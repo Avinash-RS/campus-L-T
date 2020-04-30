@@ -1,0 +1,87 @@
+<div class="create-wrapper">
+    <!-- 
+        <span class="material-icons">
+visibility
+</span>
+<span class="material-icons">
+visibility_off
+</span>
+     -->
+    <div class="head">
+        Create an account
+    </div>
+
+
+    <form [formGroup]="createForm" (ngSubmit)="submit()">
+        <div class="forms">
+            <div class="form-field">
+                <label class="label-name">
+                    Email Address
+                </label>
+                <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+                    <input matInput formControlName="email" type="text" required>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="error" *ngIf="email.invalid && email.touched">
+                    <span *ngIf="email.errors?.required">Email is Required</span>
+                    <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
+                </div>
+            </div>
+            <div class="form-field">
+                <label class="label-name">
+                    Password
+                </label>
+                <div class="input-box" [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
+                    <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'"
+                        required>
+                    <div class="icon">
+                        <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
+                            class="material-icons">
+                            visibility
+                        </span>
+                        <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
+                            class="material-icons">
+                            visibility_off
+                        </span>
+                    </div>
+
+                </div>
+                <div class="error" *ngIf="password.invalid && password.touched">
+                    <span *ngIf="password.errors?.required">Password is Required</span>
+                    <span *ngIf="password.errors?.pattern">Please enter a valid Email id</span>
+                </div>
+            </div>
+            <div class="form-field">
+                <label class="label-name">
+                    Confirm Password
+                </label>
+                <div class="input-box" [ngStyle]="{border: confirmpassword.invalid && confirmpassword.touched ? 'solid red 1px': ''}">
+                    <input matInput formControlName="confirmpassword"
+                        [type]="!toggleVisibilityConfirmPassword ? 'text' : 'password'" required>
+                    <div class="icon">
+                        <span *ngIf="toggleVisibilityConfirmPassword"
+                            (click)="toggleVisibilityConfirmPassword = !toggleVisibilityConfirmPassword;"
+                            class="material-icons">
+                            visibility
+                        </span>
+                        <span *ngIf="!toggleVisibilityConfirmPassword"
+                            (click)="toggleVisibilityConfirmPassword = !toggleVisibilityConfirmPassword;"
+                            class="material-icons">
+                            visibility_off
+                        </span>
+                    </div>
+
+                </div>
+                <div class="error" *ngIf="confirmpassword.invalid && confirmpassword.touched">
+                    <span *ngIf="confirmpassword.errors?.required">Confirm Password is Required</span>
+                    <span *ngIf="confirmpassword.errors?.pattern">Please enter a valid Email id</span>
+                </div>
+            </div>
+            <div class="submit-button">
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

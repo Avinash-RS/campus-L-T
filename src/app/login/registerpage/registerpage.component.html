@@ -1,0 +1,154 @@
+<div class="main-wrapper">
+    <div class="layer-only">
+    </div>
+    <div class="register-wrapper">
+        <div class="register-header">
+            <h3>Registration</h3>
+        </div>
+        <div class="content-wrapper">
+            <div class="sidebar-wrapper">
+                <img src="../../../assets/login/Logo.png" alt="" srcset="">
+                <h5>Unified Digital
+                    Assessment Platform</h5>
+            </div>
+            <div class="form-wrapper">
+                <form [formGroup]="registerForm">
+                    <div class="forms">
+                        <div class="form-field">
+                            <label class="label-name">
+                                First Name<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input matInput formControlName="firstName" type="text" required>
+                            </div>
+                            <div class="error" *ngIf="firstName.invalid && firstName.touched">
+                                <span *ngIf="firstName.errors?.required">Name is Required</span>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                Last Name<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input matInput formControlName="lastName" type="text" required>
+                            </div>
+                            <div class="error" *ngIf="lastName.invalid && lastName.touched">
+                                <span *ngIf="lastName.errors?.required">Last Name is Required</span>
+                            </div>
+
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                Job Title<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input matInput formControlName="jobTitle" type="text" required>
+                            </div>
+                            <div class="error" *ngIf="jobTitle.invalid && jobTitle.touched">
+                                <span *ngIf="jobTitle.errors?.required">Job title is Required</span>
+                            </div>
+
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                Mobile Number<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input matInput formControlName="mobileNumber" type="text" required>
+                            </div>
+                            <div class="error" *ngIf="mobileNumber.invalid && mobileNumber.touched">
+                                <span *ngIf="mobileNumber.errors?.required">Mobile Number is Required</span>
+                                <span *ngIf="mobileNumber.errors?.pattern">Please enter valid 10 digit Mobile
+                                    Number</span>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                Corporate Name<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input matInput formControlName="corporateName" type="text" required>
+                            </div>
+                            <div class="error" *ngIf="corporateName.invalid && corporateName.touched">
+                                <span *ngIf="corporateName.errors?.required">Corporate Name is Required</span>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                Corporate Email ID<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input matInput formControlName="corporateEmail" type="text" required>
+                            </div>
+                            <div class="error" *ngIf="corporateEmail.invalid && corporateEmail.touched">
+                                <span *ngIf="corporateEmail.errors?.required">Corporate Email is Required</span>
+                                <span *ngIf="corporateEmail.errors?.pattern">Please enter a valid Email id</span>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                State<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                    <input #statetrigger="matAutocompleteTrigger"  type="text" placeholder="" formControlName="state" [matAutocomplete]="stateMat"><span
+                                    (click)="openDropdown($event, statetrigger)" class="material-icons">
+                                    arrow_drop_down
+                                </span>
+
+                                <mat-autocomplete #stateMat="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngFor="let state of filteredStates | async" [value]="state">
+                                        {{state.name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="error" *ngIf="state.invalid && state.touched">
+                                <span *ngIf="state.errors?.required">State is Required</span>
+                                <span *ngIf="!state.errors?.required && state.errors?.dropdownNotMatch">Please select the
+                                        value from drop down</span>
+                                </div>
+                        </div>
+                        <div class="form-field">
+                            <label class="label-name">
+                                City<span class="asterick">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input #citytrigger="matAutocompleteTrigger"  type="text" placeholder="" formControlName="city" [matAutocomplete]="auto"><span
+                                    (click)="openDropdown($event, citytrigger)" class="material-icons">
+                                    arrow_drop_down
+                                </span>
+
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngFor="let city of filteredCities | async" [value]="city">
+                                        {{city.name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="error" *ngIf="city.invalid && city.touched">
+                                <span *ngIf="city.errors?.required">City is Required</span>
+                                <span *ngIf="!city.errors?.required && city.errors?.dropdownNotMatch">Please select the
+                                    value from drop down</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-field-comment">
+                        <div>
+                            <label class="label-name">
+                                Comments..
+                            </label>
+                            <div class="input-box">
+                                <textarea formControlName="comment" type="text" required></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="register-footer">
+            <!-- <input type="submit" form="ngForm" (click)="onSubmit(gDetailForm.value, 'save')"/> -->
+            <button type="submit" (click)="onSubmit(registerForm.value)">Submit</button>
+        </div>
+
+    </div>
+</div>

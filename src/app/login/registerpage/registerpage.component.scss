@@ -1,0 +1,185 @@
+@import "../../../styles.scss";
+@import "../../themes/themes.scss";
+.main-wrapper {
+  background-image: url(../../../assets/login/BackgroundImage1.png);
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100%;
+  display: flex;
+  color: $primary;
+  justify-content: center;
+  font-family: "Open Sans";
+  align-items: center;
+  .layer-only {
+    background-color: $overlay-layer-bg;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .register-wrapper {
+    position: relative;
+    align-items: center;
+    @include lg() {
+      min-width: 1000px;
+    }
+    background-color: transparent;
+    .register-header {
+      margin: 0em 0 1em 0;
+      h3 {
+        text-align: center;
+        color: $white;
+        margin-left: 220px;
+      }
+    }
+    .content-wrapper {
+      @include lg() {
+        min-width: 600px;
+      }
+      min-width: 600px;
+      background-color: $wrapper-light-gray;
+      box-shadow: $shadow-black;
+      display: flex;
+      flex-wrap: nowrap;
+      position: relative;
+      .sidebar-wrapper {
+        background-color: $layer-bg;
+        background-image: url(../../../assets/login/Corporatebuilding.png);
+        position: absolute;
+        top: 0;
+        float: left;
+        left: 0;
+        width: 220px;
+        height: 100%;
+        text-align: center;
+        color: $white;
+        img {
+          color: $white;
+        }
+      }
+
+      .form-wrapper {
+        padding: 2em 0em 1em 4em;
+        margin: 0 0 0 220px;
+        position: relative;
+        width: 100%;
+        .forms {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          justify-content: space-between;
+          text-align: left;
+          position: relative;
+          .form-field {
+            padding: 0 !important;
+            margin: 1em 4em 0 0;
+            label {
+              text-align: left;
+              padding: 0 0 0.25em 0 !important;
+              margin: 0 !important;
+              color: $primary;
+              font-size: 17px;
+              font-family: "Roboto" !important;
+            }
+            .input-box {
+              input,
+              select {
+                padding: 0em 0 0 0.5em;
+                font-size: 17px;
+                color: $secondary;
+                height: 40px;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                box-shadow: $shadow-light-black;
+                width: 100%;
+              }
+              :focus {
+                border: solid $blue 1px;
+              }
+            }
+            .error {
+              color: $red;
+              font-size: 12px;
+              font-weight: 200;
+            }
+          }
+        }
+        .form-field-comment {
+          margin: 1em 0 0 0;
+          display: flex;
+          justify-content: center;
+          div {
+            label {
+              text-align: left;
+              padding: 0 0 0.25em 0 !important;
+              margin: 0 !important;
+              color: $primary;
+              font-size: 17px;
+              font-family: "Roboto" !important;
+            }
+            .input-box {
+              textarea {
+                padding: 0em 0 0 0.5em;
+                font-size: 14px;
+                color: $secondary;
+                min-width: 400px;
+                min-height: 125px;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                box-shadow: $shadow-light-black;
+                width: 100%;
+              }
+              :focus {
+                border: 1px solid $blue;
+              }
+            }
+          }
+        }
+      }
+    }
+    .register-footer {
+      text-align: center;
+      margin: 2em 0 0em 0;
+      button {
+        margin-left: 220px;
+        background: $light-blue 0% 0% no-repeat padding-box;
+        border-radius: 10px;
+        font-size: 20px;
+        border: none;
+        outline: none;
+        color: $white;
+        font-weight: 200;
+        padding: 0.5em 4em;
+        box-shadow: $shadow-light-black;
+      }
+    }
+  }
+}
+
+// Common css for this component
+.asterick {
+  color: $red;
+}
+.material-icons {
+  position: absolute;
+  color: $light-black;
+  margin-left: -1em;
+  font-size: 30px;
+  cursor: pointer;
+}
+mat-option {
+  height: 40px;
+  font-size: 14px !important;
+}
+mat-option:hover {
+  background: $lighter-blue 0% 0% no-repeat padding-box !important;
+  border: 0.5px solid $blue;
+}
+.mat-option.mat-selected {
+  background: $lighter-blue 0% 0% no-repeat padding-box !important;
+  border: 0.5px solid $blue;
+}
