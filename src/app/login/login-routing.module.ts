@@ -23,6 +23,9 @@ const routes: Routes = [
         path: 'create', component: CreateComponent
       },
       {
+        path: 'login', component: LoginpageComponent
+      },
+      {
         path: '',
         redirectTo: 'otp',
         pathMatch: 'full'

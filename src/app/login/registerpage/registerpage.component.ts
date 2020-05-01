@@ -5,6 +5,7 @@ import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormCustomValidators } from '../../custom-form-validators/autocompleteDropdownMatch';
 import { Router } from '@angular/router';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-registerpage',
@@ -56,12 +57,23 @@ export class RegisterpageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private apiService: ApiServiceService
   ) { }
 
   ngOnInit() {
     this.FormRegister();
     this.autocomplete();
+
+    // this.dummy();
+  }
+
+  dummy() {
+    this.apiService.registration().subscribe((data: any) => {
+      console.log(data);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   autocomplete() {

@@ -7,13 +7,14 @@
   align-items: center;
   height: calc(100% - 90px);
   justify-content: center;
+  // font-family: sans-serif;
   .sub-wrapper {
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
     flex-direction: column;
     min-width: 400px;
-    max-width: 450px;
+    max-width: 400px;
     min-height: 600px;
     text-align: center;
     position: relative;
