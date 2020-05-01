@@ -90,7 +90,8 @@
                                 State<span class="asterick">*</span>
                             </label>
                             <div class="input-box">
-                                    <input #statetrigger="matAutocompleteTrigger"  type="text" placeholder="" formControlName="state" [matAutocomplete]="stateMat"><span
+                                <input #statetrigger="matAutocompleteTrigger" type="text" placeholder=""
+                                    formControlName="state" [matAutocomplete]="stateMat"><span
                                     (click)="openDropdown($event, statetrigger)" class="material-icons">
                                     arrow_drop_down
                                 </span>
@@ -103,16 +104,18 @@
                             </div>
                             <div class="error" *ngIf="state.invalid && state.touched">
                                 <span *ngIf="state.errors?.required">State is Required</span>
-                                <span *ngIf="!state.errors?.required && state.errors?.dropdownNotMatch">Please select the
-                                        value from drop down</span>
-                                </div>
+                                <span *ngIf="!state.errors?.required && state.errors?.dropdownNotMatch">Please select
+                                    the
+                                    value from drop down</span>
+                            </div>
                         </div>
                         <div class="form-field">
                             <label class="label-name">
                                 City<span class="asterick">*</span>
                             </label>
                             <div class="input-box">
-                                <input #citytrigger="matAutocompleteTrigger"  type="text" placeholder="" formControlName="city" [matAutocomplete]="auto"><span
+                                <input #citytrigger="matAutocompleteTrigger" type="text" placeholder=""
+                                    formControlName="city" [matAutocomplete]="auto"><span
                                     (click)="openDropdown($event, citytrigger)" class="material-icons">
                                     arrow_drop_down
                                 </span>
