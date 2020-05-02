@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 @import "../../themes/themes.scss";
 .main-wrapper {
-  background-image: url(../../../assets/login/BackgroundImage1.png);
+  background-image: url(../../../assets/images/BackgroundImage1.png);
   background-size: cover;
   background-repeat: repeat-y;
   background-position: center center;
@@ -47,7 +47,7 @@
       position: relative;
       .sidebar-wrapper {
         background-color: $layer-bg;
-        background-image: url(../../../assets/login/Corporatebuilding.png);
+        background-image: url(../../../assets/images/Corporatebuilding.png);
         position: absolute;
         top: 0;
         float: left;

@@ -65,15 +65,20 @@ export class RegisterpageComponent implements OnInit {
     this.FormRegister();
     this.autocomplete();
 
-    // this.dummy();
+    // Rest API subscribe methods
+    this.dummyHTTP();
+    this.dummyFETCH();
   }
 
-  dummy() {
-    this.apiService.registration().subscribe((data: any) => {
+  dummyHTTP() {
+    this.apiService.httpAPI().subscribe((data: any) => {
       console.log(data);
     }, (error) => {
       console.log(error);
     });
+  }
+  dummyFETCH() {
+    this.apiService.fetchAPI();
   }
 
   autocomplete() {

@@ -18,6 +18,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MaterialModule,
     SharedModule
   ],
+  // providers: [],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
