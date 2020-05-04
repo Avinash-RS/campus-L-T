@@ -11,7 +11,6 @@
   color: $primary;
   justify-content: center;
   font-family: "Open Sans";
-  align-items: center;
   .layer-only {
     background-color: $overlay-layer-bg;
     position: absolute;
@@ -21,10 +20,16 @@
     height: 100%;
   }
   .register-wrapper {
-    position: relative;
+    position: absolute;
     align-items: center;
     @include lg() {
-      min-width: 1000px;
+      top: 10%;
+    }
+    @include md() {
+      top: 10%;
+    }
+    @include sm() {
+      top: 5%;
     }
     background-color: transparent;
     .register-header {
@@ -39,7 +44,6 @@
       @include lg() {
         min-width: 600px;
       }
-      min-width: 600px;
       background-color: $wrapper-light-gray;
       box-shadow: $shadow-black;
       display: flex;
@@ -52,7 +56,16 @@
         top: 0;
         float: left;
         left: 0;
-        width: 220px;
+        @include lg() {
+          width: 220px;
+        }
+        @include md() {
+          width: 220px;
+        }
+        @include sm() {
+          width: 150px;
+        }
+
         height: 100%;
         text-align: center;
         color: $white;
@@ -63,12 +76,25 @@
 
       .form-wrapper {
         padding: 2em 0em 1em 4em;
-        margin: 0 0 0 220px;
+        @include lg() {
+          margin: 0 0 0 220px;
+        }
+        @include md() {
+          margin: 0 0 0 220px;
+        }
+        @include sm() {
+          margin: 0 0 0 150px;
+        }
+
         position: relative;
         width: 100%;
+        box-sizing: border-box;
         .forms {
           display: grid;
           grid-template-columns: 1fr 1fr;
+          @include sm() {
+            grid-template-columns: 1fr;            
+          }
           justify-content: space-between;
           text-align: left;
           position: relative;
@@ -95,6 +121,7 @@
                 border-radius: 5px;
                 box-shadow: $shadow-light-black;
                 width: 100%;
+                box-sizing: border-box;
               }
               :focus {
                 border: solid $blue 1px;
@@ -125,13 +152,20 @@
                 padding: 0em 0 0 0.5em;
                 font-size: 14px;
                 color: $secondary;
-                min-width: 400px;
+                @include lg() {
+                  min-width: 400px;
+                }
+                @include md() {
+                  min-width: 250px;
+                }
+                width: 400px;
                 min-height: 125px;
                 border: none;
                 outline: none;
                 border-radius: 5px;
                 box-shadow: $shadow-light-black;
                 width: 100%;
+                box-sizing: border-box;
               }
               :focus {
                 border: 1px solid $blue;
@@ -145,7 +179,16 @@
       text-align: center;
       margin: 2em 0 0em 0;
       button {
-        margin-left: 220px;
+        @include lg() {
+          margin: 0 0 0 220px;
+        }
+        @include md() {
+          margin: 0 0 0 220px;
+        }
+        @include sm() {
+          margin: 0 0 0 150px;
+        }
+
         background: $light-blue 0% 0% no-repeat padding-box;
         border-radius: 10px;
         font-size: 20px;

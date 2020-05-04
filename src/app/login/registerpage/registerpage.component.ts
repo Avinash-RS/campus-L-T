@@ -66,20 +66,20 @@ export class RegisterpageComponent implements OnInit {
     this.autocomplete();
 
     // Rest API subscribe methods
-    this.dummyHTTP();
-    this.dummyFETCH();
+    // this.dummyHTTP();
+    // this.dummyFETCH();
   }
 
-  dummyHTTP() {
-    this.apiService.httpAPI().subscribe((data: any) => {
-      console.log(data);
-    }, (error) => {
-      console.log(error);
-    });
-  }
-  dummyFETCH() {
-    this.apiService.fetchAPI();
-  }
+  // dummyHTTP() {
+  //   this.apiService.httpAPI().subscribe((data: any) => {
+  //     console.log(data);
+  //   }, (error) => {
+  //     console.log(error);
+  //   });
+  // }
+  // dummyFETCH() {
+  //   this.apiService.fetchAPI();
+  // }
 
   autocomplete() {
     // tslint:disable-next-line: no-non-null-assertion
@@ -163,9 +163,31 @@ export class RegisterpageComponent implements OnInit {
   }
 
   onSubmit(val) {
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
     if (this.registerForm.valid) {
-      this.router.navigate(['/signup/otp']);
+      // API
+      const datas = {
+        name: [{ value: this.registerForm.value.firstName }],
+        mail: [{ value: this.registerForm.value.corporateEmail }],
+        roles: [{ target_id: 'institute' }],
+        field_first_name: [{ value: this.registerForm.value.firstName }],
+        field_lname: [{ value: this.registerForm.value.lastName }],
+        field_job_title: [{ value: this.registerForm.value.jobTitle }],
+        field_mobile_number: [{ value: this.registerForm.value.mobileNumber }],
+        field_institute_name: [{ value: this.registerForm.value.corporateName }],
+        field_institute_email: [{ value: this.registerForm.value.corporateEmail }],
+        field_state: [{ value: "tamilnadu" }],
+        field_city: [{ value: "chennai" }],
+        field_comments: [{ value: "Hi this is for testing purpose" }]
+      };
+
+      this.apiService.httpAPI(datas).subscribe((data: any) => {
+        console.log(data);
+        this.router.navigate(['/signup/otp']);
+      }, (error) => {
+        console.log(error);
+      });
+
     } else {
       this.validateAllFields(this.registerForm);
     }

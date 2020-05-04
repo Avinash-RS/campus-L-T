@@ -4,21 +4,25 @@
   background-color: $overlay-layer-bg2 !important;
   display: flex;
   position: relative;
-  align-items: center;
+  // align-items: center;
   height: calc(100% - 90px);
   justify-content: center;
+  box-sizing: border-box;
   // font-family: sans-serif;
   .sub-wrapper {
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
     flex-direction: column;
-    min-width: 400px;
+    // min-width: 400px;
     max-width: 400px;
-    min-height: 600px;
+    // min-height: 600px;
     text-align: center;
-    position: relative;
+    position: absolute;
     background: $wrapper-light-gray 0% 0% no-repeat padding-box;
     border-radius: 10px;
+    top: 10%;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
