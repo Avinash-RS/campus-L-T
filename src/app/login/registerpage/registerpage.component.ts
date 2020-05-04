@@ -54,32 +54,27 @@ export class RegisterpageComponent implements OnInit {
   filteredStates: Observable<any[]>;
   openDrop = false;
   registerForm: FormGroup;
+  currentForm;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService
-  ) { }
+  ) {
+    if (this.router.url === '/corporate') {
+      this.currentForm = 'corporate';
+    } else {
+      this.currentForm = 'institute';
+    }
+
+  }
 
   ngOnInit() {
     this.FormRegister();
     this.autocomplete();
 
-    // Rest API subscribe methods
-    // this.dummyHTTP();
-    // this.dummyFETCH();
   }
 
-  // dummyHTTP() {
-  //   this.apiService.httpAPI().subscribe((data: any) => {
-  //     console.log(data);
-  //   }, (error) => {
-  //     console.log(error);
-  //   });
-  // }
-  // dummyFETCH() {
-  //   this.apiService.fetchAPI();
-  // }
 
   autocomplete() {
     // tslint:disable-next-line: no-non-null-assertion
@@ -169,7 +164,7 @@ export class RegisterpageComponent implements OnInit {
       const datas = {
         name: [{ value: this.registerForm.value.firstName }],
         mail: [{ value: this.registerForm.value.corporateEmail }],
-        roles: [{ target_id: 'institute' }],
+        roles: [{ target_id: this.currentForm }],
         field_first_name: [{ value: this.registerForm.value.firstName }],
         field_lname: [{ value: this.registerForm.value.lastName }],
         field_job_title: [{ value: this.registerForm.value.jobTitle }],
@@ -178,10 +173,11 @@ export class RegisterpageComponent implements OnInit {
         field_institute_email: [{ value: this.registerForm.value.corporateEmail }],
         field_state: [{ value: "tamilnadu" }],
         field_city: [{ value: "chennai" }],
-        field_comments: [{ value: "Hi this is for testing purpose" }]
+        field_comments: [{ value: this.registerForm.value.comment }]
       };
+      console.log('Registration Data which is passed to API', datas);
 
-      this.apiService.httpAPI(datas).subscribe((data: any) => {
+      this.apiService.RegistrationForm(datas).subscribe((data: any) => {
         console.log(data);
         this.router.navigate(['/signup/otp']);
       }, (error) => {

@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SignupHeaderComponent } from './signup-header/signup-header.component';
+import { HomeHeaderComponent } from './home-header/home-header.component';
 
 
 @NgModule({
-  declarations: [SignupHeaderComponent],
+  declarations: [SignupHeaderComponent, HomeHeaderComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,7 +21,8 @@ import { SignupHeaderComponent } from './signup-header/signup-header.component';
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
-    SignupHeaderComponent
+    SignupHeaderComponent,
+    HomeHeaderComponent
   ],
 })
 export class SharedModule { }

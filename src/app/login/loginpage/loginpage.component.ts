@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loginpage',
@@ -12,7 +13,8 @@ export class LoginpageComponent implements OnInit {
   toggleVisibility = true;
   toggleVisibilityConfirmPassword = true;
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,9 @@ export class LoginpageComponent implements OnInit {
     }
 
   }
-
+  createAccount() {
+    this.router.navigate(['./signup/create']);
+  }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {

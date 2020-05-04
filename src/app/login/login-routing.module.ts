@@ -5,14 +5,18 @@ import { RegisterpageComponent } from './registerpage/registerpage.component';
 import { OtpComponent } from './otp/otp.component';
 import { SignupComponent } from './signup/signup.component';
 import { CreateComponent } from './create/create.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 
 const routes: Routes = [
   {
-    path: 'login', component: LoginpageComponent
+    path: 'home', component: HomepageComponent
   },
   {
-    path: 'register', component: RegisterpageComponent
+    path: 'corporate', component: RegisterpageComponent
+  },
+  {
+    path: 'institute', component: RegisterpageComponent
   },
   {
     path: 'signup', component: SignupComponent, children: [
@@ -34,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'register',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];

@@ -1,14 +1,19 @@
+@import "../../../styles.scss";
 @import "../../themes/themes.scss";
-
 .header-wrapper {
-  width: 100%;
   height: 90px;
-  background-color: $secondary;
+  background: transparent;
   padding: 2em 2em 2em 1em;
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
+  border-bottom: solid $white 1px;
+  @include sm() {
+    float: left;
+    display: flex;
+    white-space: pre-wrap;
+  }
   .logo {
     display: inline-flex;
     color: $white;
@@ -24,6 +29,8 @@
     }
   }
   .right-wrapper {
+    display: flex;
+    align-items: center;
     .help-text {
       font-weight: 200 !important;
       button {
@@ -36,6 +43,30 @@
         text-align: center;
         background: transparent !important;
         opacity: 1;
+      }
+    }
+    .routes {
+      ul {
+        padding: 0 !important;
+        display: flex;
+        margin: 0 !important;
+        align-items: center;
+        li {
+          color: $white;
+          font-size: 18px;
+          @include lg() {
+            margin: 0 90px 0 0;
+          }
+          @include md() {
+            margin: 0 20px 0 0;
+          }
+          @include sm() {
+            margin: 0 20px 0 0;
+          }
+          display: flex;
+          flex-direction: row;
+          list-style: none;
+        }
       }
     }
   }

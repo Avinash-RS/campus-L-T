@@ -23,10 +23,10 @@
     position: absolute;
     align-items: center;
     @include lg() {
-      top: 10%;
+      top: 8%;
     }
     @include md() {
-      top: 10%;
+      top: 8%;
     }
     @include sm() {
       top: 5%;
@@ -49,9 +49,14 @@
       display: flex;
       flex-wrap: nowrap;
       position: relative;
+      .side-wrapper-bg-institute {
+        background-image: url(../../../assets/images/institute.png);
+      }
+      .side-wrapper-bg-corporate {
+        background-image: url(../../../assets/images/Corporatebuilding.png);
+      }
       .sidebar-wrapper {
         background-color: $layer-bg;
-        background-image: url(../../../assets/images/Corporatebuilding.png);
         position: absolute;
         top: 0;
         float: left;

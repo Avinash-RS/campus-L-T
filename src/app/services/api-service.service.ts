@@ -22,11 +22,6 @@ export class ApiServiceService {
     "field_comments": [{ "value": "Hi this is for testing purpose" }]
   };
 
-  // datas = {
-  //   name: 'avi',
-  //   age: 'hi'
-  // };
-
   constructor(
     private http: HttpClient
   ) { }
@@ -34,27 +29,14 @@ export class ApiServiceService {
   getCustomHeaders(): HttpHeaders {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
-      .set('X-CSRFToken', 'z6VsT71BaLeBY2hZUkwIsMRDXyQYJnSrygji1XvqdjA');
+      .set('X-CSRFToken', 'hzsffAfKXnBcubBAOeGFvbQJSk5cDa5mnX-NE-T0O1M');
     return headers;
   }
 
-  httpAPI(formdata) {
+  RegistrationForm(formdata) {
     // this.datas is api body data
     return this.http.post('http://104.211.226.77/d8cintana/user/register?_format=hal_json', formdata,
-      { headers: this.getCustomHeaders(), withCredentials: true });
-  }
-
-  fetchAPI() {
-    // this.datas is api body data
-    this.httpOptions = {
-      headers: new HttpHeaders({ 'X-CSRFToken': 'z6VsT71BaLeBY2hZUkwIsMRDXyQYJnSrygji1XvqdjA' }),
-    };
-    fetch('http://104.211.226.77/d8cintana/user/register?_format=hal_json', { method: 'POST', body: JSON.stringify(this.datas), mode: 'no-cors', headers: { 'X-CSRFToken': 'z6VsT71BaLeBY2hZUkwIsMRDXyQYJnSrygji1XvqdjA', 'Content-Type': 'application/json' } }).then((data) => {
-      console.log(data);
-    })
-      .catch((err) => {
-        console.log(err);
-      });
+      {headers: this.getCustomHeaders(), withCredentials: true });
   }
 
 }

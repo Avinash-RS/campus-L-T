@@ -6,7 +6,7 @@
             <h3>Registration</h3>
         </div>
         <div class="content-wrapper">
-            <div class="sidebar-wrapper">
+            <div class="sidebar-wrapper" [ngClass]="currentForm === 'corporate' ? 'side-wrapper-bg-corporate' : 'side-wrapper-bg-institute'">
                 <img src="assets/images/Logo.png" alt="" srcset="">
                 <h5>Unified Digital
                     Assessment Platform</h5>
@@ -64,24 +64,24 @@
                         </div>
                         <div class="form-field">
                             <label class="label-name">
-                                Corporate Name<span class="asterick">*</span>
+                                {{(currentForm === 'corporate' ? 'Corporate Name' : 'Institute Name')}}<span class="asterick">*</span>
                             </label>
                             <div class="input-box">
                                 <input matInput formControlName="corporateName" type="text" required>
                             </div>
                             <div class="error" *ngIf="corporateName.invalid && corporateName.touched">
-                                <span *ngIf="corporateName.errors?.required">Corporate Name is Required</span>
+                                <span *ngIf="corporateName.errors?.required">{{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}} Name is Required</span>
                             </div>
                         </div>
                         <div class="form-field">
                             <label class="label-name">
-                                Corporate Email ID<span class="asterick">*</span>
+                                {{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}} Email ID<span class="asterick">*</span>
                             </label>
                             <div class="input-box">
                                 <input matInput formControlName="corporateEmail" type="text" required>
                             </div>
                             <div class="error" *ngIf="corporateEmail.invalid && corporateEmail.touched">
-                                <span *ngIf="corporateEmail.errors?.required">Corporate Email is Required</span>
+                                <span *ngIf="corporateEmail.errors?.required">{{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}} Email is Required</span>
                                 <span *ngIf="corporateEmail.errors?.pattern">Please enter a valid Email id</span>
                             </div>
                         </div>
