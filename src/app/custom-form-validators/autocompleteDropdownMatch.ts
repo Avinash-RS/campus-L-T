@@ -1,11 +1,12 @@
 import { ValidatorFn, AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 
 export class FormCustomValidators {
-    static valueSelected(myArray: any[]): ValidatorFn {
+    static statevalueSelected(myArray: any[]): ValidatorFn {
 
         return (c: AbstractControl): { [key: string]: boolean } | null => {
-            const selectboxValue = c.value.name;
-            const pickedOrNot = myArray.filter(alias => alias.name === selectboxValue);
+
+            const selectboxValue = c.value.state;
+            const pickedOrNot = myArray.filter(alias => alias.state === selectboxValue);
 
             if (pickedOrNot.length > 0) {
                 // everything's fine. return no error. therefore it's null.
@@ -18,6 +19,23 @@ export class FormCustomValidators {
         };
     }
 
+    static cityvalueSelected(myArray: any[]): ValidatorFn {
+
+        return (c: AbstractControl): { [key: string]: boolean } | null => {
+
+            const selectboxValue = c.value.City;
+            const pickedOrNot = myArray.filter(alias => alias.City === selectboxValue);
+
+            if (pickedOrNot.length > 0) {
+                // everything's fine. return no error. therefore it's null.
+                return null;
+
+            } else {
+                // there's no matching selectboxvalue selected. so return match error.
+                return { dropdownNotMatch: true };
+            }
+        };
+    }
 
     static patternValidator() {
         return (control: AbstractControl): { [key: string]: any } => {

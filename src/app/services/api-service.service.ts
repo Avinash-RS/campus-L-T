@@ -33,10 +33,21 @@ export class ApiServiceService {
     return headers;
   }
 
+  // Registration
   RegistrationForm(formdata) {
     // this.datas is api body data
     return this.http.post('http://104.211.226.77/d8cintana/user/register?_format=hal_json', formdata,
-      {headers: this.getCustomHeaders(), withCredentials: true });
+      { headers: this.getCustomHeaders(), withCredentials: true });
+  }
+
+  // To get all cities
+  getAllCity() {
+    return this.http.get('http://104.211.226.77/d8cintana/cities.php');
+  }
+
+  // To get all cities
+  getAllState() {
+    return this.http.get('http://104.211.226.77/d8cintana/states.php');
   }
 
 }

@@ -96,9 +96,9 @@
                                     arrow_drop_down
                                 </span>
 
-                                <mat-autocomplete #stateMat="matAutocomplete" [displayWith]="displayFn">
+                                <mat-autocomplete #stateMat="matAutocomplete" [displayWith]="statedisplayFn">
                                     <mat-option *ngFor="let state of filteredStates | async" [value]="state">
-                                        {{state.name}}
+                                        {{state.state}}
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>
@@ -120,9 +120,9 @@
                                     arrow_drop_down
                                 </span>
 
-                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="citydisplayFn">
                                     <mat-option *ngFor="let city of filteredCities | async" [value]="city">
-                                        {{city.name}}
+                                        {{city.City}}
                                     </mat-option>
                                 </mat-autocomplete>
                             </div>

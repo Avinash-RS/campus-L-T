@@ -62,7 +62,7 @@ export class OtpComponent implements OnInit {
 
   OTPVerify() {
     if (this.otp1.valid && this.otp2.valid && this.otp3.valid && this.otp4.valid) {
-      this.router.navigate(['./signup/login']);
+      this.router.navigate(['./signup/create']);
     } else {
       this.otp1.markAsTouched();
       this.otp2.markAsTouched();

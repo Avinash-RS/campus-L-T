@@ -14,47 +14,13 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 })
 export class RegisterpageComponent implements OnInit {
 
-  cities: any[] = [
-    {
-      id: '1',
-      name: 'Chennai'
-    },
-    {
-      id: '2',
-      name: 'Madurai'
-    },
-    {
-      id: '3',
-      name: 'Coimbatore'
-    },
-    {
-      id: '4',
-      name: 'Trichy'
-    }
-  ];
-  states: any[] = [
-    {
-      id: '1',
-      name: 'Tamilnadu'
-    },
-    {
-      id: '2',
-      name: 'Andhra Pradesh'
-    },
-    {
-      id: '3',
-      name: 'Karnataka'
-    },
-    {
-      id: '4',
-      name: 'Kerala'
-    }
-  ];
   filteredCities: Observable<string[]>;
   filteredStates: Observable<any[]>;
   openDrop = false;
   registerForm: FormGroup;
   currentForm;
+  allCities: any;
+  allStates: any;
 
   constructor(
     private fb: FormBuilder,
@@ -71,8 +37,33 @@ export class RegisterpageComponent implements OnInit {
 
   ngOnInit() {
     this.FormRegister();
-    this.autocomplete();
 
+    // To reduce load speee, On first time, we hit api and stored that value on local storage.
+    // On Subsquent refreshes or redirects, it will take value from local storage itself.
+    if (localStorage.getItem('allStates') && localStorage.getItem('allCities')) {
+      this.allCities = JSON.parse(localStorage.getItem('allCities'));
+      this.allStates = JSON.parse(localStorage.getItem('allStates'));
+
+      // update validations for state and city form control
+      // Updating State Form control validation
+      // tslint:disable-next-line: no-string-literal
+      this.registerForm.controls['state'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
+      // tslint:disable-next-line: no-string-literal
+      this.registerForm.controls['state'].updateValueAndValidity();
+      // Updating City Form control validation
+      // tslint:disable-next-line: no-string-literal
+      this.registerForm.controls['city'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
+      // tslint:disable-next-line: no-string-literal
+      this.registerForm.controls['city'].updateValueAndValidity();
+
+    } else {
+      // If value not found on local storage, we hit api
+      this.cityAPI();
+      this.stateAPI();
+    }
+
+
+    this.autocomplete();
   }
 
 
@@ -81,27 +72,36 @@ export class RegisterpageComponent implements OnInit {
     this.filteredCities = this.registerForm.get('city')!.valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name, this.cities) : this.cities.slice())
+      map(name => name ? this.city_filter(name, this.allCities) : this.allCities ? this.allCities.slice() : '')
     );
 
     // tslint:disable-next-line: no-non-null-assertion
     this.filteredStates = this.registerForm.get('state')!.valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name, this.states) : this.states.slice())
+      map(name => name ? this.state_filter(name, this.allStates) : this.allStates ? this.allStates.slice() : '')
     );
 
   }
 
-  displayFn(user): string {
-    return user && user.name ? user.name : '';
+  citydisplayFn(user): string {
+    return user && user.City ? user.City : '';
+  }
+  statedisplayFn(user): string {
+    return user && user.state ? user.state : '';
   }
 
-  private _filter(name: string, paramArrayFromAutoComplete): any[] {
+  private city_filter(name: string, paramArrayFromAutoComplete): any[] {
     const filterValue = name.toLowerCase();
 
-    return paramArrayFromAutoComplete.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return paramArrayFromAutoComplete.filter(option => option.City.toLowerCase().indexOf(filterValue) === 0);
   }
+  private state_filter(name: string, paramArrayFromAutoComplete): any[] {
+    const filterValue = name.toLowerCase();
+
+    return paramArrayFromAutoComplete.filter(option => option.state.toLowerCase().indexOf(filterValue) === 0);
+  }
+
 
   openDropdown(event, trigger: MatAutocompleteTrigger) {
     if (trigger.panelOpen) {
@@ -123,8 +123,8 @@ export class RegisterpageComponent implements OnInit {
       mobileNumber: ['', [Validators.required, Validators.pattern(mobileRegex)]],
       corporateName: ['', [Validators.required]],
       corporateEmail: ['', [Validators.required, Validators.pattern(emailregex)]],
-      state: ['', [Validators.required, FormCustomValidators.valueSelected(this.states)]],
-      city: ['', [Validators.required, FormCustomValidators.valueSelected(this.cities)]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
       comment: ['']
     });
   }
@@ -171,14 +171,13 @@ export class RegisterpageComponent implements OnInit {
         field_mobile_number: [{ value: this.registerForm.value.mobileNumber }],
         field_institute_name: [{ value: this.registerForm.value.corporateName }],
         field_institute_email: [{ value: this.registerForm.value.corporateEmail }],
-        field_state: [{ value: "tamilnadu" }],
-        field_city: [{ value: "chennai" }],
+        field_state: [{ value: this.registerForm.value.state.state }],
+        field_city: [{ value: this.registerForm.value.city.City }],
         field_comments: [{ value: this.registerForm.value.comment }]
       };
       console.log('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-        console.log(data);
         this.router.navigate(['/signup/otp']);
       }, (error) => {
         console.log(error);
@@ -187,6 +186,47 @@ export class RegisterpageComponent implements OnInit {
     } else {
       this.validateAllFields(this.registerForm);
     }
+  }
+
+
+  // To get all cities
+  cityAPI() {
+    this.apiService.getAllCity().subscribe((data) => {
+      this.allCities = data;
+      localStorage.setItem('allCities', JSON.stringify(this.allCities));
+
+      // Updating Form control validation
+      this.registerForm.controls['city'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
+      this.registerForm.controls['city'].updateValueAndValidity();
+
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  // To get all cities
+  stateAPI() {
+    this.apiService.getAllState().subscribe((data) => {
+      const stateArr = [];
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const datas = {
+            name: data[key],
+            state: data[key]
+          };
+          stateArr.push(datas);
+        }
+      }
+      this.allStates = stateArr;
+      localStorage.setItem('allStates', JSON.stringify(this.allStates));
+
+      // Updating Form control validation
+      this.registerForm.controls['state'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
+      this.registerForm.controls['state'].updateValueAndValidity();
+
+    }, (err) => {
+      console.log(err);
+    });
   }
 
 
