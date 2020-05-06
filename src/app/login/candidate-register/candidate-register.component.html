@@ -1,0 +1,53 @@
+<app-signup-header></app-signup-header>
+<div class="main-wrapper">
+        <div class="sub-wrapper">
+
+
+                <div class="create-wrapper">
+                        <div class="head">
+                            Welcome
+                        </div>
+                    
+                    
+                        <form [formGroup]="candidateForm" (ngSubmit)="submit()">
+                            <div class="forms">
+                                    <div class="form-field">
+                                            <label class="label-name">
+                                                Name
+                                            </label>
+                                            <div class="input-box" [ngStyle]="{border: name.invalid && name.touched ? 'solid red 1px': ''}">
+                                                <input matInput formControlName="name" type="text" required>
+                                                <div>
+                            
+                                                </div>
+                                            </div>
+                                            <div class="error" *ngIf="name.invalid && name.touched">
+                                                <span *ngIf="name.errors?.required">Name is Required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                    <label class="label-name">
+                                        Email Address
+                                    </label>
+                                    <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+                                        <input matInput formControlName="email" type="text" required>
+                                        <div>
+                    
+                                        </div>
+                                    </div>
+                                    <div class="error" *ngIf="email.invalid && email.touched">
+                                        <span *ngIf="email.errors?.required">Email is Required</span>
+                                        <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
+                                    </div>
+                                </div>
+                        
+                                <div class="submit-button">
+                                    <button type="submit">Submit</button>
+                                </div>                    
+                            </div>
+                        </form>
+                    </div>
+
+
+</div>
+    </div>

@@ -6,6 +6,7 @@ import { OtpComponent } from './otp/otp.component';
 import { SignupComponent } from './signup/signup.component';
 import { CreateComponent } from './create/create.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,9 @@ const routes: Routes = [
   },
   {
     path: 'institute', component: RegisterpageComponent
+  },
+  {
+    path: 'candidate', component: CandidateRegisterComponent
   },
   {
     path: 'signup', component: SignupComponent, children: [

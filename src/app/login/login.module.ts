@@ -10,10 +10,11 @@ import { MaterialModule } from '../material/material.module';
 import { OtpComponent } from './otp/otp.component';
 import { SignupComponent } from './signup/signup.component';
 import { CreateComponent } from './create/create.component';
+import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 
 
 @NgModule({
-  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent],
+  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,

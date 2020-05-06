@@ -7,21 +7,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ApiServiceService {
   httpOptions: { headers: HttpHeaders; };
 
-  datas = {
-    "name": [{ "value": "bvizzzzwadad" }],
-    "mail": [{ "value": "bviaadszz12z@gmail.com" }],
-    "roles": [{ "target_id": "institute" }],
-    "field_first_name": [{ "value": "madhu" }],
-    "field_lname": [{ "value": "das" }],
-    "field_job_title": [{ "value": "developer" }],
-    "field_mobile_number": [{ "value": "8287495308" }],
-    "field_institute_name": [{ "value": "vdhu" }],
-    "field_institute_email": [{ "value": "bdhu.kumari@cintanatech.com" }],
-    "field_state": [{ "value": "tamilnadu" }],
-    "field_city": [{ "value": "chennai" }],
-    "field_comments": [{ "value": "Hi this is for testing purpose" }]
-  };
-
   constructor(
     private http: HttpClient
   ) { }

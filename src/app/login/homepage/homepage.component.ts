@@ -23,5 +23,9 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(['/corporate']);
   }
 
+  candidateRegister() {
+    this.router.navigate(['/candidate']);
+  }
+
 
 }
