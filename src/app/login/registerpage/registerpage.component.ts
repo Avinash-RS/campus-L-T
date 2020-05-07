@@ -6,6 +6,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormCustomValidators } from '../../custom-form-validators/autocompleteDropdownMatch';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-registerpage',
@@ -25,7 +26,8 @@ export class RegisterpageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private apiService: ApiServiceService
+    private apiService: ApiServiceService,
+    private commonService: CommonService
   ) {
     if (this.router.url === '/corporate') {
       this.currentForm = 'corporate';
@@ -178,11 +180,20 @@ export class RegisterpageComponent implements OnInit {
       console.log('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
+        this.commonService.success('Form has been Registered Successfully', '');
         this.router.navigate(['/signup/otp']);
       }, (error) => {
         console.log(error);
+        if (error.status === 422) {
+          this.commonService.error('Usermail or Username has already taken', '');
+        }
+        if (error.status === 401) {
+          this.commonService.error('Unauthorized', '');
+        } else {
+          this.commonService.error(!error.error ? 'Something went wrong' :
+           error.error.message ? 'error.error.message' : 'Something went wrong.. Please try again', '');
+        }
       });
-
     } else {
       this.validateAllFields(this.registerForm);
     }

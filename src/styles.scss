@@ -24,10 +24,24 @@ $udap-registration-theme: mat-light-theme(
   $udap-registration-warn
 );
 
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($udap-registration-theme);
+
+$alt-registration-primary: mat-palette($mat-yellow, 600);
+$alt-registration-accent: mat-palette($mat-yellow, A200, A100, A400);
+
+$alt-registration-dark-theme: mat-dark-theme(
+  $alt-registration-primary,
+  $alt-registration-accent
+);
+.alternative {
+  @include angular-material-theme($alt-registration-dark-theme);
+}
+
+
 @import './app/themes/themes.scss';
 /* You can add global styles to this file, and also import other style files */
 /* Import font family */
@@ -85,6 +99,24 @@ body {
     @content;
   }
 }
+
+/* snack bar */
+.warn-bg-color {
+  background: #ffd2d2;
+  color: #d8000c;
+  border: 2px solid rgb(248, 190, 190);
+  border-radius: none;
+  height: 30px;
+}
+
+.success-bg-color {
+  color: #4f8a10;
+  background-color: #dff2bf;
+  border: 2px solid rgb(201, 223, 164);
+  border-radius: none;
+  height: 30px;
+}
+
 
 // Registerpage component
 .register-wrapper {

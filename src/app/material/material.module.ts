@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
@@ -35,7 +39,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }
