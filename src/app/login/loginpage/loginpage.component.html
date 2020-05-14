@@ -44,7 +44,7 @@
                         <span *ngIf="password.errors?.required">Password is Required</span>
                     </div>
                 </div>
-                <div class="forgot-password">Forgot Password / Username?</div>
+                <div (click)="forgotPassword()" class="forgot-password">Forgot Password / Username?</div>
                 <div class="check-box">
                         <input type="checkbox"> Remember me
                     </div>

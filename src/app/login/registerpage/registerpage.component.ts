@@ -15,7 +15,7 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class RegisterpageComponent implements OnInit {
 
-  filteredCities: Observable<string[]>;
+  filteredCities: Observable<any[]>;
   filteredStates: Observable<any[]>;
   openDrop = false;
   registerForm: FormGroup;
@@ -48,14 +48,10 @@ export class RegisterpageComponent implements OnInit {
 
       // update validations for state and city form control
       // Updating State Form control validation
-      // tslint:disable-next-line: no-string-literal
       this.registerForm.controls['state'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
-      // tslint:disable-next-line: no-string-literal
       this.registerForm.controls['state'].updateValueAndValidity();
       // Updating City Form control validation
-      // tslint:disable-next-line: no-string-literal
       this.registerForm.controls['city'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
-      // tslint:disable-next-line: no-string-literal
       this.registerForm.controls['city'].updateValueAndValidity();
 
     } else {
@@ -180,8 +176,8 @@ export class RegisterpageComponent implements OnInit {
       console.log('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-        this.commonService.success('Form has been Registered Successfully', '');
-        this.router.navigate(['/signup/otp']);
+        this.commonService.success(`Form has been Registered Successfully`, '');
+        this.router.navigate(['/']);
       }, (error) => {
         console.log(error);
         if (error.status === 422) {
@@ -191,7 +187,7 @@ export class RegisterpageComponent implements OnInit {
           this.commonService.error('Unauthorized', '');
         } else {
           this.commonService.error(!error.error ? 'Something went wrong' :
-           error.error.message ? 'error.error.message' : 'Something went wrong.. Please try again', '');
+           error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });
     } else {

@@ -1,6 +1,6 @@
 <div class="create-wrapper">
     <div class="head">
-        Create an account
+        {{currentRoute}}
     </div>
 
 
@@ -21,6 +21,30 @@
                     <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
                 </div>
             </div>
+            <div class="form-field">
+                <label class="label-name">
+                   Temporary Password
+                </label>
+                <div class="input-box" [ngStyle]="{border: temp.invalid && temp.touched ? 'solid red 1px': ''}">
+                    <input matInput formControlName="temp" [type]="!toggleVisibility ? 'text' : 'password'"
+                        required>
+                    <div class="icon">
+                        <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
+                            class="material-icons">
+                            visibility
+                        </span>
+                        <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
+                            class="material-icons">
+                            visibility_off
+                        </span>
+                    </div>
+
+                </div>
+                <div class="error" *ngIf="temp.invalid && temp.touched">
+                    <span *ngIf="temp.errors?.required">Temporary Password is Required</span>
+                </div>
+            </div>
+
             <div class="form-field">
                 <label class="label-name">
                     Password

@@ -11,6 +11,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatAutocompleteModule,
     MatIconModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule,
+    ScrollingModule
   ],
   exports: [
     CommonModule,
@@ -41,7 +45,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatAutocompleteModule,
     MatIconModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule { }

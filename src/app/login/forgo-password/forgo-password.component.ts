@@ -1,33 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { FormCustomValidators } from '../../custom-form-validators/autocompleteDropdownMatch';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  selector: 'app-forgo-password',
+  templateUrl: './forgo-password.component.html',
+  styleUrls: ['./forgo-password.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class ForgoPasswordComponent implements OnInit {
 
-  createForm: FormGroup;
-  toggleVisibility = true;
-  toggleVisibilityConfirmPassword = true;
-  currentRoute: string;
+  candidateForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
     private commonService: CommonService
-  ) {
-    if (this.router.url === '/signup/reset-password') {
-      this.currentRoute = 'Reset the password';
-    } else {
-      this.currentRoute = 'Create an account';
-    }
-  }
+  ) { }
 
   ngOnInit() {
     this.formInitialize();
@@ -35,48 +25,56 @@ export class CreateComponent implements OnInit {
 
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    this.createForm = this.fb.group({
+    const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
+    this.candidateForm = this.fb.group({
+      mobile: ['', [Validators.required, Validators.pattern(mobileRegex)]],
       email: ['', [Validators.required, Validators.pattern(emailregex)]],
-      temp: ['', [Validators.required]],
-      password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
-      confirmpassword: ['', [Validators.required]]
-    }, { validators: FormCustomValidators.identityRevealedValidator });
+    });
   }
 
+  get mobile() {
+    return this.candidateForm.get('mobile');
+  }
   get email() {
-    return this.createForm.get('email');
-  }
-  get password() {
-    return this.createForm.get('password');
-  }
-  get temp() {
-    return this.createForm.get('temp');
-  }
-  get confirmpassword() {
-    return this.createForm.get('confirmpassword');
+    return this.candidateForm.get('email');
   }
 
   submit() {
 
-    if (this.createForm.valid) {
-      const apiData = {
-        mail: this.createForm.value.email,
-        temp_pass: this.createForm.value.temp,
-        new_pass: this.createForm.value.password
-      };
+    if (this.candidateForm.get('mobile').valid || this.candidateForm.get('email').valid) {
+      let data;
+      if (this.candidateForm.get('mobile').valid) {
+        data = {
+          mobile: [{ value: this.candidateForm.value.mobile }],
+        };
+      }
+      if (this.candidateForm.get('email').valid) {
+        data = {
+          mail: this.candidateForm.value.email
+        };
+      }
+      if (this.candidateForm.get('mobile').valid && this.candidateForm.get('email').valid) {
+        data = {
+          mail: this.candidateForm.value.email
+        };
+      }
+      console.log('Registration Data which is passed to API', data);
+      // API
 
-      this.apiService.passwordReset(apiData).subscribe((success: any) => {
+      this.apiService.forgotPassword(data).subscribe((success: any) => {
         console.log(success);
-        this.commonService.success((this.currentRoute.includes('Reset')) ? `Password has been resetted Successfully` :
-          `Account has been created Successfully`, '');
-        this.router.navigate(['/signup/login']);
+        this.commonService.success('Email with temporary credentials has been sent Successfully', '');
+        this.router.navigate(['/signup/reset-password']);
       }, (error) => {
         console.log(error);
         if (error.status === 422) {
           return this.commonService.error('Usermail or Username has already taken', '');
         }
-        if (error.status === 400) {
+        if (error.error === 'This account is blocked or has not been activated yet.') {
           return this.commonService.error(error.error ? error.error : '400 bad request', '');
+        }
+        if (error.status === 400) {
+          return this.commonService.error(error.error ? error.error.message : '400 bad request', '');
         }
         if (error.status === 401) {
           return this.commonService.error('Unauthorized', '');
@@ -86,11 +84,10 @@ export class CreateComponent implements OnInit {
         }
       });
     } else {
-      this.validateAllFields(this.createForm);
+      this.validateAllFields(this.candidateForm);
     }
 
   }
-
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -102,5 +99,6 @@ export class CreateComponent implements OnInit {
       }
     });
   }
+
 
 }

@@ -11,10 +11,12 @@ import { OtpComponent } from './otp/otp.component';
 import { SignupComponent } from './signup/signup.component';
 import { CreateComponent } from './create/create.component';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
+import { ForgoPasswordComponent } from './forgo-password/forgo-password.component';
+import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
 
 
 @NgModule({
-  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent],
+  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent, ForgoPasswordComponent, OtpForgotPasswordComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,

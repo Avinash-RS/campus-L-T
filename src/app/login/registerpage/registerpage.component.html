@@ -97,10 +97,12 @@
                                 </span>
 
                                 <mat-autocomplete #stateMat="matAutocomplete" [displayWith]="statedisplayFn">
-                                    <mat-option *ngFor="let state of filteredStates | async" [value]="state">
+                                    <!-- <cdk-virtual-scroll-viewport itemSize="50" class="viewport"> -->
+                                        <mat-option *ngFor="let state of filteredStates | async" [value]="state">
                                         {{state.state}}
                                     </mat-option>
-                                </mat-autocomplete>
+                                <!-- </cdk-virtual-scroll-viewport> -->
+                            </mat-autocomplete>
                             </div>
                             <div class="error" *ngIf="state.invalid && state.touched">
                                 <span *ngIf="state.errors?.required">State is Required</span>
@@ -119,12 +121,13 @@
                                     (click)="openDropdown($event, citytrigger)" class="material-icons">
                                     arrow_drop_down
                                 </span>
-
                                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="citydisplayFn">
-                                    <mat-option *ngFor="let city of filteredCities | async" [value]="city">
+                                    <!-- <cdk-virtual-scroll-viewport itemSize="50" class="viewport"> -->
+                                        <mat-option *ngFor="let city of filteredCities | async" [value]="city">
                                         {{city.City}}
                                     </mat-option>
-                                </mat-autocomplete>
+                                <!-- </cdk-virtual-scroll-viewport> -->
+                            </mat-autocomplete>
                             </div>
                             <div class="error" *ngIf="city.invalid && city.touched">
                                 <span *ngIf="city.errors?.required">City is Required</span>

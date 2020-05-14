@@ -51,7 +51,7 @@ export class CandidateRegisterComponent implements OnInit {
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
         this.commonService.success('Form has been Registered Successfully', '');
-        this.router.navigate(['/signup/otp']);
+        this.router.navigate(['/']);
       }, (error) => {
         console.log(error);
         if (error.status === 422) {
@@ -61,7 +61,7 @@ export class CandidateRegisterComponent implements OnInit {
           this.commonService.error('Unauthorized', '');
         } else {
           this.commonService.error(!error.error ? 'Something went wrong' :
-           error.error.message ? 'error.error.message' : 'Something went wrong.. Please try again', '');
+           error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });
     } else {

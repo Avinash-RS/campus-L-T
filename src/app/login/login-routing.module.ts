@@ -7,6 +7,8 @@ import { SignupComponent } from './signup/signup.component';
 import { CreateComponent } from './create/create.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
+import { ForgoPasswordComponent } from './forgo-password/forgo-password.component';
+import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
 
 
 const routes: Routes = [
@@ -31,7 +33,16 @@ const routes: Routes = [
         path: 'create', component: CreateComponent
       },
       {
+        path: 'reset-password', component: CreateComponent
+      },
+      {
         path: 'login', component: LoginpageComponent
+      },
+      {
+        path: 'forgot-password', component: ForgoPasswordComponent
+      },
+      {
+        path: 'otp-password', component: OtpForgotPasswordComponent
       },
       {
         path: '',

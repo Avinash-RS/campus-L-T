@@ -76,7 +76,7 @@ body {
   font: 14px "Open Sans" !important;
   font-weight: 100;
   transition: .3s ease-in-out;
-  background-color: $overlay-layer-bg;
+  // background-color: $overlay-layer-bg;
 }
 
 @mixin sm {
@@ -106,7 +106,7 @@ body {
   color: #d8000c;
   border: 2px solid rgb(248, 190, 190);
   border-radius: none;
-  height: 30px;
+  height: 100%;
 }
 
 .success-bg-color {
@@ -114,7 +114,7 @@ body {
   background-color: #dff2bf;
   border: 2px solid rgb(201, 223, 164);
   border-radius: none;
-  height: 30px;
+  height: 100%;
 }
 
 
@@ -134,10 +134,18 @@ body {
 .mat-autocomplete-panel {
   background: $light-white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-dark !important;
-  max-height: 200px !important;
+  max-height: 220px !important;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   border: 1px solid $blue !important;
 }
+.viewport {
+  height: 200px;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
 .mat-autocomplete-panel.mat-autocomplete-visible {
   max-height: 200px !important;
 }

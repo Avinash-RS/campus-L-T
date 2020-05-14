@@ -52,10 +52,12 @@
         margin: 0 !important;
         align-items: center;
         li {
+          cursor: pointer;
+          outline: none;
           color: $white;
           font-size: 18px;
           @include lg() {
-            margin: 0 90px 0 0;
+            margin: 0 70px 0 0;
           }
           @include md() {
             margin: 0 20px 0 0;
