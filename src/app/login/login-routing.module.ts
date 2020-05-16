@@ -10,43 +10,47 @@ import { CandidateRegisterComponent } from './candidate-register/candidate-regis
 import { ForgoPasswordComponent } from './forgo-password/forgo-password.component';
 import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
 
+import { CONSTANT } from '../../app/constants/app-constants.service';
 
 const routes: Routes = [
   {
-    path: 'home', component: HomepageComponent
+    path: ``, redirectTo: `${CONSTANT.ROUTES.HOME}`
   },
   {
-    path: 'corporate', component: RegisterpageComponent
+    path: `${CONSTANT.ROUTES.HOME}`, component: HomepageComponent
   },
   {
-    path: 'institute', component: RegisterpageComponent
+    path: `${CONSTANT.ROUTES.REGISTER.CORPORATE}`, component: RegisterpageComponent
   },
   {
-    path: 'candidate', component: CandidateRegisterComponent
+    path: `${CONSTANT.ROUTES.REGISTER.INSTITUTE}`, component: RegisterpageComponent
   },
   {
-    path: 'signup', component: SignupComponent, children: [
+    path: `${CONSTANT.ROUTES.REGISTER.CANDIDATE}`, component: CandidateRegisterComponent
+  },
+  {
+    path: '', component: SignupComponent, children: [
       {
-        path: 'otp', component: OtpComponent
+        path: `${CONSTANT.ROUTES.VERIFY.OTP}`, component: OtpComponent
       },
       {
-        path: 'create', component: CreateComponent
+        path: `${CONSTANT.ROUTES.PASSWORD.SETUP}`, component: CreateComponent
       },
       {
-        path: 'reset-password', component: CreateComponent
+        path: `${CONSTANT.ROUTES.PASSWORD.FORGOT}`, component: ForgoPasswordComponent
       },
       {
-        path: 'login', component: LoginpageComponent
+        path: `${CONSTANT.ROUTES.PASSWORD.RESET}`, component: CreateComponent
       },
       {
-        path: 'forgot-password', component: ForgoPasswordComponent
+        path: `${CONSTANT.ROUTES.VERIFY.OTP_PASSWORD}`, component: OtpForgotPasswordComponent
       },
       {
-        path: 'otp-password', component: OtpForgotPasswordComponent
+        path: `${CONSTANT.ROUTES.LOGIN}`, component: LoginpageComponent
       },
       {
         path: '',
-        redirectTo: 'otp',
+        redirectTo: `${CONSTANT.ROUTES.VERIFY.OTP}`,
         pathMatch: 'full'
       }
     ]

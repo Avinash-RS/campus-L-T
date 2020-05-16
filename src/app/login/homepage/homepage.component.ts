@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-homepage',
@@ -9,22 +11,23 @@ import { Router } from '@angular/router';
 export class HomepageComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private appConfig: AppConfigService
   ) { }
 
   ngOnInit() {
   }
 
   instituteRegister() {
-    this.router.navigate(['/institute']);
+    this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.REGISTER.INSTITUTE);
   }
 
   corporateRegister() {
-    this.router.navigate(['/corporate']);
+    this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.REGISTER.CORPORATE);
   }
 
   candidateRegister() {
-    this.router.navigate(['/candidate']);
+    this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.REGISTER.CANDIDATE);
   }
 
 

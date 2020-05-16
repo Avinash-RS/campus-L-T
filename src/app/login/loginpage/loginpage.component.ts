@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-loginpage',
@@ -19,7 +20,7 @@ export class LoginpageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private commonService: CommonService
+    private appConfig: AppConfigService
   ) { }
 
   ngOnInit() {
@@ -41,28 +42,84 @@ export class LoginpageComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  submit() {
+  // After clicking Submit, we hit tao api to insert Test Taker details in TAO
+  insertTestTakerAPI(data, email) {
 
+    const apiData = [
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#password',
+        object: 'LNnIsna3nxb55bc88e792c0a4ef2dacedf466bf097a4819ea11f9ae0dfffe9ed7d4c5fd9b0'
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#userUILg',
+        object: data.current_user.name
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#login',
+        object: data.current_user.name
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#userMail',
+        object: email
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#userLastName',
+        object: data.current_user.name
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+        object: 'http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject'
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.tao.lu/Ontologies/TAO.rdf#UpdatedAt',
+        object: '1586670644.7123'
+      },
+      {
+        subject: 'http://localhost/tao/tao.rdf#',
+        predicate: 'http://www.w3.org/2000/01/rdf-schema#label',
+        object: data.current_user.name
+      }
+    ];
+    this.apiService.insertTestTaker(apiData).subscribe((success) => {
+      this.appConfig.consoleLog('success', success);
+    }, (err) => {
+      this.appConfig.errorLog('err', err);
+    });
+  }
+
+  submit() {
     if (this.loginForm.valid) {
       const apiData = {
-        mail: this.loginForm.value.email,
+        name: this.loginForm.value.email,
         pass: this.loginForm.value.password
       };
       this.subscribe1 = this.apiService.login(apiData).subscribe((data: any) => {
-        console.log(data);
+        this.appConfig.consoleLog('data', data);
+        this.insertTestTakerAPI(data, apiData.name);
+        this.appConfig.setLocalData('username', data.current_user.name);
+        this.appConfig.setLocalData('csrf-login', data.csrf_token);
+        this.appConfig.setLocalData('logout-token', data.logout_token);
+        this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.DASHBOARD.DASHBOARD}`);
 
       }, (error) => {
-        console.log(error);
+        this.appConfig.errorLog(error);
         if (error.status === 422) {
-          this.commonService.error('Usermail or Username has already taken', '');
+          this.appConfig.error('Usermail or Username has already taken', '');
         }
         if (error.status === 400) {
-          return this.commonService.error(error.error ? error.error : '400 bad request', '');
+          return this.appConfig.error(error.error ? error.error : '400 bad request', '');
         }
         if (error.status === 401) {
-          this.commonService.error('Unauthorized', '');
+          this.appConfig.error('Unauthorized', '');
         } else {
-          this.commonService.error(!error.error ? 'Something went wrong' :
+          this.appConfig.error(!error.error ? 'Something went wrong' :
             error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });
@@ -74,11 +131,11 @@ export class LoginpageComponent implements OnInit {
   }
 
   forgotPassword() {
-    this.router.navigate(['./signup/forgot-password']);
+    this.appConfig.routeNavigation('./' + CONSTANT.ROUTES.PASSWORD.FORGOT);
   }
 
   createAccount() {
-    this.router.navigate(['./signup/create']);
+    this.appConfig.routeNavigation('./' + CONSTANT.ROUTES.PASSWORD.SETUP);
   }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {

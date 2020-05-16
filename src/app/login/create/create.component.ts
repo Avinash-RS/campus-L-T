@@ -3,7 +3,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FormCustomValidators } from '../../custom-form-validators/autocompleteDropdownMatch';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-create',
@@ -15,15 +16,18 @@ export class CreateComponent implements OnInit {
   createForm: FormGroup;
   toggleVisibility = true;
   toggleVisibilityConfirmPassword = true;
+  toggleVisibilityTempPassword = true;
   currentRoute: string;
+  autoPopulateMailId: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private commonService: CommonService
+    private appConfig: AppConfigService
   ) {
-    if (this.router.url === '/signup/reset-password') {
+    if (this.router.url === '/' + `${CONSTANT.ROUTES.PASSWORD.RESET}`) {
       this.currentRoute = 'Reset the password';
+      this.autoPopulateMailId = this.appConfig.getLocalData('resetAutoPopulateMailId');
     } else {
       this.currentRoute = 'Create an account';
     }
@@ -40,7 +44,16 @@ export class CreateComponent implements OnInit {
       temp: ['', [Validators.required]],
       password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
       confirmpassword: ['', [Validators.required]]
-    }, { validators: FormCustomValidators.identityRevealedValidator });
+    }, { validators: FormCustomValidators.identityRevealedValidator }
+    ), this.autoPopulateMail(); // Function to auto populate mail after form loads.
+  }
+
+  autoPopulateMail() {
+    if (this.currentRoute === 'Reset the password') {
+      this.createForm.patchValue({
+        email: this.autoPopulateMailId
+      });
+    }
   }
 
   get email() {
@@ -60,28 +73,29 @@ export class CreateComponent implements OnInit {
 
     if (this.createForm.valid) {
       const apiData = {
-        mail: this.createForm.value.email,
+        name: this.createForm.value.email,
         temp_pass: this.createForm.value.temp,
         new_pass: this.createForm.value.password
       };
 
       this.apiService.passwordReset(apiData).subscribe((success: any) => {
-        console.log(success);
-        this.commonService.success((this.currentRoute.includes('Reset')) ? `Password has been resetted Successfully` :
+        this.appConfig.consoleLog('success', success);
+        this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been resetted Successfully` :
           `Account has been created Successfully`, '');
-        this.router.navigate(['/signup/login']);
+        this.currentRoute === 'Reset the password' ? this.appConfig.clearLocalDataOne('autoPopulateMailId') : '';
+        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.LOGIN);
       }, (error) => {
-        console.log(error);
+        this.appConfig.errorLog(error);
         if (error.status === 422) {
-          return this.commonService.error('Usermail or Username has already taken', '');
+          return this.appConfig.error('Usermail or Username has already taken', '');
         }
         if (error.status === 400) {
-          return this.commonService.error(error.error ? error.error : '400 bad request', '');
+          return this.appConfig.error(error.error ? error.error : '400 bad request', '');
         }
         if (error.status === 401) {
-          return this.commonService.error('Unauthorized', '');
+          return this.appConfig.error('Unauthorized', '');
         } else {
-          this.commonService.error(!error.error ? 'Something went wrong' :
+          this.appConfig.error(!error.error ? 'Something went wrong' :
             error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });

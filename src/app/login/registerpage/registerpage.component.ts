@@ -6,7 +6,8 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormCustomValidators } from '../../custom-form-validators/autocompleteDropdownMatch';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-registerpage',
@@ -27,9 +28,9 @@ export class RegisterpageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private commonService: CommonService
+    private appConfig: AppConfigService
   ) {
-    if (this.router.url === '/corporate') {
+    if (this.router.url === '/' + `${CONSTANT.ROUTES.REGISTER.CORPORATE}`) {
       this.currentForm = 'corporate';
     } else {
       this.currentForm = 'institute';
@@ -39,12 +40,11 @@ export class RegisterpageComponent implements OnInit {
 
   ngOnInit() {
     this.FormRegister();
-
     // To reduce load speee, On first time, we hit api and stored that value on local storage.
     // On Subsquent refreshes or redirects, it will take value from local storage itself.
-    if (localStorage.getItem('allStates') && localStorage.getItem('allCities')) {
-      this.allCities = JSON.parse(localStorage.getItem('allCities'));
-      this.allStates = JSON.parse(localStorage.getItem('allStates'));
+    if (this.appConfig.getLocalData('allStates') && this.appConfig.getLocalData('allCities')) {
+      this.allCities = JSON.parse(this.appConfig.getLocalData('allCities'));
+      this.allStates = JSON.parse(this.appConfig.getLocalData('allStates'));
 
       // update validations for state and city form control
       // Updating State Form control validation
@@ -156,7 +156,6 @@ export class RegisterpageComponent implements OnInit {
   }
 
   onSubmit(val) {
-    // console.log(this.registerForm.value);
     if (this.registerForm.valid) {
       // API
       const datas = {
@@ -173,20 +172,20 @@ export class RegisterpageComponent implements OnInit {
         field_city: [{ value: this.registerForm.value.city.City }],
         field_comments: [{ value: this.registerForm.value.comment }]
       };
-      console.log('Registration Data which is passed to API', datas);
+      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-        this.commonService.success(`Form has been Registered Successfully`, '');
-        this.router.navigate(['/']);
+        this.appConfig.success(`Form has been Registered Successfully`, '');
+        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
       }, (error) => {
-        console.log(error);
+        this.appConfig.errorLog(error);
         if (error.status === 422) {
-          this.commonService.error('Usermail or Username has already taken', '');
+          this.appConfig.error('Usermail or Username has already taken', '');
         }
         if (error.status === 401) {
-          this.commonService.error('Unauthorized', '');
+          this.appConfig.error('Unauthorized', '');
         } else {
-          this.commonService.error(!error.error ? 'Something went wrong' :
+          this.appConfig.error(!error.error ? 'Something went wrong' :
            error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });
@@ -200,14 +199,14 @@ export class RegisterpageComponent implements OnInit {
   cityAPI() {
     this.apiService.getAllCity().subscribe((data) => {
       this.allCities = data;
-      localStorage.setItem('allCities', JSON.stringify(this.allCities));
+      this.appConfig.setLocalData('allCities', JSON.stringify(this.allCities));
 
       // Updating Form control validation
       this.registerForm.controls['city'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
       this.registerForm.controls['city'].updateValueAndValidity();
 
     }, (err) => {
-      console.log(err);
+      this.appConfig.errorLog(err);
     });
   }
 
@@ -225,14 +224,14 @@ export class RegisterpageComponent implements OnInit {
         }
       }
       this.allStates = stateArr;
-      localStorage.setItem('allStates', JSON.stringify(this.allStates));
+      this.appConfig.setLocalData('allStates', JSON.stringify(this.allStates));
 
       // Updating Form control validation
       this.registerForm.controls['state'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
       this.registerForm.controls['state'].updateValueAndValidity();
 
     }, (err) => {
-      console.log(err);
+      this.appConfig.errorLog(err);
     });
   }
 

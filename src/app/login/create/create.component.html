@@ -26,14 +26,14 @@
                    Temporary Password
                 </label>
                 <div class="input-box" [ngStyle]="{border: temp.invalid && temp.touched ? 'solid red 1px': ''}">
-                    <input matInput formControlName="temp" [type]="!toggleVisibility ? 'text' : 'password'"
+                    <input matInput formControlName="temp" [type]="!toggleVisibilityTempPassword ? 'text' : 'password'"
                         required>
                     <div class="icon">
-                        <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
+                        <span *ngIf="toggleVisibilityTempPassword" (click)="toggleVisibilityTempPassword = !toggleVisibilityTempPassword;"
                             class="material-icons">
                             visibility
                         </span>
-                        <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
+                        <span *ngIf="!toggleVisibilityTempPassword" (click)="toggleVisibilityTempPassword = !toggleVisibilityTempPassword;"
                             class="material-icons">
                             visibility_off
                         </span>

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-forgo-password',
@@ -16,7 +17,7 @@ export class ForgoPasswordComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private commonService: CommonService
+    private appConfig: AppConfigService
   ) { }
 
   ngOnInit() {
@@ -58,28 +59,29 @@ export class ForgoPasswordComponent implements OnInit {
           mail: this.candidateForm.value.email
         };
       }
-      console.log('Registration Data which is passed to API', data);
+      this.appConfig.consoleLog('Registration Data which is passed to API', data);
       // API
 
       this.apiService.forgotPassword(data).subscribe((success: any) => {
-        console.log(success);
-        this.commonService.success('Email with temporary credentials has been sent Successfully', '');
-        this.router.navigate(['/signup/reset-password']);
+        this.appConfig.consoleLog('success', success);
+        this.appConfig.setLocalData('resetAutoPopulateMailId', data.mail);
+        this.appConfig.success('Email with temporary credentials has been sent Successfully', '');
+        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.PASSWORD.RESET);
       }, (error) => {
-        console.log(error);
+        this.appConfig.errorLog(error);
         if (error.status === 422) {
-          return this.commonService.error('Usermail or Username has already taken', '');
+          return this.appConfig.error('Usermail or Username has already taken', '');
         }
         if (error.error === 'This account is blocked or has not been activated yet.') {
-          return this.commonService.error(error.error ? error.error : '400 bad request', '');
+          return this.appConfig.error(error.error ? error.error : '400 bad request', '');
         }
         if (error.status === 400) {
-          return this.commonService.error(error.error ? error.error.message : '400 bad request', '');
+          return this.appConfig.error(error.error ? error.error.message : '400 bad request', '');
         }
         if (error.status === 401) {
-          return this.commonService.error('Unauthorized', '');
+          return this.appConfig.error('Unauthorized', '');
         } else {
-          this.commonService.error(!error.error ? 'Something went wrong' :
+          this.appConfig.error(!error.error ? 'Something went wrong' :
             error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });

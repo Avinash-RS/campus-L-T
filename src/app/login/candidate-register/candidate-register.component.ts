@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-candidate-register',
@@ -16,7 +17,7 @@ export class CandidateRegisterComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private commonService: CommonService
+    private appConfig: AppConfigService,
   ) { }
 
   ngOnInit() {
@@ -47,20 +48,20 @@ export class CandidateRegisterComponent implements OnInit {
         mail: [{ value: this.candidateForm.value.email }],
         roles: [{ target_id: 'candidate' }],
       };
-      console.log('Registration Data which is passed to API', datas);
+      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-        this.commonService.success('Form has been Registered Successfully', '');
-        this.router.navigate(['/']);
+        this.appConfig.success('Form has been Registered Successfully', '');
+        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
       }, (error) => {
-        console.log(error);
+        this.appConfig.errorLog(error);
         if (error.status === 422) {
-          this.commonService.error('Usermail or Username has already taken', '');
+          this.appConfig.error('Usermail or Username has already taken', '');
         }
         if (error.status === 401) {
-          this.commonService.error('Unauthorized', '');
+          this.appConfig.error('Unauthorized', '');
         } else {
-          this.commonService.error(!error.error ? 'Something went wrong' :
+          this.appConfig.error(!error.error ? 'Something went wrong' :
            error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
         }
       });

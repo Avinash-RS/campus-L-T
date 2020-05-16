@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatButtonModule,
     MatSnackBarModule,
     MatTooltipModule,
-    ScrollingModule
+    ScrollingModule,
+    MatToolbarModule
   ],
   exports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatButtonModule,
     MatSnackBarModule,
     MatTooltipModule,
-    ScrollingModule
+    ScrollingModule,
+    MatToolbarModule
   ]
 })
 export class MaterialModule { }

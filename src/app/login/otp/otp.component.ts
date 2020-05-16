@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-otp',
@@ -46,7 +48,8 @@ export class OtpComponent implements OnInit {
   otp4 = new FormControl('', Validators.required);
   OTPreSend: boolean;
   constructor(
-    private router: Router
+    private router: Router,
+    private appConfig: AppConfigService
   ) { }
 
   ngOnInit() {
@@ -62,7 +65,7 @@ export class OtpComponent implements OnInit {
 
   OTPVerify() {
     if (this.otp1.valid && this.otp2.valid && this.otp3.valid && this.otp4.valid) {
-      this.router.navigate(['./signup/create']);
+      this.appConfig.routeNavigation('./' + CONSTANT.ROUTES.PASSWORD.SETUP);
     } else {
       this.otp1.markAsTouched();
       this.otp2.markAsTouched();
