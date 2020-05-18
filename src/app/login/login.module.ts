@@ -13,6 +13,7 @@ import { CreateComponent } from './create/create.component';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 import { ForgoPasswordComponent } from './forgo-password/forgo-password.component';
 import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
+import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-pas
     LoginRoutingModule,
     SharedModule,
     MaterialModule
-  ]
+  ],
+  entryComponents: [SnackbarComponent]
 })
 export class LoginModule { }

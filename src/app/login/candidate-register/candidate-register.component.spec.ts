@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CandidateRegisterComponent } from './candidate-register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CandidateRegisterComponent', () => {
   let component: CandidateRegisterComponent;
@@ -8,7 +12,12 @@ describe('CandidateRegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CandidateRegisterComponent ]
+      imports: [
+        FormsModule, MatSnackBarModule, RouterTestingModule, ReactiveFormsModule,
+        HttpClientModule
+      ],
+      declarations: [ CandidateRegisterComponent ],
+      schemas: [ NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

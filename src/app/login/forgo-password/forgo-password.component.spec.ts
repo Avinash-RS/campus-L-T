@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForgoPasswordComponent } from './forgo-password.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ForgoPasswordComponent', () => {
   let component: ForgoPasswordComponent;
@@ -8,6 +12,9 @@ describe('ForgoPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        FormsModule, MatSnackBarModule, RouterTestingModule, ReactiveFormsModule, HttpClientModule
+      ],
       declarations: [ ForgoPasswordComponent ]
     })
     .compileComponents();

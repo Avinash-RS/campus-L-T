@@ -1,0 +1,11 @@
+{
+  "/d8cintana/*": {
+    "target": "http://104.211.226.77",
+    "secure": false,
+    "pathRewrite": {
+    "^/d8cintana": ""
+  },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

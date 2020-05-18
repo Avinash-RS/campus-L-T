@@ -14,7 +14,9 @@ export class ApiServiceService {
   ) { }
 
   getCustomHeaders(): HttpHeaders {
-    const headers = new HttpHeaders()
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
       .set('Content-Type', 'application/json')
       .set('X-CSRFToken', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
@@ -22,7 +24,9 @@ export class ApiServiceService {
     return headers;
   }
   getAfterCustomHeaders(): HttpHeaders {
-    const headers = new HttpHeaders()
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
       .set('Content-Type', 'application/json')
       .set('X-CSRFToken', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
@@ -30,7 +34,9 @@ export class ApiServiceService {
     return headers;
   }
   withoutTokens(): HttpHeaders {
-    const headers = new HttpHeaders()
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
       // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -39,7 +45,7 @@ export class ApiServiceService {
 
   // For generating new static token for before login requests
   csrfToken() {
-    return this.http.get('http://104.211.226.77/d8cintana/rest/session/token');
+    return this.http.get('/d8cintana/rest/session/token', {headers: this.withoutTokens()});
   }
   getToken() {
     this.csrfToken().subscribe((data: any) => {
@@ -54,24 +60,24 @@ export class ApiServiceService {
   RegistrationForm(formdata) {
     this.getToken();
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/entity/user?_format=hal_json`, formdata,
+    return this.http.post(`/d8cintana/entity/user?_format=hal_json`, formdata,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   // To get all cities
   getAllCity() {
-    return this.http.get(`http://104.211.226.77/d8cintana/cities.php`);
+    return this.http.get(`/d8cintana/cities.php`);
   }
 
   // To get all cities
   getAllState() {
-    return this.http.get(`http://104.211.226.77/d8cintana/states.php`);
+    return this.http.get(`/d8cintana/states.php`);
   }
 
   // Forgot Password
   forgotPassword(email) {
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/lost-password?_format=json`, email,
+    return this.http.post(`/d8cintana/user/lost-password?_format=json`, email,
       { withCredentials: true });
   }
 
@@ -79,7 +85,7 @@ export class ApiServiceService {
   passwordReset(data) {
     this.getToken();
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/lost-password-reset?_format=json`, data,
+    return this.http.post(`/d8cintana/user/lost-password-reset?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
@@ -87,20 +93,20 @@ export class ApiServiceService {
   login(loginData) {
     this.getToken();
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/login?_format=json`, loginData,
+    return this.http.post(`/d8cintana/user/login?_format=json`, loginData,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   // Logout
   logout(logoutToken) {
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/logout?_format=json&token=${logoutToken}`, logoutToken,
+    return this.http.post(`/d8cintana/user/logout?_format=json&token=${logoutToken}`, logoutToken,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   // TAO Insert Test taker api
   insertTestTaker(data) {
-    return this.http.post(`http://104.211.226.77/api/inserttesttaker.php`, data, {headers: this.withoutTokens(), withCredentials: true});
+    return this.http.post(`/api/inserttesttaker.php`, data, {headers: this.withoutTokens(), withCredentials: true});
   }
 
 }

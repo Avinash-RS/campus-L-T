@@ -73,7 +73,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "udap-registration:build"
+            "browserTarget": "udap-registration:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

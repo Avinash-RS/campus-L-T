@@ -1,17 +1,26 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { SnackbarComponent } from './shared/snackbar/snackbar.component';
+import { MaterialModule } from './material/material.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, NgxSpinnerModule, HttpClientModule,
+        MatSnackBarModule, BrowserAnimationsModule, MaterialModule
       ],
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+    })
+    .compileComponents();
   }));
 
   it('should create the app', () => {
@@ -26,10 +35,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('udap-registration');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('udap-registration app is running!');
-  });
 });
