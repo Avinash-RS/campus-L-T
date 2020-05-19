@@ -85,19 +85,6 @@ export class CreateComponent implements OnInit {
         this.currentRoute === 'Reset the password' ? this.appConfig.clearLocalDataOne('autoPopulateMailId') : '';
         this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.LOGIN);
       }, (error) => {
-        this.appConfig.errorLog(error);
-        if (error.status === 422) {
-          return this.appConfig.error('Usermail or Username has already taken', '');
-        }
-        if (error.status === 400) {
-          return this.appConfig.error(error.error ? error.error : '400 bad request', '');
-        }
-        if (error.status === 401) {
-          return this.appConfig.error('Unauthorized', '');
-        } else {
-          this.appConfig.error(!error.error ? 'Something went wrong' :
-            error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
-        }
       });
     } else {
       this.validateAllFields(this.createForm);

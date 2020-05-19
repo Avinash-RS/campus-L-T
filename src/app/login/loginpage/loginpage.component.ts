@@ -90,7 +90,6 @@ export class LoginpageComponent implements OnInit {
     this.apiService.insertTestTaker(apiData).subscribe((success) => {
       this.appConfig.consoleLog('success', success);
     }, (err) => {
-      this.appConfig.errorLog('err', err);
     });
   }
 
@@ -109,19 +108,6 @@ export class LoginpageComponent implements OnInit {
         this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.DASHBOARD.DASHBOARD}`);
 
       }, (error) => {
-        this.appConfig.errorLog(error);
-        if (error.status === 422) {
-          this.appConfig.error('Usermail or Username has already taken', '');
-        }
-        if (error.status === 400) {
-          return this.appConfig.error(error.error ? error.error : '400 bad request', '');
-        }
-        if (error.status === 401) {
-          this.appConfig.error('Unauthorized', '');
-        } else {
-          this.appConfig.error(!error.error ? 'Something went wrong' :
-            error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
-        }
       });
 
     } else {

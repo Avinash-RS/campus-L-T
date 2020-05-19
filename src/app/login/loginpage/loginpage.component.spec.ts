@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
-fdescribe('LoginpageComponent', () => {
+describe('LoginpageComponent', () => {
   let component: LoginpageComponent;
   let fixture: ComponentFixture<LoginpageComponent>;
 

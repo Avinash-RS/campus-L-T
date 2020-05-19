@@ -49,18 +49,19 @@ describe('RegisterpageComponent', () => {
     component.registerForm.controls['comment'].setValue('');
     expect(component.registerForm.valid).toBeFalsy();
   }));
-  it('form should be valid', (async () => {
+  it('form should be valid', () => {
+    expect(component.registerForm.valid).toBeFalsy();
     component.registerForm.controls['firstName'].setValue('ABC');
     component.registerForm.controls['lastName'].setValue('XYZ');
     component.registerForm.controls['jobTitle'].setValue('Software');
     component.registerForm.controls['mobileNumber'].setValue('9865258894');
     component.registerForm.controls['corporateName'].setValue('some name');
     component.registerForm.controls['corporateEmail'].setValue('some@mail.com');
-    component.registerForm.controls['state'].setValue('Tamilnadu');
+    component.registerForm.controls['state'].setValue('Tamil Nadu');
     component.registerForm.controls['city'].setValue('Chennai');
     component.registerForm.controls['comment'].setValue('hi');
     expect(component.registerForm.valid).toBeFalsy();
-  }));
+  });
 
   // it('email field validity', () => {
   //   let errors = {};

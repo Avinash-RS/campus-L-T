@@ -178,16 +178,6 @@ export class RegisterpageComponent implements OnInit {
         this.appConfig.success(`Form has been Registered Successfully`, '');
         this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
       }, (error) => {
-        this.appConfig.errorLog(error);
-        if (error.status === 422) {
-          this.appConfig.error('Usermail or Username has already taken', '');
-        }
-        if (error.status === 401) {
-          this.appConfig.error('Unauthorized', '');
-        } else {
-          this.appConfig.error(!error.error ? 'Something went wrong' :
-           error.error.message ? error.error.message : 'Something went wrong.. Please try again', '');
-        }
       });
     } else {
       this.validateAllFields(this.registerForm);
@@ -206,7 +196,6 @@ export class RegisterpageComponent implements OnInit {
       this.registerForm.controls['city'].updateValueAndValidity();
 
     }, (err) => {
-      this.appConfig.errorLog(err);
     });
   }
 
@@ -231,7 +220,6 @@ export class RegisterpageComponent implements OnInit {
       this.registerForm.controls['state'].updateValueAndValidity();
 
     }, (err) => {
-      this.appConfig.errorLog(err);
     });
   }
 

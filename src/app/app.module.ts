@@ -9,6 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorsService } from './config/interceptors.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   // providers: [],
   entryComponents: [SnackbarComponent],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

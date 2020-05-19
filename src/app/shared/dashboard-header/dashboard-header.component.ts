@@ -26,7 +26,6 @@ export class DashboardHeaderComponent implements OnInit {
       this.appConfig.clearLocalData();
       this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.HOME}`);
     }, (err) => {
-      this.appConfig.errorLog(err);
     });
   }
 
