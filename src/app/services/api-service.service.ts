@@ -19,8 +19,8 @@ export class ApiServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRFToken', this.appConfig.getSessionData('csrf'))
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
+      .set('Access-Control-Allow-Origin', '*');
+      // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
   getAfterCustomHeaders(): HttpHeaders {
