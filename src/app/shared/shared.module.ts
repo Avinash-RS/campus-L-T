@@ -8,10 +8,11 @@ import { HomeHeaderComponent } from './home-header/home-header.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 import { MaterialModule } from '../material/material.module';
+import { ModalBoxComponent } from './modal-box/modal-box.component';
 
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent],
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -28,7 +29,8 @@ import { MaterialModule } from '../material/material.module';
     SignupHeaderComponent,
     HomeHeaderComponent,
     SnackbarComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
+    ModalBoxComponent
   ],
 })
 export class SharedModule { }

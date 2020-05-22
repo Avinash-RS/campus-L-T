@@ -11,6 +11,7 @@ import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
+import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { InterceptorsService } from './config/interceptors.service';
     NgxSpinnerModule
   ],
   // providers: [],
-  entryComponents: [SnackbarComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true}

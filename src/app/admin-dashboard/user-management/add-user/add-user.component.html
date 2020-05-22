@@ -1,7 +1,7 @@
 <div class="main-wrapper">
   <div class="line"></div>
   <div class="header">
-    Add User
+    {{title ? title : 'Add User'}}
   </div>
 
   <div class="form-wrapper">
@@ -72,7 +72,7 @@
 
       <div class="button-wrapper">
         <button mat-raised-button type="submit">Save</button>
-        <button mat-raised-button type="button">Cancel</button>
+        <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
       </div>
     </form>
   </div>

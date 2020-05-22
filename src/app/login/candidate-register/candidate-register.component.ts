@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 
 @Component({
   selector: 'app-candidate-register',
@@ -13,6 +14,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class CandidateRegisterComponent implements OnInit {
 
   candidateForm: FormGroup;
+  toggleVisibility = true;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -29,6 +31,7 @@ export class CandidateRegisterComponent implements OnInit {
     this.candidateForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern(emailregex)]],
+      password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
     });
   }
 
@@ -38,6 +41,9 @@ export class CandidateRegisterComponent implements OnInit {
   get email() {
     return this.candidateForm.get('email');
   }
+  get password() {
+    return this.candidateForm.get('password');
+  }
 
   submit() {
 
@@ -46,11 +52,12 @@ export class CandidateRegisterComponent implements OnInit {
       const datas = {
         name: [{ value: this.candidateForm.value.name }],
         mail: [{ value: this.candidateForm.value.email }],
-        roles: [{ target_id: 'candidate' }],
+        pass: [{value: this.candidateForm.value.password}],
+        field_registration_role: [{ target_id: 'candidate' }],
       };
       this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
-      this.apiService.RegistrationForm(datas).subscribe((data: any) => {
+      this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
         this.appConfig.success('Form has been Registered Successfully', '');
         this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
       }, (error) => {

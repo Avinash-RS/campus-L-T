@@ -1,0 +1,46 @@
+@import '../../themes/themes.scss';
+* {
+  margin: 0;
+  padding: 0;
+}
+.modal-wrapper {
+  background: $white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-direction: column;
+  .confirmation-text {
+    color: $primary;
+    font-size: 16px;
+    font-weight: 200;
+    margin: 1em 0;
+  }
+  .button-wrappers {
+    margin: 1em 0em;
+    text-align: center;
+    button {
+      min-width: 90px;
+      color: $white;
+      font-size: 16px;
+      outline: none;
+    }
+    .delete-cancel {
+      background: $blue-2 0% 0% no-repeat padding-box;
+    }
+    .delete-confirm {
+      background: $red-1 0% 0% no-repeat padding-box;
+      margin: 0 0 0 1em;
+    }
+    .add-cancel {
+      background: $primary 0% 0% no-repeat padding-box;
+    }
+    .add-confirm {
+      background: $light-blue 0% 0% no-repeat padding-box;
+      margin: 0 0 0 1em;
+    }
+    .ok {
+      background: $blue-2 0% 0% no-repeat padding-box;
+    }
+  }
+}

@@ -130,6 +130,26 @@ body {
   .mat-sort-header-button {
     outline: none;
   }
+  mat-paginator {
+    display: inline-flex;
+    flex-flow: row-reverse;
+    opacity: 0.85;
+    width: 100%;
+    align-items: center;
+    height: 50px;
+    color: $black;
+    font-size: 16px;
+    font: roboto;
+    outline: none;
+    border: none;
+    background: $blue-3 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+  }
+  .tooltip-red {
+    display: flex;
+    background-color: red;
+    flex-flow: row-reverse;
+  }
 }
 
 // Registerpage component

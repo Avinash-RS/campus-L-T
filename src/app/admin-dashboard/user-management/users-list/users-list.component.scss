@@ -24,7 +24,7 @@
           font-size: 17px;
         }
       }
-      button:nth-of-type(2) {
+      button:nth-of-type(1) {
         width: auto;
         background: $blue-2 0% 0% no-repeat padding-box;
         box-shadow: $shadow-light-black-1;
@@ -32,7 +32,7 @@
         color: $white;
         outline: none;
       }
-      button:nth-of-type(1) {
+      button:nth-of-type(2) {
         width: auto;
         border-radius: 6px;
         color: $white;
@@ -40,11 +40,41 @@
         outline: none;
         background: $red-1 0% 0% no-repeat padding-box;
       }
+      button:disabled {
+        // pointer-events: none;
+        opacity: 0.6;
+      }
     }
   }
   .user-list-wrapper {
-    margin: 2em 0;
+    margin: 1em 0 0.5em 0;
     /* Structure */
+    .search-bar {
+      input {
+        display: inline-block;
+        border-radius: 4px;
+        margin: 8px 0;
+        width: auto;
+        min-width: 400px;
+        color: $header-blue;
+        font-size: 16px;
+        background: $white-primary;
+        box-shadow: $shadow-black;
+        box-sizing: border-box;
+        padding: 0.25em 1em;
+        height: 40px;
+      }
+      ::placeholder {
+        opacity: 0.8;
+        color: $secondary;
+        font-size: 16px;
+      }
+    }
+    :focus {
+      border-radius: 4px;
+      border: solid $blue-3 1px;
+    }
+
     table {
       background: transparent;
       box-shadow: none;

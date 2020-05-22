@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
 
 
 @Component({
@@ -82,25 +84,57 @@ export class UsersListComponent implements OnInit {
       role: 'hr'
     }
   ];
+  editPage = false;
   displayedColumns: any[] = ['sno', 'name', 'email', 'role', 'checked'];
   dataSource = new MatTableDataSource(this.dummyData);
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) set contents(paginator: MatPaginator) {
+    this.dataSource.paginator = paginator;
+  }
+  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
+  selectedUserDetail: any;
 
-  constructor() { }
+  constructor(
+    private appConfig: AppConfigService
+  ) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
-  selectedUser(userId) {
-    console.log(userId);
+  selectedUser(userDetail) {
+    this.selectedUserDetail = userDetail;
+  }
+
+  removeUser() {
+    const data = {
+      iconName: '',
+      sharedData: {
+        confirmText: 'Are you sure you want to delete this user?',
+        componentData: this.selectedUserDetail,
+        type: 'delete',
+        identity: 'user-list-delete'
+      },
+      showConfirm: 'Confirm',
+      showCancel: 'Cancel',
+      showOk: ''
+    };
+    this.appConfig.openDialog(ModalBoxComponent, data);
+  }
+
+  editUser() {
+    this.editPage = !this.editPage;
   }
 
 }

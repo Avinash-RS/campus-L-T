@@ -4,7 +4,15 @@ import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
+export interface modalBox {
+  iconName: string;
+  dataToBeShared: any;
+  showCancel: any;
+  showConfirm: any;
+  showOk: any;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +23,8 @@ export class AppConfigService {
   constructor(
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private matDialog: MatDialog
   ) { }
 
   // get Current route
@@ -25,6 +34,36 @@ export class AppConfigService {
   // Navigations
   routeNavigation(path: any) {
     return this.router.navigate([path]);
+  }
+
+  // Open dailog
+  openDialog(component, data) {
+    let dialogDetails: modalBox;
+
+    dialogDetails = {
+      iconName: data.iconName,
+      showCancel: data.showCancel,
+      showConfirm: data.showConfirm,
+      showOk: data.showOk,
+      dataToBeShared: data.sharedData,
+    };
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data: dialogDetails
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.consoleLog('result', result);
+      }
+    });
   }
 
   // Navigations with Param

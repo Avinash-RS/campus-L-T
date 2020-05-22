@@ -65,6 +65,12 @@ export class ApiServiceService {
     //   { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
+  CandidateRegistrationForm(formdata) {
+    this.getToken();
+    return this.http.post(`http://104.211.226.77/d8cintana/rest/create-account?_format=json`, formdata,
+      { headers: this.getCustomHeaders(), withCredentials: true });
+  }
+
   // To get all cities
   getAllCity() {
     return this.http.get(`http://104.211.226.77/d8cintana/cities.php`);
