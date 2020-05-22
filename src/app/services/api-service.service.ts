@@ -59,10 +59,10 @@ export class ApiServiceService {
   // Registration
   RegistrationForm(formdata) {
     this.getToken();
-    // return this.http.post(`http://104.211.226.77/d8cintana/entity/user?_format=hal_json`, formdata,
-    //   { headers: this.getCustomHeaders(), withCredentials: true });
-    return this.http.post(`http://104.211.226.77/d8cintana/user/register?_format=hal_json`, formdata,
+    return this.http.post(`http://104.211.226.77/d8cintana/entity/user?_format=hal_json`, formdata,
       { headers: this.getCustomHeaders(), withCredentials: true });
+    // return this.http.post(`http://104.211.226.77/d8cintana/user/register?_format=hal_json`, formdata,
+    //   { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   // To get all cities

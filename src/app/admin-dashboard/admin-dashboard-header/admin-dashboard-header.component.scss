@@ -1,0 +1,56 @@
+@import "../../themes/themes.scss";
+@import "../../../styles.scss";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+mat-toolbar {
+  position: relative;
+  height: 90px;
+  background: $secondary !important;
+  display: flex;
+  justify-content: space-between;
+  ul:first-child {
+    color: $white;
+    display: inline-flex;
+    align-items: center;
+    li {
+      list-style: none;
+      text-align: center;
+      padding: 1em 0.5em;
+      font-size: 18px;
+      box-sizing: border-box;
+    }
+  }
+  ul:last-child {
+    // font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    li {
+      list-style: none;
+      padding: 0.5em 1em;
+      color: $white;
+      text-transform: uppercase;
+      box-sizing: border-box;
+      cursor: pointer;
+      outline: none;
+      span {
+        img {
+          width: 26px;
+        }
+      }
+      .material-icons {
+        font-size: 32px;
+        margin-top: .5em;
+      }
+    }
+    .logout {
+      cursor: pointer;
+      color: $black;
+      border-radius: 6px;
+      padding: 0.1em 1em;
+      background: $white;
+    }
+  }
+}

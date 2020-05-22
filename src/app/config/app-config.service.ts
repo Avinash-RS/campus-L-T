@@ -18,6 +18,10 @@ export class AppConfigService {
     private router: Router
   ) { }
 
+  // get Current route
+  currentRoute() {
+   return this.router.url;
+  }
   // Navigations
   routeNavigation(path: any) {
     return this.router.navigate([path]);

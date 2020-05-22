@@ -101,11 +101,11 @@ export class LoginpageComponent implements OnInit {
       };
       this.subscribe1 = this.apiService.login(apiData).subscribe((data: any) => {
         this.appConfig.consoleLog('data', data);
-        this.insertTestTakerAPI(data, apiData.name);
+        // this.insertTestTakerAPI(data, apiData.name);
         this.appConfig.setLocalData('username', data.current_user.name);
         this.appConfig.setLocalData('csrf-login', data.csrf_token);
         this.appConfig.setLocalData('logout-token', data.logout_token);
-        this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.DASHBOARD.DASHBOARD}`);
+        this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`);
 
       }, (error) => {
       });

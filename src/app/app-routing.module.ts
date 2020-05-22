@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '', loadChildren: './login/login.module#LoginModule'
   },
   {
-    path: `${CONSTANT.ROUTES.DASHBOARD.DASHBOARD}`, loadChildren: './master-dashboard/master-dashboard.module#MasterDashboardModule'
+    path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`, loadChildren: './admin-dashboard/master-dashboard.module#MasterDashboardModule'
   }
 ];
 

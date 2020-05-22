@@ -24,7 +24,6 @@ $udap-registration-theme: mat-light-theme(
   $udap-registration-warn
 );
 
-
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
@@ -41,13 +40,13 @@ $alt-registration-dark-theme: mat-dark-theme(
   @include angular-material-theme($alt-registration-dark-theme);
 }
 
-
-@import './app/themes/themes.scss';
+@import "./app/themes/themes.scss";
 /* You can add global styles to this file, and also import other style files */
 /* Import font family */
 @font-face {
   font-family: "Open Sans";
-  src: url("^assets/fonts/OpenSans-Bold.ttf") format("ttf"), url("^assets/fonts/OpenSans-Bold.ttf") format("ttf");
+  src: url("^assets/fonts/OpenSans-Bold.ttf") format("ttf"),
+    url("^assets/fonts/OpenSans-Bold.ttf") format("ttf");
   font-weight: 600;
   font-style: normal;
 }
@@ -73,9 +72,9 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font: 14px "Open Sans" !important;
+  font: 14px "Open Sans";
   font-weight: 100;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
   // background-color: $overlay-layer-bg;
 }
 
@@ -117,6 +116,21 @@ body {
   height: 100%;
 }
 
+// Admin sidenav scrollbar
+.mat-drawer-inner-container {
+  overflow: hidden !important;
+}
+
+// Admin Usermanagement users list mat table
+.user-list-wrapper {
+  thead {
+    box-shadow: 0px 3px 6px #00000029;
+    margin-bottom: 2em;
+  }
+  .mat-sort-header-button {
+    outline: none;
+  }
+}
 
 // Registerpage component
 .register-wrapper {
@@ -170,12 +184,14 @@ body {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: transparent linear-gradient(90deg, #e4e4e4 0%, #969696 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(90deg, #e4e4e4 0%, #969696 100%) 0% 0%
+    no-repeat padding-box;
   border-radius: 50px;
   height: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: transparent linear-gradient(90deg, #e2dcdc 0%, #8f8f8f 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(90deg, #e2dcdc 0%, #8f8f8f 100%) 0% 0%
+    no-repeat padding-box;
 }

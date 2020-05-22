@@ -14,6 +14,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSnackBarModule,
     MatTooltipModule,
     ScrollingModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatRadioModule
   ],
   exports: [
     CommonModule,
@@ -50,7 +54,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSnackBarModule,
     MatTooltipModule,
     ScrollingModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatRadioModule
   ]
 })
 export class MaterialModule { }

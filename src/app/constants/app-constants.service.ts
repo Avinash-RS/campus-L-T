@@ -15,7 +15,7 @@ export const CONSTANT = {
   },
 
   ROUTES: {
-    HOME: 'home',
+    HOME: 'home-page',
     REGISTER: {
       CORPORATE: 'register/corporate',
       INSTITUTE: 'register/institute',
@@ -33,9 +33,12 @@ export const CONSTANT = {
     },
     LOGIN: 'login',
     LOGOUT: 'logout',
-    DASHBOARD: {
+    ADMIN_DASHBOARD: {
+      HOME: 'home',
       DASHBOARD: 'dashboard',
-      HOME: 'home'
+      USER_MANAGEMENT: 'user-management',
+      USER_MANAGEMENT_USERS_LIST: 'users',
+      USER_MANAGEMENT_ADD_USER: 'add-user',
     }
   }
 };
