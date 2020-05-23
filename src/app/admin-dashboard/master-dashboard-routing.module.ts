@@ -18,25 +18,29 @@ const routes: Routes = [
       {
         path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`, component: UserManagementComponent, children: [
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`, component: UsersListComponent
-          },
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`, component: AddUserComponent
-          },
-          {
-            path: '',
-            redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
-            pathMatch: 'full',
-          }
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`, component: UsersListComponent, children: [
+              {
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}/:eid`, component: AddUserComponent
+              }
         ]
       },
       {
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`, component: AddUserComponent
+      },
+      {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`,
+        redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
         pathMatch: 'full',
-
       }
     ]
+  },
+  {
+    path: '',
+    redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`,
+    pathMatch: 'full',
+
+  }
+]
   }
 ];
 

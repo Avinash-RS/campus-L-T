@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
@@ -20,11 +20,41 @@ export class LoginpageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private appConfig: AppConfigService
-  ) { }
+    private appConfig: AppConfigService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.verifyEmail();
+  }
 
   ngOnInit() {
+
     this.formInitialize();
+  }
+
+  verifyEmail() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.appConfig.hideLoader();
+      if (params['mail'] && params['temp-token']) {
+        console.log(params['mail'], params['temp-token']);
+
+        const ApiData = {
+          name: params['mail'],
+          temp_token: params['temp-token']
+        };
+        this.apiService.emailVerification(ApiData).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
+          this.appConfig.success(`${data.message}`, '');
+        }, (err) => {
+          if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
+          this.appConfig.error(`${err.error.error}`, '');
+          this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`);
+          }
+        });
+      } else {
+        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
+      }
+    });
   }
 
   formInitialize() {
@@ -100,8 +130,8 @@ export class LoginpageComponent implements OnInit {
         pass: this.loginForm.value.password
       };
       this.subscribe1 = this.apiService.login(apiData).subscribe((data: any) => {
+        this.appConfig.hideLoader();
         this.appConfig.consoleLog('data', data);
-        // this.insertTestTakerAPI(data, apiData.name);
         this.appConfig.setLocalData('username', data.current_user.name);
         this.appConfig.setLocalData('csrf-login', data.csrf_token);
         this.appConfig.setLocalData('logout-token', data.logout_token);

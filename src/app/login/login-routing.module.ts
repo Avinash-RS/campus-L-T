@@ -11,6 +11,7 @@ import { ForgoPasswordComponent } from './forgo-password/forgo-password.componen
 import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
 
 import { CONSTANT } from '../../app/constants/app-constants.service';
+import { EmailVerifierErrorPageComponent } from './email-verifier-error-page/email-verifier-error-page.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.REGISTER.CANDIDATE}`, component: CandidateRegisterComponent
+  },
+  {
+    path: `${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`, component: EmailVerifierErrorPageComponent
   },
   {
     path: '', component: SignupComponent, children: [

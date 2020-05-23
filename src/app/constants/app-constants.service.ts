@@ -24,6 +24,7 @@ export const CONSTANT = {
     VERIFY: {
       OTP: 'verify/otp',
       EMAIL: 'verify/email',
+      EMAIL_ERROR: 'verify/email/error',
       OTP_PASSWORD: 'verify/otp-password'
     },
     PASSWORD: {
@@ -39,6 +40,7 @@ export const CONSTANT = {
       USER_MANAGEMENT: 'user-management',
       USER_MANAGEMENT_USERS_LIST: 'users',
       USER_MANAGEMENT_ADD_USER: 'add-user',
+      USER_MANAGEMENT_EDIT_USER: 'edit-user',
     }
   }
 };

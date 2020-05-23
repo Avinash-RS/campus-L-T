@@ -79,6 +79,7 @@ export class CreateComponent implements OnInit {
       };
 
       this.apiService.passwordReset(apiData).subscribe((success: any) => {
+        this.appConfig.hideLoader();
         this.appConfig.consoleLog('success', success);
         this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been resetted Successfully` :
           `Account has been created Successfully`, '');

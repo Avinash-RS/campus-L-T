@@ -14,10 +14,11 @@ import { CandidateRegisterComponent } from './candidate-register/candidate-regis
 import { ForgoPasswordComponent } from './forgo-password/forgo-password.component';
 import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
+import { EmailVerifierErrorPageComponent } from './email-verifier-error-page/email-verifier-error-page.component';
 
 
 @NgModule({
-  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent, ForgoPasswordComponent, OtpForgotPasswordComponent],
+  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent, ForgoPasswordComponent, OtpForgotPasswordComponent, EmailVerifierErrorPageComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,

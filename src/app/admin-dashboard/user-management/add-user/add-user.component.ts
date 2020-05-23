@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-add-user',
@@ -16,12 +17,27 @@ export class AddUserComponent implements OnInit, OnChanges {
   @Input() editDetails;
   addUserForm: FormGroup;
   title: string;
+  editUserId: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
     private appConfig: AppConfigService,
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private subjectService: SharedServiceService
+  ) {
+    // Get url Param to view Edit user page
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.appConfig.hideLoader();
+      this.editUserId = params.get('eid');
+      if (this.editUserId) {
+        console.log('sf');
+
+        this.subjectService.hideUserListComp.next();
+      }
+
+    });
+  }
 
   ngOnInit() {
     this.formInitialize();

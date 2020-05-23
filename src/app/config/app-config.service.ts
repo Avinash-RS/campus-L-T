@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment.prod';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 export interface modalBox {
@@ -24,12 +24,13 @@ export class AppConfigService {
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   // get Current route
   currentRoute() {
-   return this.router.url;
+    return this.router.url;
   }
   // Navigations
   routeNavigation(path: any) {
@@ -60,6 +61,7 @@ export class AppConfigService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.hideLoader();
       if (result) {
         this.consoleLog('result', result);
       }
@@ -85,7 +87,7 @@ export class AppConfigService {
 
   // Show loading
   showLoader() {
-    this.spinner.show(undefined, { color: '#fff', size: 'medium', bdColor: 'rgba(0, 0, 0, 0.7)', fullScreen: true, type: 'ball-elastic-dots' });
+    this.spinner.show(undefined, { color: '#fff', size: 'medium', bdColor: 'rgba(0, 0, 0, 0.3)', fullScreen: false, type: 'ball-elastic-dots' });
   }
 
   hideLoader() {
@@ -95,7 +97,7 @@ export class AppConfigService {
   // To show success Snack Bar Message
   success(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 1500,
+      duration: 2000,
       verticalPosition: 'top',
       data: { message, icon },
       panelClass: ['success-bg-color']
@@ -105,7 +107,7 @@ export class AppConfigService {
   // To show error Snack Bar Message
   error(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 1500,
+      duration: 2000,
       verticalPosition: 'top',
       data: { message, icon },
       panelClass: ['warn-bg-color']

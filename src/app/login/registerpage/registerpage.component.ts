@@ -175,6 +175,7 @@ export class RegisterpageComponent implements OnInit {
       this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
+        this.appConfig.hideLoader();
         this.appConfig.success(`Form has been Registered Successfully`, '');
         this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
       }, (error) => {
@@ -188,6 +189,7 @@ export class RegisterpageComponent implements OnInit {
   // To get all cities
   cityAPI() {
     this.apiService.getAllCity().subscribe((data) => {
+      this.appConfig.hideLoader();
       this.allCities = data;
       this.appConfig.setLocalData('allCities', JSON.stringify(this.allCities));
 
@@ -202,6 +204,7 @@ export class RegisterpageComponent implements OnInit {
   // To get all cities
   stateAPI() {
     this.apiService.getAllState().subscribe((data) => {
+      this.appConfig.hideLoader();
       const stateArr = [];
       for (const key in data) {
         if (data.hasOwnProperty(key)) {

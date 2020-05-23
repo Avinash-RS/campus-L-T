@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 
 @Component({
@@ -10,7 +13,7 @@ import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component'
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnChanges {
 
   dummyData = [
     {
@@ -97,11 +100,18 @@ export class UsersListComponent implements OnInit {
   selectedUserDetail: any;
 
   constructor(
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
+    private apiService: ApiServiceService,
+    private subjectService: SharedServiceService
   ) { }
 
   ngOnInit() {
-    // this.dataSource.paginator = this.paginator;
+
+    this.hideUserList();
+  }
+  ngOnChanges() {
+    console.log(this.appConfig.currentRoute());
+
   }
 
   applyFilter(event: Event) {
@@ -134,7 +144,22 @@ export class UsersListComponent implements OnInit {
   }
 
   editUser() {
-    this.editPage = !this.editPage;
+    this.appConfig.routeNavigationWithParam(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}`, 1);
+    // this.editPage = !this.editPage;
+  }
+
+  // RXJS subject subsribe to hide user list component when edit page route hits
+  hideUserList() {
+    console.log('adad');
+
+    this.subjectService.hideUserListComp.subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log(data);
+      this.editPage = true;
+    }, (err) => {
+      console.log('err', err);
+
+    });
   }
 
 }

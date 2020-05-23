@@ -18,6 +18,7 @@ export class MasterDashboardComponent implements OnInit {
   ) {
     // Assigning sub menus for the current router
     this.sharedService.subMenuSubject.subscribe((data: any) => {
+      this.appConfig.hideLoader();
       this.subMenus = data;
     });
   }

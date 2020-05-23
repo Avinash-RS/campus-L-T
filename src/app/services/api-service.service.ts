@@ -45,10 +45,11 @@ export class ApiServiceService {
 
   // For generating new static token for before login requests
   csrfToken() {
-    return this.http.get('http://104.211.226.77/d8cintana/rest/session/token', { headers: this.withoutTokens() });
+    return this.http.get('http://104.211.226.77/d8cintana2/rest/session/token', { headers: this.withoutTokens() });
   }
   getToken() {
     this.csrfToken().subscribe((data: any) => {
+      this.appConfig.hideLoader();
       // localStorage.setItem('csrf', data);
     }, (err) => {
       if (err.status === 200) {
@@ -67,7 +68,13 @@ export class ApiServiceService {
 
   CandidateRegistrationForm(formdata) {
     this.getToken();
-    return this.http.post(`http://104.211.226.77/d8cintana/rest/create-account?_format=json`, formdata,
+    return this.http.post(`http://104.211.226.77/d8cintana2/rest/create-account?_format=json`, formdata,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  emailVerification(data) {
+    this.getToken();
+    return this.http.post(`http://104.211.226.77/d8cintana2/rest/verify-account?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
@@ -84,7 +91,7 @@ export class ApiServiceService {
   // Forgot Password
   forgotPassword(email) {
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/lost-password?_format=json`, email,
+    return this.http.post(`http://104.211.226.77/d8cintana2/user/lost-password?_format=json`, email,
       { withCredentials: true });
   }
 
@@ -92,7 +99,7 @@ export class ApiServiceService {
   passwordReset(data) {
     this.getToken();
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/lost-password-reset?_format=json`, data,
+    return this.http.post(`http://104.211.226.77/d8cintana2/user/lost-password-reset?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
@@ -100,14 +107,14 @@ export class ApiServiceService {
   login(loginData) {
     this.getToken();
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/login?_format=json`, loginData,
+    return this.http.post(`http://104.211.226.77/d8cintana2/user/login?_format=json`, loginData,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   // Logout
   logout(logoutToken) {
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana/user/logout?_format=json&token=${logoutToken}`, logoutToken,
+    return this.http.post(`http://104.211.226.77/d8cintana2/user/logout?_format=json&token=${logoutToken}`, logoutToken,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

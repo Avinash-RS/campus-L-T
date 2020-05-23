@@ -50,15 +50,20 @@ export class CandidateRegisterComponent implements OnInit {
     if (this.candidateForm.valid) {
       // API
       const datas = {
-        name: [{ value: this.candidateForm.value.name }],
-        mail: [{ value: this.candidateForm.value.email }],
-        pass: [{value: this.candidateForm.value.password}],
-        field_registration_role: [{ target_id: 'candidate' }],
+        // name: [{ value: this.candidateForm.value.name }],
+        // mail: [{ value: this.candidateForm.value.email }],
+        // pass: [{value: this.candidateForm.value.password}]
+        // field_registration_role: [{ target_id: 'candidate' }],
+        name: this.candidateForm.value.name,
+        mail: this.candidateForm.value.email,
+        pass: this.candidateForm.value.password
+
       };
       this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
-        this.appConfig.success('Form has been Registered Successfully', '');
+        this.appConfig.hideLoader();
+        this.appConfig.success(`Form has been Registered Successfully. ${data.message}`, '');
         this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
       }, (error) => {
       });

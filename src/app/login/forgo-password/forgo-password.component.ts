@@ -63,6 +63,7 @@ export class ForgoPasswordComponent implements OnInit {
       // API
 
       this.apiService.forgotPassword(data).subscribe((success: any) => {
+        this.appConfig.hideLoader();
         this.appConfig.consoleLog('success', success);
         this.appConfig.setLocalData('resetAutoPopulateMailId', data.mail);
         this.appConfig.success('Email with temporary credentials has been sent Successfully', '');

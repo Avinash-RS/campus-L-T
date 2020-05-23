@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 
@@ -12,7 +12,7 @@ export class HomepageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
   ) { }
 
   ngOnInit() {
