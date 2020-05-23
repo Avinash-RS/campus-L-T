@@ -24,7 +24,23 @@
     }
   }
   .right-wrapper {
+    display: inline-flex;
     .help-text {
+      margin: 0 1em;
+      font-weight: 200 !important;
+      button {
+        border: 1px solid $blue;
+        border-radius: 5px;
+        outline: none;
+        color: $white;
+        font-weight: 200 !important;
+        padding: 0.15em 1.25em;
+        text-align: center;
+        background: transparent !important;
+        opacity: 1;
+      }
+    }
+    .home {
       font-weight: 200 !important;
       button {
         border: 1px solid $blue;

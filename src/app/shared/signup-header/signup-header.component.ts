@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-signup-header',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private appConfig: AppConfigService
+  ) { }
 
   ngOnInit() {
+  }
+
+  home() {
+    this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.HOME}`);
   }
 
 }
