@@ -121,6 +121,12 @@ body {
   z-index: 1000;
 }
 
+.mat-tooltip {
+  // background-color: $red-1;
+  color: $white;
+  font: 14px 'Open Sans';
+  font-weight: 200;
+}
 // Admin sidenav scrollbar
 .mat-drawer-inner-container {
   overflow: hidden !important;

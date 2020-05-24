@@ -53,6 +53,7 @@ export class CreateComponent implements OnInit {
       this.createForm.patchValue({
         email: this.autoPopulateMailId
       });
+      this.createForm.controls['email'].disable();
     }
   }
 
@@ -81,7 +82,7 @@ export class CreateComponent implements OnInit {
       this.apiService.passwordReset(apiData).subscribe((success: any) => {
         this.appConfig.hideLoader();
         this.appConfig.consoleLog('success', success);
-        this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been resetted Successfully` :
+        this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been reset successfully` :
           `Account has been created Successfully`, '');
         this.currentRoute === 'Reset the password' ? this.appConfig.clearLocalDataOne('autoPopulateMailId') : '';
         this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.LOGIN);

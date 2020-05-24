@@ -21,6 +21,10 @@ export class AdminDashboardHeaderComponent implements OnInit {
     this.username = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : 'NA';
   }
 
+  goToHome() {
+    this.logOut();
+  }
+
   logOut() {
     const token = this.appConfig.getLocalData('logout-token');
     this.apiService.logout(token).subscribe((data: any) => {

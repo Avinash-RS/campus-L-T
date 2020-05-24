@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <ul>
+  <ul (click)="goToHome()">
     <li>
       <img src="assets/images/Logo.png" width="80px" height="80px" alt="">
     </li>
@@ -10,22 +10,22 @@
   </ul>
   <ul>
     <li>
-        <span>
+        <span matTooltip="Home">
             <img src="assets/images/015-home-icon-silhouette.svg" alt="">
           </span>
       </li>
     <li>
-      <span class="material-icons">
+      <span matTooltip="Notifications" class="material-icons">
         notifications
       </span>
     </li>
     <li>
-      <span class="material-icons">
+      <span matTooltip="Profile" class="material-icons">
         person
       </span>
     </li>
     <li style="margin-top: 6px;" (click)="logOut()">
-        <span>
+        <span  matTooltip="Logout">
           <img src="assets/images/logout.svg" alt="">
         </span>
       </li>

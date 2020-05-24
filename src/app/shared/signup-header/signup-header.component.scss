@@ -11,6 +11,7 @@
   box-sizing: border-box;
   .logo {
     display: inline-flex;
+    cursor: pointer;
     color: $white;
     .logo-txt {
       font-size: 18px;

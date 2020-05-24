@@ -15,6 +15,7 @@ mat-toolbar {
     color: $white;
     display: inline-flex;
     align-items: center;
+    cursor: pointer;
     li {
       list-style: none;
       text-align: center;
@@ -29,7 +30,7 @@ mat-toolbar {
     align-items: center;
     li {
       list-style: none;
-      padding: 0.5em 1em;
+      padding: 1em 1em;
       color: $white;
       text-transform: uppercase;
       box-sizing: border-box;
@@ -42,7 +43,7 @@ mat-toolbar {
       }
       .material-icons {
         font-size: 32px;
-        margin-top: .5em;
+        padding-top: .5em;
       }
     }
     .logout {

@@ -10,8 +10,8 @@
                 <label class="label-name">
                     Email Address
                 </label>
-                <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
-                    <input matInput formControlName="email" type="text" required>
+                <div matTooltipPosition="above" matTooltip="Email field is Non-Editable" class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+                   <input matInput formControlName="email" type="text" required>
                     <div>
 
                     </div>
