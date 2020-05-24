@@ -28,7 +28,7 @@
               Email ID
             </label>
           </div>
-          <div [matTooltip]="editDetails ? 'Email Field is Non-Editable' : ''" class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+          <div [ngClass]="editDetails ? 'disable' : ''" [matTooltip]="editDetails ? 'Email Field is Non-Editable' : ''" class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
             <input matInput formControlName="email" type="text" required>
           </div>
         </div>

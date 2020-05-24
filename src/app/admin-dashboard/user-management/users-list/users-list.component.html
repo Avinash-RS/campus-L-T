@@ -2,12 +2,12 @@
   <div class="line">
     <div class="button-wrapper">
       <span [matTooltip]="selectedUserDetail ? '' : 'Please select the user'">
-        <button (click)="editUser()" matTooltipClass="tooltip-red" [disabled]="selectedUserDetail ? false : true"
+        <button (click)="editUser()" [disabled]="selectedUserDetail ? false : true"
           mat-raised-button type="button">
           <span class="material-icons">edit</span>
           Edit
         </button>
-        <button (click)="removeUser()" matTooltipClass="tooltip-red" [disabled]="selectedUserDetail ? false : true"
+        <button (click)="removeUser()" [disabled]="selectedUserDetail ? false : true"
           mat-raised-button type="button">
           <span class="material-icons">delete</span>
           Remove

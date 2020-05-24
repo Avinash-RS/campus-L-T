@@ -40,6 +40,7 @@
             box-shadow: $shadow-light-black;
             width: 100%;
             display: flex;
+            align-items: center;
             background: $white-primary;
             height: 40px;
             padding: 0em 0px 0 0px;
@@ -58,11 +59,14 @@
               border-radius: 5px;
               display: flex !important;
               box-sizing: border-box;
-              height: 40px !important;
+              height: 35px;
             }
             input:disabled {
-              background: #C1C1C1 0% 0% no-repeat padding-box;
+              background: $gray-5 0% 0% no-repeat padding-box;
             }
+          }
+          .disable {
+            background: $gray-5 0% 0% no-repeat padding-box;
           }
           .input-box-radio {
             display: grid;

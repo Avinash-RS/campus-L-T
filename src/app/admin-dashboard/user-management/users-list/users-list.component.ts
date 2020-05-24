@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -13,7 +13,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, AfterViewInit {
 
   dummyData = [
     {
@@ -87,26 +87,36 @@ export class UsersListComponent implements OnInit {
       role: 'hr'
     }
   ];
-
+  showPage = true;
   displayedColumns: any[] = ['sno', 'name', 'email', 'role', 'checked'];
-  dataSource = new MatTableDataSource(this.dummyData);
+  dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, { static: false }) set contents(paginator: MatPaginator) {
-    this.dataSource.paginator = paginator;
-  }
-  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
-    this.dataSource.sort = sort;
-  }
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  /* Below code will be used when mat table is inside conditional statement */
+  // @ViewChild(MatPaginator, { static: false }) set contents(paginator: MatPaginator) {
+  //   this.dataSource.paginator = paginator;
+  // }
+  // @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+  //   this.dataSource.sort = sort;
+  // }
   selectedUserDetail: any;
 
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private subjectService: SharedServiceService
-  ) { }
+  ) {
+    this.dataSource = new MatTableDataSource(this.dummyData);
+  }
 
   ngOnInit() {
+  }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {

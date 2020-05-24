@@ -26,6 +26,7 @@
           box-shadow: $shadow-light-black;
           width: 100%;
           display: flex;
+          align-items: center;
           background: $white-primary;
           height: 40px;
           padding: 0em 20px 0 10px;
@@ -40,7 +41,6 @@
             outline: none;
             background: $white-primary;
             border-radius: 5px;
-            align-self: center;
             display: flex !important;
             height: 35px !important;
           }
