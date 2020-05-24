@@ -5,6 +5,7 @@
   .label-head {
     font-weight: 200;
     font-size: 18px;
+    color: $primary;
   }
   .input-select-div {
     display: flex;
@@ -110,7 +111,7 @@
       width: 70%;
       height: 40px;
       color: $white;
-      font-weight: 200;
+      font-weight: 700;
       font-size: 20px;
       outline: none;
       border: none;
@@ -124,8 +125,9 @@
   margin: 40px 0 40px 0;
   .label-head {
     width: 70%;
+    color: $primary;
     font-weight: 200;
-    font-size: 17px;
+    font-size: 18px;
   }
   .input-box {
     margin: 10px 0;
@@ -163,7 +165,7 @@
       width: 70%;
       height: 40px;
       color: $white;
-      font-weight: 200;
+      font-weight: 700;
       font-size: 20px;
       outline: none;
       border: none;

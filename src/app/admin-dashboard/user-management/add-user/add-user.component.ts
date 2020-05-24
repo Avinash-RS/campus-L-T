@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -12,9 +12,81 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
-export class AddUserComponent implements OnInit, OnChanges {
+export class AddUserComponent implements OnInit {
+  dummyData = [
+    {
+      sno: 1,
+      name: 'avi',
+      checked: false,
+      email: 'avi@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 2,
+      name: 'prem',
+      checked: false,
+      email: 'prem@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 3,
+      name: 'catherine',
+      checked: false,
+      email: 'catherine@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 4,
+      name: 'hari',
+      checked: false,
+      email: 'hari@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 5,
+      name: 'pradeep',
+      checked: false,
+      email: 'pradeep@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 6,
+      name: 'srividhya',
+      checked: false,
+      email: 'srividhya@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 7,
+      name: 'bala',
+      checked: false,
+      email: 'bala@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 8,
+      name: 'mohan',
+      checked: false,
+      email: 'mohan@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 9,
+      name: 'akash',
+      checked: false,
+      email: 'akash@gmail.com',
+      role: 'hr'
+    },
+    {
+      sno: 10,
+      name: 'aaron',
+      checked: false,
+      email: 'aaron@gmail.com',
+      role: 'hr'
+    }
+  ];
 
-  @Input() editDetails;
+  editDetails: any;
   addUserForm: FormGroup;
   title: string;
   editUserId: any;
@@ -26,27 +98,27 @@ export class AddUserComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute,
     private subjectService: SharedServiceService
   ) {
-    // Get url Param to view Edit user page
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.appConfig.hideLoader();
-      this.editUserId = params.get('eid');
-      if (this.editUserId) {
-        console.log('sf');
-
-        this.subjectService.hideUserListComp.next();
-      }
-
-    });
+    this.editRouteParamGetter();
   }
 
   ngOnInit() {
     this.formInitialize();
   }
 
-  ngOnChanges() {
-    if (this.editDetails) {
-      this.title = 'Edit User';
-    }
+  // Get url param for edit route
+  editRouteParamGetter() {
+    // Get url Param to view Edit user page
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.appConfig.hideLoader();
+      this.editUserId = params.get('eid');
+      if (this.editUserId) {
+        this.dummyData.forEach(element => {
+          if (element.sno.toString() === this.editUserId) {
+            this.editDetails = element;
+          }
+        });
+      }
+    });
   }
 
   // Edit User --> Form Updating on load
@@ -56,6 +128,7 @@ export class AddUserComponent implements OnInit, OnChanges {
       email: this.editDetails.email,
       role: this.editDetails.role
     });
+    this.addUserForm.controls['email'].disable();
   }
 
   formInitialize() {
@@ -90,8 +163,9 @@ export class AddUserComponent implements OnInit, OnChanges {
     if (this.addUserForm.valid) {
       // API
       const datas = {
-        name: [{ value: this.addUserForm.value.name }],
-        mail: [{ value: this.addUserForm.value.email }],
+        name: this.addUserForm.value.name,
+        mail: this.addUserForm.value.email,
+        role: this.addUserForm.value.role,
       };
       // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
@@ -104,10 +178,10 @@ export class AddUserComponent implements OnInit, OnChanges {
       const data = {
         iconName: '',
         sharedData: {
-          confirmText: 'Are you sure you want to add this user?',
+          confirmText: `Are you sure you want to ${(this.editDetails ? 'update' : 'add')} this user?`,
           componentData: this.addUserForm.value,
-          type: 'add',
-          identity: 'user-add'
+          type: this.editDetails ? 'update' : 'add',
+          identity: this.editDetails ? 'user-update' : 'user-add'
         },
         showConfirm: 'Confirm',
         showCancel: 'Cancel',

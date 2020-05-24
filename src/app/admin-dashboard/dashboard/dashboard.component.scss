@@ -1,14 +1,12 @@
 @import "../../themes/themes.scss";
 * {
   margin: 0;
-  padding: 0;
 }
 .main-wrapper {
   .head {
     color: $header-blue;
-    font-size: 28px;
-    padding: 0.5em 2em;
-    font-weight: 100;
-    font-family: roboto;
+    font-size: 30px;
+    padding: 0.35em 1.5em;
+    font-weight: 50;
   }
 }

@@ -1,6 +1,5 @@
 @import "../../themes/themes.scss";
 * {
-  padding: 0;
   margin: 0;
 }
 .main-wrapper {
@@ -46,9 +45,8 @@
           padding: 0.45em 2em;
           font-size: 18px;
           border: none;
-          font: 18px "Open Sans";
           outline: none;
-          font-weight: 200;
+          font-weight: 700;
           color: $white;
           box-shadow: $shadow-light-black;
         }

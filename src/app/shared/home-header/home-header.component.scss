@@ -18,10 +18,10 @@
     display: inline-flex;
     color: $white;
     .logo-txt {
+      font-weight: 700;
       font-size: 18px;
       text-align: center;
       padding: 0em 0 0 0.5em;
-      font-weight: 200;
       transform: translateY(18%);
       span {
         display: block;
@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     .help-text {
-      font-weight: 200 !important;
+      font-weight: 600 !important;
       button {
         border: 1px solid $blue;
         border-radius: 5px;
@@ -46,6 +46,7 @@
       }
     }
     .routes {
+      font-weight: 600;
       ul {
         padding: 0 !important;
         display: flex;

@@ -13,7 +13,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit, OnChanges {
+export class UsersListComponent implements OnInit {
 
   dummyData = [
     {
@@ -87,7 +87,7 @@ export class UsersListComponent implements OnInit, OnChanges {
       role: 'hr'
     }
   ];
-  editPage = false;
+
   displayedColumns: any[] = ['sno', 'name', 'email', 'role', 'checked'];
   dataSource = new MatTableDataSource(this.dummyData);
 
@@ -106,11 +106,6 @@ export class UsersListComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-
-    this.hideUserList();
-  }
-  ngOnChanges() {
-    console.log(this.appConfig.currentRoute());
 
   }
 
@@ -144,22 +139,7 @@ export class UsersListComponent implements OnInit, OnChanges {
   }
 
   editUser() {
-    this.appConfig.routeNavigationWithParam(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}`, 1);
-    // this.editPage = !this.editPage;
-  }
-
-  // RXJS subject subsribe to hide user list component when edit page route hits
-  hideUserList() {
-    console.log('adad');
-
-    this.subjectService.hideUserListComp.subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      console.log(data);
-      this.editPage = true;
-    }, (err) => {
-      console.log('err', err);
-
-    });
+    this.appConfig.routeNavigationWithParam(`./${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}`, this.selectedUserDetail.sno);
   }
 
 }

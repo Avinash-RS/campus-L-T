@@ -1,7 +1,7 @@
 <div class="main-wrapper">
   <div class="line"></div>
   <div class="header">
-    {{title ? title : 'Add User'}}
+    {{editUserId ? 'Edit User' : 'Add User'}}
   </div>
 
   <div class="form-wrapper">
@@ -28,7 +28,7 @@
               Email ID
             </label>
           </div>
-          <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+          <div [matTooltip]="editDetails ? 'Email Field is Non-Editable' : ''" class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
             <input matInput formControlName="email" type="text" required>
           </div>
         </div>

@@ -1,25 +1,23 @@
 @import "../../../../app/themes/themes.scss";
 * {
   margin: 0;
-  padding: 0;
 }
 .main-wrapper {
-  font-family: roboto;
   .line {
     height: 50px;
     border-bottom: solid 1px $primary;
   }
   .header {
     color: $header-blue;
-    font-size: 25px;
+    font-size: 24px;
     padding: 20px 20px;
-    font-weight: 100;
+    font-weight: 50;
   }
   .form-wrapper {
     display: flex;
     justify-content: center;
     .forms {
-      min-width: 470px;
+      // min-width: 470px;
       .form-field:first-child {
         margin: 0;
       }
@@ -34,7 +32,6 @@
             .label-name {
               color: $light-black;
               font-size: 17px;
-              font-weight: 200;
               transform: translate3d(10px, 10px, 10px);
             }
           }
@@ -52,17 +49,19 @@
               margin: 0 !important;
               width: 100%;
               padding: 0 1em;
-              font-size: 17px;
+              font-size: 18px;
               color: $secondary;
               vertical-align: middle;
               border: none;
               outline: none;
               background: $white-primary;
               border-radius: 5px;
-              align-self: center;
               display: flex !important;
               box-sizing: border-box;
-              height: 35px !important;
+              height: 40px !important;
+            }
+            input:disabled {
+              background: #C1C1C1 0% 0% no-repeat padding-box;
             }
           }
           .input-box-radio {
@@ -85,8 +84,8 @@
                 width: 11px;
                 height: 11px;
                 border-radius: 10px;
-                top: -5px;
-                left: -1px;
+                top: -6px;
+                left: 0px;
                 position: relative;
                 background-color: $white;
                 content: "";
@@ -109,7 +108,7 @@
                 display: inline-block;
                 visibility: visible;
                 outline: none;
-                border: 3px solid $white;
+                border: 3.15px solid $white;
               }
               span {
                 margin-left: 1.5em;
@@ -127,7 +126,9 @@
           height: 35px;
           background: $light-blue 0% 0% no-repeat padding-box;
           box-shadow: $shadow-light-black-1;
-          border-radius: 10px;
+          border-radius: 8px;
+          font-weight: 700;
+          font-size: 15px;
           color: $white;
           outline: none;
           font-weight: bold;
@@ -136,8 +137,10 @@
           width: 120px;
           height: 35px;
           margin-left: 30px;
-          border-radius: 10px;
+          border-radius: 8px;
           border: 1px solid $blue-1;
+          font-weight: 600;
+          font-size: 15px;
           color: $blue-1;
           outline: none;
         }

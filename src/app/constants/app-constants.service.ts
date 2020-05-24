@@ -40,7 +40,7 @@ export const CONSTANT = {
       USER_MANAGEMENT: 'user-management',
       USER_MANAGEMENT_USERS_LIST: 'users',
       USER_MANAGEMENT_ADD_USER: 'add-user',
-      USER_MANAGEMENT_EDIT_USER: 'edit-user',
+      USER_MANAGEMENT_EDIT_USER: 'users/edit',
     }
   }
 };

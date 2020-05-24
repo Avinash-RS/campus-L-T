@@ -1,10 +1,8 @@
 @import "../../../../app/themes/themes.scss";
 * {
   margin: 0;
-  padding: 0;
 }
 .main-wrapper {
-  font-family: roboto;
   .line {
     height: 50px;
     border-bottom: solid 1px $primary;
@@ -13,7 +11,7 @@
       padding: 0 3em;
       flex-flow: row-reverse;
       button {
-        font-size: 17px;
+        font-size: 16px;
         text-align: center;
         font-weight: 100;
         display: inline-flex;
@@ -42,7 +40,7 @@
       }
       button:disabled {
         // pointer-events: none;
-        opacity: 0.6;
+        opacity: 0.4;
       }
     }
   }
@@ -89,7 +87,7 @@
     th {
       color: $black;
       font-size: 16px;
-      font: roboto;
+      font-weight: 200;
       outline: none;
       border: none;
       background: $blue-3 0% 0% no-repeat padding-box;

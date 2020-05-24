@@ -32,6 +32,10 @@ export class ModalBoxComponent implements OnInit {
       this.appConfig.success('User Added Successfully', '');
       this.dialogRef.close();
     }
+    if (dataToBeShared.identity === 'user-update') {
+      this.appConfig.success('User Updated Successfully', '');
+      this.dialogRef.close();
+    }
 
   }
 
