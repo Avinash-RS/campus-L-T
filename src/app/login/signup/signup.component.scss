@@ -7,8 +7,10 @@
   background-position: center center;
   background-attachment: fixed;
   display: flex;
+  align-items: center;
   position: relative;
-  // height: calc(100% - 90px);
+  // height: 100%;
+  height: calc(100% - 90px);
   justify-content: center;
   box-sizing: border-box;
   .layer-only {
@@ -21,7 +23,7 @@
   overflow: visible;
   }
   .sub-wrapper {
-    margin: 5em auto;
+    // margin: 5em auto;
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
@@ -33,5 +35,12 @@
     border-radius: 10px;
     width: 100%;
     box-sizing: border-box;
+  }
+}
+
+@media only screen and (max-height: 768px) {
+  .main-wrapper {
+    height: 768px;
+    align-items: center;
   }
 }

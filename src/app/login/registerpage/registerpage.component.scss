@@ -6,7 +6,7 @@
   background-repeat: repeat-y;
   background-position: center center;
   background-attachment: fixed;
-  // height: 100%;
+  height: 100%;
   display: flex;
   color: $primary;
   align-items: center;
@@ -22,7 +22,7 @@
     overflow: visible;
   }
   .register-wrapper {
-    margin: 6em auto;
+    // margin: 6em auto;
     position: relative;
     align-items: center;
     @include lg() {
@@ -241,4 +241,12 @@ mat-option:hover {
 .mat-option.mat-selected {
   background: $lighter-blue 0% 0% no-repeat padding-box !important;
   border: 0.5px solid $blue;
+}
+
+
+@media only screen and (max-height: 768px) {
+  .main-wrapper {
+    height: 800px;
+    align-items: center;
+  }
 }

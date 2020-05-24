@@ -11,6 +11,7 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   ul:first-child {
+    padding: 0;
     color: $white;
     display: inline-flex;
     align-items: center;

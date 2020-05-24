@@ -9,7 +9,7 @@
   display: flex;
   position: relative;
   align-items: center;
-  // height: calc(100% - 90px);
+  height: calc(100% - 90px);
   justify-content: center;
   box-sizing: border-box;
   .layer-only {
@@ -22,7 +22,7 @@
   overflow: visible;
   }
   .sub-wrapper {
-    margin: 7em auto;
+    // margin: 7em auto;
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
@@ -143,5 +143,12 @@
         }
       }
 
+  }
+}
+
+@media only screen and (max-height: 768px) {
+  .main-wrapper {
+    height: 768px;
+    align-items: center;
   }
 }
