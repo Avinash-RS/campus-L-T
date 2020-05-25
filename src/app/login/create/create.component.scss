@@ -44,6 +44,9 @@
             display: flex !important;
             height: 35px !important;
           }
+          input:disabled {
+            background: $gray-5 0% 0% no-repeat padding-box;
+          }
           .icon {
             display: flex;
             align-items: center;
@@ -52,6 +55,9 @@
               color: $light-blue;
             }
           }
+        }
+        .disable {
+          background: $gray-5 0% 0% no-repeat padding-box;
         }
         .error {
           color: $red;

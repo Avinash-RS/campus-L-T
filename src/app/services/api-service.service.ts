@@ -20,7 +20,7 @@ export class ApiServiceService {
       .set('Content-Type', 'application/json')
       .set('X-CSRFToken', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
-      // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
+    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
   getAfterCustomHeaders(): HttpHeaders {
@@ -49,7 +49,6 @@ export class ApiServiceService {
   }
   getToken() {
     this.csrfToken().subscribe((data: any) => {
-      this.appConfig.hideLoader();
       // localStorage.setItem('csrf', data);
     }, (err) => {
       if (err.status === 200) {
@@ -95,7 +94,13 @@ export class ApiServiceService {
       { withCredentials: true });
   }
 
-  // Forgot Password
+  passwordTokenVerification(data) {
+    this.getToken();
+    return this.http.post(`http://104.211.226.77/d8cintana2/rest/verify-password?_format=json`, data,
+      { headers: this.getCustomHeaders(), withCredentials: true });
+  }
+
+  // Reset Password
   passwordReset(data) {
     this.getToken();
     // this.datas is api body data

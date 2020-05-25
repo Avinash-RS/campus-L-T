@@ -10,7 +10,7 @@
                 <label class="label-name">
                     Email Address
                 </label>
-                <div matTooltipPosition="above" matTooltip="Email field is Non-Editable" class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+                <div matTooltipPosition="above" matTooltip="Email field is Non-Editable" class="input-box disable" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
                    <input matInput formControlName="email" type="text" required>
                     <div>
 
@@ -21,7 +21,7 @@
                     <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
                 </div>
             </div>
-            <div class="form-field">
+            <!-- <div class="form-field">
                 <label class="label-name">
                    Temporary Password
                 </label>
@@ -43,7 +43,7 @@
                 <div class="error" *ngIf="temp.invalid && temp.touched">
                     <span *ngIf="temp.errors?.required">Temporary Password is Required</span>
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-field">
                 <label class="label-name">

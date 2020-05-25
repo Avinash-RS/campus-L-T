@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormCustomValidators } from '../../custom-form-validators/autocompleteDropdownMatch';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
@@ -18,16 +18,18 @@ export class CreateComponent implements OnInit {
   toggleVisibilityConfirmPassword = true;
   toggleVisibilityTempPassword = true;
   currentRoute: string;
-  autoPopulateMailId: any;
+  passwordTempToken: any;
+  prePoulteEmailId: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
+    private activatedRoute: ActivatedRoute
   ) {
-    if (this.router.url === '/' + `${CONSTANT.ROUTES.PASSWORD.RESET}`) {
+    if (this.router.url.includes('/' + `${CONSTANT.ROUTES.PASSWORD.RESET}`)) {
+      this.verifyPassword();
       this.currentRoute = 'Reset the password';
-      this.autoPopulateMailId = this.appConfig.getLocalData('resetAutoPopulateMailId');
     } else {
       this.currentRoute = 'Create an account';
     }
@@ -37,11 +39,29 @@ export class CreateComponent implements OnInit {
     this.formInitialize();
   }
 
+  verifyPassword() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['mail'] && params['temp-token']) {
+        const ApiData = {
+          name: params['mail'],
+          temp_token: params['temp-token']
+        };
+        // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.RESET}`);
+        this.passwordTempToken = params['temp-token'];
+        this.prePoulteEmailId = params['mail'];
+      } else {
+        this.appConfig.error(`Reset Password Temp Token is Invalid`, '');
+        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.FORGOT}`);
+      }
+    });
+  }
+
+
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.createForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(emailregex)]],
-      temp: ['', [Validators.required]],
+      // temp: ['', [Validators.required]],
       password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
       confirmpassword: ['', [Validators.required]]
     }, { validators: FormCustomValidators.identityRevealedValidator }
@@ -51,7 +71,7 @@ export class CreateComponent implements OnInit {
   autoPopulateMail() {
     if (this.currentRoute === 'Reset the password') {
       this.createForm.patchValue({
-        email: this.autoPopulateMailId
+        email: this.prePoulteEmailId ? this.prePoulteEmailId : ''
       });
       this.createForm.controls['email'].disable();
     }
@@ -63,29 +83,26 @@ export class CreateComponent implements OnInit {
   get password() {
     return this.createForm.get('password');
   }
-  get temp() {
-    return this.createForm.get('temp');
-  }
+  // get temp() {
+  //   return this.createForm.get('temp');
+  // }
   get confirmpassword() {
     return this.createForm.get('confirmpassword');
   }
 
   submit() {
-
     if (this.createForm.valid) {
       const apiData = {
-        name: this.createForm.value.email,
-        temp_pass: this.createForm.value.temp,
+        name: this.prePoulteEmailId ? this.prePoulteEmailId : '',
+        temp_pass: this.passwordTempToken ? this.passwordTempToken : '',
         new_pass: this.createForm.value.password
       };
-
       this.apiService.passwordReset(apiData).subscribe((success: any) => {
         this.appConfig.hideLoader();
         this.appConfig.consoleLog('success', success);
         this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been reset successfully` :
           `Account has been created Successfully`, '');
-        this.currentRoute === 'Reset the password' ? this.appConfig.clearLocalDataOne('autoPopulateMailId') : '';
-        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.LOGIN);
+        this.appConfig.routeNavigationWithQueryParam('/' + CONSTANT.ROUTES.LOGIN, { mail: apiData.name });
       }, (error) => {
       });
     } else {

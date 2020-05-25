@@ -16,6 +16,7 @@ export class LoginpageComponent implements OnInit {
   toggleVisibility = true;
   toggleVisibilityConfirmPassword = true;
   subscribe1: any;
+  prePoulteEmailId: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -33,7 +34,6 @@ export class LoginpageComponent implements OnInit {
 
   verifyEmail() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.appConfig.hideLoader();
       if (params['mail'] && params['temp-token']) {
         console.log(params['mail'], params['temp-token']);
 
@@ -43,26 +43,39 @@ export class LoginpageComponent implements OnInit {
         };
         this.apiService.emailVerification(ApiData).subscribe((data: any) => {
           this.appConfig.hideLoader();
-          this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
+          this.prePoulteEmailId = ApiData.name;
+          // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
           this.appConfig.success(`${data.message}`, '');
         }, (err) => {
           if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
-          this.appConfig.error(`${err.error.error}`, '');
-          this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`);
+            this.appConfig.error(`${err.error.error}`, '');
+            this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`);
           }
         });
+      }
+      if (params['mail']) {
+        this.prePoulteEmailId = params['mail'];
       } else {
         this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
       }
     });
   }
 
+  autoPopulateMail() {
+    if (this.prePoulteEmailId) {
+      this.loginForm.patchValue({
+        email: this.prePoulteEmailId ? this.prePoulteEmailId : ''
+      });
+    }
+  }
+
+
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(emailregex)]],
       password: ['', [Validators.required]],
-    });
+    }), this.autoPopulateMail();
   }
 
   get email() {
@@ -129,6 +142,7 @@ export class LoginpageComponent implements OnInit {
         name: this.loginForm.value.email,
         pass: this.loginForm.value.password
       };
+
       this.subscribe1 = this.apiService.login(apiData).subscribe((data: any) => {
         this.appConfig.hideLoader();
         this.appConfig.consoleLog('data', data);

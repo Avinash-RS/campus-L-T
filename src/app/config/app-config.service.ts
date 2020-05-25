@@ -75,6 +75,8 @@ export class AppConfigService {
 
   // Navigations with query param only
   routeNavigationWithQueryParam(path: any, queryParam: any) {
+    console.log(queryParam);
+
     return this.router.navigate([path], { queryParams: queryParam });
   }
 

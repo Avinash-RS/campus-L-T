@@ -19,7 +19,11 @@ export class InterceptorsService implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.appConfig.showLoader();
+
+    if (request.url !== 'http://104.211.226.77/d8cintana2/rest/session/token') {
+      this.appConfig.showLoader();
+    }
+
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
@@ -35,7 +39,6 @@ export class InterceptorsService implements HttpInterceptor {
         //   reason: error && error.error.reason ? error.error.reason : '',
         //   status: error.status
         // };
-        this.appConfig.hideLoader();
         console.log(error ? error : '');
 
         if (error.status === 0) {
@@ -97,7 +100,6 @@ export class InterceptorsService implements HttpInterceptor {
           return throwError(error);
         }
         if (error.status === 200) {
-          this.appConfig.hideLoader();
         } else {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
