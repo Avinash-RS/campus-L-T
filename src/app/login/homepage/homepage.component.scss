@@ -2,47 +2,49 @@
 @import "../../themes/themes.scss";
 
 .main-wrapper {
-    background-image: url(../../../assets/images/BackgroundImage1.png);
-    background-size: cover;
-    background-repeat: repeat-y;
-    background-position: center center;
-    background-attachment: fixed;
-    height: 100%;
-    color: $primary;
-    justify-content: center;
-    // font-family: "Open Sans";
-    // .header-wrapper {
-    //     position: absolute;
-    //     // background: rgba(163, 160, 160, 0.7);
-    //     height: 100%;
-    //     width: 100%;
-    // }
-    .route-links {
-        display: grid;
-        top: 15%;
-        right: 10%;
-        grid-template-columns: 1fr 1fr;
-        float: right;
-        position: relative;
-        .one, .two, .three {
-            margin-left: 5em;
-            margin-top: 2em;
-            button {
-                outline: none;
-                height: 100%;
-                border: solid $white 1px;
-                color: $white;
-                font-weight: 200;
-                font-size: 22px;
-                width: 100%;
-                box-sizing: border-box;
-                padding: .5em 1em;
-                background: rgb(128, 128, 128, 0.5);
-                border-radius: 8px;
-            }
-        }
-        .three {
-            text-align: center;
-        }
+  background-image: url(../../../assets/images/BackgroundImage1.png);
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100%;
+  color: $primary;
+  justify-content: center;
+  .header-wrapper {
+      position: absolute;
+      background: rgba(17, 7, 7, 0.7);
+      height: 100%;
+      width: 100%;
+  }
+  .route-links {
+    display: grid;
+    margin: 90px 0 0 0;
+    top: 10%;
+    right: 15%;
+    grid-template-columns: 1fr 1fr;
+    float: right;
+    position: relative;
+    .one,
+    .two,
+    .three {
+      margin-left: 5em;
+      margin-top: 2em;
+      button {
+        outline: none;
+        height: 100%;
+        border: solid $white 1px;
+        color: $white;
+        font-weight: 200;
+        font-size: 22px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.5em 1em;
+        background: rgb(128, 128, 128, 0.5);
+        border-radius: 8px;
+      }
     }
+    .three {
+      text-align: center;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 @import "../../themes/themes.scss";
-.header-wrapper {
+.headers-wrapper {
   height: 90px;
   background: transparent;
   padding: 2em 2em 2em 1em;
@@ -9,6 +9,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: solid $white 1px;
+  z-index: 2;
   @include sm() {
     float: left;
     display: flex;
@@ -46,7 +47,7 @@
       }
     }
     .routes {
-      font-weight: 600;
+      font-weight: 200;
       ul {
         padding: 0 !important;
         display: flex;
