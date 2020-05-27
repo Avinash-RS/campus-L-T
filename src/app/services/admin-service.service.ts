@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../config/app-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiServiceService {
-  httpOptions: { headers: HttpHeaders; };
-  //  --proxy-config proxy.conf.json
+export class AdminServiceService {
+  httpOptions: { headers: HttpHeaders };
+
   constructor(
     private http: HttpClient,
     private appConfig: AppConfigService
@@ -23,6 +23,41 @@ export class ApiServiceService {
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
+
+  getAfterCustomHeadersWithBasicAuth(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/json')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'admin'));
+    return headers;
+  }
+
+  getCustomHeadersWithBasicAuthWithHalContentType(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/hal+json')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'admin'));
+    return headers;
+  }
+
+
+  getCustomHeadersWithBasicAuth(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/json')
+      .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'admin'));
+    return headers;
+  }
+
   getAfterCustomHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -33,6 +68,7 @@ export class ApiServiceService {
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
+
   withoutTokens(): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -56,35 +92,35 @@ export class ApiServiceService {
       }
     });
   }
-  // Registration
-  RegistrationForm(formdata) {
-    this.getToken();
-    return this.http.post(`http://104.211.226.77/d8cintana/entity/user?_format=hal_json`, formdata,
-      { headers: this.getCustomHeaders(), withCredentials: true });
-    // return this.http.post(`http://104.211.226.77/d8cintana/user/register?_format=hal_json`, formdata,
-    //   { headers: this.getCustomHeaders(), withCredentials: true });
+
+  // Users List
+  userList() {
+    return this.http.get(`http://104.211.226.77/d8cintana2/admin/user-list?_format=json`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  CandidateRegistrationForm(formdata) {
-    this.getToken();
-    return this.http.post(`http://104.211.226.77/d8cintana2/rest/create-account?_format=json`, formdata,
-      { headers: this.withoutTokens(), withCredentials: true });
+  // Add User
+  addUser(formdata) {
+    return this.http.post(`http://104.211.226.77/d8cintana2/entity/user?_format=hal_json`, formdata,
+      { headers: this.getAfterCustomHeadersWithBasicAuth(), withCredentials: true });
   }
 
-  emailVerification(data) {
-    this.getToken();
-    return this.http.post(`http://104.211.226.77/d8cintana2/rest/verify-account?_format=json`, data,
-      { headers: this.getCustomHeaders(), withCredentials: true });
+  // Edit User
+  editUser(formdata, UserId) {
+    return this.http.patch(`http://104.211.226.77/d8cintana2/user/${UserId}?_format=hal_json`, formdata,
+      {
+        headers: this.getCustomHeadersWithBasicAuthWithHalContentType(),
+        withCredentials: true
+      });
   }
 
-  // To get all cities
-  getAllCity() {
-    return this.http.get(`http://104.211.226.77/d8cintana/cities.php`);
-  }
-
-  // To get all cities
-  getAllState() {
-    return this.http.get(`http://104.211.226.77/d8cintana/states.php`);
+  // Delete User
+  deleteUser(UserId) {
+    return this.http.delete(`http://104.211.226.77/d8cintana2/user/${UserId}?_format=hal_json`,
+      {
+        headers: this.getAfterCustomHeadersWithBasicAuth(),
+        withCredentials: true
+      });
   }
 
   // Forgot Password
@@ -94,27 +130,6 @@ export class ApiServiceService {
       { withCredentials: true });
   }
 
-  passwordTokenVerification(data) {
-    this.getToken();
-    return this.http.post(`http://104.211.226.77/d8cintana2/rest/verify-password?_format=json`, data,
-      { headers: this.getCustomHeaders(), withCredentials: true });
-  }
-
-  // Reset Password
-  passwordReset(data) {
-    this.getToken();
-    // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana2/user/lost-password-reset?_format=json`, data,
-      { headers: this.getCustomHeaders(), withCredentials: true });
-  }
-
-  // Login
-  login(loginData) {
-    this.getToken();
-    // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana2/user/login?_format=json`, loginData,
-      { headers: this.getCustomHeaders(), withCredentials: true });
-  }
 
   // Logout
   logout(logoutToken) {
@@ -123,5 +138,5 @@ export class ApiServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-}
 
+}

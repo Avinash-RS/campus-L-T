@@ -1,6 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-modal-box',
@@ -10,6 +14,9 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 export class ModalBoxComponent implements OnInit {
 
   constructor(
+    private sharedService: SharedServiceService,
+    private apiService: ApiServiceService,
+    private adminService: AdminServiceService,
     public dialogRef: MatDialogRef<ModalBoxComponent>,
     private appConfig: AppConfigService,
     @Inject(MAT_DIALOG_DATA)
@@ -24,16 +31,44 @@ export class ModalBoxComponent implements OnInit {
   }
 
   submit(dataToBeShared) {
+    // To Delete User
     if (dataToBeShared.identity === 'user-list-delete') {
-      this.appConfig.error('User Deleted', '');
+      this.adminService.deleteUser(dataToBeShared.componentData.uid).subscribe((data) => {
+        this.sharedService.updateUserlist.next();
+        this.appConfig.error('User Deleted', '');
+      }, (err) => {
+
+      });
       this.dialogRef.close();
     }
+    // To Add User
     if (dataToBeShared.identity === 'user-add') {
-      this.appConfig.success('User Added Successfully', '');
+      this.adminService.addUser(dataToBeShared.componentData).subscribe((success: any) => {
+        const mail = {
+          mail: dataToBeShared.componentData.mail[0].value
+        };
+        this.adminService.forgotPassword(mail).subscribe((Emailsuccess) => {
+
+        }, (err) => {
+
+        }, () => {
+          this.appConfig.hideLoader();
+          this.appConfig.success('Email with verification link has sent successfully', '');
+          this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`);
+        });
+      }, (error) => {
+      });
       this.dialogRef.close();
     }
+
+    // To Edit User
     if (dataToBeShared.identity === 'user-update') {
-      this.appConfig.success('User Updated Successfully', '');
+      this.adminService.editUser(dataToBeShared.componentData, dataToBeShared.userId).subscribe((success: any) => {
+        this.appConfig.hideLoader();
+        this.appConfig.success('User updated successfully', '');
+        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`);
+      }, (error) => {
+      });
       this.dialogRef.close();
     }
 

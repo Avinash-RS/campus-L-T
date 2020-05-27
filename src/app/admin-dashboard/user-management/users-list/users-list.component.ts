@@ -6,6 +6,7 @@ import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component'
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { AdminServiceService } from 'src/app/services/admin-service.service';
 
 
 @Component({
@@ -15,80 +16,8 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 })
 export class UsersListComponent implements OnInit, AfterViewInit {
 
-  dummyData = [
-    {
-      sno: 1,
-      name: 'avi',
-      checked: false,
-      email: 'avi@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 2,
-      name: 'prem',
-      checked: false,
-      email: 'prem@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 3,
-      name: 'catherine',
-      checked: false,
-      email: 'catherine@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 4,
-      name: 'hari',
-      checked: false,
-      email: 'hari@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 5,
-      name: 'pradeep',
-      checked: false,
-      email: 'pradeep@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 6,
-      name: 'srividhya',
-      checked: false,
-      email: 'srividhya@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 7,
-      name: 'bala',
-      checked: false,
-      email: 'bala@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 8,
-      name: 'mohan',
-      checked: false,
-      email: 'mohan@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 9,
-      name: 'akash',
-      checked: false,
-      email: 'akash@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 10,
-      name: 'aaron',
-      checked: false,
-      email: 'aaron@gmail.com',
-      role: 'hr'
-    }
-  ];
   showPage = true;
-  displayedColumns: any[] = ['sno', 'name', 'email', 'role', 'checked'];
+  displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -102,21 +31,43 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   //   this.dataSource.sort = sort;
   // }
   selectedUserDetail: any;
+  userList: any;
 
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
-    private subjectService: SharedServiceService
+    private adminService: AdminServiceService,
+    private sharedService: SharedServiceService
   ) {
-    this.dataSource = new MatTableDataSource(this.dummyData);
   }
 
   ngOnInit() {
+    this.getUsersList();
+
+    // Rxjs subject for update user list
+    this.rxjsUpdateUserList();
+  }
+
+  // To get all users
+  getUsersList() {
+    this.adminService.userList().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.userList = data;
+      this.userList.forEach(element => {
+        element.checked = false;
+      });
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => {
+    });
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   applyFilter(event: Event) {
@@ -149,7 +100,16 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   }
 
   editUser() {
-    this.appConfig.routeNavigationWithParam(`./${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}`, this.selectedUserDetail.sno);
+    this.appConfig.routeNavigationWithParam(`./${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}`, this.selectedUserDetail.uid);
+  }
+
+  // Rxjs subject for update user list
+  rxjsUpdateUserList() {
+    this.sharedService.updateUserlist.subscribe((data) => {
+      this.getUsersList();
+    }, (err) => {
+
+    });
   }
 
 }

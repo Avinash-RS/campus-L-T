@@ -6,6 +6,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { AdminServiceService } from 'src/app/services/admin-service.service';
 
 @Component({
   selector: 'app-add-user',
@@ -13,79 +14,6 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent implements OnInit {
-  dummyData = [
-    {
-      sno: 1,
-      name: 'avi',
-      checked: false,
-      email: 'avi@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 2,
-      name: 'prem',
-      checked: false,
-      email: 'prem@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 3,
-      name: 'catherine',
-      checked: false,
-      email: 'catherine@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 4,
-      name: 'hari',
-      checked: false,
-      email: 'hari@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 5,
-      name: 'pradeep',
-      checked: false,
-      email: 'pradeep@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 6,
-      name: 'srividhya',
-      checked: false,
-      email: 'srividhya@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 7,
-      name: 'bala',
-      checked: false,
-      email: 'bala@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 8,
-      name: 'mohan',
-      checked: false,
-      email: 'mohan@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 9,
-      name: 'akash',
-      checked: false,
-      email: 'akash@gmail.com',
-      role: 'hr'
-    },
-    {
-      sno: 10,
-      name: 'aaron',
-      checked: false,
-      email: 'aaron@gmail.com',
-      role: 'hr'
-    }
-  ];
-
   editDetails: any;
   addUserForm: FormGroup;
   title: string;
@@ -94,6 +22,7 @@ export class AddUserComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
+    private adminService: AdminServiceService,
     private appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute,
     private subjectService: SharedServiceService
@@ -109,24 +38,32 @@ export class AddUserComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.paramMap.subscribe(params => {
-      this.appConfig.hideLoader();
       this.editUserId = params.get('eid');
       if (this.editUserId) {
-        this.dummyData.forEach(element => {
-          if (element.sno.toString() === this.editUserId) {
-            this.editDetails = element;
-          }
-        });
+        this.getUsersList();
       }
     });
   }
+
+  // To find the selected user to edit from all users
+  getUsersList() {
+    this.adminService.userList().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const userList = data;
+      const selectedUser = userList.find((user) => user.uid === this.editUserId);
+      this.editDetails = selectedUser;
+      this.formInitialize();
+    }, (err) => {
+    });
+  }
+
 
   // Edit User --> Form Updating on load
   updateEditForm() {
     this.addUserForm.patchValue({
       name: this.editDetails.name,
-      email: this.editDetails.email,
-      role: this.editDetails.role
+      email: this.editDetails.mail,
+      role: this.editDetails.roles_target_id.toLowerCase()
     });
     this.addUserForm.controls['email'].disable();
   }
@@ -159,27 +96,32 @@ export class AddUserComponent implements OnInit {
   }
 
   submit() {
-
     if (this.addUserForm.valid) {
-      // API
-      const datas = {
-        name: this.addUserForm.value.name,
-        mail: this.addUserForm.value.email,
-        role: this.addUserForm.value.role,
+      // For add user API
+      const addUserDatas = {
+        name: [{ value: this.addUserForm.value.name }],
+        mail: [{ value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email }],
+        roles: [{ target_id: 'hr' }],
+        status: [{ value: '1' }]
       };
-      // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
-
-      // this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-      //   this.appConfig.success('Form has been Registered Successfully', '');
-      //   this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
-      // }, (error) => {
-      // });
-
+      // For edit user API
+      const editUserDatas = {
+        _links: {
+          type: {
+            href: 'http://104.211.226.77/d8cintana2/rest/type/user/user'
+          }
+        },
+        mail: { value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email },
+        name: { value: this.addUserForm.value.name },
+        roles: [{ target_id: this.addUserForm.value.role ? this.addUserForm.value.role : '' }]
+      };
+      // Data to be shared for modal box components
       const data = {
         iconName: '',
         sharedData: {
           confirmText: `Are you sure you want to ${(this.editDetails ? 'update' : 'add')} this user?`,
-          componentData: this.addUserForm.value,
+          componentData: this.editDetails ? editUserDatas : addUserDatas,
+          userId: `${this.editDetails ? this.editUserId : ''}`,
           type: this.editDetails ? 'update' : 'add',
           identity: this.editDetails ? 'user-update' : 'user-add'
         },
@@ -188,7 +130,6 @@ export class AddUserComponent implements OnInit {
         showOk: ''
       };
       this.appConfig.openDialog(ModalBoxComponent, data);
-
     } else {
       this.validateAllFields(this.addUserForm);
     }

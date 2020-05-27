@@ -85,56 +85,6 @@ export class LoginpageComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  // After clicking Submit, we hit tao api to insert Test Taker details in TAO
-  insertTestTakerAPI(data, email) {
-
-    const apiData = [
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#password',
-        object: 'LNnIsna3nxb55bc88e792c0a4ef2dacedf466bf097a4819ea11f9ae0dfffe9ed7d4c5fd9b0'
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#userUILg',
-        object: data.current_user.name
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#login',
-        object: data.current_user.name
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#userMail',
-        object: email
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.tao.lu/Ontologies/generis.rdf#userLastName',
-        object: data.current_user.name
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-        object: 'http://www.tao.lu/Ontologies/TAOSubject.rdf#Subject'
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.tao.lu/Ontologies/TAO.rdf#UpdatedAt',
-        object: '1586670644.7123'
-      },
-      {
-        subject: 'http://localhost/tao/tao.rdf#',
-        predicate: 'http://www.w3.org/2000/01/rdf-schema#label',
-        object: data.current_user.name
-      }
-    ];
-    this.apiService.insertTestTaker(apiData).subscribe((success) => {
-      this.appConfig.consoleLog('success', success);
-    }, (err) => {
-    });
-  }
 
   submit() {
     if (this.loginForm.valid) {

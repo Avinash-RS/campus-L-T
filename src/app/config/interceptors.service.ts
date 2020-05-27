@@ -39,7 +39,9 @@ export class InterceptorsService implements HttpInterceptor {
         //   reason: error && error.error.reason ? error.error.reason : '',
         //   status: error.status
         // };
-        console.log(error ? error : '');
+        if (error.status !== 200) {
+          console.log(error ? error : '');
+        }
 
         if (error.status === 0) {
           this.appConfig.hideLoader();
