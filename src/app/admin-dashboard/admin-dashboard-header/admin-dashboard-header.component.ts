@@ -30,7 +30,7 @@ export class AdminDashboardHeaderComponent implements OnInit {
     this.apiService.logout(token).subscribe((data: any) => {
       this.appConfig.hideLoader();
       this.appConfig.clearLocalData();
-      this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.HOME}`);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
     }, (err) => {
     });
   }

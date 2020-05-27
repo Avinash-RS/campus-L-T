@@ -9,7 +9,7 @@ import { SharedServiceService } from '../services/shared-service.service';
   styleUrls: ['./master-dashboard.component.scss']
 })
 export class MasterDashboardComponent implements OnInit {
-  appConstant = CONSTANT.ROUTES;
+  appConstant = CONSTANT.ENDPOINTS;
   subMenus: any;
   activeSubmenu;
   constructor(

@@ -12,7 +12,7 @@ export class HomeHeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-   this.home = '/' + CONSTANT.ROUTES.LOGIN;
+   this.home = CONSTANT.ENDPOINTS.LOGIN;
   }
 
 }

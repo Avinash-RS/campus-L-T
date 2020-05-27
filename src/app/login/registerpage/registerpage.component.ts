@@ -30,7 +30,7 @@ export class RegisterpageComponent implements OnInit {
     private apiService: ApiServiceService,
     private appConfig: AppConfigService
   ) {
-    if (this.router.url === '/' + `${CONSTANT.ROUTES.REGISTER.CORPORATE}`) {
+    if (this.router.url === CONSTANT.ENDPOINTS.REGISTER.CORPORATE) {
       this.currentForm = 'corporate';
     } else {
       this.currentForm = 'institute';
@@ -177,7 +177,7 @@ export class RegisterpageComponent implements OnInit {
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
         this.appConfig.hideLoader();
         this.appConfig.success(`Form has been Registered Successfully`, '');
-        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {
       });
     } else {

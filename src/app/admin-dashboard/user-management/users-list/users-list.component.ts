@@ -100,7 +100,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   }
 
   editUser() {
-    this.appConfig.routeNavigationWithParam(`./${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}`, this.selectedUserDetail.uid);
+    this.appConfig.routeNavigationWithParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER, this.selectedUserDetail.uid);
   }
 
   // Rxjs subject for update user list

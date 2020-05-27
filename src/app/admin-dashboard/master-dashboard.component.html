@@ -9,7 +9,7 @@
   </mat-drawer>
   <mat-drawer-content class="main-toolbar">
     <ng-container *ngIf="subMenus.length > 0">
-      <div [routerLink]="'/' + appConstant.ADMIN_DASHBOARD.HOME + '/' + subMenus.router"
+      <div [routerLink]="subMenus.router"
         *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active">
         <div><img src="assets/images/{{subMenus.icon}}" alt=""></div>
         <div>{{subMenus.name}}</div>
@@ -21,7 +21,7 @@
 
   <mat-drawer class="sidenav" mode="side" opened>
     <ul>
-      <li [routerLink]="'/' + appConstant.ADMIN_DASHBOARD.HOME + '/' + appConstant.ADMIN_DASHBOARD.DASHBOARD"
+      <li [routerLink]="appConstant.ADMIN_DASHBOARD.DASHBOARD"
         routerLinkActive="active">
         <span><img src="assets/images/dashboard.svg" width="20px" height="20px" alt=""></span>
         <span>Dashboard</span>
@@ -43,7 +43,7 @@
           arrow_right
         </span>
       </li>
-      <li [routerLink]="'/' + appConstant.ADMIN_DASHBOARD.HOME + '/' + appConstant.ADMIN_DASHBOARD.USER_MANAGEMENT"
+      <li [routerLink]="appConstant.ADMIN_DASHBOARD.USER_MANAGEMENT"
         routerLinkActive="active">
         <span><img src="assets/images/001-people.svg" width="20px" height="20px" alt=""></span>
         <span>User Management</span>

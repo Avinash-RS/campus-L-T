@@ -17,7 +17,7 @@ export class EmailVerifierErrorPageComponent implements OnInit {
   }
 
   goToCandidateRegister() {
-    this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.REGISTER.CANDIDATE}`);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.CANDIDATE);
   }
 
 }

@@ -137,7 +137,7 @@ export class AddUserComponent implements OnInit {
   }
 
   cancel() {
-    this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST);
   }
 
   // To validate all fields after submit

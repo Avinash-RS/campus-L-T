@@ -54,7 +54,7 @@ export class ModalBoxComponent implements OnInit {
         }, () => {
           this.appConfig.hideLoader();
           this.appConfig.success('Email with verification link has sent successfully', '');
-          this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`);
+          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST);
         });
       }, (error) => {
       });
@@ -66,7 +66,7 @@ export class ModalBoxComponent implements OnInit {
       this.adminService.editUser(dataToBeShared.componentData, dataToBeShared.userId).subscribe((success: any) => {
         this.appConfig.hideLoader();
         this.appConfig.success('User updated successfully', '');
-        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST);
       }, (error) => {
       });
       this.dialogRef.close();

@@ -19,15 +19,15 @@ export class HomepageComponent implements OnInit {
   }
 
   instituteRegister() {
-    this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.REGISTER.INSTITUTE);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.INSTITUTE);
   }
 
   corporateRegister() {
-    this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.REGISTER.CORPORATE);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.CORPORATE);
   }
 
   candidateRegister() {
-    this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.REGISTER.CANDIDATE);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.CANDIDATE);
   }
 
 

@@ -64,7 +64,7 @@ export class CandidateRegisterComponent implements OnInit {
       this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
         this.appConfig.hideLoader();
         this.appConfig.success(`Form has been Registered Successfully. ${data.message}`, '');
-        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {
       });
     } else {

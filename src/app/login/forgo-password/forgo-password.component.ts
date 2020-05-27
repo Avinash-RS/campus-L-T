@@ -66,7 +66,7 @@ export class ForgoPasswordComponent implements OnInit {
         this.appConfig.hideLoader();
         this.appConfig.consoleLog('success', success);
         this.appConfig.success('Password Reset link has been successfully sent to your Email Id', '');
-        this.appConfig.routeNavigation('/' + CONSTANT.ROUTES.HOME);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {
       });
     } else {

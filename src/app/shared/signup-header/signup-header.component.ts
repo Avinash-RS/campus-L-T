@@ -17,7 +17,7 @@ export class SignupHeaderComponent implements OnInit {
   }
 
   home() {
-    this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.HOME}`);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
   }
 
 }

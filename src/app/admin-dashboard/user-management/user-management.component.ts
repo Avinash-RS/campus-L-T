@@ -19,12 +19,12 @@ export class UserManagementComponent implements OnInit {
       {
         icon: '002-group-1.svg',
         name: 'Users',
-        router: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`
+        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST
       },
       {
         icon: '001-group.svg',
         name: 'Add User',
-        router: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}/${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`
+        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

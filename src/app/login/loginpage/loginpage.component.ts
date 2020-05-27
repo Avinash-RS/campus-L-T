@@ -49,14 +49,14 @@ export class LoginpageComponent implements OnInit {
         }, (err) => {
           if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
             this.appConfig.error(`${err.error.error}`, '');
-            this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`);
+            this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.VERIFY.EMAIL_ERROR);
           }
         });
       }
       if (params['mail']) {
         this.prePoulteEmailId = params['mail'];
       } else {
-        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
       }
     });
   }
@@ -99,7 +99,7 @@ export class LoginpageComponent implements OnInit {
         this.appConfig.setLocalData('username', data.current_user.name);
         this.appConfig.setLocalData('csrf-login', data.csrf_token);
         this.appConfig.setLocalData('logout-token', data.logout_token);
-        this.appConfig.routeNavigation('/' + `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
 
       }, (error) => {
       });
@@ -111,11 +111,11 @@ export class LoginpageComponent implements OnInit {
   }
 
   forgotPassword() {
-    this.appConfig.routeNavigation('./' + CONSTANT.ROUTES.PASSWORD.FORGOT);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.FORGOT);
   }
 
   createAccount() {
-    this.appConfig.routeNavigation('./' + CONSTANT.ROUTES.PASSWORD.SETUP);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.SETUP);
   }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {

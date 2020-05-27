@@ -27,7 +27,7 @@ export class CreateComponent implements OnInit {
     private appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute
   ) {
-    if (this.router.url.includes('/' + `${CONSTANT.ROUTES.PASSWORD.RESET}`)) {
+    if (this.router.url.includes(CONSTANT.ENDPOINTS.PASSWORD.RESET)) {
       this.verifyPassword();
       this.currentRoute = 'Reset the password';
     } else {
@@ -51,7 +51,7 @@ export class CreateComponent implements OnInit {
         this.prePoulteEmailId = params['mail'];
       } else {
         this.appConfig.error(`Reset Password Temp Token is Invalid`, '');
-        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.FORGOT}`);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.FORGOT);
       }
     });
   }
@@ -102,7 +102,7 @@ export class CreateComponent implements OnInit {
         this.appConfig.consoleLog('success', success);
         this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been reset successfully` :
           `Account has been created Successfully`, '');
-        this.appConfig.routeNavigationWithQueryParam('/' + CONSTANT.ROUTES.LOGIN, { mail: apiData.name });
+        this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.LOGIN, { mail: apiData.name });
       }, (error) => {
       });
     } else {
