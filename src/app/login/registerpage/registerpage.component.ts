@@ -204,7 +204,6 @@ export class RegisterpageComponent implements OnInit {
   // To get all cities
   stateAPI() {
     this.apiService.getAllState().subscribe((data) => {
-      this.appConfig.hideLoader();
       const stateArr = [];
       for (const key in data) {
         if (data.hasOwnProperty(key)) {

@@ -104,6 +104,8 @@ $alt-registration-dark-theme: mat-dark-theme(
 
 html,
 body {
+  margin: 0;
+  padding: 0;
   height: 100%;
 }
 body {
@@ -137,6 +139,10 @@ body {
   @media screen and (min-width: $min) and (max-width: $max) {
     @content;
   }
+}
+
+button:focus {
+  outline: none !important;
 }
 
 /* snack bar */
@@ -204,7 +210,12 @@ body {
 .mat-input-element {
   text-align: left !important;
 }
-
+// Registerpage component
+.grid-wrapper,.grid-wrapper-1,.grid-wrapper-languages,.bottom-form-wrapper {
+  input.ng-invalid.ng-touched {
+    border: solid $red 1px !important;
+  }
+}
 // Registerpage component
 .register-wrapper {
   input.ng-invalid.ng-touched,
@@ -221,7 +232,7 @@ body {
 .mat-autocomplete-panel {
   background: $light-white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-dark !important;
-  max-height: 220px !important;
+  max-height: 300px !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   border: 1px solid $blue !important;

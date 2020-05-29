@@ -23,7 +23,7 @@ import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
     BrowserAnimationsModule,
     MaterialModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
   ],
   // providers: [],
   entryComponents: [SnackbarComponent, ModalBoxComponent],

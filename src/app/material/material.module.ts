@@ -16,7 +16,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatRadioModule} from '@angular/material/radio';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [],
@@ -37,7 +37,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ScrollingModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule
   ],
   exports: [
     CommonModule,
@@ -56,7 +57,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ScrollingModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule
   ]
 })
 export class MaterialModule { }

@@ -9,6 +9,9 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`, loadChildren: './admin-dashboard/master-dashboard.module#MasterDashboardModule', canActivate: [AuthGuard]
+  },
+  {
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HOME}`, loadChildren: './candidate-dashboard/candidate-dashboard.module#CandidateDashboardModule'
   }
 ];
 

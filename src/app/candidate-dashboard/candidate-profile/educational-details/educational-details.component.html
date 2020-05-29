@@ -1,0 +1,45 @@
+<div class="mainwrapper">
+  <div class="header">
+    <div class="grid-wrapper">
+      <form [formGroup]="educationForm">
+        <div class="form-wrapper">
+          <div class="input-box">
+            <div class="dropdown">
+              <!-- <span>></span> -->
+              <input style="z-index: 3;" class="btn btn-primary dropdown-toggle" formControlName="leveling" type="button"
+                data-toggle="dropdown"><span style="cursor: pointer;" class="icon">></span>
+              <!-- <span>{{selecetedLevel ? selecetedLevel.name : ''}}</span> -->
+              <div class="dropdown-menu">
+                <a class="dropdown-item"
+                  [ngClass]="selecetedLevel && level.name === selecetedLevel.name ? 'active' : ''"
+                  (click)="selectedLevelMethod(level)" *ngFor="let level of level">
+                  {{level.name}}
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+
+      <div class="add-remove-wrapper">
+        <div class="add-button">
+          <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+          <span>Add</span>
+        </div>
+        <div class="or-text">
+          Or
+        </div>
+        <div class="remove-button">
+          <div>
+            <i class="material-icons">close</i>
+          </div>
+          <span>Remove</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

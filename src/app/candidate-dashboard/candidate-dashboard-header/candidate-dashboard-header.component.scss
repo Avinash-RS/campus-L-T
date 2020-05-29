@@ -6,6 +6,8 @@
 }
 mat-toolbar {
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
   height: 80px;
   background: $secondary !important;
   display: flex;
@@ -28,6 +30,7 @@ mat-toolbar {
   }
   ul:last-child {
     // font-size: 16px;
+    padding: 0;
     display: inline-flex;
     align-items: center;
     li {
@@ -41,11 +44,8 @@ mat-toolbar {
       span {
         img {
           width: 26px;
+          height: 26px;
         }
-      }
-      .material-icons {
-        font-size: 32px;
-        padding-top: .5em;
       }
     }
     .logout {

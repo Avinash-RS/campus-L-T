@@ -41,7 +41,18 @@ export const CONSTANT = {
       USER_MANAGEMENT_USERS_LIST: '/admin/user-management/users',
       USER_MANAGEMENT_ADD_USER: '/admin/user-management/add-user',
       USER_MANAGEMENT_EDIT_USER: '/admin/user-management/users/edit',
+    },
+    CANDIDATE_DASHBOARD: {
+      HOME: '/candidate',
+      PROFILE: '/candidate/profile',
+      PROFILE_PERSONAL_DETAILS: '/candidate/profile/personal',
+      PROFILE_EDUCATIONAL_DETAILS: '/candidate/profile/education',
+      PROFILE_FAMILY_DETAILS: '/candidate/profile/family',
+      PROFILE_GENERAL_DETAILS: '/candidate/profile/general',
+      PROFILE_VIEW_DETAILS: '/candidate/profile/view',
+      PROFILE_CONFIRM: '/candidate/profile/confirm'
     }
+
   },
 
   ROUTES: {
@@ -71,6 +82,16 @@ export const CONSTANT = {
       USER_MANAGEMENT_USERS_LIST: 'users',
       USER_MANAGEMENT_ADD_USER: 'add-user',
       USER_MANAGEMENT_EDIT_USER: 'users/edit',
+    },
+    CANDIDATE_DASHBOARD: {
+      HOME: 'candidate',
+      PROFILE: 'profile',
+      PROFILE_PERSONAL_DETAILS: 'personal',
+      PROFILE_EDUCATIONAL_DETAILS: 'education',
+      PROFILE_FAMILY_DETAILS: 'family',
+      PROFILE_GENERAL_DETAILS: 'general',
+      PROFILE_VIEW_DETAILS: 'view',
+      PROFILE_CONFIRM: 'confirm'
     }
   }
 };
