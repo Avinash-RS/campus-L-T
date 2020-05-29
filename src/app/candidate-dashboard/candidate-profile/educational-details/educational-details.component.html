@@ -1,64 +1,130 @@
 <div class="mainwrapper">
   <div class="header">
-    <div class="grid-wrapper">
-      <form [formGroup]="educationForm">
-        <div class="form-wrapper">
-          <div class="input-box">
-            <nz-select nzAllowClear nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
-              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-            </nz-select>
-          </div>
-          <div class="input-box width-300">
-            <nz-select formControlName="board" nzAllowClear nzShowSearch nzPlaceHolder="Board/University">
-              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-            </nz-select>
-          </div>
-          <div class="input-box width-300">
-            <nz-select formControlName="institute" nzAllowClear nzShowSearch nzPlaceHolder="Institute">
-              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-            </nz-select>
-          </div>
+    <form [formGroup]="educationForm">
+      <ng-container *ngIf="eduArr && eduArr.controls" formArrayName="educationArr">
+        <div class="grid-wrapper" *ngFor="let item of eduArr.controls; let i = index;" [formGroupName]="i">
+          <div style="margin: 1em 0 0 0;" class="form">
+            <div class="form-wrapper">
+              <div class="outer-box-wrapper">
+                <div class="input-box">
+                  <nz-select nzAllowClear nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
+                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                  </nz-select>
+                </div>
+                <!-- eduArr.controls[i].get('age') -->
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('leveling').invalid && eduArr.controls[i].get('leveling').touched">
+                  <span *ngIf="eduArr.controls[i].get('leveling').errors?.required">Level is Required</span>
+                </div>
+              </div>
+              <div class="outer-box-wrapper">
 
-          <div class="input-box">
-            <nz-select formControlName="discipline" nzAllowClear nzShowSearch nzPlaceHolder="Discipline">
-              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-            </nz-select>
-          </div>
+                <div class="input-box width-300">
+                  <nz-select formControlName="board" nzAllowClear nzShowSearch nzPlaceHolder="Board/University">
+                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                  </nz-select>
+                </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('board').invalid && eduArr.controls[i].get('board').touched">
+                  <span *ngIf="eduArr.controls[i].get('board').errors?.required">Board/University is Required</span>
+                </div>
+              </div>
+              <div class="outer-box-wrapper">
+                <div class="input-box width-300">
+                  <nz-select formControlName="institute" nzAllowClear nzShowSearch nzPlaceHolder="Institute">
+                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                  </nz-select>
+                </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('institute').invalid && eduArr.controls[i].get('institute').touched">
+                  <span *ngIf="eduArr.controls[i].get('institute').errors?.required">Institute is Required</span>
+                </div>
 
-          <div class="input-box">
-            <nz-select formControlName="specification" nzAllowClear nzShowSearch nzPlaceHolder="Specification">
-              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-            </nz-select>
+              </div>
+              <div class="outer-box-wrapper">
+
+                <div class="input-box">
+                  <nz-select formControlName="discipline" nzAllowClear nzShowSearch nzPlaceHolder="Discipline">
+                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                  </nz-select>
+                </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('discipline').invalid && eduArr.controls[i].get('discipline').touched">
+                  <span *ngIf="eduArr.controls[i].get('discipline').errors?.required">Discipline is Required</span>
+                </div>
+
+              </div>
+              <div class="outer-box-wrapper">
+
+                <div class="input-box">
+                  <nz-select formControlName="specification" nzAllowClear nzShowSearch nzPlaceHolder="Specification">
+                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                  </nz-select>
+                </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('specification').invalid && eduArr.controls[i].get('specification').touched">
+                  <span *ngIf="eduArr.controls[i].get('specification').errors?.required">Specification is
+                    Required</span>
+                </div>
+
+              </div>
+              <div class="outer-box-wrapper">
+
+                <div class="input-box">
+                  <nz-month-picker formControlName="passedYear" [nzDisabledDate]="disabledYears"
+                    [nzFormat]="monthFormat" nzPlaceHolder="Year of passing"></nz-month-picker>
+                </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('passedYear').invalid && eduArr.controls[i].get('passedYear').touched">
+                  <span *ngIf="eduArr.controls[i].get('passedYear').errors?.required">Year of passing is Required</span>
+                </div>
+
+              </div>
+              <div class="outer-box-wrapper">
+
+                <div class="input-box">
+                  <input placeholder="Percentage" formControlName="percentage" type="text" value="">
+                </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('percentage').invalid && eduArr.controls[i].get('percentage').touched">
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.required">Percentage is Required</span>
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Only Numbers is allowed</span>
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.maxlength">Invalid</span>
+                </div>
+
+              </div>
+            </div>
           </div>
-          <div class="input-box">
-            <!-- <input placeholder="Year of passing" formControlName="passedYear" type="text" value=""> -->
-            <nz-month-picker [nzDisabledDate]="disabledYears" [nzFormat]="monthFormat" nzPlaceHolder="Year of passing"></nz-month-picker>
-          </div>
-          <div class="input-box">
-            <input placeholder="Percentage" formControlName="percentage" type="text" value="">
+          <div class="add-remove-wrapper">
+            <ng-container *ngIf="(eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)">
+              <div (click)="addEducationForm()" class="add-button">
+                <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+                <span>Add</span>
+              </div>
+              <div *ngIf="i !== 0" class="or-text">
+                Or
+              </div>
+            </ng-container>
+            <ng-container *ngIf="i !== 0">
+                <div (click)="removeEducationForm(i)" class="remove-button">
+              <div>
+                <i class="material-icons">delete</i>
+              </div>
+              <span>Remove</span>
+            </div>
+</ng-container>
           </div>
 
         </div>
-      </form>
+      </ng-container>
 
+    </form>
 
+    <div class="submit-button-wrapper">
+      <button (click)="onSubmit(educationForm)" mat-raised-button type="submit">Save and Continue</button>
 
-      <div class="add-remove-wrapper">
-        <div class="add-button">
-          <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-          <span>Add</span>
-        </div>
-        <div class="or-text">
-          Or
-        </div>
-        <div class="remove-button">
-          <div>
-            <i class="material-icons">close</i>
-          </div>
-          <span>Remove</span>
-        </div>
+      <button mat-raised-button type="button">Cancel</button>
 
-      </div>
     </div>
+
   </div>
-</div>

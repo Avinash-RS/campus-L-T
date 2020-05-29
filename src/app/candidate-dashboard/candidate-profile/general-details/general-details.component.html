@@ -1,1 +1,108 @@
-<p>general-details works!</p>
+<div class="main-wrapper">
+  <div class="content-wrapper">
+    Extra curricular activities - Please give details about extra -curricular activity with Nature (E.g - Sports, Music,
+    Dance, Drama, positions of responsibility, Social services, Others), Level (E.g. International, National, State,
+    District, School level, Others ) and Year (Last 10 years)
+  </div>
+
+  <div class="skills">
+    <div class="text">Add your Skills</div>
+    <form [formGroup]="skillForm" class="skill-form">
+      <ng-container *ngIf="skillsArr && skillsArr.controls" formArrayName="skillsArr">
+        <div class="skill-group" *ngFor="let item of skillsArr.controls; let i = index;" [formGroupName]="i">
+          <div class="input-group">
+            <input formControlName="skill" type="text">
+          </div>
+          <!-- <div > -->
+          <div class="add">
+            <i *ngIf="i !== 0" (click)="removeSkillForm(i)"
+              class="material-icons remove">close</i>
+            <ng-container *ngIf="skillsArr && skillsArr.controls.length -1 === i">
+              <span (click)="addSkillForm()">
+                <img src="assets/images/interface.svg" alt="" srcset="">
+                <span class="text">
+                  Add
+                </span>
+              </span>
+            </ng-container>
+          </div>
+
+          <!-- </div> -->
+        </div>
+      </ng-container>
+    </form>
+  </div>
+
+  <div class="main-heading">
+    Relatives / Acquaintances in L & T group of companies
+  </div>
+
+  <div class="heading-grid">
+    <div class="head-1">
+      Name
+      <span>&#160;</span>
+    </div>
+    <div class="head-2">
+      Relationship
+      <span>&#160;</span>
+    </div>
+    <div class="head-3">
+      Position
+      <span>&#160;</span>
+    </div>
+    <div class="head-4">
+      Company
+    </div>
+
+  </div>
+  <form [formGroup]="aquaintancesForm" class="form">
+    <ng-container *ngIf="relativesArr && relativesArr.controls" formArrayName="relativesArr">
+      <div class="text-box-grid" *ngFor="let item of relativesArr.controls; let i = index;" [formGroupName]="i">
+        <div class="text-1">
+          <input formControlName="names" type="text">
+          <div class="error"
+            *ngIf="relativesArr.controls[i].get('names').invalid && relativesArr.controls[i].get('names').touched">
+            <span *ngIf="relativesArr.controls[i].get('names').errors?.required">Name is Required</span>
+          </div>
+        </div>
+        <div class="text-2">
+          <input formControlName="relationship" type="text">
+          <div class="error"
+            *ngIf="relativesArr.controls[i].get('relationship').invalid && relativesArr.controls[i].get('relationship').touched">
+            <span *ngIf="relativesArr.controls[i].get('relationship').errors?.required">Relationship is Required</span>
+          </div>
+        </div>
+        <div class="text-3">
+          <input formControlName="position" type="text">
+          <div class="error"
+            *ngIf="relativesArr.controls[i].get('position').invalid && relativesArr.controls[i].get('position').touched">
+            <span *ngIf="relativesArr.controls[i].get('position').errors?.required">Position is Required</span>
+          </div>
+        </div>
+        <div class="text-4">
+          <input formControlName="company" type="text">
+          <div class="error"
+            *ngIf="relativesArr.controls[i].get('company').invalid && relativesArr.controls[i].get('company').touched">
+            <span *ngIf="relativesArr.controls[i].get('company').errors?.required">Company is Required</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+
+  <div class="main-heading">
+    Faculty Reference
+  </div>
+  <div class="faculty">
+    <textarea name="" [(ngModel)]="facultyReference1" id="" cols="30" rows="10"></textarea>
+    <textarea name="" [(ngModel)]="facultyReference2" id="" cols="30" rows="10"></textarea>
+  </div>
+
+  <div class="submit-button-wrapper">
+    <button (click)="onSubmit(aquaintancesForm, skillForm)" mat-raised-button type="submit">Save and Continue</button>
+
+    <button mat-raised-button type="button">Cancel</button>
+
+  </div>
+
+</div>

@@ -1,5 +1,10 @@
 @import "../../../themes/themes.scss";
 
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .mainwrapper {
   margin: 1em 0 0 0;
   padding: 2em 2em 2em 1em;
@@ -10,12 +15,13 @@
     color: $light-black;
     margin: 0em 0 0.5em 0em;
   }
+  form {
   .grid-wrapper {
     display: grid;
     grid-template-columns: 9fr 1fr;
     // justify-content: space-between;
     align-items: center;
-    form {
+    .form {
       display: flex;
       width: 100%;
       flex-direction: column;
@@ -29,61 +35,74 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        .input-box {
-          margin: 1em 1em;
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
-          display: flex;
-          width: 240px;
-          max-width: 240px;
-          // width: 100%;
+        .outer-box-wrapper {
           flex: auto;
-          align-items: center;
-          background: $white;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          border: solid $black-3 1px;
-          nz-month-picker {
-            width: 100%;
+          margin: 1em 1em;
+          .input-box {
+            margin: 0 0.15em;
             border-radius: 5px;
+            box-shadow: $shadow-light-black;
+            display: flex;
+            width: 240px;
+            max-width: 240px;
+            // width: 100%;
+            align-items: center;
             background: $white;
-            max-height: 38px;
-            min-height: 38px;
-            font-size: 17px;
-            font-weight: 100;
-            color: $secondary;
-          }
-          nz-select {
-            width: 100%;
-            border-radius: 5px;
-            background: $white;
-            max-height: 38px;
-            min-height: 38px;
-            font-size: 17px;
-            font-weight: 100;
-            color: $secondary;
-            nz-option {
-              background: black;
-              border: solid $light-blue 1px;
+            height: 38px;
+            padding: 0em 0px 0 0px;
+            border: solid $black-3 1px;
+            nz-month-picker {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              // padding: .15em;
+              border-radius: 5px;
+              background: $white;
+              max-height: 38px;
+              min-height: 38px;
+              font-size: 17px;
+              font-weight: 100;
+              color: $secondary;
+            }
+            nz-select {
+              // padding: .15em;
+              width: 100%;
+              border-radius: 5px;
+              background: $white;
+              max-height: 38px;
+              min-height: 38px;
+              font-size: 17px;
+              font-weight: 100;
+              color: $secondary;
+              nz-option {
+                background: black;
+                border: solid $light-blue 1px;
+              }
+            }
+            input {
+              margin: 0 !important;
+              width: 100%;
+              font-size: 17px;
+              // padding: .15em;
+              padding: 0 1em;
+              border: none;
+              color: $secondary;
+              outline: none;
+              background: $white;
+              border-radius: 5px;
+              min-height: 38px;
+              max-height: 38px;
             }
           }
-          input {
-            margin: 0 !important;
-            width: 100%;
-            font-size: 17px;
-            padding: 0 1em;
-            border: none;
-            color: $secondary;
-            outline: none;
-            background: $white;
-            border-radius: 5px;
-            min-height: 38px;
-            max-height: 38px;
+          .error {
+            color: $red;
+            font-size: 12px;
+            font-weight: 200;
           }
-        }
-        .width-300 {
-          min-width: 300px !important;
-          max-width: 300px !important;
+          .width-300 {
+            min-width: 300px !important;
+            max-width: 300px !important;
+          }
         }
       }
     }
@@ -129,6 +148,36 @@
           font-weight: 100;
         }
       }
+    }
+  }
+}
+  .submit-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3em 0;
+    button:first-child {
+      width: 220px;
+      height: 35px;
+      background: $light-blue 0% 0% no-repeat padding-box;
+      box-shadow: $shadow-light-black-1;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      color: $white;
+      outline: none;
+      font-weight: bold;
+    }
+    button:last-child {
+      width: 120px;
+      height: 35px;
+      margin-left: 30px;
+      border-radius: 8px;
+      border: 1px solid $blue-1;
+      font-weight: 600;
+      font-size: 15px;
+      color: $blue-1;
+      outline: none;
     }
   }
 }

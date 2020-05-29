@@ -182,7 +182,7 @@ export class AppConfigService {
     }
   }
 
-  // To allow only Alphabetic Characters
+  // To allow only numbers
   onKeypressOnlyNumberic(event: any) {
     const inputChar = event.target.value;
     const regExp = /[^ 0-9]/g;
@@ -191,7 +191,7 @@ export class AppConfigService {
     }
   }
 
-  // To allow only Alphabetic Characters
+  // To allow only decimal Characters
   onKeypressOnlyDecimal(event: any) {
     const inputChar = event.target.value;
     const regExp = /[^ 0-9.]/g;

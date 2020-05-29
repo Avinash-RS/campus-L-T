@@ -12,4 +12,8 @@ export class ConfirmComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSubmit() {
+    console.log('submitted');
+
+  }
 }

@@ -3,7 +3,8 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 // import { NzSelectSizeType } from 'ng-zorro-antd/select';
 @Component({
   selector: 'app-educational-details',
@@ -38,16 +39,18 @@ export class EducationalDetailsComponent implements OnInit {
       value: 'other'
     }
   ];
+  educationForm: FormGroup;
+
   today = new Date();
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'yyyy/MM';
+
   disabledYears = (current: Date): boolean => {
     // Can not select days before today and today
     return differenceInCalendarDays(current, this.today) > 0;
-  };
+  }
 
 
-  educationForm: FormGroup;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -60,39 +63,71 @@ export class EducationalDetailsComponent implements OnInit {
     this.FormInitialization();
   }
 
+  onSubmit() {
+    if (this.educationForm.valid) {
+      console.log(this.educationForm.value);
+    } else {
+      this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
+    }
+
+  }
+
   FormInitialization() {
     this.educationForm = this.fb.group({
+      educationArr: this.fb.array([this.createItem()])
+    });
+  }
+  createItem(): FormGroup {
+    // /^[1-9][0-9]{9}$/;
+    const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
+    return this.fb.group({
       leveling: [null, [Validators.required]],
       board: [null, [Validators.required]],
       institute: [null, [Validators.required]],
       discipline: [null, [Validators.required]],
       specification: [null, [Validators.required]],
       passedYear: [null, [Validators.required]],
-      percentage: [null, [Validators.required]],
+      percentage: [null, [Validators.required, Validators.maxLength(5), Validators.pattern(onlyNumbers)]],
     });
   }
 
-  // Form Getters
-  get leveling() {
-    return this.educationForm.get('leveling');
+  removeEducationForm(i) {
+    this.eduArr.removeAt(i);
   }
-  get board() {
-    return this.educationForm.get('board');
+
+  addEducationForm() {
+    this.eduArr.push(this.createItem());
   }
-  get institute() {
-    return this.educationForm.get('institute');
-  }
-  get discipline() {
-    return this.educationForm.get('discipline');
-  }
-  get specification() {
-    return this.educationForm.get('specification');
-  }
-  get passedYear() {
-    return this.educationForm.get('passedYear');
-  }
-  get percentage() {
-    return this.educationForm.get('percentage');
-  }
+  // convenience getters for easy access to form fields
+  get eduArr() { return this.educationForm.get('educationArr') as FormArray; }
+
+
+  // To validate all fields after submit
+  validateAllFormArrays(formArray: FormArray) {
+    formArray.controls.forEach(formGroup => {
+      Object.keys(formGroup['controls']).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+          this.validateAllFields(control);
+        }
+      });
+
+    });
+}
+
+
+// To validate all fields after submit
+validateAllFields(formGroup: FormGroup) {
+  Object.keys(formGroup.controls).forEach(field => {
+    const control = formGroup.get(field);
+    if (control instanceof FormControl) {
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {
+      this.validateAllFields(control);
+    }
+  });
+}
 
 }
