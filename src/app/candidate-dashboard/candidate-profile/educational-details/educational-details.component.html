@@ -4,21 +4,40 @@
       <form [formGroup]="educationForm">
         <div class="form-wrapper">
           <div class="input-box">
-            <div class="dropdown">
-              <!-- <span>></span> -->
-              <input style="z-index: 3;" class="btn btn-primary dropdown-toggle" formControlName="leveling" type="button"
-                data-toggle="dropdown"><span style="cursor: pointer;" class="icon">></span>
-              <!-- <span>{{selecetedLevel ? selecetedLevel.name : ''}}</span> -->
-              <div class="dropdown-menu">
-                <a class="dropdown-item"
-                  [ngClass]="selecetedLevel && level.name === selecetedLevel.name ? 'active' : ''"
-                  (click)="selectedLevelMethod(level)" *ngFor="let level of level">
-                  {{level.name}}
-                </a>
-              </div>
-
-            </div>
+            <nz-select nzAllowClear nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
+              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+            </nz-select>
           </div>
+          <div class="input-box width-300">
+            <nz-select formControlName="board" nzAllowClear nzShowSearch nzPlaceHolder="Board/University">
+              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+            </nz-select>
+          </div>
+          <div class="input-box width-300">
+            <nz-select formControlName="institute" nzAllowClear nzShowSearch nzPlaceHolder="Institute">
+              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+            </nz-select>
+          </div>
+
+          <div class="input-box">
+            <nz-select formControlName="discipline" nzAllowClear nzShowSearch nzPlaceHolder="Discipline">
+              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+            </nz-select>
+          </div>
+
+          <div class="input-box">
+            <nz-select formControlName="specification" nzAllowClear nzShowSearch nzPlaceHolder="Specification">
+              <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+            </nz-select>
+          </div>
+          <div class="input-box">
+            <!-- <input placeholder="Year of passing" formControlName="passedYear" type="text" value=""> -->
+            <nz-month-picker [nzDisabledDate]="disabledYears" [nzFormat]="monthFormat" nzPlaceHolder="Year of passing"></nz-month-picker>
+          </div>
+          <div class="input-box">
+            <input placeholder="Percentage" formControlName="percentage" type="text" value="">
+          </div>
+
         </div>
       </form>
 

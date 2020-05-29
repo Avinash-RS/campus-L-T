@@ -26,9 +26,15 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/assets/images"
+              "src/assets/images",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
+              "./src/assets/css/ng-zorro-antd.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.scss"
             ],
@@ -100,6 +106,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.scss"
             ],
             "scripts": []

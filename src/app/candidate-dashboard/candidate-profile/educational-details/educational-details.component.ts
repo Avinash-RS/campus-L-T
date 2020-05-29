@@ -4,7 +4,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-
+// import { NzSelectSizeType } from 'ng-zorro-antd/select';
 @Component({
   selector: 'app-educational-details',
   templateUrl: './educational-details.component.html',
@@ -38,8 +38,15 @@ export class EducationalDetailsComponent implements OnInit {
       value: 'other'
     }
   ];
+  today = new Date();
+  dateFormat = 'yyyy/MM/dd';
+  monthFormat = 'yyyy/MM';
+  disabledYears = (current: Date): boolean => {
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.today) > 0;
+  };
 
-  selecetedLevel: any;
+
   educationForm: FormGroup;
   constructor(
     private appConfig: AppConfigService,
@@ -53,14 +60,39 @@ export class EducationalDetailsComponent implements OnInit {
     this.FormInitialization();
   }
 
-  selectedLevelMethod(level) {
-    this.selecetedLevel = level;
-    this.educationForm.get('leveling').setValue(level.name);
-  }
-
   FormInitialization() {
     this.educationForm = this.fb.group({
-      leveling: ['', [Validators.required]]
+      leveling: [null, [Validators.required]],
+      board: [null, [Validators.required]],
+      institute: [null, [Validators.required]],
+      discipline: [null, [Validators.required]],
+      specification: [null, [Validators.required]],
+      passedYear: [null, [Validators.required]],
+      percentage: [null, [Validators.required]],
     });
   }
+
+  // Form Getters
+  get leveling() {
+    return this.educationForm.get('leveling');
+  }
+  get board() {
+    return this.educationForm.get('board');
+  }
+  get institute() {
+    return this.educationForm.get('institute');
+  }
+  get discipline() {
+    return this.educationForm.get('discipline');
+  }
+  get specification() {
+    return this.educationForm.get('specification');
+  }
+  get passedYear() {
+    return this.educationForm.get('passedYear');
+  }
+  get percentage() {
+    return this.educationForm.get('percentage');
+  }
+
 }
