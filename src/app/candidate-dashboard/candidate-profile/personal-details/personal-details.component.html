@@ -52,12 +52,10 @@
       <div class="flex-box">
         <label>Gender</label>
         <div class="input-box-radio">
-          <input formControlName="gender" type="radio" class="radio-button" name="gender" value="male"> <span
-            class="text-right">Male</span>
-          <!-- </div> -->
-          <!-- <div class="input-box"> -->
-          <input formControlName="gender" type="radio" class="radio-button" name="gender" value="female"> <span
-            class="text">Female</span>
+          <nz-radio-group formControlName="gender">
+            <label nz-radio nzValue="Male">Male</label>
+            <label nz-radio nzValue="Female">Female</label>
+          </nz-radio-group>
         </div>
       </div>
       <div class="error" *ngIf="gender.invalid && gender.touched">
@@ -72,12 +70,10 @@
       <div class="flex-box">
         <label>Marital Status</label>
         <div class="input-box-radio">
-          <input formControlName="marital" type="radio" class="radio-button" name="marital" value="married"> <span
-            class="text-right">Married</span>
-          <!-- </div> -->
-          <!-- <div class="input-box"> -->
-          <input formControlName="marital" type="radio" class="radio-button" name="marital" value="unmarried"> <span
-            class="text">Unmarried</span>
+          <nz-radio-group formControlName="marital">
+            <label nz-radio nzValue="Married">Married</label>
+            <label nz-radio nzValue="Unmarried">Unmarried</label>
+          </nz-radio-group>
         </div>
       </div>
       <div class="error" *ngIf="marital.invalid && marital.touched">
@@ -92,47 +88,26 @@
       <div class="flex-box">
         <label for="dob">Date of Birth</label>
         <div class="input-box-dob">
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button"
-              data-toggle="dropdown"><span>{{dateValue ? dateValue.date : 'dd'}}</span></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" [ngClass]="dateValue && date.date === dateValue.date ? 'active' : ''"
-                (click)="selectedDate(date)" *ngFor="let date of date">
-                {{date.date}}
-              </a>
-            </div>
-          </div>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button"
-              data-toggle="dropdown"><span>{{monthValue ? monthValue.month : 'mm'}}</span></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" [ngClass]="monthValue && month.month === monthValue.month ? 'active' : ''"
-                (click)="selectedMonth(month)" *ngFor="let month of month">
-                {{month.month}}
-              </a>
-            </div>
-          </div>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button"
-              data-toggle="dropdown"><span>{{yearValue ? yearValue.year : 'yyyy'}}</span></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" [ngClass]="yearValue && year.year === yearValue.year ? 'active' : ''"
-                (click)="selectedYear(year)" *ngFor="let year of year">
-                {{year.year}}
-              </a>
-            </div>
-          </div>
 
-
-
+          <nz-select formControlName="dobDate" nzAllowClear nzShowSearch nzPlaceHolder="DD">
+            <nz-option *ngFor="let date of date" [nzLabel]="date.date" [nzValue]="date.date"></nz-option>
+          </nz-select>
+          <nz-select formControlName="dobMonth" nzAllowClear nzShowSearch nzPlaceHolder="MM">
+            <nz-option *ngFor="let month of month" [nzLabel]="month.month" [nzValue]="month.month"></nz-option>
+          </nz-select>
+          <nz-select formControlName="dobYear" nzAllowClear nzShowSearch nzPlaceHolder="YYYY">
+            <nz-option *ngFor="let year of year" [nzLabel]="year.year" [nzValue]="year.year"></nz-option>
+          </nz-select>
         </div>
       </div>
-      <div class="error" *ngIf="validateOnSubmit && (!dateValue || !monthValue || !yearValue)">
+      <div class="error"
+        *ngIf="(dobDate.invalid && dobDate.touched) || (dobMonth.invalid && dobMonth.touched) || (dobYear.invalid && dobYear.touched)">
         <div>
           &#160;
         </div>
         <div>
-          <span>Date of Birth is Required</span>
+          <span *ngIf="dobDate.errors?.required || dobMonth.errors?.required || dobYear.errors?.required">Date of Birth
+            is Invalid</span>
         </div>
       </div>
 
@@ -155,41 +130,50 @@
       <div class="flex-box">
         <label>Category</label>
         <div class="input-box">
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button"
-              data-toggle="dropdown"><span>{{categoryValue ? categoryValue.name : 'Please select form Dropdown' }}</span></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" [ngClass]="categoryValue && caste.caste === categoryValue.caste ? 'active' : ''"
-                (click)="selectedCode(caste)" *ngFor="let caste of category">
-                {{caste.name}}
-              </a>
-            </div>
-          </div>
+          <nz-select formControlName="category" nzAllowClear nzShowSearch>
+            <nz-option *ngFor="let caste of category" [nzLabel]="caste.name" [nzValue]="caste.caste"></nz-option>
+          </nz-select>
         </div>
       </div>
-      <div class="error" *ngIf="validateOnSubmit && (!categoryValue)">
+      <div class="error" *ngIf="categories.invalid && categories.touched">
         <div>
           &#160;
         </div>
         <div>
-          <span>Category is Required</span>
+          <span *ngIf="categories.errors?.required">Category is Required</span>
         </div>
       </div>
-
 
     </div>
   </form>
   <div class="second-child">
     <div class="photo-wrapper">
       <div class="profile-pic-container">
-        <img src="assets/images/camera.svg" alt="" srcset="">
-        <input type="file" name="profile" id="profile">
+        <div *ngIf="url" matTooltip="Remove Photo" matTooltipPostion="after" (click)="delete()" class="remove">
+          <span style="font-size: 30px;" class="material-icons">
+            cancel
+          </span>
+        </div>
+
+        <label class="hoverable" for="fileInput">
+          <!-- (load)="afterImgLoad()" -->
+          <img [ngClass]="!url ? 'default' : 'profile'" [src]="url ? url : 'assets/images/camera.svg'"
+            alt="" srcset="">
+        </label>
+        <input [matTooltip]="url ? 'Click to Change Photo' : 'No File Chosen'" matTooltipPostion="after" title=""
+          (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept="image/*"
+          (change)="onSelectFile($event)">
       </div>
-      <div class="info-text">
+      <div *ngIf="!url" class="info-text">
         <span><img src="assets/images/MaskGroup1.png" height="25px" width="25px" alt="" srcset=""></span> <span>Click
           and Add your photo here</span>
       </div>
+      <div *ngIf="(showSizeError && showSizeError.size) || (showSizeError && showSizeError.image)" class="sizeError">
+        {{(showSizeError.size ? 'Maximum File Size: 5MB!' : 'Valid File Format is PNG or JPEG')}}
+      </div>
+
     </div>
+
   </div>
 </div>
 <form [formGroup]="presentAddressForm">
@@ -216,6 +200,9 @@
             <div class="input-box">
               <input formControlName="presentAddress2" type="text" value="">
             </div>
+            <div class="error" *ngIf="presentAddress2.invalid && presentAddress2.touched">
+                <span *ngIf="presentAddress2.errors?.required">Address is Required</span>
+              </div>
 
           </div>
           <div class="input-boxes-2">
@@ -233,42 +220,21 @@
           <div class="input-boxes-1">
             <label>City</label>
             <div class="input-box">
-              <input #citytrigger="matAutocompleteTrigger" type="text" placeholder="" formControlName="presentCity"
-                [matAutocomplete]="auto"><span (click)="openDropdown($event, citytrigger)" class="material-icons">
-                arrow_drop_down
-              </span>
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="citydisplayFn">
-                <!-- <cdk-virtual-scroll-viewport itemSize="50" class="viewport"> -->
-                <mat-option *ngFor="let city of filteredCities | async" [value]="city">
-                  {{city.City}}
-                </mat-option>
-                <!-- </cdk-virtual-scroll-viewport> -->
-              </mat-autocomplete>
+              <nz-select formControlName="presentCity" nzAllowClear nzShowSearch>
+                <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
+              </nz-select>
             </div>
             <div class="error" *ngIf="presentCity.invalid && presentCity.touched">
               <span *ngIf="presentCity.errors?.required">City is Required</span>
-              <span *ngIf="!presentCity.errors?.required && presentCity.errors?.dropdownNotMatch">Please select
-                the
-                city from drop down</span>
             </div>
 
           </div>
           <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <input #statetrigger="matAutocompleteTrigger" type="text" placeholder="" formControlName="presentState"
-                [matAutocomplete]="stateMat"><span (click)="openDropdown($event, statetrigger)" class="material-icons">
-                arrow_drop_down
-              </span>
-
-              <mat-autocomplete #stateMat="matAutocomplete" [displayWith]="statedisplayFn">
-                <!-- <cdk-virtual-scroll-viewport itemSize="50" class="viewport"> -->
-                <mat-option *ngFor="let state of filteredStates | async" [value]="state">
-                  {{state.state}}
-                </mat-option>
-                <!-- </cdk-virtual-scroll-viewport> -->
-              </mat-autocomplete>
-
+              <nz-select formControlName="presentState" nzAllowClear nzShowSearch>
+                <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
+              </nz-select>
             </div>
             <div class="error" *ngIf="presentState.invalid && presentState.touched">
               <span *ngIf="presentState.errors?.required">State is Required</span>
@@ -308,6 +274,9 @@
             <div class="input-box">
               <input formControlName="permanentAddress2" type="text" value="">
             </div>
+            <div class="error" *ngIf="permanentAddress2.invalid && permanentAddress2.touched">
+                <span *ngIf="permanentAddress2.errors?.required">Address Required</span>
+              </div>
 
           </div>
           <div class="input-boxes-2">
@@ -324,18 +293,9 @@
           <div class="input-boxes-1">
             <label>City</label>
             <div class="input-box">
-              <input #permanentcitytrigger="matAutocompleteTrigger" type="text" placeholder=""
-                formControlName="permanentCity" [matAutocomplete]="permanentauto"><span
-                (click)="openDropdown($event, permanentcitytrigger)" class="material-icons">
-                arrow_drop_down
-              </span>
-              <mat-autocomplete #permanentauto="matAutocomplete" [displayWith]="permanentcitydisplayFn">
-                <!-- <cdk-virtual-scroll-viewport itemSize="50" class="viewport"> -->
-                <mat-option *ngFor="let city of permanentfilteredCities | async" [value]="city">
-                  {{city.City}}
-                </mat-option>
-                <!-- </cdk-virtual-scroll-viewport> -->
-              </mat-autocomplete>
+              <nz-select formControlName="permanentCity" nzAllowClear nzShowSearch>
+                <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
+              </nz-select>
             </div>
             <div class="error" *ngIf="permanentCity.invalid && permanentCity.touched">
               <span *ngIf="permanentCity.errors?.required">City is Required</span>
@@ -348,19 +308,9 @@
           <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <input #permanentstatetrigger="matAutocompleteTrigger" type="text" placeholder=""
-                formControlName="permanentState" [matAutocomplete]="permanentstateMat"><span
-                (click)="openDropdown($event, permanentstatetrigger)" class="material-icons">
-                arrow_drop_down
-              </span>
-
-              <mat-autocomplete #permanentstateMat="matAutocomplete" [displayWith]="permanentstatedisplayFn">
-                <!-- <cdk-virtual-scroll-viewport itemSize="50" class="viewport"> -->
-                <mat-option *ngFor="let state of permanentfilteredStates | async" [value]="state">
-                  {{state.state}}
-                </mat-option>
-                <!-- </cdk-virtual-scroll-viewport> -->
-              </mat-autocomplete>
+              <nz-select formControlName="permanentState" nzAllowClear nzShowSearch>
+                <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
+              </nz-select>
             </div>
             <div class="error" *ngIf="permanentState.invalid && permanentState.touched">
               <span *ngIf="permanentState.errors?.required">State is Required</span>
@@ -401,15 +351,26 @@
           <div class="input-boxes-4">
             <div class="input-box">
               <label> Read</label>
-              <input formControlName="firstRead" type="checkbox" value="">
+
+              <div class="custom-control custom-checkbox checkbox-xl">
+                <input formControlName="firstRead" type="checkbox" class="custom-control-input" id="checkbox-one">
+                <label class="custom-control-label" for="checkbox-one">&#160;</label>
+              </div>
+
             </div>
             <div class="input-box">
               <label> Write</label>
-              <input formControlName="firstWrite" type="checkbox" value="">
+              <div class="custom-control custom-checkbox checkbox-xl">
+                <input formControlName="firstWrite" type="checkbox" class="custom-control-input" id="checkbox-two">
+                <label class="custom-control-label" for="checkbox-two">&#160;</label>
+              </div>
             </div>
             <div class="input-box">
               <label> Speak</label>
-              <input formControlName="firstSpeak" type="checkbox" value="">
+              <div class="custom-control custom-checkbox checkbox-xl">
+                <input formControlName="firstSpeak" type="checkbox" class="custom-control-input" id="checkbox-three">
+                <label class="custom-control-label" for="checkbox-three">&#160;</label>
+              </div>
             </div>
           </div>
           <div style="margin: 0; padding: 0; display: flex; pointer-events: none;">
@@ -429,13 +390,25 @@
 
             <div class="input-boxes-4">
               <div class="input-box">
-                <input formControlName="read" type="checkbox" value="">
+                <div class="custom-control custom-checkbox checkbox-xl">
+                  <input formControlName="read" type="checkbox" class="custom-control-input" [id]="i + 'one'">
+                  <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
+                </div>
+
               </div>
               <div class="input-box">
-                <input formControlName="write" type="checkbox" value="">
+                <div class="custom-control custom-checkbox checkbox-xl">
+                  <input formControlName="write" type="checkbox" class="custom-control-input" [id]="i + 'two'">
+                  <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
+                </div>
+
               </div>
               <div class="input-box">
-                <input formControlName="speak" type="checkbox" value="">
+                <div class="custom-control custom-checkbox checkbox-xl">
+                  <input formControlName="speak" type="checkbox" class="custom-control-input" [id]="i + 'three'">
+                  <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
+                </div>
+
               </div>
 
             </div>
@@ -472,6 +445,7 @@
         </div>
         <div class="error" *ngIf="passportNumber.invalid && passportNumber.touched">
           <span *ngIf="passportNumber.errors?.required">Passport Number is Required</span>
+          <span *ngIf="passportNumber.errors?.pattern">Only Numbers is Allowed</span>
         </div>
 
       </div>
@@ -531,7 +505,6 @@
             [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <!-- <input formControlName="passportValid" type="text" value=""> -->
         </div>
         <div class="error" *ngIf="passportValid.invalid && passportValid.touched">
           <span *ngIf="passportValid.errors?.required">Expiry Date is Required</span>
@@ -595,6 +568,7 @@
         </div>
         <div class="error" *ngIf="daysofIll.invalid && daysofIll.touched">
           <span *ngIf="daysofIll.errors?.required">No. of days is Required</span>
+          <span *ngIf="daysofIll.errors?.pattern">Only Numbers is Allowed</span>
         </div>
 
       </div>
@@ -634,6 +608,7 @@
         </div>
         <div class="error" *ngIf="height.invalid && height.touched">
           <span *ngIf="height.errors?.required">Height is Required</span>
+          <span *ngIf="height.errors?.pattern">Numeric Decimals only Allowed</span>
         </div>
 
       </div>
@@ -646,6 +621,7 @@
         </div>
         <div class="error" *ngIf="weight.invalid && weight.touched">
           <span *ngIf="weight.errors?.required">Weight is Required</span>
+          <span *ngIf="weight.errors?.pattern">Numeric Decimals only Allowed</span>
         </div>
 
       </div>
@@ -676,9 +652,11 @@
         </div>
         <div class="error" *ngIf="left.invalid && left.touched">
           <span *ngIf="left.errors?.required">Eye Power Left is Required</span>
+          <span *ngIf="left.errors?.pattern">Numeric Decimals only Allowed</span>
         </div>
         <div class="error" *ngIf="right.invalid && right.touched">
           <span *ngIf="right.errors?.required">Eye Power Right is Required</span>
+          <span *ngIf="right.errors?.pattern">Numeric Decimals only Allowed</span>
         </div>
 
       </div>
@@ -687,7 +665,9 @@
 </div>
 
 <div class="submit-button-wrapper">
-  <button (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)" mat-raised-button type="submit">Save and Continue</button>
+  <button
+    (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)"
+    mat-raised-button type="submit">Save and Continue</button>
 
   <button mat-raised-button type="button">Cancel</button>
 

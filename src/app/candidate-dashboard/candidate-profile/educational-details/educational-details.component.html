@@ -88,8 +88,8 @@
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('percentage').invalid && eduArr.controls[i].get('percentage').touched">
                   <span *ngIf="eduArr.controls[i].get('percentage').errors?.required">Percentage is Required</span>
-                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Only Numbers is allowed</span>
-                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.maxlength">Invalid</span>
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Numeric Decimals only allowed</span>
+                  <span *ngIf="!eduArr.controls[i].get('percentage').errors?.pattern && eduArr.controls[i].get('percentage').errors?.maxlength">Invalid Percentsage</span>
                 </div>
 
               </div>

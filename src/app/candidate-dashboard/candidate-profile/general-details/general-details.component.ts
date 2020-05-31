@@ -4,6 +4,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-general-details',
@@ -33,6 +34,7 @@ export class GeneralDetailsComponent implements OnInit {
   onSubmit() {
     if (this.aquaintancesForm.valid && this.skillForm.valid) {
       console.log(this.aquaintancesForm.value);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     } else {
       this.validateAllFormArrays(this.aquaintancesForm.get('relativesArr') as FormArray);
       this.validateAllFormArrays(this.skillForm.get('skillsArr') as FormArray);
@@ -52,16 +54,16 @@ export class GeneralDetailsComponent implements OnInit {
     // /^[1-9][0-9]{9}$/;
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     return this.fb.group({
-      names: [null, [Validators.required]],
-      relationship: [null, [Validators.required]],
-      position: [null, [Validators.required]],
-      company: [null, [Validators.required]],
+      names: [null],
+      relationship: [null],
+      position: [null],
+      company: [null],
     });
   }
 
   createSkillForm(): FormGroup {
     return this.fb.group({
-      skill: [null, [Validators.required]],
+      skill: [null],
     });
   }
 

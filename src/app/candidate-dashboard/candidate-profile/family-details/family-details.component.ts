@@ -4,6 +4,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-family-details',
@@ -30,6 +31,7 @@ export class FamilyDetailsComponent implements OnInit {
 
   onSubmit() {
     if (this.familyForm.valid) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS);
       console.log(this.familyForm.value);
     } else {
       this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
@@ -45,10 +47,10 @@ export class FamilyDetailsComponent implements OnInit {
     // /^[1-9][0-9]{9}$/;
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     return this.fb.group({
-      names: [null, [Validators.required]],
-      dob: [null, [Validators.required]],
-      relationship: [null, [Validators.required]],
-      occupation: [null, [Validators.required]],
+      names: [null],
+      dob: [null],
+      relationship: [null],
+      occupation: [null],
     });
   }
 
@@ -57,7 +59,12 @@ export class FamilyDetailsComponent implements OnInit {
   }
 
   addfamilyForm() {
-    this.familyArr.push(this.createItem());
+    if (this.familyForm.valid) {
+      this.familyArr.push(this.createItem());
+    } else {
+      this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
+    }
+
   }
   // convenience getters for easy access to form fields
   get familyArr() { return this.familyForm.get('familyArr') as FormArray; }

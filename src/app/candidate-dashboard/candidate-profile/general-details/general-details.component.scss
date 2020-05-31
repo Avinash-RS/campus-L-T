@@ -17,16 +17,17 @@
     margin: 0 0 0 2em;
     .text {
       color: $light-black;
-      padding: 0 0 1em 0;
+      padding: 0 0 0em 0;
       font-size: 17px;
     }
     .skill-form {
       display: flex;
+      flex-wrap: wrap;
       width: auto;
       .skill-group {
         align-items: center;
         display: flex;
-        margin: 0 0 0 1em;
+        margin: 1em 0 0 0em;
         // flex: auto;
         flex-direction: row;
         width: auto;
@@ -82,7 +83,7 @@
         }
       }
       .skill-group:first-child {
-        margin: 0 0 0 0em !important;
+        margin: 1em 0 0 0em !important;
       }
     }
   }

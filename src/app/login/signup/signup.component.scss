@@ -1,6 +1,6 @@
 @import "../../themes/themes.scss";
 
-.main-wrapper {
+.main-wrapper-login {
   background: url(../../../assets/images/BackgroundImage1.png);
   background-size: cover;
   background-repeat: repeat-y;
@@ -38,8 +38,8 @@
   }
 }
 
-@media only screen and (max-height: 768px) {
-  .main-wrapper {
+@media only screen and (max-height: 600px) {
+  .main-wrapper-login {
     height: 768px;
     align-items: center;
   }

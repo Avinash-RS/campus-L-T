@@ -5,6 +5,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 // import { NzSelectSizeType } from 'ng-zorro-antd/select';
 @Component({
   selector: 'app-educational-details',
@@ -65,6 +66,7 @@ export class EducationalDetailsComponent implements OnInit {
 
   onSubmit() {
     if (this.educationForm.valid) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS);
       console.log(this.educationForm.value);
     } else {
       this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
@@ -80,6 +82,7 @@ export class EducationalDetailsComponent implements OnInit {
   createItem(): FormGroup {
     // /^[1-9][0-9]{9}$/;
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
+    const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     return this.fb.group({
       leveling: [null, [Validators.required]],
       board: [null, [Validators.required]],
@@ -87,7 +90,7 @@ export class EducationalDetailsComponent implements OnInit {
       discipline: [null, [Validators.required]],
       specification: [null, [Validators.required]],
       passedYear: [null, [Validators.required]],
-      percentage: [null, [Validators.required, Validators.maxLength(5), Validators.pattern(onlyNumbers)]],
+      percentage: [null, [Validators.required, Validators.maxLength(5), Validators.pattern(numberDecimals)]],
     });
   }
 
@@ -96,7 +99,11 @@ export class EducationalDetailsComponent implements OnInit {
   }
 
   addEducationForm() {
-    this.eduArr.push(this.createItem());
+    if (this.educationForm.valid) {
+      this.eduArr.push(this.createItem());
+    } else {
+      this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
+    }
   }
   // convenience getters for easy access to form fields
   get eduArr() { return this.educationForm.get('educationArr') as FormArray; }

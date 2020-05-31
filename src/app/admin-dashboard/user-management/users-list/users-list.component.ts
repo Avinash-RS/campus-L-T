@@ -32,6 +32,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   // }
   selectedUserDetail: any;
   userList: any;
+  radioCheck;
 
   constructor(
     private appConfig: AppConfigService,

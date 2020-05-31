@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: 'app-confirm',
@@ -7,12 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private appConfig: AppConfigService
+  ) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
+    this.appConfig.success('Profile Updated Successfully', '');
     console.log('submitted');
 
   }

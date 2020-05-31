@@ -8,22 +8,32 @@
 .main-wrapper {
   margin: 0em 0 0 0;
   padding: 2em 3em 2em 2em;
+  overflow: auto;
+
   .heading-grid {
-    padding: 0.25em 0 0.5em 1em;
+    // padding: 0.25em 0 0.5em 1em;
+    box-shadow: $shadow-light-black;
     display: grid;
-    justify-content: center;
-    height: 55px;
+    // justify-content: center;
+    min-height: 55px;
     align-items: center;
     grid-template-columns: 3fr 2fr 2fr 2fr;
     background: $blue-5 0% 0% no-repeat padding-box;
-    box-shadow: $shadow-light-black;
+    // box-shadow: $shadow-light-black;
     text-align: center;
     color: $light-black;
     font-size: 17px;
     font-weight: 200;
     position: relative;
     div {
+      min-height: 55px;
+      min-width: 150px;
       position: relative;
+      background: $blue-5 0% 0% no-repeat padding-box;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+
       span {
         font-size: 24px;
         top: 0x;
@@ -50,10 +60,13 @@
       font-weight: 100;
       position: relative;
       div {
+        min-width: 150px;
+        max-width: 90%;
         // width: 100%;
         align-items: center;
-        margin: 0 1em 0 1em;
-        nz-date-picker,input {
+        margin: 0 0em 0 1em;
+        nz-date-picker,
+        input {
           display: flex;
           align-items: center;
           margin: 0 !important;
@@ -78,22 +91,20 @@
       }
       div:first-child {
         margin-left: 0 !important;
-        margin-right: 0.25em !important;
-      }
-      .text-2 {
-        margin-left: 2em !important;
+        margin-right: 0em !important;
+        max-width: 96%;
       }
       div:last-child {
         margin-right: 0 !important;
       }
       .remove {
-      color: $red;
-      cursor: pointer;
-      height: 25px;
-      position: absolute;
-      right: -14px;
-      top: 10px;
-      padding: 0 0 0 .25em;
+        color: $red;
+        cursor: pointer;
+        height: 25px;
+        position: absolute;
+        right: -14px;
+        top: 10px;
+        padding: 0 0 0 0.25em;
       }
     }
   }
@@ -143,5 +154,4 @@
       outline: none;
     }
   }
-
 }

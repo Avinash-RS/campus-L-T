@@ -141,6 +141,83 @@ body {
   }
 }
 
+.checkbox-lg .custom-control-label::before,
+.checkbox-lg .custom-control-label::after {
+  top: 0.8rem;
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.checkbox-lg .custom-control-label {
+  padding-top: 13px;
+  padding-left: 6px;
+}
+
+.checkbox-xl .custom-control-label::before,
+.checkbox-xl .custom-control-label::after {
+  top: 1.2rem;
+  width: 1.85rem;
+  height: 1.85rem;
+  outline: 0;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.checkbox-xl .custom-control-label {
+  padding-top: 23px;
+  padding-left: 10px;
+  position: relative;
+  bottom: 10px;
+  outline: 0;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.custom-control-input {
+  position: absolute;
+  top: 20px;
+}
+
+.ant-radio-inner {
+  width: 15px;
+  height: 15px;
+  border-color: $secondary !important;
+}
+.ant-radio-group {
+  display: flex;
+}
+
+.ant-radio-wrapper {
+  display: flex;
+  align-items: center;
+}
+span.ant-radio + * {
+  padding-right: 8px;
+  padding-left: 8px;
+  font-weight: 100;
+  font-size: 17px;
+  color: $secondary;
+}
+.ant-select-selection {
+  width: 100% !important;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+.ant-select-selection__rendered {
+  overflow: hidden !important;
+  width: 100%;
+}
+.ant-select-selection-selected-value {
+  padding-right: 10px !important;
+}
+
 button:focus {
   outline: none !important;
 }
@@ -149,17 +226,35 @@ button:focus {
   margin-left: -0.25em;
   color: $primary;
 }
-.anticon.ant-select-arrow-icon {
-  // background: black !important;
-  color: white;
-  background-image: url(^assets/images/path.svg);
-  z-index: 4;
-  width: 13px;
-  height: 15px;
-  padding: 0 0em 0 -0.25em;
-  background-position: center;
-  background-repeat: no-repeat;
+.ant-select-arrow {
+  position: absolute;
+}
+.anticon.ant-select-arrow-icon::after {
+  // .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  margin-top: 0.25em;
+  border-top: 0.5em solid;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0;
+  border-left: 0.4em solid transparent;
+  color: $primary;
+  opacity: 0.9;
+  // // background: black !important;
+  // color: white;
+  // background-image: url(^assets/images/path.svg);
+  // z-index: 4;
+  // width: 13px;
+  // height: 15px;
+  // padding: 0 0em 0 -0.25em;
+  // background-position: center;
+  // background-repeat: no-repeat;
+}
+.ant-select-arrow-icon {
   svg {
+    display: none !important;
     visibility: hidden !important;
   }
 }
@@ -234,18 +329,21 @@ button:focus {
 .grid-wrapper-1,
 .grid-wrapper-languages,
 .bottom-form-wrapper {
+  nz-select.ng-invalid.ng-touched,
   input.ng-invalid.ng-touched {
     border: solid $red 1px !important;
   }
 }
 .mainwrapper {
-  input.ng-invalid.ng-touched,nz-month-picker.ng-invalid.ng-touched,
+  input.ng-invalid.ng-touched,
+  nz-month-picker.ng-invalid.ng-touched,
   nz-select.ng-invalid.ng-touched {
     border: solid $red 1px !important;
   }
 }
 .main-wrapper {
-  input.ng-invalid.ng-touched,nz-month-picker.ng-invalid.ng-touched,
+  input.ng-invalid.ng-touched,
+  nz-month-picker.ng-invalid.ng-touched,
   nz-select.ng-invalid.ng-touched {
     border: solid $red 1px !important;
   }
@@ -257,6 +355,9 @@ button:focus {
   }
   .ant-calendar-picker-icon {
     right: 0;
+  }
+  .ant-calendar-picker-clear {
+    right: 0px !important;
   }
 }
 
@@ -322,4 +423,10 @@ button:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: transparent linear-gradient(90deg, #e2dcdc 0%, #8f8f8f 100%) 0% 0%
     no-repeat padding-box;
+}
+.qualify-wrapper {
+  ::-webkit-scrollbar {
+    width: 8px;
+    display: none;
+  }
 }

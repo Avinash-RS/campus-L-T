@@ -53,7 +53,7 @@ export class CandidateRegisterComponent implements OnInit {
         // name: [{ value: this.candidateForm.value.name }],
         // mail: [{ value: this.candidateForm.value.email }],
         // pass: [{value: this.candidateForm.value.password}]
-        // field_registration_role: [{ target_id: 'candidate' }],
+        field_registration_role: [{ target_id: 'candidate' }],
         name: this.candidateForm.value.name,
         mail: this.candidateForm.value.email,
         pass: this.candidateForm.value.password

@@ -53,10 +53,13 @@
 
       <ng-container matColumnDef="checked">
         <th mat-header-cell *matHeaderCellDef> Select </th>
-        <mat-cell *matCellDef="let element">
-          <input style="margin-top: 1.2em; outline: none;" name="user" [value]="element.roles_target_id"
-            (change)="selectedUser(element)" type="radio">
-        </mat-cell>
+        <td *matCellDef="let element">
+            <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
+                <label nz-radio [nzValue]="element.uid"></label>
+              </nz-radio-group>
+          <!-- <input style="margin-top: 1.2em; outline: none;" name="user" [value]="element.roles_target_id"
+            (change)="selectedUser(element)" type="radio"> -->
+          </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

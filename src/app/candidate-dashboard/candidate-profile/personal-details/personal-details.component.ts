@@ -17,8 +17,10 @@ import { MatMomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { Moment } from 'moment';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
-const moment =  _moment;
+const moment = _moment;
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -71,11 +73,10 @@ export class PersonalDetailsComponent implements OnInit {
       caste: 'mbc'
     },
     {
-      name: 'OC',
+      name: 'OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC ',
       caste: 'oc'
     },
   ];
-  categoryValue;
 
   date = [
     { date: '01' }, { date: '02' }, { date: '03' }, { date: '04' }, { date: '05' }, { date: '06' }, { date: '07' }, { date: '08' }, { date: '09' }, { date: '10' }, { date: '11' }, { date: '12' }, { date: '13' }, { date: '14' }, { date: '15' }, { date: '16' }, { date: '17' }, { date: '18' }, { date: '19' }, { date: '20' }, { date: '21' }, { date: '22' }, { date: '23' }, { date: '24' }, { date: '25' }, { date: '26' }, { date: '27' }, { date: '28' }, { date: '29' }, { date: '30' }, { date: '31' }
@@ -86,19 +87,12 @@ export class PersonalDetailsComponent implements OnInit {
   year = [
     { year: '1985' }, { year: '1986' }, { year: '1987' }, { year: '1988' }, { year: '1989' }, { year: '1990' }, { year: '1991' }, { year: '1992' }, { year: '1993' }, { year: '1994' }, { year: '1995' }, { year: '1996' }, { year: '1997' }, { year: '1998' }, { year: '1999' }, { year: '2000' }, { year: '2001' }, { year: '2002' }
   ];
-  dateValue: any;
-  monthValue: any;
-  yearValue: any;
 
   // Non-FormControl Fields
   validateOnSubmit = false;
-
+  checked = false;
+  radioValue;
   // State and City
-  filteredCities: Observable<any[]>;
-  filteredStates: Observable<any[]>;
-  permanentfilteredCities: Observable<any[]>;
-  permanentfilteredStates: Observable<any[]>;
-  openDrop = false;
   allCities: any;
   allStates: any;
   allPermanentCities: any;
@@ -117,12 +111,19 @@ export class PersonalDetailsComponent implements OnInit {
   passportValidminDate: Date;
   passportValidmaxDate: Date;
   healthForm: FormGroup;
+  selectedImage: any;
+  url: string;
+  showSizeError = {
+    image: false,
+    size: false
+  };
 
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
+    private candidateService: CandidateMappersService,
     private fb: FormBuilder
   ) {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -134,9 +135,14 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.FormsInitialization();
+    // if (!this.appConfig.getLocalData('allStates') || !this.appConfig.getLocalData('allCities')) {
     this.cityAPI();
     this.stateAPI();
-    this.FormsInitialization();
+    // } else {
+    //   this.allCities = JSON.parse(this.appConfig.getLocalData('allCities'));
+    //   this.allStates = JSON.parse(this.appConfig.getLocalData('allStates'));
+    // }
   }
   preventDate(e, datepicker: MatDatepicker<Moment>) {
     datepicker.open();
@@ -159,14 +165,8 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    /* Validate on submit properties
-      dateValue: any;
-      monthValue: any;
-      yearValue: any;
-      categoryValue: any;
-    */
     if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
-      && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && this.dateValue && this.monthValue && this.yearValue && this.categoryValue && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
+      && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
       console.log('passed');
       console.log(this.upToCategoryForm.value);
       console.log(this.presentAddressForm.value);
@@ -174,11 +174,69 @@ export class PersonalDetailsComponent implements OnInit {
       console.log(this.languagesForm.value);
       console.log(this.passportForm.value);
       console.log(this.healthForm.value);
-      console.log(this.dateValue, this.monthValue, this.yearValue);
-      console.log(this.categoryValue);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
+      const apiData = {
+        type: 'candidate',
 
+        uid: [
+          {
+            target_id: this.appConfig.getLocalData('userId')
+          }
+        ],
+        field_name: { value: this.upToCategoryForm.value.name ? this.upToCategoryForm.value.name : '' },
+        field_email: { value: this.upToCategoryForm.value.mail ? this.upToCategoryForm.value.mail : '' },
+        field_mobile: { value: this.upToCategoryForm.value.mobile ? this.upToCategoryForm.value.mobile : '' },
+        field_gender: { value: this.upToCategoryForm.value.gender ? this.upToCategoryForm.value.gender : '' },
+        field_mariatal_status: { value: this.upToCategoryForm.value.marital ? this.upToCategoryForm.value.marital : '' },
+        field_dob: { value: moment(`${this.upToCategoryForm.value.dobYear}-${this.upToCategoryForm.value.dobMonth}-${this.upToCategoryForm.value.dobDate}`).format() },
+        field_nationality: { value: this.upToCategoryForm.value.nationality ? this.upToCategoryForm.value.nationality : '' },
+        field_category: { value: this.upToCategoryForm.value.category ? this.upToCategoryForm.value.category : '' },
+        field_present_line_street_addres: { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' },
+        field_present_line2_street_addre: { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' },
+        field_present_zip: { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' },
+        field_preset_city: { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' },
+        field_present_state: { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' },
+        field_permanent_line1_street_add: { value: this.permanentAddressForm.value.permanentAddress1 ? this.permanentAddressForm.value.permanentAddress1 : '' },
+        field_permanent_line2_street_add: { value: this.permanentAddressForm.value.permanentAddress2 ? this.permanentAddressForm.value.permanentAddress2 : '' },
+        field_permanent_zip: { value: this.permanentAddressForm.value.permanentZipCode ? this.permanentAddressForm.value.permanentZipCode : '' },
+        field_permanent_city: { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' },
+        field_permanent_state: { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' },
+        field_language_known: { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' },
 
+        field_language1: [{ value: this.languagesForm.value.firstRead ? 'read' : 'read' }, { value: this.languagesForm.value.firstWrite ? 'write' : 'write' }, { value: this.languagesForm.value.firstSpeak ? 'speak' : 'speak' }],
+
+        field_passport_number: { value: this.passportForm.value.passportNumber ? this.passportForm.value.passportNumber : '' },
+        field_name_as_in_passport: { value: this.passportForm.value.passportName ? this.passportForm.value.passportName : '' },
+        field_profesiona_as_passport: { value: this.passportForm.value.passportProfession ? this.passportForm.value.passportProfession : '' },
+        field_date_of_issue: { value: this.passportForm.value.passportIssueDate['_d'] ? moment(this.passportForm.value.passportIssueDate['_d']).format() : '' },
+        field_valid_upto: { value: this.passportForm.value.passportValid['_d'] ? moment(this.passportForm.value.passportValid['_d']).format() : '' },
+        field_place_of_issue: { value: this.passportForm.value.passportIssuePlace ? this.passportForm.value.passportIssuePlace : '' },
+        field_country_valid_for: { value: this.passportForm.value.passportValidFor ? this.passportForm.value.passportValidFor : '' },
+        field_serious_illness: { value: this.passportForm.value.passportValidFor ? this.passportForm.value.passportValidFor : '' },
+        field_no_of_days: { value: this.healthForm.value.daysofIll ? this.healthForm.value.daysofIll : '' },
+        field_nature_of_illness: { value: this.healthForm.value.natureofIll ? this.healthForm.value.natureofIll : '' },
+        field_physical_disability: { value: this.healthForm.value.disability ? this.healthForm.value.disability : '' },
+        field_height: { value: this.healthForm.value.height ? this.healthForm.value.height : '' },
+        field_weight: { value: this.healthForm.value.weight ? this.healthForm.value.weight : '' },
+        field_right_eye_power_glass: { value: this.healthForm.value.eyePower.right ? this.healthForm.value.eyePower.right : '' },
+        field_left_eyepower_glass: { value: this.healthForm.value.eyePower.left ? this.healthForm.value.eyePower.left : '' },
+      };
+      console.log('Request', apiData);
+
+      this.candidateService.editUser(apiData).subscribe((data: any) => {
+        console.log('success', data);
+        this.appConfig.success('Personal Details updated successfully', '');
+        this.appConfig.hideLoader();
+
+      });
     } else {
+      console.log(this.upToCategoryForm.value);
+      console.log(this.presentAddressForm.value);
+      console.log(this.permanentAddressForm.value);
+      console.log(this.languagesForm.value);
+      console.log(this.passportForm.value);
+      console.log(this.healthForm.value);
+
       this.validateOnSubmit = true;
       this.validateAllFields(this.upToCategoryForm);
       this.validateAllFields(this.presentAddressForm);
@@ -190,62 +248,12 @@ export class PersonalDetailsComponent implements OnInit {
 
   }
 
-  autocomplete() {
-    // tslint:disable-next-line: no-non-null-assertion
-    this.filteredCities = this.presentAddressForm.get('presentCity')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this.city_filter(name, this.allCities) : this.allCities ? this.allCities.slice() : '')
-    );
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.filteredStates = this.presentAddressForm.get('presentState')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this.state_filter(name, this.allStates) : this.allStates ? this.allStates.slice() : '')
-    );
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.permanentfilteredCities = this.permanentAddressForm.get('permanentCity')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this.permanentcity_filter(name, this.allPermanentCities) : this.allPermanentCities ? this.allPermanentCities.slice() : '')
-    );
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.permanentfilteredStates = this.permanentAddressForm.get('permanentState')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this.permanentstate_filter(name, this.allPermanentStates) : this.allPermanentStates ? this.allPermanentStates.slice() : '')
-    );
-
-
-  }
-
-  selectedCode(code) {
-    this.categoryValue = code;
-  }
-
-  selectedDate(date) {
-    this.dateValue = date;
-  }
-  selectedMonth(month) {
-    this.monthValue = month;
-  }
-  selectedYear(year) {
-    this.yearValue = year;
-  }
-
-
-  profile(event: Event) {
-    console.log(event.target);
-  }
-
-
   // Forms Initialization
   FormsInitialization() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
+    const numberOnly: RegExp = /^[0-9]*$/;
+    const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     // Form 1 UptoCategory
     this.upToCategoryForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -253,17 +261,17 @@ export class PersonalDetailsComponent implements OnInit {
       mobile: ['', [Validators.required, Validators.pattern(mobileRegex)]],
       gender: ['', [Validators.required]],
       marital: ['', [Validators.required]],
-      // dobDate: ['', [Validators.required]],
-      // dobMonth: ['', [Validators.required]],
-      // dobYear: ['', [Validators.required]],
+      dobDate: [null, [Validators.required]],
+      dobMonth: [null, [Validators.required]],
+      dobYear: [null, [Validators.required]],
       nationality: ['', [Validators.required]],
-      // category: ['', [Validators.required]],
+      category: [''],
     });
 
     // Present Address Form
     this.presentAddressForm = this.fb.group({
       presentAddress1: ['', [Validators.required]],
-      presentAddress2: [''],
+      presentAddress2: ['', [Validators.required]],
       presentZipCode: ['', [Validators.required]],
       presentState: ['', [Validators.required]],
       presentCity: ['', [Validators.required]],
@@ -272,7 +280,7 @@ export class PersonalDetailsComponent implements OnInit {
     // Present Address Form
     this.permanentAddressForm = this.fb.group({
       permanentAddress1: ['', [Validators.required]],
-      permanentAddress2: [''],
+      permanentAddress2: ['', [Validators.required]],
       permanentZipCode: ['', [Validators.required]],
       permanentState: ['', [Validators.required]],
       permanentCity: ['', [Validators.required]],
@@ -285,31 +293,32 @@ export class PersonalDetailsComponent implements OnInit {
       firstRead: [''],
       firstWrite: [''],
       firstSpeak: [''],
-      languageAdd: this.fb.array([this.createItem()])
+      languageAdd: this.fb.array([])
     });
 
     // Passport Form
     this.passportForm = this.fb.group({
-      passportNumber: ['', [Validators.required]],
-      passportName: ['', [Validators.required]],
-      passportProfession: ['', [Validators.required]],
-      passportIssueDate: ['', [Validators.required]],
-      passportValid: ['', [Validators.required, FormCustomValidators.dateValidation()]],
-      passportIssuePlace: ['', [Validators.required]],
-      passportValidFor: ['', [Validators.required]],
+      passportNumber: ['', [Validators.required, Validators.pattern(numberOnly)]],
+      passportName: [''],
+      passportProfession: [''],
+      passportIssueDate: [''],
+      // passportValid: ['', [Validators.required, FormCustomValidators.dateValidation()]],
+      passportValid: [''],
+      passportIssuePlace: [''],
+      passportValidFor: [''],
     });
 
     // Health Form
     this.healthForm = this.fb.group({
-      illness: ['', [Validators.required]],
-      daysofIll: ['', [Validators.required]],
-      natureofIll: ['', [Validators.required]],
-      disability: ['', [Validators.required]],
-      height: ['', [Validators.required]],
-      weight: ['', [Validators.required]],
+      illness: [''],
+      daysofIll: ['', [Validators.pattern(numberDecimals)]],
+      natureofIll: [''],
+      disability: [''],
+      height: ['', [Validators.pattern(numberDecimals)]],
+      weight: ['', [Validators.pattern(numberDecimals)]],
       eyePower: this.fb.group({
-        left: ['', [Validators.required]],
-        right: ['', [Validators.required]],
+        left: ['', [Validators.pattern(numberDecimals)]],
+        right: ['', [Validators.pattern(numberDecimals)]],
       })
     });
   }
@@ -347,8 +356,20 @@ export class PersonalDetailsComponent implements OnInit {
   get marital() {
     return this.upToCategoryForm.get('marital');
   }
+  get dobDate() {
+    return this.upToCategoryForm.get('dobDate');
+  }
+  get dobMonth() {
+    return this.upToCategoryForm.get('dobMonth');
+  }
+  get dobYear() {
+    return this.upToCategoryForm.get('dobYear');
+  }
   get nationality() {
     return this.upToCategoryForm.get('nationality');
+  }
+  get categories() {
+    return this.upToCategoryForm.get('category');
   }
   get presentAddress1() {
     return this.presentAddressForm.get('presentAddress1');
@@ -456,16 +477,8 @@ export class PersonalDetailsComponent implements OnInit {
     this.apiService.getAllCity().subscribe((data) => {
       this.appConfig.hideLoader();
       this.allCities = data;
+      this.appConfig.setLocalData('allCities', this.allCities);
       this.allPermanentCities = data;
-
-      // Updating Form control validation
-      this.presentAddressForm.controls['presentCity'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
-      this.presentAddressForm.controls['presentCity'].updateValueAndValidity();
-
-      // Updating Form control validation
-      this.permanentAddressForm.controls['permanentCity'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allPermanentCities)]);
-      this.permanentAddressForm.controls['permanentCity'].updateValueAndValidity();
-      this.autocomplete();
 
     }, (err) => {
     });
@@ -485,67 +498,46 @@ export class PersonalDetailsComponent implements OnInit {
         }
       }
       this.allStates = stateArr;
+      this.appConfig.setLocalData('allStates', this.allStates);
       this.allPermanentStates = stateArr;
-
-      // Updating Form control validation
-      this.presentAddressForm.controls['presentState'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
-      this.presentAddressForm.controls['presentState'].updateValueAndValidity();
-
-      // Updating Form control validation
-      this.permanentAddressForm.controls['permanentState'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allPermanentStates)]);
-      this.permanentAddressForm.controls['permanentState'].updateValueAndValidity();
 
     }, (err) => {
     });
   }
 
-  openDropdown(event, trigger: MatAutocompleteTrigger) {
-    if (trigger.panelOpen) {
-      event.stopPropagation();
-      trigger.closePanel();
+
+  async onSelectFile(event) {
+    if (event.target.files && event.target.files[0].type.includes('image/') && !event.target.files[0].type.includes('svg')) {
+      this.showSizeError.size = false;
+      if (event.target.files[0].size < 5000000) {
+        this.showSizeError.image = false;
+        this.selectedImage = event.target.files[0];
+
+        const fd = new FormData();
+        fd.append('file', this.selectedImage);
+        const file = event.target.files[0];
+        let reader = new FileReader();
+        let urls;
+        reader.readAsDataURL(event.target.files[0]); // read file as data url
+        reader.onload = (event: any) => { // called once readAsDataURL is completed
+          urls = event.target.result;
+          this.url = urls;
+        };
+      } else {
+        this.showSizeError.size = true;
+        this.url = null;
+      }
     } else {
-      event.stopPropagation();
-      trigger.openPanel();
+      this.showSizeError.image = true;
+      this.url = null;
     }
   }
 
-  citydisplayFn(user): string {
-    return user && user.City ? user.City : '';
+  public delete() {
+    this.showSizeError.image = false;
+    this.showSizeError.size = false;
+    this.url = null;
   }
-  statedisplayFn(user): string {
-    return user && user.state ? user.state : '';
-  }
-
-  permanentcitydisplayFn(user): string {
-    return user && user.City ? user.City : '';
-  }
-  permanentstatedisplayFn(user): string {
-    return user && user.state ? user.state : '';
-  }
-
-
-  private city_filter(name: string, paramArrayFromAutoComplete): any[] {
-    const filterValue = name.toLowerCase();
-
-    return paramArrayFromAutoComplete.filter(option => option.City.toLowerCase().indexOf(filterValue) === 0);
-  }
-  private state_filter(name: string, paramArrayFromAutoComplete): any[] {
-    const filterValue = name.toLowerCase();
-
-    return paramArrayFromAutoComplete.filter(option => option.state.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  private permanentcity_filter(name: string, paramArrayFromAutoComplete): any[] {
-    const filterValue = name.toLowerCase();
-
-    return paramArrayFromAutoComplete.filter(option => option.City.toLowerCase().indexOf(filterValue) === 0);
-  }
-  private permanentstate_filter(name: string, paramArrayFromAutoComplete): any[] {
-    const filterValue = name.toLowerCase();
-
-    return paramArrayFromAutoComplete.filter(option => option.state.toLowerCase().indexOf(filterValue) === 0);
-  }
-
 
 
   // To validate all fields after submit

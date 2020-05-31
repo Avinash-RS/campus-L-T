@@ -1,0 +1,397 @@
+<div class="top-main-wrapper">
+
+  <div class="top-grid">
+    <div class="profile-wrapper">
+      <div class="profile">
+        <img src="assets/images/img_avatar2.png" alt="">
+      </div>
+    </div>
+    <div class="form-wrapper">
+        <div class="form-group">
+          <label>Name</label>
+          <input class="input" readonly type="text" [value]="'Avinasi'">
+        </div>
+        <div class="form-group">
+          <label>Email ID</label>
+          <input class="input" readonly type="text" [value]="'Avi@gmail.com'">
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input class="input" readonly type="text" [value]="'9865258894'">
+        </div>
+        <div class="form-group">
+          <label class="label-radio">Gender</label>
+          <div class="radio">
+              <label nz-radio [ngModel]="true">{{'Male'}}</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Marital Status</label>
+          <div class="radio">
+              <label nz-radio [ngModel]="true">{{'Married'}}</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <div class="dob">
+            <input class="dob-input" readonly type="text" [value]="'29'">
+            <input class="dob-input" readonly type="text" [value]="'10'">
+            <input class="dob-input" readonly type="text" [value]="'1995'">
+          </div>
+        </div>
+
+
+      </div>
+
+  </div>
+
+  <div class="two-grid">
+    <div class="form-wrapper-left">
+      <div class="form-group">
+        <label>Nationality</label>
+        <input class="input" readonly type="text" [value]="'Indian'">
+      </div>
+    </div>
+    <div class="form-wrapper-right">
+      <div class="form-group">
+        <label>Category</label>
+        <input class="input" readonly type="text" [value]="'OBC'">
+      </div>
+    </div>
+  </div>
+
+  <div class="addressgrid">
+    <div class="form-wrapper-left">
+      <div class="form-group">
+        <label>Present Address</label>
+        <div class="input addr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit eligendi dolorum quas error cumque quam obcaecati ducimus impedit at unde accusantium iste reprehenderit nisi consequatur sint, est ea tempora neque!'"</div>
+      </div>
+      <div class="form-group">
+          <label>Permanent Address</label>
+          <div class="input addr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit eligendi dolorum quas error cumque quam obcaecati ducimus impedit at unde accusantium iste reprehenderit nisi consequatur sint, est ea tempora neque!'"</div>
+        </div>
+
+    </div>
+  </div>
+
+  <div style="margin: 1em 0 0 0 !important; height: 25px;" class="language-grid">
+      <div class="form-wrapper-left" style="height: 0;">
+        <div style="visibility: hidden;" class="form-group">
+          <label>&#160;</label>
+          <input class="input" type="text" [value]="'Indian'">
+        </div>
+      </div>
+      <div class="form-wrapper-right" style="height: 25px;">
+        <div class="form-group">
+          <label style="padding: 0 !important;">Read</label>
+          <label style="padding: 0 !important;">Write</label>
+          <label style="padding: 0 !important;">Speak</label>
+        </div>
+      </div>
+    </div>
+
+  <div class="language-grid" *ngFor="let dup of languages; let i = index">
+      <div class="form-wrapper-left">
+        <div class="form-group">
+          <label>{{(i === 0 ? 'Languages Known' : '')}}</label>
+          <input class="input" type="text" [value]="languages ? dup.name : ''">
+        </div>
+      </div>
+      <div class="form-wrapper-right">
+        <div class="form-group">
+            <div [ngStyle]="{'visibility': dup.proficiency.read ? 'show' : 'hidden'}" class="custom-control custom-checkbox checkbox-xl">
+                <input type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
+                <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
+              </div>
+              <div [ngStyle]="{'visibility': dup.proficiency.write ? 'show' : 'hidden'}" class="custom-control custom-checkbox checkbox-xl">
+                  <input type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
+                  <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
+                </div>
+                <div [ngStyle]="{'visibility': dup.proficiency.speak ? 'show' : 'hidden'}" class="custom-control custom-checkbox checkbox-xl">
+                    <input type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
+                    <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
+                  </div>
+        </div>
+      </div>
+    </div>
+
+
+
+</div>
+<div class="main-wrapper">
+  <div class="main-heading-bottom">
+    Passport related details
+  </div>
+  <div class="flex-wrapper-passport">
+    <div class="edu-wrapper-head number">
+      <label>Passport Number</label>
+      <input type="text" readonly [value]="'4464646422'">
+    </div>
+    <div class="edu-wrapper-head name">
+      <label>Name as in Passport</label>
+      <input type="text" readonly [value]="'AVINASI'">
+    </div>
+    <div class="edu-wrapper-head profession">
+      <label>Profession as in Passport</label>
+      <input type="text" readonly [value]="'BUSINESS'">
+    </div>
+    <div class="edu-wrapper-head date">
+      <label>Date of Issue</label>
+      <input type="text" readonly [value]="'20 MAR 2020'">
+    </div>
+    <div class="edu-wrapper-head valid">
+      <label>Valid Upto</label>
+      <input type="text" readonly [value]="'20 MAR 2029'">
+    </div>
+    <div class="edu-wrapper-head place">
+      <label>Place of Issue</label>
+      <input type="text" readonly [value]="'CHENNAI'">
+    </div>
+    <div class="edu-wrapper-head country">
+      <label>Countries valid for</label>
+      <input type="text" readonly [value]="'USA'">
+    </div>
+
+  </div>
+  <div class="main-heading-bottom">
+    Health-related details
+  </div>
+  <div class="flex-wrapper-passport">
+    <div class="edu-wrapper-head number">
+      <label>Most Serious Recent Illness</label>
+      <input type="text" readonly [value]="'- Nil -'">
+    </div>
+    <div class="edu-wrapper-head name">
+      <label>No. of Days Ill</label>
+      <input type="text" readonly [value]="'- Nil -'">
+    </div>
+    <div class="edu-wrapper-head profession">
+      <label>Nature of Illness</label>
+      <input type="text" readonly [value]="'- Nil -'">
+    </div>
+    <div class="edu-wrapper-head physical">
+      <label>Physical Disability (if any)</label>
+      <input type="text" readonly [value]="'No'">
+    </div>
+    <div class="edu-wrapper-head height-weight-wrapper">
+      <div class="sub-edu">
+        <div class="height">
+          <label>Height (cms)</label>
+          <input type="text" readonly [value]="'177'">
+        </div>
+        <div class="weight">
+          <label>Weight (kg)</label>
+          <input type="text" readonly [value]="'68'">
+        </div>
+      </div>
+    </div>
+    <div class="edu-wrapper-head power">
+      <label>Power of Eye glass</label>
+      <div class="power-wrapper">
+        <div class="left-wrapper">
+          <span class="label-1">Left Eye</span>
+          <input type="text" readonly [value]="'0.72'">
+        </div>
+        <div class="right-wrapper">
+          <span class="label-2">Right Eye</span>
+          <input type="text" readonly [value]="'-1.72'">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="main-heading-bottom">
+    Educational details
+  </div>
+  <div class="grid-wrapper-qualify">
+    <div class="qualify-wrapper-head">
+      <div class="level-head">
+        Level
+      </div>
+      <div class="board-head">
+        Board / University
+      </div>
+      <div class="institute-head">
+        Institute name
+      </div>
+      <div class="discipline-head">
+        Discipline
+      </div>
+      <div class="specification-head">
+        Specification
+      </div>
+      <div class="year-head">
+        Year of passing
+      </div>
+      <div class="percentage-head">
+        Percentage
+      </div>
+
+    </div>
+
+    <div class="qualify-wrapper" *ngFor="let dup of [0,1,2]">
+      <input class="level" readonly [value]="'SSLC'">
+      <input class="board" type="text" readonly
+        [value]="'Matriculation Matriculation Matriculation Matriculation Matriculation'">
+      <input class="institute" readonly [value]="'Little flower Matriculation school'">
+
+      <input class="discipline" readonly [value]="'Regular'">
+
+      <input class="specification" readonly [value]="'Computer Science Engineering'">
+
+      <input class="year" readonly [value]="'2011'">
+
+      <input class="percentage" readonly [value]="'72.50%'">
+
+
+    </div>
+  </div>
+
+
+  <div class="main-heading-bottom">
+    Family details
+  </div>
+  <div class="scroll-enable">
+      <div class="heading-grid">
+    <div class="head-1">
+      Name of your family members
+      <span>&#160;</span>
+    </div>
+    <div class="head-2">
+      Date of birth
+      <span>&#160;</span>
+    </div>
+    <div class="head-3">
+      Relationship
+      <span>&#160;</span>
+    </div>
+    <div class="head-4">
+      Occupation
+    </div>
+
+  </div>
+
+  <div class="form">
+    <ng-container>
+      <div class="text-box-grid" *ngFor="let dup of [0,1,2,3]">
+        <div class="text-1">
+          Some names
+          Some names
+        </div>
+        <div class="text-2">
+          Some names
+          Some names
+        </div>
+        <div class="text-3">
+          Some names
+          Some names
+        </div>
+        <div class="text-4">
+          Some names
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  </div>
+  <div class="main-heading-no-bottom">
+    Skills
+  </div>
+  <div class="skills-wrapper">
+    <div class="skills" *ngFor="let dup of [0,1,2,3,4,5,6,7,8,9]">
+      Being superr sleepyy..
+    </div>
+  </div>
+
+
+  <div class="main-heading-bottom">
+    Relatives / Acquaintances in L & T group of companies
+  </div>
+  <div class="scroll-enable">
+  <div class="heading-grid">
+    <div class="head-1">
+      Name
+      <span>&#160;</span>
+    </div>
+    <div class="head-2">
+      Relationship
+      <span>&#160;</span>
+    </div>
+    <div class="head-3">
+      Position
+      <span>&#160;</span>
+    </div>
+    <div class="head-4">
+      Company
+    </div>
+
+  </div>
+
+  <div class="form">
+    <ng-container>
+      <div class="text-box-grid" *ngFor="let dup of [0,1,2,3]">
+        <div class="text-1">
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+
+          Avinash
+        </div>
+        <div class="text-2">
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+          Avinash
+        </div>
+        <div class="text-3">
+          Avinash
+          Avinash
+        </div>
+        <div class="text-4">
+          Avinash
+          Avinash
+          Avinash
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+  <div class="main-heading-bottom">
+    Faculty References
+  </div>
+  <div class="faculty-wrapper">
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, necessitatibus neque quibusdam placeat
+      temporibus accusamus dolore corrupti ullam totam odio reprehenderit cum obcaecati nulla tempora! Perspiciatis
+      fugiat accusantium omnis quod!
+    </div>
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, necessitatibus neque quibusdam placeat
+      temporibus accusamus dolore corrupti ullam totam odio reprehenderit cum obcaecati nulla tempora! Perspiciatis
+      fugiat accusantium omnis quod!
+
+    </div>
+  </div>
+
+</div>
+
+<div class="submit-button-wrapper">
+  <button mat-raised-button type="button">Edit</button>
+
+  <button (click)="onSubmit()" mat-raised-button type="button">Next</button>
+
+</div>
