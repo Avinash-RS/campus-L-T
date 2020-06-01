@@ -66,9 +66,11 @@ export class EducationalDetailsComponent implements OnInit {
 
   onSubmit(OptA) {
     if (this.educationForm.valid) {
+      this.appConfig.nzNotification('success', 'Submitted', 'Educational details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS);
       console.log(this.educationForm.value);
     } else {
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
     }
 

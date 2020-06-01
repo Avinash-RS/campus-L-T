@@ -20,6 +20,7 @@ import { Moment } from 'moment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
+import { NzMessageService } from 'ng-zorro-antd';
 
 const moment = _moment;
 
@@ -133,7 +134,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     super();
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -154,6 +155,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.allStates = JSON.parse(this.appConfig.getLocalData('allStates'));
     }
   }
+
+
   preventDate(e, datepicker: MatDatepicker<Moment>) {
     datepicker.open();
     e.preventDefault();
@@ -231,17 +234,25 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         field_weight: { value: this.healthForm.value.weight ? this.healthForm.value.weight : '' },
         field_right_eye_power_glass: { value: this.healthForm.value.eyePower.right ? this.healthForm.value.eyePower.right : '' },
         field_left_eyepower_glass: { value: this.healthForm.value.eyePower.left ? this.healthForm.value.eyePower.left : '' },
+        is_default: [{
+          value: '1'
+        }]
       };
       console.log('Request', apiData);
 
       this.candidateService.editUser(apiData).subscribe((data: any) => {
         console.log('success', data);
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
-        this.appConfig.success('Personal Details updated successfully', '');
+        this.appConfig.nzNotification('success', 'Submitted', 'Personal details has been updated');
+        // this.appConfig.success('Personal Details updated successfully', '');
         this.appConfig.hideLoader();
 
       });
     } else {
+      setTimeout(() => {
+        window.scroll(0, 0);
+      }, 10);
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       console.log(this.upToCategoryForm.value);
       console.log(this.presentAddressForm.value);
       console.log(this.permanentAddressForm.value);

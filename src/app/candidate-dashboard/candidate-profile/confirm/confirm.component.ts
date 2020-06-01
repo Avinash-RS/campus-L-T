@@ -16,7 +16,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   onSubmit() {
-    this.appConfig.success('Profile Updated Successfully', '');
+    this.appConfig.nzNotification('success', 'Submitted', 'Your Declaration has been submitted');
     console.log('submitted');
 
   }

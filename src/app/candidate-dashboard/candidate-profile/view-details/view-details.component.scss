@@ -6,7 +6,7 @@
 }
 
 .top-main-wrapper {
-  padding: 4em 10em 1.5em 10em;
+  padding: 4em 4em 1.5em 4em;
   .language-grid {
     margin: 0.25em 0 0 0;
     display: grid;
@@ -121,7 +121,7 @@
           font-weight: 200;
           color: $light-black;
           margin: 0 0 0.35em 0;
-          width: 47%;
+          // width: 47%;
           margin: 0 1em 0 0;
         }
         div,
@@ -707,6 +707,18 @@
 @media only screen and (max-width: 1200px) and (min-width: 200px) {
   .top-main-wrapper {
     padding: 3em 3em 1.5em 3em;
+    .addressgrid {
+      display: flex;
+      .form-wrapper-left {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        .form-group {
+          display: grid;
+          grid-template-columns: 100%;
+        }
+      }
+    }
     .top-grid {
       display: grid;
       grid-template-columns: 100%;

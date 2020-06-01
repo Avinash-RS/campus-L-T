@@ -34,8 +34,10 @@ export class GeneralDetailsComponent implements OnInit {
   onSubmit(OptA, OptB) {
     if (this.aquaintancesForm.valid && this.skillForm.valid) {
       console.log(this.aquaintancesForm.value);
+      this.appConfig.nzNotification('success', 'Submitted', 'General details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     } else {
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       this.validateAllFormArrays(this.aquaintancesForm.get('relativesArr') as FormArray);
       this.validateAllFormArrays(this.skillForm.get('skillsArr') as FormArray);
     }

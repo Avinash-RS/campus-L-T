@@ -31,9 +31,11 @@ export class FamilyDetailsComponent implements OnInit {
 
   onSubmit(OptA) {
     if (this.familyForm.valid) {
+      this.appConfig.nzNotification('success', 'Submitted', 'Family details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS);
       console.log(this.familyForm.value);
     } else {
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
     }
   }

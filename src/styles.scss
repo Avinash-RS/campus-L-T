@@ -259,6 +259,24 @@ button:focus {
   }
 }
 
+.ant-notification-notice {
+  position: relative;
+  margin-top: 50% !important;
+  // margin-bottom: 16px;
+  padding: 16px 24px;
+  overflow: hidden;
+  line-height: 1.5;
+  background: $secondary !important;
+  color: #fff !important;
+  font-weight: 200;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.ant-notification-notice-message {
+  color: #fff !important;
+}
+
+
 /* snack bar */
 .warn-bg-color {
   background: #ffd2d2;
