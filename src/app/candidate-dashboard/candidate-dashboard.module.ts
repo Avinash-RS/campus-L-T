@@ -13,6 +13,7 @@ import { FamilyDetailsComponent } from './candidate-profile/family-details/famil
 import { GeneralDetailsComponent } from './candidate-profile/general-details/general-details.component';
 import { ViewDetailsComponent } from './candidate-profile/view-details/view-details.component';
 import { ConfirmComponent } from './candidate-profile/confirm/confirm.component';
+import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ConfirmComponent } from './candidate-profile/confirm/confirm.component'
     SharedModule,
     MaterialModule,
     CandidateDashboardRoutingModule
-  ]
+  ],
+  providers: [CanDeactivateGuard]
 })
 export class CandidateDashboardModule { }

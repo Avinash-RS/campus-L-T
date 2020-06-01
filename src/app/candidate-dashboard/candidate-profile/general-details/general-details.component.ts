@@ -31,7 +31,7 @@ export class GeneralDetailsComponent implements OnInit {
     this.FormInitialization();
   }
 
-  onSubmit() {
+  onSubmit(OptA, OptB) {
     if (this.aquaintancesForm.valid && this.skillForm.valid) {
       console.log(this.aquaintancesForm.value);
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);

@@ -5,6 +5,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 
 @Component({
   selector: 'app-view-details',
@@ -45,11 +46,22 @@ export class ViewDetailsComponent implements OnInit {
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
+    private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.getUserDetails();
+  }
+
+  getUserDetails() {
+    this.candidateService.getUserProfile().subscribe((data: any) => {
+      console.log(data);
+      this.appConfig.hideLoader();
+    }, (error) => {
+
+    });
   }
 
   onSubmit() {

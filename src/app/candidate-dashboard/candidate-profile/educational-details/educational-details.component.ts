@@ -64,7 +64,7 @@ export class EducationalDetailsComponent implements OnInit {
     this.FormInitialization();
   }
 
-  onSubmit() {
+  onSubmit(OptA) {
     if (this.educationForm.valid) {
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS);
       console.log(this.educationForm.value);

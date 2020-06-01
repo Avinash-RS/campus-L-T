@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 import { MatAutocompleteTrigger, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDatepicker } from '@angular/material';
@@ -19,6 +19,7 @@ import * as _moment from 'moment';
 import { Moment } from 'moment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 
 const moment = _moment;
 
@@ -53,7 +54,15 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class PersonalDetailsComponent implements OnInit {
+export class PersonalDetailsComponent extends FormCanDeactivate implements OnInit {
+
+  @ViewChild('form', { static: false })
+  form: NgForm;
+  presentAddressFormReference: NgForm;
+  permanentAddressFormReference: NgForm;
+  languagesFormReference: NgForm;
+  passportFormReference: NgForm;
+  healthFormReference: NgForm;
 
   category = [
     {
@@ -85,7 +94,7 @@ export class PersonalDetailsComponent implements OnInit {
     { month: '01' }, { month: '02' }, { month: '03' }, { month: '04' }, { month: '05' }, { month: '06' }, { month: '07' }, { month: '08' }, { month: '09' }, { month: '10' }, { month: '11' }, { month: '12' },
   ];
   year = [
-    { year: '1985' }, { year: '1986' }, { year: '1987' }, { year: '1988' }, { year: '1989' }, { year: '1990' }, { year: '1991' }, { year: '1992' }, { year: '1993' }, { year: '1994' }, { year: '1995' }, { year: '1996' }, { year: '1997' }, { year: '1998' }, { year: '1999' }, { year: '2000' }, { year: '2001' }, { year: '2002' }
+    { year: '1985' }, { year: '1986' }, { year: '1987' }, { year: '1988' }, { year: '1989' }, { year: '1990' }, { year: '1991' }, { year: '1992' }, { year: '1993' }, { year: '1994' }, { year: '1995' }, { year: '1996' }, { year: '1997' }, { year: '1998' }, { year: '1999' }, { year: '2000' }, { year: '2001' }, { year: '2002' }, { year: '2003' }, { year: '2004' }, { year: '2005' }, { year: '2006' }, { year: '2007' }, { year: '2008' }, { year: '2009' }, { year: '2010' }
   ];
 
   // Non-FormControl Fields
@@ -126,6 +135,7 @@ export class PersonalDetailsComponent implements OnInit {
     private candidateService: CandidateMappersService,
     private fb: FormBuilder
   ) {
+    super();
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 20, 0, 1);
@@ -136,13 +146,13 @@ export class PersonalDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.FormsInitialization();
-    // if (!this.appConfig.getLocalData('allStates') || !this.appConfig.getLocalData('allCities')) {
-    this.cityAPI();
-    this.stateAPI();
-    // } else {
-    //   this.allCities = JSON.parse(this.appConfig.getLocalData('allCities'));
-    //   this.allStates = JSON.parse(this.appConfig.getLocalData('allStates'));
-    // }
+    if (!this.appConfig.getLocalData('allStates') || !this.appConfig.getLocalData('allCities')) {
+      this.cityAPI();
+      this.stateAPI();
+    } else {
+      this.allCities = JSON.parse(this.appConfig.getLocalData('allCities'));
+      this.allStates = JSON.parse(this.appConfig.getLocalData('allStates'));
+    }
   }
   preventDate(e, datepicker: MatDatepicker<Moment>) {
     datepicker.open();
@@ -164,7 +174,7 @@ export class PersonalDetailsComponent implements OnInit {
     datepicker.close();
   }
 
-  onSubmit() {
+  onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
     if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
       && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
       console.log('passed');
@@ -174,7 +184,6 @@ export class PersonalDetailsComponent implements OnInit {
       console.log(this.languagesForm.value);
       console.log(this.passportForm.value);
       console.log(this.healthForm.value);
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
       const apiData = {
         type: 'candidate',
 
@@ -203,7 +212,9 @@ export class PersonalDetailsComponent implements OnInit {
         field_permanent_state: { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' },
         field_language_known: { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' },
 
-        field_language1: [{ value: this.languagesForm.value.firstRead ? 'read' : 'read' }, { value: this.languagesForm.value.firstWrite ? 'write' : 'write' }, { value: this.languagesForm.value.firstSpeak ? 'speak' : 'speak' }],
+        field_read: [{ value: this.languagesForm.value.firstRead ? '1' : '0' }],
+        field_write: [{ value: this.languagesForm.value.firstWrite ? '1' : '0' }],
+        field_speak: [{ value: this.languagesForm.value.firstSpeak ? '1' : '0' }],
 
         field_passport_number: { value: this.passportForm.value.passportNumber ? this.passportForm.value.passportNumber : '' },
         field_name_as_in_passport: { value: this.passportForm.value.passportName ? this.passportForm.value.passportName : '' },
@@ -225,6 +236,7 @@ export class PersonalDetailsComponent implements OnInit {
 
       this.candidateService.editUser(apiData).subscribe((data: any) => {
         console.log('success', data);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
         this.appConfig.success('Personal Details updated successfully', '');
         this.appConfig.hideLoader();
 
@@ -247,7 +259,12 @@ export class PersonalDetailsComponent implements OnInit {
     }
 
   }
+  upToCategoryFormPatchvalues() {
+    this.upToCategoryForm.patchValue({
+      name: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
+    });
 
+  }
   // Forms Initialization
   FormsInitialization() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -266,7 +283,7 @@ export class PersonalDetailsComponent implements OnInit {
       dobYear: [null, [Validators.required]],
       nationality: ['', [Validators.required]],
       category: [''],
-    });
+    }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
     this.presentAddressForm = this.fb.group({
@@ -477,7 +494,7 @@ export class PersonalDetailsComponent implements OnInit {
     this.apiService.getAllCity().subscribe((data) => {
       this.appConfig.hideLoader();
       this.allCities = data;
-      this.appConfig.setLocalData('allCities', this.allCities);
+      this.appConfig.setLocalData('allCities', JSON.stringify(this.allCities));
       this.allPermanentCities = data;
 
     }, (err) => {
@@ -498,7 +515,7 @@ export class PersonalDetailsComponent implements OnInit {
         }
       }
       this.allStates = stateArr;
-      this.appConfig.setLocalData('allStates', this.allStates);
+      this.appConfig.setLocalData('allStates', JSON.stringify(this.allStates));
       this.allPermanentStates = stateArr;
 
     }, (err) => {

@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment.prod';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { NzMessageService } from 'ng-zorro-antd';
 
 export interface modalBox {
   iconName: string;
@@ -26,6 +27,7 @@ export class AppConfigService {
     private router: Router,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private message: NzMessageService
   ) { }
 
   // get Current route
@@ -96,108 +98,120 @@ export class AppConfigService {
     this.spinner.hide();
   }
 
-  // To show success Snack Bar Message
-  success(message: any, icon: any) {
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 2000,
-      verticalPosition: 'top',
-      data: { message, icon },
-      panelClass: ['success-bg-color']
+  // NZ Zorro message
+  nzsuccess(message: any, icon: any): void {
+    this.message.success(message, {
+      nzDuration: 10000
     });
   }
+  // nzerror(message: any, icon: any): void {
+  //   this.message.error(message, {
+  //     nzDuration: 100000000
+  //   });
+  // }
 
-  // To show error Snack Bar Message
-  error(message: any, icon: any) {
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 2000,
-      verticalPosition: 'top',
-      data: { message, icon },
-      panelClass: ['warn-bg-color']
-    });
-  }
-
-  // To get a local storage value
-  getLocalData(key: string): any {
-    return localStorage.getItem(key);
-  }
-
-  // To get a Session storage value
-  getSessionData(key: string): any {
-    return sessionStorage.getItem(key);
-  }
-
-  // To set localstorage key and value
-  setLocalData(key: string, value: any): any {
-    return localStorage.setItem(key, value);
-  }
-
-  // To set sessionstorage key and value
-  setSessionData(key: string, value: any): any {
-    return sessionStorage.setItem(key, value);
-  }
-
-  // Clear local and session data
-  clearLocalDataOne(key) {
-    return localStorage.removeItem(key);
-  }
-  // Clear local and session data
-  clearLocalData() {
-    return localStorage.clear();
-  }
-
-  // Clear local and session data
-  clearSessionData() {
-    return sessionStorage.clear();
-  }
-
-  // To print logs
-  consoleLog(optional?: any, printText?: any) {
-    if (environment) {
-      console.log(optional ? optional : null, printText ? printText : null);
+    // To show success Snack Bar Message
+    success(message: any, icon: any) {
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        duration: 2000,
+        verticalPosition: 'top',
+        data: { message, icon },
+        panelClass: ['success-bg-color']
+      });
     }
-  }
 
-  // To print error logs
-  errorLog(optional?: any, printText?: any) {
-    if (environment) {
-      console.log(optional ? optional : null, printText ? printText : null);
+    // To show error Snack Bar Message
+    error(message: any, icon: any) {
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        duration: 2000,
+        verticalPosition: 'top',
+        data: { message, icon },
+        panelClass: ['warn-bg-color']
+      });
     }
-  }
 
-  // To allow only Alphabetic Characters
-  onKeypressOnlyAlphabetic(event: any) {
-    const inputChar = event.target.value;
-    const regExp = /[^ a-zA-Z]/g;
-    if (regExp.test(inputChar)) {
-      event.target.value = inputChar.replace(regExp, '');
+    // To get a local storage value
+    getLocalData(key: string): any {
+      return localStorage.getItem(key);
     }
-  }
 
-  // To allow only AlphaNumeric Characters
-  onKeypressOnlyAlphaNumeric(event: any) {
-    const inputChar = event.target.value;
-    const regExp = /[^ a-zA-Z0-9]/g;
-    if (regExp.test(inputChar)) {
-      event.target.value = inputChar.replace(regExp, '');
+    // To get a Session storage value
+    getSessionData(key: string): any {
+      return sessionStorage.getItem(key);
     }
-  }
 
-  // To allow only numbers
-  onKeypressOnlyNumberic(event: any) {
-    const inputChar = event.target.value;
-    const regExp = /[^ 0-9]/g;
-    if (regExp.test(inputChar)) {
-      event.target.value = inputChar.replace(regExp, '');
+    // To set localstorage key and value
+    setLocalData(key: string, value: any): any {
+      return localStorage.setItem(key, value);
     }
-  }
 
-  // To allow only decimal Characters
-  onKeypressOnlyDecimal(event: any) {
-    const inputChar = event.target.value;
-    const regExp = /[^ 0-9.]/g;
-    if (regExp.test(inputChar)) {
-      event.target.value = inputChar.replace(regExp, '');
+    // To set sessionstorage key and value
+    setSessionData(key: string, value: any): any {
+      return sessionStorage.setItem(key, value);
     }
-  }
 
-}
+    // Clear local and session data
+    clearLocalDataOne(key) {
+      return localStorage.removeItem(key);
+    }
+    // Clear local and session data
+    clearLocalData() {
+      return localStorage.clear();
+    }
+
+    // Clear local and session data
+    clearSessionData() {
+      return sessionStorage.clear();
+    }
+
+    // To print logs
+    consoleLog(optional ?: any, printText ?: any) {
+      if (environment) {
+        console.log(optional ? optional : null, printText ? printText : null);
+      }
+    }
+
+    // To print error logs
+    errorLog(optional ?: any, printText ?: any) {
+      if (environment) {
+        console.log(optional ? optional : null, printText ? printText : null);
+      }
+    }
+
+    // To allow only Alphabetic Characters
+    onKeypressOnlyAlphabetic(event: any) {
+      const inputChar = event.target.value;
+      const regExp = /[^ a-zA-Z]/g;
+      if (regExp.test(inputChar)) {
+        event.target.value = inputChar.replace(regExp, '');
+      }
+    }
+
+    // To allow only AlphaNumeric Characters
+    onKeypressOnlyAlphaNumeric(event: any) {
+      const inputChar = event.target.value;
+      const regExp = /[^ a-zA-Z0-9]/g;
+      if (regExp.test(inputChar)) {
+        event.target.value = inputChar.replace(regExp, '');
+      }
+    }
+
+    // To allow only numbers
+    onKeypressOnlyNumberic(event: any) {
+      const inputChar = event.target.value;
+      const regExp = /[^ 0-9]/g;
+      if (regExp.test(inputChar)) {
+        event.target.value = inputChar.replace(regExp, '');
+      }
+    }
+
+    // To allow only decimal Characters
+    onKeypressOnlyDecimal(event: any) {
+      const inputChar = event.target.value;
+      const regExp = /[^ 0-9.]/g;
+      if (regExp.test(inputChar)) {
+        event.target.value = inputChar.replace(regExp, '');
+      }
+    }
+
+  }

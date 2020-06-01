@@ -9,6 +9,7 @@ import { FamilyDetailsComponent } from './candidate-profile/family-details/famil
 import { GeneralDetailsComponent } from './candidate-profile/general-details/general-details.component';
 import { ConfirmComponent } from './candidate-profile/confirm/confirm.component';
 import { ViewDetailsComponent } from './candidate-profile/view-details/view-details.component';
+import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 
 
 const routes: Routes = [

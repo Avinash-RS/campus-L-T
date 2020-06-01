@@ -29,7 +29,7 @@ export class FamilyDetailsComponent implements OnInit {
     this.FormInitialization();
   }
 
-  onSubmit() {
+  onSubmit(OptA) {
     if (this.familyForm.valid) {
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS);
       console.log(this.familyForm.value);

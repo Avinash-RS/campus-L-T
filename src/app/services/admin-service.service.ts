@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../config/app-config.service';
+import { CONSTANT } from '../constants/app-constants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class AdminServiceService {
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'admin'));
+      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
   }
 
@@ -42,7 +43,7 @@ export class AdminServiceService {
       .set('Content-Type', 'application/hal+json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'admin'));
+      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
   }
 
@@ -54,7 +55,7 @@ export class AdminServiceService {
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'admin'));
+      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
   }
 

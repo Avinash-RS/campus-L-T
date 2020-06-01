@@ -17,6 +17,7 @@ import en from '@angular/common/locales/en';
 import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 registerLocaleData(en);
 
@@ -46,7 +47,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
     { provide: NZ_I18N, useValue: en_US },
-    { provide: NZ_ICONS, useValue: icons }
+    { provide: NZ_ICONS, useValue: icons },
+    CanDeactivateGuard
   ],
   bootstrap: [AppComponent]
 })

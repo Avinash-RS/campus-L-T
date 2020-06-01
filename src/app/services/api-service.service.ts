@@ -20,7 +20,6 @@ export class ApiServiceService {
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
-    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
   getAfterCustomHeaders(): HttpHeaders {
@@ -30,7 +29,6 @@ export class ApiServiceService {
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
-    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
   withoutTokens(): HttpHeaders {
@@ -39,7 +37,6 @@ export class ApiServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
-    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
   }
 
