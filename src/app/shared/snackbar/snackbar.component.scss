@@ -1,0 +1,12 @@
+.grid {
+  display: grid;
+  grid-template-columns: 10% 90%;
+  position: relative;
+  span:first-child {
+    margin: 0 .5em 0 0;
+  }
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
+}

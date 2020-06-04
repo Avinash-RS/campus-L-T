@@ -438,7 +438,7 @@
     <div class="three-column-flex">
       <div class="wrapper">
         <div class="form-field">
-          <label>Passport Number*</label>
+          <label>Passport Number</label>
         </div>
         <div class="input-box">
           <input (focusout)="detectInput(passportForm)" formControlName="passportNumber" type="text" value="">
@@ -669,6 +669,6 @@
     (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)"
     mat-raised-button type="submit">Save and Continue</button>
 
-  <button mat-raised-button type="button">Cancel</button>
+  <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
 </div>

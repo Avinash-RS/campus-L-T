@@ -43,6 +43,11 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  cancel() {
+    this.ngOnInit();
+  }
+
+
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
     console.log(this.apiForm);

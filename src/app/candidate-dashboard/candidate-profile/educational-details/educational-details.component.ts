@@ -80,6 +80,10 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
 
   }
 
+  cancel() {
+    this.ngOnInit();
+  }
+
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
     this.educationValuearray = [{

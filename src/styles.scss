@@ -204,6 +204,26 @@ span.ant-radio + * {
   font-size: 17px;
   color: $secondary;
 }
+.view-page {
+  .ant-radio-inner {
+    width: 15px;
+    height: 15px;
+    border-color: $light-black !important;
+  }
+
+  span.ant-radio + * {
+    padding-right: 8px;
+    padding-left: 8px;
+    font-weight: 100;
+    font-size: 17px;
+    color: $light-black;
+  }
+
+  .ant-radio-inner::after {
+    background: $light-black;
+  }
+}
+
 .ant-select-selection {
   width: 100% !important;
   display: flex;
@@ -276,25 +296,45 @@ button:focus {
   color: #fff !important;
 }
 
-
 /* snack bar */
-.warn-bg-color {
-  background: #ffd2d2;
-  color: #d8000c;
-  border: 2px solid rgb(248, 190, 190);
-  border-radius: none;
-  height: 100%;
-  z-index: 1000;
-}
 
-.success-bg-color {
-  color: #4f8a10;
-  background-color: #dff2bf;
-  border: 2px solid rgb(201, 223, 164);
+.mat-snack-bar-container {
+  position: absolute !important;
+  top: 25% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+.warn-bg-color {
+  color: $white;
+  background-color: #FF0000;
+  font-weight: 200;
+  font-size: 18px;
   border-radius: none;
   height: 100%;
   z-index: 20;
+  box-shadow: 0px 0px 5px #00000029;
+  border-radius: 10px;
   z-index: 1000;
+  margin: 0 !important;
+  position: absolute;
+  height: auto !important;
+}
+
+.success-bg-color {
+  color: $white;
+  background-color: #228B22;
+  font-weight: 200;
+  font-size: 18px;
+  border-radius: none;
+  height: 100%;
+  z-index: 20;
+  box-shadow: 0px 0px 5px #00000029;
+  border-radius: 10px;
+  z-index: 1000;
+  margin: 0 !important;
+  position: absolute;
+  height: auto !important;
+  // transform: translate(-50%, -50%);
 }
 
 .mat-tooltip {

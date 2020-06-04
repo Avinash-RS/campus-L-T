@@ -197,7 +197,7 @@ export class ViewDetailsComponent implements OnInit {
     this.candidateService.getUserProfile().subscribe((data: any) => {
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {
-        if (data[0]['field_isformsubmitted'][0]['value'] === true) {
+        if (data[0] && data[0]['field_isformsubmitted'] && data[0]['field_isformsubmitted'][0] && data[0]['field_isformsubmitted'][0]['value'] === true) {
           this.appConfig.setLocalData('field_isformsubmitted', 'true');
           this.appConfig.setLocalData('personalFormSubmitted', 'true');
           this.appConfig.setLocalData('educationalFormSubmitted', 'true');
@@ -425,6 +425,9 @@ export class ViewDetailsComponent implements OnInit {
     });
   }
 
+  edit() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS);
+  }
   onSubmit() {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_CONFIRM);
   }

@@ -39,7 +39,10 @@ export class FamilyDetailsComponent implements OnInit, OnDestroy {
     if (this.appConfig.getLocalData('field_isformsubmitted') == 'true') {
       this.appConfig.setLocalData('familyFormSubmitted', 'true');
     }
+  }
 
+  cancel() {
+    this.ngOnInit();
   }
 
   getLocalForm() {

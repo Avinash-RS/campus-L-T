@@ -26,11 +26,11 @@ export class LoginpageComponent implements OnInit {
     private appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.verifyEmail();
   }
 
   ngOnInit() {
 
+    this.verifyEmail();
     this.formInitialize();
   }
 
@@ -54,18 +54,26 @@ export class LoginpageComponent implements OnInit {
   }
 
   apiCalling() {
-    this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      this.prePoulteEmailId = this.verifyArr[0]['name'];
-      // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
-      this.appConfig.success(`${data.message}`, '');
+    this.apiService.csrfToken().subscribe((data: any) => {
     }, (err) => {
-      console.log(err);
-
-      if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
-        this.appConfig.error(`${err.error.error}`, '');
-        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.VERIFY.EMAIL_ERROR);
+      if (err.status === 200) {
+        this.appConfig.setSessionData('csrf', err.error.text);
       }
+
+      this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        this.prePoulteEmailId = this.verifyArr[0]['name'];
+        this.appConfig.success(`${data.message}`, '');
+        this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
+      }, (error) => {
+        console.log(error);
+
+        if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
+          this.appConfig.error(`${err.error.error}`, '');
+          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.VERIFY.EMAIL_ERROR);
+        }
+      });
+
     });
   }
 
@@ -96,38 +104,41 @@ export class LoginpageComponent implements OnInit {
 
 
   submit() {
-    if (this.loginForm.valid) {
-      const apiData = {
-        name: this.loginForm.value.email,
-        pass: this.loginForm.value.password
-      };
-      console.log('c1', apiData.name, apiData.pass);
-
-      if (apiData.name && apiData.pass) {
-        console.log('c2');
-        this.apiService.login(apiData).subscribe((data: any) => {
-          console.log('c3');
-          this.appConfig.hideLoader();
-          this.appConfig.consoleLog('data', data);
-          this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
-          this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
-          this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
-          this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
-          this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
-          if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
-            this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
-          } else {
-            this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
-          }
-
-        }, (error) => {
-          console.log('hi', error);
-
-        });
+    const apiData = {
+      name: this.loginForm.value.email,
+      pass: this.loginForm.value.password
+    };
+    this.apiService.csrfToken().subscribe((data: any) => {
+    }, (err) => {
+      if (err.status === 200) {
+        this.appConfig.setSessionData('csrf', err.error.text);
       }
-    } else {
-      this.validateAllFields(this.loginForm);
-    }
+      // Login API
+      if (this.loginForm.valid) {
+        if (apiData.name && apiData.pass) {
+          this.apiService.login(apiData).subscribe((data: any) => {
+            this.appConfig.hideLoader();
+            this.appConfig.consoleLog('data', data);
+            this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
+            this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
+            this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
+            this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
+            this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
+              this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+            } else {
+              this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
+            }
+
+          }, (error) => {
+
+          });
+        }
+      } else {
+        this.validateAllFields(this.loginForm);
+      }
+    });
+
 
   }
 

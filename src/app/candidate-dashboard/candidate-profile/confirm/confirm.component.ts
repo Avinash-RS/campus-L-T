@@ -36,6 +36,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   onSubmit() {
+    this.apiForm.field_isformsubmitted = [{value: true}];
 
     this.candidateService.editUser(this.apiForm).subscribe((data: any) => {
       console.log('success', data);
@@ -47,5 +48,9 @@ export class ConfirmComponent implements OnInit {
     }, (err) => {
 
     });
+  }
+
+  cancel() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
   }
 }

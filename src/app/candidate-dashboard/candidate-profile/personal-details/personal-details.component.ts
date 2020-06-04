@@ -169,6 +169,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }
   }
 
+  cancel() {
+    this.ngOnInit();
+  }
+
+
   regularGetUserDetails(data) {
     if (data) {
       if (data['field_isformsubmitted'][0]['value'] === true) {
@@ -193,7 +198,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.appConfig.hideLoader();
     this.FormsInitialization();
 
-    if (this.userData) {
+    if (this.userData && this.userData['field_isformsubmitted'][0]['value'] == true) {
       this.validateAllForms();
     }
   }
@@ -202,7 +207,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.candidateService.getUserProfile().subscribe((data: any) => {
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {
-        if (data[0]['field_isformsubmitted'][0]['value'] === true) {
+        if (data[0] && data[0]['field_isformsubmitted'] && data[0]['field_isformsubmitted'][0] && data[0]['field_isformsubmitted'][0]['value'] === true) {
           this.appConfig.setLocalData('field_isformsubmitted', 'true');
           this.appConfig.setLocalData('personalFormSubmitted', 'true');
           this.appConfig.setLocalData('educationalFormSubmitted', 'true');
@@ -321,6 +326,26 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
         this.appConfig.hideLoader();
       } else {
+        this.KYCModifiedData = {
+          type: 'candidate',
+
+          uid: [
+            {
+              target_id: this.appConfig.getLocalData('userId')
+            }
+          ],
+
+          is_default: [{
+            value: '1'
+          }],
+          field_isformsubmitted: [
+            {
+              value: false
+            }
+          ],
+        };
+        this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
+
         this.appConfig.hideLoader();
       }
       this.FormsInitialization();

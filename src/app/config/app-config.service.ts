@@ -102,7 +102,7 @@ export class AppConfigService {
   // NZ Zorro message
   nzsuccess(message: any, icon: any): void {
     this.message.success(message, {
-      nzDuration: 10000
+      nzDuration: 3000
     });
   }
   // nzerror(message: any, icon: any): void {
@@ -113,7 +113,7 @@ export class AppConfigService {
   // FormError message
   nzformerror(message: any, icon: any): void {
     this.message.error('Please fill all the red highlighted fields to proceed further', {
-      nzDuration: 10000
+      nzDuration: 3000
     });
   }
 
@@ -122,7 +122,7 @@ export class AppConfigService {
       type,
       title,
       text,
-      { nzDuration: 10000}
+      { nzDuration: 3000}
     );
   }
 
@@ -130,9 +130,9 @@ export class AppConfigService {
   // To show success Snack Bar Message
   success(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 2000,
+      duration: 5000,
       verticalPosition: 'top',
-      data: { message, icon },
+      data: { message, icon: 'success' },
       panelClass: ['success-bg-color']
     });
   }
@@ -140,9 +140,9 @@ export class AppConfigService {
   // To show error Snack Bar Message
   error(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 2000,
+      duration: 5000,
       verticalPosition: 'top',
-      data: { message, icon },
+      data: { message, icon: 'error' },
       panelClass: ['warn-bg-color']
     });
   }

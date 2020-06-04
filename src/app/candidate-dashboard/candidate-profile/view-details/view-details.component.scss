@@ -41,9 +41,9 @@
           align-items: center;
           font-size: 17px;
           overflow: auto;
-          opacity: 0.87;
-          color: $secondary;
-          background: $white-primary;
+          opacity: 1;
+          color: $light-black;
+          background: $disable-gray;
         }
         .radio-input {
           width: 42%;
@@ -54,8 +54,9 @@
           border-radius: 5px;
           font-size: 17px;
           overflow: auto;
-          color: $secondary;
-          background: $white-primary;
+          opacity: 1;
+          color: $light-black;
+          background: $disable-gray;
         }
       }
     }
@@ -83,8 +84,8 @@
           align-items: center;
           font-size: 17px;
           overflow: auto;
-          opacity: 0.87;
-          color: $secondary;
+          opacity: 1;
+          color: $light-black;
         }
         // label {
         //   outline: none;
@@ -134,14 +135,14 @@
           margin: 0 0 0 0;
           box-shadow: $shadow-light-black;
           border-radius: 5px;
-          padding: 0.5em 1em 0.5em 1em;
+          padding: 0.5em .5em 0.5em .5em;
           display: flex;
           align-items: center;
           font-size: 17px;
           overflow: auto;
-          opacity: 0.87;
-          color: $secondary;
-          background: $white-primary;
+          opacity: 1;
+          color: $light-black;
+          background: $disable-gray;
         }
       }
     }
@@ -183,9 +184,9 @@
           align-items: center;
           font-size: 17px;
           overflow: auto;
-          opacity: 0.87;
-          color: $secondary;
-          background: $white-primary;
+          opacity: 1;
+          color: $light-black;
+          background: $disable-gray;
           .label-input {
             outline: none;
             border: none;
@@ -217,10 +218,10 @@
             box-shadow: $shadow-light-black;
             border-radius: 5px;
             font-size: 17px;
-            background: $white-primary;
             overflow: auto;
-            opacity: 0.87;
-            color: $secondary;
+            opacity: 1;
+            color: $light-black;
+            background: $disable-gray;
           }
           .dob-input:last-child {
             background: $white-primary;
@@ -234,8 +235,9 @@
             border-radius: 5px;
             font-size: 17px;
             overflow: auto;
-            opacity: 0.87;
-            color: $secondary;
+            opacity: 1;
+            color: $light-black;
+            background: $disable-gray;
           }
         }
         .radio {
@@ -304,9 +306,9 @@
           align-items: center;
           font-size: 17px;
           overflow: auto;
-          opacity: 0.87;
-          color: $secondary;
-          background: $white-primary;
+          opacity: 1;
+          color: $light-black;
+          background: $disable-gray;
         }
       }
     }
@@ -341,9 +343,9 @@
           align-items: center;
           font-size: 17px;
           overflow: auto;
-          opacity: 0.87;
-          color: $secondary;
-          background: $white-primary;
+          opacity: 1;
+          color: $light-black;
+          background: $disable-gray;
         }
       }
     }
@@ -392,9 +394,9 @@
         align-items: center;
         font-size: 17px;
         overflow: auto;
-        opacity: 0.87;
-        color: $secondary;
-        background: $white;
+        opacity: 1;
+        color: $light-black;
+        background: $disable-gray;
       }
     }
     .height-weight-wrapper {
@@ -462,9 +464,9 @@
             align-items: center;
             font-size: 17px;
             overflow: auto;
-            opacity: 0.87;
-            color: $secondary;
-            background: $white;
+            opacity: 1;
+            color: $light-black;
+            background: $disable-gray;
           }
         }
         .right-wrapper {
@@ -523,10 +525,10 @@
         align-items: center;
         font-size: 15px;
         // overflow: auto;
-        opacity: 0.87;
-        color: $secondary;
+        opacity: 1;
+        color: $light-black;
+        background: $disable-gray;
         min-width: 180px;
-        background: $white;
       }
       .year,
       .percentage {
@@ -559,10 +561,11 @@
       margin: 1em 0 0 1.5em;
       display: flex;
       border-radius: 5px;
-      background: $white;
       padding: 0.5em 1.5em;
       font-size: 17px;
-      color: $secondary;
+      opacity: 1;
+      color: $light-black;
+      background: $disable-gray;
     }
   }
   .faculty-wrapper {
@@ -578,16 +581,16 @@
       width: 100%;
       display: flex;
       border-radius: 5px;
-      background: $white-primary;
       justify-content: space-around;
       padding: 1em;
       font-size: 17px;
-      color: $secondary;
+      opacity: 1;
+      color: $light-black;
+      background: $disable-gray;
     }
     div:last-child {
       min-height: 150px;
       margin: 0 0 0 2em;
-      background: $white-primary;
       align-items: center;
       box-shadow: $shadow-light-black;
       text-align: left;
@@ -597,13 +600,15 @@
       justify-content: space-around;
       padding: 1em;
       font-size: 17px;
-      color: $secondary;
+      opacity: 1;
+      color: $light-black;
+      background: $disable-gray;
     }
   }
   .scroll-enable {
     overflow: auto;
     background: $white-primary;
-      box-shadow: $shadow-light-black;
+    box-shadow: $shadow-light-black;
 
     .heading-grid {
       // padding: 0em 0 0.5em 1em;
@@ -653,6 +658,9 @@
         border-bottom: 0.5px solid #00000029;
         position: relative;
         min-height: 45px;
+        opacity: 1;
+        color: $light-black;
+        background: $disable-gray;
         div {
           min-width: 150px;
           // align-items: center;
@@ -662,7 +670,6 @@
           justify-content: space-around;
           padding: 0.25em 0.25em;
           font-size: 17px;
-          color: $secondary;
         }
       }
     }
@@ -746,3 +753,4 @@
     // }
   }
 }
+

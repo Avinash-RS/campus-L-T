@@ -1,4 +1,4 @@
-<div class="top-main-wrapper"
+<div class="top-main-wrapper view-page"
   *ngIf="userDetails">
 
   <div class="top-grid">
@@ -809,7 +809,7 @@
 </div>
 
 <div class="submit-button-wrapper">
-  <button mat-raised-button type="button">Edit</button>
+  <button (click)="edit()" mat-raised-button type="button">Edit</button>
 
   <button (click)="onSubmit()" mat-raised-button type="button">Next</button>
 

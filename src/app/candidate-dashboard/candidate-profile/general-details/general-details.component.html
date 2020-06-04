@@ -18,7 +18,7 @@
             <i *ngIf="i !== 0" (click)="removeSkillForm(i)"
               class="material-icons remove">close</i>
             <ng-container *ngIf="skillsArr && skillsArr.controls.length -1 === i">
-              <span (click)="addSkillForm()">
+              <span (click)="addSkillForm(null)">
                 <img src="assets/images/interface.svg" alt="" srcset="">
                 <span class="text">
                   Add
@@ -101,7 +101,7 @@
   <div class="submit-button-wrapper">
     <button (click)="onSubmit(aquaintancesForm.value, skillForm.value)" mat-raised-button type="submit">Save and Continue</button>
 
-    <button mat-raised-button type="button">Cancel</button>
+    <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
   </div>
 
