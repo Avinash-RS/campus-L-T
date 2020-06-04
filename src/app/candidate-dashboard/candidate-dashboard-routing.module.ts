@@ -10,6 +10,7 @@ import { GeneralDetailsComponent } from './candidate-profile/general-details/gen
 import { ConfirmComponent } from './candidate-profile/confirm/confirm.component';
 import { ViewDetailsComponent } from './candidate-profile/view-details/view-details.component';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
+import { KycAccessGuard } from '../guards/access-to-kyc-forms/kyc-access.guard';
 
 
 const routes: Routes = [
@@ -19,19 +20,19 @@ const routes: Routes = [
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, component: CandidateProfileComponent, children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, component: PersonalDetailsComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, component: PersonalDetailsComponent,
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, component: EducationalDetailsComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, component: EducationalDetailsComponent, canActivate: [KycAccessGuard]
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`, component: FamilyDetailsComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`, component: FamilyDetailsComponent, canActivate: [KycAccessGuard]
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`, component: GeneralDetailsComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`, component: GeneralDetailsComponent, canActivate: [KycAccessGuard]
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, component: ViewDetailsComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, component: ViewDetailsComponent, canActivate: [KycAccessGuard]
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`, component: ConfirmComponent

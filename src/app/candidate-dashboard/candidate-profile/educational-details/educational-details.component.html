@@ -7,7 +7,7 @@
             <div class="form-wrapper">
               <div class="outer-box-wrapper">
                 <div class="input-box">
-                  <nz-select nzAllowClear nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
+                  <nz-select (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -20,7 +20,7 @@
               <div class="outer-box-wrapper">
 
                 <div class="input-box width-300">
-                  <nz-select formControlName="board" nzAllowClear nzShowSearch nzPlaceHolder="Board/University">
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="board" nzAllowClear nzShowSearch nzPlaceHolder="Board/University">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -31,7 +31,7 @@
               </div>
               <div class="outer-box-wrapper">
                 <div class="input-box width-300">
-                  <nz-select formControlName="institute" nzAllowClear nzShowSearch nzPlaceHolder="Institute">
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear nzShowSearch nzPlaceHolder="Institute">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -44,7 +44,7 @@
               <div class="outer-box-wrapper">
 
                 <div class="input-box">
-                  <nz-select formControlName="discipline" nzAllowClear nzShowSearch nzPlaceHolder="Discipline">
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="discipline" nzAllowClear nzShowSearch nzPlaceHolder="Discipline">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -57,7 +57,7 @@
               <div class="outer-box-wrapper">
 
                 <div class="input-box">
-                  <nz-select formControlName="specification" nzAllowClear nzShowSearch nzPlaceHolder="Specification">
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear nzShowSearch nzPlaceHolder="Specification">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -71,7 +71,7 @@
               <div class="outer-box-wrapper">
 
                 <div class="input-box">
-                  <nz-month-picker formControlName="passedYear" [nzDisabledDate]="disabledYears"
+                  <nz-month-picker (ngModelChange)="detectSelectChange()" formControlName="passedYear" [nzDisabledDate]="disabledYears"
                     [nzFormat]="monthFormat" nzPlaceHolder="Year of passing"></nz-month-picker>
                 </div>
                 <div class="error"
@@ -83,20 +83,21 @@
               <div class="outer-box-wrapper">
 
                 <div class="input-box">
-                  <input placeholder="Percentage" formControlName="percentage" type="text" value="">
+                  <input (focusout)="detectInput(educationForm)" placeholder="Percentage" formControlName="percentage" type="text" value="">
                 </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('percentage').invalid && eduArr.controls[i].get('percentage').touched">
                   <span *ngIf="eduArr.controls[i].get('percentage').errors?.required">Percentage is Required</span>
-                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Numeric Decimals only allowed</span>
-                  <span *ngIf="!eduArr.controls[i].get('percentage').errors?.pattern && eduArr.controls[i].get('percentage').errors?.maxlength">Invalid Percentsage</span>
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Numeric Decimals and Percentage symbol only
+                    allowed</span>
                 </div>
 
               </div>
             </div>
           </div>
           <div class="add-remove-wrapper">
-            <ng-container *ngIf="(eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)">
+            <ng-container
+              *ngIf="(eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)">
               <div (click)="addEducationForm()" class="add-button">
                 <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
                 <span>Add</span>
@@ -106,13 +107,13 @@
               </div>
             </ng-container>
             <ng-container *ngIf="i !== 0">
-                <div (click)="removeEducationForm(i)" class="remove-button">
-              <div>
-                <i class="material-icons">delete</i>
+              <div (click)="removeEducationForm(i)" class="remove-button">
+                <div>
+                  <i class="material-icons">delete</i>
+                </div>
+                <span>Remove</span>
               </div>
-              <span>Remove</span>
-            </div>
-</ng-container>
+            </ng-container>
           </div>
 
         </div>

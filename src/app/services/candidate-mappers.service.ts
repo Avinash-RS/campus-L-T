@@ -80,6 +80,17 @@ export class CandidateMappersService {
     return headers;
   }
 
+  BasicAuthwithoutTokens(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/json')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
+    return headers;
+  }
+
   // For generating new static token for before login requests
   csrfToken() {
     return this.http.get('http://104.211.226.77/d8cintana2/rest/session/token', { headers: this.withoutTokens() });

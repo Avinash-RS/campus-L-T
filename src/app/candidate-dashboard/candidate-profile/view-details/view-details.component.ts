@@ -43,7 +43,10 @@ export class ViewDetailsComponent implements OnInit {
         speak: false
       }
     },
-  ]
+  ];
+  userData: any;
+  apiForm: any;
+  KYCModifiedData: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -54,7 +57,14 @@ export class ViewDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserDetails();
+
+    if (this.appConfig.getLocalData('kycForm')) {
+      const data = JSON.parse(this.appConfig.getLocalData('kycForm'));
+      this.apiForm = data;
+      this.getLocalForm(data);
+    } else {
+      this.getUserDetails();
+    }
   }
 
   getDateFormat(date) {
@@ -67,95 +77,349 @@ export class ViewDetailsComponent implements OnInit {
       return '';
     }
   }
+  getMonthFormat(date) {
+    if (date) {
+      const split = moment(date).format('MMM YYYY');
+      const output = split.toUpperCase();
+      return output;
 
+    } else {
+      return '';
+    }
+  }
+
+  getLocalForm(form) {
+    this.apiForm = form;
+    this.userData = this.apiForm;
+    const organizeUserDetails = this.apiForm;
+    let dob;
+    const dobFormats = organizeUserDetails && organizeUserDetails['field_dob'] && organizeUserDetails['field_dob'] ? organizeUserDetails['field_dob']['value'] : '-';
+
+    if (dobFormats) {
+      const split = moment(dobFormats).format('DD/MM/YYYY').split('/');
+      dob = {
+        date: split[0],
+        month: split[1],
+        year: split[2],
+      };
+    } else {
+      dob = {
+        date: '',
+        month: '',
+        year: '',
+      };
+    }
+
+    const dump = {
+      name: organizeUserDetails && organizeUserDetails['field_name'] && organizeUserDetails['field_name'] ? organizeUserDetails['field_name']['value'] : '-',
+      mail: organizeUserDetails && organizeUserDetails['field_email'] && organizeUserDetails['field_email'] ? organizeUserDetails['field_email']['value'] : '-',
+      mobile: organizeUserDetails && organizeUserDetails['field_mobile'] && organizeUserDetails['field_mobile'] ? organizeUserDetails['field_mobile']['value'] : '-',
+      gender: organizeUserDetails && organizeUserDetails['field_gender'] && organizeUserDetails['field_gender'] ? organizeUserDetails['field_gender']['value'] : '-',
+      marital: organizeUserDetails && organizeUserDetails['field_mariatal_status'] && organizeUserDetails['field_mariatal_status'] ? organizeUserDetails['field_mariatal_status']['value'] : '-',
+      dobDate: dob.date,
+      dobMonth: dob.month,
+      dobYear: dob.year,
+      nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '-',
+      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '-',
+
+      presentAddress1: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'] ? organizeUserDetails['field_present_line_street_addres']['value'] : '-',
+      presentAddress2: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'] ? organizeUserDetails['field_present_line2_street_addre']['value'] : '-',
+      presentZipCode: organizeUserDetails && organizeUserDetails['field_present_zip'] && organizeUserDetails['field_present_zip'] ? organizeUserDetails['field_present_zip']['value'] : '-',
+      presentCity: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'] ? organizeUserDetails['field_preset_city']['value'] : '-',
+      presentState: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'] ? organizeUserDetails['field_present_state']['value'] : '-',
+
+      permanentAddress1: organizeUserDetails && organizeUserDetails['field_permanent_line1_street_add'] && organizeUserDetails['field_permanent_line1_street_add'] ? organizeUserDetails['field_permanent_line1_street_add']['value'] : '-',
+      permanentAddress2: organizeUserDetails && organizeUserDetails['field_permanent_line2_street_add'] && organizeUserDetails['field_permanent_line2_street_add'] ? organizeUserDetails['field_permanent_line2_street_add']['value'] : '-',
+      permanentZipCode: organizeUserDetails && organizeUserDetails['field_permanent_zip'] && organizeUserDetails['field_permanent_zip'] ? organizeUserDetails['field_permanent_zip']['value'] : '-',
+      permanentCity: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'] ? organizeUserDetails['field_permanent_city']['value'] : '-',
+      permanentState: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'] ? organizeUserDetails['field_permanent_state']['value'] : '-',
+
+      languagesknown: [{
+        languageRequired: organizeUserDetails && organizeUserDetails['field_language_known'] && organizeUserDetails['field_language_known'] ? organizeUserDetails['field_language_known']['value'] : '-',
+
+        firstRead: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '-',
+        firstWrite: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '-',
+        firstSpeak: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '-',
+      }],
+
+      passportNumber: organizeUserDetails && organizeUserDetails['field_passport_number'] && organizeUserDetails['field_passport_number'] ? organizeUserDetails['field_passport_number']['value'] : '-',
+      passportName: organizeUserDetails && organizeUserDetails['field_name_as_in_passport'] && organizeUserDetails['field_name_as_in_passport'] ? organizeUserDetails['field_name_as_in_passport']['value'] : '-',
+      passportProfession: organizeUserDetails && organizeUserDetails['field_profesiona_as_passport'] && organizeUserDetails['field_profesiona_as_passport'] ? organizeUserDetails['field_profesiona_as_passport']['value'] : '-',
+      passportIssueDate: organizeUserDetails && organizeUserDetails['field_date_of_issue'] && organizeUserDetails['field_date_of_issue'] ? this.getDateFormat(organizeUserDetails['field_date_of_issue']['value']) : '-',
+      passportValid: organizeUserDetails && organizeUserDetails['field_valid_upto'] && organizeUserDetails['field_valid_upto'] ? this.getDateFormat(organizeUserDetails['field_valid_upto']['value']) : '-',
+      passportIssuePlace: organizeUserDetails && organizeUserDetails['field_place_of_issue'] && organizeUserDetails['field_place_of_issue'] ? organizeUserDetails['field_place_of_issue']['value'] : '-',
+      passportValidFor: organizeUserDetails && organizeUserDetails['field_country_valid_for'] && organizeUserDetails['field_country_valid_for'] ? organizeUserDetails['field_country_valid_for']['value'] : '-',
+
+      illness: organizeUserDetails && organizeUserDetails['field_serious_illness'] && organizeUserDetails['field_serious_illness'] ? organizeUserDetails['field_serious_illness']['value'] : '-',
+      daysofIll: organizeUserDetails && organizeUserDetails['field_no_of_days'] && organizeUserDetails['field_no_of_days'] ? organizeUserDetails['field_no_of_days']['value'] : '-',
+      natureofIll: organizeUserDetails && organizeUserDetails['field_nature_of_illness'] && organizeUserDetails['field_nature_of_illness'] ? organizeUserDetails['field_nature_of_illness']['value'] : '-',
+      disability: organizeUserDetails && organizeUserDetails['field_physical_disability'] && organizeUserDetails['field_physical_disability'] ? organizeUserDetails['field_physical_disability']['value'] : '-',
+      height: organizeUserDetails && organizeUserDetails['field_height'] && organizeUserDetails['field_height'] ? organizeUserDetails['field_height']['value'] : '-',
+      weight: organizeUserDetails && organizeUserDetails['field_weight'] && organizeUserDetails['field_weight'] ? organizeUserDetails['field_weight']['value'] : '-',
+      left: organizeUserDetails && organizeUserDetails['field_left_eyepower_glass'] && organizeUserDetails['field_left_eyepower_glass'] ? organizeUserDetails['field_left_eyepower_glass']['value'] : '-',
+      right: organizeUserDetails && organizeUserDetails['field_right_eye_power_glass'] && organizeUserDetails['field_right_eye_power_glass'] ? organizeUserDetails['field_right_eye_power_glass']['value'] : '-',
+
+      educationValuearray: [{
+        leveling: this.apiForm && this.apiForm['field_level'] ? this.apiForm['field_level']['value'] : '-',
+        board: this.apiForm && this.apiForm['field_board_university'] ? this.apiForm['field_board_university']['value'] : '-',
+        institute: this.apiForm && this.apiForm['field_institute'] ? this.apiForm['field_institute']['value'] : '-',
+        discipline: this.apiForm && this.apiForm['field_discipline'] ? this.apiForm['field_discipline']['value'] : '-',
+        specification: this.apiForm && this.apiForm['field_specification'] ? this.apiForm['field_specification']['value'] : '-',
+        passedYear: this.apiForm && this.apiForm['field_year_of_passing'] ? this.getMonthFormat(this.apiForm['field_year_of_passing']['value']) : '-',
+        percentage: this.apiForm && this.apiForm['field_percentage'] ? this.apiForm['field_percentage']['value'] : '-',
+      }],
+
+      familyValuesArr: [{
+        names: this.apiForm && this.apiForm['field_name_of_your_family_member'] ? this.apiForm['field_name_of_your_family_member']['value'] : '-',
+        dob: this.apiForm && this.apiForm['field_family_date_of_birth'] ? this.getDateFormat(this.apiForm['field_family_date_of_birth']['value']) : '-',
+        relationship: this.apiForm && this.apiForm['field_relationship'] ? this.apiForm['field_relationship']['value'] : '-',
+        occupation: this.apiForm && this.apiForm['field_occupation'] ? this.apiForm['field_occupation']['value'] : '-',
+      }],
+
+      skillValueArray: [{
+        skill: this.apiForm && this.apiForm['field_add_your_skills'] ? this.apiForm['field_add_your_skills']['value'] : '-'
+      }],
+      generalArray: [{
+        names: this.apiForm && this.apiForm['field_relatives_l_t_group_name'] ? this.apiForm['field_relatives_l_t_group_name']['value'] : '-',
+        relationship: this.apiForm && this.apiForm['field_realationship'] ? this.apiForm['field_realationship']['value'] : '-',
+        position: this.apiForm && this.apiForm['field_position'] ? this.apiForm['field_position']['value'] : '-',
+        company: this.apiForm && this.apiForm['field_company'] ? this.apiForm['field_company']['value'] : '-',
+      }],
+      facultyReference1: this.apiForm && this.apiForm['field_faculty_reference'] ? this.apiForm['field_faculty_reference']['value'] : '-',
+      facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
+    };
+
+    this.userDetails = dump;
+    console.log(this.userDetails);
+
+  }
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
-      console.log(data[0]);
-      this.userDetails = data[0];
-      const organizeUserDetails = data[0];
-
-      // Changing Dob Date Format
-      let dob;
-      const dobFormats = organizeUserDetails && organizeUserDetails.field_dob && organizeUserDetails.field_dob[0].value ? organizeUserDetails.field_dob[0].value : 'NA';
-      if (dobFormats) {
-        const split = moment(dobFormats).format('DD/MM/YYYY').split('/');
-        dob = {
-          date: split[0],
-          month: split[1],
-          year: split[2],
-        };
+      this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
+      if (data && data.length > 0) {
+        if (data[0]['field_isformsubmitted'][0]['value'] === true) {
+          this.appConfig.setLocalData('field_isformsubmitted', 'true');
+          this.appConfig.setLocalData('personalFormSubmitted', 'true');
+          this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+          this.appConfig.setLocalData('familyFormSubmitted', 'true');
+          this.appConfig.setLocalData('generalFormSubmitted', 'true');
+          this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+        } else {
+          this.appConfig.setLocalData('field_isformsubmitted', 'false');
+          this.appConfig.setLocalData('personalFormSubmitted', 'false');
+          this.appConfig.setLocalData('educationalFormSubmitted', 'false');
+          this.appConfig.setLocalData('familyFormSubmitted', 'false');
+          this.appConfig.setLocalData('generalFormSubmitted', 'false');
+          this.appConfig.setLocalData('confirmFormSubmitted', 'false');
+        }
       } else {
-        dob = {
-          date: 'NA',
-          month: 'NA',
-          year: 'NA',
-        };
+        this.appConfig.setLocalData('field_isformsubmitted', 'false');
+        this.appConfig.setLocalData('personalFormSubmitted', 'false');
+        this.appConfig.setLocalData('educationalFormSubmitted', 'false');
+        this.appConfig.setLocalData('familyFormSubmitted', 'false');
+        this.appConfig.setLocalData('generalFormSubmitted', 'false');
+        this.appConfig.setLocalData('confirmFormSubmitted', 'false');
       }
+      const datas = [];
+      this.userData = data;
+      if (this.userData && this.userData.length > 0) {
+        console.log(data[0]);
+        this.userDetails = data[0];
+        const organizeUserDetails = data[0];
+        // Changing Dob Date Format
+        let dob;
+        const dobFormats = organizeUserDetails && organizeUserDetails.field_dob && organizeUserDetails.field_dob[0].value ? organizeUserDetails.field_dob[0].value : '-';
+        if (dobFormats) {
+          const split = moment(dobFormats).format('DD/MM/YYYY').split('/');
+          dob = {
+            date: split[0],
+            month: split[1],
+            year: split[2],
+          };
+        } else {
+          dob = {
+            date: '-',
+            month: '-',
+            year: '-',
+          };
+        }
 
-      this.userDetails = {
-        name: organizeUserDetails && organizeUserDetails.field_name && organizeUserDetails.field_name[0] ? organizeUserDetails.field_name[0].value : 'NA',
-        mail: organizeUserDetails && organizeUserDetails.field_email && organizeUserDetails.field_email[0] ? organizeUserDetails.field_email[0].value : 'NA',
-        mobile: organizeUserDetails && organizeUserDetails.field_mobile && organizeUserDetails.field_mobile[0] ? organizeUserDetails.field_mobile[0].value : 'NA',
-        gender: organizeUserDetails && organizeUserDetails.field_gender && organizeUserDetails.field_gender[0] ? organizeUserDetails.field_gender[0].value : 'NA',
-        marital: organizeUserDetails && organizeUserDetails.field_mariatal_status && organizeUserDetails.field_mariatal_status[0] ? organizeUserDetails.field_mariatal_status[0].value : 'NA',
-        dob: {
-          date: dob.date,
-          month: dob.month,
-          year: dob.year
-        },
-        nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails.field_nationality[0] ? organizeUserDetails.field_nationality[0].value : 'NA',
-        category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails.field_category[0] ? organizeUserDetails.field_category[0].value : 'NA',
-        presentAddress: {
-          address1: organizeUserDetails && organizeUserDetails.field_present_line_street_addres && organizeUserDetails.field_present_line_street_addres[0] ? organizeUserDetails.field_present_line_street_addres[0].value : '',
-          address2: organizeUserDetails && organizeUserDetails.field_present_line2_street_addre && organizeUserDetails.field_present_line2_street_addre[0] ? organizeUserDetails.field_present_line2_street_addre[0].value : '',
-          postalCode: organizeUserDetails && organizeUserDetails.field_present_zip && organizeUserDetails.field_present_zip[0] ? organizeUserDetails.field_present_zip[0].value : '',
-          city: organizeUserDetails && organizeUserDetails.field_preset_city && organizeUserDetails.field_preset_city[0] ? organizeUserDetails.field_preset_city[0].value : '',
-          state: organizeUserDetails && organizeUserDetails.field_present_state && organizeUserDetails.field_present_state[0] ? organizeUserDetails.field_present_state[0].value : ''
-        },
-        permanentAddress: {
-          address1: organizeUserDetails && organizeUserDetails.field_permanent_line1_street_add && organizeUserDetails.field_permanent_line1_street_add[0] ? organizeUserDetails.field_permanent_line1_street_add[0].value : '',
-          address2: organizeUserDetails && organizeUserDetails.field_permanent_line2_street_add && organizeUserDetails.field_permanent_line2_street_add[0] ? organizeUserDetails.field_permanent_line2_street_add[0].value : '',
-          postalCode: organizeUserDetails && organizeUserDetails.field_permanent_zip && organizeUserDetails.field_permanent_zip[0] ? organizeUserDetails.field_permanent_zip[0].value : '',
-          city: organizeUserDetails && organizeUserDetails.field_permanent_city && organizeUserDetails.field_permanent_city[0] ? organizeUserDetails.field_permanent_city[0].value : '',
-          state: organizeUserDetails && organizeUserDetails.field_permanent_state && organizeUserDetails.field_permanent_state[0] ? organizeUserDetails.field_permanent_state[0].value : ''
-        },
-        languagesknown: [
-          {
-            name: organizeUserDetails && organizeUserDetails.field_language_known && organizeUserDetails.field_language_known[0] ? organizeUserDetails.field_language_known[0].value : 'NA',
-            read: 'read',
-            write: '',
-            speak: ''
+        this.KYCModifiedData = data;
+        this.KYCModifiedData = {
+          type: 'candidate',
+
+          uid: [
+            {
+              target_id: this.appConfig.getLocalData('userId')
+            }
+          ],
+          field_name: { value: organizeUserDetails && organizeUserDetails['field_name'] && organizeUserDetails['field_name'][0] ? organizeUserDetails['field_name'][0]['value'] : '' },
+          field_email: { value: organizeUserDetails && organizeUserDetails['field_email'] && organizeUserDetails['field_email'][0] ? organizeUserDetails['field_email'][0]['value'] : '' },
+          field_mobile: { value: organizeUserDetails && organizeUserDetails['field_mobile'] && organizeUserDetails['field_mobile'][0] ? organizeUserDetails['field_mobile'][0]['value'] : '' },
+          field_gender: { value: organizeUserDetails && organizeUserDetails['field_gender'] && organizeUserDetails['field_gender'][0] ? organizeUserDetails['field_gender'][0]['value'] : '' },
+          field_mariatal_status: { value: organizeUserDetails && organizeUserDetails['field_mariatal_status'] && organizeUserDetails['field_mariatal_status'][0] ? organizeUserDetails['field_mariatal_status'][0]['value'] : '' },
+          field_dob: { value: organizeUserDetails && organizeUserDetails['field_dob'] && organizeUserDetails['field_dob'][0] ? organizeUserDetails['field_dob'][0]['value'] : '' },
+          field_nationality: { value: organizeUserDetails && organizeUserDetails['field_nationality'] && organizeUserDetails['field_nationality'][0] ? organizeUserDetails['field_nationality'][0]['value'] : '' },
+          field_category: { value: organizeUserDetails && organizeUserDetails['field_category'] && organizeUserDetails['field_category'][0] ? organizeUserDetails['field_category'][0]['value'] : '' },
+
+          field_present_line_street_addres: { value: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'][0] ? organizeUserDetails['field_present_line_street_addres'][0]['value'] : '' },
+          field_present_line2_street_addre: { value: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'][0] ? organizeUserDetails['field_present_line2_street_addre'][0]['value'] : '' },
+          field_present_zip: { value: organizeUserDetails && organizeUserDetails['field_present_zip'] && organizeUserDetails['field_present_zip'][0] ? organizeUserDetails['field_present_zip'][0]['value'] : '' },
+          field_preset_city: { value: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'][0] ? organizeUserDetails['field_preset_city'][0]['value'] : '' },
+          field_present_state: { value: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'][0] ? organizeUserDetails['field_present_state'][0]['value'] : '' },
+
+          field_permanent_line1_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line1_street_add'] && organizeUserDetails['field_permanent_line1_street_add'][0] ? organizeUserDetails['field_permanent_line1_street_add'][0]['value'] : '' },
+          field_permanent_line2_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line2_street_add'] && organizeUserDetails['field_permanent_line2_street_add'][0] ? organizeUserDetails['field_permanent_line2_street_add'][0]['value'] : '' },
+          field_permanent_zip: { value: organizeUserDetails && organizeUserDetails['field_permanent_zip'] && organizeUserDetails['field_permanent_zip'][0] ? organizeUserDetails['field_permanent_zip'][0]['value'] : '' },
+          field_permanent_city: { value: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'][0] ? organizeUserDetails['field_permanent_city'][0]['value'] : '' },
+          field_permanent_state: { value: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'][0] ? organizeUserDetails['field_permanent_state'][0]['value'] : '' },
+
+          field_language_known: { value: organizeUserDetails && organizeUserDetails['field_language_known'] && organizeUserDetails['field_language_known'][0] ? organizeUserDetails['field_language_known'][0]['value'] : '' },
+
+          field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
+          field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
+          field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
+
+          field_passport_number: { value: organizeUserDetails && organizeUserDetails['field_passport_number'] && organizeUserDetails['field_passport_number'][0] ? organizeUserDetails['field_passport_number'][0]['value'] : '' },
+          field_name_as_in_passport: { value: organizeUserDetails && organizeUserDetails['field_name_as_in_passport'] && organizeUserDetails['field_name_as_in_passport'][0] ? organizeUserDetails['field_name_as_in_passport'][0]['value'] : '' },
+          field_profesiona_as_passport: { value: organizeUserDetails && organizeUserDetails['field_profesiona_as_passport'] && organizeUserDetails['field_profesiona_as_passport'][0] ? organizeUserDetails['field_profesiona_as_passport'][0]['value'] : '' },
+          field_date_of_issue: { value: organizeUserDetails && organizeUserDetails['field_date_of_issue'] && organizeUserDetails['field_date_of_issue'][0] ? organizeUserDetails['field_date_of_issue'][0]['value'] : '' },
+          field_valid_upto: { value: organizeUserDetails && organizeUserDetails['field_valid_upto'] && organizeUserDetails['field_valid_upto'][0] ? organizeUserDetails['field_valid_upto'][0]['value'] : '' },
+          field_place_of_issue: { value: organizeUserDetails && organizeUserDetails['field_place_of_issue'] && organizeUserDetails['field_place_of_issue'][0] ? organizeUserDetails['field_place_of_issue'][0]['value'] : '' },
+          field_country_valid_for: { value: organizeUserDetails && organizeUserDetails['field_country_valid_for'] && organizeUserDetails['field_country_valid_for'][0] ? organizeUserDetails['field_country_valid_for'][0]['value'] : '' },
+
+          field_serious_illness: { value: organizeUserDetails && organizeUserDetails['field_serious_illness'] && organizeUserDetails['field_serious_illness'][0] ? organizeUserDetails['field_serious_illness'][0]['value'] : '' },
+          field_no_of_days: { value: organizeUserDetails && organizeUserDetails['field_no_of_days'] && organizeUserDetails['field_no_of_days'][0] ? organizeUserDetails['field_no_of_days'][0]['value'] : '' },
+          field_nature_of_illness: { value: organizeUserDetails && organizeUserDetails['field_nature_of_illness'] && organizeUserDetails['field_nature_of_illness'][0] ? organizeUserDetails['field_nature_of_illness'][0]['value'] : '' },
+          field_physical_disability: { value: organizeUserDetails && organizeUserDetails['field_physical_disability'] && organizeUserDetails['field_physical_disability'][0] ? organizeUserDetails['field_physical_disability'][0]['value'] : '' },
+          field_height: { value: organizeUserDetails && organizeUserDetails['field_height'] && organizeUserDetails['field_height'][0] ? organizeUserDetails['field_height'][0]['value'] : '' },
+          field_weight: { value: organizeUserDetails && organizeUserDetails['field_weight'] && organizeUserDetails['field_weight'][0] ? organizeUserDetails['field_weight'][0]['value'] : '' },
+          field_right_eye_power_glass: { value: organizeUserDetails && organizeUserDetails['field_right_eye_power_glass'] && organizeUserDetails['field_right_eye_power_glass'][0] ? organizeUserDetails['field_right_eye_power_glass'][0]['value'] : '' },
+          field_left_eyepower_glass: { value: organizeUserDetails && organizeUserDetails['field_left_eyepower_glass'] && organizeUserDetails['field_left_eyepower_glass'][0] ? organizeUserDetails['field_left_eyepower_glass'][0]['value'] : '' },
+
+          // Educational
+          field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
+          field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
+          field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '' },
+          field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
+          field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
+          field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
+          field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
+
+          // Family
+          field_name_of_your_family_member: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family_member'] && organizeUserDetails['field_name_of_your_family_member'][0] ? organizeUserDetails['field_name_of_your_family_member'][0]['value'] : '' },
+          field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
+          field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
+          field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
+
+          // General
+          field_add_your_skills: { value: organizeUserDetails && organizeUserDetails['field_add_your_skills'] && organizeUserDetails['field_add_your_skills'][0] ? organizeUserDetails['field_add_your_skills'][0]['value'] : '' },
+          field_relatives_l_t_group_name: { value: organizeUserDetails && organizeUserDetails['field_relatives_l_t_group_name'] && organizeUserDetails['field_relatives_l_t_group_name'][0] ? organizeUserDetails['field_relatives_l_t_group_name'][0]['value'] : '' },
+          field_realationship: { value: organizeUserDetails && organizeUserDetails['field_realationship'] && organizeUserDetails['field_realationship'][0] ? organizeUserDetails['field_realationship'][0]['value'] : '' },
+          field_position: { value: organizeUserDetails && organizeUserDetails['field_position'] && organizeUserDetails['field_position'][0] ? organizeUserDetails['field_position'][0]['value'] : '' },
+          field_company: { value: organizeUserDetails && organizeUserDetails['field_company'] && organizeUserDetails['field_company'][0] ? organizeUserDetails['field_company'][0]['value'] : '' },
+          field_faculty_reference: { value: organizeUserDetails && organizeUserDetails['field_faculty_reference'] && organizeUserDetails['field_faculty_reference'][0] ? organizeUserDetails['field_faculty_reference'][0]['value'] : '' },
+          field_faculty_reference1: { value: organizeUserDetails && organizeUserDetails['field_faculty_reference1'] && organizeUserDetails['field_faculty_reference1'][0] ? organizeUserDetails['field_faculty_reference1'][0]['value'] : '' },
+
+          is_default: [{
+            value: '1'
+          }],
+          field_isformsubmitted: [
+            {
+              value: true
+            }
+          ],
+        };
+        this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
+        this.getLocalForm(this.KYCModifiedData);
+        this.appConfig.hideLoader();
+
+      } else {
+        this.appConfig.hideLoader();
+        this.userDetails = {
+          name: '',
+          mail: '',
+          mobile: '',
+          gender: '',
+          marital: '',
+          dobDate: '',
+          dobMonth: '',
+          dobYear: '',
+          nationality: '',
+          category: '',
+
+          presentAddress1: '',
+          presentAddress2: '',
+          presentZipCode: '',
+          presentCity: '',
+          presentState: '',
+
+          permanentAddress1: '',
+          permanentAddress2: '',
+          permanentZipCode: '',
+          permanentCity: '',
+          permanentState: '',
+
+          languagesknown: [
+            {
+              languageRequired: '',
+              firstRead: '',
+              firstWrite: '',
+              firstSpeak: '',
+            }],
+
+          passportNumber: '',
+          passportName: '',
+          passportProfession: '',
+          passportIssueDate: '',
+          passportValid: '',
+          passportIssuePlace: '',
+          passportValidFor: '',
+
+          illness: '',
+          daysofIll: '',
+          natureofIll: '',
+          disability: '',
+          height: '',
+          weight: '',
+          left: '',
+          right: '',
+
+          educationValuearray: [{
+            leveling: '',
+            board: '',
+            institute: '',
+            discipline: '',
+            specification: '',
+            passedYear: '',
+            percentage: '',
           }],
 
-        passportNumber: organizeUserDetails && organizeUserDetails.field_passport_number && organizeUserDetails.field_passport_number[0] ? organizeUserDetails.field_passport_number[0].value : 'NA',
-        passportName: organizeUserDetails && organizeUserDetails.field_name_as_in_passport && organizeUserDetails.field_name_as_in_passport[0] ? organizeUserDetails.field_name_as_in_passport[0].value : 'NA',
-        passportProfession: organizeUserDetails && organizeUserDetails.field_profesiona_as_passport && organizeUserDetails.field_profesiona_as_passport[0] ? organizeUserDetails.field_profesiona_as_passport[0].value : 'NA',
-        passportDate: organizeUserDetails && organizeUserDetails.field_date_of_issue && organizeUserDetails.field_date_of_issue[0] ? this.getDateFormat(organizeUserDetails.field_date_of_issue[0].value) : 'NA',
-        passportValid: organizeUserDetails && organizeUserDetails.field_valid_upto && organizeUserDetails.field_valid_upto[0] ? this.getDateFormat(organizeUserDetails.field_valid_upto[0].value) : 'NA',
-        passportPlace: organizeUserDetails && organizeUserDetails.field_place_of_issue && organizeUserDetails.field_place_of_issue[0] ? organizeUserDetails.field_place_of_issue[0].value : 'NA',
-        passportCountries: organizeUserDetails && organizeUserDetails.field_country_valid_for && organizeUserDetails.field_country_valid_for[0] ? organizeUserDetails.field_country_valid_for[0].value : 'NA',
+          familyValuesArr: [{
+            names: '',
+            dob: '',
+            relationship: '',
+            occupation: '',
+          }],
 
-        healthRecentIllness: organizeUserDetails && organizeUserDetails.field_serious_illness && organizeUserDetails.field_serious_illness[0] ? organizeUserDetails.field_serious_illness[0].value : 'NA',
+          skillValueArray: [{
+            skill: '',
+          }],
 
-        healthIllnessDays: organizeUserDetails && organizeUserDetails.field_no_of_days && organizeUserDetails.field_no_of_days[0] ? organizeUserDetails.field_no_of_days[0].value : 'NA',
+          generalArray: [{
+            names: '',
 
-        healthNature: organizeUserDetails && organizeUserDetails.field_nature_of_illness && organizeUserDetails.field_nature_of_illness[0] ? organizeUserDetails.field_nature_of_illness[0].value : 'NA',
+            relationship: '',
 
-        healthDisability: organizeUserDetails && organizeUserDetails.field_physical_disability && organizeUserDetails.field_physical_disability[0] ? organizeUserDetails.field_physical_disability[0].value : 'NA',
+            position: '',
 
-        healthHeight: organizeUserDetails && organizeUserDetails.field_height && organizeUserDetails.field_height[0] ? organizeUserDetails.field_height[0].value : 'NA',
+            company: '',
+          }],
+          facultyReference1: '',
+          facultyReference2: '',
+        };
 
-        healthWeight: organizeUserDetails && organizeUserDetails.field_weight && organizeUserDetails.field_weight[0] ? organizeUserDetails.field_weight[0].value : 'NA',
-
-        healthPowerLeft: organizeUserDetails && organizeUserDetails.field_left_eyepower_glass && organizeUserDetails.field_left_eyepower_glass[0] ? organizeUserDetails.field_left_eyepower_glass[0].value : 'NA',
-
-        healthPowerRight: organizeUserDetails && organizeUserDetails.field_right_eye_power_glass && organizeUserDetails.field_right_eye_power_glass[0] ? organizeUserDetails.field_right_eye_power_glass[0].value : 'NA',
-
-
-      };
-      console.log(this.userDetails);
-
-      this.appConfig.hideLoader();
+      }
     }, (error) => {
 
     });
@@ -164,4 +428,90 @@ export class ViewDetailsComponent implements OnInit {
   onSubmit() {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_CONFIRM);
   }
+
+  /*
+        this.userDetails = {
+          name: organizeUserDetails && organizeUserDetails.field_name && organizeUserDetails.field_name[0] ? organizeUserDetails.field_name[0]['value'] : '-',
+          mail: organizeUserDetails && organizeUserDetails.field_email && organizeUserDetails.field_email[0] ? organizeUserDetails.field_email[0]['value'] : '-',
+          mobile: organizeUserDetails && organizeUserDetails.field_mobile && organizeUserDetails.field_mobile[0] ? organizeUserDetails.field_mobile[0]['value'] : '-',
+          gender: organizeUserDetails && organizeUserDetails.field_gender && organizeUserDetails.field_gender[0] ? organizeUserDetails.field_gender[0]['value'] : '-',
+          marital: organizeUserDetails && organizeUserDetails.field_mariatal_status && organizeUserDetails.field_mariatal_status[0] ? organizeUserDetails.field_mariatal_status[0]['value'] : '-',
+          dobDate: dob.date,
+          dobMonth: dob.month,
+          dobYear: dob.year,
+          nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails.field_nationality[0] ? organizeUserDetails.field_nationality[0]['value'] : '-',
+          category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails.field_category[0] ? organizeUserDetails.field_category[0]['value'] : '-',
+
+          presentAddress1: organizeUserDetails && organizeUserDetails.field_present_line_street_addres && organizeUserDetails.field_present_line_street_addres[0] ? organizeUserDetails.field_present_line_street_addres[0]['value'] : '-',
+          presentAddress2: organizeUserDetails && organizeUserDetails.field_present_line2_street_addre && organizeUserDetails.field_present_line2_street_addre[0] ? organizeUserDetails.field_present_line2_street_addre[0]['value'] : '-',
+          presentZipCode: organizeUserDetails && organizeUserDetails.field_present_zip && organizeUserDetails.field_present_zip[0] ? organizeUserDetails.field_present_zip[0]['value'] : '-',
+          presentCity: organizeUserDetails && organizeUserDetails.field_preset_city && organizeUserDetails.field_preset_city[0] ? organizeUserDetails.field_preset_city[0]['value'] : '-',
+          presentState: organizeUserDetails && organizeUserDetails.field_present_state && organizeUserDetails.field_present_state[0] ? organizeUserDetails.field_present_state[0]['value'] : '-',
+
+          permanentAddress1: organizeUserDetails && organizeUserDetails.field_permanent_line1_street_add && organizeUserDetails.field_permanent_line1_street_add[0] ? organizeUserDetails.field_permanent_line1_street_add[0]['value'] : '-',
+          permanentAddress2: organizeUserDetails && organizeUserDetails.field_permanent_line2_street_add && organizeUserDetails.field_permanent_line2_street_add[0] ? organizeUserDetails.field_permanent_line2_street_add[0]['value'] : '-',
+          permanentZipCode: organizeUserDetails && organizeUserDetails.field_permanent_zip && organizeUserDetails.field_permanent_zip[0] ? organizeUserDetails.field_permanent_zip[0]['value'] : '-',
+          permanentCity: organizeUserDetails && organizeUserDetails.field_permanent_city && organizeUserDetails.field_permanent_city[0] ? organizeUserDetails.field_permanent_city[0]['value'] : '-',
+          permanentState: organizeUserDetails && organizeUserDetails.field_permanent_state && organizeUserDetails.field_permanent_state[0] ? organizeUserDetails.field_permanent_state[0]['value'] : '-',
+
+          languagesknown: [
+            {
+              languageRequired: organizeUserDetails && organizeUserDetails.field_language_known && organizeUserDetails.field_language_known[0] ? organizeUserDetails.field_language_known[0]['value'] : '-',
+              firstRead: organizeUserDetails && organizeUserDetails.field_read && organizeUserDetails.field_read[0] ? organizeUserDetails.field_read[0]['value'] : '-',
+              firstWrite: organizeUserDetails && organizeUserDetails.field_write && organizeUserDetails.field_write[0] ? organizeUserDetails.field_write[0]['value'] : '-',
+              firstSpeak: organizeUserDetails && organizeUserDetails.field_speak && organizeUserDetails.field_speak[0] ? organizeUserDetails.field_speak[0]['value'] : '-',
+            }],
+
+          passportNumber: organizeUserDetails && organizeUserDetails.field_passport_number && organizeUserDetails.field_passport_number[0] ? organizeUserDetails.field_passport_number[0]['value'] : '-',
+          passportName: organizeUserDetails && organizeUserDetails.field_name_as_in_passport && organizeUserDetails.field_name_as_in_passport[0] ? organizeUserDetails.field_name_as_in_passport[0]['value'] : '-',
+          passportProfession: organizeUserDetails && organizeUserDetails.field_profesiona_as_passport && organizeUserDetails.field_profesiona_as_passport[0] ? organizeUserDetails.field_profesiona_as_passport[0]['value'] : '-',
+          passportIssueDate: organizeUserDetails && organizeUserDetails.field_date_of_issue && organizeUserDetails.field_date_of_issue[0] ? this.getDateFormat(organizeUserDetails.field_date_of_issue[0]['value']) : '-',
+          passportValid: organizeUserDetails && organizeUserDetails.field_valid_upto && organizeUserDetails.field_valid_upto[0] ? this.getDateFormat(organizeUserDetails.field_valid_upto[0]['value']) : '-',
+          passportIssuePlace: organizeUserDetails && organizeUserDetails.field_place_of_issue && organizeUserDetails.field_place_of_issue[0] ? organizeUserDetails.field_place_of_issue[0]['value'] : '-',
+          passportValidFor: organizeUserDetails && organizeUserDetails.field_country_valid_for && organizeUserDetails.field_country_valid_for[0] ? organizeUserDetails.field_country_valid_for[0]['value'] : '-',
+
+          illness: organizeUserDetails && organizeUserDetails.field_serious_illness && organizeUserDetails.field_serious_illness[0] ? organizeUserDetails.field_serious_illness[0]['value'] : '-',
+          daysofIll: organizeUserDetails && organizeUserDetails.field_no_of_days && organizeUserDetails.field_no_of_days[0] ? organizeUserDetails.field_no_of_days[0]['value'] : '-',
+          natureofIll: organizeUserDetails && organizeUserDetails.field_nature_of_illness && organizeUserDetails.field_nature_of_illness[0] ? organizeUserDetails.field_nature_of_illness[0]['value'] : '-',
+          disability: organizeUserDetails && organizeUserDetails.field_physical_disability && organizeUserDetails.field_physical_disability[0] ? organizeUserDetails.field_physical_disability[0]['value'] : '-',
+          height: organizeUserDetails && organizeUserDetails.field_height && organizeUserDetails.field_height[0] ? organizeUserDetails.field_height[0]['value'] : '-',
+          weight: organizeUserDetails && organizeUserDetails.field_weight && organizeUserDetails.field_weight[0] ? organizeUserDetails.field_weight[0]['value'] : '-',
+          left: organizeUserDetails && organizeUserDetails.field_left_eyepower_glass && organizeUserDetails.field_left_eyepower_glass[0] ? organizeUserDetails.field_left_eyepower_glass[0]['value'] : '-',
+          right: organizeUserDetails && organizeUserDetails.field_right_eye_power_glass && organizeUserDetails.field_right_eye_power_glass[0] ? organizeUserDetails.field_right_eye_power_glass[0]['value'] : '-',
+
+          educationValuearray: [{
+            leveling: organizeUserDetails && organizeUserDetails.field_level && organizeUserDetails.field_level[0] ? organizeUserDetails.field_level[0]['value'] : '-',
+            board: organizeUserDetails && organizeUserDetails.field_board_university && organizeUserDetails.field_board_university[0] ? organizeUserDetails.field_board_university[0]['value'] : '-',
+            institute: organizeUserDetails && organizeUserDetails.field_institute && organizeUserDetails.field_institute[0] ? organizeUserDetails.field_institute[0]['value'] : '-',
+            discipline: organizeUserDetails && organizeUserDetails.field_discipline && organizeUserDetails.field_discipline[0] ? organizeUserDetails.field_discipline[0]['value'] : '-',
+            specification: organizeUserDetails && organizeUserDetails.field_specification && organizeUserDetails.field_specification[0] ? organizeUserDetails.field_specification[0]['value'] : '-',
+            passedYear: organizeUserDetails && organizeUserDetails.field_year_of_passing && organizeUserDetails.field_year_of_passing[0] ? this.getMonthFormat(organizeUserDetails.field_year_of_passing[0]['value']) : '-',
+            percentage: organizeUserDetails && organizeUserDetails.field_percentage && organizeUserDetails.field_percentage[0] ? organizeUserDetails.field_percentage[0]['value'] : '-',
+          }],
+
+          familyValuesArr: [{
+            names: organizeUserDetails && organizeUserDetails.field_name_of_your_family_member && organizeUserDetails.field_name_of_your_family_member[0] ? organizeUserDetails.field_name_of_your_family_member[0]['value'] : '-',
+            dob: organizeUserDetails && organizeUserDetails.field_family_date_of_birth && organizeUserDetails.field_family_date_of_birth[0] ? this.getDateFormat(organizeUserDetails.field_family_date_of_birth[0]['value']) : '-',
+            relationship: organizeUserDetails && organizeUserDetails.field_relationship && organizeUserDetails.field_relationship[0] ? organizeUserDetails.field_relationship[0]['value'] : '-',
+            occupation: organizeUserDetails && organizeUserDetails.field_occupation && organizeUserDetails.field_occupation[0] ? organizeUserDetails.field_occupation[0]['value'] : '-',
+          }],
+
+          skillValueArray: [{
+            skill: organizeUserDetails && organizeUserDetails.field_add_your_skills && organizeUserDetails.field_add_your_skills[0] ? organizeUserDetails.field_add_your_skills[0]['value'] : '-',
+          }],
+
+          generalArray: [{
+            names: organizeUserDetails && organizeUserDetails.field_relatives_l_t_group_name && organizeUserDetails.field_relatives_l_t_group_name[0] ? organizeUserDetails.field_relatives_l_t_group_name[0]['value'] : '-',
+
+            relationship: organizeUserDetails && organizeUserDetails.field_realationship && organizeUserDetails.field_realationship[0] ? organizeUserDetails.field_realationship[0]['value'] : '-',
+
+            position: organizeUserDetails && organizeUserDetails.field_position && organizeUserDetails.field_position[0] ? organizeUserDetails.field_position[0]['value'] : '-',
+
+            company: organizeUserDetails && organizeUserDetails.field_company && organizeUserDetails.field_company[0] ? organizeUserDetails.field_company[0]['value'] : '-',
+          }],
+          facultyReference1: organizeUserDetails && organizeUserDetails.field_faculty_reference && organizeUserDetails.field_faculty_reference[0] ? organizeUserDetails.field_faculty_reference[0]['value'] : '-',
+          facultyReference2: organizeUserDetails && organizeUserDetails.field_faculty_reference1 && organizeUserDetails.field_faculty_reference1[0] ? organizeUserDetails.field_faculty_reference1[0]['value'] : '-',
+        };
+
+  */
 }

@@ -11,7 +11,7 @@
       <ng-container *ngIf="skillsArr && skillsArr.controls" formArrayName="skillsArr">
         <div class="skill-group" *ngFor="let item of skillsArr.controls; let i = index;" [formGroupName]="i">
           <div class="input-group">
-            <input formControlName="skill" type="text">
+            <input (focusout)="detectInput(skillForm)" formControlName="skill" type="text">
           </div>
           <!-- <div > -->
           <div class="add">
@@ -59,7 +59,7 @@
     <ng-container *ngIf="relativesArr && relativesArr.controls" formArrayName="relativesArr">
       <div class="text-box-grid" *ngFor="let item of relativesArr.controls; let i = index;" [formGroupName]="i">
         <div class="text-1">
-          <input formControlName="names" type="text">
+          <input (focusout)="detectInput(aquaintancesForm)" formControlName="names" type="text">
           <div class="error"
             *ngIf="relativesArr.controls[i].get('names').invalid && relativesArr.controls[i].get('names').touched">
             <span *ngIf="relativesArr.controls[i].get('names').errors?.required">Name is Required</span>
@@ -94,8 +94,8 @@
     Faculty Reference
   </div>
   <div class="faculty">
-    <textarea name="" [(ngModel)]="facultyReference1" id="" cols="30" rows="10"></textarea>
-    <textarea name="" [(ngModel)]="facultyReference2" id="" cols="30" rows="10"></textarea>
+    <textarea (focusout)="detectSelectChange()" name="" [(ngModel)]="facultyReference1" id="" cols="30" rows="10"></textarea>
+    <textarea (focusout)="detectSelectChange()" name="" [(ngModel)]="facultyReference2" id="" cols="30" rows="10"></textarea>
   </div>
 
   <div class="submit-button-wrapper">

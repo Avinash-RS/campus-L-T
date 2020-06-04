@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -11,13 +11,16 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   templateUrl: './general-details.component.html',
   styleUrls: ['./general-details.component.scss']
 })
-export class GeneralDetailsComponent implements OnInit {
+export class GeneralDetailsComponent implements OnInit, OnDestroy {
 
   aquaintancesForm: FormGroup;
   skillForm: FormGroup;
 
   facultyReference1;
   facultyReference2;
+  apiForm: any;
+  generalArray: any;
+  skillValueArray: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -29,11 +32,50 @@ export class GeneralDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.FormInitialization();
+    this.getLocalForm();
+
+    if (this.appConfig.getLocalData('generalFormTouched')) {
+      this.appConfig.clearLocalDataOne('generalFormTouched');
+    }
+    // tslint:disable-next-line: triple-equals
+    if (this.appConfig.getLocalData('field_isformsubmitted') == 'true') {
+      this.appConfig.setLocalData('generalFormSubmitted', 'true');
+    }
+  }
+
+  getLocalForm() {
+    this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
+    console.log(this.apiForm);
+    this.generalArray = [{
+      names: this.apiForm && this.apiForm['field_relatives_l_t_group_name'] ? this.apiForm['field_relatives_l_t_group_name'].value : null,
+      relationship: this.apiForm && this.apiForm['field_realationship'] ? this.apiForm['field_realationship'].value : null,
+      position: this.apiForm && this.apiForm['field_position'] ? this.apiForm['field_position'].value : null,
+      company: this.apiForm && this.apiForm['field_company'] ? this.apiForm['field_company'].value : null,
+    }];
+    this.skillValueArray = [{
+      skill: this.apiForm && this.apiForm['field_add_your_skills'] ? this.apiForm['field_add_your_skills'].value : null
+    }];
+    this.facultyReference1 = this.apiForm && this.apiForm['field_faculty_reference'] ? this.apiForm['field_faculty_reference'].value : null;
+    this.facultyReference2 = this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1'].value : null;
+
+    this.FormInitialization();
   }
 
   onSubmit(OptA, OptB) {
     if (this.aquaintancesForm.valid && this.skillForm.valid) {
-      console.log(this.aquaintancesForm.value);
+
+      this.apiForm.field_add_your_skills = { value: this.skillForm.value.skillsArr[0]['skill'] ? this.skillForm.value.skillsArr[0]['skill'] : '' },
+        this.apiForm.field_relatives_l_t_group_name = { value: this.aquaintancesForm.value.relativesArr[0]['names'] ? this.aquaintancesForm.value.relativesArr[0]['names'] : '' },
+        this.apiForm.field_realationship = { value: this.aquaintancesForm.value.relativesArr[0]['relationship'] ? this.aquaintancesForm.value.relativesArr[0]['relationship'] : '' },
+        this.apiForm.field_position = { value: this.aquaintancesForm.value.relativesArr[0]['position'] ? this.aquaintancesForm.value.relativesArr[0]['position'] : '' },
+        this.apiForm.field_company = { value: this.aquaintancesForm.value.relativesArr[0]['company'] ? this.aquaintancesForm.value.relativesArr[0]['company'] : '' },
+        this.apiForm.field_faculty_reference = { value: this.facultyReference1 ? this.facultyReference1 : '' },
+        this.apiForm.field_faculty_reference1 = { value: this.facultyReference2 ? this.facultyReference2 : '' },
+
+        this.appConfig.setLocalData('generalFormSubmitted', 'true');
+      this.appConfig.clearLocalDataOne('generalFormTouched');
+      this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
+
       this.appConfig.nzNotification('success', 'Submitted', 'General details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     } else {
@@ -43,39 +85,80 @@ export class GeneralDetailsComponent implements OnInit {
     }
   }
 
+  // General Acquantancies patch
+  generalPatch(dataArray) {
+    if (dataArray && dataArray.length > 0) {
+      dataArray.forEach(gen => {
+        this.addaquaintancesForm(gen);
+      });
+      if (dataArray.length === 1) {
+        this.addaquaintancesForm(null);
+      }
+    } else {
+      for (let i = 0; i <= 1; i++) {
+        this.addaquaintancesForm(null);
+      }
+    }
+
+  }
+  // Skill Array patch
+  generalSkillPatch(dataArray) {
+    if (dataArray && dataArray.length > 0) {
+      dataArray.forEach(skill => {
+        this.addSkillForm(skill);
+      });
+    } else {
+      for (let i = 0; i <= 0; i++) {
+        this.addaquaintancesForm(null);
+      }
+    }
+  }
   FormInitialization() {
     this.aquaintancesForm = this.fb.group({
-      relativesArr: this.fb.array([this.createItem(), this.createItem()])
-    });
+      relativesArr: this.fb.array([])
+    }), this.generalPatch(this.generalArray);
 
     this.skillForm = this.fb.group({
-      skillsArr: this.fb.array([this.createSkillForm()])
-    });
+      skillsArr: this.fb.array([])
+    }), this.generalSkillPatch(this.skillValueArray);
   }
-  createItem(): FormGroup {
-    // /^[1-9][0-9]{9}$/;
-    const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
-    return this.fb.group({
-      names: [null],
-      relationship: [null],
-      position: [null],
-      company: [null],
-    });
+  createItem(data): FormGroup {
+    if (data) {
+      return this.fb.group({
+        names: [data.names ? data.names : null],
+        relationship: [data.relationship ? data.relationship : null],
+        position: [data.position ? data.position : null],
+        company: [data.company ? data.company : null],
+      });
+    } else {
+      return this.fb.group({
+        names: [null],
+        relationship: [null],
+        position: [null],
+        company: [null],
+      });
+    }
   }
 
-  createSkillForm(): FormGroup {
-    return this.fb.group({
-      skill: [null],
-    });
+  createSkillForm(data): FormGroup {
+    if (data) {
+      return this.fb.group({
+        skill: [data.skill],
+      });
+    } else {
+      return this.fb.group({
+        skill: [null],
+      });
+    }
   }
 
   removeSkillForm(i) {
     this.skillsArr.removeAt(i);
   }
 
-  addSkillForm() {
+  addSkillForm(data) {
     if (this.skillForm.valid) {
-      this.skillsArr.push(this.createSkillForm());
+      this.skillsArr.push(this.createSkillForm(data));
     } else {
       this.validateAllFormArrays(this.skillForm.get('skillsArr') as FormArray);
     }
@@ -85,12 +168,22 @@ export class GeneralDetailsComponent implements OnInit {
     this.relativesArr.removeAt(i);
   }
 
-  addaquaintancesForm() {
-    this.relativesArr.push(this.createItem());
+  addaquaintancesForm(data) {
+    this.relativesArr.push(this.createItem(data));
   }
   // convenience getters for easy access to form fields
   get relativesArr() { return this.aquaintancesForm.get('relativesArr') as FormArray; }
   get skillsArr() { return this.skillForm.get('skillsArr') as FormArray; }
+
+  detectSelectChange() {
+    this.appConfig.setLocalData('generalFormTouched', 'true');
+  }
+
+  detectInput(form) {
+    if (form.touched === true) {
+      this.appConfig.setLocalData('generalFormTouched', 'true');
+    }
+  }
 
 
   // To validate all fields after submit
@@ -121,4 +214,7 @@ export class GeneralDetailsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.appConfig.clearLocalDataOne('generalFormTouched');
+  }
 }

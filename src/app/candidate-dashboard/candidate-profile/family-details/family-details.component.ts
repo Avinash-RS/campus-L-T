@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-family-details',
   templateUrl: './family-details.component.html',
   styleUrls: ['./family-details.component.scss']
 })
-export class FamilyDetailsComponent implements OnInit {
+export class FamilyDetailsComponent implements OnInit, OnDestroy {
   familyForm: FormGroup;
 
   dateFormat = 'dd MMM yyyy';
   monthFormat = 'yyyy/MM';
+  apiForm: any;
+  familyValuesArr: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -27,10 +30,44 @@ export class FamilyDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.FormInitialization();
+    this.getLocalForm();
+
+    if (this.appConfig.getLocalData('familyFormTouched')) {
+      this.appConfig.clearLocalDataOne('familyFormTouched');
+    }
+    // tslint:disable-next-line: triple-equals
+    if (this.appConfig.getLocalData('field_isformsubmitted') == 'true') {
+      this.appConfig.setLocalData('familyFormSubmitted', 'true');
+    }
+
+  }
+
+  getLocalForm() {
+    this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
+    this.familyValuesArr = [{
+      names: this.apiForm && this.apiForm['field_name_of_your_family_member'] ? this.apiForm['field_name_of_your_family_member'].value : null,
+      dob: this.apiForm && this.apiForm['field_family_date_of_birth'] ? this.apiForm['field_family_date_of_birth'].value : null,
+      relationship: this.apiForm && this.apiForm['field_relationship'] ? this.apiForm['field_relationship'].value : null,
+      occupation: this.apiForm && this.apiForm['field_occupation'] ? this.apiForm['field_occupation'].value : null,
+    }];
+    this.FormInitialization();
   }
 
   onSubmit(OptA) {
     if (this.familyForm.valid) {
+      // this.apiForm.field_board_university = { value: this.educationForm.value.educationArr[0]['board'] },
+
+      this.apiForm.field_name_of_your_family_member = { value: this.familyForm.value.familyArr[0]['names'] ? this.familyForm.value.familyArr[0]['names'] : '' },
+        this.apiForm.field_family_date_of_birth = { value: moment(this.familyForm.value.familyArr[0]['dob']).format() !== 'Invalid date' ? moment(this.familyForm.value.familyArr[0]['dob']).format() : '' },
+        this.apiForm.field_relationship = { value: this.familyForm.value.familyArr[0]['relationship'] ? this.familyForm.value.familyArr[0]['relationship'] : '' },
+        this.apiForm.field_occupation = { value: this.familyForm.value.familyArr[0]['occupation'] ? this.familyForm.value.familyArr[0]['occupation'] : '' };
+
+      console.log(this.apiForm);
+
+      this.appConfig.setLocalData('familyFormSubmitted', 'true');
+      this.appConfig.clearLocalDataOne('familyFormTouched');
+      this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
+
       this.appConfig.nzNotification('success', 'Submitted', 'Family details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS);
       console.log(this.familyForm.value);
@@ -40,29 +77,51 @@ export class FamilyDetailsComponent implements OnInit {
     }
   }
 
+  // Family Patch
+  familyPatch(dataArray) {
+    if (dataArray && dataArray.length > 0) {
+      dataArray.forEach(fam => {
+        this.addfamilyForm(fam);
+      });
+    } else {
+      for (let i = 0; i <= 0; i++) {
+        this.addfamilyForm(null);
+      }
+    }
+  }
+
   FormInitialization() {
     this.familyForm = this.fb.group({
-      familyArr: this.fb.array([this.createItem()])
-    });
+      familyArr: this.fb.array([])
+    }), this.familyPatch(this.familyValuesArr);
   }
-  createItem(): FormGroup {
+  createItem(fam): FormGroup {
     // /^[1-9][0-9]{9}$/;
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
-    return this.fb.group({
-      names: [null],
-      dob: [null],
-      relationship: [null],
-      occupation: [null],
-    });
+    if (fam) {
+      return this.fb.group({
+        names: [fam.names],
+        dob: [fam.dob],
+        relationship: [fam.relationship],
+        occupation: [fam.occupation],
+      });
+    } else {
+      return this.fb.group({
+        names: [null],
+        dob: [null],
+        relationship: [null],
+        occupation: [null],
+      });
+    }
   }
 
   removefamilyForm(i) {
     this.familyArr.removeAt(i);
   }
 
-  addfamilyForm() {
+  addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
-      this.familyArr.push(this.createItem());
+      this.familyArr.push(this.createItem(data));
     } else {
       this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
     }
@@ -70,6 +129,16 @@ export class FamilyDetailsComponent implements OnInit {
   }
   // convenience getters for easy access to form fields
   get familyArr() { return this.familyForm.get('familyArr') as FormArray; }
+
+  detectSelectChange() {
+    this.appConfig.setLocalData('familyFormTouched', 'true');
+  }
+
+  detectInput(form) {
+    if (form.touched === true) {
+      this.appConfig.setLocalData('familyFormTouched', 'true');
+    }
+  }
 
 
   // To validate all fields after submit
@@ -100,5 +169,7 @@ export class FamilyDetailsComponent implements OnInit {
     });
   }
 
-
+  ngOnDestroy() {
+    this.appConfig.clearLocalDataOne('familyFormTouched');
+  }
 }

@@ -2,9 +2,9 @@
   <form #form="ngForm" [formGroup]="upToCategoryForm">
     <div class="first-child">
       <div class="flex-box">
-        <label>Name</label>
+        <label>Name*</label>
         <div class="input-box">
-          <input formControlName="name" type="text" value="">
+          <input (focusout)="detectInput(upToCategoryForm)" formControlName="name" type="text" value="">
         </div>
       </div>
       <div class="error" *ngIf="name.invalid && name.touched">
@@ -17,9 +17,9 @@
       </div>
 
       <div class="flex-box">
-        <label>Email ID</label>
+        <label>Email ID*</label>
         <div class="input-box">
-          <input formControlName="mail" type="text" value="">
+          <input (focusout)="detectInput(upToCategoryForm)" formControlName="mail" type="text" value="">
         </div>
       </div>
       <div class="error" *ngIf="mail.invalid && mail.touched">
@@ -33,9 +33,9 @@
       </div>
 
       <div class="flex-box">
-        <label>Mobile Number</label>
+        <label>Mobile Number*</label>
         <div class="input-box">
-          <input formControlName="mobile" type="text" value="">
+          <input (focusout)="detectInput(upToCategoryForm)" formControlName="mobile" type="text" value="">
         </div>
       </div>
       <div class="error" *ngIf="mobile.invalid && mobile.touched">
@@ -50,9 +50,9 @@
       </div>
 
       <div class="flex-box">
-        <label>Gender</label>
+        <label>Gender*</label>
         <div class="input-box-radio">
-          <nz-radio-group formControlName="gender">
+          <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="gender">
             <label nz-radio nzValue="Male">Male</label>
             <label nz-radio nzValue="Female">Female</label>
           </nz-radio-group>
@@ -68,9 +68,9 @@
       </div>
 
       <div class="flex-box">
-        <label>Marital Status</label>
+        <label>Marital Status*</label>
         <div class="input-box-radio">
-          <nz-radio-group formControlName="marital">
+          <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="marital">
             <label nz-radio nzValue="Married">Married</label>
             <label nz-radio nzValue="Unmarried">Unmarried</label>
           </nz-radio-group>
@@ -86,16 +86,16 @@
       </div>
 
       <div class="flex-box">
-        <label for="dob">Date of Birth</label>
+        <label for="dob">Date of Birth*</label>
         <div class="input-box-dob">
 
-          <nz-select formControlName="dobDate" nzAllowClear nzShowSearch nzPlaceHolder="DD">
+          <nz-select (ngModelChange)="detectSelectChange()" formControlName="dobDate" nzAllowClear nzShowSearch nzPlaceHolder="DD">
             <nz-option *ngFor="let date of date" [nzLabel]="date.date" [nzValue]="date.date"></nz-option>
           </nz-select>
-          <nz-select formControlName="dobMonth" nzAllowClear nzShowSearch nzPlaceHolder="MM">
+          <nz-select (ngModelChange)="detectSelectChange()" formControlName="dobMonth" nzAllowClear nzShowSearch nzPlaceHolder="MM">
             <nz-option *ngFor="let month of month" [nzLabel]="month.month" [nzValue]="month.month"></nz-option>
           </nz-select>
-          <nz-select formControlName="dobYear" nzAllowClear nzShowSearch nzPlaceHolder="YYYY">
+          <nz-select (ngModelChange)="detectSelectChange()" formControlName="dobYear" nzAllowClear nzShowSearch nzPlaceHolder="YYYY">
             <nz-option *ngFor="let year of year" [nzLabel]="year.year" [nzValue]="year.year"></nz-option>
           </nz-select>
         </div>
@@ -112,9 +112,9 @@
       </div>
 
       <div class="flex-box">
-        <label>Nationality</label>
+        <label>Nationality*</label>
         <div class="input-box">
-          <input formControlName="nationality" type="text" value="">
+          <input (focusout)="detectInput(upToCategoryForm)" formControlName="nationality" type="text" value="">
         </div>
       </div>
       <div class="error" *ngIf="nationality.invalid && nationality.touched">
@@ -130,7 +130,7 @@
       <div class="flex-box">
         <label>Category</label>
         <div class="input-box">
-          <nz-select formControlName="category" nzAllowClear nzShowSearch>
+          <nz-select (ngModelChange)="detectSelectChange()" formControlName="category" nzAllowClear nzShowSearch>
             <nz-option *ngFor="let caste of category" [nzLabel]="caste.name" [nzValue]="caste.caste"></nz-option>
           </nz-select>
         </div>
@@ -181,13 +181,13 @@
   <div class="grid-wrapper-1">
     <div class="first-child">
       <div class="flex-box">
-        <label>Present Address</label>
+        <label>Present Address*</label>
       </div>
       <div class="sub-input-box">
         <div class="label-box">
           <label>Line 1 Street Address</label>
           <div class="input-box">
-            <input formControlName="presentAddress1" type="text" value="">
+            <input (focusout)="detectInput(presentAddressForm)" formControlName="presentAddress1" type="text" value="">
           </div>
           <div class="error" *ngIf="presentAddress1.invalid && presentAddress1.touched">
             <span *ngIf="presentAddress1.errors?.required">Address is Required</span>
@@ -198,7 +198,7 @@
           <div class="input-boxes-1">
             <label>Line 2 Street Address</label>
             <div class="input-box">
-              <input formControlName="presentAddress2" type="text" value="">
+              <input (focusout)="detectInput(presentAddressForm)" formControlName="presentAddress2" type="text" value="">
             </div>
             <div class="error" *ngIf="presentAddress2.invalid && presentAddress2.touched">
                 <span *ngIf="presentAddress2.errors?.required">Address is Required</span>
@@ -208,7 +208,7 @@
           <div class="input-boxes-2">
             <label>Postal / Zip code</label>
             <div class="input-box">
-              <input formControlName="presentZipCode" type="text" value="">
+              <input (focusout)="detectInput(presentAddressForm)" formControlName="presentZipCode" type="text" value="">
             </div>
             <div class="error" *ngIf="presentZipCode.invalid && presentZipCode.touched">
               <span *ngIf="presentZipCode.errors?.required">Zip code is Required</span>
@@ -220,7 +220,7 @@
           <div class="input-boxes-1">
             <label>City</label>
             <div class="input-box">
-              <nz-select formControlName="presentCity" nzAllowClear nzShowSearch>
+              <nz-select (ngModelChange)="detectSelectChange()" formControlName="presentCity" nzAllowClear nzShowSearch>
                 <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
               </nz-select>
             </div>
@@ -232,7 +232,7 @@
           <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <nz-select formControlName="presentState" nzAllowClear nzShowSearch>
+              <nz-select  (ngModelChange)="detectSelectChange()" formControlName="presentState" nzAllowClear nzShowSearch>
                 <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
               </nz-select>
             </div>
@@ -255,13 +255,13 @@
   <div class="grid-wrapper-1">
     <div class="first-child">
       <div class="flex-box">
-        <label>Permanent Address</label>
+        <label>Permanent Address*</label>
       </div>
       <div class="sub-input-box">
         <div class="label-box">
           <label>Line 1 Street Address</label>
           <div class="input-box">
-            <input formControlName="permanentAddress1" type="text" value="">
+            <input (focusout)="detectInput(permanentAddressForm)" formControlName="permanentAddress1" type="text" value="">
           </div>
           <div class="error" *ngIf="permanentAddress1.invalid && permanentAddress1.touched">
             <span *ngIf="permanentAddress1.errors?.required">Address Required</span>
@@ -272,7 +272,7 @@
           <div class="input-boxes-1">
             <label>Line 2 Street Address</label>
             <div class="input-box">
-              <input formControlName="permanentAddress2" type="text" value="">
+              <input (focusout)="detectInput(permanentAddressForm)" formControlName="permanentAddress2" type="text" value="">
             </div>
             <div class="error" *ngIf="permanentAddress2.invalid && permanentAddress2.touched">
                 <span *ngIf="permanentAddress2.errors?.required">Address Required</span>
@@ -282,7 +282,7 @@
           <div class="input-boxes-2">
             <label>Postal / Zip code</label>
             <div class="input-box">
-              <input formControlName="permanentZipCode" type="text" value="">
+              <input (focusout)="detectInput(permanentAddressForm)" formControlName="permanentZipCode" type="text" value="">
             </div>
             <div class="error" *ngIf="permanentZipCode.invalid && permanentZipCode.touched">
               <span *ngIf="permanentZipCode.errors?.required">Zip code is Required</span>
@@ -293,7 +293,7 @@
           <div class="input-boxes-1">
             <label>City</label>
             <div class="input-box">
-              <nz-select formControlName="permanentCity" nzAllowClear nzShowSearch>
+              <nz-select (ngModelChange)="detectSelectChange()" formControlName="permanentCity" nzAllowClear nzShowSearch>
                 <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
               </nz-select>
             </div>
@@ -308,7 +308,7 @@
           <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <nz-select formControlName="permanentState" nzAllowClear nzShowSearch>
+              <nz-select (ngModelChange)="detectSelectChange()" formControlName="permanentState" nzAllowClear nzShowSearch>
                 <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
               </nz-select>
             </div>
@@ -330,14 +330,14 @@
   <div class="grid-wrapper-languages">
     <div class="first-child">
       <div class="flex-box">
-        <label>Languages Known</label>
+        <label>Languages Known*</label>
       </div>
 
       <div class="sub-input-box">
         <div class="label-box-2">
           <div class="input-boxes-1">
             <div class="input-box">
-              <input formControlName="languageRequired" type="text" value="">
+              <input (focusout)="detectInput(languagesForm)" formControlName="languageRequired" type="text" value="">
             </div>
             <div class="error" *ngIf="languageRequired.invalid && languageRequired.touched ||
             languageRequired.touched && (!firstRead.value && !firstWrite.value && !firstSpeak.value)">
@@ -353,7 +353,7 @@
               <label> Read</label>
 
               <div class="custom-control custom-checkbox checkbox-xl">
-                <input formControlName="firstRead" type="checkbox" class="custom-control-input" id="checkbox-one">
+                <input (focusout)="detectInput(languagesForm)" formControlName="firstRead" type="checkbox" class="custom-control-input" id="checkbox-one">
                 <label class="custom-control-label" for="checkbox-one">&#160;</label>
               </div>
 
@@ -361,14 +361,14 @@
             <div class="input-box">
               <label> Write</label>
               <div class="custom-control custom-checkbox checkbox-xl">
-                <input formControlName="firstWrite" type="checkbox" class="custom-control-input" id="checkbox-two">
+                <input (focusout)="detectInput(languagesForm)" formControlName="firstWrite" type="checkbox" class="custom-control-input" id="checkbox-two">
                 <label class="custom-control-label" for="checkbox-two">&#160;</label>
               </div>
             </div>
             <div class="input-box">
               <label> Speak</label>
               <div class="custom-control custom-checkbox checkbox-xl">
-                <input formControlName="firstSpeak" type="checkbox" class="custom-control-input" id="checkbox-three">
+                <input (focusout)="detectInput(languagesForm)" formControlName="firstSpeak" type="checkbox" class="custom-control-input" id="checkbox-three">
                 <label class="custom-control-label" for="checkbox-three">&#160;</label>
               </div>
             </div>
@@ -384,28 +384,28 @@
           <div class="label-box-3" *ngFor="let item of t.controls; let i = index;" [formGroupName]="i">
             <div class="input-boxes-1">
               <div class="input-box">
-                <input formControlName="language" type="text" value="">
+                <input (focusout)="detectInput(languagesForm)" formControlName="language" type="text" value="">
               </div>
             </div>
 
             <div class="input-boxes-4">
               <div class="input-box">
                 <div class="custom-control custom-checkbox checkbox-xl">
-                  <input formControlName="read" type="checkbox" class="custom-control-input" [id]="i + 'one'">
+                  <input (focusout)="detectInput(languagesForm)" formControlName="read" type="checkbox" class="custom-control-input" [id]="i + 'one'">
                   <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
                 </div>
 
               </div>
               <div class="input-box">
                 <div class="custom-control custom-checkbox checkbox-xl">
-                  <input formControlName="write" type="checkbox" class="custom-control-input" [id]="i + 'two'">
+                  <input (focusout)="detectInput(languagesForm)" formControlName="write" type="checkbox" class="custom-control-input" [id]="i + 'two'">
                   <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
                 </div>
 
               </div>
               <div class="input-box">
                 <div class="custom-control custom-checkbox checkbox-xl">
-                  <input formControlName="speak" type="checkbox" class="custom-control-input" [id]="i + 'three'">
+                  <input (focusout)="detectInput(languagesForm)" formControlName="speak" type="checkbox" class="custom-control-input" [id]="i + 'three'">
                   <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
                 </div>
 
@@ -438,10 +438,10 @@
     <div class="three-column-flex">
       <div class="wrapper">
         <div class="form-field">
-          <label>Passport Number</label>
+          <label>Passport Number*</label>
         </div>
         <div class="input-box">
-          <input formControlName="passportNumber" type="text" value="">
+          <input (focusout)="detectInput(passportForm)" formControlName="passportNumber" type="text" value="">
         </div>
         <div class="error" *ngIf="passportNumber.invalid && passportNumber.touched">
           <span *ngIf="passportNumber.errors?.required">Passport Number is Required</span>
@@ -451,10 +451,10 @@
       </div>
       <div class="wrapper">
         <div class="form-field">
-          <label>Name as in Passpost</label>
+          <label>Name as in Passport</label>
         </div>
         <div class="input-box">
-          <input formControlName="passportName" type="text" value="">
+          <input (focusout)="detectInput(passportForm)" formControlName="passportName" type="text" value="">
         </div>
         <div class="error" *ngIf="passportName.invalid && passportName.touched">
           <span *ngIf="passportName.errors?.required">Name is Required</span>
@@ -466,7 +466,7 @@
           <label>Profession as in Passport</label>
         </div>
         <div class="input-box">
-          <input formControlName="passportProfession" type="text" value="">
+          <input (focusout)="detectInput(passportForm)" formControlName="passportProfession" type="text" value="">
         </div>
         <div class="error" *ngIf="passportProfession.invalid && passportProfession.touched">
           <span *ngIf="passportProfession.errors?.required">Profession is Required</span>
@@ -481,7 +481,7 @@
           <label>Date of Issue</label>
         </div>
         <div class="input-box">
-          <input (keydown)="preventDate($event, dp)" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dp"
+          <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, dp)" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dp"
             formControlName="passportIssueDate">
           <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp>
@@ -501,7 +501,7 @@
           <label>Valid Upto</label>
         </div>
         <div class="input-box">
-          <input (keydown)="preventDate($event, picker)" formControlName="passportValid" matInput [min]="minDate"
+          <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, picker)" formControlName="passportValid" matInput [min]="minDate"
             [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -518,7 +518,7 @@
           <label>Place of Issue</label>
         </div>
         <div class="input-box">
-          <input formControlName="passportIssuePlace" type="text" value="">
+          <input (focusout)="detectInput(passportForm)" formControlName="passportIssuePlace" type="text" value="">
         </div>
         <div class="error" *ngIf="passportIssuePlace.invalid && passportIssuePlace.touched">
           <span *ngIf="passportIssuePlace.errors?.required">Issue place is Required</span>
@@ -530,7 +530,7 @@
           <label>Countries valid for</label>
         </div>
         <div class="input-box">
-          <input formControlName="passportValidFor" type="text" value="">
+          <input (focusout)="detectInput(passportForm)" formControlName="passportValidFor" type="text" value="">
         </div>
         <div class="error" *ngIf="passportValidFor.invalid && passportValidFor.touched">
           <span *ngIf="passportValidFor.errors?.required">Countries valid for is Required</span>
@@ -552,7 +552,7 @@
           <label>Most Serious Recent Illness</label>
         </div>
         <div class="input-box">
-          <input formControlName="illness" type="text" value="">
+          <input (focusout)="detectInput(healthForm)" formControlName="illness" type="text" value="">
         </div>
         <div class="error" *ngIf="illness.invalid && illness.touched">
           <span *ngIf="illness.errors?.required">Mandatory Field</span>
@@ -564,7 +564,7 @@
           <label>No. of Days Ill</label>
         </div>
         <div class="input-box">
-          <input formControlName="daysofIll" type="text" value="">
+          <input (focusout)="detectInput(healthForm)" formControlName="daysofIll" type="text" value="">
         </div>
         <div class="error" *ngIf="daysofIll.invalid && daysofIll.touched">
           <span *ngIf="daysofIll.errors?.required">No. of days is Required</span>
@@ -577,7 +577,7 @@
           <label>Nature of Illness</label>
         </div>
         <div class="input-box">
-          <input formControlName="natureofIll" type="text" value="">
+          <input (focusout)="detectInput(healthForm)" formControlName="natureofIll" type="text" value="">
         </div>
         <div class="error" *ngIf="natureofIll.invalid && natureofIll.touched">
           <span *ngIf="natureofIll.errors?.required">Nature of Ill is Required</span>
@@ -592,7 +592,7 @@
           <label>Physical Disability (if any)</label>
         </div>
         <div class="input-box">
-          <input formControlName="disability" type="text" value="">
+          <input (focusout)="detectInput(healthForm)" formControlName="disability" type="text" value="">
         </div>
         <div class="error" *ngIf="disability.invalid && disability.touched">
           <span *ngIf="disability.errors?.required">Disability is Required</span>
@@ -604,7 +604,7 @@
           <label>Height (cms)</label>
         </div>
         <div class="input-box max-200">
-          <input formControlName="height" type="text" value="">
+          <input (focusout)="detectInput(healthForm)" formControlName="height" type="text" value="">
         </div>
         <div class="error" *ngIf="height.invalid && height.touched">
           <span *ngIf="height.errors?.required">Height is Required</span>
@@ -617,7 +617,7 @@
           <label>Weight (kg)</label>
         </div>
         <div class="input-box max-200">
-          <input formControlName="weight" type="text" value="">
+          <input (focusout)="detectInput(healthForm)" formControlName="weight" type="text" value="">
         </div>
         <div class="error" *ngIf="weight.invalid && weight.touched">
           <span *ngIf="weight.errors?.required">Weight is Required</span>
@@ -636,7 +636,7 @@
             </div>
 
             <div class="input-box">
-              <input formControlName="left" type="text" value="">
+              <input (focusout)="detectInput(healthForm)" formControlName="left" type="text" value="">
             </div>
 
           </div>
@@ -646,7 +646,7 @@
             </div>
 
             <div class="input-box">
-              <input formControlName="right" type="text" value="">
+              <input (focusout)="detectInput(healthForm)" formControlName="right" type="text" value="">
             </div>
           </div>
         </div>

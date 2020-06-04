@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -12,6 +13,7 @@ export class CandidateProfileComponent implements OnInit {
 
   constructor(
     private appConfig: AppConfigService,
+    private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
@@ -53,6 +55,26 @@ export class CandidateProfileComponent implements OnInit {
 
 
   ngOnInit() {
+    // this.getUserKYC();
+  }
+
+  getUserKYC() {
+    this.candidateService.getUserProfile().subscribe((data: any) => {
+      this.appConfig.setLocalData('ParentKYCAPI', JSON.stringify(data));
+      this.appConfig.hideLoader();
+      if (data && data.length > 0) {
+        if (data[0]['field_isformsubmitted'][0]['value'] === true) {
+          this.appConfig.setLocalData('field_isformsubmitted', 'true');
+        } else {
+          this.appConfig.setLocalData('field_isformsubmitted', 'false');
+        }
+      } else {
+        this.appConfig.setLocalData('field_isformsubmitted', 'false');
+      }
+
+    }, (err) => {
+
+    });
   }
 
 }

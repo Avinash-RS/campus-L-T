@@ -40,7 +40,7 @@ export class InterceptorsService implements HttpInterceptor {
         //   status: error.status
         // };
         if (error.status !== 200) {
-          console.log(error ? error : '');
+          console.log(error);
         }
 
         if (error.status === 0) {
@@ -104,7 +104,7 @@ export class InterceptorsService implements HttpInterceptor {
         if (error.status === 200) {
         } else {
           this.appConfig.hideLoader();
-          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+          this.appConfig.error(error.error && error.error.FailureReason ? error.error.FailureReason.message : error.error.message
             ? error.error.message : `${error.status} Error`, '');
           return throwError(error);
         }
