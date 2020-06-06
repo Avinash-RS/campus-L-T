@@ -746,3 +746,45 @@
 //     // }
 //   }
 // }
+
+
+"field_relatives_l_t_group_name":{"value":"AMit"},
+"field_realationship":{"value":"husband"},
+"field_position":{"value":"Engineer"},
+"field_company":{"value":"Spicejet"},
+
+
+field_educational_details": [
+  {
+    "field_level": "10th",
+    "field_board_university": "BSEB",
+    "field_institute": "BSEB",
+    "field_discipline": "BSEB",
+    "field_specification": "BSEB",
+    "field_year_of_passing": "2020-05-03T07:31:56+05:30",
+    "field_percentage": "60",
+    "field_backlogs": "60"
+  },
+  {
+    "field_level": "10th",
+    "field_board_university": "BSEB",
+    "field_institute": "BSEB",
+    "field_discipline": "BSEB",
+    "field_specification": "BSEB",
+    "field_year_of_passing": "2020-05-03T07:31:56+05:30",
+    "field_percentage": "60",
+    "field_backlogs": "60"
+  },
+  {
+    "field_level": "10th",
+    "field_board_university": "BSEB",
+    "field_institute": "BSEB",
+    "field_discipline": "BSEB",
+    "field_specification": "BSEB",
+    "field_year_of_passing": "2020-05-03T07:31:56+05:30",
+    "field_percentage": "60",
+    "field_backlogs": "60"
+  }
+
+
+]

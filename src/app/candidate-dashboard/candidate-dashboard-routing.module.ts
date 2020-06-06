@@ -20,7 +20,7 @@ const routes: Routes = [
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, component: CandidateProfileComponent, children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, component: PersonalDetailsComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, component: PersonalDetailsComponent, canActivate: [KycAccessGuard]
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, component: EducationalDetailsComponent, canActivate: [KycAccessGuard]
@@ -35,7 +35,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, component: ViewDetailsComponent, canActivate: [KycAccessGuard]
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`, component: ConfirmComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`, component: ConfirmComponent, canActivate: [KycAccessGuard]
           },
           {
             path: '',

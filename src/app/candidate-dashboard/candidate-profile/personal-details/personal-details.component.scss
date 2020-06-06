@@ -232,7 +232,15 @@
     }
   }
 }
-
+.checkbox {
+  display: grid;
+  padding: 3em 4em 0 2em;
+  grid-template-columns: 24% 80%;
+  color: $light-black;
+  font-size: 17px;
+  opacity: 0.85;
+  font-weight: 200;
+}
 .grid-wrapper-1 {
   display: grid;
   padding: 3em 4em 0 4em;

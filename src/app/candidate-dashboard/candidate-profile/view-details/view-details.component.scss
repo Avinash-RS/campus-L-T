@@ -135,7 +135,7 @@
           margin: 0 0 0 0;
           box-shadow: $shadow-light-black;
           border-radius: 5px;
-          padding: 0.5em .5em 0.5em .5em;
+          padding: 0.5em 0.5em 0.5em 0.5em;
           display: flex;
           align-items: center;
           font-size: 17px;
@@ -261,12 +261,12 @@
         box-shadow: $shadow-light-black;
         border-radius: 5px;
         display: flex;
-        background: #000;
-        width: 180px;
-        height: 210px;
+        background: none;
+        width: 210px;
+        height: 230px;
         img {
-          width: 180px;
-          height: 210px;
+          width: 210px;
+          height: 230px;
         }
       }
     }
@@ -569,8 +569,10 @@
     }
   }
   .faculty-wrapper {
-    display: flex;
+    display: grid;
     width: auto;
+    grid-template-columns: 1fr 1fr;
+    // flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     div:first-child {
@@ -578,8 +580,11 @@
       align-items: center;
       box-shadow: $shadow-light-black;
       text-align: left;
-      width: 100%;
+      width: auto;
+      word-break: break-all;
       display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
       border-radius: 5px;
       justify-content: space-around;
       padding: 1em;
@@ -593,9 +598,12 @@
       margin: 0 0 0 2em;
       align-items: center;
       box-shadow: $shadow-light-black;
+      flex-direction: column;
       text-align: left;
-      width: 100%;
+      width: auto;
+      word-break: break-all;
       display: flex;
+      flex-wrap: wrap;
       border-radius: 5px;
       justify-content: space-around;
       padding: 1em;
@@ -603,6 +611,7 @@
       opacity: 1;
       color: $light-black;
       background: $disable-gray;
+      line-break: anywhere;
     }
   }
   .scroll-enable {
@@ -753,4 +762,3 @@
     // }
   }
 }
-

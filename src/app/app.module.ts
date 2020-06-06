@@ -18,6 +18,7 @@ import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+import { KycSnackbarComponent } from './shared/kyc-snackbar/kyc-snackbar.component';
 
 registerLocaleData(en);
 
@@ -42,7 +43,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NgZorroAntdModule,
   ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},

@@ -3,33 +3,48 @@
   margin: 0;
 }
 .modal-wrapper {
-  background: $white;
+  background: $secondary;
+  color: $white;
+  padding: 24px;
   display: flex;
   flex-wrap: wrap;
-  padding: 24px;
   justify-content: center;
   box-sizing: border-box;
   flex-direction: column;
+  .img {
+    text-align: center;
+    img {
+      background-color: red;
+      border-radius: 50%;
+    }
+  }
+  .head {
+    margin: .5em 0;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 200;
+  }
   .confirmation-text {
-    color: $primary;
+    // color: $primary;
     font-size: 16px;
     font-weight: 200;
-    margin: 1em 0;
+    margin: .5em 0;
   }
   .button-wrappers {
     margin: 1em 0em;
     text-align: center;
     button {
       min-width: 90px;
-      color: $white;
+      color: $light-black;
       font-size: 16px;
       outline: none;
     }
     .delete-cancel {
-      background: $blue-2 0% 0% no-repeat padding-box;
+      background: $white 0% 0% no-repeat padding-box;
     }
     .delete-confirm {
-      background: $red-1 0% 0% no-repeat padding-box;
+      color: white;
+      background: red 0% 0% no-repeat padding-box;
       margin: 0 0 0 1em;
     }
     .add-cancel {

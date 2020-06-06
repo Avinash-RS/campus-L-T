@@ -2,11 +2,25 @@
   display: grid;
   grid-template-columns: 10% 90%;
   position: relative;
-  span:first-child {
-    margin: 0 .5em 0 0;
+  justify-content: center;
+  align-items: center;
+  .error,.success {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 0 0em 0.5em 0;
+    img {
+      align-items: center;
+      width: 25px;
+      height: 25px;
+    }
   }
   span {
     display: inline-flex;
     align-items: center;
+  }
+  .msg {
+    padding-left: .5em;
   }
 }

@@ -1,0 +1,20 @@
+<div class="modal-wrapper">
+  <div class="img">
+    <img src="assets/images/001-cancel.svg" alt="" srcset="">
+  </div>
+  <div class="head">
+    Your changes will be lost!
+  </div>
+  <div class="confirmation-text">
+    {{data.message ? data.message : ''}}
+  </div>
+
+  <div class="button-wrappers">
+
+    <!-- Type Delete Buttons -->
+    <button (click)="cancel(false)"
+      mat-raised-button class="delete-cancel" type="button">Cancel</button>
+    <button (click)="submit(true)"
+      mat-raised-button class="delete-confirm" type="button">Confirm</button>
+  </div>
+</div>

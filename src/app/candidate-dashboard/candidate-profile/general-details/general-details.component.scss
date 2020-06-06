@@ -103,19 +103,24 @@
     align-items: center;
     margin: 1em 2em;
     justify-content: space-between;
-    textarea:first-child {
-      margin: 0 1em 0 0;
-    }
-    textarea {
-      border: none;
-      outline: none;
-      border-radius: 5px;
-      box-shadow: $shadow-light-black;
-      background: $white-primary;
+    position: relative;
+    div {
       width: 100%;
-      font-size: 17px;
-      color: $secondary;
-      padding: 0.5em;
+      align-items: center;
+      textarea {
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        box-shadow: $shadow-light-black;
+        background: $white-primary;
+        width: 100%;
+        font-size: 17px;
+        color: $secondary;
+        padding: 0.5em;
+      }
+    }
+    div:first-child {
+        margin: 0 1em 0 0;
     }
   }
   .heading-grid {

@@ -44,17 +44,26 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
   ];
   educationForm: FormGroup;
 
-  today = new Date();
+  startingYear = new Date("2005-01-01");
+  endYear = new Date();
+  dummystartDate = new Date("2005-01-01");
+  dummyendDate = new Date("2020-07-07");
   dateFormat = 'yyyy/MM/dd';
-  monthFormat = 'yyyy/MM';
+  monthFormat = 'MMM yyyy';
 
   apiForm: any;
+  educationValuearray: any;
 
   disabledYears = (current: Date): boolean => {
+
     // Can not select days before today and today
-    return differenceInCalendarDays(current, this.today) > 0;
+    return differenceInCalendarDays(current, this.startingYear) < 0;
   }
-  educationValuearray: any;
+  disabledprevious = (current: Date): any => {
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.startingYear) < 0 && differenceInCalendarDays(current, this.endYear) > 0;
+    // return differenceInCalendarDays(this.dummyendDate, this.dummystartDate) > 0;
+  }
 
 
   constructor(
@@ -80,21 +89,25 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
 
   }
 
+
+
   cancel() {
     this.ngOnInit();
   }
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    this.educationValuearray = [{
-      leveling: this.apiForm && this.apiForm['field_level'] ? this.apiForm['field_level'].value : null,
-      board: this.apiForm && this.apiForm['field_board_university'] ? this.apiForm['field_board_university'].value : null,
-      institute: this.apiForm && this.apiForm['field_institute'] ? this.apiForm['field_institute'].value : null,
-      discipline: this.apiForm && this.apiForm['field_discipline'] ? this.apiForm['field_discipline'].value : null,
-      specification: this.apiForm && this.apiForm['field_specification'] ? this.apiForm['field_specification'].value : null,
-      passedYear: this.apiForm && this.apiForm['field_year_of_passing'] ? this.apiForm['field_year_of_passing'].value : null,
-      percentage: this.apiForm && this.apiForm['field_percentage'] ? this.apiForm['field_percentage'].value : null,
-    }];
+    this.educationValuearray = [
+      {
+        leveling: this.apiForm && this.apiForm['field_level'] ? this.apiForm['field_level'].value : null,
+        board: this.apiForm && this.apiForm['field_board_university'] ? this.apiForm['field_board_university'].value : null,
+        institute: this.apiForm && this.apiForm['field_institute'] ? this.apiForm['field_institute'].value : null,
+        discipline: this.apiForm && this.apiForm['field_discipline'] ? this.apiForm['field_discipline'].value : null,
+        specification: this.apiForm && this.apiForm['field_specification'] ? this.apiForm['field_specification'].value : null,
+        passedYear: this.apiForm && this.apiForm['field_year_of_passing'] ? this.apiForm['field_year_of_passing'].value : null,
+        percentage: this.apiForm && this.apiForm['field_percentage'] ? this.apiForm['field_percentage'].value : null,
+      },
+    ];
 
     this.FormInitialization();
   }
@@ -205,10 +218,10 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
       Object.keys(formGroup['controls']).forEach(field => {
         const control = formGroup.get(field);
         if (control instanceof FormControl) {
-          if (control['status'] === 'INVALID') {
-            console.log(control);
-            this.appConfig.setLocalData('educationalFormSubmitted', 'false');
-          }
+          // if (control['status'] === 'INVALID') {
+          //   console.log(control);
+          //   this.appConfig.setLocalData('educationalFormSubmitted', 'false');
+          // }
           control.markAsTouched({ onlySelf: true });
         } else if (control instanceof FormGroup) {
           this.validateAllFields(control);

@@ -131,6 +131,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   userDetails: any;
   FinaluserDetails: any;
   KYCModifiedData: any;
+  profileData: { fid: any; uuid: any; localShowUrl: string; apiUrl: any; };
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -140,15 +141,19 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     private fb: FormBuilder,
   ) {
     super();
+
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 20, 0, 1);
     this.maxDate = new Date();
-    this.passportValidminDate = new Date(currentYear - 20, 0, 1);
-    this.passportValidmaxDate = new Date();
+    let oneDayAdd = new Date().getDate() + 1;
+    console.log(oneDayAdd);
+    this.passportValidminDate = new Date();
+    this.passportValidmaxDate = new Date(currentYear + 20, 0, 1);
   }
 
   ngOnInit() {
+    this.appConfig.showLoader();
     this.FormsInitialization();
     if (!this.appConfig.getLocalData('allStates') || !this.appConfig.getLocalData('allCities')) {
       this.cityAPI();
@@ -173,6 +178,28 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.ngOnInit();
   }
 
+  checkboxChanged(check) {
+    console.log(check);
+    if (check === true) {
+      this.permanentAddressForm.patchValue({
+        permanentAddress1: null,
+        permanentAddress2: null,
+        permanentZipCode: null,
+        permanentCity: null,
+        permanentState: null,
+      });
+    } else {
+      this.permanentAddressForm.patchValue({
+        permanentAddress1: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '',
+        permanentAddress2: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '',
+        permanentZipCode: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '',
+        permanentCity: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '',
+        permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '',
+      });
+    }
+
+    // this.checked = true;
+  }
 
   regularGetUserDetails(data) {
     if (data) {
@@ -181,7 +208,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.appConfig.setLocalData('personalFormSubmitted', 'true');
       } else {
         this.appConfig.setLocalData('field_isformsubmitted', 'false');
-        this.appConfig.setLocalData('personalFormSubmitted', 'false');
       }
     } else {
       this.appConfig.setLocalData('field_isformsubmitted', 'false');
@@ -192,10 +218,20 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     if (this.userData) {
       const organizeUserDetails = data;
       this.KYCModifiedData = data;
+      console.log(this.KYCModifiedData);
+
+      if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
+        this.url = null;
+      }
+      if (!this.appConfig.getLocalData('localProfilePic')) {
+        this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : '';
+      }
+      if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') !== 'null') {
+        this.url = JSON.parse(this.appConfig.getLocalData('localProfilePic'));
+      }
     } else {
-      this.appConfig.hideLoader();
+      this.url = '';
     }
-    this.appConfig.hideLoader();
     this.FormsInitialization();
 
     if (this.userData && this.userData['field_isformsubmitted'][0]['value'] == true) {
@@ -289,6 +325,20 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_right_eye_power_glass: { value: organizeUserDetails && organizeUserDetails['field_right_eye_power_glass'] && organizeUserDetails['field_right_eye_power_glass'][0] ? organizeUserDetails['field_right_eye_power_glass'][0]['value'] : '' },
           field_left_eyepower_glass: { value: organizeUserDetails && organizeUserDetails['field_left_eyepower_glass'] && organizeUserDetails['field_left_eyepower_glass'][0] ? organizeUserDetails['field_left_eyepower_glass'][0]['value'] : '' },
 
+
+          field_profile_image: [
+            {
+              target_id: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_id'] : 12,
+              alt: 'Image',
+              title: '',
+              width: 210,
+              height: 230,
+              target_uuid: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_uuid'] : '',
+              url: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['url'] : '/d8cintana2/sites/default/files/2020-06/filename1_1.jpg',
+              status: 'true'
+            }
+          ],
+
           // Educational
           field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
           field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
@@ -322,9 +372,12 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             }
           ],
         };
+        this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : '';
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.hideLoader();
+        console.log(this.KYCModifiedData);
+
       } else {
         this.KYCModifiedData = {
           type: 'candidate',
@@ -334,7 +387,17 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
               target_id: this.appConfig.getLocalData('userId')
             }
           ],
-
+          field_profile_image: [
+            {
+              target_id: '',
+              alt: 'Image',
+              title: '',
+              width: 210,
+              height: 230,
+              url: '/d8cintana2/sites/default/files/2020-06/filename1_1.jpg',
+              status: 'true'
+            }
+          ],
           is_default: [{
             value: '1'
           }],
@@ -370,6 +433,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
+
     if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
       && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
       this.KYCModifiedData.field_name = { value: this.upToCategoryForm.value.name ? this.upToCategoryForm.value.name : '' };
@@ -399,11 +463,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.KYCModifiedData.field_passport_number = { value: this.passportForm.value.passportNumber ? this.passportForm.value.passportNumber : '' };
       this.KYCModifiedData.field_name_as_in_passport = { value: this.passportForm.value.passportName ? this.passportForm.value.passportName : '' };
       this.KYCModifiedData.field_profesiona_as_passport = { value: this.passportForm.value.passportProfession ? this.passportForm.value.passportProfession : '' };
-      this.KYCModifiedData.field_date_of_issue = { value: this.passportForm.value.passportIssueDate['_d'] ? moment(this.passportForm.value.passportIssueDate['_d']).format() : '' };
-      this.KYCModifiedData.field_valid_upto = { value: this.passportForm.value.passportValid['_d'] ? moment(this.passportForm.value.passportValid['_d']).format() : '' };
+      this.KYCModifiedData.field_date_of_issue = { value: this.passportForm.value.passportIssueDate['_d'] ? moment(this.passportForm.value.passportIssueDate['_d']).format() : this.passportForm.value.passportIssueDate ? moment(this.passportForm.value.passportIssueDate).format() : '' };
+      this.KYCModifiedData.field_valid_upto = { value: this.passportForm.value.passportValid['_d'] ? moment(this.passportForm.value.passportValid['_d']).format() : this.passportForm.value.passportValid ? moment(this.passportForm.value.passportValid).format() : '' };
       this.KYCModifiedData.field_place_of_issue = { value: this.passportForm.value.passportIssuePlace ? this.passportForm.value.passportIssuePlace : '' };
       this.KYCModifiedData.field_country_valid_for = { value: this.passportForm.value.passportValidFor ? this.passportForm.value.passportValidFor : '' };
-      this.KYCModifiedData.field_serious_illness = { value: this.passportForm.value.passportValidFor ? this.passportForm.value.passportValidFor : '' };
+      this.KYCModifiedData.field_serious_illness = { value: this.healthForm.value.illness ? this.healthForm.value.illness : '' };
       this.KYCModifiedData.field_no_of_days = { value: this.healthForm.value.daysofIll ? this.healthForm.value.daysofIll : '' };
       this.KYCModifiedData.field_nature_of_illness = { value: this.healthForm.value.natureofIll ? this.healthForm.value.natureofIll : '' };
       this.KYCModifiedData.field_physical_disability = { value: this.healthForm.value.disability ? this.healthForm.value.disability : '' };
@@ -412,6 +476,12 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.KYCModifiedData.field_right_eye_power_glass = { value: this.healthForm.value.eyePower.right ? this.healthForm.value.eyePower.right : '' };
       this.KYCModifiedData.field_left_eyepower_glass = { value: this.healthForm.value.eyePower.left ? this.healthForm.value.eyePower.left : '' };
 
+      if (this.url === null) {
+        this.appConfig.setLocalData('localProfilePic', 'null');
+      } else {
+        this.appConfig.setLocalData('localProfilePic', JSON.stringify(this.url));
+      }
+      this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
       this.appConfig.setLocalData('personalFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('personalFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
@@ -440,6 +510,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
     const numberOnly: RegExp = /^[0-9]*$/;
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
+    const eyenumberDecimals: RegExp = /^[\-\+]?[0-9]{1,2}\d*(\.\d{0,2})?$/;
     // Form 1 UptoCategory
     this.upToCategoryForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -503,8 +574,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       height: ['', [Validators.pattern(numberDecimals)]],
       weight: ['', [Validators.pattern(numberDecimals)]],
       eyePower: this.fb.group({
-        left: ['', [Validators.pattern(numberDecimals)]],
-        right: ['', [Validators.pattern(numberDecimals)]],
+        left: ['', [Validators.pattern(eyenumberDecimals)]],
+        right: ['', [Validators.pattern(eyenumberDecimals)]],
       })
     }), this.healthFormPatchValue();
   }
@@ -679,6 +750,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       //   right: organizeUserDetails && organizeUserDetails.field_right_eye_power_glass && organizeUserDetails.field_right_eye_power_glass[0] ? organizeUserDetails.field_right_eye_power_glass[0].value : '',
       // }
     });
+    this.appConfig.hideLoader();
   }
 
   getDateFormat(date) {
@@ -748,33 +820,62 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
 
   async onSelectFile(event) {
+    console.log(event.target.files[0]);
+
     if (event.target.files && event.target.files[0].type.includes('image/') && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
-      if (event.target.files[0].size < 5000000) {
+      if (event.target.files[0].size < 2000000) {
         this.showSizeError.image = false;
         this.selectedImage = event.target.files[0];
 
         const fd = new FormData();
         fd.append('file', this.selectedImage);
-        const file = event.target.files[0];
+        const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
+        // console.log(reader.readAsBinaryString(event.target.files[0]));
+
         reader.readAsDataURL(event.target.files[0]); // read file as data url
         reader.onload = (event: any) => { // called once readAsDataURL is completed
           urls = event.target.result;
           this.url = urls;
+          this.candidateService.imageUpload(this.selectedImage, file).subscribe((data: any) => {
+            this.appConfig.setLocalData('personalFormTouched', 'true');
+            this.profileData = {
+              fid: data.fid[0].value,
+              uuid: data.uuid[0].value,
+              localShowUrl: 'http://104.211.226.77' + data.uri[0].url,
+              apiUrl: data.uri[0].url
+            };
+            console.log('data', data);
+            this.appConfig.hideLoader();
+
+          }, (err) => {
+
+          });
+
         };
       } else {
         this.showSizeError.size = true;
-        this.url = null;
+        // this.url = null;
       }
     } else {
       this.showSizeError.image = true;
-      this.url = null;
+      // this.url = null;
     }
   }
 
   public delete() {
+    this.appConfig.setLocalData('personalFormTouched', 'true');
+    this.profileData = {
+      fid: '',
+      uuid: '',
+      localShowUrl: '',
+      apiUrl: ''
+    };
+    // this.appConfig.clearLocalDataOne('localProfilePic');
+    // this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
+
     this.showSizeError.image = false;
     this.showSizeError.size = false;
     this.url = null;
@@ -794,9 +895,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
-    if (formGroup['status'] === 'INVALID') {
-      this.appConfig.setLocalData('personalFormSubmitted', 'false');
-    }
+    // if (formGroup['status'] === 'INVALID') {
+    //   this.appConfig.setLocalData('personalFormSubmitted', 'false');
+    // }
     Object.keys(formGroup.controls).forEach(field => {
 
       const control = formGroup.get(field);

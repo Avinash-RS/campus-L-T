@@ -1,10 +1,10 @@
 <div class="grid">
-  <span *ngIf="data?.icon === 'error'">
+  <span class="error" *ngIf="data?.icon === 'error'">
     <img src="assets/images/001-cancel.svg" alt="" srcset="">
   </span>
-  <span *ngIf="data?.icon === 'success'">
+  <span class="success" *ngIf="data?.icon === 'success'">
     <img src="assets/images/002-tick.svg" alt="" srcset="">
   </span>
 
-  <span>{{data?.message}}</span>
+  <span class="msg">{{data?.message}}</span>
 </div>

@@ -16,11 +16,13 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   aquaintancesForm: FormGroup;
   skillForm: FormGroup;
 
-  facultyReference1;
-  facultyReference2;
+  facultyReference1Form = new FormControl('', Validators.maxLength(300));
+  facultyReference2Form = new FormControl('', Validators.maxLength(300));
+
   apiForm: any;
   generalArray: any;
   skillValueArray: any;
+  showLineError: boolean;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -60,22 +62,22 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.skillValueArray = [{
       skill: this.apiForm && this.apiForm['field_add_your_skills'] ? this.apiForm['field_add_your_skills'].value : null
     }];
-    this.facultyReference1 = this.apiForm && this.apiForm['field_faculty_reference'] ? this.apiForm['field_faculty_reference'].value : null;
-    this.facultyReference2 = this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1'].value : null;
+    this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : 'asad');
+    this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : 'asdadad');
 
     this.FormInitialization();
   }
 
   onSubmit(OptA, OptB) {
-    if (this.aquaintancesForm.valid && this.skillForm.valid) {
+    if (this.aquaintancesForm.valid && this.skillForm.valid && this.facultyReference1Form.valid && this.facultyReference2Form.valid) {
 
       this.apiForm.field_add_your_skills = { value: this.skillForm.value.skillsArr[0]['skill'] ? this.skillForm.value.skillsArr[0]['skill'] : '' },
         this.apiForm.field_relatives_l_t_group_name = { value: this.aquaintancesForm.value.relativesArr[0]['names'] ? this.aquaintancesForm.value.relativesArr[0]['names'] : '' },
         this.apiForm.field_realationship = { value: this.aquaintancesForm.value.relativesArr[0]['relationship'] ? this.aquaintancesForm.value.relativesArr[0]['relationship'] : '' },
         this.apiForm.field_position = { value: this.aquaintancesForm.value.relativesArr[0]['position'] ? this.aquaintancesForm.value.relativesArr[0]['position'] : '' },
         this.apiForm.field_company = { value: this.aquaintancesForm.value.relativesArr[0]['company'] ? this.aquaintancesForm.value.relativesArr[0]['company'] : '' },
-        this.apiForm.field_faculty_reference = { value: this.facultyReference1 ? this.facultyReference1 : '' },
-        this.apiForm.field_faculty_reference1 = { value: this.facultyReference2 ? this.facultyReference2 : '' },
+        this.apiForm.field_faculty_reference = { value: this.facultyReference1Form ? this.facultyReference1Form.value : '' },
+        this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' },
 
         this.appConfig.setLocalData('generalFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('generalFormTouched');
@@ -189,7 +191,6 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       this.appConfig.setLocalData('generalFormTouched', 'true');
     }
   }
-
 
   // To validate all fields after submit
   validateAllFormArrays(formArray: FormArray) {

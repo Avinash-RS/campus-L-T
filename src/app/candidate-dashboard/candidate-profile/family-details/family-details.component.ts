@@ -6,6 +6,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import moment from 'moment';
+import { differenceInCalendarDays } from 'date-fns/esm';
 
 @Component({
   selector: 'app-family-details',
@@ -15,10 +16,17 @@ import moment from 'moment';
 export class FamilyDetailsComponent implements OnInit, OnDestroy {
   familyForm: FormGroup;
 
-  dateFormat = 'dd MMM yyyy';
+  dateFormat = 'dd-mm-yyyy';
   monthFormat = 'yyyy/MM';
   apiForm: any;
   familyValuesArr: any;
+  today = new Date();
+
+  disabledYears = (current: Date): boolean => {
+
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.today) > 0;
+  }
 
   constructor(
     private appConfig: AppConfigService,

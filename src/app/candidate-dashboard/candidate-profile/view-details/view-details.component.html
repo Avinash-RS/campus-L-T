@@ -4,7 +4,8 @@
   <div class="top-grid">
     <div class="profile-wrapper">
       <div class="profile">
-        <img src="assets/images/img_avatar2.png" alt="">
+        <img *ngIf="url" [src]="url" alt="">
+        <img *ngIf="!url" src="assets/images/MaskGroup1.png" alt="" srcset="">
       </div>
     </div>
     <div class="form-wrapper">
@@ -122,19 +123,19 @@
       </div>
       <div class="form-wrapper-right">
         <div class="form-group">
-          <div [ngStyle]="{'visibility': dup.firstRead ? 'show' : 'hidden'}"
+          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup.firstRead ? 'show' : 'hidden'}"
             class="custom-control custom-checkbox checkbox-xl">
-            <input type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
+            <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
             <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
           </div>
-          <div [ngStyle]="{'visibility': dup.firstWrite ? 'show' : 'hidden'}"
+          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup.firstWrite ? 'show' : 'hidden'}"
             class="custom-control custom-checkbox checkbox-xl">
-            <input type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
+            <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
             <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
           </div>
-          <div [ngStyle]="{'visibility': dup.firstSpeak ? 'show' : 'hidden'}"
+          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup.firstSpeak ? 'show' : 'hidden'}"
             class="custom-control custom-checkbox checkbox-xl">
-            <input type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
+            <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
             <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
           </div>
         </div>

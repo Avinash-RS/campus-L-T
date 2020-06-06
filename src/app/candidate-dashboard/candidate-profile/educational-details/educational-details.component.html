@@ -1,4 +1,5 @@
 <div class="mainwrapper">
+  <div class="legend">*All fields are mandatory</div>
   <div class="header">
     <form [formGroup]="educationForm">
       <ng-container *ngIf="eduArr && eduArr.controls" formArrayName="educationArr">
@@ -71,12 +72,12 @@
               <div class="outer-box-wrapper">
 
                 <div class="input-box">
-                  <nz-month-picker (ngModelChange)="detectSelectChange()" formControlName="passedYear" [nzDisabledDate]="disabledYears"
-                    [nzFormat]="monthFormat" nzPlaceHolder="Year of passing"></nz-month-picker>
+                  <nz-month-picker (ngModelChange)="detectSelectChange()" formControlName="passedYear" [nzDisabledDate]="disabledprevious"
+                    [nzFormat]="monthFormat" nzPlaceHolder="Date of passing"></nz-month-picker>
                 </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('passedYear').invalid && eduArr.controls[i].get('passedYear').touched">
-                  <span *ngIf="eduArr.controls[i].get('passedYear').errors?.required">Year of passing is Required</span>
+                  <span *ngIf="eduArr.controls[i].get('passedYear').errors?.required">Date of passing is Required</span>
                 </div>
 
               </div>
@@ -88,8 +89,7 @@
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('percentage').invalid && eduArr.controls[i].get('percentage').touched">
                   <span *ngIf="eduArr.controls[i].get('percentage').errors?.required">Percentage is Required</span>
-                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Numeric Decimals and Percentage symbol only
-                    allowed</span>
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Please enter a valid percentage</span>
                 </div>
 
               </div>

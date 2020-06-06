@@ -15,14 +15,20 @@ export class AppComponent {
     private route: Router,
     private apiService: ApiServiceService,
     private appConfig: AppConfigService
-    ) {
+  ) {
+    // tslint:disable-next-line: deprecation
+    this.appConfig.clearLocalDataOne('personalFormTouched');
+    this.appConfig.clearLocalDataOne('educationalFormTouched');
+    this.appConfig.clearLocalDataOne('familyFormTouched');
+    this.appConfig.clearLocalDataOne('generalFormTouched');
 
-      this.apiService.csrfToken().subscribe((data: any) => {
-        // localStorage.setItem('csrf', data);
-      }, (err) => {
-        if (err.status === 200) {
-          this.appConfig.setSessionData('csrf', err.error.text);
-        }
-      });
+
+    this.apiService.csrfToken().subscribe((data: any) => {
+      // localStorage.setItem('csrf', data);
+    }, (err) => {
+      if (err.status === 200) {
+        this.appConfig.setSessionData('csrf', err.error.text);
+      }
+    });
   }
 }

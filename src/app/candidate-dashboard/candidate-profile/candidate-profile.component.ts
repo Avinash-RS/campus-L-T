@@ -56,6 +56,10 @@ export class CandidateProfileComponent implements OnInit {
 
   ngOnInit() {
     // this.getUserKYC();
+    this.appConfig.clearLocalDataOne('personalFormTouched');
+    this.appConfig.clearLocalDataOne('educationalFormTouched');
+    this.appConfig.clearLocalDataOne('familyFormTouched');
+    this.appConfig.clearLocalDataOne('generalFormTouched');
   }
 
   getUserKYC() {

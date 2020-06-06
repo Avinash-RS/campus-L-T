@@ -70,6 +70,19 @@ export class CandidateMappersService {
     return headers;
   }
 
+  forImage(uniqueName): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/octet-stream')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      // tslint:disable-next-line: quotemark
+      .set('Content-Disposition', `filename="${uniqueName}"`)
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
+    return headers;
+  }
+
   withoutTokens(): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -130,6 +143,13 @@ export class CandidateMappersService {
       { withCredentials: true });
   }
 
+  imageUpload(file, uniqueName) {
+    console.log(uniqueName);
+
+    // this.datas is api body data
+    return this.http.post(`http://104.211.226.77/d8cintana2/file/upload/profile/candidate/field_profile_image?_format=json`, file,
+      { headers: this.forImage(uniqueName), withCredentials: true });
+  }
 
   // Logout
   logout(logoutToken) {

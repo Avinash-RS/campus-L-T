@@ -47,6 +47,8 @@ export class ViewDetailsComponent implements OnInit {
   userData: any;
   apiForm: any;
   KYCModifiedData: any;
+  localPhoto: any;
+  url: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -142,6 +144,20 @@ export class ViewDetailsComponent implements OnInit {
         firstSpeak: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '-',
       }],
 
+      field_profile_image: [
+        {
+          target_id: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_id'] : '',
+          alt: 'Image',
+          title: '',
+          width: 210,
+          height: 230,
+          target_uuid: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_uuid'] : '',
+          url: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['url'] : '',
+          status: 'true'
+        }
+      ],
+
+
       passportNumber: organizeUserDetails && organizeUserDetails['field_passport_number'] && organizeUserDetails['field_passport_number'] ? organizeUserDetails['field_passport_number']['value'] : '-',
       passportName: organizeUserDetails && organizeUserDetails['field_name_as_in_passport'] && organizeUserDetails['field_name_as_in_passport'] ? organizeUserDetails['field_name_as_in_passport']['value'] : '-',
       passportProfession: organizeUserDetails && organizeUserDetails['field_profesiona_as_passport'] && organizeUserDetails['field_profesiona_as_passport'] ? organizeUserDetails['field_profesiona_as_passport']['value'] : '-',
@@ -188,6 +204,16 @@ export class ViewDetailsComponent implements OnInit {
       facultyReference1: this.apiForm && this.apiForm['field_faculty_reference'] ? this.apiForm['field_faculty_reference']['value'] : '-',
       facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
     };
+
+    if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
+      this.url = 'http://104.211.226.77/d8cintana2/sites/default/files/2020-06/filename1_1.jpg';
+    }
+    if (!this.appConfig.getLocalData('localProfilePic')) {
+      this.url = !dump['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? dump['field_profile_image'][0]['url'] : dump['field_profile_image'][0]['url'];
+    }
+    if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') !== 'null') {
+      this.url = JSON.parse(this.appConfig.getLocalData('localProfilePic'));
+    }
 
     this.userDetails = dump;
     console.log(this.userDetails);
@@ -297,6 +323,19 @@ export class ViewDetailsComponent implements OnInit {
           field_right_eye_power_glass: { value: organizeUserDetails && organizeUserDetails['field_right_eye_power_glass'] && organizeUserDetails['field_right_eye_power_glass'][0] ? organizeUserDetails['field_right_eye_power_glass'][0]['value'] : '' },
           field_left_eyepower_glass: { value: organizeUserDetails && organizeUserDetails['field_left_eyepower_glass'] && organizeUserDetails['field_left_eyepower_glass'][0] ? organizeUserDetails['field_left_eyepower_glass'][0]['value'] : '' },
 
+          field_profile_image: [
+            {
+              target_id: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_id'] : '',
+              alt: 'Image',
+              title: '',
+              width: 210,
+              height: 230,
+              target_uuid: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_uuid'] : '',
+              url: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['url'] : '',
+              status: 'true'
+            }
+          ],
+
           // Educational
           field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
           field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
@@ -330,6 +369,9 @@ export class ViewDetailsComponent implements OnInit {
             }
           ],
         };
+        this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : this.KYCModifiedData['field_profile_image'][0]['url'];
+        this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
+
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
         this.getLocalForm(this.KYCModifiedData);
         this.appConfig.hideLoader();
@@ -432,89 +474,4 @@ export class ViewDetailsComponent implements OnInit {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_CONFIRM);
   }
 
-  /*
-        this.userDetails = {
-          name: organizeUserDetails && organizeUserDetails.field_name && organizeUserDetails.field_name[0] ? organizeUserDetails.field_name[0]['value'] : '-',
-          mail: organizeUserDetails && organizeUserDetails.field_email && organizeUserDetails.field_email[0] ? organizeUserDetails.field_email[0]['value'] : '-',
-          mobile: organizeUserDetails && organizeUserDetails.field_mobile && organizeUserDetails.field_mobile[0] ? organizeUserDetails.field_mobile[0]['value'] : '-',
-          gender: organizeUserDetails && organizeUserDetails.field_gender && organizeUserDetails.field_gender[0] ? organizeUserDetails.field_gender[0]['value'] : '-',
-          marital: organizeUserDetails && organizeUserDetails.field_mariatal_status && organizeUserDetails.field_mariatal_status[0] ? organizeUserDetails.field_mariatal_status[0]['value'] : '-',
-          dobDate: dob.date,
-          dobMonth: dob.month,
-          dobYear: dob.year,
-          nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails.field_nationality[0] ? organizeUserDetails.field_nationality[0]['value'] : '-',
-          category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails.field_category[0] ? organizeUserDetails.field_category[0]['value'] : '-',
-
-          presentAddress1: organizeUserDetails && organizeUserDetails.field_present_line_street_addres && organizeUserDetails.field_present_line_street_addres[0] ? organizeUserDetails.field_present_line_street_addres[0]['value'] : '-',
-          presentAddress2: organizeUserDetails && organizeUserDetails.field_present_line2_street_addre && organizeUserDetails.field_present_line2_street_addre[0] ? organizeUserDetails.field_present_line2_street_addre[0]['value'] : '-',
-          presentZipCode: organizeUserDetails && organizeUserDetails.field_present_zip && organizeUserDetails.field_present_zip[0] ? organizeUserDetails.field_present_zip[0]['value'] : '-',
-          presentCity: organizeUserDetails && organizeUserDetails.field_preset_city && organizeUserDetails.field_preset_city[0] ? organizeUserDetails.field_preset_city[0]['value'] : '-',
-          presentState: organizeUserDetails && organizeUserDetails.field_present_state && organizeUserDetails.field_present_state[0] ? organizeUserDetails.field_present_state[0]['value'] : '-',
-
-          permanentAddress1: organizeUserDetails && organizeUserDetails.field_permanent_line1_street_add && organizeUserDetails.field_permanent_line1_street_add[0] ? organizeUserDetails.field_permanent_line1_street_add[0]['value'] : '-',
-          permanentAddress2: organizeUserDetails && organizeUserDetails.field_permanent_line2_street_add && organizeUserDetails.field_permanent_line2_street_add[0] ? organizeUserDetails.field_permanent_line2_street_add[0]['value'] : '-',
-          permanentZipCode: organizeUserDetails && organizeUserDetails.field_permanent_zip && organizeUserDetails.field_permanent_zip[0] ? organizeUserDetails.field_permanent_zip[0]['value'] : '-',
-          permanentCity: organizeUserDetails && organizeUserDetails.field_permanent_city && organizeUserDetails.field_permanent_city[0] ? organizeUserDetails.field_permanent_city[0]['value'] : '-',
-          permanentState: organizeUserDetails && organizeUserDetails.field_permanent_state && organizeUserDetails.field_permanent_state[0] ? organizeUserDetails.field_permanent_state[0]['value'] : '-',
-
-          languagesknown: [
-            {
-              languageRequired: organizeUserDetails && organizeUserDetails.field_language_known && organizeUserDetails.field_language_known[0] ? organizeUserDetails.field_language_known[0]['value'] : '-',
-              firstRead: organizeUserDetails && organizeUserDetails.field_read && organizeUserDetails.field_read[0] ? organizeUserDetails.field_read[0]['value'] : '-',
-              firstWrite: organizeUserDetails && organizeUserDetails.field_write && organizeUserDetails.field_write[0] ? organizeUserDetails.field_write[0]['value'] : '-',
-              firstSpeak: organizeUserDetails && organizeUserDetails.field_speak && organizeUserDetails.field_speak[0] ? organizeUserDetails.field_speak[0]['value'] : '-',
-            }],
-
-          passportNumber: organizeUserDetails && organizeUserDetails.field_passport_number && organizeUserDetails.field_passport_number[0] ? organizeUserDetails.field_passport_number[0]['value'] : '-',
-          passportName: organizeUserDetails && organizeUserDetails.field_name_as_in_passport && organizeUserDetails.field_name_as_in_passport[0] ? organizeUserDetails.field_name_as_in_passport[0]['value'] : '-',
-          passportProfession: organizeUserDetails && organizeUserDetails.field_profesiona_as_passport && organizeUserDetails.field_profesiona_as_passport[0] ? organizeUserDetails.field_profesiona_as_passport[0]['value'] : '-',
-          passportIssueDate: organizeUserDetails && organizeUserDetails.field_date_of_issue && organizeUserDetails.field_date_of_issue[0] ? this.getDateFormat(organizeUserDetails.field_date_of_issue[0]['value']) : '-',
-          passportValid: organizeUserDetails && organizeUserDetails.field_valid_upto && organizeUserDetails.field_valid_upto[0] ? this.getDateFormat(organizeUserDetails.field_valid_upto[0]['value']) : '-',
-          passportIssuePlace: organizeUserDetails && organizeUserDetails.field_place_of_issue && organizeUserDetails.field_place_of_issue[0] ? organizeUserDetails.field_place_of_issue[0]['value'] : '-',
-          passportValidFor: organizeUserDetails && organizeUserDetails.field_country_valid_for && organizeUserDetails.field_country_valid_for[0] ? organizeUserDetails.field_country_valid_for[0]['value'] : '-',
-
-          illness: organizeUserDetails && organizeUserDetails.field_serious_illness && organizeUserDetails.field_serious_illness[0] ? organizeUserDetails.field_serious_illness[0]['value'] : '-',
-          daysofIll: organizeUserDetails && organizeUserDetails.field_no_of_days && organizeUserDetails.field_no_of_days[0] ? organizeUserDetails.field_no_of_days[0]['value'] : '-',
-          natureofIll: organizeUserDetails && organizeUserDetails.field_nature_of_illness && organizeUserDetails.field_nature_of_illness[0] ? organizeUserDetails.field_nature_of_illness[0]['value'] : '-',
-          disability: organizeUserDetails && organizeUserDetails.field_physical_disability && organizeUserDetails.field_physical_disability[0] ? organizeUserDetails.field_physical_disability[0]['value'] : '-',
-          height: organizeUserDetails && organizeUserDetails.field_height && organizeUserDetails.field_height[0] ? organizeUserDetails.field_height[0]['value'] : '-',
-          weight: organizeUserDetails && organizeUserDetails.field_weight && organizeUserDetails.field_weight[0] ? organizeUserDetails.field_weight[0]['value'] : '-',
-          left: organizeUserDetails && organizeUserDetails.field_left_eyepower_glass && organizeUserDetails.field_left_eyepower_glass[0] ? organizeUserDetails.field_left_eyepower_glass[0]['value'] : '-',
-          right: organizeUserDetails && organizeUserDetails.field_right_eye_power_glass && organizeUserDetails.field_right_eye_power_glass[0] ? organizeUserDetails.field_right_eye_power_glass[0]['value'] : '-',
-
-          educationValuearray: [{
-            leveling: organizeUserDetails && organizeUserDetails.field_level && organizeUserDetails.field_level[0] ? organizeUserDetails.field_level[0]['value'] : '-',
-            board: organizeUserDetails && organizeUserDetails.field_board_university && organizeUserDetails.field_board_university[0] ? organizeUserDetails.field_board_university[0]['value'] : '-',
-            institute: organizeUserDetails && organizeUserDetails.field_institute && organizeUserDetails.field_institute[0] ? organizeUserDetails.field_institute[0]['value'] : '-',
-            discipline: organizeUserDetails && organizeUserDetails.field_discipline && organizeUserDetails.field_discipline[0] ? organizeUserDetails.field_discipline[0]['value'] : '-',
-            specification: organizeUserDetails && organizeUserDetails.field_specification && organizeUserDetails.field_specification[0] ? organizeUserDetails.field_specification[0]['value'] : '-',
-            passedYear: organizeUserDetails && organizeUserDetails.field_year_of_passing && organizeUserDetails.field_year_of_passing[0] ? this.getMonthFormat(organizeUserDetails.field_year_of_passing[0]['value']) : '-',
-            percentage: organizeUserDetails && organizeUserDetails.field_percentage && organizeUserDetails.field_percentage[0] ? organizeUserDetails.field_percentage[0]['value'] : '-',
-          }],
-
-          familyValuesArr: [{
-            names: organizeUserDetails && organizeUserDetails.field_name_of_your_family_member && organizeUserDetails.field_name_of_your_family_member[0] ? organizeUserDetails.field_name_of_your_family_member[0]['value'] : '-',
-            dob: organizeUserDetails && organizeUserDetails.field_family_date_of_birth && organizeUserDetails.field_family_date_of_birth[0] ? this.getDateFormat(organizeUserDetails.field_family_date_of_birth[0]['value']) : '-',
-            relationship: organizeUserDetails && organizeUserDetails.field_relationship && organizeUserDetails.field_relationship[0] ? organizeUserDetails.field_relationship[0]['value'] : '-',
-            occupation: organizeUserDetails && organizeUserDetails.field_occupation && organizeUserDetails.field_occupation[0] ? organizeUserDetails.field_occupation[0]['value'] : '-',
-          }],
-
-          skillValueArray: [{
-            skill: organizeUserDetails && organizeUserDetails.field_add_your_skills && organizeUserDetails.field_add_your_skills[0] ? organizeUserDetails.field_add_your_skills[0]['value'] : '-',
-          }],
-
-          generalArray: [{
-            names: organizeUserDetails && organizeUserDetails.field_relatives_l_t_group_name && organizeUserDetails.field_relatives_l_t_group_name[0] ? organizeUserDetails.field_relatives_l_t_group_name[0]['value'] : '-',
-
-            relationship: organizeUserDetails && organizeUserDetails.field_realationship && organizeUserDetails.field_realationship[0] ? organizeUserDetails.field_realationship[0]['value'] : '-',
-
-            position: organizeUserDetails && organizeUserDetails.field_position && organizeUserDetails.field_position[0] ? organizeUserDetails.field_position[0]['value'] : '-',
-
-            company: organizeUserDetails && organizeUserDetails.field_company && organizeUserDetails.field_company[0] ? organizeUserDetails.field_company[0]['value'] : '-',
-          }],
-          facultyReference1: organizeUserDetails && organizeUserDetails.field_faculty_reference && organizeUserDetails.field_faculty_reference[0] ? organizeUserDetails.field_faculty_reference[0]['value'] : '-',
-          facultyReference2: organizeUserDetails && organizeUserDetails.field_faculty_reference1 && organizeUserDetails.field_faculty_reference1[0] ? organizeUserDetails.field_faculty_reference1[0]['value'] : '-',
-        };
-
-  */
 }

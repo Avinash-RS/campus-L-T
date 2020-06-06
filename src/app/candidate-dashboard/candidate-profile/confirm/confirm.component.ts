@@ -30,13 +30,31 @@ export class ConfirmComponent implements OnInit {
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    // this.apiForm.field_year_of_passing = {value: ''};
-    // // this.apiForm.field_dob = {value: ''};
+    this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace('http://104.211.226.77', '');
+
     console.log(this.apiForm);
   }
 
   onSubmit() {
-    this.apiForm.field_isformsubmitted = [{value: true}];
+    this.apiForm.field_isformsubmitted = [{ value: true }];
+    if (this.appConfig.getLocalData('profileData')) {
+      // tslint:disable-next-line: quotemark
+      if (this.appConfig.getLocalData('profileData') !== "undefined") {
+        let pro = JSON.parse(this.appConfig.getLocalData('profileData'));
+        this.apiForm.field_profile_image = [
+          {
+            target_id: pro && pro['fid'] ? pro['fid'] : 12,
+            alt: 'Image',
+            title: '',
+            width: 210,
+            height: 230,
+            // target_uuid: pro && pro['uuid'] ? pro['uuid'] : 'abc',
+            url: pro && pro['apiUrl'] ? pro['apiUrl'] : '/d8cintana2/sites/default/files/2020-06/filename1_1.jpg',
+            status: 'true'
+          }
+        ];
+      }
+    }
 
     this.candidateService.editUser(this.apiForm).subscribe((data: any) => {
       console.log('success', data);
