@@ -5,6 +5,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
   selector: 'app-general-details',
@@ -16,8 +17,8 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   aquaintancesForm: FormGroup;
   skillForm: FormGroup;
 
-  facultyReference1Form = new FormControl('', Validators.maxLength(300));
-  facultyReference2Form = new FormControl('', Validators.maxLength(300));
+  facultyReference1Form = new FormControl('', [Validators.maxLength(300), RemoveWhitespace.whitespace()]);
+  facultyReference2Form = new FormControl('', [Validators.maxLength(300), RemoveWhitespace.whitespace()]);
 
   apiForm: any;
   generalArray: any;
@@ -47,6 +48,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.ngOnInit();
+    this.appConfig.nzNotification('success', 'Resetted', 'General details form has been resetted');
   }
 
 
@@ -62,8 +64,8 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.skillValueArray = [{
       skill: this.apiForm && this.apiForm['field_add_your_skills'] ? this.apiForm['field_add_your_skills'].value : null
     }];
-    this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : 'asad');
-    this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : 'asdadad');
+    this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : '');
+    this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : '');
 
     this.FormInitialization();
   }
@@ -132,17 +134,17 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   createItem(data): FormGroup {
     if (data) {
       return this.fb.group({
-        names: [data.names ? data.names : null],
-        relationship: [data.relationship ? data.relationship : null],
-        position: [data.position ? data.position : null],
-        company: [data.company ? data.company : null],
+        names: [data.names ? data.names : null, RemoveWhitespace.whitespace()],
+        relationship: [data.relationship ? data.relationship : null, RemoveWhitespace.whitespace()],
+        position: [data.position ? data.position : null, RemoveWhitespace.whitespace()],
+        company: [data.company ? data.company : null, RemoveWhitespace.whitespace()],
       });
     } else {
       return this.fb.group({
-        names: [null],
-        relationship: [null],
-        position: [null],
-        company: [null],
+        names: [null, RemoveWhitespace.whitespace()],
+        relationship: [null, RemoveWhitespace.whitespace()],
+        position: [null, RemoveWhitespace.whitespace()],
+        company: [null, RemoveWhitespace.whitespace()],
       });
     }
   }
@@ -150,11 +152,11 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   createSkillForm(data): FormGroup {
     if (data) {
       return this.fb.group({
-        skill: [data.skill],
+        skill: [data.skill, RemoveWhitespace.whitespace()],
       });
     } else {
       return this.fb.group({
-        skill: [null],
+        skill: [null, RemoveWhitespace.whitespace()],
       });
     }
   }

@@ -121,6 +121,7 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.consoleLog('data', data);
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
+            this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
             this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);

@@ -3,8 +3,8 @@
     <div class="first-child">
       <div class="flex-box">
         <label>Name*</label>
-        <div class="input-box">
-          <input (focusout)="detectInput(upToCategoryForm)" formControlName="name" type="text" value="">
+        <div class="input-box" matTooltipPosition="after" [matTooltip]="localUsername ? 'Non-Editable' : ''">
+          <input [ngClass]="localUsername ? 'nonEdit' : ''" (focusout)="detectInput(upToCategoryForm)" formControlName="name" type="text" value="">
         </div>
       </div>
       <div class="error" *ngIf="name.invalid && name.touched">
@@ -18,8 +18,8 @@
 
       <div class="flex-box">
         <label>Email ID*</label>
-        <div class="input-box">
-          <input (focusout)="detectInput(upToCategoryForm)" formControlName="mail" type="text" value="">
+        <div class="input-box" matTooltipPosition="after" [matTooltip]="localUserEmail ? 'Non-Editable' : ''">
+          <input [ngClass]="localUserEmail ? 'nonEdit' : ''" (focusout)="detectInput(upToCategoryForm)" formControlName="mail" type="text" value="">
         </div>
       </div>
       <div class="error" *ngIf="mail.invalid && mail.touched">
@@ -48,6 +48,23 @@
             Number</span>
         </div>
       </div>
+
+      <div class="flex-box">
+          <label>Aadhaar Number*</label>
+          <div class="input-box">
+            <input (focusout)="detectInput(upToCategoryForm)" formControlName="aadhaar" type="text" value="">
+          </div>
+        </div>
+        <div class="error" *ngIf="aadhaar.invalid && aadhaar.touched">
+          <div>
+            &#160;
+          </div>
+          <div>
+            <span *ngIf="aadhaar.errors?.required">Aadhaar Number is Required</span>
+            <span *ngIf="aadhaar.errors?.pattern">Numbers only allowed</span>
+            <span *ngIf="!aadhaar.errors?.pattern && (aadhaar.errors?.minlength || aadhaar.errors?.maxlength)">Aadhaar should be exact 12 digits</span>
+          </div>
+        </div>
 
       <div class="flex-box">
         <label>Gender*</label>
@@ -128,7 +145,6 @@
           <span *ngIf="nationality.errors?.required">Nationality is Required</span>
         </div>
       </div>
-
 
       <div class="flex-box">
         <label>Category</label>

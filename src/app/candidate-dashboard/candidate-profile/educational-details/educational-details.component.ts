@@ -1,20 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl, FormArray, NgForm } from '@angular/forms';
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import moment from 'moment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 // import { NzSelectSizeType } from 'ng-zorro-antd/select';
 @Component({
   selector: 'app-educational-details',
   templateUrl: './educational-details.component.html',
   styleUrls: ['./educational-details.component.scss']
 })
-export class EducationalDetailsComponent implements OnInit, OnDestroy {
+export class EducationalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+  @ViewChild('form', { static: false })
+  form: NgForm;
 
   level = [
     {
@@ -61,7 +64,7 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
   }
   disabledprevious = (current: Date): any => {
     // Can not select days before today and today
-    return differenceInCalendarDays(current, this.startingYear) < 0 && differenceInCalendarDays(current, this.endYear) > 0;
+    return differenceInCalendarDays(current, this.startingYear) < 0;
     // return differenceInCalendarDays(this.dummyendDate, this.dummystartDate) > 0;
   }
 
@@ -73,7 +76,9 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.FormInitialization();
@@ -93,6 +98,7 @@ export class EducationalDetailsComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.ngOnInit();
+    this.appConfig.nzNotification('success', 'Resetted', 'Educational details form has been resetted');
   }
 
   getLocalForm() {

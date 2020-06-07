@@ -72,10 +72,20 @@ export class ModalBoxComponent implements OnInit {
       this.dialogRef.close();
     }
 
+    // To logout User
+    if (dataToBeShared.identity === 'logout') {
+      this.dialogRef.close(true);
+    }
+
+    // To Submit KYC Forms
+    if (dataToBeShared.identity === 'kycSubmit') {
+      this.dialogRef.close(true);
+    }
+
   }
 
   cancel(dataToBeShared) {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   ok() {

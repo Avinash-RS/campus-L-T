@@ -16,6 +16,12 @@
     <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add'" (click)="submit(data.dataToBeShared)"
       mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
 
+    <!-- Type Confirm Buttons -->
+    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'confirm'" (click)="cancel(data.dataToBeShared)"
+      mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
+    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'confirm'" (click)="submit(data.dataToBeShared)"
+      mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+
     <!-- Type Update Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'update'" (click)="cancel(data.dataToBeShared)"
       mat-raised-button class="update-cancel" type="button">{{data.showCancel}}</button>

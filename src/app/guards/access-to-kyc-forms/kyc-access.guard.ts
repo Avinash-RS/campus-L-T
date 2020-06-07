@@ -22,7 +22,7 @@ export class KycAccessGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let url: any = route['url'].toString();
     console.log('Url:' + url);
-
+    this.appConfig.showLoader();
     // Route to education
     if (url === 'personal') {
       if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
@@ -30,6 +30,7 @@ export class KycAccessGuard implements CanActivate {
         const localData = 'clearAllTouched';
         this.openDialog(data, localData, url);
       } else {
+        this.appConfig.hideLoader();
         return true;
       }
     }
@@ -40,6 +41,7 @@ export class KycAccessGuard implements CanActivate {
           const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
           this.openDialog(data, 'personalFormTouched', url);
         } else {
+          this.appConfig.hideLoader();
           return true;
         }
 
@@ -50,9 +52,11 @@ export class KycAccessGuard implements CanActivate {
             const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
             this.openDialog(data, 'personalFormTouched', url);
           } else {
+            this.appConfig.hideLoader();
             return true;
           }
         } else {
+          this.appConfig.hideLoader();
           this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
           return false;
         }
@@ -66,6 +70,7 @@ export class KycAccessGuard implements CanActivate {
           const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
           this.openDialog(data, 'educationalFormTouched', url);
         } else {
+          this.appConfig.hideLoader();
           return true;
         }
         // Starting first time submit conditions
@@ -75,9 +80,11 @@ export class KycAccessGuard implements CanActivate {
             const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
             this.openDialog(data, 'educationalFormTouched', url);
           } else {
+            this.appConfig.hideLoader();
             return true;
           }
         } else {
+          this.appConfig.hideLoader();
           this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
           return false;
         }
@@ -91,6 +98,7 @@ export class KycAccessGuard implements CanActivate {
           const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
           this.openDialog(data, 'familyFormTouched', url);
         } else {
+          this.appConfig.hideLoader();
           return true;
         }
         // Starting first time submit conditions
@@ -100,9 +108,11 @@ export class KycAccessGuard implements CanActivate {
             const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
             this.openDialog(data, 'familyFormTouched', url);
           } else {
+            this.appConfig.hideLoader();
             return true;
           }
         } else {
+          this.appConfig.hideLoader();
           this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
           return false;
         }
@@ -116,6 +126,7 @@ export class KycAccessGuard implements CanActivate {
           const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
           this.openDialog(data, 'generalFormTouched', url);
         } else {
+          this.appConfig.hideLoader();
           return true;
         }
         // Starting first time submit conditions
@@ -125,9 +136,11 @@ export class KycAccessGuard implements CanActivate {
             const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
             this.openDialog(data, 'generalFormTouched', url);
           } else {
+            this.appConfig.hideLoader();
             return true;
           }
         } else {
+          this.appConfig.hideLoader();
           this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
           return false;
         }
@@ -141,6 +154,7 @@ export class KycAccessGuard implements CanActivate {
           const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
           this.openDialog(data, 'generalFormTouched', url);
         } else {
+          this.appConfig.hideLoader();
           return true;
         }
         // Starting first time submit conditions
@@ -150,17 +164,17 @@ export class KycAccessGuard implements CanActivate {
             const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
             this.openDialog(data, 'generalFormTouched', url);
           } else {
+            this.appConfig.hideLoader();
             return true;
           }
         } else {
+          this.appConfig.hideLoader();
           this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
           return false;
         }
       }
     }
-
-
-
+    this.appConfig.hideLoader();
   }
 
 
@@ -196,8 +210,10 @@ export class KycAccessGuard implements CanActivate {
         this.appConfig.clearLocalDataOne('generalFormTouched');
         // }
         this.appConfig.routeNavigation(`${CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE}/${route}`);
+        this.appConfig.hideLoader();
         return true;
       } else {
+        this.appConfig.hideLoader();
         return false;
       }
     });

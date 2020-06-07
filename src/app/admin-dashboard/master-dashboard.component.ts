@@ -12,6 +12,7 @@ export class MasterDashboardComponent implements OnInit {
   appConstant = CONSTANT.ENDPOINTS;
   subMenus: any;
   activeSubmenu;
+  sidebarOpen;
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService
@@ -23,6 +24,10 @@ export class MasterDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sidebarOpen = true;
+  }
+  sidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 
 }

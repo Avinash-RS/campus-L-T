@@ -4,7 +4,10 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+.nonEdit {
+  background: rgba(128, 128, 128, 0.315) !important;
+  pointer-events: none;
+}
 .grid-wrapper {
   display: grid;
   grid-template-columns: 2fr 1fr;

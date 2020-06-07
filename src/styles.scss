@@ -312,8 +312,13 @@ button:focus {
 
 .mat-snack-bar-container {
   position: absolute !important;
-  top: 25% !important;
+  top: 30% !important;
   left: 50% !important;
+  padding: .25em;
+  margin: 0 !important;
+  padding: 0.5em 0 !important;
+  display: grid !important;
+  align-items: center !important;
   transform: translate(-50%, -50%) !important;
 }
 .warn-bg-color {
@@ -334,7 +339,8 @@ button:focus {
 
 .success-bg-color {
   color: $white;
-  background-color: #228b22;
+  background-color: #1CCC3F;
+  // background-color: #228b22;
   font-weight: 200;
   font-size: 16px;
   border-radius: none;

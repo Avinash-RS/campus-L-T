@@ -11,6 +11,7 @@ import { SharedServiceService } from '../services/shared-service.service';
 export class MasterDashboardComponent implements OnInit {
 
   appConstant = CONSTANT.ENDPOINTS;
+  sidebarOpen;
   subMenus: any;
   activeSubmenu;
   constructor(
@@ -24,6 +25,9 @@ export class MasterDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sidebarOpen = true;
   }
-
+  sidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
 }

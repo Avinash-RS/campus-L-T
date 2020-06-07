@@ -1,7 +1,7 @@
 <div class="mainwrapper">
   <div class="legend">*All fields are mandatory</div>
   <div class="header">
-    <form [formGroup]="educationForm">
+    <form #form="ngForm" [formGroup]="educationForm">
       <ng-container *ngIf="eduArr && eduArr.controls" formArrayName="educationArr">
         <div class="grid-wrapper" *ngFor="let item of eduArr.controls; let i = index;" [formGroupName]="i">
           <div style="margin: 1em 0 0 0;" class="form">

@@ -44,7 +44,7 @@ export class FormCustomValidators {
         // if control is empty return no error
         return null;
       }
-      const passRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/gm;
+      const passRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{4,})/gm;
       const passRegex1: RegExp = /\s/gm;
       const passRegex2: RegExp = /\s?[, ]\s?/gm;
 

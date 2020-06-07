@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../config/app-config.service';
 import { CONSTANT } from '../constants/app-constants.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminServiceService {
+  BASE_URL = environment.API_BASE_URL;
   httpOptions: { headers: HttpHeaders };
+
 
   constructor(
     private http: HttpClient,
@@ -82,7 +85,7 @@ export class AdminServiceService {
 
   // For generating new static token for before login requests
   csrfToken() {
-    return this.http.get('http://104.211.226.77/d8cintana2/rest/session/token', { headers: this.withoutTokens() });
+    return this.http.get(`${this.BASE_URL}/rest/session/token`, { headers: this.withoutTokens() });
   }
   getToken() {
     this.csrfToken().subscribe((data: any) => {
@@ -96,19 +99,19 @@ export class AdminServiceService {
 
   // Users List
   userList() {
-    return this.http.get(`http://104.211.226.77/d8cintana2/admin/user-list?_format=json`,
+    return this.http.get(`${this.BASE_URL}/admin/user-list?_format=json`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   // Add User
   addUser(formdata) {
-    return this.http.post(`http://104.211.226.77/d8cintana2/entity/user?_format=hal_json`, formdata,
+    return this.http.post(`${this.BASE_URL}/entity/user?_format=hal_json`, formdata,
       { headers: this.getAfterCustomHeadersWithBasicAuth(), withCredentials: true });
   }
 
   // Edit User
   editUser(formdata, UserId) {
-    return this.http.patch(`http://104.211.226.77/d8cintana2/user/${UserId}?_format=hal_json`, formdata,
+    return this.http.patch(`${this.BASE_URL}/user/${UserId}?_format=hal_json`, formdata,
       {
         headers: this.getCustomHeadersWithBasicAuthWithHalContentType(),
         withCredentials: true
@@ -117,7 +120,7 @@ export class AdminServiceService {
 
   // Delete User
   deleteUser(UserId) {
-    return this.http.delete(`http://104.211.226.77/d8cintana2/user/${UserId}?_format=hal_json`,
+    return this.http.delete(`${this.BASE_URL}/user/${UserId}?_format=hal_json`,
       {
         headers: this.getAfterCustomHeadersWithBasicAuth(),
         withCredentials: true
@@ -127,7 +130,7 @@ export class AdminServiceService {
   // Forgot Password
   forgotPassword(email) {
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana2/user/lost-password?_format=json`, email,
+    return this.http.post(`${this.BASE_URL}/user/lost-password?_format=json`, email,
       { withCredentials: true });
   }
 
@@ -135,7 +138,7 @@ export class AdminServiceService {
   // Logout
   logout(logoutToken) {
     // this.datas is api body data
-    return this.http.post(`http://104.211.226.77/d8cintana2/user/logout?_format=json&token=${logoutToken}`, logoutToken,
+    return this.http.post(`${this.BASE_URL}/user/logout?_format=json&token=${logoutToken}`, logoutToken,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

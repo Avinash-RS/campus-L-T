@@ -21,6 +21,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 import { NzMessageService } from 'ng-zorro-antd';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 const moment = _moment;
 
@@ -83,7 +84,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       caste: 'mbc'
     },
     {
-      name: 'OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC OC ',
+      name: 'OC',
       caste: 'oc'
     },
   ];
@@ -132,6 +133,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   FinaluserDetails: any;
   KYCModifiedData: any;
   profileData: { fid: any; uuid: any; localShowUrl: string; apiUrl: any; };
+  localUsername: any;
+  localUserEmail: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -172,11 +175,12 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     if (this.appConfig.getLocalData('personalFormTouched')) {
       this.appConfig.clearLocalDataOne('personalFormTouched');
     }
+
+    this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
+    this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
+
   }
 
-  cancel() {
-    this.ngOnInit();
-  }
 
   checkboxChanged(check) {
     console.log(check);
@@ -198,7 +202,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       });
     }
 
-    // this.checked = true;
   }
 
   regularGetUserDetails(data) {
@@ -226,7 +229,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       if (!this.appConfig.getLocalData('localProfilePic')) {
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : '';
       }
-      if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') !== 'null') {
+      if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') !== 'null' && this.appConfig.getLocalData('localProfilePic') !== 'undefined') {
         this.url = JSON.parse(this.appConfig.getLocalData('localProfilePic'));
       }
     } else {
@@ -289,6 +292,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_dob: { value: organizeUserDetails && organizeUserDetails['field_dob'] && organizeUserDetails['field_dob'][0] ? organizeUserDetails['field_dob'][0]['value'] : '' },
           field_nationality: { value: organizeUserDetails && organizeUserDetails['field_nationality'] && organizeUserDetails['field_nationality'][0] ? organizeUserDetails['field_nationality'][0]['value'] : '' },
           field_category: { value: organizeUserDetails && organizeUserDetails['field_category'] && organizeUserDetails['field_category'][0] ? organizeUserDetails['field_category'][0]['value'] : '' },
+          field_aadharno: { value: organizeUserDetails && organizeUserDetails['field_aadharno'] && organizeUserDetails['field_aadharno'][0] ? organizeUserDetails['field_aadharno'][0]['value'] : '' },
 
           field_present_line_street_addres: { value: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'][0] ? organizeUserDetails['field_present_line_street_addres'][0]['value'] : '' },
           field_present_line2_street_addre: { value: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'][0] ? organizeUserDetails['field_present_line2_street_addre'][0]['value'] : '' },
@@ -389,7 +393,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           ],
           field_profile_image: [
             {
-              target_id: '',
+              target_id: 12,
               alt: 'Image',
               title: '',
               width: 210,
@@ -433,6 +437,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
+    console.log(this.upToCategoryForm.value.name);
+    console.log(this.upToCategoryForm.value.mail);
 
     if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
       && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
@@ -443,6 +449,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.KYCModifiedData.field_mariatal_status = { value: this.upToCategoryForm.value.marital ? this.upToCategoryForm.value.marital : '' };
       this.KYCModifiedData.field_dob = { value: moment(`${this.upToCategoryForm.value.dobYear}-${this.upToCategoryForm.value.dobMonth}-${this.upToCategoryForm.value.dobDate}`).format() };
       this.KYCModifiedData.field_nationality = { value: this.upToCategoryForm.value.nationality ? this.upToCategoryForm.value.nationality : '' };
+      this.KYCModifiedData.field_aadharno = { value: this.upToCategoryForm.value.aadhaar ? this.upToCategoryForm.value.aadhaar : '' };
       this.KYCModifiedData.field_category = { value: this.upToCategoryForm.value.category ? this.upToCategoryForm.value.category : '' };
       this.KYCModifiedData.field_present_line_street_addres = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
       this.KYCModifiedData.field_present_line2_street_addre = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
@@ -504,6 +511,12 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }
 
   }
+
+  cancel() {
+    this.ngOnInit();
+    this.appConfig.nzNotification('success', 'Resetted', 'Personal details form has been resetted');
+  }
+
   // Forms Initialization
   FormsInitialization() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -521,24 +534,25 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobDate: [null, [Validators.required]],
       dobMonth: [null, [Validators.required]],
       dobYear: [null, [Validators.required]],
-      nationality: ['', [Validators.required]],
+      nationality: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      aadhaar: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
       category: [''],
     }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
     this.presentAddressForm = this.fb.group({
-      presentAddress1: ['', [Validators.required]],
-      presentAddress2: ['', [Validators.required]],
-      presentZipCode: ['', [Validators.required]],
+      presentAddress1: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      presentAddress2: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      presentZipCode: ['', [Validators.required, RemoveWhitespace.whitespace()]],
       presentState: ['', [Validators.required]],
       presentCity: ['', [Validators.required]],
     }), this.presentAddressPatchValue();
 
     // Present Address Form
     this.permanentAddressForm = this.fb.group({
-      permanentAddress1: ['', [Validators.required]],
-      permanentAddress2: ['', [Validators.required]],
-      permanentZipCode: ['', [Validators.required]],
+      permanentAddress1: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      permanentAddress2: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      permanentZipCode: ['', [Validators.required, RemoveWhitespace.whitespace()]],
       permanentState: ['', [Validators.required]],
       permanentCity: ['', [Validators.required]],
     }), this.permanentAddressPatchValue();
@@ -546,7 +560,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Language Form
     this.languagesForm = this.fb.group({
-      languageRequired: ['', [Validators.required]],
+      languageRequired: ['', [Validators.required, RemoveWhitespace.whitespace()]],
       firstRead: [''],
       firstWrite: [''],
       firstSpeak: [''],
@@ -555,22 +569,22 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Passport Form
     this.passportForm = this.fb.group({
-      passportNumber: ['', [Validators.pattern(numberOnly)]],
-      passportName: [''],
-      passportProfession: [''],
+      passportNumber: ['', [RemoveWhitespace.whitespace()]],
+      passportName: ['', RemoveWhitespace.whitespace()],
+      passportProfession: ['', RemoveWhitespace.whitespace()],
       passportIssueDate: [''],
       // passportValid: ['', [Validators.required, FormCustomValidators.dateValidation()]],
       passportValid: [''],
-      passportIssuePlace: [''],
-      passportValidFor: [''],
+      passportIssuePlace: ['', RemoveWhitespace.whitespace()],
+      passportValidFor: ['', RemoveWhitespace.whitespace()],
     }), this.passportFormPatchValue();
 
     // Health Form
     this.healthForm = this.fb.group({
-      illness: [''],
+      illness: ['', RemoveWhitespace.whitespace()],
       daysofIll: ['', [Validators.pattern(numberDecimals)]],
-      natureofIll: [''],
-      disability: [''],
+      natureofIll: ['', RemoveWhitespace.whitespace()],
+      disability: ['', RemoveWhitespace.whitespace()],
       height: ['', [Validators.pattern(numberDecimals)]],
       weight: ['', [Validators.pattern(numberDecimals)]],
       eyePower: this.fb.group({
@@ -610,8 +624,10 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }
     this.upToCategoryForm.patchValue({
 
-      name: organizeUserDetails && organizeUserDetails['field_name'] && organizeUserDetails['field_name'] ? organizeUserDetails['field_name']['value'] : '',
-      mail: organizeUserDetails && organizeUserDetails['field_email'] && organizeUserDetails['field_email'] ? organizeUserDetails['field_email']['value'] : '',
+      // name: organizeUserDetails && organizeUserDetails['field_name'] && organizeUserDetails['field_name'] ? organizeUserDetails['field_name']['value'] : '',
+      // mail: organizeUserDetails && organizeUserDetails['field_email'] && organizeUserDetails['field_email'] ? organizeUserDetails['field_email']['value'] : '',
+      name: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
+      mail: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '',
       mobile: organizeUserDetails && organizeUserDetails['field_mobile'] && organizeUserDetails['field_mobile'] ? organizeUserDetails['field_mobile']['value'] : '',
       gender: organizeUserDetails && organizeUserDetails['field_gender'] && organizeUserDetails['field_gender'] ? organizeUserDetails['field_gender']['value'] : '',
       marital: organizeUserDetails && organizeUserDetails['field_mariatal_status'] && organizeUserDetails['field_mariatal_status'] ? organizeUserDetails['field_mariatal_status']['value'] : '',
@@ -619,18 +635,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobMonth: dob.month,
       dobYear: dob.year,
       nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '',
+      aadhaar: organizeUserDetails && organizeUserDetails.field_aadharno && organizeUserDetails['field_aadharno'] ? organizeUserDetails['field_aadharno']['value'] : '',
       category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '',
-
-      // name: organizeUserDetails && organizeUserDetails.field_name && organizeUserDetails.field_name[0] ? organizeUserDetails.field_name[0].value : '',
-      // mail: organizeUserDetails && organizeUserDetails.field_email && organizeUserDetails.field_email[0] ? organizeUserDetails.field_email[0].value : '',
-      // mobile: organizeUserDetails && organizeUserDetails.field_mobile && organizeUserDetails.field_mobile[0] ? organizeUserDetails.field_mobile[0].value : '',
-      // gender: organizeUserDetails && organizeUserDetails.field_gender && organizeUserDetails.field_gender[0] ? organizeUserDetails.field_gender[0].value : '',
-      // marital: organizeUserDetails && organizeUserDetails.field_mariatal_status && organizeUserDetails.field_mariatal_status[0] ? organizeUserDetails.field_mariatal_status[0].value : '',
-      // dobDate: dob.date,
-      // dobMonth: dob.month,
-      // dobYear: dob.year,
-      // nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails.field_nationality[0] ? organizeUserDetails.field_nationality[0].value : '',
-      // category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails.field_category[0] ? organizeUserDetails.field_category[0].value : '',
     });
   }
 
@@ -643,12 +649,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       presentZipCode: organizeUserDetails && organizeUserDetails['field_present_zip'] && organizeUserDetails['field_present_zip'] ? organizeUserDetails['field_present_zip']['value'] : '',
       presentCity: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'] ? organizeUserDetails['field_preset_city']['value'] : '',
       presentState: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'] ? organizeUserDetails['field_present_state']['value'] : '',
-
-      // presentAddress1: organizeUserDetails && organizeUserDetails.field_present_line_street_addres && organizeUserDetails.field_present_line_street_addres[0] ? organizeUserDetails.field_present_line_street_addres[0].value : '',
-      // presentAddress2: organizeUserDetails && organizeUserDetails.field_present_line2_street_addre && organizeUserDetails.field_present_line2_street_addre[0] ? organizeUserDetails.field_present_line2_street_addre[0].value : '',
-      // presentZipCode: organizeUserDetails && organizeUserDetails.field_present_zip && organizeUserDetails.field_present_zip[0] ? organizeUserDetails.field_present_zip[0].value : '',
-      // presentState: organizeUserDetails && organizeUserDetails.field_present_state && organizeUserDetails.field_present_state[0] ? organizeUserDetails.field_present_state[0].value : '',
-      // presentCity: organizeUserDetails && organizeUserDetails.field_preset_city && organizeUserDetails.field_preset_city[0] ? organizeUserDetails.field_preset_city[0].value : '',
     });
   }
 
@@ -661,12 +661,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       permanentZipCode: organizeUserDetails && organizeUserDetails['field_permanent_zip'] && organizeUserDetails['field_permanent_zip'] ? organizeUserDetails['field_permanent_zip']['value'] : '',
       permanentCity: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'] ? organizeUserDetails['field_permanent_city']['value'] : '',
       permanentState: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'] ? organizeUserDetails['field_permanent_state']['value'] : '',
-
-      // permanentAddress1: organizeUserDetails && organizeUserDetails.field_permanent_line1_street_add && organizeUserDetails.field_permanent_line1_street_add[0] ? organizeUserDetails.field_permanent_line1_street_add[0].value : '',
-      // permanentAddress2: organizeUserDetails && organizeUserDetails.field_present_line2_street_addre && organizeUserDetails.field_present_line2_street_addre[0] ? organizeUserDetails.field_present_line2_street_addre[0].value : '',
-      // permanentZipCode: organizeUserDetails && organizeUserDetails.field_permanent_zip && organizeUserDetails.field_permanent_zip[0] ? organizeUserDetails.field_permanent_zip[0].value : '',
-      // permanentState: organizeUserDetails && organizeUserDetails.field_permanent_state && organizeUserDetails.field_permanent_state[0] ? organizeUserDetails.field_permanent_state[0].value : '',
-      // permanentCity: organizeUserDetails && organizeUserDetails.field_permanent_city && organizeUserDetails.field_permanent_city[0] ? organizeUserDetails.field_permanent_city[0].value : ''
     });
   }
   languageFormPatchValue() {
@@ -678,11 +672,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         firstRead: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '',
         firstWrite: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '',
         firstSpeak: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '',
-
-        // languageRequired: organizeUserDetails && organizeUserDetails.field_language_known && organizeUserDetails.field_language_known[0] ? organizeUserDetails.field_language_known[0].value : '',
-        // firstRead: organizeUserDetails && organizeUserDetails.field_read && organizeUserDetails.field_read[0] ? organizeUserDetails.field_read[0].value : '',
-        // firstWrite: organizeUserDetails && organizeUserDetails.field_write && organizeUserDetails.field_write[0] ? organizeUserDetails.field_write[0].value : '',
-        // firstSpeak: organizeUserDetails && organizeUserDetails.field_speak && organizeUserDetails.field_speak[0] ? organizeUserDetails.field_speak[0].value : ''
       });
   }
 
@@ -704,13 +693,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
         passportValidFor: organizeUserDetails && organizeUserDetails['field_country_valid_for'] && organizeUserDetails['field_country_valid_for'] ? organizeUserDetails['field_country_valid_for']['value'] : '',
 
-        // passportNumber: organizeUserDetails && organizeUserDetails.field_passport_number && organizeUserDetails.field_passport_number[0] ? organizeUserDetails.field_passport_number[0].value : '',
-        // passportName: organizeUserDetails && organizeUserDetails.field_name_as_in_passport && organizeUserDetails.field_name_as_in_passport[0] ? organizeUserDetails.field_name_as_in_passport[0].value : '',
-        // passportProfession: organizeUserDetails && organizeUserDetails.field_profesiona_as_passport && organizeUserDetails.field_profesiona_as_passport[0] ? organizeUserDetails.field_profesiona_as_passport[0].value : '',
-        // passportIssueDate: organizeUserDetails && organizeUserDetails.field_date_of_issue && organizeUserDetails.field_date_of_issue[0] ? organizeUserDetails.field_date_of_issue[0].value : '',
-        // passportValid: organizeUserDetails && organizeUserDetails.field_valid_upto && organizeUserDetails.field_valid_upto[0] ? organizeUserDetails.field_valid_upto[0].value : '',
-        // passportIssuePlace: organizeUserDetails && organizeUserDetails.field_place_of_issue && organizeUserDetails.field_place_of_issue[0] ? organizeUserDetails.field_place_of_issue[0].value : '',
-        // passportValidFor: organizeUserDetails && organizeUserDetails.field_country_valid_for && organizeUserDetails.field_country_valid_for[0] ? organizeUserDetails.field_country_valid_for[0].value : '',
       });
   }
 
@@ -733,22 +715,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         right: organizeUserDetails && organizeUserDetails['field_right_eye_power_glass'] && organizeUserDetails['field_right_eye_power_glass'] ? organizeUserDetails['field_right_eye_power_glass']['value'] : '',
       }
 
-
-      // illness: organizeUserDetails && organizeUserDetails.field_serious_illness && organizeUserDetails.field_serious_illness[0] ? organizeUserDetails.field_serious_illness[0].value : '',
-
-      // daysofIll: organizeUserDetails && organizeUserDetails.field_no_of_days && organizeUserDetails.field_no_of_days[0] ? organizeUserDetails.field_no_of_days[0].value : '',
-
-      // natureofIll: organizeUserDetails && organizeUserDetails.field_nature_of_illness && organizeUserDetails.field_nature_of_illness[0] ? organizeUserDetails.field_nature_of_illness[0].value : '',
-
-      // disability: organizeUserDetails && organizeUserDetails.field_physical_disability && organizeUserDetails.field_physical_disability[0] ? organizeUserDetails.field_physical_disability[0].value : '',
-
-      // height: organizeUserDetails && organizeUserDetails.field_height && organizeUserDetails.field_height[0] ? organizeUserDetails.field_height[0].value : '',
-
-      // weight: organizeUserDetails && organizeUserDetails.field_weight && organizeUserDetails.field_weight[0] ? organizeUserDetails.field_weight[0].value : '',
-      // eyePower: {
-      //   left: organizeUserDetails && organizeUserDetails.field_left_eyepower_glass && organizeUserDetails.field_left_eyepower_glass[0] ? organizeUserDetails.field_left_eyepower_glass[0].value : '',
-      //   right: organizeUserDetails && organizeUserDetails.field_right_eye_power_glass && organizeUserDetails.field_right_eye_power_glass[0] ? organizeUserDetails.field_right_eye_power_glass[0].value : '',
-      // }
     });
     this.appConfig.hideLoader();
   }
@@ -954,6 +920,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
   get nationality() {
     return this.upToCategoryForm.get('nationality');
+  }
+  get aadhaar() {
+    return this.upToCategoryForm.get('aadhaar');
   }
   get categories() {
     return this.upToCategoryForm.get('category');

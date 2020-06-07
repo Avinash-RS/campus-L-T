@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment.prod';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
+import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
 
 export interface modalBox {
   iconName: string;
@@ -28,8 +28,9 @@ export class AppConfigService {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private message: NzMessageService,
-    private notification: NzNotificationService
-  ) { }
+    private notification: NzNotificationService,
+  ) {
+  }
 
   // get Current route
   currentRoute() {
@@ -64,7 +65,7 @@ export class AppConfigService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.hideLoader();
+      // this.hideLoader();
       if (result) {
         this.consoleLog('result', result);
       }
@@ -122,7 +123,7 @@ export class AppConfigService {
       type,
       title,
       text,
-      { nzDuration: 3000}
+      { nzDuration: 3000 }
     );
   }
 

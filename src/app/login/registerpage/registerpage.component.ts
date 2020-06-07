@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
   selector: 'app-registerpage',
@@ -114,12 +115,13 @@ export class RegisterpageComponent implements OnInit {
   FormRegister() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
+    const onlyAlpha: RegExp = /^[a-zA-Z ]*$/;
     this.registerForm = this.fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      jobTitle: ['', [Validators.required]],
+      firstName: ['', [Validators.required, Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
+      lastName: ['', [Validators.required, Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
+      jobTitle: ['', [Validators.required, RemoveWhitespace.whitespace()]],
       mobileNumber: ['', [Validators.required, Validators.pattern(mobileRegex)]],
-      corporateName: ['', [Validators.required]],
+      corporateName: ['', [Validators.required], RemoveWhitespace.whitespace()],
       corporateEmail: ['', [Validators.required, Validators.pattern(emailregex)]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],

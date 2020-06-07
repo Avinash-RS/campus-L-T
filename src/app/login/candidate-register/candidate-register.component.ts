@@ -5,6 +5,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
   selector: 'app-candidate-register',
@@ -27,9 +28,11 @@ export class CandidateRegisterComponent implements OnInit {
   }
 
   formInitialize() {
+    const onlyAlpha: RegExp = /^[a-zA-Z ]*$/;
+    const trimSpace: RegExp = /^[ \t]+|[ \t]+$/;
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.candidateForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
       email: ['', [Validators.required, Validators.pattern(emailregex)]],
       password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
     });

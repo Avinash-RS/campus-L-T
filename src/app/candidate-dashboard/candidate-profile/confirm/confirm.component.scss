@@ -6,58 +6,172 @@
 }
 
 .main-wrap {
-padding: 6em 3em;
-.declaration {
-  margin: 2em 0;
-  font-weight: 200;
-  font-size: 18px;
-  color: $light-black;
-}
-.content-1 {
-  margin: 1.5em 0;
-  font-weight: 100;
-  font-size: 15px;
-  color: $primary;
-}
-.content-2 {
-  margin: 1.5em 0;
-  font-weight: 100;
-  font-size: 15px;
-  color: $primary;
-}
-.ack {
-  margin: 2em 0;
-  color: $light-black-1;
-  font-size: 17px;
-}
+  padding: 1em 3em;
+  .declaration {
+    margin: 1em 0;
+    font-weight: 200;
+    font-size: 18px;
+    color: $light-black;
+  }
+  .content-1 {
+    margin: 1.5em 0;
+    font-weight: 100;
+    font-size: 15px;
+    color: $primary;
+  }
+  .content-2 {
+    margin: 1.5em 0;
+    font-weight: 100;
+    font-size: 15px;
+    color: $primary;
+  }
+  .ack {
+    margin: 2em 0;
+    color: $light-black-1;
+    font-size: 17px;
+  }
 
-.submit-button-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 6em 2em 2em 2em;
-  button:first-child {
-    width: 120px;
-    height: 35px;
-    background: $light-blue 0% 0% no-repeat padding-box;
-    box-shadow: $shadow-light-black-1;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 15px;
-    color: $white;
-    outline: none;
-    font-weight: bold;
+  .sizeError {
+    font-weight: 200;
+    color: $red;
   }
-  button:last-child {
-    width: 120px;
-    height: 35px;
-    margin-left: 30px;
-    border-radius: 8px;
-    border: 1px solid $blue-1;
-    font-weight: 600;
-    font-size: 15px;
-    color: $blue-1;
-    outline: none;
+  .signature-wrapper {
+    width: 480px;
+    display: grid;
+    align-items: center;
+    position: relative;
+    padding: 0.5em;
+    height: 150px;
+    background: $white-primary;
+    // box-shadow: $shadow-light-black;
+    border-radius: 4px;
+    .remove {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      z-index: 10;
+      opacity: 0.85;
+      top: 0;
+      padding: 0em 0em 0.25em 0.25em;
+    }
+    .text-wrapper {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 100%;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      .bold-text {
+        margin: .25em 0 .25em 0;
+        font-weight: 200;
+        color: $black-1;
+        font-size: 14px;
+      }
+      .footer-text {
+        margin: 0em 0 .25em 0;
+        font-size: 13px;
+        color: $black-4;
+      }
+    }
+    .label-input-holder {
+      text-align: left;
+      position: relative;
+      width: 350px;
+      margin: 0 auto;
+      input {
+        cursor: pointer;
+        opacity: 0;
+
+        /* IE 8 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+
+        /* IE 5-7 */
+        filter: alpha(opacity=0);
+
+        /* Netscape or and older firefox browsers */
+        -moz-opacity: 0;
+
+        /* older Safari browsers */
+        -khtml-opacity: 0;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+      }
+      label {
+        cursor: pointer;
+        display: grid;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        .sign {
+          width: 400px;
+          height: 70px;
+        }
+        .grid {
+          cursor: pointer;
+          display: grid;
+          grid-template-columns: 15% 85%;
+          max-width: 100%;
+          justify-content: center;
+          align-items: center;
+          padding: 1.5em 1em;
+          box-shadow: $shadow-light-black-2;
+          border-radius: 6px;
+          min-width: 350px;
+          .left {
+            margin: 0 0 0 1em;
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+          .right {
+            margin: 0 0 0 1em;
+            color: $light-blue;
+            font-size: 17px;
+            font-weight: 200;
+          }
+        }
+      }
+    }
   }
-}
+
+  .width-100 {
+    height: 100px !important;
+  }
+
+  .submit-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 2em 2em 2em;
+    button:first-child {
+      width: 120px;
+      height: 35px;
+      background: $light-blue 0% 0% no-repeat padding-box;
+      box-shadow: $shadow-light-black-1;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      color: $white;
+      outline: none;
+      font-weight: bold;
+    }
+    button:last-child {
+      width: 120px;
+      height: 35px;
+      margin-left: 30px;
+      border-radius: 8px;
+      border: 1px solid $blue-1;
+      font-weight: 600;
+      font-size: 15px;
+      color: $blue-1;
+      outline: none;
+    }
+  }
 }

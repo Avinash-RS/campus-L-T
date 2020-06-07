@@ -29,7 +29,7 @@
         </div>
         <div class="text-2">
           <!-- <input formControlName="dob" type="text"> -->
-          <nz-date-picker (ngModelChange)="detectSelectChange()" [nzDisabledDate]="disabledYears" formControlName="dob" [nzFormat]="dateFormat"></nz-date-picker>
+          <nz-date-picker (ngModelChange)="detectSelectChange()" [nzShowToday]="false" [nzDisabledDate]="disabledYears" formControlName="dob" [nzFormat]="dateFormat"></nz-date-picker>
           <div class="error"
           *ngIf="familyArr.controls[i].get('dob').invalid && familyArr.controls[i].get('dob').touched">
           <span *ngIf="familyArr.controls[i].get('dob').errors?.required">Date of Birth is Required</span>

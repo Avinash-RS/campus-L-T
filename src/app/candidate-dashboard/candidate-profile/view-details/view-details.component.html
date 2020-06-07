@@ -5,7 +5,7 @@
     <div class="profile-wrapper">
       <div class="profile">
         <img *ngIf="url" [src]="url" alt="">
-        <img *ngIf="!url" src="assets/images/MaskGroup1.png" alt="" srcset="">
+        <img *ngIf="!url" src="assets/images/img_avatar2.png" alt="" srcset="">
       </div>
     </div>
     <div class="form-wrapper">
@@ -21,6 +21,10 @@
         <label>Mobile Number</label>
         <input class="input" readonly type="text" [value]="userDetails['mobile']">
       </div>
+      <div class="form-group">
+          <label>Aadhaar Number</label>
+          <input class="input" readonly type="text" [value]="userDetails['aadhaar']">
+        </div>
       <div class="form-group">
         <label class="label-radio">Gender</label>
         <div class="radio">

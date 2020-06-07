@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import moment from 'moment';
 import { differenceInCalendarDays } from 'date-fns/esm';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
   selector: 'app-family-details',
@@ -16,7 +17,7 @@ import { differenceInCalendarDays } from 'date-fns/esm';
 export class FamilyDetailsComponent implements OnInit, OnDestroy {
   familyForm: FormGroup;
 
-  dateFormat = 'dd-mm-yyyy';
+  dateFormat = 'dd/MM/yyyy';
   monthFormat = 'yyyy/MM';
   apiForm: any;
   familyValuesArr: any;
@@ -51,6 +52,7 @@ export class FamilyDetailsComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.ngOnInit();
+    this.appConfig.nzNotification('success', 'Resetted', 'Family details form has been resetted');
   }
 
   getLocalForm() {
@@ -111,17 +113,17 @@ export class FamilyDetailsComponent implements OnInit, OnDestroy {
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     if (fam) {
       return this.fb.group({
-        names: [fam.names],
+        names: [fam.names, RemoveWhitespace.whitespace()],
         dob: [fam.dob],
-        relationship: [fam.relationship],
-        occupation: [fam.occupation],
+        relationship: [fam.relationship, RemoveWhitespace.whitespace()],
+        occupation: [fam.occupation, RemoveWhitespace.whitespace()],
       });
     } else {
       return this.fb.group({
-        names: [null],
+        names: [null, RemoveWhitespace.whitespace()],
         dob: [null],
-        relationship: [null],
-        occupation: [null],
+        relationship: [null, RemoveWhitespace.whitespace()],
+        occupation: [null, RemoveWhitespace.whitespace()],
       });
     }
   }

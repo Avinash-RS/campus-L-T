@@ -26,7 +26,10 @@
             </div>
             <div class="error" *ngIf="name.invalid && name.touched">
               <span *ngIf="name.errors?.required">Name is Required</span>
+              <span *ngIf="name.errors?.pattern">Alphabetic characters only allowed</span>
+              <span *ngIf="name.errors?.maxlength && !name.errors?.pattern">Should not exceed 30 characters</span>
             </div>
+            <div class="note">Note: Name as mentioned in Aadhaar</div>
           </div>
           <div class="form-field">
             <label class="label-name">

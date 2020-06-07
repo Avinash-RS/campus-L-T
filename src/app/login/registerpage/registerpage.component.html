@@ -23,6 +23,7 @@
                             </div>
                             <div class="error" *ngIf="firstName.invalid && firstName.touched">
                                 <span *ngIf="firstName.errors?.required">Name is Required</span>
+                                <span *ngIf="firstName.errors?.pattern">Alphabetic characters only allowed</span>
                             </div>
                         </div>
                         <div class="form-field">
@@ -34,6 +35,7 @@
                             </div>
                             <div class="error" *ngIf="lastName.invalid && lastName.touched">
                                 <span *ngIf="lastName.errors?.required">Last Name is Required</span>
+                                <span *ngIf="lastName.errors?.pattern">Alphabetic characters only allowed</span>
                             </div>
 
                         </div>

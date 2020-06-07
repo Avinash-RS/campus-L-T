@@ -14,13 +14,17 @@ import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
 import { FormsModule } from '@angular/forms';
 import en from '@angular/common/locales/en';
-import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { KycSnackbarComponent } from './shared/kyc-snackbar/kyc-snackbar.component';
-
+// import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';NZ_CONFIG
 registerLocaleData(en);
+
+const ngZorroConfig: NzConfig = {
+  notification: { nzMaxStack: 1 }
+};
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -49,6 +53,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
+    { provide: NZ_CONFIG, useValue: ngZorroConfig },
     CanDeactivateGuard
   ],
   bootstrap: [AppComponent]

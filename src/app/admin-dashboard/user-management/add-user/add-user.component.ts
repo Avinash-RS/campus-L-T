@@ -60,6 +60,8 @@ export class AddUserComponent implements OnInit {
 
   // Edit User --> Form Updating on load
   updateEditForm() {
+    console.log(this.editDetails);
+
     this.addUserForm.patchValue({
       name: this.editDetails.name,
       email: this.editDetails.mail,
