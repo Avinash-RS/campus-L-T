@@ -18,6 +18,11 @@ import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-de
 export class EducationalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
   @ViewChild('form', { static: false })
   form: NgForm;
+  form1: NgForm;
+  form2: NgForm;
+  form3: NgForm;
+  form4: NgForm;
+  form5: NgForm;
 
   level = [
     {
@@ -81,6 +86,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   }
 
   ngOnInit() {
+    if (!this.appConfig.getLocalData('confirmClick')) {
+      this.appConfig.setLocalData('confirmClick', 'false');
+    }
+
     this.FormInitialization();
     this.getLocalForm();
 
@@ -135,6 +144,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         this.appConfig.setLocalData('educationalFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('educationalFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
+      this.appConfig.setLocalData('confirmClick', 'true');
       this.appConfig.nzNotification('success', 'Submitted', 'Educational details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS);
 

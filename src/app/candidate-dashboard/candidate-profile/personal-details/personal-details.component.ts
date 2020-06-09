@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContentChecked, HostListener } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -59,7 +59,17 @@ export const MY_FORMATS = {
 export class PersonalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
 
   @ViewChild('form', { static: false })
+  // @ViewChild('form1', { static: false })
+  // @ViewChild('form2', { static: false })
+  // @ViewChild('form3', { static: false })
+  // @ViewChild('form4', { static: false })
+  // @ViewChild('form5', { static: false })
   form: NgForm;
+  form1: NgForm;
+  form2: NgForm;
+  form3: NgForm;
+  form4: NgForm;
+  form5: NgForm;
   presentAddressFormReference: NgForm;
   permanentAddressFormReference: NgForm;
   languagesFormReference: NgForm;
@@ -135,6 +145,16 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   profileData: { fid: any; uuid: any; localShowUrl: string; apiUrl: any; };
   localUsername: any;
   localUserEmail: any;
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // unloadNotification($event: any) {
+  //   if (this.form.submitted || !this.form.dirty) {
+  //     if (this.appConfig.getLocalData('confirmClick') == 'true') {
+  //     $event.returnValue = true;
+  //   }
+  // }
+  // }
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -156,6 +176,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   ngOnInit() {
+    if (!this.appConfig.getLocalData('confirmClick')) {
+      this.appConfig.setLocalData('confirmClick', 'false');
+    }
     this.appConfig.showLoader();
     this.FormsInitialization();
     if (!this.appConfig.getLocalData('allStates') || !this.appConfig.getLocalData('allCities')) {
@@ -359,13 +382,18 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
 
           // General
-          field_add_your_skills: { value: organizeUserDetails && organizeUserDetails['field_add_your_skills'] && organizeUserDetails['field_add_your_skills'][0] ? organizeUserDetails['field_add_your_skills'][0]['value'] : '' },
+          field_skills: organizeUserDetails && organizeUserDetails['field_skills'] ? organizeUserDetails && organizeUserDetails['field_skills'] : [{value: ''}],
           field_relatives_l_t_group_name: { value: organizeUserDetails && organizeUserDetails['field_relatives_l_t_group_name'] && organizeUserDetails['field_relatives_l_t_group_name'][0] ? organizeUserDetails['field_relatives_l_t_group_name'][0]['value'] : '' },
           field_realationship: { value: organizeUserDetails && organizeUserDetails['field_realationship'] && organizeUserDetails['field_realationship'][0] ? organizeUserDetails['field_realationship'][0]['value'] : '' },
           field_position: { value: organizeUserDetails && organizeUserDetails['field_position'] && organizeUserDetails['field_position'][0] ? organizeUserDetails['field_position'][0]['value'] : '' },
           field_company: { value: organizeUserDetails && organizeUserDetails['field_company'] && organizeUserDetails['field_company'][0] ? organizeUserDetails['field_company'][0]['value'] : '' },
           field_faculty_reference: { value: organizeUserDetails && organizeUserDetails['field_faculty_reference'] && organizeUserDetails['field_faculty_reference'][0] ? organizeUserDetails['field_faculty_reference'][0]['value'] : '' },
           field_faculty_reference1: { value: organizeUserDetails && organizeUserDetails['field_faculty_reference1'] && organizeUserDetails['field_faculty_reference1'][0] ? organizeUserDetails['field_faculty_reference1'][0]['value'] : '' },
+
+          field_relatives1: { value: organizeUserDetails && organizeUserDetails['field_relatives1'] && organizeUserDetails['field_relatives1'][0] ? organizeUserDetails['field_relatives1'][0]['value'] : '' },
+          field_relative_relation1: { value: organizeUserDetails && organizeUserDetails['field_relative_relation1'] && organizeUserDetails['field_relative_relation1'][0] ? organizeUserDetails['field_relative_relation1'][0]['value'] : '' },
+          field_relative_position1: { value: organizeUserDetails && organizeUserDetails['field_relative_position1'] && organizeUserDetails['field_relative_position1'][0] ? organizeUserDetails['field_relative_position1'][0]['value'] : '' },
+          field_relative_company1: { value: organizeUserDetails && organizeUserDetails['field_relative_company1'] && organizeUserDetails['field_relative_company1'][0] ? organizeUserDetails['field_relative_company1'][0]['value'] : '' },
 
           is_default: [{
             value: '1'
@@ -492,6 +520,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.appConfig.setLocalData('personalFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('personalFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
+      this.appConfig.setLocalData('confirmClick', 'true');
       this.appConfig.nzNotification('success', 'Submitted', 'Personal details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
 
@@ -810,7 +839,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             this.profileData = {
               fid: data.fid[0].value,
               uuid: data.uuid[0].value,
-              localShowUrl: 'http://104.211.226.77' + data.uri[0].url,
+              localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
               apiUrl: data.uri[0].url
             };
             console.log('data', data);

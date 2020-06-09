@@ -1,18 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 
 @Component({
   selector: 'app-general-details',
   templateUrl: './general-details.component.html',
   styleUrls: ['./general-details.component.scss']
 })
-export class GeneralDetailsComponent implements OnInit, OnDestroy {
+export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+  @ViewChild('form', { static: false })
+  // @ViewChild('form1', { static: false })
+  // @ViewChild('form2', { static: false })
+  // @ViewChild('form3', { static: false })
+  form: NgForm;
+  form1: NgForm;
+  form2: NgForm;
+  form3: NgForm;
+  form4: NgForm;
+  form5: NgForm;
 
   aquaintancesForm: FormGroup;
   skillForm: FormGroup;
@@ -30,10 +41,16 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    super();
+  }
 
 
   ngOnInit() {
+    if (!this.appConfig.getLocalData('confirmClick')) {
+      this.appConfig.setLocalData('confirmClick', 'false');
+    }
+
     this.FormInitialization();
     this.getLocalForm();
 
@@ -60,10 +77,15 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       relationship: this.apiForm && this.apiForm['field_realationship'] ? this.apiForm['field_realationship'].value : null,
       position: this.apiForm && this.apiForm['field_position'] ? this.apiForm['field_position'].value : null,
       company: this.apiForm && this.apiForm['field_company'] ? this.apiForm['field_company'].value : null,
+    },
+    {
+      names: this.apiForm && this.apiForm['field_relatives1'] ? this.apiForm['field_relatives1'].value : null,
+      relationship: this.apiForm && this.apiForm['field_relative_relation1'] ? this.apiForm['field_relative_relation1'].value : null,
+      position: this.apiForm && this.apiForm['field_relative_position1'] ? this.apiForm['field_relative_position1'].value : null,
+      company: this.apiForm && this.apiForm['field_relative_company1'] ? this.apiForm['field_relative_company1'].value : null,
     }];
-    this.skillValueArray = [{
-      skill: this.apiForm && this.apiForm['field_add_your_skills'] ? this.apiForm['field_add_your_skills'].value : null
-    }];
+    this.skillValueArray = this.apiForm && this.apiForm['field_skills'] ? this.apiForm['field_skills'] : [{ value: '' }];
+
     this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : '');
     this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : '');
 
@@ -71,17 +93,26 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(OptA, OptB) {
-    if (this.aquaintancesForm.valid && this.skillForm.valid && this.facultyReference1Form.valid && this.facultyReference2Form.valid) {
+    console.log(this.aquaintancesForm.value);
 
-      this.apiForm.field_add_your_skills = { value: this.skillForm.value.skillsArr[0]['skill'] ? this.skillForm.value.skillsArr[0]['skill'] : '' },
-        this.apiForm.field_relatives_l_t_group_name = { value: this.aquaintancesForm.value.relativesArr[0]['names'] ? this.aquaintancesForm.value.relativesArr[0]['names'] : '' },
+    if (this.aquaintancesForm.valid && this.skillForm.valid && this.facultyReference1Form.valid && this.facultyReference2Form.valid) {
+      this.apiForm.field_skills = this.skillForm['value']['skillsArr'];
+      this.apiForm.field_relatives_l_t_group_name = { value: this.aquaintancesForm.value.relativesArr[0]['names'] ? this.aquaintancesForm.value.relativesArr[0]['names'] : '' },
         this.apiForm.field_realationship = { value: this.aquaintancesForm.value.relativesArr[0]['relationship'] ? this.aquaintancesForm.value.relativesArr[0]['relationship'] : '' },
         this.apiForm.field_position = { value: this.aquaintancesForm.value.relativesArr[0]['position'] ? this.aquaintancesForm.value.relativesArr[0]['position'] : '' },
         this.apiForm.field_company = { value: this.aquaintancesForm.value.relativesArr[0]['company'] ? this.aquaintancesForm.value.relativesArr[0]['company'] : '' },
+
+        this.apiForm.field_relatives1 = { value: this.aquaintancesForm.value.relativesArr[1]['names'] ? this.aquaintancesForm.value.relativesArr[1]['names'] : '' },
+        this.apiForm.field_relative_relation1 = { value: this.aquaintancesForm.value.relativesArr[1]['relationship'] ? this.aquaintancesForm.value.relativesArr[1]['relationship'] : '' },
+        this.apiForm.field_relative_position1 = { value: this.aquaintancesForm.value.relativesArr[1]['position'] ? this.aquaintancesForm.value.relativesArr[1]['position'] : '' },
+        this.apiForm.field_relative_company1 = { value: this.aquaintancesForm.value.relativesArr[1]['company'] ? this.aquaintancesForm.value.relativesArr[1]['company'] : '' },
+
         this.apiForm.field_faculty_reference = { value: this.facultyReference1Form ? this.facultyReference1Form.value : '' },
         this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' },
+console.log(this.apiForm);
 
         this.appConfig.setLocalData('generalFormSubmitted', 'true');
+      this.appConfig.setLocalData('confirmClick', 'true');
       this.appConfig.clearLocalDataOne('generalFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
 
@@ -118,7 +149,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       });
     } else {
       for (let i = 0; i <= 0; i++) {
-        this.addaquaintancesForm(null);
+        this.addSkillForm(null);
       }
     }
   }
@@ -152,11 +183,11 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   createSkillForm(data): FormGroup {
     if (data) {
       return this.fb.group({
-        skill: [data.skill, RemoveWhitespace.whitespace()],
+        value: [data && data['value'] ? data['value'] : '', RemoveWhitespace.whitespace()],
       });
     } else {
       return this.fb.group({
-        skill: [null, RemoveWhitespace.whitespace()],
+        value: [null, RemoveWhitespace.whitespace()],
       });
     }
   }

@@ -1,6 +1,6 @@
 {
   "/d8cintana/*": {
-    "target": "http://104.211.226.77",
+    "target": "http://udapqa.southindia.cloudapp.azure.com",
     "secure": false,
     "pathRewrite": {
     "^/d8cintana": ""

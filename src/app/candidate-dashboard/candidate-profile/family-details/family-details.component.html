@@ -17,7 +17,7 @@
     </div>
 
   </div>
-  <form [formGroup]="familyForm" class="form">
+  <form #form="ngForm" [formGroup]="familyForm" class="form">
     <ng-container *ngIf="familyArr && familyArr.controls" formArrayName="familyArr">
       <div class="text-box-grid" *ngFor="let item of familyArr.controls; let i = index;" [formGroupName]="i">
         <div class="text-1">

@@ -7,6 +7,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-user',
@@ -110,7 +111,7 @@ export class AddUserComponent implements OnInit {
       const editUserDatas = {
         _links: {
           type: {
-            href: 'http://104.211.226.77/d8cintana2/rest/type/user/user'
+            href: `${environment.API_BASE_URL}/rest/type/user/user`
           }
         },
         mail: { value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email },

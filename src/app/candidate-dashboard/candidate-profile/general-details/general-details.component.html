@@ -7,11 +7,11 @@
 
   <div class="skills">
     <div class="text">Add your Skills</div>
-    <form [formGroup]="skillForm" class="skill-form">
+    <form #form="ngForm" [formGroup]="skillForm" class="skill-form">
       <ng-container *ngIf="skillsArr && skillsArr.controls" formArrayName="skillsArr">
         <div class="skill-group" *ngFor="let item of skillsArr.controls; let i = index;" [formGroupName]="i">
           <div class="input-group">
-            <input (focusout)="detectInput(skillForm)" formControlName="skill" type="text">
+            <input (focusout)="detectInput(skillForm)" formControlName="value" type="text">
           </div>
           <!-- <div > -->
           <div class="add">
@@ -55,7 +55,7 @@
     </div>
 
   </div>
-  <form [formGroup]="aquaintancesForm" class="form">
+  <form #form1="ngForm" [formGroup]="aquaintancesForm" class="form">
     <ng-container *ngIf="relativesArr && relativesArr.controls" formArrayName="relativesArr">
       <div class="text-box-grid" *ngFor="let item of relativesArr.controls; let i = index;" [formGroupName]="i">
         <div class="text-1">
@@ -96,10 +96,10 @@
 
   <form class="faculty">
     <div>
-    <textarea [formControl]="facultyReference1Form" (focusout)="detectSelectChange()" maxlength="301" name="" id="" cols="30" rows="7"></textarea>
+    <textarea #form2="ngForm" [formControl]="facultyReference1Form" (focusout)="detectSelectChange()" maxlength="301" name="" id="" cols="30" rows="7"></textarea>
   </div>
   <div>
-      <textarea [formControl]="facultyReference2Form" (focusout)="detectSelectChange()" maxlength="301" name="" id="" cols="30" rows="7"></textarea>
+      <textarea #form3="ngForm" [formControl]="facultyReference2Form" (focusout)="detectSelectChange()" maxlength="301" name="" id="" cols="30" rows="7"></textarea>
       <!-- <div *ngIf="true" class="error-lines">Charcters should not exceed 250</div> -->
     </div>
   </form>

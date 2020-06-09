@@ -6,7 +6,7 @@ import { AppConfigService } from './config/app-config.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'udap-registration';
@@ -24,7 +24,9 @@ export class AppComponent {
 
 
     this.apiService.csrfToken().subscribe((data: any) => {
+      console.log(data);
       // localStorage.setItem('csrf', data);
+      this.appConfig.hideLoader();
     }, (err) => {
       if (err.status === 200) {
         this.appConfig.setSessionData('csrf', err.error.text);

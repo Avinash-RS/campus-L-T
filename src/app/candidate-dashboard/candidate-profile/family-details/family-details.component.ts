@@ -1,20 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl, NgForm } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import moment from 'moment';
 import { differenceInCalendarDays } from 'date-fns/esm';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 
 @Component({
   selector: 'app-family-details',
   templateUrl: './family-details.component.html',
   styleUrls: ['./family-details.component.scss']
 })
-export class FamilyDetailsComponent implements OnInit, OnDestroy {
+export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+  @ViewChild('form', { static: false })
+  form: NgForm;
+  form1: NgForm;
+  form2: NgForm;
+  form3: NgForm;
+  form4: NgForm;
+  form5: NgForm;
+
   familyForm: FormGroup;
 
   dateFormat = 'dd/MM/yyyy';
@@ -35,9 +44,14 @@ export class FamilyDetailsComponent implements OnInit, OnDestroy {
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
+    if (!this.appConfig.getLocalData('confirmClick')) {
+      this.appConfig.setLocalData('confirmClick', 'false');
+    }
     this.FormInitialization();
     this.getLocalForm();
 
@@ -75,11 +89,11 @@ export class FamilyDetailsComponent implements OnInit, OnDestroy {
         this.apiForm.field_relationship = { value: this.familyForm.value.familyArr[0]['relationship'] ? this.familyForm.value.familyArr[0]['relationship'] : '' },
         this.apiForm.field_occupation = { value: this.familyForm.value.familyArr[0]['occupation'] ? this.familyForm.value.familyArr[0]['occupation'] : '' };
 
-      console.log(this.apiForm);
 
       this.appConfig.setLocalData('familyFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('familyFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
+      this.appConfig.setLocalData('confirmClick', 'true');
 
       this.appConfig.nzNotification('success', 'Submitted', 'Family details has been updated');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS);

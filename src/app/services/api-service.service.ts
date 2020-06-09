@@ -51,6 +51,9 @@ export class ApiServiceService {
   }
   getToken() {
     this.csrfToken().subscribe((data: any) => {
+      console.log(data);
+
+      this.appConfig.hideLoader();
       // localStorage.setItem('csrf', data);
     }, (err) => {
       if (err.status === 200) {
@@ -63,8 +66,6 @@ export class ApiServiceService {
     this.getToken();
     return this.http.post(`${this.BASE_URL}/entity/user?_format=hal_json`, formdata,
       { headers: this.getCustomHeaders(), withCredentials: true });
-    // return this.http.post(`http://104.211.226.77/d8cintana/user/register?_format=hal_json`, formdata,
-    //   { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   CandidateRegistrationForm(formdata) {

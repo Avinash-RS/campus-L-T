@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HostListener } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -49,6 +50,14 @@ export class ViewDetailsComponent implements OnInit {
   KYCModifiedData: any;
   localPhoto: any;
   url: any;
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (this.appConfig.getLocalData('confirmClick') == 'true') {
+      $event.returnValue = true;
+      // return 'You have unsaved changes';
+    }
+  }
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -59,6 +68,9 @@ export class ViewDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!this.appConfig.getLocalData('confirmClick')) {
+      this.appConfig.setLocalData('confirmClick', 'false');
+    }
 
     if (this.appConfig.getLocalData('kycForm')) {
       const data = JSON.parse(this.appConfig.getLocalData('kycForm'));
@@ -67,6 +79,9 @@ export class ViewDetailsComponent implements OnInit {
     } else {
       this.getUserDetails();
     }
+  }
+
+  refresh() {
   }
 
   getDateFormat(date) {
@@ -195,21 +210,25 @@ export class ViewDetailsComponent implements OnInit {
         occupation: this.apiForm && this.apiForm['field_occupation'] ? this.apiForm['field_occupation']['value'] : '-',
       }],
 
-      skillValueArray: [{
-        skill: this.apiForm && this.apiForm['field_add_your_skills'] ? this.apiForm['field_add_your_skills']['value'] : '-'
-      }],
+      skillValueArray: this.apiForm && this.apiForm['field_skills'] ? this.apiForm['field_skills'] : [{ value: '' }],
       generalArray: [{
         names: this.apiForm && this.apiForm['field_relatives_l_t_group_name'] ? this.apiForm['field_relatives_l_t_group_name']['value'] : '-',
         relationship: this.apiForm && this.apiForm['field_realationship'] ? this.apiForm['field_realationship']['value'] : '-',
         position: this.apiForm && this.apiForm['field_position'] ? this.apiForm['field_position']['value'] : '-',
         company: this.apiForm && this.apiForm['field_company'] ? this.apiForm['field_company']['value'] : '-',
+      },
+      {
+        names: this.apiForm && this.apiForm['field_relatives1'] ? this.apiForm['field_relatives1']['value'] : '-',
+        relationship: this.apiForm && this.apiForm['field_relative_relation1'] ? this.apiForm['field_relative_relation1']['value'] : '-',
+        position: this.apiForm && this.apiForm['field_relative_position1'] ? this.apiForm['field_relative_position1']['value'] : '-',
+        company: this.apiForm && this.apiForm['field_relative_company1'] ? this.apiForm['field_relative_company1']['value'] : '-',
       }],
       facultyReference1: this.apiForm && this.apiForm['field_faculty_reference'] ? this.apiForm['field_faculty_reference']['value'] : '-',
       facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
     };
 
     if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
-      this.url = 'http://104.211.226.77/d8cintana2/sites/default/files/2020-06/filename1_1.jpg';
+      this.url = `${this.appConfig.imageBaseUrl()}/d8cintana2/sites/default/files/2020-06/filename1_1.jpg`;
     }
     if (!this.appConfig.getLocalData('localProfilePic')) {
       this.url = !dump['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? dump['field_profile_image'][0]['url'] : dump['field_profile_image'][0]['url'];
@@ -282,8 +301,8 @@ export class ViewDetailsComponent implements OnInit {
               target_id: this.appConfig.getLocalData('userId')
             }
           ],
-          field_name: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
-          field_email: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '',
+          field_name: { value: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '' },
+          field_email: { value: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '' },
           // field_name: { value: organizeUserDetails && organizeUserDetails['field_name'] && organizeUserDetails['field_name'][0] ? organizeUserDetails['field_name'][0]['value'] : '' },
           // field_email: { value: organizeUserDetails && organizeUserDetails['field_email'] && organizeUserDetails['field_email'][0] ? organizeUserDetails['field_email'][0]['value'] : '' },
           field_mobile: { value: organizeUserDetails && organizeUserDetails['field_mobile'] && organizeUserDetails['field_mobile'][0] ? organizeUserDetails['field_mobile'][0]['value'] : '' },
@@ -358,13 +377,18 @@ export class ViewDetailsComponent implements OnInit {
           field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
 
           // General
-          field_add_your_skills: { value: organizeUserDetails && organizeUserDetails['field_add_your_skills'] && organizeUserDetails['field_add_your_skills'][0] ? organizeUserDetails['field_add_your_skills'][0]['value'] : '' },
+          field_skills: organizeUserDetails && organizeUserDetails['field_skills'] ? organizeUserDetails && organizeUserDetails['field_skills'] : [{ value: '' }],
+          // field_add_your_skills: { value: organizeUserDetails && organizeUserDetails['field_add_your_skills'] && organizeUserDetails['field_add_your_skills'][0] ? organizeUserDetails['field_add_your_skills'][0]['value'] : '' },
           field_relatives_l_t_group_name: { value: organizeUserDetails && organizeUserDetails['field_relatives_l_t_group_name'] && organizeUserDetails['field_relatives_l_t_group_name'][0] ? organizeUserDetails['field_relatives_l_t_group_name'][0]['value'] : '' },
           field_realationship: { value: organizeUserDetails && organizeUserDetails['field_realationship'] && organizeUserDetails['field_realationship'][0] ? organizeUserDetails['field_realationship'][0]['value'] : '' },
           field_position: { value: organizeUserDetails && organizeUserDetails['field_position'] && organizeUserDetails['field_position'][0] ? organizeUserDetails['field_position'][0]['value'] : '' },
           field_company: { value: organizeUserDetails && organizeUserDetails['field_company'] && organizeUserDetails['field_company'][0] ? organizeUserDetails['field_company'][0]['value'] : '' },
           field_faculty_reference: { value: organizeUserDetails && organizeUserDetails['field_faculty_reference'] && organizeUserDetails['field_faculty_reference'][0] ? organizeUserDetails['field_faculty_reference'][0]['value'] : '' },
           field_faculty_reference1: { value: organizeUserDetails && organizeUserDetails['field_faculty_reference1'] && organizeUserDetails['field_faculty_reference1'][0] ? organizeUserDetails['field_faculty_reference1'][0]['value'] : '' },
+          field_relatives1: { value: organizeUserDetails && organizeUserDetails['field_relatives1'] && organizeUserDetails['field_relatives1'][0] ? organizeUserDetails['field_relatives1'][0]['value'] : '' },
+          field_relative_relation1: { value: organizeUserDetails && organizeUserDetails['field_relative_relation1'] && organizeUserDetails['field_relative_relation1'][0] ? organizeUserDetails['field_relative_relation1'][0]['value'] : '' },
+          field_relative_position1: { value: organizeUserDetails && organizeUserDetails['field_relative_position1'] && organizeUserDetails['field_relative_position1'][0] ? organizeUserDetails['field_relative_position1'][0]['value'] : '' },
+          field_relative_company1: { value: organizeUserDetails && organizeUserDetails['field_relative_company1'] && organizeUserDetails['field_relative_company1'][0] ? organizeUserDetails['field_relative_company1'][0]['value'] : '' },
 
           is_default: [{
             value: '1'
@@ -451,9 +475,7 @@ export class ViewDetailsComponent implements OnInit {
             occupation: '',
           }],
 
-          skillValueArray: [{
-            skill: '',
-          }],
+          skillValueArray: [{ value: '' }],
 
           generalArray: [{
             names: '',
@@ -463,7 +485,17 @@ export class ViewDetailsComponent implements OnInit {
             position: '',
 
             company: '',
-          }],
+          },
+          {
+            names: '',
+
+            relationship: '',
+
+            position: '',
+
+            company: '',
+          }
+          ],
           facultyReference1: '',
           facultyReference2: '',
         };

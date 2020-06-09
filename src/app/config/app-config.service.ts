@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
@@ -89,6 +89,10 @@ export class AppConfigService {
     return this.router.navigate([path, param], { queryParams: queryParam });
   }
 
+  // Image Basu url
+  imageBaseUrl() {
+    return environment.Image_Base_Url;
+  }
 
 
   // Show loading

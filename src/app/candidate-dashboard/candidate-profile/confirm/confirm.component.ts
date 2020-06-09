@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -23,6 +23,12 @@ export class ConfirmComponent implements OnInit {
   };
   signatureData: any;
   selectedImage: any;
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (this.appConfig.getLocalData('confirmClick') == 'true') {
+      $event.returnValue = true;
+    }
+  }
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -36,8 +42,12 @@ export class ConfirmComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.appConfig.getLocalData('confirmClick')) {
+      this.appConfig.setLocalData('confirmClick', 'false');
+    }
     this.getLocalForm();
     this.onInitSignatureAssign();
+
   }
 
   onInitSignatureAssign() {
@@ -53,7 +63,7 @@ export class ConfirmComponent implements OnInit {
             width: 480,
             height: 100,
             localShowUrl: apiSignature[0]['field_signature'][0]['url'],
-            url: apiSignature[0]['field_signature'][0]['url'].replace('http://104.211.226.77', ''),
+            url: apiSignature[0]['field_signature'][0]['url'].replace(`${this.appConfig.imageBaseUrl()}`, ''),
             status: 'true'
           };
           this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
@@ -61,14 +71,14 @@ export class ConfirmComponent implements OnInit {
       }
     }
     if (this.appConfig.getLocalData('signature')) {
-    const urlAssign = JSON.parse(this.appConfig.getLocalData('signature'));
-    this.url = urlAssign['localShowUrl'];
+      const urlAssign = JSON.parse(this.appConfig.getLocalData('signature'));
+      this.url = urlAssign['localShowUrl'];
     }
   }
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace('http://104.211.226.77', '');
+    this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace(`${this.appConfig.imageBaseUrl()}`, '');
 
     console.log(this.apiForm);
   }
@@ -102,6 +112,7 @@ export class ConfirmComponent implements OnInit {
       this.appConfig.hideLoader();
       this.appConfig.clearLocalDataOne('KYCAPI');
       this.appConfig.clearLocalDataOne('kycForm');
+      this.appConfig.clearLocalDataOne('confirmClick');
       this.appConfig.nzNotification('success', 'Submitted', 'Your KYC form has been successfully submitted');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     }, (err) => {
@@ -205,7 +216,7 @@ export class ConfirmComponent implements OnInit {
               title: '',
               width: 480,
               height: 100,
-              localShowUrl: 'http://104.211.226.77' + data.uri[0].url,
+              localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
               url: data.uri[0].url,
               status: 'true'
             };
@@ -241,7 +252,7 @@ export class ConfirmComponent implements OnInit {
       title: '',
       width: 480,
       height: 100,
-      localShowUrl: 'http://104.211.226.77' + '',
+      localShowUrl: `${this.appConfig.imageBaseUrl()}` + '',
       url: null,
       status: 'true'
     };

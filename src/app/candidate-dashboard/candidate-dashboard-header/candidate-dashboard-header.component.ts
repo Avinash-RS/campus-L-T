@@ -25,7 +25,7 @@ export class CandidateDashboardHeaderComponent implements OnInit {
   }
 
   goToHome() {
-    this.logOut();
+    // this.logOut();
   }
 
   logOut() {

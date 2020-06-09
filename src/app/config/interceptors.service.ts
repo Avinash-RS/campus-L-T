@@ -10,9 +10,12 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AppConfigService } from './app-config.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class InterceptorsService implements HttpInterceptor {
+
+  BASE_URL = environment.API_BASE_URL;
 
   constructor(
     private appConfig: AppConfigService
@@ -20,7 +23,7 @@ export class InterceptorsService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (request.url !== 'http://104.211.226.77/d8cintana2/rest/session/token') {
+    if (request.url !== `${this.BASE_URL}/rest/session/token`) {
       this.appConfig.showLoader();
     }
 

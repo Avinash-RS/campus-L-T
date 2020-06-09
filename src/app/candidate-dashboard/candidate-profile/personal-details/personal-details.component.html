@@ -194,7 +194,7 @@
 
   </div>
 </div>
-<form [formGroup]="presentAddressForm">
+<form #form1="ngForm" [formGroup]="presentAddressForm">
 
   <div class="grid-wrapper-1">
     <div class="first-child">
@@ -276,7 +276,7 @@
   <label nz-checkbox (ngModelChange)="checkboxChanged(checked)" [(ngModel)]="checked">Click here if permanent address is same as present address</label>
   <!-- <input type="checkbox" name=""  id=""> -->
 </div>
-<form [formGroup]="permanentAddressForm">
+<form #form2="ngForm" [formGroup]="permanentAddressForm">
   <div class="grid-wrapper-1">
     <div class="first-child">
       <div class="flex-box">
@@ -356,7 +356,7 @@
     </div>
   </div>
 </form>
-<form [formGroup]="languagesForm">
+<form #form3="ngForm" [formGroup]="languagesForm">
   <div class="grid-wrapper-languages">
     <div class="first-child">
       <div class="flex-box">
@@ -456,10 +456,10 @@
             </div>
           </div>
         </ng-container>
-        <div class="language-add-button">
+        <!-- <div class="language-add-button">
           <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
           <span (click)="addLanguage()">Add</span>
-        </div>
+        </div> -->
       </div>
 
     </div>
@@ -470,7 +470,7 @@
   <div class="header">
     Passport Related Details
   </div>
-  <form [formGroup]="passportForm" class="passport-form">
+  <form #form4="ngForm" [formGroup]="passportForm" class="passport-form">
     <div class="three-column-flex">
       <div class="wrapper">
         <div class="form-field">
@@ -582,7 +582,7 @@
   <div class="header">
     Health-related details
   </div>
-  <form [formGroup]="healthForm" class="passport-form">
+  <form #form5="ngForm" [formGroup]="healthForm" class="passport-form">
     <div class="three-column-flex">
       <div class="wrapper">
         <div class="form-field">
