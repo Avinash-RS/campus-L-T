@@ -51,7 +51,8 @@ export const CONSTANT = {
       PROFILE_FAMILY_DETAILS: '/candidate/profile/family',
       PROFILE_GENERAL_DETAILS: '/candidate/profile/general',
       PROFILE_VIEW_DETAILS: '/candidate/profile/view',
-      PROFILE_CONFIRM: '/candidate/profile/confirm'
+      PROFILE_CONFIRM: '/candidate/profile/confirm',
+      KYC_THANKS: '/candidate/kyc/submitted'
     }
 
   },
@@ -92,7 +93,8 @@ export const CONSTANT = {
       PROFILE_FAMILY_DETAILS: 'family',
       PROFILE_GENERAL_DETAILS: 'general',
       PROFILE_VIEW_DETAILS: 'view',
-      PROFILE_CONFIRM: 'confirm'
+      PROFILE_CONFIRM: 'confirm',
+      KYC_THANKS: 'kyc/submitted'
     }
   }
 };

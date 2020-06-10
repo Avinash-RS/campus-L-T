@@ -113,8 +113,8 @@ export class ConfirmComponent implements OnInit {
       this.appConfig.clearLocalDataOne('KYCAPI');
       this.appConfig.clearLocalDataOne('kycForm');
       this.appConfig.clearLocalDataOne('confirmClick');
-      this.appConfig.nzNotification('success', 'Submitted', 'Your KYC form has been successfully submitted');
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+      // this.appConfig.nzNotification('success', 'Submitted', 'Your KYC form has been successfully submitted');
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.KYC_THANKS);
     }, (err) => {
 
     });
@@ -137,7 +137,7 @@ export class ConfirmComponent implements OnInit {
       const data = {
         iconName: '',
         sharedData: {
-          confirmText: 'Please confirm your submission of KYC Form',
+          confirmText: 'Please confirm to submit your details',
           componentData: '',
           type: 'confirm',
           identity: 'kycSubmit'
@@ -192,7 +192,7 @@ export class ConfirmComponent implements OnInit {
 
     if (event.target.files && event.target.files[0].type.includes('image/') && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
-      if (event.target.files[0].size < 51000) {
+      if (event.target.files[0].size < 100000) {
         this.showSizeError.image = false;
         this.selectedImage = event.target.files[0];
 

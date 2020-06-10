@@ -14,10 +14,11 @@ import { GeneralDetailsComponent } from './candidate-profile/general-details/gen
 import { ViewDetailsComponent } from './candidate-profile/view-details/view-details.component';
 import { ConfirmComponent } from './candidate-profile/confirm/confirm.component';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
+import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent],
+  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent],
   imports: [
     CommonModule,
     SharedModule,

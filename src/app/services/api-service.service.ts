@@ -115,8 +115,11 @@ export class ApiServiceService {
   login(loginData) {
     // this.getToken();
     // this.datas is api body data
+    // return this.http.post(`${this.BASE_URL}/user/login?_format=json`, loginData,
+    //   { headers: this.getCustomHeaders(), withCredentials: true });
     return this.http.post(`${this.BASE_URL}/user/login?_format=json`, loginData,
-      { headers: this.getCustomHeaders(), withCredentials: true });
+      { headers: this.withoutTokens(), withCredentials: true });
+
   }
 
   // Logout

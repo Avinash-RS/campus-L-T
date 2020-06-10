@@ -1,5 +1,5 @@
 <div class="mainwrapper">
-  <div class="legend">*All fields are mandatory</div>
+  <!-- <div class="legend">*All fields are mandatory</div> -->
   <div class="header">
     <form #form="ngForm" [formGroup]="educationForm">
       <ng-container *ngIf="eduArr && eduArr.controls" formArrayName="educationArr">
@@ -7,10 +7,18 @@
           <div style="margin: 1em 0 0 0;" class="form">
             <div class="form-wrapper">
               <div class="outer-box-wrapper">
-                <div class="input-box">
-                  <nz-select (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
-                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-                  </nz-select>
+                <div class="label-wrapper">
+                  <div class="label">
+                    <label>Level*</label>
+                  </div>
+                  <div class="input-box">
+                      <input (focusout)="detectInput(educationForm)" placeholder="Level" formControlName="leveling"
+                      type="text" value="">
+                      <!-- <nz-select (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch
+                      formControlName="leveling" nzPlaceHolder="Level">
+                      <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                    </nz-select> -->
+                  </div>
                 </div>
                 <!-- eduArr.controls[i].get('age') -->
                 <div class="error"
@@ -19,23 +27,39 @@
                 </div>
               </div>
               <div class="outer-box-wrapper">
-
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>Board/University*</label>
+                      </div>
                 <div class="input-box width-300">
-                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="board" nzAllowClear nzShowSearch nzPlaceHolder="Board/University">
+                    <input (focusout)="detectInput(educationForm)" placeholder="Board/University" formControlName="board"
+                    type="text" value="">
+                <!-- <nz-select (ngModelChange)="detectSelectChange()" formControlName="board" nzAllowClear nzShowSearch
+                    nzPlaceHolder="Board/University">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-                  </nz-select>
+                  </nz-select> -->
                 </div>
+              </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('board').invalid && eduArr.controls[i].get('board').touched">
                   <span *ngIf="eduArr.controls[i].get('board').errors?.required">Board/University is Required</span>
                 </div>
               </div>
               <div class="outer-box-wrapper">
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>Institute*</label>
+                      </div>
                 <div class="input-box width-300">
-                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear nzShowSearch nzPlaceHolder="Institute">
-                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                    <!-- <input (focusout)="detectInput(educationForm)" placeholder="Institute" formControlName="institute"
+                    type="text" value=""> -->
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear
+                    nzShowSearch nzPlaceHolder="">
+                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <nz-option *ngFor="let level of institutes" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
+              </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('institute').invalid && eduArr.controls[i].get('institute').touched">
                   <span *ngIf="eduArr.controls[i].get('institute').errors?.required">Institute is Required</span>
@@ -43,12 +67,21 @@
 
               </div>
               <div class="outer-box-wrapper">
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>Discipline*</label>
+                      </div>
 
                 <div class="input-box">
-                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="discipline" nzAllowClear nzShowSearch nzPlaceHolder="Discipline">
-                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                    <!-- <input (focusout)="detectInput(educationForm)" placeholder="Discipline" formControlName="discipline"
+                    type="text" value=""> -->
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="discipline" nzAllowClear
+                    nzShowSearch nzPlaceHolder="">
+                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <nz-option *ngFor="let level of discipline" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
+              </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('discipline').invalid && eduArr.controls[i].get('discipline').touched">
                   <span *ngIf="eduArr.controls[i].get('discipline').errors?.required">Discipline is Required</span>
@@ -56,12 +89,20 @@
 
               </div>
               <div class="outer-box-wrapper">
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>Specification*</label>
+                      </div>
 
                 <div class="input-box">
-                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear nzShowSearch nzPlaceHolder="Specification">
+                    <input (focusout)="detectInput(educationForm)" placeholder="Specification" formControlName="specification"
+                    type="text" value="">
+                  <!-- <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear
+                    nzShowSearch nzPlaceHolder="Specification">
                     <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-                  </nz-select>
+                  </nz-select> -->
                 </div>
+              </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('specification').invalid && eduArr.controls[i].get('specification').touched">
                   <span *ngIf="eduArr.controls[i].get('specification').errors?.required">Specification is
@@ -70,11 +111,17 @@
 
               </div>
               <div class="outer-box-wrapper">
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>Date of Passing*</label>
+                      </div>
 
                 <div class="input-box">
-                  <nz-month-picker (ngModelChange)="detectSelectChange()" formControlName="passedYear" [nzDisabledDate]="disabledprevious"
-                    [nzFormat]="monthFormat" nzPlaceHolder="Date of passing"></nz-month-picker>
+                  <nz-month-picker (ngModelChange)="detectSelectChange()" formControlName="passedYear"
+                    [nzDisabledDate]="disabledprevious" [nzFormat]="monthFormat" nzPlaceHolder="Date of passing">
+                  </nz-month-picker>
                 </div>
+              </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('passedYear').invalid && eduArr.controls[i].get('passedYear').touched">
                   <span *ngIf="eduArr.controls[i].get('passedYear').errors?.required">Date of passing is Required</span>
@@ -82,26 +129,51 @@
 
               </div>
               <div class="outer-box-wrapper">
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>No. of Backlogs (If any)</label>
+                      </div>
 
                 <div class="input-box">
-                  <input (focusout)="detectInput(educationForm)" placeholder="Percentage" formControlName="percentage" type="text" value="">
+                  <input (focusout)="detectInput(educationForm)" placeholder="Backlogs" formControlName="backlogs"
+                    type="text" value="">
                 </div>
+              </div>
+                <div class="error"
+                  *ngIf="eduArr.controls[i].get('backlogs').invalid && eduArr.controls[i].get('backlogs').touched">
+                  <span *ngIf="eduArr.controls[i].get('backlogs').errors?.pattern">Accept Numbers only and Maximum of 2 digits only Allowed</span>
+                </div>
+
+              </div>
+
+              <div class="outer-box-wrapper">
+                  <div class="label-wrapper">
+                      <div class="label">
+                        <label>Percentage*</label>
+                      </div>
+
+                <div class="input-box">
+                  <input (focusout)="detectInput(educationForm)" placeholder="Percentage" formControlName="percentage"
+                    type="text" value="">
+                </div>
+              </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('percentage').invalid && eduArr.controls[i].get('percentage').touched">
                   <span *ngIf="eduArr.controls[i].get('percentage').errors?.required">Percentage is Required</span>
-                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Please enter a valid percentage</span>
+                  <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Please enter a valid
+                    percentage</span>
                 </div>
 
               </div>
             </div>
           </div>
-          <div class="add-remove-wrapper">
+          <!-- <div class="add-remove-wrapper">
             <ng-container
               *ngIf="(eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)">
-              <!-- <div (click)="addEducationForm()" class="add-button">
+              <div (click)="addEducationForm()" class="add-button">
                 <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
                 <span>Add</span>
-              </div> -->
+              </div>
               <div *ngIf="i !== 0" class="or-text">
                 Or
               </div>
@@ -114,7 +186,7 @@
                 <span>Remove</span>
               </div>
             </ng-container>
-          </div>
+          </div> -->
 
         </div>
       </ng-container>

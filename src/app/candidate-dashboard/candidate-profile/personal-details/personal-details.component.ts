@@ -78,24 +78,24 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   category = [
     {
-      name: '0BC',
-      caste: 'obc'
+      name: 'GEN',
+      caste: 'GEN'
     },
     {
-      name: 'BC',
-      caste: 'bc'
+      name: 'OBC',
+      caste: 'OBC'
     },
     {
       name: 'SC',
-      caste: 'sc'
+      caste: 'SC'
     },
     {
-      name: 'MBC',
-      caste: 'mbc'
+      name: 'ST',
+      caste: 'ST'
     },
     {
-      name: 'OC',
-      caste: 'oc'
+      name: 'Other',
+      caste: 'Other'
     },
   ];
 
@@ -201,6 +201,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
+    console.log(this.checked);
 
   }
 
@@ -255,6 +256,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') !== 'null' && this.appConfig.getLocalData('localProfilePic') !== 'undefined') {
         this.url = JSON.parse(this.appConfig.getLocalData('localProfilePic'));
       }
+      this.checked = this.KYCModifiedData['field_address_checkbox'] && this.KYCModifiedData['field_address_checkbox']['value'] == "1" ? true : false;
+
     } else {
       this.url = '';
     }
@@ -323,6 +326,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_preset_city: { value: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'][0] ? organizeUserDetails['field_preset_city'][0]['value'] : '' },
           field_present_state: { value: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'][0] ? organizeUserDetails['field_present_state'][0]['value'] : '' },
 
+          field_address_checkbox: {value: organizeUserDetails && organizeUserDetails['field_address_checkbox'] && organizeUserDetails['field_address_checkbox'][0] ? organizeUserDetails['field_address_checkbox'][0]['value'] : '' },
+
           field_permanent_line1_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line1_street_add'] && organizeUserDetails['field_permanent_line1_street_add'][0] ? organizeUserDetails['field_permanent_line1_street_add'][0]['value'] : '' },
           field_permanent_line2_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line2_street_add'] && organizeUserDetails['field_permanent_line2_street_add'][0] ? organizeUserDetails['field_permanent_line2_street_add'][0]['value'] : '' },
           field_permanent_zip: { value: organizeUserDetails && organizeUserDetails['field_permanent_zip'] && organizeUserDetails['field_permanent_zip'][0] ? organizeUserDetails['field_permanent_zip'][0]['value'] : '' },
@@ -373,6 +378,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
           field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
           field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
+          field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
           field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
 
           // Family
@@ -382,7 +388,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
 
           // General
-          field_skills: organizeUserDetails && organizeUserDetails['field_skills'] ? organizeUserDetails && organizeUserDetails['field_skills'] : [{value: ''}],
+          field_skills: organizeUserDetails && organizeUserDetails['field_skills'] ? organizeUserDetails && organizeUserDetails['field_skills'] : [{ value: '' }],
           field_relatives_l_t_group_name: { value: organizeUserDetails && organizeUserDetails['field_relatives_l_t_group_name'] && organizeUserDetails['field_relatives_l_t_group_name'][0] ? organizeUserDetails['field_relatives_l_t_group_name'][0]['value'] : '' },
           field_realationship: { value: organizeUserDetails && organizeUserDetails['field_realationship'] && organizeUserDetails['field_realationship'][0] ? organizeUserDetails['field_realationship'][0]['value'] : '' },
           field_position: { value: organizeUserDetails && organizeUserDetails['field_position'] && organizeUserDetails['field_position'][0] ? organizeUserDetails['field_position'][0]['value'] : '' },
@@ -404,6 +410,12 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             }
           ],
         };
+        // field_address_checkbox: {value: organizeUserDetails && organizeUserDetails['field_address_checkbox'] && organizeUserDetails['field_address_checkbox'][0] ? organizeUserDetails['field_address_checkbox'][0]['value'] : '' },
+// console.log(this.KYCModifiedData);
+
+        this.checked = this.KYCModifiedData['field_address_checkbox'] && this.KYCModifiedData['field_address_checkbox']['value'] == "1" ? true : false;
+        console.log('zzz', this.checked);
+
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : '';
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
@@ -479,16 +491,25 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.KYCModifiedData.field_nationality = { value: this.upToCategoryForm.value.nationality ? this.upToCategoryForm.value.nationality : '' };
       this.KYCModifiedData.field_aadharno = { value: this.upToCategoryForm.value.aadhaar ? this.upToCategoryForm.value.aadhaar : '' };
       this.KYCModifiedData.field_category = { value: this.upToCategoryForm.value.category ? this.upToCategoryForm.value.category : '' };
+      this.KYCModifiedData.field_address_checkbox = { value: this.checked && this.checked === true ? '1' : '0' };
       this.KYCModifiedData.field_present_line_street_addres = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
       this.KYCModifiedData.field_present_line2_street_addre = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
       this.KYCModifiedData.field_present_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
       this.KYCModifiedData.field_preset_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
       this.KYCModifiedData.field_present_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
-      this.KYCModifiedData.field_permanent_line1_street_add = { value: this.permanentAddressForm.value.permanentAddress1 ? this.permanentAddressForm.value.permanentAddress1 : '' };
-      this.KYCModifiedData.field_permanent_line2_street_add = { value: this.permanentAddressForm.value.permanentAddress2 ? this.permanentAddressForm.value.permanentAddress2 : '' };
-      this.KYCModifiedData.field_permanent_zip = { value: this.permanentAddressForm.value.permanentZipCode ? this.permanentAddressForm.value.permanentZipCode : '' };
-      this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' };
-      this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' };
+      if (this.checked === true) {
+        this.KYCModifiedData.field_permanent_line1_street_add = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
+        this.KYCModifiedData.field_permanent_line2_street_add = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
+        this.KYCModifiedData.field_permanent_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
+        this.KYCModifiedData.field_permanent_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
+        this.KYCModifiedData.field_permanent_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
+      } else {
+        this.KYCModifiedData.field_permanent_line1_street_add = { value: this.permanentAddressForm.value.permanentAddress1 ? this.permanentAddressForm.value.permanentAddress1 : '' };
+        this.KYCModifiedData.field_permanent_line2_street_add = { value: this.permanentAddressForm.value.permanentAddress2 ? this.permanentAddressForm.value.permanentAddress2 : '' };
+        this.KYCModifiedData.field_permanent_zip = { value: this.permanentAddressForm.value.permanentZipCode ? this.permanentAddressForm.value.permanentZipCode : '' };
+        this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' };
+        this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' };
+      }
       this.KYCModifiedData.field_language_known = { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' };
 
       this.KYCModifiedData.field_read = [{ value: this.languagesForm.value.firstRead ? true : false }];

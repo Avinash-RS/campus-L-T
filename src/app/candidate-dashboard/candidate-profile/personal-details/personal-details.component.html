@@ -277,7 +277,7 @@
   <!-- <input type="checkbox" name=""  id=""> -->
 </div>
 <form #form2="ngForm" [formGroup]="permanentAddressForm">
-  <div class="grid-wrapper-1">
+  <div class="grid-wrapper-1" [ngStyle]="{display: checked == true ? 'none' : 'block'}">
     <div class="first-child">
       <div class="flex-box">
         <label>Permanent Address*</label>

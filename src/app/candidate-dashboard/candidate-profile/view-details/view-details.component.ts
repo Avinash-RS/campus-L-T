@@ -200,6 +200,7 @@ export class ViewDetailsComponent implements OnInit {
         discipline: this.apiForm && this.apiForm['field_discipline'] ? this.apiForm['field_discipline']['value'] : '-',
         specification: this.apiForm && this.apiForm['field_specification'] ? this.apiForm['field_specification']['value'] : '-',
         passedYear: this.apiForm && this.apiForm['field_year_of_passing'] ? this.getMonthFormat(this.apiForm['field_year_of_passing']['value']) : '-',
+        backlogs: this.apiForm && this.apiForm['field_backlogs'] ? this.apiForm['field_backlogs']['value'] : '-',
         percentage: this.apiForm && this.apiForm['field_percentage'] ? this.apiForm['field_percentage']['value'] : '-',
       }],
 
@@ -319,6 +320,8 @@ export class ViewDetailsComponent implements OnInit {
           field_preset_city: { value: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'][0] ? organizeUserDetails['field_preset_city'][0]['value'] : '' },
           field_present_state: { value: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'][0] ? organizeUserDetails['field_present_state'][0]['value'] : '' },
 
+          field_address_checkbox: { value: organizeUserDetails && organizeUserDetails['field_address_checkbox'] && organizeUserDetails['field_address_checkbox'][0] ? organizeUserDetails['field_address_checkbox'][0]['value'] : '' },
+
           field_permanent_line1_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line1_street_add'] && organizeUserDetails['field_permanent_line1_street_add'][0] ? organizeUserDetails['field_permanent_line1_street_add'][0]['value'] : '' },
           field_permanent_line2_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line2_street_add'] && organizeUserDetails['field_permanent_line2_street_add'][0] ? organizeUserDetails['field_permanent_line2_street_add'][0]['value'] : '' },
           field_permanent_zip: { value: organizeUserDetails && organizeUserDetails['field_permanent_zip'] && organizeUserDetails['field_permanent_zip'][0] ? organizeUserDetails['field_permanent_zip'][0]['value'] : '' },
@@ -368,6 +371,7 @@ export class ViewDetailsComponent implements OnInit {
           field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
           field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
           field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
+          field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
           field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
 
           // Family
@@ -421,6 +425,10 @@ export class ViewDetailsComponent implements OnInit {
           aadhaar: '',
           category: '',
 
+          field_address_checkbox: {
+            value: ''
+          },
+
           presentAddress1: '',
           presentAddress2: '',
           presentZipCode: '',
@@ -465,6 +473,7 @@ export class ViewDetailsComponent implements OnInit {
             discipline: '',
             specification: '',
             passedYear: '',
+            backlogs: '',
             percentage: '',
           }],
 

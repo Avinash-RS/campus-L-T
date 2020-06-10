@@ -38,60 +38,73 @@
         .outer-box-wrapper {
           flex: auto;
           margin: 1em 1em;
-          .input-box {
-            margin: 0 0.15em;
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
-            display: flex;
-            width: 240px;
-            max-width: 240px;
-            // width: 100%;
-            align-items: center;
-            background: $white;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            border: solid $black-3 1px;
-            nz-month-picker {
-              width: 100%;
+          .label-wrapper {
+            flex: auto;
+            .label {
+                label {
+                  color: $light-black;
+                  width: 100%;
+                  font-weight: 100;
+                  margin: 0em 0 0.25em 0.25em;
+                  font-size: 15px;
+                  white-space: nowrap;
+                }
+            }
+            .input-box {
+              margin: 0 0.15em;
+              border-radius: 5px;
+              box-shadow: $shadow-light-black;
               display: flex;
+              width: 240px;
+              max-width: 240px;
+              // width: 100%;
               align-items: center;
-              // padding: .15em;
-              border-radius: 5px;
               background: $white;
-              max-height: 38px;
-              min-height: 38px;
-              font-size: 17px;
-              font-weight: 100;
-              color: $secondary;
-            }
-            nz-select {
-              // padding: .15em;
-              width: 100%;
-              border-radius: 5px;
-              background: $white;
-              max-height: 38px;
-              min-height: 38px;
-              font-size: 17px;
-              font-weight: 100;
-              color: $secondary;
-              nz-option {
-                background: black;
-                border: solid $light-blue 1px;
+              height: 38px;
+              padding: 0em 0px 0 0px;
+              border: solid $black-3 1px;
+              nz-month-picker {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                // padding: .15em;
+                border-radius: 5px;
+                background: $white;
+                max-height: 38px;
+                min-height: 38px;
+                font-size: 17px;
+                font-weight: 100;
+                color: $secondary;
               }
-            }
-            input {
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              // padding: .15em;
-              padding: 0 1em;
-              border: none;
-              color: $secondary;
-              outline: none;
-              background: $white;
-              border-radius: 5px;
-              min-height: 38px;
-              max-height: 38px;
+              nz-select {
+                // padding: .15em;
+                width: 100%;
+                border-radius: 5px;
+                background: $white;
+                max-height: 38px;
+                min-height: 38px;
+                font-size: 17px;
+                font-weight: 100;
+                color: $secondary;
+                nz-option {
+                  background: black;
+                  border: solid $light-blue 1px;
+                }
+              }
+              input {
+                margin: 0 !important;
+                width: 100%;
+                font-size: 17px;
+                // padding: .15em;
+                padding: 0 1em;
+                border: none;
+                color: $secondary;
+                outline: none;
+                background: $white;
+                border-radius: 5px;
+                min-height: 38px;
+                max-height: 38px;
+              }
             }
           }
           .error {

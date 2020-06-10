@@ -17,13 +17,22 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.appConfig.getLocalData('csrf-login')) {
-      // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`);
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') && this.appConfig.getLocalData('roles') == 'administrator') {
+      console.log('ad');
+
+      // this.appConfig.routeNavigation(`${CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME}`);
       return true;
     }
-    localStorage.clear();
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
-    return false;
+    if (!this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') && this.appConfig.getLocalData('roles') == 'candidate') {
+      console.log('ca');
+      // this.appConfig.routeNavigation(`${CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE}`);
+      return true;
+    }
+    if (!this.appConfig.getLocalData('csrf-login')) {
+      localStorage.clear();
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+      return false;
+    }
 
   }
 
