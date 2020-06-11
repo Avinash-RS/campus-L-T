@@ -365,11 +365,11 @@
 
       <div class="sub-input-box">
         <div class="label-box-2">
-          <div class="input-boxes-1">
-            <div class="input-box">
+          <div style="height: 18px;" class="input-boxes-1">
+            <div style="visibility: hidden;" class="input-box">
               <input (focusout)="detectInput(languagesForm)" formControlName="languageRequired" type="text" value="">
             </div>
-            <div class="error" *ngIf="languageRequired.invalid && languageRequired.touched ||
+            <div style="visibility: hidden;" class="error" *ngIf="languageRequired.invalid && languageRequired.touched ||
             languageRequired.touched && (!firstRead.value && !firstWrite.value && !firstSpeak.value)">
               <span *ngIf="languageRequired.errors?.required">Language is Required</span>
               <span *ngIf="!languageRequired.errors?.required &&
@@ -378,11 +378,11 @@
             </div>
 
           </div>
-          <div class="input-boxes-4">
+          <div style="height: 18px;" class="input-boxes-4">
             <div class="input-box">
               <label> Read</label>
 
-              <div class="custom-control custom-checkbox checkbox-xl">
+              <div style="visibility: hidden;" class="custom-control custom-checkbox checkbox-xl">
                 <input (focusout)="detectInput(languagesForm)" formControlName="firstRead" type="checkbox"
                   class="custom-control-input" id="checkbox-one">
                 <label class="custom-control-label" for="checkbox-one">&#160;</label>
@@ -391,7 +391,7 @@
             </div>
             <div class="input-box">
               <label> Write</label>
-              <div class="custom-control custom-checkbox checkbox-xl">
+              <div style="visibility: hidden;" class="custom-control custom-checkbox checkbox-xl">
                 <input (focusout)="detectInput(languagesForm)" formControlName="firstWrite" type="checkbox"
                   class="custom-control-input" id="checkbox-two">
                 <label class="custom-control-label" for="checkbox-two">&#160;</label>
@@ -399,7 +399,7 @@
             </div>
             <div class="input-box">
               <label> Speak</label>
-              <div class="custom-control custom-checkbox checkbox-xl">
+              <div style="visibility: hidden;" class="custom-control custom-checkbox checkbox-xl">
                 <input (focusout)="detectInput(languagesForm)" formControlName="firstSpeak" type="checkbox"
                   class="custom-control-input" id="checkbox-three">
                 <label class="custom-control-label" for="checkbox-three">&#160;</label>
@@ -419,7 +419,12 @@
               <div class="input-box">
                 <input (focusout)="detectInput(languagesForm)" formControlName="language" type="text" value="">
               </div>
+              <div class="error"
+              *ngIf="t.controls[i].get('language').invalid && t.controls[i].get('language').touched">
+              <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
+              <span *ngIf="t.hasError('notSelected')">Please select any one of the language proficiency</span>
             </div>
+        </div>
 
             <div class="input-boxes-4">
               <div class="input-box">
@@ -456,10 +461,10 @@
             </div>
           </div>
         </ng-container>
-        <!-- <div class="language-add-button">
+        <div *ngIf="!notShow" class="language-add-button">
           <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
           <span (click)="addLanguage()">Add</span>
-        </div> -->
+        </div>
       </div>
 
     </div>

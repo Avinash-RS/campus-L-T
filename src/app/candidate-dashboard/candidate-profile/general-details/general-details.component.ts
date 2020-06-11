@@ -28,8 +28,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   aquaintancesForm: FormGroup;
   skillForm: FormGroup;
 
-  facultyReference1Form = new FormControl('', [Validators.maxLength(300), RemoveWhitespace.whitespace()]);
-  facultyReference2Form = new FormControl('', [Validators.maxLength(300), RemoveWhitespace.whitespace()]);
+  facultyReference1Form = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  facultyReference2Form = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
 
   apiForm: any;
   generalArray: any;

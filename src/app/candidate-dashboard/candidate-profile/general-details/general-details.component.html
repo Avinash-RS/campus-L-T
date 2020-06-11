@@ -96,14 +96,14 @@
 
   <form class="faculty">
     <div>
-    <textarea #form2="ngForm" [formControl]="facultyReference1Form" (focusout)="detectSelectChange()" maxlength="301" name="" id="" cols="30" rows="7"></textarea>
+    <textarea #form2="ngForm" [formControl]="facultyReference1Form" (focusout)="detectSelectChange()" maxlength="255" name="" id="" cols="30" rows="7"></textarea>
   </div>
   <div>
-      <textarea #form3="ngForm" [formControl]="facultyReference2Form" (focusout)="detectSelectChange()" maxlength="301" name="" id="" cols="30" rows="7"></textarea>
+      <textarea #form3="ngForm" [formControl]="facultyReference2Form" (focusout)="detectSelectChange()" maxlength="255" name="" id="" cols="30" rows="7"></textarea>
       <!-- <div *ngIf="true" class="error-lines">Charcters should not exceed 250</div> -->
     </div>
   </form>
-  <div style="margin: 0 0 0 2em; font-weight: 200; color: red;" *ngIf="facultyReference1Form.invalid || facultyReference2Form.invalid" class="error-lines">Characters should not exceed 300</div>
+  <div style="margin: 0 0 0 2em; font-weight: 200; color: red;" *ngIf="facultyReference1Form.invalid || facultyReference2Form.invalid" class="error-lines">Characters should not exceed 255</div>
 
   <div class="submit-button-wrapper">
     <button (click)="onSubmit(aquaintancesForm.value, skillForm.value)" mat-raised-button type="submit">Save and Continue</button>

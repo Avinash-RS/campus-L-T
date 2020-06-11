@@ -145,6 +145,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   profileData: { fid: any; uuid: any; localShowUrl: string; apiUrl: any; };
   localUsername: any;
   localUserEmail: any;
+  lang: { language: string; read: boolean; write: boolean; speak: boolean; }[];
+  notShow: boolean;
 
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
@@ -170,7 +172,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.minDate = new Date(currentYear - 20, 0, 1);
     this.maxDate = new Date();
     let oneDayAdd = new Date().getDate() + 1;
-    console.log(oneDayAdd);
     this.passportValidminDate = new Date();
     this.passportValidmaxDate = new Date(currentYear + 20, 0, 1);
   }
@@ -201,13 +202,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
-    console.log(this.checked);
 
   }
 
 
   checkboxChanged(check) {
-    console.log(check);
     if (check === true) {
       this.permanentAddressForm.patchValue({
         permanentAddress1: null,
@@ -261,6 +260,12 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     } else {
       this.url = '';
     }
+    if (this.KYCModifiedData['langArr'].length > 0) {
+      this.lang = this.KYCModifiedData['langArr'];
+    } else {
+      this.lang = [];
+    }
+
     this.FormsInitialization();
 
     if (this.userData && this.userData['field_isformsubmitted'][0]['value'] == true) {
@@ -270,6 +275,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   // For Edit
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
+      console.log('data', data);
+
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {
         if (data[0] && data[0]['field_isformsubmitted'] && data[0]['field_isformsubmitted'][0] && data[0]['field_isformsubmitted'][0]['value'] === true) {
@@ -326,7 +333,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_preset_city: { value: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'][0] ? organizeUserDetails['field_preset_city'][0]['value'] : '' },
           field_present_state: { value: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'][0] ? organizeUserDetails['field_present_state'][0]['value'] : '' },
 
-          field_address_checkbox: {value: organizeUserDetails && organizeUserDetails['field_address_checkbox'] && organizeUserDetails['field_address_checkbox'][0] ? organizeUserDetails['field_address_checkbox'][0]['value'] : '' },
+          field_address_checkbox: { value: organizeUserDetails && organizeUserDetails['field_address_checkbox'] && organizeUserDetails['field_address_checkbox'][0] ? organizeUserDetails['field_address_checkbox'][0]['value'] : false },
 
           field_permanent_line1_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line1_street_add'] && organizeUserDetails['field_permanent_line1_street_add'][0] ? organizeUserDetails['field_permanent_line1_street_add'][0]['value'] : '' },
           field_permanent_line2_street_add: { value: organizeUserDetails && organizeUserDetails['field_permanent_line2_street_add'] && organizeUserDetails['field_permanent_line2_street_add'][0] ? organizeUserDetails['field_permanent_line2_street_add'][0]['value'] : '' },
@@ -334,11 +341,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_permanent_city: { value: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'][0] ? organizeUserDetails['field_permanent_city'][0]['value'] : '' },
           field_permanent_state: { value: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'][0] ? organizeUserDetails['field_permanent_state'][0]['value'] : '' },
 
-          field_language_known: { value: organizeUserDetails && organizeUserDetails['field_language_known'] && organizeUserDetails['field_language_known'][0] ? organizeUserDetails['field_language_known'][0]['value'] : '' },
+          // field_language: { value: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'][0] ? organizeUserDetails['field_language'][0]['value'] : '' },
 
-          field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
-          field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
-          field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
+          // field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
+          // field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
+          // field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
 
           field_passport_number: { value: organizeUserDetails && organizeUserDetails['field_passport_number'] && organizeUserDetails['field_passport_number'][0] ? organizeUserDetails['field_passport_number'][0]['value'] : '' },
           field_name_as_in_passport: { value: organizeUserDetails && organizeUserDetails['field_name_as_in_passport'] && organizeUserDetails['field_name_as_in_passport'][0] ? organizeUserDetails['field_name_as_in_passport'][0]['value'] : '' },
@@ -372,20 +379,20 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           ],
 
           // Educational
-          field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
-          field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
-          field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '' },
-          field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
-          field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
-          field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
-          field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
-          field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
+          // field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
+          // field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
+          // field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '' },
+          // field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
+          // field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
+          // field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
+          // field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
+          // field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
 
           // Family
-          field_name_of_your_family_member: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family_member'] && organizeUserDetails['field_name_of_your_family_member'][0] ? organizeUserDetails['field_name_of_your_family_member'][0]['value'] : '' },
-          field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
-          field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
-          field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
+          // field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family'] && organizeUserDetails['field_name_of_your_family'][0] ? organizeUserDetails['field_name_of_your_family'][0]['value'] : '' },
+          // field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
+          // field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
+          // field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
 
           // General
           field_skills: organizeUserDetails && organizeUserDetails['field_skills'] ? organizeUserDetails && organizeUserDetails['field_skills'] : [{ value: '' }],
@@ -410,17 +417,253 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             }
           ],
         };
-        // field_address_checkbox: {value: organizeUserDetails && organizeUserDetails['field_address_checkbox'] && organizeUserDetails['field_address_checkbox'][0] ? organizeUserDetails['field_address_checkbox'][0]['value'] : '' },
-// console.log(this.KYCModifiedData);
 
+        this.KYCModifiedData['famArr'] = [
+          {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family'] && organizeUserDetails['field_name_of_your_family'][0] ? organizeUserDetails['field_name_of_your_family'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
+          }
+        ];
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family1'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'][0] ? organizeUserDetails['field_name_of_your_family1'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth1'] && organizeUserDetails['field_family_date_of_birth1'][0] ? organizeUserDetails['field_family_date_of_birth1'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship1'] && organizeUserDetails['field_relationship1'][0] ? organizeUserDetails['field_relationship1'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation1'] && organizeUserDetails['field_occupation1'][0] ? organizeUserDetails['field_occupation1'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family2'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'][0] ? organizeUserDetails['field_name_of_your_family2'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth2'] && organizeUserDetails['field_family_date_of_birth2'][0] ? organizeUserDetails['field_family_date_of_birth2'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship2'] && organizeUserDetails['field_relationship2'][0] ? organizeUserDetails['field_relationship2'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation2'] && organizeUserDetails['field_occupation2'][0] ? organizeUserDetails['field_occupation2'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family3'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'][0] ? organizeUserDetails['field_name_of_your_family3'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth3'] && organizeUserDetails['field_family_date_of_birth3'][0] ? organizeUserDetails['field_family_date_of_birth3'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship3'] && organizeUserDetails['field_relationship3'][0] ? organizeUserDetails['field_relationship3'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation3'] && organizeUserDetails['field_occupation3'][0] ? organizeUserDetails['field_occupation3'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family4'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'][0] ? organizeUserDetails['field_name_of_your_family4'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth4'] && organizeUserDetails['field_family_date_of_birth4'][0] ? organizeUserDetails['field_family_date_of_birth4'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship4'] && organizeUserDetails['field_relationship4'][0] ? organizeUserDetails['field_relationship4'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation4'] && organizeUserDetails['field_occupation4'][0] ? organizeUserDetails['field_occupation4'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+
+
+        this.KYCModifiedData['langArr'] = [
+          {
+            field_language: { value: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'][0] ? organizeUserDetails['field_language'][0]['value'] : '' },
+
+            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
+            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
+            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
+          }
+        ];
+        if (organizeUserDetails && organizeUserDetails['field_language1'].length > 0) {
+          const a = {
+            field_language: { value: organizeUserDetails && organizeUserDetails['field_language1'] && organizeUserDetails['field_language1'][0] ? organizeUserDetails['field_language1'][0]['value'] : '' },
+            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read1'] && organizeUserDetails['field_read1'][0] ? organizeUserDetails['field_read1'][0]['value'] : '' }],
+            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write1'] && organizeUserDetails['field_write1'][0] ? organizeUserDetails['field_write1'][0]['value'] : '' }],
+            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak1'] && organizeUserDetails['field_speak1'][0] ? organizeUserDetails['field_speak1'][0]['value'] : '' }],
+          };
+          this.KYCModifiedData['langArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_language2'].length > 0) {
+          const a = {
+            field_language: { value: organizeUserDetails && organizeUserDetails['field_language2'] && organizeUserDetails['field_language2'][0] ? organizeUserDetails['field_language2'][0]['value'] : '' },
+            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read2'] && organizeUserDetails['field_read2'][0] ? organizeUserDetails['field_read2'][0]['value'] : '' }],
+            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write2'] && organizeUserDetails['field_write2'][0] ? organizeUserDetails['field_write2'][0]['value'] : '' }],
+            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak2'] && organizeUserDetails['field_speak2'][0] ? organizeUserDetails['field_speak2'][0]['value'] : '' }],
+          };
+          this.KYCModifiedData['langArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_language3'].length > 0) {
+          const a = {
+            field_language: { value: organizeUserDetails && organizeUserDetails['field_language3'] && organizeUserDetails['field_language3'][0] ? organizeUserDetails['field_language3'][0]['value'] : '' },
+            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read3'] && organizeUserDetails['field_read3'][0] ? organizeUserDetails['field_read3'][0]['value'] : '' }],
+            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write3'] && organizeUserDetails['field_write3'][0] ? organizeUserDetails['field_write3'][0]['value'] : '' }],
+            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak3'] && organizeUserDetails['field_speak3'][0] ? organizeUserDetails['field_speak3'][0]['value'] : '' }],
+          };
+          this.KYCModifiedData['langArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_language4'].length > 0) {
+          const a = {
+            field_language: { value: organizeUserDetails && organizeUserDetails['field_language4'] && organizeUserDetails['field_language4'][0] ? organizeUserDetails['field_language4'][0]['value'] : '' },
+            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read4'] && organizeUserDetails['field_read4'][0] ? organizeUserDetails['field_read4'][0]['value'] : '' }],
+            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write4'] && organizeUserDetails['field_write4'][0] ? organizeUserDetails['field_write4'][0]['value'] : '' }],
+            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak4'] && organizeUserDetails['field_speak4'][0] ? organizeUserDetails['field_speak4'][0]['value'] : '' }],
+          };
+          this.KYCModifiedData['langArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_language5'].length > 0) {
+          const a = {
+            field_language: { value: organizeUserDetails && organizeUserDetails['field_language5'] && organizeUserDetails['field_language5'][0] ? organizeUserDetails['field_language5'][0]['value'] : '' },
+            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read5'] && organizeUserDetails['field_read5'][0] ? organizeUserDetails['field_read5'][0]['value'] : '' }],
+            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write5'] && organizeUserDetails['field_write5'][0] ? organizeUserDetails['field_write5'][0]['value'] : '' }],
+            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak5'] && organizeUserDetails['field_speak5'][0] ? organizeUserDetails['field_speak5'][0]['value'] : '' }],
+          };
+          this.KYCModifiedData['langArr'].push(a);
+        }
+
+
+        this.KYCModifiedData['eduArr'] = [
+          {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
+          }
+        ];
+        if (organizeUserDetails && organizeUserDetails['field_level1'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level1'] && organizeUserDetails['field_level1'][0] ? organizeUserDetails['field_level1'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university1'] && organizeUserDetails['field_board_university1'][0] ? organizeUserDetails['field_board_university1'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute1'] && organizeUserDetails['field_institute1'][0] ? organizeUserDetails['field_institute1'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline1'] && organizeUserDetails['field_discipline1'][0] ? organizeUserDetails['field_discipline1'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification1'] && organizeUserDetails['field_specification1'][0] ? organizeUserDetails['field_specification1'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing1'] && organizeUserDetails['field_year_of_passing1'][0] ? organizeUserDetails['field_year_of_passing1'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs1'] && organizeUserDetails['field_backlogs1'][0] ? organizeUserDetails['field_backlogs1'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage1'] && organizeUserDetails['field_percentage1'][0] ? organizeUserDetails['field_percentage1'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level2'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level2'] && organizeUserDetails['field_level2'][0] ? organizeUserDetails['field_level2'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university2'] && organizeUserDetails['field_board_university2'][0] ? organizeUserDetails['field_board_university2'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute2'] && organizeUserDetails['field_institute2'][0] ? organizeUserDetails['field_institute2'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline2'] && organizeUserDetails['field_discipline2'][0] ? organizeUserDetails['field_discipline2'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification2'] && organizeUserDetails['field_specification2'][0] ? organizeUserDetails['field_specification2'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing2'] && organizeUserDetails['field_year_of_passing2'][0] ? organizeUserDetails['field_year_of_passing2'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs2'] && organizeUserDetails['field_backlogs2'][0] ? organizeUserDetails['field_backlogs2'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage2'] && organizeUserDetails['field_percentage2'][0] ? organizeUserDetails['field_percentage2'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level3'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level3'] && organizeUserDetails['field_level3'][0] ? organizeUserDetails['field_level3'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university3'] && organizeUserDetails['field_board_university3'][0] ? organizeUserDetails['field_board_university3'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute3'] && organizeUserDetails['field_institute3'][0] ? organizeUserDetails['field_institute3'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline3'] && organizeUserDetails['field_discipline3'][0] ? organizeUserDetails['field_discipline3'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification3'] && organizeUserDetails['field_specification3'][0] ? organizeUserDetails['field_specification3'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing3'] && organizeUserDetails['field_year_of_passing3'][0] ? organizeUserDetails['field_year_of_passing3'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs3'] && organizeUserDetails['field_backlogs3'][0] ? organizeUserDetails['field_backlogs3'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage3'] && organizeUserDetails['field_percentage3'][0] ? organizeUserDetails['field_percentage3'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level4'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level4'] && organizeUserDetails['field_level4'][0] ? organizeUserDetails['field_level4'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university4'] && organizeUserDetails['field_board_university4'][0] ? organizeUserDetails['field_board_university4'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute4'] && organizeUserDetails['field_institute4'][0] ? organizeUserDetails['field_institute4'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline4'] && organizeUserDetails['field_discipline4'][0] ? organizeUserDetails['field_discipline4'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification4'] && organizeUserDetails['field_specification4'][0] ? organizeUserDetails['field_specification4'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing4'] && organizeUserDetails['field_year_of_passing4'][0] ? organizeUserDetails['field_year_of_passing4'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs4'] && organizeUserDetails['field_backlogs4'][0] ? organizeUserDetails['field_backlogs4'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage4'] && organizeUserDetails['field_percentage4'][0] ? organizeUserDetails['field_percentage4'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level5'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level5'] && organizeUserDetails['field_level5'][0] ? organizeUserDetails['field_level5'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university5'] && organizeUserDetails['field_board_university5'][0] ? organizeUserDetails['field_board_university5'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute5'] && organizeUserDetails['field_institute5'][0] ? organizeUserDetails['field_institute5'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline5'] && organizeUserDetails['field_discipline5'][0] ? organizeUserDetails['field_discipline5'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification5'] && organizeUserDetails['field_specification5'][0] ? organizeUserDetails['field_specification5'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing5'] && organizeUserDetails['field_year_of_passing5'][0] ? organizeUserDetails['field_year_of_passing5'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs5'] && organizeUserDetails['field_backlogs5'][0] ? organizeUserDetails['field_backlogs5'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage5'] && organizeUserDetails['field_percentage5'][0] ? organizeUserDetails['field_percentage5'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level6'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level6'] && organizeUserDetails['field_level6'][0] ? organizeUserDetails['field_level6'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university6'] && organizeUserDetails['field_board_university6'][0] ? organizeUserDetails['field_board_university6'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute6'] && organizeUserDetails['field_institute6'][0] ? organizeUserDetails['field_institute6'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline6'] && organizeUserDetails['field_discipline6'][0] ? organizeUserDetails['field_discipline6'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification6'] && organizeUserDetails['field_specification6'][0] ? organizeUserDetails['field_specification6'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing6'] && organizeUserDetails['field_year_of_passing6'][0] ? organizeUserDetails['field_year_of_passing6'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs6'] && organizeUserDetails['field_backlogs6'][0] ? organizeUserDetails['field_backlogs6'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage6'] && organizeUserDetails['field_percentage6'][0] ? organizeUserDetails['field_percentage6'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level7'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level7'] && organizeUserDetails['field_level7'][0] ? organizeUserDetails['field_level7'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university7'] && organizeUserDetails['field_board_university7'][0] ? organizeUserDetails['field_board_university7'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute7'] && organizeUserDetails['field_institute7'][0] ? organizeUserDetails['field_institute7'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline7'] && organizeUserDetails['field_discipline7'][0] ? organizeUserDetails['field_discipline7'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification7'] && organizeUserDetails['field_specification7'][0] ? organizeUserDetails['field_specification7'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing7'] && organizeUserDetails['field_year_of_passing7'][0] ? organizeUserDetails['field_year_of_passing7'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs7'] && organizeUserDetails['field_backlogs7'][0] ? organizeUserDetails['field_backlogs7'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage7'] && organizeUserDetails['field_percentage7'][0] ? organizeUserDetails['field_percentage7'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level8'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level8'] && organizeUserDetails['field_level8'][0] ? organizeUserDetails['field_level8'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university8'] && organizeUserDetails['field_board_university8'][0] ? organizeUserDetails['field_board_university8'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute8'] && organizeUserDetails['field_institute8'][0] ? organizeUserDetails['field_institute8'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline8'] && organizeUserDetails['field_discipline8'][0] ? organizeUserDetails['field_discipline8'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification8'] && organizeUserDetails['field_specification8'][0] ? organizeUserDetails['field_specification8'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing8'] && organizeUserDetails['field_year_of_passing8'][0] ? organizeUserDetails['field_year_of_passing8'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs8'] && organizeUserDetails['field_backlogs8'][0] ? organizeUserDetails['field_backlogs8'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage8'] && organizeUserDetails['field_percentage8'][0] ? organizeUserDetails['field_percentage8'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_level9'].length > 0) {
+          const a = {
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level9'] && organizeUserDetails['field_level9'][0] ? organizeUserDetails['field_level9'][0]['value'] : '' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university9'] && organizeUserDetails['field_board_university9'][0] ? organizeUserDetails['field_board_university9'][0]['value'] : '' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute9'] && organizeUserDetails['field_institute9'][0] ? organizeUserDetails['field_institute9'][0]['value'] : '' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline9'] && organizeUserDetails['field_discipline9'][0] ? organizeUserDetails['field_discipline9'][0]['value'] : '' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification9'] && organizeUserDetails['field_specification9'][0] ? organizeUserDetails['field_specification9'][0]['value'] : '' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing9'] && organizeUserDetails['field_year_of_passing9'][0] ? organizeUserDetails['field_year_of_passing9'][0]['value'] : '' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs9'] && organizeUserDetails['field_backlogs9'][0] ? organizeUserDetails['field_backlogs9'][0]['value'] : '' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage9'] && organizeUserDetails['field_percentage9'][0] ? organizeUserDetails['field_percentage9'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['eduArr'].push(a);
+        }
+
+        if (this.KYCModifiedData['langArr'].length > 0) {
+          this.lang = this.KYCModifiedData['langArr'];
+        } else {
+          this.lang = [];
+        }
         this.checked = this.KYCModifiedData['field_address_checkbox'] && this.KYCModifiedData['field_address_checkbox']['value'] == "1" ? true : false;
-        console.log('zzz', this.checked);
 
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : '';
+
+        console.log('final', this.KYCModifiedData);
+
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.hideLoader();
-        console.log(this.KYCModifiedData);
 
       } else {
         this.KYCModifiedData = {
@@ -477,8 +720,15 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
-    console.log(this.upToCategoryForm.value.name);
-    console.log(this.upToCategoryForm.value.mail);
+    if (this.checked === true) {
+      this.permanentAddressForm.patchValue({
+        permanentAddress1: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '',
+        permanentAddress2: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '',
+        permanentZipCode: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '',
+        permanentCity: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '',
+        permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '',
+      });
+    }
 
     if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
       && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
@@ -510,11 +760,18 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' };
         this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' };
       }
-      this.KYCModifiedData.field_language_known = { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' };
 
-      this.KYCModifiedData.field_read = [{ value: this.languagesForm.value.firstRead ? true : false }];
-      this.KYCModifiedData.field_write = [{ value: this.languagesForm.value.firstWrite ? true : false }];
-      this.KYCModifiedData.field_speak = [{ value: this.languagesForm.value.firstSpeak ? true : false }];
+      const langArrays = [];
+      this.languagesForm.value.languageAdd.forEach((element, i) => {
+        langArrays.push({ field_language: { value: element.language }, field_read: [{ value: element.read }], field_write: [{ value: element.write }], field_speak: [{ value: element.speak }] });
+      });
+      this.KYCModifiedData['langArr'] = langArrays;
+
+      // this.KYCModifiedData.field_language = { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' };
+
+      // this.KYCModifiedData.field_read = [{ value: this.languagesForm.value.firstRead ? true : false }];
+      // this.KYCModifiedData.field_write = [{ value: this.languagesForm.value.firstWrite ? true : false }];
+      // this.KYCModifiedData.field_speak = [{ value: this.languagesForm.value.firstSpeak ? true : false }];
 
       this.KYCModifiedData.field_passport_number = { value: this.passportForm.value.passportNumber ? this.passportForm.value.passportNumber : '' };
       this.KYCModifiedData.field_name_as_in_passport = { value: this.passportForm.value.passportName ? this.passportForm.value.passportName : '' };
@@ -610,12 +867,13 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Language Form
     this.languagesForm = this.fb.group({
-      languageRequired: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      firstRead: [''],
+      languageRequired: ['sd', [Validators.required, RemoveWhitespace.whitespace()]],
+      firstRead: [true],
       firstWrite: [''],
       firstSpeak: [''],
       languageAdd: this.fb.array([])
-    }), this.languageFormPatchValue();
+    }), this.languagePatch(this.lang);
+    // this.languageFormPatchValue();
 
     // Passport Form
     this.passportForm = this.fb.group({
@@ -644,12 +902,65 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }), this.healthFormPatchValue();
   }
 
-  removeLanguage(i) {
-    this.t.removeAt(i);
+
+
+  get t() { return this.languagesForm.get('languageAdd') as FormArray; }
+
+  languagePatch(dataArray) {
+    console.log(dataArray);
+
+    if (dataArray && dataArray.length > 0) {
+      dataArray.forEach(lang => {
+        this.addLanguage(lang);
+      });
+    } else {
+      for (let i = 0; i <= 0; i++) {
+        this.addLanguage(null);
+      }
+    }
   }
 
-  addLanguage() {
-    this.t.push(this.createItem());
+  removeLanguage(i) {
+    this.t.removeAt(i);
+    if (this.t.length < 6) {
+      this.notShow = false;
+    } else {
+      this.notShow = true;
+    }
+  }
+
+  addLanguage(data?: any) {
+    if (this.languagesForm['status'] !== 'INVALID') {
+      if (this.t.length < 6) {
+        this.t.push(this.createItem(data));
+        if (this.t.length < 6) {
+          this.notShow = false;
+        } else {
+          this.notShow = true;
+        }
+      } else {
+        this.notShow = true;
+      }
+    } else {
+      this.validateAllFormArrays(this.languagesForm.get('languageAdd') as FormArray);
+    }
+  }
+  createItem(data): FormGroup {
+    if (data) {
+      return this.fb.group({
+        language: [data['field_language']['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        read: data['field_read'][0]['value'],
+        write: data['field_write'][0]['value'],
+        speak: data['field_speak'][0]['value']
+      }, { validator: FormCustomValidators.anyOneSelected });
+    } else {
+      return this.fb.group({
+        language: ['', [RemoveWhitespace.whitespace(), Validators.required]],
+        read: '',
+        write: '',
+        speak: ''
+      }, { validator: FormCustomValidators.anyOneSelected });
+    }
   }
 
 
@@ -717,7 +1028,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     const organizeUserDetails = this.KYCModifiedData;
     this.languagesForm.patchValue(
       {
-        languageRequired: organizeUserDetails && organizeUserDetails['field_language_known'] && organizeUserDetails['field_language_known'] ? organizeUserDetails['field_language_known']['value'] : '',
+        languageRequired: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'] ? organizeUserDetails['field_language']['value'] : '',
 
         firstRead: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '',
         firstWrite: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '',
@@ -836,7 +1147,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
 
   async onSelectFile(event) {
-    console.log(event.target.files[0]);
 
     if (event.target.files && event.target.files[0].type.includes('image/') && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
@@ -849,7 +1159,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
-        // console.log(reader.readAsBinaryString(event.target.files[0]));
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
         reader.onload = (event: any) => { // called once readAsDataURL is completed
@@ -863,7 +1172,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
               localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
               apiUrl: data.uri[0].url
             };
-            console.log('data', data);
             this.appConfig.hideLoader();
 
           }, (err) => {
@@ -896,6 +1204,26 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.showSizeError.size = false;
     this.url = null;
   }
+
+  // To validate all fields after submit
+  validateAllFormArrays(formArray: FormArray) {
+    formArray.controls.forEach(formGroup => {
+      Object.keys(formGroup['controls']).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+          // if (control['status'] === 'INVALID') {
+          //   console.log(control);
+          //   this.appConfig.setLocalData('educationalFormSubmitted', 'false');
+          // }
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+          this.validateAllFields(control);
+        }
+      });
+
+    });
+  }
+
 
   validateAllForms() {
     this.validateAllFields(this.upToCategoryForm);
@@ -930,7 +1258,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   // convenience getters for easy access to form fields
   get f() { return this.languagesForm.controls; }
-  get t() { return this.f.languageAdd as FormArray; }
   get languageRequired() {
     return this.languagesForm.get('languageRequired');
   }
@@ -1058,18 +1385,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     return this.healthEyePowerGroup.get('right');
   }
 
-
-  createItem(): FormGroup {
-    return this.fb.group({
-      language: '',
-      read: '',
-      write: '',
-      speak: ''
-    });
-  }
-
   ngOnDestroy() {
     this.appConfig.clearLocalDataOne('personalFormTouched');
-    console.log('destroyed');
   }
 }

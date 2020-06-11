@@ -54,7 +54,7 @@
       </div>
     </ng-container>
   </form>
-  <div class="add-form">
+  <div *ngIf="!notShow" class="add-form">
     <div (click)="addfamilyForm()">
       <img src="assets/images/interface.svg" alt="" srcset="">
       <div class="text">

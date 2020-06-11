@@ -55,7 +55,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, component: KycSubmissionPageComponent
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, component: KycSubmissionPageComponent, canActivate: [CanloadGuard]
   },
 
 ];

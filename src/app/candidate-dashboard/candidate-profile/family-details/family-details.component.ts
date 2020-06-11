@@ -37,6 +37,7 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
     // Can not select days before today and today
     return differenceInCalendarDays(current, this.today) > 0;
   }
+  notShow: boolean;
 
   constructor(
     private appConfig: AppConfigService,
@@ -71,12 +72,20 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    this.familyValuesArr = [{
-      names: this.apiForm && this.apiForm['field_name_of_your_family_member'] ? this.apiForm['field_name_of_your_family_member'].value : null,
-      dob: this.apiForm && this.apiForm['field_family_date_of_birth'] ? this.apiForm['field_family_date_of_birth'].value : null,
-      relationship: this.apiForm && this.apiForm['field_relationship'] ? this.apiForm['field_relationship'].value : null,
-      occupation: this.apiForm && this.apiForm['field_occupation'] ? this.apiForm['field_occupation'].value : null,
-    }];
+    console.log(this.apiForm['famArr']);
+
+    if (this.apiForm['famArr'] && this.apiForm['famArr'].length > 0) {
+      this.familyValuesArr = this.apiForm['famArr'];
+    } else {
+      this.familyValuesArr = [];
+    }
+
+    // this.familyValuesArr = [{
+    //   names: this.apiForm && this.apiForm['field_name_of_your_family'] ? this.apiForm['field_name_of_your_family'].value : null,
+    //   dob: this.apiForm && this.apiForm['field_family_date_of_birth'] ? this.apiForm['field_family_date_of_birth'].value : null,
+    //   relationship: this.apiForm && this.apiForm['field_relationship'] ? this.apiForm['field_relationship'].value : null,
+    //   occupation: this.apiForm && this.apiForm['field_occupation'] ? this.apiForm['field_occupation'].value : null,
+    // }];
     this.FormInitialization();
   }
 
@@ -84,11 +93,16 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
     if (this.familyForm.valid) {
       // this.apiForm.field_board_university = { value: this.educationForm.value.educationArr[0]['board'] },
 
-      this.apiForm.field_name_of_your_family_member = { value: this.familyForm.value.familyArr[0]['names'] ? this.familyForm.value.familyArr[0]['names'] : '' },
-        this.apiForm.field_family_date_of_birth = { value: moment(this.familyForm.value.familyArr[0]['dob']).format() !== 'Invalid date' ? moment(this.familyForm.value.familyArr[0]['dob']).format() : '' },
-        this.apiForm.field_relationship = { value: this.familyForm.value.familyArr[0]['relationship'] ? this.familyForm.value.familyArr[0]['relationship'] : '' },
-        this.apiForm.field_occupation = { value: this.familyForm.value.familyArr[0]['occupation'] ? this.familyForm.value.familyArr[0]['occupation'] : '' };
+      // this.apiForm.field_name_of_your_family = { value: this.familyForm.value.familyArr[0]['names'] ? this.familyForm.value.familyArr[0]['names'] : '' },
+      //   this.apiForm.field_family_date_of_birth = { value: moment(this.familyForm.value.familyArr[0]['dob']).format() !== 'Invalid date' ? moment(this.familyForm.value.familyArr[0]['dob']).format() : '' },
+      //   this.apiForm.field_relationship = { value: this.familyForm.value.familyArr[0]['relationship'] ? this.familyForm.value.familyArr[0]['relationship'] : '' },
+      //   this.apiForm.field_occupation = { value: this.familyForm.value.familyArr[0]['occupation'] ? this.familyForm.value.familyArr[0]['occupation'] : '' };
 
+      const famArrays = [];
+      this.familyForm.value.familyArr.forEach((element, i) => {
+        famArrays.push({ field_name_of_your_family: { value: element['names'] }, field_family_date_of_birth: { value: moment(element['dob']).format() }, field_relationship: { value: element['relationship'] }, field_occupation: { value: element['occupation'] } });
+      });
+      this.apiForm['famArr'] = famArrays;
 
       this.appConfig.setLocalData('familyFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('familyFormTouched');
@@ -127,10 +141,10 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     if (fam) {
       return this.fb.group({
-        names: [fam.names, RemoveWhitespace.whitespace()],
-        dob: [fam.dob],
-        relationship: [fam.relationship, RemoveWhitespace.whitespace()],
-        occupation: [fam.occupation, RemoveWhitespace.whitespace()],
+        names: [fam['field_name_of_your_family']['value'], RemoveWhitespace.whitespace()],
+        dob: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
+        relationship: [fam['field_relationship']['value'], RemoveWhitespace.whitespace()],
+        occupation: [fam['field_occupation']['value'], RemoveWhitespace.whitespace()],
       });
     } else {
       return this.fb.group({
@@ -144,11 +158,23 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
 
   removefamilyForm(i) {
     this.familyArr.removeAt(i);
+    if (this.familyArr.length < 5) {
+      this.notShow = false;
+    } else {
+      this.notShow = true;
+    }
   }
 
   addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
-      this.familyArr.push(this.createItem(data));
+      if (this.familyArr.length < 5) {
+        this.familyArr.push(this.createItem(data));
+        if (this.familyArr.length < 5) {
+          this.notShow = false;
+        } else {
+          this.notShow = true;
+        }
+      }
     } else {
       this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
     }

@@ -88,5 +88,17 @@ export class FormCustomValidators {
     };
   }
 
+  static anyOneSelected(g: FormGroup) {
+    if (g.get('language').value) {
+      if (g.controls.language.value.length > 0) {
+        if (g.controls.read.value || g.controls.write.value || g.controls.speak.value) {
+          return null;
+        } else {
+          return { notSelected: true };
+        }
+      }
+
+    }
+  }
 
 }

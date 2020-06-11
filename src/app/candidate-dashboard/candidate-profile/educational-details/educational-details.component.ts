@@ -330,7 +330,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     { name: "Adhiyamaan College of Engineering", value: "Adhiyamaan College of Engineering" },
     { name: "SNS Institutions Group", value: "SNS Institutions Group" },
     { name: "JEPPIAAR MAAMALLAN ENGINEERING COLLEGE", value: "JEPPIAAR MAAMALLAN ENGINEERING COLLEGE" },
-    { name: "KANCHEEPURAM",  value: "KANCHEEPURAM" },
+    { name: "KANCHEEPURAM", value: "KANCHEEPURAM" },
     { name: "Park College of Engineering", value: "Park College of Engineering" },
     { name: "Park College of Engineering And Technology", value: "Park College of Engineering And Technology" },
     { name: "KGiSL Institute of Technology", value: "KGiSL Institute of Technology" },
@@ -671,37 +671,36 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    this.educationValuearray = [
-      {
-        leveling: this.apiForm && this.apiForm['field_level'] ? this.apiForm['field_level'].value : null,
-        board: this.apiForm && this.apiForm['field_board_university'] ? this.apiForm['field_board_university'].value : null,
-        institute: this.apiForm && this.apiForm['field_institute'] ? this.apiForm['field_institute'].value : null,
-        discipline: this.apiForm && this.apiForm['field_discipline'] ? this.apiForm['field_discipline'].value : null,
-        specification: this.apiForm && this.apiForm['field_specification'] ? this.apiForm['field_specification'].value : null,
-        passedYear: this.apiForm && this.apiForm['field_year_of_passing'] ? this.apiForm['field_year_of_passing'].value : null,
-        backlogs: this.apiForm && this.apiForm['field_backlogs'] ? this.apiForm['field_backlogs'].value : null,
-        percentage: this.apiForm && this.apiForm['field_percentage'] ? this.apiForm['field_percentage'].value : null,
-      },
-    ];
+    if (this.apiForm['eduArr'] && this.apiForm['eduArr'].length > 0) {
+      this.educationValuearray = this.apiForm['eduArr'];
+    } else {
+      this.educationValuearray = [];
+    }
 
     this.FormInitialization();
   }
 
   onSubmit(OptA) {
+
     if (this.educationForm.valid) {
 
       console.log(this.educationForm.value);
 
-      this.apiForm.field_level = { value: this.educationForm.value.educationArr[0]['leveling'] },
-        this.apiForm.field_board_university = { value: this.educationForm.value.educationArr[0]['board'] },
-        this.apiForm.field_institute = { value: this.educationForm.value.educationArr[0]['institute'] },
-        this.apiForm.field_discipline = { value: this.educationForm.value.educationArr[0]['discipline'] },
-        this.apiForm.field_specification = { value: this.educationForm.value.educationArr[0]['specification'] },
-        this.apiForm.field_year_of_passing = { value: moment(this.educationForm.value.educationArr[0]['passedYear']).format() },
-        this.apiForm.field_percentage = { value: this.educationForm.value.educationArr[0]['percentage'] },
-        this.apiForm.field_backlogs = { value: this.educationForm.value.educationArr[0]['backlogs'] ? this.educationForm.value.educationArr[0]['backlogs'] : '' },
+      const edArrays = [];
+      this.educationForm.value.educationArr.forEach((element, i) => {
+        edArrays.push({ field_level: { value: element.leveling }, field_board_university: { value: element.board }, field_institute: { value: element.institute }, field_discipline: { value: element.discipline }, field_specification: { value: element.specification }, field_year_of_passing: { value: moment(element['passedYear']).format() }, field_backlogs: { value: element.backlogs }, field_percentage: { value: element.percentage } });
+      });
+      this.apiForm['eduArr'] = edArrays;
+      // this.apiForm.field_level = { value: this.educationForm.value.educationArr[0]['leveling'] },
+      //   this.apiForm.field_board_university = { value: this.educationForm.value.educationArr[0]['board'] },
+      //   this.apiForm.field_institute = { value: this.educationForm.value.educationArr[0]['institute'] },
+      //   this.apiForm.field_discipline = { value: this.educationForm.value.educationArr[0]['discipline'] },
+      //   this.apiForm.field_specification = { value: this.educationForm.value.educationArr[0]['specification'] },
+      //   this.apiForm.field_year_of_passing = { value: moment(this.educationForm.value.educationArr[0]['passedYear']).format() },
+      //   this.apiForm.field_percentage = { value: this.educationForm.value.educationArr[0]['percentage'] },
+      //   this.apiForm.field_backlogs = { value: this.educationForm.value.educationArr[0]['backlogs'] ? this.educationForm.value.educationArr[0]['backlogs'] : '' },
 
-        this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+      this.appConfig.setLocalData('educationalFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('educationalFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
       this.appConfig.setLocalData('confirmClick', 'true');
@@ -741,23 +740,24 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     const numberOnly: RegExp = /^[0-9][0-9]{0,1}$/;
     const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?%?$)/;
     if (edu) {
+
       return this.fb.group({
-        leveling: [edu.leveling, [Validators.required, RemoveWhitespace.whitespace()]],
-        board: [edu.board, [Validators.required, RemoveWhitespace.whitespace()]],
-        institute: [edu.institute, [Validators.required]],
-        discipline: [edu.discipline, [Validators.required]],
-        specification: [edu.specification, [Validators.required, RemoveWhitespace.whitespace()]],
-        passedYear: [edu.passedYear, [Validators.required]],
-        backlogs: [edu.backlogs, [Validators.pattern(numberOnly)]],
-        percentage: [edu.percentage, [Validators.required, Validators.pattern(percentageDecimals)]],
+        leveling: [edu.field_level['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        board: [edu.field_board_university['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        institute: [edu.field_institute['value'], [Validators.required]],
+        discipline: [edu.field_discipline['value'], [Validators.required]],
+        specification: [edu.field_specification['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        passedYear: [edu.field_year_of_passing['value'], [Validators.required]],
+        backlogs: [edu.field_backlogs['value'], [Validators.pattern(numberOnly)]],
+        percentage: [edu.field_percentage['value'], [Validators.required, Validators.pattern(percentageDecimals)]],
       });
     } else {
       return this.fb.group({
-        leveling: [null, [Validators.required, RemoveWhitespace.whitespace()]],
-        board: [null, [Validators.required, RemoveWhitespace.whitespace()]],
+        leveling: [null, [RemoveWhitespace.whitespace(), Validators.required]],
+        board: [null, [RemoveWhitespace.whitespace(), Validators.required]],
         institute: [null, [Validators.required]],
         discipline: [null, [Validators.required]],
-        specification: [null, [Validators.required, RemoveWhitespace.whitespace()]],
+        specification: [null, [RemoveWhitespace.whitespace(), Validators.required]],
         passedYear: [null, [Validators.required]],
         backlogs: [null, [Validators.pattern(numberOnly)]],
         percentage: [null, [Validators.required, Validators.pattern(percentageDecimals)]],

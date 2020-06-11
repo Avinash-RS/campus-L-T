@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: 'app-kyc-submission-page',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KycSubmissionPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private appConfig: AppConfigService
+  ) { }
 
   ngOnInit() {
   }

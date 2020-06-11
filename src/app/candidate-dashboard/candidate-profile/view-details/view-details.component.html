@@ -1,5 +1,4 @@
-<div class="top-main-wrapper view-page"
-  *ngIf="userDetails">
+<div class="top-main-wrapper view-page" *ngIf="userDetails">
 
   <div class="top-grid">
     <div class="profile-wrapper">
@@ -22,9 +21,9 @@
         <input class="input" readonly type="text" [value]="userDetails['mobile']">
       </div>
       <div class="form-group">
-          <label>Aadhaar Number</label>
-          <input class="input" readonly type="text" [value]="userDetails['aadhaar']">
-        </div>
+        <label>Aadhaar Number</label>
+        <input class="input" readonly type="text" [value]="userDetails['aadhaar']">
+      </div>
       <div class="form-group">
         <label class="label-radio">Gender</label>
         <div class="radio">
@@ -122,22 +121,23 @@
       <div class="form-wrapper-left">
         <div class="form-group">
           <label>{{(i === 0 ? 'Languages Known' : '')}}</label>
-          <input class="input" readonly type="text" [value]="languages ? dup.languageRequired : ''">
+          <input class="input" readonly type="text" [value]="languages ? dup['field_language']['value'] : ''">
         </div>
       </div>
       <div class="form-wrapper-right">
         <div class="form-group">
-          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup.firstRead ? 'show' : 'hidden'}"
+          <div style="pointer-events: none;"
+            [ngStyle]="{'visibility': dup['field_read'][0]['value'] ? 'show' : 'hidden'}"
             class="custom-control custom-checkbox checkbox-xl">
             <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
             <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
           </div>
-          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup.firstWrite ? 'show' : 'hidden'}"
+          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup['field_write'][0]['value'] ? 'show' : 'hidden'}"
             class="custom-control custom-checkbox checkbox-xl">
             <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
             <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
           </div>
-          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup.firstSpeak ? 'show' : 'hidden'}"
+          <div style="pointer-events: none;" [ngStyle]="{'visibility': dup['field_speak'][0]['value'] ? 'show' : 'hidden'}"
             class="custom-control custom-checkbox checkbox-xl">
             <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
             <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
@@ -150,8 +150,7 @@
 
 
 </div>
-<div class="main-wrapper"
-  *ngIf="userDetails">
+<div class="main-wrapper" *ngIf="userDetails">
   <div class="main-heading-bottom">
     Passport related details
   </div>
@@ -261,28 +260,28 @@
         Year of passing
       </div>
       <div class="percentage-head">
-          Backlogs
-        </div>
-        <div class="percentage-head">
+        Backlogs
+      </div>
+      <div class="percentage-head">
         Percentage
       </div>
 
     </div>
 
     <div class="qualify-wrapper" *ngFor="let dup of userDetails['educationValuearray']">
-      <input class="level" readonly [value]="dup.leveling">
-      <input class="board" type="text" readonly [value]="dup.board">
-      <input class="institute" readonly [value]="dup.institute">
+      <input class="level" readonly [value]="dup['field_level']['value']">
+      <input class="board" type="text" readonly [value]="dup['field_board_university']['value']">
+      <input class="institute" readonly [value]="dup['field_institute']['value']">
 
-      <input class="discipline" readonly [value]="dup.discipline">
+      <input class="discipline" readonly [value]="dup['field_discipline']['value']">
 
-      <input class="specification" readonly [value]="dup.specification">
+      <input class="specification" readonly [value]="dup['field_specification']['value']">
 
-      <input class="year" readonly [value]="dup.passedYear">
+      <input class="year" readonly [value]="dup['field_year_of_passing']['value']">
 
-      <input class="percentage" readonly [value]="dup.backlogs">
+      <input class="percentage" readonly [value]="dup['field_backlogs']['value']">
 
-      <input class="percentage" readonly [value]="dup.percentage">
+      <input class="percentage" readonly [value]="dup['field_percentage']['value']">
 
 
     </div>
@@ -316,19 +315,19 @@
       <ng-container>
         <div class="text-box-grid" *ngFor="let dup of userDetails['familyValuesArr']">
           <div class="text-1">
-            {{dup.names ? dup.names : '-'}}
+            {{dup['field_name_of_your_family'] && dup['field_name_of_your_family']['value'] ? dup['field_name_of_your_family']['value'] : '-'}}
           </div>
           <div class="text-2">
-            {{dup.dob ? dup.dob : '-'}}
+            {{(dup['field_family_date_of_birth'] && dup['field_family_date_of_birth']['value'] != 'INVALID DATE') ? dup['field_family_date_of_birth']['value'] : '-'}}
           </div>
           <div class="text-3">
-            {{dup.relationship ? dup.relationship : '-'}}
+            {{dup['field_relationship'] && dup['field_relationship']['value'] ? dup['field_relationship']['value'] : '-'}}
           </div>
           <div class="text-4">
-            {{dup.occupation ? dup.occupation : '-'}}
+            {{dup['field_occupation'] && dup['field_occupation']['value'] ? dup['field_occupation']['value'] : '-'}}
           </div>
         </div>
-    <!-- When Array is empty -->
+        <!-- When Array is empty -->
         <!-- <div class="text-box-grid" *ngIf="userDetails['familyArray'].length < 1">
           <div class="text-1">
             {{'-'}}

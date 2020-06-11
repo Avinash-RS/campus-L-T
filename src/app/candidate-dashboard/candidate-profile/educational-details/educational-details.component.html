@@ -167,18 +167,18 @@
               </div>
             </div>
           </div>
-          <!-- <div class="add-remove-wrapper">
+          <div class="add-remove-wrapper">
             <ng-container
-              *ngIf="(eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)">
+              *ngIf="((eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)) && i < 9 ">
               <div (click)="addEducationForm()" class="add-button">
                 <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
                 <span>Add</span>
               </div>
-              <div *ngIf="i !== 0" class="or-text">
+              <div *ngIf="eduArr.controls.length !== 1" class="or-text">
                 Or
               </div>
             </ng-container>
-            <ng-container *ngIf="i !== 0">
+            <ng-container *ngIf="eduArr.controls.length !== 1">
               <div (click)="removeEducationForm(i)" class="remove-button">
                 <div>
                   <i class="material-icons">delete</i>
@@ -186,7 +186,7 @@
                 <span>Remove</span>
               </div>
             </ng-container>
-          </div> -->
+          </div>
 
         </div>
       </ng-container>

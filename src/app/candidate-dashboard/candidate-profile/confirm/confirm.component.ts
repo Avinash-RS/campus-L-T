@@ -48,6 +48,69 @@ export class ConfirmComponent implements OnInit {
     this.getLocalForm();
     this.onInitSignatureAssign();
 
+    this.convertEduArrToSingleVar();
+  }
+
+  convertEduArrToSingleVar() {
+    if (this.apiForm['eduArr']) {
+      this.apiForm['eduArr'].forEach((element, i) => {
+        if (i == '0') {
+          this.apiForm[`field_backlogs`] = element['field_backlogs'];
+          this.apiForm[`field_board_university`] = element['field_board_university'];
+          this.apiForm[`field_discipline`] = element['field_discipline'];
+          this.apiForm[`field_institute`] = element['field_institute'];
+          this.apiForm[`field_level`] = element['field_level'];
+          this.apiForm[`field_percentage`] = element['field_percentage'];
+          this.apiForm[`field_specification`] = element['field_specification'];
+          this.apiForm[`field_year_of_passing`] = element['field_year_of_passing'];
+        } else {
+          const num = i;
+          this.apiForm[`field_backlogs${num}`] = element['field_backlogs'];
+          this.apiForm[`field_board_university${num}`] = element['field_board_university'];
+          this.apiForm[`field_discipline${num}`] = element['field_discipline'];
+          this.apiForm[`field_institute${num}`] = element['field_institute'];
+          this.apiForm[`field_level${num}`] = element['field_level'];
+          this.apiForm[`field_percentage${num}`] = element['field_percentage'];
+          this.apiForm[`field_specification${num}`] = element['field_specification'];
+          this.apiForm[`field_year_of_passing${num}`] = element['field_year_of_passing'];
+        }
+      });
+    }
+
+    if (this.apiForm['langArr']) {
+      this.apiForm['langArr'].forEach((element, i) => {
+        if (i == '0') {
+          this.apiForm[`field_language`] = element['field_language'];
+          this.apiForm[`field_read`] = element['field_read'] && element['field_read'][0]['value'] ? [{ value: '1' }] : [{ value: '0' }];
+          this.apiForm[`field_write`] = element['field_write'] && element['field_write'][0]['value'] ? [{ value: '1' }] : [{ value: '0' }];
+          this.apiForm[`field_speak`] = element['field_speak'] && element['field_speak'][0]['value'] ? [{ value: '1' }] : [{ value: '0' }];
+        } else {
+          const num = i;
+          this.apiForm[`field_language${num}`] = element['field_language'];
+          this.apiForm[`field_read${num}`] = element['field_read'] && element['field_read'][0]['value'] ? [{ value: '1' }] : [{ value: '0' }];
+          this.apiForm[`field_write${num}`] = element['field_write'] && element['field_write'][0]['value'] ? [{ value: '1' }] : [{ value: '0' }];
+          this.apiForm[`field_speak${num}`] = element['field_speak'] && element['field_speak'][0]['value'] ? [{ value: '1' }] : [{ value: '0' }];
+        }
+      });
+    }
+
+    if (this.apiForm['famArr']) {
+      this.apiForm['famArr'].forEach((element, i) => {
+        if (i == '0') {
+          this.apiForm[`field_name_of_your_family`] = element['field_name_of_your_family'];
+          this.apiForm[`field_family_date_of_birth`] = element['field_family_date_of_birth'];
+          this.apiForm[`field_relationship`] = element['field_relationship'];
+          this.apiForm[`field_occupation`] = element['field_occupation'];
+        } else {
+          const num = i;
+          this.apiForm[`field_name_of_your_family${num}`] = element['field_name_of_your_family'];
+          this.apiForm[`field_family_date_of_birth${num}`] = element['field_family_date_of_birth'];
+          this.apiForm[`field_relationship${num}`] = element['field_relationship'];
+          this.apiForm[`field_occupation${num}`] = element['field_occupation'];
+        }
+      });
+    }
+    console.log('after', this.apiForm);
   }
 
   onInitSignatureAssign() {
@@ -84,6 +147,9 @@ export class ConfirmComponent implements OnInit {
   }
 
   submitKYCData() {
+    delete this.apiForm['eduArr'];
+    delete this.apiForm['langArr'];
+    delete this.apiForm['famArr'];
     this.apiForm.field_isformsubmitted = [{ value: true }];
     if (this.appConfig.getLocalData('profileData')) {
       // tslint:disable-next-line: quotemark
