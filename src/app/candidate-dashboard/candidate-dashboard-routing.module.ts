@@ -12,6 +12,7 @@ import { ViewDetailsComponent } from './candidate-profile/view-details/view-deta
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { KycAccessGuard } from '../guards/access-to-kyc-forms/kyc-access.guard';
 import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
+import { CanloadGuard } from '../guards/canload/canload.guard';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
     path: '', component: MasterDashboardComponent,
     children: [
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, component: CandidateProfileComponent, children: [
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, component: CandidateProfileComponent, canActivate: [CanloadGuard], children: [
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, component: PersonalDetailsComponent, canActivate: [KycAccessGuard]
           },

@@ -19,6 +19,9 @@ import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { KycSnackbarComponent } from './shared/kyc-snackbar/kyc-snackbar.component';
+import { CanloadGuard } from './guards/canload/canload.guard';
+import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
+import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 // import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';NZ_CONFIG
 registerLocaleData(en);
 
@@ -54,7 +57,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
-    CanDeactivateGuard
+    CanDeactivateGuard, CanloadGuard, AdmincanloadGuard, IsLoggedinGuard
   ],
   bootstrap: [AppComponent]
 })

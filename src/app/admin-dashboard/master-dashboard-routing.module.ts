@@ -6,6 +6,8 @@ import { CONSTANT } from '../constants/app-constants.service';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UsersListComponent } from './user-management/users-list/users-list.component';
 import { AddUserComponent } from './user-management/add-user/add-user.component';
+import { CanloadGuard } from '../guards/canload/canload.guard';
+import { AdmincanloadGuard } from '../guards/canload/admincanload.guard';
 
 
 const routes: Routes = [
@@ -13,7 +15,7 @@ const routes: Routes = [
     path: '', component: MasterDashboardComponent,
     children: [
       {
-        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`, component: DashboardComponent
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`, component: DashboardComponent, canActivate: [AdmincanloadGuard]
       },
       {
         path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`, component: UserManagementComponent, children: [
