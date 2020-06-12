@@ -13,6 +13,7 @@ import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { KycAccessGuard } from '../guards/access-to-kyc-forms/kyc-access.guard';
 import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
 import { CanloadGuard } from '../guards/canload/canload.guard';
+import { KycthanksGuard } from '../guards/canload/kycthanks.guard';
 
 
 const routes: Routes = [
@@ -55,7 +56,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, component: KycSubmissionPageComponent, canActivate: [CanloadGuard]
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, component: KycSubmissionPageComponent, canActivate: [KycthanksGuard]
   },
 
 ];

@@ -424,6 +424,12 @@
               <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
               <span *ngIf="t.hasError('notSelected')">Please select any one of the language proficiency</span>
             </div>
+            <div class="error"
+            *ngIf="t.controls[i].get('language').valid && t.controls[i].get('language').touched">
+            <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
+            <span *ngIf="t.controls[i].get('read').errors?.notSelected">Please select any one of the language proficiency</span>
+          </div>
+
         </div>
 
             <div class="input-boxes-4">
@@ -453,7 +459,7 @@
               </div>
 
             </div>
-            <div style="margin: 0; padding: 0; display: flex;">
+            <div style="margin: 0; padding: 0; display: flex;" [ngClass]="t['controls'].length == 1 ? 'hideClose' : ''">
               <button (click)="removeLanguage(i)" style="display: inline-flex; background: transparent; border: none;"
                 type="button">
                 <span class="material-icons">close</span>

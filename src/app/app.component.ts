@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {
+  Router, NavigationStart, NavigationEnd,
+  NavigationCancel, NavigationError, Event, ResolveEnd
+} from '@angular/router';
 import { ApiServiceService } from './services/api-service.service';
 import { AppConfigService } from './config/app-config.service';
 
@@ -8,11 +11,11 @@ import { AppConfigService } from './config/app-config.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'udap-registration';
 
   constructor(
-    private route: Router,
+    private router: Router,
     private apiService: ApiServiceService,
     private appConfig: AppConfigService
   ) {
@@ -32,5 +35,23 @@ export class AppComponent {
         this.appConfig.setSessionData('csrf', err.error.text);
       }
     });
+
+
+    this.router.events.subscribe((routerEvent: Event) => {
+      if (routerEvent instanceof NavigationStart) {
+        // console.log('start', routerEvent);
+      }
+      // On NavigationEnd or NavigationError or NavigationCancel
+      // set showLoadingIndicator to false
+      if (routerEvent instanceof NavigationEnd ||
+        routerEvent instanceof NavigationError ||
+        routerEvent instanceof NavigationCancel) {
+        // console.log(routerEvent);
+      }
+    });
+  }
+
+  ngOnInit() {
+
   }
 }

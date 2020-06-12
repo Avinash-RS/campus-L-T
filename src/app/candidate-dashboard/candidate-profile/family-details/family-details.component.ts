@@ -9,6 +9,7 @@ import moment from 'moment';
 import { differenceInCalendarDays } from 'date-fns/esm';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
+import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 
 @Component({
   selector: 'app-family-details',
@@ -31,13 +32,13 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
   apiForm: any;
   familyValuesArr: any;
   today = new Date();
+  notShow: boolean;
 
   disabledYears = (current: Date): boolean => {
 
     // Can not select days before today and today
     return differenceInCalendarDays(current, this.today) > 0;
   }
-  notShow: boolean;
 
   constructor(
     private appConfig: AppConfigService,
@@ -145,14 +146,14 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
         dob: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
         relationship: [fam['field_relationship']['value'], RemoveWhitespace.whitespace()],
         occupation: [fam['field_occupation']['value'], RemoveWhitespace.whitespace()],
-      });
+      }, { validator: FormCustomValidators.FamilyanyOneSelected });
     } else {
       return this.fb.group({
         names: [null, RemoveWhitespace.whitespace()],
         dob: [null],
         relationship: [null, RemoveWhitespace.whitespace()],
         occupation: [null, RemoveWhitespace.whitespace()],
-      });
+      }, { validator: FormCustomValidators.FamilyanyOneSelected });
     }
   }
 

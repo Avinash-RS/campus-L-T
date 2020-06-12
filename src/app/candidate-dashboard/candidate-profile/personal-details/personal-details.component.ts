@@ -813,6 +813,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.validateAllFields(this.presentAddressForm);
       this.validateAllFields(this.permanentAddressForm);
       this.validateAllFields(this.languagesForm);
+      this.validateAllFormArrays(this.languagesForm.get('languageAdd') as FormArray);
       this.validateAllFields(this.passportForm);
       this.validateAllFields(this.healthForm);
     }

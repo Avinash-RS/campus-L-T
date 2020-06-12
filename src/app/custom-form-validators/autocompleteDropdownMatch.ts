@@ -76,7 +76,6 @@ export class FormCustomValidators {
       // const pickedOrNot = myArray.filter(alias => alias.City === selectboxValue);
 
       if (c && c.value && c.value.isSameOrAfter(_moment())) {
-        // console.log(c.value.isSameOrAfter(_moment()));
 
         // everything's fine. return no error. therefore it's null.
         return null;
@@ -92,13 +91,36 @@ export class FormCustomValidators {
     if (g.get('language').value) {
       if (g.controls.language.value.length > 0) {
         if (g.controls.read.value || g.controls.write.value || g.controls.speak.value) {
+          g.controls['read'].setErrors(null);
           return null;
         } else {
-          return { notSelected: true };
+          return g.controls['read']['setErrors']({ notSelected: true });
+          // return { notSelected: true };
         }
       }
 
     }
   }
+
+  static FamilyanyOneSelected(g: FormGroup) {
+    if ((g.get('dob') && g.get('dob')['value']) || (g.get('relationship') && g.get('relationship')['value']) || (g.get('occupation') && g.get('occupation')['value'])) {
+      if ((g.get('dob')['value']) || (g.get('relationship')['value'] && g.get('relationship')['value'].length > 0) || (g.get('occupation')['value'] && g.get('occupation')['value'].length > 0)) {
+        if (!g.controls['names']['value'] || (g.controls['names']['value'].length < 1 || g.controls['names']['value'] == '' || g.controls['names']['value'] == null || g.controls['names']['value'] == undefined)) {
+          return g.controls['names']['setErrors']({ Namerequired: true });
+          // return { notSelected: true };
+        } else {
+          g.controls['names'].setErrors(null);
+          return null;
+        }
+      } else {
+        g.controls['names'].setErrors(null);
+        return null;
+      }
+    } else {
+      g.controls['names'].setErrors(null);
+      return null;
+    }
+  }
+
 
 }
