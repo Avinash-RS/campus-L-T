@@ -22,7 +22,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
+      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -56,7 +56,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
+      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
@@ -88,14 +88,14 @@ export class AdminServiceService {
     return this.http.get(`${this.BASE_URL}/rest/session/token`, { headers: this.withoutTokens() });
   }
   getToken() {
-    this.csrfToken().subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      // localStorage.setItem('csrf', data);
-    }, (err) => {
-      if (err.status === 200) {
-        this.appConfig.setSessionData('csrf', err.error.text);
-      }
-    });
+    // this.csrfToken().subscribe((data: any) => {
+    //   this.appConfig.hideLoader();
+    //   // localStorage.setItem('csrf', data);
+    // }, (err) => {
+    //   if (err.status === 200) {
+    //     this.appConfig.setSessionData('csrf', err.error.text);
+    //   }
+    // });
   }
 
   // Users List

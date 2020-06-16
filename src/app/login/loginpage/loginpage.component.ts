@@ -54,25 +54,25 @@ export class LoginpageComponent implements OnInit {
   }
 
   apiCalling() {
-    this.apiService.csrfToken().subscribe((data: any) => {
-    }, (err) => {
-      if (err.status === 200) {
-        this.appConfig.setSessionData('csrf', err.error.text);
-      }
-
+    this.apiService.getAllState().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
         this.appConfig.hideLoader();
         this.prePoulteEmailId = this.verifyArr[0]['name'];
         this.appConfig.success(`${data.message}`, '');
         this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
-      }, (error) => {
-        console.log(error);
+      }, (err) => {
+        console.log(err);
 
         if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
           this.appConfig.error(`${err.error.error}`, '');
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.VERIFY.EMAIL_ERROR);
         }
       });
+    }, (err) => {
+      // if (err.status === 200) {
+      //   this.appConfig.setSessionData('csrf', err.error.text);
+      // }
+
 
     });
   }
@@ -108,11 +108,8 @@ export class LoginpageComponent implements OnInit {
       name: this.loginForm.value.email,
       pass: this.loginForm.value.password
     };
-    this.apiService.csrfToken().subscribe((data: any) => {
-    }, (err) => {
-      if (err.status === 200) {
-        this.appConfig.setSessionData('csrf', err.error.text);
-      }
+    this.apiService.getAllState().subscribe((datas: any) => {
+
       // Login API
       if (this.loginForm.valid) {
         if (apiData.name && apiData.pass) {
@@ -138,6 +135,11 @@ export class LoginpageComponent implements OnInit {
       } else {
         this.validateAllFields(this.loginForm);
       }
+
+    }, (err) => {
+      // if (err.status === 200) {
+      //   this.appConfig.setSessionData('csrf', err.error.text);
+      // }
     });
 
 

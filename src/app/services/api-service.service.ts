@@ -23,7 +23,7 @@ export class ApiServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
+      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
     return headers;
   }
@@ -50,16 +50,16 @@ export class ApiServiceService {
     return this.http.get(`${this.BASE_URL}/rest/session/token`, { headers: this.withoutTokens() });
   }
   getToken() {
-    this.csrfToken().subscribe((data: any) => {
-      console.log(data);
+    // this.csrfToken().subscribe((data: any) => {
+    //   console.log(data);
 
-      this.appConfig.hideLoader();
-      // localStorage.setItem('csrf', data);
-    }, (err) => {
-      if (err.status === 200) {
-        this.appConfig.setSessionData('csrf', err.error.text);
-      }
-    });
+    //   this.appConfig.hideLoader();
+    //   // localStorage.setItem('csrf', data);
+    // }, (err) => {
+    //   if (err.status === 200) {
+    //     this.appConfig.setSessionData('csrf', err.error.text);
+    //   }
+    // });
   }
   // Registration
   RegistrationForm(formdata) {
@@ -113,10 +113,6 @@ export class ApiServiceService {
 
   // Login
   login(loginData) {
-    // this.getToken();
-    // this.datas is api body data
-    // return this.http.post(`${this.BASE_URL}/user/login?_format=json`, loginData,
-    //   { headers: this.getCustomHeaders(), withCredentials: true });
     return this.http.post(`${this.BASE_URL}/user/login?_format=json`, loginData,
       { headers: this.withoutTokens(), withCredentials: true });
 

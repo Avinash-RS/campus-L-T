@@ -65,7 +65,7 @@ export class ForgoPasswordComponent implements OnInit {
       this.apiService.forgotPassword(data).subscribe((success: any) => {
         this.appConfig.hideLoader();
         this.appConfig.consoleLog('success', success);
-        this.appConfig.success('Password Reset link has been successfully sent to your Email Id', '');
+        this.appConfig.success('Password Reset link has been successfully sent to your Email ID', '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {
       });

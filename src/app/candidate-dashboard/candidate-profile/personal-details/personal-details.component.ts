@@ -426,7 +426,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
           }
         ];
-        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family1'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'].length > 0) {
           const a = {
             field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'][0] ? organizeUserDetails['field_name_of_your_family1'][0]['value'] : '' },
             field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth1'] && organizeUserDetails['field_family_date_of_birth1'][0] ? organizeUserDetails['field_family_date_of_birth1'][0]['value'] : '' },
@@ -435,7 +435,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['famArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family2'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'].length > 0) {
           const a = {
             field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'][0] ? organizeUserDetails['field_name_of_your_family2'][0]['value'] : '' },
             field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth2'] && organizeUserDetails['field_family_date_of_birth2'][0] ? organizeUserDetails['field_family_date_of_birth2'][0]['value'] : '' },
@@ -444,7 +444,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['famArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family3'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'].length > 0) {
           const a = {
             field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'][0] ? organizeUserDetails['field_name_of_your_family3'][0]['value'] : '' },
             field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth3'] && organizeUserDetails['field_family_date_of_birth3'][0] ? organizeUserDetails['field_family_date_of_birth3'][0]['value'] : '' },
@@ -453,7 +453,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['famArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family4'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'].length > 0) {
           const a = {
             field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'][0] ? organizeUserDetails['field_name_of_your_family4'][0]['value'] : '' },
             field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth4'] && organizeUserDetails['field_family_date_of_birth4'][0] ? organizeUserDetails['field_family_date_of_birth4'][0]['value'] : '' },
@@ -473,7 +473,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
           }
         ];
-        if (organizeUserDetails && organizeUserDetails['field_language1'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_language1'] && organizeUserDetails['field_language1'].length > 0) {
           const a = {
             field_language: { value: organizeUserDetails && organizeUserDetails['field_language1'] && organizeUserDetails['field_language1'][0] ? organizeUserDetails['field_language1'][0]['value'] : '' },
             field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read1'] && organizeUserDetails['field_read1'][0] ? organizeUserDetails['field_read1'][0]['value'] : '' }],
@@ -482,7 +482,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['langArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_language2'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_language2'] && organizeUserDetails['field_language2'].length > 0) {
           const a = {
             field_language: { value: organizeUserDetails && organizeUserDetails['field_language2'] && organizeUserDetails['field_language2'][0] ? organizeUserDetails['field_language2'][0]['value'] : '' },
             field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read2'] && organizeUserDetails['field_read2'][0] ? organizeUserDetails['field_read2'][0]['value'] : '' }],
@@ -491,7 +491,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['langArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_language3'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_language3'] && organizeUserDetails['field_language3'].length > 0) {
           const a = {
             field_language: { value: organizeUserDetails && organizeUserDetails['field_language3'] && organizeUserDetails['field_language3'][0] ? organizeUserDetails['field_language3'][0]['value'] : '' },
             field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read3'] && organizeUserDetails['field_read3'][0] ? organizeUserDetails['field_read3'][0]['value'] : '' }],
@@ -500,7 +500,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['langArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_language4'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_language4'] && organizeUserDetails['field_language4'].length > 0) {
           const a = {
             field_language: { value: organizeUserDetails && organizeUserDetails['field_language4'] && organizeUserDetails['field_language4'][0] ? organizeUserDetails['field_language4'][0]['value'] : '' },
             field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read4'] && organizeUserDetails['field_read4'][0] ? organizeUserDetails['field_read4'][0]['value'] : '' }],
@@ -509,7 +509,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['langArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_language5'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_language5'] && organizeUserDetails['field_language5'].length > 0) {
           const a = {
             field_language: { value: organizeUserDetails && organizeUserDetails['field_language5'] && organizeUserDetails['field_language5'][0] ? organizeUserDetails['field_language5'][0]['value'] : '' },
             field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read5'] && organizeUserDetails['field_read5'][0] ? organizeUserDetails['field_read5'][0]['value'] : '' }],
@@ -532,7 +532,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
           }
         ];
-        if (organizeUserDetails && organizeUserDetails['field_level1'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level1'] && organizeUserDetails['field_level1'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level1'] && organizeUserDetails['field_level1'][0] ? organizeUserDetails['field_level1'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university1'] && organizeUserDetails['field_board_university1'][0] ? organizeUserDetails['field_board_university1'][0]['value'] : '' },
@@ -545,7 +545,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level2'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level2'] && organizeUserDetails['field_level2'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level2'] && organizeUserDetails['field_level2'][0] ? organizeUserDetails['field_level2'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university2'] && organizeUserDetails['field_board_university2'][0] ? organizeUserDetails['field_board_university2'][0]['value'] : '' },
@@ -558,7 +558,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level3'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level3'] && organizeUserDetails['field_level3'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level3'] && organizeUserDetails['field_level3'][0] ? organizeUserDetails['field_level3'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university3'] && organizeUserDetails['field_board_university3'][0] ? organizeUserDetails['field_board_university3'][0]['value'] : '' },
@@ -571,7 +571,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level4'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level4'] && organizeUserDetails['field_level4'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level4'] && organizeUserDetails['field_level4'][0] ? organizeUserDetails['field_level4'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university4'] && organizeUserDetails['field_board_university4'][0] ? organizeUserDetails['field_board_university4'][0]['value'] : '' },
@@ -584,7 +584,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level5'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level5'] && organizeUserDetails['field_level5'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level5'] && organizeUserDetails['field_level5'][0] ? organizeUserDetails['field_level5'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university5'] && organizeUserDetails['field_board_university5'][0] ? organizeUserDetails['field_board_university5'][0]['value'] : '' },
@@ -597,7 +597,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level6'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level6'] && organizeUserDetails['field_level6'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level6'] && organizeUserDetails['field_level6'][0] ? organizeUserDetails['field_level6'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university6'] && organizeUserDetails['field_board_university6'][0] ? organizeUserDetails['field_board_university6'][0]['value'] : '' },
@@ -610,7 +610,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level7'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level7'] && organizeUserDetails['field_level7'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level7'] && organizeUserDetails['field_level7'][0] ? organizeUserDetails['field_level7'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university7'] && organizeUserDetails['field_board_university7'][0] ? organizeUserDetails['field_board_university7'][0]['value'] : '' },
@@ -623,7 +623,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level8'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level8'] && organizeUserDetails['field_level8'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level8'] && organizeUserDetails['field_level8'][0] ? organizeUserDetails['field_level8'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university8'] && organizeUserDetails['field_board_university8'][0] ? organizeUserDetails['field_board_university8'][0]['value'] : '' },
@@ -636,7 +636,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
-        if (organizeUserDetails && organizeUserDetails['field_level9'].length > 0) {
+        if (organizeUserDetails && organizeUserDetails['field_level9'] && organizeUserDetails['field_level9'].length > 0) {
           const a = {
             field_level: { value: organizeUserDetails && organizeUserDetails['field_level9'] && organizeUserDetails['field_level9'][0] ? organizeUserDetails['field_level9'][0]['value'] : '' },
             field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university9'] && organizeUserDetails['field_board_university9'][0] ? organizeUserDetails['field_board_university9'][0]['value'] : '' },

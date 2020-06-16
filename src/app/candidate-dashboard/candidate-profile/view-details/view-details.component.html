@@ -254,7 +254,7 @@
         Discipline
       </div>
       <div class="specification-head">
-        Specification
+        Specialization
       </div>
       <div class="year-head">
         Year of passing
@@ -678,7 +678,7 @@
         Discipline
       </div>
       <div class="specification-head">
-        Specification
+        Specialization
       </div>
       <div class="year-head">
         Year of passing
@@ -820,8 +820,8 @@
 </div>
 
 <div class="submit-button-wrapper">
-  <button (click)="edit()" mat-raised-button type="button">Edit</button>
+  <button *ngIf="showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
 
-  <button (click)="onSubmit()" mat-raised-button type="button">Next</button>
+  <button *ngIf="showNext" (click)="onSubmit()" mat-raised-button type="button">Next</button>
 
 </div>

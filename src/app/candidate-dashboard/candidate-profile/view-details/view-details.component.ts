@@ -19,37 +19,12 @@ export class ViewDetailsComponent implements OnInit {
   radioIsChecked = 'checked';
   userDetails: any;
 
-  languages = [
-    {
-      name: 'English',
-      proficiency: {
-        read: true,
-        write: true,
-        speak: false
-      }
-    },
-    {
-      name: 'Tamil',
-      proficiency: {
-        read: false,
-        write: true,
-        speak: true
-      }
-    },
-    {
-      name: 'English',
-      proficiency: {
-        read: false,
-        write: true,
-        speak: false
-      }
-    },
-  ];
   userData: any;
   apiForm: any;
   KYCModifiedData: any;
   localPhoto: any;
   url: any;
+  showNext: boolean;
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.appConfig.getLocalData('confirmClick') == 'true') {
@@ -78,6 +53,10 @@ export class ViewDetailsComponent implements OnInit {
       this.getLocalForm(data);
     } else {
       this.getUserDetails();
+    }
+
+    if (this.appConfig.getLocalData('field_isformsubmitted') && this.appConfig.getLocalData('field_isformsubmitted') !== 'true') {
+      this.showNext = true;
     }
   }
 

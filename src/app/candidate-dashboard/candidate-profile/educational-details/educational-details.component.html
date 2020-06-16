@@ -91,11 +91,11 @@
               <div class="outer-box-wrapper">
                   <div class="label-wrapper">
                       <div class="label">
-                        <label>Specification*</label>
+                        <label>Specialization*</label>
                       </div>
 
                 <div class="input-box">
-                    <input (focusout)="detectInput(educationForm)" placeholder="Specification" formControlName="specification"
+                    <input (focusout)="detectInput(educationForm)" placeholder="Specialization" formControlName="specification"
                     type="text" value="">
                   <!-- <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear
                     nzShowSearch nzPlaceHolder="Specification">
@@ -105,7 +105,7 @@
               </div>
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('specification').invalid && eduArr.controls[i].get('specification').touched">
-                  <span *ngIf="eduArr.controls[i].get('specification').errors?.required">Specification is
+                  <span *ngIf="eduArr.controls[i].get('specification').errors?.required">Specialization is
                     Required</span>
                 </div>
 

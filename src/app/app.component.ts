@@ -26,15 +26,15 @@ export class AppComponent implements OnInit {
     this.appConfig.clearLocalDataOne('generalFormTouched');
 
 
-    this.apiService.csrfToken().subscribe((data: any) => {
-      console.log(data);
-      // localStorage.setItem('csrf', data);
-      this.appConfig.hideLoader();
-    }, (err) => {
-      if (err.status === 200) {
-        this.appConfig.setSessionData('csrf', err.error.text);
-      }
-    });
+    // this.apiService.csrfToken().subscribe((data: any) => {
+    //   console.log(data);
+    //   // localStorage.setItem('csrf', data);
+    //   this.appConfig.hideLoader();
+    // }, (err) => {
+    //   if (err.status === 200) {
+    //     this.appConfig.setSessionData('csrf', err.error.text);
+    //   }
+    // });
 
 
     this.router.events.subscribe((routerEvent: Event) => {
