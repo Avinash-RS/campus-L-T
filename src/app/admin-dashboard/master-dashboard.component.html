@@ -8,11 +8,11 @@
     &#160;
   </mat-drawer>
   <mat-drawer-content class="main-toolbar">
-    <ng-container *ngIf="subMenus.length > 0">
+    <ng-container *ngIf="subMenus && subMenus.length > 0">
       <div [routerLink]="subMenus.router"
         *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active">
-        <div><img src="assets/images/{{subMenus.icon}}" alt=""></div>
-        <div>{{subMenus.name}}</div>
+        <div *ngIf="subMenus.icon"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
+        <div *ngIf="subMenus.name">{{subMenus.name}}</div>
       </div>
     </ng-container>
   </mat-drawer-content>

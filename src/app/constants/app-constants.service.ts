@@ -53,6 +53,15 @@ export const CONSTANT = {
       PROFILE_VIEW_DETAILS: '/candidate/profile/view',
       PROFILE_CONFIRM: '/candidate/profile/confirm',
       KYC_THANKS: '/candidate/kyc/submitted'
+    },
+    HR_DASHBOARD: {
+      HOME: '/hr',
+      DASHBOARD: '/hr/dashboard',
+      SHORTLISTING: '/hr/shortlist',
+      FIRSTSHORTLISTING: '/hr/shortlist/1st',
+      USER_MANAGEMENT: '/hr/user-management',
+      USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
+
     }
 
   },
@@ -95,6 +104,14 @@ export const CONSTANT = {
       PROFILE_VIEW_DETAILS: 'view',
       PROFILE_CONFIRM: 'confirm',
       KYC_THANKS: 'kyc/submitted'
+    },
+    HR_DASHBOARD: {
+      HOME: 'hr',
+      DASHBOARD: 'dashboard',
+      SHORTLISTING: 'shortlist',
+      FIRSTSHORTLISTING: '1st',
+      USER_MANAGEMENT: 'user-management',
+      USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
     }
   }
 };

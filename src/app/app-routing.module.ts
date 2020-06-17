@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
+import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,9 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HOME}`, loadChildren: './candidate-dashboard/candidate-dashboard.module#CandidateDashboardModule', canLoad: [ CanloadGuard ]
+  },
+  {
+    path: `${CONSTANT.ROUTES.HR_DASHBOARD.HOME}`, loadChildren: './hr-dashboard/hr-dashboard.module#HrDashboardModule', canLoad: [ HrcanloadGuard ]
   }
 ];
 

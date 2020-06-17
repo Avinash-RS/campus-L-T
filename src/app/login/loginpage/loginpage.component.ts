@@ -126,7 +126,7 @@ export class LoginpageComponent implements OnInit {
              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
             } else {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
             }
