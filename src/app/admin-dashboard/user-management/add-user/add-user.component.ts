@@ -102,7 +102,8 @@ export class AddUserComponent implements OnInit {
     if (this.addUserForm.valid) {
       // For add user API
       const addUserDatas = {
-        name: [{ value: this.addUserForm.value.name }],
+        name: [{ value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email }],
+        field_user_name: [{value: this.addUserForm.value.name}],
         mail: [{ value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email }],
         roles: [{ target_id: 'hr' }],
         status: [{ value: '1' }]
@@ -115,7 +116,8 @@ export class AddUserComponent implements OnInit {
           }
         },
         mail: { value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email },
-        name: { value: this.addUserForm.value.name },
+        field_user_name: [{value: this.addUserForm.value.name}],
+        name: { value: this.editDetails ? this.editDetails.mail : this.addUserForm.value.email },
         roles: [{ target_id: this.addUserForm.value.role ? this.addUserForm.value.role : '' }]
       };
       // Data to be shared for modal box components

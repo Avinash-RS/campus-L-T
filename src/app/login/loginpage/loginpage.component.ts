@@ -123,9 +123,12 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
-              this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+             return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+            }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
             } else {
-              this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
             }
 
           }, (error) => {

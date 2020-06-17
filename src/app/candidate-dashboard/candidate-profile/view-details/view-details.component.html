@@ -121,7 +121,7 @@
       <div class="form-wrapper-left">
         <div class="form-group">
           <label>{{(i === 0 ? 'Languages Known' : '')}}</label>
-          <input class="input" readonly type="text" [value]="languages ? dup['field_language']['value'] : ''">
+          <input class="input" readonly type="text" [value]="dup['field_language'] ? dup['field_language']['value'] : ''">
         </div>
       </div>
       <div class="form-wrapper-right">

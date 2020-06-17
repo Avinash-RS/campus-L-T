@@ -18,7 +18,11 @@ export class AdmincanloadGuard implements CanLoad {
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
       return true;
-    } else {
+    }
+    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'hr')) {
+      return true;
+    }
+    else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();
@@ -41,7 +45,11 @@ export class AdmincanloadGuard implements CanLoad {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
       return true;
-    } else {
+    }
+    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'hr')) {
+      return true;
+    }
+    else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();
