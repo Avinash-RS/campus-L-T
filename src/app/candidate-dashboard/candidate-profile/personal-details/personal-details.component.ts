@@ -147,6 +147,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   localUserEmail: any;
   lang: { language: string; read: boolean; write: boolean; speak: boolean; }[];
   notShow: boolean;
+  allStatess: any;
+  allCitiess: any;
+  allPCitiess: any;
+  hideCityDropDown: boolean;
+  hidePermanentCityDropDown: boolean;
 
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
@@ -177,6 +182,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   ngOnInit() {
+    this.updatedStateAPI();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -203,6 +209,18 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
 
+  }
+
+  updatedStateAPI() {
+    const datas = {
+      country_id: '101'
+    };
+    this.candidateService.updatedState(datas).subscribe((data: any) => {
+      this.allStatess = data[0];
+
+    }, (err) => {
+
+    });
   }
 
 
@@ -242,9 +260,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     this.userData = data;
     if (this.userData) {
-      const organizeUserDetails = data;
       this.KYCModifiedData = data;
-      console.log(this.KYCModifiedData);
+      const organizeUserDetails = data;
 
       if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
         this.url = null;
@@ -257,14 +274,37 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       }
       this.checked = this.KYCModifiedData['field_address_checkbox'] && this.KYCModifiedData['field_address_checkbox']['value'] == "1" ? true : false;
 
+      const dataCity = this.KYCModifiedData['field_present_state'] && this.KYCModifiedData['field_present_state']['value'] ? this.KYCModifiedData['field_present_state']['value'] : '';
+      const dataPermanentCity = this.KYCModifiedData['field_permanent_state'] && this.KYCModifiedData['field_permanent_state']['value'] ? this.KYCModifiedData['field_permanent_state']['value'] : '';
+      if (dataCity) {
+        const ApiData = {
+          state_id: dataCity
+        };
+        this.getUpdatedCity(ApiData);
+      } else {
+        this.hideCityDropDown = true;
+      }
+
+      if (dataPermanentCity) {
+        const ApiData = {
+          state_id: dataPermanentCity
+        };
+        this.getPUpdatedCity(ApiData);
+      } else {
+        this.hidePermanentCityDropDown = true;
+      }
+
+
     } else {
       this.url = '';
     }
-    if (this.KYCModifiedData['langArr'].length > 0) {
+    if (this.KYCModifiedData['langArr'] && this.KYCModifiedData['langArr'].length > 0) {
       this.lang = this.KYCModifiedData['langArr'];
     } else {
       this.lang = [];
     }
+
+
 
     this.FormsInitialization();
 
@@ -341,11 +381,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           field_permanent_city: { value: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'][0] ? organizeUserDetails['field_permanent_city'][0]['value'] : '' },
           field_permanent_state: { value: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'][0] ? organizeUserDetails['field_permanent_state'][0]['value'] : '' },
 
-          // field_language: { value: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'][0] ? organizeUserDetails['field_language'][0]['value'] : '' },
-
-          // field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
-          // field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
-          // field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
 
           field_passport_number: { value: organizeUserDetails && organizeUserDetails['field_passport_number'] && organizeUserDetails['field_passport_number'][0] ? organizeUserDetails['field_passport_number'][0]['value'] : '' },
           field_name_as_in_passport: { value: organizeUserDetails && organizeUserDetails['field_name_as_in_passport'] && organizeUserDetails['field_name_as_in_passport'][0] ? organizeUserDetails['field_name_as_in_passport'][0]['value'] : '' },
@@ -377,22 +412,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
               status: 'true'
             }
           ],
-
-          // Educational
-          // field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
-          // field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
-          // field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '' },
-          // field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
-          // field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
-          // field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
-          // field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
-          // field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
-
-          // Family
-          // field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family'] && organizeUserDetails['field_name_of_your_family'][0] ? organizeUserDetails['field_name_of_your_family'][0]['value'] : '' },
-          // field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
-          // field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
-          // field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
 
           // General
           field_skills: organizeUserDetails && organizeUserDetails['field_skills'] ? organizeUserDetails && organizeUserDetails['field_skills'] : [{ value: '' }],
@@ -661,6 +680,28 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
         console.log('final', this.KYCModifiedData);
 
+        const dataCity = { value: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'][0] ? organizeUserDetails['field_present_state'][0]['value'] : '' };
+        const dataPermanentCity = { value: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'][0] ? organizeUserDetails['field_permanent_state'][0]['value'] : '' };
+
+        if (dataCity && dataCity.value) {
+          const ApiData = {
+            state_id: dataCity.value
+          };
+          this.getUpdatedCity(ApiData);
+        } else {
+          this.hideCityDropDown = true;
+        }
+
+        if (dataPermanentCity && dataPermanentCity.value) {
+          const ApiData = {
+            state_id: dataPermanentCity.value
+          };
+          this.getPUpdatedCity(ApiData);
+        } else {
+          this.hidePermanentCityDropDown = true;
+        }
+
+
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.hideLoader();
@@ -696,6 +737,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         };
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
+        this.hideCityDropDown = true;
+        this.hidePermanentCityDropDown = true;
         this.appConfig.hideLoader();
       }
       this.FormsInitialization();
@@ -709,6 +752,65 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     });
   }
 
+  getUpdatedCity(ApiData) {
+    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+      this.hideCityDropDown = false;
+      this.allCitiess = datas[0];
+      this.appConfig.hideLoader();
+    }, (err) => {
+    });
+  }
+
+  getPUpdatedCity(ApiData) {
+    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+      this.hidePermanentCityDropDown = false;
+      this.allPCitiess = datas[0];
+      this.appConfig.hideLoader();
+    }, (err) => {
+    });
+  }
+
+  detectStateSelectChange(data) {
+
+    if (data.value) {
+      const ApiData = {
+        state_id: data.value
+      };
+      this.presentAddressForm.patchValue({
+        presentCity: null
+      });
+      this.getUpdatedCity(ApiData);
+    } else {
+      this.presentAddressForm.patchValue({
+        presentCity: null
+      });
+      this.allCitiess = [];
+      this.hideCityDropDown = true;
+    }
+    this.appConfig.setLocalData('personalFormTouched', 'true');
+  }
+
+  detectPermanentStateSelectChange(data) {
+
+    if (data.value) {
+      const ApiData = {
+        state_id: data.value
+      };
+      this.permanentAddressForm.patchValue({
+        permanentCity: null
+      });
+      this.getPUpdatedCity(ApiData);
+    } else {
+      this.permanentAddressForm.patchValue({
+        permanentCity: null
+      });
+      this.allPCitiess = [];
+      this.hidePermanentCityDropDown = true;
+    }
+    this.appConfig.setLocalData('personalFormTouched', 'true');
+  }
+
+
   detectSelectChange() {
     this.appConfig.setLocalData('personalFormTouched', 'true');
   }
@@ -721,14 +823,22 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
     if (this.checked === true) {
-      this.permanentAddressForm.patchValue({
+      this.hidePermanentCityDropDown = false;
+      this.permanentAddressForm.setValue({
         permanentAddress1: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '',
         permanentAddress2: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '',
         permanentZipCode: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '',
-        permanentCity: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '',
+        permanentCity: this.presentAddressForm.value.presentCity.toString(),
         permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '',
       });
     }
+
+    if (this.checked === true) {
+      this.permanentAddressForm.patchValue({
+        permanentCity: this.presentAddressForm.value.presentCity.toString(),
+      });
+    }
+
 
     if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
       && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
@@ -908,7 +1018,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   get t() { return this.languagesForm.get('languageAdd') as FormArray; }
 
   languagePatch(dataArray) {
-    console.log(dataArray);
 
     if (dataArray && dataArray.length > 0) {
       dataArray.forEach(lang => {

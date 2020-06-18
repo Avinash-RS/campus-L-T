@@ -9,6 +9,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 import { MaterialModule } from '../material/material.module';
 import { ModalBoxComponent } from './modal-box/modal-box.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 // Ant design module
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
@@ -83,6 +84,7 @@ import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
     RouterModule,
     HttpClientModule,
     MaterialModule,
+    NgMultiSelectDropDownModule.forRoot(),
 
     // Ant design Modules
     NzAffixModule,
@@ -159,6 +161,7 @@ import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
     DashboardHeaderComponent,
     ModalBoxComponent,
     KycSnackbarComponent,
+    NgMultiSelectDropDownModule,
 
     // Ant design modules
     NzAffixModule,

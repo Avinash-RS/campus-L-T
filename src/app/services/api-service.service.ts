@@ -63,19 +63,16 @@ export class ApiServiceService {
   }
   // Registration
   RegistrationForm(formdata) {
-    this.getToken();
     return this.http.post(`${this.BASE_URL}/entity/user?_format=hal_json`, formdata,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   CandidateRegistrationForm(formdata) {
-    this.getToken();
     return this.http.post(`${this.BASE_URL}/rest/create-account?_format=json`, formdata,
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
   emailVerification(data) {
-    this.getToken();
     return this.http.post(`${this.BASE_URL}/rest/verify-account?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
@@ -98,14 +95,12 @@ export class ApiServiceService {
   }
 
   passwordTokenVerification(data) {
-    this.getToken();
     return this.http.post(`${this.BASE_URL}/rest/verify-password?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });
   }
 
   // Reset Password
   passwordReset(data) {
-    this.getToken();
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/lost-password-reset?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });

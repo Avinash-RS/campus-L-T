@@ -25,7 +25,6 @@ import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { KycthanksGuard } from './guards/canload/kycthanks.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
-// import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';NZ_CONFIG
 registerLocaleData(en);
 
 const ngZorroConfig: NzConfig = {

@@ -51,16 +51,6 @@ export class AdminServiceService {
   }
 
 
-  getCustomHeadersWithBasicAuth(): HttpHeaders {
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    })
-      .set('Content-Type', 'application/json')
-      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
-    return headers;
-  }
 
   getAfterCustomHeaders(): HttpHeaders {
     const headers = new HttpHeaders({

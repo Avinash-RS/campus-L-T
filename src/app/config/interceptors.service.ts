@@ -29,6 +29,11 @@ export class InterceptorsService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
+        if (!request.headers.has('Content-Type')) {
+          // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
+          request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
+      }
+
         if (event instanceof HttpResponse) {
           // this.appConfig.hideLoader();
           return event;

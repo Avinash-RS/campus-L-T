@@ -237,30 +237,11 @@
         </div>
         <div class="label-box-2-auto-complete">
           <div class="input-boxes-1">
-            <label>City</label>
-            <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="presentCity" nzAllowClear nzShowSearch>
-                <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
-              </nz-select>
-              <!-- <input type="hidden" name="country" id="countryId" value="IN"/>
-              <select name="state" class="states order-alpha" id="stateId">
-                  <option value="">Select State</option>
-              </select>
-              <select name="city" class="cities order-alpha" id="cityId">
-                  <option value="">Select City</option>
-              </select> -->
-            </div>
-            <div class="error" *ngIf="presentCity.invalid && presentCity.touched">
-              <span *ngIf="presentCity.errors?.required">City is Required</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="presentState" nzAllowClear
+              <nz-select (ngModelChange)="detectStateSelectChange(presentState)" formControlName="presentState" nzAllowClear
                 nzShowSearch>
-                <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
+                <nz-option *ngFor="let state of allStatess" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
               </nz-select>
             </div>
             <div class="error" *ngIf="presentState.invalid && presentState.touched">
@@ -271,6 +252,19 @@
             </div>
 
           </div>
+          <div class="input-boxes-1">
+              <label>City</label>
+              <div class="input-box" [matTooltip]="hideCityDropDown ? 'Please select your state' : ''">
+                <nz-select (ngModelChange)="detectSelectChange()" [ngClass]="hideCityDropDown ? 'hideDropDown' : ''" formControlName="presentCity" nzAllowClear nzShowSearch>
+                    <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
+                    <nz-option *ngFor="let city of allCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
+                </nz-select>
+              </div>
+              <div class="error" *ngIf="presentCity.invalid && presentCity.touched">
+                <span *ngIf="presentCity.errors?.required">City is Required</span>
+              </div>
+
+            </div>
 
         </div>
 
@@ -326,27 +320,11 @@
         </div>
         <div class="label-box-2">
           <div class="input-boxes-1">
-            <label>City</label>
-            <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="permanentCity" nzAllowClear
-                nzShowSearch>
-                <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
-              </nz-select>
-            </div>
-            <div class="error" *ngIf="permanentCity.invalid && permanentCity.touched">
-              <span *ngIf="permanentCity.errors?.required">City is Required</span>
-              <span *ngIf="!permanentCity.errors?.required && permanentCity.errors?.dropdownNotMatch">Please select
-                the
-                city from drop down</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="permanentState" nzAllowClear
+              <nz-select (ngModelChange)="detectPermanentStateSelectChange(permanentState)" formControlName="permanentState" nzAllowClear
                 nzShowSearch>
-                <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
+                <nz-option *ngFor="let state of allStatess" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
               </nz-select>
             </div>
             <div class="error" *ngIf="permanentState.invalid && permanentState.touched">
@@ -357,7 +335,25 @@
             </div>
 
           </div>
-        </div>
+
+          <div class="input-boxes-1">
+              <label>City</label>
+              <div class="input-box" [matTooltip]="hidePermanentCityDropDown ? 'Please select your state' : ''">
+                <nz-select (ngModelChange)="detectSelectChange()" [ngClass]="hidePermanentCityDropDown ? 'hideDropDown' : ''" formControlName="permanentCity" nzAllowClear
+                  nzShowSearch>
+                  <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
+                  <nz-option *ngFor="let city of allPCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
+                </nz-select>
+              </div>
+              <div class="error" *ngIf="permanentCity.invalid && permanentCity.touched">
+                <span *ngIf="permanentCity.errors?.required">City is Required</span>
+                <span *ngIf="!permanentCity.errors?.required && permanentCity.errors?.dropdownNotMatch">Please select
+                  the
+                  city from drop down</span>
+              </div>
+
+            </div>
+          </div>
 
       </div>
     </div>

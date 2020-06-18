@@ -11,6 +11,10 @@
 .hideClose {
   visibility: hidden;
 }
+.hideDropDown {
+  pointer-events: none;
+  background: rgba(128, 128, 128, 0.328) !important;
+}
 .grid-wrapper {
   display: grid;
   grid-template-columns: 2fr 1fr;

@@ -17,15 +17,6 @@ export class CandidateMappersService {
     private appConfig: AppConfigService
   ) { }
 
-  getCustomHeaders(): HttpHeaders {
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    })
-      .set('Content-Type', 'application/json')
-      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
-      .set('Access-Control-Allow-Origin', '*');
-    return headers;
-  }
 
   getAfterCustomHeadersWithBasicAuth(): HttpHeaders {
     const headers = new HttpHeaders({
@@ -49,17 +40,6 @@ export class CandidateMappersService {
     return headers;
   }
 
-
-  getCustomHeadersWithBasicAuth(): HttpHeaders {
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    })
-      .set('Content-Type', 'application/json')
-      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
-    return headers;
-  }
 
   getAfterCustomHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
@@ -95,16 +75,6 @@ export class CandidateMappersService {
     return headers;
   }
 
-  BasicAuthwithoutTokens(): HttpHeaders {
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    })
-      .set('Content-Type', 'application/json')
-      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
-      .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
-    return headers;
-  }
 
   // For generating new static token for before login requests
   csrfToken() {
@@ -169,6 +139,14 @@ export class CandidateMappersService {
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/logout?_format=json&token=${logoutToken}`, logoutToken,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  updatedState(Id) {
+    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, {headers: this.withoutTokens(), withCredentials: true});
+  }
+
+  updatedCity(Id) {
+    return this.http.post(`${this.BASE_URL}/api/city_api`, Id, {headers: this.withoutTokens(), withCredentials: true});
   }
 
 }
