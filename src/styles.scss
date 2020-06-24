@@ -141,6 +141,254 @@ body {
   }
 }
 
+// Mat checkbox
+.mat-checkbox-inner-container {
+  display: inline-block;
+  line-height: 0;
+  margin: auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-right: 8px;
+  order: 0;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0;
+}
+::ng-deep
+  .mat-checkbox-checked.mat-accent
+  .mat-checkbox-ripple
+  .mat-ripple-element {
+  opacity: 0.03 !important;
+  background-color: #2ba54b !important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #2ba54b !important;
+}
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element,
+.mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element {
+    background-color: #2ba54b !important;
+}
+.mat-column-checked {
+  text-align: center !important;
+}
+
+// Mat radio
+.mat-radio-button {
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0;
+  width: 12px !important;
+  height: 12px !important;
+}
+.mat-radio-label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  vertical-align: text-top !important;
+  width: 100%;
+}
+.mat-radio-container {
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  width: 12px !important;
+  height: 12px !important;
+  flex-shrink: 0;
+}
+.mat-radio-outer-circle {
+  box-sizing: border-box;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: border-color ease 280ms;
+  width: 12px !important;
+  height: 12px !important;
+  border-width: 1px !important;
+  border-style: solid;
+  border-radius: 50%;
+}
+.mat-radio-outer-circle {
+  border-color: #1f3777;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent
+  .mat-radio-ripple
+  .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #1f3777;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #1f3777 !important;
+}
+.mat-radio-inner-circle {
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 12px !important;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: transform ease 280ms, background-color ease 280ms;
+  width: 12px !important;
+  transform: scale(0.001);
+}
+.mat-radio-button .mat-radio-ripple {
+  position: absolute;
+  left: calc(50% - 20px);
+  top: calc(50% - 20px);
+  height: 0;
+  width: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+// Ant design Tabs
+.criteria {
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #2ba54b !important;
+    border-color: #2ba54c !important;
+    width: 15px !important;
+    height: 14px !important;
+  }
+  .ant-checkbox-inner {
+    width: 15px !important;
+    height: 14px !important;
+  }
+}
+
+:root .ant-tabs-tab-prev-icon-target,
+:root .ant-tabs-tab-next-icon-target {
+  font-size: 16px !important;
+  background: white !important;
+  border-radius: 50% !important;
+}
+.ant-tabs-tab-prev.ant-tabs-tab-arrow-show,
+.ant-tabs-tab-next.ant-tabs-tab-arrow-show {
+  width: 15px !important;
+  height: 100%;
+  opacity: 1;
+  pointer-events: auto;
+  color: $black !important;
+}
+
+.ant-tabs-bar {
+  margin: 0 0 0px 0;
+  border-bottom: none;
+  outline: none;
+  transition: none !important;
+}
+.ant-tabs-tab {
+  height: auto !important;
+  color: $black;
+  min-width: 140px !important;
+  max-width: 100% !important;
+  font-weight: 200 !important;
+  line-height: 35px !important;
+  font-size: 13px !important;
+}
+.ant-tabs-tab:hover {
+  color: $black !important;
+  font-weight: 200 !important;
+  font-size: 13px !important;
+}
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-nav-container {
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 32px !important;
+  .tab-span {
+    float: right;
+    width: 15px;
+    background-image: url("^assets/images/awesome-sort.svg");
+    background-repeat: no-repeat;
+    height: 12px;
+    position: absolute;
+    left: 85%;
+    top: 58%;
+    margin: 0 0 0 0.5em !important;
+    transform: translate(-50%, -50%);
+  }
+}
+.ant-tabs-tab {
+  line-height: 32px !important;
+  height: auto !important;
+  background: $white-primary !important;
+  box-shadow: $shadow-light-custom !important;
+  border-radius: 5px 5px 5px 5px !important;
+  margin: 0 0 0 8px !important;
+  border-bottom: 0.5px solid #70707057 !important;
+}
+.ant-tabs-tab:first-child {
+  margin: 0 0 0 8px !important;
+}
+
+.ant-tabs-tab-active {
+  color: $black !important;
+  padding-bottom: 1px !important;
+  height: auto !important;
+  background: $tab-bg 0% 0% no-repeat padding-box !important;
+  border: 0.5px solid #70707057 !important;
+  box-shadow: $shadow-light-black-29 !important;
+  border-radius: 9px 9px 2px 2px !important;
+  border-bottom: none !important;
+  font-weight: 200 !important;
+  line-height: 32px !important;
+  font-size: 13px !important;
+  .tab-span {
+    float: right;
+    width: 15px;
+    background-image: url("^assets/images/awesome-sort-1.svg") !important;
+    background-repeat: no-repeat;
+    height: 12px;
+    position: absolute;
+    left: 85%;
+    top: 58%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// .ant-tabs .ant-tabs-top-content,
+// .ant-tabs .ant-tabs-bottom-content {
+//   width: 100%;
+//   position: relative;
+//   margin: 0px 0 0 0px;
+// }
+
+.ant-tabs-content {
+  background: $tab-bg 0% 0% no-repeat padding-box !important;
+  box-shadow: $shadow-light-black-29 !important;
+  border: 0.5px solid #70707057;
+  border-top: none !important;
+  min-height: 40vh;
+  max-height: 100%;
+  border-radius: 6px;
+  width: 100%;
+  padding: 1em;
+  margin: 0 0 1em 0;
+  // display: flex;
+  // align-items: center;
+}
+
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+  transition: none !important;
+  line-height: 32px !important;
+}
+// .ant-tabs {
+//   line-height: 35px !important;
+// }
+
 .checkbox-lg .custom-control-label::before,
 .checkbox-lg .custom-control-label::after {
   top: 0.8rem;
@@ -314,7 +562,7 @@ button:focus {
   position: absolute !important;
   top: 30% !important;
   left: 50% !important;
-  padding: .25em;
+  padding: 0.25em;
   margin: 0 !important;
   padding: 0.5em 0 !important;
   display: grid !important;
@@ -339,7 +587,7 @@ button:focus {
 
 .success-bg-color {
   color: $white;
-  background-color: #1CCC3F;
+  background-color: #1ccc3f;
   // background-color: #228b22;
   font-weight: 200;
   font-size: 16px;
@@ -353,6 +601,20 @@ button:focus {
   position: absolute;
   height: auto !important;
   // transform: translate(-50%, -50%);
+}
+
+.no-space {
+  white-space: nowrap;
+}
+.top-border {
+  border-top: 1px solid #145e9a79 !important;
+  border-radius: 5px 5px 0px 0px;
+}
+.left-1 {
+  margin: 0 0 0 1em;
+}
+.bg-change {
+  background: #f7f7f7 0% 0% no-repeat padding-box !important;
 }
 
 .mat-tooltip {
@@ -369,7 +631,7 @@ button:focus {
 // Admin Usermanagement users list mat table
 .user-list-wrapper {
   thead {
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: $shadow-light-black-29 !important;
     margin-bottom: 2em;
   }
   .mat-sort-header-button {
@@ -387,7 +649,7 @@ button:focus {
     outline: none;
     border: none;
     background: $blue-3 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: $shadow-light-black-29 !important;
   }
   .tooltip-red {
     display: flex;

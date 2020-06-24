@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -38,7 +39,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatToolbarModule,
     MatSidenavModule,
     MatRadioModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule
   ],
   exports: [
     CommonModule,
@@ -58,7 +60,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatToolbarModule,
     MatSidenavModule,
     MatRadioModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule
   ]
 })
 export class MaterialModule { }

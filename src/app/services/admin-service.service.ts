@@ -134,4 +134,12 @@ export class AdminServiceService {
   }
 
 
+
+
+
+  // HR APIS
+  getCandidateListForShortlist() {
+    return this.http.get(`${this.BASE_URL}/profile/getprofileshortlist`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

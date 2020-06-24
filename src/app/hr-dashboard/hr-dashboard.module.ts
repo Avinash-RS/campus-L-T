@@ -11,10 +11,12 @@ import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shor
 import { HrMainDashboardComponent } from './hr-main-dashboard/hr-main-dashboard.component';
 import { HrUserManagementComponent } from './hr-user-management/hr-user-management.component';
 import { BulkUploadComponent } from './hr-user-management/bulk-upload/bulk-upload.component';
+import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
+import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent],
   imports: [
     CommonModule,
     SharedModule,

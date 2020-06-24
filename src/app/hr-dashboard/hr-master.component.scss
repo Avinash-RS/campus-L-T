@@ -19,7 +19,7 @@
     cursor: pointer;
     font-weight: 200;
     color: $white;
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 
@@ -40,7 +40,7 @@
     font-weight: 200;
     color: $white;
     text-align: right;
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 .toolbar-wrapper {
@@ -179,6 +179,7 @@
     }
   }
   .main-container {
-    padding: 10px 0px 10px 10px;
+    background: $hr-bg;
+    padding: 10px 0px 10px 0px;
   }
 }

@@ -59,6 +59,9 @@ export const CONSTANT = {
       DASHBOARD: '/hr/dashboard',
       SHORTLISTING: '/hr/shortlist',
       FIRSTSHORTLISTING: '/hr/shortlist/1st',
+      FIRSTSHORTLISTING_LIST: '/hr/shortlist/1st/list',
+      FIRSTSHORTLISTING_CRITERIA: '/hr/shortlist/1st/criteria',
+      SECONDSHORTLISTING: '/hr/shortlist/2nd',
       USER_MANAGEMENT: '/hr/user-management',
       USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
 
@@ -110,6 +113,9 @@ export const CONSTANT = {
       DASHBOARD: 'dashboard',
       SHORTLISTING: 'shortlist',
       FIRSTSHORTLISTING: '1st',
+      FIRSTSHORTLISTING_LIST: 'list',
+      FIRSTSHORTLISTING_CRITERIA: 'criteria',
+      SECONDSHORTLISTING: '2nd',
       USER_MANAGEMENT: 'user-management',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
     }

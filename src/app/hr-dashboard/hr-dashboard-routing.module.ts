@@ -13,6 +13,8 @@ import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shor
 import { HrcanloadGuard } from '../guards/canload/hrcanload.guard';
 import { HrUserManagementComponent } from './hr-user-management/hr-user-management.component';
 import { BulkUploadComponent } from './hr-user-management/bulk-upload/bulk-upload.component';
+import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
+import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 
 
 const routes: Routes = [
@@ -25,7 +27,22 @@ const routes: Routes = [
       {
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.SHORTLISTING}`, component: HrShortlistingComponent, canActivate: [HrcanloadGuard], children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`, component: FirstLevelShortlistComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`, component: FirstLevelShortlistComponent, children: [
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_LIST}`, component: ShortlistedCandidateListComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA}`, component: ApplyCriteriaComponent
+              },
+              {
+                path: '',
+                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_LIST}`,
+                pathMatch: 'full',
+              }
+            ]
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`, component: ApplyCriteriaComponent
           },
           {
             path: '',

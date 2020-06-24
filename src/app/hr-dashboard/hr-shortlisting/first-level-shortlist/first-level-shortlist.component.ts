@@ -17,12 +17,18 @@ export class FirstLevelShortlistComponent implements OnInit {
   selectAllCheck = false;
   ngDropDownFilter: any[];
   showSelectAll = true;
+  showCriteria = false;
   constructor() { }
 
   ngOnInit() {
 
     this.dropDownNgOnInIt();
     this.custom();
+  }
+
+  candidateChildEmittedData(emittedData) {
+    console.log(emittedData);
+    this.showCriteria = true;
   }
 
   custom() {
