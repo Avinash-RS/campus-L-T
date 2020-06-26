@@ -21,8 +21,7 @@ export class HrcanloadGuard implements CanLoad {
     }
     if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'hr')) {
       return true;
-    }
-    else {
+    } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();
@@ -48,8 +47,7 @@ export class HrcanloadGuard implements CanLoad {
     }
     if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'hr')) {
       return true;
-    }
-    else {
+    } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();

@@ -43,7 +43,8 @@ export class ViewDetailsComponent implements OnInit {
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
     private fb: FormBuilder
-  ) { }
+  ) {
+   }
 
   ngOnInit() {
     this.updatedStateAPI();
@@ -53,6 +54,21 @@ export class ViewDetailsComponent implements OnInit {
 
     if (this.appConfig.getLocalData('field_isformsubmitted') && this.appConfig.getLocalData('field_isformsubmitted') !== 'true') {
       this.showNext = true;
+    }
+  }
+
+  notShowOtherTabs() {
+    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
+      // Sub-Navigation menus. This will be retrieved in Admin master component
+      const subWrapperMenus = [
+        {
+          icon: '',
+          name: 'VIEW DETAILS',
+          router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
+        },
+      ];
+      this.sharedService.subMenuSubject.next(subWrapperMenus);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     }
   }
 

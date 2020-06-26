@@ -173,10 +173,21 @@ body {
   .mat-ripple-element,
 .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
   .mat-ripple-element {
-    background-color: #2ba54b !important;
+  background-color: #2ba54b !important;
 }
 .mat-column-checked {
   text-align: center !important;
+}
+.shortlist-candidates-wrapper {
+  .mat-column-dob {
+    white-space: nowrap !important;
+  }
+  .mat-sort-header-container {
+    // justify-content: center !important;
+  }
+}
+.mat-paginator {
+  font-size: 13px !important;
 }
 
 // Mat radio
@@ -256,6 +267,10 @@ body {
 
 // Ant design Tabs
 .criteria {
+  .ant-checkbox-wrapper {
+    width: 14px !important;
+    height: 14px !important;
+  }
   .ant-checkbox-checked .ant-checkbox-inner {
     background-color: #2ba54b !important;
     border-color: #2ba54c !important;
@@ -266,6 +281,22 @@ body {
     width: 15px !important;
     height: 14px !important;
   }
+
+  .mat-button-wrapper {
+    line-height: 0px !important;
+  }
+  .mat-datepicker-toggle-default-icon {
+    width: 20px !important;
+  }
+  .mat-icon-button.mat-button-base {
+    width: auto !important;
+    height: 26px !important;
+    line-height: 0px !important;
+  }
+}
+.mat-datepicker-content .mat-calendar {
+  width: 220px !important;
+  height: auto !important;
 }
 
 :root .ant-tabs-tab-prev-icon-target,
@@ -376,7 +407,7 @@ body {
   border-radius: 6px;
   width: 100%;
   padding: 1em;
-  margin: 0 0 1em 0;
+  margin: 0 0 0.5em 0;
   // display: flex;
   // align-items: center;
 }

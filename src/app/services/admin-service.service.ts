@@ -142,4 +142,9 @@ export class AdminServiceService {
     return this.http.get(`${this.BASE_URL}/profile/getprofileshortlist`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  submitAllFilters(data) {
+    return this.http.post(`${this.BASE_URL}/profile/first_shortlist`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

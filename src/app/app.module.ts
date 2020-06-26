@@ -25,6 +25,8 @@ import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { KycthanksGuard } from './guards/canload/kycthanks.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
+import { ShortlistedCandidateListComponent } from './hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
+import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
 registerLocaleData(en);
 
 const ngZorroConfig: NzConfig = {
@@ -52,7 +54,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NgZorroAntdModule,
   ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},

@@ -74,9 +74,11 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
+import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.component';
+import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent],
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -162,6 +164,7 @@ import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
     ModalBoxComponent,
     KycSnackbarComponent,
     NgMultiSelectDropDownModule,
+    ShortlistBoxComponent,
 
     // Ant design modules
     NzAffixModule,
