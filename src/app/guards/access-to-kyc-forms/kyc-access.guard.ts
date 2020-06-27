@@ -21,7 +21,6 @@ export class KycAccessGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let url: any = route['url'].toString();
-    console.log('Url:' + url);
     this.appConfig.showLoader();
     // Route to education
     if (url === 'personal') {
@@ -126,6 +125,7 @@ export class KycAccessGuard implements CanActivate {
           const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
           this.openDialog(data, 'generalFormTouched', url);
         } else {
+
           this.appConfig.hideLoader();
           return true;
         }
@@ -199,7 +199,6 @@ export class KycAccessGuard implements CanActivate {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('beforeresult', result);
       if (result === true) {
         // if (touchedForm !== 'clearAllTouched') {
         //   this.appConfig.clearLocalDataOne(touchedForm);
@@ -209,6 +208,7 @@ export class KycAccessGuard implements CanActivate {
         this.appConfig.clearLocalDataOne('familyFormTouched');
         this.appConfig.clearLocalDataOne('generalFormTouched');
         // }
+
         this.appConfig.routeNavigation(`${CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE}/${route}`);
         this.appConfig.hideLoader();
         return true;

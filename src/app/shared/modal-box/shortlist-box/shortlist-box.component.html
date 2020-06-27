@@ -1,10 +1,39 @@
 <div class="shortlist-wrapper">
   <div class="preview-wrapper">
     <div class="left">
+      <div class="text">Folder Name
 
-    </div>
-    <div class="right">
+        <div class="validation" *ngIf="folder.invalid && folder.touched">&#160;</div>
+      </div>
+      <div class="text">Shortlist Name
+        <div class="validation" *ngIf="shortlist.invalid && shortlist.touched">&#160;</div>
 
       </div>
+    </div>
+    <div class="right">
+      <div class="text-input">
+        <input [formControl]="folder" type="text" name="" id="">
+        <div class="validation" *ngIf="folder.invalid && folder.touched">
+          <span *ngIf="folder.errors?.required">Folder name is Required</span>
+          <span *ngIf="folder.errors?.minlength">Minimum of 3 characters required</span>
+          <span *ngIf>Input is Required</span>
+        </div>
+      </div>
+      <div class="text-input">
+        <input [formControl]="shortlist" type="text" name="" id="">
+        <div class="validation" *ngIf="shortlist.invalid && shortlist.touched">
+          <span *ngIf="shortlist.errors?.required">Shortlist name is Required</span>
+          <span *ngIf="shortlist.errors?.minlength">Minimum of 3 characters required</span>
+          <span *ngIf>Input is Required</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    confirm to move the candidate details to assign assessment
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="confirm()" mat-raised-button>Confirm</button>
   </div>
 </div>

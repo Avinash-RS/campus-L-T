@@ -1,0 +1,49 @@
+<div class="hall-ticket-wrapper">
+  <div class="user-list-wrapper">
+    <!-- <mat-form-field>
+          <mat-label>Filter</mat-label> -->
+    <div class="search-bar">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+    </div>
+    <!-- </mat-form-field> -->
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="uid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="dob">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.dob ? (element.dob) : '-'}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+        <td mat-cell *matCellDef="let element"> {{element.time ? (element.time) : '-'}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="hallticket">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hall ticket </th>
+        <td mat-cell *matCellDef="let element"> <button class="download" (click)="selectedUser(element)" mat-raised-button>Download</button> </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+  </div>
+
+</div>

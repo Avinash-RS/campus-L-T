@@ -13,6 +13,7 @@ import { AppConfigService } from './config/app-config.service';
 })
 export class AppComponent implements OnInit {
   title = 'udap-registration';
+  showLoadingIndicator = true;
 
   constructor(
     private router: Router,
@@ -39,14 +40,14 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        // console.log('start', routerEvent);
+        this.appConfig.showLoaderManual();
       }
       // On NavigationEnd or NavigationError or NavigationCancel
       // set showLoadingIndicator to false
       if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
-        // console.log(routerEvent);
+        this.appConfig.hideLoaderManual();
       }
     });
   }

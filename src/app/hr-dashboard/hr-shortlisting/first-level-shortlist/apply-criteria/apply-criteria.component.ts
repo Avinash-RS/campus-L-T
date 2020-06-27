@@ -152,11 +152,14 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // Filter Submit
   submitFilter() {
+    console.log(this.onlyForEDUFilterArray);
+
     const genderAPIData = [];
     const instituteAPIData = [];
     const disciplineAPIData = [];
     const specializationAPIData = [];
     const backlogsAPIData = [];
+    const educationData = [];
     let dobAPIData = [];
     this.genderFilter.forEach((element) => {
       if (element.checkbox) {
@@ -187,6 +190,23 @@ export class ApplyCriteriaComponent implements OnInit {
         backlogsAPIData.push(element.name);
       }
     });
+
+    if (!this.percentageRegexError && !this.percentageToRegexError) {
+      this.onlyForEDUFilterArray.forEach(element => {
+        if (element.checkbox) {
+          const data = {
+            educational_level: element['name'],
+            percentage_from: element['percentageFrom'],
+            percentage_to: element['percentageTo'],
+            from: element['yearFrom'],
+            to: element['yearTo'],
+          };
+          educationData.push(data);
+        }
+      });
+    }
+    console.log(educationData);
+
 
     dobAPIData = [{
       from_date: this.dateFromShow,

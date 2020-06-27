@@ -45,6 +45,7 @@ export const CONSTANT = {
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
+      DASHBOARD: '/candidate/dashboard',
       PROFILE: '/candidate/profile',
       PROFILE_PERSONAL_DETAILS: '/candidate/profile/personal',
       PROFILE_EDUCATIONAL_DETAILS: '/candidate/profile/education',
@@ -52,7 +53,9 @@ export const CONSTANT = {
       PROFILE_GENERAL_DETAILS: '/candidate/profile/general',
       PROFILE_VIEW_DETAILS: '/candidate/profile/view',
       PROFILE_CONFIRM: '/candidate/profile/confirm',
-      KYC_THANKS: '/candidate/kyc/submitted'
+      KYC_THANKS: '/candidate/kyc/submitted',
+      HALLTICKET: '/candidate/hallticket',
+      HALLTICKET_LIST: '/candidate/hallticket/list'
     },
     HR_DASHBOARD: {
       HOME: '/hr',
@@ -99,6 +102,7 @@ export const CONSTANT = {
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
+      DASHBOARD: 'dashboard',
       PROFILE: 'profile',
       PROFILE_PERSONAL_DETAILS: 'personal',
       PROFILE_EDUCATIONAL_DETAILS: 'education',
@@ -106,7 +110,9 @@ export const CONSTANT = {
       PROFILE_GENERAL_DETAILS: 'general',
       PROFILE_VIEW_DETAILS: 'view',
       PROFILE_CONFIRM: 'confirm',
-      KYC_THANKS: 'kyc/submitted'
+      KYC_THANKS: 'kyc/submitted',
+      HALLTICKET: 'hallticket',
+      HALLTICKET_LIST: 'list'
     },
     HR_DASHBOARD: {
       HOME: 'hr',

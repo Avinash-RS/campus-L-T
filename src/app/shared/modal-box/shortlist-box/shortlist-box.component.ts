@@ -5,6 +5,8 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ModalBoxComponent } from '../modal-box.component';
 import { AppConfigService } from 'src/app/config/app-config.service';
+import { FormControl, Validators } from '@angular/forms';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
   selector: 'app-shortlist-box',
@@ -13,6 +15,8 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 })
 export class ShortlistBoxComponent implements OnInit {
 
+  folder = new FormControl('', [Validators.required, Validators.minLength(3), RemoveWhitespace.whitespace()]);
+  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), RemoveWhitespace.whitespace()]);
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,
@@ -26,4 +30,16 @@ export class ShortlistBoxComponent implements OnInit {
   ngOnInit() {
   }
 
+  confirm() {
+    if (this.folder.valid && this.shortlist.valid) {
+      this.dialogRef.close();
+    } else {
+      this.folder.markAsTouched();
+      this.shortlist.markAsTouched();
+    }
+  }
+
+  cancel() {
+    this.dialogRef.close();
+  }
 }

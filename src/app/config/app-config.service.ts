@@ -24,6 +24,7 @@ export class AppConfigService {
   constructor(
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
+    private ManualSpinner: NgxSpinnerService,
     private router: Router,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -103,6 +104,17 @@ export class AppConfigService {
   hideLoader() {
     this.spinner.hide();
   }
+
+  // Show loading
+  showLoaderManual() {
+    this.hideLoader();
+    this.ManualSpinner.show(undefined, { color: '#fff', size: 'medium', bdColor: 'rgba(0, 0, 0, 0.3)', fullScreen: false, type: 'ball-elastic-dots' });
+  }
+
+  hideLoaderManual() {
+    this.ManualSpinner.hide();
+  }
+
 
   // NZ Zorro message
   nzsuccess(message: any, icon: any): void {

@@ -8,7 +8,6 @@ import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { SnackbarComponent } from './shared/snackbar/snackbar.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
@@ -48,7 +47,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     BrowserAnimationsModule,
     MaterialModule,
     SharedModule,
-    NgxSpinnerModule,
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,

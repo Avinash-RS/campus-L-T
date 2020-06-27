@@ -8,6 +8,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { SelectionModel, DataSource } from '@angular/cdk/collections';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import moment from 'moment';
+import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 
 @Component({
   selector: 'app-shortlisted-candidate-list',
@@ -49,8 +50,10 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   shortlist() {
-    // this.openDialog(ModalBoxComponent, data);
-
+    const data = {
+      shortlist: 'first'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
   }
 
   getDateFormat(date) {
@@ -288,13 +291,13 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   openDialog(component, data) {
     let dialogDetails: any;
 
-    dialogDetails = {
-      iconName: data.iconName,
-      showCancel: data.showCancel,
-      showConfirm: data.showConfirm,
-      showOk: data.showOk,
-      dataToBeShared: data.sharedData,
-    };
+    // dialogDetails = {
+    //   iconName: data.iconName,
+    //   showCancel: data.showCancel,
+    //   showConfirm: data.showConfirm,
+    //   showOk: data.showOk,
+    //   dataToBeShared: data.sharedData,
+    // };
 
     /**
      * Dialog modal window
@@ -304,7 +307,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       width: 'auto',
       height: 'auto',
       autoFocus: false,
-      data: dialogDetails
+      data
     });
 
     dialogRef.afterClosed().subscribe(result => {

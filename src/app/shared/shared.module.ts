@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SignupHeaderComponent } from './signup-header/signup-header.component';
@@ -81,6 +82,7 @@ import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisti
   declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent],
   imports: [
     CommonModule,
+    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -154,6 +156,7 @@ import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisti
   ],
   exports: [
     FormsModule,
+    NgxSpinnerModule,
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,

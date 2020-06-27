@@ -9,7 +9,7 @@
   position: absolute;
   top: 56%;
   transform: translate(-50%);
-  left: 270px;
+  left: 235px;
   transition: all 500ms;
   z-index: 1000;
   span {
@@ -59,7 +59,7 @@
   // background: $wrapper-light-gray 0% 0% no-repeat padding-box;
   height: 40px;
   .sub-wrapper-nav {
-    width: 270px;
+    width: 235px;
     background: $sidebar-bg 0% 0% no-repeat padding-box;
   }
   .main-toolbar {
@@ -116,7 +116,7 @@
   }
 }
 .second-sidenav {
-  margin: 120px 0 0 0;
+  margin: 100px 0 0 0;
   // margin: 190px 0 0 0;
   position: absolute;
   top: 0;
@@ -131,7 +131,7 @@
     align-items: center;
   }
   .sidenav {
-    width: 270px;
+    width: 235px;
     background: $sidebar-bg 0% 0% no-repeat padding-box;
     ul {
       overflow: hidden;
@@ -141,10 +141,10 @@
       box-sizing: border-box;
       justify-content: center;
       li {
-        padding: 20px 10px 20px 20px;
+        padding: 15px 5px 15px 15px;
         outline: none;
         list-style: none;
-        margin: 0 0 20px 0;
+        margin: 0 0 15px 0;
         color: $white;
         opacity: 0.5;
         font-weight: 100;
@@ -152,22 +152,22 @@
         cursor: pointer;
         span:first-child {
           padding: 0 0px;
-          font-size: 18px;
+          font-size: 14px;
         }
         span:nth-of-type(2) {
           padding: 0 0 0 18px;
-          font-size: 16px;
+          font-size: 14px;
         }
         span:nth-of-type(3) {
           float: right;
-          font-size: 16px;
+          font-size: 15px;
           display: none;
         }
       }
       .active {
         background: $active-sub-bg 0% 0% no-repeat padding-box;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 15px;
+        padding-bottom: 15px;
         font-weight: 700;
         opacity: 1;
         span:nth-of-type(3) {

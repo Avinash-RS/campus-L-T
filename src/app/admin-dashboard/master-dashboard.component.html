@@ -1,13 +1,13 @@
 <app-admin-dashboard-header></app-admin-dashboard-header>
-<div class="toolbar-wrapper">
+<!-- <div class="toolbar-wrapper">
   <span> Home ></span> <span> Dashboard </span>
   <span> </span>
-</div>
-<mat-drawer-container class="first-sidenav">
+</div> -->
+<mat-drawer-container [ngClass]="!subMenus ? 'toolbar-hide' : ''" class="first-sidenav">
   <mat-drawer class="sub-wrapper-nav" mode="side" [opened]="sidebarOpen">
     &#160;
   </mat-drawer>
-  <mat-drawer-content class="main-toolbar">
+  <mat-drawer-content class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
     <ng-container *ngIf="subMenus && subMenus.length > 0">
       <div [routerLink]="subMenus.router"
         *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active">
@@ -23,7 +23,7 @@
     <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
    </div>
 
-<mat-drawer-container class="second-sidenav">
+<mat-drawer-container class="second-sidenav" [ngClass]="!subMenus ? 'toolbar-hide-second' : ''">
 
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>

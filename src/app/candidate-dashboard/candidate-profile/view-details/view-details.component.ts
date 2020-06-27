@@ -44,7 +44,7 @@ export class ViewDetailsComponent implements OnInit {
     private sharedService: SharedServiceService,
     private fb: FormBuilder
   ) {
-   }
+  }
 
   ngOnInit() {
     this.updatedStateAPI();
@@ -640,13 +640,58 @@ export class ViewDetailsComponent implements OnInit {
           this.KYCModifiedData['eduArr'].push(a);
         }
 
+        this.KYCModifiedData['famArr'] = [
+          {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family'] && organizeUserDetails['field_name_of_your_family'][0] ? organizeUserDetails['field_name_of_your_family'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
+          }
+        ];
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'][0] ? organizeUserDetails['field_name_of_your_family1'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth1'] && organizeUserDetails['field_family_date_of_birth1'][0] ? organizeUserDetails['field_family_date_of_birth1'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship1'] && organizeUserDetails['field_relationship1'][0] ? organizeUserDetails['field_relationship1'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation1'] && organizeUserDetails['field_occupation1'][0] ? organizeUserDetails['field_occupation1'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'][0] ? organizeUserDetails['field_name_of_your_family2'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth2'] && organizeUserDetails['field_family_date_of_birth2'][0] ? organizeUserDetails['field_family_date_of_birth2'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship2'] && organizeUserDetails['field_relationship2'][0] ? organizeUserDetails['field_relationship2'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation2'] && organizeUserDetails['field_occupation2'][0] ? organizeUserDetails['field_occupation2'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'][0] ? organizeUserDetails['field_name_of_your_family3'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth3'] && organizeUserDetails['field_family_date_of_birth3'][0] ? organizeUserDetails['field_family_date_of_birth3'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship3'] && organizeUserDetails['field_relationship3'][0] ? organizeUserDetails['field_relationship3'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation3'] && organizeUserDetails['field_occupation3'][0] ? organizeUserDetails['field_occupation3'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'][0] ? organizeUserDetails['field_name_of_your_family4'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth4'] && organizeUserDetails['field_family_date_of_birth4'][0] ? organizeUserDetails['field_family_date_of_birth4'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship4'] && organizeUserDetails['field_relationship4'][0] ? organizeUserDetails['field_relationship4'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation4'] && organizeUserDetails['field_occupation4'][0] ? organizeUserDetails['field_occupation4'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+
+
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : this.KYCModifiedData['field_profile_image'][0]['url'];
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
         this.getLocalForm(this.KYCModifiedData);
         this.appConfig.hideLoader();
-
       } else {
         this.appConfig.hideLoader();
         this.userDetails = {
