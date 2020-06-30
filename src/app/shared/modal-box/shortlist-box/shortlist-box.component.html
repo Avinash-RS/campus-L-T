@@ -1,4 +1,4 @@
-<div class="shortlist-wrapper">
+<div class="shortlist-wrapper" *ngIf="data && data['shortlist']">
   <div class="preview-wrapper">
     <div class="left">
       <div class="text">Folder Name
@@ -35,5 +35,34 @@
   <div class="buttons">
     <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
     <button class="confirm" (click)="confirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload']">
+  <div class="bulk-upload-text">
+    Confirm to upload candidate details and send mails to fill the registration form
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
+  <div class="bulk-upload-text">
+    Candidate details have been successfully uploaded
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['first_level_shortlist_success']">
+  <div class="bulk-upload-text">
+    Selected candidates have been shortlisted successfully
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>

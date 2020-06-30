@@ -12,6 +12,8 @@ import { startWith, map } from 'rxjs/operators';
 import { MatMomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { Moment } from 'moment';
 import moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -99,6 +101,7 @@ export class ApplyCriteriaComponent implements OnInit {
   percentageRegexErrorIndex: any;
   percentageToRegexError: boolean;
   percentageToRegexErrorIndex: string;
+  totalCandidates: any;
 
   // @ViewChild('perFromm', {static: false}) redel: ElementRef;
   constructor(
@@ -108,12 +111,13 @@ export class ApplyCriteriaComponent implements OnInit {
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     // const currentYear = new Date().getFullYear();
     // this.minDate = new Date(currentYear - 20, 0, 1);
     // this.maxDate = new Date();
-
+    this.getURLParam();
   }
   ngOnInit() {
 
@@ -139,6 +143,14 @@ export class ApplyCriteriaComponent implements OnInit {
 
   }
 
+  getURLParam() {
+    this.activatedRoute.queryParams.subscribe(params => {
+
+      this.totalCandidates = params && params['data'] ? params['data'] : '';
+
+    });
+  }
+
   // Clear All Filters
   clearAllFilters() {
     this.clearGenderFilter();
@@ -152,8 +164,6 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // Filter Submit
   submitFilter() {
-    console.log(this.onlyForEDUFilterArray);
-
     const genderAPIData = [];
     const instituteAPIData = [];
     const disciplineAPIData = [];
@@ -161,6 +171,7 @@ export class ApplyCriteriaComponent implements OnInit {
     const backlogsAPIData = [];
     const educationData = [];
     let dobAPIData = [];
+    let localUID = [];
     this.genderFilter.forEach((element) => {
       if (element.checkbox) {
         genderAPIData.push(element.name);
@@ -191,42 +202,64 @@ export class ApplyCriteriaComponent implements OnInit {
       }
     });
 
-    if (!this.percentageRegexError && !this.percentageToRegexError) {
-      this.onlyForEDUFilterArray.forEach(element => {
-        if (element.checkbox) {
-          const data = {
-            educational_level: element['name'],
-            percentage_from: element['percentageFrom'],
-            percentage_to: element['percentageTo'],
-            from: element['yearFrom'],
-            to: element['yearTo'],
-          };
-          educationData.push(data);
-        }
-      });
+    if (this.onlyForEDUFilterArray) {
+      if (!this.percentageRegexError && !this.percentageToRegexError) {
+        this.onlyForEDUFilterArray.forEach(element => {
+          if (element.checkbox) {
+            const data = {
+              educational_level: element['name'],
+              percentage_from: element['percentageFrom'],
+              percentage_to: element['percentageTo'],
+              from: element['yearFrom'] && element['yearFrom']['_d'] ? this.getAPIDateFormat(element['yearFrom']['_d']) : '',
+              to: element['yearTo'] && element['yearTo']['_d'] ? this.getAPIDateFormat(element['yearTo']['_d']) : '',
+            };
+            educationData.push(data);
+          }
+        });
+      } else {
+        this.eduFilter.forEach(element => {
+          element['checkbox'] = false;
+          element['radio'] = false;
+        });
+      }
     }
-    console.log(educationData);
 
 
     dobAPIData = [{
-      from_date: this.dateFromShow,
-      to_date: this.dateToShow
+      from_date: this.getAPIDateFormat(this.dateFromShow),
+      to_date: this.getAPIDateFormat(this.dateToShow)
     }];
 
-
+    if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+      localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+    }
 
     const apiData = {
+      user_id: localUID,
       field_gender: genderAPIData,
       field_institute: instituteAPIData,
       field_discipline: disciplineAPIData,
       field_specification: specializationAPIData,
       field_backlogs: backlogsAPIData,
-      field_dob: dobAPIData
+      field_dob: dobAPIData,
+      educational_level: educationData
     };
     console.log(apiData);
     this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
       console.log(data);
+      const apiData = {
+        user_id: []
+      };
+      if (data) {
+        data.forEach(element => {
+          if (element['uuid']) {
+            apiData['user_id'].push(element['uuid']);
+          }
+        });
+      }
+      this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_LIST, { data: 'filtered' });
 
     }, (err) => {
 
@@ -253,6 +286,20 @@ export class ApplyCriteriaComponent implements OnInit {
       return '';
     }
   }
+
+  getAPIDateFormat(date) {
+    if (date) {
+      const split = moment(date).format('YYYY-MM-DD');
+      const output = split;
+
+      return output;
+
+    } else {
+      this.dateFilterShow = false;
+      return '';
+    }
+  }
+
 
   // Apply Date Filter
   applyDateFilter() {

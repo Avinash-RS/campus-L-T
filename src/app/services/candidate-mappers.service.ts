@@ -93,9 +93,11 @@ export class CandidateMappersService {
 
   // Edit User Profile
   editUser(formdata) {
-    return this.http.post(`${this.BASE_URL}/entity/profile?_format=json`, formdata,
+    // return this.http.post(`${this.BASE_URL}/entity/profile?_format=json`, formdata,
+    return this.http.post(`${this.BASE_URL}/profile/updateprofile`, formdata,
       {
-        headers: this.getAfterCustomHeadersWithBasicAuth(),
+        // headers: this.getAfterCustomHeadersWithBasicAuth(),
+        headers: this.withoutTokens(),
         withCredentials: true
       });
   }

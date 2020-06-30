@@ -67,9 +67,10 @@ export class CandidateProfileComponent implements OnInit {
       ];
       this.sharedService.subMenuSubject.next(subWrapperMenus);
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
-    } else {
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS);
     }
+    // else {
+    //   this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS);
+    // }
     // this.getUserKYC();
     this.appConfig.clearLocalDataOne('personalFormTouched');
     this.appConfig.clearLocalDataOne('educationalFormTouched');

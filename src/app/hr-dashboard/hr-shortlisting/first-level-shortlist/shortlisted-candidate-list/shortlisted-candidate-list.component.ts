@@ -30,6 +30,10 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   userList: any;
   radioCheck;
   selectAllCheck;
+  notShowReject: boolean = true;
+  notShowShortlist: boolean = true;
+  totalCandidates: any;
+  selectedCandidates: number;
 
   constructor(
     private appConfig: AppConfigService,
@@ -45,8 +49,24 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   applyCriteria() {
-    // this.enableCriteriaComponent.emit(true);
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA);
+    console.log(this.userList);
+    const apiData = {
+      user_id: []
+    };
+    this.userList.forEach(element => {
+      if (element['checked']) {
+        apiData['user_id'].push(element['uid']);
+      }
+    });
+    console.log(apiData);
+
+    this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA, { data: apiData['user_id'].length });
+    }, (err) => {
+
+    });
   }
 
   shortlist() {
@@ -54,6 +74,31 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       shortlist: 'first'
     };
     this.openDialog(ShortlistBoxComponent, data);
+  }
+  apiShortlistSubmit(apiDatas) {
+    const apiUserList = [];
+    this.userList.forEach(element => {
+      if (element['checked']) {
+        apiUserList.push(element['uid']);
+      }
+    });
+    const apiData = {
+      user_id: apiUserList,
+      folder_name: apiDatas && apiDatas['folderName'] ? apiDatas['folderName'] : '',
+      shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : ''
+    };
+    this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const datas = {
+        first_level_shortlist_success: 'first_level_shortlist_success'
+      };
+      this.openDialog1(ShortlistBoxComponent, datas);
+      this.appConfig.clearLocalDataOne('shortListCheckedCandidates');
+      this.getUsersList();
+
+    }, (err) => {
+
+    });
   }
 
   getDateFormat(date) {
@@ -70,58 +115,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   // To get all users
   getUsersList() {
     this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
       console.log('api', datas);
-      const data = [
-        {
-          uid: '1',
-          name: 'Avinash',
-          gender: 'male',
-          dob: '29-10-1995',
-          institute: 'Sathyabama University',
-          level: 'Post Graduate',
-          percentage: '70%',
-          backlog: 'Nil',
-          dateofpassing: 'may 2019',
-          checked: false
-        },
-        {
-          uid: '2',
-          name: 'Prem',
-          gender: 'male',
-          dob: '29-10-1995',
-          institute: 'Srm University',
-          level: 'Post Graduate',
-          percentage: '70%',
-          backlog: 'Nil',
-          dateofpassing: 'may 2019',
-          checked: false
-        },
-        {
-          uid: '3',
-          name: 'Hari',
-          gender: 'male',
-          dob: '29-10-1995',
-          institute: 'Panimalar University',
-          level: 'Post Graduate',
-          percentage: '70%',
-          backlog: 'Nil',
-          dateofpassing: 'may 2019',
-          checked: true
-        },
-        {
-          uid: '4',
-          name: 'Pradeep',
-          gender: 'male',
-          dob: '29-10-1995',
-          institute: 'Anna University',
-          level: 'UG',
-          percentage: '70%',
-          backlog: 'Nil',
-          dateofpassing: 'may 2019',
-          checked: false
-        },
-      ];
       const align = [];
       datas.forEach(element => {
         const uid = element && element['uuid'] ? element['uuid'] : '-';
@@ -136,35 +130,36 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         const checked = false;
         if (element && element['education'] && element['education'].length > 0) {
           element['education'].forEach(ele => {
-            if (ele && ele['field_level'] === 'Other') {
+
+            if (ele && ele['field_level'] === 'Other' && (level !== 'SSLC' && level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
             }
-            if (ele && ele['field_level'] === 'sslc') {
+            if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
             }
-            if (ele && ele['field_level'] === 'hsc') {
+            if (ele && ele['field_level'] === 'HSC' && (level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
             }
-            if (ele && ele['field_level'] === 'sadsad') {
+            if (ele && ele['field_level'] === 'Diplomo' && (level !== 'Under Graduation' && level !== 'Post Graduation')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
             }
-            if (ele && ele['field_level'] === 'Under Graduation') {
+            if (ele && ele['field_level'] === 'Under Graduation' && (level !== 'Post Graduation')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -195,13 +190,25 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
           }
         );
       });
+      if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+        const localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+        if (localUID && localUID.length > 0) {
+          align.forEach(element => {
+            localUID.forEach(ele => {
+              if (element && element['uid'] === ele) {
+                element['checked'] = true;
+              }
+            });
+          });
+        }
+      }
       this.userList = align;
-      // this.userList.forEach(element => {
-      //   element.checked = false;
-      // });
+      this.totalCandidates = this.userList.length;
+      this.toShoworNotShowFilter();
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.appConfig.hideLoader();
     }, (err) => {
     });
   }
@@ -227,7 +234,26 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       });
     }
     console.log(this.userList);
+    this.toShoworNotShowFilter();
+  }
 
+  toShoworNotShowFilter() {
+    let runElse = true;
+    let selectedCount = 0;
+    this.userList.forEach(element => {
+      if (element.checked) {
+        selectedCount += 1;
+        this.notShowReject = false;
+        this.notShowShortlist = false;
+        runElse = false;
+      } else {
+        if (runElse) {
+          this.notShowReject = true;
+          this.notShowShortlist = true;
+        }
+      }
+    });
+    this.selectedCandidates = selectedCount;
   }
 
 
@@ -248,13 +274,13 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
     this.userList.forEach(element => {
       if (element.uid === userDetail.uid) {
         element.checked = !element.checked;
       }
     });
     this.selectedUserDetail = userDetail;
+    this.toShoworNotShowFilter();
   }
 
 
@@ -312,9 +338,31 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.apiShortlistSubmit(result);
       }
     });
   }
 
+
+  // Open dailog
+  openDialog1(component, data) {
+    let dialogDetails: any;
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
 
 }

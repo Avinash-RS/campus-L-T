@@ -73,6 +73,17 @@ export class AdminServiceService {
     return headers;
   }
 
+  onlyToken(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+    .set('Content-Type', 'application/json')
+    .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+    .set('Access-Control-Allow-Origin', '*');
+    return headers;
+  }
+
+
   // For generating new static token for before login requests
   csrfToken() {
     return this.http.get(`${this.BASE_URL}/rest/session/token`, { headers: this.withoutTokens() });
@@ -146,5 +157,20 @@ export class AdminServiceService {
   submitAllFilters(data) {
     return this.http.post(`${this.BASE_URL}/profile/first_shortlist`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  submitShortlistedCandidates(data) {
+    return this.http.post(`${this.BASE_URL}/profile/shortlist_user`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  alreadyUploadedDetails() {
+    return this.http.get(`${this.BASE_URL}/csv-register-user?_format=json`,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  uploadCSV(data) {
+    return this.http.post(`${this.BASE_URL}/api/bulk-user/registration?_format=json`, data,
+      { headers: this.onlyToken(), withCredentials: true });
   }
 }

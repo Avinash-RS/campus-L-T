@@ -701,6 +701,22 @@ button:focus {
   overflow: hidden !important;
 }
 
+// HR uploaded List
+.main-wrapper-uploaded-list {
+  .mat-sort-header-container {
+    justify-content: center !important;
+  }
+  .mat-column-candidateId {
+    text-align: center;
+  }
+  .mat-column-time {
+    text-align: center;
+  }
+  .mat-column-date {
+    text-align: center;
+  }
+}
+
 // Admin Usermanagement users list mat table
 .user-list-wrapper {
   thead {
@@ -741,7 +757,6 @@ button:focus {
       justify-content: center;
     }
   }
-
 }
 
 // To Prevent aligning from center by default

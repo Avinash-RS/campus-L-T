@@ -1,0 +1,87 @@
+<div class="main-wrapper-uploaded-list">
+  <div class="line">
+  </div>
+
+  <div class="user-list-wrapper">
+    <!-- <mat-form-field>
+            <mat-label>Filter</mat-label> -->
+    <div class="search-bar">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+    </div>
+    <!-- </mat-form-field> -->
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="counter">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+        <td mat-cell *matCellDef="let element"> {{element.counter}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="field_tag">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_tag}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="field_user_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_user_name}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="uid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="usermail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.usermail}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="field_user_created_by">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Uploaded by </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_user_created_by}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="field_created_role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.field_created_role ? (element.field_created_role | uppercase) : '-'}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of upload </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.created}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="created_1">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time of upload </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.created_1}} </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="checked">
+        <th mat-header-cell *matHeaderCellDef> Select </th>
+        <td mat-cell *matCellDef="let element">
+          <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
+            <label nz-radio [nzValue]="element.uid"></label>
+          </nz-radio-group>
+        </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+  </div>
+
+</div>

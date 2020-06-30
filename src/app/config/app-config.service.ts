@@ -107,7 +107,7 @@ export class AppConfigService {
 
   // Show loading
   showLoaderManual() {
-    this.hideLoader();
+    // this.hideLoader();
     this.ManualSpinner.show(undefined, { color: '#fff', size: 'medium', bdColor: 'rgba(0, 0, 0, 0.3)', fullScreen: false, type: 'ball-elastic-dots' });
   }
 

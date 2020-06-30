@@ -1,11 +1,12 @@
 @import "../../../../themes/themes.scss";
 
 .shortlist-candidates-wrapper {
+  padding: 4px;
   .shortlist-header {
     display: flex;
     height: 40px;
     align-items: center;
-    padding: 0 16px 0 16px;
+    padding: 0 12px 0 12px;
     flex-flow: row-reverse;
     border-bottom: solid #666666 1px;
     .buttons {
@@ -70,7 +71,7 @@
       .buttons {
         button {
           display: flex;
-          height: 25px;
+          height: 28px;
           align-items: center;
           font-weight: 100;
           color: $white;
@@ -153,4 +154,21 @@ td {
 th {
   // text-align: center !important;
   padding-left: 1em !important;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.no-data {
+  margin: 2em auto;
+  div {
+    color: $header-blue;
+    font-size: 20px;
+    text-align: center;
+}
+}
+.hide {
+  display: none;
 }

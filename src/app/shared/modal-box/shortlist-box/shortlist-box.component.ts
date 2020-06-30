@@ -28,15 +28,24 @@ export class ShortlistBoxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data);
   }
 
   confirm() {
     if (this.folder.valid && this.shortlist.valid) {
-      this.dialogRef.close();
+      const apiFolders = {
+        folderName: this.folder.value,
+        shortlistName: this.shortlist.value
+      };
+      this.dialogRef.close(apiFolders);
     } else {
       this.folder.markAsTouched();
       this.shortlist.markAsTouched();
     }
+  }
+
+  bulkConfirm() {
+    this.dialogRef.close(true);
   }
 
   cancel() {

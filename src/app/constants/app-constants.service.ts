@@ -66,6 +66,7 @@ export const CONSTANT = {
       FIRSTSHORTLISTING_CRITERIA: '/hr/shortlist/1st/criteria',
       SECONDSHORTLISTING: '/hr/shortlist/2nd',
       USER_MANAGEMENT: '/hr/user-management',
+      USER_MANAGEMENT_UPLOADED_LIST: '/hr/user-management/uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
 
     }
@@ -123,6 +124,7 @@ export const CONSTANT = {
       FIRSTSHORTLISTING_CRITERIA: 'criteria',
       SECONDSHORTLISTING: '2nd',
       USER_MANAGEMENT: 'user-management',
+      USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
     }
   }

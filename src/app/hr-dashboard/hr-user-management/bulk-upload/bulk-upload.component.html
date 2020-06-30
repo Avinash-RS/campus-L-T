@@ -1,1 +1,85 @@
-<p>bulk-upload works!</p>
+<div class="main-wrapper-uploaded-list">
+  <div class="line">
+  </div>
+  <div class="upload-wrapper" *ngIf="!enableList">
+    <div class="top-wrapper">
+      <div class="upload">
+        <div class="outer-wrapper">
+          <div class="text-wrapper">
+            <label class="inner-wrapper" for="fileInput" *ngIf="!url">
+              <!-- <div class="inner-wrapper"> -->
+              <img src="assets/images/file-upload.svg" alt=""> Upload candidate details
+              <!-- </div> -->
+              <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
+                (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv"
+                (change)="onSelectFile($event)">
+            </label>
+            <div class="inner-wrapper" *ngIf="url">
+              <div class="list">
+                <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()" src="assets/images/005-close-1_bulk.svg" alt=""></span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv)</div>
+          <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
+          <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
+
+        </div>
+      </div>
+      <div class="buttons">
+        <button (click)="delete()" class="cancel" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
+        <button (click)="upload()" class="upload" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+      </div>
+    </div>
+    <div class="download">
+      <div class="outer-wrapper">
+        <div class="inner-wrapper">
+          <img src="assets/images/download.svg" alt=""> Download template
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="list-wrapper" *ngIf="enableList">
+    <div class="list-count">
+      Total number of candidates : 765
+    </div>
+    <div class="list-table">
+      <div class="head-grid">
+        <div class="tag">
+          Tag
+        </div>
+        <div class="name">
+          Name
+        </div>
+        <div class="email">
+          Email ID
+        </div>
+        <div class="delete">
+          Delete
+        </div>
+      </div>
+      <div class="scroll">
+      <div class="child-grid" [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" *ngFor="let dup of [0,1,2,3,4,5,6,7,8,9,10,11,12]; let i = index">
+        <div class="tag">
+          Khowsalya
+        </div>
+        <div class="name">
+          Avinash
+        </div>
+        <div class="email">
+          Avi@gmail.com
+        </div>
+        <div class="delete">
+          <img src="assets/images/005-close-1.svg" alt="" srcset="">
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="button-wrapper">
+      <button (click)="backToUpload()" class="cancel" mat-raised-button>Cancel</button>
+      <button (click)="submit()" class="ok" mat-raised-button>Ok</button>
+    </div>
+  </div>
+</div>
