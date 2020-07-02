@@ -11,7 +11,7 @@
               <img src="assets/images/file-upload.svg" alt=""> Upload candidate details
               <!-- </div> -->
               <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
-                (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv"
+                (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv, text/csv"
                 (change)="onSelectFile($event)">
             </label>
             <div class="inner-wrapper" *ngIf="url">

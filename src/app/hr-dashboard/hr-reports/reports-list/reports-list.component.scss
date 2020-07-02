@@ -1,6 +1,14 @@
 @import "../../../themes/themes.scss";
 
-.hall-ticket-wrapper {
+.reports-wrapper {
+  width: 100%;
+  padding: 5px;
+  .heading {
+    color: $light-black;
+    font-size: 18px;
+    font-weight: 200;
+    margin: 10px 0 0 16px;
+  }
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
     /* Structure */
@@ -30,7 +38,10 @@
       border-radius: 4px;
       border: solid $blue-3 1px;
     }
-
+    .width-maintain {
+      width: auto;
+      overflow-x: auto;
+    }
     table {
       background: transparent;
       box-shadow: none;
@@ -67,23 +78,11 @@ th {
   padding-left: 1em !important;
 }
 
-.download {
-  background: #EDEEF0 0% 0% no-repeat padding-box;
-border: 1px solid #70707075;
-border-radius: 5px;
-display: flex;
-color: #145E9A;
-font-size: 13px;
-align-items: center;
-height: 25px;
-padding: 4px 16px;
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
-.light-bg {
-  background: #FFFDFD 0% 0% no-repeat padding-box !important;
-}
-.dark-bg {
-  background: #F7F7F7 0% 0% no-repeat padding-box !important;
-}
+
 .no-data {
   margin: 2em auto;
   div {
@@ -94,4 +93,10 @@ padding: 4px 16px;
 }
 .hide {
   display: none;
+}
+.light-bg {
+  background: #fffdfd 0% 0% no-repeat padding-box !important;
+}
+.dark-bg {
+  background: #f7f7f7 0% 0% no-repeat padding-box !important;
 }

@@ -4,7 +4,7 @@
       <div class="left-side">
         <div class="total">Total number of candidates: <span class="count">{{totalCandidates}}</span> <span style="display: none;" class="view">View
             details</span></div>
-        <div class="total">Selected number of candidates: <span class="count">{{''}}</span> <span style="display: none;" class="view">View
+        <div class="total">Selected number of candidates: <span class="count">{{filteredCandidates ? filteredCandidates : '0'}}</span> <span style="display: none;" class="view">View
             details</span></div>
       </div>
       <div class="right-side">
@@ -20,6 +20,7 @@
         </div>
         <div class="right">
           <div class="button">
+            <button class="filter" (click)="submitFilterNoRedirect()" mat-raised-button>Apply Filter</button>
             <button (click)="clearAllFilters()" mat-raised-button>Clear All</button>
           </div>
         </div>

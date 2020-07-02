@@ -16,6 +16,8 @@ import { BulkUploadComponent } from './hr-user-management/bulk-upload/bulk-uploa
 import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
 import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { UploadedListComponent } from './hr-user-management/uploaded-list/uploaded-list.component';
+import { HrReportsComponent } from './hr-reports/hr-reports.component';
+import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 
 
 const routes: Routes = [
@@ -63,6 +65,18 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS}`, component: HrReportsComponent, children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

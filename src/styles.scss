@@ -202,7 +202,7 @@ body {
   .mat-row {
     height: 30px !important;
   }
-  .mat-column-name {
+  .mat-column-assement_name {
     text-align: left;
     padding-left: 5% !important;
   }
@@ -212,7 +212,7 @@ body {
   .mat-row {
     max-height: 30px;
   }
-  .mat-cell.mat-column-hallticket {
+  .mat-cell.mat-column-pdf {
     display: flex;
     height: 16px !important;
     justify-content: center !important;
@@ -758,7 +758,97 @@ button:focus {
     }
   }
 }
+.reports-wrapper {
+  .user-list-wrapper {
+    thead {
+      box-shadow: $shadow-light-black-29 !important;
+      margin-bottom: 2em;
+    }
+    .mat-sort-header-button {
+      outline: none;
+    }
+    mat-paginator {
+      display: inline-flex;
+      flex-flow: row-reverse;
+      opacity: 0.85;
+      width: 100%;
+      align-items: center;
+      height: 40px;
+      color: $black;
+      font-size: 13px;
+      outline: none;
+      border: none;
+      background: $blue-3 0% 0% no-repeat padding-box;
+      box-shadow: $shadow-light-black-29 !important;
+    }
+    .tooltip-red {
+      display: flex;
+      background-color: red;
+      flex-flow: row-reverse;
+    }
+    .mat-sort-header-container {
+      margin-top: -1.5em;
+    }
 
+    tr.mat-header-row {
+      height: 20px !important;
+      white-space: nowrap;
+      .mat-column-technical_marks,
+      .mat-column-technical_percentage,
+      .mat-column-english_marks,
+      .mat-column-english_percentage,
+      .mat-column-analytical_marks,
+      .mat-column-analytical_percentage,
+      .mat-column-aptitude_marks,
+      .mat-column-aptitude_percentage,
+      .mat-column-summative_marks,
+      .mat-column-summative_percentage {
+        color: $primary !important;
+        font-size: 11px !important;
+        .mat-sort-header-container {
+          margin-top: 0px !important;
+        }
+      }
+    }
+    .personal {
+      margin-top: -1.5em;
+    }
+    .view {
+      color: $header-blue;
+      font-size: 13px;
+      display: flex;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+      font-weight: 200;
+      .material-icons {
+        margin: 0 6px 0 0;
+        font-size: 16px;
+      }
+    }
+    .reports-wrapper.user-list-wrapper,
+    tr.mat-header-row.header-group {
+      text-align: center !important;
+      height: 20px !important;
+      white-space: nowrap;
+      th {
+        text-align: center !important;
+      }
+    }
+    td.mat-cell {
+      white-space: nowrap !important;
+    }
+
+    .mat-paginator {
+      height: 40px !important;
+    }
+    .mat-column-checked {
+      .ant-radio-group {
+        justify-content: center;
+      }
+    }
+  }
+}
 // To Prevent aligning from center by default
 .mat-input-element {
   text-align: left !important;

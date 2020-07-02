@@ -256,6 +256,28 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     this.selectedCandidates = selectedCount;
   }
 
+  unselectSelectALL() {
+    console.log(this.userList);
+
+    this.selectAllCheck = false;
+    const pushChecked = [];
+    const pushNotChecked = [];
+    this.userList.forEach(element => {
+      if (element.checked) {
+        pushChecked.push(element);
+      } else {
+        pushNotChecked.push(element);
+      }
+    });
+
+    if (this.userList.length === pushChecked.length) {
+      this.selectAllCheck = true;
+    }
+    // if (this.userList.length === pushNotChecked.length) {
+    //   this.selectAllCheck = false;
+    // }
+  }
+
 
   ngAfterViewInit() {
     if (this.dataSource) {
@@ -274,6 +296,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   selectedUser(userDetail) {
+
     this.userList.forEach(element => {
       if (element.uid === userDetail.uid) {
         element.checked = !element.checked;
@@ -281,6 +304,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
     this.selectedUserDetail = userDetail;
     this.toShoworNotShowFilter();
+    console.log(userDetail);
+    this.unselectSelectALL();
   }
 
 
@@ -302,6 +327,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         console.log(this.selection.select(row));
 
       });
+    console.log(this.userList);
+
   }
 
   /** The label for the checkbox on the passed row */

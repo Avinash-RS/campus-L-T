@@ -102,6 +102,7 @@ export class ApplyCriteriaComponent implements OnInit {
   percentageToRegexError: boolean;
   percentageToRegexErrorIndex: string;
   totalCandidates: any;
+  filteredCandidates: number;
 
   // @ViewChild('perFromm', {static: false}) redel: ElementRef;
   constructor(
@@ -141,12 +142,14 @@ export class ApplyCriteriaComponent implements OnInit {
     this.SpecializationNameNgOnInIt();
     this.SpecializationNameCustom();
 
+    this.clearAllFilters();
   }
 
   getURLParam() {
     this.activatedRoute.queryParams.subscribe(params => {
 
       this.totalCandidates = params && params['data'] ? params['data'] : '';
+      this.filteredCandidates = params && params['data'] ? params['data'] : '';
 
     });
   }
@@ -163,6 +166,110 @@ export class ApplyCriteriaComponent implements OnInit {
   }
 
   // Filter Submit
+  submitFilterNoRedirect() {
+    const genderAPIData = [];
+    const instituteAPIData = [];
+    const disciplineAPIData = [];
+    const specializationAPIData = [];
+    const backlogsAPIData = [];
+    const educationData = [];
+    let dobAPIData = [];
+    let localUID = [];
+    this.genderFilter.forEach((element) => {
+      if (element.checkbox) {
+        genderAPIData.push(element.name);
+      }
+    });
+
+    this.InstituteNameFilter.forEach((element) => {
+      if (element.checkbox) {
+        instituteAPIData.push(element.name);
+      }
+    });
+
+    this.disciplineFilter.forEach((element) => {
+      if (element.checkbox) {
+        disciplineAPIData.push(element.name);
+      }
+    });
+
+    this.SpecializationNameFilter.forEach((element) => {
+      if (element.checkbox) {
+        specializationAPIData.push(element.name);
+      }
+    });
+
+    this.backlogFilter.forEach((element) => {
+      if (element.checkbox) {
+        backlogsAPIData.push(element.name);
+      }
+    });
+
+    if (this.onlyForEDUFilterArray) {
+      if (!this.percentageRegexError && !this.percentageToRegexError) {
+        this.onlyForEDUFilterArray.forEach(element => {
+          if (element.checkbox) {
+            const data = {
+              educational_level: element['name'],
+              percentage_from: element['percentageFrom'],
+              percentage_to: element['percentageTo'],
+              from: element['yearFrom'] && element['yearFrom']['_d'] ? this.getAPIDateFormat(element['yearFrom']['_d']) : '',
+              to: element['yearTo'] && element['yearTo']['_d'] ? this.getAPIDateFormat(element['yearTo']['_d']) : '',
+            };
+            educationData.push(data);
+          }
+        });
+      } else {
+        this.eduFilter.forEach(element => {
+          element['checkbox'] = false;
+          element['radio'] = false;
+        });
+      }
+    }
+
+
+    dobAPIData = [{
+      from_date: this.getAPIDateFormat(this.dateFromShow),
+      to_date: this.getAPIDateFormat(this.dateToShow)
+    }];
+
+    if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+      localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+    }
+
+    const apiData = {
+      user_id: localUID,
+      field_gender: genderAPIData,
+      field_institute: instituteAPIData,
+      field_discipline: disciplineAPIData,
+      field_specification: specializationAPIData,
+      field_backlogs: backlogsAPIData,
+      field_dob: dobAPIData,
+      educational_level: educationData
+    };
+    console.log(apiData);
+    this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log(data);
+      const apiData = {
+        user_id: []
+      };
+      if (data) {
+        data.forEach(element => {
+          if (element['uuid']) {
+            apiData['user_id'].push(element['uuid']);
+          }
+        });
+      }
+      this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      this.filteredCandidates = data.length;
+      console.log('ada', this.filteredCandidates);
+
+
+    }, (err) => {
+
+    });
+  }
   submitFilter() {
     const genderAPIData = [];
     const instituteAPIData = [];

@@ -6,6 +6,8 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import moment from 'moment';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-candidate-assigned-assessment-list',
@@ -14,7 +16,9 @@ import moment from 'moment';
 })
 export class CandidateAssignedAssessmentListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'name', 'dob', 'time', 'hallticket'];
+  BASE_URL = environment.API_BASE_URL;
+
+  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'pdf'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -30,6 +34,7 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
+    private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
   ) { }
 
@@ -50,9 +55,9 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
 
   // To get all users
   getUsersList() {
-    // this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
-    //   this.appConfig.hideLoader();
-    //   console.log('api', datas);
+    this.candidateService.assessmentList().subscribe((datas: any) => {
+      this.appConfig.hideLoader();
+      console.log('api', datas);
       const data = [
         {
           uid: '1',
@@ -83,15 +88,14 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
           hallticket: 'Post Graduate',
         },
       ];
-      this.userList = data;
-      // this.userList.forEach(element => {
-      //   element.checked = false;
-      // });
+      if (datas && datas[0]) {
+        this.userList = datas[0];
+      }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
 
   selectedUser(userDetail) {

@@ -144,11 +144,28 @@ export class CandidateMappersService {
   }
 
   updatedState(Id) {
-    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, {headers: this.withoutTokens(), withCredentials: true});
+    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
   }
 
   updatedCity(Id) {
-    return this.http.post(`${this.BASE_URL}/api/city_api`, Id, {headers: this.withoutTokens(), withCredentials: true});
+    return this.http.post(`${this.BASE_URL}/api/city_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
   }
+
+  assessmentList() {
+    return this.http.get(`${this.BASE_URL}/profile/hallticket`,
+      {
+        headers: this.getAfterCustomHeaders(),
+        withCredentials: true
+      });
+  }
+
+  hallTicketDownload(name) {
+    return this.http.get(`${this.BASE_URL}/sites/default/files/hallticket/${name}`,
+      {
+        headers: this.getAfterCustomHeaders(),
+        withCredentials: true
+      });
+  }
+
 
 }
