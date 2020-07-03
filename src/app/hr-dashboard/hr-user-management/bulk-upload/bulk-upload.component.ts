@@ -105,10 +105,12 @@ export class BulkUploadComponent implements OnInit {
     const listArray = [];
     data.forEach((dup, i) => {
       let tag; let name; let email;
-      if (i > 0 && dup && dup.length >= 3) {
+      // if (i > 0 && dup && dup.length >= 3) {
+      if (i > 0 && dup) {
         count += 1;
         dup.forEach((element, index) => {
-          if (index < 3 && element.length > 2) {
+          // if (index < 3 && element.length > 2) {
+          if (index < 3) {
             if (index == 0) {
               tag = element ? element : '';
             }
@@ -125,10 +127,9 @@ export class BulkUploadComponent implements OnInit {
           name,
           email,
         };
-        if ((tag && tag.trim()) && (name && name.trim()) && (email && email.trim())) {
-          listArray.push(value);
-        }
-
+        // if ((tag && tag.trim()) && (name && name.trim()) && (email && email.trim())) {
+        listArray.push(value);
+        // }
       }
     });
     this.uploadedListArray = listArray;

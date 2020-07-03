@@ -178,4 +178,10 @@ export class AdminServiceService {
     return this.http.get(`${this.BASE_URL}/profile/assement_report`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  firstLevelReports() {
+    return this.http.get(`${this.BASE_URL}/profile/admin_report`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }

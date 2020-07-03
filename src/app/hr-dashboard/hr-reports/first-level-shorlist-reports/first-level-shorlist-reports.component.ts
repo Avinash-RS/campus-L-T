@@ -18,7 +18,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
 
   BASE_URL = environment.API_BASE_URL;
 
-  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'pdf'];
+  displayedColumns: any[] = ['uid', 'foldername', 'shortlistname', 'dates', 'times', 'shortlistby', 'download'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -55,41 +55,11 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
 
   // To get all users
   getUsersList() {
-    this.candidateService.assessmentList().subscribe((datas: any) => {
+    this.adminService.firstLevelReports().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       console.log('api', datas);
-      const data = [
-        {
-          uid: '1',
-          name: 'Avinash',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-        {
-          uid: '2',
-          name: 'Prem',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-        {
-          uid: '3',
-          name: 'Hari',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-        {
-          uid: '4',
-          name: 'Pradeep',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-      ];
-      if (datas && datas[0]) {
-        this.userList = datas[0];
+      if (datas) {
+        this.userList = datas;
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
