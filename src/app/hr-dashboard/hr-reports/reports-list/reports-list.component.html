@@ -71,46 +71,47 @@
         </div>
         <ng-container
           *ngIf="viewDetails && viewDetails['educational_details'] && viewDetails['educational_details'].length > 0">
-        <div class="clg-details" *ngFor="let details of viewDetails['educational_details']; let i = index">
-          <div class="level-head">{{details && details['field_level'] ? details['field_level'] + ' details' : '-'}}</div>
-          <div class="three-grid">
-            <div class="group">
-              <div class="head">
-                Percentage
+          <div class="clg-details" *ngFor="let details of viewDetails['educational_details']; let i = index">
+            <div class="level-head">{{details && details['field_level'] ? details['field_level'] + ' details' : '-'}}
+            </div>
+            <div class="three-grid">
+              <div class="group">
+                <div class="head">
+                  Percentage
+                </div>
+                <div class="content">
+                  {{details && details['field_percentage'] ? details['field_percentage'] : '-'}}
+                </div>
               </div>
-              <div class="content">
-                {{details && details['field_percentage'] ? details['field_percentage'] : '-'}}
+              <div class="group">
+                <div class="head">
+                  Date of passing
+                </div>
+                <div class="content">
+                  {{details && details['date_of_passing'] ? details['date_of_passing'] : '-'}}
+                </div>
+              </div>
+              <div class="group">
+                <div class="head">
+                  Institute
+                </div>
+                <div class="content">
+                  {{details && details['field_institute'] ? details['field_institute'] : '-'}}
+                </div>
+              </div>
+              <div class="group">
+                <div class="head">
+                  Branch
+                </div>
+                <div class="content">
+                  {{details && details['field_specification'] ? details['field_specification'] : '-'}}
+                </div>
               </div>
             </div>
-            <div class="group">
-              <div class="head">
-                Date of passing
-              </div>
-              <div class="content">
-                {{details && details['date_of_passing'] ? details['date_of_passing'] : '-'}}
-              </div>
-            </div>
-            <div class="group">
-              <div class="head">
-                Institute
-              </div>
-              <div class="content">
-                {{details && details['field_institute'] ? details['field_institute'] : '-'}}
-              </div>
-            </div>
-            <div class="group">
-              <div class="head">
-                Branch
-              </div>
-              <div class="content">
-                {{details && details['field_specification'] ? details['field_specification'] : '-'}}
-              </div>
-            </div>
-          </div>
 
-        </div>
-      </ng-container>
-    </div>
+          </div>
+        </ng-container>
+      </div>
 
     </div>
   </nz-drawer>
@@ -120,7 +121,10 @@
     <!-- <mat-form-field>
         <mat-label>Filter</mat-label> -->
     <div class="search-bar">
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
     </div>
     <!-- </mat-form-field> -->
     <div class="width-maintain">

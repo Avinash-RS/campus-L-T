@@ -25,14 +25,14 @@
 
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>
-      <li>
+      <li [ngClass]="showProfileOnly ? 'hide' : ''">
         <span><img src="assets/images/002-files-and-folders.svg" width="20px" height="20px" alt=""></span>
         <span>Assessment</span>
         <span style="color: #fff;" class="material-icons">
           arrow_right
         </span>
       </li>
-      <li>
+      <li [ngClass]="showProfileOnly ? 'hide' : ''">
           <span><img src="assets/images/medical.svg" width="20px" height="20px" alt=""></span>
           <span>Result</span>
           <span style="color: #fff;" class="material-icons">
@@ -46,7 +46,7 @@
           arrow_right
         </span>
       </li>
-      <li [routerLink]="appConstant.CANDIDATE_DASHBOARD.HALLTICKET" routerLinkActive="active">
+      <li [ngClass]="showProfileOnly ? 'hide' : ''" [routerLink]="appConstant.CANDIDATE_DASHBOARD.HALLTICKET" routerLinkActive="active">
         <span><img src="assets/images/birthday-and-party.svg" width="20px" height="20px" alt=""></span>
         <span>Hallticket</span>
         <span style="color: #fff;" class="material-icons">

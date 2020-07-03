@@ -18,7 +18,12 @@ export class HrReportsComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '',
-        name: 'Reports List',
+        name: '1st Level Shortlist',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST
+      },
+      {
+        icon: '',
+        name: '2nd Level Shortlist',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST
       }
     ];

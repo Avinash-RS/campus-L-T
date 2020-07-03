@@ -1,19 +1,12 @@
 @import "../../../themes/themes.scss";
 
-.reports-wrapper {
-  width: 100%;
+.hall-ticket-wrapper {
   padding: 5px;
-  .heading {
-    color: $light-black;
-    font-size: 18px;
-    font-weight: 200;
-    margin: 10px 0 0 16px;
-  }
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
     /* Structure */
     .search-bar {
-      margin: 0em 1em 0em 1em;
+      margin: 1em 1em 0.25em 1em;
       text-align: right;
       .search-icon {
         display: inline-flex;
@@ -60,10 +53,7 @@
       border: none;
       outline: none;
     }
-    .width-maintain {
-      width: auto;
-      overflow-x: auto;
-    }
+
     table {
       background: transparent;
       box-shadow: none;
@@ -100,11 +90,25 @@ th {
   padding-left: 1em !important;
 }
 
-.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+.download {
+  background: #fffdfd 0% 0% no-repeat padding-box !important;
+  // background: #EDEEF0 0% 0% no-repeat padding-box;
+  border: 1px solid #70707075;
+  border-radius: 5px;
+  display: flex;
+  color: #145e9a;
+  font-size: 13px;
+  align-items: center;
+  height: 25px;
+  padding: 4px 12px;
+  font-weight: 100 !important;
 }
-
+.light-bg {
+  background: #fffdfd 0% 0% no-repeat padding-box !important;
+}
+.dark-bg {
+  background: #f7f7f7 0% 0% no-repeat padding-box !important;
+}
 .no-data {
   margin: 2em auto;
   div {
@@ -115,10 +119,4 @@ th {
 }
 .hide {
   display: none;
-}
-.light-bg {
-  background: #fffdfd 0% 0% no-repeat padding-box !important;
-}
-.dark-bg {
-  background: #f7f7f7 0% 0% no-repeat padding-box !important;
 }

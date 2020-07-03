@@ -177,9 +177,11 @@ body {
             font-weight: 200;
             font-size: 14px;
             .name {
+              white-space: nowrap;
               margin: 0 4px 4px 0;
             }
             .candidate {
+              white-space: nowrap;
               margin: 0 4px 4px 0;
             }
 

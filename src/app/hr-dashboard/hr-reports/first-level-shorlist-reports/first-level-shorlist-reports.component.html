@@ -1,0 +1,56 @@
+<div class="hall-ticket-wrapper">
+    <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">
+      <!-- <mat-form-field>
+            <mat-label>Filter</mat-label> -->
+      <div class="search-bar">
+        <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
+      </div>
+      <!-- </mat-form-field> -->
+
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="uid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="assement_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment </th>
+          <td mat-cell *matCellDef="let element"> {{element.assement_name}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date ? (element.date) : '-'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+          <td mat-cell *matCellDef="let element"> {{element.time ? (element.time) : '-'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="pdf">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Hall ticket </th>
+          <td mat-cell *matCellDef="let element"> <a style="text-decoration: none; cursor: pointer;" [href]="BASE_URL + '/sites/default/files/hallticket/' + element['pdf']" target="_blank"><button class="download" mat-raised-button> <span><img src="assets/images/Group4527.svg" width="20px" height="13px" alt="" srcset=""></span> <span style="padding: 0 0 0 .25em;"> Download</span></button></a> </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+    </div>
+    <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
+        <div>No assesments available </div>
+      </div>
+
+
+  </div>
