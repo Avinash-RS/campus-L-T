@@ -16,10 +16,11 @@ import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level
 import { UploadedListComponent } from './hr-user-management/uploaded-list/uploaded-list.component';
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
+import { PersonalViewComponent } from './hr-reports/reports-list/personal-view/personal-view.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, PersonalViewComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -97,6 +97,11 @@ export const DropdownListForKYC = {
   // Discipline
   discipline: [
     {
+      name: 'Other',
+      value: 'Other',
+      checkbox: false
+    },
+    {
       name: 'Civil',
       value: 'Civil',
       checkbox: false
@@ -225,6 +230,11 @@ export const DropdownListForKYC = {
   // Specialization
   specialization: [
     {
+      name: 'Other',
+      value: 'Other',
+      checkbox: false
+    },
+    {
       name: 'Civil',
       value: 'Civil',
       checkbox: false
@@ -252,6 +262,7 @@ export const DropdownListForKYC = {
   ],
   // Institute Names
   institutes: [
+    { name: "Other", checkbox: false, value: "Other" },
     { name: "Indian Institute of Engineering Science And Technology, Shibpur", checkbox: false, value: "Indian Institute of Engineering Science And Technology, Shibpur" },
     { name: "Punjab Engineering College", checkbox: false, value: "Punjab Engineering College" },
     { name: "Jadavpur University", checkbox: false, value: "Jadavpur University" },

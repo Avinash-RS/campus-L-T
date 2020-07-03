@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { FormBuilder } from '@angular/forms';
+import * as XLSX from 'xlsx';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-bulk-upload',
@@ -16,6 +18,7 @@ import { FormBuilder } from '@angular/forms';
 export class BulkUploadComponent implements OnInit {
 
   url = null;
+  validFile = false;
   showSizeError = {
     image: false,
     size: false
@@ -25,6 +28,11 @@ export class BulkUploadComponent implements OnInit {
   fileName: any;
   fileSize: any;
   enableList: boolean;
+  selectedTarget: any;
+  SavedData: any;
+  eventSaver: any;
+  totalCountofCandidates: any;
+  uploadedListArray: any;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -37,6 +45,7 @@ export class BulkUploadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.i = 0;
   }
 
   submit() {
@@ -47,17 +56,88 @@ export class BulkUploadComponent implements OnInit {
   }
 
   upload() {
+    this.appConfig.showLoader();
+    this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
     };
-    this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
-      console.log(datas);
-      this.appConfig.hideLoader();
+    /* wire up file reader */
+    const target: DataTransfer = (this.selectedTarget) as DataTransfer;
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
 
-    }, (err) => {
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Tag') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Email ID')) {
+        this.enableList = true;
+        this.totalCount(this.SavedData);
+        this.appConfig.hideLoader();
+      } else {
+        this.validFile = true;
+        this.appConfig.hideLoader();
+      }
+    };
+    reader.readAsBinaryString(target.files[0]);
+    // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
+    //   console.log(datas);
+    //   this.appConfig.hideLoader();
+
+    // }, (err) => {
+
+    // });
+  }
+
+  totalCount(data) {
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let tag; let name; let email;
+      if (i > 0 && dup && dup.length >= 3) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 3 && element.length > 2) {
+            if (index == 0) {
+              tag = element ? element : '';
+            }
+            if (index == 1) {
+              name = element ? element : '';
+            }
+            if (index == 2) {
+              email = element ? element : '';
+            }
+          }
+        });
+        const value = {
+          tag,
+          name,
+          email,
+        };
+        if ((tag && tag.trim()) && (name && name.trim()) && (email && email.trim())) {
+          listArray.push(value);
+        }
+
+      }
     });
-    this.enableList = true;
+    this.uploadedListArray = listArray;
+    console.log(listArray);
+    this.totalCountofCandidates = count - 1;
+  }
+
+  removeSelectedCandidate(i) {
+    this.uploadedListArray.splice(i, 1);
   }
 
   backToUpload() {
@@ -94,12 +174,13 @@ export class BulkUploadComponent implements OnInit {
         const datas = {
           bulk_upload_ok: 'candidate-bulk'
         };
-        this.openDialog(ShortlistBoxComponent, datas);
+        this.openDialog1(ShortlistBoxComponent, datas);
       }
     });
   }
 
   async onSelectFile(event) {
+    this.validFile = false;
     console.log(event.target.files[0]);
 
     if (event.target.files && event.target.files[0].name.includes('.csv')) {
@@ -109,6 +190,8 @@ export class BulkUploadComponent implements OnInit {
         this.fileName = event.target.files[0]['name'];
         this.fileSize = (Number(event.target.files[0]['size']) / 1024).toFixed(2);
         this.selectedImage = event.target.files[0];
+        this.selectedTarget = event.target;
+        this.eventSaver = event;
 
         const fd = new FormData();
         fd.append('file', this.selectedImage);
@@ -121,30 +204,6 @@ export class BulkUploadComponent implements OnInit {
         reader.onload = (event: any) => { // called once readAsDataURL is completed
           urls = event.target.result;
           this.url = event.target.result;
-          console.log(this.url);
-
-          // this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
-          //   console.log(data);
-
-          // this.signatureData = {
-          //   target_id: data.fid[0].value,
-          //   alt: 'signature',
-          //   title: '',
-          //   width: 480,
-          //   height: 100,
-          //   localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
-          //   url: data.uri[0].url,
-          //   status: 'true'
-          // };
-          // this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-          // console.log(this.signatureData);
-
-          // this.appConfig.hideLoader();
-
-          // }, (err) => {
-
-          // });
-
         };
       } else {
         this.showSizeError.image = false;
@@ -161,6 +220,7 @@ export class BulkUploadComponent implements OnInit {
   public delete() {
     this.showSizeError.image = false;
     this.showSizeError.size = false;
+    this.validFile = false;
     this.url = null;
   }
 
@@ -181,6 +241,7 @@ export class BulkUploadComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.enableList = false;
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);
       if (result) {
       }
     });

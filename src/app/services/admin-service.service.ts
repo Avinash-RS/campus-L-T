@@ -173,4 +173,9 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/api/bulk-user/registration?_format=json`, data,
       { headers: this.onlyToken(), withCredentials: true });
   }
+
+  secondLevelReports() {
+    return this.http.get(`${this.BASE_URL}/profile/assement_report`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

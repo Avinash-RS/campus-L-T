@@ -18,6 +18,7 @@ import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level
 import { UploadedListComponent } from './hr-user-management/uploaded-list/uploaded-list.component';
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
+import { PersonalViewComponent } from './hr-reports/reports-list/personal-view/personal-view.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,9 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS}`, component: HrReportsComponent, children: [
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST_VIEW}`, component: PersonalViewComponent
           },
           {
             path: '',

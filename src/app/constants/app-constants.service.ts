@@ -69,7 +69,8 @@ export const CONSTANT = {
       USER_MANAGEMENT_UPLOADED_LIST: '/hr/user-management/uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
       REPORTS: '/hr/reports',
-      REPORTS_LIST: '/hr/reports/list'
+      REPORTS_LIST: '/hr/reports/list',
+      REPORTS_LIST_VIEW: '/hr/reports/list/view'
     }
 
   },
@@ -128,7 +129,8 @@ export const CONSTANT = {
       USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
       REPORTS: 'reports',
-      REPORTS_LIST: 'list'
+      REPORTS_LIST: 'list',
+      REPORTS_LIST_VIEW: 'view'
     }
   }
 };

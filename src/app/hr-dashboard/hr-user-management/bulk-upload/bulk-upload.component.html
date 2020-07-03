@@ -16,13 +16,15 @@
             </label>
             <div class="inner-wrapper" *ngIf="url">
               <div class="list">
-                <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()" src="assets/images/005-close-1_bulk.svg" alt=""></span>
+                <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
+                    src="assets/images/005-close-1_bulk.svg" alt=""></span>
               </div>
             </div>
           </div>
           <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv)</div>
           <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
           <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
+          <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
 
         </div>
       </div>
@@ -43,7 +45,7 @@
 
   <div class="list-wrapper" *ngIf="enableList">
     <div class="list-count">
-      Total number of candidates : 765
+      Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
     </div>
     <div class="list-table">
       <div class="head-grid">
@@ -61,25 +63,28 @@
         </div>
       </div>
       <div class="scroll">
-      <div class="child-grid" [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" *ngFor="let dup of [0,1,2,3,4,5,6,7,8,9,10,11,12]; let i = index">
-        <div class="tag">
-          Khowsalya
-        </div>
-        <div class="name">
-          Avinash
-        </div>
-        <div class="email">
-          Avi@gmail.com
-        </div>
-        <div class="delete">
-          <img src="assets/images/005-close-1.svg" alt="" srcset="">
-        </div>
-      </div>
+        <ng-container *ngFor="let dup of uploadedListArray; let i = index">
+          <div class="child-grid" ngDefaultControl [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'">
+              <div class="tag">
+                {{dup['tag']}}
+              </div>
+              <div class="name">
+                  {{dup['name']}}
+                </div>
+              <div class="email">
+                  {{dup['email']}}
+                </div>
+              <div class="delete">
+                <img (click)="removeSelectedCandidate(i)" src="assets/images/005-close-1.svg" alt="" srcset="">
+              </div>
+            </div>
+        </ng-container>
       </div>
     </div>
+
     <div class="button-wrapper">
       <button (click)="backToUpload()" class="cancel" mat-raised-button>Cancel</button>
-      <button (click)="submit()" class="ok" mat-raised-button>Ok</button>
+      <button [disabled]="SavedData && SavedData.length > 1 ? false : true" (click)="submit()" class="ok" mat-raised-button>Ok</button>
     </div>
   </div>
 </div>

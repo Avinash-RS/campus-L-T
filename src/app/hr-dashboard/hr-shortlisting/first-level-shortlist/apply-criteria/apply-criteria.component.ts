@@ -150,7 +150,12 @@ export class ApplyCriteriaComponent implements OnInit {
 
       this.totalCandidates = params && params['data'] ? params['data'] : '';
       this.filteredCandidates = params && params['data'] ? params['data'] : '';
-
+      let localUID;
+      if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+        localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+        this.totalCandidates = localUID.length;
+        this.filteredCandidates = localUID.length;
+      }
     });
   }
 
@@ -678,12 +683,14 @@ export class ApplyCriteriaComponent implements OnInit {
 
 
   clearEDUFilter() {
-    this.onlyForEDUFilterArray.forEach(element => {
-      if (element['name']) {
-        element.checkbox = false;
-        element.radio = false;
-      }
-    });
+    if (this.onlyForEDUFilterArray) {
+      this.onlyForEDUFilterArray.forEach(element => {
+        if (element['name']) {
+          element.checkbox = false;
+          element.radio = false;
+        }
+      });
+    }
     this.eduFilter.forEach(element => {
       if (element['name']) {
         element.checkbox = false;

@@ -141,6 +141,158 @@ body {
   }
 }
 
+// Mat drawer css override
+.ant-drawer.ant-drawer-right {
+  top: 100px !important;
+}
+.ant-drawer-content {
+  overflow: auto !important;
+}
+.ant-drawer-content-wrapper {
+  width: 500px !important;
+  box-shadow: none !important;
+  .ant-drawer-content {
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: $shadow-light-black;
+    border: 0.5px solid $gray-dark;
+    border-radius: 20px 0px 0px 20px;
+  }
+  .ant-drawer-body {
+    padding: 0px !important;
+    font-size: 13px;
+    word-wrap: break-word;
+    .view-wrapper {
+      .head {
+        padding: 0 0 0 20px;
+        display: flex;
+        background: #29608d 0% 0% no-repeat padding-box;
+        justify-content: space-between;
+        align-items: center;
+        .left {
+          .grid {
+            padding: 4px;
+            display: grid;
+            grid-template-columns: 0.7fr 1fr;
+            color: $white;
+            font-weight: 200;
+            font-size: 14px;
+            .name {
+              margin: 0 4px 4px 0;
+            }
+            .candidate {
+              margin: 0 4px 4px 0;
+            }
+
+          }
+        }
+        .right {
+          background-color: #3274aa !important;
+          border-left: 1px solid #ffffff;
+          height: 58px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          .icon {
+            padding: 10px;
+            img {
+              width: 13px;
+            }
+          }
+        }
+      }
+      .scroll-enable {
+        max-height: 430px;
+        overflow-y: auto;
+      .four-grid {
+        padding: 10px 10px 10px 24px;
+        display: grid;
+        grid-template-columns: .5fr 1fr 1fr 1.5fr;
+        align-items: center;
+        border-bottom: 0.5px solid #6666667c;
+        .dob {
+          margin: 0 0 0 1em;
+        }
+        .mob {
+          margin: 0 0 0 .25em;
+        }
+        .group {
+          margin: 4px 0;
+          .head {
+            background: transparent !important;
+            color: #145E9A;
+            font-size: 12px;
+            font-weight: 200;
+            padding: 0;
+          }
+          .content {
+            font-weight: 100;
+            color: $light-black;
+            font-size: 12px;
+          }
+        }
+      }
+      .one-grid {
+        padding: 10px 10px 16px 24px;
+        align-items: center;
+        display: grid;
+        grid-template-columns: 1fr;
+        border-bottom: 0.5px solid #6666667c;
+        .group {
+          margin: 4px 0;
+          .head {
+            background: transparent !important;
+            color: #145E9A;
+            font-size: 12px;
+            font-weight: 200;
+            padding: 0;
+          }
+          .content {
+            font-weight: 100;
+            color: $light-black;
+            font-size: 12px;
+          }
+        }
+      }
+      .clg-details {
+        margin: .5em .5em;
+        .level-head {
+          color: $light-black;
+          font-size: 13px;
+          font-weight: 200;
+          margin: 0 0 0 4px;
+        }
+        .three-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr 2fr;
+          padding: 4px 10px 4px 24px;
+          .group {
+            margin: 4px 0;
+            .head {
+              background: transparent !important;
+              color: #145E9A;
+              font-size: 12px;
+              font-weight: 200;
+              padding: 0;
+            }
+            .content {
+              font-weight: 100;
+              color: $light-black;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+    }
+  }
+}
+.ant-drawer-mask {
+  // left: 220px !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  // background: none !important;
+  // left: 150px !important;
+}
 // Mat checkbox
 .mat-checkbox-inner-container {
   display: inline-block;
@@ -793,15 +945,15 @@ button:focus {
     tr.mat-header-row {
       height: 20px !important;
       white-space: nowrap;
-      .mat-column-technical_marks,
+      .mat-column-technicial_marks,
       .mat-column-technical_percentage,
       .mat-column-english_marks,
       .mat-column-english_percentage,
-      .mat-column-analytical_marks,
+      .mat-column-analytical_mark,
       .mat-column-analytical_percentage,
-      .mat-column-aptitude_marks,
-      .mat-column-aptitude_percentage,
-      .mat-column-summative_marks,
+      .mat-column-apptitude_mark,
+      .mat-column-apptitude_percentage,
+      .mat-column-summative_mark,
       .mat-column-summative_percentage {
         color: $primary !important;
         font-size: 11px !important;

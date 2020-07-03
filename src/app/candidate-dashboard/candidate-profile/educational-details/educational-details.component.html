@@ -55,7 +55,7 @@
                     type="text" value=""> -->
                   <nz-select (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear
                     nzShowSearch nzPlaceHolder="">
-                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
                     <nz-option *ngFor="let level of institutes" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -77,7 +77,7 @@
                     type="text" value=""> -->
                   <nz-select (ngModelChange)="detectSelectChange()" formControlName="discipline" nzAllowClear
                     nzShowSearch nzPlaceHolder="">
-                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
                     <nz-option *ngFor="let level of discipline" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -99,7 +99,7 @@
                     type="text" value=""> -->
                   <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear
                     nzShowSearch nzPlaceHolder="Specification">
-                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
                     <nz-option *ngFor="let level of specialization" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
