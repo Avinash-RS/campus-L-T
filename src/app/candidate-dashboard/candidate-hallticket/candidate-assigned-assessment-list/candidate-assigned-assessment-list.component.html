@@ -39,9 +39,8 @@
       <!-- Symbol Column -->
       <ng-container matColumnDef="pdf">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Hall ticket </th>
-        <td mat-cell *matCellDef="let element"> <a style="text-decoration: none; cursor: pointer;"
-            [href]="BASE_URL + '/sites/default/files/hallticket/' + element['pdf']" target="_blank"><button
-              class="download" mat-raised-button> Download</button></a> </td>
+        <td mat-cell *matCellDef="let element"> <button (click)="downloadHallticket(element)"
+              class="download" mat-raised-button> Download</button> </td>
       </ng-container>
 
 

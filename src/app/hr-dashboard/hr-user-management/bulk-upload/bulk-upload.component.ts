@@ -9,6 +9,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { FormBuilder } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bulk-upload',
@@ -17,6 +18,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 export class BulkUploadComponent implements OnInit {
 
+  BASE_URL = environment.API_BASE_URL;
   url = null;
   validFile = false;
   showSizeError = {
@@ -48,6 +50,10 @@ export class BulkUploadComponent implements OnInit {
     // this.i = 0;
   }
 
+  downloadTemplate() {
+    const excel = `${this.BASE_URL}/sites/default/files/sample.csv`;
+    window.open(excel, '_blank');
+  }
   submit() {
     const data = {
       bulk_upload: 'candidate-bulk'
@@ -81,7 +87,7 @@ export class BulkUploadComponent implements OnInit {
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Tag') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Email ID')) {
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
         this.enableList = true;
         this.totalCount(this.SavedData);
         this.appConfig.hideLoader();

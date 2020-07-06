@@ -344,6 +344,62 @@ body {
   font-size: 13px !important;
 }
 
+.first-level-reports {
+  td.mat-cell:last-of-type {
+    padding-right: 2em !important;
+}
+  .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
+  }
+  .mat-cell {
+    text-align: center;
+    height: 30px !important;
+  }
+  .mat-row {
+    height: 30px !important;
+  }
+  .mat-column-foldername {
+    text-align: left;
+    padding-left: 5% !important;
+  }
+  .mat-column-shortlistname {
+    text-align: left;
+    padding-left: 5% !important;
+  }
+  .mat-column-shortlistby {
+    text-align: left;
+    padding-left: 5% !important;
+  }
+  .mat-column-uid {
+    text-align: left;
+    padding-left: 5% !important;
+  }
+  .table-row {
+    height: 30px !important;
+  }
+  .mat-row {
+    max-height: 30px;
+  }
+  .mat-cell.mat-column-pdf {
+    display: flex;
+    height: 16px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    .mat-button-wrapper {
+      height: 25px !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  tr.mat-header-row {
+    height: 40px !important;
+  }
+  .mat-paginator {
+    height: 40px !important;
+  }
+}
 .hall-ticket-wrapper {
   .mat-sort-header-container {
     display: flex;
@@ -1080,6 +1136,10 @@ button:focus {
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px !important;
 }
 
 /* Track */

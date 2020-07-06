@@ -1,6 +1,6 @@
 @import "../../../themes/themes.scss";
 
-.hall-ticket-wrapper {
+.first-level-reports {
   padding: 5px;
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
@@ -102,6 +102,10 @@ th {
   height: 25px;
   padding: 4px 12px;
   font-weight: 100 !important;
+  justify-content: center !important;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 5px 0 5px 0;
 }
 .light-bg {
   background: #fffdfd 0% 0% no-repeat padding-box !important;

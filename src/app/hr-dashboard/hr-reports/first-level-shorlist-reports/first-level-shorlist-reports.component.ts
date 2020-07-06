@@ -68,6 +68,10 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
     });
   }
 
+  downloadExcel(element) {
+    const excel = element && element.download ? element.download : '';
+    window.open(excel, '_blank');
+  }
   selectedUser(userDetail) {
     console.log(userDetail);
   }

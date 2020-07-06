@@ -88,8 +88,10 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
           hallticket: 'Post Graduate',
         },
       ];
-      if (datas && datas[0]) {
-        this.userList = datas[0];
+      if (datas) {
+        this.userList = datas;
+      } else {
+        this.userList = [];
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -100,6 +102,10 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
 
   selectedUser(userDetail) {
     console.log(userDetail);
+  }
+  downloadHallticket(detail) {
+    const excel = detail && detail.pdf ? detail.pdf + this.appConfig.getLocalData('userId') : '';
+    window.open(excel, '_blank');
   }
 
 
