@@ -161,7 +161,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     const numberOnly: RegExp = /^[0-9][0-9]{0,1}$/;
-    const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?%?$)/;
+    const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
     if (edu) {
 
       return this.fb.group({

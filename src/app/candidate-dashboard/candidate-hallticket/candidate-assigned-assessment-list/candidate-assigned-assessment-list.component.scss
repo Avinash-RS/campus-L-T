@@ -91,10 +91,10 @@ th {
 
 .download {
   background: #EDEEF0 0% 0% no-repeat padding-box;
-border: 1px solid #70707075;
-border-radius: 5px;
+border: 1px solid #70707075 !important;
+border-radius: 5px !important;
 display: flex;
-color: #145E9A;
+color: #145E9A !important;
 font-size: 13px;
 align-items: center;
 height: 25px;

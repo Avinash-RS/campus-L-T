@@ -123,7 +123,7 @@ apiShortlistSubmit(apiDatas) {
 
 getDateFormat(date) {
   if (date) {
-    const split = moment(date).format('DD MMM YYYY');
+    const split = moment(date).format('MMM YYYY');
     const output = split;
     return output;
 

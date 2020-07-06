@@ -93,11 +93,11 @@ th {
 .download {
   background: #fffdfd 0% 0% no-repeat padding-box !important;
   // background: #EDEEF0 0% 0% no-repeat padding-box;
-  border: 1px solid #70707075;
-  border-radius: 5px;
+  border: 1px solid #70707075 !important;
+  border-radius: 5px !important;
   display: flex;
-  color: #145e9a;
-  font-size: 13px;
+  color: #145e9a !important;
+  font-size: 13px !important;
   align-items: center;
   height: 25px;
   padding: 4px 12px;
