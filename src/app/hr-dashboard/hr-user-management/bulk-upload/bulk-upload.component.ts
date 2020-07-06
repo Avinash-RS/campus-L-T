@@ -192,7 +192,7 @@ export class BulkUploadComponent implements OnInit {
 
     if (event.target.files && event.target.files[0].name.includes('.csv')) {
       this.showSizeError.size = false;
-      if (event.target.files[0].size < 200000) {
+      if (event.target.files[0].size < 2000000) {
         this.showSizeError.image = false;
         this.fileName = event.target.files[0]['name'];
         this.fileSize = (Number(event.target.files[0]['size']) / 1024).toFixed(2);
