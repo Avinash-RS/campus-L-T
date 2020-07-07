@@ -10,6 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { environment } from 'src/environments/environment';
+import moment from 'moment';
 
 @Component({
   selector: 'app-bulk-upload',
@@ -61,6 +62,46 @@ export class BulkUploadComponent implements OnInit {
     this.openDialog(ShortlistBoxComponent, data);
   }
 
+  tConvert(time) {
+    // Check correct time format and split into components
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) { // If time format correct
+      time = time.slice(1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(''); // return adjusted time or original string
+  }
+
+  getDateFormat1(date) {
+    if (date) {
+      const split = moment(date).format('YYYY-MM-DD');
+      const output = split.toUpperCase();
+      return output;
+
+    } else {
+      return '-';
+    }
+  }
+
+  uploadListToAPI() {
+    const date = new Date();
+    const currentDate = this.getDateFormat1(date);
+    const time = this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
+
+    this.uploadedListArray.forEach(element => {
+      element['date'] = this.getDateFormat1(date);
+      element['time'] = this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
+    });
+    console.log(JSON.stringify(this.uploadedListArray));
+
+    const datas = {
+      bulk_upload_ok: 'candidate-bulk'
+    };
+    this.openDialog1(ShortlistBoxComponent, datas);
+
+  }
   upload() {
     this.appConfig.showLoader();
     this.validFile = false;
@@ -129,13 +170,13 @@ export class BulkUploadComponent implements OnInit {
           }
         });
         const value = {
-          tag,
-          name,
-          email,
+          tag: tag ? tag : '',
+          name: name ? name : '',
+          email: email ? email : ''
         };
-        // if ((tag && tag.trim()) && (name && name.trim()) && (email && email.trim())) {
-        listArray.push(value);
-        // }
+        if ((tag && tag.trim()) || (name && name.trim()) || (email && email.trim())) {
+          listArray.push(value);
+        }
       }
     });
     this.uploadedListArray = listArray;
@@ -178,10 +219,7 @@ export class BulkUploadComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const datas = {
-          bulk_upload_ok: 'candidate-bulk'
-        };
-        this.openDialog1(ShortlistBoxComponent, datas);
+        this.uploadListToAPI();
       }
     });
   }

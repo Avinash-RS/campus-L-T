@@ -69,9 +69,10 @@ export const CONSTANT = {
       USER_MANAGEMENT_UPLOADED_LIST: '/hr/user-management/uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
       REPORTS: '/hr/reports',
-      REPORTS_LIST: '/hr/reports/list',
+      REPORTS_LIST: '/hr/reports/second',
       REPORTS_LIST_VIEW: '/hr/reports/list/view',
       FIRST_LEVEL_REPORTS_LIST: '/hr/reports/first',
+      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/hr/reports/candidate_list_reports',
     }
 
   },
@@ -130,9 +131,10 @@ export const CONSTANT = {
       USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
       REPORTS: 'reports',
-      REPORTS_LIST: 'list',
+      REPORTS_LIST: 'second',
       REPORTS_LIST_VIEW: 'view',
       FIRST_LEVEL_REPORTS_LIST: 'first',
+      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports'
     }
   }
 };

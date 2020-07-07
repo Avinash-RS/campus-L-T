@@ -19,6 +19,7 @@ import { UploadedListComponent } from './hr-user-management/uploaded-list/upload
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
+import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bulk-upload-reports.component';
 
 
 const routes: Routes = [
@@ -77,6 +78,9 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`, component: BulkUploadReportsComponent
           },
           {
             path: '',

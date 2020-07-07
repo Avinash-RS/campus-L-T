@@ -159,13 +159,4 @@ export class CandidateMappersService {
       });
   }
 
-  hallTicketDownload(name) {
-    return this.http.get(`${this.BASE_URL}/sites/default/files/hallticket/${name}`,
-      {
-        headers: this.getAfterCustomHeaders(),
-        withCredentials: true
-      });
-  }
-
-
 }

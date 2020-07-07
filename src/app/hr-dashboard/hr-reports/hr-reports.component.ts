@@ -25,6 +25,11 @@ export class HrReportsComponent implements OnInit {
         icon: '',
         name: '2nd Level Shortlist',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST
+      },
+      {
+        icon: '',
+        name: 'Candidate Bulk Upload Reports',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
