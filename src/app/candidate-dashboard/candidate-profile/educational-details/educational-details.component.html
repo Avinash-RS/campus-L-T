@@ -43,6 +43,7 @@
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('board').invalid && eduArr.controls[i].get('board').touched">
                   <span *ngIf="eduArr.controls[i].get('board').errors?.required">Board/University is Required</span>
+                  <span *ngIf="eduArr.controls[i].get('board').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
                 </div>
               </div>
               <div class="outer-box-wrapper">

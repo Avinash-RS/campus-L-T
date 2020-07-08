@@ -49,6 +49,20 @@ export class BulkUploadComponent implements OnInit {
 
   ngOnInit() {
     // this.i = 0;
+
+    console.log(this.tConvert('11:6'));
+    const date = new Date();
+    console.log(date.getHours(), date.getMinutes());
+    if (date.getMinutes().toString().length === 1) {
+      let hours;
+      hours = '0' + date.getMinutes().toString();
+      console.log('hours', hours);
+    }
+
+    const time = this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
+    console.log(time);
+
+
   }
 
   downloadTemplate() {
@@ -88,19 +102,33 @@ export class BulkUploadComponent implements OnInit {
   uploadListToAPI() {
     const date = new Date();
     const currentDate = this.getDateFormat1(date);
-    const time = this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
+    // const time = this.tConvert(`${date.getHours()}:${minutes}`);
 
     this.uploadedListArray.forEach(element => {
+      let minutes;
+      if (date.getMinutes().toString().length === 1) {
+        minutes = '0' + date.getMinutes().toString();
+        console.log('minutes', minutes);
+      } else {
+        minutes = date.getMinutes();
+      }
       element['date'] = this.getDateFormat1(date);
-      element['time'] = this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
+      element['field_user_created_by'] = this.appConfig.getLocalData('userId');
+      element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
+    });
+    this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
+      console.log('success', data);
+      this.appConfig.hideLoader();
+      const datas = {
+        bulk_upload_ok: 'candidate-bulk',
+        totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
+        errorLength: data ? data.length : 0,
+      };
+      this.openDialog1(ShortlistBoxComponent, datas);
+    }, (err) => {
+
     });
     console.log(JSON.stringify(this.uploadedListArray));
-
-    const datas = {
-      bulk_upload_ok: 'candidate-bulk'
-    };
-    this.openDialog1(ShortlistBoxComponent, datas);
-
   }
   upload() {
     this.appConfig.showLoader();

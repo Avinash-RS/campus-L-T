@@ -3,9 +3,9 @@ ramjai607@gmail.com
 http://udapqa.southindia.cloudapp.azure.com/d8cintana2/api/bulk-user/registration?_format=_json
 
   [
-    {"tag":"dummy","name":"Avi", "email":"avi@gmail.com", "date": "1990-10-20", "time": "11.30 AM", "reason": "Duplicate Entry"},
-    {"tag":"dummy","name":"pra","email":"pra@gmail.com", "date": "1990-10-20", "time": "11.30 AM", "reason": "Already have an account"},
-    {"tag":"dummy","name":"slfj","email":"", "date": "1990-10-20", "time": "11.30 AM", "reason": "Email is not given"},
-    {"tag":"dummy","name":"","email":"dup@gmail.com", "date": "1990-10-20", "time": "11.30 AM", "reason": "Name is not given"},
-    {"tag":"","name":"ddaj","email":"ad@gmail.com", "date": "1990-10-20", "time": "11.30 AM", "reason": "Tag is not given"}
+    {"tag":"dummy","name":"Avi", "candidate_id": "427", "email":"avi@gmail.com", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"},
+    {"tag":"dummy","name":"pra", "candidate_id": "428", "email":"pra@gmail.com", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"},
+    {"tag":"dummy","name":"slfj", "candidate_id": "429", "email":"", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"},
+    {"tag":"dummy","name":"", "candidate_id": "500", "email":"dup@gmail.com", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"},
+    {"tag":"","name":"ddaj", "candidate_id": "502", "email":"ad@gmail.com", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"}
   ]

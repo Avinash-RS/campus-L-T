@@ -59,7 +59,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
       this.appConfig.hideLoader();
       console.log('api', datas);
       if (datas) {
-        this.userList = datas;
+        this.userList = datas ? datas : [];
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

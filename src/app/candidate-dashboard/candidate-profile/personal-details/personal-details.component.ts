@@ -960,6 +960,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     const numberOnly: RegExp = /^[0-9]*$/;
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     const eyenumberDecimals: RegExp = /^[\-\+]?[0-9]{1,2}\d*(\.\d{0,2})?$/;
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     // Form 1 UptoCategory
     this.upToCategoryForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -970,25 +971,25 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobDate: [null, [Validators.required]],
       dobMonth: [null, [Validators.required]],
       dobYear: [null, [Validators.required]],
-      nationality: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      nationality: ['', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       aadhaar: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
       category: [''],
     }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
     this.presentAddressForm = this.fb.group({
-      presentAddress1: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      presentAddress2: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      presentZipCode: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      presentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      presentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      presentZipCode: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
       presentState: ['', [Validators.required]],
       presentCity: ['', [Validators.required]],
     }), this.presentAddressPatchValue();
 
     // Present Address Form
     this.permanentAddressForm = this.fb.group({
-      permanentAddress1: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      permanentAddress2: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      permanentZipCode: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      permanentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      permanentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      permanentZipCode: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
       permanentState: ['', [Validators.required]],
       permanentCity: ['', [Validators.required]],
     }), this.permanentAddressPatchValue();
@@ -996,7 +997,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Language Form
     this.languagesForm = this.fb.group({
-      languageRequired: ['sd', [Validators.required, RemoveWhitespace.whitespace()]],
+      languageRequired: ['sd', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       firstRead: [true],
       firstWrite: [''],
       firstSpeak: [''],
@@ -1006,22 +1007,22 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Passport Form
     this.passportForm = this.fb.group({
-      passportNumber: ['', [RemoveWhitespace.whitespace()]],
-      passportName: ['', RemoveWhitespace.whitespace()],
-      passportProfession: ['', RemoveWhitespace.whitespace()],
+      passportNumber: ['', [Validators.pattern(numberOnly), Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      passportName: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      passportProfession: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       passportIssueDate: [''],
       // passportValid: ['', [Validators.required, FormCustomValidators.dateValidation()]],
       passportValid: [''],
-      passportIssuePlace: ['', RemoveWhitespace.whitespace()],
-      passportValidFor: ['', RemoveWhitespace.whitespace()],
+      passportIssuePlace: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      passportValidFor: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
     }), this.passportFormPatchValue();
 
     // Health Form
     this.healthForm = this.fb.group({
-      illness: ['', RemoveWhitespace.whitespace()],
-      daysofIll: ['', [Validators.pattern(numberDecimals)]],
-      natureofIll: ['', RemoveWhitespace.whitespace()],
-      disability: ['', RemoveWhitespace.whitespace()],
+      illness: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      daysofIll: ['', [Validators.pattern(numberOnly), Validators.maxLength(5), RemoveWhitespace.whitespace()]],
+      natureofIll: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      disability: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       height: ['', [Validators.pattern(numberDecimals)]],
       weight: ['', [Validators.pattern(numberDecimals)]],
       eyePower: this.fb.group({
@@ -1074,16 +1075,17 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }
   }
   createItem(data): FormGroup {
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
       return this.fb.group({
-        language: [data['field_language']['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        language: [data['field_language']['value'], [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         read: data['field_read'][0]['value'],
         write: data['field_write'][0]['value'],
         speak: data['field_speak'][0]['value']
       }, { validator: FormCustomValidators.anyOneSelected });
     } else {
       return this.fb.group({
-        language: ['', [RemoveWhitespace.whitespace(), Validators.required]],
+        language: ['', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         read: '',
         write: '',
         speak: ''

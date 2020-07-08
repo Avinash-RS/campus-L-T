@@ -12,7 +12,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 })
 export class UploadedListComponent implements OnInit, AfterViewInit {
   showPage = true;
-  displayedColumns: any[] = ['counter', 'field_tag', 'field_user_name', 'uid', 'usermail', 'field_user_created_by', 'field_created_role', 'created', 'created_1'];
+  displayedColumns: any[] = ['counter', 'tag', 'name', 'id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -32,6 +32,18 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getUsersList();
+  }
+
+  tConvert(time) {
+    // Check correct time format and split into components
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) { // If time format correct
+      time = time.slice(1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(''); // return adjusted time or original string
   }
 
   // To get all users
@@ -86,13 +98,14 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       //     time: '11:30 AM',
       //   },
       // ];
-      this.userList = data1;
+      this.userList = data1 ? data1 : [];
       this.userList.forEach(element => {
-        element.checked = false;
+        element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
     }, (err) => {
     });
   }

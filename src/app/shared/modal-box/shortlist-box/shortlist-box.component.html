@@ -51,7 +51,7 @@
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
   <div class="bulk-upload-text">
-    Candidate details have been successfully uploaded
+  <span *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span> <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully uploaded.</span> <br> <span *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} candidates has not been uploaded. Please go to reports to see the detailed error details. </span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>

@@ -557,15 +557,17 @@
       align-items: center;
       box-shadow: $shadow-light-black;
       text-align: center;
-      width: auto;
+      min-width: auto;
       margin: 1em 0 0 1.5em;
       display: flex;
       border-radius: 5px;
-      padding: 0.5em 1.5em;
+      padding: 0.5em 1em;
+      overflow: auto;
       font-size: 17px;
       opacity: 1;
       color: $light-black;
       background: $disable-gray;
+      max-width: 350px;
     }
   }
   .faculty-wrapper {
@@ -671,14 +673,26 @@
         color: $light-black;
         background: $disable-gray;
         div {
-          min-width: 150px;
+          min-width: auto;
           // align-items: center;
           text-align: left;
-          width: 100%;
           display: flex;
           justify-content: space-around;
           padding: 0.25em 0.25em;
           font-size: 17px;
+          overflow: auto;
+          max-width: 215px;
+        }
+        div:first-child {
+          min-width: auto;
+          // align-items: center;
+          text-align: left;
+          display: flex;
+          justify-content: space-around;
+          padding: 0.25em 0.25em;
+          font-size: 17px;
+          overflow: auto;
+          max-width: 320px;
         }
       }
     }

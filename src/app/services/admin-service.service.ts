@@ -165,7 +165,7 @@ export class AdminServiceService {
   }
 
   alreadyUploadedDetails() {
-    return this.http.get(`${this.BASE_URL}/csv-register-user?_format=json`,
+    return this.http.get(`${this.BASE_URL}/profile/user_details_get`,
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
@@ -181,6 +181,16 @@ export class AdminServiceService {
 
   firstLevelReports() {
     return this.http.get(`${this.BASE_URL}/profile/admin_report`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  bulkUploadCandidates(data) {
+    return this.http.post(`${this.BASE_URL}/profile/user_create_progm`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  bulkUploadCandidatesErrorList() {
+    return this.http.get(`${this.BASE_URL}/profile/getuploaded_errors`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

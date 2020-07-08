@@ -18,7 +18,7 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
 
-  displayedColumns: any[] = ['uid', 'foldername', 'shortlistname', 'shortlistby', 'dates', 'times', 'reason'];
+  displayedColumns: any[] = ['uid', 'tag', 'name', 'email', 'date', 'time', 'reason'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -55,11 +55,11 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-    this.adminService.firstLevelReports().subscribe((datas: any) => {
+    this.adminService.bulkUploadCandidatesErrorList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       console.log('api', datas);
       if (datas) {
-        this.userList = datas;
+        this.userList = datas ? datas : [];
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

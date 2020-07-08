@@ -88,7 +88,14 @@ shortlist() {
 apiShortlistSubmit(apiDatas) {
   const date = new Date();
   const currentDate = this.getDateFormat1(date);
-  const time =  this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
+  let minutes;
+  if (date.getMinutes().toString().length === 1) {
+    minutes = '0' + date.getMinutes().toString();
+    console.log('minutes', minutes);
+  } else {
+    minutes = date.getMinutes();
+  }
+  const time =  this.tConvert(`${date.getHours()}:${minutes}`);
   const apiUserList = [];
   console.log(currentDate);
 
@@ -241,7 +248,7 @@ getUsersList() {
         });
       }
     }
-    this.userList = align;
+    this.userList = align ? align : [];
     this.totalCandidates = this.userList.length;
     this.toShoworNotShowFilter();
     this.dataSource = new MatTableDataSource(this.userList);
