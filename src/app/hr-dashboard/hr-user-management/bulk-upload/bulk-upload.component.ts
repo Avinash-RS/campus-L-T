@@ -98,6 +98,16 @@ export class BulkUploadComponent implements OnInit {
       return '-';
     }
   }
+  getDateFormat(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+      const output = split.toUpperCase();
+      return output;
+
+    } else {
+      return '-';
+    }
+  }
 
   uploadListToAPI() {
     const date = new Date();
@@ -146,7 +156,7 @@ export class BulkUploadComponent implements OnInit {
       /* read workbook */
       const bstr: string = e.target.result;
 
-      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary', cellDates: true });
 
       /* grab first sheet */
       const wsname: string = wb.SheetNames[0];
@@ -158,8 +168,8 @@ export class BulkUploadComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
         this.enableList = true;
-        this.totalCount(this.SavedData);
         this.appConfig.hideLoader();
+        this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
         this.appConfig.hideLoader();
@@ -176,6 +186,8 @@ export class BulkUploadComponent implements OnInit {
   }
 
   totalCount(data) {
+    console.log(typeof data[1][0], data[1][0].toString().endsWith('(India Standard Time)'));
+
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -187,7 +199,11 @@ export class BulkUploadComponent implements OnInit {
           // if (index < 3 && element.length > 2) {
           if (index < 3) {
             if (index == 0) {
-              tag = element ? element : '';
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                tag = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                tag = element ? element : '';
+              }
             }
             if (index == 1) {
               name = element ? element : '';
@@ -202,7 +218,10 @@ export class BulkUploadComponent implements OnInit {
           name: name ? name : '',
           email: email ? email : ''
         };
-        if ((tag && tag.trim()) || (name && name.trim()) || (email && email.trim())) {
+        console.log('tag', tag);
+
+
+        if ((tag && tag.toString().trim()) || (name && name.toString().trim()) || (email && email.toString().trim())) {
           listArray.push(value);
         }
       }

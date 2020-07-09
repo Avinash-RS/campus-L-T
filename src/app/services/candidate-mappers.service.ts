@@ -140,7 +140,7 @@ export class CandidateMappersService {
   logout(logoutToken) {
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/logout?_format=json&token=${logoutToken}`, logoutToken,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.withoutTokens(), withCredentials: true });
   }
 
   updatedState(Id) {

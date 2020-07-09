@@ -9,6 +9,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 
 @Component({
   selector: 'app-registerpage',
@@ -17,19 +18,19 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 })
 export class RegisterpageComponent implements OnInit {
 
-  filteredCities: Observable<any[]>;
-  filteredStates: Observable<any[]>;
   openDrop = false;
   registerForm: FormGroup;
   currentForm;
-  allCities: any;
-  allStates: any;
+  allStatess: any;
+  allCitiess: any;
+  hideCityDropDown = true;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
+    private candidateService: CandidateMappersService
   ) {
     if (this.router.url === CONSTANT.ENDPOINTS.REGISTER.CORPORATE) {
       this.currentForm = 'corporate';
@@ -41,93 +42,115 @@ export class RegisterpageComponent implements OnInit {
 
   ngOnInit() {
     this.FormRegister();
-    // To reduce load speee, On first time, we hit api and stored that value on local storage.
-    // On Subsquent refreshes or redirects, it will take value from local storage itself.
-    if (this.appConfig.getLocalData('allStates') && this.appConfig.getLocalData('allCities')) {
-      this.allCities = JSON.parse(this.appConfig.getLocalData('allCities'));
-      this.allStates = JSON.parse(this.appConfig.getLocalData('allStates'));
+    this.updatedStateAPI();
+  }
 
-      // update validations for state and city form control
-      // Updating State Form control validation
-      this.registerForm.controls['state'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
-      this.registerForm.controls['state'].updateValueAndValidity();
-      // Updating City Form control validation
-      this.registerForm.controls['city'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
-      this.registerForm.controls['city'].updateValueAndValidity();
+  updatedStateAPI() {
+    const datas = {
+      country_id: '101'
+    };
+    this.candidateService.updatedState(datas).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.allStatess = data[0];
 
+    }, (err) => {
+
+    });
+  }
+
+  detectStateSelectChange(data) {
+
+    if (data.value) {
+      const ApiData = {
+        state_id: data.value
+      };
+      this.registerForm.patchValue({
+        city: null
+      });
+      this.getUpdatedCity(ApiData);
     } else {
-      // If value not found on local storage, we hit api
-      this.cityAPI();
-      this.stateAPI();
-    }
-
-
-    this.autocomplete();
-  }
-
-
-  autocomplete() {
-    // tslint:disable-next-line: no-non-null-assertion
-    this.filteredCities = this.registerForm.get('city')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this.city_filter(name, this.allCities) : this.allCities ? this.allCities.slice() : '')
-    );
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.filteredStates = this.registerForm.get('state')!.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this.state_filter(name, this.allStates) : this.allStates ? this.allStates.slice() : '')
-    );
-
-  }
-
-  citydisplayFn(user): string {
-    return user && user.City ? user.City : '';
-  }
-  statedisplayFn(user): string {
-    return user && user.state ? user.state : '';
-  }
-
-  private city_filter(name: string, paramArrayFromAutoComplete): any[] {
-    const filterValue = name.toLowerCase();
-
-    return paramArrayFromAutoComplete.filter(option => option.City.toLowerCase().indexOf(filterValue) === 0);
-  }
-  private state_filter(name: string, paramArrayFromAutoComplete): any[] {
-    const filterValue = name.toLowerCase();
-
-    return paramArrayFromAutoComplete.filter(option => option.state.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-
-  openDropdown(event, trigger: MatAutocompleteTrigger) {
-    if (trigger.panelOpen) {
-      event.stopPropagation();
-      trigger.closePanel();
-    } else {
-      event.stopPropagation();
-      trigger.openPanel();
+      this.registerForm.patchValue({
+        city: null
+      });
+      this.allCitiess = [];
+      this.hideCityDropDown = true;
     }
   }
+
+
+  // To get all cities
+  getUpdatedCity(ApiData) {
+    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+      this.hideCityDropDown = false;
+      this.appConfig.hideLoader();
+      this.allCitiess = datas[0];
+    }, (err) => {
+    });
+  }
+
 
   FormRegister() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
     const onlyAlpha: RegExp = /^[a-zA-Z ]*$/;
     this.registerForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
-      lastName: ['', [Validators.required, Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
-      jobTitle: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      firstName: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
+      lastName: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
+      jobTitle: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       mobileNumber: ['', [Validators.required, Validators.pattern(mobileRegex)]],
-      corporateName: ['', [Validators.required], RemoveWhitespace.whitespace()],
-      corporateEmail: ['', [Validators.required, Validators.pattern(emailregex)]],
+      corporateName: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      corporateEmail: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(emailregex)]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      comment: ['']
+      comment: ['', [Validators.maxLength(255)]]
     });
   }
+
+  onSubmit(val) {
+    if (this.registerForm.valid) {
+      let cityName: any;
+      let stateName: any;
+      this.allCitiess.forEach(element => {
+        if (element && element['id'] === this.registerForm.value.city) {
+          cityName = element['name'];
+        }
+      });
+      this.allStatess.forEach(element => {
+        if (element && element['id'] === this.registerForm.value.state) {
+          stateName = element['name'];
+        }
+      });
+      // API
+      // name: [{ value: this.registerForm.value.firstName }],
+      // mail: [{ value: this.registerForm.value.corporateEmail }],
+      const datas = {
+        pass: '1234d56',
+        name: this.registerForm.value.firstName,
+        field_user_name: this.registerForm.value.firstName,
+        roles: [{ target_id: this.currentForm }],
+        field_ins_first_name: this.registerForm.value.firstName,
+        field_ins_last_name: this.registerForm.value.lastName,
+        field_ins_job_title: this.registerForm.value.jobTitle,
+        field_ins_mobile_number: this.registerForm.value.mobileNumber,
+        field_institute_name: this.registerForm.value.corporateName,
+        field_institute_email: this.registerForm.value.corporateEmail,
+        field_institute_state: stateName ? stateName : '',
+        field_institute_city: cityName ? cityName : '',
+        field_institute_comments: this.registerForm.value.comment
+      };
+      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
+
+      this.apiService.RegistrationForm(datas).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        this.appConfig.success(`Form has been Registered Successfully`, '');
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+      }, (error) => {
+      });
+    } else {
+      this.validateAllFields(this.registerForm);
+    }
+  }
+
 
   get firstName() {
     return this.registerForm.get('firstName');
@@ -156,77 +179,6 @@ export class RegisterpageComponent implements OnInit {
   get comment() {
     return this.registerForm.get('comment');
   }
-
-  onSubmit(val) {
-    if (this.registerForm.valid) {
-      // API
-      const datas = {
-        name: [{ value: this.registerForm.value.firstName }],
-        mail: [{ value: this.registerForm.value.corporateEmail }],
-        roles: [{ target_id: this.currentForm }],
-        field_first_name: [{ value: this.registerForm.value.firstName }],
-        field_lname: [{ value: this.registerForm.value.lastName }],
-        field_job_title: [{ value: this.registerForm.value.jobTitle }],
-        field_mobile_number: [{ value: this.registerForm.value.mobileNumber }],
-        field_institute_name: [{ value: this.registerForm.value.corporateName }],
-        field_institute_email: [{ value: this.registerForm.value.corporateEmail }],
-        field_state: [{ value: this.registerForm.value.state.state }],
-        field_city: [{ value: this.registerForm.value.city.City }],
-        field_comments: [{ value: this.registerForm.value.comment }]
-      };
-      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
-
-      this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-        this.appConfig.hideLoader();
-        this.appConfig.success(`Form has been Registered Successfully`, '');
-        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
-      }, (error) => {
-      });
-    } else {
-      this.validateAllFields(this.registerForm);
-    }
-  }
-
-
-  // To get all cities
-  cityAPI() {
-    this.apiService.getAllCity().subscribe((data) => {
-      this.appConfig.hideLoader();
-      this.allCities = data;
-      this.appConfig.setLocalData('allCities', JSON.stringify(this.allCities));
-
-      // Updating Form control validation
-      this.registerForm.controls['city'].setValidators([Validators.required, FormCustomValidators.cityvalueSelected(this.allCities)]);
-      this.registerForm.controls['city'].updateValueAndValidity();
-
-    }, (err) => {
-    });
-  }
-
-  // To get all cities
-  stateAPI() {
-    this.apiService.getAllState().subscribe((data) => {
-      const stateArr = [];
-      for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-          const datas = {
-            name: data[key],
-            state: data[key]
-          };
-          stateArr.push(datas);
-        }
-      }
-      this.allStates = stateArr;
-      this.appConfig.setLocalData('allStates', JSON.stringify(this.allStates));
-
-      // Updating Form control validation
-      this.registerForm.controls['state'].setValidators([Validators.required, FormCustomValidators.statevalueSelected(this.allStates)]);
-      this.registerForm.controls['state'].updateValueAndValidity();
-
-    }, (err) => {
-    });
-  }
-
 
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
