@@ -73,6 +73,14 @@ export const CONSTANT = {
       REPORTS_LIST_VIEW: '/hr/reports/list/view',
       FIRST_LEVEL_REPORTS_LIST: '/hr/reports/first',
       BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/hr/reports/candidate_list_reports',
+    },
+    TPO_DASHBOARD: {
+      HOME: '/tpo',
+      DASHBOARD: '/tpo/dashboard',
+      USER_MANAGEMENT: '/tpo/user-management',
+      USER_MANAGEMENT_CANDIDATE_UPLOADS: '/tpo/user-management/candidate',
+      USER_MANAGEMENT_UPLOADED_LIST: '/tpo/user-management/candidate/uploaded-list',
+      USER_MANAGEMENT_BULK_UPLOAD: '/tpo/user-management/candidate/bulk-upload',
     }
 
   },
@@ -135,6 +143,14 @@ export const CONSTANT = {
       REPORTS_LIST_VIEW: 'view',
       FIRST_LEVEL_REPORTS_LIST: 'first',
       BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports'
+    },
+    TPO_DASHBOARD: {
+      HOME: 'tpo',
+      DASHBOARD: 'dashboard',
+      USER_MANAGEMENT: 'user-management',
+      USER_MANAGEMENT_CANDIDATE_UPLOADS: 'candidate',
+      USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
+      USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
     }
   }
 };

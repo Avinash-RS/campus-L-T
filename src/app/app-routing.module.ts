@@ -19,6 +19,9 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.HR_DASHBOARD.HOME}`, loadChildren: './hr-dashboard/hr-dashboard.module#HrDashboardModule', canLoad: [ HrcanloadGuard ]
+  },
+  {
+    path: `${CONSTANT.ROUTES.TPO_DASHBOARD.HOME}`, loadChildren: './tpo-dashboard/tpo-dashboard.module#TpoDashboardModule',
   }
 ];
 

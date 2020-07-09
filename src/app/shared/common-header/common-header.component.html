@@ -1,0 +1,33 @@
+<mat-toolbar>
+    <ul (click)="goToHome()">
+      <li>
+        <img src="assets/images/Logo.png" width="80px" height="80px" alt="">
+      </li>
+      <li>
+        <div> Unified Digital</div>
+        <div>Assessment Platform </div>
+      </li>
+    </ul>
+    <ul>
+      <!-- <li>
+          <span matTooltip="Home">
+              <img src="assets/images/015-home-icon-silhouette.svg" alt="">
+            </span>
+        </li>
+      <li>
+        <span matTooltip="Notifications">
+            <img src="assets/images/Iconionic-ios-notifications.svg" alt="">
+        </span>
+      </li>
+      <li>
+        <span matTooltip="Profile">
+            <img src="assets/images/Profile.svg" alt="">
+        </span>
+      </li> -->
+      <li style="margin-top: 6px;" (click)="logOut()">
+          <span matTooltip="Logout">
+            <img src="assets/images/logout.svg" alt="">
+          </span>
+        </li>
+      </ul>
+  </mat-toolbar>
