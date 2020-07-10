@@ -72,6 +72,7 @@
       height: 50px;
       padding: 2px 2.5em;
       display: flex;
+      border-left: solid white 1px;
       background: $non-active-sub-bg 0% 0% no-repeat padding-box;
       align-items: center;
       flex-direction: column;
@@ -80,6 +81,7 @@
       div:first-child {
         img {
           width: 30px;
+          height: 20px;
         }
       }
       div:last-child {
@@ -91,6 +93,7 @@
     .active {
       background: $active-sub-bg;
       outline: none;
+      font-weight: 200;
     }
   }
 }
@@ -164,7 +167,7 @@
     }
   }
   .main-container {
-    padding: 10px 0px 10px 5px;
+    padding: 0px 0px 0px 0px;
   }
 }
 .toolbar-hide-second {

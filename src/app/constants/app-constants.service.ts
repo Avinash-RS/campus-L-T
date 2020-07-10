@@ -42,6 +42,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_USERS_LIST: '/admin/user-management/users',
       USER_MANAGEMENT_ADD_USER: '/admin/user-management/add-user',
       USER_MANAGEMENT_EDIT_USER: '/admin/user-management/users/edit',
+      USER_MANAGEMENT_INSTITUTE_UPLOADS: '/admin/user-management/institute',
+      USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST: '/admin/user-management/institute/uploaded-list',
+      USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD: '/admin/user-management/institute/bulk-upload',
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
@@ -112,6 +115,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_USERS_LIST: 'users',
       USER_MANAGEMENT_ADD_USER: 'add-user',
       USER_MANAGEMENT_EDIT_USER: 'users/edit',
+      USER_MANAGEMENT_INSTITUTE_UPLOADS: 'institute',
+      USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST: 'uploaded-list',
+      USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD: 'bulk-upload'
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',

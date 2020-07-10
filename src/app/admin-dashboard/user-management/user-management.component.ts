@@ -25,7 +25,12 @@ export class UserManagementComponent implements OnInit {
         icon: '001-group.svg',
         name: 'Add User',
         router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER
-      }
+      },
+      {
+        icon: '002-cv.svg',
+        name: 'Institutes',
+        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS
+      },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }

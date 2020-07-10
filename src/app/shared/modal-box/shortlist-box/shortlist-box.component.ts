@@ -15,8 +15,8 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 })
 export class ShortlistBoxComponent implements OnInit {
 
-  folder = new FormControl('', [Validators.required, Validators.minLength(3), RemoveWhitespace.whitespace()]);
-  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), RemoveWhitespace.whitespace()]);
+  folder = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
+  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,

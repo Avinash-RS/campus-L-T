@@ -128,6 +128,10 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
+            if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
+              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
+            }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
               // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
