@@ -42,6 +42,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_USERS_LIST: '/admin/user-management/users',
       USER_MANAGEMENT_ADD_USER: '/admin/user-management/add-user',
       USER_MANAGEMENT_EDIT_USER: '/admin/user-management/users/edit',
+      USER_MANAGEMENT_INSTITUTE_UPLOADS: '/admin/user-management/institute',
+      USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST: '/admin/user-management/institute/uploaded-list',
+      USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD: '/admin/user-management/institute/bulk-upload',
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
@@ -66,8 +69,21 @@ export const CONSTANT = {
       FIRSTSHORTLISTING_CRITERIA: '/hr/shortlist/1st/criteria',
       SECONDSHORTLISTING: '/hr/shortlist/2nd',
       USER_MANAGEMENT: '/hr/user-management',
+      USER_MANAGEMENT_UPLOADED_LIST: '/hr/user-management/uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
-
+      REPORTS: '/hr/reports',
+      REPORTS_LIST: '/hr/reports/second',
+      REPORTS_LIST_VIEW: '/hr/reports/list/view',
+      FIRST_LEVEL_REPORTS_LIST: '/hr/reports/first',
+      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/hr/reports/candidate_list_reports',
+    },
+    TPO_DASHBOARD: {
+      HOME: '/tpo',
+      DASHBOARD: '/tpo/dashboard',
+      USER_MANAGEMENT: '/tpo/user-management',
+      USER_MANAGEMENT_CANDIDATE_UPLOADS: '/tpo/user-management/candidate',
+      USER_MANAGEMENT_UPLOADED_LIST: '/tpo/user-management/candidate/uploaded-list',
+      USER_MANAGEMENT_BULK_UPLOAD: '/tpo/user-management/candidate/bulk-upload',
     }
 
   },
@@ -99,6 +115,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_USERS_LIST: 'users',
       USER_MANAGEMENT_ADD_USER: 'add-user',
       USER_MANAGEMENT_EDIT_USER: 'users/edit',
+      USER_MANAGEMENT_INSTITUTE_UPLOADS: 'institute',
+      USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST: 'uploaded-list',
+      USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD: 'bulk-upload'
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
@@ -123,6 +142,20 @@ export const CONSTANT = {
       FIRSTSHORTLISTING_CRITERIA: 'criteria',
       SECONDSHORTLISTING: '2nd',
       USER_MANAGEMENT: 'user-management',
+      USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
+      USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
+      REPORTS: 'reports',
+      REPORTS_LIST: 'second',
+      REPORTS_LIST_VIEW: 'view',
+      FIRST_LEVEL_REPORTS_LIST: 'first',
+      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports'
+    },
+    TPO_DASHBOARD: {
+      HOME: 'tpo',
+      DASHBOARD: 'dashboard',
+      USER_MANAGEMENT: 'user-management',
+      USER_MANAGEMENT_CANDIDATE_UPLOADS: 'candidate',
+      USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
     }
   }

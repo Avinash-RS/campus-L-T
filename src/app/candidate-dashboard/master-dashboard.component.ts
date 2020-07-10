@@ -14,10 +14,15 @@ export class MasterDashboardComponent implements OnInit {
   sidebarOpen;
   subMenus: any;
   activeSubmenu;
+  showProfileOnly = false;
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService
   ) {
+    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'false') {
+      this.showProfileOnly = true;
+    }
+
     // Assigning sub menus for the current router
     this.sharedService.subMenuSubject.subscribe((data: any) => {
       this.subMenus = data;

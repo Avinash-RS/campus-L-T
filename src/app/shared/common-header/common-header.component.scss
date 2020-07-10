@@ -1,0 +1,63 @@
+@import '../../themes/themes.scss';
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+mat-toolbar {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  background: $secondary !important;
+  display: flex;
+  justify-content: space-between;
+  ul:first-child {
+    padding: 0;
+    color: $white;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    li {
+      list-style: none;
+      text-align: center;
+      padding: 1em 0.5em;
+      font-size: 14px;
+      line-height: 1.4em;
+      font-weight: 700;
+      box-sizing: border-box;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+  ul:last-child {
+    // font-size: 16px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    li {
+      list-style: none;
+      padding: 1em 1em;
+      color: $white;
+      text-transform: uppercase;
+      box-sizing: border-box;
+      cursor: pointer;
+      outline: none;
+      span {
+        img {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
+    .logout {
+      cursor: pointer;
+      color: $black;
+      border-radius: 6px;
+      padding: 0.1em 1em;
+      background: $white;
+    }
+  }
+}

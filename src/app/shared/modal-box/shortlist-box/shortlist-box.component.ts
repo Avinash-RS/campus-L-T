@@ -15,8 +15,8 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 })
 export class ShortlistBoxComponent implements OnInit {
 
-  folder = new FormControl('', [Validators.required, Validators.minLength(3), RemoveWhitespace.whitespace()]);
-  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), RemoveWhitespace.whitespace()]);
+  folder = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
+  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,
@@ -28,15 +28,24 @@ export class ShortlistBoxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data);
   }
 
   confirm() {
     if (this.folder.valid && this.shortlist.valid) {
-      this.dialogRef.close();
+      const apiFolders = {
+        folderName: this.folder.value,
+        shortlistName: this.shortlist.value
+      };
+      this.dialogRef.close(apiFolders);
     } else {
       this.folder.markAsTouched();
       this.shortlist.markAsTouched();
     }
+  }
+
+  bulkConfirm() {
+    this.dialogRef.close(true);
   }
 
   cancel() {

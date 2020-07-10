@@ -15,6 +15,11 @@ import { HrUserManagementComponent } from './hr-user-management/hr-user-manageme
 import { BulkUploadComponent } from './hr-user-management/bulk-upload/bulk-upload.component';
 import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
 import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
+import { UploadedListComponent } from './hr-user-management/uploaded-list/uploaded-list.component';
+import { HrReportsComponent } from './hr-reports/hr-reports.component';
+import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
+import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
+import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bulk-upload-reports.component';
 
 
 const routes: Routes = [
@@ -54,11 +59,32 @@ const routes: Routes = [
       {
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`, component: HrUserManagementComponent, children: [
           {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, component: UploadedListComponent
+          },
+          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, component: BulkUploadComponent
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS}`, component: HrReportsComponent, children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`, component: FirstLevelShorlistReportsComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`, component: BulkUploadReportsComponent
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

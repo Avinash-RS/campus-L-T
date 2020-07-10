@@ -10,10 +10,13 @@ import { AdminDashboardHeaderComponent } from './admin-dashboard-header/admin-da
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UsersListComponent } from './user-management/users-list/users-list.component';
 import { AddUserComponent } from './user-management/add-user/add-user.component';
+import { AdminBulkUploadInstitutesComponent } from './user-management/admin-bulk-upload-institutes/admin-bulk-upload-institutes.component';
+import { AdminUploadedInstituteListComponent } from './user-management/admin-bulk-upload-institutes/admin-uploaded-institute-list/admin-uploaded-institute-list.component';
+import { AdminBulkUploadInstituteComponent } from './user-management/admin-bulk-upload-institutes/admin-bulk-upload-institute/admin-bulk-upload-institute.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, DashboardComponent, AdminDashboardHeaderComponent, UserManagementComponent, UsersListComponent, AddUserComponent],
+  declarations: [MasterDashboardComponent, DashboardComponent, AdminDashboardHeaderComponent, UserManagementComponent, UsersListComponent, AddUserComponent, AdminBulkUploadInstitutesComponent, AdminUploadedInstituteListComponent, AdminBulkUploadInstituteComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -258,7 +258,7 @@ export class ConfirmComponent implements OnInit {
 
     if (event.target.files && event.target.files[0].type.includes('image/') && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
-      if (event.target.files[0].size < 100000) {
+      if (event.target.files[0].size < 1000000) {
         this.showSizeError.image = false;
         this.selectedImage = event.target.files[0];
 

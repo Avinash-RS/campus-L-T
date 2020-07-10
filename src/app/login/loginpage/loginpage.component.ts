@@ -43,19 +43,24 @@ export class LoginpageComponent implements OnInit {
           name: params['mail'],
           temp_token: params['temp-token']
         });
+        console.log('Calling apicalling');
         this.apiCalling();
       }
       if (params['mail']) {
         this.prePoulteEmailId = params['mail'];
       } else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
+        console.log('Not getting mail or token in param', params['mail'], params['temp-token']);
       }
     });
   }
 
   apiCalling() {
+    console.log('entering apiCalling methid');
     this.apiService.getAllState().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
+        console.log('entering verify API');
+
         this.appConfig.hideLoader();
         this.prePoulteEmailId = this.verifyArr[0]['name'];
         this.appConfig.success(`${data.message}`, '');
@@ -123,8 +128,13 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
+            if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
+              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
+            }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
@@ -141,7 +151,7 @@ export class LoginpageComponent implements OnInit {
                 return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
                 // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
               } else {
-                // this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
                 // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
                 return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
               }

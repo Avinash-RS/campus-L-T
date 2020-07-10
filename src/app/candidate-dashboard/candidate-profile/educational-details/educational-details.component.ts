@@ -161,12 +161,13 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     const numberOnly: RegExp = /^[0-9][0-9]{0,1}$/;
-    const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?%?$)/;
+    const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (edu) {
 
       return this.fb.group({
         leveling: [edu.field_level['value'], [RemoveWhitespace.whitespace(), Validators.required]],
-        board: [edu.field_board_university['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        board: [edu.field_board_university['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace(), Validators.required]],
         institute: [edu.field_institute['value'], [Validators.required]],
         discipline: [edu.field_discipline['value'], [Validators.required]],
         specification: [edu.field_specification['value'], [RemoveWhitespace.whitespace(), Validators.required]],
@@ -177,7 +178,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     } else {
       return this.fb.group({
         leveling: [null, [RemoveWhitespace.whitespace(), Validators.required]],
-        board: [null, [RemoveWhitespace.whitespace(), Validators.required]],
+        board: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace(), Validators.required]],
         institute: [null, [Validators.required]],
         discipline: [null, [Validators.required]],
         specification: [null, [RemoveWhitespace.whitespace(), Validators.required]],

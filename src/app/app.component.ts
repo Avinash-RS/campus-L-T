@@ -40,14 +40,14 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        this.appConfig.showLoaderManual();
+        // this.appConfig.showLoaderManual();
       }
       // On NavigationEnd or NavigationError or NavigationCancel
       // set showLoadingIndicator to false
       if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
-        this.appConfig.hideLoaderManual();
+        // this.appConfig.hideLoaderManual();
       }
     });
   }

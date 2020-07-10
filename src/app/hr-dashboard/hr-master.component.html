@@ -9,8 +9,8 @@
   </mat-drawer>
   <mat-drawer-content class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
     <ng-container *ngIf="subMenus && subMenus.length > 0">
-      <div [routerLink]="subMenus.router"
-        *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active"  [ngClass]="subMenus.router === null ? 'non-active' : ''">
+      <div [routerLink]="subMenus.router" *ngFor="let subMenus of subMenus; let i = index" class="sub-navs"
+        routerLinkActive="active" [ngClass]="subMenus.router === null ? 'non-active' : ''">
         <div *ngIf="subMenus.icon"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
         <div *ngIf="subMenus.name">{{subMenus.name}}</div>
       </div>
@@ -18,37 +18,42 @@
   </mat-drawer-content>
 </mat-drawer-container>
 <div (click)="sidebar()" [ngClass]="sidebarOpen ? 'sideOpen' : 'sideClose'" class="openClose">
- <span *ngIf="sidebarOpen" class="material-icons">keyboard_arrow_left</span>
- <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
+  <span *ngIf="sidebarOpen" class="material-icons">keyboard_arrow_left</span>
+  <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
 </div>
 <mat-drawer-container class="second-sidenav">
 
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>
-        <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD"
-        routerLinkActive="active">
+      <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD" routerLinkActive="active">
         <span><img src="assets/images/dashboard.svg" width="20px" height="20px" alt=""></span>
         <span>Dashboard</span>
         <span style="color: #fff;" class="material-icons">
           arrow_right
         </span>
       </li>
-      <li [routerLink]="appConstant.HR_DASHBOARD.SHORTLISTING"
-      routerLinkActive="active">
-          <span><img src="assets/images/003-statistics.svg" width="20px" height="20px" alt=""></span>
-          <span>Shortlisting</span>
-          <span style="color: #fff;" class="material-icons">
-            arrow_right
-          </span>
-        </li>
-        <li [routerLink]="appConstant.HR_DASHBOARD.USER_MANAGEMENT"
-        routerLinkActive="active">
+      <li [routerLink]="appConstant.HR_DASHBOARD.USER_MANAGEMENT" routerLinkActive="active">
         <span><img src="assets/images/001-people.svg" width="20px" height="20px" alt=""></span>
         <span>User Management</span>
         <span style="color: #fff;" class="material-icons">
           arrow_right
         </span>
       </li>
+      <li [routerLink]="appConstant.HR_DASHBOARD.SHORTLISTING" routerLinkActive="active">
+        <span><img src="assets/images/Human Resource-Job Search-Magnifying Glass-Paper-Search.svg" width="20px" height="20px" alt=""></span>
+        <span>Shortlists</span>
+        <span style="color: #fff;" class="material-icons">
+          arrow_right
+        </span>
+      </li>
+      <li [routerLink]="appConstant.HR_DASHBOARD.REPORTS" routerLinkActive="active">
+        <span><img src="assets/images/003-statistics.svg" width="20px" height="20px" alt=""></span>
+        <span>Reports</span>
+        <span style="color: #fff;" class="material-icons">
+          arrow_right
+        </span>
+      </li>
+
     </ul>
 
   </mat-drawer>

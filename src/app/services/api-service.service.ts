@@ -63,8 +63,8 @@ export class ApiServiceService {
   }
   // Registration
   RegistrationForm(formdata) {
-    return this.http.post(`${this.BASE_URL}/entity/user?_format=hal_json`, formdata,
-      { headers: this.getCustomHeaders(), withCredentials: true });
+    return this.http.post(`${this.BASE_URL}/rest/create-account?_format=json`, formdata,
+      { headers: this.withoutTokens(), withCredentials: true });
   }
 
   CandidateRegistrationForm(formdata) {
@@ -117,7 +117,7 @@ export class ApiServiceService {
   logout(logoutToken) {
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/logout?_format=json&token=${logoutToken}`, logoutToken,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.withoutTokens(), withCredentials: true });
   }
 
 }

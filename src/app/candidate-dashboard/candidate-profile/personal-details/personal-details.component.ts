@@ -837,110 +837,113 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
-    if (this.checked === true) {
-      this.hidePermanentCityDropDown = false;
-      this.permanentAddressForm.setValue({
-        permanentAddress1: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '',
-        permanentAddress2: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '',
-        permanentZipCode: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '',
-        permanentCity: this.presentAddressForm.value.presentCity.toString(),
-        permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '',
-      });
-    }
-
-    if (this.checked === true) {
-      this.permanentAddressForm.patchValue({
-        permanentCity: this.presentAddressForm.value.presentCity.toString(),
-      });
-    }
-
-
-    if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
-      && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
-      this.KYCModifiedData.field_name = { value: this.upToCategoryForm.value.name ? this.upToCategoryForm.value.name : '' };
-      this.KYCModifiedData.field_email = { value: this.upToCategoryForm.value.mail ? this.upToCategoryForm.value.mail : '' };
-      this.KYCModifiedData.field_mobile = { value: this.upToCategoryForm.value.mobile ? this.upToCategoryForm.value.mobile : '' };
-      this.KYCModifiedData.field_gender = { value: this.upToCategoryForm.value.gender ? this.upToCategoryForm.value.gender : '' };
-      this.KYCModifiedData.field_mariatal_status = { value: this.upToCategoryForm.value.marital ? this.upToCategoryForm.value.marital : '' };
-      this.KYCModifiedData.field_dob = { value: moment(`${this.upToCategoryForm.value.dobYear}-${this.upToCategoryForm.value.dobMonth}-${this.upToCategoryForm.value.dobDate}`).format() };
-      this.KYCModifiedData.field_nationality = { value: this.upToCategoryForm.value.nationality ? this.upToCategoryForm.value.nationality : '' };
-      this.KYCModifiedData.field_aadharno = { value: this.upToCategoryForm.value.aadhaar ? this.upToCategoryForm.value.aadhaar : '' };
-      this.KYCModifiedData.field_category = { value: this.upToCategoryForm.value.category ? this.upToCategoryForm.value.category : '' };
-      this.KYCModifiedData.field_address_checkbox = { value: this.checked && this.checked === true ? '1' : '0' };
-      this.KYCModifiedData.field_present_line_street_addres = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
-      this.KYCModifiedData.field_present_line2_street_addre = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
-      this.KYCModifiedData.field_present_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
-      this.KYCModifiedData.field_preset_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
-      this.KYCModifiedData.field_present_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
+    if (this.url) {
       if (this.checked === true) {
-        this.KYCModifiedData.field_permanent_line1_street_add = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
-        this.KYCModifiedData.field_permanent_line2_street_add = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
-        this.KYCModifiedData.field_permanent_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
-        this.KYCModifiedData.field_permanent_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
-        this.KYCModifiedData.field_permanent_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
-      } else {
-        this.KYCModifiedData.field_permanent_line1_street_add = { value: this.permanentAddressForm.value.permanentAddress1 ? this.permanentAddressForm.value.permanentAddress1 : '' };
-        this.KYCModifiedData.field_permanent_line2_street_add = { value: this.permanentAddressForm.value.permanentAddress2 ? this.permanentAddressForm.value.permanentAddress2 : '' };
-        this.KYCModifiedData.field_permanent_zip = { value: this.permanentAddressForm.value.permanentZipCode ? this.permanentAddressForm.value.permanentZipCode : '' };
-        this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' };
-        this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' };
+        this.hidePermanentCityDropDown = false;
+        this.permanentAddressForm.setValue({
+          permanentAddress1: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '',
+          permanentAddress2: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '',
+          permanentZipCode: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '',
+          permanentCity: this.presentAddressForm.value.presentCity.toString(),
+          permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '',
+        });
       }
 
-      const langArrays = [];
-      this.languagesForm.value.languageAdd.forEach((element, i) => {
-        langArrays.push({ field_language: { value: element.language }, field_read: [{ value: element.read }], field_write: [{ value: element.write }], field_speak: [{ value: element.speak }] });
-      });
-      this.KYCModifiedData['langArr'] = langArrays;
-
-      // this.KYCModifiedData.field_language = { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' };
-
-      // this.KYCModifiedData.field_read = [{ value: this.languagesForm.value.firstRead ? true : false }];
-      // this.KYCModifiedData.field_write = [{ value: this.languagesForm.value.firstWrite ? true : false }];
-      // this.KYCModifiedData.field_speak = [{ value: this.languagesForm.value.firstSpeak ? true : false }];
-
-      this.KYCModifiedData.field_passport_number = { value: this.passportForm.value.passportNumber ? this.passportForm.value.passportNumber : '' };
-      this.KYCModifiedData.field_name_as_in_passport = { value: this.passportForm.value.passportName ? this.passportForm.value.passportName : '' };
-      this.KYCModifiedData.field_profesiona_as_passport = { value: this.passportForm.value.passportProfession ? this.passportForm.value.passportProfession : '' };
-      this.KYCModifiedData.field_date_of_issue = { value: this.passportForm.value.passportIssueDate['_d'] ? moment(this.passportForm.value.passportIssueDate['_d']).format() : this.passportForm.value.passportIssueDate ? moment(this.passportForm.value.passportIssueDate).format() : '' };
-      this.KYCModifiedData.field_valid_upto = { value: this.passportForm.value.passportValid['_d'] ? moment(this.passportForm.value.passportValid['_d']).format() : this.passportForm.value.passportValid ? moment(this.passportForm.value.passportValid).format() : '' };
-      this.KYCModifiedData.field_place_of_issue = { value: this.passportForm.value.passportIssuePlace ? this.passportForm.value.passportIssuePlace : '' };
-      this.KYCModifiedData.field_country_valid_for = { value: this.passportForm.value.passportValidFor ? this.passportForm.value.passportValidFor : '' };
-      this.KYCModifiedData.field_serious_illness = { value: this.healthForm.value.illness ? this.healthForm.value.illness : '' };
-      this.KYCModifiedData.field_no_of_days = { value: this.healthForm.value.daysofIll ? this.healthForm.value.daysofIll : '' };
-      this.KYCModifiedData.field_nature_of_illness = { value: this.healthForm.value.natureofIll ? this.healthForm.value.natureofIll : '' };
-      this.KYCModifiedData.field_physical_disability = { value: this.healthForm.value.disability ? this.healthForm.value.disability : '' };
-      this.KYCModifiedData.field_height = { value: this.healthForm.value.height ? this.healthForm.value.height : '' };
-      this.KYCModifiedData.field_weight = { value: this.healthForm.value.weight ? this.healthForm.value.weight : '' };
-      this.KYCModifiedData.field_right_eye_power_glass = { value: this.healthForm.value.eyePower.right ? this.healthForm.value.eyePower.right : '' };
-      this.KYCModifiedData.field_left_eyepower_glass = { value: this.healthForm.value.eyePower.left ? this.healthForm.value.eyePower.left : '' };
-
-      if (this.url === null) {
-        this.appConfig.setLocalData('localProfilePic', 'null');
-      } else {
-        this.appConfig.setLocalData('localProfilePic', JSON.stringify(this.url));
+      if (this.checked === true) {
+        this.permanentAddressForm.patchValue({
+          permanentCity: this.presentAddressForm.value.presentCity.toString(),
+        });
       }
-      this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-      this.appConfig.setLocalData('personalFormSubmitted', 'true');
-      this.appConfig.clearLocalDataOne('personalFormTouched');
-      this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
-      this.appConfig.setLocalData('confirmClick', 'true');
-      this.appConfig.nzNotification('success', 'Submitted', 'Personal details has been updated');
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
 
+      if (this.upToCategoryForm.valid && this.presentAddressForm.valid && this.permanentAddressForm.valid
+        && this.languagesForm.valid && this.passportForm.valid && this.healthForm.valid && (this.languagesForm.value.firstRead || this.languagesForm.value.firstWrite || this.languagesForm.value.firstSpeak)) {
+        this.KYCModifiedData.field_name = { value: this.upToCategoryForm.value.name ? this.upToCategoryForm.value.name : '' };
+        this.KYCModifiedData.field_email = { value: this.upToCategoryForm.value.mail ? this.upToCategoryForm.value.mail : '' };
+        this.KYCModifiedData.field_mobile = { value: this.upToCategoryForm.value.mobile ? this.upToCategoryForm.value.mobile : '' };
+        this.KYCModifiedData.field_gender = { value: this.upToCategoryForm.value.gender ? this.upToCategoryForm.value.gender : '' };
+        this.KYCModifiedData.field_mariatal_status = { value: this.upToCategoryForm.value.marital ? this.upToCategoryForm.value.marital : '' };
+        this.KYCModifiedData.field_dob = { value: moment(`${this.upToCategoryForm.value.dobYear}-${this.upToCategoryForm.value.dobMonth}-${this.upToCategoryForm.value.dobDate}`).format() };
+        this.KYCModifiedData.field_nationality = { value: this.upToCategoryForm.value.nationality ? this.upToCategoryForm.value.nationality : '' };
+        this.KYCModifiedData.field_aadharno = { value: this.upToCategoryForm.value.aadhaar ? this.upToCategoryForm.value.aadhaar : '' };
+        this.KYCModifiedData.field_category = { value: this.upToCategoryForm.value.category ? this.upToCategoryForm.value.category : '' };
+        this.KYCModifiedData.field_address_checkbox = { value: this.checked && this.checked === true ? '1' : '0' };
+        this.KYCModifiedData.field_present_line_street_addres = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
+        this.KYCModifiedData.field_present_line2_street_addre = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
+        this.KYCModifiedData.field_present_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
+        this.KYCModifiedData.field_preset_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
+        this.KYCModifiedData.field_present_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
+        if (this.checked === true) {
+          this.KYCModifiedData.field_permanent_line1_street_add = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
+          this.KYCModifiedData.field_permanent_line2_street_add = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
+          this.KYCModifiedData.field_permanent_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
+          this.KYCModifiedData.field_permanent_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
+          this.KYCModifiedData.field_permanent_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
+        } else {
+          this.KYCModifiedData.field_permanent_line1_street_add = { value: this.permanentAddressForm.value.permanentAddress1 ? this.permanentAddressForm.value.permanentAddress1 : '' };
+          this.KYCModifiedData.field_permanent_line2_street_add = { value: this.permanentAddressForm.value.permanentAddress2 ? this.permanentAddressForm.value.permanentAddress2 : '' };
+          this.KYCModifiedData.field_permanent_zip = { value: this.permanentAddressForm.value.permanentZipCode ? this.permanentAddressForm.value.permanentZipCode : '' };
+          this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' };
+          this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' };
+        }
+
+        const langArrays = [];
+        this.languagesForm.value.languageAdd.forEach((element, i) => {
+          langArrays.push({ field_language: { value: element.language }, field_read: [{ value: element.read }], field_write: [{ value: element.write }], field_speak: [{ value: element.speak }] });
+        });
+        this.KYCModifiedData['langArr'] = langArrays;
+
+        // this.KYCModifiedData.field_language = { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' };
+
+        // this.KYCModifiedData.field_read = [{ value: this.languagesForm.value.firstRead ? true : false }];
+        // this.KYCModifiedData.field_write = [{ value: this.languagesForm.value.firstWrite ? true : false }];
+        // this.KYCModifiedData.field_speak = [{ value: this.languagesForm.value.firstSpeak ? true : false }];
+
+        this.KYCModifiedData.field_passport_number = { value: this.passportForm.value.passportNumber ? this.passportForm.value.passportNumber : '' };
+        this.KYCModifiedData.field_name_as_in_passport = { value: this.passportForm.value.passportName ? this.passportForm.value.passportName : '' };
+        this.KYCModifiedData.field_profesiona_as_passport = { value: this.passportForm.value.passportProfession ? this.passportForm.value.passportProfession : '' };
+        this.KYCModifiedData.field_date_of_issue = { value: this.passportForm.value.passportIssueDate['_d'] ? moment(this.passportForm.value.passportIssueDate['_d']).format() : this.passportForm.value.passportIssueDate ? moment(this.passportForm.value.passportIssueDate).format() : '' };
+        this.KYCModifiedData.field_valid_upto = { value: this.passportForm.value.passportValid['_d'] ? moment(this.passportForm.value.passportValid['_d']).format() : this.passportForm.value.passportValid ? moment(this.passportForm.value.passportValid).format() : '' };
+        this.KYCModifiedData.field_place_of_issue = { value: this.passportForm.value.passportIssuePlace ? this.passportForm.value.passportIssuePlace : '' };
+        this.KYCModifiedData.field_country_valid_for = { value: this.passportForm.value.passportValidFor ? this.passportForm.value.passportValidFor : '' };
+        this.KYCModifiedData.field_serious_illness = { value: this.healthForm.value.illness ? this.healthForm.value.illness : '' };
+        this.KYCModifiedData.field_no_of_days = { value: this.healthForm.value.daysofIll ? this.healthForm.value.daysofIll : '' };
+        this.KYCModifiedData.field_nature_of_illness = { value: this.healthForm.value.natureofIll ? this.healthForm.value.natureofIll : '' };
+        this.KYCModifiedData.field_physical_disability = { value: this.healthForm.value.disability ? this.healthForm.value.disability : '' };
+        this.KYCModifiedData.field_height = { value: this.healthForm.value.height ? this.healthForm.value.height : '' };
+        this.KYCModifiedData.field_weight = { value: this.healthForm.value.weight ? this.healthForm.value.weight : '' };
+        this.KYCModifiedData.field_right_eye_power_glass = { value: this.healthForm.value.eyePower.right ? this.healthForm.value.eyePower.right : '' };
+        this.KYCModifiedData.field_left_eyepower_glass = { value: this.healthForm.value.eyePower.left ? this.healthForm.value.eyePower.left : '' };
+
+        if (this.url === null) {
+          this.appConfig.setLocalData('localProfilePic', 'null');
+        } else {
+          this.appConfig.setLocalData('localProfilePic', JSON.stringify(this.url));
+        }
+        this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
+        this.appConfig.setLocalData('personalFormSubmitted', 'true');
+        this.appConfig.clearLocalDataOne('personalFormTouched');
+        this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
+        this.appConfig.setLocalData('confirmClick', 'true');
+        this.appConfig.nzNotification('success', 'Submitted', 'Personal details has been updated');
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
+
+      } else {
+        setTimeout(() => {
+          window.scroll(0, 0);
+        }, 10);
+        this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
+
+        this.validateOnSubmit = true;
+        this.validateAllFields(this.upToCategoryForm);
+        this.validateAllFields(this.presentAddressForm);
+        this.validateAllFields(this.permanentAddressForm);
+        this.validateAllFields(this.languagesForm);
+        this.validateAllFormArrays(this.languagesForm.get('languageAdd') as FormArray);
+        this.validateAllFields(this.passportForm);
+        this.validateAllFields(this.healthForm);
+      }
     } else {
-      setTimeout(() => {
-        window.scroll(0, 0);
-      }, 10);
-      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
-
-      this.validateOnSubmit = true;
-      this.validateAllFields(this.upToCategoryForm);
-      this.validateAllFields(this.presentAddressForm);
-      this.validateAllFields(this.permanentAddressForm);
-      this.validateAllFields(this.languagesForm);
-      this.validateAllFormArrays(this.languagesForm.get('languageAdd') as FormArray);
-      this.validateAllFields(this.passportForm);
-      this.validateAllFields(this.healthForm);
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Profile Image is mandatory to proceed further');
     }
 
   }
@@ -957,6 +960,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     const numberOnly: RegExp = /^[0-9]*$/;
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     const eyenumberDecimals: RegExp = /^[\-\+]?[0-9]{1,2}\d*(\.\d{0,2})?$/;
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     // Form 1 UptoCategory
     this.upToCategoryForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -967,25 +971,25 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobDate: [null, [Validators.required]],
       dobMonth: [null, [Validators.required]],
       dobYear: [null, [Validators.required]],
-      nationality: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      nationality: ['', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       aadhaar: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
       category: [''],
     }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
     this.presentAddressForm = this.fb.group({
-      presentAddress1: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      presentAddress2: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      presentZipCode: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      presentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      presentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      presentZipCode: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
       presentState: ['', [Validators.required]],
       presentCity: ['', [Validators.required]],
     }), this.presentAddressPatchValue();
 
     // Present Address Form
     this.permanentAddressForm = this.fb.group({
-      permanentAddress1: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      permanentAddress2: ['', [Validators.required, RemoveWhitespace.whitespace()]],
-      permanentZipCode: ['', [Validators.required, RemoveWhitespace.whitespace()]],
+      permanentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      permanentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      permanentZipCode: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
       permanentState: ['', [Validators.required]],
       permanentCity: ['', [Validators.required]],
     }), this.permanentAddressPatchValue();
@@ -993,7 +997,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Language Form
     this.languagesForm = this.fb.group({
-      languageRequired: ['sd', [Validators.required, RemoveWhitespace.whitespace()]],
+      languageRequired: ['sd', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       firstRead: [true],
       firstWrite: [''],
       firstSpeak: [''],
@@ -1003,22 +1007,22 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Passport Form
     this.passportForm = this.fb.group({
-      passportNumber: ['', [RemoveWhitespace.whitespace()]],
-      passportName: ['', RemoveWhitespace.whitespace()],
-      passportProfession: ['', RemoveWhitespace.whitespace()],
+      passportNumber: ['', [Validators.pattern(numberOnly), Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      passportName: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      passportProfession: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       passportIssueDate: [''],
       // passportValid: ['', [Validators.required, FormCustomValidators.dateValidation()]],
       passportValid: [''],
-      passportIssuePlace: ['', RemoveWhitespace.whitespace()],
-      passportValidFor: ['', RemoveWhitespace.whitespace()],
+      passportIssuePlace: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      passportValidFor: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
     }), this.passportFormPatchValue();
 
     // Health Form
     this.healthForm = this.fb.group({
-      illness: ['', RemoveWhitespace.whitespace()],
-      daysofIll: ['', [Validators.pattern(numberDecimals)]],
-      natureofIll: ['', RemoveWhitespace.whitespace()],
-      disability: ['', RemoveWhitespace.whitespace()],
+      illness: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      daysofIll: ['', [Validators.pattern(numberOnly), Validators.maxLength(5), RemoveWhitespace.whitespace()]],
+      natureofIll: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      disability: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       height: ['', [Validators.pattern(numberDecimals)]],
       weight: ['', [Validators.pattern(numberDecimals)]],
       eyePower: this.fb.group({
@@ -1071,16 +1075,17 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }
   }
   createItem(data): FormGroup {
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
       return this.fb.group({
-        language: [data['field_language']['value'], [RemoveWhitespace.whitespace(), Validators.required]],
+        language: [data['field_language']['value'], [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         read: data['field_read'][0]['value'],
         write: data['field_write'][0]['value'],
         speak: data['field_speak'][0]['value']
       }, { validator: FormCustomValidators.anyOneSelected });
     } else {
       return this.fb.group({
-        language: ['', [RemoveWhitespace.whitespace(), Validators.required]],
+        language: ['', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         read: '',
         write: '',
         speak: ''

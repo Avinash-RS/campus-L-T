@@ -163,31 +163,33 @@ console.log(this.apiForm);
     }), this.generalSkillPatch(this.skillValueArray);
   }
   createItem(data): FormGroup {
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
       return this.fb.group({
-        names: [data.names ? data.names : null, RemoveWhitespace.whitespace()],
-        relationship: [data.relationship ? data.relationship : null, RemoveWhitespace.whitespace()],
-        position: [data.position ? data.position : null, RemoveWhitespace.whitespace()],
-        company: [data.company ? data.company : null, RemoveWhitespace.whitespace()],
+        names: [data.names ? data.names : null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        relationship: [data.relationship ? data.relationship : null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        position: [data.position ? data.position : null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        company: [data.company ? data.company : null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       });
     } else {
       return this.fb.group({
-        names: [null, RemoveWhitespace.whitespace()],
-        relationship: [null, RemoveWhitespace.whitespace()],
-        position: [null, RemoveWhitespace.whitespace()],
-        company: [null, RemoveWhitespace.whitespace()],
+        names: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        relationship: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        position: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        company: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       });
     }
   }
 
   createSkillForm(data): FormGroup {
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
       return this.fb.group({
-        value: [data && data['value'] ? data['value'] : '', RemoveWhitespace.whitespace()],
+        value: [data && data['value'] ? data['value'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       });
     } else {
       return this.fb.group({
-        value: [null, RemoveWhitespace.whitespace()],
+        value: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       });
     }
   }

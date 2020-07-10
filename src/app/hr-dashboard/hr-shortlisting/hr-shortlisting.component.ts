@@ -26,7 +26,7 @@ export class HrShortlistingComponent implements OnInit {
       {
         icon: '',
         name: '2nd Level Shortlist',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING
+        router: null
       },
       {
         icon: '',

@@ -140,19 +140,20 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
   createItem(fam): FormGroup {
     // /^[1-9][0-9]{9}$/;
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (fam) {
       return this.fb.group({
-        names: [fam['field_name_of_your_family']['value'], RemoveWhitespace.whitespace()],
+        names: [fam['field_name_of_your_family']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         dob: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
-        relationship: [fam['field_relationship']['value'], RemoveWhitespace.whitespace()],
-        occupation: [fam['field_occupation']['value'], RemoveWhitespace.whitespace()],
+        relationship: [fam['field_relationship']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        occupation: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       }, { validator: FormCustomValidators.FamilyanyOneSelected });
     } else {
       return this.fb.group({
-        names: [null, RemoveWhitespace.whitespace()],
+        names: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         dob: [null],
-        relationship: [null, RemoveWhitespace.whitespace()],
-        occupation: [null, RemoveWhitespace.whitespace()],
+        relationship: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        occupation: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       }, { validator: FormCustomValidators.FamilyanyOneSelected });
     }
   }

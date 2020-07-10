@@ -10,6 +10,8 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 export class HrUserManagementComponent implements OnInit {
 
+  appConstant = CONSTANT.ENDPOINTS;
+
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService
@@ -17,10 +19,20 @@ export class HrUserManagementComponent implements OnInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
-        icon: '',
-        name: 'Candidate Upload',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD
-      }
+        icon: '002-cv.svg',
+        name: 'Candidate details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT
+      },
+      // {
+      //   icon: '002-cv.svg',
+      //   name: 'Candidate details',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST
+      // },
+      // {
+      //   icon: '001-approved.svg',
+      //   name: 'Upload candidate details',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD
+      // }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }

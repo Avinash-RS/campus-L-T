@@ -93,9 +93,11 @@ export class CandidateMappersService {
 
   // Edit User Profile
   editUser(formdata) {
-    return this.http.post(`${this.BASE_URL}/entity/profile?_format=json`, formdata,
+    // return this.http.post(`${this.BASE_URL}/entity/profile?_format=json`, formdata,
+    return this.http.post(`${this.BASE_URL}/profile/updateprofile`, formdata,
       {
-        headers: this.getAfterCustomHeadersWithBasicAuth(),
+        // headers: this.getAfterCustomHeadersWithBasicAuth(),
+        headers: this.withoutTokens(),
         withCredentials: true
       });
   }
@@ -138,15 +140,23 @@ export class CandidateMappersService {
   logout(logoutToken) {
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/logout?_format=json&token=${logoutToken}`, logoutToken,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.withoutTokens(), withCredentials: true });
   }
 
   updatedState(Id) {
-    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, {headers: this.withoutTokens(), withCredentials: true});
+    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
   }
 
   updatedCity(Id) {
-    return this.http.post(`${this.BASE_URL}/api/city_api`, Id, {headers: this.withoutTokens(), withCredentials: true});
+    return this.http.post(`${this.BASE_URL}/api/city_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  assessmentList() {
+    return this.http.get(`${this.BASE_URL}/profile/hallticket`,
+      {
+        headers: this.getAfterCustomHeaders(),
+        withCredentials: true
+      });
   }
 
 }

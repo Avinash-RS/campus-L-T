@@ -6,7 +6,9 @@ import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
+import * as XLSX from 'xlsx';
 
+// tslint:disable-next-line: class-name
 export interface modalBox {
   iconName: string;
   dataToBeShared: any;
@@ -107,7 +109,7 @@ export class AppConfigService {
 
   // Show loading
   showLoaderManual() {
-    this.hideLoader();
+    // this.hideLoader();
     this.ManualSpinner.show(undefined, { color: '#fff', size: 'medium', bdColor: 'rgba(0, 0, 0, 0.3)', fullScreen: false, type: 'ball-elastic-dots' });
   }
 
@@ -248,4 +250,29 @@ export class AppConfigService {
     }
   }
 
+  excelToJson(selectedTarget) {
+    /* wire up file reader */
+    const target: DataTransfer = (selectedTarget) as DataTransfer;
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    let SavedData;
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
+
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      console.log('excel to json', SavedData);
+    };
+    reader.readAsBinaryString(target.files[0]);
+    return SavedData;
+  }
 }

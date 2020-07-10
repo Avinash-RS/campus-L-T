@@ -3,8 +3,9 @@
   margin: 0;
 }
 .main-wrapper {
+  margin: 0.5em 0 0 0;
   .line {
-    height: 50px;
+    height: 40px;
     border-bottom: solid 1px $primary;
     .button-wrapper {
       display: flex;
