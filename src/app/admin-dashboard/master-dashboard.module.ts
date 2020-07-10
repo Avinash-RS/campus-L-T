@@ -18,7 +18,7 @@ import { AddUserComponent } from './user-management/add-user/add-user.component'
     CommonModule,
     SharedModule,
     MaterialModule,
-    MasterDashboardRoutingModule
+    MasterDashboardRoutingModule,
   ]
 })
 export class MasterDashboardModule { }

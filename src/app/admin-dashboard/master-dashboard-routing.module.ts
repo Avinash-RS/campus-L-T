@@ -12,21 +12,43 @@ import { AdmincanloadGuard } from '../guards/canload/admincanload.guard';
 
 const routes: Routes = [
   {
-    path: '', component: MasterDashboardComponent,
+    path: '', 
+    component: MasterDashboardComponent,
+    data: {
+      breadcrumb: 'Home'
+    },
     children: [
       {
-        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`, component: DashboardComponent, canActivate: [AdmincanloadGuard]
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`, 
+        component: DashboardComponent, canActivate: [AdmincanloadGuard],
+        data: {
+          breadcrumb: 'Dashboard'
+        }        
       },
       {
-        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`, component: UserManagementComponent, children: [
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`,
+        component: UserManagementComponent, 
+        data: {
+          breadcrumb: 'Users'
+        } ,
+        children: [
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`, component: UsersListComponent
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`, 
+            component: UsersListComponent,
+            data: {
+              breadcrumb: 'UserList'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`, component: AddUserComponent
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`, 
+            component: AddUserComponent,
+            data: {
+              breadcrumb: 'AddUser'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}/:eid`, component: AddUserComponent
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}/:eid`, 
+            component: AddUserComponent
           },
           {
             path: '',
