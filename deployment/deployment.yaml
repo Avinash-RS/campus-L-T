@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udapweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udapweb
+  template:
+    metadata:
+      labels:
+        app: udapweb
+    spec:
+      containers:
+        - name: udapweb
+          image: lxpacrazure.azurecr.io/udapweb:$tag
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 80
+      imagePullSecrets:
+        - name: mysecret2
