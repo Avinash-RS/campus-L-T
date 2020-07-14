@@ -980,7 +980,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.presentAddressForm = this.fb.group({
       presentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       presentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
-      presentZipCode: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
+      presentZipCode: ['', [Validators.required, Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
       presentState: ['', [Validators.required]],
       presentCity: ['', [Validators.required]],
     }), this.presentAddressPatchValue();
@@ -989,7 +989,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.permanentAddressForm = this.fb.group({
       permanentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       permanentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
-      permanentZipCode: ['', [Validators.required, Validators.maxLength(255), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
+      permanentZipCode: ['', [Validators.required, Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
       permanentState: ['', [Validators.required]],
       permanentCity: ['', [Validators.required]],
     }), this.permanentAddressPatchValue();

@@ -11,47 +11,65 @@ import { AdmincanloadGuard } from '../guards/canload/admincanload.guard';
 import { AdminBulkUploadInstitutesComponent } from './user-management/admin-bulk-upload-institutes/admin-bulk-upload-institutes.component';
 import { AdminUploadedInstituteListComponent } from './user-management/admin-bulk-upload-institutes/admin-uploaded-institute-list/admin-uploaded-institute-list.component';
 import { AdminBulkUploadInstituteComponent } from './user-management/admin-bulk-upload-institutes/admin-bulk-upload-institute/admin-bulk-upload-institute.component';
+import { AdminBulkUploadCandidatesComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidates.component';
+import { AdminUploadedCandidateListComponent } from './user-management/admin-bulk-upload-candidates/admin-uploaded-candidate-list/admin-uploaded-candidate-list.component';
+import { AdminBulkUploadCandidateCompComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidate-comp/admin-bulk-upload-candidate-comp.component';
 
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '',
     component: MasterDashboardComponent,
     data: {
       breadcrumb: 'Home'
     },
     children: [
       {
-        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`, 
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`,
         component: DashboardComponent, canActivate: [AdmincanloadGuard],
         data: {
           breadcrumb: 'Dashboard'
-        }        
+        }
       },
       {
         path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`,
-        component: UserManagementComponent, 
+        component: UserManagementComponent,
         data: {
           breadcrumb: 'Users'
-        } ,
+        },
         children: [
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`, 
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
             component: UsersListComponent,
             data: {
               breadcrumb: 'UserList'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`, 
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`,
             component: AddUserComponent,
             data: {
               breadcrumb: 'AddUser'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}/:eid`, 
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}/:eid`,
             component: AddUserComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: AdminBulkUploadCandidatesComponent, children: [
+              {
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`, component: AdminUploadedCandidateListComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD}`, component: AdminBulkUploadCandidateCompComponent
+              },
+              {
+                path: '',
+                redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`,
+                pathMatch: 'full',
+              }
+            ]
           },
           {
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS}`, component: AdminBulkUploadInstitutesComponent, children: [

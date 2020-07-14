@@ -6,11 +6,11 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
-  selector: 'app-admin-uploaded-institute-list',
-  templateUrl: './admin-uploaded-institute-list.component.html',
-  styleUrls: ['./admin-uploaded-institute-list.component.scss']
+  selector: 'app-admin-uploaded-candidate-list',
+  templateUrl: './admin-uploaded-candidate-list.component.html',
+  styleUrls: ['./admin-uploaded-candidate-list.component.scss']
 })
-export class AdminUploadedInstituteListComponent implements OnInit, AfterViewInit {
+export class AdminUploadedCandidateListComponent implements OnInit, AfterViewInit {
   showPage = true;
   displayedColumns: any[] = ['counter', 'tag', 'name', 'id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
   dataSource: MatTableDataSource<any>;

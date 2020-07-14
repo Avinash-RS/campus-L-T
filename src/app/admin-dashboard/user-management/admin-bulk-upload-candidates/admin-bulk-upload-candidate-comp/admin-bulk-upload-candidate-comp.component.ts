@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as XLSX from 'xlsx';
 import { environment } from 'src/environments/environment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { FormBuilder } from '@angular/forms';
@@ -8,16 +7,17 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
+import * as XLSX from 'xlsx';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import moment from 'moment';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
-  selector: 'app-admin-bulk-upload-institute',
-  templateUrl: './admin-bulk-upload-institute.component.html',
-  styleUrls: ['./admin-bulk-upload-institute.component.scss']
+  selector: 'app-admin-bulk-upload-candidate-comp',
+  templateUrl: './admin-bulk-upload-candidate-comp.component.html',
+  styleUrls: ['./admin-bulk-upload-candidate-comp.component.scss']
 })
-export class AdminBulkUploadInstituteComponent implements OnInit {
+export class AdminBulkUploadCandidateCompComponent implements OnInit {
 
   BASE_URL = environment.API_BASE_URL;
   url = null;

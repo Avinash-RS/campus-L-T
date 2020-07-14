@@ -234,7 +234,7 @@
             </div>
             <div class="error" *ngIf="presentZipCode.invalid && presentZipCode.touched">
               <span *ngIf="presentZipCode.errors?.required">Zip code is Required</span>
-              <span *ngIf="presentZipCode.errors?.maxlength">Maximum of 255 digits only allowed</span>
+              <span *ngIf="presentZipCode.errors?.maxlength">Maximum of 7 digits only allowed</span>
               <span *ngIf="presentZipCode.errors?.pattern">Numbers only allowed</span>
             </div>
 
@@ -322,7 +322,7 @@
             </div>
             <div class="error" *ngIf="permanentZipCode.invalid && permanentZipCode.touched">
               <span *ngIf="permanentZipCode.errors?.required">Zip code is Required</span>
-              <span *ngIf="permanentZipCode.errors?.maxlength">Maximum of 255 digits only allowed</span>
+              <span *ngIf="permanentZipCode.errors?.maxlength">Maximum of 7 digits only allowed</span>
               <span *ngIf="permanentZipCode.errors?.pattern">Numbers only allowed</span>
             </div>
           </div>

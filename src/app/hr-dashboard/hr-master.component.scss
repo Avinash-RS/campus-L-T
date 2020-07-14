@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
 }
+
 .sideOpen {
   margin: 0;
   padding: 0;
@@ -48,7 +49,8 @@
   padding: 0 0 0 1em;
   word-spacing: 0em;
   display: flex;
-  height: 40px;
+  height: 25px;
+  font-size: 13px;
   align-items: center;
   color: $black-1;
   span {
@@ -182,5 +184,39 @@
   .main-container {
     background: $hr-bg;
     padding: 0px 0px 0px 0px;
+  }
+}
+//breadcrumb
+.breadcrumb {
+  background: none;
+  margin: 0;
+  a,
+  span {
+    color: #5E5E5E;
+    font-size: 14px;
+    margin: 0;
+  }
+  a:hover,
+  span:hover {
+    color: #5E5E5E;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  li {
+    list-style: none;
+    float: left;
+    margin: 5px;
+  }
+  li:last-child {
+    margin-right: 20px;
+  }
+  li::after {
+    content: ">";
+    color: #5E5E5E;
+    margin-left: 6px;
+    font-size: 14px;
+  }
+  li:last-child::after {
+    content: "";
   }
 }

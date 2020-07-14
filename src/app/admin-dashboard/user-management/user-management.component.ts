@@ -27,7 +27,12 @@ export class UserManagementComponent implements OnInit {
         router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER
       },
       {
-        icon: '002-cv.svg',
+        icon: 'hr.svg',
+        name: 'Candidates',
+        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
+      },
+      {
+        icon: 'education.svg',
         name: 'Institutes',
         router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS
       },
