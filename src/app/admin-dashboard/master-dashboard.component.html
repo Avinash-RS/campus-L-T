@@ -1,18 +1,23 @@
 <app-admin-dashboard-header></app-admin-dashboard-header>
 <div class="toolbar-wrapper">
-  <span> Home ></span> <span> Dashboard </span>
-  <span> </span>
+  <ol class="breadcrumb">
+    <li *ngFor="let breadcrumb of breadcrumbs">
+      <span [routerLink]="breadcrumb.url" routerLinkActive="router-link-active">
+        {{ breadcrumb.label }} 
+      </span>
+    </li>
+  </ol>
 </div>
-<mat-drawer-container class="first-sidenav">
+<mat-drawer-container [ngClass]="!subMenus ? 'toolbar-hide' : ''" class="first-sidenav">
   <mat-drawer class="sub-wrapper-nav" mode="side" [opened]="sidebarOpen">
     &#160;
   </mat-drawer>
-  <mat-drawer-content class="main-toolbar">
-    <ng-container *ngIf="subMenus.length > 0">
+  <mat-drawer-content class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
+    <ng-container *ngIf="subMenus && subMenus.length > 0">
       <div [routerLink]="subMenus.router"
         *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active">
-        <div><img src="assets/images/{{subMenus.icon}}" alt=""></div>
-        <div>{{subMenus.name}}</div>
+        <div *ngIf="subMenus.icon"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
+        <div *ngIf="subMenus.name">{{subMenus.name}}</div>
       </div>
     </ng-container>
   </mat-drawer-content>
@@ -23,7 +28,7 @@
     <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
    </div>
 
-<mat-drawer-container class="second-sidenav">
+<mat-drawer-container class="second-sidenav" [ngClass]="!subMenus ? 'toolbar-hide-second' : ''">
 
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>

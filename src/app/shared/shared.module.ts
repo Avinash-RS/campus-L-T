@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SignupHeaderComponent } from './signup-header/signup-header.component';
@@ -9,6 +10,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 import { MaterialModule } from '../material/material.module';
 import { ModalBoxComponent } from './modal-box/modal-box.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 // Ant design module
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
@@ -73,16 +75,21 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
+import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.component';
+import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
+import { CommonHeaderComponent } from './common-header/common-header.component';
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent],
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent],
   imports: [
     CommonModule,
+    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
     MaterialModule,
+    NgMultiSelectDropDownModule.forRoot(),
 
     // Ant design Modules
     NzAffixModule,
@@ -150,6 +157,7 @@ import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
   ],
   exports: [
     FormsModule,
+    NgxSpinnerModule,
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
@@ -159,6 +167,9 @@ import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
     DashboardHeaderComponent,
     ModalBoxComponent,
     KycSnackbarComponent,
+    NgMultiSelectDropDownModule,
+    ShortlistBoxComponent,
+    CommonHeaderComponent,
 
     // Ant design modules
     NzAffixModule,

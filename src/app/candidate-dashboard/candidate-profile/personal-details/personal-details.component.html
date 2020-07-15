@@ -143,6 +143,7 @@
         </div>
         <div>
           <span *ngIf="nationality.errors?.required">Nationality is Required</span>
+          <span style="white-space: nowrap;" *ngIf="nationality.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed </span>
         </div>
       </div>
 
@@ -209,6 +210,7 @@
           </div>
           <div class="error" *ngIf="presentAddress1.invalid && presentAddress1.touched">
             <span *ngIf="presentAddress1.errors?.required">Address is Required</span>
+            <span *ngIf="presentAddress1.errors?.maxlength">Maximum of 255 characters only allowed</span>
           </div>
 
         </div>
@@ -221,6 +223,7 @@
             </div>
             <div class="error" *ngIf="presentAddress2.invalid && presentAddress2.touched">
               <span *ngIf="presentAddress2.errors?.required">Address is Required</span>
+              <span *ngIf="presentAddress2.errors?.maxlength">Maximum of 255 characters only allowed</span>
             </div>
 
           </div>
@@ -231,36 +234,19 @@
             </div>
             <div class="error" *ngIf="presentZipCode.invalid && presentZipCode.touched">
               <span *ngIf="presentZipCode.errors?.required">Zip code is Required</span>
+              <span *ngIf="presentZipCode.errors?.maxlength">Maximum of 7 digits only allowed</span>
+              <span *ngIf="presentZipCode.errors?.pattern">Numbers only allowed</span>
             </div>
 
           </div>
         </div>
         <div class="label-box-2-auto-complete">
           <div class="input-boxes-1">
-            <label>City</label>
-            <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="presentCity" nzAllowClear nzShowSearch>
-                <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
-              </nz-select>
-              <!-- <input type="hidden" name="country" id="countryId" value="IN"/>
-              <select name="state" class="states order-alpha" id="stateId">
-                  <option value="">Select State</option>
-              </select>
-              <select name="city" class="cities order-alpha" id="cityId">
-                  <option value="">Select City</option>
-              </select> -->
-            </div>
-            <div class="error" *ngIf="presentCity.invalid && presentCity.touched">
-              <span *ngIf="presentCity.errors?.required">City is Required</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="presentState" nzAllowClear
+              <nz-select (ngModelChange)="detectStateSelectChange(presentState)" formControlName="presentState" nzAllowClear
                 nzShowSearch>
-                <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
+                <nz-option *ngFor="let state of allStatess" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
               </nz-select>
             </div>
             <div class="error" *ngIf="presentState.invalid && presentState.touched">
@@ -271,6 +257,19 @@
             </div>
 
           </div>
+          <div class="input-boxes-1">
+              <label>City</label>
+              <div class="input-box" [matTooltip]="hideCityDropDown ? 'Please select your state' : ''">
+                <nz-select (ngModelChange)="detectSelectChange()" [ngClass]="hideCityDropDown ? 'hideDropDown' : ''" formControlName="presentCity" nzAllowClear nzShowSearch>
+                    <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
+                    <nz-option *ngFor="let city of allCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
+                </nz-select>
+              </div>
+              <div class="error" *ngIf="presentCity.invalid && presentCity.touched">
+                <span *ngIf="presentCity.errors?.required">City is Required</span>
+              </div>
+
+            </div>
 
         </div>
 
@@ -298,6 +297,7 @@
           </div>
           <div class="error" *ngIf="permanentAddress1.invalid && permanentAddress1.touched">
             <span *ngIf="permanentAddress1.errors?.required">Address Required</span>
+            <span *ngIf="permanentAddress1.errors?.maxlength">Maximum of 255 characters only allowed</span>
           </div>
 
         </div>
@@ -310,6 +310,7 @@
             </div>
             <div class="error" *ngIf="permanentAddress2.invalid && permanentAddress2.touched">
               <span *ngIf="permanentAddress2.errors?.required">Address Required</span>
+              <span *ngIf="permanentAddress2.errors?.maxlength">Maximum of 255 characters only allowed</span>
             </div>
 
           </div>
@@ -321,32 +322,18 @@
             </div>
             <div class="error" *ngIf="permanentZipCode.invalid && permanentZipCode.touched">
               <span *ngIf="permanentZipCode.errors?.required">Zip code is Required</span>
+              <span *ngIf="permanentZipCode.errors?.maxlength">Maximum of 7 digits only allowed</span>
+              <span *ngIf="permanentZipCode.errors?.pattern">Numbers only allowed</span>
             </div>
           </div>
         </div>
         <div class="label-box-2">
           <div class="input-boxes-1">
-            <label>City</label>
-            <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="permanentCity" nzAllowClear
-                nzShowSearch>
-                <nz-option *ngFor="let city of allCities" [nzLabel]="city.City" [nzValue]="city.City"></nz-option>
-              </nz-select>
-            </div>
-            <div class="error" *ngIf="permanentCity.invalid && permanentCity.touched">
-              <span *ngIf="permanentCity.errors?.required">City is Required</span>
-              <span *ngIf="!permanentCity.errors?.required && permanentCity.errors?.dropdownNotMatch">Please select
-                the
-                city from drop down</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-1">
             <label>State / Province</label>
             <div class="input-box">
-              <nz-select (ngModelChange)="detectSelectChange()" formControlName="permanentState" nzAllowClear
+              <nz-select (ngModelChange)="detectPermanentStateSelectChange(permanentState)" formControlName="permanentState" nzAllowClear
                 nzShowSearch>
-                <nz-option *ngFor="let state of allStates" [nzLabel]="state.state" [nzValue]="state.state"></nz-option>
+                <nz-option *ngFor="let state of allStatess" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
               </nz-select>
             </div>
             <div class="error" *ngIf="permanentState.invalid && permanentState.touched">
@@ -357,7 +344,25 @@
             </div>
 
           </div>
-        </div>
+
+          <div class="input-boxes-1">
+              <label>City</label>
+              <div class="input-box" [matTooltip]="hidePermanentCityDropDown ? 'Please select your state' : ''">
+                <nz-select (ngModelChange)="detectSelectChange()" [ngClass]="hidePermanentCityDropDown ? 'hideDropDown' : ''" formControlName="permanentCity" nzAllowClear
+                  nzShowSearch>
+                  <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
+                  <nz-option *ngFor="let city of allPCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
+                </nz-select>
+              </div>
+              <div class="error" *ngIf="permanentCity.invalid && permanentCity.touched">
+                <span *ngIf="permanentCity.errors?.required">City is Required</span>
+                <span *ngIf="!permanentCity.errors?.required && permanentCity.errors?.dropdownNotMatch">Please select
+                  the
+                  city from drop down</span>
+              </div>
+
+            </div>
+          </div>
 
       </div>
     </div>
@@ -379,6 +384,7 @@
             <div style="visibility: hidden;" class="error" *ngIf="languageRequired.invalid && languageRequired.touched ||
             languageRequired.touched && (!firstRead.value && !firstWrite.value && !firstSpeak.value)">
               <span *ngIf="languageRequired.errors?.required">Language is Required</span>
+              <span style="white-space: nowrap;" *ngIf="languageRequired.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed </span>
               <span *ngIf="!languageRequired.errors?.required &&
                 (!firstRead.value && !firstWrite.value && !firstSpeak.value)">Language Proficiency needs to be
                 ticked</span>
@@ -429,11 +435,13 @@
               <div class="error"
               *ngIf="t.controls[i].get('language').invalid && t.controls[i].get('language').touched">
               <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
+              <span *ngIf="t.controls[i].get('language').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
               <span *ngIf="t.hasError('notSelected')">Please select any one of the language proficiency</span>
             </div>
             <div class="error"
             *ngIf="t.controls[i].get('language').valid && t.controls[i].get('language').touched">
             <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
+            <span *ngIf="t.controls[i].get('language').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
             <span *ngIf="t.controls[i].get('read').errors?.notSelected">Please select any one of the language proficiency</span>
           </div>
 
@@ -500,6 +508,7 @@
         <div class="error" *ngIf="passportNumber.invalid && passportNumber.touched">
           <span *ngIf="passportNumber.errors?.required">Passport Number is Required</span>
           <span *ngIf="passportNumber.errors?.pattern">Only Numbers is Allowed</span>
+          <span *ngIf="passportNumber.errors?.maxlength">Maximum of 255 digits only allowed</span>
         </div>
 
       </div>
@@ -512,6 +521,7 @@
         </div>
         <div class="error" *ngIf="passportName.invalid && passportName.touched">
           <span *ngIf="passportName.errors?.required">Name is Required</span>
+          <span *ngIf="passportName.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>
@@ -524,6 +534,7 @@
         </div>
         <div class="error" *ngIf="passportProfession.invalid && passportProfession.touched">
           <span *ngIf="passportProfession.errors?.required">Profession is Required</span>
+          <span *ngIf="passportProfession.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>
@@ -577,6 +588,7 @@
         </div>
         <div class="error" *ngIf="passportIssuePlace.invalid && passportIssuePlace.touched">
           <span *ngIf="passportIssuePlace.errors?.required">Issue place is Required</span>
+          <span *ngIf="passportIssuePlace.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>
@@ -589,6 +601,7 @@
         </div>
         <div class="error" *ngIf="passportValidFor.invalid && passportValidFor.touched">
           <span *ngIf="passportValidFor.errors?.required">Countries valid for is Required</span>
+          <span *ngIf="passportValidFor.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>
@@ -611,6 +624,7 @@
         </div>
         <div class="error" *ngIf="illness.invalid && illness.touched">
           <span *ngIf="illness.errors?.required">Mandatory Field</span>
+          <span *ngIf="illness.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>
@@ -623,7 +637,8 @@
         </div>
         <div class="error" *ngIf="daysofIll.invalid && daysofIll.touched">
           <span *ngIf="daysofIll.errors?.required">No. of days is Required</span>
-          <span *ngIf="daysofIll.errors?.pattern">Only Numbers is Allowed</span>
+          <span *ngIf="daysofIll.errors?.maxlength">Maximum of 5 characters only allowed</span>
+          <span *ngIf="daysofIll.errors?.pattern">Accept only numbers</span>
         </div>
 
       </div>
@@ -636,6 +651,7 @@
         </div>
         <div class="error" *ngIf="natureofIll.invalid && natureofIll.touched">
           <span *ngIf="natureofIll.errors?.required">Nature of Ill is Required</span>
+          <span *ngIf="natureofIll.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>
@@ -651,6 +667,7 @@
         </div>
         <div class="error" *ngIf="disability.invalid && disability.touched">
           <span *ngIf="disability.errors?.required">Disability is Required</span>
+          <span *ngIf="disability.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
         </div>
 
       </div>

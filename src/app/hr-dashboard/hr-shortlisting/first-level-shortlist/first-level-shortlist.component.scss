@@ -1,0 +1,35 @@
+.dropdown-wrapper {
+  margin: 0 auto;
+  position: relative;
+  background: darkcyan;
+  .outlay {
+    margin: 0 auto;
+    position: relative;
+    background: lightgray;
+    max-width: 400px;
+    // overflow: auto;
+    min-width: 300px;
+    max-height: 400px;
+    min-height: 300px;
+    border: solid blue 1px;
+    .search {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      background: gray;
+      padding: 1em;
+      input {
+        margin: 0 0 0 1em;
+        width: 100%;
+        outline: none;
+      }
+    }
+    .list {
+      max-width: 400px;
+      overflow: auto;
+      min-width: 300px;
+      max-height: 300px;
+      min-height: 200px;
+    }
+  }
+}

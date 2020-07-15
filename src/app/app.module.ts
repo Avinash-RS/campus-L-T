@@ -8,7 +8,6 @@ import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { SnackbarComponent } from './shared/snackbar/snackbar.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
@@ -24,7 +23,9 @@ import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { KycthanksGuard } from './guards/canload/kycthanks.guard';
-// import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';NZ_CONFIG
+import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
+import { ShortlistedCandidateListComponent } from './hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
+import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
 registerLocaleData(en);
 
 const ngZorroConfig: NzConfig = {
@@ -46,20 +47,19 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     BrowserAnimationsModule,
     MaterialModule,
     SharedModule,
-    NgxSpinnerModule,
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
   ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
-    CanDeactivateGuard, CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard
+    CanDeactivateGuard, CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard, HrcanloadGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -24,6 +24,7 @@
           <input (focusout)="detectInput(familyForm)" formControlName="names" type="text">
           <div class="error" *ngIf="familyArr.controls[i].get('names').invalid">
             <span *ngIf="familyArr.controls[i].get('names').errors?.Namerequired">Name is Required</span>
+            <span *ngIf="familyArr.controls[i].get('names').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
 
         </div>
@@ -41,6 +42,7 @@
           <div class="error"
             *ngIf="familyArr.controls[i].get('relationship').invalid && familyArr.controls[i].get('relationship').touched">
             <span *ngIf="familyArr.controls[i].get('relationship').errors?.required">Relationship is Required</span>
+            <span *ngIf="familyArr.controls[i].get('relationship').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
         <div class="text-4">
@@ -48,6 +50,7 @@
           <div class="error"
             *ngIf="familyArr.controls[i].get('occupation').invalid && familyArr.controls[i].get('occupation').touched">
             <span *ngIf="familyArr.controls[i].get('occupation').errors?.required">Occupation is Required</span>
+            <span *ngIf="familyArr.controls[i].get('occupation').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
         <i *ngIf="i !== 0" (click)="removefamilyForm(i)" style="color: red; height: 25px;"

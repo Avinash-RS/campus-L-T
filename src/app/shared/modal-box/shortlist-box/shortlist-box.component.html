@@ -1,0 +1,68 @@
+<div class="shortlist-wrapper" *ngIf="data && data['shortlist']">
+  <div class="preview-wrapper">
+    <div class="left">
+      <div class="text">Folder Name
+
+        <div class="validation" *ngIf="folder.invalid && folder.touched">&#160;</div>
+      </div>
+      <div class="text">Shortlist Name
+        <div class="validation" *ngIf="shortlist.invalid && shortlist.touched">&#160;</div>
+
+      </div>
+    </div>
+    <div class="right">
+      <div class="text-input">
+        <input [formControl]="folder" type="text" name="" id="">
+        <div class="validation" *ngIf="folder.invalid && folder.touched">
+          <span *ngIf="folder.errors?.required">Folder name is Required</span>
+          <span *ngIf="folder.errors?.minlength">Minimum of 3 characters required</span>
+          <span *ngIf="folder.errors?.maxlength">Maximum of 20 characters only allowed</span>
+        </div>
+      </div>
+      <div class="text-input">
+        <input [formControl]="shortlist" type="text" name="" id="">
+        <div class="validation" *ngIf="shortlist.invalid && shortlist.touched">
+          <span *ngIf="shortlist.errors?.required">Shortlist name is Required</span>
+          <span *ngIf="shortlist.errors?.minlength">Minimum of 3 characters required</span>
+          <span *ngIf="shortlist.errors?.maxlength">Maximum of 20 characters only allowed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    confirm to move the candidate details to assign assessment
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="confirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload']">
+  <div class="bulk-upload-text">
+    Confirm to upload candidate details and send mails to fill the registration form
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
+  <div class="bulk-upload-text">
+  <span *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span> <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully uploaded.</span> <br> <span *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} candidates has not been uploaded. Please go to reports to see the detailed error details. </span>
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['first_level_shortlist_success']">
+  <div class="bulk-upload-text">
+    Selected candidates have been shortlisted successfully
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>

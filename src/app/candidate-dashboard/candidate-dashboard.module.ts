@@ -15,10 +15,13 @@ import { ViewDetailsComponent } from './candidate-profile/view-details/view-deta
 import { ConfirmComponent } from './candidate-profile/confirm/confirm.component';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
+import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
+import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
+import { CandidateMainDashboardComponent } from './candidate-main-dashboard/candidate-main-dashboard.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent],
+  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent],
   imports: [
     CommonModule,
     SharedModule,

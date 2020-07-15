@@ -1,5 +1,10 @@
 @import "../../../styles.scss";
 @import "../../themes/themes.scss";
+.hideDropDown {
+  pointer-events: none;
+  background: rgba(128, 128, 128, 0.328) !important;
+}
+
 .main-wrapper {
   background: url(../../../assets/images/BackgroundImage1.png);
   background-size: cover;
@@ -127,8 +132,9 @@
             }
             .input-box {
               input,
+              nz-select,
               select {
-                padding: 0em 1.75em 0 0.5em;
+                padding: 0em 0.15em 0 0.5em;
                 font-size: 18px;
                 color: $secondary;
                 height: 40px;
@@ -137,7 +143,9 @@
                 background: $white-primary 0% 0% no-repeat padding-box;
                 border-radius: 5px;
                 box-shadow: $shadow-light-black;
-                width: 100%;
+                min-width: 275px;
+                max-width: 275px;
+                overflow: auto;
                 box-sizing: border-box;
               }
               :focus {

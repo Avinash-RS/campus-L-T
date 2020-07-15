@@ -40,7 +40,8 @@ export class CanloadGuard implements CanLoad, CanActivate {
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate' && (!this.appConfig.getLocalData('noGoBack') || this.appConfig.getLocalData('noGoBack') != 'true')) {
+    //  && (!this.appConfig.getLocalData('noGoBack') || this.appConfig.getLocalData('noGoBack') != 'true')
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
       return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {

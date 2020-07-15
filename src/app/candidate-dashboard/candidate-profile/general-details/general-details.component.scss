@@ -85,6 +85,11 @@
       .skill-group:first-child {
         margin: 1em 0 0 0em !important;
       }
+      .error {
+        color: $red;
+        font-size: 12px;
+        font-weight: 200;
+      }
     }
   }
   .main-heading {

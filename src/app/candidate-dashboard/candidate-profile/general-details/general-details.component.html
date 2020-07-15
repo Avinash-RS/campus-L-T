@@ -12,6 +12,10 @@
         <div class="skill-group" *ngFor="let item of skillsArr.controls; let i = index;" [formGroupName]="i">
           <div class="input-group">
             <input (focusout)="detectInput(skillForm)" formControlName="value" type="text">
+          <div class="error"
+            *ngIf="skillsArr.controls[i].get('value').invalid && skillsArr.controls[i].get('value').touched">
+            <span *ngIf="skillsArr.controls[i].get('value').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
           </div>
           <!-- <div > -->
           <div class="add">
@@ -63,6 +67,7 @@
           <div class="error"
             *ngIf="relativesArr.controls[i].get('names').invalid && relativesArr.controls[i].get('names').touched">
             <span *ngIf="relativesArr.controls[i].get('names').errors?.required">Name is Required</span>
+            <span *ngIf="relativesArr.controls[i].get('names').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
         <div class="text-2">
@@ -70,6 +75,7 @@
           <div class="error"
             *ngIf="relativesArr.controls[i].get('relationship').invalid && relativesArr.controls[i].get('relationship').touched">
             <span *ngIf="relativesArr.controls[i].get('relationship').errors?.required">Relationship is Required</span>
+            <span *ngIf="relativesArr.controls[i].get('relationship').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
         <div class="text-3">
@@ -77,6 +83,7 @@
           <div class="error"
             *ngIf="relativesArr.controls[i].get('position').invalid && relativesArr.controls[i].get('position').touched">
             <span *ngIf="relativesArr.controls[i].get('position').errors?.required">Position is Required</span>
+            <span *ngIf="relativesArr.controls[i].get('position').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
         <div class="text-4">
@@ -84,6 +91,7 @@
           <div class="error"
             *ngIf="relativesArr.controls[i].get('company').invalid && relativesArr.controls[i].get('company').touched">
             <span *ngIf="relativesArr.controls[i].get('company').errors?.required">Company is Required</span>
+            <span *ngIf="relativesArr.controls[i].get('company').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
       </div>

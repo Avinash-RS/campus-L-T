@@ -14,12 +14,17 @@ import { KycAccessGuard } from '../guards/access-to-kyc-forms/kyc-access.guard';
 import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
 import { CanloadGuard } from '../guards/canload/canload.guard';
 import { KycthanksGuard } from '../guards/canload/kycthanks.guard';
+import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
+import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
 
 
 const routes: Routes = [
   {
     path: '', component: MasterDashboardComponent,
     children: [
+      // {
+      //   path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DASHBOARD}`, component: CandidateHallticketComponent, canActivate: [CanloadGuard]
+      // },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, component: CandidateProfileComponent, canActivate: [CanloadGuard], children: [
           {
@@ -43,6 +48,18 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`, component: CandidateHallticketComponent, canActivate: [CanloadGuard], children: [
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`, component: CandidateAssignedAssessmentListComponent
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`,
             pathMatch: 'full',
           }
         ]

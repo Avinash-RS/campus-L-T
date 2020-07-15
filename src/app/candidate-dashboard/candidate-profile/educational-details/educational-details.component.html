@@ -12,12 +12,12 @@
                     <label>Level*</label>
                   </div>
                   <div class="input-box">
-                      <input (focusout)="detectInput(educationForm)" placeholder="Level" formControlName="leveling"
-                      type="text" value="">
-                      <!-- <nz-select (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch
+                      <!-- <input (focusout)="detectInput(educationForm)" placeholder="Level" formControlName="leveling"
+                      type="text" value=""> -->
+                      <nz-select (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch
                       formControlName="leveling" nzPlaceHolder="Level">
-                      <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-                    </nz-select> -->
+                      <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.name"></nz-option>
+                    </nz-select>
                   </div>
                 </div>
                 <!-- eduArr.controls[i].get('age') -->
@@ -43,6 +43,7 @@
                 <div class="error"
                   *ngIf="eduArr.controls[i].get('board').invalid && eduArr.controls[i].get('board').touched">
                   <span *ngIf="eduArr.controls[i].get('board').errors?.required">Board/University is Required</span>
+                  <span *ngIf="eduArr.controls[i].get('board').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
                 </div>
               </div>
               <div class="outer-box-wrapper">
@@ -55,7 +56,7 @@
                     type="text" value=""> -->
                   <nz-select (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear
                     nzShowSearch nzPlaceHolder="">
-                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
                     <nz-option *ngFor="let level of institutes" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -77,7 +78,7 @@
                     type="text" value=""> -->
                   <nz-select (ngModelChange)="detectSelectChange()" formControlName="discipline" nzAllowClear
                     nzShowSearch nzPlaceHolder="">
-                    <nz-option nzLabel="Other" nzValue="Other">Other</nz-option>
+                    <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
                     <nz-option *ngFor="let level of discipline" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                   </nz-select>
                 </div>
@@ -95,12 +96,13 @@
                       </div>
 
                 <div class="input-box">
-                    <input (focusout)="detectInput(educationForm)" placeholder="Specialization" formControlName="specification"
-                    type="text" value="">
-                  <!-- <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear
+                    <!-- <input (focusout)="detectInput(educationForm)" placeholder="Specialization" formControlName="specification"
+                    type="text" value=""> -->
+                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear
                     nzShowSearch nzPlaceHolder="Specification">
-                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-                  </nz-select> -->
+                    <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
+                    <nz-option *ngFor="let level of specialization" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+                  </nz-select>
                 </div>
               </div>
                 <div class="error"

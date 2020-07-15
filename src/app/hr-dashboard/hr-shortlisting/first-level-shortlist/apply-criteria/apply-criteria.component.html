@@ -1,0 +1,441 @@
+<div class="main-wrapper criteria">
+  <div class="first-main">
+    <div class="header">
+      <div class="left-side">
+        <div class="total">Total number of candidates: <span class="count">{{totalCandidates}}</span> <span style="display: none;" class="view">View
+            details</span></div>
+        <div class="total">Selected number of candidates: <span class="count">{{filteredCandidates ? filteredCandidates : '0'}}</span> <span style="display: none;" class="view">View
+            details</span></div>
+      </div>
+      <div class="right-side">
+        <button mat-button>Apply criteria <span class="material-icons">filter_alt</span></button>
+      </div>
+    </div>
+    <div class="filter-wrapper">
+      <div class="header">
+        <div class="left">
+          <div class="heading">
+            Applied categories
+          </div>
+        </div>
+        <div class="right">
+          <div class="button">
+            <button class="filter" (click)="submitFilterNoRedirect()" mat-raised-button>Apply Filter</button>
+            <button (click)="clearAllFilters()" mat-raised-button>Clear All</button>
+          </div>
+        </div>
+      </div>
+      <div class="filters">
+        <!-- Gender start -->
+        <div *ngIf="genderFilterShow" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearGenderFilter()" class="icon"><img src="assets/images/error.svg"
+                  alt="" srcset=""></span> <span class="head-text">Gender</span></span>
+          </div>
+          <div class="filter-list">
+            <ng-container *ngFor="let dup of genderFilter; let i = index">
+              <div class="list" *ngIf="dup.checkbox"><span (click)="GendercheckboxChanged(dup)" class="icon"><img
+                    src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.name}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Gender close -->
+
+        <!-- Date of Birth start -->
+        <div *ngIf="dateFilterShow" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearDOBFilter()" class="icon"><img src="assets/images/error.svg" alt=""
+                  srcset=""></span> <span class="head-text">Date of Birth</span></span>
+          </div>
+          <div class="filter-list">
+            <div *ngIf="dateFilterShow" class="list"><span (click)="clearDOBFilter()" class="icon"><img
+                  src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dateFromShow}} to
+                {{dateToShow}}</span></div>
+          </div>
+        </div>
+        <!-- Date of Birth close -->
+
+        <!-- Education Level start -->
+        <div *ngIf="eduFilterShow && (!percentageRegexError && !percentageToRegexError)" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearEDUFilter()" class="icon"><img src="assets/images/error.svg" alt=""
+                  srcset=""></span> <span class="head-text">Education Level</span></span>
+          </div>
+          <div class="filter-list">
+            <ng-container *ngFor="let dup of onlyForEDUFilterArray; let i = index">
+              <div class="list" *ngIf="dup.checkbox"><span (click)="EduFilterBoxChanged(dup)" class="icon"><img
+                    src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.name}}</span>
+                <span class="text1" *ngIf="dup.percentageFrom && dup.percentageTo">/ {{dup.percentageFrom}} - {{dup.percentageTo}}%</span>
+              <span class="text1" *ngIf="!dup.percentageFrom || !dup.percentageTo">{{(dup.percentageFrom ? '/ From ' : '')}} {{(dup.percentageTo ? '/ Till ' : '')}} {{(dup.percentageFrom ? dup.percentageFrom + '%' : '')}} {{(dup.percentageTo ? dup.percentageTo + '%' : '')}}</span>
+              <span class="text1" *ngIf="!dup.percentageFrom && dup.percentageTo"> </span>
+              <span class="text1" *ngIf="dup.yearFrom && dup.yearTo">/ {{yearFromShow}} - {{yearToShow}} </span>
+              <span class="text1" *ngIf="dup.yearFrom && !dup.yearTo">/ From {{yearFromShow}}</span>
+              <span class="text1" *ngIf="!dup.yearFrom && dup.yearTo">/ Till {{yearToShow}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Education Level close -->
+        <!-- Institute start -->
+        <div *ngIf="instituteFilterShow" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearInstituteFilter()" class="icon"><img src="assets/images/error.svg"
+                  alt="" srcset=""></span> <span class="head-text">Institutes
+                ({{showInstituteTotalCount}})</span></span>
+          </div>
+          <div class="filter-list">
+            <ng-container *ngFor="let dup of InstituteNameFilter; let i = index">
+              <div class="list" *ngIf="dup.checkbox"><span (click)="InstituteNameCheckboxChanged(dup)" class="icon"><img
+                    src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.name}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Institute close -->
+
+        <!-- Discipline start -->
+        <div *ngIf="disciplineFilterShow" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearDisciplineFilter()" class="icon"><img src="assets/images/error.svg"
+                  alt="" srcset=""></span> <span class="head-text">Discipline</span></span>
+          </div>
+          <div class="filter-list">
+            <ng-container *ngFor="let dup of disciplineFilter; let i = index">
+              <div class="list" *ngIf="dup.checkbox"><span (click)="DisciplinecheckboxChanged(dup)" class="icon"><img
+                    src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.name}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Discipline close -->
+
+        <!-- Specialization start -->
+        <div *ngIf="specializationFilterShow" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearSpecializationFilter()" class="icon"><img
+                  src="assets/images/error.svg" alt="" srcset=""></span> <span
+                class="head-text">Specialization</span></span>
+          </div>
+          <div class="filter-list">
+            <ng-container *ngFor="let dup of SpecializationNameFilter; let i = index">
+              <div class="list" *ngIf="dup.checkbox"><span (click)="InstituteNameCheckboxChanged(dup)" class="icon"><img
+                    src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.name}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Specialization close -->
+
+        <!-- No. of Backlogs start -->
+        <div *ngIf="backlogFilterShow" class="filter-wrapper-main">
+          <div class="filter-heading">
+            <span class="wrap"> <span (click)="clearBacklogFilter()" class="icon"><img src="assets/images/error.svg"
+                  alt="" srcset=""></span> <span class="head-text">No. of Backlogs</span></span>
+          </div>
+          <div class="filter-list">
+            <ng-container *ngFor="let dup of backlogFilter; let i = index">
+              <div class="list" *ngIf="dup.checkbox"><span (click)="BacklogcheckboxChanged(dup)" class="icon"><img
+                    src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.name}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- No. of Backlogs close -->
+
+      </div>
+    </div>
+  </div>
+  <div class="second-main">
+    <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+
+      <!-- Gender Tab -->
+      <nz-tab [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate>Gender <span class="tab-span"></span></ng-template>
+
+        <!-- Gender Content -->
+        <div class="content-wrapper-gender">
+          <div class="dropdown-wrapper">
+            <div class="head">
+              Choose gender from below list:
+            </div>
+            <div class="outlay">
+              <div class="list">
+                <div class="list-item" [ngClass]="(i % 2 === 0) ? '' : 'bg-change'"
+                  *ngFor="let dup of genderList; let i = index">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label (change)="toShowOrNotGenderFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                    </span>
+                    <span class="text">{{dup.name}}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+
+      <!-- Date of Birth Tab -->
+      <nz-tab [nzTitle]="titleDateofBirth">
+        <ng-template #titleDateofBirth>Date of Birth <span class="tab-span"></span></ng-template>
+        <!-- Date of Birth Content -->
+        <div class="content-wrapper-dob">
+          <div class="dropdown-wrapper">
+            <div class="outlay">
+              <div class="grid-wrapper">
+                <div class="left">
+                  <div class="item">From</div>
+                  <div class="item-date">
+                    <input matInput [matDatepicker]="dp" [formControl]="dateFrom">
+                    <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp>
+                    </mat-datepicker>
+                  </div>
+                </div>
+                <div class="right">
+                  <div class="item">To</div>
+                  <div class="item-date">
+                    <input [formControl]="dateTo" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </div>
+                </div>
+
+              </div>
+              <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
+              <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
+              <div class="button">
+                <button mat-raised-button (click)="applyDateFilter()"><span>Apply</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+
+      <!-- Education Level Tab -->
+      <nz-tab [nzTitle]="titleEducationLevel">
+        <ng-template #titleEducationLevel>Education Level <span class="tab-span"></span></ng-template>
+        <!-- Education Level Content -->
+        <div class="content-wrapper-education">
+          <div class="dropdown-wrapper">
+            <div class="outlay">
+              <div class="main-wrapper">
+                <div class="left">
+                  <div class="top-head"><span class="head-1">Selected education levels</span> <span class="head-2">Enter
+                      percentage in below
+                      field</span></div>
+                  <div class="left-grid">
+                    <div class="head">&#160;</div>
+                    <div class="head left-1">From</div>
+                    <div class="head">Upto</div>
+                  </div>
+                  <div class="left-grid-item"
+                    [ngClass]="[(i % 2 === 0) ? '' : 'bg-change', (i == 0) ? 'top-border' : '']"
+                    *ngFor="let dup of EduLevel; let i = index">
+                    <div class="item no-space">
+                      <span class="checkbox">
+                        <label (change)="eduCheckboxChange(dup)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                      </span>
+                      <span class="text">{{dup['name']}}</span>
+                    </div>
+                    <div class="item no-space input"><span><input
+                          [value]="dup['checkbox'] ? dup['percentageFrom'] : null"
+                          [ngClass]="dup['checkbox'] ? '' : 'disable-input'" [ngStyle]="{border: (percentageRegexError && i == percentageRegexErrorIndex) ? 'solid red 1px' : '' }" type="text" name="" [id]="'perFrom' + i">
+                        <span class="percent">
+                          %</span></span></div>
+                    <div class="item no-space input"><span><input [value]="dup['checkbox'] ? dup['percentageTo'] : null"
+                          [ngClass]="dup['checkbox'] ? '' : 'disable-input'" [ngStyle]="{border: (percentageToRegexError && i == percentageToRegexErrorIndex) ? 'solid red 1px' : '' }" type="text" name="" [id]="'perTo' + i">
+                        <span class="percent">
+                          %</span></span></div>
+                  </div>
+                </div>
+                <div class="right">
+                  <div class="top-head">Enter the date of passing range</div>
+                  <div class="right-grid">
+                    <div class="head">&#160;</div>
+                    <div class="head">From</div>
+                    <div class="head left-1">Upto</div>
+                  </div>
+                  <div class="right-grid-item"
+                    [ngClass]="[(i % 2 === 0) ? '' : 'bg-change', (i == 0) ? 'top-border' : '']"
+                    *ngFor="let dup of EduLevel; let i = index">
+                    <div class="item no-space input">
+                      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                        [(ngModel)]="radioCheck">
+                        <mat-radio-button [checked]="dup['checkbox'] ? null : false"
+                          [disabled]="dup['checkbox'] ? false : true" (change)="selectedEducationRadio(dup, $event)"
+                          class="example-radio-button" [value]="dup['checkbox'] ? dup['name'] : null">
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="item no-space input">
+                      <input [value]="dup['yearFrom']" [id]="'yearFrom' + i" [ngClass]="dup['radio'] ? '' : 'disable-input'"
+                        [disabled]="dup['radio'] ? false : true" matInput [matDatepicker]="yearF"
+                        [formControl]="yearFrom">
+                      <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="yearF"></mat-datepicker-toggle>
+                      <mat-datepicker #yearF>
+                      </mat-datepicker>
+
+                      <!-- <input [ngClass]="dup['radio'] ? '' : 'disable-input'" type="text" name="" id=""> -->
+                    </div>
+                    <div class="item no-space input">
+                      <input [value]="dup['yearTo']" [id]="'yearTo' + i" [ngClass]="dup['radio'] ? '' : 'disable-input'"
+                        [disabled]="dup['radio'] ? false : true" matInput [matDatepicker]="yearT"
+                        [formControl]="yearTo">
+                      <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="yearT"></mat-datepicker-toggle>
+                      <mat-datepicker #yearT>
+                      </mat-datepicker>
+
+                      <!-- <input [ngClass]="dup['radio'] ? '' : 'disable-input'" type="text" name="" id=""> -->
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="validation" *ngIf="endYearValidation">End date cannot be lower than start date</div>
+              <div class="validation" *ngIf="percentageRegexError || percentageToRegexError">Please enter the valid percentage in the above red highlight text boxes</div>
+              <div class="button">
+                <button mat-raised-button (click)="applyEduYearFilter()"><span>Apply</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+
+      <!-- Institute Name Tab -->
+      <nz-tab [nzTitle]="titleInstituteName">
+        <ng-template #titleInstituteName>Institute name <span class="tab-span"></span></ng-template>
+        <!-- Institute Name Content -->
+        <div class="content-wrapper-institute">
+          <div class="dropdown-wrapper">
+            <div class="head">
+              Choose and find institute names from the list below:
+            </div>
+            <div class="outlay">
+              <div class="search">
+                <span>Find:</span> <input [formControl]="InstituteNameSearchControl" type="text" name="" id="">
+              </div>
+              <div class="list">
+                <div class="item-list" *ngIf="InstituteNameShowSelectAll">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label nz-checkbox (change)="InstituteNameSelectAll($event)"
+                        [(ngModel)]="InstituteNameSelectAllCheck"></label>
+                    </span>
+                    <span class="text">{{(InstituteNameSelectAllCheck ? 'Unselect All' : 'Select All')}}</span></div>
+                </div>
+                <div class="item-list" *ngFor="let dup of InstituteNameDropDown">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label (change)="toShowOrNotInstituteFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label>
+                    </span>
+                    <span class="text">{{dup.name}}</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </nz-tab>
+
+      <!-- Discipline Tab -->
+      <nz-tab [nzTitle]="titleDiscipline">
+        <ng-template #titleDiscipline>Discipline <span class="tab-span"></span></ng-template>
+        <!-- Discipline Content -->
+        <div class="content-wrapper-discipline">
+          <div class="dropdown-wrapper">
+            <div class="head">
+              Choose discipline from the list below:
+            </div>
+            <div class="outlay">
+              <div class="list">
+                <div class="list-item" [ngClass]="(i % 2 === 0) ? '' : 'bg-change'"
+                  *ngFor="let dup of disciplineList; let i = index">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label (change)="toShowOrNotDisciplineFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label>
+                    </span>
+                    <span class="text">{{dup.name}}</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </nz-tab>
+
+      <!-- Specialization Tab -->
+      <nz-tab [nzTitle]="titleSpecialization">
+        <ng-template #titleSpecialization>Specialization <span class="tab-span"></span></ng-template>
+        <!-- Specialization Content -->
+        <div class="content-wrapper-specialization">
+          <div class="dropdown-wrapper">
+            <div class="head">
+              Choose and find specialization from the list below:
+            </div>
+            <div class="outlay">
+              <div class="search">
+                <span>Find:</span> <input [formControl]="SpecializationNameSearchControl" type="text" name="" id="">
+              </div>
+              <div class="list">
+                <div class="item-list" *ngIf="SpecializationNameShowSelectAll">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label nz-checkbox (change)="SpecializationNameSelectAll($event)"
+                        [(ngModel)]="SpecializationNameSelectAllCheck"></label>
+                    </span>
+                    <span class="text">{{(SpecializationNameSelectAllCheck ? 'Unselect All' : 'Select All')}}</span>
+                  </div>
+                </div>
+                <div class="item-list" *ngFor="let dup of SpecializationNameDropDown">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label (change)="toShowOrNotSpecializationFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label>
+                    </span>
+                    <span class="text">{{dup.name}}</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+
+      <!-- Backlogs Tab -->
+      <nz-tab [nzTitle]="titleBacklogs">
+        <ng-template #titleBacklogs>No. of Backlogs <span class="tab-span"></span></ng-template>
+        <!-- Backlogs Content -->
+        <div class="content-wrapper-backlogs">
+          <div class="dropdown-wrapper">
+            <div class="head">
+              Choose discipline from the list below:
+            </div>
+            <div class="outlay">
+              <div class="list">
+                <div class="list-item" [ngClass]="(i % 2 === 0) ? '' : 'bg-change'"
+                  *ngFor="let dup of backlogs; let i = index">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label (change)="toShowOrNotBacklogFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                    </span>
+                    <span class="text">{{dup.name}}</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+
+    </nz-tabset>
+  </div>
+  <div class="submit-button">
+    <button (click)="submitFilter()" mat-button>Submit</button>
+  </div>
+</div>

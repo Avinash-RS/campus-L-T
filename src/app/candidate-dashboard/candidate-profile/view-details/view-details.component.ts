@@ -25,6 +25,9 @@ export class ViewDetailsComponent implements OnInit {
   localPhoto: any;
   url: any;
   showNext: boolean;
+  allStatess: any;
+  allCitiess: any;
+  permanentStateId: any;
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.appConfig.getLocalData('confirmClick') == 'true') {
@@ -40,23 +43,32 @@ export class ViewDetailsComponent implements OnInit {
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
     private fb: FormBuilder
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    this.updatedStateAPI();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
 
-    if (this.appConfig.getLocalData('kycForm')) {
-      const data = JSON.parse(this.appConfig.getLocalData('kycForm'));
-      this.apiForm = data;
-      this.getLocalForm(data);
-    } else {
-      this.getUserDetails();
-    }
-
     if (this.appConfig.getLocalData('field_isformsubmitted') && this.appConfig.getLocalData('field_isformsubmitted') !== 'true') {
       this.showNext = true;
+    }
+  }
+
+  notShowOtherTabs() {
+    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
+      // Sub-Navigation menus. This will be retrieved in Admin master component
+      const subWrapperMenus = [
+        {
+          icon: '',
+          name: 'VIEW DETAILS',
+          router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
+        },
+      ];
+      this.sharedService.subMenuSubject.next(subWrapperMenus);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     }
   }
 
@@ -133,13 +145,6 @@ export class ViewDetailsComponent implements OnInit {
       permanentCity: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'] ? organizeUserDetails['field_permanent_city']['value'] : '-',
       permanentState: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'] ? organizeUserDetails['field_permanent_state']['value'] : '-',
 
-      // languagesknown: [{
-      //   languageRequired: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'] ? organizeUserDetails['field_language']['value'] : '-',
-
-      //   firstRead: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '-',
-      //   firstWrite: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '-',
-      //   firstSpeak: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '-',
-      // }],
       languagesknown: this.apiForm['langArr'],
 
       field_profile_image: [
@@ -173,25 +178,9 @@ export class ViewDetailsComponent implements OnInit {
       left: organizeUserDetails && organizeUserDetails['field_left_eyepower_glass'] && organizeUserDetails['field_left_eyepower_glass'] ? organizeUserDetails['field_left_eyepower_glass']['value'] : '-',
       right: organizeUserDetails && organizeUserDetails['field_right_eye_power_glass'] && organizeUserDetails['field_right_eye_power_glass'] ? organizeUserDetails['field_right_eye_power_glass']['value'] : '-',
 
-      // educationValuearray: [{
-      //   leveling: this.apiForm && this.apiForm['field_level'] ? this.apiForm['field_level']['value'] : '-',
-      //   board: this.apiForm && this.apiForm['field_board_university'] ? this.apiForm['field_board_university']['value'] : '-',
-      //   institute: this.apiForm && this.apiForm['field_institute'] ? this.apiForm['field_institute']['value'] : '-',
-      //   discipline: this.apiForm && this.apiForm['field_discipline'] ? this.apiForm['field_discipline']['value'] : '-',
-      //   specification: this.apiForm && this.apiForm['field_specification'] ? this.apiForm['field_specification']['value'] : '-',
-      //   passedYear: this.apiForm && this.apiForm['field_year_of_passing'] ? this.getMonthFormat(this.apiForm['field_year_of_passing']['value']) : '-',
-      //   backlogs: this.apiForm && this.apiForm['field_backlogs'] ? this.apiForm['field_backlogs']['value'] : '-',
-      //   percentage: this.apiForm && this.apiForm['field_percentage'] ? this.apiForm['field_percentage']['value'] : '-',
-      // }],
       educationValuearray: this.apiForm['eduArr'],
 
       familyValuesArr: this.apiForm['famArr'],
-      // familyValuesArr: [{
-      //   names: this.apiForm && this.apiForm['field_name_of_your_family'] ? this.apiForm['field_name_of_your_family']['value'] : '-',
-      //   dob: this.apiForm && this.apiForm['field_family_date_of_birth'] ? this.getDateFormat(this.apiForm['field_family_date_of_birth']['value']) : '-',
-      //   relationship: this.apiForm && this.apiForm['field_relationship'] ? this.apiForm['field_relationship']['value'] : '-',
-      //   occupation: this.apiForm && this.apiForm['field_occupation'] ? this.apiForm['field_occupation']['value'] : '-',
-      // }],
 
       skillValueArray: this.apiForm && this.apiForm['field_skills'] ? this.apiForm['field_skills'] : [{ value: '' }],
       generalArray: [{
@@ -222,18 +211,87 @@ export class ViewDetailsComponent implements OnInit {
 
     dump.familyValuesArr.forEach(element => {
       if (element['field_family_date_of_birth']) {
-        element['field_family_date_of_birth'] = {value: this.getDateFormat(element['field_family_date_of_birth']['value']) && this.getDateFormat(element['field_family_date_of_birth']['value']) != 'INVALID DATE ' ? this.getDateFormat(element['field_family_date_of_birth']['value']) : '' };
+        element['field_family_date_of_birth'] = { value: this.getDateFormat(element['field_family_date_of_birth']['value']) && this.getDateFormat(element['field_family_date_of_birth']['value']) != 'INVALID DATE ' ? this.getDateFormat(element['field_family_date_of_birth']['value']) : '' };
       }
     });
     dump.educationValuearray.forEach(element => {
       if (element['field_year_of_passing']) {
-        element['field_year_of_passing'] = {value: this.getMonthFormat(element['field_year_of_passing']['value'])};
+        element['field_year_of_passing'] = { value: this.getMonthFormat(element['field_year_of_passing']['value']) };
       }
     });
-    this.userDetails = dump;
-    console.log(this.userDetails);
 
+    this.userDetails = dump;
+    this.permanentStateId = this.userDetails['permanentState'];
+    console.log(this.userDetails);
+    if (this.allStatess) {
+      this.allStatess.forEach(element => {
+        if (element.id === this.userDetails['permanentState']) {
+          this.userDetails['permanentState'] = element.name;
+          // this.getPermanentUpdatedCity(element.id);
+        }
+      });
+      this.allStatess.forEach(element => {
+        if (element.id === this.userDetails['presentState']) {
+          this.userDetails['presentState'] = element.name;
+          this.getUpdatedCity(element.id);
+        }
+      });
+
+    }
   }
+
+  getUpdatedCity(Api) {
+    const ApiData = {
+      state_id: Api
+    };
+    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+      this.allCitiess = datas[0];
+      datas[0].forEach(element => {
+        if (element.id === this.userDetails['presentCity']) {
+          this.userDetails['presentCity'] = element.name;
+        }
+      });
+      this.getPermanentUpdatedCity(this.permanentStateId);
+      this.appConfig.hideLoader();
+    }, (err) => {
+    });
+  }
+
+  getPermanentUpdatedCity(Api) {
+    const ApiData = {
+      state_id: Api
+    };
+    this.candidateService.updatedCity(ApiData).subscribe((data: any) => {
+      data[0].forEach(element => {
+        if (element.id === this.userDetails['permanentCity']) {
+          this.userDetails['permanentCity'] = element.name;
+        }
+      });
+      this.appConfig.hideLoader();
+    }, (err) => {
+    });
+  }
+
+
+  updatedStateAPI() {
+    const datas = {
+      country_id: '101'
+    };
+    this.candidateService.updatedState(datas).subscribe((data: any) => {
+      this.allStatess = data[0];
+      if (this.appConfig.getLocalData('kycForm')) {
+        const data = JSON.parse(this.appConfig.getLocalData('kycForm'));
+        this.apiForm = data;
+        this.getLocalForm(data);
+      } else {
+        this.getUserDetails();
+      }
+
+    }, (err) => {
+
+    });
+  }
+
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
@@ -264,7 +322,6 @@ export class ViewDetailsComponent implements OnInit {
       const datas = [];
       this.userData = data;
       if (this.userData && this.userData.length > 0) {
-        console.log(data[0]);
         this.userDetails = data[0];
         const organizeUserDetails = data[0];
         // Changing Dob Date Format
@@ -583,13 +640,58 @@ export class ViewDetailsComponent implements OnInit {
           this.KYCModifiedData['eduArr'].push(a);
         }
 
+        this.KYCModifiedData['famArr'] = [
+          {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family'] && organizeUserDetails['field_name_of_your_family'][0] ? organizeUserDetails['field_name_of_your_family'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth'] && organizeUserDetails['field_family_date_of_birth'][0] ? organizeUserDetails['field_family_date_of_birth'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship'] && organizeUserDetails['field_relationship'][0] ? organizeUserDetails['field_relationship'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation'] && organizeUserDetails['field_occupation'][0] ? organizeUserDetails['field_occupation'][0]['value'] : '' },
+          }
+        ];
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family1'] && organizeUserDetails['field_name_of_your_family1'][0] ? organizeUserDetails['field_name_of_your_family1'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth1'] && organizeUserDetails['field_family_date_of_birth1'][0] ? organizeUserDetails['field_family_date_of_birth1'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship1'] && organizeUserDetails['field_relationship1'][0] ? organizeUserDetails['field_relationship1'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation1'] && organizeUserDetails['field_occupation1'][0] ? organizeUserDetails['field_occupation1'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family2'] && organizeUserDetails['field_name_of_your_family2'][0] ? organizeUserDetails['field_name_of_your_family2'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth2'] && organizeUserDetails['field_family_date_of_birth2'][0] ? organizeUserDetails['field_family_date_of_birth2'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship2'] && organizeUserDetails['field_relationship2'][0] ? organizeUserDetails['field_relationship2'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation2'] && organizeUserDetails['field_occupation2'][0] ? organizeUserDetails['field_occupation2'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family3'] && organizeUserDetails['field_name_of_your_family3'][0] ? organizeUserDetails['field_name_of_your_family3'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth3'] && organizeUserDetails['field_family_date_of_birth3'][0] ? organizeUserDetails['field_family_date_of_birth3'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship3'] && organizeUserDetails['field_relationship3'][0] ? organizeUserDetails['field_relationship3'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation3'] && organizeUserDetails['field_occupation3'][0] ? organizeUserDetails['field_occupation3'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+        if (organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'].length > 0) {
+          const a = {
+            field_name_of_your_family: { value: organizeUserDetails && organizeUserDetails['field_name_of_your_family4'] && organizeUserDetails['field_name_of_your_family4'][0] ? organizeUserDetails['field_name_of_your_family4'][0]['value'] : '' },
+            field_family_date_of_birth: { value: organizeUserDetails && organizeUserDetails['field_family_date_of_birth4'] && organizeUserDetails['field_family_date_of_birth4'][0] ? organizeUserDetails['field_family_date_of_birth4'][0]['value'] : '' },
+            field_relationship: { value: organizeUserDetails && organizeUserDetails['field_relationship4'] && organizeUserDetails['field_relationship4'][0] ? organizeUserDetails['field_relationship4'][0]['value'] : '' },
+            field_occupation: { value: organizeUserDetails && organizeUserDetails['field_occupation4'] && organizeUserDetails['field_occupation4'][0] ? organizeUserDetails['field_occupation4'][0]['value'] : '' },
+          };
+          this.KYCModifiedData['famArr'].push(a);
+        }
+
+
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : this.KYCModifiedData['field_profile_image'][0]['url'];
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
         this.getLocalForm(this.KYCModifiedData);
         this.appConfig.hideLoader();
-
       } else {
         this.appConfig.hideLoader();
         this.userDetails = {
@@ -647,14 +749,14 @@ export class ViewDetailsComponent implements OnInit {
           right: '',
 
           educationValuearray: [{
-            field_level: {value: ''},
-            field_board_university: {value: ''},
-            field_institute: {value: ''},
-            field_discipline: {value: ''},
-            field_specification: {value: ''},
-            field_year_of_passing: {value: ''},
-            field_backlogs: {value: ''},
-            field_percentage: {value: ''},
+            field_level: { value: '' },
+            field_board_university: { value: '' },
+            field_institute: { value: '' },
+            field_discipline: { value: '' },
+            field_specification: { value: '' },
+            field_year_of_passing: { value: '' },
+            field_backlogs: { value: '' },
+            field_percentage: { value: '' },
           }],
 
           familyValuesArr: [{

@@ -16,6 +16,7 @@ export class CandidateProfileComponent implements OnInit {
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService
   ) {
+
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
@@ -55,18 +56,20 @@ export class CandidateProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    // if (this.appConfig.getLocalData('field_isformsubmitted') && this.appConfig.getLocalData('field_isformsubmitted') === 'true') {
-    //   // Sub-Navigation menus. This will be retrieved in Admin master component
-    //   const subWrapperMenus = [
-    //     {
-    //       icon: '',
-    //       name: 'VIEW DETAILS',
-    //       router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
-    //     },
-    //   ];
-    //   this.sharedService.subMenuSubject.next(subWrapperMenus);
-    //   this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
-
+    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
+      // Sub-Navigation menus. This will be retrieved in Admin master component
+      const subWrapperMenus = [
+        {
+          icon: '',
+          name: 'VIEW DETAILS',
+          router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
+        },
+      ];
+      this.sharedService.subMenuSubject.next(subWrapperMenus);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+    }
+    // else {
+    //   this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS);
     // }
     // this.getUserKYC();
     this.appConfig.clearLocalDataOne('personalFormTouched');

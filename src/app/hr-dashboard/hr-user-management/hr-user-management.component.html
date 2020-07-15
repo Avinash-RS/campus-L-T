@@ -1,0 +1,12 @@
+<div class="sub-menu-wrapper">
+
+  <div class="menu-group" [routerLink]="appConstant.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST" routerLinkActive="active">
+    <span><img src="assets/images/002-cv.svg" alt="" srcset=""></span> <span> Candidate details</span>
+  </div>
+  <div class="menu-group" [routerLink]="appConstant.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD" routerLinkActive="active">
+    <span><img src="assets/images/001-approved.svg" alt="" srcset=""></span> <span> Upload Candidate details</span>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
