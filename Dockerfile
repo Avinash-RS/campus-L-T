@@ -1,4 +1,4 @@
-### STAGE 1: Build ###
+## STAGE 1: Build ###
 FROM node:10.20.1 AS build
 WORKDIR /usr/src/app
 
