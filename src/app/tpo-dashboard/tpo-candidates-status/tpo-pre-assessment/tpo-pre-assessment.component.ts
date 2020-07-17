@@ -1,30 +1,65 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { FormControl } from '@angular/forms';
+import moment from 'moment';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-tpo-pre-assessment',
   templateUrl: './tpo-pre-assessment.component.html',
-  styleUrls: ['./tpo-pre-assessment.component.scss']
+  styleUrls: ['./tpo-pre-assessment.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'candidate_id', 'mail', 'registered', 'profile_submit', 'profile_shortlist', 'assessment'];
+  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
+  dateFrom = new FormControl('');
+  dateTo = new FormControl('');
+  endDateValidation: boolean;
+  dateValidation: boolean;
+
   selectedUserDetail: any;
   userList: any;
   radioCheck;
   selectAllCheck;
+  folderLists: any;
+  tagLists: any;
+  shortlistLists: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -36,62 +71,120 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getUsersList();
+    this.getFolderNames();
+    this.getTagNames();
+    this.getShortlistNames();
+  }
+
+  getFolderNames() {
+    this.adminService.TPOStatusFolderLists().subscribe((data: any) => {
+      console.log('folder', data);
+      this.folderLists = data && data ? data : [];
+
+    }, (err) => {
+
+    });
+  }
+  getTagNames() {
+    this.adminService.TPOStatusTagLists().subscribe((data: any) => {
+      console.log('tag', data);
+      this.tagLists = data && data ? data : [];
+
+    }, (err) => {
+
+    });
+  }
+  getShortlistNames() {
+    this.adminService.TPOStatusShortlistLists().subscribe((data: any) => {
+      console.log('shortlist', data);
+      this.shortlistLists = data && data ? data : [];
+
+    }, (err) => {
+
+    });
   }
 
   // To get all users
   getUsersList() {
-    // this.adminService.firstLevelReports().subscribe((datas: any) => {
-    //   this.appConfig.hideLoader();
-    //   console.log('api', datas);
+    const apiData = {
+      get_assement_type: 'pre',
+      get_folder_name: '',
+      get_shortlist_name: '',
+      get_tag_name: '',
+      date1_get: '',
+      date2_get: ''
+    };
+    this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('api', data);
 
-      const data = [
-        {
-          candidate_id: '1234',
-          mail: true,
-          registered: true,
-          profile_submit: true,
-          profile_shortlist: true,
-          assessment: true
-        },
-        {
-          candidate_id: '3234',
-          mail: false,
-          registered: true,
-          profile_submit: true,
-          profile_shortlist: true,
-          assessment: true
-        },
-        {
-          candidate_id: '9234',
-          mail: true,
-          registered: true,
-          profile_submit: true,
-          profile_shortlist: true,
-          assessment: false
-        },
-        {
-          candidate_id: '2234',
-          mail: true,
-          registered: true,
-          profile_submit: false,
-          profile_shortlist: true,
-          assessment: true
-        },
-      ];
       if (data) {
         this.userList = data ? data : [];
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
 
   selectedUser(userDetail) {
     console.log(userDetail);
   }
 
+  getDateFormat(date) {
+    if (date) {
+      const split = moment(date).format('DD MMM YYYY');
+      const output = split;
+      return output;
+    } else {
+      return '';
+    }
+  }
+  getAPIDateFormat(date) {
+    if (date) {
+      const split = moment(date).format('YYYY-MM-DD');
+      const output = split;
+      return output;
+    } else {
+      return '';
+    }
+  }
+  // Apply Date Filter
+  applyDateFilter() {
+    // Change Date format to yyyy-mm-dd and date Validation
+    if (!this.dateFrom.value && !this.dateTo.value) {
+      this.dateFrom.setValue('');
+      this.dateTo.setValue('');
+      this.dateValidation = false;
+      this.endDateValidation = false;
+    } else {
+      if ((this.dateFrom.value && !this.dateTo.value) || (!this.dateFrom.value && this.dateTo.value)) {
+        this.endDateValidation = false;
+        this.dateValidation = true;
+      } else {
+        this.dateValidation = false;
+        const momentDate = new Date(this.dateFrom.value);
+        const startDate = moment(momentDate).format('YYYY-MM-DD');
+        const momentDate1 = new Date(this.dateTo.value);
+        const endDate = moment(momentDate1).format('YYYY-MM-DD');
+        if (momentDate.getTime() > momentDate1.getTime()) {
+          this.endDateValidation = true;
+        } else {
+          this.endDateValidation = false;
+        }
+      }
+    }
+  }
+  confirmDate() {
+    this.applyDateFilter();
+  }
+  cancelDate() {
+    this.dateFrom.setValue('');
+    this.dateTo.setValue('');
+    this.endDateValidation = false;
+    this.dateValidation = false;
+  }
 
 
   ngAfterViewInit() {

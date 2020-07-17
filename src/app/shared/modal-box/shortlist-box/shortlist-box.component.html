@@ -29,6 +29,13 @@
       </div>
     </div>
   </div>
+  <div class="radio-group">
+    <nz-radio-group [(ngModel)]="radioValue">
+      <label nz-radio nzValue="pre">Pre-assessment</label>
+      <label nz-radio nzValue="rec">Recruitment</label>
+    </nz-radio-group>
+
+  </div>
   <div class="footer">
     confirm to move the candidate details to assign assessment
   </div>
@@ -114,12 +121,12 @@
     <div style="width: 100%;">
       <input [formControl]="instituteRejection" placeholder="Write your comments here…" type="text" name="" id="">
     </div>
-      <div class="validation" *ngIf="instituteRejection.invalid && instituteRejection.touched">
-        <span *ngIf="instituteRejection.errors?.required">Reason for Rejection must be provided</span>
-        <span *ngIf="instituteRejection.errors?.minlength">Minimum of 3 characters required</span>
-        <span *ngIf="instituteRejection.errors?.maxlength">Maximum of 100 characters only allowed</span>
-      </div>
+    <div class="validation" *ngIf="instituteRejection.invalid && instituteRejection.touched">
+      <span *ngIf="instituteRejection.errors?.required">Reason for Rejection must be provided</span>
+      <span *ngIf="instituteRejection.errors?.minlength">Minimum of 3 characters required</span>
+      <span *ngIf="instituteRejection.errors?.maxlength">Maximum of 100 characters only allowed</span>
     </div>
+  </div>
 
   <div class="buttons">
     <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>

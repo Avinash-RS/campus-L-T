@@ -18,7 +18,7 @@ export class ShortlistBoxComponent implements OnInit {
   folder = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
   shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
   instituteRejection = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100), RemoveWhitespace.whitespace()]);
-
+  radioValue = 'rec';
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,
@@ -34,10 +34,11 @@ export class ShortlistBoxComponent implements OnInit {
   }
 
   confirm() {
-    if (this.folder.valid && this.shortlist.valid) {
+    if (this.folder.valid && this.shortlist.valid && this.radioValue) {
       const apiFolders = {
         folderName: this.folder.value,
-        shortlistName: this.shortlist.value
+        shortlistName: this.shortlist.value,
+        type: this.radioValue
       };
       this.dialogRef.close(apiFolders);
     } else {

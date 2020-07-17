@@ -343,7 +343,8 @@ body {
   font-size: 13px !important;
 }
 
-.first-level-reports, .candidate-bulk-reports {
+.first-level-reports,
+.candidate-bulk-reports {
   td.mat-cell:last-of-type {
     padding-right: 2em !important;
   }
@@ -446,7 +447,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
   // td.mat-column-approve {
   //   text-align: center;
   //   display: flex;
@@ -455,7 +456,36 @@ body {
   // }
 }
 
+.ant-select-dropdown-menu-item {
+  font-size: 13px !important;
+}
+
+.shortlist-wrapper {
+.ant-radio-wrapper {
+  span:nth-child(2) {
+    font-size: 13.5px !important;
+    font-weight: 200;
+  }
+}
+}
+
 .tpo-pre-assessment-wrapper {
+  .mat-datepicker-toggle {
+    display: flex !important;
+  }
+  .mat-icon-button {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .mat-button-wrapper {
+    height: 20px !important;
+    width: 20px !important;
+  }
+  .anticon.ant-select-close-icon {
+    font-size: 13px !important;
+    margin-left: -0.1em !important;
+    color: #666666;
+  }
   .mat-sort-header-container {
     justify-content: center !important;
   }
@@ -1090,13 +1120,13 @@ button:focus {
   }
 }
 .admin-bulk-upload-tpo {
-.mat-column-counter {
-  max-width: 75px;
-}
-.mat-column-upload_registration {
-  display: flex;
-  justify-content: center;
-}
+  .mat-column-counter {
+    max-width: 75px;
+  }
+  .mat-column-upload_registration {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 // To Prevent aligning from center by default

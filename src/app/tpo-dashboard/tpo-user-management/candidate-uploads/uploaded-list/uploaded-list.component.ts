@@ -48,56 +48,10 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-    this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
+    this.adminService.tpoCandidateListAfterBulkUpload().subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      console.log(data1);
+      console.log('data1', data1);
 
-      // const data = [
-      //   {
-      //     uid: '1',
-      //     tag: '2019_Kowsalya',
-      //     name: 'Avinash',
-      //     candidateId: '213',
-      //     email: 'avinashcarr@gmail.com',
-      //     uploadedBy: 'Someone',
-      //     role: 'Administrator',
-      //     date: '29-10-1995',
-      //     time: '11:30 AM',
-      //   },
-      //   {
-      //     uid: '2',
-      //     tag: '2019_Kowsalya',
-      //     name: 'Prem',
-      //     candidateId: '213',
-      //     email: 'avinashcarr@gmail.com',
-      //     uploadedBy: 'Someone',
-      //     role: 'HR',
-      //     date: '29-10-1995',
-      //     time: '11:30 AM',
-      //   },
-      //   {
-      //     uid: '3',
-      //     tag: '2019_Kowsalya',
-      //     name: 'Hari',
-      //     candidateId: '213',
-      //     email: 'avinashcarr@gmail.com',
-      //     uploadedBy: 'Someone',
-      //     role: 'Administrator',
-      //     date: '29-10-1995',
-      //     time: '11:30 AM',
-      //   },
-      //   {
-      //     uid: '4',
-      //     tag: '2019_Kowsalya',
-      //     name: 'Pradeep',
-      //     candidateId: '213',
-      //     email: 'avinashcarr@gmail.com',
-      //     uploadedBy: 'Someone',
-      //     role: 'HR',
-      //     date: '29-10-1995',
-      //     time: '11:30 AM',
-      //   },
-      // ];
       this.userList = data1 ? data1 : [];
       this.userList.forEach(element => {
         element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';

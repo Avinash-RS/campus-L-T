@@ -333,7 +333,7 @@ export class BulkUploadComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.enableList = false;
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);
       if (result) {
       }
     });

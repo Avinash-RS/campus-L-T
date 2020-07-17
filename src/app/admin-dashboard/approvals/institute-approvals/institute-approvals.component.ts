@@ -23,7 +23,7 @@ import moment from 'moment';
 export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
 
   showPage = true;
-  displayedColumns: any[] = ['uid', 'field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'approve', 'reject', 'checked'];
+  displayedColumns: any[] = ['id', 'field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'approve', 'reject', 'checked'];
 
   dataSource: MatTableDataSource<any>;
 

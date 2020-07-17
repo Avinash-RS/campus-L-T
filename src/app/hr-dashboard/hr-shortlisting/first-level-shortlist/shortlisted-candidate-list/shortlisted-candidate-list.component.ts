@@ -110,6 +110,7 @@ apiShortlistSubmit(apiDatas) {
     shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : '',
     dates: currentDate,
     times: time,
+    field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
     shortlistby: this.appConfig.getLocalData('username')
   };
   this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {

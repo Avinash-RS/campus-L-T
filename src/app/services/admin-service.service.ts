@@ -211,4 +211,30 @@ export class AdminServiceService {
   }
 
 
+  // TPO API's
+  tpoCandidateListAfterBulkUpload() {
+    return this.http.get(`${this.BASE_URL}/api/institute_candidate_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  TPOStatusShortlistLists() {
+    return this.http.get(`${this.BASE_URL}/profile/shortlist_details`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  TPOStatusFolderLists() {
+    return this.http.get(`${this.BASE_URL}/profile/getfolder_name`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  TPOStatusTagLists() {
+    return this.http.get(`${this.BASE_URL}/profile/user_field_tag`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getTPOStatus(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getassement_details`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }
