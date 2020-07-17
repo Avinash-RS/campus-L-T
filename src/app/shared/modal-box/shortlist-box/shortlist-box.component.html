@@ -39,7 +39,7 @@
 </div>
 
 
-<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload']">
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'candidate-bulk'">
   <div class="bulk-upload-text">
     Confirm to upload candidate details and send mails to fill the registration form
   </div>
@@ -49,9 +49,38 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'institute-bulk'">
+  <div class="bulk-upload-text">
+    Confirm to upload institute details and send mails to TPO
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
   <div class="bulk-upload-text">
-  <span *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span> <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully uploaded.</span> <br> <span *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} candidates has not been uploaded. Please go to reports to see the detailed error details. </span>
+    <span
+      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
+    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
+      uploaded.</span> <br> <span
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} candidates has not
+      been uploaded. Please go to reports to see the detailed error details. </span>
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['institute_bulk_upload_ok']">
+  <div class="bulk-upload-text">
+    <span
+      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Institute details have been successfully uploaded.' : ''}}</span>
+    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Institute details has not been successfully
+      uploaded.</span> <br> <span
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} institutes has not
+      been uploaded.</span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
@@ -64,5 +93,36 @@
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['status'] === 'approve'">
+  <div style="color: #0EBC65;" class="bulk-upload-text">
+    Please confirm approval of {{data && data['instituteName'] ? data['instituteName'] : ''}}
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="adminApprove()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['status'] === 'reject'">
+  <div style="color: #F73737; margin: 0.5em 0;" class="bulk-upload-text">
+    Please confirm rejection of {{data && data['instituteName'] ? data['instituteName'] : ''}}
+  </div>
+  <div class="text-input">
+    <div style="width: 100%;">
+      <input [formControl]="instituteRejection" placeholder="Write your comments here…" type="text" name="" id="">
+    </div>
+      <div class="validation" *ngIf="instituteRejection.invalid && instituteRejection.touched">
+        <span *ngIf="instituteRejection.errors?.required">Reason for Rejection must be provided</span>
+        <span *ngIf="instituteRejection.errors?.minlength">Minimum of 3 characters required</span>
+        <span *ngIf="instituteRejection.errors?.maxlength">Maximum of 100 characters only allowed</span>
+      </div>
+    </div>
+
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="adminReject()" mat-raised-button>Confirm</button>
   </div>
 </div>

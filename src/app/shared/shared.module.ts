@@ -78,9 +78,10 @@ import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
 import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.component';
 import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { CommonHeaderComponent } from './common-header/common-header.component';
+import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent],
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -170,6 +171,7 @@ import { CommonHeaderComponent } from './common-header/common-header.component';
     NgMultiSelectDropDownModule,
     ShortlistBoxComponent,
     CommonHeaderComponent,
+    CdkDetailRowDirective,
 
     // Ant design modules
     NzAffixModule,

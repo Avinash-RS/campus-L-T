@@ -26,6 +26,7 @@ import { KycthanksGuard } from './guards/canload/kycthanks.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { ShortlistedCandidateListComponent } from './hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
+
 registerLocaleData(en);
 
 const ngZorroConfig: NzConfig = {
@@ -39,7 +40,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

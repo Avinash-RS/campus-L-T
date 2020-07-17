@@ -441,6 +441,29 @@ body {
   }
 }
 
+.approval-institute {
+  .ant-radio-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  // td.mat-column-approve {
+  //   text-align: center;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+}
+
+.tpo-pre-assessment-wrapper {
+  .mat-sort-header-container {
+    justify-content: center !important;
+  }
+  td {
+    text-align: center;
+  }
+}
+
 // Mat radio
 .mat-radio-button {
   display: inline-block;
@@ -1066,6 +1089,16 @@ button:focus {
     }
   }
 }
+.admin-bulk-upload-tpo {
+.mat-column-counter {
+  max-width: 75px;
+}
+.mat-column-upload_registration {
+  display: flex;
+  justify-content: center;
+}
+}
+
 // To Prevent aligning from center by default
 .mat-input-element {
   text-align: left !important;

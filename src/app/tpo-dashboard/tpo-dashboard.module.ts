@@ -9,10 +9,14 @@ import { UploadedListComponent } from './tpo-user-management/candidate-uploads/u
 import { BulkUploadComponent } from './tpo-user-management/candidate-uploads/bulk-upload/bulk-upload.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
+import { TpoCandidatesStatusComponent } from './tpo-candidates-status/tpo-candidates-status.component';
+import { TpoPreAssessmentComponent } from './tpo-candidates-status/tpo-pre-assessment/tpo-pre-assessment.component';
+import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment/tpo-recruitment.component';
+import { TpoAddCandidateComponent } from './tpo-user-management/tpo-add-candidate/tpo-add-candidate.component';
 
 
 @NgModule({
-  declarations: [TpoMasterComponent, TpoUserManagementComponent, CandidateUploadsComponent, UploadedListComponent, BulkUploadComponent],
+  declarations: [TpoMasterComponent, TpoUserManagementComponent, CandidateUploadsComponent, UploadedListComponent, BulkUploadComponent, TpoCandidatesStatusComponent, TpoPreAssessmentComponent, TpoRecruitmentComponent, TpoAddCandidateComponent],
   imports: [
     CommonModule,
     SharedModule,

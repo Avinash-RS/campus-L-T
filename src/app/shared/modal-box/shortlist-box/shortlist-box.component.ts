@@ -17,6 +17,8 @@ export class ShortlistBoxComponent implements OnInit {
 
   folder = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
   shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
+  instituteRejection = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100), RemoveWhitespace.whitespace()]);
+
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,
@@ -46,6 +48,19 @@ export class ShortlistBoxComponent implements OnInit {
 
   bulkConfirm() {
     this.dialogRef.close(true);
+  }
+  adminApprove() {
+    const data = {
+      status: 'approve'
+    };
+    this.dialogRef.close(data);
+  }
+  adminReject() {
+    const data = {
+      status: 'reject',
+      comments: this.instituteRejection.value
+    };
+    this.dialogRef.close(data);
   }
 
   cancel() {

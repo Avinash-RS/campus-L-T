@@ -182,7 +182,7 @@
   }
 
   .list-wrapper {
-    width: 68%;
+    width: 100%;
     margin: 1em auto;
     .list-count {
       color: $light-black;
@@ -194,18 +194,21 @@
       border: 1px solid #145e9a;
       .head-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1.2fr 0.3fr;
+        grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.3fr;
         color: $black;
+        align-items: center;
         background: $blue-3 0% 0% no-repeat padding-box;
         font-size: 13px;
         font-weight: 200;
         outline: none;
+        justify-content: center;
+        text-align: center;
         border: none;
         padding: 4px 2em;
         .tag,
         .name,
         .email {
-          margin: 0 0 0 2em;
+          margin: 0 0 0 0em;
         }
       }
       .scroll {
@@ -214,8 +217,9 @@
         overflow: auto;
         .child-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr 1.2fr 0.3fr;
+          grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.3fr;
           padding: 4px 2em;
+          align-items: center;
           border: none;
           color: $header-blue;
           font-size: 13px;
@@ -223,6 +227,9 @@
           .delete {
             text-align: center;
             cursor: pointer;
+          }
+          div {
+            padding: 0 .5em;
           }
         }
         .light-bg {
