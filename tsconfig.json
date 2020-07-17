@@ -12,6 +12,7 @@
     "importHelpers": true,
     "target": "es2015",
     "allowSyntheticDefaultImports": true,
+    "target": "es5",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -23,6 +24,7 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     // "preserveWhitespaces": false,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "disableTypeScriptVersionCheck": true
   }
 }
