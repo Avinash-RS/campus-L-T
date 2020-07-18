@@ -14,6 +14,8 @@ import { AdminBulkUploadInstituteComponent } from './user-management/admin-bulk-
 import { AdminBulkUploadCandidatesComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidates.component';
 import { AdminUploadedCandidateListComponent } from './user-management/admin-bulk-upload-candidates/admin-uploaded-candidate-list/admin-uploaded-candidate-list.component';
 import { AdminBulkUploadCandidateCompComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidate-comp/admin-bulk-upload-candidate-comp.component';
+import { ApprovalsComponent } from './approvals/approvals.component';
+import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
 
 
 const routes: Routes = [
@@ -35,7 +37,7 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`,
         component: UserManagementComponent,
         data: {
-          breadcrumb: 'Users'
+          breadcrumb: 'User Management'
         },
         children: [
           {
@@ -57,12 +59,20 @@ const routes: Routes = [
             component: AddUserComponent
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: AdminBulkUploadCandidatesComponent, children: [
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: AdminBulkUploadCandidatesComponent, data: {
+              breadcrumb: 'Candidate'
+            },
+            children: [
               {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`, component: AdminUploadedCandidateListComponent
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`, component: AdminUploadedCandidateListComponent, data: {
+                  breadcrumb: 'uploaded-list'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD}`, component: AdminBulkUploadCandidateCompComponent
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD}`, component: AdminBulkUploadCandidateCompComponent,
+                data: {
+                  breadcrumb: 'bulk-upload'
+                }
               },
               {
                 path: '',
@@ -72,12 +82,22 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS}`, component: AdminBulkUploadInstitutesComponent, children: [
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS}`, component: AdminBulkUploadInstitutesComponent,
+            data: {
+              breadcrumb: 'Institutes'
+            },
+            children: [
               {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST}`, component: AdminUploadedInstituteListComponent
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST}`, component: AdminUploadedInstituteListComponent,
+                data: {
+                  breadcrumb: 'uploaded-list'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD}`, component: AdminBulkUploadInstituteComponent
+                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD}`, component: AdminBulkUploadInstituteComponent,
+                data: {
+                  breadcrumb: 'bulk-upload'
+                }
               },
               {
                 path: '',
@@ -89,6 +109,27 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.APPROVALS}`,
+        component: ApprovalsComponent,
+        data: {
+          breadcrumb: 'Approvals'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.APPROVALS_INSTITUTE}`,
+            component: InstituteApprovalsComponent,
+            data: {
+              breadcrumb: 'Institute Approval'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.APPROVALS_INSTITUTE}`,
             pathMatch: 'full',
           }
         ]

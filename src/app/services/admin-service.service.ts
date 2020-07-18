@@ -77,9 +77,9 @@ export class AdminServiceService {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-    .set('Content-Type', 'application/json')
-    .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
-    .set('Access-Control-Allow-Origin', '*');
+      .set('Content-Type', 'application/json')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('Access-Control-Allow-Origin', '*');
     return headers;
   }
 
@@ -144,8 +144,19 @@ export class AdminServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  instituteListForApprovals() {
+    return this.http.get(`${this.BASE_URL}/api/institute_adminstatus?_format=json`,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
+  instituteListAfterBulkUpload() {
+    return this.http.get(`${this.BASE_URL}/api/institute_list`,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
 
-
+  approveOrReject(data) {
+    return this.http.post(`${this.BASE_URL}/api/institute_update`, data,
+    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 
 
   // HR APIS
@@ -191,6 +202,38 @@ export class AdminServiceService {
 
   bulkUploadCandidatesErrorList() {
     return this.http.get(`${this.BASE_URL}/profile/getuploaded_errors`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  bulkUploadInstitutes(data) {
+    return this.http.post(`${this.BASE_URL}/api/institute_create`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+
+  // TPO API's
+  tpoCandidateListAfterBulkUpload() {
+    return this.http.get(`${this.BASE_URL}/api/institute_candidate_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  TPOStatusShortlistLists() {
+    return this.http.get(`${this.BASE_URL}/profile/shortlist_details`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  TPOStatusFolderLists() {
+    return this.http.get(`${this.BASE_URL}/profile/getfolder_name`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  TPOStatusTagLists() {
+    return this.http.get(`${this.BASE_URL}/profile/user_field_tag`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getTPOStatus(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getassement_details`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

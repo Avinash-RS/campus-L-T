@@ -63,7 +63,7 @@ export class ApiServiceService {
   }
   // Registration
   RegistrationForm(formdata) {
-    return this.http.post(`${this.BASE_URL}/rest/create-account?_format=json`, formdata,
+    return this.http.post(`${this.BASE_URL}/api/institute_create`, formdata,
       { headers: this.withoutTokens(), withCredentials: true });
   }
 

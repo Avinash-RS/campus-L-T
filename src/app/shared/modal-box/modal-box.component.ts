@@ -88,6 +88,10 @@ export class ModalBoxComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
+  submitTPOADDCandidate() {
+    this.dialogRef.close(true);
+  }
+
   ok() {
 
   }

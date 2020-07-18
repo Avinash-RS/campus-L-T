@@ -23,16 +23,11 @@ export class TpoUserManagementComponent implements OnInit {
         name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
       },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Candidate details',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST
-      // },
-      // {
-      //   icon: '001-approved.svg',
-      //   name: 'Upload candidate details',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD
-      // }
+      {
+        icon: 'add.svg',
+        name: 'Add candidate',
+        router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE
+      },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }

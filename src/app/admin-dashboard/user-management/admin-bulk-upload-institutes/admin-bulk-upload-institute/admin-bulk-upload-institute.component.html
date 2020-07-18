@@ -50,13 +50,28 @@
     <div class="list-table">
       <div class="head-grid">
         <div class="tag">
-          Tag
+          Insitute Name
         </div>
         <div class="name">
-          Name
+          Insitute Email ID
         </div>
         <div class="email">
-          Email ID
+          State
+        </div>
+        <div class="email">
+          City
+        </div>
+        <div class="email">
+          <div> Contact person</div> <div style="margin: 0 0 0 0em;"> First name</div>
+        </div>
+        <div class="email">
+          <div> Contact person</div> <div style="margin: 0 0 0 0em;"> Last name</div>
+        </div>
+        <div class="email">
+          <div> Contact person</div> <div style="margin: 0 0 0 0em;"> Title</div>
+        </div>
+        <div class="email">
+          <div> Contact person</div> <div style="margin: 0 0 0 0em;"> Mobile No.</div>
         </div>
         <div class="delete">
           Delete
@@ -66,13 +81,28 @@
         <ng-container *ngFor="let dup of uploadedListArray; let i = index">
           <div class="child-grid" ngDefaultControl [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'">
             <div class="tag">
-              {{dup['tag']}}
-            </div>
-            <div class="name">
               {{dup['name']}}
             </div>
-            <div class="email">
+            <div class="name">
               {{dup['email']}}
+            </div>
+            <div class="email">
+              {{dup['field_institute_state']}}
+            </div>
+            <div class="email">
+              {{dup['field_institute_city']}}
+            </div>
+            <div class="email">
+              {{dup['field_institute_first_name']}}
+            </div>
+            <div class="email">
+              {{dup['field_institute_last_name']}}
+            </div>
+            <div class="email">
+              {{dup['field_institute_title']}}
+            </div>
+            <div class="email">
+              {{dup['field_institute_mobile_number']}}
             </div>
             <div class="delete">
               <img (click)="removeSelectedCandidate(i)" src="assets/images/005-close-1.svg" alt="" srcset="">

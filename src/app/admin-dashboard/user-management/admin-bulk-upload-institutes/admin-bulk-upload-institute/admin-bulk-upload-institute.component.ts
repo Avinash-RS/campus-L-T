@@ -66,12 +66,13 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
   }
 
   downloadTemplate() {
-    const excel = `${this.BASE_URL}/sites/default/files/sample.csv`;
+    // const excel = `${this.BASE_URL}/sites/default/files/sample.csv`;
+    const excel = `assets/files/Institute_template.csv`;
     window.open(excel, '_blank');
   }
   submit() {
     const data = {
-      bulk_upload: 'candidate-bulk'
+      bulk_upload: 'institute-bulk'
     };
     this.openDialog(ShortlistBoxComponent, data);
   }
@@ -122,23 +123,24 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
       } else {
         minutes = date.getMinutes();
       }
-      element['date'] = this.getDateFormat1(date);
+      // element['date'] = this.getDateFormat1(date);
+      element['inst_upload'] = '1';
       element['field_user_created_by'] = this.appConfig.getLocalData('userId');
-      element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
+      // element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
-    this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
-      console.log('success', data);
+    this.adminService.bulkUploadInstitutes(this.uploadedListArray).subscribe((data: any) => {
       this.appConfig.hideLoader();
+      console.log('success', data);
       const datas = {
-        bulk_upload_ok: 'candidate-bulk',
+        institute_bulk_upload_ok: 'institute-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
-        errorLength: data ? data.length : 0,
+        errorLength: data && data.length ? data.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
     }, (err) => {
 
     });
-    console.log(JSON.stringify(this.uploadedListArray));
+    // console.log(JSON.stringify(this.uploadedListArray));
   }
   upload() {
     this.appConfig.showLoader();
@@ -164,9 +166,21 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Tag') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 8 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Institute Name')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Institute Email Id')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'State')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'City')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][4] && this.SavedData[0][4].trim() === 'Contact Person First Name')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][5] && this.SavedData[0][5].trim() === 'Contact Person Last Name')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Contact Person Title')
+        &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'Contact Person Mobile Number')) {
         this.enableList = true;
         this.appConfig.hideLoader();
         this.totalCount(this.SavedData);
@@ -186,42 +200,90 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
   }
 
   totalCount(data) {
-    console.log(typeof data[1][0], data[1][0].toString().endsWith('(India Standard Time)'));
 
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
-      let tag; let name; let email;
+      let name; let email; let field_institute_state; let field_institute_city;
+      let field_institute_name; let field_institute_last_name; let field_institute_title; let field_institute_mobile_number;
       // if (i > 0 && dup && dup.length >= 3) {
       if (i > 0 && dup) {
         count += 1;
         dup.forEach((element, index) => {
           // if (index < 3 && element.length > 2) {
-          if (index < 3) {
+          if (index < 8) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                tag = element ? this.getDateFormat(element).toString() : '';
+                field_institute_name = element ? this.getDateFormat(element).toString() : '';
               } else {
-                tag = element ? element : '';
+                field_institute_name = element ? element : '';
               }
             }
             if (index == 1) {
-              name = element ? element : '';
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                email = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                email = element ? element : '';
+              }
             }
             if (index == 2) {
-              email = element ? element : '';
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                field_institute_state = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                field_institute_state = element ? element : '';
+              }
             }
+            if (index == 3) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                field_institute_city = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                field_institute_city = element ? element : '';
+              }
+            }
+            if (index == 4) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                name = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                name = element ? element : '';
+              }
+            }
+            if (index == 5) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                field_institute_last_name = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                field_institute_last_name = element ? element : '';
+              }
+            }
+            if (index == 6) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                field_institute_title = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                field_institute_title = element ? element : '';
+              }
+            }
+            if (index == 7) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                field_institute_mobile_number = element ? this.getDateFormat(element).toString() : '';
+              } else {
+                field_institute_mobile_number = element ? element : '';
+              }
+            }
+
           }
         });
         const value = {
-          tag: tag ? tag : '',
           name: name ? name : '',
-          email: email ? email : ''
+          email: email ? email : '',
+          field_institute_state: field_institute_state ? field_institute_state : '',
+          field_institute_city: field_institute_city ? field_institute_city : '',
+          field_institute_name: field_institute_name ? field_institute_name : '',
+          field_institute_last_name: field_institute_last_name ? field_institute_last_name : '',
+          field_institute_title: field_institute_title ? field_institute_title : '',
+          field_institute_mobile_number: field_institute_mobile_number ? field_institute_mobile_number : '',
         };
-        console.log('tag', tag);
 
 
-        if ((tag && tag.toString().trim()) || (name && name.toString().trim()) || (email && email.toString().trim())) {
+        if ((name && name.toString().trim()) || (email && email.toString().trim()) || (field_institute_mobile_number && field_institute_mobile_number.toString().trim())) {
           listArray.push(value);
         }
       }
@@ -333,7 +395,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.enableList = false;
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST);
       if (result) {
       }
     });

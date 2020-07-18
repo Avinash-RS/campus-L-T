@@ -48,6 +48,8 @@ export const CONSTANT = {
       USER_MANAGEMENT_CANDIDATE_UPLOADS: '/admin/user-management/candidate',
       USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST: '/admin/user-management/candidate/uploaded-list',
       USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD: '/admin/user-management/candidate/bulk-upload',
+      APPROVALS: '/admin/approvals',
+      APPROVALS_INSTITUTE: '/admin/approvals/institute'
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
@@ -87,6 +89,15 @@ export const CONSTANT = {
       USER_MANAGEMENT_CANDIDATE_UPLOADS: '/tpo/user-management/candidate',
       USER_MANAGEMENT_UPLOADED_LIST: '/tpo/user-management/candidate/uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: '/tpo/user-management/candidate/bulk-upload',
+      USER_MANAGEMENT_ADD_CANDIDATE: '/tpo/user-management/add',
+      STATUS: '/tpo/status',
+      STATUS_PREASSESSMENT: '/tpo/status/pre-assessment',
+      STATUS_RECRUITMENT: '/tpo/status/recruitment',
+    },
+    INTERVIEW_PANEL_DASHBOARD: {
+      HOME: '/interview-panel',
+      CANDIDATE_DETAILS: '/interview-panel/candidates',
+      CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list'
     }
 
   },
@@ -123,7 +134,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD: 'bulk-upload',
       USER_MANAGEMENT_CANDIDATE_UPLOADS: 'candidate',
       USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST: 'uploaded-list',
-      USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD: 'bulk-upload'
+      USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD: 'bulk-upload',
+      APPROVALS: 'approvals',
+      APPROVALS_INSTITUTE: 'institute'
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
@@ -163,6 +176,15 @@ export const CONSTANT = {
       USER_MANAGEMENT_CANDIDATE_UPLOADS: 'candidate',
       USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
+      USER_MANAGEMENT_ADD_CANDIDATE: 'add',
+      STATUS: 'status',
+      STATUS_PREASSESSMENT: 'pre-assessment',
+      STATUS_RECRUITMENT: 'recruitment',
+    },
+    INTERVIEW_PANEL_DASHBOARD: {
+      HOME: 'interview-panel',
+      CANDIDATE_DETAILS: 'candidates',
+      CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list'
     }
   }
 };

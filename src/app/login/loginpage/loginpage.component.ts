@@ -156,21 +156,21 @@ export class LoginpageComponent implements OnInit {
                 return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
               }
             } else {
-              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
-              if (data['form_submmited'] && data['form_submmited'] === '1') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
+              // if (data['form_submmited'] && data['form_submmited'] === '1') {
 
-                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-              } else {
-                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-              }
+              //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+              //   this.appConfig.setLocalData('field_isformsubmitted', 'true');
+              //   this.appConfig.setLocalData('personalFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('familyFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('generalFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+              //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+              // } else {
+              //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+              //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+              // }
             }
 
           }, (error) => {

@@ -25,13 +25,6 @@
 
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>
-      <!-- <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD" routerLinkActive="active">
-        <span><img src="assets/images/dashboard.svg" width="20px" height="20px" alt=""></span>
-        <span>Dashboard</span>
-        <span style="color: #fff;" class="material-icons">
-          arrow_right
-        </span>
-      </li> -->
       <li [routerLink]="appConstant.TPO_DASHBOARD.USER_MANAGEMENT" routerLinkActive="active">
         <span><img src="assets/images/001-people.svg" width="20px" height="20px" alt=""></span>
         <span>User Management</span>
@@ -39,7 +32,13 @@
           arrow_right
         </span>
       </li>
-
+      <li [routerLink]="appConstant.TPO_DASHBOARD.STATUS" routerLinkActive="active">
+        <span><img src="assets/images/status-bar.svg" width="20px" height="20px" alt=""></span>
+        <span>Status</span>
+        <span style="color: #fff;" class="material-icons">
+          arrow_right
+        </span>
+      </li>
     </ul>
 
   </mat-drawer>

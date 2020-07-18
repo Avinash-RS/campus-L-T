@@ -123,21 +123,21 @@ export class RegisterpageComponent implements OnInit {
       // API
       // name: [{ value: this.registerForm.value.firstName }],
       // mail: [{ value: this.registerForm.value.corporateEmail }],
-      const datas = {
-        pass: '1234d56',
-        name: this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
-        field_user_name: this.registerForm.value.corporateEmail,
-        roles_target_id: this.currentForm,
-        field_ins_first_name: this.registerForm.value.firstName,
-        field_ins_last_name: this.registerForm.value.lastName,
-        field_ins_job_title: this.registerForm.value.jobTitle,
-        field_ins_mobile_number: this.registerForm.value.mobileNumber,
+      const datas = [{
+        // name: this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
+        // field_user_name: this.registerForm.value.corporateEmail,
+        // roles_target_id: this.currentForm,
+        name: this.registerForm.value.firstName,
+        field_institute_last_name: this.registerForm.value.lastName,
+        field_institute_title: this.registerForm.value.jobTitle,
+        field_institute_mobile_number: this.registerForm.value.mobileNumber,
         field_institute_name: this.registerForm.value.corporateName,
-        mail: this.registerForm.value.corporateEmail,
+        inst_upload: '0',
+        email: this.registerForm.value.corporateEmail,
         field_institute_state: stateName ? stateName : '',
         field_institute_city: cityName ? cityName : '',
-        field_institute_comments: this.registerForm.value.comment
-      };
+        field_insitute_comments: this.registerForm.value.comment
+      }];
       this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
