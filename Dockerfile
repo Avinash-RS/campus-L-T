@@ -9,7 +9,7 @@ RUN npm install
 COPY . .
 
 #RUN npm run build
-ng build --configuration dev --aot=true --build-optimizer=false --base-href l
+RUN ng build --configuration dev --aot=true --build-optimizer=false --base-href l
 
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
