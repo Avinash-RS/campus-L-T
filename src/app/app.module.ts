@@ -26,6 +26,7 @@ import { KycthanksGuard } from './guards/canload/kycthanks.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { ShortlistedCandidateListComponent } from './hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
+import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 
 registerLocaleData(en);
 
@@ -60,7 +61,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
-    CanDeactivateGuard, CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard, HrcanloadGuard
+    CanDeactivateGuard, CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard, HrcanloadGuard, TpocanloadGuard
   ],
   bootstrap: [AppComponent]
 })

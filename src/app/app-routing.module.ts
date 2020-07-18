@@ -22,6 +22,9 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.TPO_DASHBOARD.HOME}`, loadChildren: './tpo-dashboard/tpo-dashboard.module#TpoDashboardModule',
+  },
+  {
+    path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.HOME}`, loadChildren: './interview-panel-dashboard/interview-panel-dashboard.module#InterviewPanelDashboardModule',
   }
 ];
 
