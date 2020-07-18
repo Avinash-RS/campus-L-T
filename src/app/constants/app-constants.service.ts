@@ -63,7 +63,9 @@ export const CONSTANT = {
       PROFILE_CONFIRM: '/candidate/profile/confirm',
       KYC_THANKS: '/candidate/kyc/submitted',
       HALLTICKET: '/candidate/hallticket',
-      HALLTICKET_LIST: '/candidate/hallticket/list'
+      HALLTICKET_LIST: '/candidate/hallticket/list',
+      DOCUMENT: '/candidate/document',
+      DOCUMENT_LIST: '/candidate/document/list'
     },
     HR_DASHBOARD: {
       HOME: '/hr',
@@ -150,7 +152,9 @@ export const CONSTANT = {
       PROFILE_CONFIRM: 'confirm',
       KYC_THANKS: 'kyc/submitted',
       HALLTICKET: 'hallticket',
-      HALLTICKET_LIST: 'list'
+      HALLTICKET_LIST: 'list',
+      DOCUMENT: 'document',
+      DOCUMENT_LIST: 'list'
     },
     HR_DASHBOARD: {
       HOME: 'hr',

@@ -159,4 +159,9 @@ export class CandidateMappersService {
       });
   }
 
+  uploadCandidateDocument(documentData){
+    // this.datas is api body data
+    return this.http.post(`${this.BASE_URL}/profile/upload_certificate`, documentData, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
 }
