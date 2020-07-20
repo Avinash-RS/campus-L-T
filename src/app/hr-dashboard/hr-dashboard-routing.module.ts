@@ -20,6 +20,10 @@ import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
 import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bulk-upload-reports.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
+import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
+import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
+
 
 
 const routes: Routes = [
@@ -67,6 +71,22 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION}`, component: EvaluationComponent, children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`, component: EvaluationCandidateDetailsComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, component: EvaluationInterviewPanelComponent
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`,
             pathMatch: 'full',
           }
         ]
