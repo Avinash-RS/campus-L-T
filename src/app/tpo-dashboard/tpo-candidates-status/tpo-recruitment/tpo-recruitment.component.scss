@@ -2,6 +2,7 @@
 .tpo-pre-assessment-wrapper {
   position: relative;
   background: $wrapper-light-gray 0% 0% no-repeat padding-box;
+  height: 100%;
   .top-wrapper {
     padding: 12px 12px 0 12px;
     position: relative;
@@ -261,6 +262,7 @@ th {
 
 .no-data {
   margin: 2em auto;
+  height: 100%;
   div {
     color: $header-blue;
     font-size: 20px;

@@ -7,6 +7,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import moment from 'moment';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-inv-assessment-shortlisted-candidates',
@@ -52,6 +53,15 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
   ) {
+    // Sub-Navigation menus. This will be retrieved in Admin master component
+    const subWrapperMenus = [
+      {
+        icon: 'work.svg',
+        name: 'Shortlisted candidate',
+        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST
+      },
+    ];
+    this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
   ngOnInit() {
@@ -178,19 +188,7 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
     event.stopPropagation();
     console.log(this.radioCheck, this.rejectCheck);
     console.log(this.selectedUserDetail);
-    let data;
-    if (this.radioCheck) {
-      data = {
-        status: 'approve',
-        instituteName: this.selectedUserDetail['field_institute_name']
-      };
-    }
-    if (this.rejectCheck) {
-      data = {
-        status: 'reject',
-        instituteName: this.selectedUserDetail['field_institute_name']
-      };
-    }
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
   }
 
   selectedUser(userDetail) {

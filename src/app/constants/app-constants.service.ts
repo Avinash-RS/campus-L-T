@@ -97,7 +97,8 @@ export const CONSTANT = {
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: '/interview-panel',
       CANDIDATE_DETAILS: '/interview-panel/candidates',
-      CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list'
+      CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list',
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments'
     }
 
   },
@@ -184,7 +185,8 @@ export const CONSTANT = {
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: 'interview-panel',
       CANDIDATE_DETAILS: 'candidates',
-      CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list'
+      CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list',
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments'
     }
   }
 };
