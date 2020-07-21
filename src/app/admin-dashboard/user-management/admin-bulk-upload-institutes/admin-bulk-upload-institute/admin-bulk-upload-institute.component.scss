@@ -202,9 +202,10 @@
         font-weight: 200;
         outline: none;
         justify-content: center;
-        text-align: center;
+        // text-align: center;
         border: none;
         padding: 4px 2em;
+        padding-right: 1em;
         .tag,
         .name,
         .email {

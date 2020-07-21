@@ -9,3 +9,19 @@ http://udapqa.southindia.cloudapp.azure.com/d8cintana2/api/bulk-user/registratio
     {"tag":"dummy","name":"", "candidate_id": "500", "email":"dup@gmail.com", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"},
     {"tag":"","name":"ddaj", "candidate_id": "502", "email":"ad@gmail.com", "uploaded_by": "Avinash", "uploader_role": "HR", "date": "1990-10-20", "time": "11.30 AM"}
   ]
+
+  Admin Credentials:
+  username: avinasi.s@cintanatech.com
+  password: Cintana@123
+
+  HR Credentials:
+  username: avinashcareers29@gmail.com
+  password: Cintana@123
+
+  Candidate Credentials:
+  username: avinasiselvakumar01@gmail.com
+  password: Cintana@123
+
+  TPO Credentials:
+  username: zsrm@mailinator.com
+  password: admin
