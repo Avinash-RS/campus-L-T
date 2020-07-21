@@ -9,7 +9,7 @@
               Folder name:
             </div>
             <div class="input-box">
-              <nz-select nzAllowClear nzShowSearch nzPlaceHolder="">
+              <nz-select (ngModelChange)="selectChange()" [formControl]="folderValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                 <nz-option *ngFor="let level of folderLists" [nzLabel]="level.field_foldername_value"
                   [nzValue]="level.field_foldername_value"></nz-option>
               </nz-select>
@@ -20,7 +20,7 @@
               Tag name:
             </div>
             <div class="input-box">
-              <nz-select nzAllowClear nzShowSearch nzPlaceHolder="">
+              <nz-select (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                 <nz-option *ngFor="let level of tagLists" [nzLabel]="level.field_tag_value"
                   [nzValue]="level.field_tag_value"></nz-option>
               </nz-select>
@@ -31,7 +31,7 @@
               Shortlist name:
             </div>
             <div class="input-box">
-              <nz-select nzAllowClear nzShowSearch nzPlaceHolder="">
+              <nz-select (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                 <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value"
                   [nzValue]="level.field_shortlistname_value"></nz-option>
               </nz-select>
@@ -109,7 +109,7 @@
           <span *ngIf="element && element.mail_sent == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.mail_sent == 0">
+          <span *ngIf="element && (!element.mail_sent || element.mail_sent == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
         </td>
@@ -122,7 +122,7 @@
           <span *ngIf="element && element.registered == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.registered == 0">
+          <span *ngIf="element && (!element.registered || element.registered == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
       </ng-container>
@@ -134,7 +134,7 @@
           <span *ngIf="element && element.profile_submit == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.profile_submit == 0">
+          <span *ngIf="element && (!element.profile_submit || element.profile_submit == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
         </td>
@@ -147,7 +147,7 @@
           <span *ngIf="element && element.profile_shortlist == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.profile_shortlist == 0">
+          <span *ngIf="element && (!element.profile_shortlist || element.profile_shortlist == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
       </ng-container>
@@ -159,7 +159,7 @@
           <span *ngIf="element && element.assement == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.assement == 0">
+          <span *ngIf="element && (!element.assement || element.assement == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
       </ng-container>
@@ -171,7 +171,7 @@
           <span *ngIf="element && element.assement_shortlist == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.assement_shortlist == 0">
+          <span *ngIf="element && (!element.assement_shortlist || element.assement_shortlist == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
       </ng-container>
@@ -183,7 +183,7 @@
           <span *ngIf="element && element.document_submit == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.document_submit == 0">
+          <span *ngIf="element && (!element.document_submit || element.document_submit == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
       </ng-container>
@@ -195,7 +195,7 @@
           <span *ngIf="element && element.interview_shortlist == 1">
             <img src="assets/images/002-tick1.svg" alt="">
           </span>
-          <span *ngIf="element && element.interview_shortlist == 0">
+          <span *ngIf="element && (!element.interview_shortlist || element.interview_shortlist == 0)">
             <img src="assets/images/001-cancel1.svg" alt="">
           </span>
       </ng-container>
@@ -207,7 +207,7 @@
     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
   </div>
   <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
-    <div>Status list not available </div>
+    <div>No data available </div>
   </div>
 
 </div>

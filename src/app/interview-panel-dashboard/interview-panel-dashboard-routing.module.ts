@@ -4,6 +4,7 @@ import { InterviewPanelMasterComponent } from './interview-panel-master.componen
 import { CONSTANT } from '../constants/app-constants.service';
 import { InvCandidateDetailsComponent } from './inv-candidate-details/inv-candidate-details.component';
 import { InvAssessmentShortlistedCandidatesComponent } from './inv-candidate-details/inv-assessment-shortlisted-candidates/inv-assessment-shortlisted-candidates.component';
+import { InvParticularAssessmentCandidatesComponent } from './inv-candidate-details/inv-particular-assessment-candidates/inv-particular-assessment-candidates.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,9 @@ const routes: Routes = [
         children: [
           {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`, component: InvAssessmentShortlistedCandidatesComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`, component: InvParticularAssessmentCandidatesComponent
           },
           {
             path: '',

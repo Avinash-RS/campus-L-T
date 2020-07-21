@@ -78,6 +78,9 @@ export const CONSTANT = {
       USER_MANAGEMENT: '/hr/user-management',
       USER_MANAGEMENT_UPLOADED_LIST: '/hr/user-management/uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: '/hr/user-management/bulk-upload',
+      EVALUATION:'/hr/evaluation',
+      EVALUATION_CANDIDATE_DETAILS:'/hr/evaluation/evaluation-candidate-details',
+      EVALUATION_INTERVIEW_PANEL:'/hr/evaluation/evaluation-interview-panel',
       REPORTS: '/hr/reports',
       REPORTS_LIST: '/hr/reports/second',
       REPORTS_LIST_VIEW: '/hr/reports/list/view',
@@ -99,7 +102,8 @@ export const CONSTANT = {
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: '/interview-panel',
       CANDIDATE_DETAILS: '/interview-panel/candidates',
-      CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list'
+      CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list',
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments'
     }
 
   },
@@ -167,6 +171,9 @@ export const CONSTANT = {
       USER_MANAGEMENT: 'user-management',
       USER_MANAGEMENT_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_BULK_UPLOAD: 'bulk-upload',
+      EVALUATION:'evaluation',
+      EVALUATION_CANDIDATE_DETAILS:'candidate-details',
+      EVALUATION_INTERVIEW_PANEL:'interview-panel',
       REPORTS: 'reports',
       REPORTS_LIST: 'second',
       REPORTS_LIST_VIEW: 'view',
@@ -188,7 +195,8 @@ export const CONSTANT = {
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: 'interview-panel',
       CANDIDATE_DETAILS: 'candidates',
-      CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list'
+      CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list',
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments'
     }
   }
 };

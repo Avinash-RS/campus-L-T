@@ -60,6 +60,9 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
   folderLists: any;
   tagLists: any;
   shortlistLists: any;
+  folderValue = new FormControl('');
+  tagValue = new FormControl('');
+  shortlistValue = new FormControl('');
 
   constructor(
     private appConfig: AppConfigService,
@@ -108,6 +111,7 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
   getUsersList() {
     const apiData = {
       get_assement_type: 'rec',
+      get_created_by: this.appConfig.getLocalData('userId'),
       get_folder_name: '',
       get_shortlist_name: '',
       get_tag_name: '',
@@ -126,6 +130,33 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }, (err) => {
     });
+  }
+
+  onChangeApiHit(apiData) {
+    this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('api', data);
+
+      if (data) {
+        this.userList = data ? data : [];
+      }
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => {
+    });
+  }
+  selectChange() {
+    const apiData = {
+      get_assement_type: 'rec',
+      get_created_by: this.appConfig.getLocalData('userId'),
+      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      date1_get: this.getAPIDateFormat(this.dateFrom.value),
+      date2_get: this.getAPIDateFormat(this.dateTo.value)
+    };
+    this.onChangeApiHit(apiData);
   }
 
   selectedUser(userDetail) {
@@ -172,6 +203,16 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
           this.endDateValidation = true;
         } else {
           this.endDateValidation = false;
+          const apiData = {
+            get_assement_type: 'rec',
+            get_created_by: this.appConfig.getLocalData('userId'),
+            get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+            get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+            get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+            date1_get: this.getAPIDateFormat(this.dateFrom.value),
+            date2_get: this.getAPIDateFormat(this.dateTo.value)
+          };
+          this.onChangeApiHit(apiData);
         }
       }
     }
@@ -184,6 +225,16 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
     this.dateTo.setValue('');
     this.endDateValidation = false;
     this.dateValidation = false;
+    const apiData = {
+      get_assement_type: 'rec',
+      get_created_by: this.appConfig.getLocalData('userId'),
+      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      date1_get: '',
+      date2_get: ''
+    };
+    this.onChangeApiHit(apiData);
   }
 
 

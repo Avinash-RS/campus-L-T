@@ -81,7 +81,7 @@
         <ng-container *ngFor="let dup of uploadedListArray; let i = index">
           <div class="child-grid" ngDefaultControl [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'">
             <div class="tag">
-              {{dup['name']}}
+              {{dup['field_institute_name']}}
             </div>
             <div class="name">
               {{dup['email']}}
@@ -93,7 +93,7 @@
               {{dup['field_institute_city']}}
             </div>
             <div class="email">
-              {{dup['field_institute_first_name']}}
+              {{dup['name']}}
             </div>
             <div class="email">
               {{dup['field_institute_last_name']}}
