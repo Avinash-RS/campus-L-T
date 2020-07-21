@@ -155,7 +155,7 @@ export class AdminServiceService {
 
   approveOrReject(data) {
     return this.http.post(`${this.BASE_URL}/api/institute_update`, data,
-    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
 
@@ -234,6 +234,18 @@ export class AdminServiceService {
 
   getTPOStatus(data) {
     return this.http.post(`${this.BASE_URL}/profile/getassement_details`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+
+  // Interview panel role apis
+  interviewPanelShortlist() {
+    return this.http.get(`${this.BASE_URL}/api/institute_candidate_shortlist?_format=json`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  interviewPanelShortlist2() {
+    return this.http.get(`${this.BASE_URL}/api/interview_panel`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

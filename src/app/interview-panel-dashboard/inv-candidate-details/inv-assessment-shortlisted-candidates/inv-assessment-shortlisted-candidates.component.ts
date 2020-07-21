@@ -24,7 +24,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class InvAssessmentShortlistedCandidatesComponent implements OnInit, AfterViewInit {
 
   showPage = true;
-  displayedColumns: any[] = ['id', 'assessment_name', 'group_name', 'shortlisted_candidates', 'date', 'time', 'status', 'shortlist_by', 'checked'];
+  displayedColumns: any[] = ['View_Details', 'Assessment_Name', 'Group_Name', 'Shortlisted_candidates', 'Date', 'Time', 'Status', 'Shortlist_By', 'checked'];
 
   dataSource: MatTableDataSource<any>;
 
@@ -66,12 +66,21 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
 
   ngOnInit() {
     this.getUsersList();
+    this.shortlistAPI();
   }
 
+  shortlistAPI() {
+    this.adminService.interviewPanelShortlist2().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('interview', data);
+    }, (err) => {
+
+    });
+  }
   // To get all users
   getUsersList() {
-    this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      console.log('dataadadad', data);
+    this.adminService.interviewPanelShortlist().subscribe((data: any) => {
+      console.log('interviewssss', data);
       this.appConfig.hideLoader();
 
       const datas = [
@@ -144,11 +153,10 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
           checked: false
         },
       ];
-      this.userList = datas;
-      // this.userList.forEach(element => {
-      //   element.checked = false;
-      //   element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';
-      // });
+      this.userList = data ? data : [];
+      this.userList.forEach(element => {
+        element.checked = false;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

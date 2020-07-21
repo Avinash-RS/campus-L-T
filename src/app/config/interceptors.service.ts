@@ -47,8 +47,8 @@ export class InterceptorsService implements HttpInterceptor {
         //   reason: error && error.error.reason ? error.error.reason : '',
         //   status: error.status
         // };
-        if (error.status !== 200) {
-          console.log(error);
+        if (error && error['status'] !== 200) {
+          console.log(error ? error : '');
         }
 
         if (error.status === 0) {
