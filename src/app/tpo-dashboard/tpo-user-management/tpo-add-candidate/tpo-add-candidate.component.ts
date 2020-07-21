@@ -138,13 +138,6 @@ export class TpoAddCandidateComponent implements OnInit {
   openDialog(component, data) {
     let dialogDetails: any;
 
-    // dialogDetails = {
-    //   iconName: data.iconName,
-    //   showCancel: data.showCancel,
-    //   showConfirm: data.showConfirm,
-    //   showOk: data.showOk,
-    //   dataToBeShared: data.sharedData,
-    // };
 
     /**
      * Dialog modal window

@@ -180,14 +180,14 @@ export class CandidateUploadDocumentComponent implements OnInit {
       
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
 
-        // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
-        //   // this.url = null;
-        //   this.appConfig.hideLoader();
-        //   this.appConfig.success(`Document uploaded submitted`, '');
+        this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
+          // this.url = null;
+          this.appConfig.hideLoader();
+          this.appConfig.success(`Document uploaded submitted`, '');
   
-        // }, (err) => {
+        }, (err) => {
   
-        // });
+        });
 
       } else {
         this.showImgSizeError = true;

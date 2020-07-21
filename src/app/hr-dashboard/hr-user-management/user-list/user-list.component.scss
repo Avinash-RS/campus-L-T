@@ -1,0 +1,116 @@
+@import "../../../themes/themes.scss";
+* {
+  margin: 0;
+}
+.main-wrapper {
+  margin: 0.5em 0 0 0;
+  padding: 4px;
+  background: $wrapper-light-gray;
+  height: 100%;
+  .line {
+    height: 40px;
+    border-bottom: solid 1px $primary;
+    .button-wrapper {
+      display: flex;
+      padding: 0 1em;
+      flex-flow: row-reverse;
+      button {
+        height: 30px;
+        font-size: 14px;
+        text-align: center;
+        font-weight: 100;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 0 1em;
+        span {
+          font-size: 14px;
+        }
+      }
+    //   button:nth-of-type(1) {
+    //     width: auto;
+    //     background: $blue-2 0% 0% no-repeat padding-box;
+    //     box-shadow: $shadow-light-black-1;
+    //     border-radius: 6px;
+    //     color: $white;
+    //     outline: none;
+    //   }
+      button:nth-of-type(1) {
+        width: auto;
+        border-radius: 6px;
+        color: $white;
+        box-shadow: $shadow-light-black-1;
+        outline: none;
+        background: $red-1 0% 0% no-repeat padding-box;
+      }
+      button:disabled {
+        // pointer-events: none;
+        opacity: 0.4;
+      }
+    }
+  }
+  .user-list-wrapper {
+    margin: 1em 0 0.5em 0;
+    /* Structure */
+    .search-bar {
+      margin: 0 0 0 1em;
+      input {
+        display: inline-block;
+        border-radius: 4px;
+        margin: 8px 0;
+        width: auto;
+        min-width: 400px;
+        color: $header-blue;
+        font-size: 14px;
+        background: $white-primary;
+        box-shadow: $shadow-light-black;
+        box-sizing: border-box;
+        padding: 0.25em 1em;
+        height: 31px;
+      }
+      ::placeholder {
+        opacity: 0.8;
+        color: $secondary;
+        font-size: 13px;
+      }
+    }
+    :focus {
+      border-radius: 4px;
+      border: solid $blue-3 1px;
+    }
+
+    table {
+      background: transparent;
+      box-shadow: none;
+      width: 100%;
+    }
+    td {
+      border: none;
+      color: $header-blue;
+      font-size: 13px;
+      margin: 1em;
+    }
+    th {
+      color: $black;
+      font-size: 13px;
+      font-weight: 200;
+      outline: none;
+      border: none;
+      background: $blue-3 0% 0% no-repeat padding-box;
+    }
+
+    .mat-form-field {
+      font-size: 13px;
+      width: 100%;
+    }
+  }
+}
+
+td {
+  // text-align: center !important;
+  padding-left: 1em !important;
+}
+th {
+  // text-align: center !important;
+  padding-left: 1em !important;
+}

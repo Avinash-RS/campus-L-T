@@ -209,6 +209,21 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/api/institute_create`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+  // hrAdd User
+  hrAddUser(formdata) {
+    return this.http.post(`${this.BASE_URL}/profile/interview_panel_create`, formdata,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+  //hr user list
+  hruserList() {
+    return this.http.get(`${this.BASE_URL}/profile/interview_panel_users`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+  //hrremove user
+  hrDeleteUser(userId) {
+    return this.http.post(`${this.BASE_URL}/profile/interview_panel_unblock`, userId,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 
 
   // TPO API's

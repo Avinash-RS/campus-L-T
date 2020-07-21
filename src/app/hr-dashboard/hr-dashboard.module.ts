@@ -21,10 +21,12 @@ import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bul
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
+import { UserListComponent } from './hr-user-management/user-list/user-list.component';
+import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, UserListComponent, HrAddUserComponent],
   imports: [
     CommonModule,
     SharedModule,
