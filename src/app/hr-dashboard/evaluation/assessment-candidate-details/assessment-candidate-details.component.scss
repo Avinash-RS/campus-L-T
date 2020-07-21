@@ -1,0 +1,87 @@
+@import "../../../themes/themes.scss";
+.contant{
+    padding: 5px;
+    margin-top: 14px;
+
+    .head{
+        font-weight: 500;
+    }
+    .ans{
+        font-weight: 500;
+        color: $blue-4;
+        display: flex;
+    }
+
+}
+.space{
+    margin-top: 15px;
+}
+
+.example-button-toggle-label {
+    display: inline-block;
+    margin: 16px;
+  }
+  .empContant{
+    margin-left: 30%;
+    margin-top: 6%;
+    overflow: hidden;
+  }
+.link{
+    color: $blue-4;
+    cursor: pointer;
+}
+  .medContant{
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+  }
+  .classFont{
+    font-size: 16px;
+    font-weight: 500;
+   
+  }
+  .file-box{
+    background:$white ;
+    height: auto;
+    padding-top: 4px;
+    padding: 4px;
+    color: $blue-4;
+    border: 1px solid $black;
+    border-style: dashed;
+  }
+  .small-head{
+    margin-left: 18%;
+    font-size: 16px;
+    color: #275C87 ;
+
+  }
+
+  ::ng-deep  .mat-tab-label {
+    margin: 2px !important;
+    color: black !important;
+    background: #666666 !important;
+    opacity: 2.6 !important;
+}
+
+::ng-deep .mat-tab-label-active {
+    opacity: 2.6 !important;
+}
+::ng-deep  .mat-tab-label.mat-tab-label-active {
+    background-color: #275C87 !important;
+    color: white !important;
+
+}
+table {
+    min-width: 500px;
+    border: 1px solid #275C87;
+    border-bottom: 1px solid;
+    margin-bottom: 50px;
+    tr.mat-header-row {
+        height: 34px;
+       
+    }
+
+    .mat-elevation-z8 {
+         box-shadow: none !important;
+    }
+}
