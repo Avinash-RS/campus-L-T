@@ -1,0 +1,150 @@
+<div class="contant">
+    <div class="row">
+        <div class="col-3">
+          <span class="head">Assessment name : </span><span class="ans"> Assessment 1</span>
+        </div>
+    
+        <div class="col-3">
+            <span class="head">Candidate name : </span> <span class="ans"> Ankit</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head"> Shortlist name : </span><span class="ans"> Batch 1</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Date : </span> <span class="ans">21 june 2020</span>
+        </div>
+        <div class="col-2">
+            <span class="head">Total candidate : </span> <span class="ans"> 19</span>
+        </div>
+    </div>
+    <div class="space"></div>
+    
+    <div class="row">
+        <div class="col-3">
+            <span class="head">Group name : </span> <span class="ans"> 2020_Kousalya_VIT University</span>
+        </div>
+
+        <div class="col-3">
+            <span class="head">Candidate id : </span>  <span class="ans"> 098088</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Tag name : </span>  <span class="ans"> 2020 Kousalya</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Time : </span> <span class="ans"> 11:30</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Status : </span> <span class="ans"> Waiting</span>
+        </div>
+    </div>
+    </div>
+    <div class="space"></div>
+
+    <mat-tab-group >
+        <!-- Assessment details -->
+      
+        <mat-tab label="Assessment details">
+            <div style="    text-align: -webkit-center; margin-top: 6%;" >
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+               
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef> Section </th>
+                  <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="assessmentName">
+                  <th mat-header-cell *matHeaderCellDef > Percentage </th>
+                  <td mat-cell *matCellDef="let element"> {{element.assessmentName}} </td>
+                </ng-container>
+              
+            
+                <ng-container matColumnDef="groupName">
+                  <th mat-header-cell *matHeaderCellDef >Related submission </th>
+                  <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef > </th>
+                    <td mat-cell *matCellDef="let element"> View </td>
+                  </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+        </mat-tab>
+
+        <!-- Assessment details ends -->
+
+        <!-- Education details -->
+        <mat-tab label="Education details">
+            <div class="space"></div>
+            <h5 class="small-head">Education</h5>
+            <div class="medContant">
+                <div class="row">
+                    <div class="col-5">
+                        <span class="classFont">10 std</span>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="file-box">
+                            X_std_mark sheet1_05_2014.pdf (42K)
+                        </div>
+                    </div>
+
+                    <div class="col-1">
+                        <span class="link">View</span>
+                    </div>
+
+                    <div class="col-1">
+                        <span  class="link">Resubmit </span>
+                    </div>
+                   
+                </div>
+            </div>
+           
+        </mat-tab>
+        <!-- Education details ends -->
+
+        <!-- Employment documents -->
+        <mat-tab label="Employment documents">
+            <div class="space"></div>
+            <div class="empContant ">
+                <div class="row">
+                    <div class="col-2">
+                        <span class="classFont">Resume </span>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="file-box">
+                            X_std_mark sheet1_05_2014.pdf (42K)
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <span class="link">View</span>
+                    </div>
+                    </div><br>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <span class="classFont">Profile </span>
+                        </div>
+    
+                        <div class="col-5">
+                            <div class="file-box">
+                                X_std_mark sheet1_05_2014.pdf (42K)
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <span class="link">View</span>
+                        </div>
+                        </div>
+            </div>
+        </mat-tab>
+        <!-- Employment documents ends -->
+      </mat-tab-group>
