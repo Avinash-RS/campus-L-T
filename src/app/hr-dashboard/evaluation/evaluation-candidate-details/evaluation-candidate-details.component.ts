@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 export interface CandidateDetails {
   sno: number;
   assessmentName: string;
@@ -24,6 +24,7 @@ const ELEMENT_DATA: CandidateDetails[] = [
   styleUrls: ['./evaluation-candidate-details.component.scss']
 })
 export class EvaluationCandidateDetailsComponent implements OnInit {
+  appConstant = CONSTANT.ENDPOINTS;
   displayedColumns: string[] = ['sno', 'assessmentName', 'groupName', 'shortlistName',
   'shortlistedCandidates', 'date', 'time', 'status', 'shortlistby', 'viewdetails'];
     dataSource = new MatTableDataSource(ELEMENT_DATA);
