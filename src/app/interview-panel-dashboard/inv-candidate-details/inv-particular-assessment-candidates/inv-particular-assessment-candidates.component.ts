@@ -192,7 +192,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   submit(event) {
-
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, '1');
   }
 
 }

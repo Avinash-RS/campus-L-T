@@ -101,7 +101,12 @@ export const CONSTANT = {
       HOME: '/interview-panel',
       CANDIDATE_DETAILS: '/interview-panel/candidates',
       CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list',
-      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments'
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments',
+      INTERVIEW_PANEL_EVALUATION: '/interview-panel/candidates/evaluation',
+      SUB_ASSESSMENTS: '/interview-panel/candidates/evaluation/assessment',
+      SUB_EDUCATION: '/interview-panel/candidates/evaluation/education',
+      SUB_EMPLOYMENT: '/interview-panel/candidates/evaluation/employment',
+      SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate'
     }
 
   },
@@ -192,7 +197,12 @@ export const CONSTANT = {
       HOME: 'interview-panel',
       CANDIDATE_DETAILS: 'candidates',
       CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list',
-      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments'
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments',
+      INTERVIEW_PANEL_EVALUATION: 'evaluation',
+      SUB_ASSESSMENTS: 'assessment',
+      SUB_EDUCATION: 'education',
+      SUB_EMPLOYMENT: 'employment',
+      SUB_EVALUATION: 'evaluate'
     }
   }
 };

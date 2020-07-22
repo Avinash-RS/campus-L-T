@@ -11,6 +11,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AppConfigService } from './app-config.service';
 import { environment } from 'src/environments/environment';
+import { CONSTANT } from '../constants/app-constants.service';
 
 @Injectable()
 export class InterceptorsService implements HttpInterceptor {
@@ -32,7 +33,7 @@ export class InterceptorsService implements HttpInterceptor {
         if (!request.headers.has('Content-Type')) {
           // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
           request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
-      }
+        }
 
         if (event instanceof HttpResponse) {
           // this.appConfig.hideLoader();
@@ -68,6 +69,19 @@ export class InterceptorsService implements HttpInterceptor {
             ? error.error.message : '401 UnAuthorized', '');
           return throwError(error);
         }
+
+        if (error.status === 403) {
+          this.appConfig.hideLoader();
+          if (error.error && error.error.FailureReason && error.error.FailureReason.message === "'csrf_token' URL query argument is invalid.") {
+            this.appConfig.clearLocalData();
+            this.appConfig.error('Session Expired. Please log in again', '');
+            this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+          }
+          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+            ? error.error.message : '401 UnAuthorized', '');
+          return throwError(error);
+        }
+
         if (error.status === 422) {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.errors
