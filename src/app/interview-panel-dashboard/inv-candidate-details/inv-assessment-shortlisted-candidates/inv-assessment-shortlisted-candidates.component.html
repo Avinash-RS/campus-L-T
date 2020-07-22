@@ -10,47 +10,47 @@
       <table #table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- Position Column -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="View_Details">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index"> {{element && element.id ? element.id : '-'}} </td>
+          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index"> {{element && element.View_Details ? element.View_Details : '-'}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="assessment_name">
+        <ng-container matColumnDef="Assessment_Name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment Name </th>
-          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element && element.assessment_name ? element.assessment_name : '-'}} </td>
+          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element && element.Assessment_Name ? element.Assessment_Name : '-'}} </td>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="group_name">
+        <ng-container matColumnDef="Group_Name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Group name </th>
-          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element && element.group_name ? element.group_name : '-'}} </td>
+          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element && element.Group_Name ? element.Group_Name : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="shortlisted_candidates">
+        <ng-container matColumnDef="Shortlisted_candidates">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlisted candidates </th>
-          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.shortlisted_candidates ? (element.shortlisted_candidates) : '-'}} </td>
+          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.Shortlisted_candidates ? (element.Shortlisted_candidates) : '-'}} </td>
         </ng-container>
         <!-- Symbol Column -->
-        <ng-container matColumnDef="date">
+        <ng-container matColumnDef="Date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.date ? (element.date) : '-'}} </td>
+          <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.Date ? (element.Date) : '-'}} </td>
         </ng-container>
         <!-- Symbol Column -->
-        <ng-container matColumnDef="time">
+        <ng-container matColumnDef="Time">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
-          <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.time ? (element.time) : '-'}} </td>
+          <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.Time ? (element.Time) : '-'}} </td>
         </ng-container>
         <!-- Symbol Column -->
-        <ng-container matColumnDef="status">
+        <ng-container matColumnDef="Status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.status ? (element.status) : '-'}} </td>
+          <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.Status ? (element.Status) : '-'}} </td>
         </ng-container>
         <!-- Symbol Column -->
-        <ng-container matColumnDef="shortlist_by">
+        <ng-container matColumnDef="Shortlist_By">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist by </th>
-          <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span class="material-icons" style="font-size: 16px; vertical-align: middle;">keyboard_arrow_down </span>  {{element.shortlist_by ? (element.shortlist_by) : '-'}} </td>
+          <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span class="material-icons" style="font-size: 16px; vertical-align: middle;">keyboard_arrow_down </span>  {{element.Shortlist_By ? (element.Shortlist_By) : '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="checked">
@@ -74,22 +74,22 @@
           <td colspan="10">
           <div class="grid-4">
             <div class="items">
-            Assessment Date : <span>{{element && element.assessment_date ? element.assessment_date : '  -'}}</span>
+            Assessment Date : <span>{{element && element.Date ? element.Date : '  -'}}</span>
             </div>
             <div class="items">
-                Assessment venue : <span>{{element && element.assessment_venue ? element.assessment_venue : '  -'}}</span>
+                Assessment venue : <span>{{element && element.Assessment_venue ? element.Assessment_venue : '  -'}}</span>
             </div>
             <div class="items">
-                Total candidates : <span>{{element && element.total_candidates ? element.total_candidates : '  -'}}</span>
+                Total candidates : <span>{{element && element.Total_Candidates ? element.Total_Candidates : '  -'}}</span>
             </div>
             <div class="items">
-                Asessment time : <span>{{element && element.assessment_time ? element.assessment_time : '  -'}}</span>
+                Asessment time : <span>{{element && element.Time ? element.Time : '  -'}}</span>
             </div>
             <div class="items">
-                Selected Candidates : <span>{{element && element.selected_candidates ? element.selected_candidates : '  -'}}</span>
+                Selected Candidates : <span>{{element && element.Shortlisted_candidates ? element.Shortlisted_candidates : '  -'}}</span>
             </div>
             <div style="white-space: nowrap;" class="items">
-                Email of Shortlister : <span>{{element && element.shortlist_by_email ? element.shortlist_by_email : '  -'}}</span>
+                Email of Shortlister : <span>{{element && element.email ? element.email : '  -'}}</span>
             </div>
           </div>
           </td>
