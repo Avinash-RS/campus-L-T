@@ -1,11 +1,8 @@
 @import "../../../themes/themes.scss";
-
-  
   .mat-form-field {
     font-size: 14px;
     width: 100%;
   }
-
 
   table {
     width: 100%;
@@ -17,7 +14,7 @@
 th.mat-header-cell {
     text-align: left;
     max-width: 300px;
-    background-color: #1890ff4f;
+    background: $blue-3 0% 0% no-repeat padding-box;
     color: #000;
 }
 .viewDetails{
@@ -69,4 +66,50 @@ th.mat-header-cell {
         font-size: 12px;
       }
     }
+}
+
+.viewbtn{
+  border-radius: 4px !important;
+  color: $header-blue;
+  border: 0.5px solid #6666667e !important;
+  height: 23px;
+}
+td {
+  padding-left: 1em !important;
+}
+th {
+
+  padding-left: 1em !important;
+}
+.light-bg {
+  background: #fffdfd 0% 0% no-repeat padding-box !important;
+}
+.dark-bg {
+  background: #f7f7f7 0% 0% no-repeat padding-box !important;
+}
+
+
+.mat-row,
+.element-row,
+.detail-row {
+  .grid-4 {
+    background: #edeef0 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 0.25px solid #7070706c;
+    padding: 0 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    // align-items: center;
+    color: $light-black;
+    font-size: 13px;
+    width: 80%;
+    margin: 0.5em auto;
+    border-bottom: 3px solid #145e9a;
+    .items {
+      margin: 0.5em 0;
+    }
+    span {
+      color: #145e9a;
+    }
+  }
 }

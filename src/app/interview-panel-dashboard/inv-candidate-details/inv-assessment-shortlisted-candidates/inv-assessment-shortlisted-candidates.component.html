@@ -50,13 +50,13 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="Shortlist_By">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist by </th>
-          <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span class="material-icons" style="font-size: 16px; vertical-align: middle;">keyboard_arrow_down </span>  {{element.Shortlist_By ? (element.Shortlist_By) : '-'}} </td>
+          <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span class="material-icons"   style="font-size: 16px; vertical-align: middle;">keyboard_arrow_down </span>  {{element.Shortlist_By ? (element.Shortlist_By) : '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="checked">
           <th mat-header-cell *matHeaderCellDef> Submit </th>
           <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
-            <button (click)="submit($event)" class="submit-btn" mat-raised-button> <span style="font-size: 16px; padding-right: .25em;" class="material-icons">visibility</span> <span> View</span></button>
+            <button (click)="submit($event)" class="submit-btn" mat-raised-button> <span  class="material-icons">visibility</span> <span> View</span></button>
             </td>
         </ng-container>
 
