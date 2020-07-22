@@ -82,7 +82,7 @@ import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
 import { PdfreaderComponent } from './pdfreader/pdfreader.component';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective],
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -175,7 +175,7 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
     ShortlistBoxComponent,
     CommonHeaderComponent,
     CdkDetailRowDirective,
-
+    PdfreaderComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
