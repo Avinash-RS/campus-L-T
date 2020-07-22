@@ -21,11 +21,11 @@ export class EvaluationComponent implements OnInit {
         name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
       },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Candidate details',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST
-      // },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      },
       // {
       //   icon: '001-approved.svg',
       //   name: 'Upload candidate details',
