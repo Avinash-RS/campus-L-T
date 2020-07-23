@@ -28,6 +28,8 @@ import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user
 import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
 import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
 import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
+import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
+import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 
 const routes: Routes = [
   {
@@ -92,6 +94,13 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, component: EvaluationInterviewPanelComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTDETAILS}`, component: AssessmentDetailsComponent
+          },
+
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`, component: AssessmentCandidateDetailsComponent
           },
           {
             path: '',

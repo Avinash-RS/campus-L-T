@@ -85,6 +85,8 @@ export const CONSTANT = {
       EVALUATION_INTERVIEW_PANEL:'/hr/evaluation/evaluation-interview-panel',
       HR_USER_MANAGEMENT_USERS_LIST: '/hr/user-management/user-list',
       HR_USER_MANAGEMENT_ADD_USERS: '/hr/user-management/add-user',
+      ASSESSMENTDETAILS:'/hr/evaluation/assessment-details',
+      ASSESSMENTCANDIDATEDETAILS:'/hr/evaluation/assessment-candidate-details',
       REPORTS: '/hr/reports',
       REPORTS_LIST: '/hr/reports/second',
       REPORTS_LIST_VIEW: '/hr/reports/list/view',
@@ -110,7 +112,12 @@ export const CONSTANT = {
       HOME: '/interview-panel',
       CANDIDATE_DETAILS: '/interview-panel/candidates',
       CANDIDATE_DETAILS_ASSESSMENT_LIST: '/interview-panel/candidates/assessment-list',
-      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments'
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments',
+      INTERVIEW_PANEL_EVALUATION: '/interview-panel/candidates/evaluation',
+      SUB_ASSESSMENTS: '/interview-panel/candidates/evaluation/assessment',
+      SUB_EDUCATION: '/interview-panel/candidates/evaluation/education',
+      SUB_EMPLOYMENT: '/interview-panel/candidates/evaluation/employment',
+      SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate'
     }
 
   },
@@ -185,6 +192,8 @@ export const CONSTANT = {
       EVALUATION_INTERVIEW_PANEL:'interview-panel',
       HR_USER_MANAGEMENT_USERS_LIST: 'user-list',
       HR_USER_MANAGEMENT_ADD_USERS: 'add-user',
+      ASSESSMENTDETAILS:'assessment-details',
+      ASSESSMENTCANDIDATEDETAILS:'assessment-candidate-details',
       REPORTS: 'reports',
       REPORTS_LIST: 'second',
       REPORTS_LIST_VIEW: 'view',
@@ -210,7 +219,12 @@ export const CONSTANT = {
       HOME: 'interview-panel',
       CANDIDATE_DETAILS: 'candidates',
       CANDIDATE_DETAILS_ASSESSMENT_LIST: 'assessment-list',
-      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments'
+      CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments',
+      INTERVIEW_PANEL_EVALUATION: 'evaluation',
+      SUB_ASSESSMENTS: 'assessment',
+      SUB_EDUCATION: 'education',
+      SUB_EMPLOYMENT: 'employment',
+      SUB_EVALUATION: 'evaluate'
     }
   }
 };

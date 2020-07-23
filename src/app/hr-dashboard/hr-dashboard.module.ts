@@ -26,15 +26,16 @@ import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user
 import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
 import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
 import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
-
+import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
+import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, AssessmentDetailsComponent, AssessmentCandidateDetailsComponent],
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
-    HrDashboardRoutingModule
+    HrDashboardRoutingModule,
   ]
 })
 export class HrDashboardModule { }
