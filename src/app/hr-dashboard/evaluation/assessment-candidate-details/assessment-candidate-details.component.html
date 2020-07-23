@@ -1,0 +1,180 @@
+<div class="contant">
+    <div class="row">
+        <div class="col-3">
+          <span class="head">Assessment name : </span><span class="ans"> Assessment 1</span>
+        </div>
+    
+        <div class="col-3">
+            <span class="head">Candidate name : </span> <span class="ans"> Ankit</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head"> Shortlist name : </span><span class="ans"> Batch 1</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Date : </span> <span class="ans">21 june 2020</span>
+        </div>
+        <div class="col-2">
+            <span class="head">Total candidate : </span> <span class="ans"> 19</span>
+        </div>
+    </div>
+    <div class="space"></div>
+    
+    <div class="row">
+        <div class="col-3">
+            <span class="head">Group name : </span> <span class="ans"> 2020_Kousalya_VIT University</span>
+        </div>
+
+        <div class="col-3">
+            <span class="head">Candidate id : </span>  <span class="ans"> 098088</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Tag name : </span>  <span class="ans"> 2020 Kousalya</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Time : </span> <span class="ans"> 11:30</span>
+        </div>
+    
+        <div class="col-2">
+            <span class="head">Status : </span> <span class="ans"> Waiting</span>
+        </div>
+    </div>
+    </div>
+    <div class="space"></div>
+
+    <mat-tab-group >
+        <!-- Assessment details -->
+      
+        <mat-tab label="Assessment details">
+            <div style="    text-align: -webkit-center; margin-top: 6%;" >
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+               
+                <ng-container matColumnDef="sno">
+                  <th mat-header-cell *matHeaderCellDef> Section </th>
+                  <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="assessmentName">
+                  <th mat-header-cell *matHeaderCellDef > Percentage </th>
+                  <td mat-cell *matCellDef="let element"> {{element.assessmentName}} </td>
+                </ng-container>
+              
+            
+                <ng-container matColumnDef="groupName">
+                  <th mat-header-cell *matHeaderCellDef >Related submission </th>
+                  <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef > </th>
+                    <td mat-cell *matCellDef="let element" (click)="viewQus(previewDialog)"> View </td>
+                  </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+        </mat-tab>
+
+        <!-- Assessment details ends -->
+
+        <!-- Education details -->
+        <mat-tab label="Education details">
+            <div class="space"></div>
+            <h5 class="small-head">Education</h5>
+            <div class="medContant">
+                <div class="row">
+                    <div class="col-5">
+                        <span class="classFont">10 std</span>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="file-box">
+                            X_std_mark sheet1_05_2014.pdf (42K)
+                        </div>
+                    </div>
+
+                    <div class="col-1">
+                        <span class="link">View</span>
+                    </div>
+
+                    <div class="col-1">
+                        <span  class="link">Resubmit </span>
+                    </div>
+                   
+                </div>
+            </div>
+           
+        </mat-tab>
+        <!-- Education details ends -->
+
+        <!-- Employment documents -->
+        <mat-tab label="Employment documents">
+            <div class="space"></div>
+            <div class="empContant ">
+                <div class="row">
+                    <div class="col-2">
+                        <span class="classFont">Resume </span>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="file-box">
+                            X_std_mark sheet1_05_2014.pdf (42K)
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <span class="link">View</span>
+                    </div>
+                    </div><br>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <span class="classFont">Profile </span>
+                        </div>
+    
+                        <div class="col-5">
+                            <div class="file-box">
+                                X_std_mark sheet1_05_2014.pdf (42K)
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <span class="link">View</span>
+                        </div>
+                        </div>
+            </div>
+        </mat-tab>
+        <!-- Employment documents ends -->
+        <ng-template #previewDialog>
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon"  (click)="closedialogbox()">close</mat-icon>
+            </button>
+            <div class="row space" >
+                <div class="col-12 font-color">
+                    <span class="Qus">Question 3 : How to build a new India ? </span>  
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-12 font-color">
+                 <span class="font-align" >Answer  :</span>    
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-12 font-color">
+                  
+                    <p class="ans">New India can be built by thinking new thoughts, making new policies, and implementing those policies with patriotic fervor. India has the potential of becoming one of the most advanced and progressive countries of the world. 
+ 
+                        The most dynamic factor in a country is the Human Resource. If India is to achieve all its developmental goals, the human resource must be highly eﬃcient and creative. The second most important thing is the optimal utilization and management of resources. The optimal utilization of the best of resources by the best of professionals result in creating something new. India needs this blend. 
+                        
+                        Unquestionably, there are many challenges in building new India. Challenges such as population, environmental degradation, poverty of rural people, corruption, backwardness, etc; but these challenges are opportunities too. We can contribute to this change for the betterment by giving our best. Each one of us must do our job and responsibilities perfectly. All the challenges can easily be overcome provided the entire manpower and resources are utilized and used optimally under the right guidance of dedicated leaders. India can do wonders. India will do wonders surely. And that will happen only when the Indians set their hearts to make India the land of opportunities, growth, and prosperity with their words, deeds, and acts. 
+                        
+                        We can contribute to the making of new India by being excellent in our respective spheres of actions. Besides being perfect in our ﬁelds, we must be ideal citizens. We must pay our taxes honestly; we must not do anything that might affect our country’s prosperity and development. We must dedicate ourselves to the progress and development of our country, only then something substantial will happen.
+                    </p>
+                  
+                </div>
+            </div>
+            
+        </ng-template>
+      </mat-tab-group>

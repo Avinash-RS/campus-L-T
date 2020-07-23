@@ -16,9 +16,9 @@ export class CandidateUploadDocumentComponent implements OnInit {
   selectedImage: any;
   showImgSizeError = false;
   urlResume = null;
-  urlEducation = null;
-  urlCertificate = null;
-  urlOther = null;
+  urlEducation = [];
+  urlCertificate = [];
+  urlOther = [];
 
 
   resumeUploadForm = new FormGroup({
@@ -66,6 +66,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   get eduArr() { return this.educationUploadForm.get('educationUploadArr') as FormArray; }
 
   addEducationForm(data?: any) {
+    console.log("ptint index education..", data);
     this.eduArr.push(this.createItem(data));
   }
 
@@ -78,6 +79,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   removeEducationDoc(i: number){
+    this.urlEducation.splice(i, 1);
     this.eduArr.removeAt(i);
   }
 
@@ -109,6 +111,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
 
   removeCertificate(i: number){
+    this.urlCertificate.splice(i, 1);
     this.certiArr.removeAt(i);
   }
 
@@ -139,6 +142,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   removeOtherDoc(i: number){
+    this.urlOther.splice(i, 1);
     this.otherDocArr.removeAt(i);
   }
   stoppropgation(e:Event){
@@ -146,7 +150,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
     e.stopPropagation();
   }
 
-  onSelectFile(event, uploadType){
+  onSelectFile(event, uploadType, i){
     // if (this.educationUploadForm.valid && this.resumeUploadForm.valid && this.certificateUploadForm.valid && this.otherUploadForm) {
       if (event.target.files[0].size < 5000000) {
         this.showImgSizeError = false;
@@ -159,19 +163,28 @@ export class CandidateUploadDocumentComponent implements OnInit {
           fd.append('upload_type', "resumes");
           fd.append('user_id', this.appConfig.getLocalData('userId'));
         }else if(uploadType == 'education'){
-          this.urlEducation = event.target.files[0].name
+          if(event.target.id == 'file-input-'+ i){
+            this.urlEducation[i] = event.target.files[0].name
+          }
+          
           fd.append('product_image', this.selectedImage);
           fd.append('upload_type', "education_documents");
           fd.append('user_id', this.appConfig.getLocalData('userId'));
           fd.append('education_level', this.educationUploadForm.value.educationUploadArr[0].level);
         }else if(uploadType == 'certificate'){
-          this.urlCertificate = event.target.files[0].name
+          if(event.target.id == 'file-input-2-'+ i){
+            this.urlCertificate[i] = event.target.files[0].name
+          }
+      
           fd.append('product_image', this.selectedImage);
           fd.append('upload_type', "certificate_details");
           fd.append('user_id', this.appConfig.getLocalData('userId'));
           fd.append('certificate_name', this.certificateUploadForm.value.certificateUploadArr[0].certificateName);
         }else if(uploadType == 'other'){
-          this.urlOther = event.target.files[0].name
+          if(event.target.id == 'file-input-3-'+ i){
+            this.urlOther[i] = event.target.files[0].name
+          }
+          
           fd.append('product_image', this.selectedImage);
           fd.append('upload_type', "other_certificate");
           fd.append('user_id', this.appConfig.getLocalData('userId'));

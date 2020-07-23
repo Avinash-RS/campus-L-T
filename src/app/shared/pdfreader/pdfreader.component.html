@@ -1,0 +1,10 @@
+
+<!-- <pdf-viewer [src]="pdfSrc"  style="display: block;"></pdf-viewer> -->
+<div *ngIf="isEnable">
+  <ng2-pdfjs-viewer pdfSrc="{{pdfSrc}}" [showSpinner]="true" pagemode="none" [startPrint]="false" [print]="true"  [viewBookmark]="false" [openFile]="false"></ng2-pdfjs-viewer>
+
+</div>
+
+<div *ngIf="!isEnable">
+<img style="width: 100%;" [src]="pdfSrc">
+</div>

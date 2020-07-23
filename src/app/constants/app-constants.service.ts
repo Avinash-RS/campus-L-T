@@ -49,7 +49,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST: '/admin/user-management/candidate/uploaded-list',
       USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD: '/admin/user-management/candidate/bulk-upload',
       APPROVALS: '/admin/approvals',
-      APPROVALS_INSTITUTE: '/admin/approvals/institute'
+      APPROVALS_INSTITUTE: '/admin/approvals/institute',
+      ADMIN_REPORTS: '/admin/reports',
+      ADMIN_REPORTS_LIST: '/admin/reports-list'
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
@@ -88,6 +90,9 @@ export const CONSTANT = {
       REPORTS_LIST_VIEW: '/hr/reports/list/view',
       FIRST_LEVEL_REPORTS_LIST: '/hr/reports/first',
       BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/hr/reports/candidate_list_reports',
+      HR_STATUS: '/hr/status',
+      HR_STATUS_PREASSESSMENT: '/hr/status/pre-assessment',
+      HR_STATUS_RECRUITMENT: '/hr/status/recruitment'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -144,7 +149,9 @@ export const CONSTANT = {
       USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST: 'uploaded-list',
       USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD: 'bulk-upload',
       APPROVALS: 'approvals',
-      APPROVALS_INSTITUTE: 'institute'
+      APPROVALS_INSTITUTE: 'institute',
+      ADMIN_REPORTS: 'reports',
+      ADMIN_REPORTS_LIST: 'reports-list',
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
@@ -182,7 +189,10 @@ export const CONSTANT = {
       REPORTS_LIST: 'second',
       REPORTS_LIST_VIEW: 'view',
       FIRST_LEVEL_REPORTS_LIST: 'first',
-      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports'
+      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports',
+      HR_STATUS: 'status',
+      HR_STATUS_PREASSESSMENT: 'pre-assessment',
+      HR_STATUS_RECRUITMENT: 'recruitment'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',

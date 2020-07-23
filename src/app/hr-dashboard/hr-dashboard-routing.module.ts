@@ -25,6 +25,9 @@ import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-can
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
 import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
+import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
+import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
+import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
 
 const routes: Routes = [
   {
@@ -111,6 +114,21 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS}`, component: HrCandidateStatusComponent, children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_PREASSESSMENT}`, component: HrPreAssessmentComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_RECRUITMENT}`, component: HrRecruitmentComponent
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_PREASSESSMENT}`,
             pathMatch: 'full',
           }
         ]

@@ -23,10 +23,13 @@ import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-can
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
 import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
+import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
+import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
+import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, UserListComponent, HrAddUserComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent],
   imports: [
     CommonModule,
     SharedModule,

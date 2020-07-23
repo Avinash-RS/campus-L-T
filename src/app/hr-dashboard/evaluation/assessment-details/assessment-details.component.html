@@ -1,0 +1,77 @@
+<div class="contant">
+<div class="row">
+    <div class="col-4">
+      <span class="head">Assessment name :</span><span class="ans"> Assessment 1</span>
+    </div>
+
+    <div class="col-3">
+        <span class="head">Shortlist  name : </span> <span class="ans"> Batch  1</span>
+    </div>
+
+    <div class="col-3">
+        <span class="head"> Date : </span><span class="ans"> 21 june 2020</span>
+    </div>
+
+    <div class="col-2">
+        <span class="head">Total candidates  :</span> <span class="ans"> 19</span>
+    </div>
+</div>
+<div class="space"></div>
+
+<div class="row">
+    <div class="col-4">
+        <span class="head">Group name : </span> <span class="ans"> 2020_Kousalya_VIT University</span>
+    </div>
+
+    <div class="col-3">
+        <span class="head">Tag name :</span>  <span class="ans"> 2020 Kousalya</span>
+    </div>
+
+    <div class="col-3">
+        <span class="head">Time : </span> <span class="ans"> 11:30</span>
+    </div>
+
+    <div class="col-2">
+        <span class="head">Status  : </span> <span class="ans"> Waiting</span>
+    </div>
+</div>
+</div>
+<div class="space"></div>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    
+    <ng-container matColumnDef="sno">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+      <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="assessmentName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate name </th>
+      <td mat-cell *matCellDef="let element"> {{element.assessmentName}} </td>
+    </ng-container>
+  
+
+    <ng-container matColumnDef="groupName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate  ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
+    </ng-container>
+  
+
+    <ng-container matColumnDef="shortlistName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Evaluation status </th>
+        <td mat-cell *matCellDef="let element"> {{element.shortlistName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="viewdetails">
+        <th mat-header-cell *matHeaderCellDef> View details </th>
+        <td mat-cell *matCellDef="let element"  > 
+            <mat-icon matTooltip="View" [routerLink]="appConstant.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS" routerLinkActive="active"   data-placement="top" class="viewDetails">remove_red_eye</mat-icon>
+        </td>
+      </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
