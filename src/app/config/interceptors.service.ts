@@ -71,11 +71,16 @@ export class InterceptorsService implements HttpInterceptor {
         }
 
         if (error.status === 403) {
-          this.appConfig.hideLoader();
           if (error.error && error.error.FailureReason && error.error.FailureReason.message === "'csrf_token' URL query argument is invalid.") {
+            this.appConfig.hideLoader();
             this.appConfig.clearLocalData();
             this.appConfig.error('Session Expired. Please log in again', '');
             this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+          } else {
+            this.appConfig.hideLoader();
+            this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+              ? error.error.message : '403 Forbidden', '');
+            return throwError(error);
           }
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
             ? error.error.message : '401 UnAuthorized', '');
@@ -105,12 +110,12 @@ export class InterceptorsService implements HttpInterceptor {
             ? error.error.message : '500 Internal Server Error', '');
           return throwError(error);
         }
-        if (error.status === 403) {
-          this.appConfig.hideLoader();
-          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '403 Forbidden', '');
-          return throwError(error);
-        }
+        // if (error.status === 403) {
+        //   this.appConfig.hideLoader();
+        //   this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+        //     ? error.error.message : '403 Forbidden', '');
+        //   return throwError(error);
+        // }
         if (error.status === 404) {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
