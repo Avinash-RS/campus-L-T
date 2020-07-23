@@ -1,0 +1,107 @@
+<div class="main-wrapper-admin-add-user">
+    <div class="line"></div>
+    <!-- <div class="header">
+      {{editUserId ? 'Edit User' : 'Add User'}}
+    </div> -->
+  
+    <div class="form-wrapper">
+      <form [formGroup]="addUserForm" class="forms" (ngSubmit)="submitDialog()">
+        <div class="form-field">
+          <div class="grid">
+            <div class="label-wrapper">
+              <label class="label-name">
+                First Name
+              </label>
+            </div>
+            <div class="input-box" [ngStyle]="{border: name.invalid && name.touched ? 'solid red 1px': ''}">
+              <input matInput formControlName="name" type="text" required>
+            </div>
+          </div>
+          <div class="error" *ngIf="name.invalid && name.touched">
+            <span *ngIf="name.errors?.required">Name is Required</span>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="grid">
+            <div class="label-wrapper">
+              <label class="label-name">
+                Email ID
+              </label>
+            </div>
+            <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
+              <input matInput formControlName="email" type="text" required>
+            </div>
+          </div>
+          <div class="error" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors?.required">Email is Required</span>
+            <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="grid">
+            <div class="label-wrapper">
+              <label class="label-name">
+                Role
+              </label>
+            </div>
+            <div class="input-box-radio" [ngStyle]="{'border-bottom': role.invalid && role.touched ? 'solid red 1px': ''}">
+              
+              <div>
+                  <input (click)="showInterviewPanel = true; addValidation()" formControlName="role" type="radio" value="interview_panel"><span> Interview panel</span>
+                </div>
+              <div>
+                <input (click)="showInterviewPanel = false; addValidation()" formControlName="role" type="radio" value="proctor"><span> Proctor</span>
+              </div>
+            
+            </div>
+          </div>
+          <div class="error" *ngIf="role.invalid && role.touched">
+            <span *ngIf="role.errors?.required">Role is Required</span>
+          </div>
+        </div>
+        <div *ngIf="showInterviewPanel" class="sub-div">
+          <div class="form-field-1">
+            <div class="grid-1">
+              <div class="label-wrapper-1">
+                <label class="label-name-1">
+                  Employee ID
+                </label>
+              </div>
+              <div class="input-box-1" [ngStyle]="{border: employee_id.invalid && employee_id.touched ? 'solid red 1px': ''}">
+                <input matInput formControlName="employee_id" type="text" required>
+              </div>
+            </div>
+            <div class="error" *ngIf="employee_id.invalid && employee_id.touched">
+              <span *ngIf="employee_id.errors?.required">Employee id is Required</span>
+            </div>
+          </div>
+          <div class="form-field-1">
+            <div class="grid-1">
+              <div class="label-wrapper-1">
+                <label class="label-name-1">
+                  Discipline
+                </label>
+              </div>
+              <nz-select formControlName="discipline" class="nzSelect"
+                nzPlaceHolder="select">
+                  <nz-option nzLabel="Development" nzValue="development"></nz-option>
+                  <nz-option nzLabel="QA" nzValue="qa"></nz-option>
+                  <!-- <nz-option nzLabel="Under graduate" nzValue="ug"></nz-option>
+                  <nz-option nzLabel="Post graduate" nzValue="pg"></nz-option> -->
+              </nz-select>
+            </div>
+            <div class="error" *ngIf="discipline.invalid && discipline.touched">
+              <span *ngIf="discipline.errors?.required"> Discipline is Required</span>
+            </div>
+          </div>
+        </div>
+        
+  
+        <div class="button-wrapper">
+          <button mat-raised-button type="submit">Save</button>
+          <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

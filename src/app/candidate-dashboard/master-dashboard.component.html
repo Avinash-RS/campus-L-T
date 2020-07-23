@@ -53,6 +53,13 @@
           arrow_right
         </span>
       </li>
+      <li [ngClass]="showProfileOnly ? 'hide' : ''" [routerLink]="appConstant.CANDIDATE_DASHBOARD.DOCUMENT" routerLinkActive="active">
+        <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
+        <span>Documents</span>
+        <span style="color: #fff;" class="material-icons">
+          arrow_right
+        </span>
+      </li>
 
     </ul>
 

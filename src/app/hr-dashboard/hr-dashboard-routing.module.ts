@@ -27,6 +27,8 @@ import { AssessmentDetailsComponent } from './evaluation/assessment-details/asse
 import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 
 
+import { UserListComponent } from './hr-user-management/user-list/user-list.component';
+import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
 
 const routes: Routes = [
   {
@@ -69,6 +71,12 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, component: BulkUploadComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`, component: UserListComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS}`, component: HrAddUserComponent
           },
           {
             path: '',

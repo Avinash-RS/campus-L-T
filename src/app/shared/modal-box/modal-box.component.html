@@ -35,5 +35,11 @@
       mat-raised-button class="update-confirm" type="button">{{data.showConfirm}}</button>
 
     <button *ngIf="data.showOk" (click)="ok()" mat-raised-button class="ok" type="button">{{data.showConfirm}}</button>
+
+    <!-- Type remove Buttons -->
+    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'remove'" (click)="cancel(data.dataToBeShared)"
+      mat-raised-button class="delete-cancel" type="button">{{data.showCancel}}</button>
+    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'remove'" (click)="confirm()"
+      mat-raised-button class="delete-confirm" type="button">{{data.showConfirm}}</button>
   </div>
 </div>

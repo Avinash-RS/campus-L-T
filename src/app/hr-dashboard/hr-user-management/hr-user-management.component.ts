@@ -23,16 +23,16 @@ export class HrUserManagementComponent implements OnInit {
         name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT
       },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Candidate details',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST
-      // },
-      // {
-      //   icon: '001-approved.svg',
-      //   name: 'Upload candidate details',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD
-      // }
+      {
+        icon: '002-group-1.svg',
+        name: 'User details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST
+      },
+      {
+        icon: '001-group.svg',
+        name: 'Add Users',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS
+      }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
