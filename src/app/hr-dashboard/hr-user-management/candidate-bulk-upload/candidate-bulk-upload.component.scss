@@ -1,0 +1,39 @@
+@import '../../../themes/themes.scss';
+.sub-menu-wrapper {
+  display: flex;
+  background: $sidebar-bg;
+  padding: 4px 0;
+  margin: 0.5em 0 0 0;
+  position: sticky;
+  top: -1px;
+  z-index: 5;
+  .menu-group {
+    padding: 4px;
+    cursor: pointer;
+    border: solid $white 1px;
+    border-radius: 4px;
+    color: $white;
+    font-size: 13px;
+    outline: none;
+    font-weight: 100;
+    margin: 0 0 0 1em;
+    opacity: 0.6;
+    img {
+      width: 18px;
+      margin: 0 0.25em 0 0;
+    }
+  }
+  .active {
+    cursor: pointer;
+    padding: 4px;
+    background: $active-sub-bg 0% 0% no-repeat padding-box;
+    font-size: 13px;
+    border: solid $white 1px;
+    border-radius: 4px;
+    color: $white;
+    font-weight: 200;
+    margin: 0 0 0 1em;
+    outline: none;
+    opacity: 1;
+  }
+}

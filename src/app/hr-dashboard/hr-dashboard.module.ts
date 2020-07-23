@@ -10,10 +10,10 @@ import { HrShortlistingComponent } from './hr-shortlisting/hr-shortlisting.compo
 import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shortlist/first-level-shortlist.component';
 import { HrMainDashboardComponent } from './hr-main-dashboard/hr-main-dashboard.component';
 import { HrUserManagementComponent } from './hr-user-management/hr-user-management.component';
-import { BulkUploadComponent } from './hr-user-management/bulk-upload/bulk-upload.component';
 import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
 import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
-import { UploadedListComponent } from './hr-user-management/uploaded-list/uploaded-list.component';
+import { BulkUploadComponent } from './hr-user-management/candidate-bulk-upload/bulk-upload/bulk-upload.component';
+import { UploadedListComponent } from './hr-user-management/candidate-bulk-upload/uploaded-list/uploaded-list.component';
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
@@ -25,10 +25,14 @@ import { AssessmentDetailsComponent } from './evaluation/assessment-details/asse
 import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
 import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
+import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
+import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
+import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
+import { CandidateBulkUploadComponent } from './hr-user-management/candidate-bulk-upload/candidate-bulk-upload.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, AssessmentDetailsComponent, AssessmentCandidateDetailsComponent, UserListComponent, HrAddUserComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, AssessmentDetailsComponent, AssessmentCandidateDetailsComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, CandidateBulkUploadComponent],
   imports: [
     CommonModule,
     SharedModule,

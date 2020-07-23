@@ -21,7 +21,7 @@ export class HrUserManagementComponent implements OnInit {
       {
         icon: '002-cv.svg',
         name: 'Candidate details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
       },
       {
         icon: '002-group-1.svg',

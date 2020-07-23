@@ -16,6 +16,8 @@ import { AdminUploadedCandidateListComponent } from './user-management/admin-bul
 import { AdminBulkUploadCandidateCompComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidate-comp/admin-bulk-upload-candidate-comp.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
+import { AdminReportComponent } from './admin-report/admin-report.component';
+import { AdminReportListComponent } from './admin-report/admin-report-list/admin-report-list.component';
 
 
 const routes: Routes = [
@@ -130,6 +132,27 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.APPROVALS_INSTITUTE}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_REPORTS}`,
+        component: AdminReportComponent,
+        data: {
+          breadcrumb: 'reports'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_REPORTS_LIST}`,
+            component: AdminReportListComponent,
+            data: {
+              breadcrumb: 'reports-list'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

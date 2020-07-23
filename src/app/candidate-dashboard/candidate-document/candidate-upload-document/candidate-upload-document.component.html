@@ -38,19 +38,19 @@
                                 <nz-option nzLabel="Post graduate" nzValue="pg"></nz-option>
                             </nz-select>
     
-                            <label class="choose-input-1" for="file-input-1">
-                                <div *ngIf="!urlEducation">
+                            <label class="choose-input-1" for="file-input-{{i}}">
+                                <div *ngIf="!urlEducation[i] ">
                                     <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
                                     choose file
                                 </div>
-                                <div *ngIf="urlEducation">
-                                    <span>{{urlEducation}}</span>
-                                    <span (click)="urlEducation = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                <div *ngIf="urlEducation[i]">
+                                    <span>{{urlEducation[i]}}</span>
+                                    <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
                                 </div>
                             </label>
                             
-                            <input formControlName="repotcard" id="file-input-1" type="file" accept=".pdf,.doc,application/msword" 
-                            (change)="onSelectFile($event, 'education')">
+                            <input formControlName="repotcard" id="file-input-{{i}}" type="file" accept=".pdf,.doc,application/msword" 
+                            (change)="onSelectFile($event, 'education', i)">
     
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="eduArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeEducationDoc(i)" style="display: inline-flex; background: transparent; border: none;"
@@ -81,19 +81,19 @@
                                 <input formControlName="certificateName" placeholder="Document description">
                             </div>
     
-                            <label class="choose-input-1" for="file-input-2">
-                                <div *ngIf="!urlCertificate">
+                            <label class="choose-input-1" for="file-input-2-{{i}}">
+                                <div *ngIf="!urlCertificate[i]">
                                     <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
                                     choose file
                                 </div>
-                                <div *ngIf="urlCertificate">
-                                    <span>{{urlCertificate}}</span>
-                                    <span (click)="urlCertificate = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                <div *ngIf="urlCertificate[i]">
+                                    <span>{{urlCertificate[i]}}</span>
+                                    <span (click)="urlCertificate.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
                                 </div>
                             </label>
                             
-                            <input formControlName="certificateFile" id="file-input-2" type="file" accept=".pdf,.doc,application/msword" 
-                            (change)="onSelectFile($event, 'certificate')">
+                            <input formControlName="certificateFile" id="file-input-2-{{i}}" type="file" accept=".pdf,.doc,application/msword" 
+                            (change)="onSelectFile($event, 'certificate', i)">
     
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeCertificate(i)" style="display: inline-flex; background: transparent; border: none;"
@@ -124,19 +124,19 @@
                                     <input formControlName="otherDocName" placeholder="Document description">
                                 </div>
     
-                                <label class="choose-input-1" for="file-input-3">
-                                    <div *ngIf="!urlOther">
+                                <label class="choose-input-1" for="file-input-3-{{i}}">
+                                    <div *ngIf="!urlOther[i]">
                                         <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
                                         choose file
                                     </div>
-                                    <div *ngIf="urlOther">
-                                        <span>{{urlOther}}</span>
-                                        <span (click)="urlOther = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                    <div *ngIf="urlOther[i]">
+                                        <span>{{urlOther[i]}}</span>
+                                        <span (click)="urlOther.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
                                     </div>
                                 </label>
                                 
-                                <input formControlName="otherDocFile" id="file-input-3" type="file" accept=".pdf,.doc,application/msword" 
-                                (change)="onSelectFile($event, 'other')">
+                                <input formControlName="otherDocFile" id="file-input-3-{{i}}" type="file" accept=".pdf,.doc,application/msword" 
+                                (change)="onSelectFile($event, 'other', i)">
     
                                 <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
                                     <button (click)="removeOtherDoc(i)" style="display: inline-flex; background: transparent; border: none;"
