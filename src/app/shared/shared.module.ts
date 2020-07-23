@@ -79,9 +79,10 @@ import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.c
 import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { CommonHeaderComponent } from './common-header/common-header.component';
 import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
-
+import { PdfreaderComponent } from './pdfreader/pdfreader.component';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective],
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -154,7 +155,9 @@ import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
     NzTreeSelectModule,
     NzTypographyModule,
     NzUploadModule,
-    NzResizableModule
+    NzResizableModule,
+    // PdfreaderComponent,
+    PdfJsViewerModule
   ],
   exports: [
     FormsModule,
@@ -172,7 +175,7 @@ import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
     ShortlistBoxComponent,
     CommonHeaderComponent,
     CdkDetailRowDirective,
-
+    PdfreaderComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
@@ -235,7 +238,9 @@ import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
     NzTreeSelectModule,
     NzTypographyModule,
     NzUploadModule,
-    NzResizableModule
+    NzResizableModule,
+    // PdfreaderComponent,
+    PdfJsViewerModule
 
   ],
 })
