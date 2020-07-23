@@ -1,0 +1,165 @@
+<div class="main-wrapper-candidate">
+        <form [formGroup]="resumeUploadForm">
+            <div class="card w-50 alignCard">
+                <div class="card-body">
+
+                    <div class="image-upload">
+                        <label>Resume*</label>
+                        <label class="choose-input" for="file-input">
+                            <div *ngIf="!urlResume">
+                                <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
+                                choose file
+                            </div>
+                            <div *ngIf="urlResume">
+                                <span>{{urlResume}}</span>
+                                <span (click)="urlResume = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                            </div>
+                        </label>
+                        
+                        <input formControlName="resume" id="file-input" type="file" accept=".pdf,.doc,application/msword" 
+                        (click)="files.value = null" #files (change)="onSelectFile($event, 'resume')">
+                    </div>
+                    <span *ngIf="showImgSizeError" class="sizeError">Maximum File Size: 5 MB</span>
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="educationUploadForm">
+            <div class="card w-50 alignCard">
+                <div *ngIf="eduArr && eduArr.controls" formArrayName="educationUploadArr" class="card-body">
+                    <label>Education details*</label>
+                    <ng-container *ngIf="eduArr && eduArr.controls">
+                        <div class="image-upload display" *ngFor="let education of eduArr.controls; let i = index; let last = last;" [formGroupName]="i">
+                        
+                            <nz-select formControlName="level" class="nzSelect" nzAllowClear nzShowSearch
+                             nzPlaceHolder="Level">
+                                <nz-option nzLabel="10 std" nzValue="10"></nz-option>
+                                <nz-option nzLabel="12 std" nzValue="12"></nz-option>
+                                <nz-option nzLabel="Under graduate" nzValue="ug"></nz-option>
+                                <nz-option nzLabel="Post graduate" nzValue="pg"></nz-option>
+                            </nz-select>
+    
+                            <label class="choose-input-1" for="file-input-1">
+                                <div *ngIf="!urlEducation">
+                                    <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
+                                    choose file
+                                </div>
+                                <div *ngIf="urlEducation">
+                                    <span>{{urlEducation}}</span>
+                                    <span (click)="urlEducation = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                </div>
+                            </label>
+                            
+                            <input formControlName="repotcard" id="file-input-1" type="file" accept=".pdf,.doc,application/msword" 
+                            (change)="onSelectFile($event, 'education')">
+    
+                            <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="eduArr.controls.length == 1 ? 'hideClose' : ''">
+                                <button (click)="removeEducationDoc(i)" style="display: inline-flex; background: transparent; border: none;"
+                                    type="button">
+                                    <span class="material-icons">close</span>
+                                </button>
+                            </div>
+    
+                            <div *ngIf="((eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)) && i < 3 " class="language-add-button">
+                                <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+                                <span (click)="addEducationForm()">Add</span>
+                            </div>
+                            <span *ngIf="showImgSizeError" class="sizeError">Maximum File Size: 5 MB</span>
+                        </div>
+                    </ng-container>
+                    
+                </div>
+            </div>
+            </form>
+            <form [formGroup]="certificateUploadForm">
+            <div class="card w-50 alignCard">
+                <div *ngIf="certiArr && certiArr.controls" formArrayName="certificateUploadArr" class="card-body">
+                    <label>Certificate</label>
+                    <ng-container *ngIf="certiArr && certiArr.controls">
+                        <div class="image-upload display" *ngFor="let certificate of certiArr.controls; let i = index; let last=last" [formGroupName]="i">
+                        
+                            <div class="DesInput">
+                                <input formControlName="certificateName" placeholder="Document description">
+                            </div>
+    
+                            <label class="choose-input-1" for="file-input-2">
+                                <div *ngIf="!urlCertificate">
+                                    <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
+                                    choose file
+                                </div>
+                                <div *ngIf="urlCertificate">
+                                    <span>{{urlCertificate}}</span>
+                                    <span (click)="urlCertificate = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                </div>
+                            </label>
+                            
+                            <input formControlName="certificateFile" id="file-input-2" type="file" accept=".pdf,.doc,application/msword" 
+                            (change)="onSelectFile($event, 'certificate')">
+    
+                            <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
+                                <button (click)="removeCertificate(i)" style="display: inline-flex; background: transparent; border: none;"
+                                    type="button">
+                                    <span class="material-icons">close</span>
+                                </button>
+                            </div>
+    
+                            <div *ngIf="((certiArr && certiArr.controls.length === 0) || (certiArr && certiArr.controls.length-1 === i))" class="language-add-button">
+                                <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+                                <span (click)="addCertificateForm()">Add</span>
+                            </div>
+                        </div>
+                        <span *ngIf="showImgSizeError" class="sizeError">Maximum File Size: 5 MB</span>
+                    </ng-container>
+
+                </div>
+            </div>
+            </form>
+            <form [formGroup]="otherUploadForm">
+            <div class="card w-50 alignCard">
+                    <div *ngIf="otherDocArr && otherDocArr.controls" formArrayName="otherUploadArr" class="card-body">
+                        <label>Other</label>
+                        <ng-container *ngIf="otherDocArr && otherDocArr.controls">
+                            <div class="image-upload display" *ngFor="let otherDoc of otherDocArr.controls; let i = index; let last=last" [formGroupName]="i">
+                            
+                                <div class="DesInput">
+                                    <input formControlName="otherDocName" placeholder="Document description">
+                                </div>
+    
+                                <label class="choose-input-1" for="file-input-3">
+                                    <div *ngIf="!urlOther">
+                                        <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
+                                        choose file
+                                    </div>
+                                    <div *ngIf="urlOther">
+                                        <span>{{urlOther}}</span>
+                                        <span (click)="urlOther = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                    </div>
+                                </label>
+                                
+                                <input formControlName="otherDocFile" id="file-input-3" type="file" accept=".pdf,.doc,application/msword" 
+                                (change)="onSelectFile($event, 'other')">
+    
+                                <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
+                                    <button (click)="removeOtherDoc(i)" style="display: inline-flex; background: transparent; border: none;"
+                                        type="button">
+                                        <span class="material-icons">close</span>
+                                    </button>
+                                </div>
+    
+                                <div *ngIf="((otherDocArr && otherDocArr.controls.length === 0) || (otherDocArr && otherDocArr.controls.length-1 === i))" class="language-add-button">
+                                    <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+                                    <span (click)="addOtherDocForm()">Add</span>
+                                </div>
+                                <span *ngIf="showImgSizeError" class="sizeError">Maximum File Size: 5 MB</span>
+                            </div>
+                        </ng-container>
+                        
+                    </div>
+                </div>
+                </form>
+                <div class="buttonDiv">
+                    <button type="button" class="btn-sm btn">Save</button>
+                    <button (click)="uploadFile(resumeUploadForm.value, educationUploadForm.value, certificateUploadForm.value, otherUploadForm.value)" type="button" class="btn-sm btn-1">Submit</button>
+                </div>
+</div>
+
+

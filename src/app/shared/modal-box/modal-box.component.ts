@@ -92,6 +92,10 @@ export class ModalBoxComponent implements OnInit {
     this.dialogRef.close(true);
   }
 
+  confirm(){
+    this.dialogRef.close(true);
+  }
+
   ok() {
 
   }
