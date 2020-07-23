@@ -31,7 +31,7 @@ import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-can
     CommonModule,
     SharedModule,
     MaterialModule,
-    HrDashboardRoutingModule
+    HrDashboardRoutingModule,
   ]
 })
 export class HrDashboardModule { }
