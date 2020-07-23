@@ -18,10 +18,12 @@ import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission
 import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
 import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
 import { CandidateMainDashboardComponent } from './candidate-main-dashboard/candidate-main-dashboard.component';
+import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
+import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent],
+  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent],
   imports: [
     CommonModule,
     SharedModule,

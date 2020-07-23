@@ -16,6 +16,9 @@ import { CanloadGuard } from '../guards/canload/canload.guard';
 import { KycthanksGuard } from '../guards/canload/kycthanks.guard';
 import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
 import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
+import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
+import { from } from 'rxjs';
+import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 
 
 const routes: Routes = [
@@ -60,6 +63,18 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`, component: CandidateDocumentComponent, canActivate: [CanloadGuard], children: [
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`, component: CandidateUploadDocumentComponent
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`,
             pathMatch: 'full',
           }
         ]
