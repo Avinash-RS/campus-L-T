@@ -9,7 +9,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
   styleUrls: ['./candidate-upload-document.component.scss']
 })
 export class CandidateUploadDocumentComponent implements OnInit {
-  
+
   educationValuearray: any =[];
   certificateValuearray: any =[];
   otherDocValuearray: any = [];
@@ -27,7 +27,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   educationUploadForm: FormGroup;
   certificateUploadForm: FormGroup;
   otherUploadForm: FormGroup;
-  
+
 
   constructor(private fb: FormBuilder,
     private appConfig: AppConfigService,
@@ -35,6 +35,10 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   ngOnInit() {
     this.FormInitialization();
+  }
+
+  uploadFile(resumeUploadForm, educationUploadForm, certificateUploadForm, otherUploadForm) {
+
   }
 
   educationPatch(dataArray) {
@@ -72,7 +76,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   createItem(edu): any {
     return this.fb.group({
-      
+
       level: [null ,Validators.required],
       repotcard: [null ,Validators.required]
     });
@@ -103,7 +107,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   createCertificateItem(edu): any {
     return this.fb.group({
-      
+
       certificateName: [null ,Validators.required],
       certificateFile: [null ,Validators.required]
     });
@@ -135,7 +139,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   createOtherDocItem(edu): any {
     return this.fb.group({
-      
+
       otherDocName: [null ,Validators.required],
       otherDocFile: [null ,Validators.required]
     });
@@ -155,7 +159,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       if (event.target.files[0].size < 5000000) {
         this.showImgSizeError = false;
         this.selectedImage = event.target.files[0];
-        
+
         const fd = new FormData();
         if(uploadType == 'resume'){
           this.urlResume = event.target.files[0].name
@@ -166,7 +170,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           if(event.target.id == 'file-input-'+ i){
             this.urlEducation[i] = event.target.files[0].name
           }
-          
+
           fd.append('product_image', this.selectedImage);
           fd.append('upload_type', "education_documents");
           fd.append('user_id', this.appConfig.getLocalData('userId'));
@@ -175,7 +179,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           if(event.target.id == 'file-input-2-'+ i){
             this.urlCertificate[i] = event.target.files[0].name
           }
-      
+
           fd.append('product_image', this.selectedImage);
           fd.append('upload_type', "certificate_details");
           fd.append('user_id', this.appConfig.getLocalData('userId'));
@@ -184,29 +188,29 @@ export class CandidateUploadDocumentComponent implements OnInit {
           if(event.target.id == 'file-input-3-'+ i){
             this.urlOther[i] = event.target.files[0].name
           }
-          
+
           fd.append('product_image', this.selectedImage);
           fd.append('upload_type', "other_certificate");
           fd.append('user_id', this.appConfig.getLocalData('userId'));
           fd.append('certificate_name', this.otherUploadForm.value.otherUploadArr[0].otherDocName);
         }
-      
+
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
 
         this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
           // this.url = null;
           this.appConfig.hideLoader();
           this.appConfig.success(`Document uploaded submitted`, '');
-  
+
         }, (err) => {
-  
+
         });
 
       } else {
         this.showImgSizeError = true;
         // this.url = null;
       }
-      
+
     // } else {
     //   this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
     //   this.validateAllFields(this.resumeUploadForm);

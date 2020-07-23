@@ -1,13 +1,13 @@
 <div class="main-wrapper">
-  
+
     <div class="user-list-wrapper">
-      
+
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
+
           <!-- Position Column -->
           <ng-container matColumnDef="reportname">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Reports name </th>
-            <td class="haderWidth" mat-cell *matCellDef="let element; let i = index;"> 
+            <td class="haderWidth" mat-cell *matCellDef="let element; let i = index;">
               <label *ngIf="i == 0">1st shortlist report</label>
               <label *ngIf="i == 1">2st shortlist report</label>
               <label *ngIf="i == 2">3st shortlist report</label>
@@ -15,10 +15,10 @@
               <label *ngIf="i == 4">Interview panel report</label>
             </td>
           </ng-container>
-    
+
           <ng-container matColumnDef="col2">
               <th mat-header-cell *matHeaderCellDef>  &#160;  </th>
-              <td mat-cell *matCellDef="let element; let i = index;"> 
+              <td mat-cell *matCellDef="let element; let i = index;">
                 <div *ngIf="i == 0 || i == 3">
                     <nz-select class="nzSelect"
                     nzPlaceHolder="Tag name">
@@ -33,7 +33,7 @@
           </ng-container>
           <ng-container matColumnDef="col3">
               <th mat-header-cell *matHeaderCellDef>&#160;  </th>
-              <td mat-cell *matCellDef="let element; let i = index;">  
+              <td mat-cell *matCellDef="let element; let i = index;">
                   <div *ngIf="i == 0 || i == 3">
                       <nz-select class="nzSelect"
                       nzPlaceHolder="City">
@@ -48,7 +48,7 @@
           </ng-container>
           <ng-container matColumnDef="col4">
               <th mat-header-cell *matHeaderCellDef> &#160; </th>
-              <td mat-cell *matCellDef="let element; let i = index;">  
+              <td mat-cell *matCellDef="let element; let i = index;">
                   <div *ngIf="i == 0 || i == 3">
                       <nz-select class="nzSelect"
                       nzPlaceHolder="Institute name">
@@ -61,56 +61,53 @@
                 </div>
               </td>
           </ng-container>
-  
+
           <!-- Name Column -->
           <ng-container matColumnDef="fdate">
             <th mat-header-cell *matHeaderCellDef> Date From </th>
-            <td mat-cell *matCellDef="let element"> 
+            <td mat-cell *matCellDef="let element">
                 <div class="input-box">
-                    <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, dp)" matInput [min]="minDate"
-                        [max]="maxDate" [matDatepicker]="dp">
+                    <input matInput [matDatepicker]="dp">
                     <mat-datepicker-toggle class="mat-icon-button" matSuffix [for]="dp"></mat-datepicker-toggle>
                     <mat-datepicker #dp>
                     </mat-datepicker>
                 </div>
             </td>
           </ng-container>
-    
+
           <!-- Weight Column -->
           <ng-container matColumnDef="tdate">
             <th mat-header-cell *matHeaderCellDef> Date To </th>
-            <td mat-cell *matCellDef="let element">  
+            <td mat-cell *matCellDef="let element">
                 <div class="input-box">
-                    <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, dp)" matInput [min]="minDate"
-                        [max]="maxDate" [matDatepicker]="dp">
+                    <input  matInput [matDatepicker]="dp">
                     <mat-datepicker-toggle class="mat-icon-button" matSuffix [for]="dp"></mat-datepicker-toggle>
                     <mat-datepicker #dp>
                     </mat-datepicker>
                 </div>
             </td>
           </ng-container>
-    
+
           <!-- Symbol Column -->
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element"> 
+            <td mat-cell *matCellDef="let element">
                 <div>
-                    <button (click)="downloadExcel(element)" class="download" mat-raised-button> 
-                        <span><img src="assets/images/Group4527.svg" width="20px" height="13px" alt="" srcset=""></span> 
+                    <button class="download" mat-raised-button>
+                        <span><img src="assets/images/Group4527.svg" width="20px" height="13px" alt="" srcset=""></span>
                         <span style="padding: 0 0 0 .25em;"> Download</span>
                     </button>
-                </div> 
-                
+                </div>
+
             </td>
           </ng-container>
-    
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-  
+
   </div>
 
 
-  
-  
+

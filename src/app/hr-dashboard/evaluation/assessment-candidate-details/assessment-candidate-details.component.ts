@@ -30,4 +30,8 @@ export class AssessmentCandidateDetailsComponent implements OnInit {
       disableClose: true,
     });
   }
+
+  closedialogbox() {
+
+  }
 }
