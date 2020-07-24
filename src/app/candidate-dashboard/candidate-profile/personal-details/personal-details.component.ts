@@ -837,6 +837,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
+
     if (this.url) {
       if (this.checked === true) {
         this.hidePermanentCityDropDown = false;
@@ -888,8 +889,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
         const langArrays = [];
         this.languagesForm.value.languageAdd.forEach((element, i) => {
-          langArrays.push({ field_language: { value: element.language }, field_read: [{ value: element.read }], field_write: [{ value: element.write }], field_speak: [{ value: element.speak }] });
+          if (element['language']) {
+            langArrays.push({ field_language: { value: element.language }, field_read: [{ value: element.read }], field_write: [{ value: element.write }], field_speak: [{ value: element.speak }] });
+          }
         });
+
         this.KYCModifiedData['langArr'] = langArrays;
 
         // this.KYCModifiedData.field_language = { value: this.languagesForm.value.languageRequired ? this.languagesForm.value.languageRequired : '' };
@@ -967,37 +971,37 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       mail: ['', [Validators.required, Validators.pattern(emailregex)]],
       mobile: ['', [Validators.required, Validators.pattern(mobileRegex)]],
       gender: ['', [Validators.required]],
-      marital: ['', [Validators.required]],
+      marital: [''],
       dobDate: [null, [Validators.required]],
       dobMonth: [null, [Validators.required]],
       dobYear: [null, [Validators.required]],
-      nationality: ['', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-      aadhaar: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
+      nationality: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      aadhaar: ['', [Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
       category: [''],
     }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
     this.presentAddressForm = this.fb.group({
-      presentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
-      presentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
-      presentZipCode: ['', [Validators.required, Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
-      presentState: ['', [Validators.required]],
-      presentCity: ['', [Validators.required]],
+      presentAddress1: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      presentAddress2: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      presentZipCode: ['', [Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
+      presentState: [''],
+      presentCity: [''],
     }), this.presentAddressPatchValue();
 
     // Present Address Form
     this.permanentAddressForm = this.fb.group({
-      permanentAddress1: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
-      permanentAddress2: ['', [Validators.required, Validators.maxLength(255), RemoveWhitespace.whitespace()]],
-      permanentZipCode: ['', [Validators.required, Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
-      permanentState: ['', [Validators.required]],
-      permanentCity: ['', [Validators.required]],
+      permanentAddress1: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      permanentAddress2: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      permanentZipCode: ['', [Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
+      permanentState: [''],
+      permanentCity: [''],
     }), this.permanentAddressPatchValue();
 
 
     // Language Form
     this.languagesForm = this.fb.group({
-      languageRequired: ['sd', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      languageRequired: ['s', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       firstRead: [true],
       firstWrite: [''],
       firstSpeak: [''],
@@ -1078,14 +1082,14 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
       return this.fb.group({
-        language: [data['field_language']['value'], [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        language: [data['field_language']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         read: data['field_read'][0]['value'],
         write: data['field_write'][0]['value'],
         speak: data['field_speak'][0]['value']
       }, { validator: FormCustomValidators.anyOneSelected });
     } else {
       return this.fb.group({
-        language: ['', [Validators.required, Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        language: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         read: '',
         write: '',
         speak: ''
@@ -1278,9 +1282,10 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   async onSelectFile(event) {
 
-    if (event.target.files && event.target.files[0].type.includes('image/') && !event.target.files[0].type.includes('svg')) {
+    if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
-      if (event.target.files[0].size < 2000000) {
+
+      if (event.target.files[0].size < 1000000) {
         this.showSizeError.image = false;
         this.selectedImage = event.target.files[0];
 

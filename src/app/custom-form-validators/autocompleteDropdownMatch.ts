@@ -98,7 +98,9 @@ export class FormCustomValidators {
           // return { notSelected: true };
         }
       }
-
+    } else {
+      g.controls['read'].setErrors(null);
+      return null;
     }
   }
 

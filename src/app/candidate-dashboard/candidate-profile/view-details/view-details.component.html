@@ -30,7 +30,7 @@
           <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label>
         </div>
       </div>
-      <div class="form-group">
+      <div *ngIf="userDetails && userDetails['marital']" class="form-group">
         <label>Marital Status</label>
         <div class="radio">
           <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label>
@@ -100,7 +100,7 @@
 
     </div>
   </div>
-
+  <ng-container *ngIf="userDetails && userDetails['languagesknown'] && userDetails['languagesknown'].length > 0">
   <div style="margin: 1em 0 0 0 !important; height: 25px;" class="language-grid">
     <div class="form-wrapper-left" style="height: 0;">
       <div style="visibility: hidden;" class="form-group">
@@ -116,7 +116,8 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="userDetails && userDetails['languagesknown']">
+  </ng-container>
+  <ng-container *ngIf="userDetails && userDetails['languagesknown'] && userDetails['languagesknown'].length > 0">
     <div class="language-grid" *ngFor="let dup of userDetails['languagesknown']; let i = index">
       <div class="form-wrapper-left">
         <div class="form-group">

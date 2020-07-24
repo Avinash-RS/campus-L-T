@@ -199,6 +199,9 @@ export class ViewDetailsComponent implements OnInit {
       facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
     };
 
+    console.log('checking', dump['languagesknown']);
+
+
     if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
       this.url = `${this.appConfig.imageBaseUrl()}/d8cintana2/sites/default/files/2020-06/filename1_1.jpg`;
     }
@@ -221,6 +224,8 @@ export class ViewDetailsComponent implements OnInit {
     });
 
     this.userDetails = dump;
+    console.log('languagesknown', this.userDetails.languagesknown);
+
     this.permanentStateId = this.userDetails['permanentState'];
     console.log(this.userDetails);
     if (this.allStatess) {
@@ -294,6 +299,8 @@ export class ViewDetailsComponent implements OnInit {
 
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
+      console.log('data', data);
+
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {
         if (data[0] && data[0]['field_isformsubmitted'] && data[0]['field_isformsubmitted'][0] && data[0]['field_isformsubmitted'][0]['value'] === true) {
@@ -453,15 +460,19 @@ export class ViewDetailsComponent implements OnInit {
           ],
         };
         // For Language Array
-        this.KYCModifiedData['langArr'] = [
-          {
-            field_language: { value: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'][0] ? organizeUserDetails['field_language'][0]['value'] : '' },
+        if (organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'].length > 0) {
+          this.KYCModifiedData['langArr'] = [
+            {
+              field_language: { value: organizeUserDetails && organizeUserDetails['field_language'] && organizeUserDetails['field_language'][0] ? organizeUserDetails['field_language'][0]['value'] : '' },
 
-            field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
-            field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
-            field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
-          }
-        ];
+              field_read: [{ value: organizeUserDetails && organizeUserDetails['field_read'] && organizeUserDetails['field_read'][0] ? organizeUserDetails['field_read'][0]['value'] : '' }],
+              field_write: [{ value: organizeUserDetails && organizeUserDetails['field_write'] && organizeUserDetails['field_write'][0] ? organizeUserDetails['field_write'][0]['value'] : '' }],
+              field_speak: [{ value: organizeUserDetails && organizeUserDetails['field_speak'] && organizeUserDetails['field_speak'][0] ? organizeUserDetails['field_speak'][0]['value'] : '' }],
+            }
+          ];
+        } else {
+          this.KYCModifiedData['langArr'] = [];
+        }
         if (organizeUserDetails && organizeUserDetails['field_language1'].length > 0) {
           const a = {
             field_language: { value: organizeUserDetails && organizeUserDetails['field_language1'] && organizeUserDetails['field_language1'][0] ? organizeUserDetails['field_language1'][0]['value'] : '' },
@@ -507,6 +518,7 @@ export class ViewDetailsComponent implements OnInit {
           };
           this.KYCModifiedData['langArr'].push(a);
         }
+
 
 
         // For Educational Array

@@ -155,16 +155,36 @@
     display: inline-flex;
     justify-content: center;
     .photo-wrapper {
-      width: 210px;
+      width: 190px;
       height: 230px;
-      display: grid;
+      // display: grid;
       margin: 1em 0;
-      grid-template-rows: 4fr 1fr;
+      // grid-template-rows: 4fr 1fr;
       padding: 0;
-      background: $white-primary;
+      background: $white;
       border-radius: 5px;
       position: relative;
       box-shadow: $shadow-light-black;
+      .photo-sub-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      .head {
+        color: $black-1;
+        font-size: 12px;
+        text-align: center;
+        padding: 4px 0 0 0;
+      }
+      .hoverable {
+        width: 100%;
+        height: 100%;
+        padding: 0px;
+      }
+      .hoverable1 {
+        width: 100%;
+        height: 100%;
+        padding: 6px;
+      }
       .profile-pic-container {
         width: 100%;
         position: relative;
@@ -176,11 +196,48 @@
         .remove {
           cursor: pointer;
           position: absolute;
-          right: 0;
           z-index: 10;
           opacity: 0.85;
           top: 0;
           padding: 0em 0em 0.25em 0.25em;
+          right: -20px;
+        }
+        .bottom-label {
+          color: $black-1;
+          font-size: 12px;
+          text-align: center;
+          padding: 4px 4px;
+        }
+        .image-wrapper {
+          position: relative;
+          display: flex;
+          background: #cecece 0% 0% no-repeat padding-box;
+          align-items: center;
+          width: 100%;
+          min-height: 148px;
+          max-height: 148px;
+          justify-content: center;
+          .default {
+            width: 70px;
+            height: 70px;
+          }
+          .profile {
+            width: 210px;
+            height: 230px;
+          }
+          .default1 {
+            width: 22px;
+            height: 22px;
+            position: absolute;
+            text-align: left;
+            top: 2px;
+            left: 2px;
+          }
+          .profile1 {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+          }
         }
         .default {
           width: 50px;
@@ -218,28 +275,31 @@
       .info-text {
         box-shadow: $shadow-light-black;
         border-radius: 5px;
-        position: absolute;
+        position: relative;
         width: 100%;
         bottom: 0px;
         display: flex;
+        align-items: center;
+        background: $white-primary;
         // padding: 0.5em 0.5em 0 0.5em;
-        min-height: 40px;
+        // min-height: 40px;
         box-sizing: border-box;
         span {
-          margin: 0.5em;
-          color: $black-1;
-          font-size: 12px;
+          padding: 3px;
+          color: #707070;
+          font-size: 10px;
           text-align: center;
         }
       }
       .sizeError {
-        position: absolute;
-        top: -24px;
+        position: relative;
         color: $red;
-        font-size: 14px;
+        font-size: 12px;
+        margin: 4px 0;
         font-weight: 200;
       }
     }
+  }
   }
 }
 .checkbox {
