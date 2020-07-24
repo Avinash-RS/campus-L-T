@@ -39,12 +39,12 @@
     </div>
     <div *ngIf="!url" class="text-wrapper">
       <div class="bold-text">Upload image of your handwriting signature</div>
-      <div class="footer-text">Image types can include PNG, JPG, JPEG and BMP (file size 10 KB - 1 MB)</div>
+      <div class="footer-text">Image types can include PNG, JPG, JPEG and BMP (file size 40 KB - 2 MB)</div>
     </div>
 
   </div>
   <div *ngIf="(showSizeError && showSizeError.size) || (showSizeError && showSizeError.image)" class="sizeError">
-    {{(showSizeError.size ? 'Maximum File Size: 1 MB!' : 'Image types can include PNG, JPG, JPEG and BMP')}}
+    {{(showSizeError.size ? showSizeError.maxsize : 'Image types can include PNG, JPG and JPEG')}}
   </div>
 
   <div class="ack">

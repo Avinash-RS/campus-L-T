@@ -12,10 +12,10 @@ import { HrShortlistingComponent } from './hr-shortlisting/hr-shortlisting.compo
 import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shortlist/first-level-shortlist.component';
 import { HrcanloadGuard } from '../guards/canload/hrcanload.guard';
 import { HrUserManagementComponent } from './hr-user-management/hr-user-management.component';
-import { BulkUploadComponent } from './hr-user-management/bulk-upload/bulk-upload.component';
+import { BulkUploadComponent } from './hr-user-management/candidate-bulk-upload/bulk-upload/bulk-upload.component';
 import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
 import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
-import { UploadedListComponent } from './hr-user-management/uploaded-list/uploaded-list.component';
+import { UploadedListComponent } from './hr-user-management/candidate-bulk-upload/uploaded-list/uploaded-list.component';
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
@@ -23,13 +23,16 @@ import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bul
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
+import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
+import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
+
+
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
 import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
 import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
 import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
 import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
-import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
-import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
+import { CandidateBulkUploadComponent } from './hr-user-management/candidate-bulk-upload/candidate-bulk-upload.component';
 
 const routes: Routes = [
   {
@@ -68,10 +71,20 @@ const routes: Routes = [
       {
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`, component: HrUserManagementComponent, children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, component: UploadedListComponent
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, component: BulkUploadComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: CandidateBulkUploadComponent,
+            children: [
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, component: UploadedListComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, component: BulkUploadComponent
+              },
+              {
+                path: '',
+                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
+                pathMatch: 'full',
+              }
+            ]
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`, component: UserListComponent
@@ -81,7 +94,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
             pathMatch: 'full',
           }
         ]

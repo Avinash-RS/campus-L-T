@@ -64,7 +64,7 @@ export class HrPreAssessmentComponent implements OnInit {
   tagValue = new FormControl('');
   shortlistValue = new FormControl('');
 
-  damoData= [
+  damoData = [
     {
       'id': 1234,
       'mail_sent': 1,
@@ -83,11 +83,13 @@ export class HrPreAssessmentComponent implements OnInit {
     }
   ]
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
-    private sharedService: SharedServiceService) { }
+    private sharedService: SharedServiceService
+    ) { }
 
   ngOnInit() {
     this.getUsersList();
@@ -128,7 +130,7 @@ export class HrPreAssessmentComponent implements OnInit {
   getUsersList() {
     const apiData = {
       get_assement_type: 'pre',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: '',
       get_folder_name: '',
       get_shortlist_name: '',
       get_tag_name: '',
@@ -136,16 +138,16 @@ export class HrPreAssessmentComponent implements OnInit {
       date2_get: ''
     };
     // this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      // console.log('api', data);
+    this.appConfig.hideLoader();
+    // console.log('api', data);
 
-      // if (data) {
-      //   this.userList = data ? data : [];
-      // }
-      this.userList = this.damoData;
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    // if (data) {
+    //   this.userList = data ? data : [];
+    // }
+    this.userList = this.damoData;
+    this.dataSource = new MatTableDataSource(this.userList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     // }, (err) => {
     // });
   }
@@ -167,7 +169,7 @@ export class HrPreAssessmentComponent implements OnInit {
   selectChange() {
     const apiData = {
       get_assement_type: 'pre',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: '',
       get_folder_name: this.folderValue.value ? this.folderValue.value : '',
       get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
       get_tag_name: this.tagValue.value ? this.tagValue.value : '',
@@ -223,7 +225,7 @@ export class HrPreAssessmentComponent implements OnInit {
           this.endDateValidation = false;
           const apiData = {
             get_assement_type: 'pre',
-            get_created_by: this.appConfig.getLocalData('userId'),
+            get_created_by: '',
             get_folder_name: this.folderValue.value ? this.folderValue.value : '',
             get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
             get_tag_name: this.tagValue.value ? this.tagValue.value : '',
@@ -245,7 +247,7 @@ export class HrPreAssessmentComponent implements OnInit {
     this.dateValidation = false;
     const apiData = {
       get_assement_type: 'pre',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: '',
       get_folder_name: this.folderValue.value ? this.folderValue.value : '',
       get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
       get_tag_name: this.tagValue.value ? this.tagValue.value : '',

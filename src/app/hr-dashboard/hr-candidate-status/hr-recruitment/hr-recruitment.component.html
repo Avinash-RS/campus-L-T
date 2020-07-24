@@ -63,7 +63,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </div>
                 </div>
-  
+
               </div>
             </div>
             <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
@@ -76,7 +76,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">
       <!-- <mat-form-field>
                   <mat-label>Filter</mat-label> -->
@@ -87,21 +87,21 @@
         </div>
       </div>
       <!-- </mat-form-field> -->
-  
+
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
+
         <!-- Position Column -->
         <ng-container matColumnDef="uid">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>S No. </th>
           <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate Id </th>
           <td mat-cell *matCellDef="let element"> {{element && element.id ? (element.id) : '-'}} </td>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="mail_sent">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail sent </th>
@@ -114,7 +114,7 @@
             </span>
           </td>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="registered">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Registered </th>
@@ -126,7 +126,7 @@
               <img src="assets/images/001-cancel1.svg" alt="">
             </span>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="profile_submit">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Profile submit </th>
@@ -139,7 +139,7 @@
             </span>
           </td>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="profile_shortlist">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Profile shortlist </th>
@@ -151,7 +151,7 @@
               <img src="assets/images/001-cancel1.svg" alt="">
             </span>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="assement">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment </th>
@@ -163,7 +163,7 @@
               <img src="assets/images/001-cancel1.svg" alt="">
             </span>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="assement_shortlist">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment shortlist </th>
@@ -175,7 +175,7 @@
               <img src="assets/images/001-cancel1.svg" alt="">
             </span>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="document_submit">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Document submit </th>
@@ -187,7 +187,7 @@
               <img src="assets/images/001-cancel1.svg" alt="">
             </span>
         </ng-container>
-  
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="interview_shortlist">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview shortlist </th>
@@ -199,7 +199,7 @@
               <img src="assets/images/001-cancel1.svg" alt="">
             </span>
         </ng-container>
-  
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
           [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
@@ -209,6 +209,9 @@
     <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
       <div>No data available </div>
     </div>
-  
+
+    <div class="button-wrappers" *ngIf="userList && userList.length > 0">
+      <button mat-raised-button>Download</button>
+    </div>
+
   </div>
-  

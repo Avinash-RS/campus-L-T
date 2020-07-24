@@ -57,11 +57,15 @@ export class ShortlistBoxComponent implements OnInit {
     this.dialogRef.close(data);
   }
   adminReject() {
-    const data = {
-      status: 'reject',
-      comments: this.instituteRejection.value
-    };
-    this.dialogRef.close(data);
+    if (this.instituteRejection.valid) {
+      const data = {
+        status: 'reject',
+        comments: this.instituteRejection.value
+      };
+      this.dialogRef.close(data);
+    } else {
+      this.instituteRejection.markAsTouched();
+    }
   }
 
   cancel() {

@@ -86,12 +86,13 @@ th {
   // text-align: center !important;
   padding-left: 1em !important;
 }
-.submit-btn {
-  background: #077ddd 0% 0% no-repeat padding-box;
-  box-shadow: 0px 0px 3px #00000040;
-  color: $white;
-  justify-content: center;
-  height: 28px;
+.submit-btn, .submit-btn:focus {
+  background: #077ddd 0% 0% no-repeat padding-box !important;
+  box-shadow: 0px 0px 3px #00000040 !important;
+  color: $white !important;
+  justify-content: center !important;
+  height: 28px !important;
+  border: 4px !important;
   display: flex;
 }
 .buttonDisabled {

@@ -109,7 +109,7 @@ export class HrRecruitmentComponent implements OnInit {
   getUsersList() {
     const apiData = {
       get_assement_type: 'rec',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: '',
       get_folder_name: '',
       get_shortlist_name: '',
       get_tag_name: '',
@@ -147,7 +147,7 @@ export class HrRecruitmentComponent implements OnInit {
   selectChange() {
     const apiData = {
       get_assement_type: 'rec',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: '',
       get_folder_name: this.folderValue.value ? this.folderValue.value : '',
       get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
       get_tag_name: this.tagValue.value ? this.tagValue.value : '',
@@ -203,7 +203,7 @@ export class HrRecruitmentComponent implements OnInit {
           this.endDateValidation = false;
           const apiData = {
             get_assement_type: 'rec',
-            get_created_by: this.appConfig.getLocalData('userId'),
+            get_created_by: '',
             get_folder_name: this.folderValue.value ? this.folderValue.value : '',
             get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
             get_tag_name: this.tagValue.value ? this.tagValue.value : '',
@@ -225,7 +225,7 @@ export class HrRecruitmentComponent implements OnInit {
     this.dateValidation = false;
     const apiData = {
       get_assement_type: 'rec',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: '',
       get_folder_name: this.folderValue.value ? this.folderValue.value : '',
       get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
       get_tag_name: this.tagValue.value ? this.tagValue.value : '',

@@ -240,6 +240,29 @@
       width: 100%;
     }
   }
+
+  .button-wrappers {
+    display: flex;
+    margin: 0em 0 0 0em;
+    justify-content: center;
+    text-align: center;
+    button:nth-of-type(1) {
+      width: 110px;
+      height: 30px;
+      background: $light-blue 0% 0% no-repeat padding-box;
+      box-shadow: $shadow-light-black-1;
+      border-radius: 8px;
+      font-weight: 200;
+      font-size: 14px;
+      color: $white;
+      outline: none;
+      margin: 1em 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
 }
 
 td {
