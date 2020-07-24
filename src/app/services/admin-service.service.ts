@@ -232,6 +232,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  tpoBulkMailSent(data) {
+    return this.http.post(`${this.BASE_URL}/profile/user_email_sent`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   TPOStatusShortlistLists() {
     return this.http.get(`${this.BASE_URL}/profile/shortlist_details`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

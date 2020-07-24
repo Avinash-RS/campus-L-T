@@ -1,78 +1,106 @@
-<div class="main-wrapper-uploaded-list">
-    <!-- <div class="line">
-    </div> -->
+<div class="main-wrapper-uploaded-list tpo-main-wrapper-uploaded-list">
+  <!-- <div class="line">
+  </div> -->
 
-    <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">
-      <!-- <mat-form-field>
+  <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">
+    <!-- <mat-form-field>
               <mat-label>Filter</mat-label> -->
-      <div class="search-bar">
-        <div class="search-icon">
-          <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
-          <img src="assets/images/feather-search.svg" alt="" srcset="">
-        </div>
+    <div class="search-bar">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
       </div>
-      <!-- </mat-form-field> -->
+      <div class="button-wrapper" [matTooltip]="enableSend ? '' : 'Select the checkboxes to send mail'">
+          <button [ngClass]="enableSend ? '' : 'disable'" (click)="sendEmailPop()" mat-raised-button><span class="icon"><img src="assets/images/002-tick.svg" alt="" srcset=""></span>
+            <span> Send email</span></button>
+        </div>
+    </div>
+    <!-- </mat-form-field> -->
 
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="counter">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
-        </ng-container>
+      <!-- Position Column -->
+      <ng-container matColumnDef="counter">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{element && element.sno ? element.sno : '-' }} </td>
+      </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="tag">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.Tag ? element.Tag : '-' }} </td>
-        </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="tag">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag </th>
+        <td mat-cell *matCellDef="let element"> {{element && element.Tag ? element.Tag : '-' }} </td>
+      </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.name ? element.name : '-' }} </td>
-        </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element && element.name ? element.name : '-' }} </td>
+      </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate ID </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.id ? element.id : '-' }} </td>
-        </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate ID </th>
+        <td mat-cell *matCellDef="let element"> {{element && element.id ? element.id : '-' }} </td>
+      </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.email ? element.email : '-' }} </td>
-        </ng-container>
+      <!-- Weight Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element && element.email ? element.email : '-' }} </td>
+      </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="uploaded_by">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Uploaded by </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.uploaded_by ? element.uploaded_by : '-' }} </td>
-        </ng-container>
+      <!-- Weight Column -->
+      <ng-container matColumnDef="uploaded_by">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Uploaded by </th>
+        <td mat-cell *matCellDef="let element"> {{element && element.uploaded_by ? element.uploaded_by : '-' }} </td>
+      </ng-container>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="uploader_role">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-          <td mat-cell *matCellDef="let element">
-              {{element && element.uploader_role ? element.uploader_role : '-' }} </td>
-        </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="uploader_role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <td mat-cell *matCellDef="let element">
+          {{element && element.uploader_role ? element.uploader_role : '-' }} </td>
+      </ng-container>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of upload </th>
-          <td mat-cell *matCellDef="let element">
-              {{element && element.date ? element.date : '-' }} </td>
-        </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of upload </th>
+        <td mat-cell *matCellDef="let element">
+          {{element && element.date ? element.date : '-' }} </td>
+      </ng-container>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Time of upload </th>
-          <td mat-cell *matCellDef="let element">
-              {{element && element.time ? element.time : '-' }} </td>
-        </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time of upload </th>
+        <td mat-cell *matCellDef="let element">
+          {{element && element.time ? element.time : '-' }} </td>
+      </ng-container>
 
-        <!-- <ng-container matColumnDef="checked">
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="email_sent">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email status </th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="element && element.email_sent === 'yes' ? 'green' : ''">{{element && element.email_sent === 'yes' ? 'Sent' : '' }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="checked">
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Select All</div>
+          <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="selectAllCheck" (change)="selectAllCheckbox($event)"
+            [checked]="selectAllCheck">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)" [checked]="element.checked"
+            [disabled]="element && element['email_sent'] === 'yes' ? true : false">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+
+      <!-- <ng-container matColumnDef="checked">
           <th mat-header-cell *matHeaderCellDef> Select </th>
           <td mat-cell *matCellDef="let element">
             <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
@@ -81,14 +109,15 @@
           </td>
         </ng-container> -->
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
-    </div>
-    <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
-      <div>No data available </div>
-    </div>
-
-
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
+      [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
   </div>
+  <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
+    <div>No data available </div>
+  </div>
+
+
+</div>

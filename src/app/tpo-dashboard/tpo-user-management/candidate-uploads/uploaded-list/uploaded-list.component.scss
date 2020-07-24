@@ -1,12 +1,14 @@
-@import '../../../../themes/themes.scss';
+@import "../../../../themes/themes.scss";
 
 .main-wrapper-uploaded-list {
-  padding: 4px;
+  padding: 0 4px 4px 4px;
   background: $wrapper-light-gray;
   height: 100%;
   .line {
     height: 40px;
     border-bottom: solid 1px $primary;
+    display: flex;
+    align-items: center;
   }
 
   .user-list-wrapper {
@@ -15,6 +17,31 @@
     .search-bar {
       margin: 0em 1em 0em 1em;
       text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      .button-wrapper {
+        display: flex;
+        padding-left: 12px;
+        button, button:focus {
+          display: flex;
+          height: 26px;
+          font-size: 13px;
+          justify-content: center;
+          align-items: center;
+          padding: 4px;
+          background: #269A45;
+          color: $white;
+          .icon {
+            img {
+              padding-right: 3px;
+              width: 16px;
+              height: 16px;
+              vertical-align: text-top;
+            }
+          }
+        }
+      }
       .search-icon {
         display: inline-flex;
         align-items: center;
@@ -101,8 +128,18 @@ th {
     color: $header-blue;
     font-size: 20px;
     text-align: center;
-}
+  }
 }
 .hide {
   display: none;
+}
+.disable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.light-bg {
+  background: #FFFDFD 0% 0% no-repeat padding-box !important;
+}
+.dark-bg {
+  background: #F7F7F7 0% 0% no-repeat padding-box !important;
 }

@@ -56,6 +56,24 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'tpo-candidate-bulk'">
+    <div class="bulk-upload-text">
+        The selected candidate/candidates will receive an email to create an account.</div>
+    <div class="buttons">
+      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    </div>
+  </div>
+
+  <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'excel-candidate-bulk'">
+      <div class="bulk-upload-text">
+          Confirm to upload candidate details</div>
+      <div class="buttons">
+        <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+        <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+      </div>
+    </div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'institute-bulk'">
   <div class="bulk-upload-text">
     Confirm to upload institute details and send mails to TPO
@@ -72,7 +90,7 @@
       *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
     <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
       uploaded.</span> <br> <span
-      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} candidates has not
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
       been uploaded. Please go to reports to see the detailed error details. </span>
   </div>
   <div class="buttons">
@@ -80,13 +98,36 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['excel_bulk_upload_ok']">
+    <div class="bulk-upload-text">
+      <span
+        *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
+      <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
+        uploaded.</span> <br> <span
+        *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}  {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
+        been uploaded. </span>
+    </div>
+    <div class="buttons">
+      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    </div>
+  </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['tpo_bulk_upload_ok']">
+    <div class="bulk-upload-text">
+ <span>The mail has been sent successfully</span>
+    </div>
+    <div class="buttons">
+      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    </div>
+  </div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['institute_bulk_upload_ok']">
   <div class="bulk-upload-text">
     <span
       *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Institute details have been successfully uploaded.' : ''}}</span>
     <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Institute details has not been successfully
       uploaded.</span> <br> <span
-      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} institutes has not
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'institute' : 'institutes'}} has not
       been uploaded.</span>
   </div>
   <div class="buttons">

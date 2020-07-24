@@ -102,12 +102,8 @@
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let element">
-          <!-- <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
-            <label nz-radio [nzValue]="element.uid"></label>
-          </nz-radio-group> -->
           <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)" [checked]="element.checked">
           </mat-checkbox>
-
         </td>
       </ng-container>
 

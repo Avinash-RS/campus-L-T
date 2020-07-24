@@ -71,7 +71,7 @@ export class BulkUploadComponent implements OnInit {
   }
   submit() {
     const data = {
-      bulk_upload: 'candidate-bulk'
+      bulk_upload: 'excel-candidate-bulk'
     };
     this.openDialog(ShortlistBoxComponent, data);
   }
@@ -130,7 +130,7 @@ export class BulkUploadComponent implements OnInit {
       console.log('success', data);
       this.appConfig.hideLoader();
       const datas = {
-        bulk_upload_ok: 'candidate-bulk',
+        excel_bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data.length : 0,
       };
@@ -244,15 +244,6 @@ export class BulkUploadComponent implements OnInit {
   // Open dailog
   openDialog(component, data) {
     let dialogDetails: any;
-
-    // dialogDetails = {
-    //   iconName: data.iconName,
-    //   showCancel: data.showCancel,
-    //   showConfirm: data.showConfirm,
-    //   showOk: data.showOk,
-    //   dataToBeShared: data.sharedData,
-    // };
-
     /**
      * Dialog modal window
      */
