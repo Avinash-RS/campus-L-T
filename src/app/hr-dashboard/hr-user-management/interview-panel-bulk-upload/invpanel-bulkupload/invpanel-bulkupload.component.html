@@ -1,0 +1,97 @@
+<div class="main-wrapper-uploaded-list">
+  <!-- <div class="line">
+    </div> -->
+  <div class="upload-wrapper" *ngIf="!enableList">
+    <div class="top-wrapper">
+      <div class="upload">
+        <div class="outer-wrapper">
+          <div class="text-wrapper">
+            <label class="inner-wrapper" for="fileInput" *ngIf="!url">
+              <!-- <div class="inner-wrapper"> -->
+              <img src="assets/images/file-upload.svg" alt=""> Upload Interview panel details
+              <!-- </div> -->
+              <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
+                (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv, text/csv"
+                (change)="onSelectFile($event)">
+            </label>
+            <div class="inner-wrapper" *ngIf="url">
+              <div class="list">
+                <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
+                    src="assets/images/005-close-1_bulk.svg" alt=""></span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv)</div>
+          <div *ngIf="showSizeError && showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
+          <div *ngIf="showSizeError && showSizeError['image']" class="error">Accept only .csv files</div>
+          <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
+
+        </div>
+      </div>
+      <div class="buttons">
+        <button (click)="delete()" class="cancel" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
+        <button (click)="upload()" class="upload" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+      </div>
+    </div>
+    <div class="download">
+      <div class="outer-wrapper">
+        <div (click)="downloadTemplate()" class="inner-wrapper">
+          <img src="assets/images/download.svg" alt=""> Download template
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="list-wrapper" *ngIf="enableList">
+    <div class="list-count">
+      Total number of Interview panels : {{uploadedListArray ? uploadedListArray['length'] : ''}}
+    </div>
+    <div class="list-table">
+      <div class="head-grid">
+        <div class="tag">
+          Name
+        </div>
+        <div class="name">
+          Employee ID
+        </div>
+        <div class="email">
+          Email ID
+        </div>
+        <div class="discipline">
+          Discipline
+        </div>
+        <div class="delete">
+          Delete
+        </div>
+      </div>
+      <div class="scroll">
+        <ng-container *ngFor="let dup of uploadedListArray; let i = index">
+          <div class="child-grid" ngDefaultControl [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'">
+            <div class="name">
+              {{dup['name']}}
+            </div>
+            <div class="employeeId">
+                {{dup['employeeId']}}
+              </div>
+            <div class="email">
+              {{dup['email']}}
+            </div>
+            <div class="discipline">
+              {{dup['discipline']}}
+            </div>
+            <div class="delete">
+              <img (click)="removeSelectedCandidate(i)" src="assets/images/005-close-1.svg" alt="" srcset="">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="button-wrapper">
+      <button (click)="backToUpload()" class="cancel" mat-raised-button>Cancel</button>
+      <button [disabled]="SavedData && SavedData.length > 1 ? false : true" (click)="submit()" class="ok"
+        mat-raised-button>Ok</button>
+    </div>
+  </div>
+</div>

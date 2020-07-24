@@ -56,6 +56,17 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'invPanel-bulk'">
+    <div class="bulk-upload-text">
+      Confirm to upload Interview panel details and send them mails to create an account
+    </div>
+    <div class="buttons">
+      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    </div>
+  </div>
+
+
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'tpo-candidate-bulk'">
     <div class="bulk-upload-text">
         The selected candidate/candidates will receive an email to create an account.</div>
@@ -97,6 +108,21 @@
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['invpanel_bulk_upload_ok']">
+    <div class="bulk-upload-text">
+      <span
+        *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Interview panel has been successfully uploaded.' : ''}}</span>
+      <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Interview panel details has not been successfully
+        uploaded.</span> <br> <span
+        *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}  {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'Interview panel' : 'Interview panels'}} has not
+        been uploaded. </span>
+    </div>
+    <div class="buttons">
+      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    </div>
+  </div>
+
 
 <div class="modal-box-wrapper" *ngIf="data && data['excel_bulk_upload_ok']">
     <div class="bulk-upload-text">
