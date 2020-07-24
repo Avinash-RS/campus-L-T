@@ -19,7 +19,9 @@ export class ConfirmComponent implements OnInit {
   url = null;
   showSizeError = {
     image: false,
-    size: false
+    size: false,
+    maxsize: '',
+    minsize: ''
   };
   signatureData: any;
   selectedImage: any;
@@ -258,47 +260,55 @@ export class ConfirmComponent implements OnInit {
 
     if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
-      if (event.target.files[0].size < 1000000) {
-        this.showSizeError.image = false;
-        this.selectedImage = event.target.files[0];
+      // if (event.target.files[0].size > 500000 && event.target.files[0].size < 2000000) {
+      if (event.target.files[0].size > 40000) {
+        if (event.target.files[0].size < 2000000) {
+          this.showSizeError.image = false;
+          this.selectedImage = event.target.files[0];
 
-        const fd = new FormData();
-        fd.append('file', this.selectedImage);
-        const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
-        const reader = new FileReader();
-        let urls;
-        // console.log(reader.readAsBinaryString(event.target.files[0]));
+          const fd = new FormData();
+          fd.append('file', this.selectedImage);
+          const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
+          const reader = new FileReader();
+          let urls;
+          // console.log(reader.readAsBinaryString(event.target.files[0]));
 
-        reader.readAsDataURL(event.target.files[0]); // read file as data url
-        reader.onload = (event: any) => { // called once readAsDataURL is completed
-          urls = event.target.result;
-          this.url = urls;
-          this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
-            console.log(data);
+          reader.readAsDataURL(event.target.files[0]); // read file as data url
+          reader.onload = (event: any) => { // called once readAsDataURL is completed
+            urls = event.target.result;
+            this.url = urls;
+            this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
+              console.log(data);
 
-            this.signatureData = {
-              target_id: data.fid[0].value,
-              alt: 'signature',
-              title: '',
-              width: 480,
-              height: 100,
-              localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
-              url: data.uri[0].url,
-              status: 'true'
-            };
-            this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-            console.log(this.signatureData);
+              this.signatureData = {
+                target_id: data.fid[0].value,
+                alt: 'signature',
+                title: '',
+                width: 480,
+                height: 100,
+                localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
+                url: data.uri[0].url,
+                status: 'true'
+              };
+              this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
+              console.log(this.signatureData);
 
-            this.appConfig.hideLoader();
+              this.appConfig.hideLoader();
 
-          }, (err) => {
+            }, (err) => {
 
-          });
+            });
 
-        };
+          };
+        } else {
+          this.showSizeError.image = false;
+          this.showSizeError.size = true;
+          this.showSizeError.maxsize = 'Maximum File Size: 2MB!';
+        }
       } else {
         this.showSizeError.image = false;
         this.showSizeError.size = true;
+        this.showSizeError.maxsize = 'Minimum File Size: 40kb!';
         // this.url = null;
       }
     } else {

@@ -136,7 +136,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   url: string;
   showSizeError = {
     image: false,
-    size: false
+    size: false,
+    minsize: '',
+    maxsize: ''
   };
   userData: any;
   userDetails: any;
@@ -1285,7 +1287,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
 
-      if (event.target.files[0].size < 1000000) {
+      // if (event.target.files[0].size > 500000 && event.target.files[0].size < 2000000) {
+      if (event.target.files[0].size > 40000) {
+        if (event.target.files[0].size < 2000000) {
         this.showSizeError.image = false;
         this.selectedImage = event.target.files[0];
 
@@ -1316,6 +1320,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         };
       } else {
         this.showSizeError.size = true;
+        this.showSizeError.maxsize = 'Maximum File Size: 2MB!';
+      }
+      } else {
+        this.showSizeError.size = true;
+        this.showSizeError.maxsize = 'Minimum File Size: 40kb!';
         // this.url = null;
       }
     } else {

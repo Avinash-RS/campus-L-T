@@ -202,10 +202,10 @@
           (change)="onSelectFile($event)">
       </div>
       <div *ngIf="!url" class="info-text">
-        <span>(Size: 10kb to 1MB - Format: jpeg & png)</span>
+        <span>(Size: 40kb to 2MB - Format: jpeg & png)</span>
       </div>
       <div *ngIf="(showSizeError && showSizeError.size) || (showSizeError && showSizeError.image)" class="sizeError">
-        {{(showSizeError.size ? 'Maximum File Size: 1MB!' : 'Valid File Format is PNG or JPEG')}}
+        {{(showSizeError.size ? showSizeError.maxsize : 'Valid File Format is PNG or JPEG')}}
       </div>
 </div>
     </div>
