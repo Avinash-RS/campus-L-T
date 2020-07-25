@@ -10,6 +10,7 @@ import { InvSubAssessmentsComponent } from './inv-candidate-details/inv-evaluati
 import { InvSubEducationComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-education/inv-sub-education.component';
 import { InvSubEmploymentComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-employment/inv-sub-employment.component';
 import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-evaluate/inv-sub-evaluate.component';
+import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
 
 
 const routes: Routes = [
@@ -58,10 +59,16 @@ const routes: Routes = [
         path: '',
         redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`,
         pathMatch: 'full',
+      },
+
+      {
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`, component: EvaluationFormComponent ,
+        // redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`,
+        // pathMatch: 'full',
       }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
