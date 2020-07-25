@@ -1,0 +1,77 @@
+ [ { 
+    "id": 1,
+    "name": "TECHNICAL /FUNCTIONAL (Depth of Knowledge)",
+    "veryGood": "Thorough on fundamental concepts - is able to correlate / apply these to all given situations.",
+    "good": "Clear on fundamental concepts - is able to apply / correlate to the given situations most of the time.",
+    "acceptable": "Reasonably clear on fundamental concepts. Is able to apply to a few of the given situations.",
+    "notSuitable": "Has some clarity. Is able to apply to a few of the given situations.",
+    "level": 2
+},
+    {
+    "id": 2,
+    "name": "TECHNICAL /FUNCTIONAL (Breadth of Knowledge)",
+    "veryGood": "Answer with very ease questions related to most subjects studied. Substantiates with relevant examples.",
+    "good": "Answer with ease questions related to many subjects studied . Substantiates with relevant examples to some extent",
+    "acceptable": "Answers questions related to many subjects studied but takes time and effort to do so. Not able to substantiate with examples.",
+    "notSuitable": "Doesn't answer questions related to subjects studied  Can't think of any example.",
+    "level": 2
+    },
+
+    {
+        "id": 3,
+        "name": "CLARITY OF THOUGHT",
+        "veryGood": "Grasp all aspects of the problem/s. Goes about solving problem/s on his own in a clear and well structured manner.        ",
+        "good": "Grasp the problem/s and considers various options However arrives at an acceptable solution (on his own).",
+        "acceptable": "Grasp a few aspects of the problem/s and tries to solve through a structured approach with some support.        ",
+        "notSuitable": "Takes time to grasp some aspects of the problem/s achieve clarity and adopt an unstructured approach. ",
+        "level": 3
+        },
+
+
+
+        {
+            "id": 4,
+            "name": "ABILITY TO COMMUNICATE",
+            "veryGood": "Conveys information and ideas in a clear & structured manner.  Accurately interprets and simplifies information. Has a very good facility with words. Speaks in a clear and audible tone. ",
+            "good": "Answers are not precise but gets many key points across.  Accurately interprets and simplifies information. Use of language is reasonably good.  Speaks in a clear and audible tone.",
+            "acceptable": "Somehow conveys information and ideas. Somehow interprets information.  Language unimpressive but manages to explain by flow charts / sketches. Gives disorganised answers.            ",
+            "notSuitable": "Unable to interpret information and ideas. Language is unimpressive. Speaks in a round about manner. Able to convey only very few points",
+            "level": 4
+            },
+
+
+
+            {
+                "id": 5,
+                "name": "LEADERSHIP & INTER - PERSONAL SKILLS",
+                "veryGood": "Always Takes input from others to influence. Develops long term plan. Holds self and others accountable. Understands other people and is able to utilise them effectively.  Shares information and ideas. can identify & manage any potential conflicts.",
+                "good": "Sometimes takes input from others to influence. Somewhat develops long term plan. Holds self and others accountable. Has fair understanding of other people and is able to utilise them.  Shares information and ideas.  Deals with conflicts.",
+                "acceptable": "Very rarely takes input from others to influence.  Hardly develops long term plan Has a very little  understanding of other people and is unable to utilise them.  Shares very little information and ideas.    Somewhat deals with conflicts.",
+                "notSuitable": "Never takes input from others to influence. Makes only short-term plans. Doesn't share information and ideas. Prefers to work alone; Doesn't deal with conflicts.",
+                "level": 5
+                },
+
+
+
+
+                {
+                    "id": 6,
+                    "name": "SELF CONFIDENCE & PERSONALITY",
+                    "veryGood": "Has a strong drive and works hard for the long term goals.  Always willing to take up challenging situations & take risks;  takes effective decisions even while under pressure; prefers to handle situations proactively with initiative",
+                    "good": "Has a strong drive and works towards the long term goals.  Takes up  challenging situations beyond comfort zone at times; responds satisfactorily & does not panic under stress; can recognize situations where proactive dealing will reduce complications.",
+                    "acceptable": "Has some drive and tries to work towards the long term goals. Somehow handles  difficult things within ones domain; attempts to work & respond under pressure; does not pre-empt situations but will take initiative if pushed.",
+                    "notSuitable": "Has no drive and always work towards short term goals. Not comfortable handling  difficult situations; not able to perform  when under pressure; does not generally take initiative.",
+                    "level": 6
+                    },
+
+                    {
+                        "id": 7,
+                        "name": "EXTRA CURRICULAR ACTIVITIE",
+                        "veryGood": "Has demonstrated extra curricular activities (e.g. sports, Cultural, leadership positions) at National/ state Level in last 10 years",
+                        "good": "Has demonstrated extra curricular activates at District / School level in last 10 years.",
+                        "acceptable": "Participates in extra curricular activities but never represented a team at competitive level.",
+                        "notSuitable": "Does not participate at all. No interest in activities other than academics.",
+                        "level": 7
+                        }
+
+]

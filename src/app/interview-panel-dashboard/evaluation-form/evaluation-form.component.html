@@ -1,0 +1,394 @@
+<form [formGroup]="evaluationForm" (ngSubmit)="evaluation()">
+<div class="contant">
+   
+    <div class="row bg">
+        <div class="col-12">
+        <div class="text-cnt">INTERVIEW EVALUATION FORM FOR TRAINEES
+        </div> 
+        </div>
+    </div><br>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-5">
+                    <span class="head"> Candidate name </span>
+                </div>
+                <div class="col-7">
+                    <span class="ans">: Assessment 1</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-4">
+            <div class="row">
+                <div class="col-4">
+                    <span class="head">Discipline  </span>
+                </div>
+                <div class="col-8">
+                    <span class="ans">: Ankit</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-4">
+            <div class="row">
+                <div class="col-5">
+                    <span class="head"> Date of interview </span>
+                </div>
+                <div class="col-7">
+                    <mat-form-field class="date"  appearance="fill">
+                        <input style="padding-left: 12px;" formControlName="dateofInterview" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space"></div>
+    
+    <div class="row">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-5">
+                    <span class="head">Date of birth </span>
+                </div>
+                <div class="col-7">
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="row">
+                <div class="col-4">
+                    <span class="head">Institute name </span> 
+                </div>
+                <div class="col-8">
+                    <span class="ans">: SRM University - chennai</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-4">
+            <div class="row">
+                <div class="col-5">
+                    <span class="head">Place of interview </span> 
+                </div>
+                <div class="col-7">
+                    <input class="place"  formControlName="placeofInterview" matInput >
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="space"></div>
+<hr>
+    <!-- <h5 class="head-h5 margin">   Assessment of the  candidate</h5>
+    <div class="vertical"></div> -->
+ 
+        <table id="assessmentsTable" mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="name">
+              <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
+              <td style="width: 390px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="veryGood">
+              <th class="headerCell" mat-header-cell *matHeaderCellDef>Very Good </th>
+              <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 1)" [name]="assessment.id" value="1">
+                    <span class="material-icons"  matTooltip="{{assessment.veryGood}}">info</span>
+                </mat-radio-button>
+              </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="good">
+              <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
+            </th>
+              <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 2)" [name]="assessment.id" value="2" >
+                    <span class="material-icons"  matTooltip="{{assessment.good}}">info</span>
+                </mat-radio-button>
+              </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="acceptable">
+              <th class="headerCell" mat-header-cell *matHeaderCellDef> Acceptable 
+            </th>
+              <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 3)" [name]="assessment.id" value="3" >
+                    <span class="material-icons" matTooltip="{{assessment.acceptable}}">info</span>
+                </mat-radio-button>
+              </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="notSuitable">
+              <th class="headerCell" mat-header-cell *matHeaderCellDef>Not suitable
+            </th>
+              <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 4)" [name]="assessment.id" value="4" >
+                    <span class="material-icons" matTooltip="{{assessment.notSuitable}}">info</span>
+                </mat-radio-button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+<div class="space"></div>
+<div class="row bg">
+    <div class="col-12">
+    <div class="text-cnt">PANEL’S OVERALL ASSESSMENT OF THE CANDIDATE</div> 
+    </div>
+</div><br>
+<!-- <h5 class="head-h5 margin"> Panel’s overall  assessment of the  candidate </h5>
+<div class="vertical"></div> -->
+<br>
+<div class="row">
+    <div class="box">
+
+    <div class="col-3 border-right">
+        <mat-radio-button (change)="panelOverall( 1)"  value="1" >Very good
+        </mat-radio-button>
+    </div>
+    <div class="col-3 border-right">
+        <mat-radio-button (change)="panelOverall( 2)"  value="2" > Good
+        </mat-radio-button>
+    </div>
+    <div class="col-3 border-right">
+        <mat-radio-button (change)="panelOverall( 3)"  value="3" > Acceptable 
+        </mat-radio-button>
+    </div>
+    <div class="col-3 border-right">
+        <mat-radio-button (change)="panelOverall( 4)"  value="4" > Not suitable 
+        </mat-radio-button>
+    </div>     
+</div>
+</div>
+<div class="space"></div>
+<div style="margin-left: 10px;">
+    <div class="row pad-bootom">
+        <div class="col-4">
+        <span class="text">WILLING TO WORK AT SITE</span> 
+        </div>
+        <div class="col-8">
+            <mat-radio-group aria-label="Select an option" formControlName="willingToWorkAtSite">
+                <mat-radio-button value="1">Yes</mat-radio-button>
+                <mat-radio-button style="margin-left: 67px" value="2">No</mat-radio-button>
+              </mat-radio-group>
+        </div>
+    </div>
+
+    <div class="row pad-bootom">
+        <div class="col-4">
+            <span class="text">PHYSICAL DISABILITY, IF ANY PLEASE SPECIFY <br> (e.g., Limping,Deformity, Stammering, etc.)</span> 
+        </div>
+        <div class="col-8">
+            <mat-form-field class="example-full-width">
+                <textarea matInput formControlName="physicalDisability"></textarea>
+              </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pad-bootom">
+        <div class="col-4">
+            <span class="text"> CANDIDATES STRENGTHS</span>
+        </div>
+        <div class="col-8">
+            <mat-form-field class="example-full-width">
+                <textarea matInput formControlName="candidateStrengths"  
+                [ngClass]="{ 'is-invalid': f.candidateStrengths.touched && f.candidateStrengths.errors }"></textarea>
+              </mat-form-field >
+              <div *ngIf="f.candidateStrengths.touched && f.candidateStrengths.errors" class="mand">
+                <!-- <div *ngIf="f.candidateStrengths.errors.required">Full Name is required</div>
+              <div style="color: red;" *ngIf="f.candidateStrengths.errors.pattern">CANDIDATES STRENGTHS  is invalid</div> -->
+              </div>
+        </div>
+    </div>
+
+    <div class="row pad-bootom">
+        <div class="col-4">
+            <span class="text"> CANDIDATES WEAKNESSES</span>
+        </div>
+        <div class="col-8">
+            <mat-form-field class="example-full-width">
+                <textarea matInput formControlName="candidateWeaknesses"></textarea>
+              </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pad-bootom">
+        <div class="col-4">
+            <span class="text"> NAME OF THE PANEL MEMBERS</span>
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="panelMember1"  matInput >
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="panelMember2"  matInput >
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="panelMember3"  matInput >
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="panelMember4"  matInput >
+        </div>
+    </div>
+
+    <div class="row pad-bootom">
+        <div class="col-4">
+            <span class="text">P.S.NO. OF PANEL MEMBERS</span>
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="PS_NO_OF_panelmember1" matInput >
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="PS_NO_OF_panelmember2" matInput >
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="PS_NO_OF_panelmember3" matInput >
+        </div>
+        <div class="col-2">
+            <input class="in-box" formControlName="PS_NO_OF_panelmember4" matInput >
+        </div>
+    </div>
+</div>
+
+<div class="space"></div>
+<div class="row bg">
+    <div class="col-12">
+    <div class="text-cnt">EXTEMPORE EVALUATION</div> 
+    </div>
+</div><br>
+<!-- <h5 class="head-h5 margin"> Extempore evaluation</h5>
+<div class="vertical"></div> -->
+<h5 class="head-h5 margin"> GUIDELINES</h5>
+    <ul>
+        <li> THE EVALUATION NEEDS TO BE DONE WHILE THE CANDIDATE APPEARS FOR INTERVIEW.</li>
+        <li>CANDIDATE NEEDS TO BE PROVIDED WITH A TOPIC OF GENERAL INTEREST.</li>
+        <li> 1 MIN OF TIME SHOULD BE PROVIDED TO THE CANDIDATE TO PREPARE AND 2 MIN TO DELIVER.</li>
+        <li>CLARITY OF THOUGHT, ABILITY TO COMMUNICATE AND SELF CONFIDENCE & PERSONALITY ATTRIBUTES TO BE EVALUATED CONSIDERING THIS EXERCISE.
+        </li>
+    </ul>
+    
+<div class="space"></div>
+<br>
+<div style="margin-left: 10px;">
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">TOPIC GIVEN</span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="topicGiven"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+<div class="row pad-bootom bg-2">
+    <div class="col-4">
+    <span class="text">PARAMETERS</span> 
+    </div>
+    <div class="col-8">
+        <span class="text">  PANEL COMMENTS</span> 
+    </div>
+</div><br><br>
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">CLARITY OF THOUGHT
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="clarityOfThought"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">LOGICAL ORGANISATION OF CONTENT
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="logicalOrganisation"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">COMMAND OVER LANGUAGE
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="commandOverLanguage"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">IDEA GENERATION
+
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="ideaGeneration"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">NON-VERBAL CUES
+
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="non_verbal_cues"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">TIME TAKEN
+
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="timeTaken"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+
+
+<div class="row pad-bootom">
+    <div class="col-4">
+    <span class="text">OVERALL REMARKS
+    </span> 
+    </div>
+    <div class="col-8">
+        <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="overallRemarks"></textarea>
+          </mat-form-field>
+    </div>
+</div>
+</div>
+<div class="space"></div>
+<div style="text-align: center;">
+<button class="submit" mat-raised-button>Submit</button>
+</div> 
+</form>
+<div class="space"></div>
