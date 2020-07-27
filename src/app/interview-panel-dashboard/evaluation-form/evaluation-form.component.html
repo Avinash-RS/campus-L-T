@@ -174,8 +174,8 @@
         </div>
         <div class="col-8">
             <mat-radio-group aria-label="Select an option" formControlName="willingToWorkAtSite">
-                <mat-radio-button value="1">Yes</mat-radio-button>
-                <mat-radio-button style="margin-left: 67px" value="2">No</mat-radio-button>
+                <mat-radio-button value="yes">Yes</mat-radio-button>
+                <mat-radio-button style="margin-left: 67px" value="no">No</mat-radio-button>
               </mat-radio-group>
         </div>
     </div>
@@ -197,7 +197,7 @@
         </div>
         <div class="col-8">
             <mat-form-field class="example-full-width">
-                <textarea matInput formControlName="candidateStrengths"  
+                <textarea matInput formControlName="candidateStrengths" maxlength="2000" 
                 [ngClass]="{ 'is-invalid': f.candidateStrengths.touched && f.candidateStrengths.errors }"></textarea>
               </mat-form-field >
               <div *ngIf="f.candidateStrengths.touched && f.candidateStrengths.errors" class="mand">
@@ -213,7 +213,7 @@
         </div>
         <div class="col-8">
             <mat-form-field class="example-full-width">
-                <textarea matInput formControlName="candidateWeaknesses"></textarea>
+                <textarea matInput formControlName="candidateWeaknesses"  maxlength="2000"></textarea>
               </mat-form-field>
         </div>
     </div>
@@ -281,7 +281,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="topicGiven"></textarea>
+            <textarea matInput formControlName="topicGiven"  maxlength="2000" ></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -302,7 +302,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="clarityOfThought"></textarea>
+            <textarea matInput formControlName="clarityOfThought"  maxlength="2000"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -314,7 +314,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="logicalOrganisation"></textarea>
+            <textarea matInput formControlName="logicalOrganisation"  maxlength="2000"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -326,7 +326,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="commandOverLanguage"></textarea>
+            <textarea matInput formControlName="commandOverLanguage"  maxlength="2000"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -340,7 +340,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="ideaGeneration"></textarea>
+            <textarea matInput formControlName="ideaGeneration"  maxlength="2000"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -354,7 +354,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="non_verbal_cues"></textarea>
+            <textarea matInput formControlName="non_verbal_cues"  maxlength="2000" ></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -368,7 +368,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="timeTaken"></textarea>
+            <textarea matInput formControlName="timeTaken"  maxlength="2000"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -381,7 +381,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="overallRemarks"></textarea>
+            <textarea matInput formControlName="overallRemarks"  maxlength="2000"></textarea>
           </mat-form-field>
     </div>
 </div>
