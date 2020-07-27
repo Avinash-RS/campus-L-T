@@ -32,6 +32,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   showCertificateImgErr = false;
   showOtherImgErr = false;
   saveAndSubmitBtnDisable = true;
+  currentValue = [];
 
 
   resumeUploadForm = new FormGroup({
@@ -48,7 +49,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   ngOnInit() {
     this.FormInitialization();
-    // this.getUploadedDocument();
+    this.getUploadedDocument();
 
     var userid = {
       'id': this.appConfig.getLocalData('userId')
@@ -67,10 +68,15 @@ export class CandidateUploadDocumentComponent implements OnInit {
       'id': this.appConfig.getLocalData('userId')
     }
     this.candidateService.getUploadedDocument(userid).subscribe((data: any) => {
-      console.log("print get uploaded document..", data);
-      this.educationValuearray = data[0][0].education_documents
+      this.certificateValuearray = data[0][0].certificate_array;
+      this.otherDocValuearray = data[0][0].other_array;
+      this.educationValuearray = data[0][0].education_documents;
+      this.currentValue = [];
+      if(data[0][0].resume_details){
+        this.urlResume = data[0][0].resume_details[0].certificate_url;
+      }
       this.appConfig.hideLoader();
-      // this.FormInitialization();
+      this.FormInitialization();
 
     }, (err) => {
 
@@ -111,11 +117,21 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   createItem(edu): any {
-    return this.fb.group({
+    if(edu){
+      this.urlEducation.push(edu.certificate_url);
+      this.currentValue.push(edu.education_level);
+      return this.fb.group({
 
-      level: [null ,Validators.required],
-      repotcard: [null ,Validators.required]
-    });
+        level: [null ,Validators.required],
+        repotcard: [null ,Validators.required]
+      });
+    }else{
+      return this.fb.group({
+
+        level: [null ,Validators.required],
+        repotcard: [null ,Validators.required]
+      });
+    }
   }
 
   removeEducationDoc(i: number){
@@ -142,11 +158,20 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   createCertificateItem(edu): any {
-    return this.fb.group({
+    if(edu){
+      this.urlCertificate.push(edu.certificate_url);
+      return this.fb.group({
 
-      certificateName: [null ,Validators.required],
-      certificateFile: [null ,Validators.required]
-    });
+        certificateName: [edu.certificate_name ,Validators.required],
+        certificateFile: [null ,Validators.required]
+      });
+    }else{
+      return this.fb.group({
+
+        certificateName: [null ,Validators.required],
+        certificateFile: [null ,Validators.required]
+      });
+    }
   }
 
 
@@ -174,11 +199,20 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   createOtherDocItem(edu): any {
-    return this.fb.group({
+    if(edu){
+      this.urlOther.push(edu.certificate_url);
+      return this.fb.group({
 
-      otherDocName: [null ,Validators.required],
-      otherDocFile: [null ,Validators.required]
-    });
+        otherDocName: [edu.description ,Validators.required],
+        otherDocFile: [null ,Validators.required]
+      });
+    }else{
+      return this.fb.group({
+
+        otherDocName: [null ,Validators.required],
+        otherDocFile: [null ,Validators.required]
+      });
+    }
   }
 
   removeOtherDoc(i: number){
@@ -191,121 +225,102 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   onSelectFile(event, uploadType, i){
-    // if (this.educationUploadForm.valid && this.resumeUploadForm.valid && this.certificateUploadForm.valid && this.otherUploadForm) {
-      // if (event.target.files[0].size < 5000000) {
-        // this.showImgSizeError = false;
-        this.selectedImage = event.target.files[0];
+    this.selectedImage = event.target.files[0];
 
-        const fd = new FormData();
-        if(uploadType == 'resume'){
-          if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
-            this.showResumeImgError = false;
-            if(event.target.files[0].size < 5000000){
-              this.showResumeImgSizeError = false;
-              
-              this.urlResume = event.target.files[0].name
-              var sendData = fd.append('product_image', this.selectedImage);
-              
-              this.uploadImage(sendData, uploadType);
-            }else{
-              this.showResumeImgSizeError = true;
-            }
-          }else{
-            this.showResumeImgError = true;
-          }
-        }else if(uploadType == 'education'){
-          if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
-            this.showEducationImgErr = false;
-            if(event.target.files[0].size < 5000000){
-              this.showEducationImgSizeErr = false;
-              if(event.target.id == 'file-input-'+ i){
-                this.urlEducation[i] = event.target.files[0].name
-              }
-    
-              var sendData = fd.append('product_image', this.selectedImage);
-              
-              this.uploadImage(sendData, uploadType);
-            }else{
-              this.showEducationImgSizeErr = true;
-            }
-          }else{
-            this.showEducationImgErr = true;
-          }
-        }else if(uploadType == 'certificate'){
-          if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
-            this.showCertificateImgErr = false;
-            if(event.target.files[0].size < 5000000){
-              this.showCertificateImgSizeErr = false;
-  
-              if(event.target.id == 'file-input-2-'+ i){
-                this.urlCertificate[i] = event.target.files[0].name
-              }
-    
-              var sendData = fd.append('product_image', this.selectedImage);
-        
-              this.uploadImage(sendData, uploadType);
-            }else{
-              this.showCertificateImgSizeErr = true;
-            }
-          }else{
-            this.showCertificateImgErr = true;
-          }
-        }else if(uploadType == 'other'){
-          if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
-            this.showOtherImgErr = false;
-            if(event.target.files[0].size < 5000000){
-              this.showOtherImgSizeErr = false;
-  
-              if(event.target.id == 'file-input-3-'+ i){
-                this.urlOther[i] = event.target.files[0].name
-              }
-    
-              var sendData = fd.append('product_image', this.selectedImage);
-              this.uploadImage(sendData, uploadType);
-            }else{
-              this.showOtherImgSizeErr = true;
-            }
-          }else{
-            this.showOtherImgErr = true;
-          }
+    const fd = new FormData();
+    if(uploadType == 'resume'){
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+        this.showResumeImgError = false;
+        if(event.target.files[0].size < 5000000){
+          this.showResumeImgSizeError = false;
+          
+          this.urlResume = event.target.files[0].name
+          var sendData = fd.append('product_image', this.selectedImage);
+          
+          this.uploadImage(sendData, uploadType, i);
+        }else{
+          this.showResumeImgSizeError = true;
         }
+      }else{
+        this.showResumeImgError = true;
+      }
+    }else if(uploadType == 'education'){
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+        this.showEducationImgErr = false;
+        if(event.target.files[0].size < 5000000){
+          this.showEducationImgSizeErr = false;
+          if(event.target.id == 'file-input-'+ i){
+            this.urlEducation[i] = event.target.files[0].name
+          }
 
-        const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
+          var sendData = fd.append('product_image', this.selectedImage);
+          
+          this.uploadImage(sendData, uploadType, i);
+        }else{
+          this.showEducationImgSizeErr = true;
+        }
+      }else{
+        this.showEducationImgErr = true;
+      }
+    }else if(uploadType == 'certificate'){
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+        this.showCertificateImgErr = false;
+        if(event.target.files[0].size < 5000000){
+          this.showCertificateImgSizeErr = false;
 
-      // } else {
-      //   this.showImgSizeError = true;
-      //   // this.url = null;
-      // }
+          if(event.target.id == 'file-input-2-'+ i){
+            this.urlCertificate[i] = event.target.files[0].name
+          }
 
-    // } else {
-    //   this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
-    //   this.validateAllFields(this.resumeUploadForm);
-    //   this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
-    //   this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
-    //   this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
-    // }
+          var sendData = fd.append('product_image', this.selectedImage);
+          this.uploadImage(sendData, uploadType, i);
+        }else{
+          this.showCertificateImgSizeErr = true;
+        }
+      }else{
+        this.showCertificateImgErr = true;
+      }
+    }else if(uploadType == 'other'){
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+        this.showOtherImgErr = false;
+        if(event.target.files[0].size < 5000000){
+          this.showOtherImgSizeErr = false;
+
+          if(event.target.id == 'file-input-3-'+ i){
+            this.urlOther[i] = event.target.files[0].name
+          }
+
+          var sendData = fd.append('product_image', this.selectedImage);
+          this.uploadImage(sendData, uploadType, i);
+        }else{
+          this.showOtherImgSizeErr = true;
+        }
+      }else{
+        this.showOtherImgErr = true;
+      }
+    }
   }
 
-  uploadImage(file, selectType){
+  uploadImage(file, selectType, i){
     this.candidateService.uploadCandidateDocument(file).subscribe((data: any) => {
       
       this.appConfig.hideLoader();
 
       if(selectType == 'education'){
         var eduObj = {
-          'level': this.educationUploadForm.value.educationUploadArr[0].level,
+          'level': this.educationUploadForm.value.educationUploadArr[i].level,
           'uploaded_id': data[0].fileid
         }
         this.educationDetailsArr.push(eduObj);
       }else if(selectType == 'certificate'){
         var cerObj = {
-          'document_name': this.certificateUploadForm.value.certificateUploadArr[0].certificateName,
+          'document_name': this.certificateUploadForm.value.certificateUploadArr[i].certificateName,
           'uploaded_id': data[0].fileid
         }
         this.certificatDetailsArr.push(cerObj);
       }else if(selectType == 'other'){
         var otherObj = {
-          'document_name': this.otherUploadForm.value.otherUploadArr[0].otherDocName,
+          'document_name': this.otherUploadForm.value.otherUploadArr[i].otherDocName,
           'uploaded_id': data[0].fileid
         }
         this.otherDetailsArr.push(otherObj);
