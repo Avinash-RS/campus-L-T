@@ -137,6 +137,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   removeEducationDoc(i: number){
     this.urlEducation.splice(i, 1);
     this.eduArr.removeAt(i);
+    this.selectedDropdownValue.splice(i, 1);
   }
 
   certificatePatch(dataArray) {
