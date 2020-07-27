@@ -31,7 +31,7 @@
                     <ng-container *ngIf="eduArr && eduArr.controls">
                         <div class="image-upload display" *ngFor="let education of eduArr.controls; let i = index; let last = last;" [formGroupName]="i">
 
-                            <nz-select [(ngModel)]="currentValue[i]" formControlName="level" class="nzSelect" nzAllowClear nzShowSearch
+                            <nz-select [(ngModel)]="selectedDropdownValue[i]" formControlName="level" class="nzSelect" nzAllowClear nzShowSearch
                              nzPlaceHolder="Level">
                                 <nz-option *ngFor="let eduLevel of educationDropDownLevel" [nzLabel]="eduLevel" [nzValue]="eduLevel"></nz-option>
                                 <!-- <nz-option nzLabel="12 std" nzValue="12"></nz-option>

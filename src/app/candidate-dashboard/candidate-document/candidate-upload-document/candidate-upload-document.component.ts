@@ -32,7 +32,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   showCertificateImgErr = false;
   showOtherImgErr = false;
   saveAndSubmitBtnDisable = true;
-  currentValue = [];
+  selectedDropdownValue = [];
 
 
   resumeUploadForm = new FormGroup({
@@ -71,7 +71,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.certificateValuearray = data[0][0].certificate_array;
       this.otherDocValuearray = data[0][0].other_array;
       this.educationValuearray = data[0][0].education_documents;
-      this.currentValue = [];
+      this.selectedDropdownValue = [];
       if(data[0][0].resume_details){
         this.urlResume = data[0][0].resume_details[0].certificate_url;
       }
@@ -119,7 +119,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   createItem(edu): any {
     if(edu){
       this.urlEducation.push(edu.certificate_url);
-      this.currentValue.push(edu.education_level);
+      this.selectedDropdownValue.push(edu.education_level);
       return this.fb.group({
 
         level: [null ,Validators.required],
@@ -345,8 +345,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
         'other_certificate': this.otherDetailsArr,
         'resume_id': this.resumeFile
       }
-
-      console.log("submit upload document....", documentObj);
 
       this.candidateService.saveUploadDocument(documentObj).subscribe((data: any) => {
       
