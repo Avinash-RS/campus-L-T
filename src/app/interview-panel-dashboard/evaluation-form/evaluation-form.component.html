@@ -1,4 +1,4 @@
-<form [formGroup]="evaluationForm" (ngSubmit)="evaluation()">
+<form [formGroup]="evaluationForm" (ngSubmit)="submitEvaluationForm()">
 <div class="contant">
    
     <div class="row bg">
@@ -15,7 +15,7 @@
                     <span class="head"> Candidate name </span>
                 </div>
                 <div class="col-7">
-                    <span class="ans">: Assessment 1</span>
+                    <span class="ans">: {{getCandidateData?.name}}</span>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                     <span class="head">Discipline  </span>
                 </div>
                 <div class="col-8">
-                    <span class="ans">: Ankit</span>
+                    <span class="ans">: {{getCandidateData?.field_discipline}}</span>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-7">
                     <mat-form-field class="date"  appearance="fill">
-                        <input style="padding-left: 12px;" formControlName="dateofInterview" matInput [matDatepicker]="picker">
+                        <input style="padding-left: 12px;" formControlName="interview_date" matInput [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
@@ -55,7 +55,7 @@
                     <span class="head">Date of birth </span>
                 </div>
                 <div class="col-7">
-                   
+                    <span class="ans">:  {{getCandidateData?.field_dob}}</span>
                 </div>
             </div>
         </div>
@@ -66,7 +66,8 @@
                     <span class="head">Institute name </span> 
                 </div>
                 <div class="col-8">
-                    <span class="ans">: SRM University - chennai</span>
+                  
+                    <span class="ans">: {{getCandidateData?.education[0].field_institute}}</span>
                 </div>
             </div>
         </div>
@@ -77,7 +78,7 @@
                     <span class="head">Place of interview </span> 
                 </div>
                 <div class="col-7">
-                    <input class="place"  formControlName="placeofInterview" matInput >
+                    <input class="place"  formControlName="interview_place" matInput >
                 </div>
             </div>
         </div>
@@ -98,7 +99,7 @@
             <ng-container matColumnDef="veryGood">
               <th class="headerCell" mat-header-cell *matHeaderCellDef>Very Good </th>
               <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-                <mat-radio-button (change)="setAssessmentLevel(assessment, 1)" [name]="assessment.id" value="1">
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="veryGood">
                     <span class="material-icons"  matTooltip="{{assessment.veryGood}}">info</span>
                 </mat-radio-button>
               </td>
@@ -108,7 +109,7 @@
               <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
             </th>
               <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-                <mat-radio-button (change)="setAssessmentLevel(assessment, 2)" [name]="assessment.id" value="2" >
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2" >
                     <span class="material-icons"  matTooltip="{{assessment.good}}">info</span>
                 </mat-radio-button>
               </td>
@@ -118,7 +119,7 @@
               <th class="headerCell" mat-header-cell *matHeaderCellDef> Acceptable 
             </th>
               <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-                <mat-radio-button (change)="setAssessmentLevel(assessment, 3)" [name]="assessment.id" value="3" >
+                <mat-radio-button (change)="setAssessmentLevel(assessment,'Acceptable')" [name]="assessment.id" value="3" >
                     <span class="material-icons" matTooltip="{{assessment.acceptable}}">info</span>
                 </mat-radio-button>
               </td>
@@ -128,7 +129,7 @@
               <th class="headerCell" mat-header-cell *matHeaderCellDef>Not suitable
             </th>
               <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-                <mat-radio-button (change)="setAssessmentLevel(assessment, 4)" [name]="assessment.id" value="4" >
+                <mat-radio-button (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4" >
                     <span class="material-icons" matTooltip="{{assessment.notSuitable}}">info</span>
                 </mat-radio-button>
               </td>
@@ -147,23 +148,24 @@
 <br>
 <div class="row">
     <div class="box">
-
+        <mat-radio-group class="radioDisp"  formControlName="ASSESSMENT">
     <div class="col-3 border-right">
-        <mat-radio-button (change)="panelOverall( 1)"  value="1" >Very good
+        <mat-radio-button   value="Verygood" >Very good
         </mat-radio-button>
     </div>
     <div class="col-3 border-right">
-        <mat-radio-button (change)="panelOverall( 2)"  value="2" > Good
+        <mat-radio-button   value="Good" > Good
         </mat-radio-button>
     </div>
     <div class="col-3 border-right">
-        <mat-radio-button (change)="panelOverall( 3)"  value="3" > Acceptable 
+        <mat-radio-button   value="Acceptable" > Acceptable 
         </mat-radio-button>
     </div>
     <div class="col-3 border-right">
-        <mat-radio-button (change)="panelOverall( 4)"  value="4" > Not suitable 
+        <mat-radio-button   value="Notsuitabl" > Not suitable 
         </mat-radio-button>
-    </div>     
+    </div>   
+    </mat-radio-group>  
 </div>
 </div>
 <div class="space"></div>
@@ -173,9 +175,9 @@
         <span class="text">WILLING TO WORK AT SITE</span> 
         </div>
         <div class="col-8">
-            <mat-radio-group aria-label="Select an option" formControlName="willingToWorkAtSite">
-                <mat-radio-button value="1">Yes</mat-radio-button>
-                <mat-radio-button style="margin-left: 67px" value="2">No</mat-radio-button>
+            <mat-radio-group aria-label="Select an option" formControlName="willing_work">
+                <mat-radio-button value="Yes">Yes</mat-radio-button>
+                <mat-radio-button style="margin-left: 67px" value="No">No</mat-radio-button>
               </mat-radio-group>
         </div>
     </div>
@@ -186,7 +188,7 @@
         </div>
         <div class="col-8">
             <mat-form-field class="example-full-width">
-                <textarea matInput formControlName="physicalDisability"></textarea>
+                <textarea matInput formControlName="physical_disability"></textarea>
               </mat-form-field>
         </div>
     </div>
@@ -197,10 +199,10 @@
         </div>
         <div class="col-8">
             <mat-form-field class="example-full-width">
-                <textarea matInput formControlName="candidateStrengths"  
-                [ngClass]="{ 'is-invalid': f.candidateStrengths.touched && f.candidateStrengths.errors }"></textarea>
+                <textarea matInput formControlName="candidates_strenght"  
+                [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
               </mat-form-field >
-              <div *ngIf="f.candidateStrengths.touched && f.candidateStrengths.errors" class="mand">
+              <div *ngIf="f.candidates_strenght.touched && f.candidates_strenght.errors" class="mand">
                 <!-- <div *ngIf="f.candidateStrengths.errors.required">Full Name is required</div>
               <div style="color: red;" *ngIf="f.candidateStrengths.errors.pattern">CANDIDATES STRENGTHS  is invalid</div> -->
               </div>
@@ -213,7 +215,7 @@
         </div>
         <div class="col-8">
             <mat-form-field class="example-full-width">
-                <textarea matInput formControlName="candidateWeaknesses"></textarea>
+                <textarea matInput formControlName="candidates_weakness"></textarea>
               </mat-form-field>
         </div>
     </div>
@@ -223,16 +225,16 @@
             <span class="text"> NAME OF THE PANEL MEMBERS</span>
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="panelMember1"  matInput >
+            <input class="in-box" formControlName="panel_member1"  matInput >
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="panelMember2"  matInput >
+            <input class="in-box" formControlName="panel_member2"  matInput >
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="panelMember3"  matInput >
+            <input class="in-box" formControlName="panel_member3"  matInput >
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="panelMember4"  matInput >
+            <input class="in-box" formControlName="panel_member4"  matInput >
         </div>
     </div>
 
@@ -241,16 +243,16 @@
             <span class="text">P.S.NO. OF PANEL MEMBERS</span>
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="PS_NO_OF_panelmember1" matInput >
+            <input class="in-box" formControlName="ps_no1" matInput >
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="PS_NO_OF_panelmember2" matInput >
+            <input class="in-box" formControlName="ps_no2" matInput >
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="PS_NO_OF_panelmember3" matInput >
+            <input class="in-box" formControlName="ps_no3" matInput >
         </div>
         <div class="col-2">
-            <input class="in-box" formControlName="PS_NO_OF_panelmember4" matInput >
+            <input class="in-box" formControlName="ps_no4" matInput >
         </div>
     </div>
 </div>
@@ -281,7 +283,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="topicGiven"></textarea>
+            <textarea matInput formControlName="topic_given"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -291,7 +293,7 @@
     <span class="text">PARAMETERS</span> 
     </div>
     <div class="col-8">
-        <span class="text">  PANEL COMMENTS</span> 
+        <span class="text">PANEL COMMENTS</span> 
     </div>
 </div><br><br>
 
@@ -302,7 +304,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="clarityOfThought"></textarea>
+            <textarea matInput formControlName="thought"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -314,7 +316,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="logicalOrganisation"></textarea>
+            <textarea matInput formControlName="content"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -326,7 +328,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="commandOverLanguage"></textarea>
+            <textarea matInput formControlName="language"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -340,7 +342,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="ideaGeneration"></textarea>
+            <textarea matInput formControlName="idea"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -354,7 +356,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="non_verbal_cues"></textarea>
+            <textarea matInput formControlName="clues"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -368,7 +370,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="timeTaken"></textarea>
+            <textarea matInput formControlName="time_taken"></textarea>
           </mat-form-field>
     </div>
 </div>
@@ -381,7 +383,7 @@
     </div>
     <div class="col-8">
         <mat-form-field class="example-full-width">
-            <textarea matInput formControlName="overallRemarks"></textarea>
+            <textarea matInput formControlName="remarks"></textarea>
           </mat-form-field>
     </div>
 </div>

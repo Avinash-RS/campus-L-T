@@ -249,4 +249,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // getting evaluation user data
+  getEvaluationData() {
+    return this.http.get(`${this.BASE_URL}/api/evaluation_data`,
+    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+  postEvaluationCandidateData(data) {
+    return this.http.post(`${this.BASE_URL}/api/evaluation_form`, data,
+    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }
