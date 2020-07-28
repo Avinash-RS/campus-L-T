@@ -89,7 +89,7 @@ export class HrAddUserComponent implements OnInit {
         field_user_created_by: this.appConfig.getLocalData('userId')
 
       };
-      if(this.addUserForm.value.role == 'interview-panel'){
+      if(this.addUserForm.value.role == 'interview_panel'){
         addUserDatas['panel_discipline'] = this.addUserForm.value.discipline;
         addUserDatas['employee_id'] = this.addUserForm.value.employee_id;
       }

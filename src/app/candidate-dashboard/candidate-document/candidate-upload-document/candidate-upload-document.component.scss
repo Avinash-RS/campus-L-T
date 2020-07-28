@@ -81,12 +81,6 @@
     width: 87px;
     color: white;
 }
-.btn-1{
-    background: #077DDD;
-    border-radius: 10px;
-    width: 87px;
-    color: white;
-}
 
 .nzSelect{
     width: 110px;
@@ -109,9 +103,17 @@
 
 .iconBtn {
     position: relative;
-    left: 42px;
+    // left: 42px;
     font-size: 14px;
     border-radius: 8px;
     background-color: $cyan;
     top: 3px;
+}
+.urlSpan {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    width: 190px;
+    margin-bottom: -6px;
 }
