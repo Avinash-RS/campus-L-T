@@ -13,10 +13,11 @@ import { InvSubAssessmentsComponent } from './inv-candidate-details/inv-evaluati
 import { InvSubEducationComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-education/inv-sub-education.component';
 import { InvSubEmploymentComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-employment/inv-sub-employment.component';
 import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-evaluate/inv-sub-evaluate.component';
+import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvAssessmentShortlistedCandidatesComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvAssessmentShortlistedCandidatesComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent],
   imports: [
     CommonModule,
     SharedModule,

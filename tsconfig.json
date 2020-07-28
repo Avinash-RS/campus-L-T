@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -25,6 +26,8 @@
     "fullTemplateTypeCheck": true,
     // "preserveWhitespaces": false,
     "strictInjectionParameters": true,
-    "disableTypeScriptVersionCheck": true
+    "disableTypeScriptVersionCheck": true,
+  
   }
+  
 }

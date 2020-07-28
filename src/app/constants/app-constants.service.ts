@@ -124,7 +124,8 @@ export const CONSTANT = {
       SUB_ASSESSMENTS: '/interview-panel/candidates/evaluation/assessment',
       SUB_EDUCATION: '/interview-panel/candidates/evaluation/education',
       SUB_EMPLOYMENT: '/interview-panel/candidates/evaluation/employment',
-      SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate'
+      SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate',
+      EVALUATION_FORM: '/interview-panel/evaluation-form'
     }
 
   },
@@ -238,7 +239,8 @@ export const CONSTANT = {
       SUB_ASSESSMENTS: 'assessment',
       SUB_EDUCATION: 'education',
       SUB_EMPLOYMENT: 'employment',
-      SUB_EVALUATION: 'evaluate'
+      SUB_EVALUATION: 'evaluate',
+      EVALUATION_FORM: 'evaluation-form'
     }
   }
 };
