@@ -31,10 +31,17 @@ import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-
 import { CandidateBulkUploadComponent } from './hr-user-management/candidate-bulk-upload/candidate-bulk-upload.component';
 import { InterviewPanelBulkUploadComponent } from './hr-user-management/interview-panel-bulk-upload/interview-panel-bulk-upload.component';
 import { InvpanelBulkuploadComponent } from './hr-user-management/interview-panel-bulk-upload/invpanel-bulkupload/invpanel-bulkupload.component';
+import { UploadTestResultsComponent } from './hr-shortlisting/upload-test-results/upload-test-results.component';
+import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlist.component';
+import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
+import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
+import { SharedSubHeaderSecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/shared-sub-header-second-level-shortlist/shared-sub-header-second-level-shortlist.component';
+import { ShortlistedCandidateListSecondLevelComponent } from './hr-shortlisting/second-level-shortlist/shortlisted-candidate-list-second-level/shortlisted-candidate-list-second-level.component';
+import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, AssessmentDetailsComponent, AssessmentCandidateDetailsComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, CandidateBulkUploadComponent, InterviewPanelBulkUploadComponent, InvpanelBulkuploadComponent],
+  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, AssessmentDetailsComponent, AssessmentCandidateDetailsComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, CandidateBulkUploadComponent, InterviewPanelBulkUploadComponent, InvpanelBulkuploadComponent, UploadTestResultsComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, ShortlistedCandidateListSecondLevelComponent, SecondLevelShortlistedCandidatesReportComponent],
   imports: [
     CommonModule,
     SharedModule,

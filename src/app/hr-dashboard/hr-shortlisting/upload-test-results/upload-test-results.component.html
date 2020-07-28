@@ -1,0 +1,37 @@
+<div class="main-wrapper-uploaded-list">
+    <!-- <div class="line">
+    </div> -->
+    <div class="upload-wrapper" *ngIf="!enableList">
+      <div class="top-wrapper">
+        <div class="upload">
+          <div class="outer-wrapper">
+            <div class="text-wrapper">
+              <label class="inner-wrapper" for="fileInput" *ngIf="!url">
+                <!-- <div class="inner-wrapper"> -->
+                <img src="assets/images/file-upload.svg" alt=""> Upload test result details
+                <!-- </div> -->
+                <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
+                  (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv, text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  (change)="onSelectFile($event)">
+              </label>
+              <div class="inner-wrapper" *ngIf="url">
+                <div class="list">
+                  <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
+                      src="assets/images/005-close-1_bulk.svg" alt=""></span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv, .xls and .xlsx)</div>
+            <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
+            <div *ngIf="showSizeError['image']" class="error">Accept only .csv, .xls and .xlsx files</div>
+            <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
+
+          </div>
+        </div>
+        <div class="buttons">
+          <button (click)="delete()" class="cancel" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
+          <button (click)="upload()" class="upload" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+        </div>
+      </div>
+    </div>
+</div>

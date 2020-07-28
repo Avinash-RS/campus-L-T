@@ -1328,6 +1328,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         // this.url = null;
       }
     } else {
+      this.showSizeError.size = false;
       this.showSizeError.image = true;
       // this.url = null;
     }

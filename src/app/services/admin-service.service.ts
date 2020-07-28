@@ -225,6 +225,41 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // Test results upload for 2nd level shortlist
+  testResultsUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/first_shortlist_assement`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // 2nd level shortlist
+  assessmentListForSecondLevelShortlist() {
+    return this.http.get(`${this.BASE_URL}/profile/first_shortlist_report`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // 2nd level shortlist canidate filter header Details
+  assessmentDetailsOfSecond(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // 2nd level shortlist api
+  secondShortlistAPI(data) {
+    return this.http.post(`${this.BASE_URL}/profile/update_assement_shortlist`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // 2nd level shortlisted candidates report api
+  shortlistedCandidatesReport(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getassement_candidate_shortlist`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // 2nd level shortlist canidate filter page
+  filterSecondLevel(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_candidate_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 
   // TPO API's
   tpoCandidateListAfterBulkUpload() {

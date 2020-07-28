@@ -439,6 +439,7 @@ body {
     }
   }
   tr.mat-header-row {
+    box-shadow: 0px 3px 6px #00000029 !important;
     height: 40px !important;
   }
   .mat-paginator {
@@ -464,7 +465,8 @@ body {
   font-size: 13px !important;
 }
 
-.shortlist-wrapper {
+.shortlist-wrapper,
+.modal-box-wrapper {
   .ant-radio-wrapper {
     span:nth-child(2) {
       font-size: 13.5px !important;
@@ -1189,6 +1191,185 @@ button:focus {
     }
   }
 }
+
+.second-candidatelist-wrapper {
+  .user-list-wrapper {
+    thead {
+      box-shadow: $shadow-light-black-29 !important;
+      margin-bottom: 2em;
+    }
+    .mat-sort-header-button {
+      outline: none;
+    }
+    mat-paginator {
+      display: inline-flex;
+      flex-flow: row-reverse;
+      opacity: 0.85;
+      width: 100%;
+      align-items: center;
+      height: 40px;
+      color: $black;
+      font-size: 13px;
+      outline: none;
+      border: none;
+      background: $blue-3 0% 0% no-repeat padding-box;
+      box-shadow: $shadow-light-black-29 !important;
+    }
+    .tooltip-red {
+      display: flex;
+      background-color: red;
+      flex-flow: row-reverse;
+    }
+
+    .mat-column-percentage {
+      width: 150px !important;
+      text-align: center;
+      .mat-sort-header-container {
+        justify-content: center !important;
+      }
+    }
+    .mat-column-marks {
+      text-align: center;
+      width: 150px !important;
+      .mat-sort-header-container {
+        justify-content: center !important;
+      }
+    }
+
+    .input-header-group.mat-header-row {
+      padding: 4px 0;
+      height: 50px !important;
+      .box {
+        text-align: center;
+        background: $white-primary 0% 0% no-repeat padding-box;
+        box-shadow: 0px 0px 5px #00000029;
+        border: 0.5px solid #d1d1d1;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        border-radius: 4px;
+        align-items: center;
+        margin: 0 auto;
+        padding: 4px;
+        height: 35px;
+        img {
+          width: 14px;
+          height: 14px;
+          margin: 0 0.5em 0 0;
+        }
+        input,
+        input:focus {
+          border-radius: 4px;
+          outline: none;
+          background: transparent;
+          box-shadow: 0px 0px 5px #00000029;
+          border: 0.5px solid #5555556e;
+          height: 100%;
+          font-size: 13px;
+          width: 50%;
+          color: $header-blue;
+          padding: 4px 8px;
+          box-sizing: border-box;
+        }
+      }
+    }
+    tr.mat-header-row {
+      height: auto !important;
+      white-space: nowrap;
+      .mat-column-marks,
+      .mat-column-percentage,
+      .mat-column-third-header-row-second-group {
+        color: $primary !important;
+        font-size: 12.3px !important;
+        .mat-sort-header-container {
+          margin-top: 0px !important;
+        }
+      }
+    }
+    .second-candidatelist-wrapper.user-list-wrapper,
+    tr.mat-header-row.header-group {
+      text-align: center !important;
+      height: auto !important;
+      white-space: nowrap;
+      th {
+        text-align: center !important;
+      }
+    }
+    td.mat-cell {
+      white-space: nowrap !important;
+    }
+
+    .mat-paginator {
+      height: 40px !important;
+    }
+    .mat-column-checked {
+      .ant-radio-group {
+        justify-content: center;
+      }
+    }
+    .no-data-available.mat-header-row {
+      padding: 4px;
+      height: 40px !important;
+      th {
+        padding: 4px !important;
+        height: 40px !important;
+        text-align: center !important;
+        font-size: 20px !important;
+        background: $white-primary 0% 0% no-repeat padding-box !important;
+        color: $header-blue !important;
+        font-weight: 100 !important;
+      }
+    }
+  }
+
+  // hr/shortlist/2nd/candidateslist
+  .shortlisted-list-second-level {
+    .user-list-wrapper {
+      text-align: center;
+      mat-paginator {
+        display: inline-flex;
+        flex-flow: row-reverse;
+        opacity: 0.85;
+        align-items: center;
+        height: 40px;
+        width: 70% !important;
+        color: $black;
+        font-size: 13px;
+        outline: none;
+        border: none;
+        background: $blue-3 0% 0% no-repeat padding-box;
+        box-shadow: $shadow-light-black-29 !important;
+      }
+      .mat-row {
+        text-align: left !important;
+      }
+      tr.px40 {
+        height: 40px !important;
+      }
+    }
+  }
+}
+
+  // http://localhost:4200/#/hr/shortlist/2nd/assessment-list
+  .second-level-assessmentList {
+    .user-list-wrapper {
+      .mat-column-report {
+        .mat-sort-header-container {
+          justify-content: center !important;
+        }
+      }
+      .mat-column-no_of_candidate {
+        .mat-sort-header-container {
+          .mat-sort-header-button {
+            text-align: left !important;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+
+
 .admin-bulk-upload-tpo {
   .mat-column-counter {
     max-width: 75px;
@@ -1270,6 +1451,20 @@ button:focus {
 
 .mat-autocomplete-panel.mat-autocomplete-visible {
   max-height: 200px !important;
+}
+
+.no-data-available.mat-header-row {
+  padding: 4px;
+  height: 40px !important;
+  th {
+    padding: 4px !important;
+    height: 40px !important;
+    text-align: center !important;
+    font-size: 20px !important;
+    background: $white-primary 0% 0% no-repeat padding-box !important;
+    color: $header-blue !important;
+    font-weight: 100 !important;
+  }
 }
 
 // Scrollbar

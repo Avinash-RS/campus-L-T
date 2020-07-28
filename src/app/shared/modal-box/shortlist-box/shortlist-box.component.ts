@@ -19,6 +19,7 @@ export class ShortlistBoxComponent implements OnInit {
   shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
   instituteRejection = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100), RemoveWhitespace.whitespace()]);
   radioValue = 'rec';
+  SecondShortlistradioValue = 'yes';
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,
@@ -47,6 +48,12 @@ export class ShortlistBoxComponent implements OnInit {
     }
   }
 
+  secondShortlist() {
+    const apiFolders = {
+      type: this.SecondShortlistradioValue
+    };
+    this.dialogRef.close(apiFolders);
+  }
   bulkConfirm() {
     this.dialogRef.close(true);
   }

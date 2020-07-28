@@ -1,4 +1,4 @@
-<div class="shortlist-wrapper" *ngIf="data && data['shortlist']">
+<div class="shortlist-wrapper" *ngIf="data && data['shortlist'] == 'first'">
   <div class="preview-wrapper">
     <div class="left">
       <div class="text">Folder Name
@@ -44,6 +44,33 @@
     <button class="confirm" (click)="confirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'second'">
+    <div class="bulk-upload-text">
+        Please confirm the selected candidates for assessment shortlist
+    </div>
+    <div class="radio-group">
+        <nz-radio-group [(ngModel)]="SecondShortlistradioValue">
+          <label nz-radio nzValue="yes">Send mail</label>
+          <label nz-radio nzValue="no">Do not send mail</label>
+        </nz-radio-group>
+
+      </div>
+    <div class="buttons">
+      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="confirm" (click)="secondShortlist()" mat-raised-button>Confirm</button>
+    </div>
+  </div>
+
+  <div class="modal-box-wrapper" *ngIf="data && data['success_second']">
+      <div class="bulk-upload-text">
+   <span *ngIf="data['success_second'] === 'yes'">The mail has been sent successfully to shortlisted candidates</span>
+   <span *ngIf="data['success_second'] === 'no'">Candidates have been successfully shortlisted for the assessment</span>
+      </div>
+      <div class="buttons">
+        <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+      </div>
+    </div>
 
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'candidate-bulk'">
@@ -94,6 +121,25 @@
     <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'test-results'">
+    <div class="bulk-upload-text">
+        Confirm to upload assessment details</div>
+    <div class="buttons">
+      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    </div>
+  </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['test_results']">
+    <div class="bulk-upload-text">
+ <span>Assessment results has been uploaded successfully</span>
+    </div>
+    <div class="buttons">
+      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    </div>
+  </div>
+
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
   <div class="bulk-upload-text">

@@ -35,6 +35,11 @@ import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-
 import { CandidateBulkUploadComponent } from './hr-user-management/candidate-bulk-upload/candidate-bulk-upload.component';
 import { InterviewPanelBulkUploadComponent } from './hr-user-management/interview-panel-bulk-upload/interview-panel-bulk-upload.component';
 import { InvpanelBulkuploadComponent } from './hr-user-management/interview-panel-bulk-upload/invpanel-bulkupload/invpanel-bulkupload.component';
+import { UploadTestResultsComponent } from './hr-shortlisting/upload-test-results/upload-test-results.component';
+import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlist.component';
+import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
+import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
+import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
 
 const routes: Routes = [
   {
@@ -61,7 +66,29 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`, component: ApplyCriteriaComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`, component: SecondLevelShortlistComponent,
+            children: [
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST}`, component: SecondLevelAssessmentListComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST}`, component: SecondLevelCandidateListofAssessComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT}`, component: SecondLevelShortlistedCandidatesReportComponent
+              },
+              {
+                path: '',
+                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST}`,
+                pathMatch: 'full',
+              }
+            ]
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.UPLOAD_TEST_RESULTS}`, component: UploadTestResultsComponent
           },
           {
             path: '',

@@ -26,12 +26,12 @@ export class HrShortlistingComponent implements OnInit {
       {
         icon: '',
         name: '2nd Level Shortlist',
-        router: null
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING
       },
       {
         icon: '',
-        name: '3rd Level Shortlist',
-        router: null
+        name: 'Upload test results',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.UPLOAD_TEST_RESULTS
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
