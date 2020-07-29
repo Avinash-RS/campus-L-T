@@ -106,7 +106,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   submit() {
     this.showShortlisted = true;
   }
-  disableListView() {
+  disableListView(event) {
     this.showShortlisted = false;
   }
   // To get all users
