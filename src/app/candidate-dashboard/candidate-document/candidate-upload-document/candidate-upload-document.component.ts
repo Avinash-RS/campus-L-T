@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, NgForm } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { CandidateMappersService } from 'src/app/services/candidate-mappers.service'
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { MatDialog } from '@angular/material';
+import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 
 @Component({
   selector: 'app-candidate-upload-document',
@@ -45,7 +47,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private appConfig: AppConfigService,
-    private candidateService: CandidateMappersService) { }
+    private candidateService: CandidateMappersService,
+    private matDialog: MatDialog) { }
 
   ngOnInit() {
     this.FormInitialization();
@@ -364,6 +367,54 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
       this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
     }
+  }
+
+  submitDialog(btnType){
+    if(this.educationUploadForm.valid && this.resumeUploadForm.valid){
+      const data = {
+        iconName: '',
+        dataToBeShared: {
+          confirmText: `Are you sure you want to upload this documents?`,
+          type: 'upload-tpo',
+          identity: 'upload-doc'
+        },
+        showConfirm: 'Confirm',
+        documentUpload: 'uploadDoc',
+        showCancel: 'Cancel',
+        showOk: ''
+      };
+  
+      this.openDialog(ShortlistBoxComponent, data, btnType);
+    }else{
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
+      this.validateAllFields(this.resumeUploadForm);
+      this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
+      this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
+      this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
+    }
+
+  }
+
+  openDialog(component, data, btnType) {
+    let dialogDetails: any;
+
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.uploadFile(btnType);
+      }
+    });
   }
 
   disableBtn(){

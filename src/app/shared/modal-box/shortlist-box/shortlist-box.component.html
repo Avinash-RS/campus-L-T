@@ -257,3 +257,13 @@
     <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['documentUpload'] === 'uploadDoc'">
+  <div class="bulk-upload-text">
+    Please confirm, Are you sure you want to upload this documents 
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
