@@ -30,10 +30,10 @@ th.mat-header-cell {
     height: 43px;
     padding-top: 9px;
     font-size: 18px;
-  
+
 }
 .bg-2{
-    background: $disable-gray !important; 
+    background: $disable-gray !important;
     height: 32px;
     padding-top: 6px;
     color: $black;
@@ -45,21 +45,21 @@ th.mat-header-cell {
 }
 
 :host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-    border-radius: 0px !important; 
-    padding: 0px !important; 
+    border-radius: 0px !important;
+    padding: 0px !important;
     border: 1px solid;
     height: 34px;
 }
 
 :host ::ng-deep .mat-form-field {
     line-height: 1.125 !important;
-   
+
 }
 .head-h5 {
     color: $blue-4;
 }
 
-.vertical { 
+.vertical {
     border-left: 61px solid $blue-4;
     max-width: 100%;
     height: 5px;
@@ -67,12 +67,12 @@ th.mat-header-cell {
     left: 6px;
     margin-top: -5px;
     border-radius: 17px;
-  } 
+  }
   .margin{
       margin-left: 5px;
   }
 
-  
+
   table {
     width: 100%;
     overflow-x: auto;
@@ -137,4 +137,12 @@ th.mat-header-cell {
   .radioDisp{
       display: contents;
   }
-  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+.col-8 {
+  text-indent: -.5em;
+}

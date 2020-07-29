@@ -148,14 +148,14 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`, component: EvaluationCandidateDetailsComponent
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, component: EvaluationInterviewPanelComponent
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTDETAILS}`, component: AssessmentDetailsComponent
           },
 
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`, component: AssessmentCandidateDetailsComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, component: EvaluationInterviewPanelComponent
           },
           {
             path: '',

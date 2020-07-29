@@ -27,9 +27,11 @@ export class EvaluationFormComponent implements OnInit {
   dataSource: MatTableDataSource<PeriodicElement>;
   evaluationForm: FormGroup;
   getCandidateData: any;
-  constructor(private formBuilder: FormBuilder,
-              private adminService: AdminServiceService,
-              private appConfig: AppConfigService, ) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private adminService: AdminServiceService,
+    private appConfig: AppConfigService,
+    ) {
     this.getEvaluationData();
   }
   get f() {
@@ -42,7 +44,7 @@ export class EvaluationFormComponent implements OnInit {
     this.evaluationForm = this.formBuilder.group({
       interview_date: new FormControl(''),
       interview_place: new FormControl(''),
-      willing_work: new FormControl('') ,
+      willing_work: new FormControl(''),
       physical_disability: new FormControl(''),
       candidates_strenght: ['', myGlobals.textVal],
       candidates_weakness: new FormControl(''),
@@ -65,7 +67,7 @@ export class EvaluationFormComponent implements OnInit {
       ASSESSMENT: new FormControl(''),
       depth_knowledge: new FormControl(''),
       uid: '1091'
-       });
+    });
   }
 
   setAssessmentLevel(assessment, value) {
@@ -81,11 +83,15 @@ export class EvaluationFormComponent implements OnInit {
     this.evaluationForm.value.personality = value;
     this.evaluationForm.value.curricular_activites = value;
     this.evaluationForm.value.thought_clarity = value;
-    
+
   }
   getEvaluationData() {
-    this.adminService.getEvaluationData().subscribe((data: any) => {
+    const apiData = {
+      id: '2689'
+    };
+    this.adminService.getEvaluationData(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
+      console.log('data', data);
       this.getCandidateData = data[0];
     });
   }

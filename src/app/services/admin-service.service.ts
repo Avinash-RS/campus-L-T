@@ -305,8 +305,8 @@ export class AdminServiceService {
   }
 
   // getting evaluation user data
-  getEvaluationData() {
-    return this.http.get(`${this.BASE_URL}/api/evaluation_data`,
+  getEvaluationData(data) {
+    return this.http.post(`${this.BASE_URL}/api/evaluation_data`, data,
     { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
   postEvaluationCandidateData(data) {
