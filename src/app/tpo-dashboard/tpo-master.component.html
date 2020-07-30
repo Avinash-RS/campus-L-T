@@ -3,6 +3,15 @@
   <span> Home ></span> <span> Dashboard </span>
   <span> </span>
 </div> -->
+<div class="toolbar-wrapper">
+  <ol class="breadcrumb">
+    <li *ngFor="let breadcrumb of breadcrumbs">
+      <span [routerLink]="'.'+breadcrumb.url" routerLinkActive="router-link-active">
+        {{ breadcrumb.label }}
+      </span>
+    </li>
+  </ol>
+</div>
 <mat-drawer-container class="first-sidenav">
   <mat-drawer class="sub-wrapper-nav" mode="side" [opened]="sidebarOpen">
     &#160;

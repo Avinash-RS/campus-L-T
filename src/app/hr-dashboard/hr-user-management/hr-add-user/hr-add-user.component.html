@@ -84,10 +84,7 @@
               </div>
               <nz-select formControlName="discipline" class="nzSelect"
                 nzPlaceHolder="select">
-                  <nz-option nzLabel="Development" nzValue="development"></nz-option>
-                  <nz-option nzLabel="QA" nzValue="qa"></nz-option>
-                  <!-- <nz-option nzLabel="Under graduate" nzValue="ug"></nz-option>
-                  <nz-option nzLabel="Post graduate" nzValue="pg"></nz-option> -->
+                <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue.discipline_name" [nzValue]="disciplineValue.discipline_name"></nz-option>
               </nz-select>
             </div>
             <div class="error" *ngIf="discipline.invalid && discipline.touched">

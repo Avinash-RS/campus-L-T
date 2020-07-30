@@ -23,6 +23,7 @@ export class HrAddUserComponent implements OnInit {
   title: string;
   editUserId: any;
   showInterviewPanel = false;
+  disciplineDropdown:any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -52,6 +53,16 @@ export class HrAddUserComponent implements OnInit {
       discipline: ['']
     })
   }
+
+  // get discipline dropdown value
+  getDiscipline() {
+    this.adminService.getDiscipline().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.disciplineDropdown = data;
+    }, (err) => {
+    });
+  }
+
   addValidation(){
     if(this.showInterviewPanel){
       this.addUserForm.get('employee_id').setValidators(Validators.required)

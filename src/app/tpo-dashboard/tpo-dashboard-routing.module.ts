@@ -10,21 +10,44 @@ import { TpoAddCandidateComponent } from './tpo-user-management/tpo-add-candidat
 import { TpoCandidatesStatusComponent } from './tpo-candidates-status/tpo-candidates-status.component';
 import { TpoPreAssessmentComponent } from './tpo-candidates-status/tpo-pre-assessment/tpo-pre-assessment.component';
 import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment/tpo-recruitment.component';
+import { TpocanloadGuard } from '../guards/canload/tpocanload.guard';
 
 
 const routes: Routes = [
   {
-    path: '', component: TpoMasterComponent,
+    path: '', 
+    component: TpoMasterComponent,
+    data: {
+      breadcrumb: 'Home'
+    },
     children: [
       {
-        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT}`, component: TpoUserManagementComponent, children: [
+        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT}`, 
+        component: TpoUserManagementComponent, 
+        data: {
+          breadcrumb: 'User Management'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: CandidateUploadsComponent, children: [
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, 
+            component: CandidateUploadsComponent,
+            data: {
+              breadcrumb: 'Candidate'
+            }, 
+            children: [
               {
-                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, component: UploadedListComponent
+                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, 
+                component: UploadedListComponent,
+                data: {
+                  breadcrumb: 'Uploaded List'
+                }, 
               },
               {
-                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, component: BulkUploadComponent
+                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, 
+                component: BulkUploadComponent,
+                data: {
+                  breadcrumb: 'Bulk Upload'
+                },
               },
               {
                 path: '',
@@ -34,7 +57,11 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE}`, component: TpoAddCandidateComponent
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE}`, 
+            component: TpoAddCandidateComponent,
+            data: {
+              breadcrumb: 'AddCandidate'
+            },
           },
           {
             path: '',
@@ -44,12 +71,25 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS}`, component: TpoCandidatesStatusComponent, children: [
+        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS}`, 
+        component: TpoCandidatesStatusComponent, 
+        data: {
+          breadcrumb: 'Status'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_PREASSESSMENT}`, component: TpoPreAssessmentComponent
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_PREASSESSMENT}`, 
+            component: TpoPreAssessmentComponent,
+            data: {
+              breadcrumb: 'PreAssessment'
+            },
           },
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_RECRUITMENT}`, component: TpoRecruitmentComponent
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_RECRUITMENT}`, 
+            component: TpoRecruitmentComponent,
+            data: {
+              breadcrumb: 'Recruitment'
+            },
           },
           {
             path: '',

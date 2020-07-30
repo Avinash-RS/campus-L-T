@@ -49,7 +49,7 @@ export class InterceptorsService implements HttpInterceptor {
         //   status: error.status
         // };
         if (error && error['status'] !== 200) {
-          console.log(error ? error : '');
+          // console.log(error ? error : '');
         }
 
         if (error.status === 0) {

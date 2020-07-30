@@ -5,7 +5,7 @@
   </div>
 
   <div class="form-wrapper">
-    <form [formGroup]="addUserForm" class="forms" (ngSubmit)="submit()">
+    <form [formGroup]="addUserForm" class="forms" (ngSubmit)="submitDialog()">
       <div class="form-field">
         <div class="grid">
           <div class="label-wrapper">
@@ -46,27 +46,50 @@
           </div>
           <div class="input-box-radio" [ngStyle]="{'border-bottom': role.invalid && role.touched ? 'solid red 1px': ''}">
             <div>
-            <input formControlName="role" type="radio" value="administrator"><span>  Admin</span>
-          </div>
+              <input (click)="showInterviewPanel = true; addValidation()" formControlName="role" type="radio" value="interview_panel"><span> Interview panel</span>
+            </div>
           <div>
-            <input formControlName="role" type="radio" value="proctor"><span> Proctor</span>
+            <input (click)="showInterviewPanel = false; addValidation()" formControlName="role" type="radio" value="proctor"><span> Proctor</span>
           </div>
-          <div>
-            <input formControlName="role" type="radio" value="hr"><span> HR</span>
-          </div>
-          <div>
-            <input formControlName="role" type="radio" value="interview-panel"><span> Interview panel</span>
-          </div>
-            <!-- <mat-radio-group formControlName="role" aria-label="Select an option">
-              <mat-radio-button value="1">Admin</mat-radio-button>
-              <mat-radio-button value="2">Proctor</mat-radio-button>
-              <mat-radio-button value="3">HR</mat-radio-button>
-              <mat-radio-button value="4">Interview panel</mat-radio-button>
-            </mat-radio-group> -->
+            
           </div>
         </div>
         <div class="error" *ngIf="role.invalid && role.touched">
           <span *ngIf="role.errors?.required">Role is Required</span>
+        </div>
+      </div>
+
+      <div *ngIf="showInterviewPanel" class="sub-div">
+        <div class="form-field-1">
+          <div class="grid-1">
+            <div class="label-wrapper-1">
+              <label class="label-name-1">
+                Employee ID
+              </label>
+            </div>
+            <div class="input-box-1" [ngStyle]="{border: employee_id.invalid && employee_id.touched ? 'solid red 1px': ''}">
+              <input matInput formControlName="employee_id" type="text" required>
+            </div>
+          </div>
+          <div class="error" *ngIf="employee_id.invalid && employee_id.touched">
+            <span *ngIf="employee_id.errors?.required">Employee id is Required</span>
+          </div>
+        </div>
+        <div class="form-field-1">
+          <div class="grid-1">
+            <div class="label-wrapper-1">
+              <label class="label-name-1">
+                Discipline
+              </label>
+            </div>
+            <nz-select formControlName="discipline" class="nzSelect"
+              nzPlaceHolder="select">
+                <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue.discipline_name" [nzValue]="disciplineValue.discipline_name"></nz-option>
+            </nz-select>
+          </div>
+          <div class="error" *ngIf="discipline.invalid && discipline.touched">
+            <span *ngIf="discipline.errors?.required"> Discipline is Required</span>
+          </div>
         </div>
       </div>
 
