@@ -1,6 +1,6 @@
- [ { 
+ [ {
     "id": 1,
-    "name": "TECHNICAL /FUNCTIONAL (Depth of Knowledge)",
+    "name": "TECHNICAL/FUNCTIONAL (Depth of Knowledge)",
     "veryGood": "Thorough on fundamental concepts - is able to correlate / apply these to all given situations.",
     "good": "Clear on fundamental concepts - is able to apply / correlate to the given situations most of the time.",
     "acceptable": "Reasonably clear on fundamental concepts. Is able to apply to a few of the given situations.",
@@ -9,7 +9,7 @@
 },
     {
     "id": 2,
-    "name": "TECHNICAL /FUNCTIONAL (Breadth of Knowledge)",
+    "name": "TECHNICAL/FUNCTIONAL (Breadth of Knowledge)",
     "veryGood": "Answer with very ease questions related to most subjects studied. Substantiates with relevant examples.",
     "good": "Answer with ease questions related to many subjects studied . Substantiates with relevant examples to some extent",
     "acceptable": "Answers questions related to many subjects studied but takes time and effort to do so. Not able to substantiate with examples.",

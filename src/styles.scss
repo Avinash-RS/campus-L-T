@@ -1350,25 +1350,24 @@ button:focus {
   }
 }
 
-  // http://localhost:4200/#/hr/shortlist/2nd/assessment-list
-  .second-level-assessmentList {
-    .user-list-wrapper {
-      .mat-column-report {
-        .mat-sort-header-container {
-          justify-content: center !important;
-        }
+// http://localhost:4200/#/hr/shortlist/2nd/assessment-list
+.second-level-assessmentList {
+  .user-list-wrapper {
+    .mat-column-report {
+      .mat-sort-header-container {
+        justify-content: center !important;
       }
-      .mat-column-no_of_candidate {
-        .mat-sort-header-container {
-          .mat-sort-header-button {
-            text-align: left !important;
-            white-space: nowrap;
-          }
+    }
+    .mat-column-no_of_candidate {
+      .mat-sort-header-container {
+        .mat-sort-header-button {
+          text-align: left !important;
+          white-space: nowrap;
         }
       }
     }
   }
-
+}
 
 .admin-bulk-upload-tpo {
   .mat-column-counter {
@@ -1464,6 +1463,56 @@ button:focus {
     background: $white-primary 0% 0% no-repeat padding-box !important;
     color: $header-blue !important;
     font-weight: 100 !important;
+  }
+}
+
+.contant {
+  .mat-form-field-flex {
+    display: flex !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.527) !important;
+  }
+  .date:focus {
+    .mat-form-field-underline::before {
+      background: none !important;
+    }
+  }
+  .date {
+    border: 1px solid rgba(0, 0, 0, 0.527);
+    height: 30px !important;
+    .mat-form-field-wrapper {
+      height: 30px !important;
+    }
+    input {
+      margin-top: -0.5em !important;
+      height: 30px !important;
+    }
+    .mat-form-field-flex {
+      height: 30px !important;
+      border: none !important;
+    }
+    .mat-form-field-infix {
+      display: flex;
+      align-items: center;
+      height: 30px !important;
+    }
+  }
+  .mat-form-field-underline {
+    bottom: 0px !important;
+    background: none !important;
+  }
+  .mat-form-field-underline::before {
+    background: none !important;
+  }
+
+  .ng-touched.ng-invalid {
+    border: solid $red 1px;
+  }
+  .date {
+    input.ng-touched.ng-invalid {
+      border: none !important;
+    }
   }
 }
 
