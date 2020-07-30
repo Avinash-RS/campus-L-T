@@ -37,6 +37,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
   eventSaver: any;
   totalCountofCandidates: any;
   uploadedListArray: any;
+  dateFormatExist: boolean;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -158,7 +159,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'employee id') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'email') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'discipline')) {
-        this.enableList = true;
+        // this.enableList = true;
         this.appConfig.hideLoader();
         this.totalCount(this.SavedData);
       } else {
@@ -177,6 +178,8 @@ export class InvpanelBulkuploadComponent implements OnInit {
   }
 
   totalCount(data) {
+    this.dateFormatExist = false;
+    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -189,19 +192,33 @@ export class InvpanelBulkuploadComponent implements OnInit {
           if (index < 4) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                name = element ? this.getDateFormat(element).toString() : '';
+                // name = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 name = element ? element : '';
               }
             }
             if (index == 1) {
-              employeeId = element ? element : '';
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                // employeeId = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                employeeId = element ? element : '';
+              }
             }
             if (index == 2) {
               email = element ? element : '';
             }
             if (index == 3) {
-              discipline = element ? element : '';
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                // discipline = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                discipline = element ? element : '';
+              }
             }
           }
         });
@@ -304,6 +321,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
     this.showSizeError.image = false;
     this.showSizeError.size = false;
     this.validFile = false;
+    this.dateFormatExist = false;
     this.url = null;
   }
 

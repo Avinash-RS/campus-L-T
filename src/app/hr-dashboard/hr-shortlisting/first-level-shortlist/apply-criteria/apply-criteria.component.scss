@@ -173,7 +173,6 @@
               .text1 {
                 margin: 0px 0 0 4px;
               }
-
             }
           }
         }
@@ -222,11 +221,13 @@
               font-size: 13px;
               color: #145e9a;
               .hanging {
-                margin-left: 2em;
-                text-indent: -0.9em;
+                display: flex;
+                align-items: center;
+                // margin-left: 2em;
+                // text-indent: -0.9em;
                 .text {
                   font-size: 13px;
-                  margin: 0 0 0 0.5em;
+                  margin: 0 0 0 1em;
                 }
               }
             }
@@ -280,12 +281,15 @@
             }
             .item-date {
               white-space: nowrap;
-              height: 26px !important;
+              // height: 26px !important;
+              display: flex;
+              align-items: center;
               input {
+                height: 25px;
                 width: 88%;
                 text-align: center !important;
                 font-size: 14px;
-                color: #1F3777;
+                color: #1f3777;
                 border: none;
                 outline: none;
               }
@@ -307,13 +311,16 @@
               font-weight: 200;
             }
             .item-date {
-              height: 26px !important;
               white-space: nowrap;
+              // height: 26px !important;
+              display: flex;
+              align-items: center;
               input {
                 width: 88%;
                 text-align: center !important;
                 font-size: 14px;
-                color: #1F3777;
+                height: 25px;
+                color: #1f3777;
                 border: none;
                 outline: none;
               }
@@ -324,7 +331,7 @@
           color: $red;
           font-size: 12px;
           font-weight: 100;
-          margin: .25em .5em;
+          margin: 0.25em 0.5em;
         }
         .button {
           display: flex;
@@ -404,11 +411,13 @@
               font-size: 13px;
               color: $light-black;
               .hanging {
-                margin-left: 2em;
-                text-indent: -0.9em;
+                display: flex;
+                align-items: center;
+                // margin-left: 2em;
+                // text-indent: -0.9em;
                 .text {
                   font-size: 13px;
-                  margin: 0 0 0 0.5em;
+                  margin: 0 0 0 1em;
                 }
               }
             }
@@ -483,6 +492,7 @@
                 background: #fffdfd 0% 0% no-repeat padding-box;
                 padding: 4px 16px;
                 color: #145e9a;
+                max-height: 34px;
                 font-size: 13px;
                 input {
                   text-align: center;
@@ -532,7 +542,14 @@
                 background: #fffdfd 0% 0% no-repeat padding-box;
                 padding: 4px 16px;
                 color: #145e9a;
-                font-size: 14px;
+                font-size: 13px;
+                max-height: 34px;
+                .item {
+                  // height: auto;
+                  // width: auto;
+                  display: flex;
+                  align-items: center;
+                }
                 input {
                   text-align: center !important;
                   padding: 2px 4px;
@@ -550,7 +567,7 @@
             color: $red;
             font-size: 12px;
             font-weight: 100;
-            margin: .25em .5em;
+            margin: 0.25em 0.5em;
           }
           .button {
             display: flex;

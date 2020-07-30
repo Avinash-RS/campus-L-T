@@ -72,6 +72,15 @@
       </div>
     </div>
 
+    <div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'reject'">
+        <div class="bulk-upload-text">
+          Press confirm to reject the selected candidates
+        </div>
+        <div class="buttons">
+          <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+          <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+        </div>
+      </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'candidate-bulk'">
   <div class="bulk-upload-text">
@@ -260,7 +269,7 @@
 
 <div class="modal-box-wrapper" *ngIf="data && data['documentUpload'] === 'uploadDoc'">
   <div class="bulk-upload-text">
-    Please confirm, Are you sure you want to upload this documents 
+    Please confirm, Are you sure you want to upload this documents
   </div>
   <div class="buttons">
     <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>

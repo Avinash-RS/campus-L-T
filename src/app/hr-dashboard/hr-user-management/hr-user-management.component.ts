@@ -35,7 +35,7 @@ export class HrUserManagementComponent implements OnInit {
       },
       {
         icon: '002-group-1.svg',
-        name: 'InterviewPanel Upload',
+        name: 'Interview panel Upload',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS
       }
     ];

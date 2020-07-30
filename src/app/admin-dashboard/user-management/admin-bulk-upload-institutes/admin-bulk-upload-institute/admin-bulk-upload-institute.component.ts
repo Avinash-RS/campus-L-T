@@ -36,6 +36,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
   eventSaver: any;
   totalCountofCandidates: any;
   uploadedListArray: any;
+  dateFormatExist: boolean;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -166,7 +167,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Contact Person Title')
         &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'Contact Person Mobile Number')) {
-        this.enableList = true;
+        // this.enableList = true;
         this.appConfig.hideLoader();
         this.totalCount(this.SavedData);
       } else {
@@ -185,7 +186,8 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
   }
 
   totalCount(data) {
-
+    this.dateFormatExist = false;
+    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -199,56 +201,72 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
           if (index < 8) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                field_institute_name = element ? this.getDateFormat(element).toString() : '';
+                // field_institute_name = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 field_institute_name = element ? element : '';
               }
             }
             if (index == 1) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                email = element ? this.getDateFormat(element).toString() : '';
+                // email = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
               }
             }
             if (index == 2) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                field_institute_state = element ? this.getDateFormat(element).toString() : '';
+                // field_institute_state = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 field_institute_state = element ? element : '';
               }
             }
             if (index == 3) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                field_institute_city = element ? this.getDateFormat(element).toString() : '';
+                // field_institute_city = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 field_institute_city = element ? element : '';
               }
             }
             if (index == 4) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                name = element ? this.getDateFormat(element).toString() : '';
+                // name = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 name = element ? element : '';
               }
             }
             if (index == 5) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                field_institute_last_name = element ? this.getDateFormat(element).toString() : '';
+                // field_institute_last_name = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 field_institute_last_name = element ? element : '';
               }
             }
             if (index == 6) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                field_institute_title = element ? this.getDateFormat(element).toString() : '';
+                // field_institute_title = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 field_institute_title = element ? element : '';
               }
             }
             if (index == 7) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                field_institute_mobile_number = element ? this.getDateFormat(element).toString() : '';
+                // field_institute_mobile_number = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 field_institute_mobile_number = element ? element : '';
               }
@@ -360,6 +378,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
     this.showSizeError.image = false;
     this.showSizeError.size = false;
     this.validFile = false;
+    this.dateFormatExist = false;
     this.url = null;
   }
 

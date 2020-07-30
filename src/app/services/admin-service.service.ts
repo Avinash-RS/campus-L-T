@@ -170,6 +170,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  firstLevelReject(data) {
+    return this.http.post(`${this.BASE_URL}/profile/reject_shortlist_user`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   submitShortlistedCandidates(data) {
     return this.http.post(`${this.BASE_URL}/profile/shortlist_user`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

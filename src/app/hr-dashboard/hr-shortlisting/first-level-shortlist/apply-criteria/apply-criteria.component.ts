@@ -358,7 +358,7 @@ export class ApplyCriteriaComponent implements OnInit {
     };
     console.log(apiData);
     this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+      // this.appConfig.hideLoader();
       console.log(data);
       const apiData = {
         user_id: []

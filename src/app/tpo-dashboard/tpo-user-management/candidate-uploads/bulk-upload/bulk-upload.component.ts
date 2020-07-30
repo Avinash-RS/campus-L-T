@@ -36,6 +36,7 @@ export class BulkUploadComponent implements OnInit {
   eventSaver: any;
   totalCountofCandidates: any;
   uploadedListArray: any;
+  dateFormatExist: boolean;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -152,7 +153,7 @@ export class BulkUploadComponent implements OnInit {
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Tag') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
-        this.enableList = true;
+        // this.enableList = true;
         this.appConfig.hideLoader();
         this.totalCount(this.SavedData);
       } else {
@@ -171,6 +172,8 @@ export class BulkUploadComponent implements OnInit {
   }
 
   totalCount(data) {
+    this.dateFormatExist = false;
+    this.enableList = true;
     console.log(typeof data[1][0], data[1][0].toString().endsWith('(India Standard Time)'));
 
     let count = 0;
@@ -185,7 +188,9 @@ export class BulkUploadComponent implements OnInit {
           if (index < 3) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                tag = element ? this.getDateFormat(element).toString() : '';
+                // tag = element ? this.getDateFormat(element).toString() : '';
+                this.enableList = false;
+                this.dateFormatExist = true;
               } else {
                 tag = element ? element : '';
               }
@@ -289,6 +294,7 @@ export class BulkUploadComponent implements OnInit {
     this.showSizeError.image = false;
     this.showSizeError.size = false;
     this.validFile = false;
+    this.dateFormatExist = false;
     this.url = null;
   }
 
