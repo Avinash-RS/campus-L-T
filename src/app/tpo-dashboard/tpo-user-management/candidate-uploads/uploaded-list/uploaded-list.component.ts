@@ -83,12 +83,15 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-    this.adminService.tpoCandidateListAfterBulkUpload().subscribe((data1: any) => {
+    const apiData = {
+      uploaded_id: this.appConfig.getLocalData('userId')
+    };
+    this.adminService.tpoCandidateListAfterBulkUpload(apiData).subscribe((data1: any) => {
       this.appConfig.hideLoader();
       console.log('data1', data1);
       this.userList = data1 ? data1 : [];
       this.userList.forEach((element, i) => {
-        element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
+        element['time'] = element && element['time'] ? element['time'] : '';
         element['sno'] = i + 1;
         element['checked'] = false;
       });

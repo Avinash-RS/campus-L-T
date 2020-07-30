@@ -139,6 +139,17 @@ getDateFormat(date) {
     return '-';
   }
 }
+getDOBFormat(date) {
+  if (date) {
+    const split = moment(date).format('DD MMM YYYY');
+    const output = split;
+    return output;
+
+  } else {
+    return '-';
+  }
+}
+
 getDateFormat1(date) {
   if (date) {
     const split = moment(date).format('YYYY-MM-DD');
@@ -153,6 +164,7 @@ getDateFormat1(date) {
 // To get all users
 getUsersList() {
   this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
+    this.appConfig.hideLoader();
     console.log('api', datas);
     const align = [];
     let ApiCummulativeBacklog = 0;
@@ -160,7 +172,7 @@ getUsersList() {
       const uid = element && element['uuid'] ? element['uuid'] : '-';
       const name = element && element['name'] ? element['name'] : '-';
       const gender = element && element['field_gender'] ? element['field_gender'] : '-';
-      const dob = element && element['field_dob'] ? this.getDateFormat(element['field_dob']) : '-';
+      const dob = element && element['field_dob'] ? this.getDOBFormat(element['field_dob']) : '-';
       let institute = '-';
       let level = '-';
       let percentage = '-';
@@ -255,7 +267,6 @@ getUsersList() {
     this.dataSource = new MatTableDataSource(this.userList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.appConfig.hideLoader();
   }, (err) => {
   });
 }

@@ -100,7 +100,7 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
       // ];
       this.userList = data1 ? data1 : [];
       this.userList.forEach(element => {
-        element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
+        element['time'] = element && element['time'] ? element['time'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

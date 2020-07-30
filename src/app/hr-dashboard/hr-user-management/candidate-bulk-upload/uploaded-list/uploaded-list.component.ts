@@ -55,7 +55,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       console.log(data1);
       this.userList = data1 ? data1 : [];
       this.userList.forEach((element, i) => {
-        element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
+        element['time'] = element && element['time'] ? element['time'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

@@ -48,21 +48,6 @@ export class BulkUploadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.i = 0;
-
-    console.log(this.tConvert('11:6'));
-    const date = new Date();
-    console.log(date.getHours(), date.getMinutes());
-    if (date.getMinutes().toString().length === 1) {
-      let hours;
-      hours = '0' + date.getMinutes().toString();
-      console.log('hours', hours);
-    }
-
-    const time = this.tConvert(`${date.getHours()}:${date.getMinutes()}`);
-    console.log(time);
-
-
   }
 
   downloadTemplate() {

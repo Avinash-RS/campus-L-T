@@ -185,7 +185,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     this.unselectSelectALL();
   }
 
-  submit(event) {
+  submit() {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT, '1');
   }
 

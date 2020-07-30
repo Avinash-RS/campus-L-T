@@ -58,7 +58,7 @@
 
   <div class="buttonn-wrapper">
     <button (click)="backToShortlist()" class="cancel" mat-raised-button>Cancel</button>
-    <button [disabled]="userList && userList.length > 1 ? false : true" (click)="submit()" class="ok"
+    <button [disabled]="userList && userList.length > 0 ? false : true" (click)="submit()" class="ok"
       mat-raised-button>Ok</button>
   </div>
 

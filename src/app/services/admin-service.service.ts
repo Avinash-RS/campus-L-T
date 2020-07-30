@@ -268,8 +268,8 @@ export class AdminServiceService {
   }
 
   // TPO API's
-  tpoCandidateListAfterBulkUpload() {
-    return this.http.get(`${this.BASE_URL}/api/institute_candidate_list`,
+  tpoCandidateListAfterBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/user_details_get`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

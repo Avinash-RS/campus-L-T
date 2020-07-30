@@ -64,61 +64,7 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
       console.log('dataadadad', data);
       this.appConfig.hideLoader();
 
-      const datas = [
-        {
-          uid: '1',
-          name: 'SRM Institute of technology',
-          mail: 'SRM@gmail.com',
-          state: 'Tamilnadu',
-          city: 'Chennai',
-          date: '29 Mar 2020',
-          time: '11:00 AM',
-          contact_person: 'Avinash',
-          approve: false,
-          reject: false,
-          checked: false
-        },
-        {
-          uid: '2',
-          name: 'SRM Institute of technology',
-          mail: 'SRM@gmail.com',
-          state: 'Tamilnadu',
-          city: 'Chennai',
-          date: '29 Mar 2020',
-          time: '11:00 AM',
-          contact_person: 'Avinash',
-          approve: false,
-          reject: false,
-          checked: false
-        },
-        {
-          uid: '3',
-          name: 'SRM Institute of technology',
-          mail: 'SRM@gmail.com',
-          state: 'Tamilnadu',
-          city: 'Chennai',
-          date: '29 Mar 2020',
-          time: '11:00 AM',
-          contact_person: 'Avinash',
-          approve: false,
-          reject: false,
-          checked: false
-        },
-        {
-          uid: '4',
-          name: 'SRM Institute of technology SRM Institute of technology',
-          mail: 'SRM@gmail.com',
-          state: 'Tamilnadu',
-          city: 'Chennai',
-          date: '29 Mar 2020',
-          time: '11:00 AM',
-          contact_person: 'Avinash',
-          approve: false,
-          reject: false,
-          checked: false
-        },
-      ];
-      this.userList = data;
+      this.userList = data ? data : [];
       this.userList.forEach(element => {
         element.checked = false;
         element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';

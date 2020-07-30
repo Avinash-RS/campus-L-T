@@ -77,7 +77,7 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
 
       this.userList = data1 ? data1 : [];
       this.userList.forEach(element => {
-        element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
+        element['time'] = element && element['time'] ? element['time'] : '';
         element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';
       });
       this.dataSource = new MatTableDataSource(this.userList);
