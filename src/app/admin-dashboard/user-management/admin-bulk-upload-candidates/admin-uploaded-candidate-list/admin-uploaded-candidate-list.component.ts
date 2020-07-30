@@ -50,7 +50,7 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   getUsersList() {
     this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      console.log(data1);
+      // console.log(data1);
 
       // const data = [
       //   {

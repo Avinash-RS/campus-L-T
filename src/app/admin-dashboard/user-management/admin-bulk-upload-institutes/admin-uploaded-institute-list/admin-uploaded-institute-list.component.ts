@@ -73,7 +73,7 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
   getUsersList() {
     this.adminService.instituteListAfterBulkUpload().subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      console.log(data1);
+      // console.log(data1);
 
       this.userList = data1 ? data1 : [];
       this.userList.forEach(element => {

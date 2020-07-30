@@ -25,6 +25,8 @@ import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-can
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
 import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
 import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
+import { InterviewpanelDetailsComponent } from './evaluation/interviewpanel-details/interviewpanel-details.component';
+import { InterviewpanelSelectComponent } from './evaluation/interviewpanel-select/interviewpanel-select.component';
 
 
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
@@ -156,6 +158,12 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, component: EvaluationInterviewPanelComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS}`, component: InterviewpanelDetailsComponent
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT}`, component: InterviewpanelSelectComponent
           },
           {
             path: '',

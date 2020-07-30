@@ -48,7 +48,8 @@
   padding: 0 0 0 1em;
   word-spacing: 0em;
   display: flex;
-  height: 40px;
+  height: 25px;
+  font-size: 13px;
   align-items: center;
   color: $black-1;
   span {
@@ -56,8 +57,8 @@
   }
 }
 .first-sidenav {
-  // background: $wrapper-light-gray 0% 0% no-repeat padding-box;
-  height: 40px;
+  background: $wrapper-light-gray 0% 0% no-repeat padding-box;
+  height: 50px;
   .sub-wrapper-nav {
     width: 235px;
     background: $sidebar-bg 0% 0% no-repeat padding-box;
@@ -117,7 +118,7 @@
   }
 }
 .second-sidenav {
-  margin: 100px 0 0 0;
+  margin: 135px 0 0 0;
   // margin: 190px 0 0 0;
   position: absolute;
   top: 0;
@@ -182,5 +183,40 @@
   .main-container {
     background: $hr-bg;
     padding: 0px 0px 0px 0px;
+  }
+}
+
+//breadcrumb
+.breadcrumb {
+  background: none;
+  margin: 0;
+  a,
+  span {
+    color: #5E5E5E;
+    font-size: 14px;
+    margin: 0;
+  }
+  a:hover,
+  span:hover {
+    color: #5E5E5E;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  li {
+    list-style: none;
+    float: left;
+    margin: 5px;
+  }
+  li:last-child {
+    margin-right: 20px;
+  }
+  li::after {
+    content: ">";
+    color: #5E5E5E;
+    margin-left: 6px;
+    font-size: 14px;
+  }
+  li:last-child::after {
+    content: "";
   }
 }

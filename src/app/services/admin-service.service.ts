@@ -219,6 +219,12 @@ export class AdminServiceService {
     return this.http.get(`${this.BASE_URL}/profile/interview_panel_users`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  getDiscipline() {
+    return this.http.get(`${this.BASE_URL}/profile/getdiscipline`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   //hrremove user
   hrDeleteUser(userId) {
     return this.http.post(`${this.BASE_URL}/profile/interview_panel_unblock`, userId,
