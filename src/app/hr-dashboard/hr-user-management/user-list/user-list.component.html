@@ -19,9 +19,12 @@
 
         <div class="user-list-wrapper">
 
-          <!-- <div class="search-bar">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Search">
-          </div> -->
+          <div class="search-bar">
+            <div class="search-icon">
+              <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+              <img src="assets/images/feather-search.svg" alt="" srcset="">
+            </div>
+          </div>
 
           <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 

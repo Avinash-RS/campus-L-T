@@ -53,30 +53,52 @@
     margin: 1em 0 0.5em 0;
     /* Structure */
     .search-bar {
-      margin: 0 0 0 1em;
-      input {
-        display: inline-block;
-        border-radius: 4px;
+      margin: 0em 1em 0em 1em;
+      text-align: right;
+      .search-icon {
+        display: inline-flex;
+        align-items: center;
         margin: 8px 0;
         width: auto;
-        min-width: 400px;
+        // min-width: 280px;
         color: $header-blue;
         font-size: 14px;
-        background: $white-primary;
+        border: 0.5px solid #5e5e5e75;
+        background: #fffdfd 0% 0% no-repeat padding-box !important;
+        border-radius: 5px;
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
-        padding: 0.25em 1em;
-        height: 31px;
-      }
-      ::placeholder {
-        opacity: 0.8;
-        color: $secondary;
-        font-size: 13px;
+        padding: 0.25em 0.15em;
+        height: 27px;
+        position: relative;
+        img {
+          width: 20px;
+          height: 13px;
+        }
+        input {
+          position: relative;
+          width: 100%;
+          display: inline-block;
+          margin: 8px 0;
+          width: auto;
+          color: $header-blue;
+          font-size: 14px;
+          background: #fffdfd 0% 0% no-repeat padding-box !important;
+          box-sizing: border-box;
+          padding: 0.15em 0.5em;
+          height: 24px;
+        }
+        ::placeholder {
+          color: #5e5e5e;
+          opacity: 0.6;
+          font-size: 12px;
+        }
       }
     }
     :focus {
-      border-radius: 4px;
-      border: solid $blue-3 1px;
+      border-radius: 0px;
+      border: none;
+      outline: none;
     }
 
     table {
