@@ -45,20 +45,46 @@ import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisti
 
 const routes: Routes = [
   {
-    path: '', component: HrMasterComponent,
+    path: '', 
+    component: HrMasterComponent,
+    data: {
+      breadcrumb: 'Home'
+    },
     children: [
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.DASHBOARD}`, component: HrMainDashboardComponent, canActivate: [HrcanloadGuard]
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.DASHBOARD}`, 
+        component: HrMainDashboardComponent, canActivate: [HrcanloadGuard],
+        data: {
+          breadcrumb: 'Dashboard'
+        }
       },
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.SHORTLISTING}`, component: HrShortlistingComponent, canActivate: [HrcanloadGuard], children: [
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.SHORTLISTING}`, 
+        component: HrShortlistingComponent, canActivate: [HrcanloadGuard], 
+        data: {
+          breadcrumb: 'Shortlist'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`, component: FirstLevelShortlistComponent, children: [
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`, 
+            component: FirstLevelShortlistComponent, 
+            data: {
+              breadcrumb: '1st Shortlist'
+            },
+            children: [
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_LIST}`, component: ShortlistedCandidateListComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_LIST}`, 
+                component: ShortlistedCandidateListComponent,
+                data: {
+                  breadcrumb: 'List'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA}`, component: ApplyCriteriaComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA}`, 
+                component: ApplyCriteriaComponent,
+                data: {
+                  breadcrumb: 'Criteria'
+                }
               },
               {
                 path: '',
@@ -68,19 +94,39 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`, component: SecondLevelShortlistComponent,
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`, 
+            component: SecondLevelShortlistComponent,
+            data: {
+              breadcrumb: '2nd Shortlist'
+            },
             children: [
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST}`, component: SecondLevelAssessmentListComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST}`, 
+                component: SecondLevelAssessmentListComponent,
+                data: {
+                  breadcrumb: 'Assessment List'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, 
+                component: ReportsListComponent,
+                data: {
+                  breadcrumb: 'second'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST}`, component: SecondLevelCandidateListofAssessComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST}`, 
+                component: SecondLevelCandidateListofAssessComponent,
+                data: {
+                  breadcrumb: 'Candidateslist'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT}`, component: SecondLevelShortlistedCandidatesReportComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT}`, 
+                component: SecondLevelShortlistedCandidatesReportComponent,
+                data: {
+                  breadcrumb: 'Shortlisted Report'
+                }
               },
               {
                 path: '',
@@ -90,7 +136,11 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.UPLOAD_TEST_RESULTS}`, component: UploadTestResultsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.UPLOAD_TEST_RESULTS}`, 
+            component: UploadTestResultsComponent,
+            data: {
+              breadcrumb: 'Upload test results'
+            }
           },
           {
             path: '',
@@ -100,15 +150,32 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`, component: HrUserManagementComponent, children: [
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`, 
+        component: HrUserManagementComponent, 
+        data: {
+          breadcrumb: 'User Management'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: CandidateBulkUploadComponent,
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, 
+            component: CandidateBulkUploadComponent,
+            data: {
+              breadcrumb: 'Candidate'
+            },
             children: [
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, component: UploadedListComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, 
+                component: UploadedListComponent,
+                data: {
+                  breadcrumb: 'Uploaded List'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, component: BulkUploadComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, 
+                component: BulkUploadComponent,
+                data: {
+                  breadcrumb: 'Bulk Upload'
+                }
               },
               {
                 path: '',
@@ -118,16 +185,32 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`, component: UserListComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`, 
+            component: UserListComponent,
+            data: {
+              breadcrumb: 'User List'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS}`, component: HrAddUserComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS}`, 
+            component: HrAddUserComponent,
+            data: {
+              breadcrumb: 'Add User'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS}`, component: InterviewPanelBulkUploadComponent,
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS}`, 
+            component: InterviewPanelBulkUploadComponent,
+            data: {
+              breadcrumb: 'Interviewpanel Upload'
+            },
             children: [
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_BULK_UPLOAD}`, component: InvpanelBulkuploadComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_BULK_UPLOAD}`, 
+                component: InvpanelBulkuploadComponent,
+                data: {
+                  breadcrumb: 'Interviewpanel Bulk Upload'
+                }
               },
               {
                 path: '',
@@ -145,25 +228,54 @@ const routes: Routes = [
       },
 
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION}`, component: EvaluationComponent, children: [
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION}`, 
+        component: EvaluationComponent,
+        data: {
+          breadcrumb: 'Evaluation'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`, component: EvaluationCandidateDetailsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`, 
+            component: EvaluationCandidateDetailsComponent,
+            data: {
+              breadcrumb: 'Candidate Details'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTDETAILS}`, component: AssessmentDetailsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTDETAILS}`, 
+            component: AssessmentDetailsComponent,
+            data: {
+              breadcrumb: 'Assessment Details'
+            }
           },
 
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`, component: AssessmentCandidateDetailsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`, 
+            component: AssessmentCandidateDetailsComponent,
+            data: {
+              breadcrumb: 'Assessment Candidate Details'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, component: EvaluationInterviewPanelComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`, 
+            component: EvaluationInterviewPanelComponent,
+            data: {
+              breadcrumb: 'Interview Panel'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS}`, component: InterviewpanelDetailsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS}`, 
+            component: InterviewpanelDetailsComponent,
+            data: {
+              breadcrumb: 'Interview Panel Details'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT}`, component: InterviewpanelSelectComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT}`, 
+            component: InterviewpanelSelectComponent,
+            data: {
+              breadcrumb: 'Interview Panel Selected'
+            }
           },
           {
             path: '',
@@ -173,15 +285,32 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS}`, component: HrReportsComponent, children: [
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS}`, 
+        component: HrReportsComponent, 
+        data: {
+          breadcrumb: 'Reports'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`, component: FirstLevelShorlistReportsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`, 
+            component: FirstLevelShorlistReportsComponent,
+            data: {
+              breadcrumb: '1st Reports'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, component: ReportsListComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`, 
+            component: ReportsListComponent,
+            data: {
+              breadcrumb: '2st Reports'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`, component: BulkUploadReportsComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`, 
+            component: BulkUploadReportsComponent,
+            data: {
+              breadcrumb: 'Candidate List Reports'
+            }
           },
           {
             path: '',
@@ -191,12 +320,25 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS}`, component: HrCandidateStatusComponent, children: [
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS}`, 
+        component: HrCandidateStatusComponent, 
+        data: {
+          breadcrumb: 'Status'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_PREASSESSMENT}`, component: HrPreAssessmentComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_PREASSESSMENT}`, 
+            component: HrPreAssessmentComponent,
+            data: {
+              breadcrumb: 'PreAssessment'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_RECRUITMENT}`, component: HrRecruitmentComponent
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_RECRUITMENT}`, 
+            component: HrRecruitmentComponent,
+            data: {
+              breadcrumb: 'Recruitment'
+            }
           },
           {
             path: '',
