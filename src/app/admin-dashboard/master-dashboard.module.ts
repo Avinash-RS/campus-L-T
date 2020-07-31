@@ -20,10 +20,12 @@ import { ApprovalsComponent } from './approvals/approvals.component';
 import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
 import { AdminReportComponent } from './admin-report/admin-report.component';
 import { AdminReportListComponent } from './admin-report/admin-report-list/admin-report-list.component';
+import { AdminBulkUploadReportComponent } from './admin-report/admin-bulk-upload-report/admin-bulk-upload-report.component';
+import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institude-bulk-upload/admin-institude-bulk-upload.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, DashboardComponent, AdminDashboardHeaderComponent, UserManagementComponent, UsersListComponent, AddUserComponent, AdminBulkUploadInstitutesComponent, AdminUploadedInstituteListComponent, AdminBulkUploadInstituteComponent, AdminBulkUploadCandidatesComponent, AdminUploadedCandidateListComponent, AdminBulkUploadCandidateCompComponent, ApprovalsComponent, InstituteApprovalsComponent, AdminReportComponent, AdminReportListComponent],
+  declarations: [MasterDashboardComponent, DashboardComponent, AdminDashboardHeaderComponent, UserManagementComponent, UsersListComponent, AddUserComponent, AdminBulkUploadInstitutesComponent, AdminUploadedInstituteListComponent, AdminBulkUploadInstituteComponent, AdminBulkUploadCandidatesComponent, AdminUploadedCandidateListComponent, AdminBulkUploadCandidateCompComponent, ApprovalsComponent, InstituteApprovalsComponent, AdminReportComponent, AdminReportListComponent, AdminBulkUploadReportComponent, AdminInstitudeBulkUploadComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -51,7 +51,9 @@ export const CONSTANT = {
       APPROVALS: '/admin/approvals',
       APPROVALS_INSTITUTE: '/admin/approvals/institute',
       ADMIN_REPORTS: '/admin/reports',
-      ADMIN_REPORTS_LIST: '/admin/reports-list'
+      ADMIN_REPORTS_LIST: '/admin/reports/reports-list',
+      ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/admin/reports/candidate_list_reports',
+      ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST: '/admin/reports/institute_list_reports'
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
@@ -170,6 +172,8 @@ export const CONSTANT = {
       APPROVALS_INSTITUTE: 'institute',
       ADMIN_REPORTS: 'reports',
       ADMIN_REPORTS_LIST: 'reports-list',
+      ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports',
+      ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST: 'institute_list_reports',
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',

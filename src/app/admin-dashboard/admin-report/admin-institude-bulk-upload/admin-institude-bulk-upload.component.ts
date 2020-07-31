@@ -1,0 +1,119 @@
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
+import moment from 'moment';
+
+@Component({
+  selector: 'app-admin-institude-bulk-upload',
+  templateUrl: './admin-institude-bulk-upload.component.html',
+  styleUrls: ['./admin-institude-bulk-upload.component.scss']
+})
+export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit {
+
+  BASE_URL = environment.API_BASE_URL;
+
+  displayedColumns: any[] = ['uid', 'institude_name', 'institude_email', 'contact_name', 'mobile', 'date', 'time', 'reason'];
+  dataSource: MatTableDataSource<any>;
+  selection = new SelectionModel(true, []);
+
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  selectedUserDetail: any;
+  userList: any;
+  radioCheck;
+  selectAllCheck;
+
+  demoData = [
+    {
+      'uid': 1,
+      'institude_name': 'SRM',
+      'institude_email': 'zsrm@mailinator.com',
+      'contact_name': 'joy',
+      'mobile': 9876543234,
+      'date':'09 Jul 2020',
+      'time': '19:32:51',
+      'reason': 'test data..'
+    },
+    {
+      'uid': 1,
+      'institude_name': 'first4 ',
+      'institude_email': 'first4 @mailinator.com',
+      'contact_name': 'jimmy',
+      'mobile': 9876543876,
+      'date':'20 Jul 2020',
+      'time': '15:32:51',
+      'reason': 'testing data..'
+    }
+  ]
+
+  constructor(private appConfig: AppConfigService,
+    private apiService: ApiServiceService,
+    private adminService: AdminServiceService,
+    private candidateService: CandidateMappersService,
+    private sharedService: SharedServiceService) { }
+
+  ngOnInit() {
+    this.getUsersList();
+  }
+
+  getDateFormat(date) {
+    if (date) {
+      const split = moment(date).format('DD MMM YYYY');
+      const output = split.toUpperCase();
+      return output;
+
+    } else {
+      return '-';
+    }
+  }
+
+  // To get all users
+  getUsersList() {
+    // this.adminService.bulkUploadCandidatesErrorList().subscribe((datas: any) => {
+      // this.appConfig.hideLoader();
+      // console.log('api', datas);
+      // if (datas) {
+      //   this.userList = datas ? datas : [];
+      // }
+      this.userList = this.demoData;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    // }, (err) => {
+    // });
+  }
+
+  downloadExcel(element) {
+    const excel = element && element.download ? element.download : '';
+    window.open(excel, '_blank');
+  }
+  selectedUser(userDetail) {
+    console.log(userDetail);
+  }
+
+
+
+  ngAfterViewInit() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+}
