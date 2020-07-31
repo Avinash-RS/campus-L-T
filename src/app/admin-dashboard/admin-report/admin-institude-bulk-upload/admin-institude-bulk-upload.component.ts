@@ -37,7 +37,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
       'institude_email': 'zsrm@mailinator.com',
       'contact_name': 'joy',
       'mobile': 9876543234,
-      'date':'09 Jul 2020',
+      'date': '09 Jul 2020',
       'time': '19:32:51',
       'reason': 'test data..'
     },
@@ -47,17 +47,19 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
       'institude_email': 'first4 @mailinator.com',
       'contact_name': 'jimmy',
       'mobile': 9876543876,
-      'date':'20 Jul 2020',
+      'date': '20 Jul 2020',
       'time': '15:32:51',
       'reason': 'testing data..'
     }
-  ]
+  ];
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
-    private sharedService: SharedServiceService) { }
+    private sharedService: SharedServiceService
+    ) { }
 
   ngOnInit() {
     this.getUsersList();
@@ -77,15 +79,15 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   // To get all users
   getUsersList() {
     // this.adminService.bulkUploadCandidatesErrorList().subscribe((datas: any) => {
-      // this.appConfig.hideLoader();
-      // console.log('api', datas);
-      // if (datas) {
-      //   this.userList = datas ? datas : [];
-      // }
-      this.userList = this.demoData;
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    // this.appConfig.hideLoader();
+    // console.log('api', datas);
+    // if (datas) {
+    //   this.userList = datas ? datas : [];
+    // }
+    this.userList = this.demoData;
+    this.dataSource = new MatTableDataSource(this.userList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     // }, (err) => {
     // });
   }

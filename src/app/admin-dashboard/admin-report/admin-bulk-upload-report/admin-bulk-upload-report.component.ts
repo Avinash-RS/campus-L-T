@@ -30,11 +30,13 @@ export class AdminBulkUploadReportComponent implements OnInit, AfterViewInit {
   radioCheck;
   selectAllCheck;
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
-    private sharedService: SharedServiceService) { }
+    private sharedService: SharedServiceService
+    ) { }
 
   ngOnInit() {
     this.getUsersList();

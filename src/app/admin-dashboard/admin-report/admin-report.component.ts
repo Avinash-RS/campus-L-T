@@ -10,9 +10,11 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 export class AdminReportComponent implements OnInit {
 
-  constructor(private appConfig: AppConfigService,
-    private sharedService: SharedServiceService) { 
-      // Sub-Navigation menus. This will be retrieved in Admin master component
+  constructor(
+    private appConfig: AppConfigService,
+    private sharedService: SharedServiceService
+    ) {
+    // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
         icon: '',
@@ -31,7 +33,7 @@ export class AdminReportComponent implements OnInit {
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
-    }
+  }
 
   ngOnInit() {
   }

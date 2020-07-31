@@ -350,18 +350,22 @@ body {
 .first-level-reports,
 .candidate-bulk-reports {
   td.mat-cell:last-of-type {
-    padding-right: 2em !important;
+    padding-right: 0em !important;
   }
+  th.mat-header-cell:last-of-type {
+    padding-right: 0em !important;
+  }
+
   .mat-sort-header-container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
   }
   .mat-cell {
-    text-align: center;
-    height: 30px !important;
+    text-align: left;
+    height: 40px !important;
   }
   .mat-row {
-    height: 30px !important;
+    height: 40px !important;
   }
   .mat-column-foldername {
     text-align: left;
@@ -377,13 +381,13 @@ body {
   }
   .mat-column-uid {
     text-align: left;
-    padding-left: 5% !important;
+    // padding-left: 5% !important;
   }
   .table-row {
-    height: 30px !important;
+    height: 40px !important;
   }
   .mat-row {
-    max-height: 30px;
+    max-height: 40px;
   }
   .mat-cell.mat-column-pdf {
     display: flex;
