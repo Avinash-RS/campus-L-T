@@ -81,7 +81,7 @@ export class HrPreAssessmentComponent implements OnInit {
       'profile_shortlist': 1,
       'assement': 1
     }
-  ]
+  ];
 
   constructor(
     private appConfig: AppConfigService,
@@ -89,7 +89,7 @@ export class HrPreAssessmentComponent implements OnInit {
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.getUsersList();
@@ -137,19 +137,16 @@ export class HrPreAssessmentComponent implements OnInit {
       date1_get: '',
       date2_get: ''
     };
-    // this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-    this.appConfig.hideLoader();
-    // console.log('api', data);
+    this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('api', data);
 
-    // if (data) {
-    //   this.userList = data ? data : [];
-    // }
-    this.userList = this.damoData;
-    this.dataSource = new MatTableDataSource(this.userList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
+      this.userList = data ? data : [];
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => {
+    });
   }
 
   onChangeApiHit(apiData) {

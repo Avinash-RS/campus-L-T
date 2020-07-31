@@ -9,7 +9,7 @@
               </button> -->
               <button (click)="removeUser()" [disabled]="selectedUserDetail ? false : true"
                 mat-raised-button type="button">
-                <span class="material-icons">delete</span>
+                <span style="margin-right: .5em;" class="material-icons">delete</span>
                 Remove
               </button>
             </span>
@@ -76,8 +76,19 @@
                 </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+          <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+            {{'No Data Available'}}
+          </th>
+        </div>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+          *matHeaderRowDef="['fifth-header-row-first-group']">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
           </table>
           <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
         </div>

@@ -53,7 +53,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   getUsersList() {
     this.adminService.userList().subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.userList = data;
+      this.userList = data ? data : [];
       this.userList.forEach(element => {
         element.checked = false;
       });

@@ -21,7 +21,7 @@ import moment from 'moment';
 })
 export class AdminUploadedInstituteListComponent implements OnInit, AfterViewInit {
   showPage = true;
-  displayedColumns: any[] = ['counter', 'field_user_name', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_institute_name', 'upload_registration'];
+  displayedColumns: any[] = ['id', 'field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'admin_status'];
   // displayedColumns = ['name', 'weight', 'symbol', 'position'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;

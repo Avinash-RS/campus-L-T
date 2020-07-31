@@ -2,14 +2,12 @@
   <div class="line">
     <div class="button-wrapper">
       <span [matTooltip]="selectedUserDetail ? '' : 'Please select the user'">
-        <button (click)="editUser()" [disabled]="selectedUserDetail ? false : true"
-          mat-raised-button type="button">
-          <span class="material-icons">edit</span>
+        <!-- <button class="blue" (click)="editUser()" [disabled]="selectedUserDetail ? false : true" mat-raised-button type="button">
+          <span style="margin-right: .5em;" class="material-icons">edit</span>
           Edit
-        </button>
-        <button (click)="removeUser()" [disabled]="selectedUserDetail ? false : true"
-          mat-raised-button type="button">
-          <span class="material-icons">delete</span>
+        </button> -->
+        <button class="red" (click)="removeUser()" [disabled]="selectedUserDetail ? false : true" mat-raised-button type="button">
+          <span style="margin-right: .5em;" class="material-icons">delete</span>
           Remove
         </button>
       </span>
@@ -21,7 +19,10 @@
     <!-- <mat-form-field>
         <mat-label>Filter</mat-label> -->
     <div class="search-bar">
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
     </div>
     <!-- </mat-form-field> -->
 
@@ -48,22 +49,34 @@
       <!-- Symbol Column -->
       <ng-container matColumnDef="roles_target_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-        <td mat-cell *matCellDef="let element"> {{element.roles_target_id ? (element.roles_target_id | uppercase) : '-'}} </td>
+        <td mat-cell *matCellDef="let element">
+          {{element.roles_target_id ? (element.roles_target_id | uppercase) : '-'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="checked">
         <th mat-header-cell *matHeaderCellDef> Select </th>
         <td mat-cell *matCellDef="let element">
-            <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
-                <label nz-radio [nzValue]="element.uid"></label>
-              </nz-radio-group>
+          <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
+            <label nz-radio [nzValue]="element.uid"></label>
+          </nz-radio-group>
           <!-- <input style="margin-top: 1.2em; outline: none;" name="user" [value]="element.roles_target_id"
             (change)="selectedUser(element)" type="radio"> -->
-          </td>
+        </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+          <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+            {{'No Data Available'}}
+          </th>
+        </div>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+          *matHeaderRowDef="['fifth-header-row-first-group']">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
   </div>

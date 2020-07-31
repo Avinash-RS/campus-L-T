@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit {
   getUsersList() {
     this.adminService.hruserList().subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.userList = data;
+      this.userList = data ? data : [];
       this.userList.forEach(element => {
         element.uid = element.user_id;
         element.checked = false;
@@ -64,7 +64,7 @@ export class UserListComponent implements OnInit {
     var removeUser = {
       'user_id': this.selectedUserDetail.user_id
     }
-    
+
     this.adminService.hrDeleteUser(removeUser).subscribe((success: any) => {
       this.appConfig.hideLoader();
       this.userList.splice(this.userListIndex, 1);
@@ -73,7 +73,7 @@ export class UserListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      
+
     }, (error) => {
     });
   }

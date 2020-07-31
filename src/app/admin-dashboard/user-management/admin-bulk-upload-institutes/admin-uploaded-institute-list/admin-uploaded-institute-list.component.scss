@@ -61,33 +61,24 @@
       outline: none;
     }
 
-    mat-table {
+    table {
       background: $white;
       box-shadow: none;
       width: 100%;
     }
-    mat-cell {
+    td {
       border: none;
       color: $header-blue;
       font-size: 13px;
-      margin: 0 0.5em 0 0;
-      overflow: hidden;
-      white-space: nowrap;
-      // word-break: break-word;
+      margin: 1em;
     }
-    mat-cell:hover {
-      overflow: auto;
-    }
-    mat-row {
-      // pointer-events: ;
-    }
-    mat-header-cell {
+    th {
       color: $black;
-      margin: 0 0.5em 0 0;
       font-size: 13px;
       font-weight: 200;
       outline: none;
       border: none;
+      background: $blue-3 0% 0% no-repeat padding-box;
     }
 
     .mat-form-field {
@@ -96,14 +87,13 @@
     }
   }
 }
-mat-cell {
+td {
   // text-align: center !important;
-  // padding-left: 1em !important;
+  padding-left: 1em !important;
 }
-mat-header-row {
+th {
   // text-align: center !important;
-  // padding-left: 1em !important;
-  background: $blue-3 0% 0% no-repeat padding-box;
+  padding-left: 1em !important;
 }
 .no-data {
   margin: 2em auto;
@@ -149,4 +139,3 @@ mat-header-row {
 .red {
   color: #f73737;
 }
-

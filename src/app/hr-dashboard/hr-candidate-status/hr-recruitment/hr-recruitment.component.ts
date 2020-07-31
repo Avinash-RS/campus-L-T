@@ -64,11 +64,13 @@ export class HrRecruitmentComponent implements OnInit {
   tagValue = new FormControl('');
   shortlistValue = new FormControl('');
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
-    private sharedService: SharedServiceService) { }
+    private sharedService: SharedServiceService
+  ) { }
 
   ngOnInit() {
     this.getUsersList();

@@ -83,7 +83,8 @@
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+      [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
   </div>

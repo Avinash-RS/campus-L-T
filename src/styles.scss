@@ -983,7 +983,7 @@ button:focus {
 // HR uploaded List
 .main-wrapper-uploaded-list {
   .mat-sort-header-container {
-    justify-content: center !important;
+    // justify-content: center !important;
   }
   .mat-column-candidateId {
     text-align: center;
@@ -1377,8 +1377,8 @@ button:focus {
     max-width: 75px;
   }
   .mat-column-upload_registration {
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
   }
 }
 
@@ -1453,6 +1453,16 @@ button:focus {
 
 .mat-autocomplete-panel.mat-autocomplete-visible {
   max-height: 200px !important;
+}
+
+.hide {
+  display: none;
+}
+.light-bg {
+  background: #FFFDFD 0% 0% no-repeat padding-box !important;
+}
+.dark-bg {
+  background: #F7F7F7 0% 0% no-repeat padding-box !important;
 }
 
 .no-data-available.mat-header-row {

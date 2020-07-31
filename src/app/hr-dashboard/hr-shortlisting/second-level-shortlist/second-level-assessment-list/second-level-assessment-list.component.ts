@@ -61,10 +61,11 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
       console.log('datas', datas);
 
       if (datas) {
-        this.userList = datas;
-        const count = 0;
+        this.userList = datas ? datas : [];
+        let count = 0;
         this.userList.forEach(element => {
-          element['uid'] = count + 1;
+          count = count + 1;
+          element['uid'] = count;
         });
       } else {
         this.userList = [];

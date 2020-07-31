@@ -108,15 +108,14 @@ export class AddUserComponent implements OnInit {
     }
   }
 
-  addValidation(){
-    if(this.showInterviewPanel){
-      this.addUserForm.get('employee_id').setValidators(Validators.required)
-      this.addUserForm.get('discipline').setValidators(Validators.required)
-    }else{
-      this.addUserForm.get('employee_id').clearValidators()
-      this.addUserForm.get('discipline').clearValidators()
+  addValidation() {
+    if (this.showInterviewPanel) {
+      this.addUserForm.get('employee_id').setValidators(Validators.required);
+      this.addUserForm.get('discipline').setValidators(Validators.required);
+    } else {
+      this.addUserForm.get('employee_id').clearValidators();
+      this.addUserForm.get('discipline').clearValidators();
     }
-    
   }
 
   get name() {
@@ -187,11 +186,11 @@ export class AddUserComponent implements OnInit {
         field_user_created_by: this.appConfig.getLocalData('userId')
 
       };
-      if(this.addUserForm.value.role == 'interview_panel'){
+      if (this.addUserForm.value.role == 'interview_panel') {
         addUserDatas['panel_discipline'] = this.addUserForm.value.discipline;
         addUserDatas['employee_id'] = this.addUserForm.value.employee_id;
       }
-      
+
       this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
         this.appConfig.hideLoader();
         this.addUserForm.reset();
@@ -204,8 +203,8 @@ export class AddUserComponent implements OnInit {
 
   }
 
-  submitDialog(){
-    if(this.addUserForm.valid){
+  submitDialog() {
+    if (this.addUserForm.valid) {
       const data = {
         iconName: '',
         dataToBeShared: {
@@ -219,9 +218,9 @@ export class AddUserComponent implements OnInit {
         showCancel: 'Cancel',
         showOk: ''
       };
-  
+
       this.openDialog(ShortlistBoxComponent, data);
-    }else{
+    } else {
       this.validateAllFields(this.addUserForm);
     }
 
