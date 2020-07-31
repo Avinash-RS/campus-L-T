@@ -11,6 +11,8 @@ import { TpoCandidatesStatusComponent } from './tpo-candidates-status/tpo-candid
 import { TpoPreAssessmentComponent } from './tpo-candidates-status/tpo-pre-assessment/tpo-pre-assessment.component';
 import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment/tpo-recruitment.component';
 import { TpocanloadGuard } from '../guards/canload/tpocanload.guard';
+import { TpoReportsComponent } from './tpo-reports/tpo-reports.component';
+import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-reports/tpo-bulk-upload-reports.component';
 
 
 const routes: Routes = [
@@ -94,6 +96,27 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_PREASSESSMENT}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_REPORTS}`, 
+        component: TpoReportsComponent, 
+        data: {
+          breadcrumb: 'Reports'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`, 
+            component: TpoBulkUploadReportsComponent,
+            data: {
+              breadcrumb: 'Candidate Upload List'
+            },
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

@@ -119,6 +119,8 @@ export const CONSTANT = {
       STATUS: '/tpo/status',
       STATUS_PREASSESSMENT: '/tpo/status/pre-assessment',
       STATUS_RECRUITMENT: '/tpo/status/recruitment',
+      TPO_REPORTS: '/tpo/reports',
+      TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/tpo/reports/candidate_list_reports'
     },
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: '/interview-panel',
@@ -239,6 +241,8 @@ export const CONSTANT = {
       STATUS: 'status',
       STATUS_PREASSESSMENT: 'pre-assessment',
       STATUS_RECRUITMENT: 'recruitment',
+      TPO_REPORTS: 'reports',
+      TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports'
     },
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: 'interview-panel',
