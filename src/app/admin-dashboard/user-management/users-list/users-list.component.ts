@@ -17,7 +17,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 export class UsersListComponent implements OnInit, AfterViewInit {
 
   showPage = true;
-  displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
+  displayedColumns: any[] = ['uid', 'name', 'email', 'roles_target_id', 'checked'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;

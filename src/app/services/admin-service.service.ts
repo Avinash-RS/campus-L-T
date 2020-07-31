@@ -102,7 +102,7 @@ export class AdminServiceService {
 
   // Users List
   userList() {
-    return this.http.get(`${this.BASE_URL}/admin/user-list?_format=json`,
+    return this.http.get(`${this.BASE_URL}/profile/userdetail_admin`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
