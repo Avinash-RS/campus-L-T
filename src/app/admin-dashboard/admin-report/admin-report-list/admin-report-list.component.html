@@ -22,8 +22,7 @@
                 <div *ngIf="i == 0 || i == 3">
                     <nz-select class="nzSelect"
                     nzPlaceHolder="Tag name">
-                      <nz-option nzLabel="Development" nzValue="development"></nz-option>
-                      <nz-option nzLabel="QA" nzValue="qa"></nz-option>
+                      <nz-option *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name"></nz-option>
                   </nz-select>
                 </div>
                 <div class="input-box" *ngIf="i == 1 || i == 2">
@@ -52,7 +51,7 @@
                   <div *ngIf="i == 0 || i == 3">
                       <nz-select class="nzSelect"
                       nzPlaceHolder="Institute name">
-                        <nz-option nzLabel="Development" nzValue="development"></nz-option>
+                        <nz-option *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value"></nz-option>
                         <nz-option nzLabel="QA" nzValue="qa"></nz-option>
                     </nz-select>
                   </div>

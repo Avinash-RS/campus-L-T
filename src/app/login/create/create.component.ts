@@ -50,7 +50,7 @@ export class CreateComponent implements OnInit {
         this.passwordTempToken = params['temp-token'];
         this.prePoulteEmailId = params['mail'];
       } else {
-        this.appConfig.error(`Reset Password Temp Token is Invalid`, '');
+        this.appConfig.error(`Reset password temp token is invalid`, '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.FORGOT);
       }
     });
