@@ -60,7 +60,7 @@ export class InterceptorsService implements HttpInterceptor {
         if (error.status === 400) {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '400 Bad Request', '');
+            ? error.error.message : '400 Bad request', '');
           return throwError(error);
         }
         if (error.status === 401) {
@@ -74,7 +74,7 @@ export class InterceptorsService implements HttpInterceptor {
           if (error.error && error.error.FailureReason && error.error.FailureReason.message === "'csrf_token' URL query argument is invalid.") {
             this.appConfig.hideLoader();
             this.appConfig.clearLocalData();
-            this.appConfig.error('Session Expired. Please log in again', '');
+            this.appConfig.error('Session expired. Please log in again', '');
             this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
           } else {
             this.appConfig.hideLoader();
@@ -91,7 +91,7 @@ export class InterceptorsService implements HttpInterceptor {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.errors
             ? error.error.errors[0].message : error.error.message
-              ? error.error.message : '422 Unprocessable Entity', '');
+              ? error.error.message : '422 Unprocessable entity', '');
           // if (error.error) {
           //   if (error.error.errors) {
           //     this.appConfig.error(error.error.errors[0].message, '');
@@ -100,14 +100,14 @@ export class InterceptorsService implements HttpInterceptor {
           //     this.appConfig.error(error.error.message, '');
           //   }
           // } else {
-          //   this.appConfig.error('422 Unprocessable Entity', '');
+          //   this.appConfig.error('422 Unprocessable entity', '');
           // }
           return throwError(error);
         }
         if (error.status === 500) {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '500 Internal Server Error', '');
+            ? error.error.message : '500 Internal server error', '');
           return throwError(error);
         }
         // if (error.status === 403) {
@@ -119,13 +119,13 @@ export class InterceptorsService implements HttpInterceptor {
         if (error.status === 404) {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '404 Not Found', '');
+            ? error.error.message : '404 Not found', '');
           return throwError(error);
         }
         if (error.status === 409) {
           this.appConfig.hideLoader();
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '409 Conflict Error', '');
+            ? error.error.message : '409 Conflict error', '');
           return throwError(error);
         }
         if (error.status === 200) {

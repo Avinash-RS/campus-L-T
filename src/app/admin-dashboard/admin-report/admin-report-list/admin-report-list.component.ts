@@ -6,6 +6,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
+import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 
 import { MatAutocompleteTrigger, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDatepicker } from '@angular/material';
 import { MatMomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -55,6 +56,8 @@ export class AdminReportListComponent implements OnInit {
 
   form: FormGroup;
   userList;
+  tagNameDropdown: any = [];
+  institutesList = DropdownListForKYC['institutes'];
   
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -67,6 +70,7 @@ export class AdminReportListComponent implements OnInit {
   //  });
 
     this.getUsersList();
+    this.getTagName();
   }
 
   // To get all users
@@ -136,6 +140,17 @@ export class AdminReportListComponent implements OnInit {
   //     this.dataSource.sort = this.sort;
   //   }
   // }
+
+  // To get all users
+  getTagName() {
+    this.adminService.getTagName().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      
+      this.tagNameDropdown = data;
+    
+    }, (err) => {
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

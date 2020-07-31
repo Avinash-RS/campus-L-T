@@ -231,6 +231,12 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  //get tag name
+  getTagName() {
+    return this.http.get(`${this.BASE_URL}/api/report_details`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   //hrremove user
   hrDeleteUser(userId) {
     return this.http.post(`${this.BASE_URL}/profile/interview_panel_unblock`, userId,
