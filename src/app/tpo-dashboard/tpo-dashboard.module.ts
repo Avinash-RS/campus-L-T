@@ -13,10 +13,12 @@ import { TpoCandidatesStatusComponent } from './tpo-candidates-status/tpo-candid
 import { TpoPreAssessmentComponent } from './tpo-candidates-status/tpo-pre-assessment/tpo-pre-assessment.component';
 import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment/tpo-recruitment.component';
 import { TpoAddCandidateComponent } from './tpo-user-management/tpo-add-candidate/tpo-add-candidate.component';
+import { TpoReportsComponent } from './tpo-reports/tpo-reports.component';
+import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-reports/tpo-bulk-upload-reports.component';
 
 
 @NgModule({
-  declarations: [TpoMasterComponent, TpoUserManagementComponent, CandidateUploadsComponent, UploadedListComponent, BulkUploadComponent, TpoCandidatesStatusComponent, TpoPreAssessmentComponent, TpoRecruitmentComponent, TpoAddCandidateComponent],
+  declarations: [TpoMasterComponent, TpoUserManagementComponent, CandidateUploadsComponent, UploadedListComponent, BulkUploadComponent, TpoCandidatesStatusComponent, TpoPreAssessmentComponent, TpoRecruitmentComponent, TpoAddCandidateComponent, TpoReportsComponent, TpoBulkUploadReportsComponent],
   imports: [
     CommonModule,
     SharedModule,
