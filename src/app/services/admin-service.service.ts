@@ -206,8 +206,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  bulkUploadCandidatesErrorList() {
-    return this.http.get(`${this.BASE_URL}/profile/getuploaded_errors`,
+  bulkUploadCandidatesErrorList(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getuploaded_errors`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  bulkUploadInstitutesErrorList() {
+    return this.http.get(`${this.BASE_URL}/api/getuploaded_errors_institute`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

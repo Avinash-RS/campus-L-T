@@ -171,7 +171,7 @@
       <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Interview panel details has not been successfully
         uploaded.</span> <br> <span
         *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}  {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'Interview panel' : 'Interview panels'}} has not
-        been uploaded. </span>
+        been uploaded.  Please go to reports to see the detailed error details.</span>
     </div>
     <div class="buttons">
       <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
@@ -186,7 +186,7 @@
       <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
         uploaded.</span> <br> <span
         *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}  {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
-        been uploaded. </span>
+        been uploaded.  Please go to reports to see the detailed error details.</span>
     </div>
     <div class="buttons">
       <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
@@ -209,7 +209,7 @@
     <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Institute details has not been successfully
       uploaded.</span> <br> <span
       *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'institute' : 'institutes'}} has not
-      been uploaded.</span>
+      been uploaded. Please go to reports to see the detailed error details.</span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>

@@ -18,7 +18,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
 
   BASE_URL = environment.API_BASE_URL;
 
-  displayedColumns: any[] = ['uid', 'institude_name', 'institude_email', 'contact_name', 'mobile', 'date', 'time', 'reason'];
+  displayedColumns: any[] = ['uid', 'field_institute_name', 'email', 'name', 'field_institute_mobile_number', 'date', 'time', 'reason'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -30,28 +30,6 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   radioCheck;
   selectAllCheck;
 
-  demoData = [
-    {
-      'uid': 1,
-      'institude_name': 'SRM',
-      'institude_email': 'zsrm@mailinator.com',
-      'contact_name': 'joy',
-      'mobile': 9876543234,
-      'date': '09 Jul 2020',
-      'time': '19:32:51',
-      'reason': 'test data..'
-    },
-    {
-      'uid': 1,
-      'institude_name': 'first4 ',
-      'institude_email': 'first4 @mailinator.com',
-      'contact_name': 'jimmy',
-      'mobile': 9876543876,
-      'date': '20 Jul 2020',
-      'time': '15:32:51',
-      'reason': 'testing data..'
-    }
-  ];
 
   constructor(
     private appConfig: AppConfigService,
@@ -59,7 +37,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.getUsersList();
@@ -78,18 +56,20 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
 
   // To get all users
   getUsersList() {
-    // this.adminService.bulkUploadCandidatesErrorList().subscribe((datas: any) => {
-    // this.appConfig.hideLoader();
-    // console.log('api', datas);
-    // if (datas) {
-    //   this.userList = datas ? datas : [];
-    // }
-    this.userList = this.demoData;
-    this.dataSource = new MatTableDataSource(this.userList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
+    this.adminService.bulkUploadInstitutesErrorList().subscribe((datas: any) => {
+      this.appConfig.hideLoader();
+      console.log('api', datas);
+      this.userList = datas ? datas : [];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => {
+    });
   }
 
   downloadExcel(element) {

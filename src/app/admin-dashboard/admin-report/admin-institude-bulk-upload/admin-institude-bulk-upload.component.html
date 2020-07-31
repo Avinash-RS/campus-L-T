@@ -15,31 +15,31 @@
         <!-- Position Column -->
         <ng-container matColumnDef="uid">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+          <td mat-cell *matCellDef="let element; let i = index"> {{element.uid ? element.uid : ''}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="institude_name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Institude name </th>
-          <td mat-cell *matCellDef="let element"> {{element.institude_name ? element.institude_name : ''}} </td>
+        <ng-container matColumnDef="field_institute_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute name </th>
+          <td mat-cell *matCellDef="let element"> {{element.field_institute_name ? element.field_institute_name : ''}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="institude_email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Institude email id </th>
-          <td mat-cell *matCellDef="let element"> {{element.institude_email ? (element.institude_email) : '-'}} </td>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute Email Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.email ? (element.email) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="contact_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact name </th>
-            <td mat-cell *matCellDef="let element"> {{element.contact_name ? (element.contact_name) : '-'}} </td>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact person's name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name ? (element.name) : '-'}} </td>
           </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="mobile">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact mobile </th>
-          <td mat-cell *matCellDef="let element"> {{element.mobile ? (element.mobile) : '-'}} </td>
+        <ng-container matColumnDef="field_institute_mobile_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile number </th>
+          <td mat-cell *matCellDef="let element"> {{element.field_institute_mobile_number ? (element.field_institute_mobile_number) : '-'}} </td>
         </ng-container>
 
           <!-- Symbol Column -->

@@ -55,7 +55,10 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-    this.adminService.bulkUploadCandidatesErrorList().subscribe((datas: any) => {
+    const apiData = {
+      uploaded_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    };
+    this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
       console.log('api', datas);
       if (datas) {
