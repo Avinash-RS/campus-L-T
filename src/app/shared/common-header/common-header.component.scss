@@ -1,4 +1,4 @@
-@import '../../themes/themes.scss';
+@import "../../themes/themes.scss";
 
 * {
   margin: 0;
@@ -33,19 +33,25 @@ mat-toolbar {
     }
   }
   ul:last-child {
-    // font-size: 16px;
     padding: 0;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    height: auto !important;
+    max-height: 60px !important;
     li {
+      display: flex;
+      align-items: center !important;
+      flex-direction: row;
+      padding: 0 .5em !important;
+      height: auto !important;
       list-style: none;
-      padding: 1em 1em;
       color: $white;
-      text-transform: uppercase;
+      // text-transform: uppercase;
       box-sizing: border-box;
       cursor: pointer;
       outline: none;
       span {
+        display: flex;
         img {
           width: 22px;
           height: 22px;

@@ -59,9 +59,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
       if (this.isConnected) {
-        this.status = 'ONLINE';
+        this.status = 'You are back online';
       } else {
-        this.status = 'OFFLINE';
+        this.status = 'You are offline';
       }
       alert(this.status);
     });

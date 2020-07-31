@@ -23,7 +23,7 @@ export class HrAddUserComponent implements OnInit {
   title: string;
   editUserId: any;
   showInterviewPanel = false;
-  disciplineDropdown:any = [];
+  disciplineDropdown: any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -38,20 +38,21 @@ export class HrAddUserComponent implements OnInit {
 
   ngOnInit() {
     this.formInitialize();
+    this.getDiscipline();
   }
 
 
   formInitialize() {
-    
+
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+
     this.addUserForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern(emailregex)]],
       role: ['', [Validators.required]],
       employee_id: [''],
       discipline: ['']
-    })
+    });
   }
 
   // get discipline dropdown value
@@ -63,15 +64,15 @@ export class HrAddUserComponent implements OnInit {
     });
   }
 
-  addValidation(){
-    if(this.showInterviewPanel){
-      this.addUserForm.get('employee_id').setValidators(Validators.required)
-      this.addUserForm.get('discipline').setValidators(Validators.required)
-    }else{
-      this.addUserForm.get('employee_id').clearValidators()
-      this.addUserForm.get('discipline').clearValidators()
+  addValidation() {
+    if (this.showInterviewPanel) {
+      this.addUserForm.get('employee_id').setValidators(Validators.required);
+      this.addUserForm.get('discipline').setValidators(Validators.required);
+    } else {
+      this.addUserForm.get('employee_id').clearValidators();
+      this.addUserForm.get('discipline').clearValidators();
     }
-    
+
   }
 
   get name() {
@@ -100,11 +101,11 @@ export class HrAddUserComponent implements OnInit {
         field_user_created_by: this.appConfig.getLocalData('userId')
 
       };
-      if(this.addUserForm.value.role == 'interview_panel'){
+      if (this.addUserForm.value.role == 'interview_panel') {
         addUserDatas['panel_discipline'] = this.addUserForm.value.discipline;
         addUserDatas['employee_id'] = this.addUserForm.value.employee_id;
       }
-      
+
       this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
         this.appConfig.hideLoader();
         this.addUserForm.reset();
@@ -117,8 +118,8 @@ export class HrAddUserComponent implements OnInit {
 
   }
 
-  submitDialog(){
-    if(this.addUserForm.valid){
+  submitDialog() {
+    if (this.addUserForm.valid) {
       const data = {
         iconName: '',
         dataToBeShared: {
@@ -132,9 +133,9 @@ export class HrAddUserComponent implements OnInit {
         showCancel: 'Cancel',
         showOk: ''
       };
-  
+
       this.openDialog(ShortlistBoxComponent, data);
-    }else{
+    } else {
       this.validateAllFields(this.addUserForm);
     }
 

@@ -18,13 +18,13 @@
         <span matTooltip="Notifications">
             <img src="assets/images/Iconionic-ios-notifications.svg" alt="">
         </span>
-      </li>
-      <li>
-        <span matTooltip="Profile">
-            <img src="assets/images/Profile.svg" alt="">
-        </span>
       </li> -->
-      <li style="margin-top: 6px;" (click)="logOut()">
+      <li style="cursor: auto !important;">
+        <span style="font-size: 16px;">
+           {{username ? 'Welcome ' + username : ''}}
+        </span>
+      </li>
+      <li (click)="logOut()">
           <span matTooltip="Logout">
             <img src="assets/images/logout.svg" alt="">
           </span>
