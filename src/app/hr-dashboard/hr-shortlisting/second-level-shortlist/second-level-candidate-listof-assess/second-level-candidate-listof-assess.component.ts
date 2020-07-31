@@ -41,6 +41,8 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   assessmentName: any;
   nameOfAssessment: any;
   selectedCandidates: any;
+  previewList: any;
+  changedList: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -51,22 +53,22 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     private activatedRoute: ActivatedRoute
   ) {
     this.editRouteParamGetter();
-   }
+  }
 
   ngOnInit() {
     this.onChanges();
   }
 
-    // Get url param for edit route
-    editRouteParamGetter() {
-      // Get url Param to view Edit user page
-      this.activatedRoute.queryParams.subscribe(params => {
-        console.log(params['data']);
-        this.nameOfAssessment = params['data'];
-        this.assessmentDetails(params['data']);
-        this.getUsersList(params['data']);
-      });
-    }
+  // Get url param for edit route
+  editRouteParamGetter() {
+    // Get url Param to view Edit user page
+    this.activatedRoute.queryParams.subscribe(params => {
+      console.log(params['data']);
+      this.nameOfAssessment = params['data'];
+      this.assessmentDetails(params['data']);
+      this.getUsersList(params['data']);
+    });
+  }
 
   assessmentDetails(name) {
     const apidata = {
@@ -104,10 +106,21 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   submit() {
+    this.changedList = this.userList;
+    this.previewList = this.changedList;
+    console.log('this.previewList', this.previewList);
+
     this.showShortlisted = true;
   }
   disableListView(event) {
+    this.userList = event;
+    this.dataSource = new MatTableDataSource(this.userList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.changedList = [];
+    this.previewList = [];
     this.showShortlisted = false;
+    this.appConfig.clearLocalDataOne('tempSecond');
   }
   // To get all users
   getUsersList(name) {

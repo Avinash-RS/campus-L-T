@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './shortlisted-candidate-list-second-level.component.html',
   styleUrls: ['./shortlisted-candidate-list-second-level.component.scss']
 })
-export class ShortlistedCandidateListSecondLevelComponent implements OnInit, AfterViewInit {
+export class ShortlistedCandidateListSecondLevelComponent implements OnInit, AfterViewInit, OnChanges {
 
   BASE_URL = environment.API_BASE_URL;
 
@@ -31,10 +31,11 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   @Input() shortlistedCandidates;
 
   selectedUserDetail: any;
-  userList: any;
+  userListing: any;
   radioCheck;
   selectAllCheck;
   nameOfAssessment: any;
+  staticList: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -49,9 +50,19 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   }
 
   ngOnInit() {
-    this.getUsersList();
   }
 
+  ngOnChanges() {
+    console.log('on', this.shortlistedCandidates);
+    if (this.shortlistedCandidates) {
+      this.staticList = this.shortlistedCandidates;
+      this.appConfig.setLocalData('tempSecond', JSON.stringify(this.staticList));
+      this.userListing = this.shortlistedCandidates;
+    } else {
+      this.userListing = [];
+    }
+    this.getUsersList();
+  }
   // Get url param for edit route
   editRouteParamGetter() {
     // Get url Param to view Edit user page
@@ -62,7 +73,9 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
 
 
   backToShortlist() {
-    this.disableShowList.emit();
+    this.shortlistedCandidates = [];
+    this.userListing = [];
+    this.disableShowList.emit(JSON.parse(this.appConfig.getLocalData('tempSecond')));
   }
 
   submit() {
@@ -78,7 +91,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
       assement_name: this.nameOfAssessment,
       shortlist_mark: this.appConfig.getLocalData('secondLevelFilter') ? this.appConfig.getLocalData('secondLevelFilter') : ''
     };
-    this.shortlistedCandidates.forEach(element => {
+    this.userListing.forEach(element => {
       if (element['candidate_id']) {
         apiData['id'].push(element['candidate_id']);
       }
@@ -109,11 +122,11 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   // To get all users
   getUsersList() {
     if (this.shortlistedCandidates) {
-      this.userList = this.shortlistedCandidates;
+      this.userListing = this.shortlistedCandidates;
     } else {
-      this.userList = [];
+      this.userListing = [];
     }
-    this.dataSource = new MatTableDataSource(this.userList);
+    this.dataSource = new MatTableDataSource(this.userListing);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     // }, (err) => {
@@ -124,8 +137,8 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
     console.log(userDetail);
   }
   removeSelectedCandidate(i) {
-    this.userList.splice(i, 1);
-    this.dataSource = new MatTableDataSource(this.userList);
+    this.userListing.splice(i, 1);
+    this.dataSource = new MatTableDataSource(this.userListing);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -195,6 +208,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.appConfig.clearLocalDataOne('secondLevelFilter');
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, {data: this.nameOfAssessment ? this.nameOfAssessment : 'none'});
       if (result) {
       }

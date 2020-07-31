@@ -1,0 +1,297 @@
+<div class="reports-wrapper">
+    <div class="heading">
+      Assessment Report
+    </div>
+
+    <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="" (nzOnClose)="close()">
+      <div class="view-wrapper">
+        <div class="head">
+          <div class="left">
+            <div class="grid">
+              <div class="name">Name : </div>
+              <div class="name">{{viewDetails && viewDetails['emailid'] ? viewDetails['emailid'] : ''}}</div>
+              <div class="candidate">Candidate ID : </div>
+              <div class="candidate">{{viewDetails && viewDetails['candidate_id'] ? viewDetails['candidate_id'] : ''}}
+              </div>
+            </div>
+          </div>
+          <div (click)="close()" class="right">
+            <div class="icon">
+              <img src="assets/images/ionic-ios-arrow-down.svg" alt="" srcset="">
+            </div>
+          </div>
+
+        </div>
+        <div class="scroll-enable">
+          <div class="four-grid">
+            <div class="group">
+              <div class="head">
+                Gender
+              </div>
+              <div class="content">
+                {{viewDetails && viewDetails['gender'] ? viewDetails['gender'] : ''}}
+              </div>
+            </div>
+            <div class="group dob">
+              <div class="head">
+                Date of Birth
+              </div>
+              <div class="content">
+                {{viewDetails && viewDetails['dob'] ? viewDetails['dob'] : ''}}
+              </div>
+            </div>
+            <div class="group mob">
+              <div class="head">
+                Mobile No
+              </div>
+              <div class="content">
+                {{viewDetails && viewDetails['mobileno'] ? viewDetails['mobileno'] : ''}}
+              </div>
+            </div>
+            <div class="group">
+              <div class="head">
+                Email ID
+              </div>
+              <div class="content">
+                {{viewDetails && viewDetails['emailid'] ? viewDetails['emailid'] : ''}}
+              </div>
+            </div>
+
+
+          </div>
+          <div class="one-grid">
+            <div class="group">
+              <div class="head">
+                Contact details
+              </div>
+              <div class="content">
+                {{viewDetails && viewDetails['contactdetails'] ? viewDetails['contactdetails'] : ''}}
+              </div>
+            </div>
+          </div>
+          <ng-container
+            *ngIf="viewDetails && viewDetails['educational_details'] && viewDetails['educational_details'].length > 0">
+            <div class="clg-details" *ngFor="let details of viewDetails['educational_details']; let i = index">
+              <div class="level-head">{{details && details['field_level'] ? details['field_level'] + ' details' : '-'}}
+              </div>
+              <div class="three-grid">
+                <div class="group">
+                  <div class="head">
+                    Percentage
+                  </div>
+                  <div class="content">
+                    {{details && details['field_percentage'] ? details['field_percentage'] : '-'}}
+                  </div>
+                </div>
+                <div class="group">
+                  <div class="head">
+                    Date of passing
+                  </div>
+                  <div class="content">
+                    {{details && details['date_of_passing'] ? details['date_of_passing'] : '-'}}
+                  </div>
+                </div>
+                <div class="group">
+                  <div class="head">
+                    Institute
+                  </div>
+                  <div class="content">
+                    {{details && details['field_institute'] ? details['field_institute'] : '-'}}
+                  </div>
+                </div>
+                <div class="group">
+                  <div class="head">
+                    Branch
+                  </div>
+                  <div class="content">
+                    {{details && details['field_specification'] ? details['field_specification'] : '-'}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </nz-drawer>
+
+
+    <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">
+      <!-- <mat-form-field>
+          <mat-label>Filter</mat-label> -->
+      <div class="search-bar">
+        <div class="search-icon">
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+          <img src="assets/images/feather-search.svg" alt="" srcset="">
+        </div>
+      </div>
+      <!-- </mat-form-field> -->
+      <div class="width-maintain">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="uid" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>S. No </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="candidate_id" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.candidate_id ? element.candidate_id : ''}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="start_time">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Start time </th>
+            <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="end_time">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> End time </th>
+            <td mat-cell *matCellDef="let element"> {{element.end_time ? (element.end_time) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="time_taken">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Time taken </th>
+            <td mat-cell *matCellDef="let element"> {{element.time_taken ? (element.time_taken) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="technicial_marks">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.technicial_marks ? (element.technicial_marks) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="technical_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.technical_percentage ? (element.technical_percentage) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="english_marks">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.english_marks ? (element.english_marks) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="english_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+            <td mat-cell *matCellDef="let element"> {{element.english_percentage ? (element.english_percentage) : '-'}}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="analytical_mark">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.analytical_mark ? (element.analytical_mark) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="analytical_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.analytical_percentage ? (element.analytical_percentage) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="apptitude_mark">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.apptitude_mark ? (element.apptitude_mark) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="apptitude_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.apptitude_percentage ? (element.apptitude_percentage) : '-'}}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="summative_mark">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.summative_mark ? (element.summative_mark) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="summative_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.summative_percentage ? (element.summative_percentage) : '-'}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="checked" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="personal">Personal Details</div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div (click)="open(element)" class="view">
+                <span class="material-icons">visibility</span> <span>View</span>
+              </div>
+              <!-- <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)"
+                [checked]="element.checked">
+              </mat-checkbox> -->
+
+            </td>
+          </ng-container>
+
+
+          <!-- Header row first group -->
+          <ng-container matColumnDef="header-row-first-group" sticky>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+              &#160;
+            </th>
+          </ng-container>
+
+          <!-- Header row first group -->
+          <ng-container matColumnDef="header-row-second-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="3">
+              &#160;
+            </th>
+          </ng-container>
+
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-Technical-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Technical </th>
+          </ng-container>
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-English-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> English </th>
+          </ng-container>
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-Analytical-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Analytical </th>
+          </ng-container>
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-Quantitative-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Quantitative Aptitude </th>
+          </ng-container>
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-Summative-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Summative test </th>
+          </ng-container>
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-empty-group" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"> &#160; </th>
+          </ng-container>
+          <tr class="header-group" mat-header-row
+            *matHeaderRowDef="['header-row-first-group', 'header-row-second-group', 'header-row-Technical-group', 'header-row-English-group', 'header-row-Analytical-group', 'header-row-Quantitative-group','header-row-Summative-group', 'header-row-empty-group']">
+          </tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
+            [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+        </table>
+      </div>
+      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+    </div>
+    <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
+      <div>No Reports to show </div>
+    </div>
+  </div>

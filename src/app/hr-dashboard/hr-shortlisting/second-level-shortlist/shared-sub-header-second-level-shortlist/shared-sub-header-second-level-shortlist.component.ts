@@ -34,6 +34,6 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
   }
 
   viewReports() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS);
   }
 }

@@ -7,6 +7,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-second-level-shortlisted-candidates-report',
@@ -14,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./second-level-shortlisted-candidates-report.component.scss']
 })
 export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, AfterViewInit {
-
+  BASE_URL = environment.API_BASE_URL;
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
   displayedColumns: any[] = ['sno', 'name', 'uid', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing'];
@@ -182,7 +183,8 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   }
 
   downloadReport() {
-
+    const excel = `${this.BASE_URL}/sites/default/files/upload_excel_error/secondlevel.csv`;
+    window.open(excel, '_blank');
   }
 
   ngAfterViewInit() {

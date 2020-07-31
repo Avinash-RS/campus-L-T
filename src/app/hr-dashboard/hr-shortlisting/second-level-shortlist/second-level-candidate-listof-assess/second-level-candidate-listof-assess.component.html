@@ -1,7 +1,7 @@
 <div class="second-candidatelist-wrapper">
   <app-shared-sub-header-second-level-shortlist *ngIf="assessmentName" [selectedCandidates]="selectedCandidates"
     [details]="assessmentName ? assessmentName : ''"></app-shared-sub-header-second-level-shortlist>
-  <ng-container *ngIf="!showShortlisted">
+  <div [ngClass]="!showShortlisted  ? '' : 'hide'">
     <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
       <!-- <mat-form-field>
             <mat-label>Filter</mat-label> -->
@@ -120,8 +120,8 @@
     <div class="submit-wrapper" *ngIf="userList && userList.length > 0">
       <button (click)="submit()" class="upload" mat-raised-button>Submit</button>
     </div>
-  </ng-container>
+  </div>
 
-  <app-shortlisted-candidate-list-second-level [shortlistedCandidates]="userList" (disableShowList)="disableListView($event)" *ngIf="showShortlisted">
+  <app-shortlisted-candidate-list-second-level *ngIf="showShortlisted" [shortlistedCandidates]="previewList" (disableShowList)="disableListView($event)">
   </app-shortlisted-candidate-list-second-level>
 </div>
