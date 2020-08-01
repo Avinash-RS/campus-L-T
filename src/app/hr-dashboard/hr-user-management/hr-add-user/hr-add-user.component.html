@@ -3,14 +3,14 @@
     <!-- <div class="header">
       {{editUserId ? 'Edit User' : 'Add User'}}
     </div> -->
-  
+
     <div class="form-wrapper">
       <form [formGroup]="addUserForm" class="forms" (ngSubmit)="submitDialog()">
         <div class="form-field">
           <div class="grid">
             <div class="label-wrapper">
               <label class="label-name">
-                First Name
+                First Name<span class="asterick">*</span>
               </label>
             </div>
             <div class="input-box" [ngStyle]="{border: name.invalid && name.touched ? 'solid red 1px': ''}">
@@ -25,7 +25,7 @@
           <div class="grid">
             <div class="label-wrapper">
               <label class="label-name">
-                Email ID
+                Email ID<span class="asterick">*</span>
               </label>
             </div>
             <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
@@ -41,18 +41,18 @@
           <div class="grid">
             <div class="label-wrapper">
               <label class="label-name">
-                Role
+                Role<span class="asterick">*</span>
               </label>
             </div>
             <div class="input-box-radio" [ngStyle]="{'border-bottom': role.invalid && role.touched ? 'solid red 1px': ''}">
-              
+
               <div>
                   <input (click)="showInterviewPanel = true; addValidation()" formControlName="role" type="radio" value="interview_panel"><span> Interview panel</span>
                 </div>
               <div>
                 <input (click)="showInterviewPanel = false; addValidation()" formControlName="role" type="radio" value="proctor"><span> Proctor</span>
               </div>
-            
+
             </div>
           </div>
           <div class="error" *ngIf="role.invalid && role.touched">
@@ -64,7 +64,7 @@
             <div class="grid-1">
               <div class="label-wrapper-1">
                 <label class="label-name-1">
-                  Employee ID
+                  Employee ID<span class="asterick">*</span>
                 </label>
               </div>
               <div class="input-box-1" [ngStyle]="{border: employee_id.invalid && employee_id.touched ? 'solid red 1px': ''}">
@@ -79,7 +79,7 @@
             <div class="grid-1">
               <div class="label-wrapper-1">
                 <label class="label-name-1">
-                  Discipline
+                  Discipline<span class="asterick">*</span>
                 </label>
               </div>
               <nz-select formControlName="discipline" class="nzSelect"
@@ -92,8 +92,8 @@
             </div>
           </div>
         </div>
-        
-  
+
+
         <div class="button-wrapper">
           <button mat-raised-button type="submit">Save</button>
           <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
@@ -101,4 +101,3 @@
       </form>
     </div>
   </div>
-  

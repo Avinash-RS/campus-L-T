@@ -16,7 +16,7 @@
         <div class="forms">
           <div class="form-field">
             <label class="label-name">
-              Name
+              Name<span class="asterick">*</span>
             </label>
             <div class="input-box" [ngStyle]="{border: name.invalid && name.touched ? 'solid red 1px': ''}">
               <input matInput formControlName="name" type="text" required>
@@ -33,7 +33,7 @@
           </div>
           <div class="form-field">
             <label class="label-name">
-              Email Address
+              Email Address<span class="asterick">*</span>
             </label>
             <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
               <input matInput formControlName="email" type="text" required>
@@ -49,7 +49,7 @@
           <!-- Temp -->
           <div class="form-field">
               <label class="label-name">
-                  Password
+                  Password<span class="asterick">*</span>
               </label>
               <div class="input-box" [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
                   <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'"

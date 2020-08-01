@@ -10,7 +10,7 @@
         <div class="grid">
           <div class="label-wrapper">
             <label class="label-name">
-              Name
+              Name<span class="asterick">*</span>
             </label>
           </div>
           <div class="input-box" [ngStyle]="{border: name.invalid && name.touched ? 'solid red 1px': ''}">
@@ -25,7 +25,7 @@
         <div class="grid">
           <div class="label-wrapper">
             <label class="label-name">
-              Email ID
+              Email ID<span class="asterick">*</span>
             </label>
           </div>
           <div [ngClass]="editDetails ? 'disable' : ''" [matTooltip]="editDetails ? 'Email Field is Non-Editable' : ''" class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
@@ -41,7 +41,7 @@
         <div class="grid">
           <div class="label-wrapper">
             <label class="label-name">
-              Role
+              Role<span class="asterick">*</span>
             </label>
           </div>
           <div class="input-box-radio" [ngStyle]="{'border-bottom': role.invalid && role.touched ? 'solid red 1px': ''}">
@@ -51,7 +51,7 @@
           <div>
             <input (click)="showInterviewPanel = false; addValidation()" formControlName="role" type="radio" value="hr"><span> Hr</span>
           </div>
-            
+
           </div>
         </div>
         <div class="error" *ngIf="role.invalid && role.touched">
@@ -64,7 +64,7 @@
           <div class="grid-1">
             <div class="label-wrapper-1">
               <label class="label-name-1">
-                Employee ID
+                Employee ID<span class="asterick">*</span>
               </label>
             </div>
             <div class="input-box-1" [ngStyle]="{border: employee_id.invalid && employee_id.touched ? 'solid red 1px': ''}">
@@ -79,7 +79,7 @@
           <div class="grid-1">
             <div class="label-wrapper-1">
               <label class="label-name-1">
-                Discipline
+                Discipline<span class="asterick">*</span>
               </label>
             </div>
             <nz-select formControlName="discipline" class="nzSelect"
