@@ -81,28 +81,28 @@
       <div class="scroll">
         <ng-container *ngFor="let dup of uploadedListArray; let i = index">
           <div class="child-grid" ngDefaultControl [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'">
-            <div class="tag">
+            <div style="word-wrap: anywhere;" class="tag">
               {{dup['field_institute_name']}}
             </div>
-            <div class="name">
+            <div style="word-wrap: anywhere;" class="name">
               {{dup['email']}}
             </div>
-            <div class="email">
+            <div style="word-wrap: anywhere;" class="email">
               {{dup['field_institute_state']}}
             </div>
-            <div class="email">
+            <div style="word-wrap: anywhere;" class="email">
               {{dup['field_institute_city']}}
             </div>
-            <div class="email">
+            <div style="word-wrap: anywhere;" class="email">
               {{dup['name']}}
             </div>
-            <div class="email">
+            <div style="word-wrap: anywhere;" class="email">
               {{dup['field_institute_last_name']}}
             </div>
-            <div class="email">
+            <div style="word-wrap: anywhere;" class="email">
               {{dup['field_institute_title']}}
             </div>
-            <div class="email">
+            <div style="word-wrap: anywhere;" class="email">
               {{dup['field_institute_mobile_number']}}
             </div>
             <div class="delete">
