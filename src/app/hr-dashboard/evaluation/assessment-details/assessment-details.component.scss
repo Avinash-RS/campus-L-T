@@ -27,10 +27,10 @@ th.mat-header-cell {
     text-align: left;
     max-width: 300px;
     background: $blue-3 0% 0% no-repeat padding-box;
-    color: #000;
+    color: $black;
 }
 .viewDetails{
-    color: #cccccc;
+    color: $pink-2;
     font-size:20px;
      width:20px;
      margin-left: 21px;
@@ -47,8 +47,8 @@ th.mat-header-cell {
       // min-width: 280px;
       color: $header-blue;
       font-size: 14px;
-      border: 0.5px solid #5e5e5e75;
-      background: #fffdfd 0% 0% no-repeat padding-box !important;
+      border: 0.5px solid $borderColor-2;
+      background: $white-2 0% 0% no-repeat padding-box !important;
       border-radius: 5px;
       box-shadow: $shadow-light-black;
       box-sizing: border-box;
@@ -67,13 +67,13 @@ th.mat-header-cell {
         width: auto;
         color: $header-blue;
         font-size: 14px;
-        background: #fffdfd 0% 0% no-repeat padding-box !important;
+        background: $white-2 0% 0% no-repeat padding-box !important;
         box-sizing: border-box;
         padding: 0.15em 0.5em;
         height: 24px;
       }
       ::placeholder {
-        color: #5e5e5e;
+        color: $black-1;
         opacity: 0.6;
         font-size: 12px;
       }

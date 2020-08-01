@@ -27,8 +27,8 @@
               nz-select {
                 height: 25px;
                 color: $header-blue;
-                background: #ffffff 0% 0% no-repeat padding-box;
-                box-shadow: 0px 0px 5px #00000029;
+                background: $white 0% 0% no-repeat padding-box;
+                box-shadow: $shadow-light-black;
                 border-radius: 5px;
                 font-size: 13px;
                 min-width: 165px;
@@ -59,14 +59,14 @@
             grid-template-columns: 1fr 1fr;
             width: 80%;
             .left {
-              background: #ffffff 0% 0% no-repeat padding-box;
-              border: 0.5px solid #1460b770;
+              background: $white 0% 0% no-repeat padding-box;
+              border: 0.5px solid $borderColor;
               border-top: none;
               text-align: center;
               border-radius: 5px;
               .item {
-                background: #d6d6d6 0% 0% no-repeat padding-box;
-                border: 0.5px solid #1460b770;
+                background: $black-3 0% 0% no-repeat padding-box;
+                border: 0.5px solid $borderColor;
                 border-radius: 5px 5px 0px 0px;
                 color: $light-black;
                 font-size: 13px;
@@ -81,22 +81,22 @@
                   width: 82%;
                   text-align: center !important;
                   font-size: 14px;
-                  color: #1f3777;
+                  color: $blue-1;
                   border: none;
                   outline: none;
                 }
               }
             }
             .right {
-              background: #ffffff 0% 0% no-repeat padding-box;
-              border: 0.5px solid #1460b770;
+              background: $white 0% 0% no-repeat padding-box;
+              border: 0.5px solid $borderColor;
               border-top: none;
               border-radius: 5px;
               margin: 0 0 0 1px;
               text-align: center;
               .item {
-                background: #d6d6d6 0% 0% no-repeat padding-box;
-                border: 0.5px solid #1460b770;
+                background: $black-3 0% 0% no-repeat padding-box;
+                border: 0.5px solid $borderColor;
                 border-radius: 5px 5px 0px 0px;
                 color: $light-black;
                 font-size: 13px;
@@ -111,7 +111,7 @@
                   width: 82%;
                   text-align: center !important;
                   font-size: 14px;
-                  color: #1f3777;
+                  color: $blue-1;
                   border: none;
                   outline: none;
                 }
@@ -132,8 +132,8 @@
           justify-content: center;
           margin: .5em 0 .05em 0;
           .confirm {
-            background: #1178cb 0% 0% no-repeat padding-box;
-            box-shadow: 0px 3px 6px #00000040;
+            background: $background 0% 0% no-repeat padding-box;
+            box-shadow: $shadow-light-black-1;
             border-radius: 6px;
             height: 25px;
             color: $white;
@@ -146,8 +146,8 @@
           }
           .cancel {
             margin: 0 1em 0 0;
-            box-shadow: 0px 3px 6px #00000040;
-            border: 1px solid #707070;
+            box-shadow: $shadow-light-black-1;
+            border: 1px solid $gray-dark;
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -178,8 +178,8 @@
         // min-width: 280px;
         color: $header-blue;
         font-size: 14px;
-        border: 0.5px solid #5e5e5e75;
-        background: #fffdfd 0% 0% no-repeat padding-box !important;
+        border: 0.5px solid $borderColor-2;
+        background: $white-2 0% 0% no-repeat padding-box !important;
         border-radius: 5px;
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
@@ -198,13 +198,13 @@
           width: auto;
           color: $header-blue;
           font-size: 14px;
-          background: #fffdfd 0% 0% no-repeat padding-box !important;
+          background: $white-2 0% 0% no-repeat padding-box !important;
           box-sizing: border-box;
           padding: 0.15em 0.5em;
           height: 24px;
         }
         ::placeholder {
-          color: #5e5e5e;
+          color: $black-1;
           opacity: 0.6;
           font-size: 12px;
         }
@@ -295,8 +295,8 @@ th {
   display: none;
 }
 .light-bg {
-  background: #fffdfd 0% 0% no-repeat padding-box !important;
+  background: $white-2 0% 0% no-repeat padding-box !important;
 }
 .dark-bg {
-  background: #f7f7f7 0% 0% no-repeat padding-box !important;
+  background: $white-3 0% 0% no-repeat padding-box !important;
 }
