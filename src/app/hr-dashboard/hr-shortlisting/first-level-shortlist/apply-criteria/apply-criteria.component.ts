@@ -266,7 +266,7 @@ export class ApplyCriteriaComponent implements OnInit {
           }
         });
       }
-      this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      // this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
       this.filteredCandidates = data.length;
       console.log('ada', this.filteredCandidates);
 
@@ -370,7 +370,7 @@ export class ApplyCriteriaComponent implements OnInit {
           }
         });
       }
-      this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      this.appConfig.setLocalData('FinalshortListCheckedCandidates', JSON.stringify(apiData['user_id']));
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_LIST, { data: 'filtered' });
 
     }, (err) => {

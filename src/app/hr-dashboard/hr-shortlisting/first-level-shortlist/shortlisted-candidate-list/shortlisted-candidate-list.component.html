@@ -5,8 +5,9 @@
       <button [ngClass]="notShowShortlist ? 'disabled' : ''" (click)="shortlist()" class="shortlist" mat-button><span
           class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span class="text">
           Shortlist</span></button>
-      <button [ngClass]="notShowReject ? 'disabled' : ''" (click)="reject()" class="reject" mat-button><span class="icon"><img
-            src="assets/images/001-cancel_1.svg" alt="" srcset=""></span> <span class="text"> Reject</span></button>
+      <button [ngClass]="notShowReject ? 'disabled' : ''" (click)="reject()" class="reject" mat-button><span
+          class="icon"><img src="assets/images/001-cancel_1.svg" alt="" srcset=""></span> <span class="text">
+          Reject</span></button>
     </div>
   </div>
 
@@ -44,19 +45,25 @@
       <!-- Position Column -->
       <ng-container matColumnDef="uid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.uid ? element.uid : '-'}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="tag_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag </th>
+        <td mat-cell *matCellDef="let element"> {{element.tag_name ? element.tag_name : '-'}} </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
       </ng-container>
 
       <!-- Weight Column -->
       <ng-container matColumnDef="gender">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
-        <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.gender ? element.gender : '-'}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
@@ -136,7 +143,7 @@
       </tr>
 
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-      [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
   </div>

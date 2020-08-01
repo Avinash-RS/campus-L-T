@@ -20,7 +20,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
-  displayedColumns: any[] = ['uid', 'name', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing', 'checked'];
+  displayedColumns: any[] = ['uid', 'tag_name', 'name', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -70,6 +70,9 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     const apiData = {
       user_id: []
     };
+    const dummy = {
+      user_id: []
+    };
     this.fullUserList.forEach(element => {
       if (element['uid']) {
         apiData['user_id'].push(element['uid']);
@@ -80,6 +83,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
       this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      this.appConfig.setLocalData('FinalshortListCheckedCandidates', JSON.stringify(dummy));
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA, { data: apiData['user_id'].length });
     }, (err) => {
 
@@ -163,6 +167,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       };
       this.openDialog1(ShortlistBoxComponent, datas);
       this.appConfig.clearLocalDataOne('shortListCheckedCandidates');
+      this.appConfig.clearLocalDataOne('FinalshortListCheckedCandidates');
       this.getUsersList();
 
     }, (err) => {
@@ -214,6 +219,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         const uid = element && element['uuid'] ? element['uuid'] : '-';
         const name = element && element['name'] ? element['name'] : '-';
         const gender = element && element['field_gender'] ? element['field_gender'] : '-';
+        const tag_name = element && element['tag_name'] ? element['tag_name'] : '-';
         const dob = element && element['field_dob'] ? this.getDOBFormat(element['field_dob']) : '-';
         let institute = '-';
         let level = '-';
@@ -281,6 +287,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             uid,
             name,
             gender,
+            tag_name,
             dob,
             institute,
             level,
@@ -292,17 +299,34 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         );
       });
       let filteredArray = [];
-      if (filter && this.appConfig.getLocalData('shortListCheckedCandidates')) {
-        const localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
-        if (localUID && localUID.length > 0) {
+      let count = 0;
+      console.log('align', align.length);
+
+      if (filter && this.appConfig.getLocalData('FinalshortListCheckedCandidates')) {
+        const localUID = JSON.parse(this.appConfig.getLocalData('FinalshortListCheckedCandidates'));
+        console.log('co', localUID.length);
+        if (localUID && localUID.length === align.length) {
           align.forEach(element => {
-            localUID.forEach(ele => {
-              if (element && element['uid'] === ele) {
+              if (element && element['uid']) {
                 element['checked'] = true;
+                count = count + 1;
                 filteredArray.push(element);
               }
-            });
           });
+          console.log('co', count, align.length, filteredArray.length);
+        } else {
+          if (localUID && localUID.length > 0) {
+            align.forEach(element => {
+              localUID.forEach(ele => {
+                if (ele && element && element['uid'] === ele) {
+                  element['checked'] = true;
+                  count = count + 1;
+                  filteredArray.push(element);
+                }
+              });
+            });
+            console.log('co', count, align.length, filteredArray.length);
+          }
         }
       } else {
         filteredArray = align;
@@ -311,6 +335,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       if (filter) {
         this.filteredBoolean = true;
         this.userList = filteredArray ? filteredArray : [];
+        console.log(this.userList);
+
       } else {
         this.userList = align ? align : [];
       }
@@ -353,7 +379,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     let selectedCount = 0;
     this.userList.forEach(element => {
       if (element.checked) {
-        selectedCount += 1;
+        selectedCount = selectedCount + 1;
         this.notShowReject = false;
         this.notShowShortlist = false;
         runElse = false;
