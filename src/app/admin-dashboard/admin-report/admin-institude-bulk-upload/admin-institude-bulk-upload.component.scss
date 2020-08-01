@@ -2,6 +2,8 @@
 
 .candidate-bulk-reports {
   padding: 5px;
+  width: 100%;
+  overflow: hidden;
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
     /* Structure */
@@ -124,4 +126,7 @@ th {
 }
 .hide {
   display: none;
+}
+.scroll {
+  overflow-x: auto !important;
 }

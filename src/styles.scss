@@ -1532,7 +1532,9 @@ button:focus {
     }
   }
 }
-
+td,th {
+  padding: 0px 8px !important !important;
+}
 // Scrollbar
 /* width */
 ::-webkit-scrollbar {

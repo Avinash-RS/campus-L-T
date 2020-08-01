@@ -18,7 +18,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
 
   BASE_URL = environment.API_BASE_URL;
 
-  displayedColumns: any[] = ['uid', 'field_institute_name', 'email', 'name', 'field_institute_mobile_number', 'date', 'time', 'reason'];
+  displayedColumns: any[] = ['uid', 'field_institute_name', 'email', 'state', 'city', 'name', 'lastname', 'field_institute_mobile_number', 'date', 'time', 'reason'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
