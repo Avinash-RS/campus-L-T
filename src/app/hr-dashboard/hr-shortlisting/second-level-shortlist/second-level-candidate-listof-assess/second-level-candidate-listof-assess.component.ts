@@ -34,6 +34,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   selection = new SelectionModel(true, []);
   selectedUserDetail: any;
   userList: any;
+  totalMarks: any;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -137,6 +138,13 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       this.userList = datas ? datas : [];
       this.selectedCandidates = this.userList.length;
       let count = 0;
+      if (datas && datas.length > 0) {
+        datas.forEach((element, i) => {
+          if (element && i == '0') {
+            this.totalMarks = element['total_marks'] ? element['total_marks'] : '';
+          }
+        });
+      }
       this.userList.forEach(element => {
         count = count + 1;
         element['uid'] = count;

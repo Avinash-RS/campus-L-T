@@ -2,7 +2,7 @@
   <div class="flex-wrapper">
     <div class="inner-flex">
       <div class="heading">
-        Shortlist - {{bindDetails ? bindDetails['assement_name'] : ''}}
+        Shortlist - {{bindDetails ? bindDetails['assement_name'] : '-'}}
       </div>
       <div class="grid-wrapper">
         <div class="group">
@@ -10,7 +10,7 @@
             Date :&#160;
           </div>
           <div class="value">
-              {{bindDetails ? bindDetails['date'] : ''}}
+              {{bindDetails ? bindDetails['date'] : '-'}}
           </div>
         </div>
         <div class="group">
@@ -18,7 +18,7 @@
             Group Name :&#160;
           </div>
           <div class="value">
-              {{bindDetails ? bindDetails['group_name'] : ''}}
+              {{bindDetails ? bindDetails['group_name'] : '-'}}
           </div>
         </div>
 
@@ -27,7 +27,7 @@
             Total number of candidates :&#160;
           </div>
           <div class="value">
-            <span class="labels">{{bindDetails ? bindDetails['total'] : ''}}</span>
+            <span class="labels">{{bindDetails ? bindDetails['total'] : '-'}}</span>
           </div>
         </div>
 
@@ -36,7 +36,7 @@
             Time :&#160;
           </div>
           <div class="value">
-              {{bindDetails ? bindDetails['time'] : ''}}
+              {{bindDetails ? bindDetails['time'] : '-'}}
           </div>
         </div>
         <div class="group">
@@ -59,7 +59,7 @@
       </div>
 
     </div>
-    <div class="right-flex">
+    <div style="display: none;" class="right-flex">
       <div class="heading">
         Assessment report
       </div>

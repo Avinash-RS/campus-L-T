@@ -58,7 +58,7 @@
 
           <!-- Header row second group -->
           <ng-container matColumnDef="header-row-second-group">
-            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Section 1 </th>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Total score </th>
           </ng-container>
 
           <!-- third Header row first group -->
@@ -68,7 +68,7 @@
 
           <!-- third Header row second group -->
           <ng-container matColumnDef="third-header-row-second-group">
-            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks 100) </th>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks {{totalMarks ? totalMarks : ''}}) </th>
           </ng-container>
 
           <!-- fourth Header row first group -->

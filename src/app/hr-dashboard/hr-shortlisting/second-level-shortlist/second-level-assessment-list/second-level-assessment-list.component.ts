@@ -18,8 +18,8 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
-
-  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'report', 'pdf'];
+// 'report'
+  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'pdf'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 

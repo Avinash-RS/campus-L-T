@@ -4,8 +4,8 @@
   <div class="cutOff">
     <div class="head">Shortlist cutoff marks :&#160;</div>
     <div class="values">
-      <span *ngFor="let dup of [0]; let i = index">Section {{i + 1}}:&#160;
-      <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{'50'}}
+      <span *ngFor="let dup of [0]; let i = index">Total score {{i + 1}}:&#160;
+      <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff}}
       </span></div>
   </div>
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">

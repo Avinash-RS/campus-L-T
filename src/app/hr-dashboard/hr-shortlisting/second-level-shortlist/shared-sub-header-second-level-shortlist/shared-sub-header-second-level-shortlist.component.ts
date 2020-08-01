@@ -23,13 +23,13 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
   assessmentDetails() {
     console.log('de', this.details);
     this.bindDetails = {
-      assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '',
-      date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '',
-      time: this.details && this.details[0] && this.details[0]['time'] ? this.details[0]['time'] : '',
-      group_name: this.details && this.details[0] && this.details[0]['group_name'] ? this.details[0]['group_name'] : '',
+      assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '-',
+      date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '-',
+      time: this.details && this.details[0] && this.details[0]['time'] ? this.details[0]['time'] : '-',
+      group_name: this.details && this.details[0] && this.details[0]['group_name'] ? this.details[0]['group_name'] : '-',
       status: this.details && this.details[0] && this.details[0]['status'] ? this.details[0]['status'] : 'waiting',
-      total: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '',
-      selected: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '',
+      total: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '-',
+      selected: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '-',
     };
   }
 
