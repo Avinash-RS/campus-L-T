@@ -15,8 +15,8 @@
         // min-width: 280px;
         color: $header-blue;
         font-size: 14px;
-        border: 0.5px solid #5e5e5e75;
-        background: #fffdfd 0% 0% no-repeat padding-box !important;
+        border: 0.5px solid $borderColor-2;
+        background: $white-2 0% 0% no-repeat padding-box !important;
         border-radius: 5px;
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
@@ -35,13 +35,13 @@
           width: auto;
           color: $header-blue;
           font-size: 14px;
-          background: #fffdfd 0% 0% no-repeat padding-box !important;
+          background: $white-2 0% 0% no-repeat padding-box !important;
           box-sizing: border-box;
           padding: 0.15em 0.5em;
           height: 24px;
         }
         ::placeholder {
-          color: #5e5e5e;
+          color: $black-1;
           opacity: 0.6;
           font-size: 12px;
         }
@@ -90,21 +90,21 @@ th {
 }
 
 .download {
-  background: #EDEEF0 0% 0% no-repeat padding-box;
-border: 1px solid #70707075 !important;
+  background: $wrapper-light-gray 0% 0% no-repeat padding-box;
+border: 1px solid $borderColor-5 !important;
 border-radius: 5px !important;
 display: flex;
-color: #145E9A !important;
+color: $header-blue !important;
 font-size: 13px;
 align-items: center;
 height: 25px;
 padding: 4px 16px;
 }
 .light-bg {
-  background: #FFFDFD 0% 0% no-repeat padding-box !important;
+  background: $white-2 0% 0% no-repeat padding-box !important;
 }
 .dark-bg {
-  background: #F7F7F7 0% 0% no-repeat padding-box !important;
+  background: $white-3 0% 0% no-repeat padding-box !important;
 }
 .no-data {
   margin: 2em auto;

@@ -1,7 +1,7 @@
 @import "../../themes/themes.scss";
 .sub-menu-wrapper {
   display: flex;
-  background: #666666;
+  background: $primary;
   margin: 0.5em 0 0 0;
   position: sticky;
 //   .menu-group {
@@ -36,7 +36,7 @@
 //   }
 
   .btn{
-    background-color: #666666;
+    background-color: $primary;
     width: 24%;
     height: 65px;
     margin-right: 5px;
@@ -55,6 +55,6 @@
   }
 
 }  .btn:focus {
-    background-color: #3974aa !important;
+    background-color: $background-3 !important;
   }
 

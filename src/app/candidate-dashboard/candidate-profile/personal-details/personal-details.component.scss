@@ -211,7 +211,7 @@
         .image-wrapper {
           position: relative;
           display: flex;
-          background: #cecece 0% 0% no-repeat padding-box;
+          background: $background-9 0% 0% no-repeat padding-box;
           align-items: center;
           width: 100%;
           min-height: 148px;
@@ -286,7 +286,7 @@
         box-sizing: border-box;
         span {
           padding: 3px;
-          color: #707070;
+          color: $gray-dark;
           font-size: 10px;
           text-align: center;
         }

@@ -24,7 +24,7 @@ th.mat-header-cell {
   color: $white;
 }
 .bg {
-  background: #2c5b87;
+  background: $background-10;
   color: $white;
   height: 43px;
   padding-top: 9px;
@@ -95,7 +95,7 @@ table {
   padding-right: 7%;
 }
 .in-box {
-  border: 1px solid #ccc;
+  border: 1px solid $pink-2;
   height: 31px;
 }
 .box {
@@ -122,7 +122,7 @@ textarea {
   color: $black !important;
 }
 .place {
-  border: 1px solid rgba(0, 0, 0, 0.527);
+  border: 1px solid $borderColor-9;
   height: 30px;
   margin-top: -8px;
 }
@@ -170,7 +170,7 @@ textarea {
   color: $red;
 }
 textarea {
-  border: 1px solid rgba(0, 0, 0, 0.527);
+  border: 1px solid $borderColor-9;
 }
 textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
   border: solid $red 1px;

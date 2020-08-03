@@ -8,16 +8,16 @@
     align-items: center;
     padding: 0 12px 0 12px;
     flex-flow: row-reverse;
-    border-bottom: solid #666666 1px;
+    border-bottom: solid $primary 1px;
     .buttons {
       display: flex;
       .shortlist {
         display: flex;
         align-items: center;
         height: 25px;
-        background: #269a45;
+        background: $background-6;
         padding: 4px 6px;
-        box-shadow: 0px 3px 6px #00000029;
+        box-shadow: $shadow-light-black-29;
         font-size: 13px;
         color: $white;
         font-weight: 100;
@@ -35,8 +35,8 @@
         display: flex;
         align-items: center;
         height: 25px;
-        background: #db3137;
-        box-shadow: 0px 3px 6px #00000029;
+        background: $red-1;
+        box-shadow: $shadow-light-black-29;
         padding: 4px 4px;
         font-size: 13px;
         color: $white;
@@ -63,7 +63,7 @@
       .text {
         .count {
           font-size: 200;
-          color: #145e9a;
+          color: $header-blue;
         }
       }
     }
@@ -77,8 +77,8 @@
           color: $white;
           font-size: 13px;
           padding: 4px 6px;
-          background: #003f72 0% 0% no-repeat padding-box;
-          box-shadow: 0px 0px 5px #00000029;
+          background: $secondary 0% 0% no-repeat padding-box;
+          box-shadow: $shadow-light-black;
           .icon {
             span {
               font-size: 17px;
@@ -103,8 +103,8 @@
         // min-width: 280px;
         color: $header-blue;
         font-size: 14px;
-        border: 0.5px solid #5e5e5e75;
-        background: #fffdfd 0% 0% no-repeat padding-box !important;
+        border: 0.5px solid $borderColor-2;
+        background: $white-2 0% 0% no-repeat padding-box !important;
         border-radius: 5px;
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
@@ -123,13 +123,13 @@
           width: auto;
           color: $header-blue;
           font-size: 14px;
-          background: #fffdfd 0% 0% no-repeat padding-box !important;
+          background: $white-2 0% 0% no-repeat padding-box !important;
           box-sizing: border-box;
           padding: 0.15em 0.5em;
           height: 24px;
         }
         ::placeholder {
-          color: #5e5e5e;
+          color: $black-1;
           opacity: 0.6;
           font-size: 12px;
         }
