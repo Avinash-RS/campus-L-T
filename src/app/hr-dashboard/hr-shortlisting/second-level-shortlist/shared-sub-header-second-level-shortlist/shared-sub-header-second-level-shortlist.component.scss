@@ -1,7 +1,7 @@
 @import "../../../../themes/themes.scss";
 
 .top-wrapper {
-  background: #e6ecf9;
+  background: $background-2;
   width: 100%;
   padding: 0.25em;
   .flex-wrapper {
@@ -34,8 +34,8 @@
             font-size: 13px;
             color: $header-blue;
             .labels {
-              background: #fafafa 0% 0% no-repeat padding-box;
-              box-shadow: 0px 0px 5px #00000029;
+              background: $white-primary 0% 0% no-repeat padding-box;
+              box-shadow: $shadow-light-black;
               padding: 1px 6px;
               text-align: center;
             }

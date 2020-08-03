@@ -34,8 +34,8 @@
           width: 100%;
           input {
             border: none;
-            background: #fafafa 0% 0% no-repeat padding-box;
-            box-shadow: 0px 0px 5px #00000029;
+            background: $white-primary 0% 0% no-repeat padding-box;
+            box-shadow: $shadow-light-black;
             border-radius: 5px;
             height: 28px;
             display: flex;

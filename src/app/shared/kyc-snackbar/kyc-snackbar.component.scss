@@ -14,7 +14,7 @@
   .img {
     text-align: center;
     img {
-      background-color: red;
+      background-color: $red;
       border-radius: 50%;
     }
   }
@@ -43,8 +43,8 @@
       background: $white 0% 0% no-repeat padding-box;
     }
     .delete-confirm {
-      color: white;
-      background: red 0% 0% no-repeat padding-box;
+      color: $white;
+      background: $red 0% 0% no-repeat padding-box;
       margin: 0 0 0 1em;
     }
     .add-cancel {

@@ -121,7 +121,7 @@ th {
 .download {
   // background: #fffdfd 0% 0% no-repeat padding-box !important;
   background: $light-blue 0% 0% no-repeat padding-box !important;
-  border: 1px solid #70707075 !important;
+  border: 1px solid $borderColor-5 !important;
   border-radius: 5px !important;
   display: flex;
   color: $white !important;
