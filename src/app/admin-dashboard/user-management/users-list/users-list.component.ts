@@ -82,6 +82,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
 
   selectedUser(userDetail) {
     this.selectedUserDetail = userDetail;
+
   }
 
   removeUser() {

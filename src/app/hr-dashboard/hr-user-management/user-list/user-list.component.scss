@@ -4,18 +4,21 @@
 }
 .hr-user-list-main-wrapper {
   margin: 0em 0 0 0;
-  padding: 4px 0px 4px 0px;
+  padding: 0px 0px 4px 0px;
   background: $wrapper-light-gray;
   height: 100%;
   .line {
     height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     border-bottom: solid 1px $primary;
     .button-wrapper {
       display: flex;
       padding: 0 1em;
       flex-flow: row-reverse;
       button {
-        height: 28;
+        height: 28px;
         font-size: 13px;
         text-align: center;
         font-weight: 100;
@@ -27,15 +30,22 @@
           font-size: 14px;
         }
       }
-    //   button:nth-of-type(1) {
-    //     width: auto;
-    //     background: $blue-2 0% 0% no-repeat padding-box;
-    //     box-shadow: $shadow-light-black-1;
-    //     border-radius: 6px;
-    //     color: $white;
-    //     outline: none;
-    //   }
+      //   button:nth-of-type(1) {
+      //     width: auto;
+      //     background: $blue-2 0% 0% no-repeat padding-box;
+      //     box-shadow: $shadow-light-black-1;
+      //     border-radius: 6px;
+      //     color: $white;
+      //     outline: none;
+      //   }
       button:nth-of-type(1) {
+        height: 28;
+        font-size: 13px;
+        text-align: center;
+        font-weight: 100;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
         width: auto;
         border-radius: 6px;
         color: $white;

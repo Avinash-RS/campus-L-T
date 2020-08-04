@@ -70,13 +70,14 @@
     background: $primary 0% 0% no-repeat padding-box;
     .sub-navs {
       cursor: pointer;
-      height: 50px;
+      height: 100%;
       padding: 2px 2.5em;
       display: flex;
       border-left: solid white 1px;
       background: $non-active-sub-bg 0% 0% no-repeat padding-box;
       align-items: center;
       flex-direction: column;
+      justify-content: center;
       text-align: center;
       outline: none;
       div:first-child {
@@ -86,13 +87,17 @@
         }
       }
       div:last-child {
-        margin: 4px 0 0 0;
+        margin: 0px 0 0 0;
         color: $white;
         font-size: 13px;
       }
     }
+    .sub-navs:hover {
+      background: $active-sub-bg-hover;
+      opacity: 1;
+    }
     .active {
-      background: $active-sub-bg;
+      background: $active-sub-bg !important;
       outline: none;
       font-weight: 200;
     }
@@ -138,7 +143,7 @@
         list-style: none;
         margin: 0 0 15px 0;
         color: $white;
-        opacity: 0.5;
+        opacity: 1;
         font-weight: 100;
         box-sizing: border-box;
         cursor: pointer;
@@ -155,6 +160,9 @@
           font-size: 15px;
           display: none;
         }
+      }
+      li:hover {
+        background: $active-sub-bg 0% 0% no-repeat padding-box;
       }
       .active {
         background: $active-sub-bg 0% 0% no-repeat padding-box;

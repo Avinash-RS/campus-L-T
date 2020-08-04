@@ -45,12 +45,18 @@
             </label>
           </div>
           <div class="input-box-radio" [ngStyle]="{'border-bottom': role.invalid && role.touched ? 'solid red 1px': ''}">
-            <div>
+
+            <mat-radio-group style="display: flex; justify-content: space-between; width: 90%;" aria-label="Select an option" formControlName="role">
+              <mat-radio-button (click)="showInterviewPanel = true; addValidation()" value="interview_panel">Interview panel</mat-radio-button>
+              <mat-radio-button (click)="showInterviewPanel = false; addValidation()" value="hr">Hr</mat-radio-button>
+            </mat-radio-group>
+
+            <!-- <div>
               <input (click)="showInterviewPanel = true; addValidation()" formControlName="role" type="radio" value="interview_panel"><span> Interview panel</span>
             </div>
           <div>
             <input (click)="showInterviewPanel = false; addValidation()" formControlName="role" type="radio" value="hr"><span> Hr</span>
-          </div>
+          </div> -->
 
           </div>
         </div>

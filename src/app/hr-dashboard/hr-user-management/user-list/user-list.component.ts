@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, AfterViewInit {
 
   displayedColumns: any[] = ['uid', 'name', 'email', 'role', 'field_employee_id', 'field_panel_discipline', 'field_uploaded_by', 'checked'];
   dataSource: MatTableDataSource<any>;
@@ -24,9 +24,11 @@ export class UserListComponent implements OnInit {
   radioCheck;
   userListIndex;
 
-  constructor(private adminService: AdminServiceService,
+  constructor(
+    private adminService: AdminServiceService,
     private appConfig: AppConfigService,
-    private matDialog: MatDialog) { }
+    private matDialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.getUsersList();
@@ -60,10 +62,10 @@ export class UserListComponent implements OnInit {
     this.userListIndex = i;
   }
 
-  deleteUser(){
-    var removeUser = {
+  deleteUser() {
+    const removeUser = {
       'user_id': this.selectedUserDetail.user_id
-    }
+    };
 
     this.adminService.hrDeleteUser(removeUser).subscribe((success: any) => {
       this.appConfig.hideLoader();
