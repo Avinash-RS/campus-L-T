@@ -22,7 +22,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   selectedUserDetail: any;
   userList: any;
   buttonDisabled = true;
-  displayedColumns: any[] = ['View_Details', 'Assessment_Name', 'Group_Name', 'Shortlisted_candidates', 'Date', 'Time', 'Status', 'Shortlist_By', 'view_Info'];
+  displayedColumns: any[] = ['uid', 'Assessment_Name', 'Group_Name', 'Shortlisted_candidates', 'Date', 'Time', 'Status', 'Shortlist_By', 'view_Info'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -41,7 +41,14 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   getUsersList() {
     this.adminService.interviewPanelShortlist().subscribe((data: any) => {
       this.appConfig.hideLoader();
+      console.log(data);
+
       this.userList = data ? data : [];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

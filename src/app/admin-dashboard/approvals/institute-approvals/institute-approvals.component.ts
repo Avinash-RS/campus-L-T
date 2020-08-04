@@ -44,6 +44,7 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   buttonDisabled = true;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
+  status: string;
 
   constructor(
     private appConfig: AppConfigService,
@@ -106,16 +107,16 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
 
   submit(event) {
     event.stopPropagation();
-    console.log(this.radioCheck, this.rejectCheck);
-    console.log(this.selectedUserDetail);
+    console.log('ad', this.status);
+    console.log('s', this.selectedUserDetail);
     let data;
-    if (this.radioCheck) {
+    if (this.status === 'approve') {
       data = {
         status: 'approve',
         instituteName: this.selectedUserDetail['field_institute_name']
       };
     }
-    if (this.rejectCheck) {
+    if (this.status === 'reject') {
       data = {
         status: 'reject',
         instituteName: this.selectedUserDetail['field_institute_name']
@@ -172,8 +173,9 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  selectedUser(userDetail) {
+  selectedUser(userDetail, status) {
     console.log(this.radioCheck);
+    this.status = 'approve';
     this.buttonDisabled = false;
     this.rejectCheck = null;
 
@@ -189,9 +191,10 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  selectedUserReject(userDetail) {
+  selectedUserReject(userDetail, status) {
     console.log(userDetail);
     this.buttonDisabled = false;
+    this.status = 'reject';
     this.radioCheck = null;
     this.selectedUserDetail = userDetail;
     this.userList.forEach(element => {
@@ -228,11 +231,12 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, result.status);
       if (result && result['status'] === 'approve') {
+        console.log(result, result.status);
         this.apiSubmit(result);
       }
       if (result && result['status'] === 'reject') {
+        console.log(result, result.status);
         this.apiSubmit(result);
       }
     });

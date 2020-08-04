@@ -54,7 +54,10 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       this.appConfig.hideLoader();
       console.log(data1);
       this.userList = data1 ? data1 : [];
+      let count = 0;
       this.userList.forEach((element, i) => {
+        count = count + 1;
+        element['counter'] = count;
         element['time'] = element && element['time'] ? element['time'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);

@@ -30,12 +30,12 @@ export class HrUserManagementComponent implements OnInit {
       },
       {
         icon: '001-group.svg',
-        name: 'Add Users',
+        name: 'Add User',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS
       },
       {
         icon: '002-group-1.svg',
-        name: 'Interview panel Upload',
+        name: 'Interview panel upload',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS
       }
     ];

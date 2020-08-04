@@ -37,6 +37,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   selectedCandidates: number;
   fullUserList: any;
   filteredBoolean: boolean;
+  rejecting: boolean;
+  filter: boolean;
 
   constructor(
     private appConfig: AppConfigService,
@@ -57,8 +59,10 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     this.activatedRoute.queryParams.subscribe(params => {
       console.log('params', params);
       if (params && params['data'] === 'filtered') {
+        this.filter = true;
         this.getUsersList('filtered');
       } else {
+        this.filter = false;
         this.getUsersList();
       }
     });
@@ -118,6 +122,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       }
     });
     this.adminService.firstLevelReject(apiData).subscribe((data: any) => {
+      this.rejecting = true;
       // this.appConfig.hideLoader();
       this.appConfig.success('Selected candidates rejected successfully', '');
       this.getURLParam();
@@ -307,11 +312,11 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         console.log('co', localUID.length);
         if (localUID && localUID.length === align.length) {
           align.forEach(element => {
-              if (element && element['uid']) {
-                element['checked'] = true;
-                count = count + 1;
-                filteredArray.push(element);
-              }
+            if (element && element['uid']) {
+              element['checked'] = true;
+              count = count + 1;
+              filteredArray.push(element);
+            }
           });
           console.log('co', count, align.length, filteredArray.length);
         } else {
@@ -391,6 +396,21 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       }
     });
     this.selectedCandidates = selectedCount;
+    this.rejectingSelection();
+  }
+
+  rejectingSelection() {
+    if (this.rejecting && this.filter) {
+      let selectedCount = 0;
+      this.userList.forEach(element => {
+        if (element) {
+          element['checked'] = false;
+          selectedCount = selectedCount + 1;
+        }
+      });
+      this.selectedCandidates = selectedCount;
+      this.rejecting = false;
+    }
   }
 
   unselectSelectALL() {

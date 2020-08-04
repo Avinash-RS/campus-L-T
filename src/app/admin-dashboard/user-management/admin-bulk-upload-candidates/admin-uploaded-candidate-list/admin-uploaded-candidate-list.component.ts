@@ -51,7 +51,10 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
     this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
       this.appConfig.hideLoader();
       this.userList = data1 ? data1 : [];
+      let count = 0;
       this.userList.forEach(element => {
+        count = count + 1;
+        element['counter'] = count;
         element['time'] = element && element['time'] ? element['time'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);

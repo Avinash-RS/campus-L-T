@@ -335,9 +335,6 @@ body {
   .mat-column-dob {
     white-space: nowrap !important;
   }
-  .mat-sort-header-container {
-    // justify-content: center !important;
-  }
 }
 .mat-paginator {
   font-size: 13px !important;
@@ -984,23 +981,7 @@ button:focus {
   overflow: hidden !important;
 }
 
-// HR uploaded List
-.main-wrapper-uploaded-list {
-  .mat-sort-header-container {
-    // justify-content: center !important;
-  }
-  .mat-column-candidateId {
-    text-align: center;
-  }
-  .mat-column-time {
-    text-align: center;
-  }
-  .mat-column-date {
-    text-align: center;
-  }
-}
-
-//tpo uploaded List
+// tpo uploaded List
 .tpo-main-wrapper-uploaded-list {
   .green {
     color: #269a45;
@@ -1365,13 +1346,9 @@ button:focus {
         justify-content: center !important;
       }
     }
-    .mat-column-no_of_candidate {
-      .mat-sort-header-container {
-        .mat-sort-header-button {
-          text-align: left !important;
-          white-space: nowrap;
-        }
-      }
+    td.mat-column-no_of_candidate {
+      text-align: center;
+      padding-left: 0 !important;
     }
   }
 }
@@ -1534,6 +1511,26 @@ button:focus {
 }
 td,th {
   padding: 0px 8px !important !important;
+}
+th {
+  white-space: nowrap !important;
+}
+button:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  // transition: 0.2s ease-in-out;
+}
+.user-list-wrapper {
+  button:focus {
+    border-radius: 4px !important;
+    border: none;
+    outline: none;
+  }
+  th {
+    button:hover {
+      transform: none !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      // transition: 0.2s ease-in-out;
+    }
+  }
 }
 // Scrollbar
 /* width */

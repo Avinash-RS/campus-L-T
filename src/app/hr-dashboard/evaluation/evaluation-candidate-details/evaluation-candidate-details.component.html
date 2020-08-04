@@ -5,34 +5,34 @@
           <img src="assets/images/feather-search.svg" alt="" srcset="">
         </div>
       </div>
-<!--   
+<!--
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    
- 
+
+
     <ng-container matColumnDef="sno">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
       <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
     </ng-container>
-  
+
 
     <ng-container matColumnDef="assessmentName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment name </th>
       <td mat-cell *matCellDef="let element"> {{element.assessmentName}} </td>
     </ng-container>
-  
+
 
     <ng-container matColumnDef="groupName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Group name </th>
       <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
     </ng-container>
-  
+
 
     <ng-container matColumnDef="shortlistName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
         <td mat-cell *matCellDef="let element"> {{element.shortlistName}} </td>
       </ng-container>
 
-      
+
     <ng-container matColumnDef="shortlistedCandidates">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlisted candidates </th>
         <td mat-cell *matCellDef="let element"> {{element.shortlistedCandidates}} </td>
@@ -51,23 +51,23 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let element"> {{element.status}} </td>
       </ng-container>
-  
-      
+
+
       <ng-container matColumnDef="shortlistby">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist by </th>
         <td mat-cell *matCellDef="let element"> {{element.shortlistby}} </td>
       </ng-container>
 
-      
+
       <ng-container matColumnDef="viewdetails">
         <th mat-header-cell *matHeaderCellDef> View details </th>
-        <td mat-cell *matCellDef="let element"  > 
+        <td mat-cell *matCellDef="let element"  >
             <mat-icon matTooltip="View" [routerLink]="appConstant.HR_DASHBOARD.ASSESSMENTDETAILS" routerLinkActive="active"   data-placement="top" class="viewDetails">remove_red_eye</mat-icon>
         </td>
       </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
     </tr>
@@ -77,9 +77,9 @@
   <table #table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- Position Column -->
-    <ng-container matColumnDef="View_Details">
+    <ng-container matColumnDef="uid">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index"> {{element && element.View_Details ? element.View_Details : '-'}} </td>
+      <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index"> {{element && element.uid ? element.uid : '-'}} </td>
     </ng-container>
 
     <!-- Name Column -->
@@ -135,7 +135,7 @@
   </table>
   <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
 
-  
+
   <ng-template #tpl let-element>
     <tr class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
       <td colspan="10">

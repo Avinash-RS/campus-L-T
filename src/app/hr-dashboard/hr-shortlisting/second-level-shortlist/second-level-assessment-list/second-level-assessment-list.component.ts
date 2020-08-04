@@ -19,7 +19,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
 
   BASE_URL = environment.API_BASE_URL;
 // 'report'
-  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'pdf'];
+  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'buttons'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -66,6 +66,8 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
         this.userList.forEach(element => {
           count = count + 1;
           element['uid'] = count;
+          element['status'] = element && element.status != 'completed' ? 'waiting' : 'completed';
+          element['buttons'] = element && element.status != 'completed' ? 'w' : 'c';
         });
       } else {
         this.userList = [];

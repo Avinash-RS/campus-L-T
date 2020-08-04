@@ -154,6 +154,11 @@ export class ReportsListComponent implements OnInit, AfterViewInit {
       ];
       const align = [];
       this.userList = datas[0];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
       this.viewDetails = datas[0][0];
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

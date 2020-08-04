@@ -64,25 +64,6 @@ export class HrPreAssessmentComponent implements OnInit {
   tagValue = new FormControl('');
   shortlistValue = new FormControl('');
 
-  damoData = [
-    {
-      'id': 1234,
-      'mail_sent': 1,
-      'registered': 1,
-      'profile_submit': 1,
-      'profile_shortlist': 1,
-      'assement': 1
-    },
-    {
-      'id': 12345,
-      'mail_sent': 1,
-      'registered': 1,
-      'profile_submit': 1,
-      'profile_shortlist': 1,
-      'assement': 1
-    }
-  ];
-
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -142,6 +123,11 @@ export class HrPreAssessmentComponent implements OnInit {
       console.log('api', data);
 
       this.userList = data ? data : [];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -121,10 +121,12 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
       console.log('api', data);
-
-      if (data) {
-        this.userList = data ? data : [];
-      }
+      this.userList = data ? data : [];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

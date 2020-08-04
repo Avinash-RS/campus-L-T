@@ -25,9 +25,8 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   userList: any;
   radioCheck;
   selectAllCheck;
-  demodata =[
+  demodata = [
     {
-      'counter': 1,
       'assessment_name': 'Assessment 1',
       'group_name': '2020_Kousalya_SRM University',
       'date': '26 June 2020',
@@ -37,7 +36,6 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
       'action': '1'
     },
     {
-      'counter': 2,
       'assessment_name': 'Assessment 2',
       'group_name': '2020_Kousalya_VIT University',
       'date': '26 June 2020',
@@ -46,12 +44,14 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
       'shortlist_name': 'Batch 2',
       'action': '1'
     }
-  ]
+  ];
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private sharedService: SharedServiceService) { }
+    private sharedService: SharedServiceService
+    ) { }
 
   ngOnInit() {
     this.getUsersList();
@@ -72,16 +72,21 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   // To get all users
   getUsersList() {
     // this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
-      // this.appConfig.hideLoader();
-      // console.log(data1);
-      this.userList = this.demodata;
-      // this.userList = data1 ? data1 : [];
-      // this.userList.forEach((element, i) => {
-      //   element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
-      // });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    // this.appConfig.hideLoader();
+    // console.log(data1);
+    this.userList = this.demodata ? this.demodata : [];
+    let count = 0;
+    this.userList.forEach(element => {
+      count = count + 1;
+      element['counter'] = count;
+    });
+  // this.userList = data1 ? data1 : [];
+    // this.userList.forEach((element, i) => {
+    //   element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
+    // });
+    this.dataSource = new MatTableDataSource(this.userList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
     // }, (err) => {
     // });

@@ -20,7 +20,7 @@
       </ng-container>
 
       <ng-container matColumnDef="field_institute_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute name </th>
         <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
           {{element && element.field_institute_name ? element.field_institute_name : '-'}} </td>
       </ng-container>

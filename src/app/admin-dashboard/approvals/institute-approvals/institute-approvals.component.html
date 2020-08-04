@@ -65,7 +65,7 @@
       <ng-container matColumnDef="approve">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Approve </th>
         <td style="padding: 0 !important; text-align: center;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          <mat-radio-button (change)="selectedUser(element)" [value]="radioCheck"></mat-radio-button>
+          <mat-radio-button (change)="selectedUser(element, 'approve')" [value]="radioCheck"></mat-radio-button>
           <!-- <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
             <label nz-radio [nzValue]="element.email"></label>
           </nz-radio-group> -->
@@ -75,7 +75,7 @@
       <ng-container matColumnDef="reject">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Reject </th>
         <td style="padding: 0 !important; text-align: center;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          <mat-radio-button (change)="selectedUserReject(element)" [value]="rejectCheck"></mat-radio-button>
+          <mat-radio-button (change)="selectedUserReject(element, 'reject')" [value]="rejectCheck"></mat-radio-button>
           <!-- <nz-radio-group style="justify-content: center !important;" (ngModelChange)="selectedUserReject(element)" [(ngModel)]="rejectCheck">
             <label nz-radio [nzValue]="element.email"></label>
           </nz-radio-group> -->
@@ -86,7 +86,7 @@
         <th mat-header-cell *matHeaderCellDef> Submit </th>
         <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
           <button (click)="submit($event)" class="submit-btn"
-            [ngClass]="element['checked'] === false ? 'buttonDisabled' : ''" mat-raised-button>submit</button>
+            [ngClass]="element['checked'] === false ? 'buttonDisabled' : ''" mat-raised-button>Submit</button>
         </td>
       </ng-container>
 

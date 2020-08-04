@@ -58,41 +58,12 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
     this.candidateService.assessmentList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       console.log('api', datas);
-      const data = [
-        {
-          uid: '1',
-          name: 'Avinash',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-        {
-          uid: '2',
-          name: 'Prem',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-        {
-          uid: '3',
-          name: 'Hari',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-        {
-          uid: '4',
-          name: 'Pradeep',
-          dob: '29-10-1995',
-          time: '11:30 AM',
-          hallticket: 'Post Graduate',
-        },
-      ];
-      if (datas) {
-        this.userList = datas;
-      } else {
-        this.userList = [];
-      }
+      this.userList = datas ? datas : [];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

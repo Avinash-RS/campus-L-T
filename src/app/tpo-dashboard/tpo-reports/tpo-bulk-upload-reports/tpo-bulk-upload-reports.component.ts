@@ -61,9 +61,12 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
       console.log('api', datas);
-      if (datas) {
-        this.userList = datas ? datas : [];
-      }
+      this.userList = datas ? datas : [];
+      let count = 0;
+      this.userList.forEach(element => {
+        count = count + 1;
+        element['uid'] = count;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
