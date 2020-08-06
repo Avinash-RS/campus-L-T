@@ -290,6 +290,17 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // Hr evaluation particular assessment status
+  hrEvaluationParticularAssessmentDetails(data) {
+    return this.http.post(`${this.BASE_URL}/profile/candidatelist_evaluation`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // Hr evaluation particular assessment status
+  hrEvaluationParticularAssessmentDetailsHeader(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 
   // TPO API's
   tpoCandidateListAfterBulkUpload(data) {

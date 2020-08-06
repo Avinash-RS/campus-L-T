@@ -145,4 +145,8 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  particularAssessment(AssessmentName) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,  {data: AssessmentName});
+  }
 }

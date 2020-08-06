@@ -6,6 +6,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-assessment-details',
@@ -14,13 +15,15 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 })
 export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'name', 'id', 'status', 'details'];
+  displayedColumns: any[] = ['count', 'candidate_name', 'uid', 'evaluation_status', 'details'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   userList: any;
+  assessmentName: any;
+  nameOfAssessment: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -28,6 +31,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
@@ -43,54 +47,60 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
+    this.editRouteParamGetter();
   }
 
   ngOnInit() {
-    this.getUsersList();
   }
 
+  // Get url param for edit route
+  editRouteParamGetter() {
+    // Get url Param to view Edit user page
+    this.activatedRoute.queryParams.subscribe(params => {
+      console.log(params['data']);
+      this.nameOfAssessment = params['data'];
+      this.assessmentDetails(params['data']);
+      this.getUsersList(params['data']);
+    });
+  }
+
+  assessmentDetails(name) {
+    const apidata = {
+      assement_name: name
+    };
+    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
+      // this.appConfig.hideLoader();
+      this.assessmentName = data;
+      console.log('details', data);
+
+    }, (err) => {
+
+    });
+  }
+
+
   // To get all users
-  getUsersList() {
-    // this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
-    this.appConfig.hideLoader();
-    const data = [
-      {
-        name: 'Avinash',
-        uid: '232',
-        id: '232',
-        status: 'Waiting',
-        checked: false
-      },
-      {
-        name: 'Avinash',
-        uid: '233',
-        id: '233',
-        status: 'Approved',
-        checked: false
-      },
-      {
-        name: 'Avinash',
-        uid: '234',
-        id: '234',
-        status: 'Approved',
-        checked: false
-      },
-      {
-        name: 'Avinash',
-        uid: '235',
-        id: '235',
-        status: 'Approved',
-        checked: false
-      },
-    ];
-    // console.log('api', datas);
-    const align = data;
-    this.userList = align ? align : [];
-    this.dataSource = new MatTableDataSource(this.userList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
+  getUsersList(name) {
+
+    const apiData = {
+      assement_name: name,
+    };
+    this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
+      this.appConfig.hideLoader();
+      console.log('datas', datas);
+
+      const align = datas;
+      this.userList = align ? align : [];
+      let counting = 0;
+      this.userList.forEach(element => {
+        counting = counting + 1;
+        element['count'] = counting;
+      });
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => {
+    });
   }
 
   ngAfterViewInit() {

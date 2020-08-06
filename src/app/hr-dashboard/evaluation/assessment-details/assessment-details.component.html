@@ -1,5 +1,6 @@
 <div class="evaluation-status-main">
-  <app-shared-evaluation-sub-header></app-shared-evaluation-sub-header>
+  <app-shared-evaluation-sub-header *ngIf="assessmentName"
+  [details]="assessmentName ? assessmentName : ''"></app-shared-evaluation-sub-header>
 
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <!-- <mat-form-field>
@@ -15,27 +16,27 @@
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <!-- Position Column -->
-      <ng-container matColumnDef="uid">
+      <ng-container matColumnDef="count">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.count ? element.count : '-'}} </td>
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="candidate_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.candidate_name ? element.candidate_name : '-'}} </td>
       </ng-container>
 
       <!-- Weight Column -->
-      <ng-container matColumnDef="id">
+      <ng-container matColumnDef="uid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.uid ? element.uid : '-'}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="status">
+      <ng-container matColumnDef="evaluation_status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Evaluation Status </th>
-        <td mat-cell *matCellDef="let element"> {{element.status ? (element.status) : '-'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.evaluation_status && element.evaluation_status != '1' ? 'waiting' : 'completed'}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
