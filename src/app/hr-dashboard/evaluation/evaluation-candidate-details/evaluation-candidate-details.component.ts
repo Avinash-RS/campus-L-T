@@ -4,6 +4,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 @Component({
   selector: 'app-evaluation-candidate-details',
   templateUrl: './evaluation-candidate-details.component.html',
@@ -30,8 +31,17 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
+    private sharedService: SharedServiceService,
   ) {
-
+    // Sub-Navigation menus. This will be retrieved in Admin master component
+    const subWrapperMenus = [
+      {
+        icon: 'work.svg',
+        name: 'Shortlisted candidate',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
+      },
+    ];
+    this.sharedService.subMenuSubject.next(subWrapperMenus);
    }
 
   ngOnInit() {
@@ -43,7 +53,66 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
       this.appConfig.hideLoader();
       console.log(data);
 
-      this.userList = data ? data : [];
+      const datas = [
+        {
+          id: '1',
+          Assessment_Name: 'SRM Institute of technology',
+          Group_Name: 'SRM@gmail.com',
+          Date: '29 Mar 2020',
+          Time: '11:00 AM',
+          Status: 'waiting',
+          Shortlist_By: 'Avin',
+          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
+          Total_Candidates: '100',
+          Shortlisted_candidates: '20',
+          email: 'avin@gmail.com',
+          checked: false
+        },
+        {
+          id: '2',
+          Assessment_Name: 'SRM Institute of technology',
+          Group_Name: 'SRM@gmail.com',
+          Date: '29 Mar 2020',
+          Time: '11:00 AM',
+          Status: 'waiting',
+          Shortlist_By: 'Avin',
+          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
+          Total_Candidates: '100',
+          Shortlisted_candidates: '20',
+          email: 'avin@gmail.com',
+          checked: false
+        },
+        {
+          id: '3',
+          Assessment_Name: 'SRM Institute of technology',
+          Group_Name: 'SRM@gmail.com',
+          Date: '29 Mar 2020',
+          Time: '11:00 AM',
+          Status: 'waiting',
+          Shortlist_By: 'Avin',
+          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
+          Total_Candidates: '100',
+          Shortlisted_candidates: '20',
+          email: 'avin@gmail.com',
+          checked: false
+        },
+        {
+          id: '4',
+          Assessment_Name: 'SRM Institute of technology',
+          Group_Name: 'SRM@gmail.com',
+          Date: '29 Mar 2020',
+          Time: '11:00 AM',
+          Status: 'waiting',
+          Shortlist_By: 'Avin',
+          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
+          Total_Candidates: '100',
+          Shortlisted_candidates: '20',
+          email: 'avin@gmail.com',
+          checked: false
+        },
+      ];
+
+      this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;

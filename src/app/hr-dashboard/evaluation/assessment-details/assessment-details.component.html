@@ -1,77 +1,69 @@
-<div class="contant">
-<div class="row">
-    <div class="col-4">
-      <span class="head">Assessment name :</span><span class="ans"> Assessment 1</span>
+<div class="evaluation-status-main">
+  <app-shared-evaluation-sub-header></app-shared-evaluation-sub-header>
+
+  <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
+    <!-- <mat-form-field>
+              <mat-label>Filter</mat-label> -->
+    <div class="search-bar">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
     </div>
+    <!-- </mat-form-field> -->
 
-    <div class="col-3">
-        <span class="head">Shortlist  name : </span> <span class="ans"> Batch  1</span>
-    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <div class="col-3">
-        <span class="head"> Date : </span><span class="ans"> 21 june 2020</span>
-    </div>
-
-    <div class="col-2">
-        <span class="head">Total candidates  :</span> <span class="ans"> 19</span>
-    </div>
-</div>
-<div class="space"></div>
-
-<div class="row">
-    <div class="col-4">
-        <span class="head">Group name : </span> <span class="ans"> 2020_Kousalya_VIT University</span>
-    </div>
-
-    <div class="col-3">
-        <span class="head">Tag name :</span>  <span class="ans"> 2020 Kousalya</span>
-    </div>
-
-    <div class="col-3">
-        <span class="head">Time : </span> <span class="ans"> 11:30</span>
-    </div>
-
-    <div class="col-2">
-        <span class="head">Status  : </span> <span class="ans"> Waiting</span>
-    </div>
-</div>
-</div>
-<div class="space"></div>
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-    <ng-container matColumnDef="sno">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
-      <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="assessmentName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate name </th>
-      <td mat-cell *matCellDef="let element"> {{element.assessmentName}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="groupName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate  ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="shortlistName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Evaluation status </th>
-        <td mat-cell *matCellDef="let element"> {{element.shortlistName}} </td>
+      <!-- Position Column -->
+      <ng-container matColumnDef="uid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="viewdetails">
-        <th mat-header-cell *matHeaderCellDef> View details </th>
-        <td mat-cell *matCellDef="let element"  >
-            <mat-icon matTooltip="View" [routerLink]="appConstant.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS" routerLinkActive="active"   data-placement="top" class="viewDetails">remove_red_eye</mat-icon>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Evaluation Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status ? (element.status) : '-'}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> View details </th>
+        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
+          <button class="viewbtn" (click)="view()" mat-button>
+            <mat-icon style="justify-content: center;
+                  display: contents;
+                  font-size: 16px;">visibility</mat-icon> <span>View</span>
+          </button>
         </td>
       </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{''}}"</td>
-    </tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>
