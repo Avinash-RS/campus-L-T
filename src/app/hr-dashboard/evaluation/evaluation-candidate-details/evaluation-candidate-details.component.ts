@@ -23,7 +23,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   selectedUserDetail: any;
   userList: any;
   buttonDisabled = true;
-  displayedColumns: any[] = ['uid', 'Assessment_Name', 'Group_Name', 'Shortlisted_candidates', 'Date', 'Time', 'Status', 'Shortlist_By', 'view_Info'];
+  displayedColumns: any[] = ['uid', 'Assessment_Name', 'Group_Name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -37,7 +37,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Shortlisted candidate',
+        name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
       },
       {
@@ -117,7 +117,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
         },
       ];
 
-      this.userList = datas ? datas : [];
+      this.userList = data ? data : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;

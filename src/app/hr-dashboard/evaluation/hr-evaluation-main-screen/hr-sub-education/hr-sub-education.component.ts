@@ -26,7 +26,7 @@ export class HrSubEducationComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Shortlisted candidate',
+        name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION
       },
       {

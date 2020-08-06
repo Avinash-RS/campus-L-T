@@ -26,7 +26,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Shortlisted candidate',
+        name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION
       },
       {

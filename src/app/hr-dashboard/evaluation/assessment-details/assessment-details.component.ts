@@ -33,7 +33,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Shortlisted candidate',
+        name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS
       },
       {

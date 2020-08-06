@@ -256,15 +256,27 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
+            data: {
+              breadcrumb: 'Candidate Details'
+            },
             children: [
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`, component: HrSubAssessmentsComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`, component: HrSubAssessmentsComponent,
+                data: {
+                  breadcrumb: 'Assessment Questions'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EDUCATION}`, component: HrSubEducationComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EDUCATION}`, component: HrSubEducationComponent,
+                data: {
+                  breadcrumb: 'Education Details'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EMPLOYMENT}`, component: HrSubEmploymentComponent
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EMPLOYMENT}`, component: HrSubEmploymentComponent,
+                data: {
+                  breadcrumb: 'Employment Documents'
+                }
               },
               {
                 path: '',
