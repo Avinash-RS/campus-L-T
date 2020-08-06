@@ -52,6 +52,17 @@ export class CandidateMappersService {
     return headers;
   }
 
+  getAfterCustomHeadersWithMultiPart(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+    })
+      .set('Content-Type', 'multipart/form-data')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('Access-Control-Allow-Origin', '*');
+    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
+    return headers;
+  }
+
   forImage(uniqueName): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -159,23 +170,29 @@ export class CandidateMappersService {
       });
   }
 
-  uploadCandidateDocument(documentData){
+  uploadCandidateDocument(documentData) {
     // this.datas is api body data
-    return this.http.post(`${this.BASE_URL}/profile/upload_certificate`, documentData, { headers: this.withoutTokens(), withCredentials: true });
+    // return this.http.post(`${this.BASE_URL}/profile/upload_certificate`, documentData, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+    return fetch(`${this.BASE_URL}/profile/upload_certificate`, {
+      method: 'POST',
+      body: documentData,
+      // headers: this.getAfterCustomHeaders(), withCredentials: true
+    });
+
   }
 
   //get dropdown value
-  getEducationDropDown(userId){
+  getEducationDropDown(userId) {
     return this.http.post(`${this.BASE_URL}/profile/candidate_education_level`, userId, { headers: this.withoutTokens(), withCredentials: true });
   }
 
   //save or submit uploaded file
-  saveUploadDocument(data){
+  saveUploadDocument(data) {
     return this.http.post(`${this.BASE_URL}/profile/upload_certificates_id`, data, { headers: this.withoutTokens(), withCredentials: true });
   }
 
   //getUploaded document
-  getUploadedDocument(userId){
+  getUploadedDocument(userId) {
     return this.http.post(`${this.BASE_URL}/profile/get_certificate`, userId, { headers: this.withoutTokens(), withCredentials: true });
   }
 

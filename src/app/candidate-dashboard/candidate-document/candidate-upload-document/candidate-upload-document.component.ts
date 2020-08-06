@@ -12,8 +12,8 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 })
 export class CandidateUploadDocumentComponent implements OnInit {
 
-  educationValuearray: any =[];
-  certificateValuearray: any =[];
+  educationValuearray: any = [];
+  certificateValuearray: any = [];
   otherDocValuearray: any = [];
   selectedImage: any;
   showResumeImgSizeError = false;
@@ -28,7 +28,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   educationDetailsArr = [];
   certificatDetailsArr = [];
   otherDetailsArr = [];
-  resumeFile:any;
+  resumeFile: any;
   showResumeImgError = false;
   showEducationImgErr = false;
   showCertificateImgErr = false;
@@ -66,7 +66,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
     });
   }
 
-  getUploadedDocument(){
+  getUploadedDocument() {
     var userid = {
       'id': this.appConfig.getLocalData('userId')
     }
@@ -75,7 +75,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.otherDocValuearray = data[0][0].other_array;
       this.educationValuearray = data[0][0].education_documents;
       this.selectedDropdownValue = [];
-      if(data[0][0].resume_details[0]){
+      if (data[0][0].resume_details[0]) {
         this.urlResume = data[0][0].resume_details[0].certificate_url;
       }
       this.appConfig.hideLoader();
@@ -120,24 +120,24 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   createItem(edu): any {
-    if(edu){
+    if (edu) {
       this.urlEducation.push(edu.certificate_url);
       this.selectedDropdownValue.push(edu.education_level);
       return this.fb.group({
 
-        level: [null ,Validators.required],
-        repotcard: [null ,Validators.required]
+        level: [null, Validators.required],
+        repotcard: [null, Validators.required]
       });
-    }else{
+    } else {
       return this.fb.group({
 
-        level: [null ,Validators.required],
-        repotcard: [null ,Validators.required]
+        level: [null, Validators.required],
+        repotcard: [null, Validators.required]
       });
     }
   }
 
-  removeEducationDoc(i: number){
+  removeEducationDoc(i: number) {
     this.urlEducation.splice(i, 1);
     this.eduArr.removeAt(i);
     this.selectedDropdownValue.splice(i, 1);
@@ -162,24 +162,24 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   createCertificateItem(edu): any {
-    if(edu){
+    if (edu) {
       this.urlCertificate.push(edu.certificate_url);
       return this.fb.group({
 
-        certificateName: [edu.certificate_name ,Validators.required],
-        certificateFile: [null ,Validators.required]
+        certificateName: [edu.certificate_name, Validators.required],
+        certificateFile: [null, Validators.required]
       });
-    }else{
+    } else {
       return this.fb.group({
 
-        certificateName: [null ,Validators.required],
-        certificateFile: [null ,Validators.required]
+        certificateName: [null, Validators.required],
+        certificateFile: [null, Validators.required]
       });
     }
   }
 
 
-  removeCertificate(i: number){
+  removeCertificate(i: number) {
     this.urlCertificate.splice(i, 1);
     this.certiArr.removeAt(i);
   }
@@ -203,139 +203,148 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   createOtherDocItem(edu): any {
-    if(edu){
+    if (edu) {
       this.urlOther.push(edu.certificate_url);
       return this.fb.group({
 
-        otherDocName: [edu.description ,Validators.required],
-        otherDocFile: [null ,Validators.required]
+        otherDocName: [edu.description, Validators.required],
+        otherDocFile: [null, Validators.required]
       });
-    }else{
+    } else {
       return this.fb.group({
 
-        otherDocName: [null ,Validators.required],
-        otherDocFile: [null ,Validators.required]
+        otherDocName: [null, Validators.required],
+        otherDocFile: [null, Validators.required]
       });
     }
   }
 
-  removeOtherDoc(i: number){
+  removeOtherDoc(i: number) {
     this.urlOther.splice(i, 1);
     this.otherDocArr.removeAt(i);
   }
-  stoppropgation(e:Event){
+  stoppropgation(e: Event) {
     e.preventDefault();
     e.stopPropagation();
   }
 
-  onSelectFile(event, uploadType, i){
+  onSelectFile(event, uploadType, i) {
     this.selectedImage = event.target.files[0];
 
     const fd = new FormData();
-    if(uploadType == 'resume'){
+    if (uploadType == 'resume') {
       if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showResumeImgError = false;
-        if(event.target.files[0].size < 2000000){
+        if (event.target.files[0].size < 2000000) {
           this.showResumeImgSizeError = false;
-          
-          this.urlResume = event.target.files[0].name
-          let sendData = fd.append('product_image', this.selectedImage);
+
+          this.urlResume = event.target.files[0].name;
+          this.selectedImage = event.target.files[0];
+          fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, uploadType, i);
-        }else{
+        } else {
           this.showResumeImgSizeError = true;
         }
-      }else{
+      } else {
         this.showResumeImgError = true;
       }
-    }else if(uploadType == 'education'){
+    } else if (uploadType == 'education') {
       if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showEducationImgErr = false;
-        if(event.target.files[0].size < 2000000){
+        if (event.target.files[0].size < 2000000) {
           this.showEducationImgSizeErr = false;
-          if(event.target.id == 'file-input-'+ i){
+          if (event.target.id == 'file-input-' + i) {
             this.urlEducation[i] = event.target.files[0].name
           }
+          this.selectedImage = event.target.files[0];
+          fd.append('product_image', this.selectedImage);
 
-          let sendData = fd.append('product_image', this.selectedImage);
-          
-          this.uploadImage(sendData, uploadType, i);
-        }else{
+          this.uploadImage(fd, uploadType, i);
+        } else {
           this.showEducationImgSizeErr = true;
         }
-      }else{
+      } else {
         this.showEducationImgErr = true;
       }
-    }else if(uploadType == 'certificate'){
+    } else if (uploadType == 'certificate') {
       if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showCertificateImgErr = false;
-        if(event.target.files[0].size < 2000000){
+        if (event.target.files[0].size < 2000000) {
           this.showCertificateImgSizeErr = false;
 
-          if(event.target.id == 'file-input-2-'+ i){
+          if (event.target.id == 'file-input-2-' + i) {
             this.urlCertificate[i] = event.target.files[0].name
           }
 
           let sendData = fd.append('product_image', this.selectedImage);
           this.uploadImage(sendData, uploadType, i);
-        }else{
+        } else {
           this.showCertificateImgSizeErr = true;
         }
-      }else{
+      } else {
         this.showCertificateImgErr = true;
       }
-    }else if(uploadType == 'other'){
+    } else if (uploadType == 'other') {
       if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showOtherImgErr = false;
-        if(event.target.files[0].size < 2000000){
+        if (event.target.files[0].size < 2000000) {
           this.showOtherImgSizeErr = false;
 
-          if(event.target.id == 'file-input-3-'+ i){
+          if (event.target.id == 'file-input-3-' + i) {
             this.urlOther[i] = event.target.files[0].name
           }
 
           let sendData = fd.append('product_image', this.selectedImage);
           this.uploadImage(sendData, uploadType, i);
-        }else{
+        } else {
           this.showOtherImgSizeErr = true;
         }
-      }else{
+      } else {
         this.showOtherImgErr = true;
       }
     }
   }
 
-  uploadImage(file, selectType, i){
-    this.candidateService.uploadCandidateDocument(file).subscribe((data: any) => {
-      
+  async uploadImage(file, selectType, i) {
+
+    try {
+      this.appConfig.showLoader();
+      const data = await (await this.candidateService.uploadCandidateDocument(file)).json();
+
+      // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
+
       this.appConfig.hideLoader();
 
-      if(selectType == 'education'){
+      if (selectType == 'education') {
         var eduObj = {
           'level': this.educationUploadForm.value.educationUploadArr[i].level,
           'uploaded_id': data[0].fileid
         }
         this.educationDetailsArr.push(eduObj);
-      }else if(selectType == 'certificate'){
+      } else if (selectType == 'certificate') {
         var cerObj = {
           'document_name': this.certificateUploadForm.value.certificateUploadArr[i].certificateName,
           'uploaded_id': data[0].fileid
         }
         this.certificatDetailsArr.push(cerObj);
-      }else if(selectType == 'other'){
+      } else if (selectType == 'other') {
         var otherObj = {
           'document_name': this.otherUploadForm.value.otherUploadArr[i].otherDocName,
           'uploaded_id': data[0].fileid
         }
         this.otherDetailsArr.push(otherObj);
-      }else{
+      } else {
         this.resumeFile = data[0].fileid
       }
 
       this.appConfig.success(`Document uploaded submitted`, '');
+    } catch (e) {
+      this.appConfig.hideLoader();
+      console.log('e', e);
+    }
+    // }, (err) => {
 
-    }, (err) => {
-
-    });
+    // });
   }
 
   uploadFile(clickType) {
@@ -350,13 +359,13 @@ export class CandidateUploadDocumentComponent implements OnInit {
       }
 
       this.candidateService.saveUploadDocument(documentObj).subscribe((data: any) => {
-      
+
         this.appConfig.hideLoader();
-  
+
         this.appConfig.success(`Document uploaded successfully`, '');
-  
+
       }, (err) => {
-  
+
       });
 
     } else {
@@ -368,8 +377,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
     }
   }
 
-  submitDialog(btnType){
-    if(this.educationUploadForm.valid && this.resumeUploadForm.valid){
+  submitDialog(btnType) {
+    if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
       const data = {
         iconName: '',
         dataToBeShared: {
@@ -382,9 +391,9 @@ export class CandidateUploadDocumentComponent implements OnInit {
         showCancel: 'Cancel',
         showOk: ''
       };
-  
+
       this.openDialog(ShortlistBoxComponent, data, btnType);
-    }else{
+    } else {
       this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       this.validateAllFields(this.resumeUploadForm);
       this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
@@ -416,7 +425,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
     });
   }
 
-  disableBtn(){
+  disableBtn() {
     if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
       this.saveAndSubmitBtnDisable = false;
     }
