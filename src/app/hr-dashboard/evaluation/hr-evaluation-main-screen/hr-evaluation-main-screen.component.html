@@ -1,1 +1,21 @@
-<p>hr-evaluation-main-screen works!</p>
+<div class="inv-evaluation">
+    <div class="sticky">
+
+      <div class="router-wrapper">
+        <div class="main-toolbar">
+          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_ASSESSMENTS" routerLinkActive="active" class="tabs">
+            Assessment details
+          </div>
+          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EDUCATION" routerLinkActive="active" class="tabs">
+            Education details
+          </div>
+          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EMPLOYMENT" routerLinkActive="active" class="tabs">
+            Employment documents
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="routing">
+        <router-outlet></router-outlet>
+      </div>
+    </div>

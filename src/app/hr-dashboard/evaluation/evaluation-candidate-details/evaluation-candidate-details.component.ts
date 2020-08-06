@@ -40,6 +40,11 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
         name: 'Shortlisted candidate',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
       },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
    }
@@ -49,7 +54,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   }
 
   getUsersList() {
-    this.adminService.interviewPanelShortlist().subscribe((data: any) => {
+    this.adminService.hrEvaluationAssessmentDetails().subscribe((data: any) => {
       this.appConfig.hideLoader();
       console.log(data);
 

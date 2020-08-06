@@ -44,6 +44,10 @@ import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-lev
 import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
 import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
 import { SecondLevelAssessmentReportsComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-reports/second-level-assessment-reports.component';
+import { HrEvaluationMainScreenComponent } from './evaluation/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
+import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
+import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
+import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 
 const routes: Routes = [
   {
@@ -250,7 +254,25 @@ const routes: Routes = [
               breadcrumb: 'Assessment Details'
             }
           },
-
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
+            children: [
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`, component: HrSubAssessmentsComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EDUCATION}`, component: HrSubEducationComponent
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EMPLOYMENT}`, component: HrSubEmploymentComponent
+              },
+              {
+                path: '',
+                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`,
+                pathMatch: 'full',
+              }
+            ]
+          },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`,
             component: AssessmentCandidateDetailsComponent,
