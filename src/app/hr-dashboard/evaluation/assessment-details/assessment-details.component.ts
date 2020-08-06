@@ -36,6 +36,11 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
         name: 'Shortlisted candidate',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS
       },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
@@ -105,6 +110,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
   }
 
   view() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION);
   }
 }

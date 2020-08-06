@@ -284,6 +284,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // Hr Evaluation landing screen
+  hrEvaluationAssessmentDetails() {
+    return this.http.get(`${this.BASE_URL}/api/institute_candidate_shortlist`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+
   // TPO API's
   tpoCandidateListAfterBulkUpload(data) {
     return this.http.post(`${this.BASE_URL}/profile/user_details_get`, data,
@@ -330,11 +337,11 @@ export class AdminServiceService {
   // getting evaluation user data
   getEvaluationData(data) {
     return this.http.post(`${this.BASE_URL}/api/evaluation_data`, data,
-    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
   postEvaluationCandidateData(data) {
     return this.http.post(`${this.BASE_URL}/api/evaluation_form`, data,
-    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   //get assessment details
@@ -346,6 +353,6 @@ export class AdminServiceService {
   //based on assessment get candidate details
   getEvaluationCandidateData(data) {
     return this.http.post(`${this.BASE_URL}/Profile/interviewpanel_secondshortlit_candidate_report`, data,
-    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 }
