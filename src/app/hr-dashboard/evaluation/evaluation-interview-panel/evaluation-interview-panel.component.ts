@@ -15,7 +15,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
 
   appConstant = CONSTANT.ENDPOINTS;
   showPage = true;
-  displayedColumns: any[] = ['counter', 'assessment_name', 'group_name', 'date', 'time', 'status', 'shortlist_name', 'action'];
+  displayedColumns: any[] = ['counter', 'assement_name', 'group_name', 'date', 'time', 'status', 'shortlist_name', 'action'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -25,28 +25,6 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   userList: any;
   radioCheck;
   selectAllCheck;
-  demodata =[
-    {
-      'counter': 1,
-      'assessment_name': 'Assessment 1',
-      'group_name': '2020_Kousalya_SRM University',
-      'date': '26 June 2020',
-      'time': '11 : 30 AM',
-      'status': 'Waiting',
-      'shortlist_name': 'Batch 1',
-      'action': '1'
-    },
-    {
-      'counter': 2,
-      'assessment_name': 'Assessment 2',
-      'group_name': '2020_Kousalya_VIT University',
-      'date': '26 June 2020',
-      'time': '10 : 00 AM',
-      'status': 'Completed',
-      'shortlist_name': 'Batch 2',
-      'action': '1'
-    }
-  ]
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -71,20 +49,19 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
 
   // To get all users
   getUsersList() {
-    // this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
-      // this.appConfig.hideLoader();
-      // console.log(data1);
-      this.userList = this.demodata;
-      // this.userList = data1 ? data1 : [];
-      // this.userList.forEach((element, i) => {
-      //   element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
-      // });
+    this.adminService.getHrEvaluationInterviewPanel().subscribe((data1: any) => {
+      this.appConfig.hideLoader();
+    
+      this.userList = data1 ? data1 : [];
+      this.userList.forEach((element, i) => {
+        element['time'] = element && element['time'] ? this.tConvert(element['time']) : '';
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
 
   ngAfterViewInit() {
@@ -104,7 +81,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    this.appConfig.setLocalData('hrEvalutionInterviewPanel', JSON.stringify(userDetail));
   }
 
 }

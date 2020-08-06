@@ -336,4 +336,16 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/api/evaluation_form`, data,
     { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  //get assessment details
+  getHrEvaluationInterviewPanel() {
+    return this.http.get(`${this.BASE_URL}/profile/first_shortlist_report`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //based on assessment get candidate details
+  getEvaluationCandidateData(data) {
+    return this.http.post(`${this.BASE_URL}/Profile/interviewpanel_secondshortlit_candidate_report`, data,
+    { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

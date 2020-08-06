@@ -14,6 +14,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
 
+  appConstant = CONSTANT.ENDPOINTS;
   displayedColumns: any[] = ['uid', 'e_id', 'discipline', 'name', 'email', 'from', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
@@ -27,6 +28,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   selectAllCheck;
   notShowReject: boolean = true;
   notShowShortlist: boolean = true;
+  selectedAssign:any;
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -35,6 +37,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
     private matDialog: MatDialog) { }
 
   ngOnInit() {
+    this.selectedAssign = JSON.parse(this.appConfig.getLocalData('hrEvalutionInterviewPanel'));
     this.getUsersList();
   }
 

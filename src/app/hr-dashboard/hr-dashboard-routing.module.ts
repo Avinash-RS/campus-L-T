@@ -27,6 +27,7 @@ import { AssessmentDetailsComponent } from './evaluation/assessment-details/asse
 import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 import { InterviewpanelDetailsComponent } from './evaluation/interviewpanel-details/interviewpanel-details.component';
 import { InterviewpanelSelectComponent } from './evaluation/interviewpanel-select/interviewpanel-select.component';
+import { EvalutionInterviewpanelFormComponent } from './evaluation/evalution-interviewpanel-form/evalution-interviewpanel-form.component';
 
 
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
@@ -276,6 +277,13 @@ const routes: Routes = [
             component: InterviewpanelSelectComponent,
             data: {
               breadcrumb: 'Interview Panel Selected'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM}`,
+            component: EvalutionInterviewpanelFormComponent,
+            data: {
+              breadcrumb: 'Interview Panel List'
             }
           },
           {
