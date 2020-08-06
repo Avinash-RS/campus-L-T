@@ -229,7 +229,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   onSelectFile(event, uploadType, i) {
-    this.selectedImage = event.target.files[0];
 
     const fd = new FormData();
     if (uploadType == 'resume') {
@@ -276,8 +275,9 @@ export class CandidateUploadDocumentComponent implements OnInit {
             this.urlCertificate[i] = event.target.files[0].name
           }
 
-          let sendData = fd.append('product_image', this.selectedImage);
-          this.uploadImage(sendData, uploadType, i);
+          this.selectedImage = event.target.files[0];
+          fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, uploadType, i);
         } else {
           this.showCertificateImgSizeErr = true;
         }
@@ -294,8 +294,9 @@ export class CandidateUploadDocumentComponent implements OnInit {
             this.urlOther[i] = event.target.files[0].name
           }
 
-          let sendData = fd.append('product_image', this.selectedImage);
-          this.uploadImage(sendData, uploadType, i);
+          this.selectedImage = event.target.files[0];
+          fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, uploadType, i);
         } else {
           this.showOtherImgSizeErr = true;
         }
