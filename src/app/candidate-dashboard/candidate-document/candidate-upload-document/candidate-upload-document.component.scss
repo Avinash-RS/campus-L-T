@@ -96,9 +96,17 @@
 .sizeError {
     font-weight: 200;
     font-size: 12px;
-    left: 182px;
+    left: 152px;
     position: relative;
     color: $red;
+}
+
+.sizeMsg {
+    font-weight: 200;
+    font-size: 10px;
+    left: 100px;
+    position: relative;
+    color: $gray-2;
 }
 
 .iconBtn {

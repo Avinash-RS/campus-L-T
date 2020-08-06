@@ -16,11 +16,12 @@
                             </div>
                         </label>
 
-                        <input formControlName="resume" id="file-input" type="file" accept=".pdf,.doc"
+                        <input formControlName="resume" id="file-input" type="file" accept=".pdf,.doc,.png, .jpeg"
                         (click)="files.value = null" #files (change)="onSelectFile($event, 'resume', 'i'); disableBtn()">
                     </div>
-                    <span *ngIf="showResumeImgSizeError" class="sizeError">Maximum File Size: 5 MB</span>
-                    <span *ngIf="showResumeImgError" class="sizeError">Valid File Format is pdf or doc</span>
+                    <span *ngIf="!showResumeImgError" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
+                    <span *ngIf="showResumeImgSizeError" class="sizeError">Maximum File Size: 2 MB</span>
+                    <span *ngIf="showResumeImgError" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
                 </div>
             </div>
         </form>
@@ -50,7 +51,7 @@
                                 </div>
                             </label>
 
-                            <input formControlName="repotcard" id="file-input-{{i}}" type="file" accept=".pdf,.doc,application/msword"
+                            <input formControlName="repotcard" id="file-input-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
                             (change)="onSelectFile($event, 'education', i); disableBtn()">
 
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="eduArr.controls.length == 1 ? 'hideClose' : ''">
@@ -65,8 +66,9 @@
                                 <span (click)="addEducationForm()">Add</span>
                             </div>
                         </div>
-                        <span *ngIf="showEducationImgSizeErr" class="sizeError">Maximum File Size: 5 MB</span>
-                        <span *ngIf="showEducationImgErr" class="sizeError">Valid File Format is pdf, msword or doc</span>
+                        <span *ngIf="!showEducationImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
+                        <span *ngIf="showEducationImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
+                        <span *ngIf="showEducationImgErr" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
                     </ng-container>
 
                 </div>
@@ -94,7 +96,7 @@
                                 </div>
                             </label>
 
-                            <input formControlName="certificateFile" id="file-input-2-{{i}}" type="file" accept=".pdf,.doc,application/msword"
+                            <input formControlName="certificateFile" id="file-input-2-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
                             (change)="onSelectFile($event, 'certificate', i)">
 
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
@@ -109,8 +111,9 @@
                                 <span (click)="addCertificateForm()">Add</span>
                             </div>
                         </div>
-                        <span *ngIf="showCertificateImgSizeErr" class="sizeError">Maximum File Size: 5 MB</span>
-                        <span *ngIf="showCertificateImgErr" class="sizeError">Valid File Format is pdf, msword or doc</span>
+                        <span *ngIf="!showCertificateImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
+                        <span *ngIf="showCertificateImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
+                        <span *ngIf="showCertificateImgErr" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
                     </ng-container>
 
                 </div>
@@ -138,7 +141,7 @@
                                     </div>
                                 </label>
 
-                                <input formControlName="otherDocFile" id="file-input-3-{{i}}" type="file" accept=".pdf,.doc,application/msword"
+                                <input formControlName="otherDocFile" id="file-input-3-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
                                 (change)="onSelectFile($event, 'other', i)">
 
                                 <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
@@ -152,9 +155,10 @@
                                     <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
                                     <span (click)="addOtherDocForm()">Add</span>
                                 </div>
-                                <span *ngIf="showOtherImgSizeErr" class="sizeError">Maximum File Size: 5 MB</span>
-                                <span *ngIf="showOtherImgErr" class="sizeError">Valid File Format is pdf, msword or doc</span>
                             </div>
+                            <span *ngIf="!showOtherImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
+                            <span *ngIf="showOtherImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
+                            <span *ngIf="showOtherImgErr" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
                         </ng-container>
 
                     </div>

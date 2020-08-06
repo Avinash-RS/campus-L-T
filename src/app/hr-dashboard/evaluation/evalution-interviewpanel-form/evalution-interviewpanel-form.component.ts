@@ -8,13 +8,14 @@ import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/m
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-interviewpanel-details',
-  templateUrl: './interviewpanel-details.component.html',
-  styleUrls: ['./interviewpanel-details.component.scss']
+  selector: 'app-evalution-interviewpanel-form',
+  templateUrl: './evalution-interviewpanel-form.component.html',
+  styleUrls: ['./evalution-interviewpanel-form.component.scss']
 })
-export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
+export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'name', 'id', 'level', 'institute', 'discipline', 'checked'];
+  appConstant = CONSTANT.ENDPOINTS;
+  displayedColumns: any[] = ['uid', 'e_id', 'discipline', 'name', 'email', 'from', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -27,7 +28,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   selectAllCheck;
   notShowReject: boolean = true;
   notShowShortlist: boolean = true;
-  selectedAssign: any;
+  selectedAssign:any;
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -42,21 +43,55 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-    let assessment = {
-      'assement_name': this.selectedAssign.assement_name
-    }
-    this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
+    // this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      
-      console.log('api', datas);
-      const align = datas;
+      const data = [
+        {
+          name: 'Avinash',
+          uid: '231',
+          e_id: 'IN 202',
+          email: 'gunasekara@icc.com',
+          from: 'Default',
+          discipline: 'Development',
+          checked: false
+        },
+        {
+          name: 'Avinash',
+          uid: '231',
+          e_id: 'IN 202',
+          email: 'gunasekara@icc.com',
+          from: 'Default',
+          discipline: 'Development',
+          checked: false
+        },
+        {
+          name: 'Avinash',
+          uid: '231',
+          e_id: 'IN 202',
+          email: 'gunasekara@icc.com',
+          from: 'Default',
+          discipline: 'Development',
+          checked: false
+        },
+        {
+          name: 'Avinash',
+          uid: '231',
+          e_id: 'IN 202',
+          email: 'gunasekara@icc.com',
+          from: 'Default',
+          discipline: 'Development',
+          checked: false
+        },
+      ];
+      // console.log('api', datas);
+      const align = data;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    }, (err) => {
-    });
+    // }, (err) => {
+    // });
   }
 
   selectAllCheckbox(checked) {
@@ -65,7 +100,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     if (checked['checked']) {
       this.userList.forEach(element => {
         this.dataSource.filteredData.forEach(ele => {
-          if (element.candidate_id === ele.candidate_id) {
+          if (element.uid === ele.uid) {
             element.checked = true;
           }
         });
@@ -73,7 +108,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     } else {
       this.userList.forEach(element => {
         this.dataSource.filteredData.forEach(ele => {
-          if (element.candidate_id === ele.candidate_id) {
+          if (element.uid === ele.uid) {
             element.checked = false;
           }
         });
@@ -143,7 +178,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   selectedUser(userDetail) {
 
     this.userList.forEach(element => {
-      if (element.candidate_id === userDetail.candidate_id) {
+      if (element.uid === userDetail.uid) {
         element.checked = !element.checked;
       }
     });
@@ -153,7 +188,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     this.unselectSelectALL();
   }
 
-  submit() {
+  submit(event) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT, '1');
   }
 

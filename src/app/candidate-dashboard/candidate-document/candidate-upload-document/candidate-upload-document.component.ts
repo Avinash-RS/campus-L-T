@@ -75,7 +75,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.otherDocValuearray = data[0][0].other_array;
       this.educationValuearray = data[0][0].education_documents;
       this.selectedDropdownValue = [];
-      if(data[0][0].resume_details){
+      if(data[0][0].resume_details[0]){
         this.urlResume = data[0][0].resume_details[0].certificate_url;
       }
       this.appConfig.hideLoader();
@@ -233,15 +233,14 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
     const fd = new FormData();
     if(uploadType == 'resume'){
-      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showResumeImgError = false;
-        if(event.target.files[0].size < 5000000){
+        if(event.target.files[0].size < 2000000){
           this.showResumeImgSizeError = false;
           
           this.urlResume = event.target.files[0].name
-          var sendData = fd.append('product_image', this.selectedImage);
-          
-          this.uploadImage(sendData, uploadType, i);
+          let sendData = fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, uploadType, i);
         }else{
           this.showResumeImgSizeError = true;
         }
@@ -249,15 +248,15 @@ export class CandidateUploadDocumentComponent implements OnInit {
         this.showResumeImgError = true;
       }
     }else if(uploadType == 'education'){
-      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showEducationImgErr = false;
-        if(event.target.files[0].size < 5000000){
+        if(event.target.files[0].size < 2000000){
           this.showEducationImgSizeErr = false;
           if(event.target.id == 'file-input-'+ i){
             this.urlEducation[i] = event.target.files[0].name
           }
 
-          var sendData = fd.append('product_image', this.selectedImage);
+          let sendData = fd.append('product_image', this.selectedImage);
           
           this.uploadImage(sendData, uploadType, i);
         }else{
@@ -267,16 +266,16 @@ export class CandidateUploadDocumentComponent implements OnInit {
         this.showEducationImgErr = true;
       }
     }else if(uploadType == 'certificate'){
-      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showCertificateImgErr = false;
-        if(event.target.files[0].size < 5000000){
+        if(event.target.files[0].size < 2000000){
           this.showCertificateImgSizeErr = false;
 
           if(event.target.id == 'file-input-2-'+ i){
             this.urlCertificate[i] = event.target.files[0].name
           }
 
-          var sendData = fd.append('product_image', this.selectedImage);
+          let sendData = fd.append('product_image', this.selectedImage);
           this.uploadImage(sendData, uploadType, i);
         }else{
           this.showCertificateImgSizeErr = true;
@@ -285,16 +284,16 @@ export class CandidateUploadDocumentComponent implements OnInit {
         this.showCertificateImgErr = true;
       }
     }else if(uploadType == 'other'){
-      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword'))) {
+      if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
         this.showOtherImgErr = false;
-        if(event.target.files[0].size < 5000000){
+        if(event.target.files[0].size < 2000000){
           this.showOtherImgSizeErr = false;
 
           if(event.target.id == 'file-input-3-'+ i){
             this.urlOther[i] = event.target.files[0].name
           }
 
-          var sendData = fd.append('product_image', this.selectedImage);
+          let sendData = fd.append('product_image', this.selectedImage);
           this.uploadImage(sendData, uploadType, i);
         }else{
           this.showOtherImgSizeErr = true;
