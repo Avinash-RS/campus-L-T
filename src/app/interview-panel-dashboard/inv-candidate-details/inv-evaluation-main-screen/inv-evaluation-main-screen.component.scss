@@ -1,37 +1,15 @@
 @import "../../../themes/themes.scss";
 
 .inv-evaluation {
-  background: #f7f7f7;
-  // height: 100%;
+  background: $wrapper-light-gray;
+  height: 100%;
   position: relative;
   .sticky {
     position: sticky;
     top: 0;
     position: -webkit-sticky; /* Safari */
-    background: #f7f7f7;
+    background: $wrapper-light-gray;
     z-index: 3;
-  .top-wrapper {
-    background: #e6ecf9;
-    width: 100%;
-    padding: 0.25em;
-    .grid-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      .group {
-        margin: 0.5em;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        .label {
-          color: $light-black;
-          font-size: 13px;
-        }
-        .value {
-          font-size: 13px;
-          color: $header-blue;
-        }
-      }
-    }
-  }
 
   .router-wrapper {
     margin: 1em 0 0 0;

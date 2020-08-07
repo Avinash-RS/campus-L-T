@@ -11,20 +11,28 @@
           </div>
         </div>
         <!-- <div class="group">
+            <div class="label">
+              Shortlist name :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails ? bindDetails['shortlist_name'] : '-'}}
+            </div>
+          </div> -->
+
+        <div style="white-space: nowrap;" class="group">
+          <div class="label">
+            Candidate name :&#160;
+          </div>
+          <div class="value">
+            {{name ? name : '-'}}
+          </div>
+        </div>
+        <div class="group">
           <div class="label">
             Shortlist name :&#160;
           </div>
           <div class="value">
-            {{bindDetails ? bindDetails['shortlist_name'] : '-'}}
-          </div>
-        </div> -->
-
-        <div style="white-space: nowrap;" class="group">
-          <div class="label">
-            Date :&#160;
-          </div>
-          <div class="value">
-            {{bindDetails ? bindDetails['date'] : '-'}}
+            {{bindDetails ? bindDetails['group_name'] : '-'}}
           </div>
         </div>
         <div style="white-space: nowrap;" class="group">
@@ -36,28 +44,20 @@
           </div>
         </div>
         <div class="group">
-          <div class="label">
-            Shortlist name :&#160;
+            <div class="label">
+              Candidate ID :&#160;
+            </div>
+            <div class="value">
+              {{cid ? cid : '-'}}
+            </div>
           </div>
-          <div class="value">
-            {{bindDetails ? bindDetails['group_name'] : '-'}}
-          </div>
-        </div>
-        <!-- <div class="group">
+
+        <div class="group">
           <div class="label">
             Tag name :&#160;
           </div>
           <div class="value">
-              {{bindDetails ? bindDetails['tag_name'] : '-'}}
-            </div>
-        </div> -->
-
-        <div class="group">
-          <div class="label">
-            Time :&#160;
-          </div>
-          <div class="value">
-              {{bindDetails ? bindDetails['time'] : '-'}}
+            {{tag ? tag : '-'}}
           </div>
         </div>
 
@@ -66,7 +66,7 @@
             Status :&#160;
           </div>
           <div class="value">
-            {{bindDetails && bindDetails['status'] ? bindDetails['status'] : ''}}
+            {{status && status != '1' ? 'waiting' : 'completed'}}
           </div>
         </div>
 

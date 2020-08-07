@@ -61,7 +61,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
   userlist(cid) {
     const apiData = {
-      id: '1081'
+      id: cid
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
@@ -77,7 +77,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
   profileView() {
     const apiData = {
-      uid: this.candidateId ? '670' : ''
+      uid: this.candidateId
     };
     this.adminService.getProfileView(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();

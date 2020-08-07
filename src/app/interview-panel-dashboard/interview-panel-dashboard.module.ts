@@ -14,10 +14,12 @@ import { InvSubEducationComponent } from './inv-candidate-details/inv-evaluation
 import { InvSubEmploymentComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-employment/inv-sub-employment.component';
 import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-evaluate/inv-sub-evaluate.component';
 import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
+import { SharedInvPanelHeaderComponent } from './inv-candidate-details/shared-inv-panel-header/shared-inv-panel-header.component';
+import { SubSharedInvPanelHeaderComponent } from './inv-candidate-details/sub-shared-inv-panel-header/sub-shared-inv-panel-header.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvAssessmentShortlistedCandidatesComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvAssessmentShortlistedCandidatesComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SharedInvPanelHeaderComponent, SubSharedInvPanelHeaderComponent],
   imports: [
     CommonModule,
     SharedModule,

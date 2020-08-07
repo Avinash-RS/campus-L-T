@@ -1,1 +1,70 @@
-<p>inv-sub-education works!</p>
+<div class="hr-evaluation-sub-edu">
+  <div class="edu-wrapper" *ngIf="certificateArr">
+    <ng-container
+      *ngIf="certificateArr && certificateArr['education_documents'] && certificateArr['education_documents'].length > 0">
+      <div class="heading">
+        Education
+      </div>
+      <div class="flex" *ngFor=" let edu of certificateArr['education_documents']">
+        <div class="level">
+          {{edu['education_level'] ? edu['education_level'] : '-'}}
+        </div>
+        <div class="box">
+          {{edu['filename'] ? edu['filename'] : ''}} &#160; ({{edu['file_size'] ? edu['file_size'] : ''}})
+        </div>
+        <div class="view">
+          <span (click)="viewCerificates(edu['certificate_url'])">View</span>
+          <span style="visibility: hidden;">Resubmit</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container
+      *ngIf="certificateArr && certificateArr['certificate_array'] && certificateArr['certificate_array'].length > 0">
+      <div class="heading">
+        Certificates
+      </div>
+      <div class="flex" *ngFor=" let cer of certificateArr['certificate_array']">
+        <div class="level">
+          {{cer['certificate_name'] ? cer['certificate_name'] : '-'}}
+        </div>
+        <div class="box">
+          {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})
+        </div>
+        <div class="view">
+          <span (click)="viewCerificates(cer['certificate_url'])">View</span>
+          <span style="visibility: hidden;">Resubmit</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="certificateArr && certificateArr['other_array'] && certificateArr['other_array'].length > 0">
+      <div class="heading">
+        Others
+      </div>
+      <div class="flex" *ngFor=" let cer of certificateArr['other_array']">
+        <div class="level">
+          {{cer['certificate_name'] ? cer['certificate_name'] : '-'}}
+        </div>
+        <div class="box">
+          {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})
+        </div>
+        <div class="view">
+          <span (click)="viewCerificates(cer['certificate_url'])">View</span>
+          <span style="visibility: hidden;">Resubmit</span>
+        </div>
+      </div>
+    </ng-container>
+    <div class="no-data"
+      *ngIf="certificateArr['education_documents'].length < 1 && certificateArr['certificate_array'].length < 1 && certificateArr['other_array'].length < 1">
+      No documents available
+    </div>
+    <div class="button-wrapper">
+      <button mat-button (click)="next()">Next</button>
+    </div>
+  </div>
+  <div class="no-data" *ngIf="!certificateArr">
+    No documents available
+  </div>
+
+</div>

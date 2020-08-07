@@ -6,6 +6,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inv-particular-assessment-candidates',
@@ -15,8 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class InvParticularAssessmentCandidatesComponent implements OnInit, AfterViewInit {
 
 
-  // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
-  displayedColumns: any[] = ['uid', 'name', 'id', 'status', 'details', 'checked'];
+  displayedColumns: any[] = ['count', 'candidate_name', 'uid', 'evaluation_status', 'details', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -25,10 +25,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
-  radioCheck;
+  buttonCheck;
   selectAllCheck;
-  notShowReject: boolean = true;
-  notShowShortlist: boolean = true;
+  assessmentName: any;
+  nameOfAssessment: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -36,6 +36,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
@@ -46,56 +47,64 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
+    this.editRouteParamGetter();
   }
 
   ngOnInit() {
-    this.getUsersList();
   }
 
+  // Get url param for edit route
+  editRouteParamGetter() {
+    // Get url Param to view Edit user page
+    this.activatedRoute.queryParams.subscribe(params => {
+      console.log(params['data']);
+      this.nameOfAssessment = params['data'];
+      this.assessmentDetails(params['data']);
+    });
+  }
+
+  assessmentDetails(name) {
+    const apidata = {
+      assement_name: name
+    };
+    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
+      // this.appConfig.hideLoader();
+      this.assessmentName = data;
+      console.log('details', data);
+      this.getUsersList(name);
+
+    }, (err) => {
+
+    });
+  }
+
+
   // To get all users
-  getUsersList() {
-    // this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
+  getUsersList(name) {
+
+    const apiData = {
+      assement_name: name,
+    };
+    this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      const data = [
-        {
-          name: 'Avinash',
-          uid: '232',
-          id: '232',
-          status: 'Waiting',
-          checked: false
-        },
-        {
-          name: 'Avinash',
-          uid: '233',
-          id: '233',
-          status: 'Approved',
-          checked: false
-        },
-        {
-          name: 'Avinash',
-          uid: '234',
-          id: '234',
-          status: 'Approved',
-          checked: false
-        },
-        {
-          name: 'Avinash',
-          uid: '235',
-          id: '235',
-          status: 'Approved',
-          checked: false
-        },
-      ];
-      // console.log('api', datas);
-      const align = data;
+      console.log('datas', datas);
+
+      const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
+      let counting = 0;
+      this.userList.forEach(element => {
+        counting = counting + 1;
+        element['count'] = counting;
+        element['checked'] = false;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
+
 
   selectAllCheckbox(checked) {
     console.log(this.dataSource);
@@ -127,13 +136,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     this.userList.forEach(element => {
       if (element.checked) {
         selectedCount += 1;
-        this.notShowReject = false;
-        this.notShowShortlist = false;
+        this.buttonCheck = false;
         runElse = false;
       } else {
         if (runElse) {
-          this.notShowReject = true;
-          this.notShowShortlist = true;
+          this.buttonCheck = true;
         }
       }
     });
@@ -191,8 +198,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     this.unselectSelectALL();
   }
 
-  submit(event) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, '1');
+  submit(cid, name, status, tag) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, {data: this.nameOfAssessment, id: cid, name, status, tag});
   }
 
 }

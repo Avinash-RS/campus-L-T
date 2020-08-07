@@ -1,0 +1,92 @@
+@import '../../../themes/themes.scss';
+
+.top-wrapper {
+  background: $background-2;
+  width: 100%;
+  padding: 0.5em .25em;
+  .flex-wrapper {
+    display: flex;
+    justify-content: space-between;
+    .inner-flex {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      .heading {
+        font-weight: 200;
+        font-size: 13px;
+        margin-left: 0.5em;
+        margin-top: 0.5em;
+        color: $light-black;
+      }
+      .grid-wrapper {
+        display: grid;
+        // grid-template-columns: 0.7fr 1.3fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        .group {
+          margin: 0.5em;
+          display: grid;
+          grid-template-columns: .5fr 1.2fr;
+          .label {
+            color: $light-black;
+            font-size: 13px;
+            white-space: nowrap;
+          }
+          .value {
+            font-size: 13px;
+            color: $header-blue;
+            .labels {
+              background: $white-primary 0% 0% no-repeat padding-box;
+              box-shadow: $shadow-light-black;
+              padding: 1px 6px;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+    .right-flex {
+      display: flex;
+      flex-direction: column;
+      width: 35%;
+      justify-content: center;
+      text-align: center;
+      .heading {
+        font-weight: 200;
+        font-size: 13px;
+        margin: 0.5em 0 0.5em 0.5em;
+        color: $light-black;
+      }
+      .grid {
+        margin: 0 0 0.5em 0.5em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        button,
+        button:focus {
+          width: 110px;
+          height: 30px;
+          background: $light-blue;
+          display: flex;
+          justify-content: center;
+          color: $white;
+          font-weight: 200;
+          align-items: center;
+          font-size: 13px;
+          .eye {
+            width: 16px;
+            margin-right: 12px;
+          }
+          .download {
+            width: 13px;
+            height: 13px;
+            margin-right: 12px;
+          }
+        }
+        button:first-child {
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
+}

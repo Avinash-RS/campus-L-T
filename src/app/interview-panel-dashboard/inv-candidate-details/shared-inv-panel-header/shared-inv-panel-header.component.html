@@ -1,0 +1,77 @@
+<div class="top-wrapper">
+    <div class="flex-wrapper">
+      <div class="inner-flex">
+        <div class="grid-wrapper">
+          <div class="group">
+            <div class="label">
+              Assessment name :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails ? bindDetails['assement_name'] : '-'}}
+            </div>
+          </div>
+          <!-- <div class="group">
+            <div class="label">
+              Shortlist name :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails ? bindDetails['shortlist_name'] : '-'}}
+            </div>
+          </div> -->
+
+          <div style="white-space: nowrap;" class="group">
+            <div class="label">
+              Date :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails ? bindDetails['date'] : '-'}}
+            </div>
+          </div>
+          <div style="white-space: nowrap;" class="group">
+            <div class="label">
+              Total candidates :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails ? bindDetails['no_of_candidate'] : '-'}}
+            </div>
+          </div>
+          <div class="group">
+            <div class="label">
+              Shortlist name :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails ? bindDetails['group_name'] : '-'}}
+            </div>
+          </div>
+          <!-- <div class="group">
+            <div class="label">
+              Tag name :&#160;
+            </div>
+            <div class="value">
+                {{bindDetails ? bindDetails['tag_name'] : '-'}}
+              </div>
+          </div> -->
+
+          <div class="group">
+            <div class="label">
+              Time :&#160;
+            </div>
+            <div class="value">
+                {{bindDetails ? bindDetails['time'] : '-'}}
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="label">
+              Status :&#160;
+            </div>
+            <div class="value">
+              {{bindDetails && bindDetails['status'] ? bindDetails['status'] : ''}}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>

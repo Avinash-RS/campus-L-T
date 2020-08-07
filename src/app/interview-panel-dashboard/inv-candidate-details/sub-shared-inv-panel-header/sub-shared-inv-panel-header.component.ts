@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -8,14 +7,17 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-shared-evaluation-sub-header',
-  templateUrl: './shared-evaluation-sub-header.component.html',
-  styleUrls: ['./shared-evaluation-sub-header.component.scss']
+  selector: 'app-sub-shared-inv-panel-header',
+  templateUrl: './sub-shared-inv-panel-header.component.html',
+  styleUrls: ['./sub-shared-inv-panel-header.component.scss']
 })
-export class SharedEvaluationSubHeaderComponent implements OnInit {
+export class SubSharedInvPanelHeaderComponent implements OnInit {
 
   @Input() details: any;
-  @Input() selectedCandidates: any;
+  @Input() name: any;
+  @Input() cid: any;
+  @Input() status: any;
+  @Input() tag: any;
   bindDetails: any;
   nameOfAssessment: any;
   constructor(

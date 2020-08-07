@@ -61,7 +61,7 @@ export class HrSubEducationComponent implements OnInit {
 
   userlist(cid) {
     const apiData = {
-      id: '1081'
+      id: cid
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
