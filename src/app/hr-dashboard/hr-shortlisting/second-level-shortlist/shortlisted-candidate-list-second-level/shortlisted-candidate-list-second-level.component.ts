@@ -86,7 +86,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   }
   afterSubmit(result) {
     const apiData = {
-      id: [],
+      uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
       emai_sent: result['type'] === 'yes' ? '1' : '0',
       assement_name: this.nameOfAssessment,
       shortlist_mark: this.appConfig.getLocalData('secondLevelFilter') ? this.appConfig.getLocalData('secondLevelFilter') : ''

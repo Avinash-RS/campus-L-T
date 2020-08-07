@@ -24,9 +24,9 @@
     </ng-container>
 
     <!-- Weight Column -->
-    <ng-container matColumnDef="Group_Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Group name </th>
-      <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element && element.Group_Name ? element.Group_Name : '-'}} </td>
+    <ng-container matColumnDef="shortlist_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
+      <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element && element.shortlist_name ? element.shortlist_name : '-'}} </td>
     </ng-container>
 
     <!-- Symbol Column -->

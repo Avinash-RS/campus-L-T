@@ -1,14 +1,14 @@
 @import "../../../themes/themes.scss";
 
 .inv-evaluation {
-  background: #f7f7f7;
-  // height: 100%;
+  background: $wrapper-light-gray;
+  height: 100%;
   position: relative;
   .sticky {
     position: sticky;
     top: 0;
     position: -webkit-sticky; /* Safari */
-    background: #f7f7f7;
+    background: $wrapper-light-gray;
     z-index: 3;
 
   .router-wrapper {

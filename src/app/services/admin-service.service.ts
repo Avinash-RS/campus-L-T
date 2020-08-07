@@ -296,11 +296,30 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // Hr evaluation particular assessment status
+  // Hr evaluation particular assessment header
   hrEvaluationParticularAssessmentDetailsHeader(data) {
     return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  // Hr evaluation particular assessment header
+  hrEvaluationSectionMarks(data) {
+    return this.http.post(`${this.BASE_URL}/profile/marks_by_user`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // Hr evaluation get eduction certificates
+  getCertificates(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_certificate`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // Profile View
+  getProfileView(data) {
+    return this.http.post(`${this.BASE_URL}/api/profile_details`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 
   // TPO API's
   tpoCandidateListAfterBulkUpload(data) {

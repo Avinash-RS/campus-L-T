@@ -1,1 +1,35 @@
-<p>hr-sub-employment works!</p>
+<div class="hr-evaluation-sub-edu">
+    <div class="edu-wrapper" *ngIf="certificateArr">
+      <ng-container
+        *ngIf="certificateArr && certificateArr['resume_details'] && certificateArr['resume_details'].length > 0">
+        <div class="flex" *ngFor=" let edu of certificateArr['resume_details']">
+          <div class="level">
+            {{edu['certificate_url'] ? 'Resume' : '-'}}
+          </div>
+          <div class="box">
+            {{edu['filename'] ? edu['filename'] : ''}} &#160; ({{edu['file_size'] ? edu['file_size'] : ''}})
+          </div>
+          <div class="view">
+            <span (click)="viewCerificates(edu['certificate_url'])">View</span>
+            <span (click)="reSubmit(edu)">Resubmit</span>
+          </div>
+        </div>
+      </ng-container>
+      <div class="flex">
+          <div class="level">
+            {{'Profile'}}
+          </div>
+          <div class="box">
+            {{'NA'}}
+          </div>
+          <div class="view">
+            <span (click)="viewCerificates('profile')">View</span>
+            <span style="visibility: hidden;">Resubmit</span>
+          </div>
+        </div>
+
+      <div class="button-wrapper">
+          <button mat-button (click)="next()">Next</button>
+        </div>
+    </div>
+  </div>

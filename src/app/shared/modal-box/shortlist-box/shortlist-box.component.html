@@ -275,3 +275,24 @@
     <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['reSubmit'] === 'documents'">
+    <div style="margin: 0.5em 0;" class="bulk-upload-text">
+        Candidate will upload this document again
+    </div>
+    <div class="text-input">
+      <div style="width: 100%; text-align: center;">
+        <input style="width: 80%;" [formControl]="reSubmission" placeholder="Reason" type="text" name="" id="">
+      </div>
+      <div class="validation" style="text-align: center;" *ngIf="reSubmission.invalid && reSubmission.touched">
+        <span *ngIf="reSubmission.errors?.required">Reason must be provided</span>
+        <span *ngIf="reSubmission.errors?.minlength">Minimum of 3 characters required</span>
+        <span *ngIf="reSubmission.errors?.maxlength">Maximum of 30 characters only allowed</span>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="confirm" (click)="reSubmit()" mat-raised-button>Confirm</button>
+    </div>
+  </div>

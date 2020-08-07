@@ -119,7 +119,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  view() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION);
+  view(cid) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION,  {data: this.nameOfAssessment, id: cid});
   }
 }

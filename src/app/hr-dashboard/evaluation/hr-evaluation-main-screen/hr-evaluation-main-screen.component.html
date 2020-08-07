@@ -1,15 +1,17 @@
 <div class="inv-evaluation">
     <div class="sticky">
+        <app-shared-evaluation-sub-header *ngIf="assessmentName"
+        [details]="assessmentName ? assessmentName : ''"></app-shared-evaluation-sub-header>
 
       <div class="router-wrapper">
         <div class="main-toolbar">
-          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_ASSESSMENTS" routerLinkActive="active" class="tabs">
+          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_ASSESSMENTS" [queryParams]="{'data': nameOfAssessment, 'id': candidateId}" routerLinkActive="active" class="tabs">
             Assessment details
           </div>
-          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EDUCATION" routerLinkActive="active" class="tabs">
+          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EDUCATION" [queryParams]="{'data': nameOfAssessment, 'id': candidateId}" routerLinkActive="active" class="tabs">
             Education details
           </div>
-          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EMPLOYMENT" routerLinkActive="active" class="tabs">
+          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EMPLOYMENT" [queryParams]="{'data': nameOfAssessment, 'id': candidateId}" routerLinkActive="active" class="tabs">
             Employment documents
           </div>
         </div>

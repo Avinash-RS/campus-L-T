@@ -1,1 +1,89 @@
-<p>hr-sub-assessments works!</p>
+<div class="sub-assessments">
+
+    <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
+        <!-- <mat-form-field>
+                  <mat-label>Filter</mat-label> -->
+        <div class="search-bar">
+          <div class="search-icon">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+            <img src="assets/images/feather-search.svg" alt="" srcset="">
+          </div>
+        </div>
+        <!-- </mat-form-field> -->
+
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="section">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Section </th>
+            <td mat-cell *matCellDef="let element"> {{element.section ? element.section : '-'}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+            <td mat-cell *matCellDef="let element"> {{element.percentage ? element.percentage : '-'}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="question">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Related submission </th>
+              <td mat-cell *matCellDef="let element">
+                <span class="ques"> {{element.question ? element.question : 'NA'}} </span>
+                <span class="view" (click)="viewQus(previewDialog)" *ngIf="element['question']">View</span>
+              </td>
+            </ng-container>
+
+          <!-- fifth Header row first group -->
+          <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+              {{'No Data Available'}}
+            </th>
+          </div>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+            *matHeaderRowDef="['fifth-header-row-first-group']">
+          </tr>
+          <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
+            [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+      </div>
+        <!-- Employment documents ends -->
+        <ng-template #previewDialog>
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon"  (click)="closedialogbox()">close</mat-icon>
+            </button>
+            <div class="row space" >
+                <div class="col-12 font-color">
+                    <span class="Qus">Question 3 : How to build a new India ? </span>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-12 font-color">
+                 <span class="font-align" >Answer  :</span>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-12 font-color">
+
+                    <p class="ans">New India can be built by thinking new thoughts, making new policies, and implementing those policies with patriotic fervor. India has the potential of becoming one of the most advanced and progressive countries of the world.
+
+                        The most dynamic factor in a country is the Human Resource. If India is to achieve all its developmental goals, the human resource must be highly eﬃcient and creative. The second most important thing is the optimal utilization and management of resources. The optimal utilization of the best of resources by the best of professionals result in creating something new. India needs this blend.
+
+                        Unquestionably, there are many challenges in building new India. Challenges such as population, environmental degradation, poverty of rural people, corruption, backwardness, etc; but these challenges are opportunities too. We can contribute to this change for the betterment by giving our best. Each one of us must do our job and responsibilities perfectly. All the challenges can easily be overcome provided the entire manpower and resources are utilized and used optimally under the right guidance of dedicated leaders. India can do wonders. India will do wonders surely. And that will happen only when the Indians set their hearts to make India the land of opportunities, growth, and prosperity with their words, deeds, and acts.
+
+                        We can contribute to the making of new India by being excellent in our respective spheres of actions. Besides being perfect in our ﬁelds, we must be ideal citizens. We must pay our taxes honestly; we must not do anything that might affect our country’s prosperity and development. We must dedicate ourselves to the progress and development of our country, only then something substantial will happen.
+                    </p>
+
+                </div>
+            </div>
+
+        </ng-template>
+
+        <div class="button-wrapper">
+          <button mat-button (click)="next()">Next</button>
+        </div>
+
+</div>

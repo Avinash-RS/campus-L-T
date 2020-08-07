@@ -23,7 +23,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   selectedUserDetail: any;
   userList: any;
   buttonDisabled = true;
-  displayedColumns: any[] = ['uid', 'Assessment_Name', 'Group_Name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
+  displayedColumns: any[] = ['uid', 'Assessment_Name', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
