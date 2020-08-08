@@ -13,7 +13,7 @@
       .group {
         margin: 0.5em;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 0.9fr 1.5fr;
         .label {
           color: $light-black;
           font-size: 13px;
@@ -179,4 +179,37 @@ th {
 .submit-btn:focus {
   border-radius: 4px !important;
   border: 0.5px solid $borderColor-4 !important;
+}
+
+
+.light-bg {
+  background: $white-2 0% 0% no-repeat padding-box !important;
+}
+.dark-bg {
+  background: $white-3 0% 0% no-repeat padding-box !important;
+}
+
+.mat-row,
+.element-row,
+.detail-row {
+  .grid-4 {
+    background: $wrapper-light-gray 0% 0% no-repeat padding-box;
+    box-shadow: $shadow-light-black-29;
+    border: 0.25px solid $borderColor-3;
+    padding: 0 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    // align-items: center;
+    color: $light-black;
+    font-size: 13px;
+    width: 80%;
+    margin: 0.5em auto;
+    border-bottom: 3px solid $header-blue;
+    .items {
+      margin: 0.5em 0;
+    }
+    span {
+      color: $header-blue;
+    }
+  }
 }

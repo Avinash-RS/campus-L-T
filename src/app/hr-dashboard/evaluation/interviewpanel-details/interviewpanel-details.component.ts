@@ -29,6 +29,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   notShowShortlist: boolean = true;
   selectedAssign: any;
   selectedCandidateId: any = [];
+  buttonHide;
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -49,10 +50,12 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
       
-      console.log('api', datas);
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
+      this.userList.forEach(element => {
+        element['checked'] = false;
+    });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -61,7 +64,6 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   }
 
   selectAllCheckbox(checked) {
-    console.log(this.dataSource);
 
     if (checked['checked']) {
       this.userList.forEach(element => {
@@ -80,7 +82,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
         });
       });
     }
-    console.log(this.userList);
+    this.getSelectedData();
     this.toShoworNotShowFilter();
   }
 
@@ -90,20 +92,17 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     this.userList.forEach(element => {
       if (element.checked) {
         selectedCount += 1;
-        this.notShowReject = false;
-        this.notShowShortlist = false;
+        this.buttonHide = false;
         runElse = false;
       } else {
         if (runElse) {
-          this.notShowReject = true;
-          this.notShowShortlist = true;
+          this.buttonHide = true;
         }
       }
     });
   }
 
   unselectSelectALL() {
-    console.log(this.userList);
 
     this.selectAllCheck = false;
     const pushChecked = [];
@@ -149,19 +148,20 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       }
     });
     this.selectedUserDetail = userDetail;
-    if(this.selectedCandidateId.length == 0){
-      this.selectedCandidateId.push(userDetail.candidate_id);
-    }else{
-      if(this.selectedCandidateId.indexOf(userDetail.candidate_id) !== -1){
-        this.selectedCandidateId.splice(this.selectedCandidateId.indexOf(userDetail.candidate_id), 1);
-      } else{
-        this.selectedCandidateId.push(userDetail.candidate_id);
-      }
-    }
-
-    this.appConfig.setLocalData('hrEvaluationInterviewSelectedCandidate', JSON.stringify(this.selectedCandidateId));
+    
+    this.getSelectedData();
     this.toShoworNotShowFilter();
     this.unselectSelectALL();
+  }
+  // getSelected data
+  getSelectedData(){
+    this.selectedCandidateId = [];
+    this.userList.forEach(element => {
+      if (element['checked']) {
+        this.selectedCandidateId.push(element.candidate_id);
+      }
+    });
+    this.appConfig.setLocalData('hrEvaluationInterviewSelectedCandidate', JSON.stringify(this.selectedCandidateId));
   }
 
   submit() {

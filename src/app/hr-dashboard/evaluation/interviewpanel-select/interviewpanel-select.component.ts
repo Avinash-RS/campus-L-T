@@ -33,6 +33,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   selectedFormData: any =[];
   selectedCandidate: any = [];
   defaultFormSelecterHrPanel: any = [];
+  buttonHide;
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -53,10 +54,12 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
     this.adminService.getInterviewPanelDetails().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       
-      // console.log('api', datas);
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
+      this.userList.forEach(element => {
+          element['checked'] = false;
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -84,7 +87,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
         });
       });
     }
-    console.log(this.userList);
+    this.getSelectedData();
     this.toShoworNotShowFilter();
   }
 
@@ -94,13 +97,11 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
     this.userList.forEach(element => {
       if (element.checked) {
         selectedCount += 1;
-        this.notShowReject = false;
-        this.notShowShortlist = false;
+        this.buttonHide = false;
         runElse = false;
       } else {
         if (runElse) {
-          this.notShowReject = true;
-          this.notShowShortlist = true;
+          this.buttonHide = true;
         }
       }
     });
@@ -153,67 +154,9 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       }
     });
     this.selectedUserDetail = userDetail;
-
-    let tempObj = {
-      'hr_id': userDetail.user_id,
-      'frm_id': userDetail.field_form_name
-    }
-    this.defaultFormSelecterHrPanel.push(tempObj);
-
-    // if(this.defaultFormSelecterHrPanel.length != 0){
-    //   let tempArr = [];
-    //   for(var i= 0; i < this.defaultFormSelecterHrPanel.length; i++){
-    //     if(this.defaultFormSelecterHrPanel[i].hr_id == userDetail.user_id){
-    //       console.log("inside if...")
-    //       tempArr.splice(i, 1);
-    //     }else{
-    //       console.log("inside else...")
-    //       let tempObj = {
-    //         'hr_id': userDetail.user_id,
-    //         'frm_id': userDetail.field_form_name
-    //       }
-    //       tempArr.push(tempObj);
-    //     }
-    //   }
-    //   this.defaultFormSelecterHrPanel.push(tempArr);
-    // }else{
-    //     let tempObj = {
-    //       'hr_id': userDetail.user_id,
-    //       'frm_id': userDetail.field_form_name
-    //     }
-    //     this.defaultFormSelecterHrPanel.push(tempObj);
-    // }
-    // console.log("selected form data is there select form temp..", this.defaultFormSelecterHrPanel)    
-  
-
-  //filter code....
     
-    // if(this.defaultFormSelecterHrPanel.length != 0){
-    //     let temArr = this.defaultFormSelecterHrPanel;
-    //     temArr.filter(function (item, i) {
-    //       if(item.hr_id == userDetail.user_id){
-    //         temArr.splice(i, 1);
-    //       }else{
-    //         let tempObj = {
-    //           'hr_id': userDetail.user_id,
-    //           'frm_id': userDetail.field_form_name
-    //         }
-    //         temArr.push(tempObj);
-    //         console.log("selected form data is there select form temp..", temArr)
-    //       }
-    //     });
-    //     this.defaultFormSelecterHrPanel = temArr;
-    // }else{
-    //   let tempObj = {
-    //     'hr_id': userDetail.user_id,
-    //     'frm_id': userDetail.field_form_name
-    //   }
-    //   this.defaultFormSelecterHrPanel.push(tempObj);
-    // }
-    
-    
+    this.getSelectedData();
     this.toShoworNotShowFilter();
-    console.log(userDetail);
     this.unselectSelectALL();
   }
 
@@ -236,6 +179,20 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
 
   sendInEvalutionFormPage(selectedForm){
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM, {id: selectedForm.user_id ? selectedForm.user_id : 'none'});
+  }
+
+  // getSelected data
+  getSelectedData(){
+    this.defaultFormSelecterHrPanel = [];
+    this.userList.forEach(element => {
+      if (element['checked']) {
+        let tempObj = {
+          'hr_id': element.user_id,
+          'frm_id': element.field_form_name
+        }
+        this.defaultFormSelecterHrPanel.push(tempObj);
+      }
+    });
   }
 
   //assign panel to selected candidate
