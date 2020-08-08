@@ -72,56 +72,38 @@
   
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   
-          <!-- Position Column -->
-          <ng-container matColumnDef="uid">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
-            <td mat-cell *matCellDef="let element; let i = index"> {{ i +1}} </td>
-          </ng-container>
-
-          <!-- Weight Column -->
-          <ng-container matColumnDef="e_id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.e_id}} </td>
-          </ng-container>
 
           <!-- Symbol Column -->
-          <ng-container matColumnDef="discipline">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Discipline </th>
-            <td mat-cell *matCellDef="let element"> {{element.discipline ? (element.discipline) : '-'}} </td>
+          <ng-container matColumnDef="evalution_from_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Evaluation form Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name ? (element.name) : '-'}} </td>
           </ng-container>
   
           <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dates ? (element.dates) : '-'}} </td>
           </ng-container>
   
           <!-- Symbol Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.email ? (element.email) : '-'}} </td>
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+            <td mat-cell *matCellDef="let element"> {{element.time ? (element.time) : '-'}} </td>
           </ng-container>
   
           <!-- Symbol Column -->
-          <ng-container matColumnDef="from">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> From </th>
+          <ng-container matColumnDef="created_by">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created by </th>
                 <td mat-cell *matCellDef="let element">
-                    <button  class="submit-btn" mat-raised-button> {{element.from ? (element.from) : '-'}}</button>
+                  {{element.created_by ? (element.created_by) : '-'}}
                 </td>
           </ng-container>
   
   
-          <ng-container matColumnDef="checked">
-            <th mat-header-cell *matHeaderCellDef>
-              <div>Select All</div>
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="selectAllCheckbox($event)"
-                [checked]="selectAllCheck">
-              </mat-checkbox>
-            </th>
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>Select</th>
             <td mat-cell *matCellDef="let element">
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)" [checked]="element.checked">
-              </mat-checkbox>
-  
+              <mat-radio-button (change)="selectedUser(element)" [value]="radioCheck" [checked]="element.name == 'default' ? true : false"></mat-radio-button>
             </td>
           </ng-container>
   
@@ -134,7 +116,8 @@
         <div>No Candidate data available to shortlist </div>
       </div>
       <div class="button-wrapper">
-        <button [disabled]="selectedUserDetail ? false : true" [routerLink]="appConstant.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM" routerLinkActive="active" class="button" mat-raised-button>Assign</button>
+        <button [routerLink]="appConstant.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT" routerLinkActive="active" class="button-1" mat-raised-button>Cancel</button>
+        <button [disabled]="selectedUserDetail ? false : true" (click)="confirmForm()" class="button" mat-raised-button>Confirm</button>
       </div>
   </div>
   

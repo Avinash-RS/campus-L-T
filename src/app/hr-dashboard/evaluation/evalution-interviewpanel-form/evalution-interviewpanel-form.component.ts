@@ -6,6 +6,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-evalution-interviewpanel-form',
@@ -15,7 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
-  displayedColumns: any[] = ['uid', 'e_id', 'discipline', 'name', 'email', 'from', 'checked'];
+  displayedColumns: any[] = ['evalution_from_name', 'date', 'time', 'created_by', 'select'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -29,12 +30,17 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
   notShowReject: boolean = true;
   notShowShortlist: boolean = true;
   selectedAssign:any;
+  selectedPanelId: any;
+  selectedFormArr: any = [];
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private matDialog: MatDialog) { }
+    private matDialog: MatDialog,
+    private activatedRoute: ActivatedRoute) { 
+      this.editRouteParamGetter();
+    }
 
   ngOnInit() {
     this.selectedAssign = JSON.parse(this.appConfig.getLocalData('hrEvalutionInterviewPanel'));
@@ -43,120 +49,82 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
 
   // To get all users
   getUsersList() {
-    // this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
+    this.adminService.getInterviewPanelFormlist().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      const data = [
-        {
-          name: 'Avinash',
-          uid: '231',
-          e_id: 'IN 202',
-          email: 'gunasekara@icc.com',
-          from: 'Default',
-          discipline: 'Development',
-          checked: false
-        },
-        {
-          name: 'Avinash',
-          uid: '231',
-          e_id: 'IN 202',
-          email: 'gunasekara@icc.com',
-          from: 'Default',
-          discipline: 'Development',
-          checked: false
-        },
-        {
-          name: 'Avinash',
-          uid: '231',
-          e_id: 'IN 202',
-          email: 'gunasekara@icc.com',
-          from: 'Default',
-          discipline: 'Development',
-          checked: false
-        },
-        {
-          name: 'Avinash',
-          uid: '231',
-          e_id: 'IN 202',
-          email: 'gunasekara@icc.com',
-          from: 'Default',
-          discipline: 'Development',
-          checked: false
-        },
-      ];
+      
       // console.log('api', datas);
-      const align = data;
+      const align = datas;
       this.userList = align ? align : [];
-      this.toShoworNotShowFilter();
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
-  }
-
-  selectAllCheckbox(checked) {
-    console.log(this.dataSource);
-
-    if (checked['checked']) {
-      this.userList.forEach(element => {
-        this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid) {
-            element.checked = true;
-          }
-        });
-      });
-    } else {
-      this.userList.forEach(element => {
-        this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid) {
-            element.checked = false;
-          }
-        });
-      });
-    }
-    console.log(this.userList);
-    this.toShoworNotShowFilter();
-  }
-
-  toShoworNotShowFilter() {
-    let runElse = true;
-    let selectedCount = 0;
-    this.userList.forEach(element => {
-      if (element.checked) {
-        selectedCount += 1;
-        this.notShowReject = false;
-        this.notShowShortlist = false;
-        runElse = false;
-      } else {
-        if (runElse) {
-          this.notShowReject = true;
-          this.notShowShortlist = true;
-        }
-      }
+    }, (err) => {
     });
   }
 
-  unselectSelectALL() {
-    console.log(this.userList);
+  // selectAllCheckbox(checked) {
+  //   console.log(this.dataSource);
 
-    this.selectAllCheck = false;
-    const pushChecked = [];
-    const pushNotChecked = [];
-    this.userList.forEach(element => {
-      if (element.checked) {
-        pushChecked.push(element);
-      } else {
-        pushNotChecked.push(element);
-      }
-    });
+  //   if (checked['checked']) {
+  //     this.userList.forEach(element => {
+  //       this.dataSource.filteredData.forEach(ele => {
+  //         if (element.uid === ele.uid) {
+  //           element.checked = true;
+  //         }
+  //       });
+  //     });
+  //   } else {
+  //     this.userList.forEach(element => {
+  //       this.dataSource.filteredData.forEach(ele => {
+  //         if (element.uid === ele.uid) {
+  //           element.checked = false;
+  //         }
+  //       });
+  //     });
+  //   }
+  //   console.log(this.userList);
+  //   this.toShoworNotShowFilter();
+  // }
 
-    if (this.userList.length === pushChecked.length) {
-      this.selectAllCheck = true;
-    }
-    // if (this.userList.length === pushNotChecked.length) {
-    //   this.selectAllCheck = false;
-    // }
-  }
+  // toShoworNotShowFilter() {
+  //   let runElse = true;
+  //   let selectedCount = 0;
+  //   this.userList.forEach(element => {
+  //     if (element.checked) {
+  //       selectedCount += 1;
+  //       this.notShowReject = false;
+  //       this.notShowShortlist = false;
+  //       runElse = false;
+  //     } else {
+  //       if (runElse) {
+  //         this.notShowReject = true;
+  //         this.notShowShortlist = true;
+  //       }
+  //     }
+  //   });
+  // }
+
+  // unselectSelectALL() {
+  //   console.log(this.userList);
+
+  //   this.selectAllCheck = false;
+  //   const pushChecked = [];
+  //   const pushNotChecked = [];
+  //   this.userList.forEach(element => {
+  //     if (element.checked) {
+  //       pushChecked.push(element);
+  //     } else {
+  //       pushNotChecked.push(element);
+  //     }
+  //   });
+
+  //   if (this.userList.length === pushChecked.length) {
+  //     this.selectAllCheck = true;
+  //   }
+  //   // if (this.userList.length === pushNotChecked.length) {
+  //   //   this.selectAllCheck = false;
+  //   // }
+  // }
 
 
   ngAfterViewInit() {
@@ -176,20 +144,37 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
   }
 
   selectedUser(userDetail) {
-
-    this.userList.forEach(element => {
-      if (element.uid === userDetail.uid) {
-        element.checked = !element.checked;
-      }
-    });
     this.selectedUserDetail = userDetail;
-    this.toShoworNotShowFilter();
-    console.log(userDetail);
-    this.unselectSelectALL();
   }
 
   submit(event) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT, '1');
+  }
+
+  // Get url param for edit route
+  editRouteParamGetter() {
+    // Get url Param to view Edit user page
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.selectedPanelId = params['id'];
+    });
+  }
+
+  confirmForm(){
+    let tempObj = {
+      'hr_id': this.selectedPanelId,
+      'frm_id': this.selectedUserDetail.id,
+      'frm_name': this.selectedUserDetail.name
+    }
+    if(this.appConfig.getLocalData('selectedFormId') != null){
+      this.selectedFormArr = JSON.parse(this.appConfig.getLocalData('selectedFormId'));
+      this.selectedFormArr.push(tempObj);
+      this.appConfig.setLocalData('selectedFormId', JSON.stringify(this.selectedFormArr));
+    }else{
+      this.selectedFormArr.push(tempObj);
+      this.appConfig.setLocalData('selectedFormId', JSON.stringify(this.selectedFormArr));
+    }
+  
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT)
   }
 
 }
