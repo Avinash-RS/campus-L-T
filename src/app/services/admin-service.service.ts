@@ -369,18 +369,32 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/api/evaluation_data`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  // Submitting Form
   postEvaluationCandidateData(data) {
     return this.http.post(`${this.BASE_URL}/api/evaluation_form`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  //get assessment details
+  // Submitting Form
+  invSubmittingCandidates(data) {
+    return this.http.post(`${this.BASE_URL}/profile/update_evaluation_status`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // Submitted Candidates List
+  invSubmittedCandidatesList(data) {
+    return this.http.post(`${this.BASE_URL}/profile/candidatelist_evaluation`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // get assessment details
   getHrEvaluationInterviewPanel() {
     return this.http.get(`${this.BASE_URL}/profile/first_shortlist_report`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  //based on assessment get candidate details
+  // based on assessment get candidate details
   getEvaluationCandidateData(data) {
     return this.http.post(`${this.BASE_URL}/Profile/interviewpanel_secondshortlit_candidate_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

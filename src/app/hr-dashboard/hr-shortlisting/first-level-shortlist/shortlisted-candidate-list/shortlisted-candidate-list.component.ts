@@ -173,7 +173,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.openDialog1(ShortlistBoxComponent, datas);
       this.appConfig.clearLocalDataOne('shortListCheckedCandidates');
       this.appConfig.clearLocalDataOne('FinalshortListCheckedCandidates');
-      this.getUsersList();
 
     }, (err) => {
 
@@ -536,6 +535,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getUsersList();
       if (result) {
       }
     });

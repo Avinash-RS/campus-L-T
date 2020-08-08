@@ -2,7 +2,7 @@
 import { Validators } from '@angular/forms';
 const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
 const alphaNumericMaxLength30: RegExp = /^([a-zA-Z0-9_ ]){0,30}$/;
-const alphaWithDot: RegExp = /^[a-zA-Z\.]*$/;
+const alphaWithDot: RegExp = /^[a-zA-Z \.]*$/;
 
 export const textVal: any = [
   Validators.pattern(/^(.|\s)*\S(.|\s)*$/),

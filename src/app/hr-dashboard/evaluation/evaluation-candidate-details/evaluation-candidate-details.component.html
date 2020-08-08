@@ -52,7 +52,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="shortlistby">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist by </th>
-      <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.shortlistby ? (element.shortlistby) : '-'}} <span class="material-icons" style="font-size: 16px; vertical-align: middle;" matTooltip="{{element.shortlistemail ? element.shortlistemail : 'Email not available'}}">info</span></td>
+      <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.shortlistby ? (element.shortlistby) : '-'}} <span class="material-icons" style="font-size: 16px; vertical-align: middle;" matTooltip="{{element.email ? element.email : 'Email not available'}}">info</span></td>
     </ng-container>
 
     <ng-container matColumnDef="view_Info">
@@ -86,16 +86,16 @@
       <td colspan="10">
       <div class="grid-4">
         <div class="items">
-        Assessment Date : <span>{{element && element.Date ? element.Date : '  -'}}</span>
+        Assessment Date : <span>{{element && element.Assessment_date ? element.Assessment_date : '  -'}}</span>
         </div>
         <div class="items">
             Assessment venue : <span>{{element && element.Assessment_venue ? element.Assessment_venue : ' Online'}}</span>
         </div>
         <div class="items">
-            Total candidates : <span>{{element && element.selected_total_count ? element.selected_total_count : '  -'}}</span>
+            Total candidates : <span>{{element && element.Total_Candidates ? element.Total_Candidates : '  -'}}</span>
         </div>
         <div class="items">
-            Asessment time : <span>{{element && element.Time ? element.Time : '  -'}}</span>
+            Asessment time : <span>{{element && element.Assessment_time ? element.Assessment_time : '  -'}}</span>
         </div>
         <div class="items">
             Selected Candidates : <span>{{element && element.selected_candidate_count ? element.selected_candidate_count : '  -'}}</span>

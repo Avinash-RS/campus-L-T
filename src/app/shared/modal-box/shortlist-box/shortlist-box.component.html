@@ -30,10 +30,16 @@
     </div>
   </div>
   <div class="radio-group">
-    <nz-radio-group [(ngModel)]="radioValue">
+    <mat-radio-group  style="display: flex; justify-content: space-between; width: 50%;" [(ngModel)]="radioValue">
+      <mat-radio-button value="pre">Pre-assessment
+      </mat-radio-button>
+      <mat-radio-button value="rec">Recruitment</mat-radio-button>
+    </mat-radio-group>
+
+    <!-- <nz-radio-group [(ngModel)]="radioValue">
       <label nz-radio nzValue="pre">Pre-assessment</label>
       <label nz-radio nzValue="rec">Recruitment</label>
-    </nz-radio-group>
+    </nz-radio-group> -->
 
   </div>
   <div class="footer">
@@ -46,41 +52,47 @@
 </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'second'">
-    <div class="bulk-upload-text">
-        Please confirm the selected candidates for assessment shortlist
-    </div>
-    <div class="radio-group">
-        <nz-radio-group [(ngModel)]="SecondShortlistradioValue">
-          <label nz-radio nzValue="yes">Send mail</label>
-          <label nz-radio nzValue="no">Do not send mail</label>
-        </nz-radio-group>
-
-      </div>
-    <div class="buttons">
-      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="confirm" (click)="secondShortlist()" mat-raised-button>Confirm</button>
-    </div>
+  <div class="bulk-upload-text">
+    Please confirm the selected candidates for assessment shortlist
   </div>
+  <div class="radio-group">
+      <mat-radio-group  style="display: flex; justify-content: space-between; width: 35%; margin-right: 6em;" [(ngModel)]="SecondShortlistradioValue">
+          <mat-radio-button value="yes">Send mail
+          </mat-radio-button>
+          <mat-radio-button value="no">Do not send mail</mat-radio-button>
+        </mat-radio-group>
+    <!-- <nz-radio-group [(ngModel)]="SecondShortlistradioValue">
+      <label nz-radio nzValue="yes">Send mail</label>
+      <label nz-radio nzValue="no">Do not send mail</label>
+    </nz-radio-group> -->
 
-  <div class="modal-box-wrapper" *ngIf="data && data['success_second']">
-      <div class="bulk-upload-text">
-   <span *ngIf="data['success_second'] === 'yes'">The mail has been sent successfully to shortlisted candidates</span>
-   <span *ngIf="data['success_second'] === 'no'">Candidates have been successfully shortlisted for the assessment</span>
-      </div>
-      <div class="buttons">
-        <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
-      </div>
-    </div>
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="secondShortlist()" mat-raised-button>Confirm</button>
+  </div>
+</div>
 
-    <div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'reject'">
-        <div class="bulk-upload-text">
-          Press confirm to reject the selected candidates
-        </div>
-        <div class="buttons">
-          <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-          <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
-        </div>
-      </div>
+<div class="modal-box-wrapper" *ngIf="data && data['success_second']">
+  <div class="bulk-upload-text">
+    <span *ngIf="data['success_second'] === 'yes'">The mail has been sent successfully to shortlisted candidates</span>
+    <span *ngIf="data['success_second'] === 'no'">Candidates have been successfully shortlisted for the
+      assessment</span>
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'reject'">
+  <div class="bulk-upload-text">
+    Press confirm to reject the selected candidates
+  </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'candidate-bulk'">
   <div class="bulk-upload-text">
@@ -93,33 +105,33 @@
 </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'invPanel-bulk'">
-    <div class="bulk-upload-text">
-      Confirm to upload Interview panel details and send them mails to create an account
-    </div>
-    <div class="buttons">
-      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
-    </div>
+  <div class="bulk-upload-text">
+    Confirm to upload Interview panel details and send them mails to create an account
   </div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
 
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'tpo-candidate-bulk'">
-    <div class="bulk-upload-text">
-        The selected candidate/candidates will receive an email to create an account.</div>
-    <div class="buttons">
-      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
-    </div>
+  <div class="bulk-upload-text">
+    The selected candidate/candidates will receive an email to create an account.</div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
+</div>
 
-  <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'excel-candidate-bulk'">
-      <div class="bulk-upload-text">
-          Confirm to upload candidate details</div>
-      <div class="buttons">
-        <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-        <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
-      </div>
-    </div>
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'excel-candidate-bulk'">
+  <div class="bulk-upload-text">
+    Confirm to upload candidate details</div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'institute-bulk'">
   <div class="bulk-upload-text">
@@ -132,22 +144,22 @@
 </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'test-results'">
-    <div class="bulk-upload-text">
-        Confirm to upload assessment details</div>
-    <div class="buttons">
-      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
-    </div>
+  <div class="bulk-upload-text">
+    Confirm to upload assessment details</div>
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
+</div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['test_results']">
-    <div class="bulk-upload-text">
- <span>Assessment results has been uploaded successfully</span>
-    </div>
-    <div class="buttons">
-      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
-    </div>
+  <div class="bulk-upload-text">
+    <span>Assessment results has been uploaded successfully</span>
   </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
 
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
@@ -156,7 +168,8 @@
       *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
     <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
       uploaded.</span> <br> <span
-      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
+      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
       been uploaded. Please go to reports to see the detailed error details. </span>
   </div>
   <div class="buttons">
@@ -165,42 +178,45 @@
 </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['invpanel_bulk_upload_ok']">
-    <div class="bulk-upload-text">
-      <span
-        *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Interview panel has been successfully uploaded.' : ''}}</span>
-      <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Interview panel details has not been successfully
-        uploaded.</span> <br> <span
-        *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}  {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'Interview panel' : 'Interview panels'}} has not
-        been uploaded.  Please go to reports to see the detailed error details.</span>
-    </div>
-    <div class="buttons">
-      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
-    </div>
+  <div class="bulk-upload-text">
+    <span
+      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Interview panel has been successfully uploaded.' : ''}}</span>
+    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Interview panel details has not been successfully
+      uploaded.</span> <br> <span
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
+      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'Interview panel' : 'Interview panels'}} has
+      not
+      been uploaded. Please go to reports to see the detailed error details.</span>
   </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
 
 
 <div class="modal-box-wrapper" *ngIf="data && data['excel_bulk_upload_ok']">
-    <div class="bulk-upload-text">
-      <span
-        *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
-      <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
-        uploaded.</span> <br> <span
-        *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}  {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
-        been uploaded.  Please go to reports to see the detailed error details.</span>
-    </div>
-    <div class="buttons">
-      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
-    </div>
+  <div class="bulk-upload-text">
+    <span
+      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
+    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
+      uploaded.</span> <br> <span
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
+      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
+      been uploaded. Please go to reports to see the detailed error details.</span>
   </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['tpo_bulk_upload_ok']">
-    <div class="bulk-upload-text">
- <span>The mail has been sent successfully</span>
-    </div>
-    <div class="buttons">
-      <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
-    </div>
+  <div class="bulk-upload-text">
+    <span>The mail has been sent successfully</span>
   </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['institute_bulk_upload_ok']">
   <div class="bulk-upload-text">
@@ -208,7 +224,8 @@
       *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Institute details have been successfully uploaded.' : ''}}</span>
     <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Institute details has not been successfully
       uploaded.</span> <br> <span
-      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}} {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'institute' : 'institutes'}} has not
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
+      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'institute' : 'institutes'}} has not
       been uploaded. Please go to reports to see the detailed error details.</span>
   </div>
   <div class="buttons">
@@ -258,7 +275,8 @@
 
 <div class="modal-box-wrapper" *ngIf="data && data['interViwePanelAdd'] === 'add'">
   <div class="bulk-upload-text">
-    Please confirm to assign role of Interview panel to “{{data['userName']}}”. An email will be sent for account creation
+    Please confirm to assign role of Interview panel to “{{data['userName']}}”. An email will be sent for account
+    creation
   </div>
   <div class="buttons">
     <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
@@ -277,22 +295,42 @@
 </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['reSubmit'] === 'documents'">
-    <div style="margin: 0.5em 0;" class="bulk-upload-text">
-        Candidate will upload this document again
+  <div style="margin: 0.5em 0;" class="bulk-upload-text">
+    Candidate will upload this document again
+  </div>
+  <div class="text-input">
+    <div style="width: 100%; text-align: center;">
+      <input style="width: 80%;" [formControl]="reSubmission" placeholder="Reason" type="text" name="" id="">
     </div>
-    <div class="text-input">
-      <div style="width: 100%; text-align: center;">
-        <input style="width: 80%;" [formControl]="reSubmission" placeholder="Reason" type="text" name="" id="">
-      </div>
-      <div class="validation" style="text-align: center;" *ngIf="reSubmission.invalid && reSubmission.touched">
-        <span *ngIf="reSubmission.errors?.required">Reason must be provided</span>
-        <span *ngIf="reSubmission.errors?.minlength">Minimum of 3 characters required</span>
-        <span *ngIf="reSubmission.errors?.maxlength">Maximum of 30 characters only allowed</span>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="confirm" (click)="reSubmit()" mat-raised-button>Confirm</button>
+    <div class="validation" style="text-align: center;" *ngIf="reSubmission.invalid && reSubmission.touched">
+      <span *ngIf="reSubmission.errors?.required">Reason must be provided</span>
+      <span *ngIf="reSubmission.errors?.minlength">Minimum of 3 characters required</span>
+      <span *ngIf="reSubmission.errors?.maxlength">Maximum of 30 characters only allowed</span>
     </div>
   </div>
+
+  <div class="buttons">
+    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="confirm" (click)="reSubmit()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['evaluation'] === 'submit'">
+    <div class="bulk-upload-text">
+      Confirm to submit the evaluation details for this candidate
+    </div>
+    <div class="buttons">
+      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    </div>
+  </div>
+
+  <div class="modal-box-wrapper" *ngIf="data && data['evaluation'] === 'candidates'">
+      <div class="bulk-upload-text">
+        Confirm to shortlist the selected candidates
+      </div>
+      <div class="buttons">
+        <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
+        <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+      </div>
+    </div>

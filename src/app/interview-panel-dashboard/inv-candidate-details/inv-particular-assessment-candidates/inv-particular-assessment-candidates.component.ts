@@ -7,6 +7,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ActivatedRoute } from '@angular/router';
+import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 
 @Component({
   selector: 'app-inv-particular-assessment-candidates',
@@ -96,7 +97,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       this.userList.forEach(element => {
         counting = counting + 1;
         element['count'] = counting;
-        element['checked'] = false;
+        if (element['evaluation_status'] == '1') {
+          element['checked'] = false;
+        }
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -112,7 +115,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     if (checked['checked']) {
       this.userList.forEach(element => {
         this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid) {
+          if (element.uid === ele.uid && element['evaluation_status'] == '1') {
             element.checked = true;
           }
         });
@@ -120,7 +123,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     } else {
       this.userList.forEach(element => {
         this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid) {
+          if (element.uid === ele.uid && element['evaluation_status'] == '1') {
             element.checked = false;
           }
         });
@@ -199,7 +202,55 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   submit(cid, name, status, tag) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, {data: this.nameOfAssessment, id: cid, name, status, tag});
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment, id: cid, name, status, tag });
   }
+
+  finalSubmit() {
+    const data = {
+      evaluation: 'candidates'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
+  }
+  finalSubmitAPI() {
+    const apiData = {
+      userid: []
+    };
+    this.userList.forEach(element => {
+      if (element['checked']) {
+        apiData['userid'].push(element['uid']);
+      }
+    });
+    this.adminService.invSubmittingCandidates(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log(data);
+
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
+    }, (err) => {
+
+    });
+  }
+
+
+    // Open dailog
+    openDialog(component, data) {
+      let dialogDetails: any;
+
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.matDialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.finalSubmitAPI();
+        }
+      });
+    }
 
 }

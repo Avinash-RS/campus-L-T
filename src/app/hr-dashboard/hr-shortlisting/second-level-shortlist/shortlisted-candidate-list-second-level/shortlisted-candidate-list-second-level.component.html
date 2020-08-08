@@ -58,7 +58,7 @@
 
   <div class="buttonn-wrapper">
     <button (click)="backToShortlist()" class="cancel" mat-raised-button>Cancel</button>
-    <button [disabled]="userListing && userListing.length > 0 ? false : true" (click)="submit()" class="ok"
+    <button [disabled]="userListing && userListing.length > 0 ? false : true" [ngClass]="userListing && userListing.length > 0 ? '' : 'dis'" (click)="submit()" class="ok"
       mat-raised-button>Ok</button>
   </div>
 

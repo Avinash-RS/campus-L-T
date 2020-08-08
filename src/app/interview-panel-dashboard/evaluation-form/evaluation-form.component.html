@@ -42,7 +42,16 @@
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
+
           </div>
+          <ng-container *ngIf="interview_date.invalid && interview_date.touched">
+                <div class="col-5">
+                  <span>&#160;</span>
+                </div>
+                <div style="margin-top: .25em;" class="col-7 validation">
+                    <span *ngIf="interview_date.errors?.required">Interview Date is required</span>
+                  </div>
+                  </ng-container>
         </div>
       </div>
     </div>
@@ -74,7 +83,7 @@
 
       <div class="col-4">
         <div class="row no-center-align">
-          <div class="col-5">
+          <div style="white-space: nowrap;" class="col-5">
             <span class="head">Place of interview </span>
           </div>
           <div class="col-7">
@@ -84,7 +93,7 @@
           <div class="col-5">
             <span>&#160;</span>
           </div>
-          <div class="col-7 validation">
+          <div style="margin-top: .25em;" class="col-7 validation">
               <span *ngIf="interview_place.errors?.required">Interview place is required</span>
               <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
             </div>
@@ -108,7 +117,7 @@
     <ng-container matColumnDef="veryGood">
       <th class="headerCell" mat-header-cell *matHeaderCellDef>Very Good </th>
       <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-        <mat-radio-button (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="veryGood">
+        <mat-radio-button  (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
           <span class="material-icons" matTooltip="{{assessment.veryGood}}">info</span>
         </mat-radio-button>
       </td>
@@ -146,6 +155,18 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <div *ngIf=
+  "(depth_knowledge.touched && depth_knowledge.errors) || (breadth_knowledge.touched && breadth_knowledge.errors) ||
+  (communicate_ability.touched && communicate_ability.errors) || (personal_skill.touched && personal_skill.errors) ||
+  (personality.touched && personality.errors) || (curricular_activites.touched && curricular_activites.errors) ||
+  (thought_clarity.touched && thought_clarity.errors)"
+  class="mand validation1">
+      <span *ngIf=
+      "(depth_knowledge.errors?.required) || (breadth_knowledge.errors?.required) ||
+      (communicate_ability.errors?.required) || (personal_skill.errors?.required) ||
+      (personality.errors?.required) || (curricular_activites.errors?.required) ||
+      (thought_clarity.errors?.required)">Make sure you have selected the radio buttons for all the above rows</span>
+    </div>
   <div class="space"></div>
   <div class="row bg">
     <div class="col-12">
@@ -256,6 +277,7 @@
       <div class="col-2">
         <input class="in-box" formControlName="panel_member1" matInput>
         <div *ngIf="f.panel_member1.touched && f.panel_member1.errors" class="mand validation1">
+            <span *ngIf="f.panel_member1.errors?.required">Panel member 1 is required</span>
             <span *ngIf="f.panel_member1.errors?.maxlength">Maxlength of 50 characters only allowed</span>
             <span *ngIf="f.panel_member1.errors?.pattern">Alphabetics and dot only allowed</span>
           </div>
@@ -290,6 +312,7 @@
       <div class="col-2">
         <input class="in-box" formControlName="ps_no1" matInput>
         <div *ngIf="f.ps_no1.touched && f.ps_no1.errors" class="mand validation1">
+            <span *ngIf="f.ps_no1.errors?.required">PS number is required</span>
             <span *ngIf="f.ps_no1.errors?.maxlength">Maxlength of 30 characters only allowed</span>
           </div>
       </div>

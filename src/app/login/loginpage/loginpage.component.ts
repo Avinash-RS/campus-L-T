@@ -114,77 +114,79 @@ export class LoginpageComponent implements OnInit {
       pass: this.loginForm.value.password
     };
 
-      // Login API
-      if (this.loginForm.valid) {
-        if (apiData.name && apiData.pass) {
-          this.apiService.getAllState().subscribe((datas: any) => {
-            this.apiService.login(apiData).subscribe((data: any) => {
-              this.appConfig.hideLoader();
-              this.appConfig.consoleLog('data', data);
-              // this.appConfig.setLocalData('username', "data && data.current_user.name ? data.current_user.name : ''");
-              this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
-              this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
-              this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
-              this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
-              this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
-              this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
-              if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
-                // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
-              }
-              if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
-                // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
-              }
-              if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
-              }
-              if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-                if (data['form_submmited'] && data['form_submmited'] === '1') {
-                  this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                  this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                  this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                  this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                } else {
-                  this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                }
+    // Login API
+    if (this.loginForm.valid) {
+      if (apiData.name && apiData.pass) {
+        this.apiService.getAllState().subscribe((datas: any) => {
+          this.apiService.login(apiData).subscribe((data: any) => {
+            this.appConfig.hideLoader();
+            this.appConfig.consoleLog('data', data);
+            // this.appConfig.setLocalData('username', "data && data.current_user.name ? data.current_user.name : ''");
+            this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
+            this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
+            this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
+            this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
+            this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
+            this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
+            if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
+              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
+            }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
+            }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
+            }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
+              if (data['form_submmited'] && data['form_submmited'] === '1') {
+                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                this.appConfig.setLocalData('field_isformsubmitted', 'true');
+                this.appConfig.setLocalData('personalFormSubmitted', 'true');
+                this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+                this.appConfig.setLocalData('familyFormSubmitted', 'true');
+                this.appConfig.setLocalData('generalFormSubmitted', 'true');
+                this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
               } else {
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
-                // if (data['form_submmited'] && data['form_submmited'] === '1') {
-
-                //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                //   this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                //   this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                //   this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                //   this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                //   this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                //   this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-                //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                // } else {
-                //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                // }
+                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
+                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
               }
+            }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'interview_panel') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
+            } else {
+              // if (data['form_submmited'] && data['form_submmited'] === '1') {
 
-            }, (error) => {
+              //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+              //   this.appConfig.setLocalData('field_isformsubmitted', 'true');
+              //   this.appConfig.setLocalData('personalFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('familyFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('generalFormSubmitted', 'true');
+              //   this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+              //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+              // } else {
+              //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+              //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+              // }
+            }
 
-            });
-          }, (err) => {
-            // if (err.status === 200) {
-            //   this.appConfig.setSessionData('csrf', err.error.text);
-            // }
+          }, (error) => {
+
           });
-        }
-      } else {
-        this.validateAllFields(this.loginForm);
+        }, (err) => {
+          // if (err.status === 200) {
+          //   this.appConfig.setSessionData('csrf', err.error.text);
+          // }
+        });
       }
+    } else {
+      this.validateAllFields(this.loginForm);
+    }
 
 
   }
