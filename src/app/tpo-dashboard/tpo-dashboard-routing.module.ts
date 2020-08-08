@@ -17,35 +17,35 @@ import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-rep
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '',
     component: TpoMasterComponent,
     data: {
       breadcrumb: 'Home'
     },
     children: [
       {
-        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT}`, 
-        component: TpoUserManagementComponent, 
+        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT}`,
+        component: TpoUserManagementComponent, canActivate: [TpocanloadGuard],
         data: {
           breadcrumb: 'User Management'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, 
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
             component: CandidateUploadsComponent,
             data: {
               breadcrumb: 'Candidate'
-            }, 
+            },
             children: [
               {
-                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`, 
+                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
                 component: UploadedListComponent,
                 data: {
                   breadcrumb: 'Uploaded List'
-                }, 
+                },
               },
               {
-                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`, 
+                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
                 component: BulkUploadComponent,
                 data: {
                   breadcrumb: 'Bulk Upload'
@@ -59,7 +59,7 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE}`, 
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE}`,
             component: TpoAddCandidateComponent,
             data: {
               breadcrumb: 'AddCandidate'
@@ -73,21 +73,21 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS}`, 
-        component: TpoCandidatesStatusComponent, 
+        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS}`,
+        component: TpoCandidatesStatusComponent, canActivate: [TpocanloadGuard],
         data: {
           breadcrumb: 'Status'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_PREASSESSMENT}`, 
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_PREASSESSMENT}`,
             component: TpoPreAssessmentComponent,
             data: {
               breadcrumb: 'PreAssessment'
             },
           },
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_RECRUITMENT}`, 
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_RECRUITMENT}`,
             component: TpoRecruitmentComponent,
             data: {
               breadcrumb: 'Recruitment'
@@ -101,14 +101,14 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_REPORTS}`, 
-        component: TpoReportsComponent, 
+        path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_REPORTS}`,
+        component: TpoReportsComponent, canActivate: [TpocanloadGuard],
         data: {
           breadcrumb: 'Reports'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`, 
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: TpoBulkUploadReportsComponent,
             data: {
               breadcrumb: 'Candidate Upload List'

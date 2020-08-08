@@ -12,6 +12,7 @@ import { InvSubEmploymentComponent } from './inv-candidate-details/inv-evaluatio
 import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-evaluate/inv-sub-evaluate.component';
 import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
 import { InvShortlistedCandidatesViewScreenComponent } from './inv-candidate-details/inv-shortlisted-candidates-view-screen/inv-shortlisted-candidates-view-screen.component';
+import { InvpanelGuard } from '../guards/canload/invpanel.guard';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
     path: '', component: InterviewPanelMasterComponent,
     children: [
       {
-        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`, component: InvCandidateDetailsComponent,
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`, component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
         children: [
           {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`, component: InvAssessmentShortlistedCandidatesComponent

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Injectable()
-export class AdmincanloadGuard implements CanLoad {
+export class InvpanelGuard implements CanLoad {
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService
@@ -16,10 +16,9 @@ export class AdmincanloadGuard implements CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
+    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'interview_panel')) {
       return true;
-    }
-    else {
+    } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();
@@ -40,10 +39,9 @@ export class AdmincanloadGuard implements CanLoad {
     }
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
+    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'interview_panel')) {
       return true;
-    }
-    else {
+    } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();

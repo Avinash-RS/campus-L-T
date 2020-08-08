@@ -46,6 +46,20 @@ export class HrSubEducationComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.profileView();
+  }
+
+  profileView() {
+    const apiData = {
+      uid: this.candidateId
+    };
+    this.adminService.getProfileView(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('profiles', data);
+
+    }, (err) => {
+
+    });
   }
 
   // Get url param for edit route
