@@ -113,6 +113,7 @@
     .active {
       background: $active-sub-bg !important;
       outline: none;
+      pointer-events: none;
       div:last-child {
         font-weight: 200;
         color: $white;

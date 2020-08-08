@@ -145,7 +145,10 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
   }
 
   next() {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION,  {data: this.nameOfAssessment, id: this.candidateId});
+    const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
+    const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
+    const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
   }
 
 }

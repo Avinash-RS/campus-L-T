@@ -43,7 +43,7 @@
       <ng-container matColumnDef="details">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> View details </th>
         <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
-          <button class="viewbtn" (click)="view(element && element.uid ? element.uid : '')" mat-button>
+          <button class="viewbtn" (click)="view(element['uid'], element['candidate_name'], element['evaluation_status'], element['tag'])" mat-button>
             <mat-icon style="justify-content: center;
                   display: contents;
                   font-size: 16px;">visibility</mat-icon> <span>View</span>

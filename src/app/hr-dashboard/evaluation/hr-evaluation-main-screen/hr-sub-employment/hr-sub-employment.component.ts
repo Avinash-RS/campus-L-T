@@ -95,7 +95,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
 
   next() {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT, { data: this.nameOfAssessment, id: this.candidateId });
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL);
   }
 
 
