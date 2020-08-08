@@ -28,6 +28,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   notShowReject: boolean = true;
   notShowShortlist: boolean = true;
   selectedAssign: any;
+  selectedCandidateId: any = [];
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -148,13 +149,23 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       }
     });
     this.selectedUserDetail = userDetail;
+    if(this.selectedCandidateId.length == 0){
+      this.selectedCandidateId.push(userDetail.candidate_id);
+    }else{
+      if(this.selectedCandidateId.indexOf(userDetail.candidate_id) !== -1){
+        this.selectedCandidateId.splice(this.selectedCandidateId.indexOf(userDetail.candidate_id), 1);
+      } else{
+        this.selectedCandidateId.push(userDetail.candidate_id);
+      }
+    }
+
+    this.appConfig.setLocalData('hrEvaluationInterviewSelectedCandidate', JSON.stringify(this.selectedCandidateId));
     this.toShoworNotShowFilter();
-    console.log(userDetail);
     this.unselectSelectALL();
   }
 
   submit() {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT, '1');
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT);
   }
 
 }

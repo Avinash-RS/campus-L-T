@@ -119,6 +119,21 @@
       padding: 0px 2em !important;
       display: flex;
     }
+    .button-1 {
+      background: $white;
+      color: $cyan;
+      justify-content: center;
+      box-shadow: $shadow-light-black-1;
+      border-radius: 10px;
+      height: 26px;
+      font-weight: 200;
+      font-size: 13px;
+      align-items: center;
+      padding: 0px 2em !important;
+      display: flex;
+      border: 1px solid;
+      margin-right: 20px;
+    }
   }
 }
 

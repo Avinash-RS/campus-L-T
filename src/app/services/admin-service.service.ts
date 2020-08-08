@@ -399,4 +399,22 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/Profile/interviewpanel_secondshortlit_candidate_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  //get interview panel details
+  getInterviewPanelDetails() {
+    return this.http.get(`${this.BASE_URL}/profile/interview_panel_users_only`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //get interview panel form list
+  getInterviewPanelFormlist() {
+    return this.http.get(`${this.BASE_URL}/profile/formlists`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //assign candidate to interview panel
+  assignCandidateTOPanel(data) {
+    return this.http.post(`${this.BASE_URL}/Profile/evaluation_hr_assign`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }
