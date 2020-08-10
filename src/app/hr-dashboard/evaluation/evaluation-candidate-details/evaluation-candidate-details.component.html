@@ -11,13 +11,13 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="uid">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> S.no. </th>
       <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index"> {{element && element.uid ? element.uid : '-'}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="Assessment_Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment name </th>
       <td style="cursor: pointer;" mat-cell *matCellDef="let element">
           {{element.Assessment_Name ? (element.Assessment_Name) : '-'}}
         <span class="material-icons" style="font-size: 16px; vertical-align: middle;">keyboard_arrow_down </span></td>
