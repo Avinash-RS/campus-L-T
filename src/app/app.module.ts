@@ -28,6 +28,7 @@ import { ShortlistedCandidateListComponent } from './hr-dashboard/hr-shortlistin
 import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
+import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 registerLocaleData(en);
 
@@ -55,7 +56,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NgZorroAntdModule,
   ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},

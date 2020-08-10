@@ -316,7 +316,13 @@ export class AdminServiceService {
 
   // Profile View
   getProfileView(data) {
-    return this.http.post(`${this.BASE_URL}/api/profile_details`, data,
+    return this.http.get(`${this.BASE_URL}/kyc_views/${data}?_format=json`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // Resubmit certificate request
+  reSubmitRequest(data) {
+    return this.http.post(`${this.BASE_URL}/profile/changecertificate`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

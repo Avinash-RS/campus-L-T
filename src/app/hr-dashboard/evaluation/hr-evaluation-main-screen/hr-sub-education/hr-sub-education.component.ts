@@ -46,20 +46,6 @@ export class HrSubEducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.profileView();
-  }
-
-  profileView() {
-    const apiData = {
-      uid: this.candidateId
-    };
-    this.adminService.getProfileView(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      console.log('profiles', data);
-
-    }, (err) => {
-
-    });
   }
 
   // Get url param for edit route
@@ -103,18 +89,31 @@ export class HrSubEducationComponent implements OnInit {
 
 
   reSubmit(details) {
+    console.log(details);
+
     const data = {
       reSubmit: 'documents'
     };
-    this.openDialog(ShortlistBoxComponent, data);
+    this.openDialog(ShortlistBoxComponent, data, details['id']);
   }
 
-  apiResubmit(reason) {
+  apiResubmit(reason, dId) {
+    const apiData = {
+      types: reason['comments'],
+      id: dId
+    };
+    this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log(data);
+      this.appConfig.success('Document Resubmit request has been done', '');
+      this.editRouteParamGetter();
+    }, (err) => {
 
+    });
   }
 
   // Open dailog
-  openDialog(component, data) {
+  openDialog(component, data, dId) {
     let dialogDetails: any;
 
     /**
@@ -130,7 +129,7 @@ export class HrSubEducationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.apiResubmit(result);
+        this.apiResubmit(result, dId);
       }
     });
   }

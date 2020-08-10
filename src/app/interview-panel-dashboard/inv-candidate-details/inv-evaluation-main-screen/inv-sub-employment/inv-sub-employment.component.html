@@ -17,13 +17,13 @@
       </ng-container>
       <div class="flex">
           <div class="level">
-            {{'Profile'}}
-          </div>
-          <div class="box">
-            {{'NA'}}
-          </div>
+              {{'Profile'}}
+            </div>
+            <div class="box">
+              {{candidateName ? candidateName + ' profile' : 'NA'}}
+            </div>
           <div class="view">
-            <span (click)="viewCerificates('profile')">View</span>
+            <span (click)="profileView()">View</span>
             <span style="visibility: hidden;">Resubmit</span>
           </div>
         </div>

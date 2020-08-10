@@ -7,6 +7,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-hr-sub-employment',
@@ -19,6 +20,7 @@ export class HrSubEmploymentComponent implements OnInit {
   nameOfAssessment: any;
   candidateId: any;
   certificateArr: any;
+  candidateName: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -55,6 +57,7 @@ export class HrSubEmploymentComponent implements OnInit {
       console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
+      this.candidateName = params['name'];
       this.userlist(params['id']);
     });
   }
@@ -68,24 +71,14 @@ export class HrSubEmploymentComponent implements OnInit {
       console.log('certificates', data);
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
       console.log('certificatesArr', this.certificateArr);
-      this.profileView();
-
     }, (err) => {
 
     });
   }
 
   profileView() {
-    const apiData = {
-      uid: this.candidateId
-    };
-    this.adminService.getProfileView(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      console.log('profile', data);
-
-    }, (err) => {
-
-    });
+    const data = this.candidateId ? this.candidateId : '';
+    this.openDialog1(CommonKycProfileViewComponent, data);
   }
 
   viewCerificates(path) {
@@ -100,18 +93,31 @@ export class HrSubEmploymentComponent implements OnInit {
 
 
   reSubmit(details) {
+    console.log(details);
+
     const data = {
       reSubmit: 'documents'
     };
-    this.openDialog(ShortlistBoxComponent, data);
+    this.openDialog(ShortlistBoxComponent, data, details['id']);
   }
 
-  apiResubmit(reason) {
+  apiResubmit(reason, dId) {
+    const apiData = {
+      types: reason['comments'],
+      id: dId
+    };
+    this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log(data);
+      this.appConfig.success('Document Resubmit request has been done', '');
+      this.editRouteParamGetter();
+    }, (err) => {
 
+    });
   }
 
   // Open dailog
-  openDialog(component, data) {
+  openDialog(component, data, dId) {
     let dialogDetails: any;
 
     /**
@@ -127,9 +133,31 @@ export class HrSubEmploymentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.apiResubmit(result);
+        this.apiResubmit(result, dId);
       }
     });
   }
+
+    // Open dailog
+  openDialog1(component, data) {
+    let dialogDetails: any;
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+
 
 }
