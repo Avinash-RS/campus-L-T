@@ -82,8 +82,9 @@ import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
 import { PdfreaderComponent } from './pdfreader/pdfreader.component';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { CommonKycProfileViewComponent } from './common-kyc-profile-view/common-kyc-profile-view.component';
+import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared-upload-previewer.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent],
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -178,6 +179,7 @@ import { CommonKycProfileViewComponent } from './common-kyc-profile-view/common-
     CdkDetailRowDirective,
     PdfreaderComponent,
     CommonKycProfileViewComponent,
+    SharedUploadPreviewerComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

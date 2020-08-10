@@ -37,7 +37,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
   totalCountofCandidates: any;
   uploadedListArray: any;
   dateFormatExist: boolean;
-
+  statusText = 'institute';
   constructor(
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,

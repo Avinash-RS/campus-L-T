@@ -48,7 +48,8 @@
     <div class="list-count">
       Total number of Interview panels : {{uploadedListArray ? uploadedListArray['length'] : ''}}
     </div>
-    <div class="list-table">
+    <app-shared-upload-previewer *ngIf="enableList" [status]="'interview'" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
+    <!-- <div class="list-table">
       <div class="head-grid">
         <div style="word-wrap: anywhere;" class="tag">
           Name
@@ -87,7 +88,7 @@
           </div>
         </ng-container>
       </div>
-    </div>
+    </div> -->
 
     <div class="button-wrapper">
       <button (click)="backToUpload()" class="cancel" mat-raised-button>Cancel</button>

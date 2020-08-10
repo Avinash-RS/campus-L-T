@@ -20,6 +20,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class AdminBulkUploadCandidateCompComponent implements OnInit {
 
   BASE_URL = environment.API_BASE_URL;
+  statusText = 'candidate';
   url = null;
   validFile = false;
   showSizeError = {
