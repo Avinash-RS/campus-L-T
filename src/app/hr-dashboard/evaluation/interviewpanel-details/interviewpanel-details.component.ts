@@ -14,7 +14,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'name', 'id', 'level', 'institute', 'discipline', 'checked'];
+  displayedColumns: any[] = ['uid', 'user_name', 'candidate_id', 'level', 'insitute', 'discipline', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -70,8 +70,11 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
+      let count = 0;
       this.userList.forEach(element => {
         element['checked'] = false;
+        count = count + 1;
+        element['uid'] = count;
       });
       this.userList = this.userList.filter(user => {
         if(user.hr_assign_status == 0){

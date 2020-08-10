@@ -16,7 +16,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
-  displayedColumns: any[] = ['uid', 'e_id', 'discipline', 'name', 'email', 'from', 'checked'];
+  displayedColumns: any[] = ['uid', 'field_employee_id', 'field_panel_discipline', 'name', 'email', 'from', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -74,8 +74,11 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
+      let count = 0;
       this.userList.forEach(element => {
         element['checked'] = false;
+        count = count + 1;
+        element['uid'] = count;
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

@@ -26,6 +26,7 @@ export class CommonKycProfileViewComponent implements OnInit {
   localPhoto: any;
   url: any;
   allStatess: any;
+  radioValue = 'pre';
   allCitiess: any;
   permanentStateId: any;
 
@@ -129,7 +130,7 @@ export class CommonKycProfileViewComponent implements OnInit {
         const organizeUserDetails = data[0];
         // Changing Dob Date Format
         let dob;
-        const dobFormats = organizeUserDetails && organizeUserDetails.field_dob && organizeUserDetails.field_dob[0].value ? organizeUserDetails.field_dob[0].value : '-';
+        const dobFormats = organizeUserDetails && organizeUserDetails.field_dob && organizeUserDetails.field_dob[0] && organizeUserDetails.field_dob[0].value ? organizeUserDetails.field_dob[0].value : '-';
         if (dobFormats) {
           const split = moment(dobFormats).format('DD/MM/YYYY').split('/');
           dob = {
@@ -308,130 +309,130 @@ export class CommonKycProfileViewComponent implements OnInit {
         // For Educational Array
         this.KYCModifiedData['eduArr'] = [
           {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level'] && organizeUserDetails['field_level'][0] ? organizeUserDetails['field_level'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university'] && organizeUserDetails['field_board_university'][0] ? organizeUserDetails['field_board_university'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute'] && organizeUserDetails['field_institute'][0] ? organizeUserDetails['field_institute'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline'] && organizeUserDetails['field_discipline'][0] ? organizeUserDetails['field_discipline'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification'] && organizeUserDetails['field_specification'][0] ? organizeUserDetails['field_specification'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing'] && organizeUserDetails['field_year_of_passing'][0] ? organizeUserDetails['field_year_of_passing'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs'] && organizeUserDetails['field_backlogs'][0] ? organizeUserDetails['field_backlogs'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage'] && organizeUserDetails['field_percentage'][0] ? organizeUserDetails['field_percentage'][0]['value'] : '-' },
           }
         ];
         if (organizeUserDetails && organizeUserDetails['field_level1'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level1'] && organizeUserDetails['field_level1'][0] ? organizeUserDetails['field_level1'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university1'] && organizeUserDetails['field_board_university1'][0] ? organizeUserDetails['field_board_university1'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute1'] && organizeUserDetails['field_institute1'][0] ? organizeUserDetails['field_institute1'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline1'] && organizeUserDetails['field_discipline1'][0] ? organizeUserDetails['field_discipline1'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification1'] && organizeUserDetails['field_specification1'][0] ? organizeUserDetails['field_specification1'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing1'] && organizeUserDetails['field_year_of_passing1'][0] ? organizeUserDetails['field_year_of_passing1'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs1'] && organizeUserDetails['field_backlogs1'][0] ? organizeUserDetails['field_backlogs1'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage1'] && organizeUserDetails['field_percentage1'][0] ? organizeUserDetails['field_percentage1'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level1'] && organizeUserDetails['field_level1'][0] ? organizeUserDetails['field_level1'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university1'] && organizeUserDetails['field_board_university1'][0] ? organizeUserDetails['field_board_university1'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute1'] && organizeUserDetails['field_institute1'][0] ? organizeUserDetails['field_institute1'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline1'] && organizeUserDetails['field_discipline1'][0] ? organizeUserDetails['field_discipline1'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification1'] && organizeUserDetails['field_specification1'][0] ? organizeUserDetails['field_specification1'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing1'] && organizeUserDetails['field_year_of_passing1'][0] ? organizeUserDetails['field_year_of_passing1'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs1'] && organizeUserDetails['field_backlogs1'][0] ? organizeUserDetails['field_backlogs1'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage1'] && organizeUserDetails['field_percentage1'][0] ? organizeUserDetails['field_percentage1'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level2'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level2'] && organizeUserDetails['field_level2'][0] ? organizeUserDetails['field_level2'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university2'] && organizeUserDetails['field_board_university2'][0] ? organizeUserDetails['field_board_university2'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute2'] && organizeUserDetails['field_institute2'][0] ? organizeUserDetails['field_institute2'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline2'] && organizeUserDetails['field_discipline2'][0] ? organizeUserDetails['field_discipline2'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification2'] && organizeUserDetails['field_specification2'][0] ? organizeUserDetails['field_specification2'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing2'] && organizeUserDetails['field_year_of_passing2'][0] ? organizeUserDetails['field_year_of_passing2'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs2'] && organizeUserDetails['field_backlogs2'][0] ? organizeUserDetails['field_backlogs2'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage2'] && organizeUserDetails['field_percentage2'][0] ? organizeUserDetails['field_percentage2'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level2'] && organizeUserDetails['field_level2'][0] ? organizeUserDetails['field_level2'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university2'] && organizeUserDetails['field_board_university2'][0] ? organizeUserDetails['field_board_university2'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute2'] && organizeUserDetails['field_institute2'][0] ? organizeUserDetails['field_institute2'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline2'] && organizeUserDetails['field_discipline2'][0] ? organizeUserDetails['field_discipline2'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification2'] && organizeUserDetails['field_specification2'][0] ? organizeUserDetails['field_specification2'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing2'] && organizeUserDetails['field_year_of_passing2'][0] ? organizeUserDetails['field_year_of_passing2'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs2'] && organizeUserDetails['field_backlogs2'][0] ? organizeUserDetails['field_backlogs2'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage2'] && organizeUserDetails['field_percentage2'][0] ? organizeUserDetails['field_percentage2'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level3'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level3'] && organizeUserDetails['field_level3'][0] ? organizeUserDetails['field_level3'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university3'] && organizeUserDetails['field_board_university3'][0] ? organizeUserDetails['field_board_university3'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute3'] && organizeUserDetails['field_institute3'][0] ? organizeUserDetails['field_institute3'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline3'] && organizeUserDetails['field_discipline3'][0] ? organizeUserDetails['field_discipline3'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification3'] && organizeUserDetails['field_specification3'][0] ? organizeUserDetails['field_specification3'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing3'] && organizeUserDetails['field_year_of_passing3'][0] ? organizeUserDetails['field_year_of_passing3'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs3'] && organizeUserDetails['field_backlogs3'][0] ? organizeUserDetails['field_backlogs3'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage3'] && organizeUserDetails['field_percentage3'][0] ? organizeUserDetails['field_percentage3'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level3'] && organizeUserDetails['field_level3'][0] ? organizeUserDetails['field_level3'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university3'] && organizeUserDetails['field_board_university3'][0] ? organizeUserDetails['field_board_university3'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute3'] && organizeUserDetails['field_institute3'][0] ? organizeUserDetails['field_institute3'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline3'] && organizeUserDetails['field_discipline3'][0] ? organizeUserDetails['field_discipline3'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification3'] && organizeUserDetails['field_specification3'][0] ? organizeUserDetails['field_specification3'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing3'] && organizeUserDetails['field_year_of_passing3'][0] ? organizeUserDetails['field_year_of_passing3'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs3'] && organizeUserDetails['field_backlogs3'][0] ? organizeUserDetails['field_backlogs3'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage3'] && organizeUserDetails['field_percentage3'][0] ? organizeUserDetails['field_percentage3'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level4'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level4'] && organizeUserDetails['field_level4'][0] ? organizeUserDetails['field_level4'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university4'] && organizeUserDetails['field_board_university4'][0] ? organizeUserDetails['field_board_university4'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute4'] && organizeUserDetails['field_institute4'][0] ? organizeUserDetails['field_institute4'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline4'] && organizeUserDetails['field_discipline4'][0] ? organizeUserDetails['field_discipline4'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification4'] && organizeUserDetails['field_specification4'][0] ? organizeUserDetails['field_specification4'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing4'] && organizeUserDetails['field_year_of_passing4'][0] ? organizeUserDetails['field_year_of_passing4'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs4'] && organizeUserDetails['field_backlogs4'][0] ? organizeUserDetails['field_backlogs4'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage4'] && organizeUserDetails['field_percentage4'][0] ? organizeUserDetails['field_percentage4'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level4'] && organizeUserDetails['field_level4'][0] ? organizeUserDetails['field_level4'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university4'] && organizeUserDetails['field_board_university4'][0] ? organizeUserDetails['field_board_university4'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute4'] && organizeUserDetails['field_institute4'][0] ? organizeUserDetails['field_institute4'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline4'] && organizeUserDetails['field_discipline4'][0] ? organizeUserDetails['field_discipline4'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification4'] && organizeUserDetails['field_specification4'][0] ? organizeUserDetails['field_specification4'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing4'] && organizeUserDetails['field_year_of_passing4'][0] ? organizeUserDetails['field_year_of_passing4'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs4'] && organizeUserDetails['field_backlogs4'][0] ? organizeUserDetails['field_backlogs4'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage4'] && organizeUserDetails['field_percentage4'][0] ? organizeUserDetails['field_percentage4'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level5'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level5'] && organizeUserDetails['field_level5'][0] ? organizeUserDetails['field_level5'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university5'] && organizeUserDetails['field_board_university5'][0] ? organizeUserDetails['field_board_university5'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute5'] && organizeUserDetails['field_institute5'][0] ? organizeUserDetails['field_institute5'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline5'] && organizeUserDetails['field_discipline5'][0] ? organizeUserDetails['field_discipline5'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification5'] && organizeUserDetails['field_specification5'][0] ? organizeUserDetails['field_specification5'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing5'] && organizeUserDetails['field_year_of_passing5'][0] ? organizeUserDetails['field_year_of_passing5'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs5'] && organizeUserDetails['field_backlogs5'][0] ? organizeUserDetails['field_backlogs5'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage5'] && organizeUserDetails['field_percentage5'][0] ? organizeUserDetails['field_percentage5'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level5'] && organizeUserDetails['field_level5'][0] ? organizeUserDetails['field_level5'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university5'] && organizeUserDetails['field_board_university5'][0] ? organizeUserDetails['field_board_university5'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute5'] && organizeUserDetails['field_institute5'][0] ? organizeUserDetails['field_institute5'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline5'] && organizeUserDetails['field_discipline5'][0] ? organizeUserDetails['field_discipline5'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification5'] && organizeUserDetails['field_specification5'][0] ? organizeUserDetails['field_specification5'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing5'] && organizeUserDetails['field_year_of_passing5'][0] ? organizeUserDetails['field_year_of_passing5'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs5'] && organizeUserDetails['field_backlogs5'][0] ? organizeUserDetails['field_backlogs5'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage5'] && organizeUserDetails['field_percentage5'][0] ? organizeUserDetails['field_percentage5'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level6'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level6'] && organizeUserDetails['field_level6'][0] ? organizeUserDetails['field_level6'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university6'] && organizeUserDetails['field_board_university6'][0] ? organizeUserDetails['field_board_university6'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute6'] && organizeUserDetails['field_institute6'][0] ? organizeUserDetails['field_institute6'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline6'] && organizeUserDetails['field_discipline6'][0] ? organizeUserDetails['field_discipline6'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification6'] && organizeUserDetails['field_specification6'][0] ? organizeUserDetails['field_specification6'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing6'] && organizeUserDetails['field_year_of_passing6'][0] ? organizeUserDetails['field_year_of_passing6'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs6'] && organizeUserDetails['field_backlogs6'][0] ? organizeUserDetails['field_backlogs6'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage6'] && organizeUserDetails['field_percentage6'][0] ? organizeUserDetails['field_percentage6'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level6'] && organizeUserDetails['field_level6'][0] ? organizeUserDetails['field_level6'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university6'] && organizeUserDetails['field_board_university6'][0] ? organizeUserDetails['field_board_university6'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute6'] && organizeUserDetails['field_institute6'][0] ? organizeUserDetails['field_institute6'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline6'] && organizeUserDetails['field_discipline6'][0] ? organizeUserDetails['field_discipline6'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification6'] && organizeUserDetails['field_specification6'][0] ? organizeUserDetails['field_specification6'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing6'] && organizeUserDetails['field_year_of_passing6'][0] ? organizeUserDetails['field_year_of_passing6'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs6'] && organizeUserDetails['field_backlogs6'][0] ? organizeUserDetails['field_backlogs6'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage6'] && organizeUserDetails['field_percentage6'][0] ? organizeUserDetails['field_percentage6'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level7'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level7'] && organizeUserDetails['field_level7'][0] ? organizeUserDetails['field_level7'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university7'] && organizeUserDetails['field_board_university7'][0] ? organizeUserDetails['field_board_university7'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute7'] && organizeUserDetails['field_institute7'][0] ? organizeUserDetails['field_institute7'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline7'] && organizeUserDetails['field_discipline7'][0] ? organizeUserDetails['field_discipline7'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification7'] && organizeUserDetails['field_specification7'][0] ? organizeUserDetails['field_specification7'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing7'] && organizeUserDetails['field_year_of_passing7'][0] ? organizeUserDetails['field_year_of_passing7'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs7'] && organizeUserDetails['field_backlogs7'][0] ? organizeUserDetails['field_backlogs7'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage7'] && organizeUserDetails['field_percentage7'][0] ? organizeUserDetails['field_percentage7'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level7'] && organizeUserDetails['field_level7'][0] ? organizeUserDetails['field_level7'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university7'] && organizeUserDetails['field_board_university7'][0] ? organizeUserDetails['field_board_university7'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute7'] && organizeUserDetails['field_institute7'][0] ? organizeUserDetails['field_institute7'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline7'] && organizeUserDetails['field_discipline7'][0] ? organizeUserDetails['field_discipline7'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification7'] && organizeUserDetails['field_specification7'][0] ? organizeUserDetails['field_specification7'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing7'] && organizeUserDetails['field_year_of_passing7'][0] ? organizeUserDetails['field_year_of_passing7'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs7'] && organizeUserDetails['field_backlogs7'][0] ? organizeUserDetails['field_backlogs7'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage7'] && organizeUserDetails['field_percentage7'][0] ? organizeUserDetails['field_percentage7'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level8'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level8'] && organizeUserDetails['field_level8'][0] ? organizeUserDetails['field_level8'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university8'] && organizeUserDetails['field_board_university8'][0] ? organizeUserDetails['field_board_university8'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute8'] && organizeUserDetails['field_institute8'][0] ? organizeUserDetails['field_institute8'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline8'] && organizeUserDetails['field_discipline8'][0] ? organizeUserDetails['field_discipline8'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification8'] && organizeUserDetails['field_specification8'][0] ? organizeUserDetails['field_specification8'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing8'] && organizeUserDetails['field_year_of_passing8'][0] ? organizeUserDetails['field_year_of_passing8'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs8'] && organizeUserDetails['field_backlogs8'][0] ? organizeUserDetails['field_backlogs8'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage8'] && organizeUserDetails['field_percentage8'][0] ? organizeUserDetails['field_percentage8'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level8'] && organizeUserDetails['field_level8'][0] ? organizeUserDetails['field_level8'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university8'] && organizeUserDetails['field_board_university8'][0] ? organizeUserDetails['field_board_university8'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute8'] && organizeUserDetails['field_institute8'][0] ? organizeUserDetails['field_institute8'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline8'] && organizeUserDetails['field_discipline8'][0] ? organizeUserDetails['field_discipline8'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification8'] && organizeUserDetails['field_specification8'][0] ? organizeUserDetails['field_specification8'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing8'] && organizeUserDetails['field_year_of_passing8'][0] ? organizeUserDetails['field_year_of_passing8'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs8'] && organizeUserDetails['field_backlogs8'][0] ? organizeUserDetails['field_backlogs8'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage8'] && organizeUserDetails['field_percentage8'][0] ? organizeUserDetails['field_percentage8'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }
         if (organizeUserDetails && organizeUserDetails['field_level9'].length > 0) {
           const a = {
-            field_level: { value: organizeUserDetails && organizeUserDetails['field_level9'] && organizeUserDetails['field_level9'][0] ? organizeUserDetails['field_level9'][0]['value'] : '' },
-            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university9'] && organizeUserDetails['field_board_university9'][0] ? organizeUserDetails['field_board_university9'][0]['value'] : '' },
-            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute9'] && organizeUserDetails['field_institute9'][0] ? organizeUserDetails['field_institute9'][0]['value'] : '' },
-            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline9'] && organizeUserDetails['field_discipline9'][0] ? organizeUserDetails['field_discipline9'][0]['value'] : '' },
-            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification9'] && organizeUserDetails['field_specification9'][0] ? organizeUserDetails['field_specification9'][0]['value'] : '' },
-            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing9'] && organizeUserDetails['field_year_of_passing9'][0] ? organizeUserDetails['field_year_of_passing9'][0]['value'] : '' },
-            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs9'] && organizeUserDetails['field_backlogs9'][0] ? organizeUserDetails['field_backlogs9'][0]['value'] : '' },
-            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage9'] && organizeUserDetails['field_percentage9'][0] ? organizeUserDetails['field_percentage9'][0]['value'] : '' },
+            field_level: { value: organizeUserDetails && organizeUserDetails['field_level9'] && organizeUserDetails['field_level9'][0] ? organizeUserDetails['field_level9'][0]['value'] : '-' },
+            field_board_university: { value: organizeUserDetails && organizeUserDetails['field_board_university9'] && organizeUserDetails['field_board_university9'][0] ? organizeUserDetails['field_board_university9'][0]['value'] : '-' },
+            field_institute: { value: organizeUserDetails && organizeUserDetails['field_institute9'] && organizeUserDetails['field_institute9'][0] ? organizeUserDetails['field_institute9'][0]['value'] : '-' },
+            field_discipline: { value: organizeUserDetails && organizeUserDetails['field_discipline9'] && organizeUserDetails['field_discipline9'][0] ? organizeUserDetails['field_discipline9'][0]['value'] : '-' },
+            field_specification: { value: organizeUserDetails && organizeUserDetails['field_specification9'] && organizeUserDetails['field_specification9'][0] ? organizeUserDetails['field_specification9'][0]['value'] : '-' },
+            field_year_of_passing: { value: organizeUserDetails && organizeUserDetails['field_year_of_passing9'] && organizeUserDetails['field_year_of_passing9'][0] ? organizeUserDetails['field_year_of_passing9'][0]['value'] : '-' },
+            field_backlogs: { value: organizeUserDetails && organizeUserDetails['field_backlogs9'] && organizeUserDetails['field_backlogs9'][0] ? organizeUserDetails['field_backlogs9'][0]['value'] : '-' },
+            field_percentage: { value: organizeUserDetails && organizeUserDetails['field_percentage9'] && organizeUserDetails['field_percentage9'][0] ? organizeUserDetails['field_percentage9'][0]['value'] : '-' },
           };
           this.KYCModifiedData['eduArr'].push(a);
         }

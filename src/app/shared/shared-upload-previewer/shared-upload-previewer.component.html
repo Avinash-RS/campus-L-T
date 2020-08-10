@@ -1,0 +1,236 @@
+<ng-container *ngIf="status === 'institute'">
+  <div class="user-list-wrapper" [ngClass]="status && status === 'institute' ? '' : 'hide'">
+    <div class="search-bar">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="field_institute_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Insitute Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_institute_name ? element.field_institute_name : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Insitute Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="field_institute_state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_institute_state ? element.field_institute_state : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="field_institute_city">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_institute_city ? element.field_institute_city : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="name">
+        <th style="white-space: normal !important;" mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div> <span style="white-space: nowrap;">Contact person</span> <br> <span style="white-space: nowrap;">First
+              name</span></div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="field_institute_last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div> <span style="white-space: nowrap;">Contact person</span> <br> <span style="white-space: nowrap;">Last
+              name</span></div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.field_institute_last_name ? element.field_institute_last_name : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="field_institute_title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div> <span style="white-space: nowrap;">Contact person</span> <br> <span
+              style="white-space: nowrap;">Title</span></div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.field_institute_title ? element.field_institute_title : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="field_institute_mobile_number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div> <span style="white-space: nowrap;">Contact person</span> <br> <span style="white-space: nowrap;">Mobile
+              No.</span></div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.field_institute_mobile_number ? element.field_institute_mobile_number : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <img style="cursor: pointer; padding-left: 1em;" (click)="removeSelectedCandidate(i)"
+            src="assets/images/005-close-1.svg" alt="" srcset="">
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+  </div>
+</ng-container>
+<!-- candidate -->
+
+<ng-container *ngIf="status === 'candidate'">
+  <div class="user-list-wrapper" [ngClass]="status && status === 'candidate' ? '' : 'hide'">
+    <!-- <mat-form-field>
+          <mat-label>Filter</mat-label> -->
+    <div class="search-bar">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
+    </div>
+    <!-- </mat-form-field> -->
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="tag">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag </th>
+        <td mat-cell *matCellDef="let element"> {{element.tag ? element.tag : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <img style="cursor: pointer; padding-left: 1em;" (click)="removeSelectedCandidate(i)"
+            src="assets/images/005-close-1.svg" alt="" srcset="">
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="status === 'interview'">
+  <div class="user-list-wrapper" [ngClass]="status && status === 'interview' ? '' : 'hide'">
+    <!-- <mat-form-field>
+          <mat-label>Filter</mat-label> -->
+    <div class="search-bar">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
+    </div>
+    <!-- </mat-form-field> -->
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="employeeId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.employeeId ? element.employeeId : '-'}}
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="discipline">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Discipline </th>
+        <td mat-cell *matCellDef="let element"> {{element.discipline ? element.discipline : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <img style="cursor: pointer; padding-left: 1em;" (click)="removeSelectedCandidate(i)"
+            src="assets/images/005-close-1.svg" alt="" srcset="">
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+  </div>
+</ng-container>
