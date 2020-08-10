@@ -54,7 +54,10 @@ ngOnInit() {
 }
 
 getUsersList() {
-  this.adminService.hrEvaluationAssessmentDetails().subscribe((data: any) => {
+  const apiData = {
+    inv_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+  };
+  this.adminService.invEvaluationAssessmentDetails(apiData).subscribe((data: any) => {
     this.appConfig.hideLoader();
     console.log(data);
 

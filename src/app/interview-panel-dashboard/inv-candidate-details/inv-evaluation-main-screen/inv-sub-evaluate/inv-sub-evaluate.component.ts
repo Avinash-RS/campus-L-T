@@ -245,7 +245,7 @@ export class InvSubEvaluateComponent implements OnInit {
           clues: this.evaluationForm.value.clues,
           time_taken: this.evaluationForm.value.time_taken,
           remarks: this.evaluationForm.value.remarks
-        }
+        };
     console.log(this.evaluationForm.value);
     console.log(apiData);
     this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {

@@ -16,7 +16,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
-  displayedColumns: any[] = ['uid', 'field_employee_id', 'field_panel_discipline', 'name', 'email', 'from', 'checked'];
+  displayedColumns: any[] = ['uid', 'field_employee_id', 'field_panel_discipline', 'name', 'email', 'formName', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -27,8 +27,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   userList: any;
   radioCheck;
   selectAllCheck;
-  notShowReject: boolean = true;
-  notShowShortlist: boolean = true;
   selectedAssign: any;
   selectedFormData: any = [];
   selectedCandidate: any = [];
@@ -79,6 +77,8 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
         element['checked'] = false;
         count = count + 1;
         element['uid'] = count;
+        element['field_form_name'] = element.field_form_name == 'default' ? 1 : element.field_form_name;
+        element['formName'] = element.field_form_name == 1 ? 'Default' : element.field_form_name == 2 ? 'Ev1' : element.field_form_name;
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -249,6 +249,11 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       showCancel: 'Cancel',
       showOk: ''
     };
+    let assignData = {
+      'uid': this.selectedCandidate,
+      'hr_id': this.defaultFormSelecterHrPanel
+    }
+    console.log(assignData);
 
     this.openDialog(ShortlistBoxComponent, data);
     // } else {
