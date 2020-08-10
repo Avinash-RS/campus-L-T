@@ -62,7 +62,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     let assessment = {
-      'assement_name': this.selectedAssign.assement_name
+      'assement_name': this.selectedAssign.Assessment_Name
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
@@ -76,6 +76,11 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
         count = count + 1;
         element['uid'] = count;
       });
+      this.userList = this.userList.filter(user => {
+        if(user.hr_assign_status == 0){
+          return user;
+        }
+      })
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

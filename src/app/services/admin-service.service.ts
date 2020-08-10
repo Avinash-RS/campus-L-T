@@ -396,7 +396,7 @@ export class AdminServiceService {
 
   // get assessment details
   getHrEvaluationInterviewPanel() {
-    return this.http.get(`${this.BASE_URL}/profile/first_shortlist_report`,
+    return this.http.get(`${this.BASE_URL}/api/institute_candidate_shortlist`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

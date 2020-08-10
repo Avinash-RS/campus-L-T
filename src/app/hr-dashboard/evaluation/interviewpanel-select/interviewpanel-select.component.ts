@@ -128,7 +128,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   }
 
   unselectSelectALL() {
-    console.log(this.userList);
 
     this.selectAllCheck = false;
     const pushChecked = [];
@@ -221,7 +220,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       'uid': this.selectedCandidate,
       'hr_id': this.defaultFormSelecterHrPanel
     }
-    console.log("print final send data...", assignData);
     this.adminService.assignCandidateTOPanel(assignData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
 
