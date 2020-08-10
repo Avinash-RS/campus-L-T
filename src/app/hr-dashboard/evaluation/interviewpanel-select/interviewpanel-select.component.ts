@@ -29,36 +29,53 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   selectAllCheck;
   notShowReject: boolean = true;
   notShowShortlist: boolean = true;
-  selectedAssign:any;
-  selectedFormData: any =[];
+  selectedAssign: any;
+  selectedFormData: any = [];
   selectedCandidate: any = [];
   defaultFormSelecterHrPanel: any = [];
   buttonHide;
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private matDialog: MatDialog) { }
+    private matDialog: MatDialog
+  ) {
+    // Sub-Navigation menus. This will be retrieved in Admin master component
+    const subWrapperMenus = [
+      {
+        icon: '002-cv.svg',
+        name: 'Candidate details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
+      },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT
+      },
+    ];
+    this.sharedService.subMenuSubject.next(subWrapperMenus);
+  }
 
   ngOnInit() {
     this.selectedAssign = JSON.parse(this.appConfig.getLocalData('hrEvalutionInterviewPanel'));
     this.selectedFormData = JSON.parse(this.appConfig.getLocalData('selectedFormId')) != null ? JSON.parse(this.appConfig.getLocalData('selectedFormId')) : [];
     this.selectedCandidate = JSON.parse(this.appConfig.getLocalData('hrEvaluationInterviewSelectedCandidate'));
     this.getUsersList();
-    
+
   }
 
   // To get all users
   getUsersList() {
     this.adminService.getInterviewPanelDetails().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      
+
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
       this.userList.forEach(element => {
-          element['checked'] = false;
+        element['checked'] = false;
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -154,15 +171,15 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       }
     });
     this.selectedUserDetail = userDetail;
-    
+
     this.getSelectedData();
     this.toShoworNotShowFilter();
     this.unselectSelectALL();
   }
 
   //check hr interview panel when select form
-  checkHrPanel(){
-    if(this.selectedFormData.length != 0){
+  checkHrPanel() {
+    if (this.selectedFormData.length != 0) {
       this.selectedFormData.forEach(data => {
         this.userList.forEach(element => {
           if (element.user_id === data.hr_id) {
@@ -177,12 +194,12 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT, '1');
   }
 
-  sendInEvalutionFormPage(selectedForm){
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM, {id: selectedForm.user_id ? selectedForm.user_id : 'none'});
+  sendInEvalutionFormPage(selectedForm) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM, { id: selectedForm.user_id ? selectedForm.user_id : 'none' });
   }
 
   // getSelected data
-  getSelectedData(){
+  getSelectedData() {
     this.defaultFormSelecterHrPanel = [];
     this.userList.forEach(element => {
       if (element['checked']) {
@@ -196,7 +213,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   }
 
   //assign panel to selected candidate
-  assignPanel(){
+  assignPanel() {
     let assignData = {
       'uid': this.selectedCandidate,
       'hr_id': this.defaultFormSelecterHrPanel
@@ -205,33 +222,34 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
     this.adminService.assignCandidateTOPanel(assignData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
 
-      this.appConfig.success(`Interview panel assign Successfully`, '');
-      
+      this.appConfig.success(`Interview panel has been assigned Successfully`, '');
+
       localStorage.removeItem('selectedFormId');
       // console.log('api', datas);
-      
+      this.ngOnInit();
+
     }, (err) => {
     });
   }
 
   submitDialog() {
     // if (this.addUserForm.valid) {
-      const data = {
-        iconName: '',
-        dataToBeShared: {
-          confirmText: `Are you sure you want to assign this panel?`,
-          type: 'assign-hr',
-          identity: 'panel-assign'
-        },
-        showConfirm: 'Confirm',
-        interViwePanelAssign: 'assign',
-        candidateCount: this.selectedCandidate.length,
-        panel: this.defaultFormSelecterHrPanel.length,
-        showCancel: 'Cancel',
-        showOk: ''
-      };
+    const data = {
+      iconName: '',
+      dataToBeShared: {
+        confirmText: `Are you sure you want to assign this panel?`,
+        type: 'assign-hr',
+        identity: 'panel-assign'
+      },
+      showConfirm: 'Confirm',
+      interViwePanelAssign: 'assign',
+      candidateCount: this.selectedCandidate.length,
+      panel: this.defaultFormSelecterHrPanel.length,
+      showCancel: 'Cancel',
+      showOk: ''
+    };
 
-      this.openDialog(ShortlistBoxComponent, data);
+    this.openDialog(ShortlistBoxComponent, data);
     // } else {
     //   this.validateAllFields(this.addUserForm);
     // }

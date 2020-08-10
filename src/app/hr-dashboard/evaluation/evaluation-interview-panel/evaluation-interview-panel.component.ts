@@ -15,7 +15,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
 
   appConstant = CONSTANT.ENDPOINTS;
   showPage = true;
-  displayedColumns: any[] = ['counter', 'assement_name', 'date', 'time', 'status', 'shortlist_name', 'action'];
+  displayedColumns: any[] = ['counter', 'assement_name', 'date', 'time', 'status', 'group_name', 'action'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -74,6 +74,11 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
       this.userList.forEach(element => {
         count = count + 1;
         element['counter'] = count;
+        if (element && element['status'] && element['status'] != '0') {
+          element['status'] = 'completed';
+        } else {
+          element['status'] = 'waiting';
+        }
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

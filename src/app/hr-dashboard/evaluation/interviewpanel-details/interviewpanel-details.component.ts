@@ -31,11 +31,28 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   selectedCandidateId: any = [];
   buttonHide;
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private matDialog: MatDialog) { }
+    private matDialog: MatDialog
+  ) {
+    // Sub-Navigation menus. This will be retrieved in Admin master component
+    const subWrapperMenus = [
+      {
+        icon: '002-cv.svg',
+        name: 'Candidate details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
+      },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS
+      },
+    ];
+    this.sharedService.subMenuSubject.next(subWrapperMenus);
+  }
 
   ngOnInit() {
     this.selectedAssign = JSON.parse(this.appConfig.getLocalData('hrEvalutionInterviewPanel'));
@@ -49,13 +66,13 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      
+
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
       this.userList.forEach(element => {
         element['checked'] = false;
-    });
+      });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -148,13 +165,13 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       }
     });
     this.selectedUserDetail = userDetail;
-    
+
     this.getSelectedData();
     this.toShoworNotShowFilter();
     this.unselectSelectALL();
   }
   // getSelected data
-  getSelectedData(){
+  getSelectedData() {
     this.selectedCandidateId = [];
     this.userList.forEach(element => {
       if (element['checked']) {

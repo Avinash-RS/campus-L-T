@@ -29,18 +29,34 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
   selectAllCheck;
   notShowReject: boolean = true;
   notShowShortlist: boolean = true;
-  selectedAssign:any;
+  selectedAssign: any;
   selectedPanelId: any;
   selectedFormArr: any = [];
 
-  constructor(private appConfig: AppConfigService,
+  constructor(
+    private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
-    private activatedRoute: ActivatedRoute) { 
-      this.editRouteParamGetter();
-    }
+    private activatedRoute: ActivatedRoute
+    ) {
+    // Sub-Navigation menus. This will be retrieved in Admin master component
+    const subWrapperMenus = [
+      {
+        icon: '002-cv.svg',
+        name: 'Candidate details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
+      },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM
+      },
+    ];
+    this.sharedService.subMenuSubject.next(subWrapperMenus);
+    this.editRouteParamGetter();
+  }
 
   ngOnInit() {
     this.selectedAssign = JSON.parse(this.appConfig.getLocalData('hrEvalutionInterviewPanel'));
@@ -51,7 +67,7 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
   getUsersList() {
     this.adminService.getInterviewPanelFormlist().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      
+
       // console.log('api', datas);
       const align = datas;
       this.userList = align ? align : [];
@@ -159,21 +175,21 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
     });
   }
 
-  confirmForm(){
+  confirmForm() {
     let tempObj = {
       'hr_id': this.selectedPanelId,
       'frm_id': this.selectedUserDetail.id,
       'frm_name': this.selectedUserDetail.name
     }
-    if(this.appConfig.getLocalData('selectedFormId') != null){
+    if (this.appConfig.getLocalData('selectedFormId') != null) {
       this.selectedFormArr = JSON.parse(this.appConfig.getLocalData('selectedFormId'));
       this.selectedFormArr.push(tempObj);
       this.appConfig.setLocalData('selectedFormId', JSON.stringify(this.selectedFormArr));
-    }else{
+    } else {
       this.selectedFormArr.push(tempObj);
       this.appConfig.setLocalData('selectedFormId', JSON.stringify(this.selectedFormArr));
     }
-  
+
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT)
   }
 
