@@ -357,7 +357,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

@@ -16,11 +16,11 @@ export class AdminReportComponent implements OnInit {
     ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-      {
-        icon: '',
-        name: 'Main Report',
-        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.ADMIN_REPORTS_LIST
-      },
+      // {
+      //   icon: '',
+      //   name: 'Main Report',
+      //   router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.ADMIN_REPORTS_LIST
+      // },
       {
         icon: '',
         name: 'Candidate Bulk upload Reports',
