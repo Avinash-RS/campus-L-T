@@ -29,7 +29,7 @@
 
       <!-- Position Column -->
       <ng-container matColumnDef="uid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.no. </th>
         <td mat-cell *matCellDef="let element; let i = index;"> {{i +1}} </td>
       </ng-container>
 
@@ -41,7 +41,7 @@
 
       <!-- Weight Column -->
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email id </th>
         <td mat-cell *matCellDef="let element"> {{element.email}} </td>
       </ng-container>
 
@@ -52,7 +52,7 @@
       </ng-container>
 
       <ng-container matColumnDef="field_employee_id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee id </th>
         <td mat-cell *matCellDef="let element">
           {{element.field_employee_id ? (element.field_employee_id | uppercase) : '-'}} </td>
       </ng-container>
