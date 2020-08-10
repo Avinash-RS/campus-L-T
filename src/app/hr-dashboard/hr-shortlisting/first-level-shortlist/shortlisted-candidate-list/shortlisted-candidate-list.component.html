@@ -57,7 +57,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate </th>
-        <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
+        <td style="cursor: pointer;" (click)="profileView(element.uid)" mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
       </ng-container>
 
       <!-- Weight Column -->

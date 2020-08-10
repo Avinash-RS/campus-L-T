@@ -10,6 +10,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import moment from 'moment';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { ActivatedRoute } from '@angular/router';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-shortlisted-candidate-list',
@@ -495,6 +496,11 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
+  profileView(id) {
+    const data = id ? id : '';
+    this.openDialog4(CommonKycProfileViewComponent, data);
+  }
+
 
   // Open dailog
   openDialog(component, data) {
@@ -563,5 +569,25 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
   }
 
+  // Open dailog
+  openDialog4(component, data) {
+    let dialogDetails: any;
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
 
 }

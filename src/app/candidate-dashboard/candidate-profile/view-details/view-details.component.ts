@@ -333,7 +333,7 @@ export class ViewDetailsComponent implements OnInit {
         const organizeUserDetails = data[0];
         // Changing Dob Date Format
         let dob;
-        const dobFormats = organizeUserDetails && organizeUserDetails.field_dob && organizeUserDetails.field_dob[0].value ? organizeUserDetails.field_dob[0].value : '-';
+        const dobFormats = organizeUserDetails && organizeUserDetails.field_dob && organizeUserDetails.field_dob[0] && organizeUserDetails.field_dob[0].value ? organizeUserDetails.field_dob[0].value : '-';
         if (dobFormats) {
           const split = moment(dobFormats).format('DD/MM/YYYY').split('/');
           dob = {

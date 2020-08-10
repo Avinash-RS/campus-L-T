@@ -1,5 +1,5 @@
 <div style="margin: .5em 2em 0 0; float: right;" class="remove">
-    <mat-icon style="font-size: 32px; cursor: pointer;" (click)="close()" class="close-icon">close</mat-icon>
+  <mat-icon style="font-size: 32px; cursor: pointer;" (click)="close()" class="close-icon">close</mat-icon>
 </div>
 <div class="top-width" style="width: 100%; max-height: 500px; overflow: auto;">
   <div class="top-main-wrapper view-page" *ngIf="userDetails">
@@ -30,14 +30,23 @@
         </div>
         <div class="form-group">
           <label class="label-radio">Gender</label>
-          <div class="radio">
-            <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label>
+          <div class="radio" style="overflow: hidden; pointer-events: none;">
+              <mat-radio-group [(ngModel)]="radioValue">
+                <mat-radio-button value="pre">{{userDetails['gender']}}
+                </mat-radio-button>
+                </mat-radio-group>
+              <!-- <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label> -->
           </div>
         </div>
         <div *ngIf="userDetails && userDetails['marital']" class="form-group">
           <label>Marital Status</label>
-          <div class="radio">
-            <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label>
+          <div class="radio" style="overflow: hidden; pointer-events: none;">
+            <mat-radio-group [(ngModel)]="radioValue">
+              <mat-radio-button value="pre">{{userDetails['marital']}}
+              </mat-radio-button>
+              </mat-radio-group>
+              <!-- <mat-radio-button [value]="userDetails['marital']">{{userDetails['marital']}}</mat-radio-button> -->
+              <!-- <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label> -->
           </div>
         </div>
         <div class="form-group">
@@ -326,7 +335,7 @@
               {{dup['field_name_of_your_family'] && dup['field_name_of_your_family']['value'] ? dup['field_name_of_your_family']['value'] : '-'}}
             </div>
             <div class="text-2">
-              {{(dup['field_family_date_of_birth'] && dup['field_family_date_of_birth']['value'] != 'INVALID DATE') ? dup['field_family_date_of_birth']['value'] : '-'}}
+              {{(dup['field_family_date_of_birth'] && dup['field_family_date_of_birth']['value'] && dup['field_family_date_of_birth']['value']!= 'INVALID DATE') ? dup['field_family_date_of_birth']['value'] : '-'}}
             </div>
             <div class="text-3">
               {{dup['field_relationship'] && dup['field_relationship']['value'] ? dup['field_relationship']['value'] : '-'}}

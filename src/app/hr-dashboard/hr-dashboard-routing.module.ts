@@ -345,7 +345,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             component: ReportsListComponent,
             data: {
-              breadcrumb: '2st Reports'
+              breadcrumb: 'Overall Reports'
             }
           },
           {
