@@ -24,29 +24,61 @@ import { CandidateUploadDocumentComponent } from './candidate-document/candidate
 const routes: Routes = [
   {
     path: '', component: MasterDashboardComponent,
+    data: {
+      breadcrumb: 'Home'
+    },
     children: [
       // {
       //   path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DASHBOARD}`, component: CandidateHallticketComponent, canActivate: [CanloadGuard]
       // },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, component: CandidateProfileComponent, canActivate: [CanloadGuard], children: [
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, 
+        component: CandidateProfileComponent, canActivate: [CanloadGuard],
+        data: {
+          breadcrumb: 'Profile'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, component: PersonalDetailsComponent, canActivate: [KycAccessGuard]
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, 
+            component: PersonalDetailsComponent, canActivate: [KycAccessGuard],
+            data: {
+              breadcrumb: 'Personal'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, component: EducationalDetailsComponent, canActivate: [KycAccessGuard]
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, 
+            component: EducationalDetailsComponent, canActivate: [KycAccessGuard],
+            data: {
+              breadcrumb: 'Education'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`, component: FamilyDetailsComponent, canActivate: [KycAccessGuard]
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`, 
+            component: FamilyDetailsComponent, canActivate: [KycAccessGuard],
+            data: {
+              breadcrumb: 'Family'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`, component: GeneralDetailsComponent, canActivate: [KycAccessGuard]
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`, 
+            component: GeneralDetailsComponent, canActivate: [KycAccessGuard],
+            data: {
+              breadcrumb: 'General'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, component: ViewDetailsComponent, canActivate: [KycAccessGuard]
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, 
+            component: ViewDetailsComponent, canActivate: [KycAccessGuard],
+            data: {
+              breadcrumb: 'View'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`, component: ConfirmComponent, canActivate: [KycAccessGuard]
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`, 
+            component: ConfirmComponent, canActivate: [KycAccessGuard],
+            data: {
+              breadcrumb: 'Confirm'
+            }
           },
           {
             path: '',
@@ -56,9 +88,18 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`, component: CandidateHallticketComponent, canActivate: [CanloadGuard], children: [
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`, 
+        component: CandidateHallticketComponent, canActivate: [CanloadGuard], 
+        data: {
+          breadcrumb: 'Hallticket'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`, component: CandidateAssignedAssessmentListComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`, 
+            component: CandidateAssignedAssessmentListComponent,
+            data: {
+              breadcrumb: 'List'
+            }
           },
           {
             path: '',
@@ -68,9 +109,18 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`, component: CandidateDocumentComponent, canActivate: [CanloadGuard], children: [
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`, 
+        component: CandidateDocumentComponent, canActivate: [CanloadGuard], 
+        data: {
+          breadcrumb: 'Document'
+        },
+        children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`, component: CandidateUploadDocumentComponent
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`, 
+            component: CandidateUploadDocumentComponent,
+            data: {
+              breadcrumb: 'Document List'
+            }
           },
           {
             path: '',
@@ -88,7 +138,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, component: KycSubmissionPageComponent, canActivate: [KycthanksGuard]
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, 
+    component: KycSubmissionPageComponent, canActivate: [KycthanksGuard],
+    data: {
+      breadcrumb: 'Kyc Submitted'
+    }
   },
 
 ];
