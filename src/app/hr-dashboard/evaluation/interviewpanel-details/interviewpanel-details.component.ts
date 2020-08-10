@@ -76,8 +76,11 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
         count = count + 1;
         element['uid'] = count;
       });
+      count = 0;
       this.userList = this.userList.filter(user => {
         if(user.hr_assign_status == 0){
+          count = count + 1;
+          user['uid'] = count;
           return user;
         }
       })
