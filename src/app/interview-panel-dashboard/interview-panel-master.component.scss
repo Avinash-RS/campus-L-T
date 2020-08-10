@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
 }
-
 .sideOpen {
   margin: 0;
   padding: 0;
@@ -59,7 +58,7 @@
 }
 .first-sidenav {
   // background: $wrapper-light-gray 0% 0% no-repeat padding-box;
-  height: 40px;
+  height: 50px;
   .sub-wrapper-nav {
     width: 235px;
     background: $sidebar-bg 0% 0% no-repeat padding-box;
@@ -73,7 +72,7 @@
     height: 100%;
     background: $primary 0% 0% no-repeat padding-box;
     .sub-navs {
-      height: 40px;
+      height: 100%;
       padding: 0em 2.5em;
       border-left: solid $white 1px;
       cursor: pointer;
@@ -113,10 +112,9 @@
     .active {
       background: $active-sub-bg !important;
       outline: none;
-      pointer-events: none;
       div:last-child {
         font-weight: 200;
-        color: $white;
+        // color: $white;
         opacity: 1;
       }
     }
@@ -125,7 +123,7 @@
   }
 }
 .second-sidenav {
-  margin: 100px 0 0 0;
+  margin: 135px 0 0 0;
   // margin: 190px 0 0 0;
   position: absolute;
   top: 0;
@@ -195,6 +193,7 @@
     padding: 0px 0px 0px 0px;
   }
 }
+
 //breadcrumb
 .breadcrumb {
   background: none;
@@ -204,6 +203,7 @@
     color: #5E5E5E;
     font-size: 14px;
     margin: 0;
+    outline: none !important;
   }
   a:hover,
   span:hover {

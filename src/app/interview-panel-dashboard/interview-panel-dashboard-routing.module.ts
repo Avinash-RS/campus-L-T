@@ -18,33 +18,72 @@ import { InvpanelGuard } from '../guards/canload/invpanel.guard';
 const routes: Routes = [
   {
     path: '', component: InterviewPanelMasterComponent,
+    data: {
+      breadcrumb: 'Home'
+    },
     children: [
       {
-        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`, component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`, 
+        component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
+        data: {
+          breadcrumb: 'Candidates'
+        },
         children: [
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`, component: InvAssessmentShortlistedCandidatesComponent
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`, 
+            component: InvAssessmentShortlistedCandidatesComponent,
+            data: {
+              breadcrumb: 'Assessment List'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`, component: InvParticularAssessmentCandidatesComponent
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`, 
+            component: InvParticularAssessmentCandidatesComponent,
+            data: {
+              breadcrumb: 'Assessment'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED}`, component: InvShortlistedCandidatesViewScreenComponent
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED}`, 
+            component: InvShortlistedCandidatesViewScreenComponent,
+            data: {
+              breadcrumb: 'Submitted'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION}`, component: InvEvaluationMainScreenComponent,
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION}`, 
+            component: InvEvaluationMainScreenComponent,
+            data: {
+              breadcrumb: 'Evaluation'
+            },
             children: [
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`, component: InvSubAssessmentsComponent
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`, 
+                component: InvSubAssessmentsComponent,
+                data: {
+                  breadcrumb: 'Assessment'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`, component: InvSubEducationComponent
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`, 
+                component: InvSubEducationComponent,
+                data: {
+                  breadcrumb: 'Education'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`, component: InvSubEmploymentComponent
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`, 
+                component: InvSubEmploymentComponent,
+                data: {
+                  breadcrumb: 'Employment'
+                }
               },
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`, component: InvSubEvaluateComponent
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`, 
+                component: InvSubEvaluateComponent,
+                data: {
+                  breadcrumb: 'Evaluate'
+                }
               },
               {
                 path: '',
@@ -67,7 +106,11 @@ const routes: Routes = [
       },
 
       {
-        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`, component: EvaluationFormComponent ,
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`, 
+        component: EvaluationFormComponent,
+        data: {
+          breadcrumb: 'Evaluation Form'
+        }
         // redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`,
         // pathMatch: 'full',
       }
