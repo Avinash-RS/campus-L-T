@@ -338,7 +338,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
         this.resumeFile = data[0].fileid
       }
 
-      this.appConfig.success(`Document uploaded submitted`, '');
+      this.appConfig.success(`Document uploaded successfully`, '');
     } catch (e) {
       this.appConfig.hideLoader();
       console.log('e', e);
@@ -363,7 +363,11 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
         this.appConfig.hideLoader();
 
-        this.appConfig.success(`Document uploaded successfully`, '');
+        if (clickType == 'submit') {
+          this.appConfig.success(`Documents submitted successfully`, '');
+        } else {
+          this.appConfig.success(`Documents saved successfully`, '');
+        }
 
       }, (err) => {
 

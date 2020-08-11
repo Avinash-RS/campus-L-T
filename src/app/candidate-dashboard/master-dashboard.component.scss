@@ -1,4 +1,4 @@
-@import '../themes/themes.scss';
+@import "../themes/themes.scss";
 * {
   margin: 0;
   padding: 0;
@@ -122,6 +122,9 @@
   .toolbar-bg {
   }
 }
+// .toolbar-hide {
+//   display: none;
+// }
 .second-sidenav {
   margin: 135px 0 0 0;
   // margin: 190px 0 0 0;
@@ -193,6 +196,15 @@
     padding: 0px 0px 0px 0px;
   }
 }
+// .toolbar-hide-second {
+//   margin: 60px 0 0 0 !important;
+//   .sidenav {
+//     ul {
+//       margin: 50px 0 0 0;
+//     }
+//   }
+// }
+
 
 //breadcrumb
 .breadcrumb {
@@ -200,14 +212,14 @@
   margin: 0;
   a,
   span {
-    color: #5E5E5E;
+    color: #5e5e5e;
     font-size: 14px;
     margin: 0;
     outline: none !important;
   }
   a:hover,
   span:hover {
-    color: #5E5E5E;
+    color: #5e5e5e;
     text-decoration: none;
     cursor: pointer;
   }
@@ -221,7 +233,7 @@
   }
   li::after {
     content: ">";
-    color: #5E5E5E;
+    color: #5e5e5e;
     margin-left: 6px;
     font-size: 14px;
   }
