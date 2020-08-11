@@ -496,8 +496,11 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  profileView(id) {
-    const data = id ? id : '';
+  profileView(candidateId, candidateName) {
+    const data = {
+      candidateId: candidateId ? candidateId : '',
+      candidateName: candidateName ? candidateName : '',
+    };
     this.openDialog4(CommonKycProfileViewComponent, data);
   }
 

@@ -84,13 +84,18 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
       this.appConfig.hideLoader();
       console.log('datas', datas);
 
-      const align = datas;
-      this.userList = align ? align : [];
+
+      const align = datas ? datas : [];
       let counting = 0;
-      this.userList.forEach(element => {
-        counting = counting + 1;
-        element['count'] = counting;
+      this.userList = [];
+      align.forEach(element => {
+        if (element && element['hr_assign_status'] == '1') {
+          counting = counting + 1;
+          element['count'] = counting;
+          this.userList.push(element);
+        }
       });
+
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -29,6 +29,7 @@ export class CommonKycProfileViewComponent implements OnInit {
   radioValue = 'pre';
   allCitiess: any;
   permanentStateId: any;
+  candidateName: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -119,7 +120,8 @@ export class CommonKycProfileViewComponent implements OnInit {
   }
 
   getUserDetails() {
-    const id = this.data;
+    const id = this.data ? this.data['candidateId'] : '';
+    this.candidateName = this.data ? this.data['candidateName'] : '';
     this.adminService.getProfileView(id).subscribe((data: any) => {
       console.log('data', data);
 

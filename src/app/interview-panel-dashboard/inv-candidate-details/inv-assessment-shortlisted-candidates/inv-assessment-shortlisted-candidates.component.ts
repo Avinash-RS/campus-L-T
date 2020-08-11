@@ -64,11 +64,11 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
       this.userList = [];
       let count = 0;
       fileteringInvAssignOnly.forEach(element => {
-        if (element && element['hr_status'] == '1') {
+        // if (element && element['hr_status'] == '1') {
           count = count + 1;
           element['uid'] = count;
           this.userList.push(element);
-        }
+        // }
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
