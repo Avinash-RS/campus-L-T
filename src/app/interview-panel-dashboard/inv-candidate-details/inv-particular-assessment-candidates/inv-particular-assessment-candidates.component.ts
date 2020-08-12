@@ -90,17 +90,20 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       this.appConfig.hideLoader();
       console.log('datas', datas);
 
-      const align = datas;
-      this.userList = align ? align : [];
-      this.toShoworNotShowFilter();
+      const align = datas ? datas : [];
       let counting = 0;
-      this.userList.forEach(element => {
-        counting = counting + 1;
-        element['count'] = counting;
-        if (element['evaluation_status'] == '1') {
-          element['checked'] = false;
+      this.userList = [];
+      align.forEach(element => {
+        if (element && element['hr_assign_status'] == '1') {
+          counting = counting + 1;
+          element['count'] = counting;
+          if (element['evaluation_status'] == '1') {
+            element['checked'] = false;
+          }
+          this.userList.push(element);
         }
       });
+      this.toShoworNotShowFilter();
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -231,26 +234,26 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
 
-    // Open dailog
-    openDialog(component, data) {
-      let dialogDetails: any;
+  // Open dailog
+  openDialog(component, data) {
+    let dialogDetails: any;
 
-      /**
-       * Dialog modal window
-       */
-      // tslint:disable-next-line: one-variable-per-declaration
-      const dialogRef = this.matDialog.open(component, {
-        width: 'auto',
-        height: 'auto',
-        autoFocus: false,
-        data
-      });
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.finalSubmitAPI();
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.finalSubmitAPI();
+      }
+    });
+  }
 
 }

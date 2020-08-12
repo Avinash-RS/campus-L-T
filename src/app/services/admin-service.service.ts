@@ -290,6 +290,12 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // inv Evaluation landing screen
+  invEvaluationAssessmentDetails(data) {
+    return this.http.post(`${this.BASE_URL}/api/institute_candidate_shortlist`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   // Hr evaluation particular assessment status
   hrEvaluationParticularAssessmentDetails(data) {
     return this.http.post(`${this.BASE_URL}/profile/candidatelist_evaluation`, data,

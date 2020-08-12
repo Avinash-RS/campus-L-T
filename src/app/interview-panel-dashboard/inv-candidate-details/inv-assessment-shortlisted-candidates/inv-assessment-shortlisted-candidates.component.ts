@@ -49,46 +49,52 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
-ngOnInit() {
-  this.getUsersList();
-}
+  ngOnInit() {
+    this.getUsersList();
+  }
 
-getUsersList() {
-  this.adminService.hrEvaluationAssessmentDetails().subscribe((data: any) => {
-    this.appConfig.hideLoader();
-    console.log(data);
-
-    this.userList = data ? data : [];
-    let count = 0;
-    this.userList.forEach(element => {
-      count = count + 1;
-      element['uid'] = count;
+  getUsersList() {
+    const apiData = {
+      inv_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    };
+    this.adminService.invEvaluationAssessmentDetails(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log(data);
+      const fileteringInvAssignOnly = data ? data : [];
+      this.userList = [];
+      let count = 0;
+      fileteringInvAssignOnly.forEach(element => {
+        // if (element && element['hr_status'] == '1') {
+          count = count + 1;
+          element['uid'] = count;
+          this.userList.push(element);
+        // }
+      });
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, (err) => {
     });
-    this.dataSource = new MatTableDataSource(this.userList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }, (err) => {
-  });
-}
-
-// tslint:disable-next-line:use-lifecycle-interface
-ngAfterViewInit() {
-  if (this.dataSource) {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
-}
 
-applyFilter(event: Event) {
-  const filterValue = (event.target as HTMLInputElement).value;
-  this.dataSource.filter = filterValue.trim().toLowerCase();
-  if (this.dataSource.paginator) {
-    this.dataSource.paginator.firstPage();
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngAfterViewInit() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
-}
 
-particularAssessment(AssessmentName) {
-  this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST, { data: AssessmentName });
-}
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  particularAssessment(AssessmentName) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST, { data: AssessmentName });
+  }
 }
 

@@ -107,10 +107,16 @@ th {
   display: none;
 }
 
+.disabled {
+  // opacity: .5;
+  pointer-events: none;
+}
+
 .submit-btn {
   background: transparent;
   color: $header-blue;
   justify-content: center;
+  align-items: center;
   box-shadow: $shadow-light-black-3;
   border: 0.5px solid $borderColor-4;
   height: 23px;

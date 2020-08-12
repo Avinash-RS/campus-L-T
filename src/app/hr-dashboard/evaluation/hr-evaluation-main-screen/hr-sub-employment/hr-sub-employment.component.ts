@@ -77,7 +77,10 @@ export class HrSubEmploymentComponent implements OnInit {
   }
 
   profileView() {
-    const data = this.candidateId ? this.candidateId : '';
+    const data = {
+      candidateId: this.candidateId ? this.candidateId : '',
+      candidateName: this.candidateName ? this.candidateName : '',
+    };
     this.openDialog1(CommonKycProfileViewComponent, data);
   }
 

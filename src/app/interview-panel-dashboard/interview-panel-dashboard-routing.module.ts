@@ -23,66 +23,66 @@ const routes: Routes = [
     },
     children: [
       {
-        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`, 
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`,
         component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
         data: {
           breadcrumb: 'Candidates'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`, 
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`,
             component: InvAssessmentShortlistedCandidatesComponent,
             data: {
-              breadcrumb: 'Assessment List'
+              breadcrumb: 'Assessment list'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`, 
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`,
             component: InvParticularAssessmentCandidatesComponent,
             data: {
-              breadcrumb: 'Assessment'
+              breadcrumb: 'Assessment candidates list'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED}`, 
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED}`,
             component: InvShortlistedCandidatesViewScreenComponent,
             data: {
-              breadcrumb: 'Submitted'
+              breadcrumb: 'Evaluation status list'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION}`, 
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION}`,
             component: InvEvaluationMainScreenComponent,
             data: {
               breadcrumb: 'Evaluation'
             },
             children: [
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`, 
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`,
                 component: InvSubAssessmentsComponent,
                 data: {
-                  breadcrumb: 'Assessment'
+                  breadcrumb: 'Assessment details'
                 }
               },
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`, 
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`,
                 component: InvSubEducationComponent,
                 data: {
-                  breadcrumb: 'Education'
+                  breadcrumb: 'Education details'
                 }
               },
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`, 
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
                 component: InvSubEmploymentComponent,
                 data: {
-                  breadcrumb: 'Employment'
+                  breadcrumb: 'Employment details'
                 }
               },
               {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`, 
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`,
                 component: InvSubEvaluateComponent,
                 data: {
-                  breadcrumb: 'Evaluate'
+                  breadcrumb: 'Evaluation details'
                 }
               },
               {
@@ -106,7 +106,7 @@ const routes: Routes = [
       },
 
       {
-        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`, 
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`,
         component: EvaluationFormComponent,
         data: {
           breadcrumb: 'Evaluation Form'
