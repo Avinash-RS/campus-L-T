@@ -101,9 +101,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
 
   uploadListToAPI() {
     const date = new Date();
-    const currentDate = this.getDateFormat1(date);
-    // const time = this.tConvert(`${date.getHours()}:${minutes}`);
-
+    const apiData = [];
     this.uploadedListArray.forEach(element => {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
@@ -112,24 +110,30 @@ export class InvpanelBulkuploadComponent implements OnInit {
       } else {
         minutes = date.getMinutes();
       }
-      element['date'] = this.getDateFormat1(date);
-      element['field_user_created_by'] = this.appConfig.getLocalData('userId');
-      element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
+      const ele = {
+        name: element['name'] ? element['name'] : '',
+        email: element['email'] ? element['email'] : '',
+        employee_id: element['employeeId'] ? element['employeeId'] : '',
+        panel_discipline: element['discipline'] ? element['discipline'] : '',
+        field_user_created_by: this.appConfig.getLocalData('userId'),
+        date: this.getDateFormat1(date),
+        time: this.tConvert(`${date.getHours()}:${minutes}`)
+      };
+      apiData.push(ele);
     });
-    // this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
-    //   console.log('success', data);
-    const data = '22';
-    this.appConfig.hideLoader();
-    const datas = {
-      invpanel_bulk_upload_ok: 'candidate-bulk',
-      totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
-      errorLength: data ? data.length : 0,
-    };
-    this.openDialog1(ShortlistBoxComponent, datas);
-    // }, (err) => {
+    console.log(apiData);
+    this.adminService.invBulk(apiData).subscribe((data: any) => {
+      console.log('success', data);
+      this.appConfig.hideLoader();
+      const datas = {
+        invpanel_bulk_upload_ok: 'candidate-bulk',
+        totalLength: apiData ? apiData.length : 0,
+        errorLength: data ? data.length : 0,
+      };
+      this.openDialog1(ShortlistBoxComponent, datas);
+    }, (err) => {
 
-    // });
-    console.log(JSON.stringify(this.uploadedListArray));
+    });
   }
   upload() {
     this.appConfig.showLoader();

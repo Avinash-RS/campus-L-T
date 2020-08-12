@@ -225,6 +225,19 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/interview_panel_create`, formdata,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  // hr Interview panel bulk create
+  invBulk(formdata) {
+    return this.http.post(`${this.BASE_URL}/profile/interview_panel_create_only`, formdata,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // hr Interview panel bulk create
+  invBulkReports() {
+    return this.http.get(`${this.BASE_URL}/profile/getuploaded_errors_interview_panel`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   //hr user list
   hruserList() {
     return this.http.get(`${this.BASE_URL}/profile/interview_panel_users`,
