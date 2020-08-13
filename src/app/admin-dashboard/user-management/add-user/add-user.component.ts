@@ -214,6 +214,7 @@ export class AddUserComponent implements OnInit {
         },
         showConfirm: 'Confirm',
         interViwePanelAdd: 'add',
+        role: this.addUserForm.value.role == 'interview_panel' ? 'interview panel' : 'hr',
         userName: this.addUserForm.value.name,
         showCancel: 'Cancel',
         showOk: ''
