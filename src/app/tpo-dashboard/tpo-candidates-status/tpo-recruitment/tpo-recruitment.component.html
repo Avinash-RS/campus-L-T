@@ -104,7 +104,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="mail_sent">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail sent </th>
+        <th matTooltipPosition="above" matTooltip="Email had been sent to the candidate" mat-header-cell *matHeaderCellDef mat-sort-header> Mail sent </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.mail_sent == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -117,7 +117,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="registered">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Registered </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has set password and logged in" mat-header-cell *matHeaderCellDef mat-sort-header> Registered </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.registered == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -129,7 +129,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="profile_submit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Profile submit </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has submitted the profile details" mat-header-cell *matHeaderCellDef mat-sort-header> Profile submit </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.profile_submit == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -142,7 +142,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="profile_shortlist">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Profile shortlist </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted for assessment" mat-header-cell *matHeaderCellDef mat-sort-header> Profile shortlist </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.profile_shortlist == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -154,7 +154,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="assement">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has completed the assessment" mat-header-cell *matHeaderCellDef mat-sort-header> Assessment </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.assement == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -166,7 +166,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="assement_shortlist">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assessment shortlist </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted based on assessment score" mat-header-cell *matHeaderCellDef mat-sort-header> Assessment shortlist </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.assement_shortlist == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -178,7 +178,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="document_submit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Document submit </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has submitted documents" mat-header-cell *matHeaderCellDef mat-sort-header> Document submit </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.document_submit == 1">
             <img src="assets/images/002-tick1.svg" alt="">
@@ -190,7 +190,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="interview_shortlist">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview shortlist </th>
+        <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted for further consideration" mat-header-cell *matHeaderCellDef mat-sort-header> Interview shortlist </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element && element.interview_shortlist == 1">
             <img src="assets/images/002-tick1.svg" alt="">

@@ -5,9 +5,9 @@
       <button [ngClass]="notShowShortlist ? 'disabled' : ''" (click)="shortlist()" class="shortlist" mat-button><span
           class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span class="text">
           Shortlist</span></button>
-      <button [ngClass]="notShowReject ? 'disabled' : ''" (click)="reject()" class="reject" mat-button><span
+      <!-- <button [ngClass]="notShowReject ? 'disabled' : ''" (click)="reject()" class="reject" mat-button><span
           class="icon"><img src="assets/images/001-cancel_1.svg" alt="" srcset=""></span> <span class="text">
-          Reject</span></button>
+          Reject</span></button> -->
     </div>
   </div>
 
@@ -23,8 +23,8 @@
     <div class="right">
       <div class="buttons">
         <button [ngClass]="userList && userList.length === 0 ? 'disabled' : ''" (click)="applyCriteria()"
-          mat-raised-button><span>Apply
-            criteria </span> <span class="icon"><span class="material-icons">filter_alt</span></span></button>
+          mat-raised-button><span>Filter
+          </span> <span class="icon"><span class="material-icons">filter_alt</span></span></button>
       </div>
     </div>
   </div>
