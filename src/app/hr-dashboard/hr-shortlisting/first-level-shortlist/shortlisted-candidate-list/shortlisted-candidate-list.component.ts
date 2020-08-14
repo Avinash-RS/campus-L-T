@@ -29,9 +29,10 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   searchInput: any;
   desc = false;
   sortedCol;
-
+  queryObject: any;
   // MatPaginator Output
   pageEvent: PageEvent;
+  overallSelect = false;
 
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
@@ -55,7 +56,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   filteredBoolean: boolean;
   rejecting: boolean;
   filter: boolean;
-  apiDataTop: { start: any; counts: any; order_by: string; order_type: string; search: any; };
+  apiDataTop: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -77,13 +78,23 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     this.activatedRoute.queryParams.subscribe(params => {
       console.log('params', params);
       if (params && params['data'] === 'filtered') {
+        console.log(JSON.parse(this.appConfig.getLocalData('savedQuery')));
         this.filter = true;
+        this.queryObject = JSON.parse(this.appConfig.getLocalData('savedQuery'));
         this.apiDataTop = {
           start: this.apiPageIndex.toString(),
           counts: this.listCount.toString(),
           order_by: '',
           order_type: '',
-          search: this.searchInput ? this.searchInput : ''
+          search: this.searchInput ? this.searchInput : '',
+          educational_level: this.queryObject['educational_level'],
+          field_backlogs: this.queryObject['field_backlogs'],
+          field_discipline: this.queryObject['field_discipline'],
+          field_dob: this.queryObject['field_dob'],
+          field_gender: this.queryObject['field_gender'],
+          field_institute: this.queryObject['field_institute'],
+          field_specification: this.queryObject['field_specification'],
+          user_id: this.queryObject['user_id']
         };
         this.getUsersList('filtered');
       } else {
@@ -116,14 +127,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
     console.log(apiData);
 
-    this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
-      this.appConfig.setLocalData('FinalshortListCheckedCandidates', JSON.stringify(dummy));
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA, { data: apiData['user_id'].length });
-    }, (err) => {
-
-    });
+    //   this.appConfig.setLocalData('FinalshortListCheckedCandidates', JSON.stringify(dummy));
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA, { data: this.length });
   }
   tConvert(time) {
     // Check correct time format and split into components
@@ -162,6 +167,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   shortlist() {
+    console.log(this.overallSelect);
+
     const data = {
       shortlist: 'first'
     };
@@ -186,14 +193,16 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         apiUserList.push(element['uid']);
       }
     });
-    const apiData = {
-      user_id: apiUserList,
+    let apiData;
+    apiData = {
+      user_id: this.overallSelect ? [] : apiUserList,
       folder_name: apiDatas && apiDatas['folderName'] ? apiDatas['folderName'] : '',
       shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : '',
       dates: currentDate,
       times: time,
       field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
-      shortlistby: this.appConfig.getLocalData('username')
+      shortlistby: this.appConfig.getLocalData('username'),
+      select: this.overallSelect ? this.queryObject : ''
     };
     this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
       console.log(data);
@@ -202,9 +211,9 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       const datas = {
         first_level_shortlist_success: 'first_level_shortlist_success'
       };
+      this.overallSelect = false;
       this.openDialog1(ShortlistBoxComponent, datas);
-      this.appConfig.clearLocalDataOne('shortListCheckedCandidates');
-      this.appConfig.clearLocalDataOne('FinalshortListCheckedCandidates');
+      this.appConfig.clearLocalDataOne('savedQuery');
 
     }, (err) => {
 
@@ -337,6 +346,16 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   // To get all users
   getPageList(apiData) {
+    if (this.filter) {
+      apiData.educational_level = this.queryObject['educational_level'];
+      apiData.field_backlogs = this.queryObject['field_backlogs'];
+      apiData.field_discipline = this.queryObject['field_discipline'];
+      apiData.field_dob = this.queryObject['field_dob'];
+      apiData.field_gender = this.queryObject['field_gender'];
+      apiData.field_institute = this.queryObject['field_institute'];
+      apiData.field_specification = this.queryObject['field_specification'];
+      apiData.user_id = this.queryObject['user_id'];
+    }
     // const apiData = {
     //   start: this.apiPageIndex.toString(),
     //   counts: this.listCount.toString()
@@ -432,6 +451,11 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
           }
         );
       });
+      // if (this.filter) {
+      //   align.forEach(element => {
+      //     element.checked = true;
+      //   });
+      // }
       console.log('align', align.length);
       this.fullUserList = align ? align : [];
       this.userList = align ? align : [];
@@ -545,48 +569,13 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
           }
         );
       });
-      let filteredArray = [];
-      let count = 0;
-      console.log('align', align.length);
-
-      if (filter && this.appConfig.getLocalData('FinalshortListCheckedCandidates')) {
-        const localUID = JSON.parse(this.appConfig.getLocalData('FinalshortListCheckedCandidates'));
-        console.log('co', localUID.length);
-        if (localUID && localUID.length === align.length) {
-          align.forEach(element => {
-            if (element && element['uid']) {
-              element['checked'] = true;
-              count = count + 1;
-              filteredArray.push(element);
-            }
-          });
-          console.log('co', count, align.length, filteredArray.length);
-        } else {
-          if (localUID && localUID.length > 0) {
-            align.forEach(element => {
-              localUID.forEach(ele => {
-                if (ele && element && element['uid'] === ele) {
-                  element['checked'] = true;
-                  count = count + 1;
-                  filteredArray.push(element);
-                }
-              });
-            });
-            console.log('co', count, align.length, filteredArray.length);
-          }
-        }
-      } else {
-        filteredArray = align;
-      }
+      // if (this.filter) {
+      //   align.forEach(element => {
+      //     element.checked = true;
+      //   });
+      // }
       this.fullUserList = align ? align : [];
-      if (filter) {
-        this.filteredBoolean = true;
-        this.userList = filteredArray ? filteredArray : [];
-        console.log(this.userList);
-
-      } else {
-        this.userList = align ? align : [];
-      }
+      this.userList = align ? align : [];
       // this.totalCandidates = this.fullUserList.length;
       this.totalCandidates = this.length;
       this.toShoworNotShowFilter();

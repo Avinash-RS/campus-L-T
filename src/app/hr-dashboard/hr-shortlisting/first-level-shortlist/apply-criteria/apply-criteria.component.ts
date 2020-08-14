@@ -149,13 +149,13 @@ export class ApplyCriteriaComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
 
       this.totalCandidates = params && params['data'] ? params['data'] : '';
-      this.filteredCandidates = params && params['data'] ? params['data'] : '';
+      this.filteredCandidates = params && params['data'] ? 0 : 0;
       let localUID;
-      if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
-        localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
-        this.totalCandidates = localUID.length;
-        this.filteredCandidates = localUID.length;
-      }
+      // if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+      //   localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+      //   this.totalCandidates = localUID.length;
+      //   this.filteredCandidates = localUID.length;
+      // }
     });
   }
 
@@ -238,36 +238,38 @@ export class ApplyCriteriaComponent implements OnInit {
       to_date: this.getAPIDateFormat(this.dateToShow)
     }];
 
-    if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
-      localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
-    }
+    // if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+    //   localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+    // }
 
-    const apiData = {
-      user_id: localUID,
+    const apiDatas = {
+      user_id: [],
       field_gender: genderAPIData,
       field_institute: instituteAPIData,
       field_discipline: disciplineAPIData,
       field_specification: specializationAPIData,
       field_backlogs: backlogsAPIData,
       field_dob: dobAPIData,
-      educational_level: educationData
+      educational_level: educationData,
+      start: '1',
+      counts: '50'
     };
-    console.log(apiData);
-    this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
+    console.log(apiDatas);
+    this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
       this.appConfig.hideLoader();
       console.log(data);
-      const apiData = {
-        user_id: []
-      };
-      if (data) {
-        data.forEach(element => {
-          if (element['uuid']) {
-            apiData['user_id'].push(element['uuid']);
-          }
-        });
-      }
+      // const apiData = {
+      //   user_id: []
+      // };
+      // if (data) {
+      //   data.forEach(element => {
+      //     if (element['uuid']) {
+      //       apiData['user_id'].push(element['uuid']);
+      //     }
+      //   });
+      // }
       // this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
-      this.filteredCandidates = data.length;
+      this.filteredCandidates = data[1] ? data[1] : '0';
       console.log('ada', this.filteredCandidates);
 
 
@@ -342,12 +344,24 @@ export class ApplyCriteriaComponent implements OnInit {
       to_date: this.getAPIDateFormat(this.dateToShow)
     }];
 
-    if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
-      localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
-    }
+    // if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
+    //   localUID = JSON.parse(this.appConfig.getLocalData('shortListCheckedCandidates'));
+    // }
 
-    const apiData = {
-      user_id: localUID,
+    const apiDatas = {
+      user_id: [],
+      field_gender: genderAPIData,
+      field_institute: instituteAPIData,
+      field_discipline: disciplineAPIData,
+      field_specification: specializationAPIData,
+      field_backlogs: backlogsAPIData,
+      field_dob: dobAPIData,
+      educational_level: educationData,
+      start: '1',
+      counts: '50'
+    };
+    const query = {
+      user_id: [],
       field_gender: genderAPIData,
       field_institute: instituteAPIData,
       field_discipline: disciplineAPIData,
@@ -356,21 +370,21 @@ export class ApplyCriteriaComponent implements OnInit {
       field_dob: dobAPIData,
       educational_level: educationData
     };
-    console.log(apiData);
-    this.adminService.submitAllFilters(apiData).subscribe((data: any) => {
+    console.log(apiDatas);
+    this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       console.log(data);
-      const apiData = {
-        user_id: []
-      };
-      if (data) {
-        data.forEach(element => {
-          if (element['uuid']) {
-            apiData['user_id'].push(element['uuid']);
-          }
-        });
-      }
-      this.appConfig.setLocalData('FinalshortListCheckedCandidates', JSON.stringify(apiData['user_id']));
+      // const apiData = {
+      //   user_id: []
+      // };
+      // if (data) {
+      //   data.forEach(element => {
+      //     if (element['uuid']) {
+      //       apiData['user_id'].push(element['uuid']);
+      //     }
+      //   });
+      // }
+      this.appConfig.setLocalData('savedQuery', JSON.stringify(query));
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_LIST, { data: 'filtered' });
 
     }, (err) => {

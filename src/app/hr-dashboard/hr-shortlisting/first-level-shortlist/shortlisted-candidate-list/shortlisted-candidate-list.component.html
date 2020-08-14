@@ -2,7 +2,12 @@
 
   <div class="shortlist-header">
     <div class="buttons">
-      <button [ngClass]="notShowShortlist ? 'disabled' : ''" (click)="shortlist()" class="shortlist" mat-button><span
+      <div *ngIf="filter" class="check">
+        <mat-checkbox style="height: 23px;" [(ngModel)]="overallSelect"
+        [checked]="overallSelect"> All Filtered Candidates
+      </mat-checkbox>
+    </div>
+      <button [ngClass]="notShowShortlist && !overallSelect ? 'disabled' : ''" (click)="shortlist()" class="shortlist" mat-button><span
           class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span class="text">
           Shortlist</span></button>
       <!-- <button [ngClass]="notShowReject ? 'disabled' : ''" (click)="reject()" class="reject" mat-button><span
@@ -13,15 +18,26 @@
 
   <div class="criteria-header">
     <div class="left">
-      <div class="text">
+      <div class="text" *ngIf="!filter">
         <span>Total number of candidates: </span> <span class="count">{{totalCandidates}}</span>
         <span style="margin: 0 0 0 1em;">Selected number of candidates: </span> <span
           class="count">{{selectedCandidates}} of {{totalCandidates}}</span>
-
       </div>
+      <div class="text" *ngIf="filter">
+          <span>Total Selected number of candidates: </span> <span
+            class="count">{{selectedCandidates}} of {{totalCandidates}}</span>
+        </div>
     </div>
     <div class="right">
       <div class="buttons">
+          <div class="search-icon">
+              <input matInput [(ngModel)]="searchInput" placeholder="Search….">
+              <img src="assets/images/feather-search.svg" alt="" srcset="">
+            </div>
+            <div class="buttons">
+                <button mat-raised-button (click)="applySearch()"><span>Search </span></button>
+              </div>
+
         <button [ngClass]="userList && userList.length === 0 ? 'disabled' : ''" (click)="applyCriteria()"
           mat-raised-button><span>Filter
           </span> <span class="icon"><span class="material-icons">filter_alt</span></span></button>
@@ -32,7 +48,7 @@
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <!-- <mat-form-field>
           <mat-label>Filter</mat-label> -->
-    <div class="search-bar">
+    <div class="search-bar" style="display: none;">
       <div class="search-icon">
         <input matInput [(ngModel)]="searchInput" placeholder="Search….">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
