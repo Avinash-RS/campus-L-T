@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog, PageEvent } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -19,6 +19,20 @@ import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile
 })
 export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit {
 
+  // MatPaginator Inputs
+  length;
+  pageSize;
+  apiPageIndex: any = 1;
+  listCount: any = 50;
+  normal = true;
+  asc = false;
+  searchInput: any;
+  desc = false;
+  sortedCol;
+
+  // MatPaginator Output
+  pageEvent: PageEvent;
+
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
   displayedColumns: any[] = ['uid', 'tag_name', 'name', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing', 'checked'];
@@ -27,6 +41,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('myDiv', { static: false }) private myDiv: ElementRef;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
@@ -40,6 +55,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   filteredBoolean: boolean;
   rejecting: boolean;
   filter: boolean;
+  apiDataTop: { start: any; counts: any; order_by: string; order_type: string; search: any; };
 
   constructor(
     private appConfig: AppConfigService,
@@ -56,14 +72,29 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     // this.getUsersList();
   }
 
+
   getURLParam() {
     this.activatedRoute.queryParams.subscribe(params => {
       console.log('params', params);
       if (params && params['data'] === 'filtered') {
         this.filter = true;
+        this.apiDataTop = {
+          start: this.apiPageIndex.toString(),
+          counts: this.listCount.toString(),
+          order_by: '',
+          order_type: '',
+          search: this.searchInput ? this.searchInput : ''
+        };
         this.getUsersList('filtered');
       } else {
         this.filter = false;
+        this.apiDataTop = {
+          start: this.apiPageIndex.toString(),
+          counts: this.listCount.toString(),
+          order_by: '',
+          order_type: '',
+          search: this.searchInput ? this.searchInput : ''
+        };
         this.getUsersList();
       }
     });
@@ -212,15 +243,226 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     }
   }
 
+
+  pageChanged(event) {
+    if (event.previousPageIndex > event.pageIndex) {
+      console.log('pre', event.pageIndex);
+      // previous button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+    }
+    if (event.previousPageIndex < event.pageIndex) {
+      console.log('next', event.pageIndex);
+      // next button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+    }
+    if (event.pageSize !== this.listCount) {
+      this.listCount = event.pageSize;
+      this.apiPageIndex = 1;
+      this.getURLParam();
+    }
+    console.log(event);
+  }
+
+  sorting(column, columnSelect) {
+    if (this.sortedCol !== columnSelect) {
+      this.normal = true;
+      this.asc = false;
+      this.desc = false;
+    }
+    this.sortedCol = columnSelect;
+    if (this.normal) {
+      this.normal = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: column,
+        order_type: 'asc',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+      return this.asc = true;
+    }
+    if (this.asc) {
+      this.asc = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: column,
+        order_type: 'desc',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+      return this.desc = true;
+    }
+    if (this.desc) {
+      this.desc = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+      return this.normal = true;
+    }
+  }
+
+  applySearch() {
+    const apiData = {
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
+    };
+    this.getPageList(apiData);
+  }
+
   // To get all users
-  getUsersList(filter?: any) {
-    console.log('filter', filter);
-    this.adminService.getCandidateListForShortlist().subscribe((datas: any) => {
+  getPageList(apiData) {
+    // const apiData = {
+    //   start: this.apiPageIndex.toString(),
+    //   counts: this.listCount.toString()
+    // };
+    console.log('apiData', apiData);
+    this.adminService.getCandidateListForShortlist(apiData).subscribe((datas: any) => {
       console.log('api', datas);
       this.filteredBoolean = false;
       const align = [];
       let ApiCummulativeBacklog = 0;
-      datas.forEach(element => {
+      this.length = datas[1];
+      const newData = datas[0] ? datas[0] : [];
+      newData.forEach(element => {
+        const uid = element && element['uuid'] ? element['uuid'] : '-';
+        const name = element && element['name'] ? element['name'] : '-';
+        const gender = element && element['field_gender'] ? element['field_gender'] : '-';
+        const tag_name = element && element['tag_name'] ? element['tag_name'] : '-';
+        const dob = element && element['field_dob'] ? this.getDOBFormat(element['field_dob']) : '-';
+        let institute = '-';
+        let level = '-';
+        let percentage = '-';
+        let backlog = '-';
+        let dateofpassing = '-';
+        const checked = false;
+        if (element && element['education'] && element['education'].length > 0) {
+          let cummulativeBacklog = 0;
+          element['education'].forEach(ele => {
+            if (ele && ele['field_level'] === 'Other' && (level !== 'SSLC' && level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+              institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
+              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
+              backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
+              dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
+              cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
+            }
+            if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+              institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
+              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
+              backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
+              dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
+              cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
+            }
+            if (ele && ele['field_level'] === 'HSC' && (level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+              institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
+              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
+              backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
+              dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
+              cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
+            }
+            if (ele && ele['field_level'] === 'Diplomo' && (level !== 'Under Graduation' && level !== 'Post Graduation')) {
+              institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
+              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
+              backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
+              dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
+              cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
+            }
+            if (ele && ele['field_level'] === 'Under Graduation' && (level !== 'Post Graduation')) {
+              institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
+              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
+              backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
+              dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
+              cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
+            }
+            if (ele && ele['field_level'] === 'Post Graduation') {
+              institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
+              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
+              backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
+              dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
+              cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
+            }
+          });
+          ApiCummulativeBacklog = cummulativeBacklog;
+        }
+
+        align.push(
+          {
+            uid,
+            name,
+            gender,
+            tag_name,
+            dob,
+            institute,
+            level,
+            percentage,
+            backlog: ApiCummulativeBacklog,
+            dateofpassing,
+            checked: false
+          }
+        );
+      });
+      console.log('align', align.length);
+      this.fullUserList = align ? align : [];
+      this.userList = align ? align : [];
+      // this.totalCandidates = this.fullUserList.length;
+      this.totalCandidates = this.length;
+      this.toShoworNotShowFilter();
+      this.dataSource = new MatTableDataSource(this.userList);
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+      this.appConfig.hideLoader();
+    }, (err) => {
+    });
+  }
+
+  // To get all users
+  getUsersList(filter?: any) {
+    console.log('filter', filter);
+    // const apiData = {
+    //   start: this.apiPageIndex.toString(),
+    //   counts: this.listCount.toString()
+    // };
+    console.log('apiData', this.apiDataTop);
+    this.adminService.getCandidateListForShortlist(this.apiDataTop).subscribe((datas: any) => {
+      console.log('api', datas);
+      this.filteredBoolean = false;
+      const align = [];
+      let ApiCummulativeBacklog = 0;
+      this.length = datas[1];
+      this.paginator['_pageIndex'] = 0;
+      const newData = datas[0] ? datas[0] : [];
+      newData.forEach(element => {
         const uid = element && element['uuid'] ? element['uuid'] : '-';
         const name = element && element['name'] ? element['name'] : '-';
         const gender = element && element['field_gender'] ? element['field_gender'] : '-';
@@ -345,16 +587,29 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       } else {
         this.userList = align ? align : [];
       }
-      this.totalCandidates = this.fullUserList.length;
+      // this.totalCandidates = this.fullUserList.length;
+      this.totalCandidates = this.length;
       this.toShoworNotShowFilter();
       this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.length = datas[1];
+      console.log(this.paginator);
+      this.triggerFalseClick();
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+      // this.length = datas[1];
       this.appConfig.hideLoader();
     }, (err) => {
     });
   }
 
+  triggerFalseClick() {
+    if (this.myDiv) {
+      console.log(this.myDiv);
+
+      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+      el.focus();
+    }
+  }
   selectAllCheckbox(checked) {
     console.log(this.dataSource);
 
@@ -438,8 +693,10 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      // this.triggerFalseClick();
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+      this.length = this.length;
     }
   }
 
@@ -544,6 +801,13 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.apiDataTop = {
+        start: '1',
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
       this.getUsersList();
       if (result) {
       }

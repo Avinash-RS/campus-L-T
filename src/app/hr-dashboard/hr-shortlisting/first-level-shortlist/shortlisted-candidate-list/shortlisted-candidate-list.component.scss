@@ -94,7 +94,10 @@
     /* Structure */
     .search-bar {
       margin: 0em 1em 0em 1em;
-      text-align: right;
+      align-items: center;
+      // text-align: right;
+      display: flex;
+      justify-content: flex-end;
       .search-icon {
         display: inline-flex;
         align-items: center;
@@ -132,6 +135,21 @@
           color: $black-1;
           opacity: 0.6;
           font-size: 12px;
+        }
+      }
+      .buttons {
+        margin: 0 0 0 1em;
+        button {
+          display: flex;
+          height: 24px;
+          align-items: center;
+          font-weight: 100;
+          color: $white;
+          font-size: 13px;
+          padding: 4px 6px;
+          justify-content: center;
+          background: $secondary 0% 0% no-repeat padding-box;
+          box-shadow: $shadow-light-black;
         }
       }
     }

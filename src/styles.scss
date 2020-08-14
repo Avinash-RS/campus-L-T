@@ -1532,6 +1532,16 @@ button:hover {
     }
   }
 }
+.sort {
+  width: 10px;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
 // Scrollbar
 /* width */
 ::-webkit-scrollbar {
