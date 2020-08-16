@@ -76,7 +76,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`,
             component: FirstLevelShortlistComponent,
             data: {
-              breadcrumb: '1st Shortlist'
+              breadcrumb: '1st level Shortlist'
             },
             children: [
               {
@@ -104,7 +104,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`,
             component: SecondLevelShortlistComponent,
             data: {
-              breadcrumb: '2nd Shortlist'
+              breadcrumb: '2nd level Shortlist'
             },
             children: [
               {

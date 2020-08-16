@@ -39,7 +39,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class HrRecruitmentComponent implements OnInit {
+export class HrRecruitmentComponent implements OnInit, AfterViewInit {
 
   displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement', 'assement_shortlist', 'document_submit', 'interview_shortlist'];
   dataSource: MatTableDataSource<any>;
@@ -142,6 +142,11 @@ export class HrRecruitmentComponent implements OnInit {
 
       if (data) {
         this.userList = data ? data : [];
+        let count = 0;
+        this.userList.forEach(element => {
+          count = count + 1;
+          element['uid'] = count;
+        });
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
