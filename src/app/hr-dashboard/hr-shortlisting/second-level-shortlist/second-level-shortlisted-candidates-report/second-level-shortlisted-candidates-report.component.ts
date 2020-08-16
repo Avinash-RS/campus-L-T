@@ -32,6 +32,10 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   nameOfAssessment: any;
   selectedCandidates: any;
   cutOff: any;
+  cutOff1: any;
+  cutOff2: any;
+  cutOff3: any;
+  cutOff4: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -141,7 +145,11 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
       let sno = 0;
       datas.forEach((element, i) => {
         if (element && i == '0') {
-          this.cutOff = element && element['cutoff'] ? element['cutoff'] : '-';
+          this.cutOff = element && element['domain_percentage_shortlist'] ? element['domain_percentage_shortlist'] : '-';
+          this.cutOff1 = element && element['verbal_percentage_shortlist'] ? element['verbal_percentage_shortlist'] : '-';
+          this.cutOff2 = element && element['analytical_percentage_shortlist'] ? element['analytical_percentage_shortlist'] : '-';
+          this.cutOff3 = element && element['quantitative_percentage_shortlist'] ? element['quantitative_percentage_shortlist'] : '-';
+          this.cutOff4 = element && element['marks_valid_shortlist'] ? element['marks_valid_shortlist'] : '-';
         }
         sno = sno + 1;
         const uid = element && element['uuid'] ? element['uuid'] : '-';

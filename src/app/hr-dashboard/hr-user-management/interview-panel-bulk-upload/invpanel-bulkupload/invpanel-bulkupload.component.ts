@@ -128,7 +128,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
       const datas = {
         invpanel_bulk_upload_ok: 'candidate-bulk',
         totalLength: apiData ? apiData.length : 0,
-        errorLength: data ? data.length : 0,
+        errorLength: data && data.length > 0 ? data.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
     }, (err) => {

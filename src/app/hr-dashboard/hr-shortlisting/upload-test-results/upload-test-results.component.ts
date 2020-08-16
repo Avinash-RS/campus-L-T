@@ -135,13 +135,26 @@ export class UploadTestResultsComponent implements OnInit {
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
       console.log(this.SavedData);
 
-      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 7 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Assessment Name') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Assessment Date & Time') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'Shortlist Name') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][4] && this.SavedData[0][4].trim() === 'Total Marks') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][5] && this.SavedData[0][5].trim() === 'Marks') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Percentage')) {
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length >= 19 && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Email') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'Assessment Name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][4] && this.SavedData[0][4].trim() === 'Assessment Date & Time') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][5] && this.SavedData[0][5].trim() === 'Shortlist Name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Total Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][8] && this.SavedData[0][8].trim() === 'Percentage') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][9] && this.SavedData[0][9].trim() === 'Total Domain Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][10] && this.SavedData[0][10].trim() === 'Domain Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][11] && this.SavedData[0][11].trim() === 'Domain Percentage') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][12] && this.SavedData[0][12].trim() === 'Total Verbal Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][13] && this.SavedData[0][13].trim() === 'Verbal Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][14] && this.SavedData[0][14].trim() === 'Verbal Percentage') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][15] && this.SavedData[0][15].trim() === 'Total Analytical Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][16] && this.SavedData[0][16].trim() === 'Analytical Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][17] && this.SavedData[0][17].trim() === 'Analytical Percentage') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][18] && this.SavedData[0][18].trim() === 'Total Quantitative Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][19] && this.SavedData[0][19].trim() === 'Quantitative Marks') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][20] && this.SavedData[0][20].trim() === 'Quantitative Percentage')
+      ) {
         this.appConfig.hideLoader();
         this.totalCount(this.SavedData);
       } else {
@@ -158,30 +171,69 @@ export class UploadTestResultsComponent implements OnInit {
     data.forEach((dup, i) => {
       // tslint:disable-next-line: variable-name
       let email; let date_times; let assement_name; let shortlist_name; let total_marks; let marks; let percentage;
+      let total_domain_marks; let domain_marks; let domain_percentage; let total_verbal_marks; let verbal_marks; let verbal_percentage; let total_analytical_mark;
+      let analytical_mark; let analytical_percentage; let total_quantitive_mark; let quantitive_mark; let quantitative_percentage;
+
       if (i > 0 && dup) {
         count += 1;
         dup.forEach((element, index) => {
-          if (index < 7) {
-            if (index == 0) {
+          if (index < 21) {
+            if (index == 2) {
               email = element ? element : '';
             }
-            if (index == 1) {
+            if (index == 3) {
               assement_name = element ? element : '';
             }
-            if (index == 2) {
+            if (index == 4) {
               date_times = element ? element : '';
             }
-            if (index == 3) {
+            if (index == 5) {
               shortlist_name = element ? element : '';
             }
-            if (index == 4) {
+            if (index == 6) {
               total_marks = element ? element : '';
             }
-            if (index == 5) {
+            if (index == 7) {
               marks = element ? element : '';
             }
-            if (index == 6) {
+            if (index == 8) {
               percentage = element ? element : '';
+            }
+            if (index == 9) {
+              total_domain_marks = element ? element : '';
+            }
+            if (index == 10) {
+              domain_marks = element ? element : '';
+            }
+            if (index == 11) {
+              domain_percentage = element ? element : '';
+            }
+            if (index == 12) {
+              total_verbal_marks = element ? element : '';
+            }
+            if (index == 13) {
+              verbal_marks = element ? element : '';
+            }
+            if (index == 14) {
+              verbal_percentage = element ? element : '';
+            }
+            if (index == 15) {
+              total_analytical_mark = element ? element : '';
+            }
+            if (index == 16) {
+              analytical_mark = element ? element : '';
+            }
+            if (index == 17) {
+              analytical_percentage = element ? element : '';
+            }
+            if (index == 18) {
+              total_quantitive_mark = element ? element : '';
+            }
+            if (index == 19) {
+              quantitive_mark = element ? element : '';
+            }
+            if (index == 20) {
+              quantitative_percentage = element ? element : '';
             }
           }
         });
@@ -192,7 +244,19 @@ export class UploadTestResultsComponent implements OnInit {
           shortlist_name: shortlist_name ? shortlist_name : '',
           total_marks: total_marks ? total_marks : 0,
           marks: marks ? marks : 0,
-          percentage: percentage ? percentage : 0
+          percentage: percentage ? percentage : 0,
+          total_domain_marks: total_domain_marks ? total_domain_marks : 0,
+          domain_marks: domain_marks ? domain_marks : 0,
+          domain_percentage: domain_percentage ? domain_percentage : 0,
+          total_verbal_marks: total_verbal_marks ? total_verbal_marks : 0,
+          verbal_marks: verbal_marks ? verbal_marks : 0,
+          verbal_percentage: verbal_percentage ? verbal_percentage : 0,
+          total_analytical_mark: total_analytical_mark ? total_analytical_mark : 0,
+          analytical_mark: analytical_mark ? analytical_mark : 0,
+          analytical_percentage: analytical_percentage ? analytical_percentage : 0,
+          total_quantitive_mark: total_quantitive_mark ? total_quantitive_mark : 0,
+          quantitive_mark: quantitive_mark ? quantitive_mark : 0,
+          quantitative_percentage: quantitative_percentage ? quantitative_percentage : 0
         };
         if ((email && email.toString().trim()) || (assement_name && assement_name.toString().trim()) || (date_times && date_times.toString().trim()) || (shortlist_name && shortlist_name.toString().trim()) || (total_marks && total_marks.toString().trim()) || (marks && marks.toString().trim()) || (percentage && percentage.toString().trim())) {
           listArray.push(value);

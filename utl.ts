@@ -1,8 +1,6 @@
-ramjai607@gmail.com
+http://udapqa.southindia.cloudapp.azure.com/d8cintana2/profile/getassement_candidate_shortlist
 
-http://udapqa.southindia.cloudapp.azure.com/d8cintana2/api/bulk-user/registration?_format=_json
 
-http://udapqa.southindia.cloudapp.azure.com/d8cintana2/profile/changecertificate
 
 {
   "types:"education or resume or other or certificate",

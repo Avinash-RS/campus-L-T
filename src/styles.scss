@@ -1209,14 +1209,12 @@ button:focus {
       flex-flow: row-reverse;
     }
 
-    .mat-column-percentage {
-      width: 150px !important;
-      text-align: center;
-      .mat-sort-header-container {
-        justify-content: center !important;
-      }
-    }
-    .mat-column-marks {
+    .mat-column-marks,.mat-column-percentage,
+    .mat-column-domain_marks,.mat-column-domain_percentage,
+    .mat-column-verbal_marks,.mat-column-verbal_percentage,
+    .mat-column-analytical_mark,.mat-column-analytical_percentage,
+    .mat-column-quantitive_mark,.mat-column-quantitative_percentage
+   {
       text-align: center;
       width: 150px !important;
       .mat-sort-header-container {
@@ -1232,7 +1230,8 @@ button:focus {
         background: $white-primary 0% 0% no-repeat padding-box;
         box-shadow: 0px 0px 5px #00000029;
         border: 0.5px solid #d1d1d1;
-        width: 50%;
+        // width: 50%;
+        max-width: 120px;
         display: flex;
         justify-content: center;
         border-radius: 4px;
@@ -1254,9 +1253,10 @@ button:focus {
           border: 0.5px solid #5555556e;
           height: 100%;
           font-size: 13px;
-          width: 50%;
+          // width: 50%;
+          max-width: 70px;
           color: $header-blue;
-          padding: 4px 8px;
+          padding: 4px 4px;
           box-sizing: border-box;
         }
       }
@@ -1264,9 +1264,16 @@ button:focus {
     tr.mat-header-row {
       height: auto !important;
       white-space: nowrap;
-      .mat-column-marks,
-      .mat-column-percentage,
-      .mat-column-third-header-row-second-group {
+      background: $blue-3 !important;
+      .mat-column-marks,.mat-column-percentage,
+      .mat-column-domain_marks,.mat-column-domain_percentage,
+      .mat-column-verbal_marks,.mat-column-verbal_percentage,
+      .mat-column-analytical_mark,.mat-column-analytical_percentage,
+      .mat-column-quantitive_mark,.mat-column-quantitative_percentage,
+      .mat-column-third-header-row-second-group,.mat-column-third-header-row-third-group,
+      .mat-column-third-header-row-third-group,.mat-column-third-header-row-fourth-group,
+      .mat-column-third-header-row-fifth-group,.mat-column-third-header-row-sixth-group
+      {
         color: $primary !important;
         font-size: 12.3px !important;
         .mat-sort-header-container {

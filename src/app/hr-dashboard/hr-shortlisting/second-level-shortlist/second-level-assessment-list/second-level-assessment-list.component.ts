@@ -41,6 +41,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
 
   ngOnInit() {
     this.getUsersList();
+    // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, 'assement_name' ? {data: 'assement_name'} : {data: 'none'});
   }
 
   getDateFormat(date) {

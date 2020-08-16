@@ -90,7 +90,11 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
       uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
       emai_sent: result['type'] === 'yes' ? '1' : '0',
       assement_name: this.nameOfAssessment,
-      shortlist_mark: this.appConfig.getLocalData('secondLevelFilter') ? this.appConfig.getLocalData('secondLevelFilter') : ''
+      domain_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter') ? this.appConfig.getLocalData('secondLevelFilter') : '',
+      verbal_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter1') ? this.appConfig.getLocalData('secondLevelFilter1') : '',
+      analytical_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter2') ? this.appConfig.getLocalData('secondLevelFilter2') : '',
+      quantitative_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter3') ? this.appConfig.getLocalData('secondLevelFilter3') : '',
+      marks_valid_shortlist: this.appConfig.getLocalData('secondLevelFilter4') ? this.appConfig.getLocalData('secondLevelFilter4') : '',
     };
     this.userListing.forEach(element => {
       if (element['candidate_id']) {
@@ -210,7 +214,11 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
 
     dialogRef.afterClosed().subscribe(result => {
       this.appConfig.clearLocalDataOne('secondLevelFilter');
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, {data: this.nameOfAssessment ? this.nameOfAssessment : 'none'});
+      this.appConfig.clearLocalDataOne('secondLevelFilter1');
+      this.appConfig.clearLocalDataOne('secondLevelFilter2');
+      this.appConfig.clearLocalDataOne('secondLevelFilter3');
+      this.appConfig.clearLocalDataOne('secondLevelFilter4');
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, { data: this.nameOfAssessment ? this.nameOfAssessment : 'none' });
       if (result) {
       }
     });

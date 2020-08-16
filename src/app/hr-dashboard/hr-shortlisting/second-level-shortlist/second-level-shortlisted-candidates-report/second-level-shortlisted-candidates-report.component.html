@@ -1,12 +1,26 @@
 <div class="shortlisted-report-second-level">
-    <app-shared-sub-header-second-level-shortlist *ngIf="assessmentName" [selectedCandidates]="selectedCandidates"
+  <app-shared-sub-header-second-level-shortlist *ngIf="assessmentName" [selectedCandidates]="selectedCandidates"
     [details]="assessmentName ? assessmentName : ''"></app-shared-sub-header-second-level-shortlist>
   <div class="cutOff">
     <div class="head">Shortlist cutoff marks :&#160;</div>
     <div class="values">
-      <span *ngFor="let dup of [0]; let i = index">Total score {{i + 1}}:&#160;
-      <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff}}
-      </span></div>
+      <span>Domain score :&#160;
+        <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff}}
+      </span>
+      <span>Verbal score :&#160;
+        <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff1}}
+      </span>
+      <span>Analytical score :&#160;
+        <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff2}}
+      </span>
+      <span>Quantitative score :&#160;
+        <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff3}}
+      </span>
+      <span>Total score :&#160;
+        <img style="margin-right: 4px; margin-left: 4px;" src="assets/images/small_greaterthan.svg" alt=""> {{cutOff4}}
+      </span>
+
+    </div>
   </div>
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : 'hide'">
     <!-- <mat-form-field>
@@ -84,7 +98,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-      [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
   </div>
@@ -93,6 +107,6 @@
   </div>
 
   <div class="submit-wrapper" *ngIf="userList && userList.length > 0">
-      <button (click)="downloadReport()" class="upload" mat-raised-button>Download Shortlist report</button>
-    </div>
+    <button (click)="downloadReport()" class="upload" mat-raised-button>Download Shortlist report</button>
   </div>
+</div>

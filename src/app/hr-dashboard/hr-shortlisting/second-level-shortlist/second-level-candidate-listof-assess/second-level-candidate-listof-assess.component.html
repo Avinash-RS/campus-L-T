@@ -25,15 +25,67 @@
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
           <!-- Position Column -->
-          <ng-container matColumnDef="uid">
+          <ng-container matColumnDef="uid" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header>S. no </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{element.uid ? element.uid : '-'}} </td>
           </ng-container>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="candidate_id">
+          <ng-container matColumnDef="candidate_id" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate id </th>
             <td mat-cell *matCellDef="let element"> {{element.candidate_id ? element.candidate_id : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="domain_marks">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.domain_marks ? (element.domain_marks) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="domain_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.domain_percentage ? (element.domain_percentage) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="verbal_marks">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Verbal marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.verbal_marks ? (element.verbal_marks) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="verbal_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Verbal percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.verbal_percentage ? (element.verbal_percentage) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="analytical_mark">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Analytical marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.analytical_mark ? (element.analytical_mark) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="analytical_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Analytical percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.analytical_percentage ? (element.analytical_percentage) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="quantitive_mark">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantitative marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.quantitive_mark ? (element.quantitive_mark) : '-'}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="quantitative_percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantitative percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.quantitative_percentage ? (element.quantitative_percentage) : '-'}} </td>
           </ng-container>
 
           <!-- Symbol Column -->
@@ -50,7 +102,7 @@
           </ng-container>
 
           <!-- Header row first group -->
-          <ng-container matColumnDef="header-row-first-group">
+          <ng-container matColumnDef="header-row-first-group" sticky>
             <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
               &#160;
             </th>
@@ -58,21 +110,70 @@
 
           <!-- Header row second group -->
           <ng-container matColumnDef="header-row-second-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Domain score </th>
+          </ng-container>
+
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-third-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Verbal score </th>
+          </ng-container>
+
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-fourth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Analytical score </th>
+          </ng-container>
+
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-fifth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Quantitative score </th>
+          </ng-container>
+
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-sixth-group">
             <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Total score </th>
           </ng-container>
 
           <!-- third Header row first group -->
-          <ng-container matColumnDef="third-header-row-first-group">
+          <ng-container matColumnDef="third-header-row-first-group" sticky>
             <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> &#160; </th>
           </ng-container>
 
           <!-- third Header row second group -->
           <ng-container matColumnDef="third-header-row-second-group">
-            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks {{totalMarks ? totalMarks : ''}}) </th>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks
+              {{total_domain_marks ? total_domain_marks : ''}})
+            </th>
+          </ng-container>
+
+          <!-- third Header row second group -->
+          <ng-container matColumnDef="third-header-row-third-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks
+              {{total_verbal_marks ? total_verbal_marks : ''}})
+            </th>
+          </ng-container>
+
+          <!-- third Header row second group -->
+          <ng-container matColumnDef="third-header-row-fourth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks
+              {{total_analytical_mark ? total_analytical_mark : ''}})
+            </th>
+          </ng-container>
+
+          <!-- third Header row second group -->
+          <ng-container matColumnDef="third-header-row-fifth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks
+              {{total_quantitive_mark ? total_quantitive_mark : ''}})
+            </th>
+          </ng-container>
+
+          <!-- third Header row second group -->
+          <ng-container matColumnDef="third-header-row-sixth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> (Total marks {{totalMarks ? totalMarks : ''}})
+            </th>
           </ng-container>
 
           <!-- fourth Header row first group -->
-          <div [ngClass]="showApply ? '' : 'hide'" matColumnDef="fourth-header-row-first-group">
+          <div [ngClass]="showApply ? '' : 'hide'" matColumnDef="fourth-header-row-first-group" sticky>
             <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> &#160; </th>
           </div>
 
@@ -86,6 +187,46 @@
             </th>
           </div>
 
+          <!-- fourth Header row second group -->
+          <div [ngClass]="showApply ? '' : 'hide'" matColumnDef="fourth-header-row-third-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+              <div class="box"> <img src="assets/images/is-equal-to-or-greater-than-symbol.svg" alt="" srcset=""> <input
+                  [formControl]="validInput1" type="text"></div>
+              <div class="validation" *ngIf="validInput1.invalid && validInput1.touched">
+                <span *ngIf="validInput1.errors?.pattern">Please provide the values inbetween 0 to 100</span></div>
+            </th>
+          </div>
+
+          <!-- fourth Header row second group -->
+          <div [ngClass]="showApply ? '' : 'hide'" matColumnDef="fourth-header-row-fourth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+              <div class="box"> <img src="assets/images/is-equal-to-or-greater-than-symbol.svg" alt="" srcset=""> <input
+                  [formControl]="validInput2" type="text"></div>
+              <div class="validation" *ngIf="validInput2.invalid && validInput2.touched">
+                <span *ngIf="validInput2.errors?.pattern">Please provide the values inbetween 0 to 100</span></div>
+            </th>
+          </div>
+
+          <!-- fourth Header row second group -->
+          <div [ngClass]="showApply ? '' : 'hide'" matColumnDef="fourth-header-row-fifth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+              <div class="box"> <img src="assets/images/is-equal-to-or-greater-than-symbol.svg" alt="" srcset=""> <input
+                  [formControl]="validInput3" type="text"></div>
+              <div class="validation" *ngIf="validInput3.invalid && validInput3.touched">
+                <span *ngIf="validInput3.errors?.pattern">Please provide the values inbetween 0 to 100</span></div>
+            </th>
+          </div>
+
+          <!-- fourth Header row second group -->
+          <div [ngClass]="showApply ? '' : 'hide'" matColumnDef="fourth-header-row-sixth-group">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2">
+              <div class="box"> <img src="assets/images/is-equal-to-or-greater-than-symbol.svg" alt="" srcset=""> <input
+                  [formControl]="validInput4" type="text"></div>
+              <div class="validation" *ngIf="validInput4.invalid && validInput4.touched">
+                <span *ngIf="validInput4.errors?.pattern">Please provide the values inbetween 0 to 100</span></div>
+            </th>
+          </div>
+
           <!-- fifth Header row first group -->
           <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
             <th mat-header-cell *matHeaderCellDef [attr.colspan]="4">
@@ -95,14 +236,14 @@
 
 
           <tr class="header-group" mat-header-row
-            *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
+            *matHeaderRowDef="['header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-fourth-group', 'header-row-fifth-group', 'header-row-sixth-group' ]">
           </tr>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr class="header-group" mat-header-row
-            *matHeaderRowDef="['third-header-row-first-group', 'third-header-row-second-group']">
+            *matHeaderRowDef="['third-header-row-first-group', 'third-header-row-second-group', 'third-header-row-third-group', 'third-header-row-fourth-group', 'third-header-row-fifth-group', 'third-header-row-sixth-group']">
           </tr>
           <tr class="input-header-group" [ngClass]="showApply ? '' : 'hide'" mat-header-row
-            *matHeaderRowDef="['fourth-header-row-first-group', 'fourth-header-row-second-group']">
+            *matHeaderRowDef="['fourth-header-row-first-group', 'fourth-header-row-second-group', 'fourth-header-row-third-group', 'fourth-header-row-fourth-group', 'fourth-header-row-fifth-group', 'fourth-header-row-sixth-group']">
           </tr>
           <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
             *matHeaderRowDef="['fifth-header-row-first-group']">
@@ -122,6 +263,7 @@
     </div>
   </div>
 
-  <app-shortlisted-candidate-list-second-level *ngIf="showShortlisted" [shortlistedCandidates]="previewList" (disableShowList)="disableListView($event)">
+  <app-shortlisted-candidate-list-second-level *ngIf="showShortlisted" [shortlistedCandidates]="previewList"
+    (disableShowList)="disableListView($event)">
   </app-shortlisted-candidate-list-second-level>
 </div>
