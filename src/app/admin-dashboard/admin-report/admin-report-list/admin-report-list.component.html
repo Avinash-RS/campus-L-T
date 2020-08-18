@@ -20,10 +20,10 @@
               <th mat-header-cell *matHeaderCellDef>  &#160;  </th>
               <td mat-cell *matCellDef="let element; let i = index;">
                 <div *ngIf="i == 0 || i == 3">
-                    <nz-select class="nzSelect"
-                    nzPlaceHolder="Tag name">
+                    <nz-select nzAllowClear class="nzSelect" nzPlaceHolder="Tag name" [nzCustomTemplate]="defaultTemplate">
                       <nz-option *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name"></nz-option>
                   </nz-select>
+                  <ng-template #defaultTemplate let-selected>  {{ selected.nzLabel }} {{' hi how are you'}} </ng-template>
                 </div>
                 <div class="input-box" *ngIf="i == 1 || i == 2">
                     <input matInput type="text" placeholder="Assessment name" required>
