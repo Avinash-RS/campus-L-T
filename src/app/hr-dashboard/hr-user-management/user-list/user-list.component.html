@@ -7,10 +7,10 @@
                 <span class="material-icons">edit</span>
                 Edit
               </button> -->
-        <button (click)="removeUser()" [disabled]="selectedUserDetail ? false : true" mat-raised-button type="button">
-          <span style="margin-right: .25em;" class="material-icons">delete</span>
-          Remove
-        </button>
+              <button class="red" (click)="removeUser()" [disabled]="selectedUserDetail ? false : true" mat-raised-button>
+                  <span style="margin-right: .25em;" class="material-icons">delete</span>
+                  <span> Remove</span>
+                </button>
       </span>
     </div>
   </div>

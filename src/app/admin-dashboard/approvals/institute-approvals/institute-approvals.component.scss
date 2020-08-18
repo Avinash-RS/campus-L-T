@@ -91,7 +91,9 @@ th {
   box-shadow: $shadow-light-black-3 !important;
   color: $white !important;
   justify-content: center !important;
-  height: 28px !important;
+  font-size: 13px;
+  height: 25px !important;
+  align-items: center !important;
   border: 4px !important;
   display: flex;
 }

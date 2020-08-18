@@ -18,16 +18,19 @@
       padding: 0 1em;
       flex-flow: row-reverse;
       button {
-        height: 28px;
-        font-size: 13px;
-        text-align: center;
-        font-weight: 100;
-        display: inline-flex;
+        display: flex;
+        height: 24px;
         align-items: center;
-        justify-content: space-between;
-        margin: 0 0 0 1em;
+        font-weight: 200;
+        color: $white;
+        font-size: 13px;
+        padding: 4px 6px;
+        justify-content: center;
+        background: $red-1 0% 0% no-repeat padding-box;
+        box-shadow: $shadow-light-black-1;
+        outline: none;
         span {
-          font-size: 14px;
+          font-size: 13px;
         }
       }
       //   button:nth-of-type(1) {

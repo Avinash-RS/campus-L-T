@@ -141,6 +141,11 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
 
       if (data) {
         this.userList = data ? data : [];
+        let count = 0;
+        this.userList.forEach(element => {
+          count = count + 1;
+          element['uid'] = count;
+        });
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

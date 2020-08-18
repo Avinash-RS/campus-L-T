@@ -70,7 +70,11 @@
     position: relative;
     width: 50%;
     left: 210px;
-    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 25px;
 }
 .btn{
     margin-right: 10px;

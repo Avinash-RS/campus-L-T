@@ -94,8 +94,8 @@
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let element">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)" [checked]="element.checked"
-            [disabled]="element && element['email_sent'] === 'yes' ? true : false">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)" [checked]="element.checked">
+<!-- [disabled]="element && element['email_sent'] === 'yes' ? true : false" -->
           </mat-checkbox>
         </td>
       </ng-container>

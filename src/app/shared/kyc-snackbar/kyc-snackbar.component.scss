@@ -33,6 +33,9 @@
   .button-wrappers {
     margin: 1em 0em;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     button {
       min-width: 90px;
       color: $light-black;

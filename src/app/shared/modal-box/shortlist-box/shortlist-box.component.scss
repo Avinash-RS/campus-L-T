@@ -76,6 +76,8 @@
       font-weight: 200;
       padding: 4px 16px;
       display: flex;
+      justify-content: center;
+      flex-direction: column;
       align-items: center;
     }
     .cancel {
@@ -91,6 +93,8 @@
       font-weight: 200;
       padding: 4px 16px;
       background: transparent;
+      justify-content: center;
+      flex-direction: column;
     }
   }
 }
@@ -126,6 +130,7 @@
       padding: 4px 16px;
       display: flex;
       align-items: center;
+      flex-direction: column;
       justify-content: center;
     }
     .ok {
@@ -140,6 +145,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
     .cancel {
       margin: 0 1em 0 0;
@@ -155,6 +161,7 @@
       padding: 4px 16px;
       background: transparent;
       justify-content: center;
+      flex-direction: column;
     }
   }
   .text-input {

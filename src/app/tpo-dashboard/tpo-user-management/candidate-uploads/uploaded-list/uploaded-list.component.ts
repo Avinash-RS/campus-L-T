@@ -149,10 +149,10 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       this.userList.forEach(element => {
         this.dataSource.filteredData.forEach(ele => {
           if (element.id === ele.id) {
-            if (element && element['email_sent'] !== 'yes') {
+            // if (element && element['email_sent'] !== 'yes') {
               element.checked = true;
               this.enableSend = true;
-            }
+            // }
           }
         });
       });
