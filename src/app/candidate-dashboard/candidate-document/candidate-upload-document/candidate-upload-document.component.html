@@ -4,7 +4,7 @@
                 <div class="card-body">
 
                     <div class="image-upload">
-                        <label>Resume*</label>
+                        <label>Resume<span class="asterick">*</span></label>
                         <label class="choose-input" for="file-input">
                             <div *ngIf="!urlResume">
                                 <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
@@ -28,7 +28,7 @@
         <form [formGroup]="educationUploadForm">
             <div class="card w-50 alignCard">
                 <div *ngIf="eduArr && eduArr.controls" formArrayName="educationUploadArr" class="card-body">
-                    <label>Education details*</label>
+                    <label>Education details<span class="asterick">*</span></label>
                     <ng-container *ngIf="eduArr && eduArr.controls">
                         <div class="image-upload display" *ngFor="let education of eduArr.controls; let i = index; let last = last;" [formGroupName]="i">
 
