@@ -57,6 +57,14 @@ export class ReportsListComponent implements OnInit {
   userList;
   tagNameDropdown: any = [];
   institutesList = DropdownListForKYC['institutes'];
+  firstSortlistReport: any;
+  interviewPanelReport: any;
+  fromDate:any;
+  toDate:any;
+  cityListDropdown:any;
+  assessmentNameDropdown:any;
+  selectedAssessmentName:any;
+  selectedAssessmentNameSecond:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -72,6 +80,9 @@ export class ReportsListComponent implements OnInit {
 
     this.getUsersList();
     this.getTagName();
+    this.getFirstsortlistRepots();
+    this.getAllCitys();
+    this.getAllAssessmentName();
   }
 
   // To get all users
@@ -153,6 +164,98 @@ export class ReportsListComponent implements OnInit {
     });
   }
 
+  // To get all city
+  getAllCitys() {
+    this.adminService.getAllCandidateCity().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      this.cityListDropdown = data;
+
+    }, (err) => {
+    });
+  }
+
+  // To get assessment name
+  getAllAssessmentName() {
+    this.adminService.getAllAssessmentNames().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      this.assessmentNameDropdown = data;
+
+    }, (err) => {
+    });
+  }
+
+  // To get 1st shortlist report
+  getFirstsortlistRepots() {
+    this.adminService.firstSortlistReportslist().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      console.log("print 1st sortlist reports..", data);
+      this.firstSortlistReport = data;
+
+    }, (err) => {
+    });
+  }
+
+  // To get interview panel report
+  interviewPanelRepots(data) {
+  
+    let sendReq = {};
+    if(data.to._i){
+      let tomonth = data.to._i.month + 1;
+      let frommonth = data.from._i.month + 1;
+      sendReq = {
+        'to_date': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
+        'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date)
+      }
+    }else{
+      sendReq = {
+        'to_date': '',
+        'from_date': ''
+      }
+    }
+    
+    this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      const excel = data && data.url ? data.url : '';
+      window.open(excel, '_blank');
+
+    }, (err) => {
+    });
+  }
+
+  // To get 2nd  shortlist report
+  secondShortlistRepots(data) {
+
+    let sendReq = {};
+    if(data.to._i){
+      let tomonth = data.to._i.month + 1;
+      let frommonth = data.from._i.month + 1;
+      sendReq = {
+        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
+        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
+        'assement_name': data.assesment.assesment
+      }
+    }else{
+      sendReq = {
+        'to': '',
+        'from': '',
+        'assement_name': ''
+      }
+    }
+
+    this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      
+      const excel = data && data[0].url ? data[0].url : '';
+      window.open(excel, '_blank');
+
+    }, (err) => {
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -162,6 +265,28 @@ export class ReportsListComponent implements OnInit {
     }
   }
 
+  downloadReports(index){
+
+    if(index == 0){
+      console.log("print download data...", this.firstSortlistReport[0].download, index)
+      const excel = this.firstSortlistReport && this.firstSortlistReport[0].download ? this.firstSortlistReport[0].download : '';
+      window.open(excel, '_blank');
+    }else if(index == 1){
+      let sendData = {
+        'assesment': this.selectedAssessmentName,
+        "to": this.userList[index].tdate,
+    	  "from": this.userList[index].fdate
+      }
+      this.secondShortlistRepots(sendData);
+
+    }else if(index == 4){
+      let dateFilter = {
+        "to": this.userList[index].tdate,
+    	  "from": this.userList[index].fdate
+      }
+      this.interviewPanelRepots(dateFilter);
+    }
+  }
   // selectedUser(userDetail) {
   //   this.selectedUserDetail = userDetail;
   // }

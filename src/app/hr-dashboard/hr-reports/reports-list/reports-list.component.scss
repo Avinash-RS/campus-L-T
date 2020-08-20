@@ -75,7 +75,17 @@ th {
   padding-left: 1em !important;
 }
 .nzSelect{
-  width: 100%;
+  width: 130px;
+  // background: $white 0% 0% no-repeat padding-box;
+  box-shadow: $shadow-light-black;
+  border-radius: 5px;
+  opacity: 1;
+  height: 27px;
+  // margin-left: -25px;
+}
+
+.nzSelect-1{
+  width: 185px;
   // background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black;
   border-radius: 5px;

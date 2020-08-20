@@ -442,4 +442,35 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/Profile/evaluation_hr_assign`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  //hr 1st sortlist report list
+  firstSortlistReportslist(){
+    return this.http.get(`${this.BASE_URL}/api/firstshortlist_report`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+   //hr interview panel report list
+   interviewPanelReportslist(data){
+    return this.http.post(`${this.BASE_URL}/profile/interv_panel_users_reprt`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //get candidate city
+  getAllCandidateCity(){
+    return this.http.get(`${this.BASE_URL}/api/allcity`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //get assessment names
+  getAllAssessmentNames(){
+    return this.http.get(`${this.BASE_URL}/api/allassesment`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //hr 2nd shortlist report list
+  secondShortlistReport(data){
+    return this.http.post(`${this.BASE_URL}/api/secondshortlist_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }
