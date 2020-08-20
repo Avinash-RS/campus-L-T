@@ -43,6 +43,26 @@
     </div>
 
   </div>
+  <div class="ins" *ngIf="!enableList">
+      <div class="head">
+        Instructions:
+      </div>
+        <div class="ul">
+          <ul>
+            <li>Click on "Download template" button and open the file in excel program</li>
+            <li>All fields are mandatory.
+            </li>
+            <li>From Screen, click Upload Institute details link to select a file</li>
+            <li>Click upload button</li>
+            <li>Screen will provide a preview</li>
+            <li>Institute details can be removed by clicking on "x" on preview screen. These Institute details will not be
+              uploaded
+            </li>
+            <li>Click on confirm button.</li>
+          </ul>
+        </div>
+      </div>
+
    <div class="list-wrapper" [ngClass]="enableList ? '': 'none'">
     <div class="list-count">
       Total number of institutes : {{uploadedListArray ? uploadedListArray['length'] : ''}}
