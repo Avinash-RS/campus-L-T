@@ -30,14 +30,14 @@
 
                 <div *ngIf="i == 1">
                     <nz-select class="nzSelect-1"
-                    nzPlaceHolder="Assessment name" nzShowSearch [nzCustomTemplate]="defaultTemplate" [(ngModel)]="selectedAssessmentName" matTooltipPosition="after" matTooltip="{{selectedAssessmentName != undefine? selectedAssessmentName.assesment + ' (' + selectedAssessmentName.date_times + ')' : 'Please select option'}}">
+                    nzPlaceHolder="Assessment name" nzShowSearch [nzCustomTemplate]="defaultTemplate" [(ngModel)]="selectedAssessmentName" matTooltipPosition="after" matTooltip="{{selectedAssessmentName != undefined? selectedAssessmentName.assesment + ' (' + selectedAssessmentName.date_times + ')' : 'Please select option'}}">
                       <nz-option *ngFor="let assessment of assessmentNameDropdown" [nzLabel]="assessment.assesment" [nzValue]="assessment"></nz-option>
                   </nz-select>
                   <ng-template #defaultTemplate let-selected>  {{ selected.nzLabel }} {{selected.nzValue.date_times}} </ng-template>
                 </div>
                 <div *ngIf="i == 2">
                     <nz-select class="nzSelect-1"
-                    nzPlaceHolder="Assessment name" nzShowSearch [nzCustomTemplate]="defaultTemplate1" [(ngModel)]="selectedAssessmentNameSecond" matTooltipPosition="after" matTooltip="{{selectedAssessmentNameSecond != undefine? selectedAssessmentNameSecond.assesment + ' (' + selectedAssessmentNameSecond.date_times + ')' : 'Please select option'}}">
+                    nzPlaceHolder="Assessment name" nzShowSearch [nzCustomTemplate]="defaultTemplate1" [(ngModel)]="selectedAssessmentNameSecond" matTooltipPosition="after" matTooltip="{{selectedAssessmentNameSecond != undefined? selectedAssessmentNameSecond.assesment + ' (' + selectedAssessmentNameSecond.date_times + ')' : 'Please select option'}}">
                       <nz-option *ngFor="let assessment of assessmentNameDropdown" [nzLabel]="assessment.assesment" [nzValue]="assessment"></nz-option>
                   </nz-select>
                   <ng-template #defaultTemplate1 let-selected>  {{ selected.nzLabel }} {{selected.nzValue.date_times}} </ng-template>
