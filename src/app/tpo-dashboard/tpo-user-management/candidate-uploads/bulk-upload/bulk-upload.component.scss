@@ -8,13 +8,36 @@
     height: 40px;
     border-bottom: solid 1px $primary;
   }
+  .ins {
+    display: flex;
+    background: $white;
+    padding: .5em;
+    flex-direction: column;
+    .head {
+      font-size: 15px;
+      color: $light-black;
+      font-weight: 200;
+      margin: .5em;
+    }
+    ul {
+      font-size: 12px;
+      color: $light-black;
+      font-weight: 200;
+      li {
+        padding-bottom: .25em;
+        ul {
+          font-weight: 100;
+        }
+      }
+    }
+  }
 
   .upload-wrapper {
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
-    top: 25%;
+    margin-top: 1em;
     .top-wrapper {
       .upload {
         min-width: 400px;

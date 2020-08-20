@@ -218,7 +218,10 @@
     </ng-container>
     <ng-container matColumnDef="comments">
       <th class="headerCell" mat-header-cell *matHeaderCellDef> Comments </th>
-      <td style="width: 225px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+      <td style="width: 225px;" mat-cell *matCellDef="let assessment">
+          <textarea style="margin: .5em 0;" matInput placeholder="write your comments here..." formControlName="candidates_strenght"
+          [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -292,7 +295,10 @@
     </ng-container>
     <ng-container matColumnDef="comments">
       <th class="headerCell" mat-header-cell *matHeaderCellDef> Comments </th>
-      <td style="width: 225px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+      <td style="width: 225px;" mat-cell *matCellDef="let assessment">
+          <textarea style="margin: .5em 0;" matInput placeholder="write your comments here..." formControlName="candidates_strenght"
+          [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -372,7 +378,10 @@
     </ng-container>
     <ng-container matColumnDef="comments">
       <th class="headerCell" mat-header-cell *matHeaderCellDef> Comments </th>
-      <td style="width: 225px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+      <td style="width: 225px;" mat-cell *matCellDef="let assessment">
+          <textarea style="margin: .5em 0;" matInput placeholder="write your comments here..." formControlName="candidates_strenght"
+          [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -446,7 +455,10 @@
     </ng-container>
     <ng-container matColumnDef="comments">
       <th class="headerCell" mat-header-cell *matHeaderCellDef> Comments </th>
-      <td style="width: 225px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+      <td style="width: 225px;" mat-cell *matCellDef="let assessment">
+          <textarea style="margin: .5em 0;" matInput placeholder="write your comments here..." formControlName="candidates_strenght"
+          [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -520,7 +532,10 @@
     </ng-container>
     <ng-container matColumnDef="comments">
       <th class="headerCell" mat-header-cell *matHeaderCellDef> Comments </th>
-      <td style="width: 225px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+      <td style="width: 225px;" mat-cell *matCellDef="let assessment">
+          <textarea style="margin: .5em 0;" matInput placeholder="write your comments here..." formControlName="candidates_strenght"
+          [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

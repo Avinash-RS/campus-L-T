@@ -43,6 +43,29 @@
     </div>
 
   </div>
+  <div class="ins" *ngIf="!enableList">
+      <div class="head">
+        Instructions:
+      </div>
+        <div class="ul">
+          <ul>
+            <li>Click on "Download template" button and open the file in excel program</li>
+            <li>All fields are mandatory.
+              <ul>
+                <li>Tag name should be combination of alpha numeric characters.</li>
+              </ul>
+            </li>
+            <li>Tag name should be combination of alpha numeric characters.</li>
+            <li>From Screen, click Upload candidate details link to select a file</li>
+            <li>Click upload button</li>
+            <li>Screen will provide a preview</li>
+            <li>Candidate details can be removed by clicking on "x" on preview screen. These candidate details will not be
+              uploaded
+            </li>
+            <li>Click on confirm button.</li>
+          </ul>
+        </div>
+      </div>
 
   <div class="list-wrapper" *ngIf="enableList">
     <div class="list-count">
