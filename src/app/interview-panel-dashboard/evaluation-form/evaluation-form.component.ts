@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-import SampleJson from '../../../assets/files/evaluationData.json';
+import SampleJson from '../../../assets/files/evaluationData1.json';
 import { FormControl, FormGroup, FormBuilder, NgModel, Validators, FormArray } from '@angular/forms';
 import * as myGlobals from '../../custom-form-validators/validation';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -27,9 +27,13 @@ export interface PeriodicElement {
 })
 
 export class EvaluationFormComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'veryGood', 'good', 'acceptable', 'notSuitable'];
-  assessments: PeriodicElement[] = SampleJson;
+  displayedColumns: string[] = ['name', 'excellent', 'veryGood', 'good', 'acceptable', 'notSuitable', 'comments'];
+  assessments: PeriodicElement[] = SampleJson['tab'];
   dataSource: MatTableDataSource<PeriodicElement>;
+  dataSource1: MatTableDataSource<PeriodicElement>;
+  dataSource2: MatTableDataSource<PeriodicElement>;
+  dataSource3: MatTableDataSource<PeriodicElement>;
+  dataSource4: MatTableDataSource<PeriodicElement>;
   evaluationForm: FormGroup;
   getCandidateData: any;
   candidateId: any;
@@ -42,6 +46,7 @@ export class EvaluationFormComponent implements OnInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
+
     this.getEvaluationData();
   }
   get f() {
@@ -55,6 +60,10 @@ export class EvaluationFormComponent implements OnInit {
   nginitFunc() {
     console.log(SampleJson);
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
+    this.dataSource1 = new MatTableDataSource<PeriodicElement>(SampleJson['tab1']);
+    this.dataSource2 = new MatTableDataSource<PeriodicElement>(SampleJson['tab2']);
+    this.dataSource3 = new MatTableDataSource<PeriodicElement>(SampleJson['tab3']);
+    this.dataSource4 = new MatTableDataSource<PeriodicElement>(SampleJson['tab4']);
     this.evaluationForm = this.formBuilder.group({
       interview_date: new FormControl('', [Validators.required]),
       interview_place: new FormControl('', [RemoveWhitespace.whitespace(), myGlobals.req, myGlobals.alphaNum30]),

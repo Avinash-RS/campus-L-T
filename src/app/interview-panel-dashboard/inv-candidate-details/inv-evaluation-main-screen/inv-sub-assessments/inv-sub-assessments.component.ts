@@ -17,7 +17,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
 
-  displayedColumns: any[] = ['section', 'percentage', 'question'];
+  displayedColumns: any[] = ['name', 'percentage', 'question'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -94,15 +94,36 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
       this.appConfig.hideLoader();
       console.log('datas', datas);
 
-      const align = datas;
-      this.userList = align ? [align] : [];
+      let arr = [];
+      if (datas) {
+        arr = [
+          {
+            name: 'Domain',
+            percentage: datas['domain_percentage'] ? datas['domain_percentage'] : ''
+          },
+          {
+            name: 'Verbal',
+            percentage: datas['verbal_percentage'] ? datas['verbal_percentage'] : ''
+          },
+          {
+            name: 'Analytical',
+            percentage: datas['analytical_percentage'] ? datas['analytical_percentage'] : ''
+          },
+          {
+            name: 'Quantitative',
+            percentage: datas['quantitative_percentage'] ? datas['quantitative_percentage'] : ''
+          },
+          {
+            name: 'Total percentage',
+            percentage: datas['percentage'] ? datas['percentage'] : ''
+          },
+        ];
+      }
+      this.userList = arr ? arr : [];
       let counting = 0;
       this.userList.forEach(element => {
         counting = counting + 1;
         element['count'] = counting;
-        element['section'] = `Section ` + counting;
-        element['percentage'] = element['percentage'] ? element['percentage'] : '';
-        element['question'] = element['question'] ? element['question'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
