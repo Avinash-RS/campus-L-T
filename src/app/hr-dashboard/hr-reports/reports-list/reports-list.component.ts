@@ -256,6 +256,36 @@ export class ReportsListComponent implements OnInit {
     });
   }
 
+  // To get 3rd  shortlist report
+  thirdShortlistRepots(data) {
+
+    let sendReq = {};
+    if(data.to._i){
+      let tomonth = data.to._i.month + 1;
+      let frommonth = data.from._i.month + 1;
+      sendReq = {
+        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
+        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
+        'assement_name': data.assesment.assesment
+      }
+    }else{
+      sendReq = {
+        'to': '',
+        'from': '',
+        'assement_name': ''
+      }
+    }
+
+    this.adminService.thirdShortlistReport(sendReq).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      
+      const excel = data && data[0].url ? data[0].url : '';
+      window.open(excel, '_blank');
+
+    }, (err) => {
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -278,6 +308,14 @@ export class ReportsListComponent implements OnInit {
     	  "from": this.userList[index].fdate
       }
       this.secondShortlistRepots(sendData);
+
+    }else if(index == 2){
+      let sendData = {
+        'assesment': this.selectedAssessmentNameSecond,
+        "to": this.userList[index].tdate,
+    	  "from": this.userList[index].fdate
+      }
+      console.log("print 3rd shortlist report...", sendData);
 
     }else if(index == 4){
       let dateFilter = {
