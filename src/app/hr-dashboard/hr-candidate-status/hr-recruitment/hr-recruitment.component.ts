@@ -41,7 +41,7 @@ export const MY_FORMATS = {
 })
 export class HrRecruitmentComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement', 'assement_shortlist', 'document_submit', 'interview_shortlist'];
+  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement', 'assement_shortlist', 'document_submit', 'interview_shortlist', 'tag_name', 'institute', 'foldername', 'shortlistname', 'date_time'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
