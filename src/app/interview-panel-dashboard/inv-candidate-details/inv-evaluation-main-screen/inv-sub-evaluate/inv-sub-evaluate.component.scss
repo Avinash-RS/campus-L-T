@@ -186,3 +186,8 @@ textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
 .no-center-align {
   align-items: flex-start !important;
 }
+.last-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
