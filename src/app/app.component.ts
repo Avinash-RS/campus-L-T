@@ -19,6 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   titles = 'connectionDetector';
   status = 'ONLINE';
+  // Hi
   // initializing as online by default
   isConnected = true;
   subscriptions: Subscription[] = [];
