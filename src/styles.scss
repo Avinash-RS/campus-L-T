@@ -1462,10 +1462,12 @@ button:focus {
   display: none;
 }
 .light-bg {
-  background: #fffdfd 0% 0% no-repeat padding-box !important;
+  background: $white 0% 0% no-repeat padding-box !important;
 }
 .dark-bg {
-  background: #f7f7f7 0% 0% no-repeat padding-box !important;
+  background: $th-bg 0% 0% no-repeat padding-box;
+  border-top: 0.25px solid $table-border;
+  border-bottom: 0.25px solid $table-border;
 }
 
 .no-data-available.mat-header-row {
@@ -1639,7 +1641,7 @@ button {
   height: 30px !important;
   font-weight: 200;
   font-size: 13px;
-  color: #707070;
+  color: $cancel-btn;
   padding: 0 1em !important;
   min-width: 100px !important;
   max-width: auto !important;
@@ -1649,4 +1651,33 @@ button {
 }
 .btn-margin-space {
   margin: 0 2em !important;
+}
+
+mat-paginator {
+  background: $table-header !important;
+}
+.mat-header-row {
+  background: $table-header !important;
+}
+
+
+table {
+  background: transparent;
+  box-shadow: none;
+  width: 100%;
+}
+td {
+  border: none;
+  height: 45px !important;
+  color: $light-black !important;
+  font-size: 13px;
+  margin: 1em;
+}
+th {
+  color: $black;
+  background: $table-header !important;
+  font-size: 13px;
+  font-weight: 200;
+  outline: none;
+  border: none;
 }
