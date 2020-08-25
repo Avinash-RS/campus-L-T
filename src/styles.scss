@@ -313,7 +313,8 @@ body {
 .mat-column-checked {
   text-align: center !important;
 }
-.mat-checkbox-ripple,.mat-radio-ripple,.mat-ripple {
+.mat-checkbox-ripple,
+.mat-radio-ripple {
   display: none !important;
 }
 .shortlist-candidates-wrapper {
@@ -325,8 +326,8 @@ body {
     background-color: #2ba54b !important;
   }
   .mat-ripple-element {
-  opacity: 0.03 !important;
-  background-color: #2ba54b !important;
+    opacity: 0.03 !important;
+    background-color: #2ba54b !important;
   }
 }
 .mat-paginator {
@@ -975,7 +976,8 @@ button:focus {
 }
 
 // tpo uploaded List
-.tpo-main-wrapper-uploaded-list,.inv-particular-assessment-candidate {
+.tpo-main-wrapper-uploaded-list,
+.inv-particular-assessment-candidate {
   .green {
     color: #269a45;
     font-weight: 200;
@@ -985,8 +987,8 @@ button:focus {
     background-color: $secondary !important;
   }
   .mat-ripple-element {
-  opacity: 0.03 !important;
-  background-color: $secondary !important;
+    opacity: 0.03 !important;
+    background-color: $secondary !important;
   }
 
   // Mat checkbox
@@ -1460,10 +1462,12 @@ button:focus {
   display: none;
 }
 .light-bg {
-  background: #fffdfd 0% 0% no-repeat padding-box !important;
+  background: $white 0% 0% no-repeat padding-box !important;
 }
 .dark-bg {
-  background: #f7f7f7 0% 0% no-repeat padding-box !important;
+  background: $th-bg 0% 0% no-repeat padding-box;
+  border-top: 0.25px solid $table-border;
+  border-bottom: 0.25px solid $table-border;
 }
 
 .no-data-available.mat-header-row {
@@ -1537,9 +1541,9 @@ th {
   white-space: nowrap !important;
 }
 button:hover {
-  transform: scale(
-    1.05
-  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  // transform: scale(
+  //   1.05
+  // ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
   // transition: 0.2s ease-in-out;
 }
 .user-list-wrapper {
@@ -1611,4 +1615,69 @@ button {
     width: 8px;
     display: none;
   }
+}
+
+// Ui revamp global
+.submit {
+  background: $primary-bg;
+  box-shadow: 0px 3px 6px #00000040 !important;
+  color: $white;
+  font-weight: 200;
+  font-size: 13px;
+  border-radius: 0px !important;
+  height: 30px !important;
+  padding: 0 1em !important;
+  min-width: 100px !important;
+  max-width: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cancel-btn {
+  box-shadow: none !important;
+  border: 0.5px solid #707070 !important;
+  background: transparent;
+  border-radius: 0px !important;
+  height: 30px !important;
+  font-weight: 200;
+  font-size: 13px;
+  color: $cancel-btn;
+  padding: 0 1em !important;
+  min-width: 100px !important;
+  max-width: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-margin-space {
+  margin: 0 2em !important;
+}
+
+mat-paginator {
+  background: $table-header !important;
+}
+.mat-header-row {
+  background: $table-header !important;
+}
+
+
+table {
+  background: transparent;
+  box-shadow: none;
+  width: 100%;
+}
+td {
+  border: none;
+  height: 45px !important;
+  color: $light-black !important;
+  font-size: 13px;
+  margin: 1em;
+}
+th {
+  color: $black;
+  background: $table-header !important;
+  font-size: 13px;
+  font-weight: 200;
+  outline: none;
+  border: none;
 }

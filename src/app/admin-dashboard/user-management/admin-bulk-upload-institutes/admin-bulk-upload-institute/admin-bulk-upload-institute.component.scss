@@ -43,6 +43,7 @@
         min-width: 400px;
         max-width: 400px;
         background: $white-primary;
+        border: solid .5px $table-border;
         height: 120px;
         display: flex;
         align-items: center;
@@ -59,12 +60,13 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              color: $light-blue;
+              color: $light-black;
               font-weight: 200;
               font-size: 15px;
               background: $white-primary 0% 0% no-repeat padding-box;
-              box-shadow: $shadow-light-black-2;
-              border-radius: 5px;
+              // box-shadow: $shadow-light-black-2;
+              border: solid .5px $table-border;
+              // border-radius: 5px;
               position: relative;
               input {
                 cursor: pointer !important;
@@ -172,6 +174,7 @@
       min-width: 400px;
       max-width: 400px;
       background: $white-primary;
+      border: solid .5px $table-border;
       height: 120px;
       display: flex;
       align-items: center;
@@ -187,12 +190,13 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          color: $light-blue;
+          color: $light-black;
           font-weight: 200;
           font-size: 15px;
           background: $white-primary 0% 0% no-repeat padding-box;
-          box-shadow: $shadow-light-black-2;
-          border-radius: 5px;
+          // box-shadow: $shadow-light-black-2;
+          // border-radius: 5px;
+          border: solid .5px $table-border;
           cursor: pointer;
           img {
             width: 30px;

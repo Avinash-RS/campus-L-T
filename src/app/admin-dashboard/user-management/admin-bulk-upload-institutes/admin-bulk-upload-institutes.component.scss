@@ -1,9 +1,9 @@
 @import "../../../themes/themes.scss";
 .sub-menu-wrapper {
   display: flex;
-  background: $sidebar-bg;
+  background: $white;
   padding: 4px 0;
-  margin: 0.5em 0 0 0;
+  margin: 0.5em 0 0 0.5em;
   position: sticky;
   align-items: center;
   top: -1px;
@@ -11,14 +11,14 @@
   .menu-group {
     padding: 4px;
     cursor: pointer;
-    border: solid $white 1px;
-    border-radius: 4px;
-    color: $white;
-    font-size: 13px;
+    border-bottom: solid $table-border 1px;
+    // border-radius: 4px;
+    color: $light-black;
+    font-size: 14px;
     outline: none;
     font-weight: 100;
     margin: 0 0 0 1em;
-    opacity: 1;
+    opacity: 0.7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,19 +30,18 @@
     }
   }
   .menu-group:hover {
-    background: $active-sub-bg-hover 0% 0% no-repeat padding-box;
+    opacity: 1;
+    // background: $active-sub-bg-hover 0% 0% no-repeat padding-box;
   }
   .active {
     cursor: pointer;
     padding: 4px;
-    background: $active-sub-bg 0% 0% no-repeat padding-box;
-    font-size: 13px;
     border: solid $white 1px;
-    border-radius: 4px;
-    color: $white;
+    color: $light-black;
     font-weight: 200;
     margin: 0 0 0 1em;
     outline: none;
     opacity: 1;
+    border-bottom: solid $primary-red 4px;
   }
 }
