@@ -150,28 +150,28 @@
     justify-content: center;
     align-items: center;
     margin: 2em 2em 2em 2em;
-    button:first-child {
-      width: 120px;
-      height: 35px;
-      background: $light-blue 0% 0% no-repeat padding-box;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      color: $white;
-      outline: none;
-      font-weight: bold;
-    }
-    button:last-child {
-      width: 120px;
-      height: 35px;
-      margin-left: 30px;
-      border-radius: 8px;
-      border: 1px solid $blue-1;
-      font-weight: 600;
-      font-size: 15px;
-      color: $blue-1;
-      outline: none;
-    }
+    // button:first-child {
+    //   width: 120px;
+    //   height: 35px;
+    //   background: $light-blue 0% 0% no-repeat padding-box;
+    //   box-shadow: $shadow-light-black-1;
+    //   border-radius: 8px;
+    //   font-weight: 700;
+    //   font-size: 15px;
+    //   color: $white;
+    //   outline: none;
+    //   font-weight: bold;
+    // }
+    // button:last-child {
+    //   width: 120px;
+    //   height: 35px;
+    //   margin-left: 30px;
+    //   border-radius: 8px;
+    //   border: 1px solid $blue-1;
+    //   font-weight: 600;
+    //   font-size: 15px;
+    //   color: $blue-1;
+    //   outline: none;
+    // }
   }
 }
