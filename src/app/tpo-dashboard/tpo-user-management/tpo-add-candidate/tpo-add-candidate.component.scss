@@ -33,15 +33,15 @@
           margin: 0 0 0 1em;
           width: 100%;
           input {
-            border: none;
-            background: $white-primary 0% 0% no-repeat padding-box;
-            box-shadow: $shadow-light-black;
-            border-radius: 5px;
+            border: solid $input-border 1px;
+            // background: $white-primary 0% 0% no-repeat padding-box;
+            // box-shadow: $shadow-light-black;
+            border-radius: 0px;
             height: 28px;
             display: flex;
             width: 100%;
             align-items: center;
-            color: $header-blue;
+            color: $light-black;
             font-size: 14px;
             padding: 4px 8px;
             outline: none;

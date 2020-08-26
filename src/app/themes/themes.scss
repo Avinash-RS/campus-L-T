@@ -15,6 +15,8 @@ $table-border: rgba(112, 112, 112, 0.411);
 $header-shadow: 0px 3px 6px #00000029;
 $table-header: #E6E3E3;
 $search-box-border: #5C6873;
+$td-hover: #F8EDED;
+$input-border: #707070;
 
 
 
@@ -53,19 +55,19 @@ $tab-bg: #e8eefb;
 // $blue-2: #3165CC;
 // $blue-3: #b8d0ff;
 // $blue-4: #1890ff;
-// $gray-5: #C1C1C1;
+$gray-5: #C1C1C1;
 // $blue-6: #275C87E6;
 $blue-7: #333333;
 $blue-5: #333333;
 $blue: #333333;
 $light-blue:#333333;
-$lighter-blue: #333333;
+$lighter-blue: rgb(51, 51, 51, 0.4);
 $header-blue: #333333;
 $blue-1: #333333;
 $blue-2: #333333;
 $blue-3: #333333;
 $blue-4: #333333;
-$gray-5: #333333;
+// $gray-5: #333333;
 $blue-6: #333333;
 
 $red-1: #DB3137;
