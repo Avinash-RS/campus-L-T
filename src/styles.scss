@@ -1619,7 +1619,7 @@ button {
 
 // Ui revamp global
 .submit {
-  background: $primary-bg;
+  background: $primary-red;
   box-shadow: 0px 3px 6px #00000040 !important;
   color: $white;
   font-weight: 200;
@@ -1680,4 +1680,46 @@ th {
   font-weight: 200;
   outline: none;
   border: none;
+}
+
+// Search box css
+.search-icon {
+  display: inline-flex;
+  align-items: center;
+  margin: 8px 0;
+  width: auto;
+  // min-width: 280px;
+  color: $light-black;
+  font-size: 14px;
+  border: 1px solid $search-box-border !important;
+  background: $white-2 0% 0% no-repeat padding-box !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+  padding: 0.25em 0.15em;
+  height: 27px;
+  position: relative;
+  border-radius: 0px !important;
+  flex-direction: row-reverse !important;
+  img {
+    width: 20px;
+    height: 13px;
+  }
+  input {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    margin: 8px 0;
+    width: auto;
+    color: $light-black;
+    font-size: 14px;
+    background: $white 0% 0% no-repeat padding-box !important;
+    box-sizing: border-box;
+    padding: 0.15em 0.5em;
+    height: 24px;
+  }
+  ::placeholder {
+    color: $light-black;
+    opacity: 1;
+    font-size: 12px;
+  }
 }
