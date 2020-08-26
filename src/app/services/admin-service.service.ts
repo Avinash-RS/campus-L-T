@@ -444,8 +444,8 @@ export class AdminServiceService {
   }
 
   //hr 1st sortlist report list
-  firstSortlistReportslist(){
-    return this.http.get(`${this.BASE_URL}/api/firstshortlist_report`,
+  firstSortlistReportslist(data){
+    return this.http.post(`${this.BASE_URL}/api/firstshortlist_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
