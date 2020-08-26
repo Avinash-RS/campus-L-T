@@ -21,7 +21,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv, .xls and .xlsx)</div>
+            <div *ngIf="!url" class="text" style="transform: translate(50%) !important;">(<span style="color: red;">*</span> file extension allowed .csv, .xls and .xlsx)</div>
             <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
             <div *ngIf="showSizeError['image']" class="error">Accept only .csv, .xls and .xlsx files</div>
             <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
