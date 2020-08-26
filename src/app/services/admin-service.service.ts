@@ -473,4 +473,9 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  //hr 3rd shortlist report list
+  assessmentFeedbackReport(data){
+    return this.http.post(`${this.BASE_URL}/profile/assement_feedback_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }
