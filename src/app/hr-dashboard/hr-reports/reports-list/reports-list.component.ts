@@ -201,7 +201,10 @@ export class ReportsListComponent implements OnInit {
   // To get interview panel report
   interviewPanelRepots(data) {
   
-    let sendReq = {};
+    let sendReq = {
+      'to_date': '',
+      'from_date': ''
+    };
     if(data.to._i){
       let tomonth = data.to._i.month + 1;
       let frommonth = data.from._i.month + 1;
@@ -215,21 +218,30 @@ export class ReportsListComponent implements OnInit {
         'from_date': ''
       }
     }
-    
-    this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
-      this.appConfig.hideLoader();
 
-      const excel = data && data.url ? data.url : '';
-      window.open(excel, '_blank');
-
-    }, (err) => {
-    });
+    if(sendReq.to_date == '' || (sendReq.to_date >= sendReq.from_date)){
+      this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+  
+        const excel = data && data.url ? data.url : '';
+        window.open(excel, '_blank');
+  
+      }, (err) => {
+      });
+    }else{
+      this.appConfig.error("To date should be greater", '');
+    }
   }
 
   // To get 2nd  shortlist report
   secondShortlistRepots(data) {
 
-    let sendReq = {};
+    let sendReq = {
+      'to': '',
+      'from': '',
+      'assement_name': ''
+    };
+
     if(data.to._i){
       let tomonth = data.to._i.month + 1;
       let frommonth = data.from._i.month + 1;
@@ -242,48 +254,60 @@ export class ReportsListComponent implements OnInit {
       sendReq = {
         'to': '',
         'from': '',
-        'assement_name': ''
+        'assement_name': data.assesment.assesment
       }
     }
-
-    this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+    if(sendReq.to == '' || (sendReq.to >= sendReq.from)){
       
-      const excel = data && data[0].url ? data[0].url : '';
-      window.open(excel, '_blank');
+      this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        
+        const excel = data && data[0].url ? data[0].url : '';
+        window.open(excel, '_blank');
 
-    }, (err) => {
-    });
+      }, (err) => {
+      });
+    }else{
+      this.appConfig.error("To date should be assessment date", '');
+    }
   }
 
-  // To get 3rd  shortlist report
-  thirdShortlistRepots(data) {
+  // To get assessment feedback report
+  feedbackRepots(data) {
 
-    let sendReq = {};
+    let sendReq = {
+      'to_date': '',
+      'from_date': '',
+      'assement_name': ''
+    };
     if(data.to._i){
       let tomonth = data.to._i.month + 1;
       let frommonth = data.from._i.month + 1;
       sendReq = {
-        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
-        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
+        'to_date': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
+        'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
         'assement_name': data.assesment.assesment
       }
     }else{
       sendReq = {
-        'to': '',
-        'from': '',
+        'to_date': '',
+        'from_date': '',
         'assement_name': ''
       }
     }
 
-    this.adminService.thirdShortlistReport(sendReq).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      
-      const excel = data && data[0].url ? data[0].url : '';
-      window.open(excel, '_blank');
-
-    }, (err) => {
-    });
+    if(sendReq.to_date == '' || (sendReq.to_date >= sendReq.from_date)){
+      this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        
+        const excel = data && data.url ? data.url : '';
+        window.open(excel, '_blank');
+  
+      }, (err) => {
+      });
+    }else{
+      this.appConfig.error("To date should be assessment date", '');
+    }
   }
 
   applyFilter(event: Event) {
@@ -315,7 +339,7 @@ export class ReportsListComponent implements OnInit {
         "to": this.userList[index].tdate,
     	  "from": this.userList[index].fdate
       }
-      console.log("print 3rd shortlist report...", sendData);
+      this.feedbackRepots(sendData);
 
     }else if(index == 4){
       let dateFilter = {

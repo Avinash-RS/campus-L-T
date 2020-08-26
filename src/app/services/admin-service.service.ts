@@ -474,8 +474,8 @@ export class AdminServiceService {
   }
 
   //hr 3rd shortlist report list
-  thirdShortlistReport(data){
-    return this.http.post(`${this.BASE_URL}/api/secondshortlist_report`, data,
+  assessmentFeedbackReport(data){
+    return this.http.post(`${this.BASE_URL}/profile/assement_feedback_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 }
