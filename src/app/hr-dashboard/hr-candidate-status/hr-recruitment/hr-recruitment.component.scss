@@ -17,7 +17,7 @@
           grid-template-columns: 1fr 1fr;
           .flex-wrap {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: .5fr 1fr;
             align-items: center;
             margin: 0 0 0.5em 0;
             .label {
@@ -25,16 +25,16 @@
               font-size: 13px;
             }
             .input-box {
-              nz-select {
-                height: 25px;
-                color: $header-blue;
-                background: $white 0% 0% no-repeat padding-box;
-                box-shadow: $shadow-light-black;
-                border-radius: 5px;
-                font-size: 13px;
-                min-width: 165px;
-                max-width: 165px;
-              }
+              // nz-select {
+              //   height: 25px;
+              //   color: $header-blue;
+              //   background: $white 0% 0% no-repeat padding-box;
+              //   box-shadow: $shadow-light-black;
+              //   border-radius: 5px;
+              //   font-size: 13px;
+              //   min-width: 165px;
+              //   max-width: 165px;
+              // }
             }
           }
         }
@@ -61,14 +61,16 @@
             width: 80%;
             .left {
               background: $white 0% 0% no-repeat padding-box;
-              border: 0.5px solid $borderColor;
+              border: 0.5px solid $input-border;
               border-top: none;
               text-align: center;
-              border-radius: 5px;
+              // border-radius: 5px;
               .item {
                 background: $black-3 0% 0% no-repeat padding-box;
-                border: 0.5px solid $borderColor;
-                border-radius: 5px 5px 0px 0px;
+                border: 0.5px solid $input-border;
+                border-left: none;
+                border-right: none;
+                // border-radius: 5px 5px 0px 0px;
                 color: $light-black;
                 font-size: 13px;
                 font-weight: 200;
@@ -90,15 +92,16 @@
             }
             .right {
               background: $white 0% 0% no-repeat padding-box;
-              border: 0.5px solid $borderColor;
+              border: 0.5px solid $input-border;
               border-top: none;
-              border-radius: 5px;
+              // border-radius: 5px;
               margin: 0 0 0 1px;
               text-align: center;
               .item {
                 background: $black-3 0% 0% no-repeat padding-box;
-                border: 0.5px solid $borderColor;
-                border-radius: 5px 5px 0px 0px;
+                border: 0.5px solid $input-border;
+                border-left: none;
+                border-right: none;
                 color: $light-black;
                 font-size: 13px;
                 font-weight: 200;

@@ -9,7 +9,7 @@
                 Folder name:
               </div>
               <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="folderValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="folderValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                   <nz-option *ngFor="let level of folderLists" [nzLabel]="level.field_foldername_value"
                     [nzValue]="level.field_foldername_value"></nz-option>
                 </nz-select>
@@ -20,7 +20,7 @@
                 Tag name:
               </div>
               <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                   <nz-option *ngFor="let level of tagLists" [nzLabel]="level.field_tag_value"
                     [nzValue]="level.field_tag_value"></nz-option>
                 </nz-select>
@@ -31,7 +31,7 @@
                 Shortlist name:
               </div>
               <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                   <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value"
                     [nzValue]="level.field_shortlistname_value"></nz-option>
                 </nz-select>

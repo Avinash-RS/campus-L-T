@@ -603,7 +603,7 @@ body {
   }
 }
 .mat-datepicker-content .mat-calendar {
-  width: 220px !important;
+  // width: 220px !important;
   height: auto !important;
 }
 
@@ -1576,7 +1576,8 @@ button {
   justify-content: center !important;
 }
 
-.light-bg:hover,.dark-bg:hover {
+.light-bg:hover,
+.dark-bg:hover {
   background: $td-hover !important;
 }
 tr.mat-row:hover {
@@ -1667,7 +1668,6 @@ mat-paginator {
   background: $table-header !important;
 }
 
-
 table {
   background: transparent;
   box-shadow: none;
@@ -1688,7 +1688,11 @@ th {
   outline: none;
   border: none;
 }
-
+.mat-calendar {
+  th {
+    background: none !important;
+  }
+}
 // Search box css
 .search-icon {
   display: inline-flex;
@@ -1730,7 +1734,6 @@ th {
     font-size: 12px;
   }
 }
-
 
 // Bulk upoad tabs csss
 .sub-menu-wrapper {
@@ -1780,7 +1783,6 @@ th {
   }
 }
 
-
 // bulk upload design css
 .upload-wrapper {
   position: relative;
@@ -1793,7 +1795,7 @@ th {
       min-width: 400px;
       max-width: 400px;
       background: $white-primary;
-      border: solid .5px $table-border;
+      border: solid 0.5px $table-border;
       height: 120px;
       display: flex;
       align-items: center;
@@ -1815,7 +1817,7 @@ th {
             font-size: 15px;
             background: $white-primary 0% 0% no-repeat padding-box;
             box-shadow: none;
-            border: solid .5px $table-border;
+            border: solid 0.5px $table-border;
             // border-radius: 5px;
             position: relative;
             input {
@@ -1850,7 +1852,7 @@ th {
             .list {
               display: flex;
               align-items: center;
-              margin: 0 .5em 0 .5em;
+              margin: 0 0.5em 0 0.5em;
               justify-content: space-between;
               padding: 10px 4px;
               height: 25px;
@@ -1882,7 +1884,6 @@ th {
           font-weight: 200;
           font-size: 11px;
         }
-
       }
     }
     .buttons {
@@ -1926,7 +1927,7 @@ th {
     min-width: 400px;
     max-width: 400px;
     background: $white-primary;
-    border: solid .5px $table-border;
+    border: solid 0.5px $table-border;
     height: 120px;
     display: flex;
     align-items: center;
@@ -1948,7 +1949,7 @@ th {
         background: $white-primary 0% 0% no-repeat padding-box;
         box-shadow: none;
         // border-radius: 5px;
-        border: solid .5px $table-border;
+        border: solid 0.5px $table-border;
         cursor: pointer;
         img {
           width: 30px;
@@ -1959,7 +1960,6 @@ th {
     }
   }
 }
-
 
 // input box
 .input-box-revamp {
@@ -1994,11 +1994,10 @@ th {
   }
 }
 
-
 // Nzselect
 
 .nzSelect-revamp {
-  // width: 128px;
+  width: 100%;
   background: $white 0% 0% no-repeat padding-box;
   // box-shadow: $shadow-light-black;
   // border-radius: 5px;
