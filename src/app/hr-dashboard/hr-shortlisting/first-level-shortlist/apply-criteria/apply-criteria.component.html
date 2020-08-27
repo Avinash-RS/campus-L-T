@@ -7,9 +7,9 @@
         <div class="total">Selected number of candidates: <span class="count">{{filteredCandidates ? filteredCandidates : '0'}}</span> <span style="display: none;" class="view">View
             details</span></div>
       </div>
-      <div class="right-side">
+      <!-- <div class="right-side">
         <button style="display: none;" mat-button>Apply criteria <span class="material-icons">filter_alt</span></button>
-      </div>
+      </div> -->
     </div>
     <div class="filter-wrapper">
       <div class="header">
@@ -146,6 +146,10 @@
       </div>
     </div>
   </div>
+  <div class="submit-button">
+    <button class="submit" (click)="submitFilter()" mat-button>Submit</button>
+  </div>
+
   <div class="second-main">
     <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
 
@@ -434,8 +438,5 @@
       </nz-tab>
 
     </nz-tabset>
-  </div>
-  <div class="submit-button">
-    <button class="submit" (click)="submitFilter()" mat-button>Submit</button>
   </div>
 </div>

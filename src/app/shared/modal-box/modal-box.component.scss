@@ -11,10 +11,10 @@
   box-sizing: border-box;
   flex-direction: column;
   .confirmation-text {
-    color: $primary;
-    font-size: 16px;
+    color: $light-black;
+    font-size: 15px;
     font-weight: 200;
-    margin: 1em 0;
+    margin: 0em 0 0.5em 0;
   }
   .button-wrappers {
     margin: 1em 0em 0em -1em;
@@ -22,12 +22,12 @@
     display: flex;
     justify-content: center;
       align-items: center;
-    button {
-      min-width: 90px;
-      // color: $white;
-      font-size: 16px;
-      outline: none;
-    }
+    // button {
+    //   min-width: 90px;
+    //   // color: $white;
+    //   font-size: 16px;
+    //   outline: none;
+    // }
     // .delete-cancel {
     //   background: $blue-2 0% 0% no-repeat padding-box;
     // }

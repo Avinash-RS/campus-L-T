@@ -24,6 +24,7 @@
   }
   .sub-wrapper {
     // margin: 5em auto;
+    margin-top: -5em;
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
@@ -40,7 +41,7 @@
 
 @media only screen and (max-height: 600px) {
   .main-wrapper-login {
-    height: 768px;
+    height: 608px;
     align-items: center;
   }
 }

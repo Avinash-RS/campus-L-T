@@ -13,6 +13,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class ForgoPasswordComponent implements OnInit {
 
   forgotPasswordForm: FormGroup;
+  notTrue = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,

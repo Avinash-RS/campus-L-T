@@ -48,47 +48,49 @@
           </div>
           <!-- Temp -->
           <div class="form-field">
-              <label class="label-name">
-                  Password<span class="asterick">*</span>
-              </label>
-              <div class="input-box" [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
-                  <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'"
-                      required>
-                  <div class="icon">
-                      <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
-                          class="material-icons">
-                          visibility
-                      </span>
-                      <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
-                          class="material-icons">
-                          visibility_off
-                      </span>
-                  </div>
+            <label class="label-name">
+              Password<span class="asterick">*</span>
+            </label>
+            <div class="input-box"
+              [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
+              <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'" required>
+              <div class="icon">
+                <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;" class="material-icons">
+                  visibility
+                </span>
+                <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;" class="material-icons">
+                  visibility_off
+                </span>
+              </div>
 
-              </div>
-              <div class="error" *ngIf="password.invalid && password.touched">
-                  <span *ngIf="password.errors?.required">Password is Required</span>
-                  <span *ngIf="password.errors?.passwordvalidator">Please enter the valid password</span>
-              </div>
-              <div class="notes" *ngIf="password.dirty && password.invalid">
-                      <span *ngIf="password.errors?.passwordvalidator">The password should consist of 1 uppercase, 1 lowercase,1 number and 1 special character.</span>
-                      <div style="margin: 0.5em 0 0 0;" *ngIf="password.errors?.passwordvalidator">Note: Space ' " , & (Not allowed)</div>
-              </div>
-              <div *ngIf="password.valid" class="tick-mark">
-                  <div class="container">
-                 <span> <img src="assets/images/tick.svg" alt=""> Uppercase</span>
-                  <span><img src="assets/images/tick.svg" alt=""> Special character</span>
+            </div>
+            <div class="error" *ngIf="password.invalid && password.touched">
+              <span *ngIf="password.errors?.required">Password is Required</span>
+              <span *ngIf="password.errors?.passwordvalidator">Please enter the valid password</span>
+            </div>
+            <div class="notes" *ngIf="password.dirty && password.invalid">
+              <span *ngIf="password.errors?.passwordvalidator">The password should consist of 1 uppercase, 1 lowercase,1
+                number and 1 special character.</span>
+              <div style="margin: 0.5em 0 0 0;" *ngIf="password.errors?.passwordvalidator">Note: Space ' " , & (Not
+                allowed)</div>
+            </div>
+            <div *ngIf="password.valid" class="tick-mark">
+              <div class="container">
+                <span> <img src="assets/images/tick.svg" alt=""> Uppercase</span>
+                <span><img src="assets/images/tick.svg" alt=""> Special character</span>
               </div>
               <div class="container">
-                  <span><img src="assets/images/tick.svg" alt=""> Lowercase</span>
-                  <span><img src="assets/images/tick.svg" alt=""> Number</span>
+                <span><img src="assets/images/tick.svg" alt=""> Lowercase</span>
+                <span><img src="assets/images/tick.svg" alt=""> Number</span>
               </div>
-              </div>            </div>
-            <!-- Temp end -->
+            </div>
+          </div>
+          <!-- Temp end -->
 
           <div class="submit-button">
-            <button type="submit">Submit</button>
+            <button type="submit" class="submit" mat-raised-button>Submit</button>
           </div>
+
         </div>
       </form>
     </div>

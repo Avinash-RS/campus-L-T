@@ -8,7 +8,7 @@
             <div class="forms">
                 <div class="form-field">
                     <label class="label-name">
-                        Email Address
+                        Email Address<span class="asterick">*</span>
                     </label>
                     <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
                         <input matInput formControlName="email" type="text" required>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-field">
                     <label class="label-name">
-                        Password
+                        Password<span class="asterick">*</span>
                     </label>
                     <div class="input-box" [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
                         <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'"
@@ -50,7 +50,7 @@
                     </div> -->
 
                 <div class="submit-button">
-                    <button type="submit">Submit</button>
+                  <button type="submit" class="submit" mat-raised-button>Submit</button>
                 </div>
                 <!-- <div class="no-account">
                         <span (click)="createAccount()">Register here</span>
