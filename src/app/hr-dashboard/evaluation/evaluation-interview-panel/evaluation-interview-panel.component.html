@@ -62,7 +62,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
           <td mat-cell *matCellDef="let element">
-            <button (click)="selectedUser(element)" [ngClass]="element.assignStatus == 'completed' ? 'disabled' : ''" [disabled]="element.assignStatus == 'completed' ? true : false" [routerLink]="appConstant.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS" routerLinkActive="active"  class="submit-btn" mat-raised-button> {{element.assignStatus == 'completed' ? 'Assigned' : 'Assign'}}</button>
+            <button (click)="selectedUser(element)" [ngClass]="element.assignStatus == 'completed' ? 'disabled' : ''" [routerLink]="appConstant.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS" routerLinkActive="active"  class="table-btn" mat-raised-button> {{element.assignStatus == 'completed' ? 'Assigned' : 'Assign'}}</button>
           </td>
         </ng-container>
 

@@ -58,7 +58,7 @@
     <ng-container matColumnDef="view_Info">
       <th mat-header-cell *matHeaderCellDef> View details </th>
       <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
-        <button class="viewbtn" (click)="particularAssessment(element && element.Assessment_Name ? element.Assessment_Name : '')" mat-button><mat-icon style="justify-content: center;
+        <button class="table-btn" (click)="particularAssessment(element && element.Assessment_Name ? element.Assessment_Name : '')" mat-button><mat-icon style="justify-content: center;
           display: contents;
           font-size: 16px;">visibility</mat-icon> <span>View</span></button>
         </td>
