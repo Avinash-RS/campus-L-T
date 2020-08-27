@@ -6,40 +6,40 @@
 
     <!-- Type Delete Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'delete'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="delete-cancel" type="button">{{data.showCancel}}</button>
+      mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
     <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'delete'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="delete-confirm" type="button">{{data.showConfirm}}</button>
+      mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
 
     <!-- Type Add Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
+      mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
     <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+      mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
 
           <!-- Type Add Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add-tpo'" (click)="cancel(data.dataToBeShared)"
-    mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
+    mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
   <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add-tpo'" (click)="submitTPOADDCandidate()"
-    mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+    mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
 
     <!-- Type Confirm Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'confirm'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
+      mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
     <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'confirm'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+      mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
 
     <!-- Type Update Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'update'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="update-cancel" type="button">{{data.showCancel}}</button>
+      mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
     <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'update'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="update-confirm" type="button">{{data.showConfirm}}</button>
+      mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
 
     <button *ngIf="data.showOk" (click)="ok()" mat-raised-button class="ok" type="button">{{data.showConfirm}}</button>
 
     <!-- Type remove Buttons -->
     <button *ngIf="data.showCancel && data.dataToBeShared.type === 'remove'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="delete-cancel" type="button">{{data.showCancel}}</button>
+      mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
     <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'remove'" (click)="confirm()"
-      mat-raised-button class="delete-confirm" type="button">{{data.showConfirm}}</button>
+      mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
   </div>
 </div>

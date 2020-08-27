@@ -17,38 +17,38 @@
     margin: 1em 0;
   }
   .button-wrappers {
-    margin: 1em 0em;
+    margin: 1em 0em 0em -1em;
     text-align: center;
     display: flex;
     justify-content: center;
       align-items: center;
     button {
       min-width: 90px;
-      color: $white;
+      // color: $white;
       font-size: 16px;
       outline: none;
     }
-    .delete-cancel {
-      background: $blue-2 0% 0% no-repeat padding-box;
-    }
-    .delete-confirm {
-      background: $red-1 0% 0% no-repeat padding-box;
-      margin: 0 0 0 1em;
-    }
-    .add-cancel {
-      background: $primary 0% 0% no-repeat padding-box;
-    }
-    .add-confirm {
-      background: $light-blue 0% 0% no-repeat padding-box;
-      margin: 0 0 0 1em;
-    }
-    .update-cancel {
-      background: $primary 0% 0% no-repeat padding-box;
-    }
-    .update-confirm {
-      background: $light-blue 0% 0% no-repeat padding-box;
-      margin: 0 0 0 1em;
-    }
+    // .delete-cancel {
+    //   background: $blue-2 0% 0% no-repeat padding-box;
+    // }
+    // .delete-confirm {
+    //   background: $red-1 0% 0% no-repeat padding-box;
+    //   margin: 0 0 0 1em;
+    // }
+    // .add-cancel {
+    //   background: $primary 0% 0% no-repeat padding-box;
+    // }
+    // .add-confirm {
+    //   background: $light-blue 0% 0% no-repeat padding-box;
+    //   margin: 0 0 0 1em;
+    // }
+    // .update-cancel {
+    //   background: $primary 0% 0% no-repeat padding-box;
+    // }
+    // .update-confirm {
+    //   background: $light-blue 0% 0% no-repeat padding-box;
+    //   margin: 0 0 0 1em;
+    // }
 
     .ok {
       background: $blue-2 0% 0% no-repeat padding-box;

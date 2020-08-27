@@ -103,10 +103,10 @@
   min-width: 400px;
   max-width: 400px;
   padding: 1em 2em;
-  background: $background-11 0% 0% no-repeat padding-box;
+  background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black-4;
-  border: 1px solid $secondary;
-  border-radius: 5px;
+  // border: 1px solid $secondary;
+  // border-radius: 5px;
   .radio-group {
     color: $secondary;
     font-size: 13px;
