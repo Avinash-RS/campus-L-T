@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="30.3" height="30.3" viewBox="0 0 30.3 30.3"><defs><style>.a{fill:#fff;}</style></defs><path class="a" d="M12.063,0H2.282A2.285,2.285,0,0,0,0,2.282V8.151a2.285,2.285,0,0,0,2.282,2.282h9.781a2.285,2.285,0,0,0,2.282-2.282V2.282A2.285,2.285,0,0,0,12.063,0Zm0,0"/><path class="a" d="M12.063,213.332H2.282A2.285,2.285,0,0,0,0,215.614v13.693a2.285,2.285,0,0,0,2.282,2.282h9.781a2.285,2.285,0,0,0,2.282-2.282V215.614A2.285,2.285,0,0,0,12.063,213.332Zm0,0" transform="translate(0 -201.29)"/><path class="a" d="M289.4,341.332h-9.781a2.285,2.285,0,0,0-2.282,2.282v5.868a2.285,2.285,0,0,0,2.282,2.282H289.4a2.285,2.285,0,0,0,2.282-2.282v-5.868A2.285,2.285,0,0,0,289.4,341.332Zm0,0" transform="translate(-261.377 -321.465)"/><path class="a" d="M289.4,0h-9.781a2.285,2.285,0,0,0-2.282,2.282V15.975a2.285,2.285,0,0,0,2.282,2.282H289.4a2.285,2.285,0,0,0,2.282-2.282V2.282A2.285,2.285,0,0,0,289.4,0Zm0,0" transform="translate(-261.377)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17">
+  <g id="Group_8200" data-name="Group 8200" transform="translate(19657 3582)">
+    <rect id="Rectangle_2536" data-name="Rectangle 2536" width="8" height="6" transform="translate(-19657 -3582)" fill="#1f1a17"/>
+    <rect id="Rectangle_2539" data-name="Rectangle 2539" width="8" height="6" transform="translate(-19647 -3571)" fill="#1f1a17"/>
+    <rect id="Rectangle_2537" data-name="Rectangle 2537" width="8" height="10" transform="translate(-19657 -3575)" fill="#1f1a17"/>
+    <rect id="Rectangle_2538" data-name="Rectangle 2538" width="8" height="10" transform="translate(-19647 -3582)" fill="#1f1a17"/>
+  </g>
+</svg>
