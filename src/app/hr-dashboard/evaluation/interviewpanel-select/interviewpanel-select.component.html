@@ -137,6 +137,6 @@
         <div>No Candidate data available to shortlist </div>
       </div>
       <div *ngIf="userList && userList.length > 0" class="button-wrapper">
-        <button (click)="submitDialog()" [disabled]="buttonHide ? true : false" [ngClass]="buttonHide ? 'disabled' : ''" class="submit" mat-raised-button>Assign</button>
+        <button (click)="submitDialog()" [ngClass]="buttonHide ? 'disabled' : ''" class="submit" mat-raised-button>Assign</button>
       </div>
   </div>

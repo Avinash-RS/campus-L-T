@@ -20,8 +20,8 @@
         </div>
         <div class="right">
           <div class="button">
-            <button class="filter" (click)="submitFilterNoRedirect()" mat-raised-button>Apply Filter</button>
-            <button (click)="clearAllFilters()" mat-raised-button>Clear All</button>
+            <button class="submit btn-margin-space-1" (click)="submitFilterNoRedirect()" mat-raised-button>Apply Filter</button>
+            <button class="cancel-btn" (click)="clearAllFilters()" mat-raised-button>Clear All</button>
           </div>
         </div>
       </div>
@@ -205,7 +205,7 @@
               <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
               <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
               <div class="button">
-                <button mat-raised-button (click)="applyDateFilter()"><span>Apply</span></button>
+                <button class="submit" mat-raised-button (click)="applyDateFilter()"><span>Apply</span></button>
               </div>
             </div>
           </div>
@@ -296,7 +296,7 @@
               <div class="validation" *ngIf="endYearValidation">End date cannot be lower than start date</div>
               <div class="validation" *ngIf="percentageRegexError || percentageToRegexError">Please enter the valid percentage in the above red highlight text boxes</div>
               <div class="button">
-                <button mat-raised-button (click)="applyEduYearFilter()"><span>Apply</span></button>
+                <button class="submit" mat-raised-button (click)="applyEduYearFilter()"><span>Apply</span></button>
               </div>
             </div>
           </div>
@@ -436,6 +436,6 @@
     </nz-tabset>
   </div>
   <div class="submit-button">
-    <button (click)="submitFilter()" mat-button>Submit</button>
+    <button class="submit" (click)="submitFilter()" mat-button>Submit</button>
   </div>
 </div>

@@ -135,6 +135,6 @@
             <div>No Candidate data available to assign </div>
           </div>
           <div *ngIf="userList && userList.length > 0" class="button-wrapper">
-            <button class="submit" [disabled]="buttonHide ? true : false" [ngClass]="buttonHide ? 'disabled' : ''" (click)="submit()" mat-raised-button>Next</button>
+            <button class="submit"  [ngClass]="buttonHide ? 'disabled' : ''" (click)="submit()" mat-raised-button>Next</button>
           </div>
       </div>

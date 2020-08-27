@@ -121,6 +121,6 @@
       </div>
       <div class="button-wrapper">
         <button [routerLink]="appConstant.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT" routerLinkActive="active" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
-        <button [disabled]="selectedUserDetail ? false : true" [ngClass]="selectedUserDetail ? '' : 'disabled'" (click)="confirmForm()" class="submit" mat-raised-button>Confirm</button>
+        <button [ngClass]="selectedUserDetail ? '' : 'disabled'" (click)="confirmForm()" class="submit" mat-raised-button>Confirm</button>
       </div>
   </div>
