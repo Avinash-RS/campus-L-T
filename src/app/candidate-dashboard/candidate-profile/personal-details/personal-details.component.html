@@ -72,10 +72,16 @@
       <div class="flex-box">
         <label>Gender<span class="asterick">*</span></label>
         <div class="input-box-radio">
-          <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="gender">
+            <mat-radio-group style="display: flex; justify-content: space-between; width: 30%; margin-top: -1em;" (change)="detectSelectChange()" formControlName="gender">
+                <mat-radio-button value="Male" style="font-size: 17px;">Male
+                </mat-radio-button>
+                <mat-radio-button value="Female" style="font-size: 17px;">Female</mat-radio-button>
+              </mat-radio-group>
+
+          <!-- <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="gender">
             <label nz-radio nzValue="Male">Male</label>
             <label nz-radio nzValue="Female">Female</label>
-          </nz-radio-group>
+          </nz-radio-group> -->
         </div>
       </div>
       <div class="error" *ngIf="gender.invalid && gender.touched">
@@ -90,10 +96,16 @@
       <div class="flex-box">
         <label>Marital Status</label>
         <div class="input-box-radio">
-          <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="marital">
+            <mat-radio-group style="display: flex; justify-content: space-between; width: 30%; margin-top: -1em;" (change)="detectSelectChange()" formControlName="marital">
+                <mat-radio-button value="Married" style="font-size: 17px;">Married
+                </mat-radio-button>
+                <mat-radio-button value="Unmarried" style="font-size: 17px;">Unmarried</mat-radio-button>
+              </mat-radio-group>
+
+          <!-- <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="marital">
             <label nz-radio nzValue="Married">Married</label>
             <label nz-radio nzValue="Unmarried">Unmarried</label>
-          </nz-radio-group>
+          </nz-radio-group> -->
         </div>
       </div>
       <div class="error" *ngIf="marital.invalid && marital.touched">
@@ -767,10 +779,9 @@
 </div>
 
 <div class="submit-button-wrapper">
+  <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
   <button class="submit btn-margin-space"
     (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)"
     mat-raised-button type="submit">Save and Continue</button>
-
-  <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
 </div>

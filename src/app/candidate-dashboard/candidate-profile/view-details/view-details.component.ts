@@ -18,6 +18,7 @@ export class ViewDetailsComponent implements OnInit {
 
   radioIsChecked = 'checked';
   userDetails: any;
+  radioValue = 'pre';
 
   userData: any;
   apiForm: any;
