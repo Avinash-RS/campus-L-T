@@ -76,7 +76,7 @@
             </div>
             <div class="col-8 indent">
 
-              <span class="ans">: {{getCandidateData?.education[0].field_institute}}</span>
+              <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0] && getCandidateData['education'][0]['field_institute'] ? getCandidateData['education'][0]['field_institute'] : ''}}</span>
             </div>
           </div>
         </div>

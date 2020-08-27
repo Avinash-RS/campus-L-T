@@ -230,4 +230,9 @@
   li:last-child::after {
     content: "";
   }
+  li:last-child {
+    span {
+      cursor: default;
+    }
+  }
 }
