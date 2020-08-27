@@ -59,14 +59,15 @@
     }
     .filter-wrapper {
       margin: 1em 0 0 0;
-      background: $background-4 0% 0% no-repeat padding-box;
+      background: $white 0% 0% no-repeat padding-box;
       box-shadow: $shadow-light-black-29;
-      border: 1px solid $gray-dark;
+      border: 1px solid $input-border;
       .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: $white-4 0% 0% no-repeat padding-box;
+        background: $white 0% 0% no-repeat padding-box;
+        border-bottom: 1px solid $input-border;
         padding: 4px 2px 4px 16px;
         .left {
           .heading {
@@ -267,14 +268,16 @@
           grid-template-columns: 1fr 1fr;
           .left {
             background: $white 0% 0% no-repeat padding-box;
-            border: 0.5px solid $borderColor;
+            border: 0.5px solid $input-border;
             border-top: none;
             text-align: center;
-            border-radius: 5px;
+            // border-radius: 5px;
             .item {
               background: $black-3 0% 0% no-repeat padding-box;
-              border: 0.5px solid $borderColor;
-              border-radius: 5px 5px 0px 0px;
+              border: 0.5px solid $input-border;
+              border-left: none;
+              border-right: none;
+              // border-radius: 5px 5px 0px 0px;
               color: $light-black;
               font-size: 13px;
               font-weight: 200;
@@ -297,15 +300,16 @@
           }
           .right {
             background: $white 0% 0% no-repeat padding-box;
-            border: 0.5px solid $borderColor;
+            border: 0.5px solid $input-border;
             border-top: none;
-            border-radius: 5px;
-            margin: 0 0 0 4px;
+            // border-radius: 5px;
+            margin: 0 0 0 1px;
             text-align: center;
             .item {
               background: $black-3 0% 0% no-repeat padding-box;
-              border: 0.5px solid $borderColor;
-              border-radius: 5px 5px 0px 0px;
+              border: 0.5px solid $input-border;
+              border-left: none;
+              border-right: none;
               color: $light-black;
               font-size: 13px;
               font-weight: 200;
@@ -481,13 +485,13 @@
               }
               .left-grid-item:last-child {
                 border-radius: 0px 0px 5px 5px;
-                border-bottom: 1px solid $borderColor-6;
+                border-bottom: 1px solid $input-border;
               }
               .left-grid-item {
                 display: grid;
                 align-items: center;
-                border-left: 1px solid $borderColor-6;
-                border-right: 1px solid $borderColor-6;
+                border-left: 1px solid $input-border;
+                border-right: 1px solid $input-border;
                 grid-template-columns: 2fr 1fr 1fr;
                 background: $white-2 0% 0% no-repeat padding-box;
                 padding: 4px 16px;
@@ -531,13 +535,13 @@
               }
               .right-grid-item:last-child {
                 border-radius: 0px 0px 5px 5px;
-                border-bottom: 1px solid $borderColor-6;
+                border-bottom: 1px solid $input-border;
               }
               .right-grid-item {
                 display: grid;
                 align-items: center;
-                border-left: 1px solid $borderColor-6;
-                border-right: 1px solid $borderColor-6;
+                border-left: 1px solid $input-border;
+                border-right: 1px solid $input-border;
                 grid-template-columns: 0.35fr 2fr 2fr;
                 background: $white-2 0% 0% no-repeat padding-box;
                 padding: 4px 16px;
@@ -593,9 +597,9 @@
     }
   }
   .submit-button {
-    margin: 0.5em 0;
+    margin: 0.5em 0 1em 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     // button {
     //   display: flex;

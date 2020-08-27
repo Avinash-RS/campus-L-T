@@ -6,9 +6,9 @@
 .shortlist-wrapper {
   width: auto;
   padding: 1em 2em;
-  background: $background-11 0% 0% no-repeat padding-box;
+  background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black-4;
-  border: 2px solid $secondary;
+  // border: 2px solid $secondary;
   border-radius: 5px;
   .preview-wrapper {
     display: grid;
@@ -133,20 +133,20 @@
       flex-direction: column;
       justify-content: center;
     }
-    .ok {
-      background: $green-2 0% 0% no-repeat padding-box;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 10px;
-      height: 25px;
-      color: $white;
-      font-size: 13px;
-      font-weight: 200;
-      padding: 4px 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
+    // .ok {
+      // background: $green-2 0% 0% no-repeat padding-box;
+      // box-shadow: $shadow-light-black-1;
+      // border-radius: 10px;
+      // height: 25px;
+      // color: $white;
+      // font-size: 13px;
+      // font-weight: 200;
+      // padding: 4px 16px;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      // flex-direction: column;
+    // }
     .cancel {
       margin: 0 1em 0 0;
       box-shadow: $shadow-light-black-1;
