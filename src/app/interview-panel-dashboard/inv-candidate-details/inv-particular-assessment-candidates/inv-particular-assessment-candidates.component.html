@@ -43,7 +43,7 @@
       <ng-container matColumnDef="details">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> View details </th>
         <td mat-cell *matCellDef="let element">
-          <button [ngClass]="element.evaluation_status == '2' ? 'none' : ''" [matTooltip]="element.evaluation_status == '2' ? 'Submitted' : ''" [disabled] = "element.evaluation_status == '2' ? true : false" (click)="submit(element['uid'], element['candidate_name'], element['evaluation_status'], element['tag'])" class="submit-btn" mat-raised-button> Evaluate</button>
+          <button [ngClass]="element.evaluation_status == '2' ? 'none' : ''" [matTooltip]="element.evaluation_status == '2' ? 'Submitted' : ''" [disabled] = "element.evaluation_status == '2' ? true : false" (click)="submit(element['uid'], element['candidate_name'], element['evaluation_status'], element['tag'])" class="table-btn" mat-raised-button> Evaluate</button>
         </td>
       </ng-container>
 
