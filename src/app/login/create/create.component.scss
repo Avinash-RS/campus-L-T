@@ -1,11 +1,11 @@
 @import "../../themes/themes.scss";
 
 .create-wrapper {
-  margin: 50px 0;
+  margin: 20px 0;
   .head {
     color: $secondary;
     font-size: 26px;
-    margin: 0 0 50px 0;
+    margin: 0 0 20px 0;
     font-weight: 50;
   }
   form {
@@ -15,15 +15,16 @@
         margin: 20px 0em 0 0;
         label {
           display: flex;
-          padding: 0 0 8px 0 !important;
+          padding: 0 0 4px 0 !important;
           margin: 0 !important;
           color: $primary;
-          font-size: 17px;
-          font-weight: 200;
+          font-size: 15px;
+          font-weight: 100;
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           width: 100%;
           display: flex;
           align-items: center;
@@ -45,7 +46,7 @@
             height: 35px !important;
           }
           input:disabled {
-            background: $gray-5 0% 0% no-repeat padding-box;
+            background: transparent;
           }
           .icon {
             display: flex;
@@ -92,24 +93,24 @@
         }
       }
       .submit-button {
-        margin: 42px 0;
+        margin: 40px 0;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        button {
-          justify-content: center;
-          text-align: center;
-          width: 70%;
-          height: 45px;
-          color: $white;
-          font-weight: 700;
-          font-size: 18px;
-          outline: none;
-          border: none;
-          border-radius: 10px;
-          background-color: $light-blue;
-        }
+        // button {
+        //   justify-content: center;
+        //   text-align: center;
+        //   width: 70%;
+        //   height: 45px;
+        //   color: $white;
+        //   font-weight: 700;
+        //   font-size: 18px;
+        //   outline: none;
+        //   border: none;
+        //   border-radius: 10px;
+        //   background-color: $light-blue;
+        // }
       }
     }
   }

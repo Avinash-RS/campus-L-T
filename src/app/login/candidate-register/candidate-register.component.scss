@@ -23,6 +23,7 @@
   }
   .sub-wrapper {
     // margin: 7em auto;
+    margin-top: -5em;
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
@@ -37,11 +38,11 @@
     box-sizing: border-box;
 
     .create-wrapper {
-      margin: 50px 0;
+      margin: 20px 0;
       .head {
         color: $secondary;
         font-size: 26px;
-        margin: 0 0 50px 0;
+        margin: 0 0 20px 0;
         font-weight: 100;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -50,22 +51,23 @@
         .forms {
           .form-field {
             padding: 0 !important;
-            margin: 37px 0em 0 0;
+            margin: 20px 0em 0 0;
             label {
               display: flex;
-              padding: 0 0 8px 0 !important;
+              padding: 0 0 4px 0 !important;
               margin: 0 !important;
               color: $primary;
-              font-size: 17px;
+              font-size: 15px;
               font-family: "Roboto" !important;
             }
             .input-box {
-              border-radius: 5px;
-              box-shadow: $shadow-light-black;
+              // border-radius: 5px;
+              // box-shadow: $shadow-light-black;
               width: 100%;
               display: flex;
               align-items: center;
               background: $white-primary;
+              border: solid $input-border 1px;
               height: 40px;
               padding: 0em 20px 0 10px;
               margin: 0 !important;
@@ -127,24 +129,24 @@
             }
           }
           .submit-button {
-            margin: 50px 0 0 0;
+            margin: 25px 0 0 0;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            button {
-              justify-content: center;
-              text-align: center;
-              width: 70%;
-              height: 45px;
-              color: $white;
-              font-weight: 200;
-              font-size: 20px;
-              outline: none;
-              border: none;
-              border-radius: 10px;
-              background-color: $light-blue;
-            }
+            // button {
+            //   justify-content: center;
+            //   text-align: center;
+            //   width: 70%;
+            //   height: 45px;
+            //   color: $white;
+            //   font-weight: 200;
+            //   font-size: 20px;
+            //   outline: none;
+            //   border: none;
+            //   border-radius: 10px;
+            //   background-color: $light-blue;
+            // }
           }
         }
       }
@@ -161,7 +163,7 @@
 
   @media only screen and (max-height: 750px) {
     .main-wrapper-candidate {
-      height: 740px;
+      height: 640px;
       align-items: center;
     }
 

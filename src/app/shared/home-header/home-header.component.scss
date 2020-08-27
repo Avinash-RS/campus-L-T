@@ -16,8 +16,13 @@
     white-space: pre-wrap;
   }
   .logo {
+    margin-left: 1em;
     display: inline-flex;
     color: $white;
+    img {
+      width: 150px;
+      height: 40px;
+    }
     .logo-txt {
       font-weight: 700;
       font-size: 18px;
