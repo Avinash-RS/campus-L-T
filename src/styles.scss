@@ -323,11 +323,11 @@ body {
   }
   .mat-checkbox-checked.mat-accent .mat-checkbox-background,
   .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #2ba54b !important;
+    background-color: $secondary !important;
   }
   .mat-ripple-element {
     opacity: 0.03 !important;
-    background-color: #2ba54b !important;
+    background-color: $secondary !important;
   }
 }
 .mat-paginator {
@@ -580,7 +580,7 @@ body {
     height: 14px !important;
   }
   .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #2ba54b !important;
+    background-color: $secondary !important;
     border-color: #2ba54c !important;
     width: 15px !important;
     height: 14px !important;
@@ -1623,6 +1623,9 @@ tr.mat-row:hover {
 // for pop space
 .btn-margin-space-1 {
   margin: 0 1em !important;
+}
+.btn-margin-space-05 {
+  margin: 0 .5em !important;
 }
 
 mat-paginator {
