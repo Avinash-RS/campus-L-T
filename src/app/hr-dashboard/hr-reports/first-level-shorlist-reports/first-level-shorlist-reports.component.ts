@@ -72,9 +72,20 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
   }
 
   downloadExcel(element) {
-    const excel = element && element.download ? element.download : '';
-    window.open(excel, '_blank');
+
+    let sendReq = {
+      "shortlist_name": element.shortlistname
+    }
+    this.adminService.firstShortlistExcelDownload(sendReq).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      
+      const excel = data && data.file ? data.file : '';
+      window.open(excel, '_blank');
+
+    }, (err) => {
+    });
   }
+  
   selectedUser(userDetail) {
     console.log(userDetail);
   }
