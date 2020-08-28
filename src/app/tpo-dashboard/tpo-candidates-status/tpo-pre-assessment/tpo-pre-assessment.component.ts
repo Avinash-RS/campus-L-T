@@ -41,7 +41,7 @@ export const MY_FORMATS = {
 })
 export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
+  displayedColumns: any[] = ['uid', 'new_candidate_id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
