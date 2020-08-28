@@ -43,6 +43,7 @@
         min-width: 400px;
         max-width: 400px;
         background: $white-primary;
+        border: solid .5px $table-border;
         height: 120px;
         display: flex;
         align-items: center;
@@ -59,12 +60,13 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              color: $light-blue;
+              color: $light-black;
               font-weight: 200;
               font-size: 15px;
               background: $white-primary 0% 0% no-repeat padding-box;
-              box-shadow: $shadow-light-black-2;
-              border-radius: 5px;
+              // box-shadow: $shadow-light-black-2;
+              border: solid .5px $table-border;
+              // border-radius: 5px;
               position: relative;
               input {
                 cursor: pointer !important;
@@ -136,42 +138,43 @@
         width: auto;
         justify-content: center;
         margin: 1em 0;
-        .cancel {
-          margin: 0 1em 0 0;
-          box-shadow: $shadow-light-black-1;
-          border: 1px solid $gray-dark;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          height: 25px;
-          color: $background;
-          font-size: 13px;
-          font-weight: 200;
-          padding: 4px 26px;
-          background: transparent;
-          justify-content: center;
-        }
-        .upload {
-          background: $background 0% 0% no-repeat padding-box;
-          box-shadow: $shadow-light-black-1;
-          border-radius: 6px;
-          height: 25px;
-          color: $white;
-          font-size: 13px;
-          font-weight: 200;
-          padding: 4px 26px;
-          display: flex;
-          align-items: center;
-          min-width: auto !important;
-          width: auto !important;
-          justify-content: center;
-        }
+        // .cancel {
+        //   margin: 0 1em 0 0;
+        //   box-shadow: $shadow-light-black-1;
+        //   border: 1px solid $gray-dark;
+        //   border-radius: 6px;
+        //   display: flex;
+        //   align-items: center;
+        //   height: 25px;
+        //   color: $background;
+        //   font-size: 13px;
+        //   font-weight: 200;
+        //   padding: 4px 26px;
+        //   background: transparent;
+        //   justify-content: center;
+        // }
+        // .upload {
+        //   background: $background 0% 0% no-repeat padding-box;
+        //   box-shadow: $shadow-light-black-1;
+        //   border-radius: 6px;
+        //   height: 25px;
+        //   color: $white;
+        //   font-size: 13px;
+        //   font-weight: 200;
+        //   padding: 4px 26px;
+        //   display: flex;
+        //   align-items: center;
+        //   min-width: auto !important;
+        //   width: auto !important;
+        //   justify-content: center;
+        // }
       }
     }
     .download {
       min-width: 400px;
       max-width: 400px;
       background: $white-primary;
+      border: solid .5px $table-border;
       height: 120px;
       display: flex;
       align-items: center;
@@ -187,12 +190,13 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          color: $light-blue;
+          color: $light-black;
           font-weight: 200;
           font-size: 15px;
           background: $white-primary 0% 0% no-repeat padding-box;
-          box-shadow: $shadow-light-black-2;
-          border-radius: 5px;
+          // box-shadow: $shadow-light-black-2;
+          // border-radius: 5px;
+          border: solid .5px $table-border;
           cursor: pointer;
           img {
             width: 30px;
@@ -205,7 +209,7 @@
   }
 
   .list-wrapper {
-    width: 68%;
+    width: 100%;
     margin: 1em auto;
     .list-count {
       color: $light-black;
@@ -217,18 +221,22 @@
       border: 1px solid $header-blue;
       .head-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1.2fr 0.3fr;
+        grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.3fr;
         color: $black;
+        align-items: center;
         background: $blue-3 0% 0% no-repeat padding-box;
         font-size: 13px;
         font-weight: 200;
         outline: none;
+        justify-content: center;
+        // text-align: center;
         border: none;
         padding: 4px 2em;
+        padding-right: 1em;
         .tag,
         .name,
         .email {
-          margin: 0 0 0 2em;
+          margin: 0 0 0 0em;
         }
       }
       .scroll {
@@ -237,8 +245,9 @@
         overflow: auto;
         .child-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr 1.2fr 0.3fr;
+          grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.3fr;
           padding: 4px 2em;
+          align-items: center;
           border: none;
           color: $header-blue;
           font-size: 13px;
@@ -246,6 +255,9 @@
           .delete {
             text-align: center;
             cursor: pointer;
+          }
+          div {
+            padding: 0 .5em;
           }
         }
         .light-bg {
@@ -292,4 +304,7 @@
 .hide {
   pointer-events: none;
   opacity: 0.5;
+}
+.none {
+  display: none;
 }

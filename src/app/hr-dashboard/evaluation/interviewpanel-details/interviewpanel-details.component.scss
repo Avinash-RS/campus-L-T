@@ -1,10 +1,10 @@
 @import "../../../themes/themes.scss";
 
 .inv-particular-assessment-candidate {
-  background: $white-3;
+  background: $white;
   height: 100%;
   .top-wrapper {
-    background: $background-2;
+    background: $white;
     width: 100%;
     padding: 0.25em;
     .grid-wrapper {
@@ -106,19 +106,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .button {
-      background: $blue-2;
-      color: $white;
-      justify-content: center;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 10px;
-      height: 26px;
-      font-weight: 200;
-      font-size: 13px;
-      align-items: center;
-      padding: 0px 2em !important;
-      display: flex;
-    }
+    // .button {
+    //   background: $blue-2;
+    //   color: $white;
+    //   justify-content: center;
+    //   box-shadow: $shadow-light-black-1;
+    //   border-radius: 10px;
+    //   height: 26px;
+    //   font-weight: 200;
+    //   font-size: 13px;
+    //   align-items: center;
+    //   padding: 0px 2em !important;
+    //   display: flex;
+    // }
   }
 }
 
@@ -166,12 +166,6 @@ th {
   border: 0.5px solid $borderColor-4 !important;
 }
 
-.light-bg {
-  background: $white-2 0% 0% no-repeat padding-box !important;
-}
-.dark-bg {
-  background: $white-3 0% 0% no-repeat padding-box !important;
-}
 
 .mat-row,
 .element-row,

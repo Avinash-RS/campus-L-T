@@ -22,7 +22,7 @@
           border-radius: 4px;
           padding: 4px;
           width: 90px;
-          background: $secondary;
+          background: $primary-red;
           color: $white;
           .icon {
             padding-left: 1em;
@@ -117,21 +117,21 @@
     justify-content: center;
     align-items: center;
     margin: 1em 0;
-    .upload {
-      background: $background 0% 0% no-repeat padding-box;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 6px;
-      height: 30px;
-      color: $white;
-      font-size: 14px;
-      font-weight: 200;
-      padding: 4px 26px;
-      display: flex;
-      align-items: center;
-      min-width: auto !important;
-      width: auto !important;
-      justify-content: center;
-    }
+    // .upload {
+    //   background: $background 0% 0% no-repeat padding-box;
+    //   box-shadow: $shadow-light-black-1;
+    //   border-radius: 6px;
+    //   height: 30px;
+    //   color: $white;
+    //   font-size: 14px;
+    //   font-weight: 200;
+    //   padding: 4px 26px;
+    //   display: flex;
+    //   align-items: center;
+    //   min-width: auto !important;
+    //   width: auto !important;
+    //   justify-content: center;
+    // }
   }
 }
 td {
@@ -158,12 +158,6 @@ th {
 }
 .hide {
   display: none;
-}
-.light-bg {
-  background: $white-2 0% 0% no-repeat padding-box !important;
-}
-.dark-bg {
-  background: $white-3 0% 0% no-repeat padding-box !important;
 }
 .input-header-group {
   padding: 4px 0;

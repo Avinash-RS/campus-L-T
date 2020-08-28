@@ -43,6 +43,7 @@
         min-width: 400px;
         max-width: 400px;
         background: $white-primary;
+        border: solid .5px $table-border;
         height: 120px;
         display: flex;
         align-items: center;
@@ -59,12 +60,13 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              color: $light-blue;
+              color: $light-black;
               font-weight: 200;
               font-size: 15px;
               background: $white-primary 0% 0% no-repeat padding-box;
-              box-shadow: $shadow-light-black-2;
-              border-radius: 5px;
+              // box-shadow: $shadow-light-black-2;
+              border: solid .5px $table-border;
+              // border-radius: 5px;
               position: relative;
               input {
                 cursor: pointer !important;
@@ -136,42 +138,43 @@
         width: auto;
         justify-content: center;
         margin: 1em 0;
-        .cancel {
-          margin: 0 1em 0 0;
-          box-shadow: $shadow-light-black-1;
-          border: 1px solid $gray-dark;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          height: 25px;
-          color: $background;
-          font-size: 13px;
-          font-weight: 200;
-          padding: 4px 26px;
-          background: transparent;
-          justify-content: center;
-        }
-        .upload {
-          background: $background 0% 0% no-repeat padding-box;
-          box-shadow: $shadow-light-black-1;
-          border-radius: 6px;
-          height: 25px;
-          color: $white;
-          font-size: 13px;
-          font-weight: 200;
-          padding: 4px 26px;
-          display: flex;
-          align-items: center;
-          min-width: auto !important;
-          width: auto !important;
-          justify-content: center;
-        }
+        // .cancel {
+        //   margin: 0 1em 0 0;
+        //   box-shadow: $shadow-light-black-1;
+        //   border: 1px solid $gray-dark;
+        //   border-radius: 6px;
+        //   display: flex;
+        //   align-items: center;
+        //   height: 25px;
+        //   color: $background;
+        //   font-size: 13px;
+        //   font-weight: 200;
+        //   padding: 4px 26px;
+        //   background: transparent;
+        //   justify-content: center;
+        // }
+        // .upload {
+        //   background: $background 0% 0% no-repeat padding-box;
+        //   box-shadow: $shadow-light-black-1;
+        //   border-radius: 6px;
+        //   height: 25px;
+        //   color: $white;
+        //   font-size: 13px;
+        //   font-weight: 200;
+        //   padding: 4px 26px;
+        //   display: flex;
+        //   align-items: center;
+        //   min-width: auto !important;
+        //   width: auto !important;
+        //   justify-content: center;
+        // }
       }
     }
     .download {
       min-width: 400px;
       max-width: 400px;
       background: $white-primary;
+      border: solid .5px $table-border;
       height: 120px;
       display: flex;
       align-items: center;
@@ -187,12 +190,13 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          color: $light-blue;
+          color: $light-black;
           font-weight: 200;
           font-size: 15px;
           background: $white-primary 0% 0% no-repeat padding-box;
-          box-shadow: $shadow-light-black-2;
-          border-radius: 5px;
+          // box-shadow: $shadow-light-black-2;
+          // border-radius: 5px;
+          border: solid .5px $table-border;
           cursor: pointer;
           img {
             width: 30px;

@@ -11,7 +11,7 @@
         <img src="assets/images/feather-search.svg" alt="" srcset="">
       </div>
       <div class="button-wrapper" [matTooltip]="enableSend ? '' : 'Select the checkboxes to send mail'">
-        <button [ngClass]="enableSend ? '' : 'disable'" (click)="sendEmailPop()" mat-raised-button><span
+        <button class="submit" [ngClass]="enableSend ? '' : 'disable'" (click)="sendEmailPop()" mat-raised-button><span
             class="icon"><img src="assets/images/002-tick.svg" alt="" srcset=""></span>
           <span> Send email</span></button>
       </div>

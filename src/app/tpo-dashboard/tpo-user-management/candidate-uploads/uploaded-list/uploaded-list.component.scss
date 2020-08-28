@@ -23,15 +23,7 @@
       .button-wrapper {
         display: flex;
         padding-left: 12px;
-        button, button:focus {
-          display: flex;
-          height: 26px;
-          font-size: 13px;
-          justify-content: center;
-          align-items: center;
-          padding: 4px;
-          background: $background-6;
-          color: $white;
+        .submit {
           .icon {
             img {
               padding-right: 3px;
@@ -56,7 +48,7 @@
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
         padding: 0.25em 0.15em;
-        height: 27px;
+        height: 30px;
         position: relative;
         img {
           width: 20px;
@@ -137,9 +129,4 @@ th {
   opacity: 0.5;
   pointer-events: none;
 }
-.light-bg {
-  background: $white-2 0% 0% no-repeat padding-box !important;
-}
-.dark-bg {
-  background: $white-3 0% 0% no-repeat padding-box !important;
-}
+

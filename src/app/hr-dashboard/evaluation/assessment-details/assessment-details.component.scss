@@ -57,7 +57,7 @@
       width: 100%;
     }
     td {
-      border: none;
+      // border: none;
       color: $header-blue;
       font-size: 13px;
       margin: 1em;
@@ -109,12 +109,6 @@
       padding-right: 4px !important;
       align-items: center !important;
     }
-  }
-  .light-bg {
-    background: $white-2 0% 0% no-repeat padding-box !important;
-  }
-  .dark-bg {
-    background: $white-3 0% 0% no-repeat padding-box !important;
   }
 
 

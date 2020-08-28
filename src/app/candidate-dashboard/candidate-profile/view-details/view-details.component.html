@@ -26,15 +26,31 @@
       </div>
       <div class="form-group">
         <label class="label-radio">Gender</label>
-        <div class="radio">
-          <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label>
+        <div class="radio" style="overflow: hidden; pointer-events: none;">
+            <mat-radio-group [(ngModel)]="radioValue">
+              <mat-radio-button value="pre">{{userDetails['gender']}}
+              </mat-radio-button>
+              </mat-radio-group>
+            <!-- <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label> -->
         </div>
+
+        <!-- <div class="radio">
+          <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label>
+        </div> -->
       </div>
       <div *ngIf="userDetails && userDetails['marital']" class="form-group">
         <label>Marital Status</label>
-        <div class="radio">
+        <div class="radio" style="overflow: hidden; pointer-events: none;">
+            <mat-radio-group [(ngModel)]="radioValue">
+              <mat-radio-button value="pre">{{userDetails['marital']}}
+              </mat-radio-button>
+              </mat-radio-group>
+              <!-- <mat-radio-button [value]="userDetails['marital']">{{userDetails['marital']}}</mat-radio-button> -->
+              <!-- <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label> -->
+          </div>
+        <!-- <div class="radio">
           <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label>
-        </div>
+        </div> -->
       </div>
       <div class="form-group">
         <label>Date of Birth</label>
@@ -821,8 +837,8 @@
 </div>
 
 <div class="submit-button-wrapper">
-  <button *ngIf="showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
+  <button class="submit btn-margin-space" *ngIf="showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
 
-  <button *ngIf="showNext" (click)="onSubmit()" mat-raised-button type="button">Next</button>
+  <button class="submit" *ngIf="showNext" (click)="onSubmit()" mat-raised-button type="button">Next</button>
 
 </div>

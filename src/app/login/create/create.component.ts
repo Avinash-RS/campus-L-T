@@ -20,6 +20,7 @@ export class CreateComponent implements OnInit {
   currentRoute: string;
   passwordTempToken: any;
   prePoulteEmailId: any;
+  type: string;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -29,9 +30,9 @@ export class CreateComponent implements OnInit {
   ) {
     if (this.router.url.includes(CONSTANT.ENDPOINTS.PASSWORD.RESET)) {
       this.verifyPassword();
-      this.currentRoute = 'Reset the password';
+      // this.currentRoute = 'Create the password';
     } else {
-      this.currentRoute = 'Create an account';
+      // this.currentRoute = 'Reset the password';
     }
   }
 
@@ -49,6 +50,11 @@ export class CreateComponent implements OnInit {
         // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.RESET}`);
         this.passwordTempToken = params['temp-token'];
         this.prePoulteEmailId = params['mail'];
+        this.currentRoute = 'Create the password';
+        if (params['type'] === 'reset') {
+          this.type = 'reset';
+          this.currentRoute = 'Reset the password';
+        }
       } else {
         this.appConfig.error(`Reset password temp token is invalid`, '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.FORGOT);
@@ -69,7 +75,7 @@ export class CreateComponent implements OnInit {
   }
 
   autoPopulateMail() {
-    if (this.currentRoute === 'Reset the password') {
+    if (this.currentRoute) {
       this.createForm.patchValue({
         email: this.prePoulteEmailId ? this.prePoulteEmailId : ''
       });

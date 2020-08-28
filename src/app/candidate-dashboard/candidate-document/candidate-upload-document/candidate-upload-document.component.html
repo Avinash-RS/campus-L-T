@@ -165,8 +165,8 @@
                 </div>
                 </form>
                 <div class="buttonDiv">
-                    <button matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made" (click)="submitDialog('')" [disabled]="saveAndSubmitBtnDisable ? true : false" type="button" class="btn-sm btn">Save</button>
-                    <button matTooltipPosition="above" matTooltip="The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them" (click)="submitDialog('submit')" [disabled]="saveAndSubmitBtnDisable ? true : false" type="button" class="btn-sm btn">Submit</button>
+                    <button mat-raised-button matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made" (click)="submitDialog('')" [disabled]="saveAndSubmitBtnDisable ? true : false" type="button" class="submit btn-margin-space">Save</button>
+                    <button mat-raised-button matTooltipPosition="above" matTooltip="The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them" (click)="submitDialog('submit')" [disabled]="saveAndSubmitBtnDisable ? true : false" type="button" class="submit">Submit</button>
                 </div>
 </div>
 
