@@ -206,5 +206,20 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/api/diploma_colleges?_format=json`, param, { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  // education
+  getoverallInstitute() {
+    return this.http.get(`${this.BASE_URL}/api/college_list`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // education
+  getoverallDiscipline() {
+    return this.http.get(`${this.BASE_URL}/api/discipline_list`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+
+  // education
+  getoverallSpecialization() {
+    return this.http.get(`${this.BASE_URL}/api/specification_list`, { headers: this.withoutTokens(), withCredentials: true });
+  }
 
 }
