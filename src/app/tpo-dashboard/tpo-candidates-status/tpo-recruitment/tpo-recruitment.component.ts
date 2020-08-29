@@ -41,7 +41,7 @@ export const MY_FORMATS = {
 })
 export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement', 'assement_shortlist', 'document_submit', 'interview_shortlist'];
+  displayedColumns: any[] = ['uid', 'new_candidate_id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement', 'assement_shortlist', 'document_submit', 'interview_shortlist'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 

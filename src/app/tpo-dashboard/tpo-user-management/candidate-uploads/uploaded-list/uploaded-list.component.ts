@@ -13,7 +13,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 })
 export class UploadedListComponent implements OnInit, AfterViewInit {
   showPage = true;
-  displayedColumns: any[] = ['counter', 'tag', 'name', 'id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time', 'email_sent', 'checked'];
+  displayedColumns: any[] = ['counter', 'tag', 'name', 'new_candidate_id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time', 'email_sent', 'checked'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
