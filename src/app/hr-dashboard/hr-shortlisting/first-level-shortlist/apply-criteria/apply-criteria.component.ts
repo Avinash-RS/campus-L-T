@@ -168,6 +168,7 @@ export class ApplyCriteriaComponent implements OnInit {
     this.clearDisciplineFilter();
     this.clearSpecializationFilter();
     this.clearBacklogFilter();
+    this.submitFilterNoRedirect();
   }
 
   // Filter Submit
@@ -468,6 +469,7 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Education Level
   EduNgOnInIt() {
+
     this.eduFilter = this.EduLevel;
     let runGenderElse = true;
     this.eduFilter.forEach(element => {
@@ -773,6 +775,24 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Institute
   InstituteNameNgOnInIt() {
+    // const api = {
+    //   level: 'PG',
+    //   discipline: '',
+    //   specification: ''
+    // };
+    // this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+    //   this.appConfig.hideLoader();
+    //   const list = data && data[0] ? data[0] : [];
+    //   this.InstituteNameDropdownList = list;
+    //   // this.InstituteNameDropdownList.forEach(element => {
+
+    //   // });
+    //   console.log('eduFIlter', this.eduFilter);
+
+    // }, (err) => {
+
+    // });
+
     this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
     this.InstituteNameDropDown = this.InstituteNameDropdownList;
     this.InstituteNameFilter = this.InstituteNameDropDown;
