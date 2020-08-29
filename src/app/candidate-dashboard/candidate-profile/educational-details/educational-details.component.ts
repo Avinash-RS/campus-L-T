@@ -32,8 +32,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   DiplamoList: any;
   diplamoDiscipline: any;
   pgDisciplines: any;
+  ugDisciplines: any;
   pgColleges: any;
   pgSpecialization: any;
+  ugSpecialization: any;
 
   level = DropdownListForKYC['level'];
 
@@ -98,7 +100,9 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.DiplamoInstitutes();
     this.DisciplineList();
     this.PGInstitutes();
+    this.UGDiscipline();
     this.PGDiscipline();
+    this.UGSpecification();
     this.PGSpecification();
     // this.defautValue();
   }
@@ -161,6 +165,23 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     });
   }
 
+  UGDiscipline() {
+    const api = {
+      level: '',
+      discipline: 'UG',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('UGdiscii', data);
+      const list = data && data[0] ? data[0] : [];
+      this.ugDisciplines = list;
+    }, (err) => {
+
+    });
+  }
+
+
   PGDiscipline() {
     const api = {
       level: '',
@@ -176,6 +197,23 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
     });
   }
+
+  UGSpecification() {
+    const api = {
+      level: '',
+      discipline: '',
+      specification: 'UG'
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('ugSpec', data);
+      const list = data && data[0] ? data[0] : [];
+      this.ugSpecialization = list;
+    }, (err) => {
+
+    });
+  }
+
 
   PGSpecification() {
     const api = {

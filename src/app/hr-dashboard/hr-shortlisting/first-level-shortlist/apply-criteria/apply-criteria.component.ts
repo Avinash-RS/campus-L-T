@@ -76,14 +76,14 @@ export class ApplyCriteriaComponent implements OnInit {
   EduLevel = DropdownListForKYC['level'];
   backlogs = DropdownListForKYC['backlogs'];
   genderList = DropdownListForKYC['gender'];
-  disciplineList = DropdownListForKYC['discipline'];
-  specializationList = DropdownListForKYC['specialization'];
+  disciplineList: any;
+  specializationList: any;
   InstituteNameDropDown: any[];
   InstituteNameSearchControl = new FormControl();
   InstituteNameSelectAllCheck = false;
   InstituteNameFilter: any[];
   InstituteNameShowSelectAll = true;
-  InstituteNameDropdownList = [];
+  InstituteNameDropdownList: any;
   instituteFilterShow: boolean;
   showInstituteTotalCount: number;
 
@@ -775,32 +775,24 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Institute
   InstituteNameNgOnInIt() {
-    // const api = {
-    //   level: 'PG',
-    //   discipline: '',
-    //   specification: ''
-    // };
-    // this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-    //   this.appConfig.hideLoader();
-    //   const list = data && data[0] ? data[0] : [];
-    //   this.InstituteNameDropdownList = list;
-    //   // this.InstituteNameDropdownList.forEach(element => {
+    this.candidateService.getoverallInstitute().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
+      this.InstituteNameDropdownList = list;
+      console.log('eduFIlterapiii', data);
+      // this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
+      this.InstituteNameDropDown = this.InstituteNameDropdownList;
+      this.InstituteNameFilter = this.InstituteNameDropDown;
+      this.toShowOrNotInstituteFilter();
+      // this.selectedItems = [
+      //   { item_id: 3, item_text: 'Pune' },
+      //   { item_id: 4, item_text: 'Navsari' }
+      // ];
 
-    //   // });
-    //   console.log('eduFIlter', this.eduFilter);
+    }, (err) => {
 
-    // }, (err) => {
+    });
 
-    // });
-
-    this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
-    this.InstituteNameDropDown = this.InstituteNameDropdownList;
-    this.InstituteNameFilter = this.InstituteNameDropDown;
-    this.toShowOrNotInstituteFilter();
-    // this.selectedItems = [
-    //   { item_id: 3, item_text: 'Pune' },
-    //   { item_id: 4, item_text: 'Navsari' }
-    // ];
   }
 
   InstituteNameSearch(value: string) {
@@ -873,19 +865,31 @@ export class ApplyCriteriaComponent implements OnInit {
   }
 
   clearInstituteFilter() {
-    this.InstituteNameDropDown.forEach(element => {
-      if (element['name']) {
-        element.checkbox = false;
-      }
-    });
-    this.toShowOrNotInstituteFilter();
+    if (this.InstituteNameDropDown) {
+      this.InstituteNameDropDown.forEach(element => {
+        if (element['name']) {
+          element.checkbox = false;
+        }
+      });
+      this.toShowOrNotInstituteFilter();
+    }
   }
 
   // For Discpline
   DisciplineNgOnInIt() {
-    this.disciplineFilter = this.disciplineList;
+    this.candidateService.getoverallDiscipline().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
+      console.log('apiDisci', data);
 
-    this.toShowOrNotDisciplineFilter();
+      this.disciplineList = list;
+
+      this.disciplineFilter = this.disciplineList;
+
+      this.toShowOrNotDisciplineFilter();
+    }, (err) => {
+
+    });
   }
 
   DisciplinecheckboxChanged(disciplineName) {
@@ -968,14 +972,24 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Specialization
   SpecializationNameNgOnInIt() {
-    this.SpecializationNameDropdownList = this.specializationList;
-    this.SpecializationNameDropDown = this.SpecializationNameDropdownList;
-    this.SpecializationNameFilter = this.SpecializationNameDropDown;
-    this.toShowOrNotSpecializationFilter();
-    // this.selectedItems = [
-    //   { item_id: 3, item_text: 'Pune' },
-    //   { item_id: 4, item_text: 'Navsari' }
-    // ];
+    this.candidateService.getoverallSpecialization().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
+      console.log('apispeci', data);
+
+      this.specializationList = list;
+
+      this.SpecializationNameDropdownList = this.specializationList;
+      this.SpecializationNameDropDown = this.SpecializationNameDropdownList;
+      this.SpecializationNameFilter = this.SpecializationNameDropDown;
+      this.toShowOrNotSpecializationFilter();
+      // this.selectedItems = [
+      //   { item_id: 3, item_text: 'Pune' },
+      //   { item_id: 4, item_text: 'Navsari' }
+      // ];
+    }, (err) => {
+
+    });
   }
 
   SpecializationNameSearch(value: string) {
