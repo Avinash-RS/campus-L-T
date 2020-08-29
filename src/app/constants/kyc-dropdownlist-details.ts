@@ -1,4 +1,22 @@
 export const DropdownListForKYC = {
+  boards: [
+    {
+      name: 'CBSE',
+      checkbox: false
+    },
+    {
+      name: 'ICSE',
+      checkbox: false
+    },
+    {
+      name: 'State Board',
+      checkbox: false
+    },
+    {
+      name: 'Others',
+      checkbox: false
+    }
+  ],
   // Gender
   gender: [
     {

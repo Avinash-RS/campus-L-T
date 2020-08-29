@@ -191,9 +191,20 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/profile/upload_certificates_id`, data, { headers: this.withoutTokens(), withCredentials: true });
   }
 
-  //getUploaded document
+  // getUploaded document
   getUploadedDocument(userId) {
     return this.http.post(`${this.BASE_URL}/profile/get_certificate`, userId, { headers: this.withoutTokens(), withCredentials: true });
   }
+
+  // education
+  getEducationList() {
+    return this.http.get(`${this.BASE_URL}/api/education?_format=json`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // education
+  getDiplomaList(param) {
+    return this.http.post(`${this.BASE_URL}/api/diploma_colleges?_format=json`, param, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
 
 }

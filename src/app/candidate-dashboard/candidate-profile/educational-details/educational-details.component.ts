@@ -26,17 +26,22 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form4: NgForm;
   form5: NgForm;
 
+  levelList: any;
+  UGList: any;
+  DiplamoList: any;
+
   level = DropdownListForKYC['level'];
 
   institutes = DropdownListForKYC['institutes'];
   discipline = DropdownListForKYC['discipline'];
   specialization = DropdownListForKYC['specialization'];
+  boards = DropdownListForKYC['boards'];
 
   educationForm: FormGroup;
 
-  startingYear = new Date("2005-01-01");
+  startingYear = new Date("1995-01-01");
   endYear = new Date();
-  dummystartDate = new Date("2005-01-01");
+  dummystartDate = new Date("1995-01-01");
   dummyendDate = new Date("2020-07-07");
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'MMM yyyy';
@@ -83,7 +88,51 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.appConfig.setLocalData('educationalFormSubmitted', 'true');
     }
 
+    this.newApis();
+    this.educationList();
+    this.PGList();
+    this.defautValue();
   }
+
+  newApis() {
+    this.candidateService.getEducationList().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.levelList = list;
+      console.log(list);
+    }, (err) => {
+
+    });
+  }
+
+  educationList() {
+    const api = {
+      level: 'Diploma',
+      discipline: '',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('diplamo', data);
+    }, (err) => {
+
+    });
+  }
+
+  PGList() {
+    const api = {
+      level: 'PG',
+      discipline: '',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('pg', data);
+    }, (err) => {
+
+    });
+  }
+
 
 
 
@@ -177,7 +226,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       });
     } else {
       return this.fb.group({
-        leveling: [null, [RemoveWhitespace.whitespace(), Validators.required]],
+        leveling: ['SSLC', [RemoveWhitespace.whitespace(), Validators.required]],
         board: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace(), Validators.required]],
         institute: [null, [Validators.required]],
         discipline: [null, [Validators.required]],
@@ -187,6 +236,20 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         percentage: [null, [Validators.required, Validators.pattern(percentageDecimals)]],
       });
     }
+  }
+
+  defautValue() {
+    this.educationForm.valueChanges.subscribe((term) => {
+
+      if (term['educationArr'][0]['leveling'] === 'SSLC') {
+        console.log(this.eduArr);
+        this.eduArr.value[0]['specification'] = '';
+        this.eduArr.value[0]['discipline'] = '';
+        // this.eduArr.clearValidators[0].
+        // this.eduArr.updateValueAndValidity();
+      }
+      console.log('term', this.eduArr);
+    });
   }
 
   // convenience getters for easy access to form fields
@@ -220,6 +283,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     formArray.controls.forEach(formGroup => {
       Object.keys(formGroup['controls']).forEach(field => {
         const control = formGroup.get(field);
+        console.log(control);
         if (control instanceof FormControl) {
           // if (control['status'] === 'INVALID') {
           //   console.log(control);
@@ -239,6 +303,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
+
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {

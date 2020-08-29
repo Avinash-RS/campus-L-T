@@ -11,12 +11,12 @@
                   <div class="label">
                     <label>Level<span class="asterick">*</span></label>
                   </div>
-                  <div class="input-box">
+                  <div [matTooltip]="i == 0 ? 'SSLC is mandatory' : ''" class="input-box">
                       <!-- <input (focusout)="detectInput(educationForm)" placeholder="Level" formControlName="leveling"
                       type="text" value=""> -->
-                      <nz-select (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch
+                      <nz-select [ngClass]="i == 0 ? 'disabled' : ''" (ngModelChange)="detectSelectChange()" nzAllowClear nzShowSearch
                       formControlName="leveling" nzPlaceHolder="Level">
-                      <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.name"></nz-option>
+                      <nz-option *ngFor="let level of levelList; let j =index" [nzLabel]="level.education" [nzValue]="level.education"></nz-option>
                     </nz-select>
                   </div>
                 </div>
@@ -32,12 +32,12 @@
                         <label>Board/University<span class="asterick">*</span></label>
                       </div>
                 <div class="input-box width-300">
-                    <input (focusout)="detectInput(educationForm)" placeholder="Board/University" formControlName="board"
-                    type="text" value="">
-                <!-- <nz-select (ngModelChange)="detectSelectChange()" formControlName="board" nzAllowClear nzShowSearch
+                    <!-- <input (focusout)="detectInput(educationForm)" placeholder="Board/University" formControlName="board"
+                    type="text" value=""> -->
+                <nz-select (ngModelChange)="detectSelectChange()" formControlName="board" nzAllowClear nzShowSearch
                     nzPlaceHolder="Board/University">
-                    <nz-option *ngFor="let level of level" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
-                  </nz-select> -->
+                    <nz-option *ngFor="let level of boards" [nzLabel]="level.name" [nzValue]="level.name"></nz-option>
+                  </nz-select>
                 </div>
               </div>
                 <div class="error"
@@ -52,9 +52,9 @@
                         <label>Institute<span class="asterick">*</span></label>
                       </div>
                 <div class="input-box width-300">
-                    <!-- <input (focusout)="detectInput(educationForm)" placeholder="Institute" formControlName="institute"
-                    type="text" value=""> -->
-                  <nz-select (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear
+                    <input [ngClass]="i != 0 ? 'hide' : ''" (focusout)="detectInput(educationForm)" placeholder="Institute" formControlName="institute"
+                    type="text" value="">
+                  <nz-select [ngClass]="i == 0 ? 'hide' : ''" (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear
                     nzShowSearch nzPlaceHolder="">
                     <!-- <nz-option nzLabel="Other" nzValue="Other">Other</nz-option> -->
                     <nz-option *ngFor="let level of institutes" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
@@ -67,7 +67,7 @@
                 </div>
 
               </div>
-              <div class="outer-box-wrapper">
+              <div [ngClass]="i == 0 ? 'hide' : ''" class="outer-box-wrapper">
                   <div class="label-wrapper">
                       <div class="label">
                         <label>Discipline<span class="asterick">*</span></label>
@@ -89,7 +89,7 @@
                 </div>
 
               </div>
-              <div class="outer-box-wrapper">
+              <div [ngClass]="i == 0 ? 'hide' : ''" class="outer-box-wrapper">
                   <div class="label-wrapper">
                       <div class="label">
                         <label>Specialization<span class="asterick">*</span></label>
@@ -115,7 +115,7 @@
               <div class="outer-box-wrapper">
                   <div class="label-wrapper">
                       <div class="label">
-                        <label>Date of Passing<span class="asterick">*</span></label>
+                        <label>Year of Passing<span class="asterick">*</span></label>
                       </div>
 
                 <div class="input-box">
