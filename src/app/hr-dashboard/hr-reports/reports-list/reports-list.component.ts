@@ -396,7 +396,7 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.error("At list one field to be selected", '');
       }
     }else if(index == 4){
-      if(this.userList[index].tdate){
+      if(this.userList[index].tdate != 'e'){
         let dateFilter = {
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
