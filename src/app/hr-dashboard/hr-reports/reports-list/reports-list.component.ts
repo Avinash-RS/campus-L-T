@@ -360,38 +360,51 @@ export class ReportsListComponent implements OnInit {
   downloadReports(index){
 
     if(index == 0){
-      let sendData = {
-        'tagName': this.selectedTagNameFirst,
-        'city': this.selectedCityForFirst,
-        'instituteName': this.selectedInstituteNameForFirst,
-        "to": this.userList[index].tdate,
-    	  "from": this.userList[index].fdate
+      if(this.selectedTagNameFirst || this.selectedCityForFirst || this.selectedInstituteNameForFirst){
+        let sendData = {
+          'tagName': this.selectedTagNameFirst,
+          'city': this.selectedCityForFirst,
+          'instituteName': this.selectedInstituteNameForFirst,
+          "to": this.userList[index].tdate,
+          "from": this.userList[index].fdate
+        }
+    
+        this.getFirstsortlistRepots(sendData);
+      }else{
+        this.appConfig.error("At list one field to be selected", '');
       }
-  
-      this.getFirstsortlistRepots(sendData);
-      
     }else if(index == 1){
-      let sendData = {
-        'assesment': this.selectedAssessmentName,
-        "to": this.userList[index].tdate,
-    	  "from": this.userList[index].fdate
+      if(this.selectedAssessmentName){
+        let sendData = {
+          'assesment': this.selectedAssessmentName,
+          "to": this.userList[index].tdate,
+          "from": this.userList[index].fdate
+        }
+        this.secondShortlistRepots(sendData);
+      }else{
+        this.appConfig.error("At list one field to be selected", '');
       }
-      this.secondShortlistRepots(sendData);
-
     }else if(index == 2){
-      let sendData = {
-        'assesment': this.selectedAssessmentNameSecond,
-        "to": this.userList[index].tdate,
-    	  "from": this.userList[index].fdate
+      if(this.selectedAssessmentName){
+        let sendData = {
+          'assesment': this.selectedAssessmentNameSecond,
+          "to": this.userList[index].tdate,
+          "from": this.userList[index].fdate
+        }
+        this.feedbackRepots(sendData);
+      }else{
+        this.appConfig.error("At list one field to be selected", '');
       }
-      this.feedbackRepots(sendData);
-
     }else if(index == 4){
-      let dateFilter = {
-        "to": this.userList[index].tdate,
-    	  "from": this.userList[index].fdate
+      if(this.userList[index].tdate){
+        let dateFilter = {
+          "to": this.userList[index].tdate,
+          "from": this.userList[index].fdate
+        }
+        this.interviewPanelRepots(dateFilter);
+      }else{
+        this.appConfig.error("Date should be selected", '');
       }
-      this.interviewPanelRepots(dateFilter);
     }
   }
   // selectedUser(userDetail) {
