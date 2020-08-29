@@ -209,13 +209,7 @@ export class ReportsListComponent implements OnInit {
         'institute': data.instituteName
       }
     }else{
-      sendReq = {
-        'to': '',
-        'from': '',
-        'tag': data.tagName,
-        'city': data.city,
-        'institute': data.instituteName
-      }
+      this.appConfig.error("Date should be selected", '');
     }
     if(sendReq.to == '' || (sendReq.to >= sendReq.from)){
       
@@ -247,10 +241,7 @@ export class ReportsListComponent implements OnInit {
         'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date)
       }
     }else{
-      sendReq = {
-        'to_date': '',
-        'from_date': ''
-      }
+      this.appConfig.error("Date should be selected", '');
     }
 
     if(sendReq.to_date == '' || (sendReq.to_date >= sendReq.from_date)){
@@ -285,11 +276,7 @@ export class ReportsListComponent implements OnInit {
         'assement_name': data.assesment.assesment
       }
     }else{
-      sendReq = {
-        'to': '',
-        'from': '',
-        'assement_name': data.assesment.assesment
-      }
+      this.appConfig.error("Date should be selected", '');
     }
     if(sendReq.to == '' || (sendReq.to >= sendReq.from)){
       
@@ -327,11 +314,7 @@ export class ReportsListComponent implements OnInit {
         'assement_name': data.assesment.assesment
       }
     }else{
-      sendReq = {
-        'to_date': '',
-        'from_date': '',
-        'assement_name': ''
-      }
+      this.appConfig.error("Date should be selected", '');
     }
 
     if(sendReq.to_date == '' || (sendReq.to_date >= sendReq.from_date)){
@@ -385,7 +368,7 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 2){
-      if(this.selectedAssessmentName){
+      if(this.selectedAssessmentNameSecond){
         let sendData = {
           'assesment': this.selectedAssessmentNameSecond,
           "to": this.userList[index].tdate,
