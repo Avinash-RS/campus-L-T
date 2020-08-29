@@ -371,7 +371,7 @@ export class ReportsListComponent implements OnInit {
     
         this.getFirstsortlistRepots(sendData);
       }else{
-        this.appConfig.error("At list one field to be selected", '');
+        this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 1){
       if(this.selectedAssessmentName){
@@ -382,7 +382,7 @@ export class ReportsListComponent implements OnInit {
         }
         this.secondShortlistRepots(sendData);
       }else{
-        this.appConfig.error("At list one field to be selected", '');
+        this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 2){
       if(this.selectedAssessmentName){
@@ -393,7 +393,7 @@ export class ReportsListComponent implements OnInit {
         }
         this.feedbackRepots(sendData);
       }else{
-        this.appConfig.error("At list one field to be selected", '');
+        this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 4){
       if(this.userList[index].tdate != 'e'){
