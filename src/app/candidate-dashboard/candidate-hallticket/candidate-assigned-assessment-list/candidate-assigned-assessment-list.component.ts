@@ -75,8 +75,8 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
     console.log(userDetail);
   }
   downloadHallticket(detail) {
-    // const excel = detail && detail.pdf ? detail.pdf + this.appConfig.getLocalData('userId') : '';
-    // window.open(excel, '_blank');
+    const excel = detail && detail.pdf ? detail.pdf + this.appConfig.getLocalData('userId') : '';
+    window.open(excel, '_blank');
   }
 
 
