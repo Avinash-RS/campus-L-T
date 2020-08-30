@@ -208,27 +208,21 @@ export class ReportsListComponent implements OnInit {
         'city': data.city,
         'institute': data.instituteName
       }
-    }else{
-      sendReq = {
-        'to': '',
-        'from': '',
-        'tag': data.tagName,
-        'city': data.city,
-        'institute': data.instituteName
-      }
-    }
-    if(sendReq.to == '' || (sendReq.to >= sendReq.from)){
+      if(sendReq.to >= sendReq.from){
       
-      this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
-        this.appConfig.hideLoader();
-        
-        const excel = data && data[0].url ? data[0].url : '';
-        window.open(excel, '_blank');
-
-      }, (err) => {
-      });
+        this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          const excel = data && data[0].url ? data[0].url : '';
+          window.open(excel, '_blank');
+  
+        }, (err) => {
+        });
+      }else{
+        this.appConfig.error("To date should be greater", '');
+      }
     }else{
-      this.appConfig.error("To date should be greater", '');
+      this.appConfig.error("Date should be selected", '');
     }
   }
 
@@ -246,24 +240,20 @@ export class ReportsListComponent implements OnInit {
         'to_date': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
         'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date)
       }
-    }else{
-      sendReq = {
-        'to_date': '',
-        'from_date': ''
+      if(sendReq.to_date >= sendReq.from_date){
+        this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+    
+          const excel = data && data.url ? data.url : '';
+          window.open(excel, '_blank');
+    
+        }, (err) => {
+        });
+      }else{
+        this.appConfig.error("To date should be greater", '');
       }
-    }
-
-    if(sendReq.to_date == '' || (sendReq.to_date >= sendReq.from_date)){
-      this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
-        this.appConfig.hideLoader();
-  
-        const excel = data && data.url ? data.url : '';
-        window.open(excel, '_blank');
-  
-      }, (err) => {
-      });
     }else{
-      this.appConfig.error("To date should be greater", '');
+      this.appConfig.error("Date should be selected", '');
     }
   }
 
@@ -284,29 +274,25 @@ export class ReportsListComponent implements OnInit {
         'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
         'assement_name': data.assesment.assesment
       }
-    }else{
-      sendReq = {
-        'to': '',
-        'from': '',
-        'assement_name': data.assesment.assesment
-      }
-    }
-    if(sendReq.to == '' || (sendReq.to >= sendReq.from)){
+      if(sendReq.to >= sendReq.from){
       
-      this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
-        this.appConfig.hideLoader();
-        
-        if(data[0].url == 'No Data Found'){
-          this.appConfig.error(data[0].url, '');
-        }else{
-          const excel = data && data[0].url ? data[0].url : '';
-          window.open(excel, '_blank');
-        }
-
-      }, (err) => {
-      });
+        this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          if(data[0].url == 'No Data Found'){
+            this.appConfig.error(data[0].url, '');
+          }else{
+            const excel = data && data[0].url ? data[0].url : '';
+            window.open(excel, '_blank');
+          }
+  
+        }, (err) => {
+        });
+      }else{
+        this.appConfig.error("To date should be assessment date", '');
+      }
     }else{
-      this.appConfig.error("To date should be assessment date", '');
+      this.appConfig.error("Date should be selected", '');
     }
   }
 
@@ -326,25 +312,20 @@ export class ReportsListComponent implements OnInit {
         'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
         'assement_name': data.assesment.assesment
       }
-    }else{
-      sendReq = {
-        'to_date': '',
-        'from_date': '',
-        'assement_name': ''
+      if(sendReq.to_date >= sendReq.from_date){
+        this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          const excel = data && data.url ? data.url : '';
+          window.open(excel, '_blank');
+    
+        }, (err) => {
+        });
+      }else{
+        this.appConfig.error("To date should be assessment date", '');
       }
-    }
-
-    if(sendReq.to_date == '' || (sendReq.to_date >= sendReq.from_date)){
-      this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
-        this.appConfig.hideLoader();
-        
-        const excel = data && data.url ? data.url : '';
-        window.open(excel, '_blank');
-  
-      }, (err) => {
-      });
     }else{
-      this.appConfig.error("To date should be assessment date", '');
+      this.appConfig.error("Date should be selected", '');
     }
   }
 
@@ -371,7 +352,7 @@ export class ReportsListComponent implements OnInit {
     
         this.getFirstsortlistRepots(sendData);
       }else{
-        this.appConfig.error("At list one field to be selected", '');
+        this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 1){
       if(this.selectedAssessmentName){
@@ -382,10 +363,10 @@ export class ReportsListComponent implements OnInit {
         }
         this.secondShortlistRepots(sendData);
       }else{
-        this.appConfig.error("At list one field to be selected", '');
+        this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 2){
-      if(this.selectedAssessmentName){
+      if(this.selectedAssessmentNameSecond){
         let sendData = {
           'assesment': this.selectedAssessmentNameSecond,
           "to": this.userList[index].tdate,
@@ -393,10 +374,10 @@ export class ReportsListComponent implements OnInit {
         }
         this.feedbackRepots(sendData);
       }else{
-        this.appConfig.error("At list one field to be selected", '');
+        this.appConfig.error("Please select a filter criteria", '');
       }
     }else if(index == 4){
-      if(this.userList[index].tdate){
+      if(this.userList[index].tdate != 'e'){
         let dateFilter = {
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
