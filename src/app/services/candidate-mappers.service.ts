@@ -162,8 +162,8 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/api/city_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
   }
 
-  assessmentList() {
-    return this.http.get(`${this.BASE_URL}/profile/hallticket`,
+  assessmentList(user) {
+    return this.http.post(`${this.BASE_URL}/profile/hallticket`, user,
       {
         headers: this.getAfterCustomHeaders(),
         withCredentials: true
