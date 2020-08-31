@@ -57,7 +57,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
     };
     this.adminService.shortlistedCandidatesReport(apiData).subscribe((data: any) => {
       // this.appConfig.hideLoader();
-      console.log('report', data);
     }, (err) => {
 
     });
@@ -67,7 +66,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
       this.getUsersList(params['data']);
@@ -81,7 +79,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
 
     }, (err) => {
 
@@ -140,7 +137,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
       shortlist: '1'
     };
     this.adminService.shortlistedCandidatesReport(apiData).subscribe((datas: any) => {
-      console.log('api', datas);
       const align = [];
       let sno = 0;
       datas.forEach((element, i) => {

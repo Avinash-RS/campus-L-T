@@ -54,10 +54,8 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
         apiData['id'].push(element['id']);
       }
     });
-    console.log(apiData);
 
     this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
-      console.log(datas);
 
       this.appConfig.hideLoader();
       const data = {
@@ -88,7 +86,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     };
     this.adminService.tpoCandidateListAfterBulkUpload(apiData).subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      console.log('data1', data1);
       this.userList = data1 ? data1 : [];
       this.userList.forEach((element, i) => {
         element['time'] = element && element['time'] ? element['time'] : '';
@@ -128,7 +125,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       }
     });
     this.selectedUserDetail = userDetail;
-    console.log(userDetail);
     const en = this.userList.filter((item) => {
       return item.checked;
     });
@@ -137,13 +133,11 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     } else {
       this.enableSend = false;
     }
-    console.log(en);
 
     this.unselectSelectALL();
   }
 
   selectAllCheckbox(checked) {
-    console.log(this.dataSource);
 
     if (checked['checked']) {
       this.userList.forEach(element => {
@@ -166,7 +160,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
         });
       });
     }
-    console.log(this.userList);
   }
 
   unselectSelectALL() {

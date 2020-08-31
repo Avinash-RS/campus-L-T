@@ -32,7 +32,6 @@ export class ShortlistBoxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
   confirm() {

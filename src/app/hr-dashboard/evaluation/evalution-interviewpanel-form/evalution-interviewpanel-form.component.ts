@@ -68,7 +68,6 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
     this.adminService.getInterviewPanelFormlist().subscribe((datas: any) => {
       this.appConfig.hideLoader();
 
-      // console.log('api', datas);
       const align = datas;
       this.userList = align ? align : [];
       this.dataSource = new MatTableDataSource(this.userList);

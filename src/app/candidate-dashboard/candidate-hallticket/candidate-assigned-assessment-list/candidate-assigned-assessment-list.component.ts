@@ -60,7 +60,6 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
     }
     this.candidateService.assessmentList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -75,7 +74,7 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
   downloadHallticket(detail) {
     const excel = detail && detail.pdf ? detail.pdf : '';

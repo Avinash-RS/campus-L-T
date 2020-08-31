@@ -226,7 +226,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       this.appConfig.success(`Interview panel has been assigned Successfully`, '');
 
       localStorage.removeItem('selectedFormId');
-      // console.log('api', datas);
       this.ngOnInit();
 
     }, (err) => {
@@ -253,7 +252,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       'uid': this.selectedCandidate,
       'hr_id': this.defaultFormSelecterHrPanel
     }
-    console.log(assignData);
 
     this.openDialog(ShortlistBoxComponent, data);
     // } else {

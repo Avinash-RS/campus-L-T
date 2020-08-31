@@ -105,7 +105,6 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
         minutes = '0' + date.getMinutes().toString();
-        console.log('minutes', minutes);
       } else {
         minutes = date.getMinutes();
       }
@@ -116,7 +115,6 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
     });
     this.adminService.bulkUploadInstitutes(this.uploadedListArray).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('success', data);
       const datas = {
         institute_bulk_upload_ok: 'institute-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -126,7 +124,6 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
     }, (err) => {
 
     });
-    // console.log(JSON.stringify(this.uploadedListArray));
   }
   upload() {
     this.appConfig.showLoader();
@@ -292,7 +289,6 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
       }
     });
     this.uploadedListArray = listArray;
-    console.log(listArray);
     this.totalCountofCandidates = count - 1;
   }
 
@@ -338,7 +334,6 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
 
   async onSelectFile(event) {
     this.validFile = false;
-    console.log(event.target.files[0]);
 
     if (event.target.files && event.target.files[0].name.includes('.csv')) {
       this.showSizeError.size = false;
@@ -355,7 +350,6 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
-        // console.log(reader.readAsBinaryString(event.target.files[0]));
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
         reader.onload = (event: any) => { // called once readAsDataURL is completed

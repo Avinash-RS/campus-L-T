@@ -131,7 +131,6 @@ export class CandidateMappersService {
 
   // For Image
   imageUpload(file, uniqueName) {
-    console.log(uniqueName);
 
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/file/upload/profile/candidate/field_profile_image?_format=json`, file,
@@ -140,7 +139,6 @@ export class CandidateMappersService {
 
   // For Signature
   signatureUpload(file, uniqueName) {
-    console.log(uniqueName);
 
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/file/upload/profile/candidate/field_signature?_format=json`, file,

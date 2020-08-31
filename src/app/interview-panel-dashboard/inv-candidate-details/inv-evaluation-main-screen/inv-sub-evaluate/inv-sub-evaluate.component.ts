@@ -57,7 +57,6 @@ export class InvSubEvaluateComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.getEvaluationData(this.candidateId);
@@ -71,13 +70,11 @@ export class InvSubEvaluateComponent implements OnInit {
     };
     this.adminService.getEvaluationData(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('data', data);
       this.getCandidateData = data[0];
     });
   }
 
   nginitFunc() {
-    console.log(SampleJson);
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
     this.evaluationForm = this.formBuilder.group({
       interview_date: new FormControl('', [Validators.required]),
@@ -149,7 +146,6 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   setAssessmentLevel(assessment, value) {
-    console.log(assessment);
     this.assessments[this.assessments.indexOf(assessment)] = {
       ...assessment,
       level: value
@@ -199,7 +195,6 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   submitEvaluationForm() {
-    console.log(this.evaluationForm.value);
     if (this.evaluationForm.valid) {
       const data = {
         evaluation: 'submit'
@@ -246,12 +241,10 @@ export class InvSubEvaluateComponent implements OnInit {
           time_taken: this.evaluationForm.value.time_taken,
           remarks: this.evaluationForm.value.remarks
         };
-    console.log(this.evaluationForm.value);
-    console.log(apiData);
+
     this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
       this.appConfig.hideLoader();
       this.appConfig.success('Evaluation completed successfully', '');
-      console.log(res);
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST, {data: this.nameOfAssessment});
     }, (err) => {
 

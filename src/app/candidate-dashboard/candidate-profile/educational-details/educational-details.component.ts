@@ -112,7 +112,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.appConfig.hideLoader();
       const list = data && data[0] ? data[0] : [];
       this.levelList = list;
-      console.log(list);
     }, (err) => {
 
     });
@@ -128,7 +127,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.appConfig.hideLoader();
       const list = data && data[0] ? data[0] : [];
       this.DiplamoList = list;
-      console.log('diplamo', this.DiplamoList);
     }, (err) => {
 
     });
@@ -173,7 +171,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('UGdiscii', data);
       const list = data && data[0] ? data[0] : [];
       this.ugDisciplines = list;
     }, (err) => {
@@ -190,7 +187,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('pgdiscii', data);
       const list = data && data[0] ? data[0] : [];
       this.pgDisciplines = list;
     }, (err) => {
@@ -206,7 +202,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('ugSpec', data);
       const list = data && data[0] ? data[0] : [];
       this.ugSpecialization = list;
     }, (err) => {
@@ -223,7 +218,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('pgSpec', data);
       const list = data && data[0] ? data[0] : [];
       this.pgSpecialization = list;
     }, (err) => {
@@ -254,7 +248,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
     if (this.educationForm.valid) {
 
-      console.log(this.educationForm.value);
 
       const edArrays = [];
       this.educationForm.value.educationArr.forEach((element, i) => {
@@ -289,7 +282,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   educationPatch(dataArray) {
     if (dataArray && dataArray.length > 0) {
       dataArray.forEach(edu => {
-        console.log('edu', JSON.stringify(edu));
 
         this.addEducationForm(edu);
       });
@@ -385,7 +377,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   }
 
   detectSelectChanges() {
-    console.log(this.eduArr);
     if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == null || this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == '') {
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].disable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].disable();
@@ -462,11 +453,9 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   // To validate all fields after submit
   validateAllFormArrays(formArray: FormArray) {
     formArray.controls.forEach(formGroup => {
-      console.log(formGroup);
 
       Object.keys(formGroup['controls']).forEach(field => {
         const control = formGroup.get(field);
-        console.log(control);
         // if (control.value)
         if (control instanceof FormControl) {
           // if (control['status'] === 'INVALID') {

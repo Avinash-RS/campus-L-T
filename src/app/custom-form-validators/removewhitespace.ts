@@ -8,7 +8,6 @@ export class RemoveWhitespace {
     return (control: AbstractControl): { [key: string]: any } => {
       if (control && control.value && !control.value.replace(/\s/g, '').length) {
         control.setValue('');
-        console.log(control.value);
         return null;
       }
       if (control && control.value && control.value.length > 2) {

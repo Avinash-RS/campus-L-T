@@ -47,7 +47,6 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
   }
 
   open(element): void {
-    console.log(element);
     this.viewDetails = element;
     this.visible = true;
   }
@@ -59,7 +58,6 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
   // To get all users
   getUsersList() {
     this.adminService.secondLevelReports().subscribe((datas: any) => {
-      console.log('api', datas);
       this.userList = datas[0];
       let count = 0;
       this.userList.forEach(element => {
@@ -76,13 +74,12 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
   }
 
   personalView(details) {
-    console.log(details);
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST_VIEW);
 
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
   ngAfterViewInit() {

@@ -73,7 +73,6 @@ export class TpoAddCandidateComponent implements OnInit {
     let minutes;
     if (date.getMinutes().toString().length === 1) {
       minutes = '0' + date.getMinutes().toString();
-      console.log('minutes', minutes);
     } else {
       minutes = date.getMinutes();
     }
@@ -91,7 +90,6 @@ export class TpoAddCandidateComponent implements OnInit {
       }
     ];
     this.adminService.bulkUploadCandidates(apiData).subscribe((data: any) => {
-      console.log('success', data);
       this.appConfig.hideLoader();
       this.appConfig.success('Candidate added successfully', '');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);

@@ -37,36 +37,30 @@ export class LoginpageComponent implements OnInit {
   verifyEmail() {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['mail'] && params['temp-token']) {
-        console.log(params['mail'], params['temp-token']);
 
         this.verifyArr.push({
           name: params['mail'],
           temp_token: params['temp-token']
         });
-        console.log('Calling apicalling');
         this.apiCalling();
       }
       if (params['mail']) {
         this.prePoulteEmailId = params['mail'];
       } else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
-        console.log('Not getting mail or token in param', params['mail'], params['temp-token']);
       }
     });
   }
 
   apiCalling() {
-    console.log('entering apiCalling methid');
     this.apiService.getAllState().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
-        console.log('entering verify API');
 
         this.appConfig.hideLoader();
         this.prePoulteEmailId = this.verifyArr[0]['name'];
         this.appConfig.success(`${data.message}`, '');
         this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
       }, (err) => {
-        console.log(err);
 
         if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
           this.appConfig.error(`${err.error.error}`, '');

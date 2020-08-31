@@ -341,7 +341,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.appConfig.success(`Document uploaded successfully`, '');
     } catch (e) {
       this.appConfig.hideLoader();
-      console.log('e', e);
     }
     // }, (err) => {
 
@@ -444,7 +443,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
         const control = formGroup.get(field);
         if (control instanceof FormControl) {
           // if (control['status'] === 'INVALID') {
-          //   console.log(control);
           //   this.appConfig.setLocalData('educationalFormSubmitted', 'false');
           // }
           control.markAsTouched({ onlySelf: true });

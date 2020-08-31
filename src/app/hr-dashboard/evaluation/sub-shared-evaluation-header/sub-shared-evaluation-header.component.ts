@@ -37,7 +37,6 @@ export class SubSharedEvaluationHeaderComponent implements OnInit {
 
 
   assessmentDetails() {
-    console.log('de', this.details);
     this.bindDetails = {
       assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '-',
       date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '-',

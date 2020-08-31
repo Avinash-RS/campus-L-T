@@ -200,7 +200,6 @@ export class ViewDetailsComponent implements OnInit {
       facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
     };
 
-    console.log('checking', dump['languagesknown']);
 
 
     if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
@@ -225,10 +224,8 @@ export class ViewDetailsComponent implements OnInit {
     });
 
     this.userDetails = dump;
-    console.log('languagesknown', this.userDetails.languagesknown);
 
     this.permanentStateId = this.userDetails['permanentState'];
-    console.log(this.userDetails);
     if (this.allStatess) {
       this.allStatess.forEach(element => {
         if (element.id === this.userDetails['permanentState']) {
@@ -300,7 +297,6 @@ export class ViewDetailsComponent implements OnInit {
 
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
-      console.log('data', data);
 
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {

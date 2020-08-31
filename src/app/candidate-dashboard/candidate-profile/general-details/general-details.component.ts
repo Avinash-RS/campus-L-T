@@ -71,7 +71,6 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    console.log(this.apiForm);
     this.generalArray = [{
       names: this.apiForm && this.apiForm['field_relatives_l_t_group_name'] ? this.apiForm['field_relatives_l_t_group_name'].value : null,
       relationship: this.apiForm && this.apiForm['field_realationship'] ? this.apiForm['field_realationship'].value : null,
@@ -93,7 +92,6 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   }
 
   onSubmit(OptA, OptB) {
-    console.log(this.aquaintancesForm.value);
 
     if (this.aquaintancesForm.valid && this.skillForm.valid && this.facultyReference1Form.valid && this.facultyReference2Form.valid) {
       this.apiForm.field_skills = this.skillForm['value']['skillsArr'];
@@ -109,7 +107,6 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
         this.apiForm.field_faculty_reference = { value: this.facultyReference1Form ? this.facultyReference1Form.value : '' },
         this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' },
-console.log(this.apiForm);
 
         this.appConfig.setLocalData('generalFormSubmitted', 'true');
       this.appConfig.setLocalData('confirmClick', 'true');

@@ -52,7 +52,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   getUsersList() {
     this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      console.log(data1);
       this.userList = data1 ? data1 : [];
       let count = 0;
       this.userList.forEach((element, i) => {
@@ -85,7 +84,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 }
