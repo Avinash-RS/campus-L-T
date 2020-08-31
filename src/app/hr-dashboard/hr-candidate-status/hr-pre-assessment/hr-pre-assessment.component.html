@@ -84,6 +84,11 @@
           <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
         </div>
+
+        <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
+          <button class="submit" mat-raised-button>Download</button>
+        </div>
+
       </div>
       <!-- </mat-form-field> -->
 
@@ -213,10 +218,5 @@
     <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
       <div>Status list not available </div>
     </div> -->
-
-    <div class="button-wrappers" *ngIf="userList && userList.length > 0">
-      <button class="submit" mat-raised-button>Download</button>
-    </div>
-
 
 </div>

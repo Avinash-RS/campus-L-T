@@ -172,7 +172,9 @@
     /* Structure */
     .search-bar {
       margin: 0em 1em 0em 1em;
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       .search-icon {
         display: inline-flex;
         align-items: center;
@@ -187,7 +189,7 @@
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
         padding: 0.25em 0.15em;
-        height: 27px;
+        height: 30px;
         position: relative;
         img {
           width: 20px;

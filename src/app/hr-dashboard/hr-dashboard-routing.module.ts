@@ -24,7 +24,6 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
 import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
-import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 import { InterviewpanelDetailsComponent } from './evaluation/interviewpanel-details/interviewpanel-details.component';
 import { InterviewpanelSelectComponent } from './evaluation/interviewpanel-select/interviewpanel-select.component';
 import { EvalutionInterviewpanelFormComponent } from './evaluation/evalution-interviewpanel-form/evalution-interviewpanel-form.component';
@@ -285,13 +284,6 @@ const routes: Routes = [
                 pathMatch: 'full',
               }
             ]
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`,
-            component: AssessmentCandidateDetailsComponent,
-            data: {
-              breadcrumb: 'Assessment Candidate Details'
-            }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`,
