@@ -76,7 +76,7 @@ export class CommonHeaderComponent implements OnInit {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
         }, (err) => {
         });
-        this.appConfig.consoleLog('resultlogout', result);
+        // this.appConfig.consoleLog('resultlogout', result);
       }
     });
   }

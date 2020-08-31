@@ -62,7 +62,7 @@ export class CandidateRegisterComponent implements OnInit {
         field_user_name: this.candidateForm.value.name
 
       };
-      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
+      // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
         this.appConfig.hideLoader();

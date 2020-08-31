@@ -45,7 +45,7 @@ export class HrMasterComponent implements OnInit {
       distinctUntilChanged(),
     ).subscribe(() => {
       this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-      console.log(this.breadcrumbs);
+      // console.log(this.breadcrumbs);
 
     });
   }
