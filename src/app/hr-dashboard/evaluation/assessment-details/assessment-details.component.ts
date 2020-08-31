@@ -57,7 +57,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
       this.getUsersList(params['data']);
@@ -71,7 +70,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
 
     }, (err) => {
 
@@ -87,7 +85,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     };
     this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
       const align = datas;
       this.userList = align ? align : [];

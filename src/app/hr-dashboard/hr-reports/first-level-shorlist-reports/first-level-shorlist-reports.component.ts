@@ -57,7 +57,6 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
   getUsersList() {
     this.adminService.firstLevelReports().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -87,7 +86,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
   }
   
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 

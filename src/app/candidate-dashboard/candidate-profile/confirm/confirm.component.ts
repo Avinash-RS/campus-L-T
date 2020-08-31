@@ -112,7 +112,6 @@ export class ConfirmComponent implements OnInit {
         }
       });
     }
-    console.log('after', this.apiForm);
   }
 
   onInitSignatureAssign() {
@@ -145,7 +144,6 @@ export class ConfirmComponent implements OnInit {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
     this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace(`${this.appConfig.imageBaseUrl()}`, '');
 
-    console.log(this.apiForm);
   }
 
   submitKYCData() {
@@ -172,11 +170,8 @@ export class ConfirmComponent implements OnInit {
       }
     }
 
-    console.log('request sent', this.apiForm);
-
 
     this.candidateService.editUser(this.apiForm).subscribe((data: any) => {
-      console.log('success', data);
       this.appConfig.hideLoader();
       this.appConfig.clearLocalDataOne('KYCAPI');
       this.appConfig.clearLocalDataOne('kycForm');
@@ -256,7 +251,6 @@ export class ConfirmComponent implements OnInit {
 
 
   async onSelectFile(event) {
-    console.log(event.target.files[0]);
 
     if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       this.showSizeError.size = false;
@@ -271,14 +265,12 @@ export class ConfirmComponent implements OnInit {
           const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
           const reader = new FileReader();
           let urls;
-          // console.log(reader.readAsBinaryString(event.target.files[0]));
 
           reader.readAsDataURL(event.target.files[0]); // read file as data url
           reader.onload = (event: any) => { // called once readAsDataURL is completed
             urls = event.target.result;
             this.url = urls;
             this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
-              console.log(data);
 
               this.signatureData = {
                 target_id: data.fid[0].value,
@@ -291,7 +283,6 @@ export class ConfirmComponent implements OnInit {
                 status: 'true'
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-              console.log(this.signatureData);
 
               this.appConfig.hideLoader();
 

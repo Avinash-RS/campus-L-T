@@ -255,10 +255,10 @@ export class ApplyCriteriaComponent implements OnInit {
       start: '1',
       counts: '50'
     };
-    console.log(apiDatas);
+    
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
+      
       // const apiData = {
       //   user_id: []
       // };
@@ -271,7 +271,6 @@ export class ApplyCriteriaComponent implements OnInit {
       // }
       // this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
       this.filteredCandidates = data[1] ? data[1] : '0';
-      console.log('ada', this.filteredCandidates);
 
 
     }, (err) => {
@@ -371,10 +370,10 @@ export class ApplyCriteriaComponent implements OnInit {
       field_dob: dobAPIData,
       educational_level: educationData
     };
-    console.log(apiDatas);
+  
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
       // this.appConfig.hideLoader();
-      console.log(data);
+      
       // const apiData = {
       //   user_id: []
       // };
@@ -485,7 +484,6 @@ export class ApplyCriteriaComponent implements OnInit {
   }
 
   selectedEducationRadio(eduLevel, event) {
-    console.log(eduLevel, event);
     this.EduLevel.forEach(element => {
       if (element['name'] === eduLevel['name']) {
         if (element.radio) {
@@ -553,8 +551,6 @@ export class ApplyCriteriaComponent implements OnInit {
         }
       });
     });
-    console.log(this.eduFilter);
-    console.log(this.onlyForEDUFilterArray);
 
     this.toShowOrNotEducationFilter();
   }
@@ -577,7 +573,6 @@ export class ApplyCriteriaComponent implements OnInit {
         this.percentageToRegexError = false;
         this.eduFilter.forEach((element, i) => {
           if (element['checkbox']) {
-            console.log(typeof document.getElementById(`yearFrom${i}`)['value']);
             if (document.getElementById(`yearFrom${i}`)['value']) {
               this.yearFromShow = this.getDateFormat(this.yearFrom.value);
               element['yearFrom'] = this.yearFrom.value;
@@ -589,7 +584,6 @@ export class ApplyCriteriaComponent implements OnInit {
 
             if (document.getElementById(`perFrom${i}`)['value']) {
               const percentageRegex = this.percentageDecimals.test(document.getElementById(`perFrom${i}`)['value']);
-              console.log(percentageRegex);
 
               if (percentageRegex === false) {
                 this.percentageRegexError = true;
@@ -601,7 +595,7 @@ export class ApplyCriteriaComponent implements OnInit {
             }
             if (document.getElementById(`perTo${i}`)['value']) {
               const percentageToRegex = this.percentageDecimals.test(document.getElementById(`perTo${i}`)['value']);
-              console.log(percentageToRegex);
+        
               if (percentageToRegex === false) {
                 this.percentageToRegexError = true;
                 this.percentageToRegexErrorIndex = i.toString();
@@ -623,7 +617,7 @@ export class ApplyCriteriaComponent implements OnInit {
       this.percentageToRegexError = false;
       this.eduFilter.forEach((element, i) => {
         if (element['checkbox']) {
-          console.log(typeof document.getElementById(`yearFrom${i}`)['value']);
+        
           if (document.getElementById(`yearFrom${i}`)['value']) {
             this.yearFromShow = this.getDateFormat(this.yearFrom.value);
             element['yearFrom'] = this.yearFrom.value;
@@ -635,7 +629,6 @@ export class ApplyCriteriaComponent implements OnInit {
 
           if (document.getElementById(`perFrom${i}`)['value']) {
             const percentageRegex = this.percentageDecimals.test(document.getElementById(`perFrom${i}`)['value']);
-            console.log(percentageRegex);
 
             if (percentageRegex === false) {
               this.percentageRegexError = true;
@@ -647,7 +640,6 @@ export class ApplyCriteriaComponent implements OnInit {
           }
           if (document.getElementById(`perTo${i}`)['value']) {
             const percentageToRegex = this.percentageDecimals.test(document.getElementById(`perTo${i}`)['value']);
-            console.log(percentageToRegex);
             if (percentageToRegex === false) {
               this.percentageToRegexError = true;
               this.percentageToRegexErrorIndex = i.toString();
@@ -664,7 +656,6 @@ export class ApplyCriteriaComponent implements OnInit {
         this.toShowOrNotEducationFilter();
       }
     }
-    console.log(this.onlyForEDUFilterArray);
 
   }
 
@@ -779,7 +770,6 @@ export class ApplyCriteriaComponent implements OnInit {
       this.appConfig.hideLoader();
       const list = data ? data : [];
       this.InstituteNameDropdownList = list;
-      console.log('eduFIlterapiii', data);
       // this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
       this.InstituteNameDropDown = this.InstituteNameDropdownList;
       this.InstituteNameFilter = this.InstituteNameDropDown;
@@ -880,7 +870,6 @@ export class ApplyCriteriaComponent implements OnInit {
     this.candidateService.getoverallDiscipline().subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data ? data : [];
-      console.log('apiDisci', data);
 
       this.disciplineList = list;
 
@@ -975,7 +964,6 @@ export class ApplyCriteriaComponent implements OnInit {
     this.candidateService.getoverallSpecialization().subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data ? data : [];
-      console.log('apispeci', data);
 
       this.specializationList = list;
 

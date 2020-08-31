@@ -18,7 +18,6 @@ export class CanDeactivateGuard implements CanDeactivate<ComponentCanDeactivate>
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    console.log(component);
 
     if (component['languagesForm'].status !== 'INVALID') {
       return true;

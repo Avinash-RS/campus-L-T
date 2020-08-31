@@ -52,7 +52,6 @@ export class HrSubEducationComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.userlist(params['id']);
@@ -65,9 +64,7 @@ export class HrSubEducationComponent implements OnInit {
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('certificates', data);
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
-      console.log('certificatesArr', this.certificateArr);
 
     }, (err) => {
 
@@ -89,7 +86,6 @@ export class HrSubEducationComponent implements OnInit {
 
 
   reSubmit(details) {
-    console.log(details);
 
     const data = {
       reSubmit: 'documents'
@@ -104,7 +100,6 @@ export class HrSubEducationComponent implements OnInit {
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
       this.appConfig.success('Document Resubmit request has been done', '');
       this.editRouteParamGetter();
     }, (err) => {

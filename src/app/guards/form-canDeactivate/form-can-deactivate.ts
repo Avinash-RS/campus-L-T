@@ -11,12 +11,6 @@ export abstract class FormCanDeactivate extends ComponentCanDeactivate {
   abstract get form5(): NgForm;
 
   canDeactivate(): boolean {
-    console.log('form', this.form);
-    console.log('form1', this.form1);
-    console.log('form2', this.form2);
-    console.log('form3', this.form3);
-    console.log('form4', this.form4);
-    console.log('form5', this.form5);
     if (this.form) {
       return this.form.submitted || !this.form.dirty;
     }

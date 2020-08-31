@@ -82,7 +82,6 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
 
   }
 
