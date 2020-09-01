@@ -43,85 +43,113 @@
         .date-wrapper {
           display: grid;
           align-items: center;
-          justify-content: flex-end;
-          .wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          .label {
-            color: $light-black;
-            font-size: 14px;
-            margin: 0 0.5em 0 0;
-          }
+          // justify-content: flex-end;
+          // .wrapper {
+          //   display: flex;
+          //   align-items: center;
+          //   justify-content: center;
+          // .label {
+          //   color: $light-black;
+          //   font-size: 14px;
+          //   margin: 0 0.5em 0 0;
+          // }
           .grid-wrapper {
             display: grid;
             justify-content: center;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             width: 80%;
-            .left {
-              background: $white 0% 0% no-repeat padding-box;
-              border: 0.5px solid $input-border;
-              border-top: none;
-              text-align: center;
-              // border-radius: 5px;
-              .item {
-                background: $black-3 0% 0% no-repeat padding-box;
-                border: 0.5px solid $input-border;
-                border-left: none;
-                border-right: none;
-                // border-radius: 5px 5px 0px 0px;
-                color: $light-black;
-                font-size: 13px;
-                font-weight: 200;
-              }
-              .item-date {
-                white-space: nowrap;
-                height: 26px !important;
-                display: flex;
-                align-items: center;
-                input {
-                  width: 82%;
-                  text-align: center !important;
-                  font-size: 14px;
-                  color: $blue-1;
-                  border: none;
-                  outline: none;
-                }
-              }
+            // .left {
+            //   background: $white 0% 0% no-repeat padding-box;
+            //   border: 0.5px solid $input-border;
+            //   border-top: none;
+            //   text-align: center;
+            //   // border-radius: 5px;
+            //   .item {
+            //     background: $black-3 0% 0% no-repeat padding-box;
+            //     border: 0.5px solid $input-border;
+            //     border-left: none;
+            //     border-right: none;
+            //     // border-radius: 5px 5px 0px 0px;
+            //     color: $light-black;
+            //     font-size: 13px;
+            //     font-weight: 200;
+            //   }
+            //   .item-date {
+            //     white-space: nowrap;
+            //     height: 26px !important;
+            //     display: flex;
+            //     align-items: center;
+            //     input {
+            //       width: 82%;
+            //       text-align: center !important;
+            //       font-size: 14px;
+            //       color: $blue-1;
+            //       border: none;
+            //       outline: none;
+            //     }
+            //   }
+            // }
+            // .right {
+            //   background: $white 0% 0% no-repeat padding-box;
+            //   border: 0.5px solid $input-border;
+            //   border-top: none;
+            //   // border-radius: 5px;
+            //   margin: 0 0 0 1px;
+            //   text-align: center;
+            //   .item {
+            //     background: $black-3 0% 0% no-repeat padding-box;
+            //     border: 0.5px solid $input-border;
+            //     border-left: none;
+            //     border-right: none;
+            //     color: $light-black;
+            //     font-size: 13px;
+            //     font-weight: 200;
+            //   }
+            //   .item-date {
+            //     height: 26px !important;
+            //     white-space: nowrap;
+            //     display: flex;
+            //     align-items: center;
+            //     input {
+            //       width: 82%;
+            //       text-align: center !important;
+            //       font-size: 14px;
+            //       color: $blue-1;
+            //       border: none;
+            //       outline: none;
+            //     }
+            //   }
+            // }
+            .leftDate{
+              width: 125px;
+              margin-right: 15px;
+              margin-left: 15px;
             }
-            .right {
-              background: $white 0% 0% no-repeat padding-box;
-              border: 0.5px solid $input-border;
-              border-top: none;
-              // border-radius: 5px;
-              margin: 0 0 0 1px;
-              text-align: center;
-              .item {
-                background: $black-3 0% 0% no-repeat padding-box;
-                border: 0.5px solid $input-border;
-                border-left: none;
-                border-right: none;
-                color: $light-black;
-                font-size: 13px;
-                font-weight: 200;
-              }
-              .item-date {
-                height: 26px !important;
-                white-space: nowrap;
-                display: flex;
-                align-items: center;
-                input {
-                  width: 82%;
-                  text-align: center !important;
-                  font-size: 14px;
-                  color: $blue-1;
-                  border: none;
-                  outline: none;
-                }
-              }
+            .rightDate{
+              width: 125px;
+              margin-right: 15px;
+              // margin-right: 10px;
+            }
+            .btn{
+              box-shadow: none !important;
+              border: 0.5px solid $borderColor-2 !important;
+              background: transparent;
+              border-radius: 0px !important;
+              height: 30px !important;
+              font-weight: 200;
+              font-size: 13px;
+              color: $black-1;
+              padding: 0 1em !important;
+              // min-width: 90px !important;
+              // max-width: auto !important;
+              width: 90px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              opacity: 0.5;
             }
           }
-        }
+        // }
         .validation {
           color: $red;
           font-size: 12px;
@@ -302,4 +330,8 @@ th {
 .width-maintain {
   width: auto;
   overflow-x: auto;
+}
+
+mat-datepicker-toggle {
+  background-color: $white-2 !important;
 }
