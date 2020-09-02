@@ -86,7 +86,7 @@
         </div>
 
         <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
-          <button class="submit" mat-raised-button>Download</button>
+          <button class="submit" (click)="download()" mat-raised-button>Download</button>
         </div>
 
       </div>

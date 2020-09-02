@@ -52,6 +52,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   dateTo = new FormControl('');
   endDateValidation: boolean;
   dateValidation: boolean;
+  assessmentDownloadUrl:any;
 
   selectedUserDetail: any;
   userList: any;
@@ -117,7 +118,9 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     };
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.userList = data ? data : [];
+      this.assessmentDownloadUrl = data[1];
+
+      this.userList = data ? data[0] : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
@@ -134,9 +137,10 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
+      this.assessmentDownloadUrl = data[1];
 
       if (data) {
-        this.userList = data ? data : [];
+        this.userList = data ? data[0] : [];
         let count = 0;
         this.userList.forEach(element => {
           count = count + 1;
@@ -255,6 +259,11 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  download(){
+    const excel = this.assessmentDownloadUrl && this.assessmentDownloadUrl[0].url ? this.assessmentDownloadUrl[0].url : '';
+    window.open(excel, '_blank');
   }
 
 }
