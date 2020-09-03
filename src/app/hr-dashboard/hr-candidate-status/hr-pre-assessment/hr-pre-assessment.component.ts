@@ -257,4 +257,24 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
     }
   }
 
+  download(){
+    const apiData = {
+      get_assement_type: 'pre',
+      get_created_by: '',
+      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      date1_get: this.getAPIDateFormat(this.dateFrom.value),
+      date2_get: this.getAPIDateFormat(this.dateTo.value)
+    };
+
+    this.adminService.getStatusExcelDownload(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      const excel = data && data[0].url ? data[0].url : '';
+      window.open(excel, '_blank');
+    }, (err) => {
+    });
+  }
+
 }
