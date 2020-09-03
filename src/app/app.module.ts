@@ -29,6 +29,7 @@ import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlis
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
 import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 
 registerLocaleData(en);
 
@@ -56,7 +57,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NgZorroAntdModule,
   ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
