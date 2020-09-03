@@ -40,12 +40,12 @@
         </div>
         <div class="right">
           <div class="date-wrapper">
-            <!-- <div class="wrapper">
+            <div class="wrapper">
             <div class="label">
               Date:
-            </div> -->
+            </div>
               <div class="grid-wrapper">
-                  <!-- <div class="left">
+                  <div class="left">
                     <div class="item">From</div>
                     <div class="item-date">
                       <input matInput [matDatepicker]="dp" [formControl]="dateFrom">
@@ -61,34 +61,16 @@
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </div>
-                  </div> -->
-                  <!-- <div> -->
-                    <mat-form-field class="leftDate">
-                      <input matInput [matDatepicker]="dp" [formControl]="dateFrom">
-                        <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="dp"></mat-datepicker-toggle>
-                        <mat-datepicker #dp>
-                        </mat-datepicker>
-                    </mat-form-field>
-                  <!-- </div> -->
-                  <div>
-                    <mat-form-field class="rightDate">
-                      <input [formControl]="dateTo" matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                  <div class="btn">
-                    <button mat-raised-button>Reset</button>
                   </div>
 
                 </div>
-              <!-- </div> -->
+              </div>
               <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
               <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
-              <!-- <div class="button-wrapper">
+              <div class="button-wrapper">
                   <button class="cancel-btn btn-margin-space" (click)="cancelDate()" mat-raised-button>Cancel</button>
                   <button class="submit" (click)="confirmDate()" mat-raised-button>Apply</button>
-              </div> -->
+              </div>
           </div>
         </div>
       </div>

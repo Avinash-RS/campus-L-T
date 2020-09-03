@@ -11,8 +11,8 @@
               <label *ngIf="i == 0">1st shortlist</label>
               <label *ngIf="i == 1">2nd shortlist</label>
               <label *ngIf="i == 2">Assessment feedback</label>
-              <label *ngIf="i == 3">Candidate details</label>
-              <label *ngIf="i == 4">Interview panel</label>
+              <!-- <label *ngIf="i == 3">Candidate details</label> -->
+              <label *ngIf="i == 3">Interview panel</label>
             </td>
           </ng-container>
 
@@ -26,12 +26,12 @@
                   </nz-select>
                 </div>
 
-                <div *ngIf="i == 3">
+                <!-- <div *ngIf="i == 3">
                     <nz-select class="nzSelect"
                     nzPlaceHolder="Tag name">
                       <nz-option *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name"></nz-option>
                   </nz-select>
-                </div>
+                </div> -->
 
                 <div *ngIf="i == 1">
                     <nz-select class="nzSelect-1"
@@ -58,12 +58,12 @@
                         <nz-option *ngFor="let city of cityListDropdown" [nzLabel]="city.cities" [nzValue]="city.cities"></nz-option>
                     </nz-select>
                   </div>
-                  <div *ngIf="i == 3">
+                  <!-- <div *ngIf="i == 3">
                     <nz-select class="nzSelect"
                     nzPlaceHolder="City">
                       <nz-option *ngFor="let city of cityListDropdown" [nzLabel]="city.cities" [nzValue]="city.cities"></nz-option>
                   </nz-select>
-                </div>
+                </div> -->
 
               </td>
           </ng-container>
@@ -77,12 +77,12 @@
                     </nz-select>
                   </div>
 
-                  <div *ngIf="i == 3">
+                  <!-- <div *ngIf="i == 3">
                     <nz-select class="nzSelect"
                     nzPlaceHolder="Institute name">
                       <nz-option *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value"></nz-option>
                   </nz-select>
-                </div>
+                </div> -->
 
               </td>
           </ng-container>
