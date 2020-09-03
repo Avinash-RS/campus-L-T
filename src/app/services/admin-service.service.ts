@@ -484,4 +484,10 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/excel_download`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  // hr status download 
+  getStatusExcelDownload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getassement_excel`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

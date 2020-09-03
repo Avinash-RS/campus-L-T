@@ -52,7 +52,6 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   dateTo = new FormControl('');
   endDateValidation: boolean;
   dateValidation: boolean;
-  assessmentDownloadUrl:any;
 
   selectedUserDetail: any;
   userList: any;
@@ -118,9 +117,8 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     };
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.assessmentDownloadUrl = data[1];
 
-      this.userList = data ? data[0] : [];
+      this.userList = data ? data : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
@@ -137,10 +135,9 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.assessmentDownloadUrl = data[1];
 
       if (data) {
-        this.userList = data ? data[0] : [];
+        this.userList = data ? data : [];
         let count = 0;
         this.userList.forEach(element => {
           count = count + 1;
@@ -262,8 +259,23 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   }
 
   download(){
-    const excel = this.assessmentDownloadUrl && this.assessmentDownloadUrl[0].url ? this.assessmentDownloadUrl[0].url : '';
-    window.open(excel, '_blank');
+    const apiData = {
+      get_assement_type: 'rec',
+      get_created_by: '',
+      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      date1_get: this.getAPIDateFormat(this.dateFrom.value),
+      date2_get: this.getAPIDateFormat(this.dateTo.value)
+    };
+
+    this.adminService.getStatusExcelDownload(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      const excel = data && data[0].url ? data[0].url : '';
+      window.open(excel, '_blank');
+    }, (err) => {
+    });
   }
 
 }
