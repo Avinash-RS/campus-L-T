@@ -27,7 +27,6 @@
   <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
 </div>
 <mat-drawer-container class="second-sidenav">
-
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>
       <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD" routerLinkActive="active">
@@ -80,5 +79,5 @@
 
     <router-outlet></router-outlet>
 
-  </mat-drawer-content>
+    </mat-drawer-content>
 </mat-drawer-container>
