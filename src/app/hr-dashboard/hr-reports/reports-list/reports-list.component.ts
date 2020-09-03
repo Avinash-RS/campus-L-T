@@ -126,16 +126,17 @@ export class ReportsListComponent implements OnInit {
       'fdate': 'd',
       'tdate': 'e',
       'action': 'f'
-    },
-    {
-      'reportname': 'y',
-      'col2': 'a',
-      'col3': 'b',
-      'col4': 'c',
-      'fdate': 'd',
-      'tdate': 'e',
-      'action': 'f'
     }
+    // ,
+    // {
+    //   'reportname': 'y',
+    //   'col2': 'a',
+    //   'col3': 'b',
+    //   'col4': 'c',
+    //   'fdate': 'd',
+    //   'tdate': 'e',
+    //   'action': 'f'
+    // }
     ];
     this.userList = data;
     // this.userList.forEach(element => {
@@ -376,7 +377,7 @@ export class ReportsListComponent implements OnInit {
       }else{
         this.appConfig.error("Please select a filter criteria", '');
       }
-    }else if(index == 4){
+    }else if(index == 3){
       if(this.userList[index].tdate != 'e'){
         let dateFilter = {
           "to": this.userList[index].tdate,
