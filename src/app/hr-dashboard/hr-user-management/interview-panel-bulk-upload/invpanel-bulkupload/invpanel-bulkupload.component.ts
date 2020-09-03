@@ -11,6 +11,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 import moment from 'moment';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import * as XLSX from 'xlsx';
+import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
 
 @Component({
   selector: 'app-invpanel-bulkupload',
@@ -52,6 +53,22 @@ export class InvpanelBulkuploadComponent implements OnInit {
   ngOnInit() {
 
 
+  }
+
+  helper() {
+    const data = {
+      iconName: '',
+      sharedData: {
+        confirmText: 'Bulk Upload helper video',
+        componentData: '',
+        type: 'video',
+        identity: 'video'
+      },
+      showConfirm: 'Confirm',
+      showCancel: 'Cancel',
+      showOk: ''
+    };
+    this.appConfig.helperVideo(ModalBoxComponent, data);
   }
 
   downloadTemplate() {

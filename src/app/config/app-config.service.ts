@@ -44,37 +44,6 @@ export class AppConfigService {
     return this.router.navigate([path]);
   }
 
-  // Open dailog
-  openDialog(component, data) {
-    let dialogDetails: modalBox;
-
-    dialogDetails = {
-      iconName: data.iconName,
-      showCancel: data.showCancel,
-      showConfirm: data.showConfirm,
-      showOk: data.showOk,
-      dataToBeShared: data.sharedData,
-    };
-
-    /**
-     * Dialog modal window
-     */
-    // tslint:disable-next-line: one-variable-per-declaration
-    const dialogRef = this.matDialog.open(component, {
-      width: 'auto',
-      height: 'auto',
-      autoFocus: false,
-      data: dialogDetails
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // this.hideLoader();
-      if (result) {
-        // this.consoleLog('result', result);
-      }
-    });
-  }
-
   // Navigations with Param
   routeNavigationWithParam(path: any, param: any) {
     return this.router.navigate([path, param]);
@@ -275,4 +244,42 @@ export class AppConfigService {
     reader.readAsBinaryString(target.files[0]);
     return SavedData;
   }
+
+  helperVideo(comp, data) {
+    console.log('coming');
+    this.openDialog(comp, data);
+  }
+
+  // Open dailog
+  openDialog(component, data) {
+    let dialogDetails: modalBox;
+
+    dialogDetails = {
+      iconName: data.iconName,
+      showCancel: data.showCancel,
+      showConfirm: data.showConfirm,
+      showOk: data.showOk,
+      dataToBeShared: data.sharedData,
+    };
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data: dialogDetails
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // this.hideLoader();
+      if (result) {
+        // this.consoleLog('result', result);
+      }
+    });
+  }
+
 }
+
