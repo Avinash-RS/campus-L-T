@@ -111,7 +111,9 @@ export const CONSTANT = {
       BULK_INV_UPLOAD_REPORTS_LIST: '/hr/reports/inv-panel-reports',
       HR_STATUS: '/hr/status',
       HR_STATUS_PREASSESSMENT: '/hr/status/pre-assessment',
-      HR_STATUS_RECRUITMENT: '/hr/status/recruitment'
+      HR_STATUS_RECRUITMENT: '/hr/status/recruitment',
+      HR_ASSING_ASSESSMENT: '/hr/assing-assessment',
+      HR_SCHEDULING_ASSESSMENT: '/hr/assing-assessment/scheduling-assessment'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -239,7 +241,9 @@ export const CONSTANT = {
       BULK_INV_UPLOAD_REPORTS_LIST: 'inv-panel-reports',
       HR_STATUS: 'status',
       HR_STATUS_PREASSESSMENT: 'pre-assessment',
-      HR_STATUS_RECRUITMENT: 'recruitment'
+      HR_STATUS_RECRUITMENT: 'recruitment',
+      HR_ASSING_ASSESSMENT: 'assing-assessment',
+      HR_SCHEDULING_ASSESSMENT: 'scheduling-assessment'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',
