@@ -385,7 +385,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_PREASSESSMENT}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_RECRUITMENT}`,
             pathMatch: 'full',
           }
         ]

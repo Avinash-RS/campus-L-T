@@ -18,11 +18,11 @@ export class HrCandidateStatusComponent implements OnInit {
     
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-      {
-        icon: '002-files-and-folders.svg',
-        name: 'Pre-assessment',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_STATUS_PREASSESSMENT
-      },
+      // {
+      //   icon: '002-files-and-folders.svg',
+      //   name: 'Pre-assessment',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_STATUS_PREASSESSMENT
+      // },
       {
         icon: 'recruitment.svg',
         name: 'Recruitment',
