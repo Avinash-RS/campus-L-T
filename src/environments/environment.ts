@@ -20,6 +20,9 @@ export const environment = {
   // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
   // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
   // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
+  // API_BASE_URL: 'http://campus.lntedutech.com/d8cintana2',
+  // API_BASE_URL_city: 'http://campus.lntedutech.com/d8cintana2',
+  // Image_Base_Url: 'http://campus.lntedutech.com',
 
 };
 
