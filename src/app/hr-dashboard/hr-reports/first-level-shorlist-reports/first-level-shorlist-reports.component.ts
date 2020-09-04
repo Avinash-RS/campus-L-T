@@ -57,7 +57,6 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
   getUsersList() {
     this.adminService.firstLevelReports().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -72,11 +71,22 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
   }
 
   downloadExcel(element) {
-    const excel = element && element.download ? element.download : '';
-    window.open(excel, '_blank');
+
+    let sendReq = {
+      "shortlist_name": element.shortlistname
+    }
+    this.adminService.firstShortlistExcelDownload(sendReq).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      
+      const excel = data && data.file ? data.file : '';
+      window.open(excel, '_blank');
+
+    }, (err) => {
+    });
   }
+  
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 

@@ -83,8 +83,13 @@ import { PdfreaderComponent } from './pdfreader/pdfreader.component';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { CommonKycProfileViewComponent } from './common-kyc-profile-view/common-kyc-profile-view.component';
 import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared-upload-previewer.component';
+import { ScreenresolutionBoxComponent } from './screenresolution-box/screenresolution-box.component';
+import { VgCoreModule } from 'videogular2/compiled/core';
+import { VgControlsModule } from 'videogular2/compiled/controls';
+import { VgOverlayPlayModule } from 'videogular2/compiled/overlay-play';
+import { VgBufferingModule } from 'videogular2/compiled/buffering';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent],
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -159,7 +164,11 @@ import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared
     NzUploadModule,
     NzResizableModule,
     // PdfreaderComponent,
-    PdfJsViewerModule
+    PdfJsViewerModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
   ],
   exports: [
     FormsModule,
@@ -167,6 +176,10 @@ import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
     SignupHeaderComponent,
     HomeHeaderComponent,
     SnackbarComponent,
@@ -180,6 +193,7 @@ import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared
     PdfreaderComponent,
     CommonKycProfileViewComponent,
     SharedUploadPreviewerComponent,
+    ScreenresolutionBoxComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

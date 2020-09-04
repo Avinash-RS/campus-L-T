@@ -55,9 +55,11 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
 
   // To get all users
   getUsersList() {
-    this.candidateService.assessmentList().subscribe((datas: any) => {
+    const apiData = {
+      user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    }
+    this.candidateService.assessmentList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -72,11 +74,11 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
   downloadHallticket(detail) {
-    // const excel = detail && detail.pdf ? detail.pdf + this.appConfig.getLocalData('userId') : '';
-    // window.open(excel, '_blank');
+    const excel = detail && detail.pdf ? detail.pdf : '';
+    window.open(excel, '_blank');
   }
 
 

@@ -53,7 +53,6 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   }
 
   ngOnChanges() {
-    console.log('on', this.shortlistedCandidates);
     if (this.shortlistedCandidates) {
       this.staticList = this.shortlistedCandidates;
       this.appConfig.setLocalData('tempSecond', JSON.stringify(this.staticList));
@@ -101,10 +100,9 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
         apiData['id'].push(element['candidate_id']);
       }
     });
-    console.log(apiData);
+    
     this.adminService.secondShortlistAPI(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('data', data);
       const datas = {
         success_second: result['type']
       };
@@ -139,7 +137,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
   removeSelectedCandidate(i) {
     this.userListing.splice(i, 1);

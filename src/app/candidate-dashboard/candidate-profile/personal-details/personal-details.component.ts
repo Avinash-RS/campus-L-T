@@ -332,7 +332,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   // For Edit
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
-      console.log('data', data);
 
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {
@@ -694,8 +693,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.checked = this.KYCModifiedData['field_address_checkbox'] && this.KYCModifiedData['field_address_checkbox']['value'] == "1" ? true : false;
 
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : '';
-
-        console.log('final', this.KYCModifiedData);
 
         const dataCity = { value: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'][0] ? organizeUserDetails['field_present_state'][0]['value'] : '' };
         const dataPermanentCity = { value: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'][0] ? organizeUserDetails['field_permanent_state'][0]['value'] : '' };

@@ -1,4 +1,45 @@
 export const DropdownListForKYC = {
+  // Diplamo Discipline
+  HSCDiscipline: [
+    {
+      name: 'Science',
+      value: 'Science',
+      checkbox: false
+    },
+    {
+      name: 'Commerce',
+      value: 'Commerce',
+      checkbox: false
+    },
+    {
+      name: 'Arts',
+      value: 'Arts',
+      checkbox: false
+    },
+    {
+      name: 'Others',
+      value: 'Others',
+      checkbox: false
+    }
+  ],
+  boards: [
+    {
+      name: 'CBSE',
+      checkbox: false
+    },
+    {
+      name: 'ICSE',
+      checkbox: false
+    },
+    {
+      name: 'State Board',
+      checkbox: false
+    },
+    {
+      name: 'Others',
+      checkbox: false
+    }
+  ],
   // Gender
   gender: [
     {
@@ -35,7 +76,7 @@ export const DropdownListForKYC = {
       radio: false
     },
     {
-      name: 'Diplomo',
+      name: 'Diploma',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -44,7 +85,7 @@ export const DropdownListForKYC = {
       radio: false
     },
     {
-      name: 'Under Graduation',
+      name: 'UG',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -53,23 +94,14 @@ export const DropdownListForKYC = {
       radio: false
     },
     {
-      name: 'Post Graduation',
+      name: 'PG',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
       yearFrom: '',
       yearTo: '',
       radio: false
-    },
-    {
-      name: 'Other',
-      checkbox: false,
-      percentageFrom: '',
-      percentageTo: '',
-      yearFrom: '',
-      yearTo: '',
-      radio: false
-    },
+    }
   ],
   // Backlogs
   backlogs: [

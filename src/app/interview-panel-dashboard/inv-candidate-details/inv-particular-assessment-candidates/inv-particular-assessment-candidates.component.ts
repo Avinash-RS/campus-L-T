@@ -58,7 +58,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
     });
@@ -71,7 +70,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
       this.getUsersList(name);
 
     }, (err) => {
@@ -88,7 +86,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     };
     this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
       const align = datas ? datas : [];
       let counting = 0;
@@ -113,7 +110,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
 
 
   selectAllCheckbox(checked) {
-    console.log(this.dataSource);
 
     if (checked['checked']) {
       this.userList.forEach(element => {
@@ -132,7 +128,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
         });
       });
     }
-    console.log(this.userList);
     this.toShoworNotShowFilter();
   }
 
@@ -153,7 +148,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   unselectSelectALL() {
-    console.log(this.userList);
 
     this.selectAllCheck = false;
     const pushChecked = [];
@@ -200,7 +194,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     });
     this.selectedUserDetail = userDetail;
     this.toShoworNotShowFilter();
-    console.log(userDetail);
     this.unselectSelectALL();
   }
 
@@ -225,7 +218,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     });
     this.adminService.invSubmittingCandidates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
 
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
     }, (err) => {

@@ -33,11 +33,11 @@
     <div class="right">
       <div class="buttons">
         <div class="search-icon">
-          <input matInput [(ngModel)]="searchInput" placeholder="Search….">
-          <img src="assets/images/feather-search.svg" alt="" srcset="">
+            <img matTooltip="Search" (click)="applySearch()" src="assets/images/Search.svg" alt="" srcset="">
+            <input matInput [(ngModel)]="searchInput" placeholder="Search….">
         </div>
         <div class="buttons">
-          <button class="submit btn-margin-space-05" mat-raised-button (click)="applySearch()"><span>Search </span></button>
+          <!-- <button class="submit btn-margin-space-05" mat-raised-button (click)="applySearch()"><span>Search </span></button> -->
           <button class="submit btn-margin-space-05" [ngClass]="userList && userList.length === 0 ? 'disabled' : ''"
             (click)="applyCriteria()" mat-raised-button><span class="icon"><span class="material-icons">filter_alt</span></span><span> Filter
             </span></button>

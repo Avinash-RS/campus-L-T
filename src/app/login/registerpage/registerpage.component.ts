@@ -138,7 +138,7 @@ export class RegisterpageComponent implements OnInit {
         field_institute_city: cityName ? cityName : '',
         field_insitute_comments: this.registerForm.value.comment
       }];
-      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
+      // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
         this.appConfig.hideLoader();

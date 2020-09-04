@@ -62,7 +62,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      console.log('dataadadad', data);
       this.appConfig.hideLoader();
 
       this.userList = data ? data : [];
@@ -107,8 +106,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
 
   submit(event) {
     event.stopPropagation();
-    console.log('ad', this.status);
-    console.log('s', this.selectedUserDetail);
     let data;
     if (this.status === 'approve') {
       data = {
@@ -174,12 +171,9 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail, status) {
-    console.log(this.radioCheck);
     this.status = 'approve';
     this.buttonDisabled = false;
     this.rejectCheck = null;
-
-    console.log(userDetail);
 
     this.selectedUserDetail = userDetail;
     this.userList.forEach(element => {
@@ -192,7 +186,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   }
 
   selectedUserReject(userDetail, status) {
-    console.log(userDetail);
     this.buttonDisabled = false;
     this.status = 'reject';
     this.radioCheck = null;
@@ -232,11 +225,9 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result['status'] === 'approve') {
-        console.log(result, result.status);
         this.apiSubmit(result);
       }
       if (result && result['status'] === 'reject') {
-        console.log(result, result.status);
         this.apiSubmit(result);
       }
     });

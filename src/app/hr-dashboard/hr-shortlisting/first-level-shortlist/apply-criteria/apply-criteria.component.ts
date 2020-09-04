@@ -76,14 +76,14 @@ export class ApplyCriteriaComponent implements OnInit {
   EduLevel = DropdownListForKYC['level'];
   backlogs = DropdownListForKYC['backlogs'];
   genderList = DropdownListForKYC['gender'];
-  disciplineList = DropdownListForKYC['discipline'];
-  specializationList = DropdownListForKYC['specialization'];
+  disciplineList: any;
+  specializationList: any;
   InstituteNameDropDown: any[];
   InstituteNameSearchControl = new FormControl();
   InstituteNameSelectAllCheck = false;
   InstituteNameFilter: any[];
   InstituteNameShowSelectAll = true;
-  InstituteNameDropdownList = [];
+  InstituteNameDropdownList: any;
   instituteFilterShow: boolean;
   showInstituteTotalCount: number;
 
@@ -168,6 +168,7 @@ export class ApplyCriteriaComponent implements OnInit {
     this.clearDisciplineFilter();
     this.clearSpecializationFilter();
     this.clearBacklogFilter();
+    this.submitFilterNoRedirect();
   }
 
   // Filter Submit
@@ -254,10 +255,10 @@ export class ApplyCriteriaComponent implements OnInit {
       start: '1',
       counts: '50'
     };
-    console.log(apiDatas);
+    
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
+      
       // const apiData = {
       //   user_id: []
       // };
@@ -270,7 +271,6 @@ export class ApplyCriteriaComponent implements OnInit {
       // }
       // this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
       this.filteredCandidates = data[1] ? data[1] : '0';
-      console.log('ada', this.filteredCandidates);
 
 
     }, (err) => {
@@ -370,10 +370,10 @@ export class ApplyCriteriaComponent implements OnInit {
       field_dob: dobAPIData,
       educational_level: educationData
     };
-    console.log(apiDatas);
+  
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
       // this.appConfig.hideLoader();
-      console.log(data);
+      
       // const apiData = {
       //   user_id: []
       // };
@@ -468,6 +468,7 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Education Level
   EduNgOnInIt() {
+
     this.eduFilter = this.EduLevel;
     let runGenderElse = true;
     this.eduFilter.forEach(element => {
@@ -483,7 +484,6 @@ export class ApplyCriteriaComponent implements OnInit {
   }
 
   selectedEducationRadio(eduLevel, event) {
-    console.log(eduLevel, event);
     this.EduLevel.forEach(element => {
       if (element['name'] === eduLevel['name']) {
         if (element.radio) {
@@ -551,8 +551,6 @@ export class ApplyCriteriaComponent implements OnInit {
         }
       });
     });
-    console.log(this.eduFilter);
-    console.log(this.onlyForEDUFilterArray);
 
     this.toShowOrNotEducationFilter();
   }
@@ -575,7 +573,6 @@ export class ApplyCriteriaComponent implements OnInit {
         this.percentageToRegexError = false;
         this.eduFilter.forEach((element, i) => {
           if (element['checkbox']) {
-            console.log(typeof document.getElementById(`yearFrom${i}`)['value']);
             if (document.getElementById(`yearFrom${i}`)['value']) {
               this.yearFromShow = this.getDateFormat(this.yearFrom.value);
               element['yearFrom'] = this.yearFrom.value;
@@ -587,7 +584,6 @@ export class ApplyCriteriaComponent implements OnInit {
 
             if (document.getElementById(`perFrom${i}`)['value']) {
               const percentageRegex = this.percentageDecimals.test(document.getElementById(`perFrom${i}`)['value']);
-              console.log(percentageRegex);
 
               if (percentageRegex === false) {
                 this.percentageRegexError = true;
@@ -599,7 +595,7 @@ export class ApplyCriteriaComponent implements OnInit {
             }
             if (document.getElementById(`perTo${i}`)['value']) {
               const percentageToRegex = this.percentageDecimals.test(document.getElementById(`perTo${i}`)['value']);
-              console.log(percentageToRegex);
+        
               if (percentageToRegex === false) {
                 this.percentageToRegexError = true;
                 this.percentageToRegexErrorIndex = i.toString();
@@ -621,7 +617,7 @@ export class ApplyCriteriaComponent implements OnInit {
       this.percentageToRegexError = false;
       this.eduFilter.forEach((element, i) => {
         if (element['checkbox']) {
-          console.log(typeof document.getElementById(`yearFrom${i}`)['value']);
+        
           if (document.getElementById(`yearFrom${i}`)['value']) {
             this.yearFromShow = this.getDateFormat(this.yearFrom.value);
             element['yearFrom'] = this.yearFrom.value;
@@ -633,7 +629,6 @@ export class ApplyCriteriaComponent implements OnInit {
 
           if (document.getElementById(`perFrom${i}`)['value']) {
             const percentageRegex = this.percentageDecimals.test(document.getElementById(`perFrom${i}`)['value']);
-            console.log(percentageRegex);
 
             if (percentageRegex === false) {
               this.percentageRegexError = true;
@@ -645,7 +640,6 @@ export class ApplyCriteriaComponent implements OnInit {
           }
           if (document.getElementById(`perTo${i}`)['value']) {
             const percentageToRegex = this.percentageDecimals.test(document.getElementById(`perTo${i}`)['value']);
-            console.log(percentageToRegex);
             if (percentageToRegex === false) {
               this.percentageToRegexError = true;
               this.percentageToRegexErrorIndex = i.toString();
@@ -662,7 +656,6 @@ export class ApplyCriteriaComponent implements OnInit {
         this.toShowOrNotEducationFilter();
       }
     }
-    console.log(this.onlyForEDUFilterArray);
 
   }
 
@@ -773,14 +766,23 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Institute
   InstituteNameNgOnInIt() {
-    this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
-    this.InstituteNameDropDown = this.InstituteNameDropdownList;
-    this.InstituteNameFilter = this.InstituteNameDropDown;
-    this.toShowOrNotInstituteFilter();
-    // this.selectedItems = [
-    //   { item_id: 3, item_text: 'Pune' },
-    //   { item_id: 4, item_text: 'Navsari' }
-    // ];
+    this.candidateService.getoverallInstitute().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
+      this.InstituteNameDropdownList = list;
+      // this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
+      this.InstituteNameDropDown = this.InstituteNameDropdownList;
+      this.InstituteNameFilter = this.InstituteNameDropDown;
+      this.toShowOrNotInstituteFilter();
+      // this.selectedItems = [
+      //   { item_id: 3, item_text: 'Pune' },
+      //   { item_id: 4, item_text: 'Navsari' }
+      // ];
+
+    }, (err) => {
+
+    });
+
   }
 
   InstituteNameSearch(value: string) {
@@ -853,19 +855,30 @@ export class ApplyCriteriaComponent implements OnInit {
   }
 
   clearInstituteFilter() {
-    this.InstituteNameDropDown.forEach(element => {
-      if (element['name']) {
-        element.checkbox = false;
-      }
-    });
-    this.toShowOrNotInstituteFilter();
+    if (this.InstituteNameDropDown) {
+      this.InstituteNameDropDown.forEach(element => {
+        if (element['name']) {
+          element.checkbox = false;
+        }
+      });
+      this.toShowOrNotInstituteFilter();
+    }
   }
 
   // For Discpline
   DisciplineNgOnInIt() {
-    this.disciplineFilter = this.disciplineList;
+    this.candidateService.getoverallDiscipline().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
 
-    this.toShowOrNotDisciplineFilter();
+      this.disciplineList = list;
+
+      this.disciplineFilter = this.disciplineList;
+
+      this.toShowOrNotDisciplineFilter();
+    }, (err) => {
+
+    });
   }
 
   DisciplinecheckboxChanged(disciplineName) {
@@ -948,14 +961,23 @@ export class ApplyCriteriaComponent implements OnInit {
 
   // For Specialization
   SpecializationNameNgOnInIt() {
-    this.SpecializationNameDropdownList = this.specializationList;
-    this.SpecializationNameDropDown = this.SpecializationNameDropdownList;
-    this.SpecializationNameFilter = this.SpecializationNameDropDown;
-    this.toShowOrNotSpecializationFilter();
-    // this.selectedItems = [
-    //   { item_id: 3, item_text: 'Pune' },
-    //   { item_id: 4, item_text: 'Navsari' }
-    // ];
+    this.candidateService.getoverallSpecialization().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
+
+      this.specializationList = list;
+
+      this.SpecializationNameDropdownList = this.specializationList;
+      this.SpecializationNameDropDown = this.SpecializationNameDropdownList;
+      this.SpecializationNameFilter = this.SpecializationNameDropDown;
+      this.toShowOrNotSpecializationFilter();
+      // this.selectedItems = [
+      //   { item_id: 3, item_text: 'Pune' },
+      //   { item_id: 4, item_text: 'Navsari' }
+      // ];
+    }, (err) => {
+
+    });
   }
 
   SpecializationNameSearch(value: string) {

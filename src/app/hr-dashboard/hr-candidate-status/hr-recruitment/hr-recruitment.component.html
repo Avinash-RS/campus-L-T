@@ -85,6 +85,11 @@
           <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
         </div>
+
+        <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
+          <button class="submit" (click)="download()" mat-raised-button>Download</button>
+        </div>
+
       </div>
       <!-- </mat-form-field> -->
 
@@ -94,13 +99,13 @@
         <!-- Position Column -->
         <ng-container matColumnDef="uid" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header>S no. </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{element && element.uid ? (element.uid) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element; let i = index"> {{element && element.uid ? (element.uid) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="id" sticky>
+        <ng-container matColumnDef="new_candidate_id" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate id </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.id ? (element.id) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.new_candidate_id ? (element.new_candidate_id) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
@@ -204,31 +209,31 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="tag_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag name </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.tag_name ? (element.tag_name) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.tag_name ? (element.tag_name) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="institute">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.institute ? (element.institute) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.institute ? (element.institute) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="foldername">
+        <ng-container matColumnDef="folder_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> folder name </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.foldername ? (element.foldername) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.folder_name ? (element.folder_name) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="shortlistname">
+        <ng-container matColumnDef="shortlist_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.shortlistname ? (element.shortlistname) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.shortlist_name ? (element.shortlist_name) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="date_time">
+        <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.date_time ? (element.date_time) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.date ? (element.date) : '-'}} </td>
         </ng-container>
 
         <!-- fifth Header row first group -->
@@ -251,9 +256,4 @@
     <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
       <div>No data available </div>
     </div> -->
-
-    <div class="button-wrappers" *ngIf="userList && userList.length > 0">
-      <button class="submit" mat-raised-button>Download</button>
-    </div>
-
   </div>

@@ -478,4 +478,16 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/assement_feedback_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  //hr 1st shortlist excel download
+  firstShortlistExcelDownload(data){
+    return this.http.post(`${this.BASE_URL}/profile/excel_download`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // hr status download 
+  getStatusExcelDownload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getassement_excel`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

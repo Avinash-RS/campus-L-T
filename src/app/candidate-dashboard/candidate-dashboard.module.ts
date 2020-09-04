@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { CandidateDashboardRoutingModule } from './candidate-dashboard-routing.module';
 import { MasterDashboardComponent } from './master-dashboard.component';
-import { CandidateDashboardHeaderComponent } from './candidate-dashboard-header/candidate-dashboard-header.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
@@ -23,7 +22,7 @@ import { CandidateUploadDocumentComponent } from './candidate-document/candidate
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent],
+  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent],
   imports: [
     CommonModule,
     SharedModule,

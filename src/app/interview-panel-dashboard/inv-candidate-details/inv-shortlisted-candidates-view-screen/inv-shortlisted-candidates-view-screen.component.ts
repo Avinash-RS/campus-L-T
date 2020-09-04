@@ -52,7 +52,6 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
       this.getUsersList(params['data']);
@@ -66,7 +65,6 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
 
     }, (err) => {
 
@@ -82,7 +80,6 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
     };
     this.adminService.invSubmittedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
 
       const align = datas ? datas : [];

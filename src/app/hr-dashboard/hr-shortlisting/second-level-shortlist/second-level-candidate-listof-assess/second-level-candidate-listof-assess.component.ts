@@ -77,7 +77,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
       this.getUsersList(params['data']);
@@ -91,7 +90,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
 
     }, (err) => {
 
@@ -154,7 +152,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   submit() {
     this.changedList = this.userList;
     this.previewList = this.changedList;
-    console.log('this.previewList', this.previewList);
 
     this.showShortlisted = true;
   }
@@ -170,7 +167,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
   // To get all users
   getUsersList(name) {
-    console.log('val', this.validInput.value);
 
     const apiData = {
       assement_name: name,
@@ -181,7 +177,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       marks_valid: this.validInput4.value ? this.validInput4.value : ''
     };
     this.adminService.filterSecondLevel(apiData).subscribe((datas: any) => {
-      console.log('apiFilter', datas);
       this.appConfig.setLocalData('secondLevelFilter', this.validInput.value ? this.validInput.value : '');
       this.appConfig.setLocalData('secondLevelFilter1', this.validInput1.value ? this.validInput1.value : '');
       this.appConfig.setLocalData('secondLevelFilter2', this.validInput2.value ? this.validInput2.value : '');
@@ -269,7 +264,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
   ngAfterViewInit() {

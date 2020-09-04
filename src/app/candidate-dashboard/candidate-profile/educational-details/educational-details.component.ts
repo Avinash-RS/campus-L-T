@@ -11,6 +11,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
+import { Subscription } from 'rxjs';
 // import { NzSelectSizeType } from 'ng-zorro-antd/select';
 @Component({
   selector: 'app-educational-details',
@@ -26,24 +27,36 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form4: NgForm;
   form5: NgForm;
 
+  levelList: any;
+  UGList: any;
+  DiplamoList: any;
+  diplamoDiscipline: any;
+  pgDisciplines: any;
+  ugDisciplines: any;
+  pgColleges: any;
+  pgSpecialization: any;
+  ugSpecialization: any;
+
   level = DropdownListForKYC['level'];
 
   institutes = DropdownListForKYC['institutes'];
   discipline = DropdownListForKYC['discipline'];
+  HSCDiscipline = DropdownListForKYC['HSCDiscipline'];
   specialization = DropdownListForKYC['specialization'];
+  boards = DropdownListForKYC['boards'];
 
   educationForm: FormGroup;
 
-  startingYear = new Date("2005-01-01");
+  startingYear = new Date("1995-01-01");
   endYear = new Date();
-  dummystartDate = new Date("2005-01-01");
+  dummystartDate = new Date("1995-01-01");
   dummyendDate = new Date("2020-07-07");
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'MMM yyyy';
 
   apiForm: any;
   educationValuearray: any;
-
+  mySub: Subscription;
   disabledYears = (current: Date): boolean => {
 
     // Can not select days before today and today
@@ -83,7 +96,135 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.appConfig.setLocalData('educationalFormSubmitted', 'true');
     }
 
+    this.educationLevels();
+    this.DiplamoInstitutes();
+    this.DisciplineList();
+    this.PGInstitutes();
+    this.UGDiscipline();
+    this.PGDiscipline();
+    this.UGSpecification();
+    this.PGSpecification();
+    // this.defautValue();
   }
+
+  educationLevels() {
+    this.candidateService.getEducationList().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.levelList = list;
+    }, (err) => {
+
+    });
+  }
+
+  DiplamoInstitutes() {
+    const api = {
+      level: 'Diploma',
+      discipline: '',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.DiplamoList = list;
+    }, (err) => {
+
+    });
+  }
+
+  DisciplineList() {
+    const api = {
+      level: '',
+      discipline: 'Diploma',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.diplamoDiscipline = list;
+    }, (err) => {
+
+    });
+  }
+
+
+  PGInstitutes() {
+    const api = {
+      level: 'PG',
+      discipline: '',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.pgColleges = list;
+    }, (err) => {
+
+    });
+  }
+
+  UGDiscipline() {
+    const api = {
+      level: '',
+      discipline: 'UG',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.ugDisciplines = list;
+    }, (err) => {
+
+    });
+  }
+
+
+  PGDiscipline() {
+    const api = {
+      level: '',
+      discipline: 'PG',
+      specification: ''
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.pgDisciplines = list;
+    }, (err) => {
+
+    });
+  }
+
+  UGSpecification() {
+    const api = {
+      level: '',
+      discipline: '',
+      specification: 'UG'
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.ugSpecialization = list;
+    }, (err) => {
+
+    });
+  }
+
+
+  PGSpecification() {
+    const api = {
+      level: '',
+      discipline: '',
+      specification: 'PG'
+    };
+    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data && data[0] ? data[0] : [];
+      this.pgSpecialization = list;
+    }, (err) => {
+
+    });
+  }
+
 
 
 
@@ -107,7 +248,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
     if (this.educationForm.valid) {
 
-      console.log(this.educationForm.value);
 
       const edArrays = [];
       this.educationForm.value.educationArr.forEach((element, i) => {
@@ -142,11 +282,21 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   educationPatch(dataArray) {
     if (dataArray && dataArray.length > 0) {
       dataArray.forEach(edu => {
+
         this.addEducationForm(edu);
       });
     } else {
       for (let i = 0; i <= 0; i++) {
-        this.addEducationForm(null);
+        const edu = {
+          field_level: { value: 'SSLC' },
+          field_board_university: { value: null },
+          field_institute: { value: null },
+          field_discipline: { value: null },
+          field_specification: { value: null },
+          field_year_of_passing: { value: null },
+          field_backlogs: { value: null }, field_percentage: { value: null }
+        };
+        this.addEducationForm(edu);
       }
     }
   }
@@ -154,6 +304,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.educationForm = this.fb.group({
       educationArr: this.fb.array([])
     }), this.educationPatch(this.educationValuearray);
+    this.removeSSLCValidators();
   }
 
 
@@ -177,20 +328,40 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       });
     } else {
       return this.fb.group({
-        leveling: [null, [RemoveWhitespace.whitespace(), Validators.required]],
-        board: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace(), Validators.required]],
-        institute: [null, [Validators.required]],
-        discipline: [null, [Validators.required]],
-        specification: [null, [RemoveWhitespace.whitespace(), Validators.required]],
-        passedYear: [null, [Validators.required]],
-        backlogs: [null, [Validators.pattern(numberOnly)]],
-        percentage: [null, [Validators.required, Validators.pattern(percentageDecimals)]],
+        leveling: [{ value: null, disabled: false }, [RemoveWhitespace.whitespace(), Validators.required]],
+        board: [{ value: null, disabled: true }, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace(), Validators.required]],
+        institute: [{ value: null, disabled: true }, [Validators.required]],
+        discipline: [{ value: null, disabled: true }, [Validators.required]],
+        specification: [{ value: null, disabled: true }, [RemoveWhitespace.whitespace(), Validators.required]],
+        passedYear: [{ value: null, disabled: false }, [Validators.required]],
+        backlogs: [{ value: null, disabled: false }, [Validators.pattern(numberOnly)]],
+        percentage: [{ value: null, disabled: false }, [Validators.required, Validators.pattern(percentageDecimals)]],
       });
     }
   }
 
+  // defautValue() {
+  //   this.mySub = this.eduArr.valueChanges.subscribe((term) => {
+  //   }, (err) => {
+
+  //   }, () => {
+  //   });
+  // }
+
+  removeSSLCValidators() {
+    this.eduArr.controls.forEach((element: any, j) => {
+      if (j == 0) {
+        this.eduArr.value[0]['leveling'] = 'SSLC';
+        element.controls.discipline.clearValidators();
+        element.controls.specification.clearValidators();
+        element.controls.discipline.updateValueAndValidity();
+        element.controls.specification.updateValueAndValidity();
+      }
+    });
+  }
+
   // convenience getters for easy access to form fields
-  get eduArr() { return this.educationForm.get('educationArr') as FormArray; }
+  get eduArr(): any { return (this.educationForm.get('educationArr') as FormArray); }
 
   removeEducationForm(i) {
     this.eduArr.removeAt(i);
@@ -205,10 +376,74 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     }
   }
 
+  detectSelectChanges() {
+    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == null || this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == '') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].disable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].disable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].disable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].disable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+    }
+    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'HSC') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    }
+    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'Diploma') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.board.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    }
+    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'UG') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    }
+    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'PG') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    }
+
+    this.appConfig.setLocalData('educationalFormTouched', 'true');
+  }
   detectSelectChange() {
     this.appConfig.setLocalData('educationalFormTouched', 'true');
   }
-
   detectInput(form) {
     if (form.touched === true) {
       this.appConfig.setLocalData('educationalFormTouched', 'true');
@@ -218,8 +453,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   // To validate all fields after submit
   validateAllFormArrays(formArray: FormArray) {
     formArray.controls.forEach(formGroup => {
+
       Object.keys(formGroup['controls']).forEach(field => {
         const control = formGroup.get(field);
+        // if (control.value)
         if (control instanceof FormControl) {
           // if (control['status'] === 'INVALID') {
           //   console.log(control);
@@ -239,6 +476,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
+
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {

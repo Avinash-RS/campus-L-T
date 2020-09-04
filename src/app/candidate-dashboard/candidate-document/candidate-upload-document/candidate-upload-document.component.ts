@@ -341,7 +341,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.appConfig.success(`Document uploaded successfully`, '');
     } catch (e) {
       this.appConfig.hideLoader();
-      console.log('e', e);
     }
     // }, (err) => {
 
@@ -391,6 +390,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           type: 'upload-tpo',
           identity: 'upload-doc'
         },
+        showText: btnType == 'submit' ? 'The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them' : 'Please confirm, Are you sure you want to upload this documents',
         showConfirm: 'Confirm',
         documentUpload: 'uploadDoc',
         showCancel: 'Cancel',
@@ -443,7 +443,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
         const control = formGroup.get(field);
         if (control instanceof FormControl) {
           // if (control['status'] === 'INVALID') {
-          //   console.log(control);
           //   this.appConfig.setLocalData('educationalFormSubmitted', 'false');
           // }
           control.markAsTouched({ onlySelf: true });

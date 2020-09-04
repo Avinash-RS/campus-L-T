@@ -12,7 +12,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 })
 export class UploadedListComponent implements OnInit, AfterViewInit {
   showPage = true;
-  displayedColumns: any[] = ['counter', 'tag', 'name', 'id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
+  displayedColumns: any[] = ['counter', 'tag', 'name', 'new_candidate_id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -52,7 +52,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   getUsersList() {
     this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      console.log(data1);
       this.userList = data1 ? data1 : [];
       let count = 0;
       this.userList.forEach((element, i) => {
@@ -85,7 +84,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 }

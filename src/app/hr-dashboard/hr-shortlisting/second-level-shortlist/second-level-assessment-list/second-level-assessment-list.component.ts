@@ -59,7 +59,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   getUsersList() {
     this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
       if (datas) {
         this.userList = datas ? datas : [];
@@ -81,7 +80,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
   shortlistRedirect(detail) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, detail['assement_name'] ? {data: detail['assement_name']} : {data: 'none'});

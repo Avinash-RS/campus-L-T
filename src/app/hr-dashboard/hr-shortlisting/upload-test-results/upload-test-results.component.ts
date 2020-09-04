@@ -96,7 +96,6 @@ export class UploadTestResultsComponent implements OnInit {
 
   uploadListToAPI() {
     this.adminService.testResultsUpload(this.uploadedListArray).subscribe((data: any) => {
-      console.log('success', data);
       this.appConfig.hideLoader();
       const datas = {
         test_results: 'candidate-bulk',
@@ -107,7 +106,6 @@ export class UploadTestResultsComponent implements OnInit {
     }, (err) => {
 
     });
-    console.log(JSON.stringify(this.uploadedListArray));
   }
   upload() {
     this.appConfig.showLoader();
@@ -133,7 +131,6 @@ export class UploadTestResultsComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      console.log(this.SavedData);
 
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length >= 19 && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Email') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'Assessment Name') &&
@@ -264,7 +261,6 @@ export class UploadTestResultsComponent implements OnInit {
       }
     });
     this.uploadedListArray = listArray;
-    console.log(listArray);
     this.submit();
   }
 
@@ -310,7 +306,6 @@ export class UploadTestResultsComponent implements OnInit {
 
   async onSelectFile(event) {
     this.validFile = false;
-    console.log(event.target.files[0]);
 
     if (event.target.files && (event.target.files[0].name.includes('.csv') || event.target.files[0].type.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') || event.target.files[0].type.includes('application/vnd.ms-excel'))) {
       this.showSizeError.size = false;
@@ -327,7 +322,6 @@ export class UploadTestResultsComponent implements OnInit {
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
-        // console.log(reader.readAsBinaryString(event.target.files[0]));
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
         reader.onload = (event: any) => { // called once readAsDataURL is completed

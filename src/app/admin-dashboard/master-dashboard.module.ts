@@ -6,7 +6,6 @@ import { MasterDashboardComponent } from './master-dashboard.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
-import { AdminDashboardHeaderComponent } from './admin-dashboard-header/admin-dashboard-header.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UsersListComponent } from './user-management/users-list/users-list.component';
 import { AddUserComponent } from './user-management/add-user/add-user.component';
@@ -19,13 +18,12 @@ import { AdminBulkUploadCandidateCompComponent } from './user-management/admin-b
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
 import { AdminReportComponent } from './admin-report/admin-report.component';
-import { AdminReportListComponent } from './admin-report/admin-report-list/admin-report-list.component';
 import { AdminBulkUploadReportComponent } from './admin-report/admin-bulk-upload-report/admin-bulk-upload-report.component';
 import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institude-bulk-upload/admin-institude-bulk-upload.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, DashboardComponent, AdminDashboardHeaderComponent, UserManagementComponent, UsersListComponent, AddUserComponent, AdminBulkUploadInstitutesComponent, AdminUploadedInstituteListComponent, AdminBulkUploadInstituteComponent, AdminBulkUploadCandidatesComponent, AdminUploadedCandidateListComponent, AdminBulkUploadCandidateCompComponent, ApprovalsComponent, InstituteApprovalsComponent, AdminReportComponent, AdminReportListComponent, AdminBulkUploadReportComponent, AdminInstitudeBulkUploadComponent],
+  declarations: [MasterDashboardComponent, DashboardComponent, UserManagementComponent, UsersListComponent, AddUserComponent, AdminBulkUploadInstitutesComponent, AdminUploadedInstituteListComponent, AdminBulkUploadInstituteComponent, AdminBulkUploadCandidatesComponent, AdminUploadedCandidateListComponent, AdminBulkUploadCandidateCompComponent, ApprovalsComponent, InstituteApprovalsComponent, AdminReportComponent, AdminBulkUploadReportComponent, AdminInstitudeBulkUploadComponent],
   imports: [
     CommonModule,
     SharedModule,

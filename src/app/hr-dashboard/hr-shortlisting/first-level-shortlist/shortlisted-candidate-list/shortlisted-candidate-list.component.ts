@@ -76,9 +76,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   getURLParam() {
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log('params', params);
+      
       if (params && params['data'] === 'filtered') {
-        console.log(JSON.parse(this.appConfig.getLocalData('savedQuery')));
         this.filter = true;
         this.queryObject = JSON.parse(this.appConfig.getLocalData('savedQuery'));
         this.apiDataTop = {
@@ -113,7 +112,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
 
   applyCriteria() {
-    console.log(this.fullUserList);
     const apiData = {
       user_id: []
     };
@@ -125,7 +123,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         apiData['user_id'].push(element['uid']);
       }
     });
-    console.log(apiData);
 
     //   this.appConfig.setLocalData('FinalshortListCheckedCandidates', JSON.stringify(dummy));
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA, { data: this.length });
@@ -167,7 +164,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   shortlist() {
-    console.log(this.overallSelect);
 
     const data = {
       shortlist: 'first'
@@ -180,13 +176,11 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     let minutes;
     if (date.getMinutes().toString().length === 1) {
       minutes = '0' + date.getMinutes().toString();
-      console.log('minutes', minutes);
     } else {
       minutes = date.getMinutes();
     }
     const time = this.tConvert(`${date.getHours()}:${minutes}`);
     const apiUserList = [];
-    console.log(currentDate);
 
     this.userList.forEach(element => {
       if (element['checked']) {
@@ -205,7 +199,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       select: this.overallSelect ? this.queryObject : ''
     };
     this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
-      console.log(data);
 
       this.appConfig.hideLoader();
       const datas = {
@@ -255,7 +248,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   pageChanged(event) {
     if (event.previousPageIndex > event.pageIndex) {
-      console.log('pre', event.pageIndex);
       // previous button clicked
       this.apiPageIndex = event.pageIndex + 1;
       const apiData = {
@@ -268,7 +260,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.getPageList(apiData);
     }
     if (event.previousPageIndex < event.pageIndex) {
-      console.log('next', event.pageIndex);
       // next button clicked
       this.apiPageIndex = event.pageIndex + 1;
       const apiData = {
@@ -285,7 +276,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.apiPageIndex = 1;
       this.getURLParam();
     }
-    console.log(event);
   }
 
   sorting(column, columnSelect) {
@@ -360,9 +350,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     //   start: this.apiPageIndex.toString(),
     //   counts: this.listCount.toString()
     // };
-    console.log('apiData', apiData);
     this.adminService.getCandidateListForShortlist(apiData).subscribe((datas: any) => {
-      console.log('api', datas);
+    
       this.filteredBoolean = false;
       const align = [];
       let ApiCummulativeBacklog = 0;
@@ -383,7 +372,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         if (element && element['education'] && element['education'].length > 0) {
           let cummulativeBacklog = 0;
           element['education'].forEach(ele => {
-            if (ele && ele['field_level'] === 'Other' && (level !== 'SSLC' && level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'Other' && (level !== 'SSLC' && level !== 'HSC' && level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -391,7 +380,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -399,7 +388,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'HSC' && (level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'HSC' && (level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -407,7 +396,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'Diplomo' && (level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'Diploma' && (level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -415,7 +404,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'Under Graduation' && (level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'UG' && (level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -423,7 +412,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'Post Graduation') {
+            if (ele && ele['field_level'] === 'PG') {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -456,7 +445,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       //     element.checked = true;
       //   });
       // }
-      console.log('align', align.length);
       this.fullUserList = align ? align : [];
       this.userList = align ? align : [];
       // this.totalCandidates = this.fullUserList.length;
@@ -472,14 +460,13 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   // To get all users
   getUsersList(filter?: any) {
-    console.log('filter', filter);
     // const apiData = {
     //   start: this.apiPageIndex.toString(),
     //   counts: this.listCount.toString()
     // };
-    console.log('apiData', this.apiDataTop);
+  
     this.adminService.getCandidateListForShortlist(this.apiDataTop).subscribe((datas: any) => {
-      console.log('api', datas);
+      
       this.filteredBoolean = false;
       const align = [];
       let ApiCummulativeBacklog = 0;
@@ -501,7 +488,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         if (element && element['education'] && element['education'].length > 0) {
           let cummulativeBacklog = 0;
           element['education'].forEach(ele => {
-            if (ele && ele['field_level'] === 'Other' && (level !== 'SSLC' && level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'Other' && (level !== 'SSLC' && level !== 'HSC' && level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -509,7 +496,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -517,7 +504,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'HSC' && (level !== 'Diplomo' && level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'HSC' && (level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -525,7 +512,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'Diplomo' && (level !== 'Under Graduation' && level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'Diploma' && (level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -533,7 +520,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'Under Graduation' && (level !== 'Post Graduation')) {
+            if (ele && ele['field_level'] === 'UG' && (level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -541,7 +528,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
               cummulativeBacklog += (ele && ele['field_backlogs'] && ele['field_backlogs'] !== 'Nil' ? Number(ele['field_backlogs']) : 0);
             }
-            if (ele && ele['field_level'] === 'Post Graduation') {
+            if (ele && ele['field_level'] === 'PG') {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
               level = ele && ele['field_level'] ? ele['field_level'] : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
@@ -581,7 +568,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.toShoworNotShowFilter();
       this.dataSource = new MatTableDataSource(this.userList);
       this.length = datas[1];
-      console.log(this.paginator);
       this.triggerFalseClick();
       // this.dataSource.paginator = this.paginator;
       // this.dataSource.sort = this.sort;
@@ -593,14 +579,12 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   triggerFalseClick() {
     if (this.myDiv) {
-      console.log(this.myDiv);
 
       const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
       el.focus();
     }
   }
   selectAllCheckbox(checked) {
-    console.log(this.dataSource);
 
     if (checked['checked']) {
       this.userList.forEach(element => {
@@ -619,7 +603,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
         });
       });
     }
-    console.log(this.userList);
     this.toShoworNotShowFilter();
   }
 
@@ -658,7 +641,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   unselectSelectALL() {
-    console.log(this.userList);
 
     this.selectAllCheck = false;
     const pushChecked = [];
@@ -707,7 +689,6 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
     this.selectedUserDetail = userDetail;
     this.toShoworNotShowFilter();
-    console.log(userDetail);
     this.unselectSelectALL();
   }
 
@@ -727,10 +708,8 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.selection.clear() :
       this.dataSource.data.forEach((row) => {
         this.selection.select(row);
-        console.log(this.selection.select(row));
 
       });
-    console.log(this.userList);
 
   }
 

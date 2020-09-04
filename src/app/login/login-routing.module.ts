@@ -15,7 +15,7 @@ import { EmailVerifierErrorPageComponent } from './email-verifier-error-page/ema
 
 const routes: Routes = [
   {
-    path: ``, redirectTo: `${CONSTANT.ROUTES.HOME}`
+    path: ``, redirectTo: `${CONSTANT.ROUTES.LOGIN}`
   },
   {
     path: `${CONSTANT.ROUTES.HOME}`, component: HomepageComponent

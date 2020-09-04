@@ -56,7 +56,6 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   getUsersList() {
     this.adminService.hrEvaluationAssessmentDetails().subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
 
       const datas = [
         {

@@ -11,6 +11,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 import moment from 'moment';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import * as XLSX from 'xlsx';
+import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
 
 @Component({
   selector: 'app-invpanel-bulkupload',
@@ -52,6 +53,22 @@ export class InvpanelBulkuploadComponent implements OnInit {
   ngOnInit() {
 
 
+  }
+
+  helper() {
+    const data = {
+      iconName: '',
+      sharedData: {
+        confirmText: 'Bulk Upload helper video',
+        componentData: '',
+        type: 'video',
+        identity: 'video'
+      },
+      showConfirm: 'Confirm',
+      showCancel: 'Cancel',
+      showOk: ''
+    };
+    this.appConfig.helperVideo(ModalBoxComponent, data);
   }
 
   downloadTemplate() {
@@ -106,7 +123,6 @@ export class InvpanelBulkuploadComponent implements OnInit {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
         minutes = '0' + date.getMinutes().toString();
-        console.log('minutes', minutes);
       } else {
         minutes = date.getMinutes();
       }
@@ -121,9 +137,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
       };
       apiData.push(ele);
     });
-    console.log(apiData);
     this.adminService.invBulk(apiData).subscribe((data: any) => {
-      console.log('success', data);
       this.appConfig.hideLoader();
       const datas = {
         invpanel_bulk_upload_ok: 'candidate-bulk',
@@ -239,7 +253,6 @@ export class InvpanelBulkuploadComponent implements OnInit {
       }
     });
     this.uploadedListArray = listArray;
-    console.log(listArray);
     this.totalCountofCandidates = count - 1;
   }
 
@@ -285,7 +298,6 @@ export class InvpanelBulkuploadComponent implements OnInit {
 
   async onSelectFile(event) {
     this.validFile = false;
-    console.log(event.target.files[0]);
 
     if (event.target.files && event.target.files[0].name.includes('.csv')) {
       this.showSizeError.size = false;
@@ -302,7 +314,6 @@ export class InvpanelBulkuploadComponent implements OnInit {
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
-        // console.log(reader.readAsBinaryString(event.target.files[0]));
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
         reader.onload = (event: any) => { // called once readAsDataURL is completed

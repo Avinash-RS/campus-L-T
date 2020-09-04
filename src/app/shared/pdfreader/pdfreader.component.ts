@@ -11,12 +11,10 @@ export class PdfreaderComponent implements OnInit {
   @Input('url') url: any;
   isEnable = false;
   constructor() {
-    console.log(this.url);
   //  this.pdfSrc =  this.url.path;
    }
 
   ngOnInit() {
-    console.log(this.url.path);
     if (this.url.doc_type === 'application/pdf') {
       this.isEnable = true;
       this.pdfSrc =  this.url.path;

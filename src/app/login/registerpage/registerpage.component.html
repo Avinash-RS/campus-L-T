@@ -17,30 +17,32 @@
           <div class="forms">
             <div class="form-field">
               <label class="label-name">
-                First Name<span class="asterick">*</span>
+                {{(currentForm === 'corporate' ? 'Corporate Name' : 'Institute Name')}}<span class="asterick">*</span>
               </label>
               <div class="input-box">
-                <input matInput formControlName="firstName" type="text" required>
+                <input matInput formControlName="corporateName" type="text" required>
               </div>
-              <div class="error" *ngIf="firstName.invalid && firstName.touched">
-                <span *ngIf="firstName.errors?.required"> Name is Required</span>
-                <span *ngIf="firstName.errors?.maxlength"> Maximum of 255 characters only allowed</span>
-                <span *ngIf="firstName.errors?.pattern"> Alphabetic characters only allowed</span>
+              <div class="error" *ngIf="corporateName.invalid && corporateName.touched">
+                <span
+                  *ngIf="corporateName.errors?.required">{{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}}
+                  Name is Required</span>
+                <span *ngIf="corporateName.errors?.maxlength"> Maximum of 255 characters only allowed</span>
               </div>
             </div>
             <div class="form-field">
               <label class="label-name">
-                Last Name<span class="asterick">*</span>
+                {{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}} Email ID<span class="asterick">*</span>
               </label>
               <div class="input-box">
-                <input matInput formControlName="lastName" type="text" required>
+                <input matInput formControlName="corporateEmail" type="text" required>
               </div>
-              <div class="error" *ngIf="lastName.invalid && lastName.touched">
-                <span *ngIf="lastName.errors?.required"> Last Name is Required</span>
-                <span *ngIf="lastName.errors?.maxlength"> Maximum of 255 characters only allowed</span>
-                <span *ngIf="lastName.errors?.pattern"> Alphabetic characters only allowed</span>
+              <div class="error" *ngIf="corporateEmail.invalid && corporateEmail.touched">
+                <span
+                  *ngIf="corporateEmail.errors?.required">{{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}}
+                  Email is Required</span>
+                <span *ngIf="corporateEmail.errors?.maxlength"> Maximum of 255 characters only allowed</span>
+                <span *ngIf="corporateEmail.errors?.pattern">Please enter a valid Email id</span>
               </div>
-
             </div>
             <div class="form-field">
               <label class="label-name">
@@ -68,35 +70,35 @@
                   Number</span>
               </div>
             </div>
+            <!-- start -->
             <div class="form-field">
               <label class="label-name">
-                {{(currentForm === 'corporate' ? 'Corporate Name' : 'Institute Name')}}<span class="asterick">*</span>
+                First Name<span class="asterick">*</span>
               </label>
               <div class="input-box">
-                <input matInput formControlName="corporateName" type="text" required>
+                <input matInput formControlName="firstName" type="text" required>
               </div>
-              <div class="error" *ngIf="corporateName.invalid && corporateName.touched">
-                <span
-                  *ngIf="corporateName.errors?.required">{{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}}
-                  Name is Required</span>
-                  <span *ngIf="corporateName.errors?.maxlength"> Maximum of 255 characters only allowed</span>
-                </div>
+              <div class="error" *ngIf="firstName.invalid && firstName.touched">
+                <span *ngIf="firstName.errors?.required"> Name is Required</span>
+                <span *ngIf="firstName.errors?.maxlength"> Maximum of 255 characters only allowed</span>
+                <span *ngIf="firstName.errors?.pattern"> Alphabetic characters only allowed</span>
+              </div>
             </div>
             <div class="form-field">
               <label class="label-name">
-                {{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}} Email ID<span class="asterick">*</span>
+                Last Name<span class="asterick">*</span>
               </label>
               <div class="input-box">
-                <input matInput formControlName="corporateEmail" type="text" required>
+                <input matInput formControlName="lastName" type="text" required>
               </div>
-              <div class="error" *ngIf="corporateEmail.invalid && corporateEmail.touched">
-                <span
-                  *ngIf="corporateEmail.errors?.required">{{(currentForm === 'corporate' ? 'Corporate' : 'Institute')}}
-                  Email is Required</span>
-                  <span *ngIf="corporateEmail.errors?.maxlength"> Maximum of 255 characters only allowed</span>
-                <span *ngIf="corporateEmail.errors?.pattern">Please enter a valid Email id</span>
+              <div class="error" *ngIf="lastName.invalid && lastName.touched">
+                <span *ngIf="lastName.errors?.required"> Last Name is Required</span>
+                <span *ngIf="lastName.errors?.maxlength"> Maximum of 255 characters only allowed</span>
+                <span *ngIf="lastName.errors?.pattern"> Alphabetic characters only allowed</span>
               </div>
+
             </div>
+            <!-- end -->
             <div class="form-field">
               <label class="label-name">
                 State<span class="asterick">*</span>
@@ -119,8 +121,8 @@
                 City<span class="asterick">*</span>
               </label>
               <div class="input-box" [matTooltip]="hideCityDropDown ? 'Please select your state' : ''">
-                <nz-select [ngClass]="hideCityDropDown ? 'hideDropDown' : ''"
-                  formControlName="city" nzAllowClear nzShowSearch>
+                <nz-select [ngClass]="hideCityDropDown ? 'hideDropDown' : ''" formControlName="city" nzAllowClear
+                  nzShowSearch>
                   <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
                   <nz-option *ngFor="let city of allCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
                 </nz-select>
@@ -141,8 +143,9 @@
                 <textarea formControlName="comment" type="text"></textarea>
               </div>
               <div class="error" *ngIf="comment.invalid && comment.touched">
-                  <span style="color: red; font-weight: 200; font-size: 12px;" *ngIf="comment.errors?.maxlength"> Maximum of 255 characters only allowed</span>
-                </div>
+                <span style="color: red; font-weight: 200; font-size: 12px;" *ngIf="comment.errors?.maxlength"> Maximum
+                  of 255 characters only allowed</span>
+              </div>
 
             </div>
 

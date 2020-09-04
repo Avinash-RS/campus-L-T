@@ -27,7 +27,6 @@ export class FirstLevelShortlistComponent implements OnInit {
   }
 
   candidateChildEmittedData(emittedData) {
-    console.log(emittedData);
     this.showCriteria = true;
   }
 

@@ -123,7 +123,6 @@ export class CommonKycProfileViewComponent implements OnInit {
     const id = this.data ? this.data['candidateId'] : '';
     this.candidateName = this.data ? this.data['candidateName'] : '';
     this.adminService.getProfileView(id).subscribe((data: any) => {
-      console.log('data', data);
 
       const datas = [];
       this.userData = data;
@@ -695,7 +694,6 @@ export class CommonKycProfileViewComponent implements OnInit {
       facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
     };
 
-    console.log('checking', dump['languagesknown']);
 
 
     this.url = !dump['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? dump['field_profile_image'][0]['url'] : dump['field_profile_image'][0]['url'];
@@ -712,10 +710,8 @@ export class CommonKycProfileViewComponent implements OnInit {
     });
 
     this.userDetails = dump;
-    console.log('languagesknown', this.userDetails.languagesknown);
 
     this.permanentStateId = this.userDetails['permanentState'];
-    console.log(this.userDetails);
     if (this.allStatess) {
       this.allStatess.forEach(element => {
         if (element.id === this.userDetails['permanentState']) {

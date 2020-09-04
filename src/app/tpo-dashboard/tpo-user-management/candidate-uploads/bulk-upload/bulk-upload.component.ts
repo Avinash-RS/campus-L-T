@@ -104,7 +104,6 @@ export class BulkUploadComponent implements OnInit {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
         minutes = '0' + date.getMinutes().toString();
-        console.log('minutes', minutes);
       } else {
         minutes = date.getMinutes();
       }
@@ -113,7 +112,6 @@ export class BulkUploadComponent implements OnInit {
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
-      console.log('success', data);
       this.appConfig.hideLoader();
       const datas = {
         excel_bulk_upload_ok: 'candidate-bulk',
@@ -124,7 +122,6 @@ export class BulkUploadComponent implements OnInit {
     }, (err) => {
 
     });
-    console.log(JSON.stringify(this.uploadedListArray));
   }
   upload() {
     this.appConfig.showLoader();
@@ -174,7 +171,6 @@ export class BulkUploadComponent implements OnInit {
   totalCount(data) {
     this.dateFormatExist = false;
     this.enableList = true;
-    console.log(typeof data[1][0], data[1][0].toString().endsWith('(India Standard Time)'));
 
     let count = 0;
     const listArray = [];
@@ -208,7 +204,6 @@ export class BulkUploadComponent implements OnInit {
           name: name ? name : '',
           email: email ? email : ''
         };
-        console.log('tag', tag);
 
 
         if ((tag && tag.toString().trim()) || (name && name.toString().trim()) || (email && email.toString().trim())) {
@@ -217,7 +212,6 @@ export class BulkUploadComponent implements OnInit {
       }
     });
     this.uploadedListArray = listArray;
-    console.log(listArray);
     this.totalCountofCandidates = count - 1;
   }
 
@@ -254,7 +248,6 @@ export class BulkUploadComponent implements OnInit {
 
   async onSelectFile(event) {
     this.validFile = false;
-    console.log(event.target.files[0]);
 
     if (event.target.files && event.target.files[0].name.includes('.csv')) {
       this.showSizeError.size = false;
@@ -271,7 +264,6 @@ export class BulkUploadComponent implements OnInit {
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
-        // console.log(reader.readAsBinaryString(event.target.files[0]));
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
         reader.onload = (event: any) => { // called once readAsDataURL is completed

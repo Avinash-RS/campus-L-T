@@ -58,7 +58,6 @@ export class EvaluationFormComponent implements OnInit {
   }
 
   nginitFunc() {
-    console.log(SampleJson);
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
     this.dataSource1 = new MatTableDataSource<PeriodicElement>(SampleJson['tab1']);
     this.dataSource2 = new MatTableDataSource<PeriodicElement>(SampleJson['tab2']);
@@ -134,7 +133,6 @@ export class EvaluationFormComponent implements OnInit {
   }
 
   setAssessmentLevel(assessment, value) {
-    console.log(assessment);
     this.assessments[this.assessments.indexOf(assessment)] = {
       ...assessment,
       level: value
@@ -188,13 +186,11 @@ export class EvaluationFormComponent implements OnInit {
     };
     this.adminService.getEvaluationData(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('data', data);
       this.getCandidateData = data[0];
     });
   }
 
   submitEvaluationForm() {
-    console.log(this.evaluationForm.value);
     if (this.evaluationForm.valid) {
       const data = {
         evaluation: 'submit'
@@ -242,12 +238,9 @@ export class EvaluationFormComponent implements OnInit {
           remarks: this.evaluationForm.value.remarks
         }
       ];
-    console.log(this.evaluationForm.value);
-    console.log(apiData);
     this.adminService.postEvaluationCandidateData(this.evaluationForm.value).subscribe((res: any) => {
       this.appConfig.hideLoader();
 
-      console.log(res);
     }, (err) => {
 
     });

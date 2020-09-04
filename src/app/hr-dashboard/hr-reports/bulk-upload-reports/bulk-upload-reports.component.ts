@@ -60,7 +60,6 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
     };
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -79,7 +78,7 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
     window.open(excel, '_blank');
   }
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 

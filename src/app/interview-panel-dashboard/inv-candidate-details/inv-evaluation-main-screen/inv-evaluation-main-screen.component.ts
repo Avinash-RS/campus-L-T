@@ -49,7 +49,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
+      // console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
@@ -70,7 +70,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
+      // console.log('details', data);
 
     }, (err) => {
 

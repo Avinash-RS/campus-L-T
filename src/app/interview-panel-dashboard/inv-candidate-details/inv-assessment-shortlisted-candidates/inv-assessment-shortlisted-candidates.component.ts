@@ -59,7 +59,6 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
     };
     this.adminService.invEvaluationAssessmentDetails(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
       const fileteringInvAssignOnly = data ? data : [];
       this.userList = [];
       let count = 0;

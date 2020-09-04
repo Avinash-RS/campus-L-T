@@ -12,7 +12,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 })
 export class AdminUploadedCandidateListComponent implements OnInit, AfterViewInit {
   showPage = true;
-  displayedColumns: any[] = ['counter', 'tag', 'name', 'id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
+  displayedColumns: any[] = ['counter', 'tag', 'name', 'new_candidate_id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -82,7 +82,6 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
 
   }
 
