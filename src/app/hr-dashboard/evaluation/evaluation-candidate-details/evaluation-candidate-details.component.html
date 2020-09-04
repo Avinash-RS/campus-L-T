@@ -47,7 +47,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="evaluation_status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-      <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.evaluation_status && element.evaluation_status == '1' ? 'completed' : 'waiting'}} </td>
+      <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element"> {{element.evaluation_status && element.evaluation_status == '2' ? 'completed' : 'waiting'}} </td>
     </ng-container>
     <!-- Symbol Column -->
     <ng-container matColumnDef="shortlistby">
