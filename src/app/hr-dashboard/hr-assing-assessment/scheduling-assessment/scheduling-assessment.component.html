@@ -29,7 +29,7 @@
                 </div>
                 <div class="input-box">
                   <mat-form-field>
-                    <input matInput [matDatepicker]="dp" [formControl]="dateFrom">
+                    <input matInput [matDatepicker]="dp">
                       <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="dp"></mat-datepicker-toggle>
                       <mat-datepicker #dp>
                       </mat-datepicker>
@@ -41,10 +41,10 @@
                   Shortlist name:
                 </div>
                 <div class="input-box">
-                    <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch
+                    <!-- <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch
                     nzPlaceHolder="">
                     <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value" [nzValue]="level.field_shortlistname_value"></nz-option>
-                  </nz-select>
+                  </nz-select> -->
                 </div>
               </div>
             </div>
@@ -59,49 +59,49 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
             <img src="assets/images/feather-search.svg" alt="" srcset="">
           </div>
-  
+
           <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
             <button class="submit" mat-raised-button>Send email</button>
           </div>
-  
+
         </div>
         <!-- </mat-form-field> -->
-  
+
         <div class="width-maintain">
           <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
+
           <!-- Position Column -->
           <ng-container matColumnDef="candidate_name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Candidate name </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{element && element.candidate_name ? (element.candidate_name) : '-'}} </td>
           </ng-container>
-  
+
           <!-- Symbol Column -->
           <ng-container matColumnDef="candidate_id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate id </th>
             <td mat-cell *matCellDef="let element"> {{element && element.candidate_id ? (element.candidate_id) : '-'}} </td>
           </ng-container>
-  
-  
+
+
           <!-- Symbol Column -->
           <ng-container matColumnDef="gender">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
             <td mat-cell *matCellDef="let element"> {{element && element.gender ? (element.gender) : '-'}} </td>
           </ng-container>
-  
+
           <!-- Symbol Column -->
           <ng-container matColumnDef="institute">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute </th>
             <td mat-cell *matCellDef="let element"> {{element && element.institute ? (element.institute) : '-'}} </td>
           </ng-container>
-  
+
         <!-- fifth Header row first group -->
         <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
             <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
               {{'No Data Available'}}
             </th>
           </div>
-  
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
             *matHeaderRowDef="['fifth-header-row-first-group']">
