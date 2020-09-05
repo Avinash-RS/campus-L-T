@@ -1010,7 +1010,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Passport Form
     this.passportForm = this.fb.group({
-      passportNumber: ['', [Validators.pattern(numberOnly), Validators.maxLength(255), RemoveWhitespace.whitespace()]],
+      passportNumber: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       passportName: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       passportProfession: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       passportIssueDate: [''],

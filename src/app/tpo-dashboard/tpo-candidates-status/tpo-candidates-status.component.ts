@@ -18,11 +18,11 @@ export class TpoCandidatesStatusComponent implements OnInit {
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-      {
-        icon: '002-files-and-folders.svg',
-        name: 'Pre-assessment',
-        router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.STATUS_PREASSESSMENT
-      },
+      // {
+      //   icon: '002-files-and-folders.svg',
+      //   name: 'Pre-assessment',
+      //   router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.STATUS_PREASSESSMENT
+      // },
       {
         icon: 'recruitment.svg',
         name: 'Recruitment',

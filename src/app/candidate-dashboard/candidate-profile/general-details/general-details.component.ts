@@ -182,11 +182,11 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
       return this.fb.group({
-        value: [data && data['value'] ? data['value'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        value: [data && data['value'] ? data['value'] : '', [RemoveWhitespace.whitespace(), Validators.maxLength(255)]],
       });
     } else {
       return this.fb.group({
-        value: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        value: [null, [RemoveWhitespace.whitespace(), Validators.maxLength(255)]],
       });
     }
   }

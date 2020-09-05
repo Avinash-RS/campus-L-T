@@ -25,7 +25,7 @@ export class KycAccessGuard implements CanActivate {
     // Route to education
     if (url === 'personal') {
       if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-        const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+        const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
         const localData = 'clearAllTouched';
         this.openDialog(data, localData, url);
       } else {
@@ -37,7 +37,7 @@ export class KycAccessGuard implements CanActivate {
     if (url === 'education') {
       if (this.appConfig.getLocalData('field_isformsubmitted') === 'true') {
         if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-          const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+          const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
           this.openDialog(data, 'personalFormTouched', url);
         } else {
           this.appConfig.hideLoader();
@@ -48,7 +48,7 @@ export class KycAccessGuard implements CanActivate {
       } else {
         if (this.appConfig.getLocalData('personalFormSubmitted') === 'true') {
           if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-            const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+            const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
             this.openDialog(data, 'personalFormTouched', url);
           } else {
             this.appConfig.hideLoader();
@@ -56,7 +56,7 @@ export class KycAccessGuard implements CanActivate {
           }
         } else {
           this.appConfig.hideLoader();
-          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click "Continue" button to proceed further');
           return false;
         }
       }
@@ -66,7 +66,7 @@ export class KycAccessGuard implements CanActivate {
     if (url === 'family') {
       if (this.appConfig.getLocalData('field_isformsubmitted') === 'true') {
         if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-          const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+          const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
           this.openDialog(data, 'educationalFormTouched', url);
         } else {
           this.appConfig.hideLoader();
@@ -76,7 +76,7 @@ export class KycAccessGuard implements CanActivate {
       } else {
         if (this.appConfig.getLocalData('personalFormSubmitted') === 'true' && this.appConfig.getLocalData('educationalFormSubmitted') === 'true') {
           if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-            const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+            const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
             this.openDialog(data, 'educationalFormTouched', url);
           } else {
             this.appConfig.hideLoader();
@@ -84,7 +84,7 @@ export class KycAccessGuard implements CanActivate {
           }
         } else {
           this.appConfig.hideLoader();
-          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click "Continue" button to proceed further');
           return false;
         }
       }
@@ -94,7 +94,7 @@ export class KycAccessGuard implements CanActivate {
     if (url === 'general') {
       if (this.appConfig.getLocalData('field_isformsubmitted') === 'true') {
         if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-          const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+          const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
           this.openDialog(data, 'familyFormTouched', url);
         } else {
           this.appConfig.hideLoader();
@@ -104,7 +104,7 @@ export class KycAccessGuard implements CanActivate {
       } else {
         if (this.appConfig.getLocalData('personalFormSubmitted') === 'true' && this.appConfig.getLocalData('educationalFormSubmitted') === 'true' && this.appConfig.getLocalData('familyFormSubmitted') === 'true') {
           if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-            const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+            const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
             this.openDialog(data, 'familyFormTouched', url);
           } else {
             this.appConfig.hideLoader();
@@ -112,7 +112,7 @@ export class KycAccessGuard implements CanActivate {
           }
         } else {
           this.appConfig.hideLoader();
-          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click "Continue" button to proceed further');
           return false;
         }
       }
@@ -122,7 +122,7 @@ export class KycAccessGuard implements CanActivate {
     if (url === 'view') {
       if (this.appConfig.getLocalData('field_isformsubmitted') === 'true') {
         if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-          const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+          const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
           this.openDialog(data, 'generalFormTouched', url);
         } else {
 
@@ -133,7 +133,7 @@ export class KycAccessGuard implements CanActivate {
       } else {
         if (this.appConfig.getLocalData('personalFormSubmitted') === 'true' && this.appConfig.getLocalData('educationalFormSubmitted') === 'true' && this.appConfig.getLocalData('familyFormSubmitted') === 'true' && this.appConfig.getLocalData('generalFormSubmitted') === 'true') {
           if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-            const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+            const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
             this.openDialog(data, 'generalFormTouched', url);
           } else {
             this.appConfig.hideLoader();
@@ -141,7 +141,7 @@ export class KycAccessGuard implements CanActivate {
           }
         } else {
           this.appConfig.hideLoader();
-          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click "Continue" button to proceed further');
           return false;
         }
       }
@@ -151,7 +151,7 @@ export class KycAccessGuard implements CanActivate {
     if (url === 'confirm') {
       if (this.appConfig.getLocalData('field_isformsubmitted') === 'true') {
         if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-          const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+          const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
           this.openDialog(data, 'generalFormTouched', url);
         } else {
           this.appConfig.hideLoader();
@@ -161,7 +161,7 @@ export class KycAccessGuard implements CanActivate {
       } else {
         if (this.appConfig.getLocalData('personalFormSubmitted') === 'true' && this.appConfig.getLocalData('educationalFormSubmitted') === 'true' && this.appConfig.getLocalData('familyFormSubmitted') === 'true' && this.appConfig.getLocalData('generalFormSubmitted') === 'true') {
           if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
-            const data = 'If you have made any changes, please click save and continue or your changes will be lost.';
+            const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
             this.openDialog(data, 'generalFormTouched', url);
           } else {
             this.appConfig.hideLoader();
@@ -169,7 +169,7 @@ export class KycAccessGuard implements CanActivate {
           }
         } else {
           this.appConfig.hideLoader();
-          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click save and continue button to proceed further');
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please click "Continue" button to proceed further');
           return false;
         }
       }

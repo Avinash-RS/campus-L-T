@@ -2,6 +2,33 @@
 * {
   margin: 0;
 }
+.video {
+  background: $white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px 16px 16px 16px;
+  // justify-content: center;
+  box-sizing: border-box;
+  align-items: center;
+  .header {
+    color: $black;
+    font-size: 14px;
+    padding-bottom: 8px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  vg-player {
+    // min-width: 800px;
+    width: 100%;
+    min-height: 400px;
+    max-height: 400px;
+  }
+  vg-controls {
+    background-color: #130e42 !important;
+  }
+}
 .modal-wrapper {
   background: $white;
   display: flex;

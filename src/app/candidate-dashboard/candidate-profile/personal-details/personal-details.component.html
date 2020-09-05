@@ -541,8 +541,7 @@
         </div>
         <div class="error" *ngIf="passportNumber.invalid && passportNumber.touched">
           <span *ngIf="passportNumber.errors?.required">Passport Number is Required</span>
-          <span *ngIf="passportNumber.errors?.pattern">Only Numbers is Allowed</span>
-          <span *ngIf="passportNumber.errors?.maxlength">Maximum of 255 digits only allowed</span>
+          <span *ngIf="passportNumber.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters</span>
         </div>
 
       </div>
@@ -781,7 +780,7 @@
 <div class="submit-button-wrapper">
   <button class="submit btn-margin-space"
     (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)"
-    mat-raised-button type="submit">Save and Continue</button>
+    mat-raised-button type="submit">Continue</button>
     <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
 </div>
