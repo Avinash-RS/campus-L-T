@@ -32,7 +32,7 @@ export class CommonHeaderComponent implements OnInit {
     const data = {
       iconName: '',
       sharedData: {
-        confirmText: 'Are you sure you want to Logout?',
+        confirmText: 'Are you sure you want to logout?',
         componentData: '',
         type: 'delete',
         identity: 'logout'
