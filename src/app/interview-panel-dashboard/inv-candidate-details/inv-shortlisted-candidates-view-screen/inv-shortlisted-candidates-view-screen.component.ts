@@ -24,6 +24,7 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -110,6 +111,14 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

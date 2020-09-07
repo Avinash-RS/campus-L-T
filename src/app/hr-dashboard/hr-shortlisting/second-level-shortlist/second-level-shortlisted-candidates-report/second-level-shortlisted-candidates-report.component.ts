@@ -36,6 +36,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   cutOff2: any;
   cutOff3: any;
   cutOff4: any;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -205,6 +206,14 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

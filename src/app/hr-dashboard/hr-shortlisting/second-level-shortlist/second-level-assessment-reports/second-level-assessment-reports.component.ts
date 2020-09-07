@@ -29,6 +29,7 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
   selection = new SelectionModel(true, []);
   selectedUserDetail: any;
   userList: any;
+  displayNoRecords = false;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -92,6 +93,14 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

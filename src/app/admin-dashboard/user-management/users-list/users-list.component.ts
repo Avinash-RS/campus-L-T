@@ -17,8 +17,9 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 export class UsersListComponent implements OnInit, AfterViewInit {
 
   showPage = true;
-  displayedColumns: any[] = ['uid', 'name', 'email', 'roles_target_id', 'checked'];
+  displayedColumns: any[] = ['counter', 'name', 'email', 'roles_target_id', 'checked'];
   dataSource: MatTableDataSource<any>;
+  displayNoRecords = false;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -54,7 +55,10 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     this.adminService.userList().subscribe((data: any) => {
       this.appConfig.hideLoader();
       this.userList = data ? data : [];
+      let count = 0;
       this.userList.forEach(element => {
+        count = count + 1;
+        element['counter'] = count;
         element.checked = false;
       });
       this.dataSource = new MatTableDataSource(this.userList);
@@ -74,6 +78,14 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

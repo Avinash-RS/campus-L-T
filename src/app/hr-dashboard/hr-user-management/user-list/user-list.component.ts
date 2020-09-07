@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material';
 })
 export class UserListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'name', 'email', 'role', 'field_employee_id', 'field_panel_discipline', 'field_uploaded_by', 'checked'];
+  displayedColumns: any[] = ['counter', 'name', 'email', 'role', 'field_employee_id', 'field_panel_discipline', 'field_uploaded_by', 'checked'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -23,6 +23,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   userList: any;
   radioCheck;
   userListIndex;
+  displayNoRecords = false;
 
   constructor(
     private adminService: AdminServiceService,
@@ -39,7 +40,10 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.adminService.hruserList().subscribe((data: any) => {
       this.appConfig.hideLoader();
       this.userList = data ? data : [];
+      let count = 0;
       this.userList.forEach(element => {
+        count = count + 1;
+        element['counter'] = count;
         element.uid = element.user_id;
         element.checked = false;
       });
@@ -121,7 +125,14 @@ export class UserListComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
 
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

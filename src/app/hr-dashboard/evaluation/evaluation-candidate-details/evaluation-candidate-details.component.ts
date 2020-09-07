@@ -25,6 +25,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   buttonDisabled = true;
   displayedColumns: any[] = ['uid', 'Assessment_Name', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
   dataSource: MatTableDataSource<any>;
+  displayNoRecords = false;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -140,6 +141,15 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

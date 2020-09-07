@@ -14,6 +14,7 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   showPage = true;
   displayedColumns: any[] = ['counter', 'tag', 'name', 'new_candidate_id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
   dataSource: MatTableDataSource<any>;
+  displayNoRecords = false;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -75,6 +76,14 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
