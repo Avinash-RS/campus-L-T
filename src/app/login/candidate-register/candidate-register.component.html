@@ -56,10 +56,10 @@
               <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'" required>
               <div class="icon">
                 <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;" class="material-icons">
-                  visibility
+                  visibility_off
                 </span>
                 <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;" class="material-icons">
-                  visibility_off
+                  visibility
                 </span>
               </div>
 

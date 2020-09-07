@@ -254,6 +254,8 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       interViwePanelAssign: 'assign',
       candidateCount: this.selectedCandidate.length,
       panel: this.defaultFormSelecterHrPanel.length,
+      candidate: this.selectedCandidate.length == 1 ? 'Candidate' : 'Candidates',
+      member: this.defaultFormSelecterHrPanel.length == 1 ? 'member' : 'members',
       showCancel: 'Cancel',
       showOk: ''
     };

@@ -89,7 +89,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
         [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
-    <div *ngIf="displayNoRecords" style="text-align: center;">
+    <div *ngIf="displayNoRecords" class="noRecordText">
       No data available
     </div>
     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
