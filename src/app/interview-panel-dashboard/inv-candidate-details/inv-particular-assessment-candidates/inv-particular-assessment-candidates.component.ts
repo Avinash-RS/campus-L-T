@@ -17,7 +17,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 export class InvParticularAssessmentCandidatesComponent implements OnInit, AfterViewInit {
 
 
-  displayedColumns: any[] = ['count', 'candidate_name', 'uid', 'evaluation_status', 'details', 'checked'];
+  displayedColumns: any[] = ['count', 'candidate_name', 'candidate_id', 'evaluation_status', 'details', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 

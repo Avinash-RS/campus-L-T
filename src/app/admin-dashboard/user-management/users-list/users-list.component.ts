@@ -97,6 +97,11 @@ export class UsersListComponent implements OnInit, AfterViewInit {
 
   }
 
+  //pagination next and previos click
+  handlePage(e: any) {
+    this.selectedUserDetail = null;
+  }
+
   removeUser() {
     const data = {
       iconName: '',
