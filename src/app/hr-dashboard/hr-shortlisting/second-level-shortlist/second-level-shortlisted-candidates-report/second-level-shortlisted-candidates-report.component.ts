@@ -18,7 +18,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   BASE_URL = environment.API_BASE_URL;
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
-  displayedColumns: any[] = ['sno', 'name', 'uid', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing'];
+  displayedColumns: any[] = ['sno', 'name', 'candidate_id', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -149,7 +149,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
           this.cutOff4 = element && element['marks_valid_shortlist'] ? element['marks_valid_shortlist'] : '-';
         }
         sno = sno + 1;
-        const uid = element && element['uuid'] ? element['uuid'] : '-';
+        const candidate_id = element && element['candidate_id'] ? element['candidate_id'] : '-';
         const name = element && element['name'] ? element['name'] : '-';
         const gender = element && element['field_gender'] ? element['field_gender'] : '-';
         const dob = element && element['field_dob'] ? this.getMonthFormat(element['field_dob']) : '-';
@@ -169,7 +169,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
         align.push(
           {
             sno,
-            uid,
+            candidate_id,
             name,
             gender,
             dob,

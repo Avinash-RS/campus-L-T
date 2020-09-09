@@ -36,7 +36,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
-  displayedColumns: any[] = ['uid', 'tag_name', 'name', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing', 'checked'];
+  displayedColumns: any[] = ['uid', 'tag_name', 'name', 'new_candidate_id', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -360,6 +360,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       newData.forEach(element => {
         const uid = element && element['uuid'] ? element['uuid'] : '-';
         const name = element && element['name'] ? element['name'] : '-';
+        const new_candidate_id = element && element['new_candidate_id'] ? element['new_candidate_id'] : '-';
         const gender = element && element['field_gender'] ? element['field_gender'] : '-';
         const tag_name = element && element['tag_name'] ? element['tag_name'] : '-';
         const dob = element && element['field_dob'] ? this.getDOBFormat(element['field_dob']) : '-';
@@ -428,6 +429,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
           {
             uid,
             name,
+            new_candidate_id,
             gender,
             tag_name,
             dob,
@@ -476,6 +478,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       newData.forEach(element => {
         const uid = element && element['uuid'] ? element['uuid'] : '-';
         const name = element && element['name'] ? element['name'] : '-';
+        const new_candidate_id = element && element['new_candidate_id'] ? element['new_candidate_id'] : '-';
         const gender = element && element['field_gender'] ? element['field_gender'] : '-';
         const tag_name = element && element['tag_name'] ? element['tag_name'] : '-';
         const dob = element && element['field_dob'] ? this.getDOBFormat(element['field_dob']) : '-';
@@ -544,6 +547,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
           {
             uid,
             name,
+            new_candidate_id,
             gender,
             tag_name,
             dob,

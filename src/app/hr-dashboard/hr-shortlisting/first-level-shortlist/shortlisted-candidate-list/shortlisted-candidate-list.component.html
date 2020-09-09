@@ -114,6 +114,22 @@
             *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
         </ng-container>
 
+        <!-- id Column -->
+        <ng-container matColumnDef="new_candidate_id">
+          <th mat-header-cell *matHeaderCellDef>
+            <span *ngIf="sortedCol != 'new_candidate_id'" style="cursor: pointer;" (click)="sorting('Candidate id', 'new_candidate_id')">
+              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
+            </span>
+            <span *ngIf="sortedCol == 'new_candidate_id'" style="cursor: pointer;" (click)="sorting('Candidate id', 'new_candidate_id')">
+              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
+              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
+              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
+            </span>
+            Candidate id </th>
+          <td style="cursor: pointer;" (click)="profileView(element.uid, element.new_candidate_id)" mat-cell
+            *matCellDef="let element"> {{element.new_candidate_id ? element.new_candidate_id : '-'}} </td>
+        </ng-container>
+
         <!-- Weight Column -->
         <ng-container matColumnDef="gender">
           <th mat-header-cell *matHeaderCellDef>

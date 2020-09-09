@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['count', 'candidate_name', 'uid', 'evaluation_status', 'details'];
+  displayedColumns: any[] = ['count', 'candidate_name', 'candidate_id', 'evaluation_status', 'details'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 

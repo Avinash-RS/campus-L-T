@@ -192,6 +192,9 @@ export class LoginpageComponent implements OnInit {
   createAccount() {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.SETUP);
   }
+  candidateSignup(){
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.CANDIDATE);
+  }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
