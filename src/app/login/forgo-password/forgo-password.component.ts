@@ -91,5 +91,8 @@ export class ForgoPasswordComponent implements OnInit {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
   }
 
+  inputChanged(f) {
+
+  }
 
 }

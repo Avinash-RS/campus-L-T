@@ -87,4 +87,9 @@ export class CandidateRegisterComponent implements OnInit {
     });
   }
 
+  signIn() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
+  }
+
+
 }

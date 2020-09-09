@@ -117,6 +117,11 @@ export class CreateComponent implements OnInit {
 
   }
 
+  signIn() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
+  }
+
+
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
