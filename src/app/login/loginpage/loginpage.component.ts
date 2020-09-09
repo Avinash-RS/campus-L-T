@@ -18,6 +18,7 @@ export class LoginpageComponent implements OnInit {
   toggleVisibilityConfirmPassword = true;
   subscribe1: Subscription;
   prePoulteEmailId: any;
+  capsOn; any;
   verifyArr = [];
   constructor(
     private fb: FormBuilder,

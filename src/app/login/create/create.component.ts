@@ -21,6 +21,8 @@ export class CreateComponent implements OnInit {
   passwordTempToken: any;
   prePoulteEmailId: any;
   type: string;
+  capsOn; any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,

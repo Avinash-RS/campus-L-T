@@ -20,6 +20,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['counter', 'name', 'email', 'roles_target_id', 'checked'];
   dataSource: MatTableDataSource<any>;
   displayNoRecords = false;
+  pageEvent: any;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -80,10 +81,10 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
 
     }
 

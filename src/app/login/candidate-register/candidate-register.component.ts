@@ -16,6 +16,8 @@ export class CandidateRegisterComponent implements OnInit {
 
   candidateForm: FormGroup;
   toggleVisibility = true;
+  capsOn; any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,

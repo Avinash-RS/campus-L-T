@@ -24,6 +24,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   radioCheck;
   userListIndex;
   displayNoRecords = false;
+  pageEvent: any;
+
 
   constructor(
     private adminService: AdminServiceService,
