@@ -35,6 +35,11 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.getUsersList();
   }
 
+  //pagination next and previos click
+  handlePage(e: any) {
+    this.selectedUserDetail = null;
+  }
+
   // To get all users
   getUsersList() {
     this.adminService.hruserList().subscribe((data: any) => {
