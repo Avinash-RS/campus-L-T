@@ -21,7 +21,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
 
   BASE_URL = environment.API_BASE_URL;
 
-  displayedColumns: any[] = ['uid', 'user_name', 'candidate_id', 'insitute', 'pdf'];
+  displayedColumns: any[] = ['uid', 'user_name', 'candidate_new_id', 'insitute', 'pdf'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
   showShortlisted = true;
@@ -96,8 +96,8 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
       marks_valid_shortlist: this.appConfig.getLocalData('secondLevelFilter4') ? this.appConfig.getLocalData('secondLevelFilter4') : '',
     };
     this.userListing.forEach(element => {
-      if (element['candidate_id']) {
-        apiData['id'].push(element['candidate_id']);
+      if (element['candidate_new_id']) {
+        apiData['id'].push(element['candidate_new_id']);
       }
     });
     
