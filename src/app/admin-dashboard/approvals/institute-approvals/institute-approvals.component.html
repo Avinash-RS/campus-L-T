@@ -57,8 +57,7 @@
       <!-- Symbol Column -->
       <ng-container matColumnDef="field_first_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact person </th>
-        <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span class="material-icons"
-            style="font-size: 16px; vertical-align: middle;">keyboard_arrow_down </span>
+        <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span><img src="assets/images/keyboard_arrow_down-black.svg" alt="" srcset=""> </span>
           {{element.field_first_name ? (element.field_first_name) : '-'}} </td>
       </ng-container>
       <!-- Symbol Column -->

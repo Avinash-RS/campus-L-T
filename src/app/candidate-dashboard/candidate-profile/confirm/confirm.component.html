@@ -15,9 +15,9 @@
 
   <div class="signature-wrapper" [ngClass]="url ? 'width-100' : ''">
     <div *ngIf="url" matTooltip="Remove Signature" matTooltipPostion="after" (click)="delete()" class="remove">
-      <span style="font-size: 25px;" class="material-icons">
+      <i style="font-size: 25px;" class="material-icons">
         cancel
-      </span>
+      </i>
     </div>
     <div class="label-input-holder">
       <label class="hoverable" for="fileInput">
