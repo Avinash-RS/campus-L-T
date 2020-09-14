@@ -228,6 +228,12 @@
     margin-left: 6px;
     font-size: 13px;
   }
+  .afterIcon {
+    content: ">";
+    color: #5e5e5e;
+    margin-left: 6px;
+    font-size: 13px;
+  }
   li:last-child::after {
     content: "";
   }

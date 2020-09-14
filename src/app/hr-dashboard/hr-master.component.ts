@@ -60,18 +60,30 @@ export class HrMasterComponent implements OnInit {
         do {
           const childrenRoutes = currentRoute.children;
           currentRoute = null;
+
           childrenRoutes.forEach(route => {
             if (route.outlet === "primary") {
+
               const routeSnapshot = route.snapshot;
 
+              console.log('urkksd', routeSnapshot);
               url +=
-                "/" + routeSnapshot.url.map(segment => segment.path).join("/");
+                "/" + routeSnapshot.url.map(segment => segment.path);
+              // if (route.snapshot.data.breadcrumb !== undefined) {
               this.breadcrumbs.push({
                 label: route.snapshot.data.breadcrumb,
                 url: url
               });
-
+              const updateUrl = [];
+              this.breadcrumbs.forEach(element => {
+                if (element['label']) {
+                  updateUrl.push(element);
+                }
+              });
+              this.breadcrumbs = updateUrl;
               currentRoute = route;
+              // }
+              console.log('bread', this.breadcrumbs);
             }
           });
         } while (currentRoute);
