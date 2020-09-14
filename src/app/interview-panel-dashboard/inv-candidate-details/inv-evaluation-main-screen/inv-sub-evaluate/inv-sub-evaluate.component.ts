@@ -58,7 +58,7 @@ export class InvSubEvaluateComponent implements OnInit {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
-      this.candidateId = params['id'];
+      this.candidateId = params['uid'];
       this.getEvaluationData(this.candidateId);
       this.nginitFunc();
     });

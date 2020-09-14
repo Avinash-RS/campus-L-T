@@ -747,5 +747,6 @@ export const DropdownListForKYC = {
     { name: "Poornima College of Engineering, Jaipur", checkbox: false, value: "Poornima College of Engineering, Jaipur" },
     { name: "Swami Keshwanand Institute of Technology Management & Gramothan, Jaipur", checkbox: false, value: "Swami Keshwanand Institute of Technology Management & Gramothan, Jaipur" },
     { name: "Sathyabama Institute of Science and Technology", checkbox: false, value: "Sathyabama Institute of Science and Technology" },
-  ]
+  ],
+  kycDate: '22-09-2020'
 };

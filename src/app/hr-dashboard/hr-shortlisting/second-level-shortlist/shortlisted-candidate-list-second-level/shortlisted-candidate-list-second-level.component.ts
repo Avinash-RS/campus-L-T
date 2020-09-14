@@ -96,8 +96,8 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
       marks_valid_shortlist: this.appConfig.getLocalData('secondLevelFilter4') ? this.appConfig.getLocalData('secondLevelFilter4') : '',
     };
     this.userListing.forEach(element => {
-      if (element['candidate_new_id']) {
-        apiData['id'].push(element['candidate_new_id']);
+      if (element['candidate_id']) {
+        apiData['id'].push(element['candidate_id']);
       }
     });
     

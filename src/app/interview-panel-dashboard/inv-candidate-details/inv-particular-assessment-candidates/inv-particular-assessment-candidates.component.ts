@@ -206,8 +206,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     this.unselectSelectALL();
   }
 
-  submit(cid, name, status, tag) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '' });
+  submit(cid, name, status, tag, uid) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '' });
   }
 
   finalSubmit() {

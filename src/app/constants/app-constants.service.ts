@@ -69,7 +69,8 @@ export const CONSTANT = {
       HALLTICKET: '/candidate/hallticket',
       HALLTICKET_LIST: '/candidate/hallticket/list',
       DOCUMENT: '/candidate/document',
-      DOCUMENT_LIST: '/candidate/document/list'
+      DOCUMENT_LIST: '/candidate/document/list',
+      REGISTRATION_CLOSE: '/candidate/registration-close'
     },
     HR_DASHBOARD: {
       HOME: '/hr',
@@ -199,7 +200,8 @@ export const CONSTANT = {
       HALLTICKET: 'hallticket',
       HALLTICKET_LIST: 'list',
       DOCUMENT: 'document',
-      DOCUMENT_LIST: 'list'
+      DOCUMENT_LIST: 'list',
+      REGISTRATION_CLOSE: 'registration-close'
     },
     HR_DASHBOARD: {
       HOME: 'hr',

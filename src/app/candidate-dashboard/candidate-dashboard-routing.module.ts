@@ -19,6 +19,7 @@ import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { from } from 'rxjs';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
+import {  RegistrationCloseComponent } from './registration-close/registration-close.component';
 
 
 const routes: Routes = [
@@ -144,7 +145,13 @@ const routes: Routes = [
       breadcrumb: 'Kyc Submitted'
     }
   },
-
+  {
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE}`, 
+    component: RegistrationCloseComponent, canActivate: [KycthanksGuard],
+    data: {
+      breadcrumb: 'Registration close'
+    }
+  },
 ];
 
 @NgModule({
