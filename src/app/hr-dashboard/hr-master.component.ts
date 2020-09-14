@@ -18,7 +18,6 @@ export interface IBreadCrumb {
 export class HrMasterComponent implements OnInit {
 
   // public breadcrumbs: IBreadCrumb[];
-  public deliminator: string = ">";
   breadcrumbs: Array<{ label: string; url: string }>;
 
   appConstant = CONSTANT.ENDPOINTS;
@@ -66,7 +65,6 @@ export class HrMasterComponent implements OnInit {
 
               const routeSnapshot = route.snapshot;
 
-              console.log('urkksd', routeSnapshot);
               url +=
                 "/" + routeSnapshot.url.map(segment => segment.path);
               // if (route.snapshot.data.breadcrumb !== undefined) {
@@ -83,7 +81,6 @@ export class HrMasterComponent implements OnInit {
               this.breadcrumbs = updateUrl;
               currentRoute = route;
               // }
-              console.log('bread', this.breadcrumbs);
             }
           });
         } while (currentRoute);
