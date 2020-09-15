@@ -10,7 +10,7 @@
                   Assessment name
                 </div>
                 <div class="input-box-revamp">
-                    <input matInput type="text">
+                    <input matInput type="text" [(ngModel)]="assessmentName">
                 </div>
               </div>
                 </div>
@@ -19,8 +19,12 @@
                 <div class="label">
                   Disciple
                 </div>
-                <div class="input-box-revamp">
-                    <input matInput type="text">
+                <div class="input-box">
+                    <!-- <input matInput type="text"> -->
+                    <nz-select class="nzSelect-revamp" nzAllowClear nzShowSearch
+                    nzPlaceHolder="--select disciple--" [(ngModel)]="selectedDisciple">
+                    <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue.discipline_name" [nzValue]="disciplineValue.discipline_name"></nz-option>
+                  </nz-select>
                 </div>
               </div>
               <div style="margin-left: 1em;" class="flex-wrap">
@@ -28,12 +32,21 @@
                     Assessment Date & Time
                 </div>
                 <div class="input-box">
-                  <mat-form-field>
-                    <input matInput [matDatepicker]="dp">
+                  <!-- <mat-form-field>
+                    <input matInput [matDatepicker]="dp" [(ngModel)]="datetime">
                       <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="dp"></mat-datepicker-toggle>
                       <mat-datepicker #dp>
                       </mat-datepicker>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <nz-date-picker
+                    nzShowTime
+                    nzFormat="yyyy-MM-dd HH:mm:ss"
+                    nzPlaceHolder="Select date & time"
+                    ngModel
+                    (ngModelChange)="onChange($event)"
+                    (nzOnOk)="onOk($event)"
+                    class="datetime"
+                  ></nz-date-picker>
                 </div>
               </div>
               <div style="margin-left: 1em;" class="flex-wrap">
@@ -41,10 +54,10 @@
                   Shortlist name:
                 </div>
                 <div class="input-box">
-                    <!-- <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch
-                    nzPlaceHolder="">
+                    <nz-select class="nzSelect-revamp" [(ngModel)]="selectedShortlistname" (ngModelChange)="selectChange()" nzAllowClear nzShowSearch
+                    nzPlaceHolder="--select shortlist name--">
                     <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value" [nzValue]="level.field_shortlistname_value"></nz-option>
-                  </nz-select> -->
+                  </nz-select>
                 </div>
               </div>
             </div>
@@ -61,7 +74,7 @@
           </div>
 
           <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
-            <button class="submit" mat-raised-button>Send email</button>
+            <button class="submit" mat-raised-button (click)="submitDialog()">Send email</button>
           </div>
 
         </div>
@@ -71,9 +84,9 @@
           <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
           <!-- Position Column -->
-          <ng-container matColumnDef="candidate_name">
+          <ng-container matColumnDef="username">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Candidate name </th>
-            <td mat-cell *matCellDef="let element; let i = index"> {{element && element.candidate_name ? (element.candidate_name) : '-'}} </td>
+            <td mat-cell *matCellDef="let element; let i = index"> {{element && element.username ? (element.username) : '-'}} </td>
           </ng-container>
 
           <!-- Symbol Column -->
@@ -90,9 +103,9 @@
           </ng-container>
 
           <!-- Symbol Column -->
-          <ng-container matColumnDef="institute">
+          <ng-container matColumnDef="insitute">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute </th>
-            <td mat-cell *matCellDef="let element"> {{element && element.institute ? (element.institute) : '-'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element && element.insitute ? (element.insitute) : '-'}} </td>
           </ng-container>
 
         <!-- fifth Header row first group -->

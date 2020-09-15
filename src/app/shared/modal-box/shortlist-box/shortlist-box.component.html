@@ -344,3 +344,12 @@
     <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
+<div class="modal-box-wrapper" *ngIf="data && data['AssignSchedule'] === 'schedule'">
+  <div class="bulk-upload-text">
+    Are you sure you want to send an email selected no. of {{data['candidate']}}: {{data['candidateCount']}}
+  </div>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>No</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Yes</button>
+  </div>
+</div>

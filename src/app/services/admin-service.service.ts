@@ -490,4 +490,16 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/getassement_excel`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  // hr shortlist base candidate 
+  getShortlistCandidateList(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_select`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // hr scheduling assessment 
+  schedulingAssessment(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_insert`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }
