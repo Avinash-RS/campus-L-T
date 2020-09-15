@@ -49,7 +49,10 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
 
   // To get all users
   getUsersList() {
-    this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
+    const apiData = {
+      name: ''
+    };
+    this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
       this.appConfig.hideLoader();
       this.userList = data1 ? data1 : [];
       let count = 0;
