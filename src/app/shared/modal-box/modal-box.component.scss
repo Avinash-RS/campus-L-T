@@ -1,4 +1,4 @@
-@import '../../themes/themes.scss';
+@import "../../themes/themes.scss";
 * {
   margin: 0;
 }
@@ -48,7 +48,7 @@
     text-align: center;
     display: flex;
     justify-content: center;
-      align-items: center;
+    align-items: center;
     // button {
     //   min-width: 90px;
     //   // color: $white;
@@ -79,6 +79,43 @@
 
     .ok {
       background: $blue-2 0% 0% no-repeat padding-box;
+    }
+  }
+}
+
+.wrapper-kyc-terms {
+  max-width: 890px;
+  .header {
+    padding: 1em 0.5em;
+    background: $primary-yellow;
+    .text {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  .main-text {
+    padding: 2em;
+    .text {
+      margin: 1em 0 0 0;
+    }
+    .bold {
+      font-weight: 700 !important;
+    }
+    .no-top {
+      margin: 0;
+    }
+    .button-wrappers {
+      margin: 2em 0 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

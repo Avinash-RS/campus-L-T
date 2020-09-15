@@ -181,8 +181,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  alreadyUploadedDetails() {
-    return this.http.get(`${this.BASE_URL}/profile/user_details_get`,
+  alreadyUploadedDetails(data) {
+    return this.http.post(`${this.BASE_URL}/profile/user_details_get`, data,
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
@@ -485,7 +485,7 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // hr status download 
+  // hr status download
   getStatusExcelDownload(data) {
     return this.http.post(`${this.BASE_URL}/profile/getassement_excel`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

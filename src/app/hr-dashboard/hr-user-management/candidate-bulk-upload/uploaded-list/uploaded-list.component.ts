@@ -23,6 +23,16 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   radioCheck;
   selectAllCheck;
   displayNoRecords = false;
+  // serverSide Things
+  length;
+  pageSize;
+  apiPageIndex: any = 1;
+  listCount: any = 50;
+  normal = true;
+  asc = false;
+  searchInput: any;
+  desc = false;
+  sortedCol;
 
   constructor(
     private appConfig: AppConfigService,
@@ -35,6 +45,52 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getUsersList();
   }
+
+  sorting(column, columnSelect) {
+    if (this.sortedCol !== columnSelect) {
+      this.normal = true;
+      this.asc = false;
+      this.desc = false;
+    }
+    this.sortedCol = columnSelect;
+    if (this.normal) {
+      this.normal = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: column,
+        order_type: 'asc',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      // this.getPageList(apiData);
+      return this.asc = true;
+    }
+    if (this.asc) {
+      this.asc = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: column,
+        order_type: 'desc',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      // this.getPageList(apiData);
+      return this.desc = true;
+    }
+    if (this.desc) {
+      this.desc = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      // this.getPageList(apiData);
+      return this.normal = true;
+    }
+  }
+
 
   tConvert(time) {
     // Check correct time format and split into components
@@ -50,7 +106,22 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-    this.adminService.alreadyUploadedDetails().subscribe((data1: any) => {
+  //   {
+  //     "counts":"50",
+  //     "start":"1",
+  //     "search":"",
+  //     "order_by":"tag/name/candidate_id/email/uploader_name",
+  //     "order_type":"asc/desc"
+  // }
+    const apiData = {
+      counts: '50',
+      start: '1',
+      search: '',
+      order_by: '',
+      order_type: 'asc',
+      uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
+    };
+    this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
       this.appConfig.hideLoader();
       this.userList = data1 ? data1 : [];
       let count = 0;
@@ -79,10 +150,10 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
 
     }
 
@@ -92,7 +163,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail) {
-    
+
   }
 
 }
