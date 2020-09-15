@@ -118,7 +118,7 @@
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Very Good </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
           <mat-radio-button  (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
-            <span class="material-icons" matTooltip="{{assessment.veryGood}}">info</span>
+            <i class="material-icons" matTooltip="{{assessment.veryGood}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -128,7 +128,7 @@
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
           <mat-radio-button (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
-            <span class="material-icons" matTooltip="{{assessment.good}}">info</span>
+            <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -138,7 +138,7 @@
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
           <mat-radio-button (change)="setAssessmentLevel(assessment,'Acceptable')" [name]="assessment.id" value="3">
-            <span class="material-icons" matTooltip="{{assessment.acceptable}}">info</span>
+            <i class="material-icons" matTooltip="{{assessment.acceptable}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -148,7 +148,7 @@
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
           <mat-radio-button (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
-            <span class="material-icons" matTooltip="{{assessment.notSuitable}}">info</span>
+            <i class="material-icons" matTooltip="{{assessment.notSuitable}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>

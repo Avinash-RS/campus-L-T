@@ -12,7 +12,7 @@
                             </div>
                             <div *ngIf="urlResume">
                                 <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlResume}}">{{urlResume}}</span>
-                                <span (click)="urlResume = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                <span (click)="urlResume = null; stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                             </div>
                         </label>
 
@@ -47,7 +47,7 @@
                                 </div>
                                 <div *ngIf="urlEducation[i]">
                                     <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlEducation}}">{{urlEducation[i]}}</span>
-                                    <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                    <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </div>
                             </label>
 
@@ -57,7 +57,7 @@
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="eduArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeEducationDoc(i)" style="display: inline-flex; background: transparent; border: none;"
                                     type="button">
-                                    <span class="material-icons">close</span>
+                                    <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </button>
                             </div>
 
@@ -92,7 +92,7 @@
                                 </div>
                                 <div *ngIf="urlCertificate[i]">
                                     <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlCertificate}}">{{urlCertificate[i]}}</span>
-                                    <span (click)="urlCertificate.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                    <span (click)="urlCertificate.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </div>
                             </label>
 
@@ -102,7 +102,7 @@
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeCertificate(i)" style="display: inline-flex; background: transparent; border: none;"
                                     type="button">
-                                    <span class="material-icons">close</span>
+                                    <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </button>
                             </div>
 
@@ -137,7 +137,7 @@
                                     </div>
                                     <div *ngIf="urlOther[i]">
                                         <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlOther}}">{{urlOther[i]}}</span>
-                                        <span (click)="urlOther.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                        <span (click)="urlOther.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                     </div>
                                 </label>
 
@@ -147,7 +147,7 @@
                                 <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
                                     <button (click)="removeOtherDoc(i)" style="display: inline-flex; background: transparent; border: none;"
                                         type="button">
-                                        <span class="material-icons">close</span>
+                                        <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                     </button>
                                 </div>
 

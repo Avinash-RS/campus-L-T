@@ -23,9 +23,9 @@
         </mat-drawer-content>
       </mat-drawer-container>
       <div (click)="sidebar()" [ngClass]="sidebarOpen ? 'sideOpen' : 'sideClose'" class="openClose">
-        <span *ngIf="sidebarOpen" class="material-icons">keyboard_arrow_left</span>
-        <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
-      </div>
+        <span *ngIf="sidebarOpen"><img src="assets/images/keyboard_arrow_left.svg" alt="" srcset=""></span>
+        <span *ngIf="!sidebarOpen"><img src="assets/images/keyboard_arrow_right.svg" alt="" srcset=""></span>
+            </div>
       <mat-drawer-container class="second-sidenav">
 
         <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
@@ -33,17 +33,17 @@
             <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS" routerLinkActive="active">
               <span><img src="assets/images/hired.svg" width="20px" height="20px" alt=""></span>
               <span>Candidate details</span>
-              <span style="color: #fff;" class="material-icons">
-                arrow_right
+              <span>
+                <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
               </span>
-            </li>
+                  </li>
 
             <!-- <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM" routerLinkActive="active">
               <span><img src="assets/images/hired.svg" width="20px" height="20px" alt=""></span>
               <span>Evaluation form</span>
-              <span style="color: #fff;" class="material-icons">
-                arrow_right
-              </span>
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+        </span>
             </li> -->
 
           </ul>
