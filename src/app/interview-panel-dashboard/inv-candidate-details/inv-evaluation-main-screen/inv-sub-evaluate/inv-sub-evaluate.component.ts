@@ -35,6 +35,7 @@ export class InvSubEvaluateComponent implements OnInit {
   getCandidateData: any;
   candidateId: any;
   nameOfAssessment: any;
+  uid:any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -58,8 +59,9 @@ export class InvSubEvaluateComponent implements OnInit {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
-      this.candidateId = params['uid'];
-      this.getEvaluationData(this.candidateId);
+      this.candidateId = params['id'];
+      this.uid = params['uid'];
+      this.getEvaluationData(this.uid);
       this.nginitFunc();
     });
   }
@@ -209,7 +211,7 @@ export class InvSubEvaluateComponent implements OnInit {
   submitEvaluationFormAPI() {
     const apiData =
         {
-          uid: this.candidateId ? this.candidateId : '',
+          uid: this.uid ? this.uid : '',
           interview_date: this.evaluationForm.value.interview_date,
           interview_place: this.evaluationForm.value.interview_place,
           depth_knowledge: this.evaluationForm.value.depth_knowledge,

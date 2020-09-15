@@ -20,6 +20,7 @@ export class InvSubEmploymentComponent implements OnInit {
   candidateId: any;
   certificateArr: any;
   candidateName: any;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -56,7 +57,8 @@ export class InvSubEmploymentComponent implements OnInit {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
-      this.userlist(params['id']);
+      this.uid = params['uid']
+      this.userlist(params['uid']);
     });
   }
 
@@ -91,7 +93,7 @@ export class InvSubEmploymentComponent implements OnInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid:this.uid });
   }
 
   // Open dailog

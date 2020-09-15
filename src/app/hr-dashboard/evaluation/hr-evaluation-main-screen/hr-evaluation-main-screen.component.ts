@@ -21,6 +21,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
   candidateName: any;
   candidateStatus: any;
   tagName: any;
+  uid: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -60,6 +61,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       this.candidateName = params['name'];
       this.candidateStatus = params['status'];
       this.tagName = params['tag'];
+      this.uid = params['uid'];
       this.appConfig.setLocalData('cname', this.candidateName);
       this.appConfig.setLocalData('cid', this.candidateId);
       this.appConfig.setLocalData('cstatus', this.candidateStatus);
