@@ -53,6 +53,21 @@ export class ConfirmComponent implements OnInit {
     this.convertEduArrToSingleVar();
   }
 
+  kycTerms() {
+    const data = {
+      iconName: '',
+      sharedData: {
+        confirmText: 'Bulk Upload helper video',
+        componentData: '',
+        type: 'kyc-terms',
+        identity: 'kyc-terms'
+      },
+      showConfirm: 'Confirm',
+      showCancel: 'Cancel',
+      showOk: ''
+    };
+    this.appConfig.terms(ModalBoxComponent, data);
+  }
   convertEduArrToSingleVar() {
     if (this.apiForm['eduArr']) {
       this.apiForm['eduArr'].forEach((element, i) => {

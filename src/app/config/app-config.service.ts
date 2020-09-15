@@ -246,6 +246,10 @@ export class AppConfigService {
   }
 
   helperVideo(comp, data) {
+    this.openDialog(comp, data);
+  }
+
+  terms(comp, data) {
     console.log('coming');
     this.openDialog(comp, data);
   }
