@@ -16,6 +16,7 @@ import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component'
 })
 export class ConfirmComponent implements OnInit {
   apiForm: any;
+  agree = false;
   url = null;
   showSizeError = {
     image: false,
@@ -199,34 +200,41 @@ export class ConfirmComponent implements OnInit {
 
   }
   onSubmit() {
-
-    if (this.appConfig.getLocalData('signature')) {
-      const signature = JSON.parse(this.appConfig.getLocalData('signature'));
-      this.apiForm.field_signature = [{
-        target_id: signature['target_id'],
-        alt: 'signature',
-        title: '',
-        width: 480,
-        height: 100,
-        url: signature.url,
-        status: 'true'
-      }];
-
-      const data = {
-        iconName: '',
-        sharedData: {
-          confirmText: 'Please confirm to submit your details',
-          componentData: '',
-          type: 'confirm',
-          identity: 'kycSubmit'
-        },
-        showConfirm: 'Confirm',
-        showCancel: 'Cancel',
-        showOk: ''
-      };
-      this.openDialog(ModalBoxComponent, data);
+    if (!this.agree && !this.appConfig.getLocalData('signature')) {
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please upload handwritten signature image and click on the checkbox to proceed further');
     } else {
-      this.appConfig.nzNotification('error', 'Not Submitted', 'Please upload your signature to submit the KYC form');
+      if (this.agree) {
+        if (this.appConfig.getLocalData('signature')) {
+          const signature = JSON.parse(this.appConfig.getLocalData('signature'));
+          this.apiForm.field_signature = [{
+            target_id: signature['target_id'],
+            alt: 'signature',
+            title: '',
+            width: 480,
+            height: 100,
+            url: signature.url,
+            status: 'true'
+          }];
+
+          const data = {
+            iconName: '',
+            sharedData: {
+              confirmText: 'Please confirm to submit your details',
+              componentData: '',
+              type: 'confirm',
+              identity: 'kycSubmit'
+            },
+            showConfirm: 'Confirm',
+            showCancel: 'Cancel',
+            showOk: ''
+          };
+          this.openDialog(ModalBoxComponent, data);
+        } else {
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please upload your signature to submit the KYC form');
+        }
+      } else {
+        this.appConfig.nzNotification('error', 'Not Submitted', 'Please agree the terms and conditions and privacy policy by clicking on the checkbox');
+      }
     }
   }
 

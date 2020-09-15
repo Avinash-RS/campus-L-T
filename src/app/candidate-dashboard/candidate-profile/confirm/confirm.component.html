@@ -48,8 +48,9 @@
   </div>
 
   <div class="ack">
-      I agree to <a (click)="kycTerms()">terms & conditions</a> and privacy policy
-    </div>
+      <mat-checkbox [(ngModel)]="agree"></mat-checkbox>
+    I agree to <span style="color: #007bff; cursor: pointer;" (click)="kycTerms()">terms & conditions</span> and privacy policy
+  </div>
 
   <div class="submit-button-wrapper">
     <button class="submit btn-margin-space" (click)="onSubmit()" mat-raised-button type="button">Submit</button>

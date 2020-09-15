@@ -1,4 +1,5 @@
-<ng-container *ngIf="(data && data.dataToBeShared && data.dataToBeShared.type !== 'video') && data && data.dataToBeShared && data.dataToBeShared.type !== 'kyc-terms'">
+<ng-container
+  *ngIf="(data && data.dataToBeShared && data.dataToBeShared.type !== 'video') && data && data.dataToBeShared && data.dataToBeShared.type !== 'kyc-terms'">
   <div class="modal-wrapper">
     <div class="confirmation-text">
       {{data.dataToBeShared.confirmText ? data.dataToBeShared.confirmText : ''}}
@@ -90,7 +91,7 @@
 
       <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin>
         <source src="https://www.dropbox.com/s/0x2ke57h7wv49ll/Sample_512x288.mp4" type="video/mp4">
-        <!-- <source src="http://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
+        <!-- <source src="https://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
           <source src="http://static.videogular.com/assets/videos/videogular.webm" type="video/webm"> -->
 
         <!-- <track kind="subtitles" label="English" src="http://static.videogular.com/assets/subs/pale-blue-dot.vtt" srclang="en" default>
@@ -102,54 +103,67 @@
 </ng-container>
 <ng-container *ngIf="data && data.dataToBeShared && data.dataToBeShared.type === 'kyc-terms'">
   <div class="wrapper-kyc-terms">
-  <div class="header">
-    <div class="text">
-      <span>
-        Terms and Conditions
-      </span>
-      <span>
-        <img src="assets/images/cancel-black-18dp.svg" alt="" srcset="">
-      </span>
+    <div class="header">
+      <div class="text">
+        <span>
+          &#160;
+        </span>
+        <span>
+          Terms and Conditions
+        </span>
+        <span class="icons">
+            <i style="cursor: pointer;" (click)="cancel(false)" class="material-icons">cancel</i>
+            <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="main-text">
-    <div>
-      Thank you for showing interest in <strong>L&T EduTech</strong> a division of <strong>Larsen & Toubro Limited / L&T
-        Construction</strong> (“We”, “Us”, “Company”). These Terms of Use “Terms”) and any other documents they
-      expressly incorporate, set forth the terms and
-      conditions upon which you may access and use the Website <a href="http://www.lntedutech.com" target="_blank"
-        rel="noopener noreferrer">www.lntedutech.com</a> or <a href="http://www.lntiggnite.com" target="_blank"
-        rel="noopener noreferrer">www.lntiggnite.com</a> (“Website”).
-    </div>
-    <div>Please read the Terms carefully before you start to use the Website. By accessing the Website and registering
-      for various courses offered, using other functionalities of the Website, you represent you are at least 18
-      Years of age. Further, you accept and agree to be bound and abide by these Terms. If you are below 18 Years old,
-      You shall use the/access the Website only under the parental or legal guardian supervision. If you do not want to
-      agree to these Terms, you must not access or use the service/Website.
-    </div>
-    <div>
-      Please note that the Website (www.lntedutech.com) and Learning and Assessment platform (www.lntedutech.com) are
-      owned by the Company. The usage of this Website is an implied consent to Terms of Use of www.lntedutech.com or
-      www.lntiggnite.com. The registration will be common for both the websites.
-      The Terms of Use once agreed to by You for this website will automatically apply to your usage of the other
-      website
-      www.lntedutech.com
-      or www.lntiggnite.com
-      as well and no separate confirmation from your end is necessary.
-    </div>
-    <div>
-      Services/Courses:
-    </div>
-    <div>
-      This Site can be accessed by varied persons including any person who browses the Website, independent individual
-      registering
-      for the Courses, instructors, colleges/institutions which designate courses for their students, persons who create
-      and manage a particular Course.
+    <div class="main-text">
+      <div class="text">
+        Thank you for showing interest in <strong>L&T EduTech</strong> a division of <strong>Larsen & Toubro Limited /
+          L&T
+          Construction</strong> (“We”, “Us”, “Company”). These Terms of Use “Terms”) and any other documents they
+        expressly incorporate, set forth the terms and
+        conditions upon which you may access and use the Website <a href="https://www.lntedutech.com" target="_blank"
+          rel="noopener noreferrer">www.lntedutech.com</a> or <a href="https://www.lntiggnite.com" target="_blank"
+          rel="noopener noreferrer">www.lntiggnite.com</a> (“Website”).
+      </div>
+      <div class="text">Please read the Terms carefully before you start to use the Website. By accessing the Website and registering
+        for various courses offered, using other functionalities of the Website, you represent you are at least 18
+        Years of age. Further, you accept and agree to be bound and abide by these Terms. If you are below 18 Years old,
+        You shall use the/access the Website only under the parental or legal guardian supervision. If you do not want
+        to
+        agree to these Terms, you must not access or use the service/Website.
+      </div>
+      <div class="text">
+        Please note that the Website (www.lntedutech.com) and Learning and Assessment platform (<a href="https://www.lntedutech.com" target="_blank"
+        rel="noopener noreferrer">www.lntedutech.com</a>) are
+        owned by the Company. The usage of this Website is an implied consent to Terms of Use of <a href="https://www.lntedutech.com" target="_blank"
+        rel="noopener noreferrer">www.lntedutech.com</a> or
+        <a href="https://www.lntiggnite.com" target="_blank"
+          rel="noopener noreferrer">www.lntiggnite.com</a>. The registration will be common for both the websites.
+        The Terms of Use once agreed to by You for this website will automatically apply to your usage of the other
+        website
+        <a href="https://www.lntedutech.com" target="_blank"
+          rel="noopener noreferrer">www.lntedutech.com</a>
+        or <a href="https://www.lntiggnite.com" target="_blank"
+        rel="noopener noreferrer">www.lntiggnite.com</a>
+        as well and no separate confirmation from your end is necessary.
+      </div>
+      <div class="text bold">
+        Services/Courses:
+      </div>
+      <div class="no-top">
+        This Site can be accessed by varied persons including any person who browses the Website, independent individual
+        registering
+        for the Courses, instructors, colleges/institutions which designate courses for their students, persons who
+        create
+        and manage a particular Course.
+      </div>
+
+    <div class="button-wrappers">
+      <button (click)="cancel(false)" mat-raised-button class="submit" type="button">Done</button>
     </div>
   </div>
 
-  <div class="button-wrappers">
-    <button (click)="cancel('false')" mat-raised-button class="submit" type="button">Done</button>
   </div>
-</div>
 </ng-container>
