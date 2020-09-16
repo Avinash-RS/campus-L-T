@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort, PageEvent } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -17,6 +17,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('myDiv', { static: false }) private myDiv: ElementRef;
 
   selectedUserDetail: any;
   userList: any;
@@ -33,6 +34,10 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
   searchInput: any;
   desc = false;
   sortedCol;
+  queryObject: any;
+  // MatPaginator Output
+  pageEvent: PageEvent;
+  overallSelect = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -44,6 +49,53 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getUsersList();
+  }
+
+  pageChanged(event) {
+    if (event.previousPageIndex > event.pageIndex) {
+      console.log('prvcoming');
+      // previous button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+    }
+    if (event.previousPageIndex < event.pageIndex) {
+      // next button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      console.log('nexrcoming', this.apiPageIndex);
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+    }
+    if (event.pageSize !== this.listCount) {
+      console.log('ncoming', event.pageSize);
+
+      this.listCount = event.pageSize;
+      this.apiPageIndex = 1;
+      this.getUsersList();
+    }
+  }
+
+  applySearch() {
+    const apiData = {
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
+    };
+    this.getPageList(apiData);
   }
 
   sorting(column, columnSelect) {
@@ -62,7 +114,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
         order_type: 'asc',
         search: this.searchInput ? this.searchInput : ''
       };
-      // this.getPageList(apiData);
+      this.getPageList(apiData);
       return this.asc = true;
     }
     if (this.asc) {
@@ -74,7 +126,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
         order_type: 'desc',
         search: this.searchInput ? this.searchInput : ''
       };
-      // this.getPageList(apiData);
+      this.getPageList(apiData);
       return this.desc = true;
     }
     if (this.desc) {
@@ -86,10 +138,40 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
         order_type: '',
         search: this.searchInput ? this.searchInput : ''
       };
-      // this.getPageList(apiData);
+      this.getPageList(apiData);
       return this.normal = true;
     }
   }
+
+  // To get all users
+  getPageList(apiData) {
+    // const apiData = {
+    //   counts: '50',
+    //   start: '1',
+    //   search: '',
+    //   order_by: '',
+    //   order_type: 'asc',
+    //   uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
+    // };
+    this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
+      this.appConfig.hideLoader();
+      this.length = data1 && data1['count'] ? data1['count'] : '0';
+      this.userList = data1 && data1['result'] ? data1['result'] : [];
+      let count = 0;
+      this.userList.forEach((element, i) => {
+        count = count + 1;
+        element['counter'] = count;
+        element['time'] = element && element['time'] ? element['time'] : '';
+      });
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.length = data1 && data1['count'] ? data1['count'] : '0';
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+
+    }, (err) => {
+    });
+  }
+
 
 
   tConvert(time) {
@@ -106,24 +188,17 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   // To get all users
   getUsersList() {
-  //   {
-  //     "counts":"50",
-  //     "start":"1",
-  //     "search":"",
-  //     "order_by":"tag/name/candidate_id/email/uploader_name",
-  //     "order_type":"asc/desc"
-  // }
     const apiData = {
-      counts: '50',
-      start: '1',
-      search: '',
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
       order_by: '',
-      order_type: 'asc',
-      uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
+      order_type: '',
+      search: this.searchInput ? this.searchInput : '',
+      // uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
     };
     this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      this.userList = data1 ? data1 : [];
+      this.userList = data1 && data1['result'] ? data1['result'] : [];
       let count = 0;
       this.userList.forEach((element, i) => {
         count = count + 1;
@@ -131,17 +206,29 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
         element['time'] = element && element['time'] ? element['time'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.length = data1 && data1['count'] ? data1['count'] : '0';
+      this.triggerFalseClick();
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
 
     }, (err) => {
     });
   }
 
+  triggerFalseClick() {
+    if (this.myDiv) {
+
+      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+      el.focus();
+    }
+  }
+
+
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.length = this.length;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
     }
   }
 
