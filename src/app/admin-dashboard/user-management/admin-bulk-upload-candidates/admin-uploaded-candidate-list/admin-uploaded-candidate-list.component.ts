@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort, PageEvent } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -14,14 +14,30 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   showPage = true;
   displayedColumns: any[] = ['counter', 'tag', 'name', 'new_candidate_id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
   dataSource: MatTableDataSource<any>;
-  displayNoRecords = false;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('myDiv', { static: false }) private myDiv: ElementRef;
 
   selectedUserDetail: any;
   userList: any;
   radioCheck;
+  selectAllCheck;
+  displayNoRecords = false;
+  // serverSide Things
+  length;
+  pageSize;
+  apiPageIndex: any = 1;
+  listCount: any = 50;
+  normal = true;
+  asc = false;
+  searchInput: any;
+  desc = false;
+  sortedCol;
+  queryObject: any;
+  // MatPaginator Output
+  pageEvent: PageEvent;
+  overallSelect = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -34,6 +50,129 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   ngOnInit() {
     this.getUsersList();
   }
+
+  pageChanged(event) {
+    if (event.previousPageIndex > event.pageIndex) {
+      console.log('prvcoming');
+      // previous button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+    }
+    if (event.previousPageIndex < event.pageIndex) {
+      // next button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      console.log('nexrcoming', this.apiPageIndex);
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+    }
+    if (event.pageSize !== this.listCount) {
+      console.log('ncoming', event.pageSize);
+
+      this.listCount = event.pageSize;
+      this.apiPageIndex = 1;
+      this.getUsersList();
+    }
+  }
+
+  applySearch() {
+    const apiData = {
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
+    };
+    this.getPageList(apiData);
+  }
+
+  sorting(column, columnSelect) {
+    if (this.sortedCol !== columnSelect) {
+      this.normal = true;
+      this.asc = false;
+      this.desc = false;
+    }
+    this.sortedCol = columnSelect;
+    if (this.normal) {
+      this.normal = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: column,
+        order_type: 'asc',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+      return this.asc = true;
+    }
+    if (this.asc) {
+      this.asc = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: column,
+        order_type: 'desc',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+      return this.desc = true;
+    }
+    if (this.desc) {
+      this.desc = false;
+      const apiData = {
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getPageList(apiData);
+      return this.normal = true;
+    }
+  }
+
+  // To get all users
+  getPageList(apiData) {
+    // const apiData = {
+    //   counts: '50',
+    //   start: '1',
+    //   search: '',
+    //   order_by: '',
+    //   order_type: 'asc',
+    //   uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
+    // };
+    this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
+      this.appConfig.hideLoader();
+      this.length = data1 && data1['count'] ? data1['count'] : '0';
+      this.userList = data1 && data1['result'] ? data1['result'] : [];
+      let count = 0;
+      this.userList.forEach((element, i) => {
+        count = count + 1;
+        element['counter'] = count;
+        element['time'] = element && element['time'] ? element['time'] : '';
+      });
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.length = data1 && data1['count'] ? data1['count'] : '0';
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+
+    }, (err) => {
+    });
+  }
+
+
 
   tConvert(time) {
     // Check correct time format and split into components
@@ -50,29 +189,46 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   // To get all users
   getUsersList() {
     const apiData = {
-      name: ''
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : '',
+      // uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
     };
     this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      this.userList = data1 ? data1 : [];
+      this.userList = data1 && data1['result'] ? data1['result'] : [];
       let count = 0;
-      this.userList.forEach(element => {
+      this.userList.forEach((element, i) => {
         count = count + 1;
         element['counter'] = count;
         element['time'] = element && element['time'] ? element['time'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.length = data1 && data1['count'] ? data1['count'] : '0';
+      this.triggerFalseClick();
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
 
     }, (err) => {
     });
   }
 
+  triggerFalseClick() {
+    if (this.myDiv) {
+
+      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+      el.focus();
+    }
+  }
+
+
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.length = this.length;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
     }
   }
 
@@ -81,10 +237,10 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
 
     }
 
@@ -96,7 +252,6 @@ export class AdminUploadedCandidateListComponent implements OnInit, AfterViewIni
   selectedUser(userDetail) {
 
   }
-
 
 }
 

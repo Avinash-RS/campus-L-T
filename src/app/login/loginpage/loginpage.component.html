@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="forgot-password"><span (click)="forgotPassword()">Forgot Password?</span></div>
-                
+
 
                 <div class="submit-button">
                   <button type="submit" class="submit" mat-raised-button>Submit</button>
@@ -78,7 +78,7 @@
               <mat-error class="error" *ngIf="loginForm.get('email').hasError('pattern')">{{'Please enter a valid email address'}}</mat-error>
             </mat-form-field>
             <div class="space-20"></div>
-            
+
             <div class="" appCapslock (capsLock)="capsOn=$event">
               <!-- <label>Password</label> -->
               <!-- <div *ngIf="capsOn">{{'Caps lock is on !' | translate }}</div> -->
@@ -92,7 +92,7 @@
                 <mat-error class="error" *ngIf="password.touched && password.errors" >{{'Password is required' }}</mat-error>
               </mat-form-field>
               <div class="space-20"></div>
-              
+
             </div>
             <div class="space-20"></div>
 
@@ -109,19 +109,19 @@
 
             <div class="center">
               <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid" type="submit">{{'SIGN IN'}}</button>
-  
+
             </div>
 
-            <div class="sign_up">
+            <!-- <div class="sign_up">
               <span class="haveacc">Don't have an account?</span>
-              <a><span class="col" (click)="candidateSignup()">{{'Sign up' }}</span></a> </div><br><br>
+              <a><span class="col" (click)="candidateSignup()">{{'Sign up' }}</span></a> </div><br><br> -->
           </div>
         </form>
       </div>
 
       <!-- <div class="row footer20">
         <div class="col-12">
-          <span class="forgot1">2020 © L&T EduTech All Rights Reserved</span> 
+          <span class="forgot1">2020 © L&T EduTech All Rights Reserved</span>
         </div>
       </div> -->
       <!-- <div class="col-4">
