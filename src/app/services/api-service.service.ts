@@ -120,5 +120,10 @@ export class ApiServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  getEmailDecryption(data){
+    return this.http.post(`${this.BASE_URL}/profile/email_decryption_service`, data,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
+
 }
 
