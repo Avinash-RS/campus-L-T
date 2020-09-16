@@ -14,7 +14,7 @@
         </div>
         <div class="view">
           <span (click)="viewCerificates(edu['certificate_url'])">View</span>
-          <span (click)="reSubmit(edu)">Resubmit</span>
+          <span (click)="reSubmit(edu, 'education')">Resubmit</span>
         </div>
       </div>
     </ng-container>
@@ -33,7 +33,7 @@
         </div>
         <div class="view">
           <span (click)="viewCerificates(cer['certificate_url'])">View</span>
-          <span (click)="reSubmit(cer)">Resubmit</span>
+          <span (click)="reSubmit(cer, 'certificate')">Resubmit</span>
         </div>
       </div>
     </ng-container>
@@ -51,7 +51,7 @@
         </div>
         <div class="view">
           <span (click)="viewCerificates(cer['certificate_url'])">View</span>
-          <span (click)="reSubmit(cer)">Resubmit</span>
+          <span (click)="reSubmit(cer, other)">Resubmit</span>
         </div>
       </div>
     </ng-container>

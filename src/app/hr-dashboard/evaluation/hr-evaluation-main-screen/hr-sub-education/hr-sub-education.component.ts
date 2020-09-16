@@ -87,18 +87,21 @@ export class HrSubEducationComponent implements OnInit {
   }
 
 
-  reSubmit(details) {
+  reSubmit(details, docTypes) {
+    console.log("print....", details);
 
     const data = {
       reSubmit: 'documents'
     };
-    this.openDialog(ShortlistBoxComponent, data, details['id']);
+    this.openDialog(ShortlistBoxComponent, data, details['id'], docTypes);
   }
 
-  apiResubmit(reason, dId) {
+  apiResubmit(reason, dId, docTypes) {
     const apiData = {
-      types: reason['comments'],
-      id: dId
+      types: docTypes,
+      id: dId,
+      current_user_id: this.uid,
+      comments: reason['comments']
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
@@ -110,7 +113,7 @@ export class HrSubEducationComponent implements OnInit {
   }
 
   // Open dailog
-  openDialog(component, data, dId) {
+  openDialog(component, data, dId, docTypes) {
     let dialogDetails: any;
 
     /**
@@ -126,7 +129,7 @@ export class HrSubEducationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.apiResubmit(result, dId);
+        this.apiResubmit(result, dId, docTypes);
       }
     });
   }

@@ -94,18 +94,20 @@ export class HrSubEmploymentComponent implements OnInit {
   }
 
 
-  reSubmit(details) {
+  reSubmit(details, docType) {
 
     const data = {
       reSubmit: 'documents'
     };
-    this.openDialog(ShortlistBoxComponent, data, details['id']);
+    this.openDialog(ShortlistBoxComponent, data, details['id'], docType);
   }
 
-  apiResubmit(reason, dId) {
+  apiResubmit(reason, dId, docType) {
     const apiData = {
-      types: reason['comments'],
-      id: dId
+      types: docType,
+      id: dId,
+      current_user_id: this.uid,
+      comments: reason['comments']
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
@@ -117,7 +119,7 @@ export class HrSubEmploymentComponent implements OnInit {
   }
 
   // Open dailog
-  openDialog(component, data, dId) {
+  openDialog(component, data, dId, docType) {
     let dialogDetails: any;
 
     /**
@@ -133,7 +135,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.apiResubmit(result, dId);
+        this.apiResubmit(result, dId, docType);
       }
     });
   }
