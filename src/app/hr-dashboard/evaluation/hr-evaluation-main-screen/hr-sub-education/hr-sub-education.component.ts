@@ -19,6 +19,7 @@ export class HrSubEducationComponent implements OnInit {
   nameOfAssessment: any;
   candidateId: any;
   certificateArr: any;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -54,7 +55,8 @@ export class HrSubEducationComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
-      this.userlist(params['id']);
+      this.uid = params['uid'];
+      this.userlist(params['uid']);
     });
   }
 
@@ -81,7 +83,7 @@ export class HrSubEducationComponent implements OnInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid });
   }
 
 

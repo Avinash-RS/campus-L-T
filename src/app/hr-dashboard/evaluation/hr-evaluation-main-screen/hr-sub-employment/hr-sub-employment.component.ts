@@ -21,6 +21,7 @@ export class HrSubEmploymentComponent implements OnInit {
   candidateId: any;
   certificateArr: any;
   candidateName: any;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -57,7 +58,8 @@ export class HrSubEmploymentComponent implements OnInit {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
-      this.userlist(params['id']);
+      this.uid = params['uid'];
+      this.userlist(params['uid']);
     });
   }
 
@@ -75,7 +77,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
   profileView() {
     const data = {
-      candidateId: this.candidateId ? this.candidateId : '',
+      candidateId: this.uid ? this.uid : '',
       candidateName: this.candidateName ? this.candidateName : '',
     };
     this.openDialog1(CommonKycProfileViewComponent, data);

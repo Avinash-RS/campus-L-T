@@ -27,6 +27,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
   assessmentName: any;
   nameOfAssessment: any;
   candidateId: any;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -62,6 +63,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
+      this.uid = params['uid'];
       this.assessmentDetails(params['data']);
     });
   }
@@ -73,7 +75,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      this.getUsersList(name, this.candidateId);
+      this.getUsersList(name, this.uid);
 
     }, (err) => {
 
@@ -166,7 +168,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid });
   }
 
 }
