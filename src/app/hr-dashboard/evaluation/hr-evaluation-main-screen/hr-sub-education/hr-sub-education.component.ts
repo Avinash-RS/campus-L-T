@@ -19,6 +19,7 @@ export class HrSubEducationComponent implements OnInit {
   nameOfAssessment: any;
   candidateId: any;
   certificateArr: any;
+  other;
   uid:any;
 
   constructor(
