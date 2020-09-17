@@ -194,7 +194,8 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       this.selectedFormData.forEach(data => {
         this.userList.forEach(element => {
           if (element.user_id === data.hr_id) {
-            element.field_form_name = data.frm_id;
+            element['field_form_name'] = element.field_form_name == 'default' ? 1 : element.field_form_name;
+            element['formName'] = data.frm_id == 1 ? 'Default' : data.frm_id == 2 ? 'Ev1' : data.frm_id;
           }
         });
       })
