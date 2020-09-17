@@ -308,3 +308,11 @@
 .none {
   display: none;
 }
+
+.urlSpan{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  width: 260px;
+}

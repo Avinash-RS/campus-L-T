@@ -16,7 +16,7 @@
               </label>
               <div class="inner-wrapper" *ngIf="url">
                 <div class="list">
-                  <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
+                  <span class="urlSpan" matTooltipPosition="after" matTooltip="{{fileName}} ({{fileSize}} kb)">{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
                       src="assets/images/005-close-1_bulk.svg" alt=""></span>
                 </div>
               </div>
