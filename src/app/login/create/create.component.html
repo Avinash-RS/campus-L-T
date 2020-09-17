@@ -30,7 +30,7 @@
 
             <mat-form-field style="margin-bottom: 1em;" matTooltipPosition="above" matTooltip="Email field is Non-Editable" class="input-box disable" appearance="outline">
               <mat-label class="label-color">Email</mat-label>
-              <input matInput id="username" #username [placeholder]="'Enter the email'" formControlName="email"
+              <input style="color: #333333; opacity: 0.8;" matInput id="username" #username [placeholder]="'Enter the email'" formControlName="email"
                 maxlength="64" required>
               <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
               <mat-error class="error" *ngIf="createForm.get('email').hasError('required')">{{'Email is required'}}

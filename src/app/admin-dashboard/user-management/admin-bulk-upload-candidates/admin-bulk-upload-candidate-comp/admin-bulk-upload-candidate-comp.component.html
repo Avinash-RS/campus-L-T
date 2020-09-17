@@ -118,7 +118,7 @@
     </div> -->
 
     <div class="button-wrapper">
-      <button (click)="backToUpload()" class="cancel" mat-raised-button>Cancel</button>
+      <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
       <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Ok</button>
     </div>
   </div>

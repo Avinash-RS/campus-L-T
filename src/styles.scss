@@ -1576,16 +1576,18 @@ tr.mat-row:hover {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: transparent linear-gradient(90deg, #e4e4e4 0%, #969696 100%) 0% 0%
-    no-repeat padding-box;
+  background: #969696cb;
+  // background: transparent linear-gradient(90deg, #e4e4e4 0%, #969696 100%) 0% 0%
+  //   no-repeat padding-box;
   border-radius: 50px;
   height: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: transparent linear-gradient(90deg, #e2dcdc 0%, #8f8f8f 100%) 0% 0%
-    no-repeat padding-box;
+  // background: transparent linear-gradient(90deg, #e2dcdc 0%, #8f8f8f 100%) 0% 0%
+  //   no-repeat padding-box;
+  background: #969696cb;
 }
 .qualify-wrapper {
   ::-webkit-scrollbar {
@@ -2005,4 +2007,16 @@ th {
 .noRecordText {
   font-size: 20px;
   text-align: center;
+}
+.mat-paginator-range-actions {
+  height: 25px !important;
+}
+.mat-paginator-container {
+  height: 39px !important;
+}
+.mat-paginator-page-size {
+  display: flex;
+  align-items: center !important;
+  margin-right: 8px;
+  height: 39px !important;
 }

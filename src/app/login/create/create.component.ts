@@ -74,7 +74,7 @@ export class CreateComponent implements OnInit {
 
       this.prePoulteEmailId = success.decode_id;
       this.autoPopulateMail();     // Function to auto populate mail after form loads.
-      
+
     }, (error) => {
     });
   }
