@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatTableDataSource, MatPaginator, MatSort, PageEvent } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
@@ -47,6 +47,7 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('myDiv', { static: false }) private myDiv: ElementRef;
 
   dateFrom = new FormControl('');
   dateTo = new FormControl('');
@@ -64,6 +65,21 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
   folderValue = new FormControl('');
   tagValue = new FormControl('');
   shortlistValue = new FormControl('');
+  // serverSide Things
+  length;
+  pageSize;
+  apiPageIndex: any = 1;
+  listCount: any = 50;
+  normal = true;
+  asc = false;
+  searchInput: any;
+  desc = false;
+  sortedCol;
+  queryObject: any;
+  // MatPaginator Output
+  pageEvent: PageEvent;
+  overallSelect = false;
+
 
   constructor(
     private appConfig: AppConfigService,
@@ -74,7 +90,28 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.getUsersList();
+    const apiData = {
+      get_assement_type: 'rec',
+      get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      date1_get: this.getAPIDateFormat(this.dateFrom.value),
+      date2_get: this.getAPIDateFormat(this.dateTo.value),
+      // get_assement_type: 'rec',
+      // get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      // get_folder_name: '',
+      // get_shortlist_name: '',
+      // get_tag_name: '',
+      // date1_get: '',
+      // date2_get: '',
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
+    };
+    this.getUsersList(apiData);
     this.getFolderNames();
     this.getTagNames();
     this.getShortlistNames();
@@ -105,30 +142,107 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // To get all users
-  getUsersList() {
+  pageChanged(event) {
+    if (event.previousPageIndex > event.pageIndex) {
+      console.log('prvcoming');
+      // previous button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      const apiData = {
+        get_assement_type: 'rec',
+        get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+        get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+        get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+        get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+        date1_get: this.getAPIDateFormat(this.dateFrom.value),
+        date2_get: this.getAPIDateFormat(this.dateTo.value),
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getUsersList(apiData);
+    }
+    if (event.previousPageIndex < event.pageIndex) {
+      // next button clicked
+      this.apiPageIndex = event.pageIndex + 1;
+      console.log('nexrcoming', this.apiPageIndex);
+      const apiData = {
+        get_assement_type: 'rec',
+        get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+        get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+        get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+        get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+        date1_get: this.getAPIDateFormat(this.dateFrom.value),
+        date2_get: this.getAPIDateFormat(this.dateTo.value),
+          start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getUsersList(apiData);
+    }
+    if (event.pageSize !== this.listCount) {
+      console.log('ncoming', event.pageSize);
+
+      this.listCount = event.pageSize;
+      this.apiPageIndex = 1;
+      const apiData = {
+        get_assement_type: 'rec',
+        get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+        get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+        get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+        get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+        date1_get: this.getAPIDateFormat(this.dateFrom.value),
+        date2_get: this.getAPIDateFormat(this.dateTo.value),
+        start: this.apiPageIndex.toString(),
+        counts: this.listCount.toString(),
+        order_by: '',
+        order_type: '',
+        search: this.searchInput ? this.searchInput : ''
+      };
+      this.getUsersList(apiData);
+    }
+  }
+
+  applySearch() {
     const apiData = {
-      get_assement_type: 'rec',
-      get_created_by: this.appConfig.getLocalData('userId'),
-      get_folder_name: '',
-      get_shortlist_name: '',
-      get_tag_name: '',
-      date1_get: '',
-      date2_get: ''
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
     };
+    this.getUsersList(apiData);
+  }
+
+  // To get all users
+  getUsersList(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.userList = data ? data : [];
+
+      this.userList = data && data['result'] ? data['result'] : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
         element['uid'] = count;
       });
+
       this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
+      this.length = data && data['count'] ? data['count'] : '0';
+      this.triggerFalseClick();
+      // this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }, (err) => {
     });
+  }
+  triggerFalseClick() {
+    if (this.myDiv) {
+
+      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+      el.focus();
+    }
   }
 
   onChangeApiHit(apiData) {
@@ -136,7 +250,8 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
       this.appConfig.hideLoader();
 
       if (data) {
-        this.userList = data ? data : [];
+        // this.userList = data ? data : [];
+        this.userList = data && data['result'] ? data['result'] : [];
         let count = 0;
         this.userList.forEach(element => {
           count = count + 1;
@@ -144,25 +259,36 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
         });
       }
       this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
+      this.length = data && data['count'] ? data['count'] : '0';
+      this.triggerFalseClick();
+      // this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.ngAfterViewInit();
     }, (err) => {
     });
   }
   selectChange() {
+    this.listCount = 50;
+    this.apiPageIndex = 1;
     const apiData = {
       get_assement_type: 'rec',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
       get_folder_name: this.folderValue.value ? this.folderValue.value : '',
       get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
       get_tag_name: this.tagValue.value ? this.tagValue.value : '',
       date1_get: this.getAPIDateFormat(this.dateFrom.value),
-      date2_get: this.getAPIDateFormat(this.dateTo.value)
-    };
+      date2_get: this.getAPIDateFormat(this.dateTo.value),
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
+  };
     this.onChangeApiHit(apiData);
   }
 
   selectedUser(userDetail) {
+
   }
 
   getDateFormat(date) {
@@ -205,14 +331,21 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
           this.endDateValidation = true;
         } else {
           this.endDateValidation = false;
+          this.listCount = 50;
+          this.apiPageIndex = 1;
           const apiData = {
             get_assement_type: 'rec',
-            get_created_by: this.appConfig.getLocalData('userId'),
+            get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
             get_folder_name: this.folderValue.value ? this.folderValue.value : '',
             get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
             get_tag_name: this.tagValue.value ? this.tagValue.value : '',
             date1_get: this.getAPIDateFormat(this.dateFrom.value),
-            date2_get: this.getAPIDateFormat(this.dateTo.value)
+            date2_get: this.getAPIDateFormat(this.dateTo.value),
+            start: this.apiPageIndex.toString(),
+            counts: this.listCount.toString(),
+            order_by: '',
+            order_type: '',
+            search: this.searchInput ? this.searchInput : ''
           };
           this.onChangeApiHit(apiData);
         }
@@ -227,14 +360,21 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
     this.dateTo.setValue('');
     this.endDateValidation = false;
     this.dateValidation = false;
+    this.listCount = 50;
+    this.apiPageIndex = 1;
     const apiData = {
       get_assement_type: 'rec',
-      get_created_by: this.appConfig.getLocalData('userId'),
+      get_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
       get_folder_name: this.folderValue.value ? this.folderValue.value : '',
       get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
       get_tag_name: this.tagValue.value ? this.tagValue.value : '',
       date1_get: '',
-      date2_get: ''
+      date2_get: '',
+      start: this.apiPageIndex.toString(),
+      counts: this.listCount.toString(),
+      order_by: '',
+      order_type: '',
+      search: this.searchInput ? this.searchInput : ''
     };
     this.onChangeApiHit(apiData);
   }
@@ -242,7 +382,8 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
+      // this.dataSource.paginator = this.paginator;
+      this.length = this.length;
       this.dataSource.sort = this.sort;
     }
   }

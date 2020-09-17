@@ -5,7 +5,7 @@
         <div class="left">
           <div class="grid">
             <div class="flex-wrap">
-              <div class="label">
+              <div style="white-space: nowrap;" class="label">
                 Folder name:
               </div>
               <div class="input-box">
@@ -16,7 +16,7 @@
               </div>
             </div>
             <div style="margin-left: 1em;" class="flex-wrap">
-              <div class="label">
+              <div style="white-space: nowrap;" class="label">
                 Tag name:
               </div>
               <div class="input-box">
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="flex-wrap">
-              <div class="label">
+              <div style="white-space: nowrap;" class="label">
                 Shortlist name:
               </div>
               <div class="input-box">
@@ -93,8 +93,8 @@
       </div>
       <!-- </mat-form-field> -->
 
-      <div class="width-maintain">
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <div #myDiv (click)="true" class="scroll width-maintain" style="max-height: 350px; overflow: auto;">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- Position Column -->
         <ng-container matColumnDef="uid" sticky>
@@ -220,7 +220,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="folder_name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> folder name </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Folder name </th>
           <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.folder_name ? (element.folder_name) : '-'}} </td>
         </ng-container>
 
@@ -243,18 +243,20 @@
           </th>
         </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
           *matHeaderRowDef="['fifth-header-row-first-group']">
         </tr>
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
           [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
       </table>
-      </div>
       <div *ngIf="displayNoRecords" class="noRecordText">
         No data available
       </div>
-      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+    </div>
+    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[50, 100]" (page)="pageChanged($event)"
+      [length]="length"></mat-paginator>
+      <!-- <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator> -->
     </div>
     <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
       <div>No data available </div>
