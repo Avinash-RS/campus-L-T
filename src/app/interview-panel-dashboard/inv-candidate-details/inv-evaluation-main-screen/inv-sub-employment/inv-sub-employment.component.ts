@@ -76,7 +76,7 @@ export class InvSubEmploymentComponent implements OnInit {
 
   profileView() {
     const data = {
-      candidateId: this.candidateId ? this.candidateId : '',
+      candidateId: this.uid ? this.uid : '',
       candidateName: this.candidateName ? this.candidateName : '',
     };
     this.openDialog1(CommonKycProfileViewComponent, data);

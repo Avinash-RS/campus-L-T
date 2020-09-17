@@ -293,3 +293,10 @@
   pointer-events: none;
   opacity: 0.5;
 }
+.urlSpan{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  width: 260px;
+}
