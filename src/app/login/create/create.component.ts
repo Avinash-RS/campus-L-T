@@ -39,6 +39,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getEncriptedMail();
     this.formInitialize();
   }
 
@@ -64,6 +65,19 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  getEncriptedMail(){
+    let apiData = {
+      "email_id": this.prePoulteEmailId
+    }
+    this.apiService.getEmailDecryption(apiData).subscribe((success: any) => {
+      this.appConfig.hideLoader();
+
+      this.prePoulteEmailId = success.decode_id;
+      this.autoPopulateMail();     // Function to auto populate mail after form loads.
+      
+    }, (error) => {
+    });
+  }
 
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -73,7 +87,8 @@ export class CreateComponent implements OnInit {
       password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
       confirmpassword: ['', [Validators.required]]
     }, { validators: FormCustomValidators.identityRevealedValidator }
-    ), this.autoPopulateMail(); // Function to auto populate mail after form loads.
+    )
+    // , this.autoPopulateMail(); // Function to auto populate mail after form loads.
   }
 
   autoPopulateMail() {
