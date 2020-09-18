@@ -128,3 +128,7 @@
     width: 190px;
     margin-bottom: -6px;
 }
+.disable {
+    pointer-events: none;
+    opacity: 0.6;
+}
