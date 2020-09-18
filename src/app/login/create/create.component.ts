@@ -71,8 +71,10 @@ export class CreateComponent implements OnInit {
     }
     this.apiService.getEmailDecryption(apiData).subscribe((success: any) => {
       this.appConfig.hideLoader();
-
-      this.prePoulteEmailId = success.decode_id;
+      if (success) {
+        this.prePoulteEmailId = success.decode_id;
+      }     
+      // console.log('success', success);
       this.autoPopulateMail();     // Function to auto populate mail after form loads.
 
     }, (error) => {

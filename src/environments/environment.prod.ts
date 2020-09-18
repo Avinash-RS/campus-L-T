@@ -16,8 +16,12 @@ export const environment = {
   // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
   // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
   // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
-  API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
-  API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
-  Image_Base_Url: 'https://campus.lntedutech.com',
+  // API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
+  // API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
+  // Image_Base_Url: 'https://campus.lntedutech.com',
+  API_BASE_URL: 'http://40.119.225.78/d8cintana2',
+  API_BASE_URL_city: 'http://40.119.225.78/d8cintana2',
+  Image_Base_Url: 'http://40.119.225.78',
+
 
 };

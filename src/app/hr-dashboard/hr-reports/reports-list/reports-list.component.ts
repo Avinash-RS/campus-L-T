@@ -223,7 +223,24 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.error("To date should be greater", '');
       }
     }else{
-      this.appConfig.error("Date should be selected", '');
+      sendReq = {
+        'to': '',
+        'from': '',
+        'tag': data.tagName,
+        'city': data.city,
+        'institute': data.instituteName
+      }
+      
+        this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          const excel = data && data[0].url ? data[0].url : '';
+          window.open(excel, '_blank');
+  
+        }, (err) => {
+        });
+
+      // this.appConfig.error("Date should be selected", '');
     }
   }
 
@@ -293,7 +310,26 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.error("To date should be assessment date", '');
       }
     }else{
-      this.appConfig.error("Date should be selected", '');
+      sendReq = {
+        'to': '',
+        'from': '',
+        'assement_name': data.assesment.assesment
+      }
+      
+        this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          if(data[0].url == 'No Data Found'){
+            this.appConfig.error(data[0].url, '');
+          }else{
+            const excel = data && data[0].url ? data[0].url : '';
+            window.open(excel, '_blank');
+          }
+  
+        }, (err) => {
+        });
+
+      // this.appConfig.error("Date should be selected", '');
     }
   }
 
@@ -326,7 +362,21 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.error("To date should be assessment date", '');
       }
     }else{
-      this.appConfig.error("Date should be selected", '');
+      sendReq = {
+        'to_date': '',
+        'from_date': '',
+        'assement_name': data.assesment.assesment
+      }
+        this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          const excel = data && data.url ? data.url : '';
+          window.open(excel, '_blank');
+    
+        }, (err) => {
+        });
+
+      // this.appConfig.error("Date should be selected", '');
     }
   }
 
