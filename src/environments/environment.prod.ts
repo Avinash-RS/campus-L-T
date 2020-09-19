@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   qa: false,
+  uat: false,
 
   // For Dev
   // API_BASE_URL: 'http://104.211.226.77/d8cintana2',
