@@ -327,7 +327,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'level': this.educationUploadForm.value.educationUploadArr[i].level,
           'uploaded_id': data[0].fileid
         }
-        if(this.urlResume != null) {
+        if(this.getResumeData && this.getResumeData['certificate_url'] == '') {
           eduObj['id'] = this.educationValuearray[this.updateDocumentIndex].id;
         }
         this.educationDetailsArr.push(eduObj);
@@ -336,7 +336,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'document_name': this.certificateUploadForm.value.certificateUploadArr[i].certificateName,
           'uploaded_id': data[0].fileid
         }
-        if(this.urlResume != null) {
+        if(this.getResumeData && this.getResumeData['certificate_url'] == '') {
           cerObj['id'] = this.certificateValuearray.length ? this.certificateValuearray[this.updateDocumentIndex].id : '';
         }
         this.certificatDetailsArr.push(cerObj);
@@ -345,7 +345,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'document_name': this.otherUploadForm.value.otherUploadArr[i].otherDocName,
           'uploaded_id': data[0].fileid
         }
-        if(this.urlResume != null) {
+        if(this.getResumeData && this.getResumeData['certificate_url'] == '') {
           otherObj['id'] = this.otherDocValuearray.length ? this.otherDocValuearray[this.updateDocumentIndex].id : '';
         }
         this.otherDetailsArr.push(otherObj);
@@ -363,7 +363,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   uploadFile(clickType) {
-    if (this.urlResume == null) {
+    if (this.getResumeData && this.getResumeData['certificate_url'] == '') {
       var documentObj = {
         'user_id': this.appConfig.getLocalData('userId'),
         'save_type': clickType,
@@ -382,7 +382,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
         } else {
           this.appConfig.success(`Documents saved successfully`, '');
         }
-
+        this.saveAndSubmitBtnDisable = true;
       }, (err) => {
 
       });
@@ -419,7 +419,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
         } else {
           this.appConfig.success(`Documents saved successfully`, '');
         }
-
+        this.saveAndSubmitBtnDisable = true;
       }, (err) => {
 
       });
@@ -427,7 +427,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   submitDialog(btnType) {
-    if(this.urlResume == null){
+    if(this.getResumeData && this.getResumeData['certificate_url'] == ''){
       if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
         const data = {
           iconName: '',
@@ -493,11 +493,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   disableBtn() {
-    // if(this.resumeUploadForm.valid && this.urlEducation.length){
-    //   this.saveAndSubmitBtnDisable = false;
-    // }else if(this.educationUploadForm.valid && this.urlResume != null){
-    //   this.saveAndSubmitBtnDisable = false;
-    // }
     if(this.urlResume == null){
       if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
         this.saveAndSubmitBtnDisable = false;
