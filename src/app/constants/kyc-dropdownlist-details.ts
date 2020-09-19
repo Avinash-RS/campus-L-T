@@ -59,6 +59,7 @@ export const DropdownListForKYC = {
   level: [
     {
       name: 'SSLC',
+      label: 'SSLC / 10th',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -68,6 +69,7 @@ export const DropdownListForKYC = {
     },
     {
       name: 'HSC',
+      label: 'HSC / 12th',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -77,6 +79,7 @@ export const DropdownListForKYC = {
     },
     {
       name: 'Diploma',
+      label: 'Diploma',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -86,6 +89,7 @@ export const DropdownListForKYC = {
     },
     {
       name: 'UG',
+      label: 'Undergraduate',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -95,6 +99,7 @@ export const DropdownListForKYC = {
     },
     {
       name: 'PG',
+      label: 'Postgraduate',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',

@@ -3,7 +3,7 @@
             <div class="card w-50 alignCard">
                 <div class="card-body">
 
-                    <div [ngClass]="getResumeData.editable_value == 1 ? 'inputBoxDisable' : ''" class="image-upload">
+                    <div [ngClass]="getResumeData && getResumeData['editable_value'] == 1 ? 'inputBoxDisable' : ''" class="image-upload">
                         <label>Resume<span class="asterick">*</span></label>
                         <label class="choose-input" for="file-input">
                             <div *ngIf="!urlResume">

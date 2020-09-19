@@ -111,6 +111,23 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.candidateService.getEducationList().subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data && data[0] ? data[0] : [];
+      list.forEach((element, i) => {
+        if (element['id'] === '1') {
+          element['label'] = 'SSLC / 10th'
+        }
+        if (element['id'] === '2') {
+          element['label'] = 'HSC / 12th'
+        }
+        if (element['id'] === '3') {
+          element['label'] = 'Diploma'
+        }
+        if (element['id'] === '4') {
+          element['label'] = 'Undergraduate'
+        }
+        if (element['id'] === '5') {
+          element['label'] = 'Postgraduate'
+        }
+      });
       this.levelList = list;
     }, (err) => {
 
@@ -371,7 +388,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
 
   addEducationForm(data?: any) {
-    if (this.educationForm['status'] !== 'INVALID') {
+    // console.log(this.educationForm['status'], this.educationForm);
+    
+    if (true) {
+      // if (this.educationForm['status'] !== 'INVALID') {
       this.eduArr.push(this.createItem(data));
     } else {
       this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);

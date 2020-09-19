@@ -16,8 +16,8 @@
                       type="text" value=""> -->
                     <nz-select [ngClass]="i == 0 ? 'disabled' : ''" (ngModelChange)="detectSelectChanges()" nzAllowClear
                       nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
-                      <nz-option *ngFor="let level of levelList; let j =index"
-                        [nzDisabled]="level.education === 'SSLC' ? true : false" [nzLabel]="level.education"
+                      <nz-option *ngFor="let level of levelList; let j = index"
+                        [nzDisabled]="level.education === 'SSLC' ? true : false" [nzLabel]="level.label"
                         [nzValue]="level.education"></nz-option>
                     </nz-select>
                   </div>
