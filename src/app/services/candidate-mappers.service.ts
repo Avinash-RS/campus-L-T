@@ -189,6 +189,11 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/profile/upload_certificates_id`, data, { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  //save or submit update file
+  updateUploadDocument(data) {
+    return this.http.post(`${this.BASE_URL}/profile/update_certificates_id`, data, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
   // getUploaded document
   getUploadedDocument(userId) {
     return this.http.post(`${this.BASE_URL}/profile/get_certificate`, userId, { headers: this.withoutTokens(), withCredentials: true });
