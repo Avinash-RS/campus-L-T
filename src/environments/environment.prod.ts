@@ -23,6 +23,9 @@ export const environment = {
   API_BASE_URL: 'http://40.119.225.78/d8cintana2',
   API_BASE_URL_city: 'http://40.119.225.78/d8cintana2',
   Image_Base_Url: 'http://40.119.225.78',
+  // API_BASE_URL: 'http://138.91.36.116/d8cintana2',
+  // API_BASE_URL_city: 'http://138.91.36.116/d8cintana2',
+  // Image_Base_Url: 'http://138.91.36.116',
 
 
 };
