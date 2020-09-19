@@ -384,6 +384,12 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // getting evaluation details
+  getEvaluationDetails(data) {
+    return this.http.post(`${this.BASE_URL}/api/evaluation_form_result`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   interviewPanelShortlist2() {
     return this.http.get(`${this.BASE_URL}/api/interview_panel`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

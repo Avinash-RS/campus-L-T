@@ -54,15 +54,29 @@ export class InvSubEvaluateComponent implements OnInit {
   ngOnInit() {
   }
 
+  getCandidateDetails() {
+    const apiData = {
+      uid: this.candidateId ? this.candidateId : ''
+    }
+    this.adminService.getEvaluationDetails(apiData).subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      console.log('data', data);
+      
+    }, (err)=> {
+
+    })
+  }
+
   // Get url param for edit route
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
-      this.candidateId = params['id'];
+      this.candidateId = params['uid'];
       this.uid = params['uid'];
       this.getEvaluationData(this.uid);
       this.nginitFunc();
+      this.getCandidateDetails();
     });
   }
 

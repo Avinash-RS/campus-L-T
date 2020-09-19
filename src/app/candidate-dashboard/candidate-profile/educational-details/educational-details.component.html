@@ -194,7 +194,7 @@
                 <div class="outer-box-wrapper">
                   <div class="label-wrapper">
                     <div class="label">
-                      <label>No. of Backlogs (If any)</label>
+                      <label>No. of Backlogs<span class="asterick">*</span></label>
                     </div>
 
                     <div class="input-box">
@@ -204,6 +204,7 @@
                   </div>
                   <div class="error"
                     *ngIf="eduArr.controls[i].get('backlogs').invalid && eduArr.controls[i].get('backlogs').touched">
+                    <span *ngIf="eduArr.controls[i].get('backlogs').errors?.required">Backlogs is required.</span>
                     <span *ngIf="eduArr.controls[i].get('backlogs').errors?.pattern">Accept Numbers only and Maximum of
                       2 digits only Allowed</span>
                   </div>
@@ -224,8 +225,7 @@
                   <div class="error"
                     *ngIf="eduArr.controls[i].get('percentage').invalid && eduArr.controls[i].get('percentage').touched">
                     <span *ngIf="eduArr.controls[i].get('percentage').errors?.required">Percentage is Required</span>
-                    <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Please enter a valid
-                      percentage</span>
+                    <span *ngIf="eduArr.controls[i].get('percentage').errors?.pattern">Percentage should be in the range of 10 to 100</span>
                   </div>
 
                 </div>

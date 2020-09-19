@@ -294,7 +294,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
           field_discipline: { value: null },
           field_specification: { value: null },
           field_year_of_passing: { value: null },
-          field_backlogs: { value: null }, field_percentage: { value: null }
+          field_backlogs: { value: 0 }, field_percentage: { value: null }
         };
         this.addEducationForm(edu);
       }
@@ -312,7 +312,9 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     const numberOnly: RegExp = /^[0-9][0-9]{0,1}$/;
-    const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
+    // const percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
+    const percentageDecimals = /(^100(\.0{1,2})?$)|(^(?:[2-9]\d|\d{2}?)(\.[0-9]{1,2})?$)/;
+    const percentagePattern = /^[1-9][0-9]*$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (edu) {
 
@@ -323,7 +325,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         discipline: [edu.field_discipline['value'], [Validators.required]],
         specification: [edu.field_specification['value'], [RemoveWhitespace.whitespace(), Validators.required]],
         passedYear: [edu.field_year_of_passing['value'], [Validators.required]],
-        backlogs: [edu.field_backlogs['value'], [Validators.pattern(numberOnly)]],
+        backlogs: [edu.field_backlogs['value'], [Validators.required, Validators.pattern(numberOnly)]],
         percentage: [edu.field_percentage['value'], [Validators.required, Validators.pattern(percentageDecimals)]],
       });
     } else {
@@ -334,7 +336,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         discipline: [{ value: null, disabled: true }, [Validators.required]],
         specification: [{ value: null, disabled: true }, [RemoveWhitespace.whitespace(), Validators.required]],
         passedYear: [{ value: null, disabled: false }, [Validators.required]],
-        backlogs: [{ value: null, disabled: false }, [Validators.pattern(numberOnly)]],
+        backlogs: [{ value: 0, disabled: false }, [Validators.required, Validators.pattern(numberOnly)]],
         percentage: [{ value: null, disabled: false }, [Validators.required, Validators.pattern(percentageDecimals)]],
       });
     }
