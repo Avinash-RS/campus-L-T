@@ -14,12 +14,19 @@
                   <div [matTooltip]="i == 0 ? 'SSLC is mandatory' : ''" class="input-box">
                     <!-- <input (focusout)="detectInput(educationForm)" placeholder="Level" formControlName="leveling"
                       type="text" value=""> -->
-                    <nz-select [ngClass]="i == 0 ? 'disabled' : ''" (ngModelChange)="detectSelectChanges()" nzAllowClear
+                    <nz-select *ngIf="i != 1" [ngClass]="i == 0 ? 'disabled' : ''" (ngModelChange)="detectSelectChanges()" nzAllowClear
                       nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
                       <nz-option *ngFor="let level of levelList; let j = index"
-                        [nzDisabled]="level.education === 'SSLC' ? true : false" [nzLabel]="level.label"
+                        [nzDisabled]="(level.education === 'SSLC' || level.education === 'HSC') ? true : false" [nzLabel]="level.label"
                         [nzValue]="level.education"></nz-option>
                     </nz-select>
+                    <nz-select *ngIf="i == 1" (ngModelChange)="detectSelectChanges()" nzAllowClear
+                    nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
+                    <nz-option *ngFor="let level of levelList; let j = index"
+                      [nzDisabled]="(level.education == 'HSC' || level.education == 'Diploma') ? false : true" [nzLabel]="level.label"
+                      [nzValue]="level.education"></nz-option>
+                  </nz-select>
+
                   </div>
                 </div>
                 <!-- eduArr.controls[i].get('age') -->
@@ -243,7 +250,7 @@
                 Or
               </div>
             </ng-container>
-            <ng-container *ngIf="eduArr.controls.length !== 1 && i !== 0">
+            <ng-container *ngIf="(eduArr.controls.length !== 1 && i !== 0) && ((i != 1 && eduArr.controls.length > 2) || (i == 1 && eduArr.controls.length == 2))">
               <div (click)="removeEducationForm(i)" class="remove-button">
                 <div>
                   <i class="material-icons">delete</i>

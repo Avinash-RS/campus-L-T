@@ -303,8 +303,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         this.addEducationForm(edu);
       });
     } else {
-      for (let i = 0; i <= 0; i++) {
-        const edu = {
+      for (let i = 0; i <= 1; i++) {
+        let edu;
+        if (i==0) {
+        edu = {
           field_level: { value: 'SSLC' },
           field_board_university: { value: null },
           field_institute: { value: null },
@@ -313,6 +315,18 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
           field_year_of_passing: { value: null },
           field_backlogs: { value: 0 }, field_percentage: { value: null }
         };
+      }
+      if (i==1) {
+        edu = {
+          field_level: { value: null },
+          field_board_university: { value: null },
+          field_institute: { value: null },
+          field_discipline: { value: null },
+          field_specification: { value: null },
+          field_year_of_passing: { value: null },
+          field_backlogs: { value: 0 }, field_percentage: { value: null }
+        };
+      }
         this.addEducationForm(edu);
       }
     }
