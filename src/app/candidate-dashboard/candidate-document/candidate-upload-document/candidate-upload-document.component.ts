@@ -35,6 +35,9 @@ export class CandidateUploadDocumentComponent implements OnInit {
   showOtherImgErr = false;
   saveAndSubmitBtnDisable = true;
   selectedDropdownValue = [];
+  documentUploadType: any;
+  getResumeData: any = '';
+  updateDocumentIndex: any;
 
 
   resumeUploadForm = new FormGroup({
@@ -75,6 +78,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.otherDocValuearray = data[0][0].other_array;
       this.educationValuearray = data[0][0].education_documents;
       this.selectedDropdownValue = [];
+      this.getResumeData = data[0][0].resume_details[0];
       if (data[0][0].resume_details[0]) {
         this.urlResume = data[0][0].resume_details[0].certificate_url;
       }
@@ -230,6 +234,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   onSelectFile(event, uploadType, i) {
 
+    this.documentUploadType = uploadType;
+    this.updateDocumentIndex = i;
     const fd = new FormData();
     if (uploadType == 'resume') {
       if (event.target.files && (event.target.files[0].type.includes('application/pdf') || event.target.files[0].type.includes('application/msword') || event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jpeg'))) {
@@ -321,17 +327,26 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'level': this.educationUploadForm.value.educationUploadArr[i].level,
           'uploaded_id': data[0].fileid
         }
+        if(this.urlResume != null) {
+          eduObj['id'] = this.educationValuearray[this.updateDocumentIndex].id;
+        }
         this.educationDetailsArr.push(eduObj);
       } else if (selectType == 'certificate') {
         var cerObj = {
           'document_name': this.certificateUploadForm.value.certificateUploadArr[i].certificateName,
           'uploaded_id': data[0].fileid
         }
+        if(this.urlResume != null) {
+          cerObj['id'] = this.certificateValuearray.length ? this.certificateValuearray[this.updateDocumentIndex].id : '';
+        }
         this.certificatDetailsArr.push(cerObj);
       } else if (selectType == 'other') {
         var otherObj = {
           'document_name': this.otherUploadForm.value.otherUploadArr[i].otherDocName,
           'uploaded_id': data[0].fileid
+        }
+        if(this.urlResume != null) {
+          otherObj['id'] = this.otherDocValuearray.length ? this.otherDocValuearray[this.updateDocumentIndex].id : '';
         }
         this.otherDetailsArr.push(otherObj);
       } else {
@@ -348,7 +363,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   uploadFile(clickType) {
-    if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
+    if (this.urlResume == null) {
       var documentObj = {
         'user_id': this.appConfig.getLocalData('userId'),
         'save_type': clickType,
@@ -373,16 +388,70 @@ export class CandidateUploadDocumentComponent implements OnInit {
       });
 
     } else {
-      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
-      this.validateAllFields(this.resumeUploadForm);
-      this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
-      this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
-      this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
+      // this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
+      // this.validateAllFields(this.resumeUploadForm);
+      // this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
+      // this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
+      // this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
+      
+      var documentObjj = {};
+      documentObjj = {
+        'user_id': this.appConfig.getLocalData('userId'),
+        'save_type': clickType
+      }
+      if(this.documentUploadType == 'resume'){
+        documentObjj['resume_id'] = this.resumeFile
+        documentObjj['resume_json_id'] = this.getResumeData.id;
+      }else if(this.documentUploadType == 'education'){
+        documentObjj['education_details'] = this.educationDetailsArr;
+      }else if(this.documentUploadType == 'certificate'){
+        documentObjj['certificate_description'] = this.certificatDetailsArr;
+      }else if(this.documentUploadType == 'other'){
+        documentObjj['other_certificate'] = this.otherDetailsArr;
+      }
+
+      this.candidateService.updateUploadDocument(documentObjj).subscribe((data: any) => {
+
+        this.appConfig.hideLoader();
+
+        if (clickType == 'submit') {
+          this.appConfig.success(`Documents updated successfully`, '');
+        } else {
+          this.appConfig.success(`Documents saved successfully`, '');
+        }
+
+      }, (err) => {
+
+      });
     }
   }
 
   submitDialog(btnType) {
-    if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
+    if(this.urlResume == null){
+      if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
+        const data = {
+          iconName: '',
+          dataToBeShared: {
+            confirmText: `Are you sure you want to upload this documents?`,
+            type: 'upload-tpo',
+            identity: 'upload-doc'
+          },
+          showText: btnType == 'submit' ? 'The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them' : 'Please confirm, Are you sure you want to upload this documents',
+          showConfirm: 'Confirm',
+          documentUpload: 'uploadDoc',
+          showCancel: 'Cancel',
+          showOk: ''
+        };
+  
+        this.openDialog(ShortlistBoxComponent, data, btnType);
+      } else {
+        this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
+        this.validateAllFields(this.resumeUploadForm);
+        this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
+        this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
+        this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
+      }
+    }else{
       const data = {
         iconName: '',
         dataToBeShared: {
@@ -398,14 +467,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       };
 
       this.openDialog(ShortlistBoxComponent, data, btnType);
-    } else {
-      this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
-      this.validateAllFields(this.resumeUploadForm);
-      this.validateAllFormArrays(this.educationUploadForm.get('educationUploadArr') as FormArray);
-      this.validateAllFormArrays(this.certificateUploadForm.get('certificateUploadArr') as FormArray);
-      this.validateAllFormArrays(this.otherUploadForm.get('otherUploadArr') as FormArray);
     }
-
   }
 
   openDialog(component, data, btnType) {
@@ -431,9 +493,19 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   disableBtn() {
-    if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
+    // if(this.resumeUploadForm.valid && this.urlEducation.length){
+    //   this.saveAndSubmitBtnDisable = false;
+    // }else if(this.educationUploadForm.valid && this.urlResume != null){
+    //   this.saveAndSubmitBtnDisable = false;
+    // }
+    if(this.urlResume == null){
+      if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
+        this.saveAndSubmitBtnDisable = false;
+      }
+    }else{
       this.saveAndSubmitBtnDisable = false;
     }
+    
   }
 
   // To validate all fields after submit
