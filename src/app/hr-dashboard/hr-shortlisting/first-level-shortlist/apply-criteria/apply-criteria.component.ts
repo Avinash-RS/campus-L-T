@@ -187,30 +187,36 @@ export class ApplyCriteriaComponent implements OnInit {
       }
     });
 
+    if (this.InstituteNameFilter) {
     this.InstituteNameFilter.forEach((element) => {
       if (element.checkbox) {
         instituteAPIData.push(element.name);
       }
     });
-
+  }
+  if (this.disciplineFilter) {
     this.disciplineFilter.forEach((element) => {
       if (element.checkbox) {
         disciplineAPIData.push(element.name);
       }
     });
+  }
+  if (this.SpecializationNameFilter) {
 
-    this.SpecializationNameFilter.forEach((element) => {
+  this.SpecializationNameFilter.forEach((element) => {
       if (element.checkbox) {
         specializationAPIData.push(element.name);
       }
     });
-
+  }
+  if (this.backlogFilter) {
     this.backlogFilter.forEach((element) => {
       if (element.checkbox) {
         backlogsAPIData.push(element.name);
       }
     });
-
+  }
+ 
     if (this.onlyForEDUFilterArray) {
       if (!this.percentageRegexError && !this.percentageToRegexError) {
         this.onlyForEDUFilterArray.forEach(element => {
@@ -908,12 +914,14 @@ export class ApplyCriteriaComponent implements OnInit {
   }
 
   clearDisciplineFilter() {
+    if (this.disciplineList) {
     this.disciplineList.forEach(element => {
       if (element['name']) {
         element.checkbox = false;
       }
     });
     this.toShowOrNotDisciplineFilter();
+  }
   }
 
 
@@ -1020,6 +1028,7 @@ export class ApplyCriteriaComponent implements OnInit {
 
   toShowOrNotSpecializationFilter(event?) {
     let runGenderElse = true;
+    if (this.SpecializationNameFilter) {
     const showSpecializationCount = [];
     this.SpecializationNameFilter.forEach(element => {
       if (element.checkbox) {
@@ -1035,8 +1044,10 @@ export class ApplyCriteriaComponent implements OnInit {
     });
     this.showSpecializationTotalCount = showSpecializationCount.length;
   }
+  }
 
   SpecializationNameSelectAll(event) {
+    if (this.SpecializationNameDropDown) {
     this.SpecializationNameDropDown.forEach((data) => {
       if (event.target.checked === true) {
         data.checkbox = true;
@@ -1048,14 +1059,17 @@ export class ApplyCriteriaComponent implements OnInit {
     this.toShowOrNotSpecializationFilter();
     // this.InstituteNameDropDown = this.InstituteNameFilter;
   }
+}
 
   clearSpecializationFilter() {
-    this.SpecializationNameDropDown.forEach(element => {
+    if (this.SpecializationNameDropDown) {
+      this.SpecializationNameDropDown.forEach(element => {
       if (element['name']) {
         element.checkbox = false;
       }
     });
     this.toShowOrNotSpecializationFilter();
+  }
   }
 
 
