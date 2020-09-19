@@ -58,6 +58,9 @@ export class ViewDetailsComponent implements OnInit {
     }
   }
 
+  print() {
+    window.print();
+  }
   notShowOtherTabs() {
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
       // Sub-Navigation menus. This will be retrieved in Admin master component
