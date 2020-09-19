@@ -38,6 +38,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   documentUploadType: any;
   getResumeData: any = '';
   updateDocumentIndex: any;
+  updateMode = false;
 
 
   resumeUploadForm = new FormGroup({
@@ -80,6 +81,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.selectedDropdownValue = [];
       this.getResumeData = data[0][0].resume_details[0];
       if (data[0][0].resume_details[0]) {
+        this.updateMode = true;
         this.urlResume = data[0][0].resume_details[0].certificate_url;
       }
       this.appConfig.hideLoader();
@@ -327,8 +329,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'level': this.educationUploadForm.value.educationUploadArr[i].level,
           'uploaded_id': data[0].fileid
         }
-        if(this.getResumeData && this.getResumeData['certificate_url'] == '') {
-          eduObj['id'] = this.educationValuearray[this.updateDocumentIndex].id;
+        if(this.updateMode) {
+          eduObj['id'] = this.educationValuearray.length > 0 ? this.educationValuearray[this.updateDocumentIndex].id : '';
         }
         this.educationDetailsArr.push(eduObj);
       } else if (selectType == 'certificate') {
@@ -336,8 +338,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'document_name': this.certificateUploadForm.value.certificateUploadArr[i].certificateName,
           'uploaded_id': data[0].fileid
         }
-        if(this.getResumeData && this.getResumeData['certificate_url'] == '') {
-          cerObj['id'] = this.certificateValuearray.length ? this.certificateValuearray[this.updateDocumentIndex].id : '';
+        if(this.updateMode) {
+          cerObj['id'] = this.certificateValuearray.length > 0 ? this.certificateValuearray[this.updateDocumentIndex].id : '';
         }
         this.certificatDetailsArr.push(cerObj);
       } else if (selectType == 'other') {
@@ -345,8 +347,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
           'document_name': this.otherUploadForm.value.otherUploadArr[i].otherDocName,
           'uploaded_id': data[0].fileid
         }
-        if(this.getResumeData && this.getResumeData['certificate_url'] == '') {
-          otherObj['id'] = this.otherDocValuearray.length ? this.otherDocValuearray[this.updateDocumentIndex].id : '';
+        if(this.updateMode) {
+          otherObj['id'] = this.otherDocValuearray.length > 0 ? this.otherDocValuearray[this.updateDocumentIndex].id : '';
         }
         this.otherDetailsArr.push(otherObj);
       } else {
@@ -363,7 +365,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   uploadFile(clickType) {
-    if (this.getResumeData && this.getResumeData['certificate_url'] == '') {
+    if (this.updateMode == false) {
       var documentObj = {
         'user_id': this.appConfig.getLocalData('userId'),
         'save_type': clickType,
@@ -427,7 +429,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   submitDialog(btnType) {
-    if(this.getResumeData && this.getResumeData['certificate_url'] == ''){
+    if(this.updateMode == false){
       if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
         const data = {
           iconName: '',
@@ -493,7 +495,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   disableBtn() {
-    if(this.urlResume == null){
+    if(this.updateMode == false){
       if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
         this.saveAndSubmitBtnDisable = false;
       }

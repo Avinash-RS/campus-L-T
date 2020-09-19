@@ -97,7 +97,7 @@
                             </label>
 
                             <input formControlName="certificateFile" id="file-input-2-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                            (change)="onSelectFile($event, 'certificate', i)">
+                            (change)="onSelectFile($event, 'certificate', i); disableBtn()">
 
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeCertificate(i)" style="display: inline-flex; background: transparent; border: none;"
@@ -143,7 +143,7 @@
                                 </label>
 
                                 <input formControlName="otherDocFile" id="file-input-3-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                                (change)="onSelectFile($event, 'other', i)">
+                                (change)="onSelectFile($event, 'other', i); disableBtn()">
 
                                 <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
                                     <button (click)="removeOtherDoc(i)" style="display: inline-flex; background: transparent; border: none;"
