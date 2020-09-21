@@ -17,7 +17,8 @@ export interface IBreadCrumb {
 })
 export class HrMasterComponent implements OnInit {
 
-  public breadcrumbs: IBreadCrumb[];
+  // public breadcrumbs: IBreadCrumb[];
+  breadcrumbs: Array<{ label: string; url: string }>;
 
   appConstant = CONSTANT.ENDPOINTS;
   sidebarOpen;
@@ -39,15 +40,51 @@ export class HrMasterComponent implements OnInit {
   ngOnInit() {
     this.sidebarOpen = true;
 
-    // breadcrumb
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      distinctUntilChanged(),
-    ).subscribe(() => {
-      this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-      console.log(this.breadcrumbs);
+    // // breadcrumb
+    // this.router.events.pipe(
+    //   filter((event) => event instanceof NavigationEnd),
+    //   distinctUntilChanged(),
+    // ).subscribe(() => {
+    //   this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    //   // console.log(this.breadcrumbs);
 
-    });
+    // });
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(event => {
+        this.breadcrumbs = [];
+        let currentRoute = this.activatedRoute.root,
+          url = "";
+        do {
+          const childrenRoutes = currentRoute.children;
+          currentRoute = null;
+
+          childrenRoutes.forEach(route => {
+            if (route.outlet === "primary") {
+
+              const routeSnapshot = route.snapshot;
+
+              url +=
+                "/" + routeSnapshot.url.map(segment => segment.path);
+              // if (route.snapshot.data.breadcrumb !== undefined) {
+              this.breadcrumbs.push({
+                label: route.snapshot.data.breadcrumb,
+                url: url
+              });
+              const updateUrl = [];
+              this.breadcrumbs.forEach(element => {
+                if (element['label']) {
+                  updateUrl.push(element);
+                }
+              });
+              this.breadcrumbs = updateUrl;
+              currentRoute = route;
+              // }
+            }
+          });
+        } while (currentRoute);
+      });
   }
 
   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {

@@ -14,7 +14,7 @@
             <input (focusout)="detectInput(skillForm)" formControlName="value" type="text">
           <div class="error"
             *ngIf="skillsArr.controls[i].get('value').invalid && skillsArr.controls[i].get('value').touched">
-            <span *ngIf="skillsArr.controls[i].get('value').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+            <span *ngIf="skillsArr.controls[i].get('value').errors?.maxlength">Maximum of 255 characters only allowed</span>
           </div>
           </div>
           <!-- <div > -->
@@ -114,9 +114,9 @@
   <div style="margin: 0 0 0 2em; font-weight: 200; color: red;" *ngIf="facultyReference1Form.invalid || facultyReference2Form.invalid" class="error-lines">Characters should not exceed 255</div>
 
   <div class="submit-button-wrapper">
-    <button (click)="onSubmit(aquaintancesForm.value, skillForm.value)" mat-raised-button type="submit">Save and Continue</button>
+    <button class="submit btn-margin-space" (click)="onSubmit(aquaintancesForm.value, skillForm.value)" mat-raised-button type="submit">Continue</button>
 
-    <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
+    <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
   </div>
 

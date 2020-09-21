@@ -19,6 +19,8 @@ export class HrSubEducationComponent implements OnInit {
   nameOfAssessment: any;
   candidateId: any;
   certificateArr: any;
+  other;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -52,10 +54,10 @@ export class HrSubEducationComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
-      this.userlist(params['id']);
+      this.uid = params['uid'];
+      this.userlist(params['uid']);
     });
   }
 
@@ -65,9 +67,7 @@ export class HrSubEducationComponent implements OnInit {
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('certificates', data);
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
-      console.log('certificatesArr', this.certificateArr);
 
     }, (err) => {
 
@@ -84,27 +84,28 @@ export class HrSubEducationComponent implements OnInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid });
   }
 
 
-  reSubmit(details) {
-    console.log(details);
+  reSubmit(details, docTypes) {
+    console.log("print....", details);
 
     const data = {
       reSubmit: 'documents'
     };
-    this.openDialog(ShortlistBoxComponent, data, details['id']);
+    this.openDialog(ShortlistBoxComponent, data, details['id'], docTypes);
   }
 
-  apiResubmit(reason, dId) {
+  apiResubmit(reason, dId, docTypes) {
     const apiData = {
-      types: reason['comments'],
-      id: dId
+      types: docTypes,
+      id: dId,
+      current_user_id: this.uid,
+      comments: reason['comments']
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
       this.appConfig.success('Document Resubmit request has been done', '');
       this.editRouteParamGetter();
     }, (err) => {
@@ -113,7 +114,7 @@ export class HrSubEducationComponent implements OnInit {
   }
 
   // Open dailog
-  openDialog(component, data, dId) {
+  openDialog(component, data, dId, docTypes) {
     let dialogDetails: any;
 
     /**
@@ -129,7 +130,7 @@ export class HrSubEducationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.apiResubmit(result, dId);
+        this.apiResubmit(result, dId, docTypes);
       }
     });
   }

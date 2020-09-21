@@ -72,10 +72,16 @@
       <div class="flex-box">
         <label>Gender<span class="asterick">*</span></label>
         <div class="input-box-radio">
-          <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="gender">
+            <mat-radio-group style="display: flex; justify-content: space-between; width: 30%; margin-top: -1em;" (change)="detectSelectChange()" formControlName="gender">
+                <mat-radio-button value="Male" style="font-size: 17px;">Male
+                </mat-radio-button>
+                <mat-radio-button value="Female" style="font-size: 17px;">Female</mat-radio-button>
+              </mat-radio-group>
+
+          <!-- <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="gender">
             <label nz-radio nzValue="Male">Male</label>
             <label nz-radio nzValue="Female">Female</label>
-          </nz-radio-group>
+          </nz-radio-group> -->
         </div>
       </div>
       <div class="error" *ngIf="gender.invalid && gender.touched">
@@ -90,10 +96,16 @@
       <div class="flex-box">
         <label>Marital Status</label>
         <div class="input-box-radio">
-          <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="marital">
+            <mat-radio-group style="display: flex; justify-content: space-between; width: 30%; margin-top: -1em;" (change)="detectSelectChange()" formControlName="marital">
+                <mat-radio-button value="Married" style="font-size: 17px;">Married
+                </mat-radio-button>
+                <mat-radio-button value="Unmarried" style="font-size: 17px;">Unmarried</mat-radio-button>
+              </mat-radio-group>
+
+          <!-- <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="marital">
             <label nz-radio nzValue="Married">Married</label>
             <label nz-radio nzValue="Unmarried">Unmarried</label>
-          </nz-radio-group>
+          </nz-radio-group> -->
         </div>
       </div>
       <div class="error" *ngIf="marital.invalid && marital.touched">
@@ -178,8 +190,8 @@
       </div>
       <div class="profile-pic-container">
         <div *ngIf="url" matTooltip="Remove Photo" matTooltipPostion="after" (click)="delete()" class="remove">
-          <span style="font-size: 30px;" class="material-icons">
-            cancel
+          <span style="font-size: 30px;">
+            <img src="assets/images/cancel-black-36dp.svg" alt="" srcset="">
           </span>
         </div>
 
@@ -442,7 +454,7 @@
           </div>
           <div style="margin: 0; padding: 0; display: flex; pointer-events: none;">
             <button style="display: inline-flex; background: transparent; border: none;" type="button">
-              <span style="color: transparent; visibility: hidden;" class="material-icons">close</span>
+              <span style="color: transparent; visibility: hidden;"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
             </button>
           </div>
 
@@ -499,7 +511,7 @@
             <div style="margin: 0; padding: 0; display: flex;" [ngClass]="t['controls'].length == 1 ? 'hideClose' : ''">
               <button (click)="removeLanguage(i)" style="display: inline-flex; background: transparent; border: none;"
                 type="button">
-                <span class="material-icons">close</span>
+                <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
               </button>
             </div>
           </div>
@@ -529,8 +541,7 @@
         </div>
         <div class="error" *ngIf="passportNumber.invalid && passportNumber.touched">
           <span *ngIf="passportNumber.errors?.required">Passport Number is Required</span>
-          <span *ngIf="passportNumber.errors?.pattern">Only Numbers is Allowed</span>
-          <span *ngIf="passportNumber.errors?.maxlength">Maximum of 255 digits only allowed</span>
+          <span *ngIf="passportNumber.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters</span>
         </div>
 
       </div>
@@ -767,10 +778,9 @@
 </div>
 
 <div class="submit-button-wrapper">
-  <button
+  <button class="submit btn-margin-space"
     (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)"
-    mat-raised-button type="submit">Save and Continue</button>
-
-  <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
+    mat-raised-button type="submit">Continue</button>
+    <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
 </div>

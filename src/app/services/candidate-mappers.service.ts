@@ -131,7 +131,6 @@ export class CandidateMappersService {
 
   // For Image
   imageUpload(file, uniqueName) {
-    console.log(uniqueName);
 
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/file/upload/profile/candidate/field_profile_image?_format=json`, file,
@@ -140,7 +139,6 @@ export class CandidateMappersService {
 
   // For Signature
   signatureUpload(file, uniqueName) {
-    console.log(uniqueName);
 
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/file/upload/profile/candidate/field_signature?_format=json`, file,
@@ -162,8 +160,8 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/api/city_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
   }
 
-  assessmentList() {
-    return this.http.get(`${this.BASE_URL}/profile/hallticket`,
+  assessmentList(user) {
+    return this.http.post(`${this.BASE_URL}/profile/hallticket`, user,
       {
         headers: this.getAfterCustomHeaders(),
         withCredentials: true
@@ -191,9 +189,40 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/profile/upload_certificates_id`, data, { headers: this.withoutTokens(), withCredentials: true });
   }
 
-  //getUploaded document
+  //save or submit update file
+  updateUploadDocument(data) {
+    return this.http.post(`${this.BASE_URL}/profile/update_certificates_id`, data, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // getUploaded document
   getUploadedDocument(userId) {
     return this.http.post(`${this.BASE_URL}/profile/get_certificate`, userId, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // education
+  getEducationList() {
+    return this.http.get(`${this.BASE_URL}/api/education?_format=json`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // education
+  getDiplomaList(param) {
+    return this.http.post(`${this.BASE_URL}/api/diploma_colleges?_format=json`, param, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // education
+  getoverallInstitute() {
+    return this.http.get(`${this.BASE_URL}/api/college_list`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  // education
+  getoverallDiscipline() {
+    return this.http.get(`${this.BASE_URL}/api/discipline_list`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+
+  // education
+  getoverallSpecialization() {
+    return this.http.get(`${this.BASE_URL}/api/specification_list`, { headers: this.withoutTokens(), withCredentials: true });
   }
 
 }

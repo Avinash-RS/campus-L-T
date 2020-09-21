@@ -26,9 +26,9 @@
     color: $primary;
   }
   .ack {
-    margin: 2em 0;
+    margin: 1em 0;
     color: $light-black-1;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .sizeError {
@@ -43,8 +43,9 @@
     padding: 0.5em;
     height: 150px;
     background: $white-primary;
-    // box-shadow: $shadow-light-black;
-    border-radius: 4px;
+    border: solid 0.5px $table-border;
+  // box-shadow: $shadow-light-black;
+    // border-radius: 4px;
     .remove {
       cursor: pointer;
       position: absolute;
@@ -109,7 +110,8 @@
         justify-content: center;
         align-items: center;
         .sign {
-          width: 400px;
+          max-width: 400px;
+          min-width: 200px;
           height: 70px;
         }
         .grid {
@@ -120,8 +122,9 @@
           justify-content: center;
           align-items: center;
           padding: 1.5em 1em;
-          box-shadow: $shadow-light-black-2;
-          border-radius: 6px;
+          // box-shadow: $shadow-light-black-2;
+          // border-radius: 6px;
+          border: solid 0.5px $table-border;
           min-width: 350px;
           .left {
             margin: 0 0 0 1em;
@@ -150,28 +153,28 @@
     justify-content: center;
     align-items: center;
     margin: 2em 2em 2em 2em;
-    button:first-child {
-      width: 120px;
-      height: 35px;
-      background: $light-blue 0% 0% no-repeat padding-box;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      color: $white;
-      outline: none;
-      font-weight: bold;
-    }
-    button:last-child {
-      width: 120px;
-      height: 35px;
-      margin-left: 30px;
-      border-radius: 8px;
-      border: 1px solid $blue-1;
-      font-weight: 600;
-      font-size: 15px;
-      color: $blue-1;
-      outline: none;
-    }
+    // button:first-child {
+    //   width: 120px;
+    //   height: 35px;
+    //   background: $light-blue 0% 0% no-repeat padding-box;
+    //   box-shadow: $shadow-light-black-1;
+    //   border-radius: 8px;
+    //   font-weight: 700;
+    //   font-size: 15px;
+    //   color: $white;
+    //   outline: none;
+    //   font-weight: bold;
+    // }
+    // button:last-child {
+    //   width: 120px;
+    //   height: 35px;
+    //   margin-left: 30px;
+    //   border-radius: 8px;
+    //   border: 1px solid $blue-1;
+    //   font-weight: 600;
+    //   font-size: 15px;
+    //   color: $blue-1;
+    //   outline: none;
+    // }
   }
 }

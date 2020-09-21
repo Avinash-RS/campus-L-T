@@ -1,45 +1,170 @@
-<div class="modal-wrapper">
-  <div class="confirmation-text">
-    {{data.dataToBeShared.confirmText ? data.dataToBeShared.confirmText : ''}}
+<ng-container
+  *ngIf="(data && data.dataToBeShared && data.dataToBeShared.type !== 'video') && data && data.dataToBeShared && data.dataToBeShared.type !== 'kyc-terms'">
+  <div class="modal-wrapper">
+    <div class="confirmation-text">
+      {{data.dataToBeShared.confirmText ? data.dataToBeShared.confirmText : ''}}
+    </div>
+    <div class="button-wrappers">
+
+      <!-- Type Delete Buttons -->
+      <button *ngIf="data.showCancel && data.dataToBeShared.type === 'delete'" (click)="cancel(data.dataToBeShared)"
+        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+      <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'delete'" (click)="submit(data.dataToBeShared)"
+        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+
+      <!-- Type Add Buttons -->
+      <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add'" (click)="cancel(data.dataToBeShared)"
+        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+      <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add'" (click)="submit(data.dataToBeShared)"
+        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+
+      <!-- Type Add Buttons -->
+      <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add-tpo'" (click)="cancel(data.dataToBeShared)"
+        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+      <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add-tpo'" (click)="submitTPOADDCandidate()"
+        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+
+      <!-- Type Confirm Buttons -->
+      <button *ngIf="data.showCancel && data.dataToBeShared.type === 'confirm'" (click)="cancel(data.dataToBeShared)"
+        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+      <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'confirm'" (click)="submit(data.dataToBeShared)"
+        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+
+      <!-- Type Update Buttons -->
+      <button *ngIf="data.showCancel && data.dataToBeShared.type === 'update'" (click)="cancel(data.dataToBeShared)"
+        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+      <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'update'" (click)="submit(data.dataToBeShared)"
+        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+
+      <button *ngIf="data.showOk" (click)="ok()" mat-raised-button class="ok"
+        type="button">{{data.showConfirm}}</button>
+
+      <!-- Type remove Buttons -->
+      <button *ngIf="data.showCancel && data.dataToBeShared.type === 'remove'" (click)="cancel(data.dataToBeShared)"
+        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+      <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'remove'" (click)="confirm()" mat-raised-button
+        class="submit" type="button">{{data.showConfirm}}</button>
+    </div>
   </div>
-  <div class="button-wrappers">
+</ng-container>
+<ng-container *ngIf="data && data.dataToBeShared && data.dataToBeShared.type === 'video'">
+  <div class="video">
+    <div class="header">
+      <div class="text">
+        {{data.dataToBeShared.confirmText}}
+      </div>
+      <div class="icon">
+        <i style="cursor: pointer;" (click)="cancel(false)" class="material-icons">close</i>
+      </div>
+    </div>
+    <!-- <vg-player>
+      <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+          <source src="assets/images/name.mp4" type="video/mp4">
+      </video>
+  </vg-player> -->
+    <vg-player>
+      <vg-overlay-play></vg-overlay-play>
+      <vg-buffering></vg-buffering>
 
-    <!-- Type Delete Buttons -->
-    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'delete'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="delete-cancel" type="button">{{data.showCancel}}</button>
-    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'delete'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="delete-confirm" type="button">{{data.showConfirm}}</button>
+      <vg-scrub-bar>
+        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+      </vg-scrub-bar>
 
-    <!-- Type Add Buttons -->
-    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
-    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+      <vg-controls>
+        <vg-play-pause></vg-play-pause>
+        <vg-playback-button></vg-playback-button>
 
-          <!-- Type Add Buttons -->
-    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add-tpo'" (click)="cancel(data.dataToBeShared)"
-    mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
-  <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add-tpo'" (click)="submitTPOADDCandidate()"
-    mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+        <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
 
-    <!-- Type Confirm Buttons -->
-    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'confirm'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="add-cancel" type="button">{{data.showCancel}}</button>
-    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'confirm'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="add-confirm" type="button">{{data.showConfirm}}</button>
+        <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
 
-    <!-- Type Update Buttons -->
-    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'update'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="update-cancel" type="button">{{data.showCancel}}</button>
-    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'update'" (click)="submit(data.dataToBeShared)"
-      mat-raised-button class="update-confirm" type="button">{{data.showConfirm}}</button>
+        <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
 
-    <button *ngIf="data.showOk" (click)="ok()" mat-raised-button class="ok" type="button">{{data.showConfirm}}</button>
+        <vg-track-selector></vg-track-selector>
+        <vg-mute></vg-mute>
+        <vg-volume></vg-volume>
 
-    <!-- Type remove Buttons -->
-    <button *ngIf="data.showCancel && data.dataToBeShared.type === 'remove'" (click)="cancel(data.dataToBeShared)"
-      mat-raised-button class="delete-cancel" type="button">{{data.showCancel}}</button>
-    <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'remove'" (click)="confirm()"
-      mat-raised-button class="delete-confirm" type="button">{{data.showConfirm}}</button>
+        <vg-fullscreen></vg-fullscreen>
+      </vg-controls>
+
+      <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin>
+        <source src="https://www.dropbox.com/s/0x2ke57h7wv49ll/Sample_512x288.mp4" type="video/mp4">
+        <!-- <source src="https://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
+          <source src="http://static.videogular.com/assets/videos/videogular.webm" type="video/webm"> -->
+
+        <!-- <track kind="subtitles" label="English" src="http://static.videogular.com/assets/subs/pale-blue-dot.vtt" srclang="en" default>
+          <track kind="subtitles" label="Español" src="http://static.videogular.com/assets/subs/pale-blue-dot-es.vtt" srclang="es"> -->
+      </video>
+    </vg-player>
+
   </div>
-</div>
+</ng-container>
+<ng-container *ngIf="data && data.dataToBeShared && data.dataToBeShared.type === 'kyc-terms'">
+  <div class="wrapper-kyc-terms">
+    <div class="header">
+      <div class="text">
+        <span>
+          &#160;
+        </span>
+        <span>
+          Terms and Conditions
+        </span>
+        <span class="icons">
+            <i style="cursor: pointer;" (click)="cancel(false)" class="material-icons">cancel</i>
+            <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
+        </span>
+      </div>
+    </div>
+    <div class="main-text">
+      <div class="text">
+        Thank you for showing interest in <b class="bold">L&T EduTech</b> a division of <b class="bold">Larsen & Toubro Limited /
+          L&T
+          Construction</b> (“We”, “Us”, “Company”). These Terms of Use “Terms”) and any other documents they
+        expressly incorporate, set forth the terms and
+        conditions upon which you may access and use the Website <a href="https://www.lntedutech.com" target="_blank"
+          rel="noopener noreferrer">www.lntedutech.com</a> or <a href="https://www.lntiggnite.com" target="_blank"
+          rel="noopener noreferrer">www.lntiggnite.com</a> (“Website”).
+      </div>
+      <div class="text">Please read the Terms carefully before you start to use the Website. By accessing the Website and registering
+        for various courses offered, using other functionalities of the Website, you represent you are at least 18
+        Years of age. Further, you accept and agree to be bound and abide by these Terms. If you are below 18 Years old,
+        You shall use the/access the Website only under the parental or legal guardian supervision. If you do not want
+        to
+        agree to these Terms, you must not access or use the service/Website.
+      </div>
+      <div class="text">
+        Please note that the Website (<a href="https://www.lntedutech.com" target="_blank"
+        rel="noopener noreferrer">www.lntedutech.com</a>) and Learning and Assessment platform (<a href="https://www.lntedutech.com" target="_blank"
+        rel="noopener noreferrer">www.lntedutech.com</a>) are
+        owned by the Company. The usage of this Website is an implied consent to Terms of Use of <a href="https://www.lntedutech.com" target="_blank"
+        rel="noopener noreferrer">www.lntedutech.com</a> or
+        <a href="https://www.lntiggnite.com" target="_blank"
+          rel="noopener noreferrer">www.lntiggnite.com</a>. The registration will be common for both the websites.
+        The Terms of Use once agreed to by You for this website will automatically apply to your usage of the other
+        website
+        <a href="https://www.lntedutech.com" target="_blank"
+          rel="noopener noreferrer">www.lntedutech.com</a>
+        or <a href="https://www.lntiggnite.com" target="_blank"
+        rel="noopener noreferrer">www.lntiggnite.com</a>
+        as well and no separate confirmation from your end is necessary.
+      </div>
+      <div class="text bold">
+        Services/Courses:
+      </div>
+      <div class="no-top">
+        This Site can be accessed by varied persons including any person who browses the Website, independent individual
+        registering
+        for the Courses, instructors, colleges/institutions which designate courses for their students, persons who
+        create
+        and manage a particular Course.
+      </div>
+
+    <div class="button-wrappers">
+      <button (click)="cancel(false)" mat-raised-button class="submit" type="button">Done</button>
+    </div>
+  </div>
+
+  </div>
+</ng-container>

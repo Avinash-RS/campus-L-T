@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   qa: false,
+  uat: false,
 
   // For Dev
   // API_BASE_URL: 'http://104.211.226.77/d8cintana2',
@@ -13,8 +14,18 @@ export const environment = {
   // Image_Base_Url: 'http://udapqa.southindia.cloudapp.azure.com',
 
   // For Prod
-  API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
-  API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
-  Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
+  // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
+  // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
+  // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
+  // API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
+  // API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
+  // Image_Base_Url: 'https://campus.lntedutech.com',
+  // API_BASE_URL: 'http://40.119.225.78/d8cintana2',
+  // API_BASE_URL_city: 'http://40.119.225.78/d8cintana2',
+  // Image_Base_Url: 'http://40.119.225.78',
+  API_BASE_URL: 'https://campus-prod.lntedutech.com/d8cintana2',
+  API_BASE_URL_city: 'https://campus-prod.lntedutech.com/d8cintana2',
+  Image_Base_Url: 'https://campus-prod.lntedutech.com',
+
 
 };

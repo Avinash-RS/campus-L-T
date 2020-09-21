@@ -18,6 +18,7 @@ export class ViewDetailsComponent implements OnInit {
 
   radioIsChecked = 'checked';
   userDetails: any;
+  radioValue = 'pre';
 
   userData: any;
   apiForm: any;
@@ -57,6 +58,9 @@ export class ViewDetailsComponent implements OnInit {
     }
   }
 
+  print() {
+    window.print();
+  }
   notShowOtherTabs() {
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
       // Sub-Navigation menus. This will be retrieved in Admin master component
@@ -199,7 +203,6 @@ export class ViewDetailsComponent implements OnInit {
       facultyReference2: this.apiForm && this.apiForm['field_faculty_reference1'] ? this.apiForm['field_faculty_reference1']['value'] : '-'
     };
 
-    console.log('checking', dump['languagesknown']);
 
 
     if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
@@ -217,17 +220,34 @@ export class ViewDetailsComponent implements OnInit {
         element['field_family_date_of_birth'] = { value: this.getDateFormat(element['field_family_date_of_birth']['value']) && this.getDateFormat(element['field_family_date_of_birth']['value']) != 'INVALID DATE ' ? this.getDateFormat(element['field_family_date_of_birth']['value']) : '' };
       }
     });
+    console.log(dump.educationValuearray);
+    
     dump.educationValuearray.forEach(element => {
       if (element['field_year_of_passing']) {
         element['field_year_of_passing'] = { value: this.getMonthFormat(element['field_year_of_passing']['value']) };
       }
+      if (element['field_level']) {
+        if (element['field_level']['value'] === 'SSLC') {
+          element['field_level'] = { value: element['field_level']['value'] === 'SSLC' ? 'SSLC / 10th' : '' };
+        }
+        if (element['field_level']['value'] === 'HSC') {
+          element['field_level'] = { value: element['field_level']['value'] === 'HSC' ? 'HSC / 12th' : '' };
+        }
+        if (element['field_level']['value'] === 'Diploma') {
+          element['field_level'] = { value: element['field_level']['value'] === 'Diploma' ? 'Diploma' : '' };
+        }
+        if (element['field_level']['value'] === 'UG') {
+          element['field_level'] = { value: element['field_level']['value'] === 'UG' ? 'Undergraduate' : '' };
+        }
+        if (element['field_level']['value'] === 'PG') {
+          element['field_level'] = { value: element['field_level']['value'] === 'PG' ? 'Postgraduate' : '' };
+        }
+      }
     });
 
     this.userDetails = dump;
-    console.log('languagesknown', this.userDetails.languagesknown);
 
     this.permanentStateId = this.userDetails['permanentState'];
-    console.log(this.userDetails);
     if (this.allStatess) {
       this.allStatess.forEach(element => {
         if (element.id === this.userDetails['permanentState']) {
@@ -299,7 +319,6 @@ export class ViewDetailsComponent implements OnInit {
 
   getUserDetails() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
-      console.log('data', data);
 
       this.appConfig.setLocalData('KYCAPI', JSON.stringify(data));
       if (data && data.length > 0) {

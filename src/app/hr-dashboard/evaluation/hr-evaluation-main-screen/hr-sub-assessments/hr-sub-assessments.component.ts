@@ -17,7 +17,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
 
-  displayedColumns: any[] = ['section', 'percentage', 'question'];
+  displayedColumns: any[] = ['name', 'percentage', 'question'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -27,6 +27,8 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
   assessmentName: any;
   nameOfAssessment: any;
   candidateId: any;
+  displayNoRecords = false;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -60,9 +62,10 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
+  
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
+      this.uid = params['uid'];
       this.assessmentDetails(params['data']);
     });
   }
@@ -74,8 +77,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      this.getUsersList(name, this.candidateId);
-      console.log('details', data);
+      this.getUsersList(name, this.uid);
 
     }, (err) => {
 
@@ -92,17 +94,37 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
     };
     this.adminService.hrEvaluationSectionMarks(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
-      const align = datas;
-      this.userList = align ? [align] : [];
+      let arr = [];
+      if (datas) {
+        arr = [
+          {
+            name: 'Domain',
+            percentage: datas['domain_percentage'] ? datas['domain_percentage'] : ''
+          },
+          {
+            name: 'Verbal',
+            percentage: datas['verbal_percentage'] ? datas['verbal_percentage'] : ''
+          },
+          {
+            name: 'Analytical',
+            percentage: datas['analytical_percentage'] ? datas['analytical_percentage'] : ''
+          },
+          {
+            name: 'Quantitative',
+            percentage: datas['quantitative_percentage'] ? datas['quantitative_percentage'] : ''
+          },
+          {
+            name: 'Total percentage',
+            percentage: datas['percentage'] ? datas['percentage'] : ''
+          },
+        ];
+      }
+      this.userList = arr ? arr : [];
       let counting = 0;
       this.userList.forEach(element => {
         counting = counting + 1;
         element['count'] = counting;
-        element['section'] = `Section ` + counting;
-        element['percentage'] = element['percentage'] ? element['percentage'] : '';
-        element['question'] = element['question'] ? element['question'] : '';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -121,6 +143,14 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
@@ -148,7 +178,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid });
   }
 
 }

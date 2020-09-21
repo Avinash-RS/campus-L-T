@@ -4,60 +4,60 @@
   padding: 0px 4px 4px 4px;
   .shortlist-header {
     display: flex;
-    height: 40px;
-    align-items: center;
+    height: 20px;
+    align-items: baseline;
     padding: 0 12px 0 12px;
-    flex-flow: row-reverse;
-    border-bottom: solid $primary 1px;
-    .buttons {
-      display: flex;
-      align-items: center;
-      .check {
-        display: flex;
-        align-items: center;
-        font-size: 13px;
-        font-weight: 200;
-        color: $light-black;
-      }
-      .shortlist {
-        display: flex;
-        align-items: center;
-        height: 25px;
-        background: $background-6;
-        padding: 4px 6px;
-        margin-left: 1em;
-        box-shadow: $shadow-light-black-29;
-        font-size: 13px;
-        color: $white;
-        font-weight: 100;
-        .icon {
-          img {
-            width: 14px;
-            margin-top: -2px;
-            margin-right: 3px;
-          }
-        }
-      }
-      .reject {
-        font-weight: 100;
-        margin: 0 0 0 1em;
-        display: flex;
-        align-items: center;
-        height: 25px;
-        background: $red-1;
-        box-shadow: $shadow-light-black-29;
-        padding: 4px 4px;
-        font-size: 13px;
-        color: $white;
-        .icon {
-          img {
-            width: 14px;
-            margin-top: -2px;
-            margin-right: 3px;
-          }
-        }
-      }
-    }
+    justify-content: flex-end;
+    // border-bottom: solid $primary 1px;
+    // .buttons {
+    //   display: flex;
+    //   align-items: center;
+    //   .check {
+    //     display: flex;
+    //     align-items: center;
+    //     font-size: 13px;
+    //     font-weight: 200;
+    //     color: $light-black;
+    //   }
+    //   .shortlist {
+    //     display: flex;
+    //     align-items: center;
+    //     height: 25px;
+    //     background: $background-6;
+    //     padding: 4px 6px;
+    //     margin-left: 1em;
+    //     box-shadow: $shadow-light-black-29;
+    //     font-size: 13px;
+    //     color: $white;
+    //     font-weight: 100;
+    //     .icon {
+    //       img {
+    //         width: 14px;
+    //         margin-top: -2px;
+    //         margin-right: 3px;
+    //       }
+    //     }
+    //   }
+    //   .reject {
+    //     font-weight: 100;
+    //     margin: 0 0 0 1em;
+    //     display: flex;
+    //     align-items: center;
+    //     height: 25px;
+    //     background: $red-1;
+    //     box-shadow: $shadow-light-black-29;
+    //     padding: 4px 4px;
+    //     font-size: 13px;
+    //     color: $white;
+    //     .icon {
+    //       img {
+    //         width: 14px;
+    //         margin-top: -2px;
+    //         margin-right: 3px;
+    //       }
+    //     }
+    //   }
+    // }
   }
   .criteria-header {
     display: flex;
@@ -80,79 +80,68 @@
       .buttons {
         display: flex;
         align-items: center;
-      .search-icon {
-        display: inline-flex;
-        align-items: center;
-        margin: 8px 0;
-        width: auto;
-        // min-width: 280px;
-        color: $header-blue;
-        font-size: 14px;
-        border: 0.5px solid $borderColor-2;
-        background: $white-2 0% 0% no-repeat padding-box !important;
-        border-radius: 5px;
-        box-shadow: $shadow-light-black;
-        box-sizing: border-box;
-        padding: 0.25em 0.15em;
-        height: 27px;
-        position: relative;
-        img {
-          width: 20px;
-          height: 13px;
-        }
-        input {
-          position: relative;
-          width: 100%;
-          display: inline-block;
+        .search-icon {
+          display: inline-flex;
+          align-items: center;
           margin: 8px 0;
           width: auto;
+          // min-width: 280px;
           color: $header-blue;
           font-size: 14px;
+          border: 0.5px solid $borderColor-2;
           background: $white-2 0% 0% no-repeat padding-box !important;
-          box-sizing: border-box;
-          padding: 0.15em 0.5em;
-          height: 24px;
-        }
-        ::placeholder {
-          color: $black-1;
-          opacity: 0.6;
-          font-size: 12px;
-        }
-      }
-      .buttons {
-        margin: 0 0 0 0em;
-        button {
-          display: flex;
-          height: 24px;
-          align-items: center;
-          font-weight: 100;
-          color: $white;
-          font-size: 13px;
-          padding: 4px 6px;
-          justify-content: center;
-          background: $secondary 0% 0% no-repeat padding-box;
+          border-radius: 5px;
           box-shadow: $shadow-light-black;
+          box-sizing: border-box;
+          padding: 0 !important;
+          height: 30px;
+          position: relative;
+          img {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+          }
+          input {
+            position: relative;
+            width: 100%;
+            display: inline-block;
+            margin: 8px 0;
+            width: auto;
+            color: $header-blue;
+            font-size: 14px;
+            background: $white-2 0% 0% no-repeat padding-box !important;
+            box-sizing: border-box;
+            padding: 0.15em 0.5em;
+            height: 24px;
+          }
+          ::placeholder {
+            color: $black-1;
+            opacity: 0.6;
+            font-size: 12px;
+          }
         }
-      }
-      button {
-        margin: 0 0 0 1em;
-        display: flex;
-        height: 24px;
-        align-items: center;
-        font-weight: 100;
-        color: $white;
-        font-size: 13px;
-        padding: 4px 6px;
-        background: $secondary 0% 0% no-repeat padding-box;
-        box-shadow: $shadow-light-black;
-        .icon {
-          span {
-            font-size: 17px;
-            vertical-align: text-top;
+        .buttons {
+          margin: 0 0 0 0em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .submit {
+            .icon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 .25em;
+              span {
+                font-size: 18px;
+              }
+              img {
+                width: 15px;
+                height: 15px;
+              }
+            }
           }
         }
       }
-    }
     }
   }
   .user-list-wrapper {
@@ -177,12 +166,12 @@
         border-radius: 5px;
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
-        padding: 0.25em 0.15em;
-        height: 27px;
+        padding: 0 !important;
+        height: 30px;
         position: relative;
         img {
-          width: 20px;
-          height: 13px;
+          width: 100%;
+          height: 30px;
         }
         input {
           position: relative;

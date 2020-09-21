@@ -6,7 +6,7 @@
 <div class="toolbar-wrapper">
   <ol class="breadcrumb">
     <li *ngFor="let breadcrumb of breadcrumbs">
-      <span [routerLink]="'.'+breadcrumb.url" routerLinkActive="router-link-active">
+      <span [routerLink]="breadcrumb.url" routerLinkActive="router-link-active">
         {{ breadcrumb.label }}
       </span>
     </li>
@@ -27,8 +27,8 @@
   </mat-drawer-content>
 </mat-drawer-container>
 <div (click)="sidebar()" [ngClass]="sidebarOpen ? 'sideOpen' : 'sideClose'" class="openClose">
-  <span *ngIf="sidebarOpen" class="material-icons">keyboard_arrow_left</span>
-  <span *ngIf="!sidebarOpen" class="material-icons">keyboard_arrow_right</span>
+  <span *ngIf="sidebarOpen"><img src="assets/images/keyboard_arrow_left.svg" alt="" srcset=""></span>
+  <span *ngIf="!sidebarOpen"><img src="assets/images/keyboard_arrow_right.svg" alt="" srcset=""></span>
 </div>
 <mat-drawer-container class="second-sidenav">
 
@@ -37,24 +37,24 @@
       <li [routerLink]="appConstant.TPO_DASHBOARD.USER_MANAGEMENT" routerLinkActive="active">
         <span><img src="assets/images/001-people.svg" width="20px" height="20px" alt=""></span>
         <span>User Management</span>
-        <span style="color: #fff;" class="material-icons">
-          arrow_right
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>
-      </li>
+</li>
       <li [routerLink]="appConstant.TPO_DASHBOARD.STATUS" routerLinkActive="active">
         <span><img src="assets/images/status-bar.svg" width="20px" height="20px" alt=""></span>
         <span>Status</span>
-        <span style="color: #fff;" class="material-icons">
-          arrow_right
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>
-      </li>
+</li>
       <li [routerLink]="appConstant.TPO_DASHBOARD.TPO_REPORTS" routerLinkActive="active">
         <span><img src="assets/images/003-statistics.svg" width="20px" height="20px" alt=""></span>
         <span>Reports</span>
-        <span style="color: #fff;" class="material-icons">
-          arrow_right
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>
-      </li>
+</li>
     </ul>
 
   </mat-drawer>

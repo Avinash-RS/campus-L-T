@@ -1,4 +1,45 @@
 export const DropdownListForKYC = {
+  // Diplamo Discipline
+  HSCDiscipline: [
+    {
+      name: 'Science',
+      value: 'Science',
+      checkbox: false
+    },
+    {
+      name: 'Commerce',
+      value: 'Commerce',
+      checkbox: false
+    },
+    {
+      name: 'Arts',
+      value: 'Arts',
+      checkbox: false
+    },
+    {
+      name: 'Others',
+      value: 'Others',
+      checkbox: false
+    }
+  ],
+  boards: [
+    {
+      name: 'CBSE',
+      checkbox: false
+    },
+    {
+      name: 'ICSE',
+      checkbox: false
+    },
+    {
+      name: 'State Board',
+      checkbox: false
+    },
+    {
+      name: 'Others',
+      checkbox: false
+    }
+  ],
   // Gender
   gender: [
     {
@@ -18,6 +59,7 @@ export const DropdownListForKYC = {
   level: [
     {
       name: 'SSLC',
+      label: 'SSLC / 10th',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -27,6 +69,7 @@ export const DropdownListForKYC = {
     },
     {
       name: 'HSC',
+      label: 'HSC / 12th',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -35,7 +78,8 @@ export const DropdownListForKYC = {
       radio: false
     },
     {
-      name: 'Diplomo',
+      name: 'Diploma',
+      label: 'Diploma',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -44,7 +88,8 @@ export const DropdownListForKYC = {
       radio: false
     },
     {
-      name: 'Under Graduation',
+      name: 'UG',
+      label: 'Undergraduate',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
@@ -53,23 +98,15 @@ export const DropdownListForKYC = {
       radio: false
     },
     {
-      name: 'Post Graduation',
+      name: 'PG',
+      label: 'Postgraduate',
       checkbox: false,
       percentageFrom: '',
       percentageTo: '',
       yearFrom: '',
       yearTo: '',
       radio: false
-    },
-    {
-      name: 'Other',
-      checkbox: false,
-      percentageFrom: '',
-      percentageTo: '',
-      yearFrom: '',
-      yearTo: '',
-      radio: false
-    },
+    }
   ],
   // Backlogs
   backlogs: [
@@ -715,5 +752,6 @@ export const DropdownListForKYC = {
     { name: "Poornima College of Engineering, Jaipur", checkbox: false, value: "Poornima College of Engineering, Jaipur" },
     { name: "Swami Keshwanand Institute of Technology Management & Gramothan, Jaipur", checkbox: false, value: "Swami Keshwanand Institute of Technology Management & Gramothan, Jaipur" },
     { name: "Sathyabama Institute of Science and Technology", checkbox: false, value: "Sathyabama Institute of Science and Technology" },
-  ]
+  ],
+  kycDate: '22-09-2020'
 };

@@ -14,9 +14,9 @@
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
           <!-- Name Column -->
-          <ng-container matColumnDef="section">
+          <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Section </th>
-            <td mat-cell *matCellDef="let element"> {{element.section ? element.section : '-'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
           </ng-container>
 
           <!-- Weight Column -->
@@ -48,7 +48,10 @@
           <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
             [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+        <div *ngIf="displayNoRecords" class="noRecordText">
+          No data available
+        </div>
+        <!-- <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator> -->
       </div>
         <!-- Employment documents ends -->
         <ng-template #previewDialog>
@@ -83,7 +86,7 @@
         </ng-template>
 
         <div class="button-wrapper">
-          <button mat-button (click)="next()">Next</button>
+          <button class="submit" mat-button (click)="next()">Next</button>
         </div>
 
 </div>

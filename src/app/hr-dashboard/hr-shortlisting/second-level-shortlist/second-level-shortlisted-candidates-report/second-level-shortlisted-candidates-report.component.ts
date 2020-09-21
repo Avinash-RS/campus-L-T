@@ -18,7 +18,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   BASE_URL = environment.API_BASE_URL;
 
   // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
-  displayedColumns: any[] = ['sno', 'name', 'uid', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing'];
+  displayedColumns: any[] = ['sno', 'name', 'candidate_id', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -36,6 +36,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   cutOff2: any;
   cutOff3: any;
   cutOff4: any;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -57,7 +58,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
     };
     this.adminService.shortlistedCandidatesReport(apiData).subscribe((data: any) => {
       // this.appConfig.hideLoader();
-      console.log('report', data);
     }, (err) => {
 
     });
@@ -67,7 +67,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
       this.getUsersList(params['data']);
@@ -81,7 +80,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
 
     }, (err) => {
 
@@ -140,7 +138,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
       shortlist: '1'
     };
     this.adminService.shortlistedCandidatesReport(apiData).subscribe((datas: any) => {
-      console.log('api', datas);
       const align = [];
       let sno = 0;
       datas.forEach((element, i) => {
@@ -152,7 +149,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
           this.cutOff4 = element && element['marks_valid_shortlist'] ? element['marks_valid_shortlist'] : '-';
         }
         sno = sno + 1;
-        const uid = element && element['uuid'] ? element['uuid'] : '-';
+        const candidate_id = element && element['candidate_id'] ? element['candidate_id'] : '-';
         const name = element && element['name'] ? element['name'] : '-';
         const gender = element && element['field_gender'] ? element['field_gender'] : '-';
         const dob = element && element['field_dob'] ? this.getMonthFormat(element['field_dob']) : '-';
@@ -172,7 +169,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
         align.push(
           {
             sno,
-            uid,
+            candidate_id,
             name,
             gender,
             dob,
@@ -209,6 +206,14 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

@@ -6,9 +6,9 @@
 .shortlist-wrapper {
   width: auto;
   padding: 1em 2em;
-  background: $background-11 0% 0% no-repeat padding-box;
+  background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black-4;
-  border: 2px solid $secondary;
+  // border: 2px solid $secondary;
   border-radius: 5px;
   .preview-wrapper {
     display: grid;
@@ -76,6 +76,8 @@
       font-weight: 200;
       padding: 4px 16px;
       display: flex;
+      justify-content: center;
+      flex-direction: column;
       align-items: center;
     }
     .cancel {
@@ -91,6 +93,8 @@
       font-weight: 200;
       padding: 4px 16px;
       background: transparent;
+      justify-content: center;
+      flex-direction: column;
     }
   }
 }
@@ -99,10 +103,10 @@
   min-width: 400px;
   max-width: 400px;
   padding: 1em 2em;
-  background: $background-11 0% 0% no-repeat padding-box;
+  background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black-4;
-  border: 1px solid $secondary;
-  border-radius: 5px;
+  // border: 1px solid $secondary;
+  // border-radius: 5px;
   .radio-group {
     color: $secondary;
     font-size: 13px;
@@ -126,21 +130,23 @@
       padding: 4px 16px;
       display: flex;
       align-items: center;
+      flex-direction: column;
       justify-content: center;
     }
-    .ok {
-      background: $green-2 0% 0% no-repeat padding-box;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 10px;
-      height: 25px;
-      color: $white;
-      font-size: 13px;
-      font-weight: 200;
-      padding: 4px 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    // .ok {
+      // background: $green-2 0% 0% no-repeat padding-box;
+      // box-shadow: $shadow-light-black-1;
+      // border-radius: 10px;
+      // height: 25px;
+      // color: $white;
+      // font-size: 13px;
+      // font-weight: 200;
+      // padding: 4px 16px;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      // flex-direction: column;
+    // }
     .cancel {
       margin: 0 1em 0 0;
       box-shadow: $shadow-light-black-1;
@@ -155,6 +161,7 @@
       padding: 4px 16px;
       background: transparent;
       justify-content: center;
+      flex-direction: column;
     }
   }
   .text-input {

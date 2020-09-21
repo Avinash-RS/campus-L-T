@@ -9,7 +9,8 @@ mat-toolbar {
   width: 100%;
   box-sizing: border-box;
   height: 60px;
-  background: $secondary !important;
+  background: $header-bg !important;
+  box-shadow: $header-shadow;
   display: flex;
   justify-content: space-between;
   ul:first-child {
@@ -27,8 +28,9 @@ mat-toolbar {
       font-weight: 700;
       box-sizing: border-box;
       img {
-        // width: 50px;
-        // height: 50px;
+        // width: 130px;
+        width: 200px;
+        height: 40px;
       }
     }
   }
@@ -45,7 +47,7 @@ mat-toolbar {
       padding: 0 .5em !important;
       height: auto !important;
       list-style: none;
-      color: $white;
+      color: $light-black;
       // text-transform: uppercase;
       box-sizing: border-box;
       cursor: pointer;

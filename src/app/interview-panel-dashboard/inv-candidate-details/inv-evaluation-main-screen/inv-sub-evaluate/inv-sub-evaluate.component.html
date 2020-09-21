@@ -76,7 +76,7 @@
             </div>
             <div class="col-8 indent">
 
-              <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0] && getCandidateData['education'][0].field_institute ? getCandidateData['education'][0].field_institute : ''}}</span>
+              <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0] && getCandidateData['education'][0]['field_institute'] ? getCandidateData['education'][0]['field_institute'] : ''}}</span>
             </div>
           </div>
         </div>
@@ -116,9 +116,9 @@
 
       <ng-container matColumnDef="veryGood">
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Very Good </th>
-        <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-          <mat-radio-button  (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
-            <span class="material-icons" matTooltip="{{assessment.veryGood}}">info</span>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'veryGood' ? true : false" (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
+            <i class="material-icons" matTooltip="{{assessment.veryGood}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -126,9 +126,9 @@
       <ng-container matColumnDef="good">
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
         </th>
-        <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-          <mat-radio-button (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
-            <span class="material-icons" matTooltip="{{assessment.good}}">info</span>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'good' ? true : false" (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
+            <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -136,9 +136,9 @@
       <ng-container matColumnDef="acceptable">
         <th class="headerCell" mat-header-cell *matHeaderCellDef> Acceptable
         </th>
-        <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-          <mat-radio-button (change)="setAssessmentLevel(assessment,'Acceptable')" [name]="assessment.id" value="3">
-            <span class="material-icons" matTooltip="{{assessment.acceptable}}">info</span>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'Acceptable' ? true : false" (change)="setAssessmentLevel(assessment,'Acceptable')" [name]="assessment.id" value="3">
+            <i class="material-icons" matTooltip="{{assessment.acceptable}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -146,9 +146,9 @@
       <ng-container matColumnDef="notSuitable">
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Not suitable
         </th>
-        <td class="radioButtonCell" mat-cell *matCellDef="let assessment">
-          <mat-radio-button (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
-            <span class="material-icons" matTooltip="{{assessment.notSuitable}}">info</span>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'notSuitable' ? true : false" (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
+            <i class="material-icons" matTooltip="{{assessment.notSuitable}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -507,7 +507,7 @@
       </div>
     </div>
     <div class="space"></div>
-    <div style="text-align: center; padding: 1em 0;">
+    <div class="last-button" style="text-align: center; padding: 1em 0;">
       <button class="submit" mat-raised-button>Submit</button>
     </div>
   </form>

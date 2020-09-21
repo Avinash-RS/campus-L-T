@@ -5,36 +5,37 @@
   box-sizing: border-box;
 }
 mat-toolbar {
-  height: 90px;
-  background: $layer-bg !important;
+  height: 30px;
+  background: $footer-bg !important;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   ul:first-child {
-    color: $white;
     display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
     li {
+      font-size: 12px !important;
+      color: $footer-color;
       list-style: none;
-      padding: 1em 2em;
+      // padding: 1em 2em;
       box-sizing: border-box;
     }
   }
   ul:last-child {
-    font-size: 16px;
+    font-size: 13px;
     display: inline-flex;
     align-items: center;
+    margin: 0;
+    padding: 0;
     li {
+      font-size: 12px !important;
+      color: $footer-color;
       list-style: none;
-      padding: 1em 2em;
-      color: $white;
-      text-transform: uppercase;
+      // padding: 1em 2em;
+      // text-transform: uppercase;
       box-sizing: border-box;
-    }
-    .logout {
-      cursor: pointer;
-      color: $black;
-      border-radius: 6px;
-      padding: 0.1em 1em;
-      background: $white;
     }
   }
 }

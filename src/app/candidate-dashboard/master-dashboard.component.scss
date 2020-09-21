@@ -14,7 +14,7 @@
   z-index: 1000;
   span {
     transition-delay: 10s;
-    background: $blue-6;
+    background: $primary-gray;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 200;
@@ -33,7 +33,7 @@
   z-index: 1000;
   cursor: pointer;
   span {
-    background: $blue-6;
+    background: $primary-gray;
     border-radius: 6px;
     transition-delay: 10s;
     left: 0 !important;
@@ -57,38 +57,32 @@
   }
 }
 .first-sidenav {
-  // background: $wrapper-light-gray 0% 0% no-repeat padding-box;
-  height: 50px;
+  background: $wrapper-light-gray 0% 0% no-repeat padding-box;
+  height: 45px;
   .sub-wrapper-nav {
     width: 235px;
-    background: $sidebar-bg 0% 0% no-repeat padding-box;
+    background: $primary-yellow 0% 0% no-repeat padding-box;
   }
   .main-toolbar {
     display: flex;
-    overflow: auto;
-    margin: 0 0 0 0em;
-    // justify-content: space-between;
-    align-items: center;
     height: 100%;
-    background: $primary 0% 0% no-repeat padding-box;
+    align-items: center;
+    border-bottom: solid $primary-gray 1px;
+    background: $white 0% 0% no-repeat padding-box;
     .sub-navs {
-      height: 100%;
-      padding: 0em 2.5em;
-      border-left: solid $white 1px;
       cursor: pointer;
+      height: 100%;
+      padding: 2px 2.5em;
       display: flex;
+      border-left: solid white 1px;
       background: $non-active-sub-bg 0% 0% no-repeat padding-box;
       align-items: center;
-      box-sizing: border-box;
-      margin: 0 0 0 0em;
-      justify-content: space-between;
+      flex-direction: row;
+      justify-content: center;
       text-align: center;
       outline: none;
-      flex-wrap: wrap;
       div:first-child {
-        margin: 0 0 0px 0;
         img {
-          padding: 0 8px 0 0px;
           width: 30px;
           height: 20px;
         }
@@ -96,39 +90,35 @@
       div:last-child {
         margin: 0px 0 0 0;
         color: $white;
+        padding: 0 0 0 0.5em;
+        font-size: 13px;
       }
     }
     .sub-navs:hover {
       background: $active-sub-bg-hover;
-    }
-    .non-active {
-      background: $non-active-sub-bg 0% 0% no-repeat padding-box !important;
-      outline: none !important;
-      div {
-        opacity: 0.5 !important;
-        font-weight: 100 !important;
-      }
+      opacity: 1;
     }
     .active {
-      background: $active-sub-bg !important;
+      background: $primary-red !important;
       outline: none;
-      div:last-child {
-        font-weight: 200;
-        // color: $white;
-        opacity: 1;
-      }
+      font-weight: 200;
+    }
+    .grid {
+      display: grid !important;
     }
   }
-  .toolbar-bg {
-  }
 }
-// .toolbar-hide {
-//   display: none;
-// }
+.toolbar-bg {
+}
+.toolbar-hide {
+  display: none;
+}
+
 .second-sidenav {
-  margin: 135px 0 0 0;
+  // margin: 130px 0 0 0;
   // margin: 190px 0 0 0;
-  position: absolute;
+  position: relative;
+  height: calc(100vh - 160px);
   top: 0;
   bottom: 0;
   left: 0;
@@ -142,7 +132,7 @@
   }
   .sidenav {
     width: 235px;
-    background: $sidebar-bg 0% 0% no-repeat padding-box;
+    background: $primary-yellow 0% 0% no-repeat padding-box;
     ul {
       overflow: hidden;
       display: inline-flex;
@@ -155,7 +145,7 @@
         outline: none;
         list-style: none;
         margin: 0 0 15px 0;
-        color: $white;
+        color: $sidebar-black;
         opacity: 1;
         font-weight: 100;
         box-sizing: border-box;
@@ -175,37 +165,35 @@
         }
       }
       li:hover {
-        background: $active-sub-bg 0% 0% no-repeat padding-box;
+        background: $sidebar-hover 0% 0% no-repeat padding-box;
       }
       .active {
         background: $active-sub-bg 0% 0% no-repeat padding-box;
+        opacity: 0.5;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-weight: 700;
+        // font-weight: 700;
         opacity: 1;
         span:nth-of-type(3) {
-          font-size: 22px;
-          margin: 2px 0 0 0;
+          // font-size: 22px;
+          // margin: 2px 0 0 0;
           display: block;
         }
       }
     }
   }
   .main-container {
-    background: $hr-bg;
     padding: 0px 0px 0px 0px;
   }
 }
-// .toolbar-hide-second {
-//   margin: 60px 0 0 0 !important;
-//   .sidenav {
-//     ul {
-//       margin: 50px 0 0 0;
-//     }
-//   }
-// }
-
-
+.toolbar-hide-second {
+  margin: 60px 0 0 0 !important;
+  .sidenav {
+    ul {
+      margin: 50px 0 0 0;
+    }
+  }
+}
 //breadcrumb
 .breadcrumb {
   background: none;
@@ -213,7 +201,7 @@
   a,
   span {
     color: #5e5e5e;
-    font-size: 14px;
+    font-size: 13px;
     margin: 0;
     outline: none !important;
   }
@@ -227,6 +215,9 @@
     list-style: none;
     float: left;
     margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   li:last-child {
     margin-right: 20px;
@@ -235,9 +226,14 @@
     content: ">";
     color: #5e5e5e;
     margin-left: 6px;
-    font-size: 14px;
+    font-size: 13px;
   }
   li:last-child::after {
     content: "";
+  }
+  li:last-child {
+    span {
+      cursor: default;
+    }
   }
 }

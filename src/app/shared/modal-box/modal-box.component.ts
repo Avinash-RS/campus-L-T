@@ -25,8 +25,6 @@ export class ModalBoxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // console.log(this.dialogRef);
-    // console.log(this.data);
 
   }
 

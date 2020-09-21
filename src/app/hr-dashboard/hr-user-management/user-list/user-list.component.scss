@@ -18,16 +18,19 @@
       padding: 0 1em;
       flex-flow: row-reverse;
       button {
-        height: 28px;
-        font-size: 13px;
-        text-align: center;
-        font-weight: 100;
-        display: inline-flex;
+        display: flex;
+        height: 24px;
         align-items: center;
-        justify-content: space-between;
-        margin: 0 0 0 1em;
+        font-weight: 200;
+        color: $white;
+        font-size: 13px;
+        padding: 4px 6px;
+        justify-content: center;
+        background: $red-1 0% 0% no-repeat padding-box;
+        box-shadow: $shadow-light-black-1;
+        outline: none;
         span {
-          font-size: 14px;
+          font-size: 13px;
         }
       }
       //   button:nth-of-type(1) {
@@ -64,7 +67,9 @@
     /* Structure */
     .search-bar {
       margin: 0em 1em 0em 1em;
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       .search-icon {
         display: inline-flex;
         align-items: center;
@@ -79,7 +84,7 @@
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
         padding: 0.25em 0.15em;
-        height: 27px;
+        height: 30px;
         position: relative;
         img {
           width: 20px;
@@ -102,6 +107,15 @@
           color: $black-1;
           opacity: 0.6;
           font-size: 12px;
+        }
+      }
+      .icon-color {
+        background: $primary-red;
+        color: $white;
+      }
+      .submit {
+        span {
+          font-size: 14px;
         }
       }
     }
@@ -145,4 +159,8 @@ td {
 th {
   // text-align: center !important;
   padding-left: 1em !important;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
 }

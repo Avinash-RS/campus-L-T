@@ -32,6 +32,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   selectedCandidate: any = [];
   defaultFormSelecterHrPanel: any = [];
   buttonHide;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -160,6 +161,14 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -185,7 +194,8 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       this.selectedFormData.forEach(data => {
         this.userList.forEach(element => {
           if (element.user_id === data.hr_id) {
-            element.field_form_name = data.frm_id;
+            element['field_form_name'] = element.field_form_name == 'default' ? 1 : element.field_form_name;
+            element['formName'] = data.frm_id == 1 ? 'Default' : data.frm_id == 2 ? 'Ev1' : data.frm_id;
           }
         });
       })
@@ -226,7 +236,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       this.appConfig.success(`Interview panel has been assigned Successfully`, '');
 
       localStorage.removeItem('selectedFormId');
-      // console.log('api', datas);
       this.ngOnInit();
 
     }, (err) => {
@@ -246,6 +255,8 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       interViwePanelAssign: 'assign',
       candidateCount: this.selectedCandidate.length,
       panel: this.defaultFormSelecterHrPanel.length,
+      candidate: this.selectedCandidate.length == 1 ? 'Candidate' : 'Candidates',
+      member: this.defaultFormSelecterHrPanel.length == 1 ? 'member' : 'members',
       showCancel: 'Cancel',
       showOk: ''
     };
@@ -253,7 +264,6 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       'uid': this.selectedCandidate,
       'hr_id': this.defaultFormSelecterHrPanel
     }
-    console.log(assignData);
 
     this.openDialog(ShortlistBoxComponent, data);
     // } else {

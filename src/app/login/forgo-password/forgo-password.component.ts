@@ -13,6 +13,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class ForgoPasswordComponent implements OnInit {
 
   forgotPasswordForm: FormGroup;
+  notTrue = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -59,12 +60,12 @@ export class ForgoPasswordComponent implements OnInit {
           mail: this.forgotPasswordForm.value.email
         };
       }
-      this.appConfig.consoleLog('Registration Data which is passed to API', data);
+      // this.appConfig.consoleLog('Registration Data which is passed to API', data);
       // API
 
       this.apiService.forgotPassword(data).subscribe((success: any) => {
         this.appConfig.hideLoader();
-        this.appConfig.consoleLog('success', success);
+        // this.appConfig.consoleLog('success', success);
         this.appConfig.success('Password Reset link has been successfully sent to your Email ID', '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {
@@ -86,5 +87,12 @@ export class ForgoPasswordComponent implements OnInit {
     });
   }
 
+  signIn() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
+  }
+
+  inputChanged(f) {
+
+  }
 
 }

@@ -1,7 +1,7 @@
 @import "../../themes/themes.scss";
 
 .main-wrapper-login {
-  background: url(../../../assets/images/BackgroundImage1.png);
+  // background: url(../../../assets/images/BackgroundImage1.jpg);
   background-size: cover;
   background-repeat: repeat-y;
   background-position: center center;
@@ -10,11 +10,12 @@
   align-items: center;
   position: relative;
   // height: 100%;
-  height: calc(100% - 90px);
+  // height: calc(100% - 90px);
   justify-content: center;
   box-sizing: border-box;
+  top: 179px;
   .layer-only {
-    background-color: $overlay-layer-bg;
+    // background-color: $overlay-layer-bg;
     position: absolute;
     top: 0;
     left: 0;
@@ -24,15 +25,16 @@
   }
   .sub-wrapper {
     // margin: 5em auto;
+    margin-top: -15em;
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    // max-width: 400px;
     text-align: center;
     position: relative;
     background: $wrapper-light-gray 0% 0% no-repeat padding-box;
-    border-radius: 10px;
+    // border-radius: 10px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -40,7 +42,7 @@
 
 @media only screen and (max-height: 600px) {
   .main-wrapper-login {
-    height: 768px;
+    // height: 608px;
     align-items: center;
   }
 }

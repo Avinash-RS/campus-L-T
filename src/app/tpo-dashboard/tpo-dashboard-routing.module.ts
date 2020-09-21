@@ -95,7 +95,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_PREASSESSMENT}`,
+            redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.STATUS_RECRUITMENT}`,
             pathMatch: 'full',
           }
         ]

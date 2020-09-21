@@ -17,7 +17,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 export class InvParticularAssessmentCandidatesComponent implements OnInit, AfterViewInit {
 
 
-  displayedColumns: any[] = ['count', 'candidate_name', 'uid', 'evaluation_status', 'details', 'checked'];
+  displayedColumns: any[] = ['count', 'candidate_name', 'candidate_id', 'evaluation_status', 'details', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -30,6 +30,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   selectAllCheck;
   assessmentName: any;
   nameOfAssessment: any;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -58,7 +59,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
     });
@@ -71,7 +71,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
       this.getUsersList(name);
 
     }, (err) => {
@@ -88,7 +87,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     };
     this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
       const align = datas ? datas : [];
       let counting = 0;
@@ -113,7 +111,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
 
 
   selectAllCheckbox(checked) {
-    console.log(this.dataSource);
 
     if (checked['checked']) {
       this.userList.forEach(element => {
@@ -132,7 +129,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
         });
       });
     }
-    console.log(this.userList);
     this.toShoworNotShowFilter();
   }
 
@@ -153,7 +149,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   unselectSelectALL() {
-    console.log(this.userList);
 
     this.selectAllCheck = false;
     const pushChecked = [];
@@ -186,6 +181,14 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -200,12 +203,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     });
     this.selectedUserDetail = userDetail;
     this.toShoworNotShowFilter();
-    console.log(userDetail);
     this.unselectSelectALL();
   }
 
-  submit(cid, name, status, tag) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '' });
+  submit(cid, name, status, tag, uid) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '' });
   }
 
   finalSubmit() {
@@ -225,7 +227,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     });
     this.adminService.invSubmittingCandidates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
 
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
     }, (err) => {

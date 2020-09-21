@@ -16,6 +16,8 @@ export class CandidateRegisterComponent implements OnInit {
 
   candidateForm: FormGroup;
   toggleVisibility = true;
+  capsOn; any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -62,7 +64,7 @@ export class CandidateRegisterComponent implements OnInit {
         field_user_name: this.candidateForm.value.name
 
       };
-      this.appConfig.consoleLog('Registration Data which is passed to API', datas);
+      // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
         this.appConfig.hideLoader();
@@ -86,5 +88,10 @@ export class CandidateRegisterComponent implements OnInit {
       }
     });
   }
+
+  signIn() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
+  }
+
 
 }

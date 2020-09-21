@@ -24,10 +24,11 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
 import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
-import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 import { InterviewpanelDetailsComponent } from './evaluation/interviewpanel-details/interviewpanel-details.component';
 import { InterviewpanelSelectComponent } from './evaluation/interviewpanel-select/interviewpanel-select.component';
 import { EvalutionInterviewpanelFormComponent } from './evaluation/evalution-interviewpanel-form/evalution-interviewpanel-form.component';
+import { HrAssingAssessmentComponent } from './hr-assing-assessment/hr-assing-assessment.component';
+import { SchedulingAssessmentComponent } from './hr-assing-assessment/scheduling-assessment/scheduling-assessment.component';
 
 
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
@@ -49,6 +50,7 @@ import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-scree
 import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
 import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
+import { from } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -287,13 +289,6 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTCANDIDATEDETAILS}`,
-            component: AssessmentCandidateDetailsComponent,
-            data: {
-              breadcrumb: 'Assessment Candidate Details'
-            }
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`,
             component: EvaluationInterviewPanelComponent,
             data: {
@@ -393,7 +388,28 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_PREASSESSMENT}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_RECRUITMENT}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_ASSING_ASSESSMENT}`,
+        component: HrAssingAssessmentComponent,
+        data: {
+          breadcrumb: 'AssingAssessment'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_SCHEDULING_ASSESSMENT}`,
+            component: SchedulingAssessmentComponent,
+            data: {
+              breadcrumb: 'SchedulingAssessment'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_SCHEDULING_ASSESSMENT}`,
             pathMatch: 'full',
           }
         ]

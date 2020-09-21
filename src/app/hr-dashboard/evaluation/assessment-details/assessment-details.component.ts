@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['count', 'candidate_name', 'uid', 'evaluation_status', 'details'];
+  displayedColumns: any[] = ['count', 'candidate_name', 'candidate_id', 'evaluation_status', 'details'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -24,6 +24,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -57,7 +58,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
       this.getUsersList(params['data']);
@@ -71,7 +71,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
 
     }, (err) => {
 
@@ -87,7 +86,6 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     };
     this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
       const align = datas;
       this.userList = align ? align : [];
@@ -114,13 +112,21 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  view(cid, name, status, tag) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: ''});
+  view(cid, name, status, tag, uid) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
   }
 
 }

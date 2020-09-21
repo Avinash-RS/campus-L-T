@@ -5,6 +5,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Subscription } from 'rxjs';
+import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 
 @Component({
   selector: 'app-loginpage',
@@ -18,6 +19,7 @@ export class LoginpageComponent implements OnInit {
   toggleVisibilityConfirmPassword = true;
   subscribe1: Subscription;
   prePoulteEmailId: any;
+  capsOn; any;
   verifyArr = [];
   constructor(
     private fb: FormBuilder,
@@ -37,36 +39,30 @@ export class LoginpageComponent implements OnInit {
   verifyEmail() {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['mail'] && params['temp-token']) {
-        console.log(params['mail'], params['temp-token']);
 
         this.verifyArr.push({
           name: params['mail'],
           temp_token: params['temp-token']
         });
-        console.log('Calling apicalling');
         this.apiCalling();
       }
       if (params['mail']) {
         this.prePoulteEmailId = params['mail'];
       } else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
-        console.log('Not getting mail or token in param', params['mail'], params['temp-token']);
       }
     });
   }
 
   apiCalling() {
-    console.log('entering apiCalling methid');
     this.apiService.getAllState().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
-        console.log('entering verify API');
 
         this.appConfig.hideLoader();
         this.prePoulteEmailId = this.verifyArr[0]['name'];
         this.appConfig.success(`${data.message}`, '');
         this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
       }, (err) => {
-        console.log(err);
 
         if (err.status === 400 && err.error.error === 'This User was not found or invalid') {
           this.appConfig.error(`${err.error.error}`, '');
@@ -140,20 +136,29 @@ export class LoginpageComponent implements OnInit {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              if (data['form_submmited'] && data['form_submmited'] === '1') {
-                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-              } else {
-                this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-                // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+              let todayDate = new Date();
+              let month = todayDate.getMonth()+1;
+              let day = todayDate.getDate()
+              let date = (day <= 9? '0' + day : day) +'-'+(month <= 9 ? '0' + month : month) +'-'+ todayDate.getFullYear()
+            
+              if(date <= DropdownListForKYC['kycDate']){
+                if (data['form_submmited'] && data['form_submmited'] === '1') {
+                  this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                  this.appConfig.setLocalData('field_isformsubmitted', 'true');
+                  this.appConfig.setLocalData('personalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('familyFormSubmitted', 'true');
+                  this.appConfig.setLocalData('generalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                } else {
+                  this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                }
+              }else{
+                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE);
               }
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'interview_panel') {
@@ -197,6 +202,9 @@ export class LoginpageComponent implements OnInit {
 
   createAccount() {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.SETUP);
+  }
+  candidateSignup(){
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.CANDIDATE);
   }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {

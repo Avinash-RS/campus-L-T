@@ -5,33 +5,33 @@
         <div class="left">
           <div class="grid">
             <div class="flex-wrap">
-              <div class="label">
+              <div style="white-space: nowrap;" class="label">
                 Folder name:
               </div>
               <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="folderValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="folderValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                   <nz-option *ngFor="let level of folderLists" [nzLabel]="level.field_foldername_value"
                     [nzValue]="level.field_foldername_value"></nz-option>
                 </nz-select>
               </div>
             </div>
             <div style="margin-left: 1em;" class="flex-wrap">
-              <div class="label">
+              <div style="white-space: nowrap;" class="label">
                 Tag name:
               </div>
               <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                   <nz-option *ngFor="let level of tagLists" [nzLabel]="level.field_tag_value"
                     [nzValue]="level.field_tag_value"></nz-option>
                 </nz-select>
               </div>
             </div>
             <div class="flex-wrap">
-              <div class="label">
+              <div style="white-space: nowrap;" class="label">
                 Shortlist name:
               </div>
               <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="shortlistValue" nzAllowClear nzShowSearch nzPlaceHolder="">
                   <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value"
                     [nzValue]="level.field_shortlistname_value"></nz-option>
                 </nz-select>
@@ -69,8 +69,8 @@
             <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
             <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
             <div class="button-wrapper">
-              <button class="cancel" (click)="cancelDate()" mat-raised-button>Cancel</button>
-              <button class="confirm" (click)="confirmDate()" mat-raised-button>Apply</button>
+              <button class="cancel-btn btn-margin-space" (click)="cancelDate()" mat-raised-button>Cancel</button>
+              <button class="submit" (click)="confirmDate()" mat-raised-button>Apply</button>
             </div>
           </div>
         </div>
@@ -85,21 +85,27 @@
           <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
         </div>
+
+        <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
+          <button class="submit" (click)="download()" mat-raised-button>Download</button>
+        </div>
+
       </div>
       <!-- </mat-form-field> -->
 
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <div #myDiv (click)="true" class="scroll width-maintain" style="max-height: 350px; overflow: auto;">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- Position Column -->
-        <ng-container matColumnDef="uid">
+        <ng-container matColumnDef="uid" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header>S no. </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{element && element.uid ? (element.uid) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element; let i = index"> {{element && element.uid ? (element.uid) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="new_candidate_id" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate id </th>
-          <td mat-cell *matCellDef="let element"> {{element && element.id ? (element.id) : '-'}} </td>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.new_candidate_id ? (element.new_candidate_id) : '-'}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
@@ -129,7 +135,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="profile_submit">
-          <th matTooltipPosition="above" matTooltip="Candidate has submitted the profile details" mat-header-cell *matHeaderCellDef mat-sort-header> Profile submit </th>
+          <th matTooltipPosition="above" matTooltip="Candidate has submitted the profile details" mat-header-cell *matHeaderCellDef mat-sort-header> Profile submitted </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element && element.profile_submit == 1">
               <img src="assets/images/002-tick1.svg" alt="">
@@ -142,7 +148,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="profile_shortlist">
-          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted for assessment" mat-header-cell *matHeaderCellDef mat-sort-header> Profile shortlist </th>
+          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted for assessment" mat-header-cell *matHeaderCellDef mat-sort-header> Profile shortlisted </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element && element.profile_shortlist == 1">
               <img src="assets/images/002-tick1.svg" alt="">
@@ -166,7 +172,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="assement_shortlist">
-          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted based on assessment score" mat-header-cell *matHeaderCellDef mat-sort-header> Assessment shortlist </th>
+          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted based on assessment score" mat-header-cell *matHeaderCellDef mat-sort-header> Assessment shortlisted </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element && element.assement_shortlist == 1">
               <img src="assets/images/002-tick1.svg" alt="">
@@ -178,7 +184,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="document_submit">
-          <th matTooltipPosition="above" matTooltip="Candidate has submitted documents" mat-header-cell *matHeaderCellDef mat-sort-header> Document submit </th>
+          <th matTooltipPosition="above" matTooltip="Candidate has submitted documents" mat-header-cell *matHeaderCellDef mat-sort-header> Document submitted </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element && element.document_submit == 1">
               <img src="assets/images/002-tick1.svg" alt="">
@@ -190,7 +196,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="interview_shortlist">
-          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted for further consideration" mat-header-cell *matHeaderCellDef mat-sort-header> Interview shortlist </th>
+          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted for further consideration" mat-header-cell *matHeaderCellDef mat-sort-header> Interview shortlisted </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element && element.interview_shortlist == 1">
               <img src="assets/images/002-tick1.svg" alt="">
@@ -200,6 +206,36 @@
             </span>
         </ng-container>
 
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="tag_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tag name </th>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.tag_name ? (element.tag_name) : '-'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="institute">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute </th>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.institute ? (element.institute) : '-'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="folder_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Folder name </th>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.folder_name ? (element.folder_name) : '-'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="shortlist_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.shortlist_name ? (element.shortlist_name) : '-'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.date ? (element.date) : '-'}} </td>
+        </ng-container>
+
         <!-- fifth Header row first group -->
       <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
           <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
@@ -207,21 +243,22 @@
           </th>
         </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
           *matHeaderRowDef="['fifth-header-row-first-group']">
         </tr>
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
           [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+      <div *ngIf="displayNoRecords" class="noRecordText">
+        No data available
+      </div>
+    </div>
+    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[50, 100]" (page)="pageChanged($event)"
+      [length]="length"></mat-paginator>
+      <!-- <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator> -->
     </div>
     <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
       <div>No data available </div>
     </div> -->
-
-    <div class="button-wrappers" *ngIf="userList && userList.length > 0">
-      <button mat-raised-button>Download</button>
-    </div>
-
   </div>

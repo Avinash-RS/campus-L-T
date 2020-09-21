@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { HrDashboardRoutingModule } from './hr-dashboard-routing.module';
 import { HrMasterComponent } from './hr-master.component';
-import { HrHeaderComponent } from './hr-header/hr-header.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { HrShortlistingComponent } from './hr-shortlisting/hr-shortlisting.component';
@@ -22,7 +21,6 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
 import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
 import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
-import { AssessmentCandidateDetailsComponent } from './evaluation/assessment-candidate-details/assessment-candidate-details.component';
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
 import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
 import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
@@ -49,10 +47,12 @@ import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/
 import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 import { SubSharedEvaluationHeaderComponent } from './evaluation/sub-shared-evaluation-header/sub-shared-evaluation-header.component';
 import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
+import { HrAssingAssessmentComponent } from './hr-assing-assessment/hr-assing-assessment.component';
+import { SchedulingAssessmentComponent } from './hr-assing-assessment/scheduling-assessment/scheduling-assessment.component';
 
 
 @NgModule({
-  declarations: [HrMasterComponent, HrHeaderComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, AssessmentDetailsComponent, AssessmentCandidateDetailsComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, CandidateBulkUploadComponent, InterviewPanelBulkUploadComponent, InvpanelBulkuploadComponent, UploadTestResultsComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, ShortlistedCandidateListSecondLevelComponent, SecondLevelShortlistedCandidatesReportComponent, InterviewpanelDetailsComponent, InterviewpanelSelectComponent, SecondLevelAssessmentReportsComponent, EvalutionInterviewpanelFormComponent, SharedEvaluationSubHeaderComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, InvpanelBulkUploadReportComponent],
+  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, BulkUploadComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, UploadedListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, BulkUploadReportsComponent, EvaluationComponent, EvaluationCandidateDetailsComponent, EvaluationInterviewPanelComponent, AssessmentDetailsComponent, UserListComponent, HrAddUserComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, CandidateBulkUploadComponent, InterviewPanelBulkUploadComponent, InvpanelBulkuploadComponent, UploadTestResultsComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, ShortlistedCandidateListSecondLevelComponent, SecondLevelShortlistedCandidatesReportComponent, InterviewpanelDetailsComponent, InterviewpanelSelectComponent, SecondLevelAssessmentReportsComponent, EvalutionInterviewpanelFormComponent, SharedEvaluationSubHeaderComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, InvpanelBulkUploadReportComponent, HrAssingAssessmentComponent, SchedulingAssessmentComponent],
 
   imports: [
     CommonModule,

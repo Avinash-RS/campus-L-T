@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event, ResolveEnd
@@ -7,6 +7,8 @@ import { ApiServiceService } from './services/api-service.service';
 import { AppConfigService } from './config/app-config.service';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { ConnectionService } from 'ng-connection-service';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 
 @Component({
   selector: 'app-root',
@@ -16,17 +18,23 @@ import { ConnectionService } from 'ng-connection-service';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'udap-registration';
   showLoadingIndicator = true;
+  screenHeight;
+  screenWidth;
 
   titles = 'connectionDetector';
   status = 'ONLINE';
+  screenBoolean = false;
+  // Hi
   // initializing as online by default
   isConnected = true;
   subscriptions: Subscription[] = [];
+
 
   constructor(
     private router: Router,
     private apiService: ApiServiceService,
     private appConfig: AppConfigService,
+    private matDialog: MatDialog,
     private connectionService: ConnectionService
   ) {
     this.connectionStatusMethod();
@@ -51,7 +59,26 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.getScreenSize();
     // this.connectionStatusMethod();
+  }
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+
+    if (this.screenWidth < 1000 || this.screenHeight < 400) {
+      // this.show = true;
+      const data = true;
+      if (!this.screenBoolean) {
+        this.openDialog(ScreenresolutionBoxComponent, data);
+      }
+    } else {
+      const data = false;
+      if (this.screenBoolean) {
+        this.matDialog.closeAll();
+      }
+    }
   }
 
   connectionStatusMethod() {
@@ -67,8 +94,31 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-ngOnDestroy(): void {
-  // Unsubscribe all subscriptions to avoid memory leak
-  this.subscriptions.forEach(subscription => subscription.unsubscribe());
-}
+  openDialog(component, data) {
+    let dialogDetails: any;
+
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    this.screenBoolean = true;
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.screenBoolean = false;
+      if (result) {
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe all subscriptions to avoid memory leak
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
 }

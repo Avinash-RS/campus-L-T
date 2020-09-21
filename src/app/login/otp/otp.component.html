@@ -19,9 +19,9 @@
         <div class="input-box">
             <input matInput style="width: 100%;" [formControl]="mobileNumber" type="text" required>
         </div>
-        <div class="edit-icon"><span class="material-icons">
+        <div class="edit-icon"><i class="material-icons">
                 create
-            </span></div>
+            </i></div>
     </div>
     <div class="error" *ngIf="mobileNumber.invalid && mobileNumber.touched">
         <span *ngIf="mobileNumber.errors?.required">Mobile Number is Required</span>

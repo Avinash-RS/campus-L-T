@@ -29,6 +29,7 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
   userList: any;
   radioCheck;
   selectAllCheck;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -55,9 +56,11 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
 
   // To get all users
   getUsersList() {
-    this.candidateService.assessmentList().subscribe((datas: any) => {
+    const apiData = {
+      user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    }
+    this.candidateService.assessmentList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -72,11 +75,11 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
   downloadHallticket(detail) {
-    // const excel = detail && detail.pdf ? detail.pdf + this.appConfig.getLocalData('userId') : '';
-    // window.open(excel, '_blank');
+    const excel = detail && detail.pdf ? detail.pdf : '';
+    window.open(excel, '_blank');
   }
 
 
@@ -91,6 +94,14 @@ export class CandidateAssignedAssessmentListComponent implements OnInit, AfterVi
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

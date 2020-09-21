@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { CandidateDashboardRoutingModule } from './candidate-dashboard-routing.module';
 import { MasterDashboardComponent } from './master-dashboard.component';
-import { CandidateDashboardHeaderComponent } from './candidate-dashboard-header/candidate-dashboard-header.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
@@ -20,10 +19,11 @@ import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket
 import { CandidateMainDashboardComponent } from './candidate-main-dashboard/candidate-main-dashboard.component';
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
+import { RegistrationCloseComponent } from './registration-close/registration-close.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateDashboardHeaderComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent],
+  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent],
   imports: [
     CommonModule,
     SharedModule,

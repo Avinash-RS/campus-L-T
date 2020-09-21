@@ -20,7 +20,7 @@
               Tag name:
             </div>
             <div class="input-box">
-                <nz-select (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch
+                <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch
                 nzPlaceHolder="">
                 <nz-option *ngFor="let level of tagLists" [nzLabel]="level.field_tag_value" [nzValue]="level.field_tag_value"></nz-option>
               </nz-select>
@@ -69,8 +69,8 @@
             <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
             <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
             <div class="button-wrapper">
-                <button class="cancel" (click)="cancelDate()" mat-raised-button>Cancel</button>
-                <button class="confirm" (click)="confirmDate()" mat-raised-button>Apply</button>
+                <button class="cancel-btn btn-margin-space" (click)="cancelDate()" mat-raised-button>Cancel</button>
+                <button class="submit" (click)="confirmDate()" mat-raised-button>Apply</button>
             </div>
         </div>
       </div>
@@ -97,9 +97,9 @@
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="id">
+      <ng-container matColumnDef="new_candidate_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate Id </th>
-        <td mat-cell *matCellDef="let element"> {{element && element.id ? (element.id) : '-'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element && element.new_candidate_id ? (element.new_candidate_id) : '-'}} </td>
       </ng-container>
 
       <!-- Symbol Column -->

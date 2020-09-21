@@ -7,7 +7,7 @@
   background: $wrapper-light-gray;
   height: 100%;
   .edu-wrapper {
-    width: 70%;
+    width: 53%;
     margin: 0 auto;
     padding: 1em 0;
     .heading {
@@ -37,7 +37,7 @@
         padding: 4px 12px;
         max-width: 400px;
         min-width: 400px;
-        color: $sidebar-bg;
+        color: $light-black;
       }
       .view {
         color: $light-blue;
@@ -55,22 +55,22 @@
       justify-content: center;
       align-items: center;
       margin: 2em 0;
-      button {
-        background: $light-blue 0% 0% no-repeat padding-box;
-        box-shadow: $shadow-light-black-1;
-        border-radius: 6px;
-        height: 30px;
-        color: $light-black;
-        opacity: .85;
-        font-size: 14px;
-        font-weight: 200;
-        padding: 4px 26px;
-        display: flex;
-        align-items: center;
-        min-width: auto !important;
-        width: auto !important;
-        justify-content: center;
-      }
+      // button {
+      //   background: $light-blue 0% 0% no-repeat padding-box;
+      //   box-shadow: $shadow-light-black-1;
+      //   border-radius: 6px;
+      //   height: 30px;
+      //   color: $light-black;
+      //   opacity: .85;
+      //   font-size: 14px;
+      //   font-weight: 200;
+      //   padding: 4px 26px;
+      //   display: flex;
+      //   align-items: center;
+      //   min-width: auto !important;
+      //   width: auto !important;
+      //   justify-content: center;
+      // }
     }
   }
 }

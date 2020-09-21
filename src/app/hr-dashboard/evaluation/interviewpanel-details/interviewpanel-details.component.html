@@ -129,12 +129,15 @@
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
           [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"></tr>
             </table>
+            <div *ngIf="displayNoRecords" class="noRecordText">
+              No data available
+            </div>
             <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
           </div>
           <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
             <div>No Candidate data available to assign </div>
           </div>
           <div *ngIf="userList && userList.length > 0" class="button-wrapper">
-            <button [disabled]="buttonHide ? true : false" [ngClass]="buttonHide ? 'disabled' : ''" (click)="submit()" class="button" mat-raised-button>Next</button>
+            <button class="submit"  [ngClass]="buttonHide ? 'disabled' : ''" (click)="submit()" mat-raised-button>Next</button>
           </div>
       </div>

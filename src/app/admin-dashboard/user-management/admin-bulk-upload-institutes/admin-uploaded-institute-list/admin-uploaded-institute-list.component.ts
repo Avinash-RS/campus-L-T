@@ -21,7 +21,7 @@ import moment from 'moment';
 })
 export class AdminUploadedInstituteListComponent implements OnInit, AfterViewInit {
   showPage = true;
-  displayedColumns: any[] = ['id', 'field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'admin_status'];
+  displayedColumns: any[] = ['counter', 'field_institute_name', 'id', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'admin_status'];
   // displayedColumns = ['name', 'weight', 'symbol', 'position'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -30,6 +30,7 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
   selectedUserDetail: any;
   userList: any;
   radioCheck;
+  displayNoRecords = false;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
@@ -73,10 +74,12 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
   getUsersList() {
     this.adminService.instituteListAfterBulkUpload().subscribe((data1: any) => {
       this.appConfig.hideLoader();
-      // console.log(data1);
 
       this.userList = data1 ? data1 : [];
+      let count = 0;
       this.userList.forEach(element => {
+        count = count + 1;
+        element['counter'] = count;
         element['time'] = element && element['time'] ? element['time'] : '';
         element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';
       });
@@ -99,13 +102,20 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
 
   }
 

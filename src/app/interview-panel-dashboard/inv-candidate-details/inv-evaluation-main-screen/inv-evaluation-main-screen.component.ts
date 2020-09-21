@@ -21,6 +21,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   candidateName: any;
   candidateStatus: any;
   tagName: any;
+  uid: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -49,12 +50,13 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
+      // console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
       this.candidateStatus = params['status'];
       this.tagName = params['tag'];
+      this.uid = params['uid'];
       this.appConfig.setLocalData('cname', this.candidateName);
       this.appConfig.setLocalData('cid', this.candidateId);
       this.appConfig.setLocalData('cstatus', this.candidateStatus);
@@ -70,7 +72,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      console.log('details', data);
+      // console.log('details', data);
 
     }, (err) => {
 

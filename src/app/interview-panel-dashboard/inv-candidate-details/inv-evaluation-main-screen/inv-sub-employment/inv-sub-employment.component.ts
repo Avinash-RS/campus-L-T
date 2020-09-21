@@ -20,6 +20,7 @@ export class InvSubEmploymentComponent implements OnInit {
   candidateId: any;
   certificateArr: any;
   candidateName: any;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -53,11 +54,11 @@ export class InvSubEmploymentComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
-      this.userlist(params['id']);
+      this.uid = params['uid']
+      this.userlist(params['uid']);
     });
   }
 
@@ -67,9 +68,7 @@ export class InvSubEmploymentComponent implements OnInit {
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('certificates', data);
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
-      console.log('certificatesArr', this.certificateArr);
     }, (err) => {
 
     });
@@ -77,7 +76,7 @@ export class InvSubEmploymentComponent implements OnInit {
 
   profileView() {
     const data = {
-      candidateId: this.candidateId ? this.candidateId : '',
+      candidateId: this.uid ? this.uid : '',
       candidateName: this.candidateName ? this.candidateName : '',
     };
     this.openDialog1(CommonKycProfileViewComponent, data);
@@ -94,7 +93,7 @@ export class InvSubEmploymentComponent implements OnInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid:this.uid });
   }
 
   // Open dailog

@@ -17,7 +17,6 @@ import { AdminBulkUploadCandidateCompComponent } from './user-management/admin-b
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
 import { AdminReportComponent } from './admin-report/admin-report.component';
-import { AdminReportListComponent } from './admin-report/admin-report-list/admin-report-list.component';
 import { AdminBulkUploadReportComponent } from './admin-report/admin-bulk-upload-report/admin-bulk-upload-report.component';
 import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institude-bulk-upload/admin-institude-bulk-upload.component';
 
@@ -145,13 +144,6 @@ const routes: Routes = [
           breadcrumb: 'reports'
         },
         children: [
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_REPORTS_LIST}`,
-            component: AdminReportListComponent,
-            data: {
-              breadcrumb: 'reports-list'
-            }
-          },
           {
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: AdminBulkUploadReportComponent,

@@ -1,4 +1,4 @@
-<div class="create-wrapper">
+<!-- <div class="create-wrapper">
         <div class="head">
             Sign in
         </div>
@@ -8,7 +8,7 @@
             <div class="forms">
                 <div class="form-field">
                     <label class="label-name">
-                        Email Address
+                        Email Address<span class="asterick">*</span>
                     </label>
                     <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
                         <input matInput formControlName="email" type="text" required>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-field">
                     <label class="label-name">
-                        Password
+                        Password<span class="asterick">*</span>
                     </label>
                     <div class="input-box" [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
                         <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'"
@@ -31,11 +31,11 @@
                         <div class="icon">
                             <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
                                 class="material-icons">
-                                visibility
+                                visibility_off
                             </span>
                             <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;"
                                 class="material-icons">
-                                visibility_off
+                                visibility
                             </span>
                         </div>
 
@@ -45,17 +45,93 @@
                     </div>
                 </div>
                 <div class="forgot-password"><span (click)="forgotPassword()">Forgot Password?</span></div>
-                <!-- <div class="check-box">
-                        <input type="checkbox"> Remember me
-                    </div> -->
+
 
                 <div class="submit-button">
-                    <button type="submit">Submit</button>
+                  <button type="submit" class="submit" mat-raised-button>Submit</button>
                 </div>
-                <!-- <div class="no-account">
-                        <span (click)="createAccount()">Register here</span>
-                </div> -->
 
             </div>
         </form>
+    </div> -->
+
+<div class="create-wrapper">
+  <div class="row container-reg200">
+    <div class="col-md-8 col-sm-12 col-12 border-right no_pl  no_pr">
+      <div class="main-logo">
+      <img alt="" class="beforeloginimg" style="width : 300px; padding-bottom: 30px;" src="assets/images/Layer2_old.svg">
     </div>
+    </div>
+    <div class="col-md-4 col-sm-12 col-12">
+      <div class="wrap-reg">
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+          <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Sign In to your account' }}</h1> <br><br>
+          <div style="margin-top:10px">
+
+            <mat-form-field appearance="outline">
+              <mat-label class="label-color">Email</mat-label>
+              <input matInput  id="username" #username [placeholder]="'Enter the email'"  formControlName="email" maxlength="64"
+              required>
+              <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
+              <mat-error class="error" *ngIf="loginForm.get('email').hasError('required')">{{'Email is required'}}</mat-error>
+              <!-- <mat-error class="error" *ngIf="f.email.errors.required">Email ID is required</mat-error> -->
+              <mat-error class="error" *ngIf="loginForm.get('email').hasError('pattern')">{{'Please enter a valid email address'}}</mat-error>
+            </mat-form-field>
+            <div class="space-20"></div>
+
+            <div class="" appCapslock (capsLock)="capsOn=$event">
+              <!-- <label>Password</label> -->
+              <!-- <div *ngIf="capsOn">{{'Caps lock is on !' | translate }}</div> -->
+              <mat-form-field appearance="outline">
+                <mat-label  class="label-color">{{'Password' }}</mat-label>
+                <input matInput  [placeholder]="'Enter password'" [type]="!toggleVisibility ? 'text' : 'password'" formControlName="password" [ngClass]="{ 'is-invalid': password.touched && password.errors }" required>
+                <mat-icon class="icon-color" matPrefix>lock_outline</mat-icon>
+                <div mat-icon-button matSuffix (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
+                <mat-icon class="icon-color-1">{{toggleVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </div>
+                <mat-error class="error" *ngIf="password.touched && password.errors" >{{'Password is required' }}</mat-error>
+              </mat-form-field>
+              <div class="space-20"></div>
+
+            </div>
+            <div class="space-20"></div>
+
+
+            <div style="text-align: end;">
+              <!-- <mat-checkbox class="remember_me">
+                {{'Keep me signed in' }}
+              </mat-checkbox> -->
+            <mat-label>
+            <a  class="forgot" (click)="forgotPassword()">{{'Forgot password?'}}</a>
+            </mat-label></div>
+
+            <div class="space-20"></div>
+
+            <div class="center">
+              <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid" type="submit">{{'SIGN IN'}}</button>
+
+            </div>
+
+            <!-- <div class="sign_up">
+              <span class="haveacc">Don't have an account?</span>
+              <a><span class="col" (click)="candidateSignup()">{{'Sign up' }}</span></a> </div><br><br> -->
+          </div>
+        </form>
+      </div>
+
+      <!-- <div class="row footer20">
+        <div class="col-12">
+          <span class="forgot1">2020 © L&T EduTech All Rights Reserved</span>
+        </div>
+      </div> -->
+      <!-- <div class="col-4">
+        <span class="powered">
+          <img class="footericon" alt="" src="assets/learner/LT_small.svg">
+        </span>
+      </div> -->
+    </div>
+
+
+
+  </div>
+</div>

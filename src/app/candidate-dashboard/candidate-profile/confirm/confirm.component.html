@@ -15,9 +15,9 @@
 
   <div class="signature-wrapper" [ngClass]="url ? 'width-100' : ''">
     <div *ngIf="url" matTooltip="Remove Signature" matTooltipPostion="after" (click)="delete()" class="remove">
-      <span style="font-size: 25px;" class="material-icons">
+      <i style="font-size: 25px;" class="material-icons">
         cancel
-      </span>
+      </i>
     </div>
     <div class="label-input-holder">
       <label class="hoverable" for="fileInput">
@@ -48,13 +48,14 @@
   </div>
 
   <div class="ack">
-      By clicking on submit I agree to the above declaration.
-    </div>
+      <mat-checkbox [(ngModel)]="agree"></mat-checkbox>
+    I agree to <span style="color: #007bff; cursor: pointer;" (click)="kycTerms()">terms & conditions and privacy policy</span>
+  </div>
 
   <div class="submit-button-wrapper">
-    <button (click)="onSubmit()" mat-raised-button type="button">Submit</button>
+    <button class="submit btn-margin-space" (click)="onSubmit()" mat-raised-button type="button">Submit</button>
 
-    <button (click)="cancel()" mat-raised-button type="button">Cancel</button>
+    <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
 
   </div>
 

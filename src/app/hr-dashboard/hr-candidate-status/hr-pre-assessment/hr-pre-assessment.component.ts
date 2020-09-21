@@ -41,7 +41,7 @@ export const MY_FORMATS = {
 })
 export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
+  displayedColumns: any[] = ['uid', 'tag_name', 'new_candidate_id', 'institute', 'foldername', 'shortlistname', 'date_time', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -81,7 +81,6 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
 
   getFolderNames() {
     this.adminService.TPOStatusFolderLists().subscribe((data: any) => {
-      console.log('folder', data);
       this.folderLists = data && data ? data : [];
 
     }, (err) => {
@@ -90,7 +89,6 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
   }
   getTagNames() {
     this.adminService.TPOStatusTagLists().subscribe((data: any) => {
-      console.log('tag', data);
       this.tagLists = data && data ? data : [];
 
     }, (err) => {
@@ -99,7 +97,6 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
   }
   getShortlistNames() {
     this.adminService.TPOStatusShortlistLists().subscribe((data: any) => {
-      console.log('shortlist', data);
       this.shortlistLists = data && data ? data : [];
 
     }, (err) => {
@@ -120,7 +117,6 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
     };
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('api', data);
 
       this.userList = data ? data : [];
       let count = 0;
@@ -138,7 +134,6 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('api', data);
 
       if (data) {
         this.userList = data ? data : [];
@@ -168,7 +163,7 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
   getDateFormat(date) {
@@ -260,6 +255,26 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  download(){
+    const apiData = {
+      get_assement_type: 'pre',
+      get_created_by: '',
+      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
+      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      date1_get: this.getAPIDateFormat(this.dateFrom.value),
+      date2_get: this.getAPIDateFormat(this.dateTo.value)
+    };
+
+    this.adminService.getStatusExcelDownload(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+
+      const excel = data && data[0].url ? data[0].url : '';
+      window.open(excel, '_blank');
+    }, (err) => {
+    });
   }
 
 }

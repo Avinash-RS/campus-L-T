@@ -41,7 +41,7 @@ export const MY_FORMATS = {
 })
 export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
+  displayedColumns: any[] = ['uid', 'new_candidate_id', 'mail_sent', 'registered', 'profile_submit', 'profile_shortlist', 'assement'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -81,7 +81,6 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
 
   getFolderNames() {
     this.adminService.TPOStatusFolderLists().subscribe((data: any) => {
-      console.log('folder', data);
       this.folderLists = data && data ? data : [];
 
     }, (err) => {
@@ -90,7 +89,6 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
   }
   getTagNames() {
     this.adminService.TPOStatusTagLists().subscribe((data: any) => {
-      console.log('tag', data);
       this.tagLists = data && data ? data : [];
 
     }, (err) => {
@@ -99,7 +97,6 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
   }
   getShortlistNames() {
     this.adminService.TPOStatusShortlistLists().subscribe((data: any) => {
-      console.log('shortlist', data);
       this.shortlistLists = data && data ? data : [];
 
     }, (err) => {
@@ -120,7 +117,6 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
     };
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('api', data);
       this.userList = data ? data : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -137,10 +133,14 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('api', data);
 
       if (data) {
         this.userList = data ? data : [];
+        let count = 0;
+        this.userList.forEach(element => {
+          count = count + 1;
+          element['uid'] = count;
+        });
       }
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -162,7 +162,6 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
   }
 
   getDateFormat(date) {

@@ -42,6 +42,7 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   radioCheck;
   rejectCheck;
   buttonDisabled = true;
+  displayNoRecords = false;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
   status: string;
@@ -62,7 +63,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      console.log('dataadadad', data);
       this.appConfig.hideLoader();
 
       this.userList = data ? data : [];
@@ -88,6 +88,14 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -107,8 +115,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
 
   submit(event) {
     event.stopPropagation();
-    console.log('ad', this.status);
-    console.log('s', this.selectedUserDetail);
     let data;
     if (this.status === 'approve') {
       data = {
@@ -174,12 +180,9 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail, status) {
-    console.log(this.radioCheck);
     this.status = 'approve';
     this.buttonDisabled = false;
     this.rejectCheck = null;
-
-    console.log(userDetail);
 
     this.selectedUserDetail = userDetail;
     this.userList.forEach(element => {
@@ -192,7 +195,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   }
 
   selectedUserReject(userDetail, status) {
-    console.log(userDetail);
     this.buttonDisabled = false;
     this.status = 'reject';
     this.radioCheck = null;
@@ -232,11 +234,9 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result['status'] === 'approve') {
-        console.log(result, result.status);
         this.apiSubmit(result);
       }
       if (result && result['status'] === 'reject') {
-        console.log(result, result.status);
         this.apiSubmit(result);
       }
     });

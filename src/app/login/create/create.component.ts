@@ -20,6 +20,9 @@ export class CreateComponent implements OnInit {
   currentRoute: string;
   passwordTempToken: any;
   prePoulteEmailId: any;
+  type: string;
+  capsOn; any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -29,13 +32,14 @@ export class CreateComponent implements OnInit {
   ) {
     if (this.router.url.includes(CONSTANT.ENDPOINTS.PASSWORD.RESET)) {
       this.verifyPassword();
-      this.currentRoute = 'Reset the password';
+      // this.currentRoute = 'Create the password';
     } else {
-      this.currentRoute = 'Create an account';
+      // this.currentRoute = 'Reset the password';
     }
   }
 
   ngOnInit() {
+    this.getEncriptedMail();
     this.formInitialize();
   }
 
@@ -49,6 +53,11 @@ export class CreateComponent implements OnInit {
         // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.RESET}`);
         this.passwordTempToken = params['temp-token'];
         this.prePoulteEmailId = params['mail'];
+        this.currentRoute = 'Create the password';
+        if (params['type'] === 'reset') {
+          this.type = 'reset';
+          this.currentRoute = 'Reset the password';
+        }
       } else {
         this.appConfig.error(`Reset password temp token is invalid`, '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.FORGOT);
@@ -56,6 +65,21 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  getEncriptedMail(){
+    let apiData = {
+      "email_id": this.prePoulteEmailId
+    }
+    this.apiService.getEmailDecryption(apiData).subscribe((success: any) => {
+      this.appConfig.hideLoader();
+      if (success) {
+        this.prePoulteEmailId = success.decode_id;
+      }     
+      // console.log('success', success);
+      this.autoPopulateMail();     // Function to auto populate mail after form loads.
+
+    }, (error) => {
+    });
+  }
 
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -65,11 +89,12 @@ export class CreateComponent implements OnInit {
       password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
       confirmpassword: ['', [Validators.required]]
     }, { validators: FormCustomValidators.identityRevealedValidator }
-    ), this.autoPopulateMail(); // Function to auto populate mail after form loads.
+    )
+    // , this.autoPopulateMail(); // Function to auto populate mail after form loads.
   }
 
   autoPopulateMail() {
-    if (this.currentRoute === 'Reset the password') {
+    if (this.currentRoute) {
       this.createForm.patchValue({
         email: this.prePoulteEmailId ? this.prePoulteEmailId : ''
       });
@@ -99,7 +124,7 @@ export class CreateComponent implements OnInit {
       };
       this.apiService.passwordReset(apiData).subscribe((success: any) => {
         this.appConfig.hideLoader();
-        this.appConfig.consoleLog('success', success);
+        // this.appConfig.consoleLog('success', success);
         this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been reset successfully` :
           `Account has been created Successfully`, '');
         this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.LOGIN, { mail: apiData.name });
@@ -110,6 +135,11 @@ export class CreateComponent implements OnInit {
     }
 
   }
+
+  signIn() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
+  }
+
 
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {

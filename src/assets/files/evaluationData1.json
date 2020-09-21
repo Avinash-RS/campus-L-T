@@ -1,0 +1,116 @@
+{"tab": [
+  {
+    "id": 1,
+    "name": "Depth of Knowledge",
+    "excellent": "Clear fundamentals & able to correlate / apply into all situations",
+    "veryGood": "Clear fundamentals & able to correlate / apply into some situations",
+    "good": "Reasonably clear fundamentals & able to correlate / apply into few situations",
+    "acceptable": "Some clarity on fundamentals. Able to apply with support",
+    "notSuitable": "Lacks Clarity. Is not able to apply even after support.",
+    "level": 1
+  },
+  {
+    "id": 2,
+    "name": "Breadth of Knowledge",
+    "excellent": "Answers with ease questions on most subjects studied",
+    "veryGood": "Answers with ease questions on many subjects studied",
+    "good": "Answers questions on many subjects but takes time / effort to do so",
+    "acceptable": "Able to answer questions only on recently studied subjects",
+    "notSuitable": "Unable to answer questions even on recently studied subjects",
+    "level": 2
+  }
+],
+"tab1": [
+  {
+    "id": 3,
+    "name": "Has clear well-structured thoughts",
+    "excellent": "Grasps all aspects of problems & solves them on his own in a clear, well-structured manner",
+    "veryGood": "Grasps most aspects of problems & attempts to solve on his own through a structured approach with some success",
+    "good": "Grasps few aspects of problems & tries to solve through a structured approach with some support",
+    "acceptable": "Takes time to grasp some aspects of problems, achieve clarity & adopt a structured approach",
+    "notSuitable": "Is confused, cannot think through the problem",
+    "level": 3
+  },
+
+  {
+    "id": 4,
+    "name": "Takes logical decisions is the given hypothetical situation",
+    "excellent": "Breaks the problem/s into smaller parts, considers various options, provides logic/rationale and arrives at creative/most optimal solution",
+    "veryGood": "Breaks the problem/s and considers various options, however arrives at an acceptable solution (on his/her own)",
+    "good": "Breaks the problem/s provides logic/rationale and arrives at a solution with support",
+    "acceptable": "Requires support in breaking down the problems into manageable parts",
+    "notSuitable": "Not able to break the problem in smaller part even with support",
+    "level": 4
+  }
+],
+"tab2": [
+  {
+    "id": 5,
+    "name": "Initiate to develop his area of interest",
+    "excellent": "Reads & researches about a topic of interest & makes effort to develop expertise",
+    "veryGood": "Show a good level of knowledge in areas of interest",
+    "good": "Show a satisfactory level of knowledge in areas of interest",
+    "acceptable": "Has superficial knowledge in the areas of interest mentioned",
+    "notSuitable": "Does not have any specific area of interest",
+    "level": 5
+  },
+
+  {
+    "id": 6,
+    "name": "Exhibits interest beyond curriculum",
+    "excellent": "Actively involved in many extra/co-curricular activities & has several significant achievements",
+    "veryGood": "Involved in many extra/co-curricular activities & has Some achievements",
+    "good": "Involved in some extra/co-curricular activities & has few achievements",
+    "acceptable": "Has participated in some extra/co-curricular activities",
+    "notSuitable": "Has not participated in any extra/co-curricular activities",
+    "level": 6
+  }
+],
+"tab3": [
+  {
+    "id": 7,
+    "name": "English Language Proficiency",
+    "excellent": "Uses language easily & fluently. Has a facility with words. Speaks in a clear 6 audible tone. Uses flow charts/sketches when necessary",
+    "veryGood": "Use of language is reasonable good. Speaks in a clear & audible tone. Often uses flow charts/sketches",
+    "good": "Language unimpressive but manages to explain by flow charts/sketch",
+    "acceptable": "Able to explain only with flow charts/sketches",
+    "notSuitable": "Can neither explain orally nor by drawing",
+    "level": 7
+  },
+
+  {
+    "id": 8,
+    "name": "Precision in responding to questions",
+    "excellent": "Gives precise to the point answer",
+    "veryGood": "Answers not precise but gets many key points across",
+    "good": "Answers may be disorganised but gets a New key points across",
+    "acceptable": "Speaks in a round-about manner, able to convey some key points with support",
+    "notSuitable": "Speaks in a round-about manner, not able to convey the key points at all",
+    "level": 8
+  }
+],
+"tab4": [
+  {
+    "id": 9,
+    "name": "Confidence level exhibited during interview",
+    "excellent": "Composed, maintains good posture & eye contact throughout",
+    "veryGood": "Becomes comfortable given a little time, maintains good posture & eye contact for most of the time",
+    "good": "Takes some time to become comfortable. Maintains moderate posture & eye contact intermittently",
+    "acceptable": "Takes a log time to become comfortable. Maintains moderate posture, shies from eye contact",
+    "notSuitable": "Is visible anxious, does not respond to questions coherently",
+    "level": 9
+  },
+
+  {
+    "id": 10,
+    "name": "Conviction in answers",
+    "excellent": "Has a clear step by step approach to explaining concepts, Seeks clarification if required & confidently arrives at the right answer",
+    "veryGood": "Gives only obvious answers but is confident of the same",
+    "good": "Sticks to answer though low on clarity either in approach or concept",
+    "acceptable": "Hesitantly explains approach or concept",
+    "notSuitable": "Does not answer at all",
+    "level": 10
+  }
+]
+
+}

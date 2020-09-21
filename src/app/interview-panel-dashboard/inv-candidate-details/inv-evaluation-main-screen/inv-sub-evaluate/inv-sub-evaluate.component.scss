@@ -23,10 +23,10 @@ th.mat-header-cell {
 .space {
   margin-top: 15px !important;
 }
-.submit {
-  background-color: $blue-4;
-  color: $white;
-}
+// .submit {
+//   background-color: $blue-4;
+//   color: $white;
+// }
 .bg {
   background: $background-10;
   color: $white;
@@ -185,4 +185,9 @@ textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
 }
 .no-center-align {
   align-items: flex-start !important;
+}
+.last-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }

@@ -181,8 +181,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  alreadyUploadedDetails() {
-    return this.http.get(`${this.BASE_URL}/profile/user_details_get`,
+  alreadyUploadedDetails(data) {
+    return this.http.post(`${this.BASE_URL}/profile/user_details_get`, data,
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
@@ -384,6 +384,12 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // getting evaluation details
+  getEvaluationDetails(data) {
+    return this.http.post(`${this.BASE_URL}/api/evaluation_form_result`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   interviewPanelShortlist2() {
     return this.http.get(`${this.BASE_URL}/api/interview_panel`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
@@ -440,6 +446,66 @@ export class AdminServiceService {
   //assign candidate to interview panel
   assignCandidateTOPanel(data) {
     return this.http.post(`${this.BASE_URL}/Profile/evaluation_hr_assign`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //hr 1st sortlist report list
+  firstSortlistReportslist(data){
+    return this.http.post(`${this.BASE_URL}/api/firstshortlist_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+   //hr interview panel report list
+   interviewPanelReportslist(data){
+    return this.http.post(`${this.BASE_URL}/profile/interv_panel_users_reprt`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //get candidate city
+  getAllCandidateCity(){
+    return this.http.get(`${this.BASE_URL}/api/allcity`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //get assessment names
+  getAllAssessmentNames(){
+    return this.http.get(`${this.BASE_URL}/api/allassesment`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //hr 2nd shortlist report list
+  secondShortlistReport(data){
+    return this.http.post(`${this.BASE_URL}/api/secondshortlist_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //hr 3rd shortlist report list
+  assessmentFeedbackReport(data){
+    return this.http.post(`${this.BASE_URL}/profile/assement_feedback_report`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  //hr 1st shortlist excel download
+  firstShortlistExcelDownload(data){
+    return this.http.post(`${this.BASE_URL}/profile/excel_download`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // hr status download
+  getStatusExcelDownload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getassement_excel`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // hr shortlist base candidate 
+  getShortlistCandidateList(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_select`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // hr scheduling assessment 
+  schedulingAssessment(data) {
+    return this.http.post(`${this.BASE_URL}/profile/assement_insert`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 }

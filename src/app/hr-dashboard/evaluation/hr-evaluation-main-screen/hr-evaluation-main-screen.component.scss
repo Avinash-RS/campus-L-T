@@ -1,14 +1,14 @@
 @import "../../../themes/themes.scss";
 
 .inv-evaluation {
-  background: $wrapper-light-gray;
+  background: $white;
   height: 100%;
   position: relative;
   .sticky {
     position: sticky;
     top: 0;
     position: -webkit-sticky; /* Safari */
-    background: $wrapper-light-gray;
+    background: $white;
     z-index: 3;
 
   .router-wrapper {
@@ -24,16 +24,16 @@
       height: 100%;
       height: 35px;
       cursor: pointer;
-      background: $primary 0% 0% no-repeat padding-box;
+      background: $white 0% 0% no-repeat padding-box;
+      border-bottom: solid $primary-gray 1px;
       box-sizing: border-box;
       text-align: center;
       outline: none;
       flex-wrap: wrap;
       .tabs {
-        background: $non-active-sub-bg 0% 0% no-repeat padding-box !important;
+        background: $non-active-sub-bg 0% 0% no-repeat padding-box;
         outline: none !important;
         color: $white;
-        opacity: 0.5;
         font-size: 13px;
         min-width: 200px;
         display: flex;
@@ -46,10 +46,10 @@
         border-left: solid $white-primary 1px;
       }
       :hover {
-        background: $active-sub-bg !important;
+        background: $active-sub-bg-hover;
       }
       .active {
-        background: $active-sub-bg !important;
+        background: $primary-red !important;
         outline: none;
         font-weight: 200;
         color: $white;

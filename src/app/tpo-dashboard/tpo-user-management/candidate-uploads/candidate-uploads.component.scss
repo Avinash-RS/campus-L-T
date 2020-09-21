@@ -1,48 +1,48 @@
 @import "../../../themes/themes.scss";
-.sub-menu-wrapper {
-  display: flex;
-  background: $sidebar-bg;
-  padding: 4px 0;
-  margin: 0.5em 0 0 0;
-  position: sticky;
-  align-items: center;
-  top: -1px;
-  z-index: 5;
-  .menu-group {
-    padding: 4px;
-    cursor: pointer;
-    border: solid $white 1px;
-    border-radius: 4px;
-    color: $white;
-    font-size: 13px;
-    outline: none;
-    font-weight: 100;
-    margin: 0 0 0 1em;
-    opacity: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    img {
-      width: 18px;
-      height: 18px;
-      margin: 0 0.35em 0 0;
-      vertical-align: text-top;
-    }
-  }
-  .menu-group:hover {
-    background: $active-sub-bg-hover 0% 0% no-repeat padding-box;
-  }
-  .active {
-    cursor: pointer;
-    padding: 4px;
-    background: $active-sub-bg 0% 0% no-repeat padding-box;
-    font-size: 13px;
-    border: solid $white 1px;
-    border-radius: 4px;
-    color: $white;
-    font-weight: 200;
-    margin: 0 0 0 1em;
-    outline: none;
-    opacity: 1;
-  }
-}
+// .sub-menu-wrapper {
+//   display: flex;
+//   background: $sidebar-bg;
+//   padding: 4px 0;
+//   margin: 0.5em 0 0 0;
+//   position: sticky;
+//   align-items: center;
+//   top: -1px;
+//   z-index: 5;
+//   .menu-group {
+//     padding: 4px;
+//     cursor: pointer;
+//     border: solid $white 1px;
+//     border-radius: 4px;
+//     color: $white;
+//     font-size: 13px;
+//     outline: none;
+//     font-weight: 100;
+//     margin: 0 0 0 1em;
+//     opacity: 1;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     img {
+//       width: 18px;
+//       height: 18px;
+//       margin: 0 0.35em 0 0;
+//       vertical-align: text-top;
+//     }
+//   }
+//   .menu-group:hover {
+//     background: $active-sub-bg-hover 0% 0% no-repeat padding-box;
+//   }
+//   .active {
+//     cursor: pointer;
+//     padding: 4px;
+//     background: $active-sub-bg 0% 0% no-repeat padding-box;
+//     font-size: 13px;
+//     border: solid $white 1px;
+//     border-radius: 4px;
+//     color: $white;
+//     font-weight: 200;
+//     margin: 0 0 0 1em;
+//     outline: none;
+//     opacity: 1;
+//   }
+// }

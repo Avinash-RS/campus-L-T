@@ -29,6 +29,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   userList: any;
   radioCheck;
   selectAllCheck;
+  displayNoRecords = false;
 
 
   constructor(
@@ -58,7 +59,6 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   getUsersList() {
     this.adminService.bulkUploadInstitutesErrorList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -77,7 +77,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
     window.open(excel, '_blank');
   }
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 
@@ -92,6 +92,14 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

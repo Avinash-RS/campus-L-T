@@ -3,8 +3,8 @@
             <div class="card w-50 alignCard">
                 <div class="card-body">
 
-                    <div class="image-upload">
-                        <label>Resume*</label>
+                    <div [ngClass]="getResumeData && getResumeData['editable_value'] == 1 ? 'inputBoxDisable' : ''" class="image-upload">
+                        <label>Resume<span class="asterick">*</span></label>
                         <label class="choose-input" for="file-input">
                             <div *ngIf="!urlResume">
                                 <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
@@ -12,7 +12,7 @@
                             </div>
                             <div *ngIf="urlResume">
                                 <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlResume}}">{{urlResume}}</span>
-                                <span (click)="urlResume = null; stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                <span (click)="urlResume = null; stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                             </div>
                         </label>
 
@@ -28,9 +28,9 @@
         <form [formGroup]="educationUploadForm">
             <div class="card w-50 alignCard">
                 <div *ngIf="eduArr && eduArr.controls" formArrayName="educationUploadArr" class="card-body">
-                    <label>Education details*</label>
+                    <label>Education details<span class="asterick">*</span></label>
                     <ng-container *ngIf="eduArr && eduArr.controls">
-                        <div class="image-upload display" *ngFor="let education of eduArr.controls; let i = index; let last = last;" [formGroupName]="i">
+                        <div class="image-upload display" *ngFor="let education of eduArr.controls; let i = index; let last = last;" [ngClass]="educationValuearray.length && educationValuearray[i].editable_value == 1 ? 'inputBoxDisable' : ''" [formGroupName]="i">
 
                             <nz-select [(ngModel)]="selectedDropdownValue[i]" formControlName="level" class="nzSelect" nzAllowClear nzShowSearch
                              nzPlaceHolder="Level">
@@ -47,7 +47,7 @@
                                 </div>
                                 <div *ngIf="urlEducation[i]">
                                     <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlEducation}}">{{urlEducation[i]}}</span>
-                                    <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                    <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </div>
                             </label>
 
@@ -57,7 +57,7 @@
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="eduArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeEducationDoc(i)" style="display: inline-flex; background: transparent; border: none;"
                                     type="button">
-                                    <span class="material-icons">close</span>
+                                    <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </button>
                             </div>
 
@@ -79,7 +79,7 @@
                 <div *ngIf="certiArr && certiArr.controls" formArrayName="certificateUploadArr" class="card-body">
                     <label>Certificate</label>
                     <ng-container *ngIf="certiArr && certiArr.controls">
-                        <div class="image-upload display" *ngFor="let certificate of certiArr.controls; let i = index; let last=last" [formGroupName]="i">
+                        <div class="image-upload display" *ngFor="let certificate of certiArr.controls; let i = index; let last=last" [ngClass]="certificateValuearray.length && certificateValuearray[i].editable_value == 1 ? 'inputBoxDisable' : ''" [formGroupName]="i">
 
                             <div class="DesInput">
                                 <input formControlName="certificateName" placeholder="Document description">
@@ -92,23 +92,24 @@
                                 </div>
                                 <div *ngIf="urlCertificate[i]">
                                     <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlCertificate}}">{{urlCertificate[i]}}</span>
-                                    <span (click)="urlCertificate.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                    <span (click)="urlCertificate.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </div>
                             </label>
 
                             <input formControlName="certificateFile" id="file-input-2-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                            (change)="onSelectFile($event, 'certificate', i)">
+                            (change)="onSelectFile($event, 'certificate', i); disableBtn()">
 
                             <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
                                 <button (click)="removeCertificate(i)" style="display: inline-flex; background: transparent; border: none;"
                                     type="button">
-                                    <span class="material-icons">close</span>
+                                    <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </button>
                             </div>
-
-                            <div *ngIf="((certiArr && certiArr.controls.length === 0) || (certiArr && certiArr.controls.length-1 === i))" class="language-add-button">
-                                <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-                                <span (click)="addCertificateForm()">Add</span>
+                            <div *ngIf="!urlResume">
+                                <div *ngIf="((certiArr && certiArr.controls.length === 0) || (certiArr && certiArr.controls.length-1 === i))" class="language-add-button">
+                                    <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+                                    <span (click)="addCertificateForm()">Add</span>
+                                </div>
                             </div>
                         </div>
                         <span *ngIf="!showCertificateImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
@@ -124,7 +125,7 @@
                     <div *ngIf="otherDocArr && otherDocArr.controls" formArrayName="otherUploadArr" class="card-body">
                         <label>Other</label>
                         <ng-container *ngIf="otherDocArr && otherDocArr.controls">
-                            <div class="image-upload display" *ngFor="let otherDoc of otherDocArr.controls; let i = index; let last=last" [formGroupName]="i">
+                            <div class="image-upload display" *ngFor="let otherDoc of otherDocArr.controls; let i = index; let last=last" [ngClass]="otherDocValuearray.length && otherDocValuearray[i].editable_value == 1 ? 'inputBoxDisable' : ''" [formGroupName]="i">
 
                                 <div class="DesInput">
                                     <input formControlName="otherDocName" placeholder="Document description">
@@ -137,23 +138,25 @@
                                     </div>
                                     <div *ngIf="urlOther[i]">
                                         <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlOther}}">{{urlOther[i]}}</span>
-                                        <span (click)="urlOther.splice(i,1, null); stoppropgation($event)" class="material-icons iconBtn">close</span>
+                                        <span (click)="urlOther.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                     </div>
                                 </label>
 
                                 <input formControlName="otherDocFile" id="file-input-3-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                                (change)="onSelectFile($event, 'other', i)">
+                                (change)="onSelectFile($event, 'other', i); disableBtn()">
 
                                 <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
                                     <button (click)="removeOtherDoc(i)" style="display: inline-flex; background: transparent; border: none;"
                                         type="button">
-                                        <span class="material-icons">close</span>
+                                        <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                     </button>
                                 </div>
 
-                                <div *ngIf="((otherDocArr && otherDocArr.controls.length === 0) || (otherDocArr && otherDocArr.controls.length-1 === i))" class="language-add-button">
-                                    <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-                                    <span (click)="addOtherDocForm()">Add</span>
+                                <div *ngIf="!urlResume">
+                                    <div *ngIf="((otherDocArr && otherDocArr.controls.length === 0) || (otherDocArr && otherDocArr.controls.length-1 === i))" class="language-add-button">
+                                        <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
+                                        <span (click)="addOtherDocForm()">Add</span>
+                                    </div>
                                 </div>
                             </div>
                             <span *ngIf="!showOtherImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
@@ -165,8 +168,10 @@
                 </div>
                 </form>
                 <div class="buttonDiv">
-                    <button matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made" (click)="submitDialog('')" [disabled]="saveAndSubmitBtnDisable ? true : false" type="button" class="btn-sm btn">Save</button>
-                    <button matTooltipPosition="above" matTooltip="The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them" (click)="submitDialog('submit')" [disabled]="saveAndSubmitBtnDisable ? true : false" type="button" class="btn-sm btn">Submit</button>
+                    <span matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made">
+                    <button mat-raised-button matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made" (click)="submitDialog('')" [ngClass]="saveAndSubmitBtnDisable ? 'disable' : ''" type="button" class="submit btn-margin-space">Save</button>
+                    </span>
+                    <button mat-raised-button (click)="submitDialog('submit')" [ngClass]="saveAndSubmitBtnDisable ? 'disable' : ''" type="button" class="submit">Submit</button>
                 </div>
 </div>
 

@@ -30,6 +30,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   userList: any;
   radioCheck;
   selectAllCheck;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -59,7 +60,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   getUsersList() {
     this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('datas', datas);
 
       if (datas) {
         this.userList = datas ? datas : [];
@@ -81,7 +81,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   }
 
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
   shortlistRedirect(detail) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, detail['assement_name'] ? {data: detail['assement_name']} : {data: 'none'});
@@ -105,6 +105,14 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

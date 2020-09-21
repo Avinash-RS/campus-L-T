@@ -29,6 +29,7 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
   userList: any;
   radioCheck;
   selectAllCheck;
+  displayNoRecords = false;
 
   constructor(
     private appConfig: AppConfigService,
@@ -60,7 +61,6 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
     };
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log('api', datas);
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -79,7 +79,7 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
     window.open(excel, '_blank');
   }
   selectedUser(userDetail) {
-    console.log(userDetail);
+    
   }
 
 
@@ -94,6 +94,14 @@ export class BulkUploadReportsComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // check search data is available or not
+    if(this.dataSource.filteredData.length==0){
+      this.displayNoRecords=true;
+    }else{
+      this.displayNoRecords=false;
+
+    }
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

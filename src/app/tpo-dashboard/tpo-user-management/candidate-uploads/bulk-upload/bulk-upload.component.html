@@ -1,55 +1,91 @@
 <div class="main-wrapper-uploaded-list">
-    <!-- <div class="line">
+  <!-- <div class="line">
     </div> -->
-    <div class="upload-wrapper" *ngIf="!enableList">
-      <div class="top-wrapper">
-        <div class="upload">
-          <div class="outer-wrapper">
-            <div class="text-wrapper">
-              <label class="inner-wrapper" for="fileInput" *ngIf="!url">
-                <!-- <div class="inner-wrapper"> -->
-                <img src="assets/images/file-upload.svg" alt=""> Upload candidate details
-                <!-- </div> -->
-                <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
-                  (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv, text/csv"
-                  (change)="onSelectFile($event)">
-              </label>
-              <div class="inner-wrapper" *ngIf="url">
-                <div class="list">
-                  <span>{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
-                      src="assets/images/005-close-1_bulk.svg" alt=""></span>
-                </div>
+  <div class="upload-wrapper" *ngIf="!enableList">
+    <div class="top-wrapper">
+      <div class="upload">
+        <div class="outer-wrapper">
+          <div class="text-wrapper">
+            <label class="inner-wrapper" for="fileInput" *ngIf="!url">
+              <!-- <div class="inner-wrapper"> -->
+              <img src="assets/images/file-upload.svg" alt=""> Upload candidate details
+              <!-- </div> -->
+              <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
+                (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv, text/csv"
+                (change)="onSelectFile($event)">
+            </label>
+            <div class="inner-wrapper" *ngIf="url">
+              <div class="list">
+                <span class="urlSpan" matTooltipPosition="after" matTooltip="{{fileName}} ({{fileSize}} kb)">{{fileName}} ({{fileSize}} kb)</span> <span><img (click)="delete()"
+                    src="assets/images/005-close-1_bulk.svg" alt=""></span>
               </div>
             </div>
-            <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv)</div>
-            <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
-            <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
-            <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
-            <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
-
           </div>
-        </div>
-        <div class="buttons">
-          <button (click)="delete()" class="cancel" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
-          <button (click)="upload()" class="upload" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+          <div *ngIf="!url" class="text">(<span style="color: red;">*</span> file extension allowed .csv)</div>
+          <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
+          <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
+          <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
+          <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
+
         </div>
       </div>
-      <div class="download">
-        <div class="outer-wrapper">
-          <div (click)="downloadTemplate()" class="inner-wrapper">
-            <img src="assets/images/download.svg" alt=""> Download template
-          </div>
+      <div class="buttons">
+        <button (click)="delete()" class="cancel-btn btn-margin-space" [ngClass]="url ? '' : 'hide'"
+          mat-raised-button>Cancel</button>
+        <button (click)="upload()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+      </div>
+    </div>
+    <div class="download">
+      <div class="outer-wrapper">
+        <div (click)="downloadTemplate()" class="inner-wrapper">
+          <img src="assets/images/download.svg" alt=""> Download template
         </div>
       </div>
-
     </div>
 
-    <div class="list-wrapper" *ngIf="enableList">
-      <div class="list-count">
-        Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
-      </div>
-      <app-shared-upload-previewer *ngIf="enableList" [status]="'candidate'" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
-      <!-- <div class="list-table">
+  </div>
+  <div class="ins" *ngIf="!enableList">
+    <div class="head">
+      Instructions:
+    </div>
+    <div class="ul">
+      <ul>
+        <li>Click on "Download template" button and open the file in excel program.</li>
+        <li>All fields are mandatory.
+          <ul>
+            <li>Tag name should be combination of alpha numeric characters (suggested format is YYYY_Institute
+              Name_Discipline).</li>
+          </ul>
+        </li>
+        <li>From Screen, click Upload candidate details link to select a file.</li>
+        <li>Maximum 500 users can be uploaded at one time.</li>
+        <li>Please do not refresh or go back while upload is processing.</li>
+        <li>Click upload button.</li>
+        <li>Screen will provide a preview.</li>
+        <li>Candidate details can be removed by clicking on "x" on preview screen. These candidate details will not be
+          uploaded.
+        </li>
+        <li>Click on confirm button.</li>
+        <li>The successfully uploaded candidate details will be available in “candidate details” tab.</li>
+        <li>Select candidates in “Candidate details” tab to send mails to candidates.</li>
+        <li>The candidate details which are not uploaded are available in “Candidate bulk upload reports” tab.
+          <ul>
+            <li>For missing details, update the mandatory details and upload.</li>
+            <li>For Existing email ID, please search the same in user management.</li>
+            <li>For duplicate email ID, one user with the email ID has been uploaded successfully.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="list-wrapper" *ngIf="enableList">
+    <div class="list-count">
+      Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
+    </div>
+    <app-shared-upload-previewer *ngIf="enableList" [status]="'candidate'" [previewerArray]="uploadedListArray">
+    </app-shared-upload-previewer>
+    <!-- <div class="list-table">
         <div class="head-grid">
           <div style="word-wrap: anywhere;" class="tag">
             Tag
@@ -84,9 +120,11 @@
         </div>
       </div> -->
 
-      <div class="button-wrapper">
-        <button (click)="backToUpload()" class="cancel" mat-raised-button>Cancel</button>
-        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Ok</button>
-      </div>
+    <div class="button-wrapper">
+      <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
+      <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true"
+        [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok"
+        mat-raised-button>Ok</button>
     </div>
   </div>
+</div>

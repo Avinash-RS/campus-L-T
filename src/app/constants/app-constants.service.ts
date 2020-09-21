@@ -16,7 +16,7 @@ export const CONSTANT = {
   DRUPAL_ADMIN_USERNAME: 'admin',
   DRUPAL_ADMIN_PASSWORD: 'admin@123',
   ENDPOINTS: {
-    HOME: '/home',
+    HOME: '/login',
     REGISTER: {
       CORPORATE: '/register/corporate',
       INSTITUTE: '/register/institute',
@@ -69,7 +69,8 @@ export const CONSTANT = {
       HALLTICKET: '/candidate/hallticket',
       HALLTICKET_LIST: '/candidate/hallticket/list',
       DOCUMENT: '/candidate/document',
-      DOCUMENT_LIST: '/candidate/document/list'
+      DOCUMENT_LIST: '/candidate/document/list',
+      REGISTRATION_CLOSE: '/candidate/registration-close'
     },
     HR_DASHBOARD: {
       HOME: '/hr',
@@ -99,7 +100,6 @@ export const CONSTANT = {
       SUB_ASSESSMENTS: '/hr/evaluation/hr-evaluation/assessment',
       SUB_EDUCATION: '/hr/evaluation/hr-evaluation/education',
       SUB_EMPLOYMENT: '/hr/evaluation/hr-evaluation/employment',
-      ASSESSMENTCANDIDATEDETAILS: '/hr/evaluation/assessment-candidate-details',
       INTERVIEW_PANEL_DETAILS: '/hr/evaluation/interview-panels-details',
       INTERVIEW_PANEL_DETAILS_SELECT: '/hr/evaluation/interview-panels-selected',
       HR_USER_MANAGEMENT_USERS_LIST: '/hr/user-management/user-list',
@@ -112,7 +112,9 @@ export const CONSTANT = {
       BULK_INV_UPLOAD_REPORTS_LIST: '/hr/reports/inv-panel-reports',
       HR_STATUS: '/hr/status',
       HR_STATUS_PREASSESSMENT: '/hr/status/pre-assessment',
-      HR_STATUS_RECRUITMENT: '/hr/status/recruitment'
+      HR_STATUS_RECRUITMENT: '/hr/status/recruitment',
+      HR_ASSING_ASSESSMENT: '/hr/assing-assessment',
+      HR_SCHEDULING_ASSESSMENT: '/hr/assing-assessment/scheduling-assessment'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -198,7 +200,8 @@ export const CONSTANT = {
       HALLTICKET: 'hallticket',
       HALLTICKET_LIST: 'list',
       DOCUMENT: 'document',
-      DOCUMENT_LIST: 'list'
+      DOCUMENT_LIST: 'list',
+      REGISTRATION_CLOSE: 'registration-close'
     },
     HR_DASHBOARD: {
       HOME: 'hr',
@@ -228,7 +231,6 @@ export const CONSTANT = {
       SUB_ASSESSMENTS: 'assessment',
       SUB_EDUCATION: 'education',
       SUB_EMPLOYMENT: 'employment',
-      ASSESSMENTCANDIDATEDETAILS: 'assessment-candidate-details',
       INTERVIEW_PANEL_DETAILS: 'interview-panels-details',
       INTERVIEW_PANEL_DETAILS_SELECT: 'interview-panels-selected',
       HR_USER_MANAGEMENT_USERS_LIST: 'user-list',
@@ -241,7 +243,9 @@ export const CONSTANT = {
       BULK_INV_UPLOAD_REPORTS_LIST: 'inv-panel-reports',
       HR_STATUS: 'status',
       HR_STATUS_PREASSESSMENT: 'pre-assessment',
-      HR_STATUS_RECRUITMENT: 'recruitment'
+      HR_STATUS_RECRUITMENT: 'recruitment',
+      HR_ASSING_ASSESSMENT: 'assing-assessment',
+      HR_SCHEDULING_ASSESSMENT: 'scheduling-assessment'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',

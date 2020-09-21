@@ -28,12 +28,13 @@
         border-radius: 5px;
         box-shadow: $shadow-light-black;
         box-sizing: border-box;
-        padding: 0.25em 0.15em;
-        height: 27px;
+        padding: 0 !important;
+        height: 30px;
         position: relative;
         img {
-          width: 20px;
-          height: 13px;
+          cursor: pointer;
+          width: 30px;
+          height: 30px;
         }
         input {
           position: relative;
@@ -53,6 +54,7 @@
           opacity: 0.6;
           font-size: 12px;
         }
+
       }
     }
     :focus {
@@ -94,6 +96,7 @@ td {
 th {
   // text-align: center !important;
   padding-left: 1em !important;
+  white-space: nowrap;
 }
 .no-data {
   margin: 2em auto;

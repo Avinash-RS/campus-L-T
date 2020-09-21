@@ -21,6 +21,7 @@ export class HrSubEmploymentComponent implements OnInit {
   candidateId: any;
   certificateArr: any;
   candidateName: any;
+  uid:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -54,11 +55,11 @@ export class HrSubEmploymentComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
-      this.userlist(params['id']);
+      this.uid = params['uid'];
+      this.userlist(params['uid']);
     });
   }
 
@@ -68,9 +69,7 @@ export class HrSubEmploymentComponent implements OnInit {
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('certificates', data);
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
-      console.log('certificatesArr', this.certificateArr);
     }, (err) => {
 
     });
@@ -78,7 +77,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
   profileView() {
     const data = {
-      candidateId: this.candidateId ? this.candidateId : '',
+      candidateId: this.uid ? this.uid : '',
       candidateName: this.candidateName ? this.candidateName : '',
     };
     this.openDialog1(CommonKycProfileViewComponent, data);
@@ -95,23 +94,23 @@ export class HrSubEmploymentComponent implements OnInit {
   }
 
 
-  reSubmit(details) {
-    console.log(details);
+  reSubmit(details, docType) {
 
     const data = {
       reSubmit: 'documents'
     };
-    this.openDialog(ShortlistBoxComponent, data, details['id']);
+    this.openDialog(ShortlistBoxComponent, data, details['id'], docType);
   }
 
-  apiResubmit(reason, dId) {
+  apiResubmit(reason, dId, docType) {
     const apiData = {
-      types: reason['comments'],
-      id: dId
+      types: docType,
+      id: dId,
+      current_user_id: this.uid,
+      comments: reason['comments']
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log(data);
       this.appConfig.success('Document Resubmit request has been done', '');
       this.editRouteParamGetter();
     }, (err) => {
@@ -120,7 +119,7 @@ export class HrSubEmploymentComponent implements OnInit {
   }
 
   // Open dailog
-  openDialog(component, data, dId) {
+  openDialog(component, data, dId, docType) {
     let dialogDetails: any;
 
     /**
@@ -136,7 +135,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.apiResubmit(result, dId);
+        this.apiResubmit(result, dId, docType);
       }
     });
   }

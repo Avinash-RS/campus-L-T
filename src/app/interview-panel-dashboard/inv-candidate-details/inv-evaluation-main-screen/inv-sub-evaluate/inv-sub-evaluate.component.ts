@@ -35,6 +35,7 @@ export class InvSubEvaluateComponent implements OnInit {
   getCandidateData: any;
   candidateId: any;
   nameOfAssessment: any;
+  uid:any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -53,15 +54,87 @@ export class InvSubEvaluateComponent implements OnInit {
   ngOnInit() {
   }
 
+  getCandidateDetails() {
+    const apiData = {
+      uid: this.candidateId ? this.candidateId : ''
+    }
+    this.adminService.getEvaluationDetails(apiData).subscribe((success: any)=> {
+      this.appConfig.hideLoader();
+      const data = success && success.length > 0 ? success[0] : null;
+      if (data) {        
+        
+      this.evaluationForm.patchValue({
+        interview_date: data['interview_date'] ? data['interview_date'] : '',
+        interview_place: data['interview_place'] ? data['interview_place'] : '',
+        willing_work: data['willing_work'] ? data['willing_work'] : '',
+        physical_disability: data['physical_disability'] ? data['physical_disability'] : '',
+        candidates_strenght: data['candidates_strenght'] ? data['candidates_strenght'] : '',
+        candidates_weakness: data['candidates_weakness'] ? data['candidates_weakness'] : '',
+        panel_member1: data['panel_member1'] ? data['panel_member1'] : '',
+        panel_member2: data['panel_member2'] ? data['panel_member2'] : '',
+        panel_member3: data['panel_member3'] ? data['panel_member3'] : '',
+        panel_member4: data['panel_member4'] ? data['panel_member4'] : '',
+        ps_no1: data['ps_no1'] ? data['ps_no1'] : '',
+        ps_no2: data['ps_no2'] ? data['ps_no2'] : '',
+        ps_no3: data['ps_no3'] ? data['ps_no3'] : '',
+        ps_no4: data['ps_no4'] ? data['ps_no4'] : '',
+        topic_given: data['topic_given'] ? data['topic_given'] : '',
+        thought: data['thought'] ? data['thought'] : '',
+        content: data['content'] ? data['content'] : '',
+        language: data['language'] ? data['language'] : '',
+        idea: data['idea'] ? data['idea'] : '',
+        clues: data['clues'] ? data['clues'] : '',
+        time_taken: data['time_taken'] ? data['time_taken'] : '',
+        remarks: data['remarks'] ? data['remarks'] : '',
+        ASSESSMENT: data['candidate_assesment'] ? data['candidate_assesment'] : '',
+        depth_knowledge: data['depth_knowledge'] ? data['depth_knowledge'] : '',
+        breadth_knowledge: data['breadth_knowledge'] ? data['breadth_knowledge'] : '',
+        communicate_ability: data['communicate_ability'] ? data['communicate_ability'] : '',
+        personal_skill: data['personal_skill'] ? data['personal_skill'] : '',
+        personality: data['personality'] ? data['personality'] : '',
+        curricular_activites: data['curricular_activites'] ? data['curricular_activites'] : '',
+        thought_clarity: data['thought_clarity'] ? data['thought_clarity'] : ''
+      })
+    this.assessments.forEach(element => {
+     if (element['id'] === 1) {
+       element['isChecked'] = data['depth_knowledge'] ? data['depth_knowledge'] : null
+     } 
+     if (element['id'] === 2) {
+      element['isChecked'] = data['breadth_knowledge'] ? data['breadth_knowledge'] : null
+    } 
+    if (element['id'] === 3) {
+      element['isChecked'] = data['thought_clarity'] ? data['thought_clarity'] : null
+    } 
+    if (element['id'] === 4) {
+      element['isChecked'] = data['communicate_ability'] ? data['communicate_ability'] : null
+    } 
+    if (element['id'] === 5) {
+      element['isChecked'] = data['personal_skill'] ? data['personal_skill'] : null
+    } 
+    if (element['id'] === 6) {
+      element['isChecked'] = data['personality'] ? data['personality'] : null
+    } 
+    if (element['id'] === 7) {
+      element['isChecked'] = data['curricular_activites'] ? data['curricular_activites'] : null
+    } 
+    });
+  }
+
+    }, (err)=> {
+
+    })
+  }
+
   // Get url param for edit route
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params['data']);
       this.nameOfAssessment = params['data'];
-      this.candidateId = params['id'];
-      this.getEvaluationData(this.candidateId);
+      this.candidateId = params['uid'];
+      this.uid = params['uid'];
+      this.getEvaluationData(this.uid);
       this.nginitFunc();
+      this.getCandidateDetails();
     });
   }
 
@@ -71,13 +144,11 @@ export class InvSubEvaluateComponent implements OnInit {
     };
     this.adminService.getEvaluationData(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('data', data);
       this.getCandidateData = data[0];
     });
   }
 
   nginitFunc() {
-    console.log(SampleJson);
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
     this.evaluationForm = this.formBuilder.group({
       interview_date: new FormControl('', [Validators.required]),
@@ -149,7 +220,6 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   setAssessmentLevel(assessment, value) {
-    console.log(assessment);
     this.assessments[this.assessments.indexOf(assessment)] = {
       ...assessment,
       level: value
@@ -199,7 +269,6 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   submitEvaluationForm() {
-    console.log(this.evaluationForm.value);
     if (this.evaluationForm.valid) {
       const data = {
         evaluation: 'submit'
@@ -214,7 +283,7 @@ export class InvSubEvaluateComponent implements OnInit {
   submitEvaluationFormAPI() {
     const apiData =
         {
-          uid: this.candidateId ? this.candidateId : '',
+          uid: this.uid ? this.uid : '',
           interview_date: this.evaluationForm.value.interview_date,
           interview_place: this.evaluationForm.value.interview_place,
           depth_knowledge: this.evaluationForm.value.depth_knowledge,
@@ -246,12 +315,10 @@ export class InvSubEvaluateComponent implements OnInit {
           time_taken: this.evaluationForm.value.time_taken,
           remarks: this.evaluationForm.value.remarks
         };
-    console.log(this.evaluationForm.value);
-    console.log(apiData);
+
     this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
       this.appConfig.hideLoader();
       this.appConfig.success('Evaluation completed successfully', '');
-      console.log(res);
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST, {data: this.nameOfAssessment});
     }, (err) => {
 

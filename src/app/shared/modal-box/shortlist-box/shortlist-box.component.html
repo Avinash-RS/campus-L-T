@@ -46,8 +46,8 @@
     Confirm to move the candidate details to assign assessment
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="confirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="confirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -68,8 +68,8 @@
 
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="secondShortlist()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="secondShortlist()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -89,8 +89,8 @@
     Press confirm to reject the selected candidates
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -99,8 +99,8 @@
     Confirm to upload candidate details and send mails to fill the registration form
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -109,8 +109,8 @@
     Confirm to upload Interview panel details and send them mails to create an account
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -119,8 +119,8 @@
   <div class="bulk-upload-text">
     The selected candidate/candidates will receive an email to create an account.</div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -128,8 +128,8 @@
   <div class="bulk-upload-text">
     Confirm to upload candidate details</div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -138,8 +138,8 @@
     Confirm to upload institute details and send mails to TPO
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -147,8 +147,8 @@
   <div class="bulk-upload-text">
     Confirm to upload assessment details</div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -247,8 +247,8 @@
     Please confirm approval of {{data && data['instituteName'] ? data['instituteName'] : ''}}
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="adminApprove()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="adminApprove()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -268,8 +268,8 @@
   </div>
 
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="adminReject()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="adminReject()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -279,18 +279,19 @@
     creation
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
 <div class="modal-box-wrapper" *ngIf="data && data['documentUpload'] === 'uploadDoc'">
   <div class="bulk-upload-text">
-    Please confirm, Are you sure you want to upload this documents
+    <!-- Please confirm, Are you sure you want to upload this documents -->
+    {{data['showText']}}
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -310,8 +311,8 @@
   </div>
 
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="reSubmit()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="reSubmit()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -320,8 +321,8 @@
       Confirm to submit the evaluation details for this candidate
     </div>
     <div class="buttons">
-      <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+      <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
     </div>
   </div>
 
@@ -330,16 +331,25 @@
         Confirm to shortlist the selected candidates
       </div>
       <div class="buttons">
-        <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-        <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+        <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+        <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
       </div>
     </div>
 <div class="modal-box-wrapper" *ngIf="data && data['interViwePanelAssign'] === 'assign'">
   <div class="bulk-upload-text">
-    “{{data['candidateCount']}}” Candidates have been assigned to “{{data['panel']}}” interview panel members
+    “{{data['candidateCount']}}” {{data['candidate']}} have been assigned to “{{data['panel']}}” interview panel {{data['member']}}
   </div>
   <div class="buttons">
-    <button class="cancel" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="confirm" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+<div class="modal-box-wrapper" *ngIf="data && data['AssignSchedule'] === 'schedule'">
+  <div class="bulk-upload-text">
+    Are you sure you want to send an email selected no. of {{data['candidate']}}: {{data['candidateCount']}}
+  </div>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>No</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Yes</button>
   </div>
 </div>

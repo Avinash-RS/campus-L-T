@@ -70,7 +70,11 @@
     position: relative;
     width: 50%;
     left: 210px;
-    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 25px;
 }
 .btn{
     margin-right: 10px;
@@ -115,7 +119,6 @@
     font-size: 14px;
     border-radius: 8px;
     background-color: $cyan;
-    top: 3px;
 }
 .urlSpan {
     overflow: hidden;
@@ -124,4 +127,12 @@
     white-space: nowrap;
     width: 190px;
     margin-bottom: -6px;
+}
+.disable {
+    pointer-events: none;
+    opacity: 0.6;
+}
+.inputBoxDisable {
+    pointer-events: none;
+    opacity: 0.6;
 }
