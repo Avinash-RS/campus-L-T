@@ -89,7 +89,6 @@ export class HrSubEducationComponent implements OnInit {
 
 
   reSubmit(details, docTypes) {
-    console.log("print....", details);
 
     const data = {
       reSubmit: 'documents'
