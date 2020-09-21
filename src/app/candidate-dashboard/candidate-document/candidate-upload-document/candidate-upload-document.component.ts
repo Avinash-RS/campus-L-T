@@ -384,7 +384,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
         } else {
           this.appConfig.success(`Documents saved successfully`, '');
         }
-        this.saveAndSubmitBtnDisable = true;
+      
       }, (err) => {
 
       });
@@ -421,7 +421,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
         } else {
           this.appConfig.success(`Documents saved successfully`, '');
         }
-        this.saveAndSubmitBtnDisable = true;
+      
       }, (err) => {
 
       });
