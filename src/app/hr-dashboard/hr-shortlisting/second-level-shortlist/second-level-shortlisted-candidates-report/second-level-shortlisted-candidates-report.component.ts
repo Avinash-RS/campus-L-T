@@ -162,6 +162,18 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
         if (element && element['education']) {
           institute = element['education'] && element['education']['field_institute'] ? element['education']['field_institute'] : '-';
           level = element['education'] && element['education']['field_level'] ? element['education']['field_level'] : '-';
+          if (level === 'SSLC') {
+            level = 'SSLC / 10th';
+          }
+          if (level === 'HSC') {
+            level = 'HSC / 12th';
+          }
+          if (level === 'UG') {
+            level = 'Undergraduate';
+          }
+          if (level === 'PG') {
+            level = 'Postgraduate';
+          }
           percentage = element['education'] && element['education']['field_percentage'] ? element['education']['field_percentage'] : '-';
           backlog = element['education'] && element['education']['field_backlogs'] ? element['education']['field_backlogs'] : '-';
           dateofpassing = element['education'] && element['education']['field_year_of_passing'] ? this.getDateFormat(element['education']['field_year_of_passing']) : '-';

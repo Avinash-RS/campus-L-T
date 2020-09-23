@@ -7,7 +7,21 @@
       </div>
       <div class="flex" *ngFor=" let edu of certificateArr['education_documents']">
         <div class="level">
-          {{edu['education_level'] ? edu['education_level'] : '-'}}
+          <span *ngIf="edu && edu['education_level'] === 'SSLC'">
+            {{edu['education_level'] ? 'SSLC / 10th' : '-'}}
+          </span>
+          <span *ngIf="edu && edu['education_level'] === 'HSC'">
+            {{edu['education_level'] ? 'HSC / 12th' : '-'}}
+          </span>
+          <span *ngIf="edu && edu['education_level'] === 'Diploma'">
+            {{edu['education_level'] ? edu['education_level'] : '-'}}
+          </span>
+          <span *ngIf="edu && edu['education_level'] === 'UG'">
+            {{edu['education_level'] ? 'Undergraduate' : '-'}}
+          </span>
+          <span *ngIf="edu && edu['education_level'] === 'PG'">
+            {{edu['education_level'] ? 'Postgraduate' : '-'}}
+          </span>
         </div>
         <div class="box">
           {{edu['filename'] ? edu['filename'] : ''}} &#160; ({{edu['file_size'] ? edu['file_size'] : ''}})

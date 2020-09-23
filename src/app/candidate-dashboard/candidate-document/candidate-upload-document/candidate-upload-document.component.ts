@@ -63,6 +63,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
     }
     this.candidateService.getEducationDropDown(userid).subscribe((data: any) => {
       this.educationDropDownLevel = data[0][0].education_level;
+      console.log(this.educationDropDownLevel);
+      
       this.appConfig.hideLoader();
 
     }, (err) => {

@@ -707,6 +707,23 @@ export class CommonKycProfileViewComponent implements OnInit {
       if (element['field_year_of_passing']) {
         element['field_year_of_passing'] = { value: this.getMonthFormat(element['field_year_of_passing']['value']) };
       }
+      if (element['field_level']) {
+        if (element['field_level']['value'] === 'SSLC') {
+          element['field_level'] = { value: element['field_level']['value'] === 'SSLC' ? 'SSLC / 10th' : '' };
+        }
+        if (element['field_level']['value'] === 'HSC') {
+          element['field_level'] = { value: element['field_level']['value'] === 'HSC' ? 'HSC / 12th' : '' };
+        }
+        if (element['field_level']['value'] === 'Diploma') {
+          element['field_level'] = { value: element['field_level']['value'] === 'Diploma' ? 'Diploma' : '' };
+        }
+        if (element['field_level']['value'] === 'UG') {
+          element['field_level'] = { value: element['field_level']['value'] === 'UG' ? 'Undergraduate' : '' };
+        }
+        if (element['field_level']['value'] === 'PG') {
+          element['field_level'] = { value: element['field_level']['value'] === 'PG' ? 'Postgraduate' : '' };
+        }
+      }
     });
 
     this.userDetails = dump;

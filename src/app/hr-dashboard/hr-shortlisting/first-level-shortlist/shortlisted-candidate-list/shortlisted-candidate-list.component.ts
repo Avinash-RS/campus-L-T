@@ -383,7 +383,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'SSLC' ? 'SSLC / 10th' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -391,7 +391,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'HSC' && (level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'HSC' ? 'HSC / 12th' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -407,7 +407,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'UG' && (level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'UG' ? 'Undergraduate' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -415,7 +415,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'PG') {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'PG' ? 'Postgraduate' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -501,7 +501,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'SSLC' && (level !== 'HSC' && level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'SSLC' ? 'SSLC / 10th' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -509,7 +509,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'HSC' && (level !== 'Diploma' && level !== 'UG' && level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'HSC' ? 'HSC / 12th' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -525,7 +525,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'UG' && (level !== 'PG')) {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'UG' ? 'Undergraduate' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
@@ -533,7 +533,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
             }
             if (ele && ele['field_level'] === 'PG') {
               institute = ele && ele['field_institute'] ? ele['field_institute'] : '-';
-              level = ele && ele['field_level'] ? ele['field_level'] : '-';
+              level = ele && ele['field_level'] === 'PG' ? 'Postgraduate' : '-';
               percentage = ele && ele['field_percentage'] ? ele['field_percentage'] : '-';
               backlog = ele && ele['field_backlogs'] ? ele['field_backlogs'] : '-';
               dateofpassing = ele && ele['field_year_of_passing'] ? this.getDateFormat(ele['field_year_of_passing']) : '-';
