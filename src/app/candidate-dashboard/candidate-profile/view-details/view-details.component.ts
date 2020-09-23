@@ -59,7 +59,8 @@ export class ViewDetailsComponent implements OnInit {
   }
 
   print() {
-    window.print();
+    this.sharedService.printSubject.next();
+    // window.print();
   }
   notShowOtherTabs() {
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {

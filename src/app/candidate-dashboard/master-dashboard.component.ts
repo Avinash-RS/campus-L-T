@@ -3,7 +3,7 @@ import { CONSTANT } from '../constants/app-constants.service';
 import { AppConfigService } from '../config/app-config.service';
 import { SharedServiceService } from '../services/shared-service.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, timeout } from 'rxjs/operators';
 
 export interface IBreadCrumb {
   label: string;
@@ -89,6 +89,9 @@ export class MasterDashboardComponent implements OnInit {
           });
         } while (currentRoute);
       });
+
+
+      this.rxjsSubjectForPrint();
   }
 
   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {
@@ -125,5 +128,17 @@ export class MasterDashboardComponent implements OnInit {
 
   sidebar() {
     this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  rxjsSubjectForPrint() {
+    this.sharedService.printSubject.subscribe((data: any)=> {
+      this.sidebarOpen = false;
+      setTimeout(() => {
+        window.print();        
+      }, 1000);
+      // this.sidebarOpen = true;
+    }, (err)=> {
+
+    });
   }
 }

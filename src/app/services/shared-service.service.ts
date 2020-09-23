@@ -12,4 +12,5 @@ export class SharedServiceService {
   subMenuSubject = new Subject();
   // To update Admin userlist page
   updateUserlist = new Subject();
+  printSubject = new Subject();
 }
