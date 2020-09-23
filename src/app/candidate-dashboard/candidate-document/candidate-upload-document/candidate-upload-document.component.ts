@@ -440,7 +440,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
             type: 'upload-tpo',
             identity: 'upload-doc'
           },
-          showText: btnType == 'submit' ? 'The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them' : 'Please confirm, Are you sure you want to upload this documents',
+          showText: btnType == 'submit' ? 'The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them' : 'Please confirm, Are you sure you want to save this documents',
           showConfirm: 'Confirm',
           documentUpload: 'uploadDoc',
           showCancel: 'Cancel',
@@ -463,7 +463,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
           type: 'upload-tpo',
           identity: 'upload-doc'
         },
-        showText: btnType == 'submit' ? 'The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them' : 'Please confirm, Are you sure you want to upload this documents',
+        showText: btnType == 'submit' ? 'The uploaded documents will be submitted to the recruitment team. Further changes will require permission from them' : 'Please confirm, Are you sure you want to save this documents',
         showConfirm: 'Confirm',
         documentUpload: 'uploadDoc',
         showCancel: 'Cancel',

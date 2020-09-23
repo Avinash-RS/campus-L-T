@@ -2020,3 +2020,116 @@ th {
   margin-right: 8px;
   height: 39px !important;
 }
+// @media print{
+//   .printContentDiv{
+//     background-color: white;
+//         height: 130%;
+//         width: 100%;
+//         position: fixed;
+//         top: 0;
+//         left: 0;
+//         margin: 0;
+//         padding: 15px;
+//         font-size: 14px;
+//         line-height: 18px;
+//         z-index: 9999999;
+//         overflow-y: auto !important;
+//   }
+//   .print{display:none !important;
+//   height: 100%;
+//   }
+// }
+
+// this css using for print
+
+
+@media print {
+
+  * {
+    color: black !important;
+    // Force to print colors, otherwise the material components will look white
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  body,
+  .header-title,
+  .mat-autocomplete-panel,
+  .mat-bottom-sheet-container,
+  .mat-card,
+  .mat-button-toggle,
+  .mat-dialog-container,
+  .mat-drawer,
+  .mat-drawer-container,
+  .mat-expansion-panel,
+  .mat-table {
+    background: white !important;
+    color: black !important;
+  }
+  .cdk-overlay-backdrop {
+    background-color: transparent !important;
+  }
+
+  // Hide website controls when printing
+  app-header,
+  app-footer,
+  .hide-print,
+  .mat-drawer-backdrop,
+  .mat-header-cell .mat-checkbox,
+  .mat-fab,
+  .mat-mini-fab,
+  .mat-toolbar button,
+  .navbar,
+  .print {
+    display: none !important;
+  }
+
+  body {
+    // Roboto not printing ok on Chrome, fallback on supported fonts
+    font-family: 'Helvetica Neue', sans-serif !important;
+
+    mat-drawer-container {
+      // Position needs to be relative
+      min-height: 300%;
+      position: relative !important;
+
+      mat-drawer {
+        // Remove the content margin if sidenav is expanded when hidden for print
+        margin: 0 !important;
+
+        // Remove max width and padding from containers to flow text depending on printer page sizes
+        .main-container {
+          min-width: 0 !important;
+          padding: 0 !important;
+        }
+
+        // // Roboto not printing ok on Chrome, fallback on supported fonts
+        // .mat-typography, .mat-card {
+        //   font-family: 'Helvetica Neue', sans-serif !important;
+        //   h1, h2, h3, h4, h5 {
+        //     font-family: 'Helvetica Neue', sans-serif !important;
+        //   }
+        // }
+        // .mat-button, .mat-raised-button, .mat-icon-button,
+        // .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
+        //   font-family: 'Helvetica Neue', sans-serif !important;
+        // }
+
+        // // Define where a page break should occur when printing
+        // .main-heading-bottom {
+        //   break-after: always; // New syntax
+        //   page-break-before: always; // always break before h2 elements, for chapters for example
+        // }
+        // .flex-wrapper-passport  {
+        //   break-after: avoid; // New syntax
+        //   page-break-after: avoid; // avoid breaking after subtitles, it looks weird
+        // }
+        // pre, blockquote, img, mat-row, .thumbnail {
+        //   break-inside: avoid; // New syntax
+        //   page-break-inside: avoid; // avoid breaking inside pre and blockquotes
+        // }
+      
+      }
+    }
+  }
+}
