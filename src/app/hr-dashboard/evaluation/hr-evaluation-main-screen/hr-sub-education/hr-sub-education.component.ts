@@ -101,7 +101,8 @@ export class HrSubEducationComponent implements OnInit {
       types: docTypes,
       id: dId,
       current_user_id: this.uid,
-      comments: reason['comments']
+      comments: reason['comments'],
+      hr_id: this.appConfig.getLocalData('userId')
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
