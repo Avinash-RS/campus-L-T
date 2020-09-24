@@ -34,7 +34,7 @@
 
                             <nz-select [(ngModel)]="selectedDropdownValue[i]" formControlName="level" class="nzSelect" nzAllowClear nzShowSearch
                              nzPlaceHolder="Level">
-                                <nz-option *ngFor="let eduLevel of educationDropDownLevel" [nzLabel]="eduLevel" [nzValue]="eduLevel"></nz-option>
+                                <nz-option *ngFor="let eduLevel of educationDropDownLevel" [nzLabel]="eduLevel == 'SSLC'? 'SSLC / 10th' : eduLevel == 'HSC'? 'HSC / 12th' : eduLevel == 'UG'? 'Undergraduate' : eduLevel == 'PG'? 'Postgraduate' : eduLevel" [nzValue]="eduLevel"></nz-option>
                                 <!-- <nz-option nzLabel="12 std" nzValue="12"></nz-option>
                                 <nz-option nzLabel="Under graduate" nzValue="ug"></nz-option>
                                 <nz-option nzLabel="Post graduate" nzValue="pg"></nz-option> -->
