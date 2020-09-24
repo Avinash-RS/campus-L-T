@@ -101,18 +101,31 @@
     }
   }
   .main-text {
-    padding: 2em;
+    padding: 1em 1.25em;
+    max-height: 450px;
+    overflow-y: auto;
+    .ul {
+      ul {
+        margin: .75em 0;
+        li {
+          margin: .25em 0;
+        }
+    }
+  }
     .text {
       margin: 1em 0 0 0;
     }
+    .text-half {
+      margin: .5em 0 0 0;
+    }
     .bold {
-      font-weight: 700 !important;
+      font-weight: 600 !important;
     }
     .no-top {
       margin: 0;
     }
     .button-wrappers {
-      margin: 2em 0 0 0;
+      margin: 2em 0 1em 0;
       display: flex;
       justify-content: center;
       align-items: center;
