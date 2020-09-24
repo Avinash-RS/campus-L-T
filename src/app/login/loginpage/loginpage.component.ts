@@ -6,6 +6,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Subscription } from 'rxjs';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 
 @Component({
   selector: 'app-loginpage',
@@ -25,6 +26,7 @@ export class LoginpageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
+    private candidateService: CandidateMappersService,
     private appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -55,8 +57,9 @@ export class LoginpageComponent implements OnInit {
   }
 
   apiCalling() {
-    this.apiService.getAllState().subscribe((datas: any) => {
-      this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
+    // this.apiService.getAllState().subscribe((datas: any) => {
+      this.candidateService.getEducationList().subscribe((datas: any) => {
+        this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
 
         this.appConfig.hideLoader();
         this.prePoulteEmailId = this.verifyArr[0]['name'];
@@ -113,8 +116,9 @@ export class LoginpageComponent implements OnInit {
     // Login API
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
-        this.apiService.getAllState().subscribe((datas: any) => {
-          this.apiService.login(apiData).subscribe((data: any) => {
+        // this.apiService.getAllState().subscribe((datas: any) => {
+          this.candidateService.getEducationList().subscribe((datas: any) => {
+            this.apiService.login(apiData).subscribe((data: any) => {
             this.appConfig.hideLoader();
             this.appConfig.consoleLog('data', data);
             // this.appConfig.setLocalData('username', "data && data.current_user.name ? data.current_user.name : ''");
