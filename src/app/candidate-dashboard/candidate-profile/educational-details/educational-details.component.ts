@@ -402,7 +402,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
 
   addEducationForm(data?: any) {
-    // console.log(this.educationForm['status'], this.educationForm);
     
     if (true) {
       // if (this.educationForm['status'] !== 'INVALID') {

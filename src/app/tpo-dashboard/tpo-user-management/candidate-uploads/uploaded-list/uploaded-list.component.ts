@@ -97,7 +97,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
   pageChanged(event) {
     if (event.previousPageIndex > event.pageIndex) {
-      console.log('prvcoming');
       // previous button clicked
       this.apiPageIndex = event.pageIndex + 1;
       const apiData = {
@@ -112,7 +111,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     if (event.previousPageIndex < event.pageIndex) {
       // next button clicked
       this.apiPageIndex = event.pageIndex + 1;
-      console.log('nexrcoming', this.apiPageIndex);
       const apiData = {
         start: this.apiPageIndex.toString(),
         counts: this.listCount.toString(),
@@ -123,7 +121,6 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       this.getPageList(apiData);
     }
     if (event.pageSize !== this.listCount) {
-      console.log('ncoming', event.pageSize);
 
       this.listCount = event.pageSize;
       this.apiPageIndex = 1;

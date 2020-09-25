@@ -221,7 +221,6 @@ export class ViewDetailsComponent implements OnInit {
         element['field_family_date_of_birth'] = { value: this.getDateFormat(element['field_family_date_of_birth']['value']) && this.getDateFormat(element['field_family_date_of_birth']['value']) != 'INVALID DATE ' ? this.getDateFormat(element['field_family_date_of_birth']['value']) : '' };
       }
     });
-    console.log(dump.educationValuearray);
     
     dump.educationValuearray.forEach(element => {
       if (element['field_year_of_passing']) {
