@@ -122,6 +122,9 @@ export class ApplyCriteriaComponent implements OnInit {
   }
   ngOnInit() {
 
+    //get candidate count 
+    this.getCandidateCount();
+
     // For Gender
     this.genderNgOnInIt();
 
@@ -148,7 +151,7 @@ export class ApplyCriteriaComponent implements OnInit {
   getURLParam() {
     this.activatedRoute.queryParams.subscribe(params => {
 
-      this.totalCandidates = params && params['data'] ? params['data'] : '';
+      // this.totalCandidates = params && params['data'] ? params['data'] : '';
       this.filteredCandidates = params && params['data'] ? 0 : 0;
       let localUID;
       // if (this.appConfig.getLocalData('shortListCheckedCandidates')) {
@@ -277,6 +280,41 @@ export class ApplyCriteriaComponent implements OnInit {
       // }
       // this.appConfig.setLocalData('shortListCheckedCandidates', JSON.stringify(apiData['user_id']));
       this.filteredCandidates = data[1] ? data[1] : '0';
+
+
+    }, (err) => {
+
+    });
+  }
+
+  // get total number of candidate
+  getCandidateCount(){
+    const genderAPIData = [];
+    const instituteAPIData = [];
+    const disciplineAPIData = [];
+    const specializationAPIData = [];
+    const backlogsAPIData = [];
+    const educationData = [];
+    let dobAPIData = [];
+
+    const apiDatas = {
+      user_id: [],
+      field_gender: genderAPIData,
+      field_institute: instituteAPIData,
+      field_discipline: disciplineAPIData,
+      field_specification: specializationAPIData,
+      field_backlogs: backlogsAPIData,
+      field_dob: dobAPIData,
+      educational_level: educationData,
+      start: '1',
+      counts: '50'
+    };
+    
+    this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      
+      
+      this.totalCandidates = data[1] ? data[1] : '0';
 
 
     }, (err) => {
