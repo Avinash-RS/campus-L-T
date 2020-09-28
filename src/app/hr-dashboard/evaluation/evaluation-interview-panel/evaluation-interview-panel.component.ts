@@ -38,13 +38,13 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
       {
         icon: '002-cv.svg',
         name: 'Candidate details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
-      },
-      {
-        icon: '002-cv.svg',
-        name: 'Interview panel',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
       },
+      // {
+      //   icon: '002-cv.svg',
+      //   name: 'Interview panel',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      // },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
