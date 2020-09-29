@@ -26,7 +26,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   showApply = false;
   showShortlisted = false;
   displayedColumns1: any[] = ['filter'];
-  displayedColumns: any[] = ['uid', 'candidate_new_id',
+  displayedColumns: any[] = ['uid', 'candidate_new_id', 'user_name',
     'domain_marks',
     'domain_percentage',
     'verbal_marks',
