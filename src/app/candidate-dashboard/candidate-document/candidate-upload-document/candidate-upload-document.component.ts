@@ -83,7 +83,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.getResumeData = data[0][0].resume_details[0];
       if (data[0][0].resume_details[0]) {
         this.updateMode = true;
-        this.urlResume = data[0][0].resume_details[0].certificate_url;
+        this.urlResume = data[0][0].resume_details[0].filename;
       }
       this.appConfig.hideLoader();
       this.FormInitialization();
@@ -128,7 +128,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   createItem(edu): any {
     if (edu) {
-      this.urlEducation.push(edu.certificate_url);
+      this.urlEducation.push(edu.filename);
       this.selectedDropdownValue.push(edu.education_level);
       return this.fb.group({
 
@@ -170,7 +170,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   createCertificateItem(edu): any {
     if (edu) {
-      this.urlCertificate.push(edu.certificate_url);
+      this.urlCertificate.push(edu.filename);
       return this.fb.group({
 
         certificateName: [edu.certificate_name, Validators.required],
@@ -211,7 +211,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
   createOtherDocItem(edu): any {
     if (edu) {
-      this.urlOther.push(edu.certificate_url);
+      this.urlOther.push(edu.filename);
       return this.fb.group({
 
         otherDocName: [edu.description, Validators.required],

@@ -28,7 +28,7 @@
           {{edu['filename'] ? edu['filename'] : ''}} &#160; ({{edu['file_size'] ? edu['file_size'] : ''}})
         </div>
         <div class="view">
-          <span (click)="viewCerificates(edu['certificate_url'])">View</span>
+          <span (click)="viewCerificates(edu['cerificate_id'])">View</span>
           <span (click)="reSubmit(edu, 'education')">Resubmit</span>
         </div>
       </div>
@@ -47,7 +47,7 @@
           {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})
         </div>
         <div class="view">
-          <span (click)="viewCerificates(cer['certificate_url'])">View</span>
+          <span (click)="viewCerificates(cer['cerificate_id'])">View</span>
           <span (click)="reSubmit(cer, 'certificate')">Resubmit</span>
         </div>
       </div>
@@ -65,7 +65,7 @@
           {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})
         </div>
         <div class="view">
-          <span (click)="viewCerificates(cer['certificate_url'])">View</span>
+          <span (click)="viewCerificates(cer['cerificate_id'])">View</span>
           <span (click)="reSubmit(cer, other)">Resubmit</span>
         </div>
       </div>

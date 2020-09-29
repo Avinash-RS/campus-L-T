@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-hr-sub-employment',
@@ -22,6 +23,7 @@ export class HrSubEmploymentComponent implements OnInit {
   certificateArr: any;
   candidateName: any;
   uid:any;
+  BASE_URL = environment.API_BASE_URL;
 
   constructor(
     private appConfig: AppConfigService,
@@ -83,8 +85,9 @@ export class HrSubEmploymentComponent implements OnInit {
     this.openDialog1(CommonKycProfileViewComponent, data);
   }
 
-  viewCerificates(path) {
+  viewCerificates(id) {
     // const excel = element && element.download ? element.download : '';
+    let path = this.BASE_URL +`/profile/get_certificate_name_test?certificate_id=${id}`
     window.open(path, '_blank');
   }
 
