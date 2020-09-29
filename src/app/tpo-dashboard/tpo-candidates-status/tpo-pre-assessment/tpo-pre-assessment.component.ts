@@ -88,7 +88,14 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
     });
   }
   getTagNames() {
-    this.adminService.TPOStatusTagLists().subscribe((data: any) => {
+    let loggedInUserRole = this.appConfig.getLocalData('roles')
+    let  dataObj = {
+      'current_user_id': ''
+    }
+    if(loggedInUserRole == 'institute'){
+      dataObj.current_user_id = this.appConfig.getLocalData('userId');
+    }
+    this.adminService.TPOStatusTagLists(dataObj).subscribe((data: any) => {
       this.tagLists = data && data ? data : [];
 
     }, (err) => {

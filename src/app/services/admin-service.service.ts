@@ -367,8 +367,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  TPOStatusTagLists() {
-    return this.http.get(`${this.BASE_URL}/profile/user_field_tag`,
+  TPOStatusTagLists(data) {
+    return this.http.post(`${this.BASE_URL}/profile/user_field_tag`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
