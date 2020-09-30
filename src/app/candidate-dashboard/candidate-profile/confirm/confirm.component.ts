@@ -8,6 +8,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { MatDialog } from '@angular/material';
 import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: 'app-confirm',
@@ -284,34 +285,49 @@ export class ConfirmComponent implements OnInit {
           this.selectedImage = event.target.files[0];
 
           const fd = new FormData();
-          fd.append('file', this.selectedImage);
+          fd.append('product_image', this.selectedImage);
           const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
           const reader = new FileReader();
           let urls;
 
           reader.readAsDataURL(event.target.files[0]); // read file as data url
-          reader.onload = (event: any) => { // called once readAsDataURL is completed
+          reader.onload = async(event: any) => { // called once readAsDataURL is completed
             urls = event.target.result;
             this.url = urls;
-            this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
 
+            const data = await (await this.candidateService.profileUpload(fd)).json();
+            this.appConfig.hideLoader();
               this.signatureData = {
-                target_id: data.fid[0].value,
+                target_id: data[0].id,
                 alt: 'signature',
                 title: '',
                 width: 480,
                 height: 100,
-                localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
-                url: data.uri[0].url,
+                localShowUrl: data[0].frontend_url,
+                url: data[0].backend_url,
                 status: 'true'
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
 
-              this.appConfig.hideLoader();
+            // this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
 
-            }, (err) => {
+            //   this.signatureData = {
+            //     target_id: data.fid[0].value,
+            //     alt: 'signature',
+            //     title: '',
+            //     width: 480,
+            //     height: 100,
+            //     localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
+            //     url: data.uri[0].url,
+            //     status: 'true'
+            //   };
+            //   this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
 
-            });
+            //   this.appConfig.hideLoader();
+
+            // }, (err) => {
+
+            // });
 
           };
         } else {

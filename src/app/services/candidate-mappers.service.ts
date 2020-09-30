@@ -137,6 +137,20 @@ export class CandidateMappersService {
       { headers: this.forImage(uniqueName), withCredentials: true });
   }
 
+  // For profile Image
+  profileUpload(file) {
+
+    // this.datas is api body data
+    // return this.http.post(`${this.BASE_URL}/profile/get_certificate_full_name`, file,
+    //   { headers: this.withoutTokens(), withCredentials: true });
+
+    return fetch(`${this.BASE_URL}/profile/get_certificate_full_name`, {
+      method: 'POST',
+      body: file,
+      // headers: this.getAfterCustomHeaders(), withCredentials: true
+    });
+  }
+
   // For Signature
   signatureUpload(file, uniqueName) {
 

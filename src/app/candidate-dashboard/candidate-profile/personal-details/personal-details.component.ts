@@ -1291,28 +1291,38 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.selectedImage = event.target.files[0];
 
         const fd = new FormData();
-        fd.append('file', this.selectedImage);
+        fd.append('product_image', this.selectedImage);
         const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
         const reader = new FileReader();
         let urls;
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
-        reader.onload = (event: any) => { // called once readAsDataURL is completed
+        reader.onload = async(event: any) => { // called once readAsDataURL is completed
           urls = event.target.result;
           this.url = urls;
-          this.candidateService.imageUpload(this.selectedImage, file).subscribe((data: any) => {
-            this.appConfig.setLocalData('personalFormTouched', 'true');
+          
+          const data = await (await this.candidateService.profileUpload(fd)).json();
+          this.appConfig.hideLoader();
             this.profileData = {
-              fid: data.fid[0].value,
-              uuid: data.uuid[0].value,
-              localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
-              apiUrl: data.uri[0].url
+              fid: data[0].id,
+              uuid: '',
+              localShowUrl: data[0].frontend_url,
+              apiUrl: data[0].backend_url
             };
-            this.appConfig.hideLoader();
+      
+          // this.candidateService.profileUpload(fd).subscribe((data: any) => {
+          //   this.appConfig.setLocalData('personalFormTouched', 'true');
+          //   this.profileData = {
+          //     fid: data[0].id,
+          //     uuid: '',
+          //     localShowUrl: data[0].frontend_url,
+          //     apiUrl: data[0].backend_url
+          //   };
+          //   this.appConfig.hideLoader();
 
-          }, (err) => {
+          // }, (err) => {
 
-          });
+          // });
 
         };
       } else {
