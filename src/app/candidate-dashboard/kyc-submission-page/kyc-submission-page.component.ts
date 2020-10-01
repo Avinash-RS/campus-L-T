@@ -16,6 +16,13 @@ export class KycSubmissionPageComponent implements OnInit {
 
   ngOnInit() {
     this.appConfig.setLocalData('noGoBack', 'true');
+
+    //disable back button
+    history.pushState(null, document.title, location.href);
+    window.addEventListener('popstate', function (event)
+    {
+      history.pushState(null, document.title, location.href);
+    });
   }
 
 }
