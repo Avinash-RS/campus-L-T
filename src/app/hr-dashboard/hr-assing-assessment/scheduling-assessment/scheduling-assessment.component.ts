@@ -64,7 +64,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
     private matDialog: MatDialog) { }
 
   ngOnInit() {
-    this.getDiscipline();
+    // this.getDiscipline();
     this.getShortlistNames();
   }
 
@@ -115,6 +115,11 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       this.appConfig.hideLoader();
 
       this.userList = data ? data : [];
+      this.userList.forEach(element => {
+        if(element.discipline){
+          this.disciplineDropdown.push(element.discipline);
+        }
+      });
 
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

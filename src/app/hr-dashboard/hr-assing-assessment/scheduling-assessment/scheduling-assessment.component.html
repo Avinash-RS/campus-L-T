@@ -5,12 +5,15 @@
             <div class="grid">
               <div class="flex-wrap">
                 <div class="label">
-                  <div style="margin-left: 1em;" class="flex-wrap">
+              <div style="margin-left: 1em;" class="flex-wrap">
                 <div class="label">
-                  Assessment name
+                  Shortlist name:
                 </div>
-                <div class="input-box-revamp">
-                    <input matInput type="text" [(ngModel)]="assessmentName">
+                <div class="input-box">
+                    <nz-select class="nzSelect-revamp" [(ngModel)]="selectedShortlistname" (ngModelChange)="selectChange()" nzAllowClear nzShowSearch
+                    nzPlaceHolder="--select shortlist name--">
+                    <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value" [nzValue]="level.field_shortlistname_value"></nz-option>
+                  </nz-select>
                 </div>
               </div>
                 </div>
@@ -22,9 +25,17 @@
                 <div class="input-box">
                     <!-- <input matInput type="text"> -->
                     <nz-select class="nzSelect-revamp" nzAllowClear nzShowSearch
-                    nzPlaceHolder="--select disciple--" [(ngModel)]="selectedDisciple">
-                    <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue.discipline_name" [nzValue]="disciplineValue.discipline_name"></nz-option>
+                    nzPlaceHolder="--select disciple--" [(ngModel)]="selectedDisciple" [ngClass]="disciplineDropdown.length == 0 ? 'disabled': ''">
+                    <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue" [nzValue]="disciplineValue"></nz-option>
                   </nz-select>
+                </div>
+              </div>
+              <div style="margin-left: 1em;" class="flex-wrap">
+                <div class="label">
+                  Assessment name
+                </div>
+                <div class="input-box-revamp">
+                    <input matInput type="text" [(ngModel)]="assessmentName">
                 </div>
               </div>
               <div style="margin-left: 1em;" class="flex-wrap">
@@ -47,17 +58,6 @@
                     (nzOnOk)="onOk($event)"
                     class="datetime"
                   ></nz-date-picker>
-                </div>
-              </div>
-              <div style="margin-left: 1em;" class="flex-wrap">
-                <div class="label">
-                  Shortlist name:
-                </div>
-                <div class="input-box">
-                    <nz-select class="nzSelect-revamp" [(ngModel)]="selectedShortlistname" (ngModelChange)="selectChange()" nzAllowClear nzShowSearch
-                    nzPlaceHolder="--select shortlist name--">
-                    <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value" [nzValue]="level.field_shortlistname_value"></nz-option>
-                  </nz-select>
                 </div>
               </div>
             </div>
