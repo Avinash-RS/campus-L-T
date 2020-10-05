@@ -18,23 +18,25 @@
             // display: grid;
             // grid-template-columns: .5fr 1fr;
             align-items: center;
+            max-width: 370px;
+            margin-top: .25em;
             // margin: 0 0 0.5em 0;
             .label {
               color: $light-black;
               font-size: 13px;
             }
-            // .input-box {
-              // nz-select {
-              //   height: 25px;
-              //   color: $header-blue;
-              //   background: $white 0% 0% no-repeat padding-box;
-              //   box-shadow: $shadow-light-black;
-              //   border-radius: 5px;
-              //   font-size: 13px;
-              //   min-width: 165px;
-              //   max-width: 165px;
-              // }
-            // }
+            .input-box {
+              nz-select {
+                height: 30px;
+                // color: $header-blue;
+                // background: $white 0% 0% no-repeat padding-box;
+                // box-shadow: $shadow-light-black;
+                // border-radius: 5px;
+                // font-size: 13px;
+                // min-width: 165px;
+                // max-width: 165px;
+              }
+            }
           }
         }
       }
@@ -184,4 +186,8 @@
 
 .datetime{
   border: solid $input-border 1px;
+}
+nz-date-picker {
+  width: 100%;
+height: 30px;
 }

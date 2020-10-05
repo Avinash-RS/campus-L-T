@@ -959,6 +959,34 @@ button:focus {
   // transform: translate(-50%, -50%);
 }
 
+.assign-assessment-wrapper {
+  .ant-calendar-picker-icon {
+    display: flex;
+    color: $black;
+    font-size: 14px;
+    line-height: 1;
+    height: 30px;
+}
+  .ant-calendar-picker {
+    width: 100% !important;
+  }
+  .ant-input {
+    margin: 0 !important;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 100;
+    padding: 0 1em;
+    border: none;
+    background: transparent;
+    color: #333333;
+    outline: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+  }
+}
+
 .mat-button-wrapper {
   display: flex !important;
   align-items: center !important;
