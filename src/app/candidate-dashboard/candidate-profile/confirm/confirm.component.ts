@@ -295,8 +295,8 @@ export class ConfirmComponent implements OnInit {
             urls = event.target.result;
             this.url = urls;
 
+            this.appConfig.showLoader();
             const data = await (await this.candidateService.profileUpload(fd)).json();
-            this.appConfig.hideLoader();
               this.signatureData = {
                 target_id: data[0].id,
                 alt: 'signature',
@@ -308,6 +308,7 @@ export class ConfirmComponent implements OnInit {
                 status: 'true'
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
+              this.appConfig.hideLoader();
 
             // this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
 

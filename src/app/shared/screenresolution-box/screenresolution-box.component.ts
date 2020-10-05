@@ -32,4 +32,8 @@ export class ScreenresolutionBoxComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
+  logout() {
+        window.close();
+  }
+
 }

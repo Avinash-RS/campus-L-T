@@ -4,6 +4,11 @@
   margin: 0;
   box-sizing: border-box;
 }
+.alert {
+  color: $primary-red;
+  font-size: 14px;
+  padding-bottom: 0 !important;
+}
 .nonEdit {
   background: rgba(128, 128, 128, 0.315) !important;
   pointer-events: none;
@@ -18,7 +23,7 @@
 .grid-wrapper {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  padding: 3em 4em 0 4em;
+  padding: 1em 4em 0 4em;
   form {
     width: 100%;
     margin: 0;

@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // Hi
   // initializing as online by default
   isConnected = true;
+  isIE = false;
   subscriptions: Subscription[] = [];
 
 
@@ -60,6 +61,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getScreenSize();
+    this.checkIE();
+    // const isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent)
+    
     // this.connectionStatusMethod();
   }
   @HostListener('window:resize', ['$event'])
@@ -69,15 +73,34 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (this.screenWidth < 1000 || this.screenHeight < 400) {
       // this.show = true;
-      const data = true;
+      const data = {
+        data: true,
+        type: 'resize'
+      };
       if (!this.screenBoolean) {
-        this.openDialog(ScreenresolutionBoxComponent, data);
-      }
+        this.openDialog(ScreenresolutionBoxComponent, data);        
+          }
     } else {
       const data = false;
       if (this.screenBoolean) {
         this.matDialog.closeAll();
       }
+    }
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  checkIE(event?) {
+    const isIEOrEdge = /msie\s|trident\//i.test(window.navigator.userAgent)
+    if (isIEOrEdge) {
+      this.isIE = true;
+      const data = {
+        data: true,
+        type: 'browser'
+      };
+      if (!this.screenBoolean) {
+        this.openDialog(ScreenresolutionBoxComponent, data);
+      }
+    } else {
     }
   }
 

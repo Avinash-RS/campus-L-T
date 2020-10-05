@@ -26,8 +26,15 @@
     color: $primary;
   }
   .ack {
-    margin: 1em 0;
     color: $light-black-1;
+    margin: 1em 0 0.5em 0;
+    font-size: 16px;
+  }
+
+  .alert {
+    color: $primary-red;
+    margin: 0 !important;
+    padding: 0 !important;
     font-size: 16px;
   }
 
