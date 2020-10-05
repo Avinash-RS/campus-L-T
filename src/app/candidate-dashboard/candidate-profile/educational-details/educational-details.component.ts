@@ -263,8 +263,22 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   onSubmit(OptA) {
 
-    if (this.educationForm.valid) {
+    if (this.educationForm.valid) { 
+      let value = {
+        hscDiploma: false,
+        ug: false
+      };
+      // console.log(this.educationForm.value.educationArr);
 
+      this.educationForm.value.educationArr.forEach(element => {
+        if (element['leveling'] == 'HSC' || element['leveling'] == 'Diploma' ) {
+          value.hscDiploma = true;
+        }
+        if (element['leveling'] == 'UG') {
+          value.ug = true;
+        }
+      });
+      if (value.hscDiploma && value.ug) {
 
       const edArrays = [];
       this.educationForm.value.educationArr.forEach((element, i) => {
@@ -288,6 +302,9 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS);
 
     } else {
+      this.appConfig.nzNotification('error', 'Not Submitted', '12th or Diploma and Undergraduate are mandatory');
+    }
+  } else {
       this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
     }
@@ -398,6 +415,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   removeEducationForm(i) {
     this.eduArr.removeAt(i);
+    this.appConfig.setLocalData('educationalFormTouched', 'true');
   }
 
 
