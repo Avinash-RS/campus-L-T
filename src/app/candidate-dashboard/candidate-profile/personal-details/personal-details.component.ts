@@ -1301,14 +1301,15 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           urls = event.target.result;
           this.url = urls;
           
+          this.appConfig.showLoader();
           const data = await (await this.candidateService.profileUpload(fd)).json();
-          this.appConfig.hideLoader();
             this.profileData = {
               fid: data[0].id,
               uuid: '',
               localShowUrl: data[0].frontend_url,
               apiUrl: data[0].backend_url
             };
+            this.appConfig.hideLoader();
       
           // this.candidateService.profileUpload(fd).subscribe((data: any) => {
           //   this.appConfig.setLocalData('personalFormTouched', 'true');
