@@ -12,6 +12,7 @@ import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-pas
 
 import { CONSTANT } from '../../app/constants/app-constants.service';
 import { EmailVerifierErrorPageComponent } from './email-verifier-error-page/email-verifier-error-page.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.HOME}`, component: HomepageComponent
+  },
+  {
+    path: `${CONSTANT.ROUTES.MAINTENANCE}`, component: MaintenanceComponent
   },
   {
     path: `${CONSTANT.ROUTES.REGISTER.CORPORATE}`, component: RegisterpageComponent
