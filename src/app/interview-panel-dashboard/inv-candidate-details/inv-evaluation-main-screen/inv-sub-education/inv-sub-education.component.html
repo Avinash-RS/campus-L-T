@@ -58,7 +58,7 @@
       </div>
       <div class="flex" *ngFor=" let cer of certificateArr['other_array']">
         <div class="level">
-          {{cer['certificate_name'] ? cer['certificate_name'] : '-'}}
+          {{cer['description'] ? cer['description'] : '-'}}
         </div>
         <div class="box">
           {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})

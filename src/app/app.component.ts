@@ -9,6 +9,8 @@ import { Observable, Subscription, fromEvent } from 'rxjs';
 import { ConnectionService } from 'ng-connection-service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
+import { CONSTANT } from './constants/app-constants.service';
+import { SharedServiceService } from './services/shared-service.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showLoadingIndicator = true;
   screenHeight;
   screenWidth;
+  maintenanceStatus = false;
 
   titles = 'connectionDetector';
   status = 'ONLINE';
@@ -29,11 +32,13 @@ export class AppComponent implements OnInit, OnDestroy {
   isConnected = true;
   isIE = false;
   subscriptions: Subscription[] = [];
+  maintenanceMessage: any;
 
 
   constructor(
     private router: Router,
     private apiService: ApiServiceService,
+    private sharedService: SharedServiceService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
     private connectionService: ConnectionService
@@ -55,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
         // this.appConfig.hideLoaderManual();
-      }
+        }
     });
   }
 
@@ -138,6 +143,46 @@ export class AppComponent implements OnInit, OnDestroy {
       if (result) {
       }
     });
+  }
+
+  getMaintenanceStatus() {
+    // if (!this.maintenanceStatus) {
+    //   if (!this.appConfig.getLocalData('maintenance')) {
+    //     this.apiService.getStatus().subscribe((data: any)=> {
+    //       this.appConfig.hideLoader();
+    //       console.log('status', data);
+    //       if (data && data['status'] == '0') {
+    //         this.maintenanceStatus = true;
+    //         this.sharedService.maintenanceSubject.next(data && data['message'] ? data['message'] : 'Website under maintenance');
+    //         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
+    //         this.appConfig.setLocalData('maintenance', data && data['message'] ? data['message'] : 'Website under maintenance');
+    //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
+    //       }
+    //     }, (err)=> {
+    //     });    
+    //   } else {
+    //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
+    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);  
+    //   }
+    // } else {
+    //   if (!this.appConfig.getLocalData('maintenance')) {
+    //     this.apiService.getStatus().subscribe((data: any)=> {
+    //       this.appConfig.hideLoader();
+    //       console.log('status', data);
+    //       if (data && data['status'] == '0') {
+    //         this.maintenanceStatus = true;
+    //         this.sharedService.maintenanceSubject.next(data && data['message'] ? data['message'] : 'Website under maintenance');
+    //         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
+    //         this.appConfig.setLocalData('maintenance', data && data['message'] ? data['message'] : 'Website under maintenance');
+    //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
+    //       }
+    //     }, (err)=> {
+    //     });    
+    //   } else {
+    //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
+    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);  
+    //   }
+    // }
   }
 
   ngOnDestroy(): void {

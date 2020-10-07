@@ -836,6 +836,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
+console.log('jgjg', this.profileData);
 
     if (this.url) {
       if (this.checked === true) {
@@ -958,6 +959,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   // Forms Initialization
   FormsInitialization() {
+    if (this.appConfig.getLocalData('profileData')) {
+      this.profileData = JSON.parse(this.appConfig.getLocalData('profileData'));
+    }
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
     const numberOnly: RegExp = /^[0-9]*$/;
@@ -1301,14 +1305,17 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           urls = event.target.result;
           this.url = urls;
           
+          this.appConfig.showLoader();
           const data = await (await this.candidateService.profileUpload(fd)).json();
-          this.appConfig.hideLoader();
             this.profileData = {
               fid: data[0].id,
               uuid: '',
               localShowUrl: data[0].frontend_url,
               apiUrl: data[0].backend_url
             };
+            // this.appConfig.clearLocalDataOne('localProfilePic');
+            this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
+                    this.appConfig.hideLoader();
       
           // this.candidateService.profileUpload(fd).subscribe((data: any) => {
           //   this.appConfig.setLocalData('personalFormTouched', 'true');
