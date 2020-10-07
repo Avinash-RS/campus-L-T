@@ -423,7 +423,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
               title: '',
               width: 210,
               height: 230,
-              target_uuid: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_uuid'] : '',
+              // target_uuid: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['target_uuid'] : '',
               url: organizeUserDetails && organizeUserDetails['field_profile_image'] && organizeUserDetails['field_profile_image'][0] ? organizeUserDetails['field_profile_image'][0]['url'] : '/d8cintana2/sites/default/files/2020-06/filename1_1.jpg',
               status: 'true'
             }
@@ -959,7 +959,7 @@ console.log('jgjg', this.profileData);
 
   // Forms Initialization
   FormsInitialization() {
-    if (this.appConfig.getLocalData('profileData')) {
+    if (this.appConfig.getLocalData('profileData') && this.appConfig.getLocalData('profileData') != "undefined") {
       this.profileData = JSON.parse(this.appConfig.getLocalData('profileData'));
     }
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
