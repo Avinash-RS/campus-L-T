@@ -411,11 +411,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         element.controls.specification.clearValidators();
         element.controls.specification.updateValueAndValidity();
       }
-      else if(j == 1){
-        this.eduArr.value[0]['leveling'] = 'HSC';
-        element.controls.specification.clearValidators();
-        element.controls.specification.updateValueAndValidity();
-      }
     });
   }
 

@@ -129,16 +129,17 @@ export class ReportsListComponent implements OnInit {
       'fdate': 'd',
       'tdate': 'e',
       'action': 'f'
-    },
-    {
-      'reportname': 'y',
-      'col2': 'a',
-      'col3': 'b',
-      'col4': 'c',
-      'fdate': 'd',
-      'tdate': 'e',
-      'action': 'f'
     }
+    // ,
+    // {
+    //   'reportname': 'y',
+    //   'col2': 'a',
+    //   'col3': 'b',
+    //   'col4': 'c',
+    //   'fdate': 'd',
+    //   'tdate': 'e',
+    //   'action': 'f'
+    // }
     ];
     this.userList = data;
     // this.userList.forEach(element => {
@@ -484,7 +485,7 @@ export class ReportsListComponent implements OnInit {
       }else{
         this.appConfig.error("Please select a filter criteria", '');
       }
-    }else if(index == 4){
+    }else if(index == 3){
       if(this.userList[index].tdate != 'e'){
         let dateFilter = {
           "to": this.userList[index].tdate,
@@ -494,21 +495,22 @@ export class ReportsListComponent implements OnInit {
       }else{
         this.appConfig.error("Date should be selected", '');
       }
-    }else if(index == 3){
-      if(this.selectedTagNameSecond || this.selectedCityForSecond || this.selectedInstituteNameForSecond){
-        let sendData = {
-          'tagName': this.selectedTagNameSecond,
-          'city': this.selectedCityForSecond,
-          'instituteName': this.selectedInstituteNameForSecond,
-          "to": this.userList[index].tdate,
-          "from": this.userList[index].fdate
-        }
-    
-        this.getCandidateRepots(sendData);
-      }else{
-        this.appConfig.error("Please select a filter criteria", '');
-      }
     }
+    // else if(index == 3){
+    //   if(this.selectedTagNameSecond || this.selectedCityForSecond || this.selectedInstituteNameForSecond){
+    //     let sendData = {
+    //       'tagName': this.selectedTagNameSecond,
+    //       'city': this.selectedCityForSecond,
+    //       'instituteName': this.selectedInstituteNameForSecond,
+    //       "to": this.userList[index].tdate,
+    //       "from": this.userList[index].fdate
+    //     }
+    
+    //     this.getCandidateRepots(sendData);
+    //   }else{
+    //     this.appConfig.error("Please select a filter criteria", '');
+    //   }
+    // }
   }
   // selectedUser(userDetail) {
   //   this.selectedUserDetail = userDetail;
