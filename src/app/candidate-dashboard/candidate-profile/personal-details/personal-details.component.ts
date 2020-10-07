@@ -1291,6 +1291,7 @@ console.log('jgjg', this.profileData);
       // if (event.target.files[0].size > 500000 && event.target.files[0].size < 2000000) {
       if (event.target.files[0].size > 40000) {
         if (event.target.files[0].size < 2000000) {
+          this.appConfig.setLocalData('personalFormTouched', 'true');
         this.showSizeError.image = false;
         this.selectedImage = event.target.files[0];
 
