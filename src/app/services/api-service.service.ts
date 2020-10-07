@@ -125,5 +125,10 @@ export class ApiServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  getStatus() {
+    return this.http.get(`${this.BASE_URL}/profile/fetch_maintance_status`,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
+
 }
 

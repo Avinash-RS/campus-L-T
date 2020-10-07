@@ -16,6 +16,11 @@ export const environment = {
   API_BASE_URL_city: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',
   Image_Base_Url: 'http://udapqa.southindia.cloudapp.azure.com',
 
+  // For UAT
+  // API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',
+  // API_BASE_URL_city: 'https://uat-campus.lntedutech.com/d8cintana2',
+  // Image_Base_Url: 'https://uat-campus.lntedutech.com',
+
   // For Prod
   // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
   // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',

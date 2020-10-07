@@ -1,5 +1,10 @@
 @import "../../../themes/themes.scss";
 
+.alert {
+    color: $primary-red;
+    font-size: 14px;
+    padding-bottom: 0 !important;
+  }
 .alignCard{
     margin: 10px;
     top: 20px;

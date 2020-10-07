@@ -15,10 +15,11 @@ import { ForgoPasswordComponent } from './forgo-password/forgo-password.componen
 import { OtpForgotPasswordComponent } from './otp-forgot-password/otp-forgot-password.component';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { EmailVerifierErrorPageComponent } from './email-verifier-error-page/email-verifier-error-page.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 
 @NgModule({
-  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent, ForgoPasswordComponent, OtpForgotPasswordComponent, EmailVerifierErrorPageComponent],
+  declarations: [HomepageComponent, LoginpageComponent, RegisterpageComponent, OtpComponent, SignupComponent, CreateComponent, CandidateRegisterComponent, ForgoPasswordComponent, OtpForgotPasswordComponent, EmailVerifierErrorPageComponent, MaintenanceComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,

@@ -17,6 +17,7 @@ export const CONSTANT = {
   DRUPAL_ADMIN_PASSWORD: 'admin@123',
   ENDPOINTS: {
     HOME: '/login',
+    MAINTENANCE: '/unavailable',
     REGISTER: {
       CORPORATE: '/register/corporate',
       INSTITUTE: '/register/institute',
@@ -148,6 +149,7 @@ export const CONSTANT = {
 
   ROUTES: {
     HOME: 'home',
+    MAINTENANCE: 'unavailable',
     REGISTER: {
       CORPORATE: 'register/corporate',
       INSTITUTE: 'register/institute',
