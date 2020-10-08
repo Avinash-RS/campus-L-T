@@ -1,4 +1,4 @@
-<div class="main-wrapper">
+<div class="main-wrapper main-reports">
 
     <div class="user-list-wrapper">
 
@@ -7,7 +7,7 @@
           <!-- Position Column -->
           <ng-container matColumnDef="reportname">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Reports name </th>
-            <td class="haderWidth" mat-cell *matCellDef="let element; let i = index;">
+            <td style="white-space: nowrap !important;" class="haderWidth" mat-cell *matCellDef="let element; let i = index;">
               <label *ngIf="i == 0">1st shortlist</label>
               <label *ngIf="i == 1">2nd shortlist</label>
               <label *ngIf="i == 2">Evaluation feedback</label>
@@ -21,8 +21,10 @@
               <td mat-cell *matCellDef="let element; let i = index;">
                 <div *ngIf="i == 0">
                     <nz-select class="nzSelect"
-                    nzPlaceHolder="Tag name" [(ngModel)]="selectedTagNameFirst">
-                      <nz-option *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name"></nz-option>
+                    nzPlaceHolder="Tag name" [(ngModel)]="selectedTagNameFirst" nzAllowClear nzShowSearch>
+                      <nz-option nzCustomContent *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name">
+                        <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="tag.tag_name">{{tag.tag_name}}</span>
+                      </nz-option>
                   </nz-select>
                 </div>
 
@@ -35,15 +37,19 @@
 
                 <div *ngIf="i == 1">
                     <nz-select class="nzSelect-1"
-                    nzPlaceHolder="Assessment name" nzShowSearch [nzCustomTemplate]="defaultTemplate" [(ngModel)]="selectedAssessmentName" matTooltipPosition="after" matTooltip="{{selectedAssessmentName != undefined? selectedAssessmentName.assesment + ' (' + selectedAssessmentName.date_times + ')' : 'Please select option'}}">
-                      <nz-option *ngFor="let assessment of assessmentNameDropdown" [nzLabel]="assessment.assesment" [nzValue]="assessment"></nz-option>
+                    nzPlaceHolder="Assessment name" nzShowSearch nzAllowClear [nzCustomTemplate]="defaultTemplate" [(ngModel)]="selectedAssessmentName" matTooltipPosition="after" matTooltip="{{selectedAssessmentName != undefined? selectedAssessmentName.assesment + ' (' + selectedAssessmentName.date_times + ')' : 'Please select option'}}">
+                      <nz-option nzCustomContent *ngFor="let assessment of assessmentNameDropdown" [nzLabel]="assessment.assesment" [nzValue]="assessment">
+                        <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="assessment.assesment">{{assessment.assesment}}</span>
+                      </nz-option>
                   </nz-select>
                   <ng-template #defaultTemplate let-selected>  {{ selected.nzLabel }} {{selected.nzValue.date_times}} </ng-template>
                 </div>
                 <div *ngIf="i == 2">
                     <nz-select class="nzSelect-1"
-                    nzPlaceHolder="Assessment name" nzShowSearch [nzCustomTemplate]="defaultTemplate1" [(ngModel)]="selectedAssessmentNameSecond" matTooltipPosition="after" matTooltip="{{selectedAssessmentNameSecond != undefined? selectedAssessmentNameSecond.assesment + ' (' + selectedAssessmentNameSecond.date_times + ')' : 'Please select option'}}">
-                      <nz-option *ngFor="let assessment of assessmentNameDropdown" [nzLabel]="assessment.assesment" [nzValue]="assessment"></nz-option>
+                    nzPlaceHolder="Assessment name" nzShowSearch nzAllowClear [nzCustomTemplate]="defaultTemplate1" [(ngModel)]="selectedAssessmentNameSecond" matTooltipPosition="after" matTooltip="{{selectedAssessmentNameSecond != undefined? selectedAssessmentNameSecond.assesment + ' (' + selectedAssessmentNameSecond.date_times + ')' : 'Please select option'}}">
+                      <nz-option nzCustomContent *ngFor="let assessment of assessmentNameDropdown" [nzLabel]="assessment.assesment" [nzValue]="assessment">
+                        <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="assessment.assesment">{{assessment.assesment}}</span>
+                      </nz-option>
                   </nz-select>
                   <ng-template #defaultTemplate1 let-selected>  {{ selected.nzLabel }} {{selected.nzValue.date_times}} </ng-template>
                 </div>
@@ -53,9 +59,11 @@
               <th mat-header-cell *matHeaderCellDef>&#160;  </th>
               <td mat-cell *matCellDef="let element; let i = index;">
                   <div *ngIf="i == 0">
-                      <nz-select class="nzSelect"
+                      <nz-select nzShowSearch nzAllowClear class="nzSelect"
                       nzPlaceHolder="City" [(ngModel)]="selectedCityForFirst">
-                        <nz-option *ngFor="let city of cityListDropdown" [nzLabel]="city.cities" [nzValue]="city.cities"></nz-option>
+                        <nz-option nzCustomContent *ngFor="let city of cityListDropdown" [nzLabel]="city.cities" [nzValue]="city.cities">
+                          <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="city.cities">{{city.cities}}</span>
+                        </nz-option>
                     </nz-select>
                   </div>
                   <!-- <div *ngIf="i == 3">
@@ -71,9 +79,11 @@
               <th mat-header-cell *matHeaderCellDef> &#160; </th>
               <td mat-cell *matCellDef="let element; let i = index;">
                   <div *ngIf="i == 0">
-                      <nz-select class="nzSelect"
+                      <nz-select nzShowSearch nzAllowClear class="nzSelect"
                       nzPlaceHolder="Institute name" [(ngModel)]="selectedInstituteNameForFirst">
-                        <nz-option *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value"></nz-option>
+                        <nz-option nzCustomContent *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value">
+                          <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="institute.name">{{institute.name}}</span>
+                        </nz-option>
                     </nz-select>
                   </div>
 
@@ -114,7 +124,7 @@
           </ng-container>
 
           <!-- Symbol Column -->
-          <ng-container matColumnDef="action">
+          <ng-container matColumnDef="action" stickyEnd>
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element; let i = index;">
                 <div>

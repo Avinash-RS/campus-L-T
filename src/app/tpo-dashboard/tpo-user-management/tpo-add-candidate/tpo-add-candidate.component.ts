@@ -91,8 +91,12 @@ export class TpoAddCandidateComponent implements OnInit {
     ];
     this.adminService.bulkUploadCandidates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      this.appConfig.success('Candidate added successfully', '');
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);
+      if (data && data.length > 0) {
+        this.appConfig.error(data && data[0] && data[0]['reason'] ? data[0]['reason'] : 'Candidate not added successfully', '');
+      } else {
+        this.appConfig.success('Candidate added successfully', '');
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST);
+      }
     }, (err) => {
 
     });
