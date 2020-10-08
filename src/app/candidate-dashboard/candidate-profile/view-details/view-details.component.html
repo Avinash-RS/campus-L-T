@@ -1,37 +1,37 @@
 <div class="printContentDiv">     <!-- This div using for print -->
-  <div class="top-main-wrapper view-page" *ngIf="userDetails">
-    <div *ngIf="!showNext" (click)="print()" class="print printBtn">
+  <div class="top-main-wrapper view-page">
+    <div *ngIf="showNext" (click)="print()" class="print printBtn">
       <label style="cursor: pointer;" class="submit">Print</label>
     </div>
       <div class="top-grid">
         <div class="profile-wrapper">
           <div class="profile">
             <img *ngIf="url" [src]="url" alt="">
-            <img *ngIf="!url" src="assets/images/img_avatar2.jpg" alt="" srcset="">
+            <!-- <img *ngIf="!url" src="assets/images/img_avatar2.jpg" alt="" srcset=""> -->
           </div>
         </div>
         <div class="form-wrapper">
           <div class="form-group">
             <label>Name</label>
-            <input class="input" readonly type="text" [value]="userDetails['name']">
+            <input class="input" readonly type="text" [value]="userDetails && userDetails['name'] ? userDetails['name'] : ''">
           </div>
           <div class="form-group">
             <label>Email ID</label>
-            <input class="input" readonly type="text" [value]="userDetails['mail']">
+            <input class="input" readonly type="text" [value]="userDetails && userDetails['mail'] ? userDetails['mail'] : ''">
           </div>
           <div class="form-group">
             <label>Mobile Number</label>
-            <input class="input" readonly type="text" [value]="userDetails['mobile']">
+            <input class="input" readonly type="text" [value]="userDetails && userDetails['mobile'] ? userDetails['mobile'] : ''">
           </div>
           <div class="form-group">
             <label>Aadhaar Number</label>
-            <input class="input" readonly type="text" [value]="userDetails['aadhaar']">
+            <input class="input" readonly type="text" [value]="userDetails && userDetails['aadhaar'] ? userDetails['aadhaar'] : ''">
           </div>
-          <div class="form-group">
+          <div *ngIf="userDetails && userDetails['gender']" class="form-group">
             <label class="label-radio">Gender</label>
             <div class="radio" style="overflow: hidden; pointer-events: none;">
                 <mat-radio-group [(ngModel)]="radioValue">
-                  <mat-radio-button value="pre">{{userDetails['gender']}}
+                  <mat-radio-button value="pre">{{userDetails && userDetails['gender'] ? userDetails['gender'] : ''}}
                   </mat-radio-button>
                   </mat-radio-group>
                 <!-- <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label> -->
@@ -45,7 +45,7 @@
             <label>Marital Status</label>
             <div class="radio" style="overflow: hidden; pointer-events: none;">
                 <mat-radio-group [(ngModel)]="radioValue">
-                  <mat-radio-button value="pre">{{userDetails['marital']}}
+                  <mat-radio-button value="pre">{{userDetails && userDetails['marital'] ? userDetails['marital'] : ''}}
                   </mat-radio-button>
                   </mat-radio-group>
                   <!-- <mat-radio-button [value]="userDetails['marital']">{{userDetails['marital']}}</mat-radio-button> -->
@@ -58,9 +58,9 @@
           <div class="form-group">
             <label>Date of Birth</label>
             <div class="dob">
-              <input class="dob-input" readonly type="text" [value]="userDetails['dobDate']">
-              <input class="dob-input" readonly type="text" [value]="userDetails['dobMonth']">
-              <input class="dob-input" readonly type="text" [value]="userDetails['dobYear']">
+              <input class="dob-input" readonly type="text" [value]="userDetails && userDetails['dobDate'] ? userDetails['dobDate'] : ''">
+              <input class="dob-input" readonly type="text" [value]="userDetails && userDetails['dobMonth'] ? userDetails['dobMonth'] : ''">
+              <input class="dob-input" readonly type="text" [value]="userDetails && userDetails['dobYear'] ? userDetails['dobYear'] : ''">
             </div>
           </div>
     
@@ -73,13 +73,13 @@
         <div class="form-wrapper-left">
           <div class="form-group">
             <label>Nationality</label>
-            <input class="input" readonly type="text" [value]="userDetails['nationality']">
+            <input class="input" readonly type="text" [value]="userDetails && userDetails['nationality'] ? userDetails['nationality'] : ''">
           </div>
         </div>
         <div class="form-wrapper-right">
           <div class="form-group">
             <label>Category</label>
-            <input class="input" readonly type="text" [value]="userDetails['category']">
+            <input class="input" readonly type="text" [value]="userDetails && userDetails['category'] ? userDetails['category'] : ''">
           </div>
         </div>
       </div>
@@ -89,31 +89,31 @@
           <div class="form-group">
             <label>Present Address</label>
             <div class="input addr" style="flex-wrap: wrap;">
-              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentAddress1']}}
+              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails && userDetails['presentAddress1'] ? userDetails['presentAddress1'] : ''}}
               </div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentAddress2']}}
+              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails && userDetails['presentAddress2'] ? userDetails['presentAddress2'] : ''}}
               </div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentCity']}}
+              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails && userDetails['presentCity'] ? userDetails['presentCity'] : ''}}
               </div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentState']}}
+              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails && userDetails['presentState'] ? userDetails['presentState'] : ''}}
               </div> <br>
               <div style="border: none; box-shadow: none; background: transparent;">
-                {{userDetails['presentZipCode']}}</div>
+                {{userDetails && userDetails['presentZipCode'] ? userDetails['presentZipCode'] : ''}}</div>
             </div>
           </div>
           <div class="form-group">
             <label>Permanent Address</label>
             <div class="input addr" style="flex-wrap: wrap;">
               <div style="border: none; box-shadow: none; background: transparent;">
-                {{userDetails['permanentAddress1']}}</div> <br>
+                {{userDetails && userDetails['permanentAddress1'] ? userDetails['permanentAddress1'] : ''}}</div> <br>
               <div style="border: none; box-shadow: none; background: transparent;">
-                {{userDetails['permanentAddress2']}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['permanentCity']}}
+                {{userDetails && userDetails['permanentAddress2'] ? userDetails['permanentAddress2'] : ''}}</div> <br>
+              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails && userDetails['permanentCity'] ? userDetails['permanentCity'] : ''}}
               </div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['permanentState']}}
+              <div style="border: none; box-shadow: none; background: transparent;">{{userDetails && userDetails['permanentState'] ? userDetails['permanentState'] : ''}}
               </div> <br>
               <div style="border: none; box-shadow: none; background: transparent;">
-                {{userDetails['permanentZipCode']}}</div>
+                {{userDetails && userDetails['permanentZipCode'] ? userDetails['permanentZipCode'] : ''}}</div>
             </div>
           </div>
     
@@ -170,38 +170,38 @@
     
     
     </div>
-    <div class="main-wrapper" *ngIf="userDetails">
+    <div class="main-wrapper">
       <div class="main-heading-bottom">
         Passport related details
       </div>
       <div class="flex-wrapper-passport">
         <div class="edu-wrapper-head number">
           <label>Passport Number</label>
-          <input type="text" readonly [value]="userDetails['passportNumber']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportNumber'] ? userDetails['passportNumber'] : ''">
         </div>
         <div class="edu-wrapper-head name">
           <label>Name as in Passport</label>
-          <input type="text" readonly [value]="userDetails['passportName']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportName'] ? userDetails['passportName'] : ''">
         </div>
         <div class="edu-wrapper-head profession">
           <label>Profession as in Passport</label>
-          <input type="text" readonly [value]="userDetails['passportProfession']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportProfession'] ? userDetails['passportProfession'] : ''">
         </div>
         <div class="edu-wrapper-head date">
           <label>Date of Issue</label>
-          <input type="text" readonly [value]="userDetails['passportIssueDate']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportIssueDate'] ? userDetails['passportIssueDate'] : ''">
         </div>
         <div class="edu-wrapper-head valid">
           <label>Valid Upto</label>
-          <input type="text" readonly [value]="userDetails['passportValid']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportValid'] ? userDetails['passportValid'] : ''">
         </div>
         <div class="edu-wrapper-head place">
           <label>Place of Issue</label>
-          <input type="text" readonly [value]="userDetails['passportIssuePlace']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportIssuePlace'] ? userDetails['passportIssuePlace'] : ''">
         </div>
         <div class="edu-wrapper-head country">
           <label>Countries valid for</label>
-          <input type="text" readonly [value]="userDetails['passportValidFor']">
+          <input type="text" readonly [value]="userDetails && userDetails['passportValidFor'] ? userDetails['passportValidFor'] : ''">
         </div>
     
       </div>
@@ -211,29 +211,29 @@
       <div class="flex-wrapper-passport">
         <div class="edu-wrapper-head number">
           <label>Most Serious Recent Illness</label>
-          <input type="text" readonly [value]="userDetails['illness']">
+          <input type="text" readonly [value]="userDetails && userDetails['illness'] ? userDetails['illness'] : ''">
         </div>
         <div class="edu-wrapper-head name">
           <label>No. of Days Ill</label>
-          <input type="text" readonly [value]="userDetails['daysofIll']">
+          <input type="text" readonly [value]="userDetails && userDetails['daysofIll'] ? userDetails['daysofIll'] : ''">
         </div>
         <div class="edu-wrapper-head profession">
           <label>Nature of Illness</label>
-          <input type="text" readonly [value]="userDetails['natureofIll']">
+          <input type="text" readonly [value]="userDetails && userDetails['natureofIll'] ? userDetails['natureofIll'] : ''">
         </div>
         <div class="edu-wrapper-head physical">
           <label>Physical Disability (if any)</label>
-          <input type="text" readonly [value]="userDetails['disability']">
+          <input type="text" readonly [value]="userDetails && userDetails['disability'] ? userDetails['disability'] : ''">
         </div>
         <div class="edu-wrapper-head height-weight-wrapper">
           <div class="sub-edu">
             <div class="height">
               <label>Height (cms)</label>
-              <input type="text" readonly [value]="userDetails['height']">
+              <input type="text" readonly [value]="userDetails && userDetails['height'] ? userDetails['height'] : ''">
             </div>
             <div class="weight">
               <label>Weight (kg)</label>
-              <input type="text" readonly [value]="userDetails['weight']">
+              <input type="text" readonly [value]="userDetails && userDetails['weight'] ? userDetails['weight'] : ''">
             </div>
           </div>
         </div>
@@ -242,11 +242,11 @@
           <div class="power-wrapper">
             <div class="left-wrapper">
               <span class="label-1">Left Eye</span>
-              <input type="text" readonly [value]="userDetails['left']">
+              <input type="text" readonly [value]="userDetails && userDetails['left'] ? userDetails['left'] : ''">
             </div>
             <div class="right-wrapper">
               <span class="label-2">Right Eye</span>
-              <input type="text" readonly [value]="userDetails['right']">
+              <input type="text" readonly [value]="userDetails && userDetails['right'] ? userDetails['right'] : ''">
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@
           </div>
     
         </div>
-    
+        <ng-container *ngIf="userDetails">
         <div class="qualify-wrapper" *ngFor="let dup of userDetails['educationValuearray']">
           <input class="level" readonly [value]="dup['field_level']['value']">
           <input class="board" type="text" readonly [value]="dup['field_board_university']['value']">
@@ -305,6 +305,7 @@
     
     
         </div>
+      </ng-container>
       </div>
     
     
@@ -332,7 +333,7 @@
         </div>
     
         <div class="form">
-          <ng-container>
+          <ng-container *ngIf="userDetails">
             <div class="text-box-grid" *ngFor="let dup of userDetails['familyValuesArr']">
               <div class="text-1">
                 {{dup['field_name_of_your_family'] && dup['field_name_of_your_family']['value'] ? dup['field_name_of_your_family']['value'] : '-'}}
@@ -369,7 +370,7 @@
       <div class="main-heading-no-bottom">
         Skills
       </div>
-      <div class="skills-wrapper">
+      <div *ngIf="userDetails" class="skills-wrapper">
         <div class="skills" *ngFor="let dup of userDetails['skillValueArray']">
           {{dup.value ? dup.value : 'NA'}}
         </div>
@@ -405,7 +406,7 @@
         </div>
     
         <div class="form">
-          <ng-container>
+          <ng-container *ngIf="userDetails">
             <div class="text-box-grid" *ngFor="let dup of userDetails['generalArray']">
               <div class="text-1">
                 {{dup.names ? dup.names : '-'}}
@@ -446,17 +447,17 @@
       </div>
       <div class="faculty-wrapper">
         <div>
-          {{userDetails['facultyReference1'] ? userDetails['facultyReference1'] : '-'}}
+          {{userDetails && userDetails['facultyReference1'] ? userDetails['facultyReference1'] : '-'}}
         </div>
         <div>
-          {{userDetails['facultyReference2'] ? userDetails['facultyReference2'] : '-'}}
+          {{userDetails && userDetails['facultyReference2'] ? userDetails['facultyReference2'] : '-'}}
         </div>
       </div>
     
     </div>
     
     <!-- When empty array comes -->
-    <div class="top-main-wrapper" *ngIf="!userData || userData.length < 1">
+    <!-- <div class="top-main-wrapper" *ngIf="!userData || userData.length < 1">
     
       <div class="top-grid">
         <div class="profile-wrapper">
@@ -837,12 +838,12 @@
         </div>
       </div>
     
-    </div>
+    </div> -->
     
     <div class="submit-button-wrapper">
-      <button class="submit btn-margin-space" *ngIf="showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
+      <button class="submit btn-margin-space" *ngIf="!showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
     
-      <button class="submit" *ngIf="showNext" (click)="onSubmit()" mat-raised-button type="button">Next</button>
+      <button class="submit" *ngIf="!showNext" (click)="onSubmit()" mat-raised-button type="button">Next</button>
     
     </div>
 </div>

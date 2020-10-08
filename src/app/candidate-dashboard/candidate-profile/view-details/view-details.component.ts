@@ -45,15 +45,16 @@ export class ViewDetailsComponent implements OnInit {
     private sharedService: SharedServiceService,
     private fb: FormBuilder
   ) {
+    this.appConfig.showLoader();
+    this.updatedStateAPI();
   }
 
   ngOnInit() {
-    this.updatedStateAPI();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
 
-    if (this.appConfig.getLocalData('field_isformsubmitted') && this.appConfig.getLocalData('field_isformsubmitted') !== 'true') {
+    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') == 'true') {
       this.showNext = true;
     }
   }
@@ -62,20 +63,20 @@ export class ViewDetailsComponent implements OnInit {
     this.sharedService.printSubject.next();
     // window.print();
   }
-  notShowOtherTabs() {
-    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
-      // Sub-Navigation menus. This will be retrieved in Admin master component
-      const subWrapperMenus = [
-        {
-          icon: '',
-          name: 'VIEW DETAILS',
-          router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
-        },
-      ];
-      this.sharedService.subMenuSubject.next(subWrapperMenus);
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
-    }
-  }
+  // notShowOtherTabs() {
+  //   if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
+  //     // Sub-Navigation menus. This will be retrieved in Admin master component
+  //     const subWrapperMenus = [
+  //       {
+  //         icon: '',
+  //         name: 'VIEW DETAILS',
+  //         router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
+  //       },
+  //     ];
+  //     this.sharedService.subMenuSubject.next(subWrapperMenus);
+  //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+  //   }
+  // }
 
   refresh() {
   }
@@ -207,7 +208,7 @@ export class ViewDetailsComponent implements OnInit {
 
 
     if (this.appConfig.getLocalData('localProfilePic') && this.appConfig.getLocalData('localProfilePic') == 'null') {
-      this.url = `${this.appConfig.imageBaseUrl()}/d8cintana2/sites/default/files/2020-06/filename1_1.jpg`;
+      // this.url = `${this.appConfig.imageBaseUrl()}/d8cintana2/sites/default/files/2020-06/filename1_1.jpg`;
     }
     if (!this.appConfig.getLocalData('localProfilePic')) {
       this.url = !dump['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? dump['field_profile_image'][0]['url'] : dump['field_profile_image'][0]['url'];
