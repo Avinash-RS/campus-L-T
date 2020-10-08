@@ -63,7 +63,7 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+      this.appConfig.hideLoader(); 
 
       this.userList = data ? data : [];
       this.userList.forEach(element => {
