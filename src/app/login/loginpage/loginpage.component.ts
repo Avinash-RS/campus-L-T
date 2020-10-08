@@ -146,8 +146,19 @@ export class LoginpageComponent implements OnInit {
               let date = (day <= 9? '0' + day : day) +'-'+(month <= 9 ? '0' + month : month) +'-'+ todayDate.getFullYear()
             
               if(date <= DropdownListForKYC['kycDate']){
-                if (data['form_submmited'] && data['form_submmited'] === '1') {
-                  this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                if (data['first_shortlist'] && data['first_shortlist'] === '1') {
+                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
+                  this.appConfig.setLocalData('field_isformsubmitted', 'true');
+                  this.appConfig.setLocalData('personalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('familyFormSubmitted', 'true');
+                  this.appConfig.setLocalData('generalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                } 
+                  if (data['form_submmited'] && data['form_submmited'] === '1') {
+                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
                   this.appConfig.setLocalData('field_isformsubmitted', 'true');
                   this.appConfig.setLocalData('personalFormSubmitted', 'true');
                   this.appConfig.setLocalData('educationalFormSubmitted', 'true');
@@ -157,7 +168,7 @@ export class LoginpageComponent implements OnInit {
                   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
                   // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
                 } else {
-                  this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
+                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
                   // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
                   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
                 }

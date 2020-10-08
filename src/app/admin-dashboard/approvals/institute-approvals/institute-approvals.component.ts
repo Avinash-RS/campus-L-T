@@ -63,12 +63,12 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+      this.appConfig.hideLoader(); 
 
       this.userList = data ? data : [];
       this.userList.forEach(element => {
         element.checked = false;
-        element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';
+        element['field_date'] = element && element['field_date'] ? element['field_date'] : '-';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
