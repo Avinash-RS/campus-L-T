@@ -68,7 +68,7 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
       this.userList = data ? data : [];
       this.userList.forEach(element => {
         element.checked = false;
-        element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';
+        element['field_date'] = element && element['field_date'] ? element['field_date'] : '-';
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
