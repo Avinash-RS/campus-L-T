@@ -25,6 +25,7 @@
             <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
             <div *ngIf="showSizeError['image']" class="error">Accept only .csv, .xls and .xlsx files</div>
             <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
+            <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
 
           </div>
         </div>
