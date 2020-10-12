@@ -455,6 +455,12 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  //hr candidate report list
+  candidateReportslist(data){
+    return this.http.post(`${this.BASE_URL}/profile/candidate_report_download`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
    //hr interview panel report list
    interviewPanelReportslist(data){
     return this.http.post(`${this.BASE_URL}/profile/interv_panel_users_reprt`, data,

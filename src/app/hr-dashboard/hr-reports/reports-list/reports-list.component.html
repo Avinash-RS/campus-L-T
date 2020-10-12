@@ -30,7 +30,7 @@
 
                 <!-- <div *ngIf="i == 3">
                     <nz-select class="nzSelect"
-                    nzPlaceHolder="Tag name">
+                    nzPlaceHolder="Tag name" [(ngModel)]="selectedTagNameSecond">
                       <nz-option *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name"></nz-option>
                   </nz-select>
                 </div> -->
@@ -68,7 +68,7 @@
                   </div>
                   <!-- <div *ngIf="i == 3">
                     <nz-select class="nzSelect"
-                    nzPlaceHolder="City">
+                    nzPlaceHolder="City" [(ngModel)]="selectedCityForSecond">
                       <nz-option *ngFor="let city of cityListDropdown" [nzLabel]="city.cities" [nzValue]="city.cities"></nz-option>
                   </nz-select>
                 </div> -->
@@ -89,7 +89,7 @@
 
                   <!-- <div *ngIf="i == 3">
                     <nz-select class="nzSelect"
-                    nzPlaceHolder="Institute name">
+                    nzPlaceHolder="Institute name" [(ngModel)]="selectedInstituteNameForSecond">
                       <nz-option *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value"></nz-option>
                   </nz-select>
                 </div> -->

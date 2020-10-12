@@ -68,6 +68,9 @@ export class ReportsListComponent implements OnInit {
   selectedTagNameFirst:any;
   selectedCityForFirst:any;
   selectedInstituteNameForFirst:any;
+  selectedTagNameSecond:any;
+  selectedCityForSecond:any;
+  selectedInstituteNameForSecond:any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -380,6 +383,61 @@ export class ReportsListComponent implements OnInit {
     }
   }
 
+  // To get candidate report
+  getCandidateRepots(data) {
+    let sendReq = {
+      'to': '',
+      'from': '',
+      'tag': '',
+      'city': '',
+      'institute': ''
+    };
+
+    if(data.to._i){
+      let tomonth = data.to._i.month + 1;
+      let frommonth = data.from._i.month + 1;
+      sendReq = {
+        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
+        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
+        'tag': data.tagName,
+        'city': data.city,
+        'institute': data.instituteName
+      }
+      if(sendReq.to >= sendReq.from){
+      
+        this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          const excel = data && data.url ? data.url : '';
+          window.open(excel, '_blank');
+  
+        }, (err) => {
+        });
+      }else{
+        this.appConfig.error("To date should be greater", '');
+      }
+    }else{
+      sendReq = {
+        'to': '',
+        'from': '',
+        'tag': data.tagName,
+        'city': data.city,
+        'institute': data.instituteName
+      }
+      
+        this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
+          this.appConfig.hideLoader();
+          
+          const excel = data && data.url ? data.url : '';
+          window.open(excel, '_blank');
+  
+        }, (err) => {
+        });
+
+      // this.appConfig.error("Date should be selected", '');
+    }
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -438,6 +496,21 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.error("Date should be selected", '');
       }
     }
+    // else if(index == 3){
+    //   if(this.selectedTagNameSecond || this.selectedCityForSecond || this.selectedInstituteNameForSecond){
+    //     let sendData = {
+    //       'tagName': this.selectedTagNameSecond,
+    //       'city': this.selectedCityForSecond,
+    //       'instituteName': this.selectedInstituteNameForSecond,
+    //       "to": this.userList[index].tdate,
+    //       "from": this.userList[index].fdate
+    //     }
+    
+    //     this.getCandidateRepots(sendData);
+    //   }else{
+    //     this.appConfig.error("Please select a filter criteria", '');
+    //   }
+    // }
   }
   // selectedUser(userDetail) {
   //   this.selectedUserDetail = userDetail;
