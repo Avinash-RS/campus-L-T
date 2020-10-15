@@ -2168,3 +2168,6 @@ th {
     }
   }
 }
+::ng-deep .ant-select-dropdown {
+  width: 100% !important !important;
+}
