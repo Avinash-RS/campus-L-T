@@ -79,7 +79,7 @@
               <th mat-header-cell *matHeaderCellDef> &#160; </th>
               <td mat-cell *matCellDef="let element; let i = index;">
                   <div *ngIf="i == 0">
-                      <nz-select nzShowSearch nzAllowClear class="nzSelect ant-select-dropdown"
+                      <nz-select nzShowSearch nzAllowClear class="nzSelect"
                       nzPlaceHolder="Institute name" [(ngModel)]="selectedInstituteNameForFirst">
                         <nz-option nzCustomContent *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value">
                           <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="institute.name">{{institute.name}}</span>

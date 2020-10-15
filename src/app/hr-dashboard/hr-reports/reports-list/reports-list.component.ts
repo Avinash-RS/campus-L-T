@@ -77,13 +77,14 @@ export class ReportsListComponent implements OnInit {
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService
-    ) { }
+    ) { 
+      this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
+    }
 
   ngOnInit() {
     //   this.form = new FormGroup({
     //     title: new FormControl()
     //  });
-    this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
 
     this.getUsersList();
     this.getTagName();
