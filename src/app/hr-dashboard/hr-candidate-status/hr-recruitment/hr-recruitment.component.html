@@ -82,8 +82,8 @@
                   <mat-label>Filter</mat-label> -->
       <div class="search-bar">
         <div class="search-icon">
-          <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
-          <img src="assets/images/feather-search.svg" alt="" srcset="">
+          <img matTooltip="Search" (click)="applySearch()" src="assets/images/Search.svg" alt="" srcset="">
+          <input matInput [(ngModel)]="searchInput" placeholder="Search….">
         </div>
 
         <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
