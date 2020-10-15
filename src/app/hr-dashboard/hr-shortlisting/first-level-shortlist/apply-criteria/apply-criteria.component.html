@@ -18,10 +18,11 @@
             Applied categories
           </div>
         </div>
-        <div class="right">
+        <div class="right" style="display: flex;">
+          <button class="submit btn-margin-space-1" (click)="submitFilterNoRedirect()" mat-raised-button>Apply Filter</button>
+          <button style="margin-right: 1.1em;" class="cancel-btn" (click)="clearAllFilters()" mat-raised-button>Clear All</button>
           <div class="button">
-            <button class="submit btn-margin-space-1" (click)="submitFilterNoRedirect()" mat-raised-button>Apply Filter</button>
-            <button class="cancel-btn" (click)="clearAllFilters()" mat-raised-button>Clear All</button>
+            <button style="margin-left: .5em;" class="submit" (click)="submitFilter()" mat-button>Submit</button>
           </div>
         </div>
       </div>
@@ -81,8 +82,7 @@
         <div *ngIf="instituteFilterShow" class="filter-wrapper-main">
           <div class="filter-heading">
             <span class="wrap"> <span (click)="clearInstituteFilter()" class="icon"><img src="assets/images/error.svg"
-                  alt="" srcset=""></span> <span class="head-text">Institutes
-                ({{showInstituteTotalCount}})</span></span>
+                  alt="" srcset=""></span> <span class="head-text">Institutes ({{showInstituteTotalCount}})</span></span>
           </div>
           <div class="filter-list">
             <ng-container *ngFor="let dup of InstituteNameFilter; let i = index">
@@ -98,7 +98,7 @@
         <div *ngIf="disciplineFilterShow" class="filter-wrapper-main">
           <div class="filter-heading">
             <span class="wrap"> <span (click)="clearDisciplineFilter()" class="icon"><img src="assets/images/error.svg"
-                  alt="" srcset=""></span> <span class="head-text">Discipline</span></span>
+                  alt="" srcset=""></span> <span class="head-text">Discipline ({{showDisciplineTotalCount}})</span></span>
           </div>
           <div class="filter-list">
             <ng-container *ngFor="let dup of disciplineFilter; let i = index">
@@ -147,7 +147,7 @@
     </div>
   </div>
   <div class="submit-button">
-    <button class="submit" (click)="submitFilter()" mat-button>Submit</button>
+    <!-- <button class="submit" (click)="submitFilter()" mat-button>Submit</button> -->
   </div>
 
   <div class="second-main">
@@ -190,7 +190,7 @@
                 <div class="left">
                   <div class="item">From</div>
                   <div class="item-date">
-                    <input matInput [matDatepicker]="dp" [formControl]="dateFrom">
+                    <input (keyup)="dateFpress($event)" matInput [matDatepicker]="dp" [formControl]="dateFrom">
                     <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="dp"></mat-datepicker-toggle>
                     <mat-datepicker #dp>
                     </mat-datepicker>
@@ -199,7 +199,7 @@
                 <div class="right">
                   <div class="item">To</div>
                   <div class="item-date">
-                    <input [formControl]="dateTo" matInput [matDatepicker]="picker">
+                    <input (keyup)="dateTpress($event)" [formControl]="dateTo" matInput [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </div>
@@ -208,8 +208,9 @@
               </div>
               <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
               <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
-              <div class="button">
-                <button class="submit" mat-raised-button (click)="applyDateFilter()"><span>Apply</span></button>
+              <div class="button validation1">
+                Note: Both Startdate and Enddate needs to be provided.               
+                <!-- <button class="submit" mat-raised-button (click)="applyDateFilter()"><span>Apply</span></button> -->
               </div>
             </div>
           </div>
@@ -348,7 +349,43 @@
       <!-- Discipline Tab -->
       <nz-tab [nzTitle]="titleDiscipline">
         <ng-template #titleDiscipline>Discipline <span class="tab-span"></span></ng-template>
-        <!-- Discipline Content -->
+        <!-- Institute Name Content -->
+        <div class="content-wrapper-institute">
+          <div class="dropdown-wrapper">
+            <div class="head">
+              Choose discipline from the list below:
+            </div>
+            <div class="outlay">
+              <div class="search">
+                <span>Find:</span> <input [formControl]="disciplineSearchControl" type="text" name="" id="">
+              </div>
+              <div class="list">
+                <div class="item-list" *ngIf="disciplineShowSelectAll">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label nz-checkbox (change)="DisciplineSelectAll($event)"
+                        [(ngModel)]="disciplineSelectAllCheck"></label>
+                    </span>
+                    <span class="text">{{(disciplineSelectAllCheck ? 'Unselect All' : 'Select All')}}</span></div>
+                </div>
+                <div class="item-list" *ngFor="let dup of disciplineList">
+                  <div class="hanging">
+                    <span class="checkbox">
+                      <label (change)="toShowOrNotDisciplineFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label>
+                    </span>
+                    <span class="text">{{dup.name}}</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </nz-tab>
+
+      <!-- <nz-tab [nzTitle]="titleDiscipline">
+        <ng-template #titleDiscipline>Discipline <span class="tab-span"></span></ng-template>
         <div class="content-wrapper-discipline">
           <div class="dropdown-wrapper">
             <div class="head">
@@ -371,7 +408,7 @@
           </div>
         </div>
 
-      </nz-tab>
+      </nz-tab> -->
 
       <!-- Specialization Tab -->
       <nz-tab [nzTitle]="titleSpecialization">

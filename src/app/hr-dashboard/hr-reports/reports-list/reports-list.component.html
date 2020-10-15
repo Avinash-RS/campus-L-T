@@ -81,7 +81,7 @@
                   <div *ngIf="i == 0">
                       <nz-select nzShowSearch nzAllowClear class="nzSelect"
                       nzPlaceHolder="Institute name" [(ngModel)]="selectedInstituteNameForFirst">
-                        <nz-option nzCustomContent *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value">
+                        <nz-option class="dummy" nzCustomContent *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value">
                           <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="institute.name">{{institute.name}}</span>
                         </nz-option>
                     </nz-select>

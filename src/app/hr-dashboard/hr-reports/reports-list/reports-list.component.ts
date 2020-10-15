@@ -71,7 +71,9 @@ export class ReportsListComponent implements OnInit {
   selectedTagNameSecond:any;
   selectedCityForSecond:any;
   selectedInstituteNameForSecond:any;
-
+  yesexist = {
+    width: 'auto !important'
+  }
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,

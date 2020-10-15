@@ -7,6 +7,8 @@ import { FormBuilder, FormArray, FormGroup, Validators, FormControl, NgForm } fr
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
+import { differenceInCalendarDays } from 'date-fns/esm';
+import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 
 @Component({
   selector: 'app-general-details',
@@ -35,6 +37,21 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   generalArray: any;
   skillValueArray: any;
   showLineError: boolean;
+
+  familyForm: FormGroup;
+
+  dateFormat = 'dd/MM/yyyy';
+  monthFormat = 'yyyy/MM';
+  familyValuesArr: any;
+  today = new Date();
+  notShow: boolean;
+
+  disabledYears = (current: Date): boolean => {
+
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.today) > 0;
+  }
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -150,7 +167,24 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       }
     }
   }
+    // Family Patch
+    familyPatch(dataArray) {
+      if (dataArray && dataArray.length > 0) {
+        dataArray.forEach(fam => {
+          this.addfamilyForm(fam);
+        });
+      } else {
+        for (let i = 0; i <= 0; i++) {
+          this.addfamilyForm(null);
+        }
+      }
+    }
+  
   FormInitialization() {
+    this.familyForm = this.fb.group({
+      familyArr: this.fb.array([])
+    }), this.familyPatch(this.familyValuesArr);
+
     this.aquaintancesForm = this.fb.group({
       relativesArr: this.fb.array([])
     }), this.generalPatch(this.generalArray);
@@ -159,6 +193,62 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       skillsArr: this.fb.array([])
     }), this.generalSkillPatch(this.skillValueArray);
   }
+
+  createItem1(fam): FormGroup {
+    // /^[1-9][0-9]{9}$/;
+    const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
+    const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
+    if (fam) {
+      return this.fb.group({
+        names: [fam['field_name_of_your_family']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        dob: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
+        relationship: [fam['field_relationship']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        occupation: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        occupation1: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        works: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        leaving: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      }, { validator: FormCustomValidators.FamilyanyOneSelected });
+    } else {
+      return this.fb.group({
+        names: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        dob: [null],
+        relationship: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        occupation: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        occupation1: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        works: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        leaving: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      }, { validator: FormCustomValidators.FamilyanyOneSelected });
+    }
+  }
+
+  removefamilyForm() {
+    // this.familyArr.removeAt(i);
+    this.familyArr.removeAt(this.familyArr.controls.length - 1);
+    if (this.familyArr.length < 5) {
+      this.notShow = false;
+    } else {
+      this.notShow = true;
+    }
+  }
+
+  addfamilyForm(data?: any) {
+    if (this.familyForm.valid) {
+      if (this.familyArr.length < 5) {
+        this.familyArr.push(this.createItem1(data));
+        if (this.familyArr.length < 5) {
+          this.notShow = false;
+        } else {
+          this.notShow = true;
+        }
+      }
+    } else {
+      this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
+    }
+
+  }
+  // convenience getters for easy access to form fields
+  get familyArr() { return this.familyForm.get('familyArr') as FormArray; }
+
   createItem(data): FormGroup {
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
