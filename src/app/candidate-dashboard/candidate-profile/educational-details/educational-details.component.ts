@@ -479,6 +479,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
     }
@@ -492,6 +493,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
     }
