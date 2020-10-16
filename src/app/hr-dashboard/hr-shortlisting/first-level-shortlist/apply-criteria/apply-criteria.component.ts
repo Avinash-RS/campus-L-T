@@ -77,6 +77,12 @@ export class ApplyCriteriaComponent implements OnInit {
   backlogs = DropdownListForKYC['backlogs'];
   genderList = DropdownListForKYC['gender'];
   disciplineList: any;
+  disciplineSearchControl = new FormControl();
+  disciplineSelectAllCheck = false;
+  disciplineShowSelectAll = true;
+  disciplineDropdownList: any;
+  showDisciplineTotalCount: number;
+
   specializationList: any;
   InstituteNameDropDown: any[];
   InstituteNameSearchControl = new FormControl();
@@ -137,6 +143,7 @@ export class ApplyCriteriaComponent implements OnInit {
 
     // For Discipline
     this.DisciplineNgOnInIt();
+    this.DisciplineCustom();
 
     // For Backlogs
     this.BacklogNgOnInIt();
@@ -146,6 +153,9 @@ export class ApplyCriteriaComponent implements OnInit {
     this.SpecializationNameCustom();
 
     this.clearAllFilters();
+
+    this.valueChangesDateFrom();
+    this.valueChangesDateTo();
   }
 
   getURLParam() {
@@ -470,7 +480,38 @@ export class ApplyCriteriaComponent implements OnInit {
     }
   }
 
+  dateFpress(event) {
+    if (event.keyCode == 46 || event.keyCode == 8) {
+      this.dateFrom.setValue('');
+    }
+  }
+  dateTpress(event) {
+    if (event.keyCode == 46 || event.keyCode == 8) {
+      this.dateTo.setValue('');
+    }
+  }
 
+  valueChangesDateFrom() {
+    this.dateFrom.valueChanges
+    .pipe(
+      debounceTime(300)
+    )
+    .subscribe((term) => {
+      this.applyDateFilter();
+      
+    });
+  }
+  valueChangesDateTo() {
+    this.dateTo.valueChanges
+    .pipe(
+      debounceTime(300)
+    )
+    .subscribe((term) => {
+      this.applyDateFilter();
+      
+    });
+  }
+  
   // Apply Date Filter
   applyDateFilter() {
     // Change Date format to yyyy-mm-dd and date Validation
@@ -913,10 +954,12 @@ export class ApplyCriteriaComponent implements OnInit {
   DisciplineNgOnInIt() {
     this.candidateService.getoverallDiscipline().subscribe((data: any) => {
       this.appConfig.hideLoader();
-      const list = data ? data : [];
+      const listarr = data ? data : [];
 
+      let list =  listarr.filter((v,i) => listarr.findIndex(item => item.value.trim() == v.value.trim()) === i);
+          
       this.disciplineList = list;
-
+      this.disciplineDropdownList = this.disciplineList;
       this.disciplineFilter = this.disciplineList;
 
       this.toShowOrNotDisciplineFilter();
@@ -925,21 +968,51 @@ export class ApplyCriteriaComponent implements OnInit {
     });
   }
 
-  DisciplinecheckboxChanged(disciplineName) {
-
-    this.disciplineList.forEach(element => {
-      if (element['name'] === disciplineName['name']) {
-        element.checkbox = !element.checkbox;
-      }
-    });
-
-    this.toShowOrNotDisciplineFilter();
+  DisciplineSearch(value: string) {
+    this.disciplineList = this.disciplineDropdownList.filter(
+      option => option['name'].toLowerCase().includes(value.toLowerCase())
+    );
   }
+
+
+  DisciplineCustom() {
+    this.disciplineSearchControl.valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe((term) => {
+        if (term.length > 0) {
+          this.disciplineShowSelectAll = false;
+        } else {
+          this.disciplineShowSelectAll = true;
+        }
+
+        this.DisciplineSearch(term);
+      });
+  }
+
+
+  DisciplinecheckboxChanged(disciplineName) {
+    this.disciplineSearchControl.patchValue('');
+    setTimeout(() => {
+      if (this.disciplineSearchControl.value === '') {
+        this.disciplineList.forEach((data) => {
+          if (data['name'] === disciplineName['name']) {
+            data.checkbox = !data.checkbox;
+          }
+        });
+      }
+      this.toShowOrNotDisciplineFilter();
+    }, 500);
+  }
+
 
   toShowOrNotDisciplineFilter(event?) {
     let runGenderElse = true;
+    const showDisciplineCount = [];
     this.disciplineFilter.forEach(element => {
       if (element.checkbox) {
+        showDisciplineCount.push(element);
         runGenderElse = false;
         this.disciplineFilterShow = true;
         return false;
@@ -949,8 +1022,23 @@ export class ApplyCriteriaComponent implements OnInit {
         }
       }
     });
+    this.showDisciplineTotalCount = showDisciplineCount.length;
   }
 
+  DisciplineSelectAll(event) {
+    this.disciplineList.forEach((data) => {
+      if (event.target.checked === true) {
+        data.checkbox = true;
+      }
+      if (event.target.checked === false) {
+        data.checkbox = false;
+      }
+    });
+    this.toShowOrNotDisciplineFilter();
+    // this.InstituteNameDropDown = this.InstituteNameFilter;
+  }
+
+  
   clearDisciplineFilter() {
     if (this.disciplineList) {
     this.disciplineList.forEach(element => {

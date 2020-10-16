@@ -337,6 +337,13 @@
           font-weight: 100;
           margin: 0.25em 0.5em;
         }
+        .validation1 {
+          text-align: left !important;
+          color: $light-black !important;
+          font-size: 12px !important;
+          font-weight: 100 !important;
+          margin: 0.25em 0.5em !important;
+        }
         .button {
           display: flex;
           align-items: center;
@@ -597,7 +604,7 @@
     }
   }
   .submit-button {
-    margin: 0.5em 0 1em 0;
+    margin: 0.5em 0 .5em 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;

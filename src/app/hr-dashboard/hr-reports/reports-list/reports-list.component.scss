@@ -168,6 +168,6 @@ th {
   position: relative;
   top: -5px;
 }
-::ng-deep .ant-select-dropdown {
-  width: 650px;
-}
+  ::ng-deep .ant-select-dropdown {
+    width: 650px !important;
+  }

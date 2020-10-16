@@ -40,6 +40,96 @@
     </form>
   </div>
 
+  <!-- <div class="main-heading">
+    Work Experience
+  </div>
+  <form #form="ngForm" [formGroup]="familyForm" class="form1">
+    <ng-container *ngIf="familyArr && familyArr.controls" formArrayName="familyArr">
+      <div class="text-box-grid" *ngFor="let item of familyArr.controls; let i = index;" [formGroupName]="i">
+        <div style="font-size: 20px; width: 100%; margin: .5em 0; text-align: center;" class="num">{{i + 1}}.</div>
+        <div class="text-1">
+          <div class="label">EMPLOYER'S NAME & ADDRESS</div>
+          <textarea (focusout)="detectInput(familyForm)" formControlName="names" type="text"></textarea>
+          <div class="error" *ngIf="familyArr.controls[i].get('names').invalid">
+            <span *ngIf="familyArr.controls[i].get('names').errors?.Namerequired">Name is Required</span>
+            <span *ngIf="familyArr.controls[i].get('names').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
+
+        </div>
+        <div class="text-2">
+          <div class="label">Duration (DD/MM/YYYY)</div>
+          <nz-date-picker (ngModelChange)="detectSelectChange()" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
+            formControlName="dob" [nzFormat]="dateFormat"></nz-date-picker>
+          <div class="error"
+            *ngIf="familyArr.controls[i].get('dob').invalid && familyArr.controls[i].get('dob').touched">
+            <span *ngIf="familyArr.controls[i].get('dob').errors?.required">Date of Birth is Required</span>
+          </div>
+        </div>
+        <div class="text-3">
+          <div class="label">POSITION HELD</div>
+          <input (focusout)="detectInput(familyForm)" formControlName="relationship" type="text">
+          <div class="error"
+            *ngIf="familyArr.controls[i].get('relationship').invalid && familyArr.controls[i].get('relationship').touched">
+            <span *ngIf="familyArr.controls[i].get('relationship').errors?.required">Relationship is Required</span>
+            <span *ngIf="familyArr.controls[i].get('relationship').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
+        </div>
+        <div class="text-4">
+          <div class="label">NAME & DESIGNATION OF IMMEDIATE SUPERIOR</div>
+          <input (focusout)="detectInput(familyForm)" formControlName="occupation" type="text">
+          <div class="error"
+            *ngIf="familyArr.controls[i].get('occupation').invalid && familyArr.controls[i].get('occupation').touched">
+            <span *ngIf="familyArr.controls[i].get('occupation').errors?.required">Occupation is Required</span>
+            <span *ngIf="familyArr.controls[i].get('occupation').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
+        </div>
+        <div class="text-5" style="max-width: 155px;">
+          <div class="label">GROSS EMOLUMENTS (PER MONTH)</div>
+          <input (focusout)="detectInput(familyForm)" formControlName="occupation1" type="text">
+          <div class="error"
+            *ngIf="familyArr.controls[i].get('occupation1').invalid && familyArr.controls[i].get('occupation1').touched">
+            <span *ngIf="familyArr.controls[i].get('occupation1').errors?.required">Occupation1 is Required</span>
+            <span *ngIf="familyArr.controls[i].get('occupation1').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
+        </div>
+
+        <div class="text-5">
+          <div class="label">NATURE OF WORK DONE</div>
+          <input (focusout)="detectInput(familyForm)" formControlName="works" type="text">
+          <div class="error"
+            *ngIf="familyArr.controls[i].get('works').invalid && familyArr.controls[i].get('works').touched">
+            <span *ngIf="familyArr.controls[i].get('works').errors?.required">works is Required</span>
+            <span *ngIf="familyArr.controls[i].get('works').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
+        </div>
+
+        <div class="text-5" style="min-width: 500px; max-width: 500px;">
+          <div class="label">REASON FOR LEAVING</div>
+          <textarea (focusout)="detectInput(familyForm)" formControlName="leaving" type="text"></textarea>
+          <div class="error"
+            *ngIf="familyArr.controls[i].get('leaving').invalid && familyArr.controls[i].get('leaving').touched">
+            <span *ngIf="familyArr.controls[i].get('leaving').errors?.required">leaving is Required</span>
+            <span *ngIf="familyArr.controls[i].get('leaving').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+  </form>
+  <div *ngIf="!notShow" class="add-form">
+    <div (click)="addfamilyForm()">
+      <img src="assets/images/interface.svg" alt="" srcset="">
+      <div class="text">
+        Add
+      </div>
+    </div>
+
+    <i *ngIf="familyArr && familyArr.controls && familyArr.controls.length > 1 " (click)="removefamilyForm()" style="color: red; height: 25px;"
+    class="material-icons remove">delete</i>
+
+  </div> -->
+
+
   <div class="main-heading">
     Relatives / Acquaintances in L & T group of companies
   </div>
