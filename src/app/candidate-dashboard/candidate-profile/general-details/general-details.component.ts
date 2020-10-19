@@ -46,6 +46,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   today = new Date();
   notShow: boolean;
 
+  yes = false;
+  no = false;
   disabledYears = (current: Date): boolean => {
 
     // Can not select days before today and today
@@ -78,6 +80,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     if (this.appConfig.getLocalData('field_isformsubmitted') == 'true') {
       this.appConfig.setLocalData('generalFormSubmitted', 'true');
     }
+
+    // this.valueChangesWork();
   }
 
   cancel() {
@@ -201,25 +205,107 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     if (fam) {
       return this.fb.group({
         names: [fam['field_name_of_your_family']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        dob: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
-        relationship: [fam['field_relationship']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        occupation: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        occupation1: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        works: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        dateFrom: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
+        dateTo: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
+        position: [fam['field_relationship']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        supervisor: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        gross: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        nature: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         leaving: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-      }, { validator: FormCustomValidators.FamilyanyOneSelected });
+      }, 
+      { validator: FormCustomValidators.FamilyanyOneSelected }
+      );
     } else {
       return this.fb.group({
         names: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        dob: [null],
-        relationship: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        occupation: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        occupation1: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        works: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        dateFrom: [null],
+        dateTo: [null],
+        position: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        supervisor: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        gross: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        nature: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         leaving: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-      }, { validator: FormCustomValidators.FamilyanyOneSelected });
+      }, 
+      { validator: FormCustomValidators.WorkanyOneSelected }
+      );
     }
   }
+
+  // valueChangesWork() {
+  //   this.familyArr.valueChanges.subscribe((data: any)=> {
+  //     console.log('values', data);
+  //     let i = data.length - 1;
+  //     // for (let i = 0; i < data.length; i++) {
+  //       const element = data[i];
+  //       if (i== 0) {
+  //         if (element['names'] || element['dateFrom'] || element['dateTo'] || element['position'] || element['supervisor'] || element['gross'] || element['nature'] || element['leaving']) {
+  //           this.familyArr.at(Number(`${i}`)).controls['names'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['names'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['dateFrom'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['dateFrom'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['dateTo'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['dateTo'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['position'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['position'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['supervisor'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['supervisor'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['gross'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['gross'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['nature'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['nature'].updateValueAndValidity();
+  //           this.familyArr.at(Number(`${i}`)).controls['leaving'].setValidators([Validators.required]);
+  //           this.familyArr.at(Number(`${i}`)).controls['leaving'].updateValueAndValidity();
+  //         } else {
+  //           this.familyArr.at(Number(`${i}`)).controls['names'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['dateFrom'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['dateTo'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['position'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['supervisor'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['gross'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['nature'].clearValidators();
+  //           this.familyArr.at(Number(`${i}`)).controls['leaving'].clearValidators();
+
+  //         }
+  //       }
+  //     // }
+  //     // data.forEach((element, i) => {
+  //     //   if (i== 0) {
+  //     //     if (element['names'] || element['dateFrom'] || element['dateTo'] || element['position'] || element['supervisor'] || element['gross'] || element['nature'] || element['leaving']) {
+  //     //       this.familyArr.at(Number(`${i}`)).controls['names'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['names'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['dateFrom'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['dateFrom'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['dateTo'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['dateTo'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['position'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['position'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['supervisor'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['supervisor'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['gross'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['gross'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['nature'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['nature'].updateValueAndValidity();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['leaving'].setValidators([Validators.required]);
+  //     //       this.familyArr.at(Number(`${i}`)).controls['leaving'].updateValueAndValidity();
+  //     //     } else {
+  //     //       this.familyArr.at(Number(`${i}`)).controls['names'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['dateFrom'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['dateTo'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['position'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['supervisor'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['gross'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['nature'].clearValidators();
+  //     //       this.familyArr.at(Number(`${i}`)).controls['leaving'].clearValidators();
+
+  //     //     }
+  //     //   }
+  //     // });
+  //   }, (err)=> {
+
+  //   }, (next)=> {
+  //     console.log('completed');
+  //   });
+  // }
 
   removefamilyForm() {
     // this.familyArr.removeAt(i);
@@ -233,6 +319,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
+      console.log(this.familyForm.value);
+      
       if (this.familyArr.length < 5) {
         this.familyArr.push(this.createItem1(data));
         if (this.familyArr.length < 5) {
@@ -247,7 +335,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   }
   // convenience getters for easy access to form fields
-  get familyArr() { return this.familyForm.get('familyArr') as FormArray; }
+  get familyArr(): any { return this.familyForm.get('familyArr') as FormArray; }
 
   createItem(data): FormGroup {
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
