@@ -2048,6 +2048,13 @@ th {
   margin-right: 8px;
   height: 39px !important;
 }
+
+// Mian reports
+// #cdk-overlay-5 {
+  // .ant-select-dropdown {
+  //   width: auto !important;
+  // }
+// }
 // @media print{
 //   .printContentDiv{
 //     background-color: white;
@@ -2160,4 +2167,8 @@ th {
       }
     }
   }
+}
+
+::ng-deep .ant-select-dropdown {
+  width: 100% !important !important;
 }

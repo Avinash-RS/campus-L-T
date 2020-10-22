@@ -406,11 +406,28 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         element.controls.specification.clearValidators();
         element.controls.discipline.updateValueAndValidity();
         element.controls.specification.updateValueAndValidity();
-      }
-      else if(j == 1){
+      }else if(j == 1){
         this.eduArr.value[0]['leveling'] = 'HSC';
         element.controls.specification.clearValidators();
         element.controls.specification.updateValueAndValidity();
+      }
+      else if (element['value']['leveling'] == 'Diploma') {
+        element.controls.specification.clearValidators();
+        element.controls.specification.updateValueAndValidity();
+        element.controls.board.clearValidators();
+        element.controls.board.updateValueAndValidity();
+      }
+      else if (element['value']['leveling'] == 'UG') {
+        element.controls.specification.clearValidators();
+        element.controls.specification.updateValueAndValidity();
+        element.controls.board.clearValidators();
+        element.controls.board.updateValueAndValidity();
+      }
+      else if (element['value']['leveling'] == 'PG') {
+        element.controls.specification.clearValidators();
+        element.controls.specification.updateValueAndValidity();
+        element.controls.board.clearValidators();
+        element.controls.board.updateValueAndValidity();
       }
     });
   }
@@ -457,7 +474,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
     }
     if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'Diploma') {
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.board.clearValidators();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
@@ -471,6 +488,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
     }
     if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'UG') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
@@ -480,10 +498,12 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
     }
     if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'PG') {
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
@@ -493,6 +513,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
       this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
     }

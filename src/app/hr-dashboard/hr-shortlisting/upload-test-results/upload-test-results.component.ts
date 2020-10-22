@@ -36,6 +36,7 @@ export class UploadTestResultsComponent implements OnInit {
   eventSaver: any;
   totalCountofCandidates: any;
   uploadedListArray: any;
+  dateFormatExist: boolean;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -55,10 +56,16 @@ export class UploadTestResultsComponent implements OnInit {
     window.open(excel, '_blank');
   }
   submit() {
-    const data = {
-      bulk_upload: 'test-results'
-    };
-    this.openDialog(ShortlistBoxComponent, data);
+    if(this.dateFormatExist == false){
+      const data = {
+        bulk_upload: 'test-results'
+      };
+      this.openDialog(ShortlistBoxComponent, data);
+    }
+    // const data = {
+    //   bulk_upload: 'test-results'
+    // };
+    // this.openDialog(ShortlistBoxComponent, data);
   }
 
   tConvert(time) {
@@ -163,6 +170,7 @@ export class UploadTestResultsComponent implements OnInit {
   }
 
   totalCount(data) {
+    this.dateFormatExist = false;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -185,7 +193,12 @@ export class UploadTestResultsComponent implements OnInit {
               date_times = element ? element : '';
             }
             if (index == 5) {
-              shortlist_name = element ? element : '';
+
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.dateFormatExist = true;
+              } else {
+                shortlist_name = element ? element : '';
+              }
             }
             if (index == 6) {
               total_marks = element ? element : '';
@@ -344,6 +357,7 @@ export class UploadTestResultsComponent implements OnInit {
     this.showSizeError.image = false;
     this.showSizeError.size = false;
     this.validFile = false;
+    this.dateFormatExist = false;
     this.url = null;
   }
 
