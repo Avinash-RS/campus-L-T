@@ -8,6 +8,10 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { FormCanDeactivate } from 'src/app/guards/form-canDeactivate/form-can-deactivate';
 import { differenceInCalendarDays } from 'date-fns/esm';
+import * as moment from "moment";
+// import {extendMoment} from 'moment-range';
+// import moment from 'moment';
+// import moment from 'moment-precise-range-plugin';
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 
 @Component({
@@ -171,19 +175,19 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       }
     }
   }
-    // Family Patch
-    familyPatch(dataArray) {
-      if (dataArray && dataArray.length > 0) {
-        dataArray.forEach(fam => {
-          this.addfamilyForm(fam);
-        });
-      } else {
-        for (let i = 0; i <= 0; i++) {
-          this.addfamilyForm(null);
-        }
+  // Family Patch
+  familyPatch(dataArray) {
+    if (dataArray && dataArray.length > 0) {
+      dataArray.forEach(fam => {
+        this.addfamilyForm(fam);
+      });
+    } else {
+      for (let i = 0; i <= 0; i++) {
+        this.addfamilyForm(null);
       }
     }
-  
+  }
+
   FormInitialization() {
     this.familyForm = this.fb.group({
       familyArr: this.fb.array([])
@@ -214,8 +218,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         gross: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         nature: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         leaving: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-      }, 
-      { validator: FormCustomValidators.FamilyanyOneSelected }
+      },
+        { validator: FormCustomValidators.FamilyanyOneSelected }
       );
     } else {
       return this.fb.group({
@@ -229,8 +233,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         gross: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         nature: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         leaving: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-      }, 
-      { validator: FormCustomValidators.WorkanyOneSelected }
+      },
+        { validator: FormCustomValidators.WorkanyOneSelected }
       );
     }
   }
@@ -249,7 +253,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
       console.log(this.familyForm.value);
-      
+
       if (this.familyArr.length < 5) {
         this.familyArr.push(this.createItem1(data));
         if (this.familyArr.length < 5) {
@@ -331,21 +335,62 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     }
   }
   detectDateCalc(form, i) {
-      console.log(form, i);
-      if (this.familyArr) {
-        this.familyArr.value.forEach((element, index) => {
-          if (index == i && element['dateFrom'] && element['dateTo']) {
-            this.familyArr.value[0]['dateMonth'] = '10';
-            this.familyArr.value[0]['dateYear'] = '5';
-            this.familyForm.patchValue(this.familyArr.value);
-            // return this.fb.group({
-            //   dateMonth: ['10'],
-            //   dateYear: ['5']
-            // })
-          }  
-      });              
-      };
-      this.appConfig.setLocalData('generalFormTouched', 'true');
+    console.log(form, i);
+    if (this.familyArr) {
+     let yearCount = 0;
+     let monthCount = 0;
+      this.familyArr.value.forEach((element, index) => {
+        if (index == i && element['dateFrom'] && element['dateTo']) {
+          console.log(element['dateFrom']);
+          console.log(element['dateTo']);
+
+          let today = new Date(`${element['dateTo']}`)
+          let past = new Date(`${element['dateFrom']}`) // remember this is equivalent to 06 01 2010
+          console.log(today, past);
+          //dates in js are counted from 0, so 05 is june
+
+          // function calcDate(date1,date2) {
+          let diff = Math.floor(today.getTime() - past.getTime());
+          let day = 1000 * 60 * 60 * 24;
+
+          let days = Math.floor(diff / day);
+          let months = Math.floor(days / 31);
+          let years = Math.floor(months / 12);
+
+          if (months > 12) {
+            let a = Number(months) / 12;
+            if (Number.isInteger(a)) {
+              form[i].patchValue({
+                dateMonth: '0',
+                dateYear: a.toString()
+              });
+            } else {
+              let b = Math.floor(a);
+              let m = Number(b) * 12;
+              let diff = Number(months) - m;
+              form[i].patchValue({
+                dateMonth: diff.toString(),
+                dateYear: b.toString()
+              });
+            }
+          } else {
+            form[i].patchValue({
+              dateMonth: months.toString(),
+              dateYear: '0'
+            });
+          }
+        }
+
+        if (element['dateFrom']) {
+          monthCount += Number(element['dateMonth']);
+          yearCount += Number(element['dateYear']);
+        }
+
+        console.log(yearCount, monthCount);
+        
+      });
+    };
+    this.appConfig.setLocalData('generalFormTouched', 'true');
   }
 
   // To validate all fields after submit

@@ -237,13 +237,15 @@
     display: flex;
     justify-content: center;
     div {
+      display: flex;
+      align-items: center;
       cursor: pointer;
       text-align: center;
       .text {
-        margin: 0.5em 0 0 0;
+        margin: 0em 0 0 0.5em;
         color: $light-blue;
         padding: 0 0 0.1em 0;
-        border-bottom: solid $light-blue 1px;
+        // border-bottom: solid $light-blue 1px;
         font-size: 15px;
         font-weight: 100;
       }

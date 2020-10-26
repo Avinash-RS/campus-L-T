@@ -11,6 +11,7 @@ import { Moment } from 'moment';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { FormGroup } from '@angular/forms';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 
 const moment = _moment;
 
@@ -56,7 +57,8 @@ export class ReportsListComponent implements OnInit {
   form: FormGroup;
   userList;
   tagNameDropdown: any = [];
-  institutesList = DropdownListForKYC['institutes'];
+  // institutesList = DropdownListForKYC['institutes'];
+  institutesList: any;
   firstSortlistReport: any;
   interviewPanelReport: any;
   fromDate:any;
@@ -78,22 +80,32 @@ export class ReportsListComponent implements OnInit {
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private sharedService: SharedServiceService
+    private sharedService: SharedServiceService,
+    private candidateService: CandidateMappersService
     ) { 
-      this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
     }
 
   ngOnInit() {
     //   this.form = new FormGroup({
     //     title: new FormControl()
     //  });
-
+    this.getInstitute();
     this.getUsersList();
     this.getTagName();
     this.getAllCitys();
     this.getAllAssessmentName();
   }
 
+  getInstitute() {
+    this.candidateService.getoverallInstitute().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      const list = data ? data : [];
+      this.institutesList = list;
+      this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
+    }, (err)=> {
+
+    });
+  }
   // To get all users
   getUsersList() {
     // this.adminService.userList().subscribe((data: any) => {

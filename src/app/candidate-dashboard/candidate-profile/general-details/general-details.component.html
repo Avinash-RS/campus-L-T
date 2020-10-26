@@ -67,7 +67,7 @@
             <div class="upper">
               <div class="left">
                 <div class="label1"><span>From</span></div>
-                <input type="date" (change)="detectDateCalc(familyForm, i)" formControlName="dateFrom">
+                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="dateFrom">
                 <div class="error"
                   *ngIf="familyArr.controls[i].get('dateFrom').invalid && familyArr.controls[i].get('dateFrom').touched"
                   style="font-size: 12px; align-items: flex-start !important; min-width: 110px !important; max-width: 110px !important;">
@@ -79,7 +79,7 @@
 
               <div class="right">
                 <div class="label1"><span>To</span></div>
-                <input type="date" (change)="detectDateCalc(familyForm, i)" formControlName="dateTo">
+                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="dateTo">
                 <div class="error"
                   *ngIf="familyArr.controls[i].get('dateTo').invalid && familyArr.controls[i].get('dateTo').touched"
                   style="font-size: 12px; align-items: flex-start !important; min-width: 110px !important; max-width: 110px !important;">
@@ -169,14 +169,17 @@
   </form>
   <div *ngIf="!notShow" class="add-form">
     <div (click)="addfamilyForm()">
-      <img src="assets/images/interface.svg" alt="" srcset="">
+      <img style="height: 20px !important;" src="assets/images/interface.svg" alt="" srcset="">
       <div class="text">
         Add
       </div>
     </div>
-
-    <i *ngIf="familyArr && familyArr.controls && familyArr.controls.length > 1 " (click)="removefamilyForm()"
-      style="color: red; height: 25px;" class="material-icons remove">delete</i>
+    <div *ngIf="familyArr && familyArr.controls && familyArr.controls.length > 1 " style="margin-left: 1em;" (click)="removefamilyForm()">
+      <i style="color: red; font-size: 20px;" class="material-icons remove">delete</i>
+      <div class="text" style="margin: 0.2em 0 !important;">
+        Remove
+      </div>
+    </div>
 
   </div>
   <!--  #form8="ngForm" [formGroup]="workForm" -->
