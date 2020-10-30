@@ -37,6 +37,13 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   facultyReference1Form = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
   facultyReference2Form = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
 
+  interviewed_by_us = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  oc = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  payslip = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  post = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  when_interview = new FormControl(null, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  criminal_record = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+
   apiForm: any;
   generalArray: any;
   skillValueArray: any;
@@ -50,13 +57,15 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   today = new Date();
   notShow: boolean;
 
-  yes = false;
-  no = false;
+  emp_yes = false;
+  emp_no = false;
   disabledYears = (current: Date): boolean => {
 
     // Can not select days before today and today
     return differenceInCalendarDays(current, this.today) > 0;
   }
+  fullYearBinding: any;
+  monthYearBinding: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -113,6 +122,27 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : '');
     this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : '');
 
+    if (this.apiForm['full_employment'] && this.apiForm['full_employment'].length > 0) {
+      console.log('1', this.apiForm['full_employment']);
+      
+      this.familyValuesArr = this.apiForm['full_employment'];
+    } else {
+      console.log('2', this.apiForm['full_employment']);
+      this.familyValuesArr = [];
+    }
+
+      this.criminal_record.setValue(this.apiForm.criminal_record ? this.apiForm.criminal_record : '');
+      this.fullYearBinding = this.apiForm.total_exp_years ? this.apiForm.total_exp_years : '';
+      this.monthYearBinding = this.apiForm.total_exp_months ? this.apiForm.total_exp_months : '';
+      this.emp_yes = this.apiForm.employed_us ? true : false;
+      this.emp_no = this.apiForm.employed_us ? false : true;
+      this.oc.setValue(this.apiForm.oc ? this.apiForm.oc : '');
+      this.payslip.setValue(this.apiForm.payslip ? this.apiForm.payslip : '');
+      this.interviewed_by_us.setValue(this.apiForm.interviewed_by_us ? this.apiForm.interviewed_by_us : '');
+      this.post.setValue(this.apiForm.post ? this.apiForm.post : '');
+      this.when_interview.setValue(this.apiForm.when_interview ? this.apiForm.when_interview : null);
+
+
     this.FormInitialization();
   }
 
@@ -131,15 +161,31 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         this.apiForm.field_relative_company1 = { value: this.aquaintancesForm.value.relativesArr[1]['company'] ? this.aquaintancesForm.value.relativesArr[1]['company'] : '' },
 
         this.apiForm.field_faculty_reference = { value: this.facultyReference1Form ? this.facultyReference1Form.value : '' },
-        this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' },
+        this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' };
+
+
+      if (this.familyForm.valid && this.interviewed_by_us.valid && this.oc.valid && this.payslip.valid && this.post.valid && this.when_interview.valid && this.criminal_record.valid) {
+        this.apiForm.criminal_record = this.criminal_record.value ? this.criminal_record.value : '';
+        this.apiForm.total_exp_years = this.fullYearBinding ? this.fullYearBinding : '';
+        this.apiForm.total_exp_months = this.monthYearBinding ? this.monthYearBinding : '';
+        this.apiForm.employed_us = this.emp_yes ? this.emp_yes : false;
+          this.apiForm.oc = this.oc.value ? this.oc.value : '';
+        this.apiForm.payslip = this.payslip.value ? this.payslip.value : '';
+        this.apiForm.interviewed_by_us = this.interviewed_by_us.value ? this.interviewed_by_us.value : '';
+        this.apiForm.post = this.post.value ? this.post.value : '';
+        this.apiForm.when_interview = this.when_interview.value ? this.when_interview.value : null;
+        this.apiForm.full_employment = this.familyForm['value']['familyArr'];
+
+
 
         this.appConfig.setLocalData('generalFormSubmitted', 'true');
-      this.appConfig.setLocalData('confirmClick', 'true');
-      this.appConfig.clearLocalDataOne('generalFormTouched');
-      this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
+        this.appConfig.setLocalData('confirmClick', 'true');
+        this.appConfig.clearLocalDataOne('generalFormTouched');
+        this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
 
-      this.appConfig.nzNotification('success', 'Submitted', 'General details has been updated');
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+        this.appConfig.nzNotification('success', 'Submitted', 'General details has been updated');
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+      }
     } else {
       this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       this.validateAllFormArrays(this.aquaintancesForm.get('relativesArr') as FormArray);
@@ -179,19 +225,19 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   familyPatch(dataArray) {
     if (dataArray && dataArray.length > 0) {
       dataArray.forEach(fam => {
+        console.log('123', fam);
+        
         this.addfamilyForm(fam);
       });
     } else {
       for (let i = 0; i <= 0; i++) {
+        console.log('not');
         this.addfamilyForm(null);
       }
     }
   }
 
   FormInitialization() {
-    this.familyForm = this.fb.group({
-      familyArr: this.fb.array([])
-    }), this.familyPatch(this.familyValuesArr);
 
     this.aquaintancesForm = this.fb.group({
       relativesArr: this.fb.array([])
@@ -200,6 +246,11 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     this.skillForm = this.fb.group({
       skillsArr: this.fb.array([])
     }), this.generalSkillPatch(this.skillValueArray);
+
+    this.familyForm = this.fb.group({
+      familyArr: this.fb.array([])
+    }), this.familyPatch(this.familyValuesArr);
+
   }
 
   createItem1(fam): FormGroup {
@@ -207,32 +258,34 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ \-,.;]){0,255}$/;
     if (fam) {
+      console.log('adadadfsf', fam);
+      
       return this.fb.group({
-        names: [fam['field_name_of_your_family']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        dateFrom: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
-        dateTo: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
-        dateYear: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
-        dateMonth: [(fam['field_family_date_of_birth']['value'] && fam['field_family_date_of_birth']['value'] != 'Invalid date') ? fam['field_family_date_of_birth']['value'] : null],
-        position: [fam['field_relationship']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        supervisor: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        gross: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        nature: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        leaving: [fam['field_occupation']['value'], [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        employment_name_address: [fam['employment_name_address'] ? fam['employment_name_address'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        duration_from: [(fam['duration_from'] && fam['duration_from'] != 'Invalid date') ? fam['duration_from'] : null],
+        duration_to: [(fam['duration_to'] && fam['duration_to'] != 'Invalid date') ? fam['duration_to'] : null],
+        duration_year: [(fam['duration_year'] && fam['duration_year'] != 'Invalid date') ? fam['duration_year'] : null],
+        duration_month: [(fam['duration_month'] && fam['duration_month'] != 'Invalid date') ? fam['duration_month'] : null],
+        postion_field: [fam['postion_field'] ? fam['postion_field'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        name_designation_supervisor: [fam['name_designation_supervisor'] ? fam['name_designation_supervisor'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        gross_emploment: [fam['gross_emploment'] ? fam['gross_emploment'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        nature_work: [fam['nature_work'] ? fam['nature_work'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        reason_leaving: [fam['reason_leaving'] ? fam['reason_leaving'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       },
-        { validator: FormCustomValidators.FamilyanyOneSelected }
+        { validator: FormCustomValidators.WorkanyOneSelected }
       );
     } else {
       return this.fb.group({
-        names: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        dateFrom: [null],
-        dateTo: [null],
-        dateYear: [null],
-        dateMonth: [null],
-        position: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        supervisor: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        gross: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        nature: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        leaving: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        employment_name_address: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        duration_from: [null],
+        duration_to: [null],
+        duration_year: [null],
+        duration_month: [null],
+        postion_field: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        name_designation_supervisor: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        gross_emploment: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        nature_work: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        reason_leaving: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       },
         { validator: FormCustomValidators.WorkanyOneSelected }
       );
@@ -240,9 +293,26 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   }
 
 
-  removefamilyForm() {
+  removefamilyForm(form) {
     // this.familyArr.removeAt(i);
     this.familyArr.removeAt(this.familyArr.controls.length - 1);
+    let monthCount = 0;
+    let yearCount = 0;
+    form.forEach(ele => {
+      monthCount += Number(ele['controls']['duration_month']['value']);
+      yearCount += Number(ele['controls']['duration_year']['value']);
+      if (monthCount > 12) {
+        let y; let m;
+        y = Math.floor(monthCount / 12);
+        m = monthCount % 12;
+        this.fullYearBinding = yearCount + y;
+        this.monthYearBinding = m;
+      } else {
+        this.fullYearBinding = yearCount;
+        this.monthYearBinding = monthCount;
+      }
+    });
+
     if (this.familyArr.length < 5) {
       this.notShow = false;
     } else {
@@ -253,8 +323,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
       console.log(this.familyForm.value);
-
       if (this.familyArr.length < 5) {
+        console.log('add', this.familyArr.length, data);
         this.familyArr.push(this.createItem1(data));
         if (this.familyArr.length < 5) {
           this.notShow = false;
@@ -337,15 +407,15 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   detectDateCalc(form, i) {
     console.log(form, i);
     if (this.familyArr) {
-     let yearCount = 0;
-     let monthCount = 0;
+      let yearCount = 0;
+      let monthCount = 0;
       this.familyArr.value.forEach((element, index) => {
-        if (index == i && element['dateFrom'] && element['dateTo']) {
-          console.log(element['dateFrom']);
-          console.log(element['dateTo']);
+        if (index == i && element['duration_from'] && element['duration_to']) {
+          console.log(element['duration_from']);
+          console.log(element['duration_to']);
 
-          let today = new Date(`${element['dateTo']}`)
-          let past = new Date(`${element['dateFrom']}`) // remember this is equivalent to 06 01 2010
+          let today = new Date(`${element['duration_to']}`)
+          let past = new Date(`${element['duration_from']}`) // remember this is equivalent to 06 01 2010
           console.log(today, past);
           //dates in js are counted from 0, so 05 is june
 
@@ -361,33 +431,47 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
             let a = Number(months) / 12;
             if (Number.isInteger(a)) {
               form[i].patchValue({
-                dateMonth: '0',
-                dateYear: a.toString()
+                duration_month: '0',
+                duration_year: a.toString()
               });
             } else {
               let b = Math.floor(a);
               let m = Number(b) * 12;
               let diff = Number(months) - m;
               form[i].patchValue({
-                dateMonth: diff.toString(),
-                dateYear: b.toString()
+                duration_month: diff.toString(),
+                duration_year: b.toString()
               });
             }
           } else {
             form[i].patchValue({
-              dateMonth: months.toString(),
-              dateYear: '0'
+              duration_month: months.toString(),
+              duration_year: '0'
             });
           }
+
+          if (element['duration_from']) {
+            form.forEach(ele => {
+              monthCount += Number(ele['controls']['duration_month']['value']);
+              yearCount += Number(ele['controls']['duration_year']['value']);
+              if (monthCount > 12) {
+                let y; let m;
+                y = Math.floor(monthCount / 12);
+                m = monthCount % 12;
+                this.fullYearBinding = yearCount + y;
+                this.monthYearBinding = m;
+              } else {
+                this.fullYearBinding = yearCount;
+                this.monthYearBinding = monthCount;
+              }
+            });
+          }
+
         }
 
-        if (element['dateFrom']) {
-          monthCount += Number(element['dateMonth']);
-          yearCount += Number(element['dateYear']);
-        }
 
         console.log(yearCount, monthCount);
-        
+
       });
     };
     this.appConfig.setLocalData('generalFormTouched', 'true');

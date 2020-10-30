@@ -125,49 +125,14 @@ export class FormCustomValidators {
   }
 
   static WorkanyOneSelected(g: FormGroup) {
-    if ((g.get('names') && g.get('names')['value']) || (g.get('dateFrom') && g.get('dateFrom')['value']) || (g.get('dateTo') && g.get('dateTo')['value']) || (g.get('position') && g.get('position')['value']) || (g.get('supervisor') && g.get('supervisor')['value']) || (g.get('gross') && g.get('gross')['value']) || (g.get('nature') && g.get('nature')['value']) || (g.get('leaving') && g.get('leaving')['value'])) {
-      // if ((g.get('dob')['value']) || (g.get('relationship')['value'] && g.get('relationship')['value'].length > 0) || (g.get('occupation')['value'] && g.get('occupation')['value'].length > 0)) {
-      //   if (!g.controls['names']['value'] || (g.controls['names']['value'].length < 1 || g.controls['names']['value'] == '' || g.controls['names']['value'] == null || g.controls['names']['value'] == undefined)) {
-      //     return g.controls['names']['setErrors']({ Namerequired: true });
-      //     // return { notSelected: true };
-      //   } else {
-      //     g.controls['names'].setErrors(null);
-      //     return null;
-      //   }
-      // } else {
-      //   g.controls['names'].setErrors(null);
-      //   return null;
-      // }
-      if ((g.get('names') && g.get('names')['value']) && (g.get('dateFrom') && g.get('dateFrom')['value']) && (g.get('dateTo') && g.get('dateTo')['value']) && (g.get('position') && g.get('position')['value']) && (g.get('supervisor') && g.get('supervisor')['value']) && (g.get('gross') && g.get('gross')['value']) && (g.get('nature') && g.get('nature')['value']) && (g.get('leaving') && g.get('leaving')['value'])) {
-      // return g.controls['names']['setErrors'](null),
-      // g.controls['dateFrom']['setErrors'](null),
-      // g.controls['dateTo']['setErrors'](null),
-      // g.controls['position']['setErrors'](null),
-      // g.controls['supervisor']['setErrors'](null),
-      // g.controls['gross']['setErrors'](null),
-      // g.controls['nature']['setErrors'](null),
-      // g.controls['leaving']['setErrors'](null);
+    if ((g.get('employment_name_address') && g.get('employment_name_address')['value']) || (g.get('duration_from') && g.get('duration_from')['value']) || (g.get('duration_to') && g.get('duration_to')['value']) || (g.get('postion_field') && g.get('postion_field')['value']) || (g.get('name_designation_supervisor') && g.get('name_designation_supervisor')['value']) || (g.get('gross_emploment') && g.get('gross_emploment')['value']) || (g.get('nature_work') && g.get('nature_work')['value']) || (g.get('reason_leaving') && g.get('reason_leaving')['value'])) {
+
+      if ((g.get('employment_name_address') && g.get('employment_name_address')['value']) && (g.get('duration_from') && g.get('duration_from')['value']) && (g.get('duration_to') && g.get('duration_to')['value']) && (g.get('postion_field') && g.get('postion_field')['value']) && (g.get('name_designation_supervisor') && g.get('name_designation_supervisor')['value']) && (g.get('gross_emploment') && g.get('gross_emploment')['value']) && (g.get('nature_work') && g.get('nature_work')['value']) && (g.get('reason_leaving') && g.get('reason_leaving')['value'])) {
       return null;
       } else {
-        // return g.controls['names']['setErrors']({ required: true }),
-        // g.controls['dateFrom']['setErrors']({ required: true }),
-        // g.controls['dateTo']['setErrors']({ required: true }),
-        // g.controls['position']['setErrors']({ required: true }),
-        // g.controls['supervisor']['setErrors']({ required: true }),
-        // g.controls['gross']['setErrors']({ required: true }),
-        // g.controls['nature']['setErrors']({ required: true }),
-        // g.controls['leaving']['setErrors']({ required: true });
           return { notSelected: true };
       }
     } else {
-      // return g.controls['names']['setErrors'](null),
-      // g.controls['dateFrom']['setErrors'](null),
-      // g.controls['dateTo']['setErrors'](null),
-      // g.controls['position']['setErrors'](null),
-      // g.controls['supervisor']['setErrors'](null),
-      // g.controls['gross']['setErrors'](null),
-      // g.controls['nature']['setErrors'](null),
-      // g.controls['leaving']['setErrors'](null);
       return null;
     }
   }

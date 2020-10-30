@@ -717,6 +717,18 @@ export class ViewDetailsComponent implements OnInit {
           this.KYCModifiedData['famArr'].push(a);
         }
 
+        let a = JSON.parse(localStorage.getItem('empLogin'));
+        this.KYCModifiedData.criminal_record = a && a[0] && a[0]['criminal'] && a[0]['criminal'][0] && a[0]['criminal'][0]['criminal'] ? a[0]['criminal'][0]['criminal'] : '';
+        this.KYCModifiedData.total_exp_years = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['total_exp_years'] ? a[0]['kyc_full_emp'][0]['total_exp_years'] : '';
+        this.KYCModifiedData.total_exp_months = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['total_exp_months'] ? a[0]['kyc_full_emp'][0]['total_exp_months'] : '';
+        this.KYCModifiedData.employed_us = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['employed_us'] ? a[0]['kyc_full_emp'][0]['employed_us'] : '';
+        this.KYCModifiedData.oc =a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['oc'] ? a[0]['kyc_full_emp'][0]['oc'] : '';
+        this.KYCModifiedData.payslip = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['payslip'] ? a[0]['kyc_full_emp'][0]['payslip'] : '';
+        this.KYCModifiedData.interviewed_by_us = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['interviewed_by_us'] ? a[0]['kyc_full_emp'][0]['interviewed_by_us'] : '';
+        this.KYCModifiedData.post = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['post'] ? a[0]['kyc_full_emp'][0]['post'] : '';
+        this.KYCModifiedData.when_interview = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['when_interview'] ? a[0]['kyc_full_emp'][0]['when_interview'] : '';
+        this.KYCModifiedData.full_employment = a && a[0] && a[0]['his'] ? a[0]['his'] : [];
+
 
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : this.KYCModifiedData['field_profile_image'][0]['url'];
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));

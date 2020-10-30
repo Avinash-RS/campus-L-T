@@ -22,9 +22,9 @@ export const environment = {
   // Image_Base_Url: 'https://uat-campus.lntedutech.com',
 
   // For Prod
-  // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
-  // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
-  // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
+  // API_BASE_URL: 'http://http://localhost:4200/d8cintana2',
+  // API_BASE_URL_city: 'http://http://localhost:4200/d8cintana2',
+  // Image_Base_Url: 'http://http://localhost:4200',
   // API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
   // API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
   // Image_Base_Url: 'https://campus.lntedutech.com',

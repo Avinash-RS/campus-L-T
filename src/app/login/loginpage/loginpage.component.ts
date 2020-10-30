@@ -146,6 +146,7 @@ export class LoginpageComponent implements OnInit {
               let date = (day <= 9? '0' + day : day) +'-'+(month <= 9 ? '0' + month : month) +'-'+ todayDate.getFullYear()
             
               if(date <= DropdownListForKYC['kycDate']){
+                localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
                 if (data['first_shortlist'] && data['first_shortlist'] === '1') {
                   this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
                   this.appConfig.setLocalData('field_isformsubmitted', 'true');

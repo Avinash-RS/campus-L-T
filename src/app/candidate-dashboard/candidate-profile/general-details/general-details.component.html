@@ -22,7 +22,6 @@
                 allowed</span>
             </div>
           </div>
-          <!-- <div > -->
           <div class="add">
             <i *ngIf="i !== 0" (click)="removeSkillForm(i)" class="material-icons remove">close</i>
             <ng-container *ngIf="skillsArr && skillsArr.controls.length -1 === i">
@@ -34,13 +33,18 @@
               </span>
             </ng-container>
           </div>
-
-          <!-- </div> -->
         </div>
       </ng-container>
     </form>
   </div>
 
+  <!-- <div class="main-heading">
+    Criminal Record
+  </div>
+<div class="criminal">
+  <div class="text-criminal">HAVE YOU EVER BEEN INVOLVED IN ANY CRIMINAL PROCEEDINGS / CONVICTED OF ANY OFFENSE? IF YES, PLEASE GIVE DETAILS:</div>
+  <textarea class="criminal-textarea" [formControl]="criminal_record" name="" id="" rows="3"></textarea>
+</div>
   <div class="main-heading">
     Work Experience
   </div>
@@ -50,13 +54,13 @@
         <div style="font-size: 20px; width: 100%; margin: .5em 0; text-align: center;" class="num">{{i + 1}}.</div>
         <div class="text-1">
           <div class="label">EMPLOYER'S NAME & ADDRESS</div>
-          <textarea (focusout)="detectInput(familyForm)" formControlName="names" type="text"></textarea>
+          <textarea (focusout)="detectInput(familyForm)" formControlName="employment_name_address" type="text"></textarea>
           <div class="error"
-            *ngIf="familyArr.controls[i].get('names').invalid && familyArr.controls[i].get('names').touched"
+            *ngIf="familyArr.controls[i].get('employment_name_address').invalid && familyArr.controls[i].get('employment_name_address').touched"
             style="font-size: 12px; align-items: flex-start !important;">
-            <span *ngIf="familyArr.controls[i].get('names').errors?.required">Employer's name & address is
+            <span *ngIf="familyArr.controls[i].get('employment_name_address').errors?.required">Employer's name & address is
               Required</span>
-            <span *ngIf="familyArr.controls[i].get('names').errors?.pattern">Accept only Alphanumeric characters and
+            <span *ngIf="familyArr.controls[i].get('employment_name_address').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
 
@@ -67,103 +71,96 @@
             <div class="upper">
               <div class="left">
                 <div class="label1"><span>From</span></div>
-                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="dateFrom">
+                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="duration_from">
                 <div class="error"
-                  *ngIf="familyArr.controls[i].get('dateFrom').invalid && familyArr.controls[i].get('dateFrom').touched"
+                  *ngIf="familyArr.controls[i].get('duration_from').invalid && familyArr.controls[i].get('duration_from').touched"
                   style="font-size: 12px; align-items: flex-start !important; min-width: 110px !important; max-width: 110px !important;">
-                  <span *ngIf="familyArr.controls[i].get('dateFrom').errors?.required">Date From is Required</span>
-                  <span *ngIf="familyArr.controls[i].get('dateFrom').errors?.pattern">Accept only Alphanumeric
+                  <span *ngIf="familyArr.controls[i].get('duration_from').errors?.required">Date From is Required</span>
+                  <span *ngIf="familyArr.controls[i].get('duration_from').errors?.pattern">Accept only Alphanumeric
                     characters and maximum of 255 characters only allowed</span>
                 </div>
               </div>
 
               <div class="right">
                 <div class="label1"><span>To</span></div>
-                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="dateTo">
+                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="duration_to">
                 <div class="error"
-                  *ngIf="familyArr.controls[i].get('dateTo').invalid && familyArr.controls[i].get('dateTo').touched"
+                  *ngIf="familyArr.controls[i].get('duration_to').invalid && familyArr.controls[i].get('duration_to').touched"
                   style="font-size: 12px; align-items: flex-start !important; min-width: 110px !important; max-width: 110px !important;">
-                  <span *ngIf="familyArr.controls[i].get('dateTo').errors?.required">Date To is Required</span>
-                  <span *ngIf="familyArr.controls[i].get('dateTo').errors?.pattern">Accept only Alphanumeric characters
+                  <span *ngIf="familyArr.controls[i].get('duration_to').errors?.required">Date To is Required</span>
+                  <span *ngIf="familyArr.controls[i].get('duration_to').errors?.pattern">Accept only Alphanumeric characters
                     and maximum of 255 characters only allowed</span>
                 </div>
               </div>
             </div>
             <div class="lower">
-              <div class="boxes"><span class="head">Year: </span>  <input formControlName="dateYear" type="text"></div>
-              <div class="boxes"><span class="head">Month: </span> <input formControlName="dateMonth" type="text"></div>
+              <div class="boxes"><span class="head">Year: </span>  <input formControlName="duration_year" type="text"></div>
+              <div class="boxes"><span class="head">Month: </span> <input formControlName="duration_month" type="text"></div>
 
             </div>
           </div>
-          <!-- <nz-date-picker (ngModelChange)="detectSelectChange()" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
-            formControlName="dob" [nzFormat]="dateFormat"></nz-date-picker> -->
-          <!-- <div class="error"
-            *ngIf="familyArr.controls[i].get('dob').invalid && familyArr.controls[i].get('dob').touched">
-            <span *ngIf="familyArr.controls[i].get('dob').errors?.required">Date of Birth is Required</span>
-          </div> -->
         </div>
         <div class="text-3">
           <div class="label">POSITION HELD</div>
-          <input (focusout)="detectInput(familyForm)" formControlName="position" type="text">
+          <input (focusout)="detectInput(familyForm)" formControlName="postion_field" type="text">
           <div class="error"
-            *ngIf="familyArr.controls[i].get('position').invalid && familyArr.controls[i].get('position').touched"
+            *ngIf="familyArr.controls[i].get('postion_field').invalid && familyArr.controls[i].get('postion_field').touched"
             style="font-size: 12px; align-items: flex-start !important;">
-            <span *ngIf="familyArr.controls[i].get('position').errors?.required">Position held is Required</span>
-            <span *ngIf="familyArr.controls[i].get('position').errors?.pattern">Accept only Alphanumeric characters and
+            <span *ngIf="familyArr.controls[i].get('postion_field').errors?.required">Position held is Required</span>
+            <span *ngIf="familyArr.controls[i].get('postion_field').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
         </div>
         <div class="text-4">
           <div class="label">NAME & DESIGNATION OF IMMEDIATE SUPERIOR</div>
-          <input (focusout)="detectInput(familyForm)" formControlName="supervisor" type="text">
+          <input (focusout)="detectInput(familyForm)" formControlName="name_designation_supervisor" type="text">
           <div class="error"
-            *ngIf="familyArr.controls[i].get('supervisor').invalid && familyArr.controls[i].get('supervisor').touched"
+            *ngIf="familyArr.controls[i].get('name_designation_supervisor').invalid && familyArr.controls[i].get('name_designation_supervisor').touched"
             style="font-size: 12px; align-items: flex-start !important;">
-            <span *ngIf="familyArr.controls[i].get('supervisor').errors?.required">Name & Designation of immediate
+            <span *ngIf="familyArr.controls[i].get('name_designation_supervisor').errors?.required">Name & Designation of immediate
               superior is Required</span>
-            <span *ngIf="familyArr.controls[i].get('supervisor').errors?.pattern">Accept only Alphanumeric characters
+            <span *ngIf="familyArr.controls[i].get('name_designation_supervisor').errors?.pattern">Accept only Alphanumeric characters
               and maximum of 255 characters only allowed</span>
           </div>
         </div>
         <div class="text-5" style="max-width: 155px;">
           <div class="label">GROSS EMOLUMENTS (PER MONTH)</div>
-          <input (focusout)="detectInput(familyForm)" formControlName="gross" type="text">
+          <input (focusout)="detectInput(familyForm)" formControlName="gross_emploment" type="text">
           <div class="error"
-            *ngIf="familyArr.controls[i].get('gross').invalid && familyArr.controls[i].get('gross').touched"
+            *ngIf="familyArr.controls[i].get('gross_emploment').invalid && familyArr.controls[i].get('gross_emploment').touched"
             style="font-size: 12px; align-items: flex-start !important;">
-            <span *ngIf="familyArr.controls[i].get('gross').errors?.required">Gross emoluments is Required</span>
-            <span *ngIf="familyArr.controls[i].get('gross').errors?.pattern">Accept only Alphanumeric characters and
+            <span *ngIf="familyArr.controls[i].get('gross_emploment').errors?.required">Gross emoluments is Required</span>
+            <span *ngIf="familyArr.controls[i].get('gross_emploment').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
         </div>
 
         <div class="text-5">
           <div class="label">NATURE OF WORK DONE</div>
-          <input (focusout)="detectInput(familyForm)" formControlName="nature" type="text">
+          <input (focusout)="detectInput(familyForm)" formControlName="nature_work" type="text">
           <div class="error"
-            *ngIf="familyArr.controls[i].get('nature').invalid && familyArr.controls[i].get('nature').touched"
+            *ngIf="familyArr.controls[i].get('nature_work').invalid && familyArr.controls[i].get('nature_work').touched"
             style="font-size: 12px; align-items: flex-start !important;">
-            <span *ngIf="familyArr.controls[i].get('nature').errors?.required">Nature of work done is Required</span>
-            <span *ngIf="familyArr.controls[i].get('nature').errors?.pattern">Accept only Alphanumeric characters and
+            <span *ngIf="familyArr.controls[i].get('nature_work').errors?.required">Nature of work done is Required</span>
+            <span *ngIf="familyArr.controls[i].get('nature_work').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
         </div>
 
         <div class="text-5" style="min-width: 500px; max-width: 500px;">
           <div class="label">REASON FOR LEAVING</div>
-          <textarea (focusout)="detectInput(familyForm)" formControlName="leaving" type="text"></textarea>
+          <textarea (focusout)="detectInput(familyForm)" formControlName="reason_leaving" type="text"></textarea>
           <div class="error"
-            *ngIf="familyArr.controls[i].get('leaving').invalid && familyArr.controls[i].get('leaving').touched"
+            *ngIf="familyArr.controls[i].get('reason_leaving').invalid && familyArr.controls[i].get('reason_leaving').touched"
             style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: -2em;">
-            <span *ngIf="familyArr.controls[i].get('leaving').errors?.required">Reason for leaving is Required</span>
-            <span *ngIf="familyArr.controls[i].get('leaving').errors?.pattern">Accept only Alphanumeric characters and
+            <span *ngIf="familyArr.controls[i].get('reason_leaving').errors?.required">Reason for leaving is Required</span>
+            <span *ngIf="familyArr.controls[i].get('reason_leaving').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
           <div class="error" *ngIf="familyArr.controls[i].invalid" style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: -2em; margin-top: 1em !important; border-top: solid red 1px;">
             <span>*Make sure, you have entered all the fields value, If you enter any one of the value</span>
           </div>
         </div>
-        <!-- {{familyArr.controls | JSON}} -->
       </div>
     </ng-container>
   </form>
@@ -174,7 +171,7 @@
         Add
       </div>
     </div>
-    <div *ngIf="familyArr && familyArr.controls && familyArr.controls.length > 1 " style="margin-left: 1em;" (click)="removefamilyForm()">
+    <div *ngIf="familyArr && familyArr.controls && familyArr.controls.length > 1 " style="margin-left: 1em;" (click)="removefamilyForm(familyArr.controls)">
       <i style="color: red; font-size: 20px;" class="material-icons remove">delete</i>
       <div class="text" style="margin: 0.2em 0 !important;">
         Remove
@@ -182,7 +179,6 @@
     </div>
 
   </div>
-  <!--  #form8="ngForm" [formGroup]="workForm" -->
   <div class="form10">
     <div class="flex-box">
       <div class="fields">
@@ -191,10 +187,10 @@
         </div>
         <div class="experience">
           <div class="exp-box">
-            <span class="head">YEARS: </span> <span class="val">10.75</span>
+            <span class="head">YEARS: </span> <span class="val">{{fullYearBinding}}</span>
           </div>
           <div class="exp-box">
-            <span class="head">MONTHS: </span> <span class="val">12.75</span>
+            <span class="head">MONTHS: </span> <span class="val">{{monthYearBinding}}</span>
           </div>
         </div>
       </div>
@@ -202,9 +198,7 @@
         <div class="label">
           BREAK IN EMPLOYMENT, IF ANY, SHOULD BE INDICATED WITH REASONS
         </div>
-        <!-- <div class="reson">
-        </div> -->
-        <textarea name="" id="" rows="2"></textarea>
+        <textarea [formControl]="interviewed_by_us" name="" id="" rows="2"></textarea>
       </div>
 
     </div>
@@ -214,16 +208,16 @@
 COMPANIES AND YOUR PAYSLIP NUMBER)
       </div>
       <div class="checkboxes">
-        <mat-checkbox [(ngModel)]="yes">Yes</mat-checkbox>
-        <mat-checkbox [(ngModel)]="no">No</mat-checkbox>
+        <mat-checkbox [(ngModel)]="emp_yes">Yes</mat-checkbox>
+        <mat-checkbox [(ngModel)]="emp_no">No</mat-checkbox>
       </div>
 
       <div class="explain">
         <div class="text">
           IF, YES, PLEASE GIVE DETAILS
         </div>
-        <div class="in"><span>OC: </span> <span><input type="text"></span></div>
-        <div class="in"><span>PAYSLIP NUMBER: </span> <span><input type="text"></span></div>
+        <div class="in"><span>OC: </span> <span><input [formControl]="oc" type="text"></span></div>
+        <div class="in"><span>PAYSLIP NUMBER: </span> <span><input [formControl]="payslip" type="text"></span></div>
       </div>
     </div>
     <div class="details1">
@@ -231,12 +225,12 @@ COMPANIES AND YOUR PAYSLIP NUMBER)
         HAVE YOU EVER BEEN INTERVIEWED BY US?
       </div>
       <div class="explain">
-        <div class="in"><span>IF YES, FOR WHAT POST: </span> <span><input type="text"></span></div>
-        <div class="in"><span>WHEN: </span> <span><input type="text"></span></div>
+        <div class="in"><span>IF YES, FOR WHAT POST: </span> <span><input [formControl]="post" type="text"></span></div>
+        <div class="in"><span>WHEN: </span> <span><input [formControl]="when_interview" type="date"></span></div>
       </div>
     </div>
 
-  </div>
+  </div> -->
 
 
 

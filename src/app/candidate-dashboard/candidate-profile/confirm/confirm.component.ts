@@ -197,16 +197,6 @@ export class ConfirmComponent implements OnInit {
               }
             ]
             
-            this.apiForm.criminal_record = "No";
-            this.apiForm.total_exp_years = "15",
-            this.apiForm.total_exp_months = "06",
-            this.apiForm.employed_us = "yes",
-            this.apiForm.oc ="OC yes",
-            this.apiForm.payslip = "13797313",
-            this.apiForm.interviewed_by_us = "yes",
-            this.apiForm.post = "software developer",
-            this.apiForm.when_interview = "2020-10-06",
-            this.apiForm.full_employment = full_employment;
             console.log(this.apiForm);
         
   }
