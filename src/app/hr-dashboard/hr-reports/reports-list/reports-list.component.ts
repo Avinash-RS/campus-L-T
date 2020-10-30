@@ -83,6 +83,7 @@ export class ReportsListComponent implements OnInit {
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService
     ) { 
+      // this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
     }
 
   ngOnInit() {
@@ -106,6 +107,7 @@ export class ReportsListComponent implements OnInit {
 
     });
   }
+  
   // To get all users
   getUsersList() {
     // this.adminService.userList().subscribe((data: any) => {
