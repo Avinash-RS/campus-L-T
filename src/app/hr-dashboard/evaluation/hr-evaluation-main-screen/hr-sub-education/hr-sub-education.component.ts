@@ -39,11 +39,11 @@ export class HrSubEducationComponent implements OnInit {
         name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION
       },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Interview panel',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
-      // },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();

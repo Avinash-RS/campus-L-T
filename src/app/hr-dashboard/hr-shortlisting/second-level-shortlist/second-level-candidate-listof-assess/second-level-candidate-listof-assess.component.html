@@ -245,9 +245,13 @@
             *matHeaderRowDef="['header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-fourth-group', 'header-row-fifth-group', 'header-row-sixth-group' ]">
           </tr>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr class="header-group" mat-header-row
+          <!-- <tr class="header-group" mat-header-row
             *matHeaderRowDef="['third-header-row-first-group', 'third-header-row-second-group', 'third-header-row-third-group', 'third-header-row-fourth-group', 'third-header-row-fifth-group', 'third-header-row-sixth-group']">
-          </tr>
+          </tr> -->
+          <tr class="header-group" mat-header-row
+          *matHeaderRowDef="[]">
+        </tr>
+
           <tr class="input-header-group" [ngClass]="showApply ? '' : 'hide'" mat-header-row
             *matHeaderRowDef="['fourth-header-row-first-group', 'fourth-header-row-second-group', 'fourth-header-row-third-group', 'fourth-header-row-fourth-group', 'fourth-header-row-fifth-group', 'fourth-header-row-sixth-group']">
           </tr>

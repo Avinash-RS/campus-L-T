@@ -40,11 +40,11 @@ export class HrSubEmploymentComponent implements OnInit {
         name: 'Candidate details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT
       },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Interview panel',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
-      // },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
@@ -93,7 +93,8 @@ export class HrSubEmploymentComponent implements OnInit {
 
 
   next() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL);
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,  {data: this.nameOfAssessment ? this.nameOfAssessment : ''});
+    // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS);
   }
 
 

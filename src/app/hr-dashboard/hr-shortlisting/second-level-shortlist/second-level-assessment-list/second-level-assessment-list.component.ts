@@ -19,7 +19,8 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
 
   BASE_URL = environment.API_BASE_URL;
 // 'report'
-  displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'buttons'];
+  // displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'buttons'];
+  displayedColumns: any[] = ['uid', 'group_name', 'status', 'no_of_candidate', 'buttons'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 

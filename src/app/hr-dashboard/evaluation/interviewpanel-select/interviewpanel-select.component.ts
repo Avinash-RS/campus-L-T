@@ -46,13 +46,13 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       {
         icon: '002-cv.svg',
         name: 'Candidate details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
+      },
+      {
+        icon: '002-cv.svg',
+        name: 'Interview panel',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT
       },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Interview panel',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT
-      // },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }

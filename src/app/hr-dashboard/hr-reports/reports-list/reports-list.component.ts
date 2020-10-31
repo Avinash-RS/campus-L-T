@@ -235,8 +235,12 @@ export class ReportsListComponent implements OnInit {
         this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
           this.appConfig.hideLoader();
           
-          const excel = data && data[0].url ? data[0].url : '';
-          window.open(excel, '_blank');
+          if(data && data[0] && data[0].url == 'No Data Found'){
+            this.appConfig.error(data[0].url, '');
+          }else{
+            const excel = data && data[0].url ? data[0].url : '';
+            window.open(excel, '_blank');
+          }
   
         }, (err) => {
         });
@@ -255,8 +259,12 @@ export class ReportsListComponent implements OnInit {
         this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
           this.appConfig.hideLoader();
           
-          const excel = data && data[0].url ? data[0].url : '';
-          window.open(excel, '_blank');
+          if(data && data[0] && data[0].url == 'No Data Found'){
+            this.appConfig.error(data[0].url, '');
+          }else{
+            const excel = data && data[0].url ? data[0].url : '';
+            window.open(excel, '_blank');
+          }
   
         }, (err) => {
         });
