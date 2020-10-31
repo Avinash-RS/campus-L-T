@@ -143,10 +143,10 @@ export class LoginpageComponent implements OnInit {
               let todayDate = new Date();
               let month = todayDate.getMonth()+1;
               let day = todayDate.getDate()
-              let date = (day <= 9? '0' + day : day) +'-'+(month <= 9 ? '0' + month : month) +'-'+ todayDate.getFullYear()
-            
-              if(date <= DropdownListForKYC['kycDate']){
-                if (data['first_shortlist'] && data['first_shortlist'] === '1') {
+              let date = todayDate.getFullYear() +'-'+(month <= 9 ? '0' + month : month) +'-' + (day <= 9? '0' + day : day)
+              if(new Date(date) <= new Date(DropdownListForKYC['kycDate'])){
+                // if(date.toString() != DropdownListForKYC['kycDate'].toString()){
+                  if (data['first_shortlist'] && data['first_shortlist'] === '1') {
                   this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
                   this.appConfig.setLocalData('field_isformsubmitted', 'true');
                   this.appConfig.setLocalData('personalFormSubmitted', 'true');
