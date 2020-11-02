@@ -1346,6 +1346,11 @@ button:focus {
   }
 }
 
+.sub-assessments {
+  .mat-column-question {
+    width: 200px;
+  }
+}
 // http://localhost:4200/#/hr/shortlist/2nd/assessment-list
 .second-level-assessmentList {
   .user-list-wrapper {

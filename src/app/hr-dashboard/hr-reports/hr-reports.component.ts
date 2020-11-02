@@ -35,6 +35,11 @@ export class HrReportsComponent implements OnInit {
         icon: '',
         name: 'Interview panel Bulk Upload Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST
+      },
+      {
+        icon: '',
+        name: 'Test Upload Reports',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

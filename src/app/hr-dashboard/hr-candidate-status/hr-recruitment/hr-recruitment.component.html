@@ -172,7 +172,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="assement_shortlist">
-          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted based on assessment score" mat-header-cell *matHeaderCellDef mat-sort-header> Assessment shortlisted </th>
+          <th matTooltipPosition="above" matTooltip="Candidate has been shortlisted based on assessment score" mat-header-cell *matHeaderCellDef mat-sort-header> Assessment <br> shortlisted </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element && element.assement_shortlist == 1">
               <img src="assets/images/002-tick1.svg" alt="">
@@ -233,7 +233,7 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-          <td style="text-align: left !important;" mat-cell *matCellDef="let element"> {{element && element.date ? (element.date) : '-'}} </td>
+          <td style="text-align: left !important; white-space: nowrap !important;" mat-cell *matCellDef="let element"> {{element && element.date ? (element.date) : '-'}} </td>
         </ng-container>
 
         <!-- fifth Header row first group -->

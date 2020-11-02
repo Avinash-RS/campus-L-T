@@ -51,6 +51,7 @@ import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/
 import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
 import { from } from 'rxjs';
+import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/hr-upload-test-report.component';
 
 const routes: Routes = [
   {
@@ -348,14 +349,21 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: BulkUploadReportsComponent,
             data: {
-              breadcrumb: 'Candidate bulk upload Reports'
+              breadcrumb: 'Candidate Bulk Upload Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST}`,
             component: InvpanelBulkUploadReportComponent,
             data: {
-              breadcrumb: 'Interview panel bulk upload Reports'
+              breadcrumb: 'Interview Panel Bulk Upload Reports'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST}`,
+            component: HrUploadTestReportComponent,
+            data: {
+              breadcrumb: 'Test Upload Reports'
             }
           },
           {

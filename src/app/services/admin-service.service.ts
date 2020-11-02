@@ -216,6 +216,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  UploadTestReports() {
+    return this.http.get(`${this.BASE_URL}/profile/assement_errors`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   bulkUploadInstitutes(data) {
     return this.http.post(`${this.BASE_URL}/api/institute_create`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
