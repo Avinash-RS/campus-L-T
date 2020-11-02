@@ -753,5 +753,5 @@ export const DropdownListForKYC = {
     { name: "Swami Keshwanand Institute of Technology Management & Gramothan, Jaipur", checkbox: false, value: "Swami Keshwanand Institute of Technology Management & Gramothan, Jaipur" },
     { name: "Sathyabama Institute of Science and Technology", checkbox: false, value: "Sathyabama Institute of Science and Technology" },
   ],
-  kycDate: '30-10-2099'
+  kycDate: '2099-10-31'
 };

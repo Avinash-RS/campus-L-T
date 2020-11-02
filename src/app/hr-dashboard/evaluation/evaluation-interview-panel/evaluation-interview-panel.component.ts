@@ -15,7 +15,8 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
 
   appConstant = CONSTANT.ENDPOINTS;
   showPage = true;
-  displayedColumns: any[] = ['counter', 'Assessment_Name', 'Date', 'Time', 'assignStatus', 'shortlist_name', 'action'];
+  // displayedColumns: any[] = ['counter', 'Assessment_Name', 'Date', 'Time', 'assignStatus', 'shortlist_name', 'action'];
+  displayedColumns: any[] = ['counter', 'shortlist_name', 'Date', 'Time', 'assignStatus', 'action'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;

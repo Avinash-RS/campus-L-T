@@ -28,7 +28,8 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
   selectedUserDetail: any;
   userList: any;
   buttonDisabled = true;
-  displayedColumns: any[] = ['uid', 'Assessment_Name', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
+  // displayedColumns: any[] = ['uid', 'Assessment_Name', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
+  displayedColumns: any[] = ['uid', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
   dataSource: MatTableDataSource<any>;
   displayNoRecords = false;
 
