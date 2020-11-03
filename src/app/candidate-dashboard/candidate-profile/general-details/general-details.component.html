@@ -38,7 +38,7 @@
     </form>
   </div>
 
-  <!-- <div class="main-heading">
+  <div class="main-heading">
     Criminal Record
   </div>
 <div class="criminal">
@@ -51,7 +51,7 @@
   <form #form6="ngForm" [formGroup]="familyForm" class="form1">
     <ng-container *ngIf="familyArr && familyArr.controls" formArrayName="familyArr">
       <div class="text-box-grid" *ngFor="let item of familyArr.controls; let i = index;" [formGroupName]="i">
-        <div style="font-size: 20px; width: 100%; margin: .5em 0; text-align: center;" class="num">{{i + 1}}.</div>
+        <div style="font-size: 20px; width: 100%; margin: .5em 0; text-align: left !important; display: flex; align-items: flex-start !important;" class="num">{{i + 1}}.</div>
         <div class="text-1">
           <div class="label">EMPLOYER'S NAME & ADDRESS</div>
           <textarea (focusout)="detectInput(familyForm)" formControlName="employment_name_address" type="text"></textarea>
@@ -198,7 +198,7 @@
         <div class="label">
           BREAK IN EMPLOYMENT, IF ANY, SHOULD BE INDICATED WITH REASONS
         </div>
-        <textarea [formControl]="interviewed_by_us" name="" id="" rows="2"></textarea>
+        <textarea [formControl]="break_in_emp" name="" id="" rows="2"></textarea>
       </div>
 
     </div>
@@ -208,29 +208,38 @@
 COMPANIES AND YOUR PAYSLIP NUMBER)
       </div>
       <div class="checkboxes">
-        <mat-checkbox [(ngModel)]="emp_yes">Yes</mat-checkbox>
-        <mat-checkbox [(ngModel)]="emp_no">No</mat-checkbox>
+        <mat-checkbox (change)="matchangeYes($event)" [(ngModel)]="emp_yes">Yes</mat-checkbox>
+        <mat-checkbox (change)="matchangeNo($event)" [(ngModel)]="emp_no">No</mat-checkbox>
       </div>
 
       <div class="explain">
         <div class="text">
           IF, YES, PLEASE GIVE DETAILS
-        </div>
-        <div class="in"><span>OC: </span> <span><input [formControl]="oc" type="text"></span></div>
-        <div class="in"><span>PAYSLIP NUMBER: </span> <span><input [formControl]="payslip" type="text"></span></div>
+        </div> 
+        <div class="in"><span>OC: </span> <span><input [formControl]="oc" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
+        <div *ngIf="oc.invalid && oc.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>OC is required </span></div>
+        <div class="in"><span>PAYSLIP NUMBER: </span> <span><input [formControl]="payslip" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
+        <div *ngIf="payslip.invalid && payslip.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Payslip number is required </span></div>
       </div>
     </div>
     <div class="details1">
       <div class="text">
         HAVE YOU EVER BEEN INTERVIEWED BY US?
       </div>
+      <div class="checkboxes">
+        <mat-checkbox (change)="matchangeinvYes($event)" [(ngModel)]="inv_yes">Yes</mat-checkbox>
+        <mat-checkbox (change)="matchangeinvNo($event)" [(ngModel)]="inv_no">No</mat-checkbox>
+      </div>
+
       <div class="explain">
-        <div class="in"><span>IF YES, FOR WHAT POST: </span> <span><input [formControl]="post" type="text"></span></div>
-        <div class="in"><span>WHEN: </span> <span><input [formControl]="when_interview" type="date"></span></div>
+        <div class="in"><span>IF YES, FOR WHAT POST: </span> <span><input [formControl]="post" [ngClass]="inv_no ? 'disabled' : ''" type="text"></span></div>
+        <div *ngIf="post.invalid && post.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Post is required </span></div>
+        <div class="in"><span>WHEN: </span> <span><input [formControl]="when_interview" [ngClass]="inv_no ? 'disabled' : ''" type="date"></span></div>
+        <div *ngIf="when_interview.invalid && when_interview.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Date of interview is required </span></div>
       </div>
     </div>
 
-  </div> -->
+  </div>
 
 
 

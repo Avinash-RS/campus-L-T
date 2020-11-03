@@ -722,6 +722,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.KYCModifiedData.oc =a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['oc'] ? a[0]['kyc_full_emp'][0]['oc'] : '';
         this.KYCModifiedData.payslip = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['payslip'] ? a[0]['kyc_full_emp'][0]['payslip'] : '';
         this.KYCModifiedData.interviewed_by_us = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['interviewed_by_us'] ? a[0]['kyc_full_emp'][0]['interviewed_by_us'] : '';
+        this.KYCModifiedData.break_in_emp = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['break_in_emp'] ? a[0]['kyc_full_emp'][0]['break_in_emp'] : '';
         this.KYCModifiedData.post = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['post'] ? a[0]['kyc_full_emp'][0]['post'] : '';
         this.KYCModifiedData.when_interview = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['when_interview'] ? a[0]['kyc_full_emp'][0]['when_interview'] : '';
         this.KYCModifiedData.full_employment = a && a[0] && a[0]['his'] ? a[0]['his'] : [];

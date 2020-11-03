@@ -37,12 +37,15 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   facultyReference1Form = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
   facultyReference2Form = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
 
-  interviewed_by_us = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
-  oc = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
-  payslip = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
-  post = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
-  when_interview = new FormControl(null, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  disable1 = false;
+  disable2 = false;
   criminal_record = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  break_in_emp = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  interviewed_by_us = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  oc = new FormControl({value: '', disabled: this.disable1 }, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  payslip = new FormControl({value: '', disabled: this.disable1 }, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  post = new FormControl({value: '', disabled: this.disable2 }, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
+  when_interview = new FormControl({value: '', disabled: this.disable2 }, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
 
   apiForm: any;
   generalArray: any;
@@ -59,6 +62,9 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   emp_yes = false;
   emp_no = false;
+  inv_yes = false;
+  inv_no = false;
+
   disabledYears = (current: Date): boolean => {
 
     // Can not select days before today and today
@@ -97,6 +103,59 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     // this.valueChangesWork();
   }
 
+  matchangeYes(e) {
+    this.emp_yes = e.checked;
+    this.emp_no = !this.emp_yes;
+    if (this.emp_yes) {
+      this.disable1 = false;
+      this.oc.enable();
+      this.payslip.enable();
+      this.oc.setValidators([Validators.required]);
+      this.payslip.setValidators([Validators.required]);
+      this.oc.updateValueAndValidity();
+      this.payslip.updateValueAndValidity();
+    }
+  }
+  matchangeNo(e) {
+    this.emp_no = e.checked;
+    this.emp_yes = !this.emp_no;
+    if (this.emp_no) {
+      this.oc.setValue('');
+      this.payslip.setValue('');
+      this.oc.clearValidators();
+      this.payslip.clearValidators();
+      this.oc.updateValueAndValidity();
+      this.payslip.updateValueAndValidity();
+    }
+  }
+
+  matchangeinvYes(e) {
+    this.inv_yes = e.checked;
+    this.inv_no = !this.inv_yes;
+    if (this.inv_yes) {
+      this.disable2 = false;
+      this.post.enable();
+      this.when_interview.enable();
+      this.post.setValidators([Validators.required]);
+      this.when_interview.setValidators([Validators.required]);
+      this.post.updateValueAndValidity();
+      this.when_interview.updateValueAndValidity();
+    }
+  }
+  matchangeinvNo(e) {
+    this.inv_no = e.checked;
+    this.inv_yes = !this.inv_no;
+    if (this.inv_no) {
+      this.post.setValue('');
+      this.when_interview.setValue('');
+      this.post.clearValidators();
+      this.when_interview.clearValidators();
+      this.post.updateValueAndValidity();
+      this.when_interview.updateValueAndValidity();
+    }
+  }
+
+
   cancel() {
     this.ngOnInit();
     this.appConfig.nzNotification('success', 'Resetted', 'General details form has been resetted');
@@ -122,12 +181,9 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : '');
     this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : '');
 
-    if (this.apiForm['full_employment'] && this.apiForm['full_employment'].length > 0) {
-      console.log('1', this.apiForm['full_employment']);
-      
+    if (this.apiForm['full_employment'] && this.apiForm['full_employment'].length > 0) {      
       this.familyValuesArr = this.apiForm['full_employment'];
     } else {
-      console.log('2', this.apiForm['full_employment']);
       this.familyValuesArr = [];
     }
 
@@ -136,11 +192,25 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       this.monthYearBinding = this.apiForm.total_exp_months ? this.apiForm.total_exp_months : '';
       this.emp_yes = this.apiForm.employed_us ? true : false;
       this.emp_no = this.apiForm.employed_us ? false : true;
+      this.inv_yes = this.apiForm.interviewed_by_us ? true : false;
+      this.inv_no = this.apiForm.interviewed_by_us ? false : true;
       this.oc.setValue(this.apiForm.oc ? this.apiForm.oc : '');
       this.payslip.setValue(this.apiForm.payslip ? this.apiForm.payslip : '');
-      this.interviewed_by_us.setValue(this.apiForm.interviewed_by_us ? this.apiForm.interviewed_by_us : '');
+      this.break_in_emp.setValue(this.apiForm.break_in_emp ? this.apiForm.break_in_emp : '');
       this.post.setValue(this.apiForm.post ? this.apiForm.post : '');
       this.when_interview.setValue(this.apiForm.when_interview ? this.apiForm.when_interview : null);
+      if (this.emp_yes) {
+        this.oc.setValidators([Validators.required]);
+        this.payslip.setValidators([Validators.required]);
+        this.oc.updateValueAndValidity();
+        this.payslip.updateValueAndValidity();
+          }
+      if (this.inv_yes) {
+        this.post.setValidators([Validators.required]);
+        this.when_interview.setValidators([Validators.required]);  
+        this.post.updateValueAndValidity();
+        this.when_interview.updateValueAndValidity();
+        }
 
 
     this.FormInitialization();
@@ -162,18 +232,19 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
         this.apiForm.field_faculty_reference = { value: this.facultyReference1Form ? this.facultyReference1Form.value : '' },
         this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' };
-
-
-      if (this.familyForm.valid && this.interviewed_by_us.valid && this.oc.valid && this.payslip.valid && this.post.valid && this.when_interview.valid && this.criminal_record.valid) {
+      
+      if (this.familyForm.valid && this.break_in_emp.valid && this.oc.valid && this.payslip.valid && this.post.valid && this.when_interview.valid && this.criminal_record.valid) {
         this.apiForm.criminal_record = this.criminal_record.value ? this.criminal_record.value : '';
         this.apiForm.total_exp_years = this.fullYearBinding ? this.fullYearBinding : '';
         this.apiForm.total_exp_months = this.monthYearBinding ? this.monthYearBinding : '';
-        this.apiForm.employed_us = this.emp_yes ? this.emp_yes : false;
-          this.apiForm.oc = this.oc.value ? this.oc.value : '';
+        this.apiForm.oc = this.oc.value ? this.oc.value : '';
         this.apiForm.payslip = this.payslip.value ? this.payslip.value : '';
-        this.apiForm.interviewed_by_us = this.interviewed_by_us.value ? this.interviewed_by_us.value : '';
+        this.apiForm.break_in_emp = this.break_in_emp.value ? this.break_in_emp.value : '';
         this.apiForm.post = this.post.value ? this.post.value : '';
         this.apiForm.when_interview = this.when_interview.value ? this.when_interview.value : null;
+        this.apiForm.employed_us = this.emp_yes ? this.emp_yes : false;
+        this.apiForm.interviewed_by_us = this.inv_yes ? this.inv_yes : false;
+
         this.apiForm.full_employment = this.familyForm['value']['familyArr'];
 
 
@@ -185,6 +256,15 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
         this.appConfig.nzNotification('success', 'Submitted', 'General details has been updated');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+      } else {
+        this.break_in_emp.markAsTouched();
+        this.oc.markAsTouched();
+        this.payslip.markAsTouched();
+        this.post.markAsTouched();
+        this.when_interview.markAsTouched();
+        this.criminal_record.markAsTouched();
+        this.validateAllFormArrays(this.familyForm.get('familyArr') as FormArray);
+        this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       }
     } else {
       this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
@@ -224,14 +304,11 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   // Family Patch
   familyPatch(dataArray) {
     if (dataArray && dataArray.length > 0) {
-      dataArray.forEach(fam => {
-        console.log('123', fam);
-        
+      dataArray.forEach(fam => {        
         this.addfamilyForm(fam);
       });
     } else {
       for (let i = 0; i <= 0; i++) {
-        console.log('not');
         this.addfamilyForm(null);
       }
     }
@@ -258,7 +335,6 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ \-,.;]){0,255}$/;
     if (fam) {
-      console.log('adadadfsf', fam);
       
       return this.fb.group({
         employment_name_address: [fam['employment_name_address'] ? fam['employment_name_address'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
@@ -322,10 +398,16 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
-      console.log(this.familyForm.value);
       if (this.familyArr.length < 5) {
-        console.log('add', this.familyArr.length, data);
-        this.familyArr.push(this.createItem1(data));
+        if (this.familyArr.length >= 1) {
+          let i = this.familyArr['controls'].length-1;
+          if (this.familyArr && this.familyArr['controls'] && this.familyArr['controls'][i] && this.familyArr['controls'][i]['value'] && this.familyArr['controls'][i]['value']['employment_name_address']) {
+            this.familyArr.push(this.createItem1(data));
+          } else {
+          }        
+        } else {
+          this.familyArr.push(this.createItem1(data));
+        }
         if (this.familyArr.length < 5) {
           this.notShow = false;
         } else {
@@ -405,18 +487,14 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     }
   }
   detectDateCalc(form, i) {
-    console.log(form, i);
     if (this.familyArr) {
       let yearCount = 0;
       let monthCount = 0;
       this.familyArr.value.forEach((element, index) => {
         if (index == i && element['duration_from'] && element['duration_to']) {
-          console.log(element['duration_from']);
-          console.log(element['duration_to']);
 
           let today = new Date(`${element['duration_to']}`)
           let past = new Date(`${element['duration_from']}`) // remember this is equivalent to 06 01 2010
-          console.log(today, past);
           //dates in js are counted from 0, so 05 is june
 
           // function calcDate(date1,date2) {
@@ -469,8 +547,6 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
         }
 
-
-        console.log(yearCount, monthCount);
 
       });
     };
