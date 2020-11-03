@@ -1170,6 +1170,15 @@ button:focus {
   }
 }
 
+.second-candidatelist-wrapper .user-list-wrapper tr.mat-header-row {
+  background: none;
+}
+.mat-column-candidate_new_id {
+  left: 0 !important;
+}
+.mat-column-user_name {
+  left: 0 !important;
+}
 .second-candidatelist-wrapper {
   .user-list-wrapper {
     thead {
@@ -1258,7 +1267,7 @@ button:focus {
     tr.mat-header-row {
       height: auto !important;
       white-space: nowrap;
-      background: $blue-3 !important;
+      // background: $blue-3 !important;
       .mat-column-marks,
       .mat-column-percentage,
       .mat-column-domain_marks,

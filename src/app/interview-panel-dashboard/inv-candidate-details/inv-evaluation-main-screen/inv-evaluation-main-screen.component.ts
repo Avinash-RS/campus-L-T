@@ -66,7 +66,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
 
   assessmentDetails(name) {
     const apidata = {
-      assement_name: name
+      shortlist_name: name
     };
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();

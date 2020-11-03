@@ -85,10 +85,10 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
     
   }
   shortlistRedirect(detail) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, detail['assement_name'] ? {data: detail['assement_name']} : {data: 'none'});
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
   }
   shortlistedReport(detail) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, detail['assement_name'] ? {data: detail['assement_name']} : {data: 'none'});
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
   }
   viewReports(selectedCandidate) {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS);

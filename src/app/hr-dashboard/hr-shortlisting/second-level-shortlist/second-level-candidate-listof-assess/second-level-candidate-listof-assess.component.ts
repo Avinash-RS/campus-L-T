@@ -86,7 +86,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   assessmentDetails(name) {
     const apidata = {
-      assement_name: name
+      shortlist_name: name
     };
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
@@ -170,7 +170,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   getUsersList(name) {
 
     const apiData = {
-      assement_name: name,
+      shortlist_name: name,
       domain_percentage: this.validInput.value ? this.validInput.value : '',
       verbal_percentage: this.validInput1.value ? this.validInput1.value : '',
       analytical_percentage: this.validInput2.value ? this.validInput2.value : '',
@@ -184,62 +184,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       this.appConfig.setLocalData('secondLevelFilter3', this.validInput3.value ? this.validInput3.value : '');
       this.appConfig.setLocalData('secondLevelFilter4', this.validInput4.value ? this.validInput4.value : '');
       const align = [];
-      const data = [
-        {
-          candidate_id: '2131313',
-          marks: '23',
-          percentage: '20',
-          domain_marks: '90',
-          domain_percentage: '95',
-          verbal_marks: '30',
-          verbal_percentage: '45',
-          analytical_mark: '30',
-          analytical_percentage: '45',
-          quantitive_mark: '84',
-          quantitative_percentage: '75',
-          total_marks: '50',
-          total_domain_marks: '100',
-          total_verbal_marks: '90',
-          total_analytical_mark: '50',
-          total_quantitive_mark: '75'
-        },
-        {
-          candidate_id: '2131313',
-          marks: '23',
-          percentage: '20',
-          domain_marks: '90',
-          domain_percentage: '95',
-          verbal_marks: '30',
-          verbal_percentage: '45',
-          analytical_mark: '30',
-          analytical_percentage: '45',
-          quantitive_mark: '84',
-          quantitative_percentage: '75',
-          total_marks: '50',
-          total_domain_marks: '100',
-          total_verbal_marks: '90',
-          total_analytical_mark: '50',
-          total_quantitive_mark: '75'
-        },
-        {
-          candidate_id: '2131313',
-          marks: '23',
-          percentage: '20',
-          domain_marks: '90',
-          domain_percentage: '95',
-          verbal_marks: '30',
-          verbal_percentage: '45',
-          analytical_mark: '30',
-          analytical_percentage: '45',
-          quantitive_mark: '84',
-          quantitative_percentage: '75',
-          total_marks: '50',
-          total_domain_marks: '100',
-          total_verbal_marks: '90',
-          total_analytical_mark: '50',
-          total_quantitive_mark: '75'
-        }
-      ];
 
       this.userList = datas ? datas : [];
       let count = 0;

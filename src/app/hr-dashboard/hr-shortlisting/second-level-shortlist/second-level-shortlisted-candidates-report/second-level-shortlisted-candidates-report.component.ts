@@ -53,7 +53,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
 
   check(name) {
     const apiData = {
-      assement_name: name,
+      shortlist_name: name,
       shortlist: '1'
     };
     this.adminService.shortlistedCandidatesReport(apiData).subscribe((data: any) => {
@@ -75,7 +75,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
 
   assessmentDetails(name) {
     const apidata = {
-      assement_name: name
+      shortlist_name: name
     };
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
@@ -134,7 +134,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   // To get all users
   getUsersList(names) {
     const apiData = {
-      assement_name: names,
+      shortlist_name: names,
       shortlist: '1'
     };
     this.adminService.shortlistedCandidatesReport(apiData).subscribe((datas: any) => {

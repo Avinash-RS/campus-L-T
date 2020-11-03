@@ -88,7 +88,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
       id: [],
       uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
       emai_sent: result['type'] === 'yes' ? '1' : '0',
-      assement_name: this.nameOfAssessment,
+      shortlist_name: this.nameOfAssessment,
       domain_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter') ? this.appConfig.getLocalData('secondLevelFilter') : '',
       verbal_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter1') ? this.appConfig.getLocalData('secondLevelFilter1') : '',
       analytical_percentage_shortlist: this.appConfig.getLocalData('secondLevelFilter2') ? this.appConfig.getLocalData('secondLevelFilter2') : '',
