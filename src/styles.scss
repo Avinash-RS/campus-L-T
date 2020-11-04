@@ -1368,9 +1368,30 @@ button:focus {
         justify-content: center !important;
       }
     }
+    th.mat-column-no_of_candidate {
+      .mat-sort-header-container {
+        justify-content: center;
+      }  
+    }
     td.mat-column-no_of_candidate {
       text-align: center;
       padding-left: 0 !important;
+    }
+    th.mat-column-buttons {
+      .mat-sort-header-container {
+        justify-content: center;
+      }  
+    }
+    td.mat-column-buttons {
+      display: flex;
+      align-items: center;
+      padding-left: 0 !important;
+      height: 20px !important;
+      align-items: center;
+      justify-content: center;
+      .mat-raised-button {
+        margin-left: .75em !important;
+      }
     }
   }
 }
