@@ -76,7 +76,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
       this.userList.forEach(element => {
         count = count + 1;
         element['counter'] = count;
-        if (element && element['hr_status'] && element['hr_status'] == '1') {
+        if (element && element['evaluation_status'] && element['evaluation_status'] == '2') {
           element['assignStatus'] = 'completed';
         } else {
           element['assignStatus'] = 'waiting';
@@ -115,6 +115,8 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   }
 
   selectedUser(userDetail) {
+    console.log(userDetail);
+    
     this.appConfig.setLocalData('hrEvalutionInterviewPanel', JSON.stringify(userDetail));
   }
 

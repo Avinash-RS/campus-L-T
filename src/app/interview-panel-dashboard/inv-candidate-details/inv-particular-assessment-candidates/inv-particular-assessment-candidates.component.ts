@@ -83,7 +83,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   getUsersList(name) {
 
     const apiData = {
-      assement_name: name,
+      shortlist_name: name,
     };
     this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();

@@ -63,11 +63,12 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     let assessment = {
-      'assement_name': this.selectedAssign.Assessment_Name
+      'shortlist_name': this.selectedAssign.shortlist_name
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-
+      console.log(datas);
+      
       const align = datas;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
@@ -77,14 +78,14 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
         count = count + 1;
         element['uid'] = count;
       });
-      count = 0;
-      this.userList = this.userList.filter(user => {
-        if(user.hr_assign_status == 0){
-          count = count + 1;
-          user['uid'] = count;
-          return user;
-        }
-      })
+      // count = 0;
+      // this.userList = this.userList.filter(user => {
+      //   if(user.hr_assign_status == 0){
+      //     count = count + 1;
+      //     user['uid'] = count;
+      //     return user;
+      //   }
+      // })
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

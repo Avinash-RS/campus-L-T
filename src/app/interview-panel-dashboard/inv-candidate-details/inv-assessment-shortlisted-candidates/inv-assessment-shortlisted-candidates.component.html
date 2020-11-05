@@ -58,7 +58,7 @@
     <ng-container matColumnDef="view_Info">
       <th mat-header-cell *matHeaderCellDef> View details </th>
       <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
-        <button class="table-btn" (click)="particularAssessment(element && element.Assessment_Name ? element.Assessment_Name : '')" mat-button><mat-icon style="justify-content: center;
+        <button class="table-btn" (click)="particularAssessment(element && element.shortlist_name ? element.shortlist_name : '')" mat-button><mat-icon style="justify-content: center;
           display: contents;
           font-size: 16px;">visibility</mat-icon> <span>View</span></button>
         </td>
@@ -76,7 +76,7 @@
           *matHeaderRowDef="['fifth-header-row-first-group']">
         </tr>
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
-          [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl"></tr>
+          [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tp2"></tr>
     </table>
     <div *ngIf="displayNoRecords" class="noRecordText">
       No data available

@@ -23,7 +23,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   selectedUserDetail: any;
   userList: any;
   buttonDisabled = true;
-  displayedColumns: any[] = ['uid', 'Assessment_Name', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
+  displayedColumns: any[] = ['uid', 'shortlist_name', 'Shortlisted_candidates', 'Date', 'Time', 'evaluation_status', 'shortlistby', 'view_Info'];
   dataSource: MatTableDataSource<any>;
   displayNoRecords = false;
 
@@ -57,65 +57,6 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
   getUsersList() {
     this.adminService.hrEvaluationAssessmentDetails().subscribe((data: any) => {
       this.appConfig.hideLoader();
-
-      const datas = [
-        {
-          id: '1',
-          Assessment_Name: 'SRM Institute of technology',
-          Group_Name: 'SRM@gmail.com',
-          Date: '29 Mar 2020',
-          Time: '11:00 AM',
-          Status: 'waiting',
-          Shortlist_By: 'Avin',
-          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
-          Total_Candidates: '100',
-          Shortlisted_candidates: '20',
-          email: 'avin@gmail.com',
-          checked: false
-        },
-        {
-          id: '2',
-          Assessment_Name: 'SRM Institute of technology',
-          Group_Name: 'SRM@gmail.com',
-          Date: '29 Mar 2020',
-          Time: '11:00 AM',
-          Status: 'waiting',
-          Shortlist_By: 'Avin',
-          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
-          Total_Candidates: '100',
-          Shortlisted_candidates: '20',
-          email: 'avin@gmail.com',
-          checked: false
-        },
-        {
-          id: '3',
-          Assessment_Name: 'SRM Institute of technology',
-          Group_Name: 'SRM@gmail.com',
-          Date: '29 Mar 2020',
-          Time: '11:00 AM',
-          Status: 'waiting',
-          Shortlist_By: 'Avin',
-          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
-          Total_Candidates: '100',
-          Shortlisted_candidates: '20',
-          email: 'avin@gmail.com',
-          checked: false
-        },
-        {
-          id: '4',
-          Assessment_Name: 'SRM Institute of technology',
-          Group_Name: 'SRM@gmail.com',
-          Date: '29 Mar 2020',
-          Time: '11:00 AM',
-          Status: 'waiting',
-          Shortlist_By: 'Avin',
-          Assessment_venue: 'Chennaisfsfsfsfsf sfsf sfsfsfsf',
-          Total_Candidates: '100',
-          Shortlisted_candidates: '20',
-          email: 'avin@gmail.com',
-          checked: false
-        },
-      ];
 
       this.userList = data ? data : [];
       let count = 0;

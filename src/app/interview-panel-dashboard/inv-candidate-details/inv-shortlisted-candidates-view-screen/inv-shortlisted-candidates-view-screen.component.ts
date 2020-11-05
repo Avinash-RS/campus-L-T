@@ -77,7 +77,7 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   getUsersList(name) {
 
     const apiData = {
-      assement_name: name,
+      shortlist_name: name,
     };
     this.adminService.invSubmittedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();

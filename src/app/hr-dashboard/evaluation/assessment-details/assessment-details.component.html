@@ -36,7 +36,7 @@
       <!-- Symbol Column -->
       <ng-container matColumnDef="evaluation_status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Evaluation status </th>
-        <td mat-cell *matCellDef="let element"> {{element.evaluation_status && element.evaluation_status != '1' ? 'waiting' : 'completed'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.evaluation_status && element.evaluation_status != '2' ? 'waiting' : 'completed'}} </td>
       </ng-container>
 
       <!-- Symbol Column -->

@@ -35,15 +35,15 @@ export class SharedEvaluationSubHeaderComponent implements OnInit {
 
 
   assessmentDetails() {
-    this.bindDetails = {
+        this.bindDetails = {
       assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '-',
       date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '-',
       time: this.details && this.details[0] && this.details[0]['time'] ? this.details[0]['time'] : '-',
       group_name: this.details && this.details[0] && this.details[0]['group_name'] ? this.details[0]['group_name'] : '-',
-      status: this.details && this.details[0] && this.details[0]['evaluation_status'] && this.details[0]['evaluation_status'] != '1' ? 'waiting' : 'completed',
       no_of_candidate: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '-',
       shortlist_name: this.details && this.details[0] && this.details[0]['shortlist_name'] ? this.details[0]['shortlist_name'] : '-',
       tag_name: this.details && this.details[0] && this.details[0]['tag_name'] ? this.details[0]['tag_name'] : '-',
+      status: this.details && this.details[0] && this.details[0]['evaluation_status'] != '2' ? 'waiting' : 'completed',
     };
   }
 
