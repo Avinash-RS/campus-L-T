@@ -42,7 +42,7 @@
     Criminal Record
   </div>
 <div class="criminal">
-  <div class="text-criminal">HAVE YOU EVER BEEN INVOLVED IN ANY CRIMINAL PROCEEDINGS / CONVICTED OF ANY OFFENSE? IF YES, PLEASE GIVE DETAILS:</div>
+  <div class="text-criminal">Have you ever been involved in any criminal proceedings / convicted of any offense? If yes, please give details:</div>
   <textarea class="criminal-textarea" [formControl]="criminal_record" name="" id="" rows="3"></textarea>
 </div>
   <div class="main-heading">
@@ -51,9 +51,9 @@
   <form #form6="ngForm" [formGroup]="familyForm" class="form1">
     <ng-container *ngIf="familyArr && familyArr.controls" formArrayName="familyArr">
       <div class="text-box-grid" *ngFor="let item of familyArr.controls; let i = index;" [formGroupName]="i">
-        <div style="font-size: 20px; width: 100%; margin: .5em 0; text-align: left !important; display: flex; align-items: flex-start !important;" class="num">{{i + 1}}.</div>
+        <!-- <div style="font-size: 20px; width: 100%; margin: .5em 0; text-align: left !important; display: flex; align-items: flex-start !important;" class="num">{{i + 1}}.</div> -->
         <div class="text-1">
-          <div class="label">EMPLOYER'S NAME & ADDRESS</div>
+          <div class="label">Employer's name & address</div>
           <textarea (focusout)="detectInput(familyForm)" formControlName="employment_name_address" type="text"></textarea>
           <div class="error"
             *ngIf="familyArr.controls[i].get('employment_name_address').invalid && familyArr.controls[i].get('employment_name_address').touched"
@@ -66,7 +66,7 @@
 
         </div>
         <div class="text-2">
-          <div class="label">DURATION (DD/MM/YYYY)</div>
+          <div class="label">Duration (DD/MM/YYYY)</div>
           <div class="outer">
             <div class="upper">
               <div class="left">
@@ -94,14 +94,14 @@
               </div>
             </div>
             <div class="lower">
-              <div class="boxes"><span class="head">Year: </span>  <input formControlName="duration_year" type="text"></div>
+              <div class="boxes" style="margin-right: 1em !important;"><span class="head">Year: </span>  <input formControlName="duration_year" type="text"></div>
               <div class="boxes"><span class="head">Month: </span> <input formControlName="duration_month" type="text"></div>
 
             </div>
           </div>
         </div>
         <div class="text-3">
-          <div class="label">POSITION HELD</div>
+          <div class="label">Position held</div>
           <input (focusout)="detectInput(familyForm)" formControlName="postion_field" type="text">
           <div class="error"
             *ngIf="familyArr.controls[i].get('postion_field').invalid && familyArr.controls[i].get('postion_field').touched"
@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="text-4">
-          <div class="label">NAME & DESIGNATION OF IMMEDIATE SUPERIOR</div>
+          <div class="label">Name & Designation of immediate superior</div>
           <input (focusout)="detectInput(familyForm)" formControlName="name_designation_supervisor" type="text">
           <div class="error"
             *ngIf="familyArr.controls[i].get('name_designation_supervisor').invalid && familyArr.controls[i].get('name_designation_supervisor').touched"
@@ -123,8 +123,8 @@
               and maximum of 255 characters only allowed</span>
           </div>
         </div>
-        <div class="text-5" style="max-width: 155px;">
-          <div class="label">GROSS EMOLUMENTS (PER MONTH)</div>
+        <div class="text-5">
+          <div class="label">Gross emoluments (per month)</div>
           <input (focusout)="detectInput(familyForm)" formControlName="gross_emploment" type="text">
           <div class="error"
             *ngIf="familyArr.controls[i].get('gross_emploment').invalid && familyArr.controls[i].get('gross_emploment').touched"
@@ -136,7 +136,7 @@
         </div>
 
         <div class="text-5">
-          <div class="label">NATURE OF WORK DONE</div>
+          <div class="label">Nature of work done</div>
           <input (focusout)="detectInput(familyForm)" formControlName="nature_work" type="text">
           <div class="error"
             *ngIf="familyArr.controls[i].get('nature_work').invalid && familyArr.controls[i].get('nature_work').touched"
@@ -147,8 +147,8 @@
           </div>
         </div>
 
-        <div class="text-5" style="min-width: 500px; max-width: 500px;">
-          <div class="label">REASON FOR LEAVING</div>
+        <div class="text-5">
+          <div class="label">Reason for leaving</div>
           <textarea (focusout)="detectInput(familyForm)" formControlName="reason_leaving" type="text"></textarea>
           <div class="error"
             *ngIf="familyArr.controls[i].get('reason_leaving').invalid && familyArr.controls[i].get('reason_leaving').touched"
@@ -157,7 +157,7 @@
             <span *ngIf="familyArr.controls[i].get('reason_leaving').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
-          <div class="error" *ngIf="familyArr.controls[i].invalid" style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: -2em; margin-top: 1em !important; border-top: solid red 1px;">
+          <div class="error" *ngIf="familyArr.controls[i].invalid" style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: -2em; margin-top: 1em !important; border-top: solid red 1px; white-space: nowrap;">
             <span>*Make sure, you have entered all the fields value, If you enter any one of the value</span>
           </div>
         </div>
@@ -183,20 +183,20 @@
     <div class="flex-box">
       <div class="fields">
         <div class="label">
-          TOTAL EXPERIENCE
+          Total experience
         </div>
         <div class="experience">
           <div class="exp-box">
-            <span class="head">YEARS: </span> <span class="val">{{fullYearBinding}}</span>
+            <span class="head">Years: </span> <span class="val">{{fullYearBinding}}</span>
           </div>
           <div class="exp-box">
-            <span class="head">MONTHS: </span> <span class="val">{{monthYearBinding}}</span>
+            <span class="head">Months: </span> <span class="val">{{monthYearBinding}}</span>
           </div>
         </div>
       </div>
       <div class="fields">
         <div class="label">
-          BREAK IN EMPLOYMENT, IF ANY, SHOULD BE INDICATED WITH REASONS
+          Break in employment, If any, Should be indicated with reasons
         </div>
         <textarea [formControl]="break_in_emp" name="" id="" rows="2"></textarea>
       </div>
@@ -204,8 +204,8 @@
     </div>
     <div class="details">
       <div class="text">
-        HAVE YOU EVER BEEN EMPLOYED BY US OR BY ANY OF OUR SUBSIDIARY / ASSOCIATE COMPANIES? (IF SO PLEASE MENTION THE NAME OF OUR COMPANY AND / OR ANY OF OUR SUBSIDIARY / ASSOCIATE
-COMPANIES AND YOUR PAYSLIP NUMBER)
+        Have you ever been employed by us or by any of our subsidiary / associate companies? (If so please mention the name of our company and / or any of our subsidiary / associate
+        companies and your payslip number)
       </div>
       <div class="checkboxes">
         <mat-checkbox (change)="matchangeYes($event)" [(ngModel)]="emp_yes">Yes</mat-checkbox>
@@ -214,17 +214,17 @@ COMPANIES AND YOUR PAYSLIP NUMBER)
 
       <div class="explain">
         <div class="text">
-          IF, YES, PLEASE GIVE DETAILS
+          If, yes, Please give details
         </div> 
         <div class="in"><span>OC: </span> <span><input [formControl]="oc" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="oc.invalid && oc.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>OC is required </span></div>
-        <div class="in"><span>PAYSLIP NUMBER: </span> <span><input [formControl]="payslip" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
+        <div class="in"><span>Payslip number: </span> <span><input [formControl]="payslip" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="payslip.invalid && payslip.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Payslip number is required </span></div>
       </div>
     </div>
     <div class="details1">
       <div class="text">
-        HAVE YOU EVER BEEN INTERVIEWED BY US?
+        Have you ever been interviewed by us?
       </div>
       <div class="checkboxes">
         <mat-checkbox (change)="matchangeinvYes($event)" [(ngModel)]="inv_yes">Yes</mat-checkbox>
@@ -232,9 +232,9 @@ COMPANIES AND YOUR PAYSLIP NUMBER)
       </div>
 
       <div class="explain">
-        <div class="in"><span>IF YES, FOR WHAT POST: </span> <span><input [formControl]="post" [ngClass]="inv_no ? 'disabled' : ''" type="text"></span></div>
+        <div class="in"><span>If yes, For what post: </span> <span><input [formControl]="post" [ngClass]="inv_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="post.invalid && post.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Post is required </span></div>
-        <div class="in"><span>WHEN: </span> <span><input [formControl]="when_interview" [ngClass]="inv_no ? 'disabled' : ''" type="date"></span></div>
+        <div class="in"><span>When: </span> <span><input [formControl]="when_interview" [ngClass]="inv_no ? 'disabled' : ''" type="date"></span></div>
         <div *ngIf="when_interview.invalid && when_interview.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Date of interview is required </span></div>
       </div>
     </div>
