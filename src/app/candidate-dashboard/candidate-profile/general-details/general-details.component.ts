@@ -398,7 +398,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   addfamilyForm(data?: any) {
     if (this.familyForm.valid) {
-      if (this.familyArr.length < 5) {
+      if (this.familyArr.length < 3) {
         if (this.familyArr.length >= 1) {
           let i = this.familyArr['controls'].length-1;
           if (this.familyArr && this.familyArr['controls'] && this.familyArr['controls'][i] && this.familyArr['controls'][i]['value'] && this.familyArr['controls'][i]['value']['employment_name_address']) {
@@ -408,7 +408,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         } else {
           this.familyArr.push(this.createItem1(data));
         }
-        if (this.familyArr.length < 5) {
+        if (this.familyArr.length < 3) {
           this.notShow = false;
         } else {
           this.notShow = true;

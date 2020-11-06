@@ -192,9 +192,17 @@
 
   }
   .form1 {
-    margin: 2em 0 0 0;
+    // margin: 2em 0 0 0;
+    padding: .25em;
+    background: $white-primary;
+    border-radius: 5px;
+    display: grid;
+    align-items: flex-end;
+    grid-template-columns: 1fr .09fr;
+    // .pa {
+    // }
     .text-box-grid {
-      padding: 0.25em 1em 0.5em 1em;
+      padding: 0.5em .5em 1em .5em;
       // display: grid;
       // align-items: center;
       // grid-template-columns: 3fr 2fr 2fr 2fr;
@@ -211,6 +219,8 @@
       align-items: flex-start !important;
       justify-content: space-between;
       width: 100%;
+      border-radius: 5px;
+      border: solid $input-border 1px;
       .label {
         font-size: 15px;
         margin: 1.5em 0 0.5em 0;
@@ -290,15 +300,22 @@
     margin: 1em 0 0 0;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    top: -10em !important;
+    position: relative;
     div {
       display: flex;
-      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex-direction: column;
       cursor: pointer;
       text-align: center;
+      // margin-top: .5em;
       .text {
-        margin: 0em 0 0 0.5em;
+        margin: 0;
         color: $light-blue;
-        padding: 0 0 0.1em 0;
+        padding: 0 0 0em 0;
         // border-bottom: solid $light-blue 1px;
         font-size: 15px;
         font-weight: 100;
