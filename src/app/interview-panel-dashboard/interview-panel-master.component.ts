@@ -18,7 +18,7 @@ export interface IBreadCrumb {
 export class InterviewPanelMasterComponent implements OnInit {
 
   // public breadcrumbs: IBreadCrumb[];
-  breadcrumbs: Array<{ label: string; url: string }>;
+  breadcrumbs: Array<any>;
 
   appConstant = CONSTANT.ENDPOINTS;
   sidebarOpen;
@@ -70,7 +70,8 @@ export class InterviewPanelMasterComponent implements OnInit {
               // if (route.snapshot.data.breadcrumb !== undefined) {
               this.breadcrumbs.push({
                 label: route.snapshot.data.breadcrumb,
-                url: url
+                url: url,
+                params: route.snapshot.queryParams ? route.snapshot.queryParams : ''
               });
               const updateUrl = [];
               this.breadcrumbs.forEach(element => {

@@ -18,7 +18,7 @@ export interface IBreadCrumb {
 export class HrMasterComponent implements OnInit {
 
   // public breadcrumbs: IBreadCrumb[];
-  breadcrumbs: Array<{ label: string; url: string }>;
+  breadcrumbs: Array<any>;
 
   appConstant = CONSTANT.ENDPOINTS;
   sidebarOpen;
@@ -35,6 +35,8 @@ export class HrMasterComponent implements OnInit {
       this.subMenus = data;
     });
     this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    console.log(this.breadcrumbs);
+    
   }
 
   ngOnInit() {
@@ -64,13 +66,15 @@ export class HrMasterComponent implements OnInit {
             if (route.outlet === "primary") {
 
               const routeSnapshot = route.snapshot;
-
+              console.log('route', route.snapshot);
+              
               url +=
                 "/" + routeSnapshot.url.map(segment => segment.path);
               // if (route.snapshot.data.breadcrumb !== undefined) {
               this.breadcrumbs.push({
                 label: route.snapshot.data.breadcrumb,
-                url: url
+                url: url,
+                params: route.snapshot.queryParams ? route.snapshot.queryParams : ''
               });
               const updateUrl = [];
               this.breadcrumbs.forEach(element => {
@@ -87,10 +91,13 @@ export class HrMasterComponent implements OnInit {
       });
   }
 
-  buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {
+  buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
     // If no routeConfig is avalailable we are on the root path
+    console.log(route);
+    
     let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
     let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
+    let param = route.snapshot && route.snapshot['queryParams'] ? route.snapshot['queryParams'] : '';
 
     // If the route is dynamic route such as ':id', remove it
     const lastRoutePart = path.split('/').pop();
@@ -105,9 +112,10 @@ export class HrMasterComponent implements OnInit {
     // so we rebuild it each time
     const nextUrl = path ? `${url}/${path}` : url;
 
-    const breadcrumb: IBreadCrumb = {
+    const breadcrumb: any = {
       label: label,
       url: nextUrl,
+      // params: param
     };
     // Only adding route with non-empty label
     const newBreadcrumbs = breadcrumb.label ? [...breadcrumbs, breadcrumb] : [...breadcrumbs];
