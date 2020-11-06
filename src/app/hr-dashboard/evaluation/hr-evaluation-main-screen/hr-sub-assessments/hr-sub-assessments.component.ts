@@ -43,7 +43,9 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       {
         icon: 'work.svg',
         name: 'Candidate details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,
+        data: `${this.activatedRoute.queryParams['_value']['data']}`,
+        active: true
       },
       {
         icon: '002-cv.svg',

@@ -38,7 +38,9 @@ export class HrSubEmploymentComponent implements OnInit {
       {
         icon: 'work.svg',
         name: 'Candidate details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EMPLOYMENT
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,
+        data: `${this.activatedRoute.queryParams['_value']['data']}`,
+        active: true
       },
       {
         icon: '002-cv.svg',

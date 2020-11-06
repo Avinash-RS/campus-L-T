@@ -240,6 +240,7 @@
   li:last-child {
     span {
       cursor: default;
+      pointer-events: none;
     }
   }
 }

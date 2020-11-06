@@ -14,8 +14,8 @@
   </mat-drawer>
   <mat-drawer-content class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
     <ng-container *ngIf="subMenus && subMenus.length > 0">
-      <div [routerLink]="subMenus.router" *ngFor="let subMenus of subMenus; let i = index" class="sub-navs"
-        routerLinkActive="active" [ngClass]="subMenus.router === null ? 'non-active' : ''">
+      <div [routerLink]="subMenus.router" [queryParams]="subMenus.data ? {data: subMenus.data ? subMenus.data : ''} : ''" *ngFor="let subMenus of subMenus; let i = index" class="sub-navs"
+        routerLinkActive="active" [ngClass]="subMenus.active ? 'active' : ''" [ngClass]="subMenus.router === null ? 'non-active' : ''">
         <div *ngIf="subMenus.icon"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
         <div *ngIf="subMenus.name">{{subMenus.name}}</div>
       </div>

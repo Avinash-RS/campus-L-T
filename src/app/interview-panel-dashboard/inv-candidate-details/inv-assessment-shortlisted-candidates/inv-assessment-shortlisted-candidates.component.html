@@ -76,7 +76,7 @@
           *matHeaderRowDef="['fifth-header-row-first-group']">
         </tr>
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
-          [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tp2"></tr>
+          [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"></tr>
     </table>
     <div *ngIf="displayNoRecords" class="noRecordText">
       No data available

@@ -35,11 +35,14 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
+    console.log(this.activatedRoute);
+    
     const subWrapperMenus = [
       {
         icon: 'work.svg',
         name: 'Candidate details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS,
+        active: true
       },
       {
         icon: '002-cv.svg',

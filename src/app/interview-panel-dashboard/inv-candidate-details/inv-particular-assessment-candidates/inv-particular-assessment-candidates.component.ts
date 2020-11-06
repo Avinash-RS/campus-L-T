@@ -45,7 +45,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       {
         icon: 'work.svg',
         name: 'Shortlisted candidate',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST
+        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST,
+        active: true
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
