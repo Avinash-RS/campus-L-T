@@ -50,10 +50,10 @@ export const DropdownListForKYC = {
       name: 'Female',
       checkbox: false
     },
-    {
-      name: 'Other',
-      checkbox: false
-    }
+    // {
+    //   name: 'Other',
+    //   checkbox: false
+    // }
   ],
   // Education Level
   level: [

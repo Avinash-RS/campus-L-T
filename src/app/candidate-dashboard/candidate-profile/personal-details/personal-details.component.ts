@@ -968,6 +968,7 @@ console.log('jgjg', this.profileData);
     const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
     const eyenumberDecimals: RegExp = /^[\-\+]?[0-9]{1,2}\d*(\.\d{0,2})?$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
+    const alphaNumericMaxLength1: RegExp = /^([a-zA-Z0-9,_ ]){0,255}$/;
     // Form 1 UptoCategory
     this.upToCategoryForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -1021,7 +1022,7 @@ console.log('jgjg', this.profileData);
       // passportValid: ['', [Validators.required, FormCustomValidators.dateValidation()]],
       passportValid: [''],
       passportIssuePlace: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-      passportValidFor: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+      passportValidFor: ['', [Validators.pattern(alphaNumericMaxLength1), RemoveWhitespace.whitespace()]],
     }), this.passportFormPatchValue();
 
     // Health Form
