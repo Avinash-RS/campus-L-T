@@ -2083,6 +2083,14 @@ th {
   margin-right: 8px;
   height: 39px !important;
 }
+.mat-paginator-outer-container {
+  display: flex;
+  height: 100% !important;
+  .mat-paginator-container {
+    min-height: 100% !important;
+    height: 100% !important;
+  }
+}
 
 // Mian reports
 // #cdk-overlay-5 {
