@@ -52,7 +52,8 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
       {
         icon: '002-cv.svg',
         name: 'Interview panel',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL,
+        active: true
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

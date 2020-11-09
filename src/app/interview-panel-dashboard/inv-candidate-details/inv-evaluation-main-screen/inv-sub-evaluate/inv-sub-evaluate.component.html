@@ -111,7 +111,7 @@
     <table id="assessmentsTable" mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
         <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
-        <td style="width: 390px;" mat-cell *matCellDef="let assessment">{{assessment.name}}</td>
+        <td style="width: 390px;" mat-cell *matCellDef="let assessment">{{assessment.name}}<span class="asterick">*</span></td>
       </ng-container>
 
       <ng-container matColumnDef="veryGood">
