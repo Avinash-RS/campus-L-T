@@ -104,6 +104,7 @@ export class InvSubEvaluateComponent implements OnInit {
         communicate_ability: data['communicate_ability'] ? data['communicate_ability'] : '',
         personal_skill: data['personal_skill'] ? data['personal_skill'] : '',
         personality: data['personality'] ? data['personality'] : '',
+        personality_1: data['personality_1'] ? data['personality_1'] : '',
         curricular_activites: data['curricular_activites'] ? data['curricular_activites'] : '',
         thought_clarity: data['thought_clarity'] ? data['thought_clarity'] : ''
       })
@@ -125,6 +126,9 @@ export class InvSubEvaluateComponent implements OnInit {
     } 
     if (element['id'] === 6) {
       element['isChecked'] = data['personality'] ? data['personality'] : null
+    } 
+    if (element['id'] === 8) {
+      element['isChecked'] = data['personality_1'] ? data['personality_1'] : null
     } 
     if (element['id'] === 7) {
       element['isChecked'] = data['curricular_activites'] ? data['curricular_activites'] : null
@@ -191,6 +195,7 @@ export class InvSubEvaluateComponent implements OnInit {
       communicate_ability: new FormControl('', [Validators.required]),
       personal_skill: new FormControl('', [Validators.required]),
       personality: new FormControl('', [Validators.required]),
+      personality_1: new FormControl('', [Validators.required]),
       curricular_activites: new FormControl('', [Validators.required]),
       thought_clarity: new FormControl('', [Validators.required]),
     });
@@ -214,6 +219,9 @@ export class InvSubEvaluateComponent implements OnInit {
   }
   get personality() {
     return this.evaluationForm.get('personality');
+  }
+  get personality_1() {
+    return this.evaluationForm.get('personality_1');
   }
   get curricular_activites() {
     return this.evaluationForm.get('curricular_activites');
@@ -241,6 +249,12 @@ export class InvSubEvaluateComponent implements OnInit {
         curricular_activites: value
       });
       this.evaluationForm.value.curricular_activites = value;
+    }
+    if (assessment['id'] == 8) {
+      this.evaluationForm.patchValue({
+        personality_1: value
+      });
+      this.evaluationForm.value.personality_1 = value;
     }
     if (assessment['id'] == 6) {
       this.evaluationForm.patchValue({
@@ -304,6 +318,7 @@ export class InvSubEvaluateComponent implements OnInit {
           communicate_ability: this.evaluationForm.value.communicate_ability,
           personal_skill: this.evaluationForm.value.personal_skill,
           personality: this.evaluationForm.value.personality,
+          personality_1: this.evaluationForm.value.personality_1,
           curricular_activites: this.evaluationForm.value.curricular_activites,
           candidate_assesment: this.evaluationForm.value.ASSESSMENT,
           physical_disability: this.evaluationForm.value.physical_disability,
