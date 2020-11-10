@@ -16,7 +16,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   appConstant = CONSTANT.ENDPOINTS;
   showPage = true;
   // displayedColumns: any[] = ['counter', 'Assessment_Name', 'Date', 'Time', 'assignStatus', 'shortlist_name', 'action'];
-  displayedColumns: any[] = ['counter', 'shortlist_name', 'Date', 'Time', 'assignStatus', 'action'];
+  displayedColumns: any[] = ['counter', 'institute', 'assement_name', 'taken_assessment', 'shortlisted_for_interview', 'interview_assigned', 'interview_completed', 'action'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -27,6 +27,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   radioCheck;
   selectAllCheck;
   displayNoRecords = false;
+  userlist1: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -114,10 +115,11 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
     }
   }
 
-  selectedUser(userDetail) {
-    console.log(userDetail);
-    
-    this.appConfig.setLocalData('hrEvalutionInterviewPanel', JSON.stringify(userDetail));
+  selectedUser(userDetail) {   
+    const urlData = {
+        assement_name: userDetail.assement_name,
+        institute: userDetail.institute
+      };
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS,  {data: JSON.stringify(urlData)});
   }
-
 }

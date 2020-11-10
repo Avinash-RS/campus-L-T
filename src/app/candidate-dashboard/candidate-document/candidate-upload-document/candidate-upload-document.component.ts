@@ -33,7 +33,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   showEducationImgErr = false;
   showCertificateImgErr = false;
   showOtherImgErr = false;
-  saveAndSubmitBtnDisable = true;
+  saveAndSubmitBtnDisable = false;
   selectedDropdownValue = [];
   documentUploadType: any;
   getResumeData: any = '';

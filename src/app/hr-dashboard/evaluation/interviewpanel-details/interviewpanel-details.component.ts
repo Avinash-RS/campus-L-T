@@ -6,6 +6,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-interviewpanel-details',
@@ -14,7 +15,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['uid', 'user_name', 'candidate_id', 'level', 'insitute', 'discipline', 'checked'];
+  displayedColumns: any[] = ['uid', 'user_name', 'candidate_id', 'email', 'level', 'discipline', 'documents_submitted', 'interview_status', 'checked'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
 
@@ -31,13 +32,16 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   selectedCandidateId: any = [];
   buttonHide;
   displayNoRecords = false;
+  urlParsedData: any;
+  assessmentName: { user_name: string; candidate_id: string; email: string; level: string; discipline: string; documents_submitted: string; interview_status: string; }[];
 
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
@@ -54,23 +58,77 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
+    this.editRouteParamGetter();
   }
 
   ngOnInit() {
     this.selectedAssign = JSON.parse(this.appConfig.getLocalData('hrEvalutionInterviewPanel'));
-    this.getUsersList();
   }
 
+    // Get url param for edit route
+    editRouteParamGetter() {
+      // Get url Param to view Edit user page
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.urlParsedData = params['data'] ? JSON.parse(params['data']) : '';        
+        // this.assessmentDetails(params['data']);
+        this.getUsersList(params['data']);
+      });
+    }
+  
+    assessmentDetails(name) {
+      const apidata = {
+        shortlist_name: name
+      };
+      this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
+        // this.appConfig.hideLoader();
+        // this.assessmentName = data;
+  
+      }, (err) => {
+  
+      });
+    }
+  
   // To get all users
-  getUsersList() {
+  getUsersList(data) {
     let assessment = {
-      'shortlist_name': this.selectedAssign.shortlist_name
+      'institute_name': data.institute ? data.institute : '',
+      'assessment_name': data.assement_name ? data.assement_name : ''
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log(datas);
+      console.log(datas, 'apiiii');
       
-      const align = datas;
+      const dummy = [
+        {
+          user_name: 'Avinash',
+          candidate_id: '2248028408421',
+          email: 'Avinashcareers29@gmail.com',
+          level: 'Under graduate',
+          discipline: 'Electrical',
+          documents_submitted: '0',
+          interview_status: '0'
+        },
+        {
+          user_name: 'Avinash',
+          candidate_id: '2248028408422',
+          email: 'Avinashcareers29@gmail.com',
+          level: 'Under graduate',
+          discipline: 'Electrical',
+          documents_submitted: '0',
+          interview_status: '1'
+        },
+        {
+          user_name: 'Avinash Anitta',
+          candidate_id: '2248028408424',
+          email: 'Avinashcareers29@gmail.com',
+          level: 'Under graduate',
+          discipline: 'Electrical',
+          documents_submitted: '1',
+          interview_status: '2'
+        },
+      ]
+        this.assessmentName = dummy;
+        const align = dummy;
       this.userList = align ? align : [];
       this.toShoworNotShowFilter();
       let count = 0;
@@ -79,14 +137,6 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
         count = count + 1;
         element['uid'] = count;
       });
-      // count = 0;
-      // this.userList = this.userList.filter(user => {
-      //   if(user.hr_assign_status == 0){
-      //     count = count + 1;
-      //     user['uid'] = count;
-      //     return user;
-      //   }
-      // })
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -99,7 +149,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     if (checked['checked']) {
       this.userList.forEach(element => {
         this.dataSource.filteredData.forEach(ele => {
-          if (element.candidate_id === ele.candidate_id) {
+          if (element.candidate_id === ele.candidate_id && element['interview_status'] !== '2') {
             element.checked = true;
           }
         });
@@ -140,7 +190,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     const pushNotChecked = [];
     this.userList.forEach(element => {
       if (element.checked) {
-        pushChecked.push(element);
+          pushChecked.push(element);
       } else {
         pushNotChecked.push(element);
       }
@@ -167,10 +217,10 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
 
     }
 
@@ -188,7 +238,7 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     });
     this.selectedUserDetail = userDetail;
 
-    this.getSelectedData();
+    // this.getSelectedData();
     this.toShoworNotShowFilter();
     this.unselectSelectALL();
   }
