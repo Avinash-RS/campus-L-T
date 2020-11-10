@@ -33,7 +33,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   showEducationImgErr = false;
   showCertificateImgErr = false;
   showOtherImgErr = false;
-  saveAndSubmitBtnDisable = true;
+  saveAndSubmitBtnDisable = false;
   selectedDropdownValue = [];
   documentUploadType: any;
   getResumeData: any = '';
@@ -47,6 +47,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   educationUploadForm: FormGroup;
   certificateUploadForm: FormGroup;
   otherUploadForm: FormGroup;
+  savesubmitDisable: any;
 
 
   constructor(private fb: FormBuilder,
@@ -76,6 +77,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
       'id': this.appConfig.getLocalData('userId')
     }
     this.candidateService.getUploadedDocument(userid).subscribe((data: any) => {
+      this.savesubmitDisable = data && data[0] && data[0][0] && data[0][0]['full_edit'] == '1' ? true : false;
+      
       this.certificateValuearray = data[0][0].certificate_array;
       this.otherDocValuearray = data[0][0].other_array;
       this.educationValuearray = data[0][0].education_documents;

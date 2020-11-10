@@ -1,5 +1,8 @@
-<div class="alert">
-*The documents can only be uploaded after the assessment and getting shortlisted for the interview process.
+<div class="alert">Note: 
+    <ol>
+        <li>The documents can only be uploaded after the assessment and getting shortlisted for the interview process.</li>
+        <li>Please use submit button only after uploading all documents / certificates. Once submitted, you will not be able to modify or upload additional documents.</li>
+    </ol>
 </div>
 <div class="main-wrapper-candidate">
         <form [formGroup]="resumeUploadForm">
@@ -49,7 +52,7 @@
                                     choose file
                                 </div>
                                 <div *ngIf="urlEducation[i]">
-                                    <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlEducation}}">{{urlEducation[i]}}</span>
+                                    <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlEducation[i]}}">{{urlEducation[i]}}</span>
                                     <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
                                 </div>
                             </label>
@@ -170,7 +173,7 @@
                     </div>
                 </div>
                 </form>
-                <div class="buttonDiv">
+                <div [ngClass]="savesubmitDisable ? 'disable' : ''" class="buttonDiv">
                     <span matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made">
                     <button mat-raised-button matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made" (click)="submitDialog('')" [ngClass]="saveAndSubmitBtnDisable ? 'disable' : ''" type="button" class="submit btn-margin-space">Save</button>
                     </span>

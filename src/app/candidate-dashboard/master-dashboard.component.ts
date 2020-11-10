@@ -25,6 +25,7 @@ export class MasterDashboardComponent implements OnInit {
   subMenus: any;
   activeSubmenu;
   showProfileOnly = false;
+  showDocuments = false;
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService,
@@ -33,6 +34,9 @@ export class MasterDashboardComponent implements OnInit {
   ) {
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'false') {
       this.showProfileOnly = true;
+    }
+    if (this.appConfig.getLocalData('secondShortlist') && this.appConfig.getLocalData('secondShortlist') === 'true') {
+      this.showDocuments = true;
     }
 
     // Assigning sub menus for the current router
