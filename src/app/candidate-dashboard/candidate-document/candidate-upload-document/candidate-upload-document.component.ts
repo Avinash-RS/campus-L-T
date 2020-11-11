@@ -47,6 +47,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   educationUploadForm: FormGroup;
   certificateUploadForm: FormGroup;
   otherUploadForm: FormGroup;
+  savesubmitDisable: any;
 
 
   constructor(private fb: FormBuilder,
@@ -55,6 +56,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
     private matDialog: MatDialog) { }
 
   ngOnInit() {
+    this.saveAndSubmitBtnDisable = false;
     this.FormInitialization();
     this.getUploadedDocument();
 
@@ -71,11 +73,18 @@ export class CandidateUploadDocumentComponent implements OnInit {
     });
   }
 
+  viewDocuments(url) {
+    let path = url;
+    window.open(path, '_blank');
+  }
+
   getUploadedDocument() {
     var userid = {
       'id': this.appConfig.getLocalData('userId')
     }
     this.candidateService.getUploadedDocument(userid).subscribe((data: any) => {
+      this.savesubmitDisable = data && data[0] && data[0][0] && data[0][0]['full_edit'] == '1' ? true : false;
+      
       this.certificateValuearray = data[0][0].certificate_array;
       this.otherDocValuearray = data[0][0].other_array;
       this.educationValuearray = data[0][0].education_documents;
@@ -235,8 +244,14 @@ export class CandidateUploadDocumentComponent implements OnInit {
     e.stopPropagation();
   }
 
-  onSelectFile(event, uploadType, i) {
+  edudropdownChange(i) {
+    
+  }
 
+  onSelectFile(event, uploadType, i) {
+    console.log(this.eduArr.controls);
+    
+    
     this.documentUploadType = uploadType;
     this.updateDocumentIndex = i;
     const fd = new FormData();
@@ -313,6 +328,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
         this.showOtherImgErr = true;
       }
     }
+    // console.log(this.otherDocArr.controls, 'otherDocFile');
+
   }
 
   async uploadImage(file, selectType, i) {
@@ -342,6 +359,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
         if(this.updateMode) {
           cerObj['id'] = this.certificateValuearray.length > 0 ? this.certificateValuearray[this.updateDocumentIndex].id : '';
         }
+        console.log(this.certificatDetailsArr);
+        
         this.certificatDetailsArr.push(cerObj);
       } else if (selectType == 'other') {
         var otherObj = {
@@ -375,15 +394,18 @@ export class CandidateUploadDocumentComponent implements OnInit {
         'other_certificate': this.otherDetailsArr,
         'resume_id': this.resumeFile
       }
-
+      console.log('Details', this.educationDetailsArr);
+      
       this.candidateService.saveUploadDocument(documentObj).subscribe((data: any) => {
 
         this.appConfig.hideLoader();
 
         if (clickType == 'submit') {
           this.appConfig.success(`Documents submitted successfully`, '');
+          this.ngOnInit();
         } else {
           this.appConfig.success(`Documents saved successfully`, '');
+          this.ngOnInit();
         }
       
       }, (err) => {
@@ -419,8 +441,10 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
         if (clickType == 'submit') {
           this.appConfig.success(`Documents updated successfully`, '');
+          this.ngOnInit();
         } else {
           this.appConfig.success(`Documents saved successfully`, '');
+          this.ngOnInit();
         }
       
       }, (err) => {
