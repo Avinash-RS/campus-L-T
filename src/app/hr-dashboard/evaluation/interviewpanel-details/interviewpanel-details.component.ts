@@ -70,17 +70,20 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       // Get url Param to view Edit user page
       this.activatedRoute.queryParams.subscribe(params => {
         this.urlParsedData = params['data'] ? JSON.parse(params['data']) : '';        
-        // this.assessmentDetails(params['data']);
-        this.getUsersList(params['data']);
+        this.assessmentDetails(this.urlParsedData);
+        this.getUsersList(this.urlParsedData);
       });
     }
   
-    assessmentDetails(name) {
+    assessmentDetails(data) {
       const apidata = {
-        shortlist_name: name
-      };
-      this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
-        // this.appConfig.hideLoader();
+        institute_name: data.institute ? data.institute : '',
+        assement_name: data.assement_name ? data.assement_name : ''
+        };
+      this.adminService.getHrEvaluationInterviewPanelHeader(apidata).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        console.log('header', data);
+        
         // this.assessmentName = data;
   
       }, (err) => {
@@ -91,8 +94,8 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList(data) {
     let assessment = {
-      'institute_name': data.institute ? data.institute : '',
-      'assessment_name': data.assement_name ? data.assement_name : ''
+      institute_name: data.institute ? data.institute : '',
+      assement_name: data.assement_name ? data.assement_name : ''
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
