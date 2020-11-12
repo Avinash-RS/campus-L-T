@@ -141,3 +141,21 @@
     pointer-events: none;
     opacity: 0.6;
 }
+.listFiles {
+    margin-left: 215px !important;
+    .head {
+        color: #333333;
+        font-size: 15px;
+        margin-bottom: .5em;
+    }
+    ol {
+        li {
+            font-size: 12px;
+            margin-bottom: .25em;
+            .links {
+                cursor: pointer;
+                color: #007bff;
+            }        
+        }
+    }
+}

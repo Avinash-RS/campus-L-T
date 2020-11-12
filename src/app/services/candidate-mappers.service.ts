@@ -193,6 +193,10 @@ export class CandidateMappersService {
 
   }
 
+  getListofDocs(data) {
+    return this.http.post(`${this.BASE_URL}/profile/fileslist`, data, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
   //get dropdown value
   getEducationDropDown(userId) {
     return this.http.post(`${this.BASE_URL}/profile/candidate_education_level`, userId, { headers: this.withoutTokens(), withCredentials: true });
