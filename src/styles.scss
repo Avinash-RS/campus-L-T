@@ -2092,6 +2092,11 @@ th {
   }
 }
 
+.ant-calendar-picker {
+  display: flex;
+  justify-content: space-between;
+}
+
 // Mian reports
 // #cdk-overlay-5 {
   // .ant-select-dropdown {
