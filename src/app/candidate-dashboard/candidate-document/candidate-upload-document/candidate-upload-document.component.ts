@@ -39,7 +39,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   getResumeData: any = '';
   updateDocumentIndex: any;
   updateMode = false;
-
+  filelists: any;
 
   resumeUploadForm = new FormGroup({
     resume: new FormControl()
@@ -59,8 +59,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
     this.saveAndSubmitBtnDisable = false;
     this.FormInitialization();
     this.getUploadedDocument();
-
-    var userid = {
+    this.listOfDocs();
+    let userid = {
       'id': this.appConfig.getLocalData('userId')
     }
     this.candidateService.getEducationDropDown(userid).subscribe((data: any) => {
@@ -71,6 +71,25 @@ export class CandidateUploadDocumentComponent implements OnInit {
     }, (err) => {
 
     });
+  }
+
+  listOfDocs() {
+    let apiData = {
+      user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+    };
+    this.candidateService.getListofDocs(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('list of docs', data);
+      this.filelists  = data ? data : [];
+    }, (err) => {
+
+    });
+  }
+
+  viewDocs(url) {    
+    let path = url && url['certificate_url'] ? url['certificate_url'] : '';
+    window.open(path, '_blank');
+
   }
 
   viewDocuments(url) {
@@ -182,14 +201,14 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.urlCertificate.push(edu.filename);
       return this.fb.group({
 
-        certificateName: [edu.certificate_name, Validators.required],
-        certificateFile: [null, Validators.required]
+        certificateName: [edu.certificate_name, [Validators.maxLength(200)]],
+        certificateFile: [null]
       });
     } else {
       return this.fb.group({
 
-        certificateName: [null, Validators.required],
-        certificateFile: [null, Validators.required]
+        certificateName: [null, [Validators.maxLength(200)]],
+        certificateFile: [null]
       });
     }
   }
@@ -223,14 +242,14 @@ export class CandidateUploadDocumentComponent implements OnInit {
       this.urlOther.push(edu.filename);
       return this.fb.group({
 
-        otherDocName: [edu.description, Validators.required],
-        otherDocFile: [null, Validators.required]
+        otherDocName: [edu.description, [Validators.maxLength(200)]],
+        otherDocFile: [null]
       });
     } else {
       return this.fb.group({
 
-        otherDocName: [null, Validators.required],
-        otherDocFile: [null, Validators.required]
+        otherDocName: [null, [Validators.maxLength(200)]],
+        otherDocFile: [null]
       });
     }
   }
@@ -454,6 +473,9 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   submitDialog(btnType) {
+    
+    if (this.certificateUploadForm.valid && this.otherUploadForm.valid) {
+
     if(this.updateMode == false){
       if (this.educationUploadForm.valid && this.resumeUploadForm.valid) {
         const data = {
@@ -495,6 +517,10 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
       this.openDialog(ShortlistBoxComponent, data, btnType);
     }
+  } else {
+          this.appConfig.nzNotification('error', 'Not Submitted', 'Please fix red highlighted texts to continue further');
+  }
+
   }
 
   openDialog(component, data, btnType) {
