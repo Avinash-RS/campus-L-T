@@ -553,4 +553,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  getAlreadyAssigned(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_list_of_candidates_already_assigned`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

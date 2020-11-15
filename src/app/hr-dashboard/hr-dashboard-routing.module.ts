@@ -53,6 +53,7 @@ import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-up
 import { from } from 'rxjs';
 import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/hr-upload-test-report.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
+import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
 
 const routes: Routes = [
   {
@@ -323,6 +324,13 @@ const routes: Routes = [
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
               breadcrumb: 'Interview Panel Assign'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED}`,
+            component: NewInterviewpanelAssignedDetailsComponent,
+            data: {
+              breadcrumb: 'Assigned details'
             }
           },
           {

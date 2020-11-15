@@ -68,6 +68,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   allHRDisciplines: any;
   userListHR: any;
   selectedUserDetailHR: any;
+  routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
   constructor(
     private appConfig: AppConfigService,
@@ -114,6 +115,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.appConfig.hideLoader();      
       const datas = data ? data : [];
       this.showDefault = false;
+      this.routeAssignedData = apiData;
       this.getUsersList(datas);
     }, (err) => {
     });
@@ -164,6 +166,10 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
+  instituteChangeForDiscipline(data) {
+    this.getParticularAssessmentAndDiscipline(data);
+  }
+
   particularInvpanelist(data) {
     const apiData = {
       discipline: data ? data : ''
@@ -192,9 +198,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   }
 
-  instituteChangeForDiscipline(data) {
-    this.getParticularAssessmentAndDiscipline(data);
-  }
   hrDiciplineChange(data) {
   }
   // Get url param for edit route
@@ -424,7 +427,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   assigntoPanel(apiData) {
     this.adminService.assignToHR(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-        console.log('assigned', data);
        const datas = {
           iconName: '',
           dataToBeShared: {
@@ -437,7 +439,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
           showCancel: '',
           showOk: ''
         };    
-        this.openDialog(ShortlistBoxComponent, datas, apiData);
+        this.openDialog1(ShortlistBoxComponent, datas, this.routeAssignedData);
     }, (err) => {
     });
   }
@@ -503,9 +505,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
     }
   }
-
-    console.log('ca', candidateID);
-    console.log('hr', HRID);
     const apiData = {
       uid: candidateID,
       hr_id: HRID,
@@ -532,6 +531,28 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       if (result) {
         this.assigntoPanel(apiData);
       }
+    });
+  }
+
+  openDialog1(component, data, apiData) {
+    let dialogDetails: any;
+
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED, {data: JSON.stringify(this.routeAssignedData)});
     });
   }
 

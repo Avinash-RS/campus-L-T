@@ -1,0 +1,79 @@
+<div class="main-new-interview-assigned">
+<div class="top-wrapper">
+    <div style="margin-left: 1em;" class="left">
+      <div class="flex-wrap">
+        <div class="label">
+          Institute name<span class="asterick">*</span>
+        </div>
+        <div class="input-box">
+          <nz-select class="nzSelect-revamp" [(ngModel)]="selectedInstitute"
+            (ngModelChange)="instituteChangeForDiscipline(selectedInstitute)" nzAllowClear nzShowSearch
+            nzPlaceHolder="--Select Institute name--">
+            <nz-option *ngFor="let level of allInstitutes" [nzLabel]="level.institute_name"
+              [nzValue]="level.institute_name"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="flex-wrap">
+        <div class="label">
+          Discipline
+        </div>
+        <div [matTooltip]="selectedInstitute ? '' : 'Select Institute name'" class="input-box">
+          <nz-select [ngClass]="selectedInstitute ? '' : 'disabled'" class="nzSelect-revamp"
+            [(ngModel)]="selectedDiscipline" (ngModelChange)="instituteChange()" nzAllowClear nzShowSearch
+            nzPlaceHolder="All">
+            <nz-option *ngFor="let level of allDisciplines" [nzLabel]="level.discipline" [nzValue]="level.discipline">
+            </nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="flex-wrap">
+        <div class="label">
+          Education Level
+        </div>
+        <div class="input-box">
+          <nz-select class="nzSelect-revamp" [(ngModel)]="selectedEdu" (ngModelChange)="instituteChange()" nzAllowClear
+            nzShowSearch nzPlaceHolder="All">
+            <nz-option *ngFor="let level of allEducations" [nzLabel]="level.label" [nzValue]="level.name"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="flex-wrap">
+        <div class="label">
+          Assessment
+        </div>
+        <div [matTooltip]="selectedInstitute ? '' : 'Select Institute name'" class="input-box">
+          <nz-select class="nzSelect-revamp" [ngClass]="selectedInstitute ? '' : 'disabled'"
+            [(ngModel)]="selectedAssessment" (ngModelChange)="instituteChange()" nzAllowClear nzShowSearch
+            nzPlaceHolder="All">
+            <nz-option *ngFor="let level of allAssessments" [nzLabel]="level.assement_name"
+              [nzValue]="level.assement_name"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="flex-wrap">
+        <div class="label">
+          Status<span class="asterick">*</span>
+        </div>
+        <div class="input-box">
+          <nz-select class="nzSelect-revamp" [(ngModel)]="selectedStatus" (ngModelChange)="instituteChange()"
+            nzAllowClear nzShowSearch nzPlaceHolder="--Select Status--">
+            <nz-option *ngFor="let level of statusList" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="flex-wrap">
+        <div class="label">
+          &#160;
+        </div>
+        <div class="input-box">
+          <div style="display: flex; justify-content: center;">
+            <button [disabled]="selectedInstitute && selectedStatus ? false : true" class="submit" (click)="go()"
+              mat-raised-button>Go</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

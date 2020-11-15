@@ -1,0 +1,61 @@
+@import "../../../themes/themes.scss";
+
+.main-new-interview-assigned {
+    .total-wrap {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        .lefttable {
+          min-width: 500px;
+          max-width: 500px;
+        }
+        .righttable {
+          min-width: 500px;
+          max-width: 500px;
+        }
+      }
+      .head-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1em;
+      }
+      .top-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 80%;
+        justify-content: space-between;
+        .left,.right {
+          width: 100%;
+        .flex-wrap {
+          display: grid;
+          grid-template-columns: .7fr 1fr;
+          align-items: center;
+          max-width: 400px;
+          margin-top: 1em;
+          // margin: 0 0 0.5em 0;
+          .label {
+            color: $light-black;
+            font-size: 14px;
+          }
+          .input-box {
+            nz-select {
+              height: 30px;
+              color: $light-black;
+              // background: $white 0% 0% no-repeat padding-box;
+              // box-shadow: $shadow-light-black;
+              // border-radius: 5px;
+              // font-size: 13px;
+              min-width: 235px;
+              max-width: 235px;
+            }
+          }
+        }
+      }
+    }
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
