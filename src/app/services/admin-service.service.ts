@@ -526,4 +526,31 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/assement_insert`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+
+  getInterviewpanelInstitutes() {
+    return this.http.get(`${this.BASE_URL}/profile/getall_institue_assement`, 
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getParticularInstituteDiscipline(data) {
+    return this.http.post(`${this.BASE_URL}/profile/getall_dip_and_assement`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getParticularInterviewpanelist(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_interview_pan_by_discipline`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getParticularCandidatelist(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_candidate_for_assement`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  assignToHR(data) {
+    return this.http.post(`${this.BASE_URL}/profile/evaluation_hr_assign`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }

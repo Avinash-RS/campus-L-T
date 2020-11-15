@@ -344,6 +344,15 @@
     <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
+<div class="modal-box-wrapper" *ngIf="data && data['interViwePanelAssign'] === 'noData'">
+  <div class="bulk-upload-text">
+    {{data['dataToBeShared']['confirmText']}}
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['AssignSchedule'] === 'schedule'">
   <div class="bulk-upload-text">
     Are you sure you want to send an email selected no. of {{data['candidate']}}: {{data['candidateCount']}}

@@ -1022,7 +1022,8 @@ button:focus {
 
 // tpo uploaded List
 .tpo-main-wrapper-uploaded-list,
-.inv-particular-assessment-candidate {
+.inv-particular-assessment-candidate,
+.new-inv-particular-assessment-candidate {
   .green {
     color: #269a45;
     font-weight: 200;
@@ -1482,16 +1483,27 @@ button:focus {
 .hide {
   display: none;
 }
-.light-bg {
+.light-bg,.light-bg:hover {
   background: $white 0% 0% no-repeat padding-box !important;
   border-top: 0.25px solid $table-border;
   border-bottom: 0.25px solid $table-border;
 }
-.dark-bg {
+.dark-bg,.dark-bg:hover {
   background: $th-bg 0% 0% no-repeat padding-box;
   border-top: 0.25px solid $table-border;
   border-bottom: 0.25px solid $table-border;
 }
+.light-bg:hover {
+  background: $white 0% 0% no-repeat padding-box !important;
+  border-top: 0.25px solid $table-border;
+  border-bottom: 0.25px solid $table-border;
+}
+.dark-bg:hover {
+  background: $th-bg 0% 0% no-repeat padding-box;
+  border-top: 0.25px solid $table-border;
+  border-bottom: 0.25px solid $table-border;
+}
+
 .no-data-available.mat-header-row {
   padding: 4px;
   height: 40px !important;
@@ -2219,4 +2231,17 @@ th {
 
 ::ng-deep .ant-select-dropdown {
   width: 100% !important !important;
+}
+.mat-raised-button[disabled][disabled] {
+  background: $primary-red !important;
+  color: $white !important;
+  opacity: 0.5;
+}
+.mat-checkbox-layout {
+  margin-bottom: .15rem !important;
+}
+.new-inv-particular-assessment-candidate {
+  tr.mat-row {
+    height: inherit !important;
+  }
 }

@@ -52,6 +52,7 @@ import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen
 import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
 import { from } from 'rxjs';
 import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/hr-upload-test-report.component';
+import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 
 const routes: Routes = [
   {
@@ -318,8 +319,15 @@ const routes: Routes = [
             }
           },
           {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
+            component: NewInterviewpanelAssignmentScreenComponent,
+            data: {
+              breadcrumb: 'Interview Panel Assign'
+            }
+          },
+          {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             pathMatch: 'full',
           }
         ]
