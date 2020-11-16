@@ -34,18 +34,29 @@ export class HrSubEducationComponent implements OnInit {
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
+      // {
+      //   icon: 'work.svg',
+      //   name: 'Candidate details',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,
+      //   data: `${this.activatedRoute.queryParams['_value']['data']}`,
+      //   active: true
+      // },
+      // {
+      //   icon: '002-cv.svg',
+      //   name: 'Interview panel',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
+      // },
       {
         icon: 'work.svg',
-        name: 'Candidate details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,
-        data: `${this.activatedRoute.queryParams['_value']['data']}`,
-        active: true
+        name: 'Interview panel Assign',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
         icon: '002-cv.svg',
-        name: 'Interview panel',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
-      },
+        name: 'Assigned details',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED,
+        active: true
+      }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();

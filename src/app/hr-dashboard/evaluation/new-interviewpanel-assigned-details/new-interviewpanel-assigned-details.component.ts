@@ -7,6 +7,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-new-interviewpanel-assigned-details',
@@ -37,8 +38,8 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     }
   ];
 
-  paginationPageSize = 10;
-  cacheBlockSize: any = 10;
+  paginationPageSize = 1000;
+  cacheBlockSize: any = 1000;
   gridApi: any;
   gridApi1: any;
   columnDefs = [];
@@ -133,12 +134,15 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
           const i = +params.node.id + 1;
           return i ? i : 'Loading...';
         },
+        minWidth: 100,
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'candidate_id',
         // comparator: this.customComparator,
         getQuickFilterText: (params) => {
           return params.value;
@@ -148,7 +152,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         headerName: 'Candidate name', field: 'name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'name',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -157,7 +163,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         headerName: 'Email', field: 'email',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'email',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -166,7 +174,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         headerName: 'Institue name', field: 'institue',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'institue',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -175,7 +185,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         headerName: 'Discipline', field: 'discipline',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'discipline',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -184,8 +196,17 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         headerName: 'Education level', field: 'level',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
-        getQuickFilterText: (params) => {
+        tooltipField: 'level',
+        valueGetter: (params) => {
+          if (params.data.level == 'UG') {
+            return 'Undergraduate';
+          } else if (params.data.level == 'PG') {
+            return 'Postgraduate';
+          } else { return '-'; }
+        },
+      getQuickFilterText: (params) => {
           return params.value;
         }
       },
@@ -193,25 +214,31 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         headerName: 'Panel assigned', field: 'panel_assigned',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'panel_assigned',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Assessment', field: 'evaluation_status',
+        headerName: 'Assessment', field: 'assement_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'assement_name',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Documents submitted', field: 'hr_assign_result',
+        headerName: 'Documents submitted', field: 'document_submit',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
         sortable: true,
+        tooltipField: 'document_submit',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -244,32 +271,6 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
 
     ];
 
-   const dummy = [
-      {
-          "candidate_id": "2020000015781",
-          "name": "Varun Chakravarthy",
-          "email": "varunchakravarthy.candidate@mailinator.com",
-          "institue": "VESIT  Mumbai",
-          "discipline": "Electronics and Communication",
-          "level": "UG",
-          "uid": "15781",
-          "panel_assigned": "Anand Narayan Subramanyam Swami Krishna Vamsi Ram Narayan( Communications )",
-          "evaluation_status": "0",
-          "hr_assign_result": "1"
-      },
-      {
-          "candidate_id": "2020000015779",
-          "name": "Kuldeep Yadav",
-          "email": "kuldeepyadav.candidate@mailinator.com",
-          "institue": "VESIT  Mumbai",
-          "discipline": "Civil",
-          "level": "UG",
-          "uid": "15779",
-          "panel_assigned": "Anand Narayan Subramanyam Swami Krishna Vamsi Ram Narayan( Communications )",
-          "evaluation_status": "0",
-          "hr_assign_result": "1"
-      }
-  ];
     // this.service.getNotificationData(this.adminDetails._id)
     //   .subscribe((result: any) => {
     //     if (result.data && result.data.getnotificationreports?.message) {
@@ -280,7 +281,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     //         return item.request_type === 'bulk_enrolment';
     //       });
     //       this.reportDetails = array;
-          this.rowData = dummy;
+          this.go();
     //     }
     //   });
 
@@ -288,27 +289,27 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
 
   onCellClicked(event) {
     console.log(event);
-    
-    // if (event.colDef.field === 'report_url') {
-    //   window.location.href = event.value;
-    // }
+    if (event.colDef.field === 'name') {
+      // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
+      console.log('workingg');
+    }
   }
 
   getModel(e) {
-    console.log(e);
+    // console.log(e);
     
-    // const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
-    // if (filteredArray?.length === 0) {
-    //   // this.toast.warning('No results found');
-    // }
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
   }
 
   onQuickFilterChanged() {
     this.gridApi.setQuickFilter(this.quickSearchValue);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      console.log('adad');
-      
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
       // this.toast.warning('No reuslts found');
     }
   }
@@ -366,15 +367,12 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     }
     console.log('apiData', apiData);
     
-    // this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
-    //   this.appConfig.hideLoader();      
-    //   console.log('data', data);
-      
-      // const datas = data ? data : [];
-      // this.showDefault = false;
-      // this.getUsersList(datas);
-    // }, (err) => {
-    // });
+    this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
+      this.appConfig.hideLoader();      
+      this.rowData = data ? data : [];
+      console.log('assigned data', data);
+          }, (err) => {
+    });
   }
 
 }

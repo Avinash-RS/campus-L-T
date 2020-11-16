@@ -554,7 +554,7 @@ export class AdminServiceService {
   }
 
   getAlreadyAssigned(data) {
-    return this.http.post(`${this.BASE_URL}/profile/get_list_of_candidates_already_assigned`, data,
+    return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 }

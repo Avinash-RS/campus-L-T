@@ -80,7 +80,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    // const subWrapperMenus = [
+    const subWrapperMenus = [
     //   {
     //     icon: '002-cv.svg',
     //     name: 'Candidate details',
@@ -92,8 +92,19 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     //     router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL,
     //     active: true
     //   },
-    // ];
-    // this.sharedService.subMenuSubject.next(subWrapperMenus);
+    {
+      icon: '002-cv.svg',
+      name: 'Interview panel Assign',
+      router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
+    },
+    {
+      icon: '002-cv.svg',
+      name: 'Assigned details',
+      router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED
+    }
+
+    ];
+    this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
   ngOnInit() {
