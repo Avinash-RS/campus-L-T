@@ -37,6 +37,43 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     }
   ];
 
+  paginationPageSize = 10;
+  cacheBlockSize: any = 10;
+  gridApi: any;
+  gridApi1: any;
+  columnDefs = [];
+  columnDefs1 = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  reportDetails1: any;
+  rowData1: any;
+  // quickSearchValue: string;
+  quickSearchValue = '';
+  quickSearchValue1 = '';
+
+
+//   columnDefs = [
+//     { field: 'make', sortable: true, filter: true },
+//     { field: 'model', sortable: true, filter: true },
+//     { field: 'price', sortable: true, filter: true }
+// ];
+// rowData = [
+//     { make: 'Toyota', model: 'Celica', price: 35000 },
+//     { make: 'Ford', model: 'Mondeo', price: 32000 },
+//     { make: 'Porsche', model: 'Boxter', price: 72000 }
+// ];
+
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -52,6 +89,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
   ngOnInit() {
     this.getInstitute();
     this.getEducation();
+    this.tabledef();
   }
 
   editRouteParamGetter() {
@@ -74,6 +112,208 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     });
   }
 
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    // this.gridApi.sizeColumnsToFit();
+    // this.gridApi.setDatasource(this.dataSources);
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  tabledef() {
+    this.columnDefs = [
+      {
+        headerName: 'S no',
+        valueGetter: (params) => {
+          const i = +params.node.id + 1;
+          return i ? i : 'Loading...';
+        },
+      },
+      {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate name', field: 'name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Email', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institue name', field: 'institue',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Discipline', field: 'discipline',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Education level', field: 'level',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Panel assigned', field: 'panel_assigned',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Assessment', field: 'evaluation_status',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Documents submitted', field: 'hr_assign_result',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      // {
+      //   headerName: 'Status', field: 'total_count',
+      //   filter: true,
+      //   floatingFilterComponentParams: { suppressFilterButton: true },
+      //   sortable: true,
+      //   valueGetter: (params) => {
+      //     const total = +params.data.total_count;
+      //     // console.log(params, total, 'vg');
+      //     if (total === +params.data.updated_count + +params.data.success_count) {
+      //       return 'All success';
+      //     } else if (total === +params.data.duplicate_count + +params.data.existing_count + +params.data.failure_count) {
+      //       return 'All failure';
+      //     } else { return 'Partial success'; }
+      //   },
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
+      // {
+      //   headerName: 'Link to download', field: 'report_url',
+      //   cellStyle: { textAlign: 'center' },
+      //   cellRenderer: (params) => {
+      //     return '<span><i class="material-icons">get_app</i> </span>';
+      //   }
+      // }
+
+    ];
+
+   const dummy = [
+      {
+          "candidate_id": "2020000015781",
+          "name": "Varun Chakravarthy",
+          "email": "varunchakravarthy.candidate@mailinator.com",
+          "institue": "VESIT  Mumbai",
+          "discipline": "Electronics and Communication",
+          "level": "UG",
+          "uid": "15781",
+          "panel_assigned": "Anand Narayan Subramanyam Swami Krishna Vamsi Ram Narayan( Communications )",
+          "evaluation_status": "0",
+          "hr_assign_result": "1"
+      },
+      {
+          "candidate_id": "2020000015779",
+          "name": "Kuldeep Yadav",
+          "email": "kuldeepyadav.candidate@mailinator.com",
+          "institue": "VESIT  Mumbai",
+          "discipline": "Civil",
+          "level": "UG",
+          "uid": "15779",
+          "panel_assigned": "Anand Narayan Subramanyam Swami Krishna Vamsi Ram Narayan( Communications )",
+          "evaluation_status": "0",
+          "hr_assign_result": "1"
+      }
+  ];
+    // this.service.getNotificationData(this.adminDetails._id)
+    //   .subscribe((result: any) => {
+    //     if (result.data && result.data.getnotificationreports?.message) {
+    //       const reportDetails = result.data.getnotificationreports?.message || [];
+
+    //       const array = reportDetails.filter((item) => {
+    //         item.report_info.created_on = moment(item.report_info.updated_on).format('MM-DD-YYYY HH:mm a');
+    //         return item.request_type === 'bulk_enrolment';
+    //       });
+    //       this.reportDetails = array;
+          this.rowData = dummy;
+    //     }
+    //   });
+
+  }
+
+  onCellClicked(event) {
+    console.log(event);
+    
+    // if (event.colDef.field === 'report_url') {
+    //   window.location.href = event.value;
+    // }
+  }
+
+  getModel(e) {
+    console.log(e);
+    
+    // const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    // if (filteredArray?.length === 0) {
+    //   // this.toast.warning('No results found');
+    // }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      console.log('adad');
+      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+
+
   getParticularAssessmentAndDiscipline(data) {
     const apiData = {
       institute: data ? data : ''
@@ -86,6 +326,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     });
   }
 
+  instituteChange() {
+
+  }
+  
   instituteChangeForDiscipline(data) {
     this.getParticularAssessmentAndDiscipline(data);
   }

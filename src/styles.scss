@@ -41,8 +41,50 @@ $alt-registration-dark-theme: mat-dark-theme(
 }
 
 @import "./app/themes/themes.scss";
+// @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham-mixin.scss";
+// @import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
 /* You can add global styles to this file, and also import other style files */
 /* Import font family */
+
+.ag-theme-material .ag-checkbox-input-wrapper {
+  background: none;
+}
+
+.ag-theme-material .ag-checkbox-input-wrapper.ag-checked::after {
+  color: $primary-red;
+}
+
+.ag-theme-material .ag-checkbox-input-wrapper.ag-indeterminate::after {
+  color: $primary-red;
+}
+
+.ag-theme-alpine input[class^="ag-"][type="text"]:focus {
+  box-shadow: none !important;
+  border: 1px solid $primary-red;
+}
+
+.ag-theme-alpine .ag-row-selected {
+  background-color: $lineColor;
+}
+
+.ag-theme-alpine .ag-ltr .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected) {
+  border-color: $color-dark-border;
+}
+
+.ag-theme-alpine .ag-checkbox-input-wrapper:focus-within,
+.ag-theme-alpine .ag-checkbox-input-wrapper:active {
+  box-shadow: none !important;
+}
+
+.ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+  content: "\f106";
+  color: $primary-red !important;
+}
+
 
 // Font ROBOTO
 @font-face {
@@ -102,6 +144,7 @@ $alt-registration-dark-theme: mat-dark-theme(
   font-weight: 100;
   font-style: normal;
 }
+
 
 html,
 body {

@@ -21,7 +21,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   // displayedColumns: any[] = ['uid', 'user_name', 'candidate_id', 'email', 'level', 'discipline', 'documents_submitted', 'interview_status', 'checked'];
   displayedColumns: any[] = ['checked', 'name', 'discipline', 'level'];
-  displayedColumns1: any[] = ['checked', 'employee_id', 'discipline', 'email'];
+  displayedColumns1: any[] = ['checked', 'employee_name', 'discipline', 'email'];
   dataSource: MatTableDataSource<any>;
   dataSourceHR: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
@@ -104,6 +104,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   go() {
+    this.selectAllCheck = false;
     const apiData = {
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
       discipline: this.selectedDiscipline ? this.selectedDiscipline : '',
@@ -121,6 +122,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
   HRgo(data) {
+    this.selectAllCheckHR = false;
     this.particularInvpanelist(data);
   }
 
@@ -218,6 +220,12 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         element['checked'] = false;
         count = count + 1;
         element['sid'] = count;
+        if (element && element['level'] == 'UG') {
+          element['level'] = 'Undergraduate';
+        }
+        if (element && element['level'] == 'PG') {
+          element['level'] = 'Postgraduate';
+        }
       });
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

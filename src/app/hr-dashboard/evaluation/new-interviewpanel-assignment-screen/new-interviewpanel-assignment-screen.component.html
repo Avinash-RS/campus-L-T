@@ -29,7 +29,7 @@
       </div>
       <div class="flex-wrap">
         <div class="label">
-          Education Level
+          Education level
         </div>
         <div class="input-box">
           <nz-select class="nzSelect-revamp" [(ngModel)]="selectedEdu" (ngModelChange)="instituteChange()" nzAllowClear
@@ -78,7 +78,7 @@
     <div style="margin-left: 1em;" class="right">
       <div class="flex-wrap">
         <div class="label">
-          Discipline
+          Interview panel discipline
         </div>
         <div class="input-box">
           <nz-select class="nzSelect-revamp" [(ngModel)]="selectedHRDiscipline"
@@ -186,9 +186,9 @@
         <div [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'">
           <table mat-table #sortHR="matSort" [dataSource]="dataSourceHR" matSort class="mat-elevation-z8">
             <!-- Name Column -->
-            <ng-container matColumnDef="employee_id">
+            <ng-container matColumnDef="employee_name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee name </th>
-              <td mat-cell *matCellDef="let element"> {{element.employee_id ? element.employee_id : '-'}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.employee_name ? element.employee_name : '-'}} </td>
             </ng-container>
 
             <!-- Weight Column -->
@@ -241,6 +241,6 @@
   </div>
 
   <div class="button-wrapper">
-    <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="submit()" mat-raised-button>Next</button>
+    <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="submit()" mat-raised-button>Assign</button>
   </div>
 </div>

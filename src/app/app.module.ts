@@ -30,6 +30,7 @@ import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
 import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/common-kyc-profile-view.component';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
+// import { AgGridModule } from 'ag-grid-angular';
 
 registerLocaleData(en);
 
@@ -55,7 +56,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-  ],
+    // AgGridModule.withComponents([])
+    ],
   // providers: [],
   entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [

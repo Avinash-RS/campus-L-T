@@ -29,7 +29,7 @@
       </div>
       <div class="flex-wrap">
         <div class="label">
-          Education Level
+          Education level
         </div>
         <div class="input-box">
           <nz-select class="nzSelect-revamp" [(ngModel)]="selectedEdu" (ngModelChange)="instituteChange()" nzAllowClear
@@ -76,4 +76,13 @@
 
     </div>
   </div>
+
+
+<ag-grid-angular style="width: 99%; height: calc(100vh - -20px); margin:auto !important;" class="ag-theme-alpine"
+[rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
+[paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
+(gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+headerHeight="40">
+</ag-grid-angular>
+
 </div>

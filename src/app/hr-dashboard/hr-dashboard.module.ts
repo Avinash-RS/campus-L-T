@@ -53,6 +53,7 @@ import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/
 import { SharedInterviewPanelHeaderComponent } from './evaluation/shared-interview-panel-header/shared-interview-panel-header.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-inte
     SharedModule,
     MaterialModule,
     HrDashboardRoutingModule,
+    AgGridModule.withComponents([])
   ]
 })
 export class HrDashboardModule { }
