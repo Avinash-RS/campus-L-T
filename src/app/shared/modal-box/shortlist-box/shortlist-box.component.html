@@ -362,3 +362,28 @@
     <button class="submit" (click)="bulkConfirm()" mat-raised-button>Yes</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'resultsUpload'">
+  <div class="bulk-upload-text">
+    Confirm to assign these candidates to the respective interview panels
+  </div>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['inv_assign_bulk_upload_ok']">
+  <div class="bulk-upload-text">
+    <span
+      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidates have been successfully assigned.' : ''}}</span>
+    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate has not been successfully
+      assigned.</span> <br> <span
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
+      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
+      been assigned. Please go to reports to see the detailed error details. </span>
+  </div>
+  <div class="buttons">
+    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>

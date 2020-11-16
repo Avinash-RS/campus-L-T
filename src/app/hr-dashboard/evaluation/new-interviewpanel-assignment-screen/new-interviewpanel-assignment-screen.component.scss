@@ -25,7 +25,7 @@
   .top-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 80%;
+    width: 100%;
     justify-content: space-between;
     .left,.right {
       width: 100%;
@@ -197,4 +197,11 @@ th {
   max-height: 400px !important;
   min-height: 70px !important;
   overflow: auto !important;
+}
+.borders {
+	position: absolute;
+	padding: 13em;
+	border-left: solid $table-border 1px;
+	top: 5em;
+	left: 50%;
 }

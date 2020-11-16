@@ -22,7 +22,7 @@ export class HrSubEmploymentComponent implements OnInit {
   candidateId: any;
   certificateArr: any;
   candidateName: any;
-  uid:any;
+  uid: any;
   BASE_URL = environment.API_BASE_URL;
 
   constructor(
@@ -49,7 +49,7 @@ export class HrSubEmploymentComponent implements OnInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview panel Assign',
+        name: 'Interview panel assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
@@ -57,6 +57,11 @@ export class HrSubEmploymentComponent implements OnInit {
         name: 'Assigned details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED,
         active: true
+      },
+      {
+        icon: '002-group-1.svg',
+        name: 'Bulk assign',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
@@ -100,7 +105,7 @@ export class HrSubEmploymentComponent implements OnInit {
 
   viewCerificates(id) {
     // const excel = element && element.download ? element.download : '';
-    let path = this.BASE_URL +`/profile/get_certificate_name_test?certificate_id=${id}`
+    let path = this.BASE_URL + `/profile/get_certificate_name_test?certificate_id=${id}`
     window.open(path, '_blank');
   }
 
@@ -158,7 +163,7 @@ export class HrSubEmploymentComponent implements OnInit {
     });
   }
 
-    // Open dailog
+  // Open dailog
   openDialog1(component, data) {
     let dialogDetails: any;
 

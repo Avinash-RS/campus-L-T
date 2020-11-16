@@ -28,13 +28,18 @@ export class EvaluationComponent implements OnInit {
       // },
       {
         icon: '002-cv.svg',
-        name: 'Interview panel Assign',
+        name: 'Interview panel assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
         icon: '002-cv.svg',
         name: 'Assigned details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED
+      },
+      {
+        icon: '002-group-1.svg',
+        name: 'Bulk assign',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

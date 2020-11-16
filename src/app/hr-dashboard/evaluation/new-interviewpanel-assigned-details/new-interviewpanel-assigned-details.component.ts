@@ -62,19 +62,6 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
   quickSearchValue = '';
   quickSearchValue1 = '';
 
-
-//   columnDefs = [
-//     { field: 'make', sortable: true, filter: true },
-//     { field: 'model', sortable: true, filter: true },
-//     { field: 'price', sortable: true, filter: true }
-// ];
-// rowData = [
-//     { make: 'Toyota', model: 'Celica', price: 35000 },
-//     { make: 'Ford', model: 'Mondeo', price: 32000 },
-//     { make: 'Porsche', model: 'Boxter', price: 72000 }
-// ];
-
-
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -291,7 +278,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     console.log(event);
     if (event.colDef.field === 'name') {
       // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
+      // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
       console.log('workingg');
     }
   }
@@ -365,12 +352,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
       assement_name: this.selectedAssessment ? this.selectedAssessment : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
-    console.log('apiData', apiData);
     
     this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();      
       this.rowData = data ? data : [];
-      console.log('assigned data', data);
           }, (err) => {
     });
   }

@@ -54,6 +54,8 @@ import { from } from 'rxjs';
 import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/hr-upload-test-report.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
+import { NewInterviewpanelResultsUploadComponent } from './evaluation/new-interviewpanel-results-upload/new-interviewpanel-results-upload.component';
+import { InvBulkAssignReportsComponent } from './hr-reports/inv-bulk-assign-reports/inv-bulk-assign-reports.component';
 
 const routes: Routes = [
   {
@@ -323,7 +325,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
-              breadcrumb: 'Interview Panel Assign'
+              breadcrumb: 'Interview panel assign'
             }
           },
           {
@@ -331,6 +333,13 @@ const routes: Routes = [
             component: NewInterviewpanelAssignedDetailsComponent,
             data: {
               breadcrumb: 'Assigned details'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD}`,
+            component: NewInterviewpanelResultsUploadComponent,
+            data: {
+              breadcrumb: 'Bulk assign'
             }
           },
           {
@@ -358,28 +367,35 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             component: ReportsListComponent,
             data: {
-              breadcrumb: 'Overall Reports'
+              breadcrumb: 'Overall reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: BulkUploadReportsComponent,
             data: {
-              breadcrumb: 'Candidate Bulk Upload Reports'
+              breadcrumb: 'Candidate bulk upload reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST}`,
             component: InvpanelBulkUploadReportComponent,
             data: {
-              breadcrumb: 'Interview Panel Bulk Upload Reports'
+              breadcrumb: 'Interview panel bulk upload reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST}`,
             component: HrUploadTestReportComponent,
             data: {
-              breadcrumb: 'Test Upload Reports'
+              breadcrumb: 'Test upload reports'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST}`,
+            component: InvBulkAssignReportsComponent,
+            data: {
+              breadcrumb: 'Panel bulk assign reports'
             }
           },
           {

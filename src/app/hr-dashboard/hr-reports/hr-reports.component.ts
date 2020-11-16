@@ -18,28 +18,33 @@ export class HrReportsComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '',
-        name: 'All Reports',
+        name: 'All reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST
       },
       {
         icon: '',
-        name: '1st Level Shortlist',
+        name: '1st level shortlist',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Candidate Bulk Upload Reports',
+        name: 'Candidate bulk upload reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Interview panel Bulk Upload Reports',
+        name: 'Interview panel bulk upload reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Test Upload Reports',
+        name: 'Test upload reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST
+      },
+      {
+        icon: '',
+        name: 'Panel bulk assign reports',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

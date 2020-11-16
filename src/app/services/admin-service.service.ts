@@ -557,4 +557,15 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  bulkUploadInvAssign(data) {
+    return this.http.post(`${this.BASE_URL}/profile/evaluation_hr_assign_bulk_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  bulkUploadInvAssignReports() {
+    return this.http.get(`${this.BASE_URL}/profile/evaluation_assignment_errors`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }
