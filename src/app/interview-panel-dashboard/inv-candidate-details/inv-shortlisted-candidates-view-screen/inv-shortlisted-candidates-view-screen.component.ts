@@ -47,7 +47,6 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   }
 
   ngOnInit() {
-    console.log('comingggg1');
   }
 
   // Get url param for edit route

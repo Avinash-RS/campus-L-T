@@ -34,9 +34,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    console.log(this.activatedRoute);
-    
+    // Sub-Navigation menus. This will be retrieved in Admin master component    
     const subWrapperMenus = [
       {
         icon: 'work.svg',

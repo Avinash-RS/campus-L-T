@@ -22,7 +22,6 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
 this.sharedService.maintenanceSubject.subscribe((data: any) => {
      
     this.message = data;
-    console.log('aadddadafa', this.message);
   }, (err)=> {
 
     });

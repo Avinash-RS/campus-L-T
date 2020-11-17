@@ -133,7 +133,6 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
         element['field_user_created_by'] = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
       }
     });
-    console.log('Inv Assign');
     
     this.adminService.bulkUploadInvAssign(this.uploadedListArray).subscribe((data: any) => {
       this.appConfig.hideLoader();

@@ -1,216 +1,186 @@
-<div class="alert">Note: 
+<div class="alert">Note:
     <ol>
-        <li>The documents can only be uploaded after the assessment and getting shortlisted for the interview process.</li>
-        <li>Please use submit button only after uploading all documents / certificates. Once submitted, you will not be able to modify or upload additional documents.</li>
-        <li>Once a file is selected for upload, cannot be changed.</li>
+        <li>Documents marked as “*” are mandatory.
+        </li>
+        <li>Click on “choose file” button to upload a file.</li>
+        <li>To replace an already uploaded document, click on the file name displayed and select a new file.</li>
+        <li>Please use submit button only after uploading all documents / certificates.</li>
     </ol>
 </div>
 <div class="main-wrapper-candidate">
-        <form [formGroup]="resumeUploadForm">
-            <div class="card w-50 alignCard">
-                <div class="card-body">
+    <div class="card w-50 alignCard">
+        <div class="card-body">
+            <div class="image-upload">
+                <label>Resume<span class="asterick">*</span></label>
+                <div class="files">
+                    <label class="choose-input" for="file-input">
+                        <div *ngIf="!urlResume">
+                            <img class="chooseImg" src="../../../assets/images/paper-clip.svg" />
+                            choose file
+                        </div>
+                        <div *ngIf="urlResume">
+                            <span matTooltipPosition="after" matTooltip="{{'Click to change file'}}">{{urlResume}}</span>
+                        </div>
+                    </label>
+                    <div class="grid">
+                        <div *ngIf="!showResumeImgError" class="sizeMsg">PDF formats can be uploaded (Maximum size
+                            2MB)</div>
+                        <div *ngIf="showResumeImgSizeError" class="sizeError">Maximum File Size: 2 MB</div>
+                        <div *ngIf="showResumeImgError" class="sizeError">Valid File Format is pdf</div>
+                    </div>
+                </div>
+                <label style="display: flex; justify-content: center;" *ngIf="getResumeData && getResumeData['certificate_url']"> <span
+                        (click)="viewDocuments(getResumeData['certificate_url'])"
+                        style="border-bottom: solid black 1px; cursor: pointer;">View</span></label>
 
-                    <div [ngClass]="getResumeData && getResumeData['editable_value'] == 1 ? 'inputBoxDisable' : ''" class="image-upload">
-                        <label>Resume<span class="asterick">*</span></label>
-                        <label class="choose-input" for="file-input">
-                            <div *ngIf="!urlResume">
-                                <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
+                <input id="file-input" type="file" accept=".pdf" (click)="files.value = null" #files
+                    (change)="onSelectFile($event, 'resume', 'i')">
+            </div>
+        </div>
+    </div>
+
+    <!-- education -->
+    <div>
+        <div class="card w-50 alignCard">
+            <div class="card-body">
+                <label style="margin: 0 !important;">Education details<span class="asterick">*</span></label>
+                <div class="ins-note">PDF formats can be uploaded (Maximum size 2MB)</div>
+                <div class="image-upload" style="padding-bottom: .5em;" *ngFor="let eduLevel of educationValuearray; let i = index">
+                    <label>{{eduLevel['education_level']}}<span class="asterick">*</span></label>
+                    <div class="files">
+                        <label class="choose-input" for="files-input-{{i}}">
+                            <div *ngIf="!eduLevel['filename']">
+                                <img class="chooseImg" src="../../../assets/images/paper-clip.svg" />
                                 choose file
                             </div>
-                            <div *ngIf="urlResume">
-                                <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlResume}}">{{urlResume}}</span>
-                                <!-- <span (click)="urlResume = null; stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span> -->
+                            <div *ngIf="eduLevel['filename']">
+                                <span matTooltipPosition="after" matTooltip="{{'Click to change file'}}">{{eduLevel['filename']}}</span>
                             </div>
                         </label>
-                        <div *ngIf="savesubmitDisable" (click)="viewDocuments(getResumeData['certificate_url'])" style="position: absolute; font-size: 16px; right: 2%; text-align: right; cursor: pointer; border-bottom: solid black 1px; top: 20px; z-index: 3; pointer-events: all;">View</div>
-
-                        <input formControlName="resume" id="file-input" type="file" accept=".pdf,.doc,.png, .jpeg"
-                        (click)="files.value = null" #files (change)="onSelectFile($event, 'resume', 'i'); disableBtn()">
-                    </div>
-                    <span *ngIf="!showResumeImgError" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
-                    <span *ngIf="showResumeImgSizeError" class="sizeError">Maximum File Size: 2 MB</span>
-                    <span *ngIf="showResumeImgError" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
-                </div>
-            </div>
-        </form>
-        <form [formGroup]="educationUploadForm">
-            <div class="card w-50 alignCard">
-                <div *ngIf="eduArr && eduArr.controls" formArrayName="educationUploadArr" class="card-body">
-                    <label style="margin: 0 !important;">Education details<span class="asterick">*</span></label>
-                    <div style="font-size: 11px; color: #C02222; margin-bottom: .5em;"><span class="asterick">*</span>Please choose correct file to upload. You will not be able to edit once uploaded.</div>
-                    <ng-container *ngIf="eduArr && eduArr.controls">
-                        <div class="image-upload display" *ngFor="let education of eduArr.controls; let i = index; let last = last;" [ngClass]="educationValuearray && educationValuearray.length && educationValuearray[i] && educationValuearray[i].editable_value && educationValuearray[i].editable_value == 1 ? 'inputBoxDisable' : ''" [formGroupName]="i">
-
-                            <nz-select [(ngModel)]="selectedDropdownValue[i]" (ngModelChange)="edudropdownChange(i)" formControlName="level" class="nzSelect" nzAllowClear nzShowSearch
-                             nzPlaceHolder="Level">
-                                <nz-option *ngFor="let eduLevel of educationDropDownLevel" [nzLabel]="eduLevel == 'SSLC'? 'SSLC / 10th' : eduLevel == 'HSC'? 'HSC / 12th' : eduLevel == 'UG'? 'Undergraduate' : eduLevel == 'PG'? 'Postgraduate' : eduLevel" [nzValue]="eduLevel"></nz-option>
-                                <!-- <nz-option nzLabel="12 std" nzValue="12"></nz-option>
-                                <nz-option nzLabel="Under graduate" nzValue="ug"></nz-option>
-                                <nz-option nzLabel="Post graduate" nzValue="pg"></nz-option> -->
-                            </nz-select>
-                            <div matTooltip="{{education['value'] && education['value']['level'] ? '' : 'Please select a education level from dropdown'}}">
-                            <label [ngClass]="education['value'] && education['value']['level'] && !education['value']['repotcard'] ? '' : 'disable'" class="choose-input-1" for="file-input-{{i}}">
-                                <div *ngIf="!urlEducation[i] || !education['value']['level']">
-                                    <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
-                                    choose file
-                                </div>
-                                <div *ngIf="urlEducation[i] && education['value']['level']">
-                                    <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlEducation[i]}}">{{urlEducation[i]}}</span>
-                                    <!-- <span (click)="urlEducation.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span> -->
-                                </div>
-                            </label>
-                                </div>
-
-                            <div *ngIf="savesubmitDisable" (click)="viewDocuments(educationValuearray[i]['certificate_url'])" style="position: absolute; font-size: 16px; right: 2%; text-align: right; cursor: pointer; border-bottom: solid black 1px; z-index: 3; pointer-events: all;">View</div>
-
-                            <input [ngClass]="education['value'] && education['value']['repotcard'] ? 'disable' : ''" formControlName="repotcard" id="file-input-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                            (change)="onSelectFile($event, 'education', i); disableBtn()">
-
-                            <!-- <div *ngIf="!last" style="margin: 0; padding: 0; display: flex; height: 24px;" [ngClass]="eduArr.controls.length == 1 ? 'hideClose' : ''">
-                                <button (click)="removeEducationDoc(i)" style="display: inline-flex; background: transparent; border: none;"
-                                    type="button">
-                                    <span><img style="width: 24px;" src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
-                                </button>
-                            </div> -->
-
-                            <div *ngIf="((eduArr && eduArr.controls.length === 0) || (eduArr && eduArr.controls.length-1 === i)) && i < educationDropDownLevel.length -1 " class="language-add-button">
-                                <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-                                <span (click)="addEducationForm()">Add</span>
-                            </div>
-                        </div>
-                        <span *ngIf="!showEducationImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
-                        <span *ngIf="showEducationImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
-                        <span *ngIf="showEducationImgErr" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
-                    </ng-container>
-
-                </div>
-            </div>
-            </form>
-            <form [formGroup]="certificateUploadForm">
-            <div class="card w-50 alignCard">
-                <div *ngIf="certiArr && certiArr.controls" formArrayName="certificateUploadArr" class="card-body">
-                    <label style="margin: 0 !important;">Certificate</label>
-                    <div style="font-size: 11px; color: #C02222; margin-bottom: .5em;"><span class="asterick">*</span>Please choose correct file to upload. You will not be able to edit once uploaded.</div>
-                    <ng-container *ngIf="certiArr && certiArr.controls">
-                        <div class="image-upload display" *ngFor="let certificate of certiArr.controls; let i = index; let last=last" [ngClass]="certificateValuearray && certificateValuearray.length && certificateValuearray[i] && certificateValuearray[i].editable_value && certificateValuearray[i].editable_value == 1 ? 'inputBoxDisable' : ''" [formGroupName]="i">
-
-                            <div [ngClass]="savesubmitDisable ? 'disable' : ''" class="DesInput">
-                                <input formControlName="certificateName" placeholder="Document description">
-                                <div class="error"
-                                *ngIf="certiArr.controls[i].get('certificateName').errors?.maxlength">
-                                <span style="color: #C02222;">Minimum of 200 characters only accepted</span>
-                              </div>
-                            </div>
-                            <div [ngClass]="savesubmitDisable ? 'disable' : ''" matTooltip="{{certificate['value'] && certificate['value']['certificateName'] ? '' : 'Please type document description'}}">
-                                <label [ngClass]="certificate['value'] && certificate['value']['certificateName'] && !certificate['value']['certificateFile'] ? '' : 'disable'" class="choose-input-1" for="file-input-2-{{i}}">
-                                <div *ngIf="!urlCertificate[i] || !certificate['value']['certificateName']">
-                                    <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
-                                    choose file
-                                </div>
-                                <div *ngIf="urlCertificate[i] && certificate['value']['certificateName']">
-                                    <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlCertificate}}">{{urlCertificate[i]}}</span>
-                                    <!-- <span (click)="urlCertificate.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span> -->
-                                </div>
-                            </label>
-                        </div>
-                            <div *ngIf="savesubmitDisable" (click)="viewDocuments(certificateValuearray[i]['certificate_url'])" style="position: absolute; font-size: 16px; right: 2%; text-align: right; cursor: pointer; border-bottom: solid black 1px; z-index: 3; pointer-events: all;">View</div>
-
-                            <input formControlName="certificateFile" id="file-input-2-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                            (change)="onSelectFile($event, 'certificate', i); disableBtn()">
-
-                            <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="certiArr.controls.length == 1 ? 'hideClose' : ''">
-                                <button (click)="removeCertificate(i)" style="display: inline-flex; background: transparent; border: none;"
-                                    type="button">
-                                    <!-- <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span> -->
-                                </button>
-                            </div>
-                            <div *ngIf="!urlResume">
-                                <!-- <div *ngIf="((certiArr && certiArr.controls.length === 0) || (certiArr && certiArr.controls.length-1 === i))" class="language-add-button">
-                                    <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-                                    <span (click)="addCertificateForm()">Add</span>
-                                </div> -->
-                            </div>
-                        </div>
-                        <span *ngIf="!showCertificateImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
-                        <span *ngIf="showCertificateImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
-                        <span *ngIf="showCertificateImgErr" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
-                    </ng-container>
-
-                </div>
-            </div>
-            </form>
-            <form [formGroup]="otherUploadForm">
-            <div class="card w-50 alignCard">
-                    <div *ngIf="otherDocArr && otherDocArr.controls" formArrayName="otherUploadArr" class="card-body">
-                        <label style="margin: 0 !important">Other</label>
-                        <div style="font-size: 11px; color: #C02222; margin-bottom: .5em;"><span class="asterick">*</span>Please choose correct file to upload. You will not be able to edit once uploaded.</div>
-                        <ng-container *ngIf="otherDocArr && otherDocArr.controls">
-                            <div class="image-upload display" *ngFor="let otherDoc of otherDocArr.controls; let i = index; let last=last" [ngClass]="otherDocValuearray && otherDocValuearray.length && otherDocValuearray[i] && otherDocValuearray[i].editable_value &&  otherDocValuearray[i].editable_value == 1 ? 'inputBoxDisable' : ''" [formGroupName]="i">
-
-                                <div [ngClass]="savesubmitDisable ? 'disable' : ''" class="DesInput">
-                                    <input formControlName="otherDocName" placeholder="Document description">
-                                    <div class="error"
-                                    *ngIf="otherDocArr.controls[i].get('otherDocName').errors?.maxlength">
-                                    <span style="color: #C02222;">Minimum of 200 characters only accepted</span>
-                                  </div>
-                                    </div>
-              
-                                <div [ngClass]="savesubmitDisable ? 'disable' : ''" matTooltip="{{otherDoc['value'] && otherDoc['value']['otherDocName'] ? '' : 'Please type document description'}}">
-                                    <label [ngClass]="otherDoc['value'] && otherDoc['value']['otherDocName'] && !otherDoc['value']['otherDocFile'] ? '' : 'disable'" class="choose-input-1" for="file-input-3-{{i}}">
-                                    <div *ngIf="!urlOther[i] || !otherDoc['value']['otherDocName']">
-                                        <img class="chooseImg" src="../../../assets/images/paper-clip.svg"/>
-                                        choose file
-                                    </div>
-                                    <div *ngIf="urlOther[i] && otherDoc['value']['otherDocName']">
-                                        <span class="urlSpan" matTooltipPosition="after" matTooltip="{{urlOther}}">{{urlOther[i]}}</span>
-                                        <!-- <span (click)="urlOther.splice(i,1, null); stoppropgation($event)" class="iconBtn"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span> -->
-                                    </div>
-                                </label>
-                                </div>
-                                <div *ngIf="savesubmitDisable" (click)="viewDocuments(otherDocValuearray[i]['certificate_url'])" style="position: absolute; font-size: 16px; right: 2%; text-align: right; cursor: pointer; border-bottom: solid black 1px; z-index: 3; pointer-events: all;">View</div>
-
-                                <input formControlName="otherDocFile" id="file-input-3-{{i}}" type="file" accept=".pdf,.doc,application/msword,.png, .jpeg"
-                                (change)="onSelectFile($event, 'other', i); disableBtn()">
-
-                                <div *ngIf="!last" style="margin: 0; padding: 0; display: flex;" [ngClass]="otherDocArr.controls.length == 1 ? 'hideClose' : ''">
-                                    <button (click)="removeOtherDoc(i)" style="display: inline-flex; background: transparent; border: none;"
-                                        type="button">
-                                        <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
-                                    </button>
-                                </div>
-
-                                <!-- <div *ngIf="!urlResume">
-                                    <div *ngIf="((otherDocArr && otherDocArr.controls.length === 0) || (otherDocArr && otherDocArr.controls.length-1 === i))" class="language-add-button">
-                                        <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-                                        <span (click)="addOtherDocForm()">Add</span>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <span *ngIf="!showOtherImgErr" class="sizeMsg">PDF, Doc, JPEG and PNG formats can be uploaded ( Maximum size 2MB)</span>
-                            <span *ngIf="showOtherImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
-                            <span *ngIf="showOtherImgErr" class="sizeError">Valid File Format is pdf, png,jpeg and doc</span>
+                        <div class="grid">
+                            <!-- <div *ngIf="!showResumeImgError" class="sizeMsg">PDF formats can be uploaded (Maximum size
+                                2MB)</div> -->
+                                <ng-container *ngIf="eduLevel && eduLevel['education_level'] == showLevel">
+                            <div *ngIf="showEducationImgSizeErr" class="sizeError">Maximum File Size: 2 MB</div>
+                            <div *ngIf="showEducationImgErr" class="sizeError">Valid File Format is pdf</div>
                         </ng-container>
+                        </div>
+                    </div>
+                    <label style="display: flex; justify-content: center;" *ngIf="eduLevel['certificate_url']"> <span
+                            (click)="viewDocuments(eduLevel['certificate_url'])"
+                            style="border-bottom: solid black 1px; cursor: pointer;">View</span></label>
+    <!-- (click)="{{i}}filesa.value = null" #{{i}}filesa -->
+                    <input id="files-input-{{i}}" type="file" accept=".pdf" 
+                        (change)="onSelectFile($event, 'education', eduLevel['education_level'])">
 
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+    <!-- New ceritficate -->
+    <div class="card w-50 alignCard">
+        <div class="card-body">
+            <label style="margin: 0 !important;">Certificate</label>
+            <div class="image-upload">
+                <div class="DesInput" matTooltip="{{urlCertificate ? 'Once uploaded, label will be disabled. Remove the document to edit this label and re-upload it.' : ''}}">
+                    <input [ngClass]="urlCertificate ? 'disable' : ''" matInput [formControl]="NewcertificateName" type="text" placeholder="Document description">
+                    <div class="error" *ngIf="NewcertificateName.errors?.maxlength || NewcertificateName.errors?.pattern">
+                        <span *ngIf="NewcertificateName.errors?.maxlength" style="color: #C02222;">Minimum of 200 characters only accepted</span>
+                        <span *ngIf="NewcertificateName.errors?.pattern" style="color: #C02222;">Alphanumeric with commas, periods and spaces only allowed</span>
                     </div>
                 </div>
-                </form>
-                <div [ngClass]="savesubmitDisable ? 'disable' : ''" class="buttonDiv">
-                    <!-- <span matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made">
-                    <button mat-raised-button matTooltipPosition="above" matTooltip="The uploaded documents will be saved and changes can be made" (click)="submitDialog('')" [ngClass]="saveAndSubmitBtnDisable ? 'disable' : ''" type="button" class="submit btn-margin-space">Save</button>
-                    </span> -->
-                    <button mat-raised-button (click)="submitDialog('submit')" [ngClass]="saveAndSubmitBtnDisable ? 'disable' : ''" type="button" class="submit">Submit</button>
+                <div class="files">
+                    <div matTooltip="{{NewcertificateName && NewcertificateName['value'] ? '' : 'Please type document description'}}">
+                        <label [ngClass]="(NewcertificateName && NewcertificateName['value']) && NewcertificateName.valid ? '' : 'disable'"
+                            class="choose-input" for="file-input-2">
+                            <div *ngIf="!urlCertificate">
+                                <img class="chooseImg" src="../../../assets/images/paper-clip.svg" />
+                                choose file
+                            </div>
+                            <div style="display: flex; justify-content: space-between;" *ngIf="urlCertificate">
+                                <span matTooltipPosition="after"
+                                    matTooltip="{{'Click to change file'}}">{{(urlCertificate ? urlCertificate : null)}}</span>
+                                <span style="padding-left: .5em;" matTooltip="{{'Remove file'}}" (click)="removeCert(getCertificateData['cerificate_id'], 'certificate'); stoppropgation($event)"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="grid">
+                        <span *ngIf="!showCertificateImgErr" class="sizeMsg">PDF formats can be
+                            uploaded
+                            ( Maximum size 2MB)</span>
+                        <span *ngIf="showCertificateImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
+                        <span *ngIf="showCertificateImgErr" class="sizeError">Valid File Format is pdf</span>
+                    </div>
                 </div>
+                <label style="display: flex; justify-content: center;" *ngIf="getCertificateData && getCertificateData['certificate_url']"> <span
+                        (click)="viewDocuments(getCertificateData['certificate_url'])"
+                        style="border-bottom: solid black 1px; cursor: pointer;">View</span></label>
 
-                <div *ngIf="filelists && filelists.length > 0" class="listFiles">
-                    <div class="head">List of assets uploaded by you:</div>
-                    <ol>
-                        <li *ngFor="let file of filelists; let i = index">
-                          <span (click)="viewDocs(file)" class="links">{{file['filename']}}</span>
-                        </li>
-                    </ol>
+                        <input id="file-input-2" type="file" accept=".pdf" (click)="filesc.value = null" #filesc
+                        (change)="onSelectFile($event, 'certificate', 'i')">
+            </div>
+        </div>
+    </div>
+
+        <!-- New Other document -->
+        <div class="card w-50 alignCard">
+            <div class="card-body">
+                <label style="margin: 0 !important;">Other</label>
+                <div class="image-upload">
+                    <div class="DesInput" matTooltip="{{urlOther ? 'Once uploaded, label will be disabled. Remove the document to edit this label and re-upload it.' : ''}}">
+                        <input [ngClass]="urlOther ? 'disable' : ''" matInput [formControl]="NewOther" type="text" placeholder="Document description">
+                        <div class="error" *ngIf="NewOther.errors?.maxlength || NewOther.errors?.pattern">
+                            <span *ngIf="NewOther.errors?.maxlength" style="color: #C02222;">Minimum of 200 characters only accepted</span>
+                            <span *ngIf="NewOther.errors?.pattern" style="color: #C02222;">Alphanumeric with commas, periods and spaces only allowed</span>
+                            </div>
+                    </div>
+                    <div class="files">
+                        <div matTooltip="{{NewOther && NewOther['value'] ? '' : 'Please type document description'}}">
+                            <label [ngClass]="(NewOther && NewOther['value']) && NewOther.valid ? '' : 'disable'"
+                                class="choose-input" for="file-input-3">
+                                <div *ngIf="!urlOther">
+                                    <img class="chooseImg" src="../../../assets/images/paper-clip.svg" />
+                                    choose file
+                                </div>
+                                <div style="display: flex; justify-content: space-between;" *ngIf="urlOther">
+                                    <span matTooltipPosition="after"
+                                        matTooltip="{{'Click to change file'}}">{{(urlOther ? urlOther : null)}}</span>
+                                    <span style="padding-left: .5em;" matTooltip="{{'Remove file'}}" (click)="removeCert(getOtherData['cerificate_id'], 'other'); stoppropgation($event)"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="grid">
+                            <span *ngIf="!showOtherImgErr" class="sizeMsg">PDF formats can be
+                                uploaded
+                                ( Maximum size 2MB)</span>
+                            <span *ngIf="showOtherImgSizeErr" class="sizeError">Maximum File Size: 2 MB</span>
+                            <span *ngIf="showOtherImgErr" class="sizeError">Valid File Format is pdf</span>
+                        </div>
+                    </div>
+                    <label style="display: flex; justify-content: center;" *ngIf="getOtherData && getOtherData['certificate_url']"> <span
+                            (click)="viewDocuments(getOtherData['certificate_url'])"
+                            style="border-bottom: solid black 1px; cursor: pointer;">View</span></label>
+    
+                            <input id="file-input-3" type="file" accept=".pdf" (click)="fileso.value = null" #fileso
+                            (change)="onSelectFile($event, 'other', 'i')">
                 </div>
+            </div>
+        </div>
+    
+    <div class="buttonDiv">
+        <button mat-raised-button (click)="submitDialog('submit')" type="button" class="submit">Submit</button>
+    </div>
+
+    <div *ngIf="filelists && filelists.length > 0" class="listFiles">
+        <div class="head">List of assets uploaded by you:</div>
+        <ol>
+            <li *ngFor="let file of filelists; let i = index">
+                <span (click)="viewDocs(file)" class="links">{{file['filename']}}</span>
+            </li>
+        </ol>
+    </div>
 
 
 </div>
-
-

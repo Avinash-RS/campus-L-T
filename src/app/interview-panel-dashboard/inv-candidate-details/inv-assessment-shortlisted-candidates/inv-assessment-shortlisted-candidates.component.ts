@@ -52,7 +52,6 @@ export class InvAssessmentShortlistedCandidatesComponent implements OnInit, Afte
   }
 
   ngOnInit() {
-    console.log('comingggg');
     this.getUsersList();
   }
 

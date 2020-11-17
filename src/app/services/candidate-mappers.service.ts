@@ -185,7 +185,7 @@ export class CandidateMappersService {
   uploadCandidateDocument(documentData) {
     // this.datas is api body data
     // return this.http.post(`${this.BASE_URL}/profile/upload_certificate`, documentData, { headers: this.getAfterCustomHeaders(), withCredentials: true });
-    return fetch(`${this.BASE_URL}/profile/upload_certificate`, {
+    return fetch(`${this.BASE_URL}/profile/upload_certificate_new`, {
       method: 'POST',
       body: documentData,
       // headers: this.getAfterCustomHeaders(), withCredentials: true
@@ -241,6 +241,10 @@ export class CandidateMappersService {
   // education
   getoverallSpecialization() {
     return this.http.get(`${this.BASE_URL}/api/specification_list`, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
+  removeCeritficate(data) {
+    return this.http.post(`${this.BASE_URL}/profile/remove_certiticate`, data, { headers: this.withoutTokens(), withCredentials: true });    
   }
 
 }

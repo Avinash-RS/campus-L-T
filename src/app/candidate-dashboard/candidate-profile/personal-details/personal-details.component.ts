@@ -836,8 +836,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   }
 
   onSubmit(OptA, OptB, OptC, OptD, OptE, OptF) {
-console.log('jgjg', this.profileData);
-
     if (this.url) {
       if (this.checked === true) {
         this.hidePermanentCityDropDown = false;

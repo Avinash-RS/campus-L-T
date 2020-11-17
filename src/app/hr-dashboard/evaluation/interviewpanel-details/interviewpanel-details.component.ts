@@ -82,8 +82,6 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
         };
       this.adminService.getHrEvaluationInterviewPanelHeader(apidata).subscribe((data: any) => {
         this.appConfig.hideLoader();
-        console.log('header', data);
-        
         // this.assessmentName = data;
   
       }, (err) => {
@@ -99,7 +97,6 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      console.log(datas, 'apiiii');
       
       const dummy = [
         {

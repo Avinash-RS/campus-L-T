@@ -155,7 +155,6 @@ export class InvBulkAssignReportsComponent implements OnInit {
     //   });
     this.adminService.bulkUploadInvAssignReports().subscribe((data: any) => {
       this.appConfig.hideLoader();      
-      console.log('reports data', data);
       this.rowData = data ? data : [];
           }, (err) => {
     });
@@ -163,7 +162,6 @@ export class InvBulkAssignReportsComponent implements OnInit {
   }
 
   onCellClicked(event) {
-    console.log(event);
     if (event.colDef.field === 'name') {
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
     }
