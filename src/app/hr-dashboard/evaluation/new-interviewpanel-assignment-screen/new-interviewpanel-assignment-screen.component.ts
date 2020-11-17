@@ -120,7 +120,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   go() {
-    this.unselectSelectALL();
     const apiData = {
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
       discipline: this.selectedDiscipline ? this.selectedDiscipline : '',
@@ -482,13 +481,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     const HRID = [];
     this.userList.forEach(element => {
       if (element['checked']) {
-        candidateID.push(element['uid'])
+        candidateID.push(element['email'])
       }
     });
 
     this.userListHR.forEach(element => {
       if (element['checked']) {
-        HRID.push(element['uid'])
+        HRID.push(element['email'])
       }
     });
     let data;
@@ -540,8 +539,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     }
   }
     const apiData = {
-      uid: candidateID,
-      hr_id: HRID,
+      user_email: candidateID,
+      hr_email: HRID,
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
     this.openDialog(ShortlistBoxComponent, data, apiData);
   }

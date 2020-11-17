@@ -45,15 +45,16 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       {
         icon: 'work.svg',
         name: 'Shortlisted candidate',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST,
+        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST,
         active: true
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
-    this.editRouteParamGetter();
+    // this.editRouteParamGetter();
   }
 
   ngOnInit() {
+    this.getUsersList();
   }
 
   // Get url param for edit route
@@ -69,10 +70,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     const apidata = {
       shortlist_name: name
     };
+
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
-      this.getUsersList(name);
+      this.getUsersList();
 
     }, (err) => {
 
@@ -81,19 +83,23 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
 
 
   // To get all users
-  getUsersList(name) {
+  getUsersList() {
 
+    // const apiData = {
+    //   shortlist_name: name,
+    // };
     const apiData = {
-      shortlist_name: name,
+      inv_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
-    this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
+
+    this.adminService.invSubmittedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
 
       const align = datas ? datas : [];
       let counting = 0;
       this.userList = [];
       align.forEach(element => {
-        if (element && element['hr_assign_status'] == '1') {
+        if (element) {
           counting = counting + 1;
           element['count'] = counting;
           if (element['evaluation_status'] == '1') {

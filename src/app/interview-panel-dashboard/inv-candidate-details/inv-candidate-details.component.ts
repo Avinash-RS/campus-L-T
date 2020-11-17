@@ -19,7 +19,7 @@ export class InvCandidateDetailsComponent implements OnInit {
       {
         icon: 'work.svg',
         name: 'Shortlisted candidate',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST
+        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

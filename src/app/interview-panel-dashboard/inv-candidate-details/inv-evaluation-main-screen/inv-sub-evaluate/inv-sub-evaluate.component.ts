@@ -346,7 +346,7 @@ export class InvSubEvaluateComponent implements OnInit {
     this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
       this.appConfig.hideLoader();
       this.appConfig.success('Evaluation completed successfully', '');
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST, {data: this.nameOfAssessment});
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
     }, (err) => {
 
     });

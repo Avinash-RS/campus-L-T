@@ -420,7 +420,7 @@ export class AdminServiceService {
 
   // Submitted Candidates List
   invSubmittedCandidatesList(data) {
-    return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned`, data,
+    return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned_evaluation`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

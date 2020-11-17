@@ -30,17 +30,17 @@ const routes: Routes = [
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`,
-            component: InvAssessmentShortlistedCandidatesComponent,
-            data: {
-              breadcrumb: 'Assessment list'
-            }
-          },
-          {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`,
             component: InvParticularAssessmentCandidatesComponent,
             data: {
               breadcrumb: 'Assessment candidates list'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`,
+            component: InvAssessmentShortlistedCandidatesComponent,
+            data: {
+              breadcrumb: 'Assessment list'
             }
           },
           {
@@ -94,7 +94,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`,
+            redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`,
             pathMatch: 'full',
           }
         ]
