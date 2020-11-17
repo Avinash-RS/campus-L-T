@@ -120,7 +120,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   go() {
-    this.selectAllCheck = false;
+    this.unselectSelectALL();
     const apiData = {
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
       discipline: this.selectedDiscipline ? this.selectedDiscipline : '',
@@ -138,7 +138,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
   HRgo(data) {
-    this.selectAllCheckHR = false;
+    this.unselectSelectALLHR();
     this.particularInvpanelist(data);
   }
 
@@ -230,6 +230,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   // To get all users
   getUsersList(data) {
       this.userList = data;
+      if (this.userList && this.userList.length > 0) {
+        this.unselectSelectALL();
+      } else {
+        this.selectAllCheck = false;
+      }
       this.toShoworNotShowFilter();
       let count = 0;
       this.userList.forEach(element => {
@@ -250,7 +255,12 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
     // To get all users
     getUsersList1(data) {
-        this.userListHR = data ? data : [];
+      this.userListHR = data ? data : [];
+      if (this.userListHR && this.userListHR.length > 0) {
+        this.unselectSelectALLHR();
+      } else {
+        this.selectAllCheckHR = false;
+      }
         this.toShoworNotShowFilterHR();
         let count = 0;
         this.userListHR.forEach(element => {

@@ -121,7 +121,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
           const i = +params.node.id + 1;
           return i ? i : 'Loading...';
         },
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 100,
+        sortable: true
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
@@ -204,6 +207,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         minWidth: 140,
         sortable: true,
         tooltipField: 'panel_assigned',
+        valueGetter: (params) => {
+          return params && params.data &&  params.data.panel_assigned ? params.data.panel_assigned : 'Unassigned'
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -278,7 +284,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     console.log(event);
     if (event.colDef.field === 'name') {
       // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
-      // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
       console.log('workingg');
     }
   }

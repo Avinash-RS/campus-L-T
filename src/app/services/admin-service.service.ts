@@ -310,7 +310,7 @@ export class AdminServiceService {
 
   // inv Evaluation landing screen
   invEvaluationAssessmentDetails(data) {
-    return this.http.post(`${this.BASE_URL}/api/institute_candidate_shortlist`, data,
+    return this.http.post(`${this.BASE_URL}/api/institute_candidate_shortlist_evaluation_screen`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
@@ -420,7 +420,7 @@ export class AdminServiceService {
 
   // Submitted Candidates List
   invSubmittedCandidatesList(data) {
-    return this.http.post(`${this.BASE_URL}/profile/candidatelist_evaluation`, data,
+    return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

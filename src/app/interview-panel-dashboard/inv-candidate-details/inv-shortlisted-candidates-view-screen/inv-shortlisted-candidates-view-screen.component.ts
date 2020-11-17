@@ -47,6 +47,7 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   }
 
   ngOnInit() {
+    console.log('comingggg1');
   }
 
   // Get url param for edit route
@@ -76,9 +77,13 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
   // To get all users
   getUsersList(name) {
 
+    // const apiData = {
+    //   shortlist_name: name,
+    // };
     const apiData = {
-      shortlist_name: name,
+      inv_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
+
     this.adminService.invSubmittedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
 
@@ -87,7 +92,7 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
       let counting = 0;
       this.userList = [];
       align.forEach(element => {
-        if (element && element['hr_assign_status'] == '1') {
+        if (element) {
           counting = counting + 1;
           element['count'] = counting;
           this.userList.push(element);
