@@ -200,7 +200,8 @@ h5 {
 }
 
 .ag-theme-alpine .ag-ltr .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected) {
-  border-color: $color-dark-border;
+  // border-color: $color-dark-border;
+  border: none;
 }
 
 .ag-theme-alpine .ag-checkbox-input-wrapper:focus-within,
@@ -2332,4 +2333,14 @@ th {
 }
 .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: $primary-red !important;
+}
+.agTable {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center;
+  border: none;
+  min-width: 70px !important;
+  width: 100% !important;
+  padding: 0 .75em !important;
 }
