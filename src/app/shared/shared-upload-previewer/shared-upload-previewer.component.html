@@ -101,7 +101,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
         [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
   </div>
 </ng-container>
 <!-- candidate -->
@@ -163,7 +163,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
         [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
   </div>
 </ng-container>
 
@@ -224,7 +224,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
         [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[500]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
   </div>
 </ng-container>
 
@@ -292,6 +292,6 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
         [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
   </div>
 </ng-container>

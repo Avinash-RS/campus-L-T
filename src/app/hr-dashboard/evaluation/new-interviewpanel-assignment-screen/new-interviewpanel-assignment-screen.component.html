@@ -170,7 +170,7 @@
               [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"></tr>
           </table>
         </div>
-        <mat-paginator #paginator [pageSizeOptions]="[1000]"></mat-paginator>
+        <mat-paginator #paginator [pageSizeOptions]="[500, 1000]"></mat-paginator>
       </div>
 
       <!-- second table -->
@@ -235,7 +235,7 @@
               [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"></tr>
           </table>
         </div>
-        <mat-paginator #paginatorHR [pageSizeOptions]="[1000]"></mat-paginator>
+        <mat-paginator #paginatorHR [pageSizeOptions]="[500, 1000]"></mat-paginator>
       </div>
 
     </div>

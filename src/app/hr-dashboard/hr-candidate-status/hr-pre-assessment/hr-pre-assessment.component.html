@@ -213,7 +213,7 @@
         <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
       </table>
       </div>
-      <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
     </div>
     <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
       <div>Status list not available </div>
