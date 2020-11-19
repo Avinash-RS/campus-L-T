@@ -588,3 +588,6 @@ top: -2px;
   font-size: 24px;
   letter-spacing: 0.5px;
 }
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $primary-red !important;
+}
