@@ -214,7 +214,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   submit(cid, name, status, tag, uid) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '' });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment ? this.nameOfAssessment : '', id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '' });
   }
 
   finalSubmit() {
@@ -234,8 +234,21 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     });
     this.adminService.invSubmittingCandidates(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
+      const datas = {
+        iconName: '',
+        dataToBeShared: {
+          confirmText: `Selected candidates have been submitted successfully`,
+          type: 'assign-hr',
+          identity: 'panel-assign'
+        },
+        showConfirm: 'Confirm',
+        interViwePanelAssign: 'noData',
+        showCancel: '',
+        showOk: ''
+      };    
+      this.openDialog(ShortlistBoxComponent, datas);
 
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
+      // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
     }, (err) => {
 
     });
@@ -260,6 +273,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.finalSubmitAPI();
+      }
+      if (data && data['interViwePanelAssign']) {
+        this.ngOnInit();
       }
     });
   }
