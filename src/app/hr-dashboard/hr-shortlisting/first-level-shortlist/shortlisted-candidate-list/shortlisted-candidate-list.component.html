@@ -110,8 +110,8 @@
               <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
             </span>
             Candidate </th>
-          <td style="cursor: pointer;" (click)="profileView(element.uid, element.name)" mat-cell
-            *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
+          <td mat-cell
+            *matCellDef="let element"> <span (click)="profileView(element.uid, element.name)" class="inline-view"> {{element.name ? element.name : '-'}}</span> </td>
         </ng-container>
 
         <!-- id Column -->
@@ -126,7 +126,7 @@
               <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
             </span>
             Candidate id </th>
-          <td style="cursor: pointer;" (click)="profileView(element.uid, element.new_candidate_id)" mat-cell
+          <td mat-cell
             *matCellDef="let element"> {{element.new_candidate_id ? element.new_candidate_id : '-'}} </td>
         </ng-container>
 

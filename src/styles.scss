@@ -2321,3 +2321,15 @@ th {
     height: inherit !important;
   }
 }
+.inline-view {
+  color: $primary-red;
+  border-bottom: solid $primary-red 1px;
+  cursor: pointer;
+}
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled),
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: $primary-red !important;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $primary-red !important;
+}

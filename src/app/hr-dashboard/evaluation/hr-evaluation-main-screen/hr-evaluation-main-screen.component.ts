@@ -51,7 +51,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       {
         icon: '002-cv.svg',
         name: 'Assigned details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED,
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION,
         active: true
       },
       {
