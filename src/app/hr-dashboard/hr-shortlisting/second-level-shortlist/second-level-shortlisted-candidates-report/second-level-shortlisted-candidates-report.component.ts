@@ -14,16 +14,9 @@ import { environment } from 'src/environments/environment';
   templateUrl: './second-level-shortlisted-candidates-report.component.html',
   styleUrls: ['./second-level-shortlisted-candidates-report.component.scss']
 })
-export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, AfterViewInit {
+export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
   BASE_URL = environment.API_BASE_URL;
 
-  // displayedColumns: any[] = ['uid', 'name', 'mail', 'roles_target_id', 'checked'];
-  displayedColumns: any[] = ['sno', 'name', 'candidate_id', 'gender', 'dob', 'institute', 'level', 'percentage', 'backlog', 'dateofpassing'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
   selectedUserDetail: any;
   userList: any;
   radioCheck;
@@ -38,6 +31,24 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   cutOff4: any;
   displayNoRecords = false;
 
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -51,26 +62,163 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
   ngOnInit() {
   }
 
-  check(name) {
-    const apiData = {
-      shortlist_name: name,
-      shortlist: '1'
-    };
-    this.adminService.shortlistedCandidatesReport(apiData).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
-    }, (err) => {
-
-    });
-  }
-
   // Get url param for edit route
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
-      this.getUsersList(params['data']);
+      this.tabledef(params['data']);
     });
+  }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    // event['data']
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef(apiData) {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'sno',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'sno',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate', field: 'name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Gender', field: 'gender',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'gender',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date of birth', field: 'dob',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 100,
+        sortable: true,
+        tooltipField: 'dob',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute', field: 'institute',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'institute',
+      getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Education level', field: 'level',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'level',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Percentage', field: 'percentage',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'percentage',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Backlog', field: 'backlog',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'backlog',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date of passing', field: 'dateofpassing',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        // minWidth: 140,
+        sortable: true,
+        tooltipField: 'dateofpassing',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
+    this.getUsersList(apiData);
   }
 
   assessmentDetails(name) {
@@ -195,9 +343,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
       });
       this.userList = align ? align : [];
       this.selectedCandidates = this.userList.length;
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
       this.appConfig.hideLoader();
     }, (err) => {
     });
@@ -207,31 +353,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
     const excel = `${this.BASE_URL}/sites/default/files/upload_excel_error/secondlevel.csv`;
     window.open(excel, '_blank');
   }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
 
 }
 

@@ -15,23 +15,32 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   templateUrl: './second-level-assessment-list.component.html',
   styleUrls: ['./second-level-assessment-list.component.scss']
 })
-export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit {
+export class SecondLevelAssessmentListComponent implements OnInit {
 
   BASE_URL = environment.API_BASE_URL;
-// 'report'
-  // displayedColumns: any[] = ['uid', 'assement_name', 'date', 'time', 'group_name', 'status', 'no_of_candidate', 'buttons'];
-  displayedColumns: any[] = ['uid', 'group_name', 'status', 'no_of_candidate', 'buttons'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   selectedUserDetail: any;
   userList: any;
   radioCheck;
   selectAllCheck;
   displayNoRecords = false;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   constructor(
     private appConfig: AppConfigService,
@@ -42,20 +51,114 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
   ) { }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
     // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, 'assement_name' ? {data: 'assement_name'} : {data: 'none'});
   }
 
-  getDateFormat(date) {
-    if (date) {
-      const split = moment(date).format('DD MMM YYYY');
-      const output = split.toUpperCase();
-      return output;
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
 
-    } else {
-      return '-';
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    if (event.colDef.field === 'buttons') {
+      if (event['data']['status'] == 'completed') {
+        this.shortlistedReport(event['data']);
+      } else {
+        this.shortlistRedirect(event['data']);
+      }
     }
   }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Shortlist name', field: 'group_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'group_name',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Status', field: 'status',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'status',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'No. of candidates', field: 'no_of_candidate',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'no_of_candidate',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Shortlist', field: 'buttons',
+        // cellStyle: { textAlign: 'center', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' },
+        cellClass: 'agCellStyle',
+        cellRenderer: (params) => {
+          if (params['data']['buttons'] == 'completed') {
+            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;            
+          } else {
+            return `<button class="table-btn agTable" mat-raised-button>Shortlist</button>`;            
+          }
+        },
+        sortable: true,
+      }
+    ];
+    this.getUsersList();
+  }
+
 
   // To get all users
   getUsersList() {
@@ -67,23 +170,18 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
         let count = 0;
         this.userList.forEach(element => {
           count = count + 1;
-          element['uid'] = count;
+          element['counter'] = count;
           element['status'] = element && element.status != 'completed' ? 'waiting' : 'completed';
-          element['buttons'] = element && element.status != 'completed' ? 'w' : 'c';
+          element['buttons'] = element && element.status != 'completed' ? 'waiting' : 'completed';
         });
       } else {
         this.userList = [];
       }
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
   }
 
-  selectedUser(userDetail) {
-    
-  }
   shortlistRedirect(detail) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
   }
@@ -94,29 +192,4 @@ export class SecondLevelAssessmentListComponent implements OnInit, AfterViewInit
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS);
   }
 
-
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 }
