@@ -14,23 +14,33 @@ import moment from 'moment';
   templateUrl: './hr-upload-test-report.component.html',
   styleUrls: ['./hr-upload-test-report.component.scss']
 })
-export class HrUploadTestReportComponent implements OnInit, AfterViewInit {
+export class HrUploadTestReportComponent implements OnInit {
 
 
   BASE_URL = environment.API_BASE_URL;
-
-  displayedColumns: any[] = ['uid', 'shortlist_name', 'email', 'date', 'assement_error'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   selectedUserDetail: any;
   userList: any;
   radioCheck;
   selectAllCheck;
   displayNoRecords = false;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   constructor(
     private appConfig: AppConfigService,
@@ -41,18 +51,101 @@ export class HrUploadTestReportComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
   }
 
-  getDateFormat(date) {
-    if (date) {
-      const split = moment(date).format('DD MMM YYYY');
-      const output = split.toUpperCase();
-      return output;
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
 
-    } else {
-      return '-';
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
     }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Shortlist name', field: 'shortlist_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'shortlist_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Email id', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date', field: 'date',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        sortable: true,
+        tooltipField: 'date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Reason for not uploaded', field: 'assement_error',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'assement_error',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
+    this.getUsersList();
   }
 
   // To get all users
@@ -61,53 +154,16 @@ export class HrUploadTestReportComponent implements OnInit, AfterViewInit {
       uploaded_by: ''
     };
     this.adminService.UploadTestReports().subscribe((datas: any) => {
-      // this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
-        element['uid'] = count;
+        element['counter'] = count;
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
-  }
-
-  downloadExcel(element) {
-    const excel = element && element.download ? element.download : '';
-    window.open(excel, '_blank');
-  }
-  selectedUser(userDetail) {
-    
-  }
-
-
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
 

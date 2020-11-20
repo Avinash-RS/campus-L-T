@@ -4,83 +4,19 @@
             <mat-label>Filter</mat-label> -->
       <div class="search-bar">
         <div class="search-icon">
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+          <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
       </div>
       </div>
       <!-- </mat-form-field> -->
 
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-        <!-- Position Column -->
-        <ng-container matColumnDef="uid">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> S.no. </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{element.uid ? element.uid : '-'}} </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="foldername">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Folder name </th>
-          <td mat-cell *matCellDef="let element"> {{element.foldername ? element.foldername : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="shortlistname">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
-          <td mat-cell *matCellDef="let element"> {{element.shortlistname ? (element.shortlistname) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="dates">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.dates ? (element.dates) : '-'}} </td>
-          </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="times">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
-          <td mat-cell *matCellDef="let element"> {{element.times ? (element.times) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="shortlistby">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlisted by </th>
-            <td mat-cell *matCellDef="let element"> {{element.shortlistby ? (element.shortlistby) : '-'}} </td>
-          </ng-container>
-
-          <!-- Symbol Column -->
-        <ng-container matColumnDef="download">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate details </th>
-          <td mat-cell *matCellDef="let element">
-              <!-- [href]="element['download']" target="_blank" -->
-            <!-- <a style="text-decoration: none; cursor: pointer;" > -->
-              <button (click)="downloadExcel(element)" class="table-btn" mat-raised-button> <span style="padding: 0 0 0 .25em;"> Download</span></button>
-            <!-- </a> -->
-          </td>
-        </ng-container>
-
-
-      <!-- fifth Header row first group -->
-      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
-          <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
-            {{'No Data Available'}}
-          </th>
-        </div>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
-          *matHeaderRowDef="['fifth-header-row-first-group']">
-        </tr>
-        <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
-      </table>
-      <div *ngIf="displayNoRecords" class="noRecordText">
-        No data available
+      <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+      [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
+      [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
+      (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+      headerHeight="40">
+      </ag-grid-angular>
       </div>
-      <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
-    </div>
-    <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
-        <div>No reports available </div>
-      </div> -->
 
 
   </div>
