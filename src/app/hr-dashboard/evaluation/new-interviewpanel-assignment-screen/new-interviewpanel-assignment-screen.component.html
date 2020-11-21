@@ -113,64 +113,19 @@
           <div class="text">Shortlisted candidates list:</div>
           <div class="search-bar">
             <div class="search-icon">
-              <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+              <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
             </div>
           </div>      
         </div>
         <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
-          <table mat-table #sort="matSort" [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name ? element.name : '-'}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="discipline">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Discipline </th>
-              <td mat-cell *matCellDef="let element"> {{element.discipline ? element.discipline : '-'}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="level">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Education level </th>
-              <td mat-cell *matCellDef="let element"> {{element.level ? element.level : '-'}} </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="checked">
-              <th mat-header-cell *matHeaderCellDef>
-                <div>Select All</div>
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="selectAllCheckbox($event)"
-                  [checked]="selectAllCheck">
-                </mat-checkbox>
-              </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)" 
-                  [checked]="element.checked">
-                </mat-checkbox>
-
-              </td>
-            </ng-container>
-
-                  <!-- fifth Header row first group -->
-      <div [ngClass]="(userList && userList.length === 0) || showDefault ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
-          {{(showDefault ? 'Please select Institute name' : 'No Data Available')}}
-        </th>
-      </div>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr class="no-data-available" [ngClass]="(userList && userList.length === 0) || showDefault ? '' : 'hide'" mat-header-row
-            *matHeaderRowDef="['fifth-header-row-first-group']">
-          </tr>  
-            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
-              [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"></tr>
-          </table>
+          <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+          [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
+          (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+          headerHeight="40">
+          </ag-grid-angular>    
         </div>
-        <mat-paginator #paginator [pageSizeOptions]="[500, 1000]"></mat-paginator>
       </div>
 
       <!-- second table -->
@@ -179,63 +134,20 @@
           <div class="text">Interview panel list:</div>
           <div class="search-bar">
             <div class="search-icon">
-              <input matInput (keyup)="applyFilterHR($event)" placeholder="Search….">
+              <input matInput (keyup)="onQuickFilterChangedHR()" [(ngModel)]="quickSearchValueHR" placeholder="Search….">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
             </div>
           </div>      
         </div>
         <div [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'">
-          <table mat-table #sortHR="matSort" [dataSource]="dataSourceHR" matSort class="mat-elevation-z8">
-            <!-- Name Column -->
-            <ng-container matColumnDef="employee_name">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee name </th>
-              <td mat-cell *matCellDef="let element"> {{element.employee_name ? element.employee_name : '-'}} </td>
-            </ng-container>
+          <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+          [rowData]="rowDataHR" [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR" [pagination]="true" [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSizeHR" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSizeHR"
+          (gridReady)="onGridReadyHR($event)" (sortChanged)="sorteventHR($event)" (cellClicked)="onCellClickedHR($event)" (filterModified)="getModelHR($event)"
+          headerHeight="40">
+          </ag-grid-angular>    
 
-            <!-- Weight Column -->
-            <ng-container matColumnDef="discipline">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Discipline </th>
-              <td mat-cell *matCellDef="let element"> {{element.discipline ? element.discipline : '-'}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-              <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="checked" sticky>
-              <th mat-header-cell *matHeaderCellDef>
-                <div>Select All</div>
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="selectAllCheckboxHR($event)"
-                  [checked]="selectAllCheckHR">
-                </mat-checkbox>
-              </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUserHR(element)"
-                  [checked]="element.checked">
-                </mat-checkbox>
-
-              </td>
-            </ng-container>
-
-                              <!-- fifth Header row first group -->
-      <div [ngClass]="userListHR && userListHR.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
-          {{'No Data Available'}}
-        </th>
-      </div>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-            <tr class="no-data-available" [ngClass]="userListHR && userListHR.length === 0 ? '' : 'hide'" mat-header-row
-            *matHeaderRowDef="['fifth-header-row-first-group']">
-          </tr>  
-
-            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns1;"
-              [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"></tr>
-          </table>
         </div>
-        <mat-paginator #paginatorHR [pageSizeOptions]="[500, 1000]"></mat-paginator>
       </div>
 
     </div>

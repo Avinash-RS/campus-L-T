@@ -37,6 +37,7 @@ export class BulkUploadReportsComponent implements OnInit {
     suppressMenu: true,
     unSortIcon: true,
   };
+  gridColumnApi: any;
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -56,6 +57,7 @@ export class BulkUploadReportsComponent implements OnInit {
 
   onGridReady(params: any) {
     this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
   }
 
   sortevent(e) {

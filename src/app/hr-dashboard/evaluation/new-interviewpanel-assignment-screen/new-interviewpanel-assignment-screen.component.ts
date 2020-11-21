@@ -17,19 +17,8 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
   styleUrls: ['./new-interviewpanel-assignment-screen.component.scss']
 })
 
-export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit {
+export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
 
-  // displayedColumns: any[] = ['uid', 'user_name', 'candidate_id', 'email', 'level', 'discipline', 'documents_submitted', 'interview_status', 'checked'];
-  displayedColumns: any[] = ['checked', 'name', 'discipline', 'level'];
-  displayedColumns1: any[] = ['checked', 'employee_name', 'discipline', 'email'];
-  dataSource: MatTableDataSource<any>;
-  dataSourceHR: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild('paginator', { static: true }) paginator: MatPaginator;
-  @ViewChild('sort', { static: true }) sort: MatSort;
-  @ViewChild('paginatorHR', { static: true }) paginatorHR: MatPaginator;
-  @ViewChild('sortHR', { static: true }) sortHR: MatSort;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
@@ -68,6 +57,48 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   allHRDisciplines: any;
   userListHR: any;
   selectedUserDetailHR: any;
+
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any = [];
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
+  gridColumnApi: any;
+  isChecked: boolean;
+
+  paginationPageSizeHR = 500;
+  cacheBlockSizeHR: any = 500;
+  gridApiHR: any;
+  columnDefsHR = [];
+  defaultColDefHR = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowDataHR: any = [];
+  searchBoxHR = false;
+  filterValueHR: string;
+  quickSearchValueHR = '';
+  gridColumnApiHR: any;
+  isCheckedHR: boolean;
+
+
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
   constructor(
@@ -113,11 +144,173 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   ngOnInit() {
+    this.tabledef();
+    this.tabledefHR();
     this.getInstitute();
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
   }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
+    }
+  }
+  tabledef() {
+    this.columnDefs = [
+      {
+        headerCheckboxSelection: true,
+        maxWidth: 50,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        suppressMenu: true,
+        field: 'is_checked',
+        headerName: ''
+      },
+      {
+        headerName: 'Candidate name', field: 'name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'discipline', field: 'discipline',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'discipline',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Education level', field: 'level',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'level',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
+  }
+
+  //  HR
+  onGridReadyHR(params: any) {
+    this.gridApiHR = params.api;
+    this.gridColumnApiHR = params.columnApi;
+  }
+
+  sorteventHR(e) {
+  }
+
+  customComparatorHR = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClickedHR(event) {
+  }
+
+  getModelHR(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChangedHR() {
+    this.gridApiHR.setQuickFilter(this.quickSearchValueHR);
+    const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No global search results found');
+    }
+  }
+  tabledefHR() {
+    this.columnDefsHR = [
+      {
+        headerCheckboxSelection: true,
+        maxWidth: 50,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        suppressMenu: true,
+        field: 'is_checkedHR',
+        headerName: ''
+      },
+      {
+        headerName: 'Employee name', field: 'employee_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'employee_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Discipline', field: 'discipline',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'discipline',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Email', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
+  }
+
 
   go() {
     const apiData = {
@@ -137,7 +330,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
   HRgo(data) {
-    this.unselectSelectALLHR();
     this.particularInvpanelist(data);
   }
 
@@ -199,18 +391,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
-  // particularCandidatepanelist(data) {
-  //   const apiData = {
-  //     discipline: data ? data : ''
-  //   }
-  //   this.adminService.getParticularInterviewpanelist(apiData).subscribe((data: any) => {
-  //     this.appConfig.hideLoader();
-  //     const datas = data ? data : [];
-  //     this.getUsersList1(datas);
-  //   }, (err) => {
-  //   });
-  // }
-
   instituteChange() {
 
   }
@@ -229,12 +409,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   // To get all users
   getUsersList(data) {
       this.userList = data;
-      if (this.userList && this.userList.length > 0) {
-        this.unselectSelectALL();
-      } else {
-        this.selectAllCheck = false;
-      }
-      this.toShoworNotShowFilter();
       let count = 0;
       this.userList.forEach(element => {
         element['checked'] = false;
@@ -247,215 +421,21 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
           element['level'] = 'Postgraduate';
         }
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
   }
 
     // To get all users
     getUsersList1(data) {
       this.userListHR = data ? data : [];
-      if (this.userListHR && this.userListHR.length > 0) {
-        this.unselectSelectALLHR();
-      } else {
-        this.selectAllCheckHR = false;
-      }
-        this.toShoworNotShowFilterHR();
         let count = 0;
         this.userListHR.forEach(element => {
           element['checked'] = false;
           count = count + 1;
           element['uid'] = count;
         });
-        this.dataSourceHR = new MatTableDataSource(this.userListHR);
-        this.dataSourceHR.paginator = this.paginatorHR;
-        this.dataSourceHR.sort = this.sortHR;
+        this.rowDataHR = this.userListHR;
     }
   
-
-  selectAllCheckbox(checked) {
-
-    if (checked['checked']) {
-      this.userList.forEach(element => {
-        this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid) {
-            element.checked = true;
-          }
-        });
-      });
-    } else {
-      this.userList.forEach(element => {
-        this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid) {
-            element.checked = false;
-          }
-        });
-      });
-    }
-    this.toShoworNotShowFilter();
-  }
-
-  selectAllCheckboxHR(checked) {
-
-    if (checked['checked']) {
-      this.userListHR.forEach(element => {
-        this.dataSourceHR.filteredData.forEach(ele => {
-          if (element.employee_id === ele.employee_id) {
-            element.checked = true;
-          }
-        });
-      });
-    } else {
-      this.userListHR.forEach(element => {
-        this.dataSourceHR.filteredData.forEach(ele => {
-          if (element.employee_id === ele.employee_id) {
-            element.checked = false;
-          }
-        });
-      });
-    }
-    this.toShoworNotShowFilterHR();
-  }
-
-
-  toShoworNotShowFilter() {
-    let runElse = true;
-    let selectedCount = 0;
-    this.userList.forEach(element => {
-      if (element.checked) {
-        selectedCount += 1;
-        this.buttonHide = false;
-        runElse = false;
-      } else {
-        if (runElse) {
-          this.buttonHide = true;
-        }
-      }
-    });
-  }
-
-  toShoworNotShowFilterHR() {
-    let runElse = true;
-    let selectedCount = 0;
-    this.userListHR.forEach(element => {
-      if (element.checked) {
-        selectedCount += 1;
-        this.buttonHide = false;
-        runElse = false;
-      } else {
-        if (runElse) {
-          this.buttonHide = true;
-        }
-      }
-    });
-  }
-
-  unselectSelectALL() {
-
-    this.selectAllCheck = false;
-    const pushChecked = [];
-    const pushNotChecked = [];
-    this.userList.forEach(element => {
-      if (element.checked) {
-        pushChecked.push(element);
-      } else {
-        pushNotChecked.push(element);
-      }
-    });
-
-    if (this.userList.length === pushChecked.length) {
-      this.selectAllCheck = true;
-    }
-  }
-  unselectSelectALLHR() {
-
-    this.selectAllCheckHR = false;
-    const pushChecked = [];
-    const pushNotChecked = [];
-    this.userListHR.forEach(element => {
-      if (element.checked) {
-        pushChecked.push(element);
-      } else {
-        pushNotChecked.push(element);
-      }
-    });
-
-    if (this.userListHR.length === pushChecked.length) {
-      this.selectAllCheckHR = true;
-    }
-  }
-
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-    if (this.dataSourceHR) {
-      this.dataSourceHR.paginator = this.paginatorHR;
-      this.dataSourceHR.sort = this.sortHR;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if (this.dataSource.filteredData.length == 0) {
-      this.displayNoRecords = true;
-    } else {
-      this.displayNoRecords = false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  applyFilterHR(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSourceHR.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if (this.dataSourceHR.filteredData.length == 0) {
-      this.displayNoRecords = true;
-    } else {
-      this.displayNoRecords = false;
-    }
-
-    if (this.dataSourceHR.paginator) {
-      this.dataSourceHR.paginator.firstPage();
-    }
-  }
-
-
-  selectedUser(userDetail) {
-
-    this.userList.forEach(element => {
-      if (element.uid === userDetail.uid) {
-        element.checked = !element.checked;
-      }
-    });
-    this.selectedUserDetail = userDetail;
-
-    this.toShoworNotShowFilter();
-    this.unselectSelectALL();
-  }
-
-  selectedUserHR(userDetail) {
-
-    this.userListHR.forEach(element => {
-      if (element.employee_id === userDetail.employee_id) {
-        element.checked = !element.checked;
-      }
-    });
-    this.selectedUserDetailHR = userDetail;
-
-    this.toShoworNotShowFilterHR();
-    this.unselectSelectALLHR();
-  }
 
   assigntoPanel(apiData) {
     this.adminService.assignToHR(apiData).subscribe((data: any) => {
@@ -477,17 +457,20 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
   submit() {
+    console.log(this.gridApiHR.getSelectedNodes());
+    const selectedUserlist = this.gridApi.getSelectedNodes();
+    const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
     const candidateID = [];
     const HRID = [];
-    this.userList.forEach(element => {
-      if (element['checked']) {
-        candidateID.push(element['email'])
+    selectedUserlist.forEach(element => {
+      if (element['data']) {
+        candidateID.push(element['data']['email'])
       }
     });
 
-    this.userListHR.forEach(element => {
-      if (element['checked']) {
-        HRID.push(element['email'])
+    selectedUserlistHR.forEach(element => {
+      if (element['data']) {
+        HRID.push(element['data']['email'])
       }
     });
     let data;

@@ -64,12 +64,15 @@ export class InvBulkAssignReportsComponent implements OnInit {
   tabledef() {
     this.columnDefs = [
       {
-        headerName: 'S no',
-        valueGetter: (params) => {
-          const i = +params.node.id + 1;
-          return i ? i : 'Loading...';
-        },
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 100,
+        sortable: true,
+        tooltipField: 'counter',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
       },
       {
         headerName: 'Candidate email', field: 'user_email',
@@ -140,22 +143,15 @@ export class InvBulkAssignReportsComponent implements OnInit {
       },
     ];
 
-    // this.service.getNotificationData(this.adminDetails._id)
-    //   .subscribe((result: any) => {
-    //     if (result.data && result.data.getnotificationreports?.message) {
-    //       const reportDetails = result.data.getnotificationreports?.message || [];
-
-    //       const array = reportDetails.filter((item) => {
-    //         item.report_info.created_on = moment(item.report_info.updated_on).format('MM-DD-YYYY HH:mm a');
-    //         return item.request_type === 'bulk_enrolment';
-    //       });
-    //       this.reportDetails = array;
-          // this.go();
-    //     }
-    //   });
     this.adminService.bulkUploadInvAssignReports().subscribe((data: any) => {
       this.appConfig.hideLoader();      
-      this.rowData = data ? data : [];
+      const userlist = data ? data : [];
+      let count = 0;
+      userlist.forEach(element => {
+        count = count + 1;
+        element['counter'] = count;
+      });
+      this.rowData = userlist;
           }, (err) => {
     });
 
