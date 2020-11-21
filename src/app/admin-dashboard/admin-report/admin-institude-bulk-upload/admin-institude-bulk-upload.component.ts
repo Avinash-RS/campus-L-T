@@ -14,16 +14,9 @@ import moment from 'moment';
   templateUrl: './admin-institude-bulk-upload.component.html',
   styleUrls: ['./admin-institude-bulk-upload.component.scss']
 })
-export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit {
+export class AdminInstitudeBulkUploadComponent implements OnInit {
 
   BASE_URL = environment.API_BASE_URL;
-
-  displayedColumns: any[] = ['uid', 'field_institute_name', 'email', 'state', 'city', 'name', 'lastname', 'field_institute_mobile_number', 'date', 'time', 'reason'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   selectedUserDetail: any;
   userList: any;
@@ -31,6 +24,24 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   selectAllCheck;
   displayNoRecords = false;
 
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  gridColumnApi: any;
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   constructor(
     private appConfig: AppConfigService,
@@ -41,18 +52,160 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
   ) { }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
   }
 
-  getDateFormat(date) {
-    if (date) {
-      const split = moment(date).format('DD MMM YYYY');
-      const output = split.toUpperCase();
-      return output;
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
 
-    } else {
-      return '-';
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
     }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        minWidth: 85,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute name', field: 'field_institute_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute email id', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'State', field: 'state',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'state',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'City', field: 'city',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'city',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: `Contact person`, field: 'name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+      },
+      {
+        headerName: 'Mobile number', field: 'field_institute_mobile_number',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_mobile_number',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date', field: 'date',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        minWidth: 110,
+        sortable: true,
+        tooltipField: 'date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Time', field: 'time',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        minWidth: 110,
+        sortable: true,
+        tooltipField: 'time',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Reason for not uploaded', field: 'reason',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'reason',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
+    this.getUsersList();
   }
 
   // To get all users
@@ -63,47 +216,15 @@ export class AdminInstitudeBulkUploadComponent implements OnInit, AfterViewInit 
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
-        element['uid'] = count;
+        element['counter'] = count;
+        const fn = element && element.name ? element.name : '';
+        const ln = element && element.lastname ? element.lastname : '';
+        element.name = fn + ' ' + ln;
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData =  this.userList;
     }, (err) => {
     });
   }
 
-  downloadExcel(element) {
-    const excel = element && element.download ? element.download : '';
-    window.open(excel, '_blank');
-  }
-  selectedUser(userDetail) {
-    
-  }
-
-
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
 }

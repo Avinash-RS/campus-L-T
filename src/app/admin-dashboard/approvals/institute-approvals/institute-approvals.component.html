@@ -2,140 +2,20 @@
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <div class="search-bar">
       <div class="search-icon">
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
       </div>
     </div>
 
-    <table #table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-      <!-- Position Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
-        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
-          {{element && element.id ? element.id : '-'}} </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="field_institute_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute name </th>
-        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          {{element && element.field_institute_name ? element.field_institute_name : '-'}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Institute email ID </th>
-        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          {{element && element.email ? element.email : '-'}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="field_institute_state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
-        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          {{element.field_institute_state ? (element.field_institute_state) : '-'}} </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="field_institute_city">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
-        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          {{element.field_institute_city ? (element.field_institute_city) : '-'}} </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="field_date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-        <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          {{element.field_date ? (element.field_date) : '-'}} </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="field_time">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
-        <td style="white-space: nowrap;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          {{element.field_time ? (element.field_time) : '-'}} </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="field_first_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact person </th>
-        <td style="cursor: pointer;" mat-cell *matCellDef="let element"><span><img src="assets/images/keyboard_arrow_down-black.svg" alt="" srcset=""> </span>
-          {{element.field_first_name ? (element.field_first_name) : '-'}} </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="approve">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Approve </th>
-        <td style="padding: 0 !important; text-align: center;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          <mat-radio-button (change)="selectedUser(element, 'approve')" [value]="radioCheck"></mat-radio-button>
-          <!-- <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
-            <label nz-radio [nzValue]="element.email"></label>
-          </nz-radio-group> -->
-        </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="reject">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reject </th>
-        <td style="padding: 0 !important; text-align: center;" (click)="$event.stopPropagation();" mat-cell *matCellDef="let element">
-          <mat-radio-button (change)="selectedUserReject(element, 'reject')" [value]="rejectCheck"></mat-radio-button>
-          <!-- <nz-radio-group style="justify-content: center !important;" (ngModelChange)="selectedUserReject(element)" [(ngModel)]="rejectCheck">
-            <label nz-radio [nzValue]="element.email"></label>
-          </nz-radio-group> -->
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="checked">
-        <th mat-header-cell *matHeaderCellDef> Submit </th>
-        <td (click)="$event.stopPropagation();" mat-cell *matCellDef="let element; let i = index">
-          <button (click)="submit($event)" class="table-btn"
-            [ngClass]="element['checked'] === false ? 'buttonDisabled' : ''" mat-raised-button>Submit</button>
-        </td>
-      </ng-container>
-
-      <!-- fifth Header row first group -->
-      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
-          {{'No Data Available'}}
-        </th>
-      </div>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
-        *matHeaderRowDef="['fifth-header-row-first-group']">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'" matRipple class="element-row" [cdkDetailRow]="row"
-        [cdkDetailRowTpl]="tpl"></tr>
-    </table>
-    <div *ngIf="displayNoRecords" class="noRecordText">
-      No data available
-    </div>
-    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
+    [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
+    (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+    headerHeight="40">
+    </ag-grid-angular>
   </div>
   <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
     <div>No data available </div>
   </div> -->
-
-  <ng-template #tpl let-element>
-    <tr class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
-      <td colspan="10">
-        <div class="grid-4">
-          <div class="items">
-            Last Name :
-            <span>{{element && element.field_institute_last_name ? element.field_institute_last_name : '  -'}}</span>
-          </div>
-          <div class="items">
-            Job Title :
-            <span>{{element && element.field_institute_title ? element.field_institute_title : '  -'}}</span>
-          </div>
-          <div class="items">
-            Mobile Number :
-            <span>{{element && element.field_institute_mobile_number ? element.field_institute_mobile_number : '  -'}}</span>
-          </div>
-          <div class="items">
-            Comments :
-            <span>{{element && element.field_insitute_comments ? element.field_insitute_comments : '  -'}}</span>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </ng-template>
 
 </div>

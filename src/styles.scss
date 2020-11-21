@@ -2330,6 +2330,13 @@ th {
   }
 }
 
+.green-1 {
+  color: $green-2;
+}
+.red-1 {
+  color: $primary-red;
+}
+
 ::ng-deep .ant-select-dropdown {
   width: 100% !important !important;
 }

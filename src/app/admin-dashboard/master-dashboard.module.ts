@@ -20,6 +20,7 @@ import { InstituteApprovalsComponent } from './approvals/institute-approvals/ins
 import { AdminReportComponent } from './admin-report/admin-report.component';
 import { AdminBulkUploadReportComponent } from './admin-report/admin-bulk-upload-report/admin-bulk-upload-report.component';
 import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institude-bulk-upload/admin-institude-bulk-upload.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institud
     SharedModule,
     MaterialModule,
     MasterDashboardRoutingModule,
+    AgGridModule.withComponents([])
   ]
 })
 export class MasterDashboardModule { }

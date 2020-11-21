@@ -19,20 +19,31 @@ import moment from 'moment';
     ]),
   ],
 })
-export class AdminUploadedInstituteListComponent implements OnInit, AfterViewInit {
+export class AdminUploadedInstituteListComponent implements OnInit {
   showPage = true;
-  displayedColumns: any[] = ['counter', 'field_institute_name', 'id', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'admin_status'];
-  // displayedColumns = ['name', 'weight', 'symbol', 'position'];
-  dataSource: MatTableDataSource<any>;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   selectedUserDetail: any;
   userList: any;
   radioCheck;
   displayNoRecords = false;
 
-  isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   constructor(
     private appConfig: AppConfigService,
@@ -43,19 +54,202 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
   }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
   }
 
-  tConvert(time) {
-    // Check correct time format and split into components
-    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
 
-    if (time.length > 1) { // If time format correct
-      time = time.slice(1);  // Remove full string match value
-      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    // event['data']
+  }
+
+  getModel(e) {
+    // console.log(e);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
     }
-    return time.join(''); // return adjusted time or original string
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');
+      // this.toast.warning('No reuslts found');
+    }
+  }
+
+  tabledef() {
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 100,
+        minWidth: 85,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute name', field: 'field_institute_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_name',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute id', field: 'id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        minWidth: 100,
+        sortable: true,
+        tooltipField: 'id',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute email id', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'State', field: 'field_institute_state',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 100,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_state',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'City', field: 'field_institute_city',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 100,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_city',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date', field: 'field_date',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: `Contact person`, field: 'field_first_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_first_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+      },
+      {
+        headerName: 'Job title', field: 'field_institute_title',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_title',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Mobile number', field: 'field_institute_mobile_number',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_mobile_number',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Comments', field: 'field_insitute_comments',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_insitute_comments',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        valueGetter: (params) => {
+          return params.data.field_insitute_comments ? params.data.field_insitute_comments : '-';
+        },
+      },
+      {
+        headerName: 'Status', field: 'admin_status',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'admin_status',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellRenderer: (params) => {
+          if (params &&  params['data'] && params['data']['admin_status'] == 'Approved') {
+            return `<span class="green-1"> Approved </span>`;
+          } 
+          if (params &&  params['data'] && params['data']['admin_status'] == 'Rejected') {
+            return `<span class="red-1"> Rejected </span>`;
+          } else {
+            return `-`;
+          }
+        },
+      },
+    ];
+    this.getUsersList();
   }
 
   getDateFormat(date) {
@@ -81,44 +275,15 @@ export class AdminUploadedInstituteListComponent implements OnInit, AfterViewIni
         count = count + 1;
         element['counter'] = count;
         element['time'] = element && element['time'] ? element['time'] : '';
+        const fn = element && element.field_first_name ? element.field_first_name : '';
+        const ln = element && element.field_institute_last_name ? element.field_institute_last_name : '';
+        element.field_first_name = fn + ' ' + ln;
         element['field_date'] = element && element['field_date'] ? this.getDateFormat(element['field_date']) : '-';
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
+      this.rowData = this.userList;
     }, (err) => {
     });
   }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  selectedUser(userDetail) {
-
-  }
-
 
 }
 

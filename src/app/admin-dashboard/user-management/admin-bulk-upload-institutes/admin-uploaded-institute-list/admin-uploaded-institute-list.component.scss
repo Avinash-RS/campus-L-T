@@ -47,6 +47,7 @@
           box-sizing: border-box;
           padding: 0.15em 0.5em;
           height: 24px;
+          border: none;
         }
         ::placeholder {
           color: $black-1;
@@ -132,10 +133,4 @@ th {
 }
 mat-header-row {
   min-height: 42px !important;
-}
-.green {
-  color: $green-2;
-}
-.red {
-  color: $red;
 }
