@@ -2333,6 +2333,9 @@ th {
 ::ng-deep .ant-select-dropdown {
   width: 100% !important !important;
 }
+// .ant-select-dropdown {
+//     width: auto !important !important;
+//   }
 .mat-raised-button[disabled][disabled] {
   background: $primary-red !important;
   color: $white !important;
