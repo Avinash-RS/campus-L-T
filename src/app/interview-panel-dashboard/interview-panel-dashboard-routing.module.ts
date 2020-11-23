@@ -26,21 +26,21 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`,
         component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
         data: {
-          breadcrumb: 'Candidates'
+          breadcrumb: 'Assigned candidates list'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`,
             component: InvParticularAssessmentCandidatesComponent,
             data: {
-              breadcrumb: 'Assessment candidates list'
+              breadcrumb: 'list'
             }
           },
           {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`,
             component: InvAssessmentShortlistedCandidatesComponent,
             data: {
-              breadcrumb: 'Assessment list'
+              breadcrumb: 'Assigned list'
             }
           },
           {
@@ -82,7 +82,7 @@ const routes: Routes = [
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`,
                 component: InvSubEvaluateComponent,
                 data: {
-                  breadcrumb: 'Evaluation details'
+                  breadcrumb: 'Evaluation form'
                 }
               },
               {

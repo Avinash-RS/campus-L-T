@@ -61,7 +61,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Shortlisted candidate',
+        name: 'Assigned candidates',
         router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST,
         active: true
       },

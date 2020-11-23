@@ -38,7 +38,7 @@ export class InvShortlistedCandidatesViewScreenComponent implements OnInit, Afte
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Shortlisted candidate',
+        name: 'Assigned candidates',
         router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED
       },
     ];
