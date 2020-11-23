@@ -8,21 +8,16 @@ import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/m
 import { SelectionModel } from '@angular/cdk/collections';
 import { ActivatedRoute } from '@angular/router';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-inv-particular-assessment-candidates',
   templateUrl: './inv-particular-assessment-candidates.component.html',
   styleUrls: ['./inv-particular-assessment-candidates.component.scss']
 })
-export class InvParticularAssessmentCandidatesComponent implements OnInit, AfterViewInit {
+export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
 
-  displayedColumns: any[] = ['count', 'candidate_name', 'candidate_id', 'evaluation_status', 'details', 'checked'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
@@ -31,6 +26,28 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   assessmentName: any;
   nameOfAssessment: any;
   displayNoRecords = false;
+  getSelectedCandidates: any;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any = [];
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
+  gridColumnApi: any;
+  isChecked: boolean;
+  public rowSelection;
+  public isRowSelectable;
 
   constructor(
     private appConfig: AppConfigService,
@@ -54,7 +71,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   ngOnInit() {
-    this.getUsersList();
+    this.buttonCheck = false;
+    this.getSelectedCandidates = [];
+    this.tabledef();
   }
 
   // Get url param for edit route
@@ -64,6 +83,140 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       this.nameOfAssessment = params['data'];
       this.assessmentDetails(params['data']);
     });
+  }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    if (event.colDef.field === 'candidate_name') {
+      const data = {
+        candidateId: event['data'] && event['data']['uid'] ? event['data']['uid'] : '',
+        candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
+      };
+      this.openDialog4(CommonKycProfileViewComponent, data);      
+    }
+
+    if (event.colDef.field === 'evaluation_btn') {
+      if (event['data'] && event['data']['evaluation_status'] != '2') {
+        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid']);
+      }
+    }
+
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
+    }
+  }
+  tabledef() {
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 85,
+        maxWidth: 100,
+        sortable: true,
+        tooltipField: 'counter',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate name', field: 'candidate_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: { color: '#C02222' },
+        cellRenderer: (params) => {
+          return `<span style="border-bottom: solid #C02222 1px; cursor: pointer">${params['data']['candidate_name']} </span>`;
+        }
+      },
+      {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Evaluation status', field: 'evaluation_status_1',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'evaluation_status_1',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'View', field: 'evaluation_btn',
+        filter: false,
+        floatingFilterComponentParams: { suppressFilterButton: false },
+        minWidth: 90,
+        maxWidth: 90,
+        sortable: false,
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellRenderer: (params) => {
+          if (params['data'] && params['data']['evaluation_status'] == '2') {
+            return `<button class="table-btn agTable disabled-ag" mat-raised-button>Evaluated</button>`;
+          } else {
+            return `<button class="table-btn agTable" mat-raised-button>Evaluate</button>`;
+          }
+        },
+      },
+      {
+        headerCheckboxSelection: true,
+        minWidth: 80,
+        maxWidth: 80,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        suppressMenu: true,
+        field: 'is_checked',
+        headerName: ''
+      }
+    ];
+    this.rowSelection = 'multiple';
+    this.isRowSelectable = function (rowNode) {
+      return rowNode.data ? rowNode.data.evaluation_status == '1' : false;
+    };
+    this.getUsersList();
   }
 
   assessmentDetails(name) {
@@ -101,116 +254,18 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
       align.forEach(element => {
         if (element) {
           counting = counting + 1;
-          element['count'] = counting;
-          if (element['evaluation_status'] == '1') {
-            element['checked'] = false;
+          element['counter'] = counting;
+          element['evaluation_btn'] = element.evaluation_status;
+          if (element.evaluation_status == '1') {
+            this.buttonCheck = true;
           }
+          element['evaluation_status_1'] = element.evaluation_status && element.evaluation_status == '2' ? 'submitted' : element.evaluation_status == '1' ? 'completed' : 'waiting';
           this.userList.push(element);
         }
       });
-      this.toShoworNotShowFilter();
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
-  }
-
-
-  selectAllCheckbox(checked) {
-
-    if (checked['checked']) {
-      this.userList.forEach(element => {
-        this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid && element['evaluation_status'] == '1') {
-            element.checked = true;
-          }
-        });
-      });
-    } else {
-      this.userList.forEach(element => {
-        this.dataSource.filteredData.forEach(ele => {
-          if (element.uid === ele.uid && element['evaluation_status'] == '1') {
-            element.checked = false;
-          }
-        });
-      });
-    }
-    this.toShoworNotShowFilter();
-  }
-
-  toShoworNotShowFilter() {
-    let runElse = true;
-    let selectedCount = 0;
-    this.userList.forEach(element => {
-      if (element.checked) {
-        selectedCount += 1;
-        this.buttonCheck = false;
-        runElse = false;
-      } else {
-        if (runElse) {
-          this.buttonCheck = true;
-        }
-      }
-    });
-  }
-
-  unselectSelectALL() {
-
-    this.selectAllCheck = false;
-    const pushChecked = [];
-    const pushNotChecked = [];
-    this.userList.forEach(element => {
-      if (element.checked) {
-        pushChecked.push(element);
-      } else {
-        pushNotChecked.push(element);
-      }
-    });
-
-    if (this.userList.length === pushChecked.length) {
-      this.selectAllCheck = true;
-    }
-    // if (this.userList.length === pushNotChecked.length) {
-    //   this.selectAllCheck = false;
-    // }
-  }
-
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  selectedUser(userDetail) {
-
-    this.userList.forEach(element => {
-      if (element.uid === userDetail.uid) {
-        element.checked = !element.checked;
-      }
-    });
-    this.selectedUserDetail = userDetail;
-    this.toShoworNotShowFilter();
-    this.unselectSelectALL();
   }
 
   submit(cid, name, status, tag, uid) {
@@ -218,18 +273,25 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
   }
 
   finalSubmit() {
-    const data = {
-      evaluation: 'candidates'
-    };
-    this.openDialog(ShortlistBoxComponent, data);
+    console.log(this.gridApi.getSelectedNodes());
+    
+    if(this.gridApi.getSelectedNodes().length > 0) {
+      this.getSelectedCandidates = this.gridApi.getSelectedNodes();
+      const data = {
+        evaluation: 'candidates'
+      };
+      this.openDialog(ShortlistBoxComponent, data);  
+    } else {
+      this.appConfig.nzNotification('error', 'Not selected', 'No candidates have been selected');
+    }
   }
   finalSubmitAPI() {
     const apiData = {
       userid: []
     };
-    this.userList.forEach(element => {
-      if (element['checked']) {
-        apiData['userid'].push(element['uid']);
+    this.getSelectedCandidates.forEach(element => {
+      if (element) {
+        apiData['userid'].push(element['data'] && element['data']['uid'] ? element['data']['uid'] : '');
       }
     });
     this.adminService.invSubmittingCandidates(apiData).subscribe((data: any) => {
@@ -280,4 +342,25 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, After
     });
   }
 
+    // Open dailog
+    openDialog4(component, data) {
+      let dialogDetails: any;
+  
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.matDialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+    }
+  
 }

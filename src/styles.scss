@@ -2336,6 +2336,10 @@ th {
 .red-1 {
   color: $primary-red;
 }
+.disabled-ag {
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+}
 
 ::ng-deep .ant-select-dropdown {
   width: 100% !important !important;
