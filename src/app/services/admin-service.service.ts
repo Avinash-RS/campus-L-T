@@ -568,4 +568,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  evalationReportAPI() {
+    return this.http.get(`${this.BASE_URL}/profile/evaluation_institute_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+  shortlist2ReportAPI() {
+    return this.http.get(`${this.BASE_URL}/profile/assement_institute_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }

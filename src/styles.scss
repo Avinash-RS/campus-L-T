@@ -2369,8 +2369,11 @@ th {
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
   color: $primary-red !important;
 }
-.mat-form-field.mat-focused .mat-form-field-ripple {
+.mat-form-field.mat-focused .mat-form-field-ripple, .mat-calendar-body-selected {
   background-color: $primary-red !important;
+}
+.mat-datepicker-toggle-active {
+  color: $primary-red;
 }
 .agTable {
   display: flex !important;
@@ -2387,4 +2390,18 @@ th {
   align-items: center;
   text-align: center;
   justify-content: center;
+}
+.main-reports {
+  .mat-icon-button.mat-button-base {
+    height: 35px !important;
+  }
+  .mat-icon-button.mat-datepicker-toggle {
+    right: 34px !important;
+    width: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+  // .mat-column-col3,.mat-column-col4 {
+  //   width: 140px;
+  // }
 }
