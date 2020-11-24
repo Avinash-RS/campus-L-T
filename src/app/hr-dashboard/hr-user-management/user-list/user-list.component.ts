@@ -11,21 +11,29 @@ import { MatDialog } from '@angular/material';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit, AfterViewInit {
+export class UserListComponent implements OnInit {
 
-  displayedColumns: any[] = ['counter', 'name', 'email', 'role', 'field_employee_id', 'field_panel_discipline', 'field_uploaded_by', 'checked'];
-  dataSource: MatTableDataSource<any>;
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   selectedUserDetail: any;
   userList: any;
-  radioCheck;
-  userListIndex;
-  displayNoRecords = false;
-  pageEvent: any;
 
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   constructor(
     private adminService: AdminServiceService,
@@ -34,12 +42,137 @@ export class UserListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
   }
 
-  //pagination next and previos click
-  handlePage(e: any) {
-    this.selectedUserDetail = null;
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    // event['data']
+    if (event.colDef.field === 'user_id') {
+      this.selectedUserDetail = event['data'] ? event['data'] : '';
+      this.removeUser(this.selectedUserDetail);  
+    }
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Name', field: 'name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'name',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Email id', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Role', field: 'role',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'role',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Employee id', field: 'field_employee_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 100,
+        sortable: true,
+        tooltipField: 'field_employee_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Discipline', field: 'field_panel_discipline',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_panel_discipline',
+      getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Uploaded by', field: 'field_uploaded_by',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_uploaded_by',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Delete', field: 'user_id',
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
+        cellRenderer: (params) => {
+          return `<button class="submit agTable" mat-raised-button><span style="margin-right: .25em;"><img src="assets/images/delete-white-18dp.svg" alt="" srcset=""></span><span> Remove</span></button>`;
+        },
+        minWidth: 120,
+      }
+    ];
+    this.getUsersList();
   }
 
   // To get all users
@@ -54,23 +187,9 @@ export class UserListComponent implements OnInit, AfterViewInit {
         element.uid = element.user_id;
         element.checked = false;
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
-  }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  selectedUser(userDetail, i) {
-    this.selectedUserDetail = userDetail;
-    this.userListIndex = i;
   }
 
   deleteUser() {
@@ -80,23 +199,18 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
     this.adminService.hrDeleteUser(removeUser).subscribe((success: any) => {
       this.appConfig.hideLoader();
-      this.userList.splice(this.userListIndex, 1);
       this.appConfig.success(`User has been removed Successfully`, '');
-      this.selectedUserDetail = null;
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
+      this.tabledef();
     }, (error) => {
     });
   }
 
-  removeUser() {
+  removeUser(userDetail) {
     const data = {
       iconName: '',
       dataToBeShared: {
         confirmText: 'Are you sure you want to delete this user?',
-        componentData: this.selectedUserDetail,
+        componentData: userDetail,
         type: 'remove',
         identity: 'user-list-delete'
       },
@@ -109,8 +223,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   openDialog(component, data) {
     let dialogDetails: any;
-
-
     /**
      * Dialog modal window
      */
@@ -128,21 +240,4 @@ export class UserListComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
-
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
 }

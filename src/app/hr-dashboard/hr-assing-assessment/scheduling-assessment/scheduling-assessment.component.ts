@@ -40,11 +40,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
-
-  displayedColumns: any[] = ['username', 'candidate_id', 'gender', 'insitute'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
+export class SchedulingAssessmentComponent implements OnInit {
   userList:any;
   disciplineDropdown: any = [];
   shortlistLists: any;
@@ -53,8 +49,23 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   selectedShortlistname:any = '';
   datetime:any = '';
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any = [];
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   constructor(private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -65,7 +76,102 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // this.getDiscipline();
+    this.tabledef();
     this.getShortlistNames();
+  }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+    // displayedColumns: any[] = ['username', 'candidate_id', 'gender', 'insitute'];
+
+    this.columnDefs = [
+      // {
+      //   headerName: 'S no', field: 'counter',
+      //   filter: true,
+      //   floatingFilterComponentParams: { suppressFilterButton: true },
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'counter',
+      //   // comparator: this.customComparator,
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
+      {
+        headerName: 'Candidate name', field: 'username',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'username',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Gender', field: 'gender',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        sortable: true,
+        tooltipField: 'gender',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Insitute', field: 'insitute',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'insitute',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
   }
 
   onChange(result: Date): void {
@@ -120,10 +226,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
           this.disciplineDropdown.push(element.discipline);
         }
       });
-
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
   }
@@ -208,22 +311,6 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
         this.scheduleAssessment();
       }
     });
-  }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
 }

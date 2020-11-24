@@ -15,6 +15,7 @@ import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment
 import { TpoAddCandidateComponent } from './tpo-user-management/tpo-add-candidate/tpo-add-candidate.component';
 import { TpoReportsComponent } from './tpo-reports/tpo-reports.component';
 import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-reports/tpo-bulk-upload-reports.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-rep
     CommonModule,
     SharedModule,
     MaterialModule,
-    TpoDashboardRoutingModule
+    TpoDashboardRoutingModule,
+    AgGridModule.withComponents([])
   ]
 })
 export class TpoDashboardModule { }

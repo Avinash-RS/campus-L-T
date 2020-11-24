@@ -48,7 +48,7 @@ export const MY_FORMATS = {
 })
 export class ReportsListComponent implements OnInit {
 
-  displayedColumns: any[] = ['reportname', 'col2', 'col3', 'col4', 'fdate', 'tdate', 'action'];
+  displayedColumns: any[] = ['reportname', 'col2', 'col3', 'col4', 'action'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -73,6 +73,8 @@ export class ReportsListComponent implements OnInit {
   selectedTagNameSecond:any;
   selectedCityForSecond:any;
   selectedInstituteNameForSecond:any;
+  evaluationReportInstitutes: any;
+  selectedevaluationReportInstitute: any;
   yesexist = {
     width: 'auto !important'
   }
@@ -95,6 +97,9 @@ export class ReportsListComponent implements OnInit {
     this.getTagName();
     this.getAllCitys();
     this.getAllAssessmentName();
+    this.evaluationInstitute();
+    console.log(moment(), moment().date);
+    
   }
 
   getInstitute() {
@@ -112,13 +117,15 @@ export class ReportsListComponent implements OnInit {
   getUsersList() {
     // this.adminService.userList().subscribe((data: any) => {
     // this.appConfig.hideLoader();
+    const today = moment();
+    
     const data = [{
       'reportname': 'abc',
       'col2': 'a',
       'col3': 'b',
       'col4': 'c',
-      'fdate': 'd',
-      'tdate': 'e',
+      'fdate': today,
+      'tdate': today,
       'action': 'f'
     },
     {
@@ -126,8 +133,8 @@ export class ReportsListComponent implements OnInit {
       'col2': 'a',
       'col3': 'b',
       'col4': 'c',
-      'fdate': 'd',
-      'tdate': 'e',
+      'fdate': today,
+      'tdate': today,
       'action': 'f'
     },
     {
@@ -135,8 +142,8 @@ export class ReportsListComponent implements OnInit {
       'col2': 'a',
       'col3': 'b',
       'col4': 'c',
-      'fdate': 'd',
-      'tdate': 'e',
+      'fdate': today,
+      'tdate': today,
       'action': 'f'
     },
     {
@@ -144,8 +151,8 @@ export class ReportsListComponent implements OnInit {
       'col2': 'a',
       'col3': 'b',
       'col4': 'c',
-      'fdate': 'd',
-      'tdate': 'e',
+      'fdate': today,
+      'tdate': today,
       'action': 'f'
     }
     // ,
@@ -201,13 +208,26 @@ export class ReportsListComponent implements OnInit {
 
   // To get assessment name
   getAllAssessmentName() {
-    this.adminService.getAllAssessmentNames().subscribe((data: any) => {
+    this.adminService.shortlist2ReportAPI().subscribe((data: any) => {
       this.appConfig.hideLoader();
 
-      this.assessmentNameDropdown = data;
+      this.assessmentNameDropdown = data ? data : [];
+      
 
     }, (err) => {
     });
+  }
+
+  evaluationInstitute() {
+    this.adminService.evalationReportAPI().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.evaluationReportInstitutes = data ? data : [];
+
+      // this.assessmentNameDropdown = data;
+
+    }, (err) => {
+    });
+
   }
 
   // To get 1st shortlist report
@@ -220,12 +240,12 @@ export class ReportsListComponent implements OnInit {
       'institute': ''
     };
 
-    if(data.to._i){
-      let tomonth = data.to._i.month + 1;
-      let frommonth = data.from._i.month + 1;
+    if(data.to && data.to._d){
+      const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
+      const dateF = data.from && data.from._d ? moment(data.from._d).format('YYYY-MM-DD') : '';
       sendReq = {
-        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
-        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
+        'to': dateT.toString(),
+        'from': dateF.toString(),
         'tag': data.tagName,
         'city': data.city,
         'institute': data.instituteName
@@ -236,7 +256,7 @@ export class ReportsListComponent implements OnInit {
           this.appConfig.hideLoader();
           
           if(data && data[0] && data[0].url == 'No Data Found'){
-            this.appConfig.error(data[0].url, '');
+            this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 1st shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
@@ -245,7 +265,7 @@ export class ReportsListComponent implements OnInit {
         }, (err) => {
         });
       }else{
-        this.appConfig.error("To date should be greater", '');
+        this.appConfig.nzNotification("error", "Invalid date", "1st shortlist 'Date to' should be greater than 'Date from'");
       }
     }else{
       sendReq = {
@@ -260,7 +280,7 @@ export class ReportsListComponent implements OnInit {
           this.appConfig.hideLoader();
           
           if(data && data[0] && data[0].url == 'No Data Found'){
-            this.appConfig.error(data[0].url, '');
+            this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 1st shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
@@ -280,12 +300,12 @@ export class ReportsListComponent implements OnInit {
       'to_date': '',
       'from_date': ''
     };
-    if(data.to._i){
-      let tomonth = data.to._i.month + 1;
-      let frommonth = data.from._i.month + 1;
+    if(data.to && data.to._d){
+      const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
+      const dateF = data.from && data.from._d ? moment(data.from._d).format('YYYY-MM-DD') : '';
       sendReq = {
-        'to_date': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
-        'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date)
+        'to_date': dateT.toString(),
+        'from_date': dateF.toString()
       }
       if(sendReq.to_date >= sendReq.from_date){
         this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
@@ -297,37 +317,37 @@ export class ReportsListComponent implements OnInit {
         }, (err) => {
         });
       }else{
-        this.appConfig.error("To date should be greater", '');
+        this.appConfig.nzNotification("error", "Invalid date", "Interview Panel 'Date to' should be greater than 'Date from'");
       }
     }else{
-      this.appConfig.error("Date should be selected", '');
+      this.appConfig.nzNotification("error", "Invalid date", "Date field is mandatory for Interview panel report");
     }
   }
 
   // To get 2nd  shortlist report
   secondShortlistRepots(data) {
-
+    console.log(data);
+    
     let sendReq = {
       'to': '',
       'from': '',
-      'assement_name': ''
+      'institute_name': ''
     };
 
-    if(data.to._i){
-      let tomonth = data.to._i.month + 1;
-      let frommonth = data.from._i.month + 1;
+    if(data.to && data.to._d){
+      const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
+      const dateF = data.from && data.from._d ? moment(data.from._d).format('YYYY-MM-DD') : '';
       sendReq = {
-        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
-        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
-        'assement_name': data.assesment.assesment
+        'to': dateT.toString(),
+        'from': dateF.toString(),
+        'institute_name': data.institute_name
       }
       if(sendReq.to >= sendReq.from){
-      
         this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
           this.appConfig.hideLoader();
           
           if(data[0].url == 'No Data Found'){
-            this.appConfig.error(data[0].url, '');
+            this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 2nd shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
@@ -336,20 +356,19 @@ export class ReportsListComponent implements OnInit {
         }, (err) => {
         });
       }else{
-        this.appConfig.error("To date should be assessment date", '');
+        this.appConfig.nzNotification("error", "Invalid date", "2nd shortlist 'Date to' should be greater than 'Date from'");
       }
     }else{
       sendReq = {
         'to': '',
         'from': '',
-        'assement_name': data.assesment.assesment
+        'institute_name': data.institute_name
       }
-      
         this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
           this.appConfig.hideLoader();
           
           if(data[0].url == 'No Data Found'){
-            this.appConfig.error(data[0].url, '');
+            this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 2nd shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
@@ -357,7 +376,6 @@ export class ReportsListComponent implements OnInit {
   
         }, (err) => {
         });
-
       // this.appConfig.error("Date should be selected", '');
     }
   }
@@ -368,15 +386,15 @@ export class ReportsListComponent implements OnInit {
     let sendReq = {
       'to_date': '',
       'from_date': '',
-      'assement_name': ''
+      'institute_name': ''
     };
-    if(data.to._i){
-      let tomonth = data.to._i.month + 1;
-      let frommonth = data.from._i.month + 1;
+    if(data.to && data.to._d){
+      const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
+      const dateF = data.from && data.from._d ? moment(data.from._d).format('YYYY-MM-DD') : '';
       sendReq = {
-        'to_date': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
-        'from_date': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
-        'assement_name': data.assesment.assesment
+        'to_date': dateT.toString(),
+        'from_date': dateF.toString(),
+        'institute_name': data.institute_name
       }
       if(sendReq.to_date >= sendReq.from_date){
         this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
@@ -388,13 +406,13 @@ export class ReportsListComponent implements OnInit {
         }, (err) => {
         });
       }else{
-        this.appConfig.error("To date should be assessment date", '');
+        this.appConfig.nzNotification("error", "Invalid date", "Evaluation feedback 'Date to' should be greater than 'Date from'");
       }
     }else{
       sendReq = {
         'to_date': '',
         'from_date': '',
-        'assement_name': data.assesment.assesment
+        'institute_name': data.institute_name
       }
         this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
           this.appConfig.hideLoader();
@@ -419,12 +437,12 @@ export class ReportsListComponent implements OnInit {
       'institute': ''
     };
 
-    if(data.to._i){
-      let tomonth = data.to._i.month + 1;
-      let frommonth = data.from._i.month + 1;
+    if(data.to && data.to._d){
+      const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
+      const dateF = data.from && data.from._d ? moment(data.from._d).format('YYYY-MM-DD') : '';
       sendReq = {
-        'to': data.to._i.year + '-' + (tomonth <= 9 ? '0' + tomonth : tomonth)  + '-' +  (data.to._i.date <= 9? '0' + data.to._i.date : data.to._i.date),
-        'from': data.from._i.year + '-' + (frommonth <= 9 ? '0' + frommonth : frommonth)  + '-' +  (data.from._i.date <= 9? '0' + data.from._i.date : data.from._i.date),
+        'to': dateT.toString(),
+        'from': dateF.toString(),
         'tag': data.tagName,
         'city': data.city,
         'institute': data.instituteName
@@ -440,7 +458,7 @@ export class ReportsListComponent implements OnInit {
         }, (err) => {
         });
       }else{
-        this.appConfig.error("To date should be greater", '');
+        this.appConfig.nzNotification("error", "Invalid date", "Candidate report 'Date to' should be greater than 'Date from'");
       }
     }else{
       sendReq = {
@@ -487,39 +505,44 @@ export class ReportsListComponent implements OnInit {
     
         this.getFirstsortlistRepots(sendData);
       }else{
-        this.appConfig.error("Please select a filter criteria", '');
+        this.appConfig.nzNotification("error", "1st Shortlist", "Tag name or City or Insitute name is required");
       }
     }else if(index == 1){
       if(this.selectedAssessmentName){
         let sendData = {
-          'assesment': this.selectedAssessmentName,
+          'institute_name': this.selectedAssessmentName,
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
         }
         this.secondShortlistRepots(sendData);
       }else{
-        this.appConfig.error("Please select a filter criteria", '');
+        this.appConfig.nzNotification("error", "2nd Shortlist", "Institute name is required");
       }
     }else if(index == 2){
-      if(this.selectedAssessmentNameSecond){
+      if(this.selectedevaluationReportInstitute){
+        // let sendData = {
+        //   'assesment': this.selectedAssessmentNameSecond,
+        //   "to": this.userList[index].tdate,
+        //   "from": this.userList[index].fdate
+        // }
         let sendData = {
-          'assesment': this.selectedAssessmentNameSecond,
+          'institute_name': this.selectedevaluationReportInstitute,
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
-        }
+        }                
         this.feedbackRepots(sendData);
       }else{
-        this.appConfig.error("Please select a filter criteria", '');
+        this.appConfig.nzNotification("error", "Evaluation Feedback", "Institute name is required");
       }
     }else if(index == 3){
-      if(this.userList[index].tdate != 'e'){
+      if(this.userList[index].tdate){
         let dateFilter = {
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
         }
         this.interviewPanelRepots(dateFilter);
       }else{
-        this.appConfig.error("Date should be selected", '');
+        this.appConfig.nzNotification("error", "Interview Panel", "Date is required");
       }
     }
     // else if(index == 3){

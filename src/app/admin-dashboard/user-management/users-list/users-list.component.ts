@@ -14,27 +14,34 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit, AfterViewInit {
+export class UsersListComponent implements OnInit {
 
   showPage = true;
-  displayedColumns: any[] = ['counter', 'name', 'email', 'roles_target_id', 'checked'];
-  dataSource: MatTableDataSource<any>;
   displayNoRecords = false;
   pageEvent: any;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-
-  /* Below code will be used when mat table is inside conditional statement */
-  // @ViewChild(MatPaginator, { static: false }) set contents(paginator: MatPaginator) {
-  //   this.dataSource.paginator = paginator;
-  // }
-  // @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
-  //   this.dataSource.sort = sort;
-  // }
   selectedUserDetail: any;
   userList: any;
   radioCheck;
+
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
+
 
   constructor(
     private appConfig: AppConfigService,
@@ -45,11 +52,110 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
 
     // Rxjs subject for update user list
     this.rxjsUpdateUserList();
   }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    // event['data']
+    if (event.colDef.field === 'user_id') {
+      this.selectedUserDetail = event['data'] ? event['data'] : '';
+      this.removeUser(this.selectedUserDetail);  
+    }
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Name', field: 'name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'name',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Email id', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Role', field: 'roles_target_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'roles_target_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Delete', field: 'user_id',
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
+        cellRenderer: (params) => {
+          return `<button class="submit agTable" mat-raised-button><span style="margin-right: .25em;"><img src="assets/images/delete-white-18dp.svg" alt="" srcset=""></span><span> Remove</span></button>`;
+        },
+        minWidth: 120,
+        maxWidth: 120,
+      }
+    ];
+    this.getUsersList();
+  }
+
 
   // To get all users
   getUsersList() {
@@ -61,54 +167,19 @@ export class UsersListComponent implements OnInit, AfterViewInit {
         count = count + 1;
         element['counter'] = count;
         element.checked = false;
+        element['user_id'] = element['uid'];
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
   }
 
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if (this.dataSource.filteredData.length == 0) {
-      this.displayNoRecords = true;
-    } else {
-      this.displayNoRecords = false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  selectedUser(userDetail) {
-    this.selectedUserDetail = userDetail;
-
-  }
-
-  //pagination next and previos click
-  handlePage(e: any) {
-    this.selectedUserDetail = null;
-  }
-
-  removeUser() {
+  removeUser(userDetail) {
     const data = {
       iconName: '',
       sharedData: {
         confirmText: 'Are you sure you want to delete this user?',
-        componentData: this.selectedUserDetail,
+        componentData: userDetail,
         type: 'delete',
         identity: 'user-list-delete'
       },
@@ -126,7 +197,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   // Rxjs subject for update user list
   rxjsUpdateUserList() {
     this.sharedService.updateUserlist.subscribe((data) => {
-      this.getUsersList();
+      this.tabledef();
     }, (err) => {
 
     });

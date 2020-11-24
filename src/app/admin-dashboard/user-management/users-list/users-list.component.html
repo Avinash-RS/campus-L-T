@@ -4,80 +4,21 @@
   <div class="user-list-wrapper">
     <!-- <mat-form-field>
         <mat-label>Filter</mat-label> -->
-    <div class="search-bar">
-      <div class="search-icon">
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
-      </div>
-
-      <div class="button-wrapper">
-        <span [matTooltip]="selectedUserDetail ? '' : 'Please select the user'">
-          <button class="submit btn-margin-space-1" (click)="removeUser()"
-            [ngClass]="selectedUserDetail ? '' : 'disabled'" mat-raised-button>
-            <span style="margin-right: .25em;"><img src="assets/images/delete-white-18dp.svg" alt="" srcset=""></span>
-            <span> Remove</span>
-          </button>
-        </span>
-      </div>
-
-    </div>
+        <div class="search-bar">
+          <div class="search-icon">
+            <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+            <img src="assets/images/feather-search.svg" alt="" srcset="">
+          </div>
+    
+        </div>    
     <!-- </mat-form-field> -->
 
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-      <!-- Position Column -->
-      <ng-container matColumnDef="counter">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.counter}} </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name ? element.name : ''}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : ''}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="roles_target_id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-        <td mat-cell *matCellDef="let element">
-          {{element.roles_target_id ? (element.roles_target_id | uppercase) : '-'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="checked">
-        <th mat-header-cell *matHeaderCellDef> Select </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-radio-button (change)="selectedUser(element)" [value]="radioCheck"></mat-radio-button>
-          <!-- <nz-radio-group (ngModelChange)="selectedUser(element)" [(ngModel)]="radioCheck">
-            <label nz-radio [nzValue]="element.uid"></label>
-          </nz-radio-group> -->
-        </td>
-      </ng-container>
-
-      <!-- fifth Header row first group -->
-      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
-          <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
-            {{'No Data Available'}}
-          </th>
-        </div>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
-          *matHeaderRowDef="['fifth-header-row-first-group']">
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
-    </table>
-    <div *ngIf="displayNoRecords" class="noRecordText">
-      No data available
-    </div>
-    <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]" (page)="pageEvent = handlePage($event)"></mat-paginator>
+    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
+    [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
+    (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+    headerHeight="40">
+    </ag-grid-angular>
   </div>
 
 </div>

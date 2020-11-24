@@ -103,10 +103,10 @@ th {
 
 .input-box {
   // border-radius: 5px;
-  border: solid $input-border 1px;
+  // border: solid $input-border 1px;
   // box-shadow: $shadow-light-black;
-  width: 200px;
-  // width: 100%;
+  // width: 200px;
+  width: 100%;
   display: flex;
   align-items: center;
   background: $white-primary;
@@ -117,14 +117,15 @@ th {
   input {
     margin: 0 !important;
     width: 100%;
-    padding: 0 1em;
+    padding: 0 .5em;
     font-size: 14px;
     color: $secondary;
     vertical-align: middle;
-    border: none;
+    border: solid $input-border 1px;
+  // border: none !important;
     outline: none;
     background: $white-primary;
-    border-radius: 5px;
+    border-radius: 0px !important;
     display: flex !important;
     box-sizing: border-box;
     height: 32px;
@@ -171,3 +172,15 @@ th {
   ::ng-deep .ant-select-dropdown {
     width: 650px !important;
   }
+.inline-table-flex {
+    display: flex;
+    flex-direction: column;
+    padding: .5em 0;
+    nz-select {
+      margin-bottom: .5em !important;
+    }
+    nz-select:last-child {
+      margin-bottom: 0em !important;
+    }
+
+}

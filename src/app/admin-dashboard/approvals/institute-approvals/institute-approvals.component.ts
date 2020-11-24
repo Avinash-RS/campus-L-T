@@ -20,15 +20,9 @@ import moment from 'moment';
     ]),
   ],
 })
-export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
+export class InstituteApprovalsComponent implements OnInit {
 
   showPage = true;
-  displayedColumns: any[] = ['id', 'field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'field_date', 'field_time', 'field_first_name', 'approve', 'reject', 'checked'];
-
-  dataSource: MatTableDataSource<any>;
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   /* Below code will be used when mat table is inside conditional statement */
   // @ViewChild(MatPaginator, { static: false }) set contents(paginator: MatPaginator) {
@@ -37,14 +31,32 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   // @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
   //   this.dataSource.sort = sort;
   // }
+  // <i class="material-icons">done</i>
+
   selectedUserDetail: any;
   userList: any;
   radioCheck;
   rejectCheck;
   buttonDisabled = true;
   displayNoRecords = false;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
-  isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
   status: string;
 
   constructor(
@@ -57,72 +69,227 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.tabledef();
+  }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
+
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    // event['data']
+    if (event.colDef.field === 'approve') {
+      this.selectedUserDetail = event['data'] ? event['data'] : '';
+      this.submit('approve');
+    }
+    if (event.colDef.field === 'reject') {
+      this.selectedUserDetail = event['data'] ? event['data'] : '';
+      this.submit('reject');
+    }
+  }
+
+  getModel(e) {
+    // console.log(e);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');
+      // this.toast.warning('No reuslts found');
+    }
+  }
+
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        minWidth: 100,
+        sortable: true,
+        tooltipField: 'id',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Approve', field: 'approve',
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellRenderer: (params) => {
+          return `<i style="color: green; cursor: pointer" class="material-icons agCellStyle">done</i>`;
+        },
+        minWidth: 88,
+        maxWidth: 105,
+        tooltipField: 'approve'
+      },
+      {
+        headerName: 'Reject', field: 'reject',
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellRenderer: (params) => {
+          return `<i style="color: #C02222; cursor: pointer;" class="material-icons agCellStyle">close</i>`;
+        },
+        minWidth: 88,
+        maxWidth: 105,
+        tooltipField: 'reject',
+      },
+      {
+        headerName: 'Institute name', field: 'field_institute_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_name',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute email id', field: 'email',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'State', field: 'field_institute_state',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 100,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_state',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'City', field: 'field_institute_city',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 100,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_city',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date', field: 'field_date',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: `Contact person`, field: 'field_first_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'field_first_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+      },
+      {
+        headerName: 'Job title', field: 'field_institute_title',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_title',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Mobile number', field: 'field_institute_mobile_number',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_institute_mobile_number',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Comments', field: 'field_insitute_comments',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        tooltipField: 'field_insitute_comments',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        valueGetter: (params) => {
+          return params.data.field_insitute_comments ? params.data.field_insitute_comments : '-';
+        },
+      },
+    ];
     this.getUsersList();
   }
 
   // To get all users
   getUsersList() {
     this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      this.appConfig.hideLoader(); 
+      this.appConfig.hideLoader();
 
       this.userList = data ? data : [];
       this.userList.forEach(element => {
         element.checked = false;
+        element.approve = 'Approve';
+        element.reject = 'Reject';
+        const fn = element && element.field_first_name ? element.field_first_name : '';
+        const ln = element && element.field_institute_last_name ? element.field_institute_last_name : '';
+        element.field_first_name = fn + ' ' + ln;
         element['field_date'] = element && element['field_date'] ? element['field_date'] : '-';
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
   }
 
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  getDateFormat(date) {
-    if (date) {
-      const split = moment(date).format('DD MMM YYYY');
-      const output = split;
-      return output;
-
-    } else {
-      return '-';
-    }
-  }
-
-
-  submit(event) {
-    event.stopPropagation();
+  submit(confirm) {
     let data;
-    if (this.status === 'approve') {
+    if (confirm === 'approve') {
       data = {
         status: 'approve',
         instituteName: this.selectedUserDetail['field_institute_name']
       };
     }
-    if (this.status === 'reject') {
+    if (confirm === 'reject') {
       data = {
         status: 'reject',
         instituteName: this.selectedUserDetail['field_institute_name']
@@ -176,35 +343,6 @@ export class InstituteApprovalsComponent implements OnInit, AfterViewInit {
       this.ngOnInit();
     }, (err) => {
 
-    });
-  }
-
-  selectedUser(userDetail, status) {
-    this.status = 'approve';
-    this.buttonDisabled = false;
-    this.rejectCheck = null;
-
-    this.selectedUserDetail = userDetail;
-    this.userList.forEach(element => {
-      if (element['email'] === userDetail['email']) {
-        element['checked'] = true;
-      } else {
-        element['checked'] = false;
-      }
-    });
-  }
-
-  selectedUserReject(userDetail, status) {
-    this.buttonDisabled = false;
-    this.status = 'reject';
-    this.radioCheck = null;
-    this.selectedUserDetail = userDetail;
-    this.userList.forEach(element => {
-      if (element['email'] === userDetail['email']) {
-        element['checked'] = true;
-      } else {
-        element['checked'] = false;
-      }
     });
   }
 

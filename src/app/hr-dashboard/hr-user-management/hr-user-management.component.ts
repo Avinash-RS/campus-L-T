@@ -25,7 +25,7 @@ export class HrUserManagementComponent implements OnInit {
       },
       {
         icon: '002-group-1.svg',
-        name: 'User details',
+        name: 'Panel details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST
       },
       {

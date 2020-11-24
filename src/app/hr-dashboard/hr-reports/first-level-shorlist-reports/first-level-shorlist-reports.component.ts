@@ -14,16 +14,27 @@ import moment from 'moment';
   templateUrl: './first-level-shorlist-reports.component.html',
   styleUrls: ['./first-level-shorlist-reports.component.scss']
 })
-export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit {
+export class FirstLevelShorlistReportsComponent implements OnInit {
 
   BASE_URL = environment.API_BASE_URL;
 
-  displayedColumns: any[] = ['uid', 'foldername', 'shortlistname', 'dates', 'times', 'shortlistby', 'download'];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    lockPosition: true,
+    suppressMenu: true,
+    unSortIcon: true,
+  };
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
 
   selectedUserDetail: any;
   userList: any;
@@ -40,18 +51,113 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
   ) { }
 
   ngOnInit() {
-    this.getUsersList();
+    this.tabledef();
   }
 
-  getDateFormat(date) {
-    if (date) {
-      const split = moment(date).format('DD MMM YYYY');
-      const output = split.toUpperCase();
-      return output;
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
 
-    } else {
-      return '-';
+  sortevent(e) {
+  }
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    if (event.colDef.field === 'details') {
+      this.downloadExcel(event['data']);
     }
+  }
+
+  getModel(e) {
+    // console.log(e);
+    
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      // this.toast.warning('No reuslts found');
+    }
+  }
+  tabledef() {
+    // displayedColumns: any[] = ['uid', 'foldername', 'shortlistname', 'dates', 'times', 'shortlistby', 'download'];
+
+    this.columnDefs = [
+      {
+        headerName: 'S no', field: 'counter',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Shortlist name', field: 'shortlistname',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'shortlistname',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date', field: 'dates',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        sortable: true,
+        tooltipField: 'dates',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Time', field: 'times',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        maxWidth: 120,
+        sortable: true,
+        tooltipField: 'times',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Shortlisted by', field: 'shortlistby',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'shortlistby',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate details', field: 'details',
+        cellClass: 'agCellStyle',
+        cellRenderer: (params) => {
+            return `<button class="table-btn agTable" mat-raised-button>Download</button>`;            
+        },
+        sortable: true,
+      }
+    ];
+    this.getUsersList();
   }
 
   // To get all users
@@ -62,11 +168,10 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
-        element['uid'] = count;
+        element['counter'] = count;
+        element['details'] = count;
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.rowData = this.userList;
     }, (err) => {
     });
   }
@@ -84,36 +189,6 @@ export class FirstLevelShorlistReportsComponent implements OnInit, AfterViewInit
 
     }, (err) => {
     });
-  }
-  
-  selectedUser(userDetail) {
-    
-  }
-
-
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
 }

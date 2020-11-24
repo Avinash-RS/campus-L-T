@@ -17,6 +17,7 @@ import { EvaluationFormComponent } from './evaluation-form/evaluation-form.compo
 import { SharedInvPanelHeaderComponent } from './inv-candidate-details/shared-inv-panel-header/shared-inv-panel-header.component';
 import { SubSharedInvPanelHeaderComponent } from './inv-candidate-details/sub-shared-inv-panel-header/sub-shared-inv-panel-header.component';
 import { InvShortlistedCandidatesViewScreenComponent } from './inv-candidate-details/inv-shortlisted-candidates-view-screen/inv-shortlisted-candidates-view-screen.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { InvShortlistedCandidatesViewScreenComponent } from './inv-candidate-det
     CommonModule,
     SharedModule,
     MaterialModule,
-    InterviewPanelDashboardRoutingModule
+    InterviewPanelDashboardRoutingModule,
+    AgGridModule.withComponents([])
   ]
 })
 export class InterviewPanelDashboardModule { }

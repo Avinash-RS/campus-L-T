@@ -146,6 +146,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         tooltipField: 'name',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellStyle: { 'cursor': 'pointer', color: '#C02222' },
+        cellRenderer: (params) => {
+          return `<span style="border-bottom: solid #C02222 1px">${params['data']['name']} </span>`;
         }
       },
       {
@@ -281,8 +285,18 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
 
   onCellClicked(event) {
     if (event.colDef.field === 'name') {
+      console.log(event.colDef);
+      console.log(event);
+      const param = {
+        assessment: event['data'] && event['data']['shortlist_name'] ? event['data']['shortlist_name'] : '',
+        cid: event['data'] && event['data']['candidate_id'] ? event['data']['candidate_id'] : '',
+        name: event['data'] && event['data']['name'] ? event['data']['name'] : '',
+        status: event['data'] && event['data']['evaluation_status'] ? event['data']['evaluation_status'] : '',
+        tag: event['data'] && event['data']['tag'] ? event['data']['tag'] : '',
+        uid: event['data'] && event['data']['uid'] ? event['data']['uid'] : ''
+      }      
       // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
-      // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: '', id: '', name: '', status: '', tag: '', uid: ''});
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION, { data: param['assessment'], id: param['cid'], name: param['name'], status: param['status'], tag: param['tag'], uid: param['uid'] });
     }
   }
 
