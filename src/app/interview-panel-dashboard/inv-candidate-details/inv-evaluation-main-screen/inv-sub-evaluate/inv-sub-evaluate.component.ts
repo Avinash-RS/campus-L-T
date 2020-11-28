@@ -11,6 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { CONSTANT } from 'src/app/constants/app-constants.service.js';
+import * as _moment from 'moment';
+import moment from 'moment';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 export interface PeriodicElement {
   id: number;
@@ -25,7 +28,13 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-inv-sub-evaluate',
   templateUrl: './inv-sub-evaluate.component.html',
-  styleUrls: ['./inv-sub-evaluate.component.scss']
+  styleUrls: ['./inv-sub-evaluate.component.scss'],
+  providers: [
+    {
+      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+      useValue: { useUtc: true }
+    },
+  ],
 })
 export class InvSubEvaluateComponent implements OnInit {
   displayedColumns: string[] = ['name', 'veryGood', 'good', 'acceptable', 'notSuitable'];
@@ -307,10 +316,11 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   submitEvaluationFormAPI() {
+    const dateInterview = this.evaluationForm.value.interview_date ? moment(this.evaluationForm.value.interview_date).format('YYYY-MM-DD') : '';
     const apiData =
         {
           uid: this.uid ? this.uid : '',
-          interview_date: this.evaluationForm.value.interview_date,
+          interview_date: dateInterview,
           interview_place: this.evaluationForm.value.interview_place,
           depth_knowledge: this.evaluationForm.value.depth_knowledge,
           breadth_knowledge: this.evaluationForm.value.breadth_knowledge,
