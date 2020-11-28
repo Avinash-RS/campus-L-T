@@ -38,6 +38,7 @@
               "./src/assets/css/ng-zorro-antd.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "./node_modules/videogular2/fonts/videogular.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
             "scripts": [

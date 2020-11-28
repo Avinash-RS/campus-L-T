@@ -11,6 +11,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { CONSTANT } from './constants/app-constants.service';
 import { SharedServiceService } from './services/shared-service.service';
+import { ToastrService } from 'ngx-toastr';
+import { AdminServiceService } from './services/admin-service.service';
 
 @Component({
   selector: 'app-root',
@@ -38,11 +40,13 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private apiService: ApiServiceService,
-    private sharedService: SharedServiceService,
+    private adminService: AdminServiceService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private toastr: ToastrService
   ) {
+    // this.toastr.warning('Please choose the file to be uploaded', 'Invalid Excel headers');
     this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
     this.appConfig.clearLocalDataOne('personalFormTouched');
@@ -66,10 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getScreenSize();
-    this.checkIE();
-    // const isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent)
-    
-    // this.connectionStatusMethod();
+    this.checkIE();    
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {

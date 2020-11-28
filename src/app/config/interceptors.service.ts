@@ -5,10 +5,11 @@ import {
   HttpResponse,
   HttpHandler,
   HttpEvent,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 import { AppConfigService } from './app-config.service';
 import { environment } from 'src/environments/environment';
 import { CONSTANT } from '../constants/app-constants.service';
@@ -27,21 +28,35 @@ export class InterceptorsService implements HttpInterceptor {
     if (request.url !== `${this.BASE_URL}/rest/session/token`) {
       this.appConfig.showLoader();
     }
+    // created on 28-Nov
+    const headers = new HttpHeaders({
+      'Accept': 'application/json'
+    });
 
-    return next.handle(request).pipe(
+    const clone = request.clone({
+      headers: request.headers.set('Accept', 'application/json')
+    });
+    return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
-        if (!request.headers.has('Content-Type')) {
-          // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
-          request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
-        }
-
-        if (event instanceof HttpResponse) {
-          // this.appConfig.hideLoader();
-          return event;
-        }
-        // this.appConfig.hideLoader();
         return event;
       }),
+      retry(3),
+      // Hidden on 28-Nov
+      // return next.handle(request).pipe(
+      //   map((event: HttpEvent<any>) => {
+      //     if (!request.headers.has('Content-Type')) {
+      //       // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
+      //       request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
+      //     }
+
+      //     if (event instanceof HttpResponse) {
+      //       // this.appConfig.hideLoader();
+      //       return event;
+      //     }
+      //     // this.appConfig.hideLoader();
+      //     return event;
+      //   }),
+      //   retry(3),
       catchError((error: HttpErrorResponse) => {
         // let data = {};
         // data = {
