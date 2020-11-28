@@ -421,7 +421,7 @@
             <textarea matInput formControlName="content"></textarea>
             <div *ngIf="f.content.touched && f.content.errors" class="mand validation1">
                 <span *ngIf="f.content.errors?.maxlength">Maxlength of 100 characters only allowed</span>
-                <span *ngIf="f.contant.errors?.pattern">Alpha numerics only allowed</span>
+                <span *ngIf="f.content.errors?.pattern">Alpha numerics only allowed</span>
               </div>
 
           <!-- </mat-form-field> -->
