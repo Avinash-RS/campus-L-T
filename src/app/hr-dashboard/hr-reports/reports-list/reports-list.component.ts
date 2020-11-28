@@ -519,20 +519,20 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.nzNotification("error", "2nd Shortlist", "Institute name is required");
       }
     }else if(index == 2){
-      if(this.selectedevaluationReportInstitute){
+      if(this.selectedevaluationReportInstitute || (this.userList[index].fdate && this.userList[index].fdate['_d']) && (this.userList[index].tdate && this.userList[index].tdate['_d'])){
         // let sendData = {
         //   'assesment': this.selectedAssessmentNameSecond,
         //   "to": this.userList[index].tdate,
         //   "from": this.userList[index].fdate
         // }
         let sendData = {
-          'institute_name': this.selectedevaluationReportInstitute,
+          'institute_name': this.selectedevaluationReportInstitute ? this.selectedevaluationReportInstitute : '',
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
         }                
         this.feedbackRepots(sendData);
       }else{
-        this.appConfig.nzNotification("error", "Evaluation Feedback", "Institute name is required");
+        this.appConfig.nzNotification("error", "Evaluation Feedback", "Either Institute name Or Date field is mandatory");
       }
     }else if(index == 3){
       if(this.userList[index].tdate){
