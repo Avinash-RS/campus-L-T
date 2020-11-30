@@ -46,8 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private connectionService: ConnectionService,
     private toastr: ToastrService
   ) {
-    // this.toastr.warning('Please choose the file to be uploaded', 'Invalid Excel headers');
-    this.connectionStatusMethod();
+    // this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
     this.appConfig.clearLocalDataOne('personalFormTouched');
     this.appConfig.clearLocalDataOne('educationalFormTouched');
@@ -56,14 +55,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        // this.appConfig.showLoaderManual();
+        // this.connectionStatusMethod();
       }
       // On NavigationEnd or NavigationError or NavigationCancel
       // set showLoadingIndicator to false
       if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
-        // this.appConfig.hideLoaderManual();
         }
     });
   }
@@ -112,14 +110,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   connectionStatusMethod() {
     // Get the online/offline status from browser window
-    this.connectionService.monitor().subscribe(isConnected => {
+        this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
+      console.log('coming', this.isConnected);
       if (this.isConnected) {
-        this.status = 'You are back online';
+        // this.status = 'You are back online';
+      //  return this.appConfig.warning('You are online');
       } else {
-        this.status = 'You are offline';
+       return this.appConfig.warning('You are offline');
+        // this.status = 'You are offline';
       }
-      alert(this.status);
+      // alert(this.status);
     });
   }
 

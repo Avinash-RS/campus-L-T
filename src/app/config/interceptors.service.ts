@@ -70,7 +70,7 @@ export class InterceptorsService implements HttpInterceptor {
         if (error.status === 0) {
           this.appConfig.hideLoader();
           // this.appConfig.error(error.statusText + ': HTTP failure response', '');
-          this.appConfig.errorWithTitle('Network is down or Request is getting timed out.', 'Please try again later..');
+          this.appConfig.errorWithTitle('Your network connection is down or Request is getting timed out.', 'Please try again later..');
           return throwError(error);
         }
         if (error.status === 400) {
@@ -87,7 +87,7 @@ export class InterceptorsService implements HttpInterceptor {
         }
 
         if (error.status === 403) {
-          if (error.error && error.error.FailureReason && error.error.FailureReason.message === "'csrf_token' URL query argument is invalid.") {
+          if (error.error && error.error.FailureReason && error.error.FailureReason.message == "'csrf_token' URL query argument is invalid.") {
             this.appConfig.hideLoader();
             this.appConfig.clearLocalData();
             this.appConfig.error('Session expired. Please log in again', '');
@@ -122,8 +122,8 @@ export class InterceptorsService implements HttpInterceptor {
         }
         if (error.status === 500) {
           this.appConfig.hideLoader();
-          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '500 Internal server error', '');
+          this.appConfig.errorWithTitle(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+            ? error.error.message : 'Please try again later', 'Something went wrong');
           return throwError(error);
         }
         // if (error.status === 403) {

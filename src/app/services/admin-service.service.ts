@@ -23,7 +23,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -35,6 +35,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
@@ -46,6 +47,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/hal+json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
@@ -59,6 +61,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -69,6 +72,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -79,6 +83,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
     return headers;
