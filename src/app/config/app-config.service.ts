@@ -37,8 +37,15 @@ export class AppConfigService {
   ) {
   }
 
-  succes(val) {
+  success(val, title?: any) {
     this.toast.success(val);
+  }
+
+  error(val, title?: any) {
+    this.toast.warning(val);
+  }
+  errorWithTitle(val, title?: any) {
+    this.toast.warning(val, title);
   }
 
   warning(val) {
@@ -48,6 +55,22 @@ export class AppConfigService {
   warningWithTitle(val, title) {
     this.toast.warning(val, title);
   }
+
+   nzNotification(type: string, title: any, text: any): any {
+     if (type == 'error') {
+     return this.toast.warning(text, title);
+     } 
+     if (type == 'success') {
+     return this.toast.success(text, title);
+     } else {
+           this.notification.create(
+      type,
+      title,
+      text,
+      { nzDuration: 3000 }
+    );
+     }
+}
 
   errorToast(val) {
     this.toast.error(val);
@@ -123,18 +146,18 @@ export class AppConfigService {
     });
   }
 
-  nzNotification(type: string, title: any, text: any): void {
-    this.notification.create(
-      type,
-      title,
-      text,
-      { nzDuration: 3000 }
-    );
-  }
+  // nzNotification(type: string, title: any, text: any): void {
+  //   this.notification.create(
+  //     type,
+  //     title,
+  //     text,
+  //     { nzDuration: 3000 }
+  //   );
+  // }
 
 
   // To show success Snack Bar Message
-  success(message: any, icon: any) {
+  successOld(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: 5000,
       verticalPosition: 'top',
@@ -144,7 +167,7 @@ export class AppConfigService {
   }
 
   // To show error Snack Bar Message
-  error(message: any, icon: any) {
+  errorOld(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: 5000,
       verticalPosition: 'top',

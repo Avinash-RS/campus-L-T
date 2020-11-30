@@ -69,7 +69,8 @@ export class InterceptorsService implements HttpInterceptor {
 
         if (error.status === 0) {
           this.appConfig.hideLoader();
-          this.appConfig.error(error.statusText + ': HTTP failure response', '');
+          // this.appConfig.error(error.statusText + ': HTTP failure response', '');
+          this.appConfig.errorWithTitle('Network is down or Request is getting timed out.', 'Please try again later..');
           return throwError(error);
         }
         if (error.status === 400) {

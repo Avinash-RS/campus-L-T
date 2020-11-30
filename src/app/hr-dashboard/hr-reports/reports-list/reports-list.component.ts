@@ -98,7 +98,6 @@ export class ReportsListComponent implements OnInit {
     this.getAllCitys();
     this.getAllAssessmentName();
     this.evaluationInstitute();
-    console.log(moment(), moment().date);
     
   }
 
@@ -326,7 +325,6 @@ export class ReportsListComponent implements OnInit {
 
   // To get 2nd  shortlist report
   secondShortlistRepots(data) {
-    console.log(data);
     
     let sendReq = {
       'to': '',
