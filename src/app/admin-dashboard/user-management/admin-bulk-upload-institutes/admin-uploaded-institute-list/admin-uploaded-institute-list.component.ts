@@ -76,7 +76,7 @@ export class AdminUploadedInstituteListComponent implements OnInit {
     // console.log(e);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+      this.appConfig.warning('No search results found');
     }
   }
 
@@ -84,8 +84,7 @@ export class AdminUploadedInstituteListComponent implements OnInit {
     this.gridApi.setQuickFilter(this.quickSearchValue);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');
-      // this.toast.warning('No reuslts found');
+      this.appConfig.warning('No search results found');
     }
   }
 

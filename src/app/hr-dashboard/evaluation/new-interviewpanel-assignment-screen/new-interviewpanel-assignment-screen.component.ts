@@ -172,7 +172,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
+      // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
     }
   }
 
@@ -180,7 +181,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     this.gridApi.setQuickFilter(this.quickSearchValue);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
+      // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
     }
   }
   tabledef() {
@@ -252,7 +254,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
+      // this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
     }
   }
 
@@ -260,7 +263,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     this.gridApiHR.setQuickFilter(this.quickSearchValueHR);
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No global search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
+      // this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No global search results found');
     }
   }
   tabledefHR() {

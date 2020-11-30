@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
 import * as XLSX from 'xlsx';
+import { ToastrService } from 'ngx-toastr';
 
 // tslint:disable-next-line: class-name
 export interface modalBox {
@@ -32,7 +33,24 @@ export class AppConfigService {
     private activatedRoute: ActivatedRoute,
     private message: NzMessageService,
     private notification: NzNotificationService,
+    public toast: ToastrService
   ) {
+  }
+
+  succes(val) {
+    this.toast.success(val);
+  }
+
+  warning(val) {
+    this.toast.warning(val);
+  }
+
+  warningWithTitle(val, title) {
+    this.toast.warning(val, title);
+  }
+
+  errorToast(val) {
+    this.toast.error(val);
   }
 
   // get Current route
