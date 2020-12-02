@@ -46,6 +46,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }

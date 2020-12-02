@@ -440,7 +440,7 @@ export class AdminServiceService {
       return this.http.post(`${this.BASE_URL}/api/institute_candidate_shortlist`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true });
     }
-  
+
 
   // based on assessment get candidate details
   getEvaluationCandidateData(data) {
@@ -520,13 +520,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // hr shortlist base candidate 
+  // hr shortlist base candidate
   getShortlistCandidateList(data) {
     return this.http.post(`${this.BASE_URL}/profile/assement_select`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // hr scheduling assessment 
+  // hr scheduling assessment
   schedulingAssessment(data) {
     return this.http.post(`${this.BASE_URL}/profile/assement_insert`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
@@ -534,7 +534,7 @@ export class AdminServiceService {
 
 
   getInterviewpanelInstitutes() {
-    return this.http.get(`${this.BASE_URL}/profile/getall_institue_assement`, 
+    return this.http.get(`${this.BASE_URL}/profile/getall_institue_assement`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

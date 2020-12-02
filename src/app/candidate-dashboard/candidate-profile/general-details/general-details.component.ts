@@ -64,6 +64,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
 
   ngOnInit() {
+    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }

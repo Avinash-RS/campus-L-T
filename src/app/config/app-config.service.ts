@@ -37,6 +37,12 @@ export class AppConfigService {
   ) {
   }
 
+  scrollToTop() {
+    let pos = window.pageYOffset;
+   return window.scrollTo(0, pos - 100); // how far to scroll on each step
+   // return window.scrollTo(0,0);
+  }
+
   success(val, title?: any) {
     this.toast.success(val);
   }
@@ -59,7 +65,7 @@ export class AppConfigService {
    nzNotification(type: string, title: any, text: any): any {
      if (type == 'error') {
      return this.toast.warning(text, title);
-     } 
+     }
      if (type == 'success') {
      return this.toast.success(text, title);
      } else {

@@ -105,6 +105,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.UGSpecification();
     this.PGSpecification();
     // this.defautValue();
+    this.appConfig.scrollToTop();
   }
 
   educationLevels() {

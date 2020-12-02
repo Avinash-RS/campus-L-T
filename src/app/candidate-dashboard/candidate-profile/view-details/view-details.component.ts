@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -50,6 +50,7 @@ export class ViewDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -58,7 +59,6 @@ export class ViewDetailsComponent implements OnInit {
       this.showNext = true;
     }
   }
-
   print() {
     this.sharedService.printSubject.next();
     // window.print();
@@ -222,7 +222,7 @@ export class ViewDetailsComponent implements OnInit {
         element['field_family_date_of_birth'] = { value: this.getDateFormat(element['field_family_date_of_birth']['value']) && this.getDateFormat(element['field_family_date_of_birth']['value']) != 'INVALID DATE ' ? this.getDateFormat(element['field_family_date_of_birth']['value']) : '' };
       }
     });
-    
+
     dump.educationValuearray.forEach(element => {
       if (element['field_year_of_passing']) {
         element['field_year_of_passing'] = { value: this.getMonthFormat(element['field_year_of_passing']['value']) };

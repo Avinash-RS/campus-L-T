@@ -96,7 +96,7 @@ export class SchedulingAssessmentComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -254,7 +254,7 @@ export class SchedulingAssessmentComponent implements OnInit {
   }
 
   submitDialog() {
-    
+
     if(this.assessmentName != ''){
       if(this.selectedDisciple != ''){
         if(this.selectedShortlistname != ''){
@@ -274,7 +274,7 @@ export class SchedulingAssessmentComponent implements OnInit {
               showCancel: 'No',
               showOk: ''
             };
-        
+
             this.openDialog(ShortlistBoxComponent, data);
 
           }else{

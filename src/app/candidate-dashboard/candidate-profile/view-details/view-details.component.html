@@ -36,7 +36,7 @@
                   </mat-radio-group>
                 <!-- <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label> -->
             </div>
-    
+
             <!-- <div class="radio">
               <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label>
             </div> -->
@@ -63,12 +63,12 @@
               <input class="dob-input" readonly type="text" [value]="userDetails && userDetails['dobYear'] ? userDetails['dobYear'] : ''">
             </div>
           </div>
-    
-    
+
+
         </div>
-    
+
       </div>
-    
+
       <div class="two-grid">
         <div class="form-wrapper-left">
           <div class="form-group">
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-    
+
       <div class="addressgrid">
         <div class="form-wrapper-left">
           <div class="form-group">
@@ -116,7 +116,7 @@
                 {{userDetails && userDetails['permanentZipCode'] ? userDetails['permanentZipCode'] : ''}}</div>
             </div>
           </div>
-    
+
         </div>
       </div>
       <ng-container *ngIf="userDetails && userDetails['languagesknown'] && userDetails['languagesknown'].length > 0">
@@ -166,9 +166,9 @@
           </div>
         </div>
       </ng-container>
-    
-    
-    
+
+
+
     </div>
     <div class="main-wrapper">
       <div class="main-heading-bottom">
@@ -203,7 +203,7 @@
           <label>Countries valid for</label>
           <input type="text" readonly [value]="userDetails && userDetails['passportValidFor'] ? userDetails['passportValidFor'] : ''">
         </div>
-    
+
       </div>
       <div class="main-heading-bottom">
         Health-related details
@@ -250,12 +250,12 @@
             </div>
           </div>
         </div>
-    
+
       </div>
-    
-    
-    
-    
+
+
+
+
       <div class="main-heading-bottom">
         Educational details
       </div>
@@ -285,30 +285,30 @@
           <div class="percentage-head">
             Percentage
           </div>
-    
+
         </div>
         <ng-container *ngIf="userDetails">
         <div class="qualify-wrapper" *ngFor="let dup of userDetails['educationValuearray']">
           <input class="level" readonly [value]="dup['field_level']['value']">
           <input class="board" type="text" readonly [value]="dup['field_board_university']['value']">
           <input class="institute" readonly [value]="dup['field_institute']['value']">
-    
+
           <input class="discipline" readonly [value]="dup['field_discipline']['value']">
-    
+
           <input class="specification" readonly [value]="dup['field_specification']['value']">
-    
+
           <input class="year" readonly [value]="dup['field_year_of_passing']['value']">
-    
+
           <input class="percentage" readonly [value]="dup['field_backlogs']['value']">
-    
+
           <input class="percentage" readonly [value]="dup['field_percentage']['value']">
-    
-    
+
+
         </div>
       </ng-container>
       </div>
-    
-    
+
+
       <div class="main-heading-bottom">
         Family details
       </div>
@@ -329,9 +329,9 @@
           <div class="head-4">
             Occupation
           </div>
-    
+
         </div>
-    
+
         <div class="form">
           <ng-container *ngIf="userDetails">
             <div class="text-box-grid" *ngFor="let dup of userDetails['familyValuesArr']">
@@ -362,7 +362,7 @@
               <div class="text-4">
                 {{'-'}}
               </div>
-    
+
             </div> -->
           </ng-container>
         </div>
@@ -378,10 +378,10 @@
         <!-- <div class="skills" *ngIf="userDetails['skillArray'] && (userDetails['skillArray'].length < 1 || !userDetails['skillsArray'])">
           {{'NA'}}
         </div> -->
-    
+
       </div>
-    
-    
+
+
       <div class="main-heading-bottom">
         Relatives / Acquaintances in L & T group of companies
       </div>
@@ -402,9 +402,9 @@
           <div class="head-4">
             Company
           </div>
-    
+
         </div>
-    
+
         <div class="form">
           <ng-container *ngIf="userDetails">
             <div class="text-box-grid" *ngFor="let dup of userDetails['generalArray']">
@@ -435,13 +435,13 @@
               <div class="text-4">
                 {{'-'}}
               </div>
-    
+
             </div> -->
           </ng-container>
         </div>
       </div>
-    
-    
+
+
       <div class="main-heading-bottom">
         Faculty References
       </div>
@@ -453,12 +453,12 @@
           {{userDetails && userDetails['facultyReference2'] ? userDetails['facultyReference2'] : '-'}}
         </div>
       </div>
-    
+
     </div>
-    
+
     <!-- When empty array comes -->
     <!-- <div class="top-main-wrapper" *ngIf="!userData || userData.length < 1">
-    
+
       <div class="top-grid">
         <div class="profile-wrapper">
           <div class="profile">
@@ -500,12 +500,12 @@
               <input class="dob-input" readonly type="text" [value]="''">
             </div>
           </div>
-    
-    
+
+
         </div>
-    
+
       </div>
-    
+
       <div class="two-grid">
         <div class="form-wrapper-left">
           <div class="form-group">
@@ -520,7 +520,7 @@
           </div>
         </div>
       </div>
-    
+
       <div class="addressgrid">
         <div class="form-wrapper-left">
           <div class="form-group">
@@ -543,10 +543,10 @@
               <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div>
             </div>
           </div>
-    
+
         </div>
       </div>
-    
+
       <div style="margin: 1em 0 0 0 !important; height: 25px;" class="language-grid">
         <div class="form-wrapper-left" style="height: 0;">
           <div style="visibility: hidden;" class="form-group">
@@ -591,9 +591,9 @@
           </div>
         </div>
       </ng-container>
-    
-    
-    
+
+
+
     </div>
     <div class="main-wrapper" *ngIf="!userData || userData.length < 1">
       <div class="main-heading-bottom">
@@ -628,7 +628,7 @@
           <label>Countries valid for</label>
           <input type="text" readonly [value]="''">
         </div>
-    
+
       </div>
       <div class="main-heading-bottom">
         Health-related details
@@ -675,12 +675,12 @@
             </div>
           </div>
         </div>
-    
+
       </div>
-    
-    
-    
-    
+
+
+
+
       <div class="main-heading-bottom">
         Educational details
       </div>
@@ -707,29 +707,29 @@
           <div class="percentage-head">
             Percentage
           </div>
-    
+
         </div>
-    
+
         <div class="qualify-wrapper" *ngFor="let dup of [0,1,2]">
           <input class="level" readonly [value]="'NA'">
           <input class="board" type="text" readonly [value]="'NA'">
           <input class="institute" readonly [value]="'NA'">
-    
+
           <input class="discipline" readonly [value]="'NA'">
-    
+
           <input class="specification" readonly [value]="'NA'">
-    
+
           <input class="year" readonly [value]="'NA'">
-    
+
           <input class="percentage" readonly [value]="'NA'">
-    
+
           <input class="percentage" readonly [value]="'NA'">
-    
-    
+
+
         </div>
       </div>
-    
-    
+
+
       <div class="main-heading-bottom">
         Family details
       </div>
@@ -750,9 +750,9 @@
           <div class="head-4">
             Occupation
           </div>
-    
+
         </div>
-    
+
         <div class="form">
           <ng-container>
             <div class="text-box-grid" *ngFor="let dup of [0,1,2]">
@@ -780,8 +780,8 @@
           NA
         </div>
       </div>
-    
-    
+
+
       <div class="main-heading-bottom">
         Relatives / Acquaintances in L & T group of companies
       </div>
@@ -802,9 +802,9 @@
           <div class="head-4">
             Company
           </div>
-    
+
         </div>
-    
+
         <div class="form">
           <ng-container>
             <div class="text-box-grid" *ngFor="let dup of [0,1,2]">
@@ -824,8 +824,8 @@
           </ng-container>
         </div>
       </div>
-    
-    
+
+
       <div class="main-heading-bottom">
         Faculty References
       </div>
@@ -837,14 +837,13 @@
           NA
         </div>
       </div>
-    
+
     </div> -->
-    
+
     <div class="submit-button-wrapper">
       <button class="submit btn-margin-space" *ngIf="!showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
-    
+
       <button class="submit" *ngIf="!showNext" (click)="onSubmit()" mat-raised-button type="button">Next</button>
-    
+
     </div>
 </div>
-
