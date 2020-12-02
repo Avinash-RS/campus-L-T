@@ -17,7 +17,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
   styleUrls: ['./new-interviewpanel-assignment-screen.component.scss']
 })
 
-export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
+export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit {
 
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
@@ -150,6 +150,16 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
+    this.appConfig.scrollToTop();
+  }
+
+  ngAfterViewInit() {
+     // Hack: Scrolls to top of Page after page view initialized
+     let top = document.getElementById('top');
+     if (top !== null) {
+       top.scrollIntoView();
+       top = null;
+     }
   }
 
   onGridReady(params: any) {
@@ -169,7 +179,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
@@ -251,7 +261,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
 
   getModelHR(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
@@ -325,7 +335,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
       status: this.selectedStatus ? this.selectedStatus : ''
     }
     this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();      
+      this.appConfig.hideLoader();
       const datas = data ? data : [];
       this.showDefault = false;
       this.routeAssignedData = apiData;
@@ -439,7 +449,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
         });
         this.rowDataHR = this.userListHR;
     }
-  
+
 
   assigntoPanel(apiData) {
     this.adminService.assignToHR(apiData).subscribe((data: any) => {
@@ -455,7 +465,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
           interViwePanelAssign: 'noData',
           showCancel: '',
           showOk: ''
-        };    
+        };
         this.openDialog1(ShortlistBoxComponent, datas, this.routeAssignedData);
     }, (err) => {
     });
@@ -494,7 +504,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
         member: HRID.length == 1 ? 'member' : 'members',
         showCancel: 'Cancel',
         showOk: ''
-      };  
+      };
     } else {
       if (candidateID.length < 1 && HRID.length < 1) {
         data = {
@@ -508,7 +518,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
           interViwePanelAssign: 'noData',
           showCancel: '',
           showOk: ''
-        };    
+        };
       } else {
           data = {
             iconName: '',

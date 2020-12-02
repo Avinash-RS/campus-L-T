@@ -58,12 +58,12 @@
           font-size: 17px;
           // padding: .15em;
           padding: 0 1em;
-          box-shadow: $shadow-light-black;
-          border: none;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           color: $secondary;
           outline: none;
-          background: $white-primary;
-          border-radius: 5px;
+          // background: $white-primary;
+          // border-radius: 5px;
           min-height: 44px;
           // max-height: 38px;
         }
@@ -143,12 +143,12 @@
             font-size: 17px;
             // padding: .15em;
             padding: 0 1em;
-            box-shadow: $shadow-light-black;
-            border: none;
+            // box-shadow: $shadow-light-black;
+            border: solid $input-border 1px;
             color: $secondary;
             outline: none;
-            background: $white-primary;
-            border-radius: 5px;
+            // background: $white-primary;
+            // border-radius: 5px;
             min-height: 38px;
             max-height: 38px;
           }
@@ -215,11 +215,11 @@
       width: 100%;
       align-items: center;
       textarea {
-        border: none;
+        border: solid $input-border 1px;
         outline: none;
-        border-radius: 5px;
-        box-shadow: $shadow-light-black;
-        background: $white-primary;
+        // border-radius: 5px;
+        // box-shadow: $shadow-light-black;
+        // background: $white-primary;
         width: 100%;
         font-size: 17px;
         color: $secondary;
@@ -281,12 +281,12 @@
           font-size: 17px;
           // padding: .15em;
           padding: 0 1em;
-          box-shadow: $shadow-light-black;
-          border: none;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           color: $secondary;
           outline: none;
-          background: $white-primary;
-          border-radius: 5px;
+          // background: $white-primary;
+          // border-radius: 5px;
           min-height: 38px;
           max-height: 38px;
         }

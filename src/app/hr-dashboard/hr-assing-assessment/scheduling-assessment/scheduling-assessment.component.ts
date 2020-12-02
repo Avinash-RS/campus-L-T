@@ -40,7 +40,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class SchedulingAssessmentComponent implements OnInit {
+export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   userList:any;
   disciplineDropdown: any = [];
   shortlistLists: any;
@@ -79,6 +79,15 @@ export class SchedulingAssessmentComponent implements OnInit {
     this.tabledef();
     this.getShortlistNames();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   onGridReady(params: any) {
     this.gridApi = params.api;

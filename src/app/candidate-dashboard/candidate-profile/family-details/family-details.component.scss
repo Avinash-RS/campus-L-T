@@ -81,12 +81,12 @@
           font-size: 17px;
           // padding: .15em;
           padding: 0 1em;
-          box-shadow: $shadow-light-black;
-          border: none;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           color: $secondary;
           outline: none;
-          background: $white-primary;
-          border-radius: 5px;
+          // background: $white-primary;
+          // border-radius: 5px;
           min-height: 38px;
           max-height: 38px;
         }

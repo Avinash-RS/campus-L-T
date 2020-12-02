@@ -68,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getScreenSize();
-    this.checkIE();    
+    this.checkIE();
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
         type: 'resize'
       };
       if (!this.screenBoolean) {
-        this.openDialog(ScreenresolutionBoxComponent, data);        
+        this.openDialog(ScreenresolutionBoxComponent, data);
           }
     } else {
       const data = false;
@@ -161,10 +161,10 @@ export class AppComponent implements OnInit, OnDestroy {
     //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
     //       }
     //     }, (err)=> {
-    //     });    
+    //     });
     //   } else {
     //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);  
+    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
     //   }
     // } else {
     //   if (!this.appConfig.getLocalData('maintenance')) {
@@ -179,10 +179,10 @@ export class AppComponent implements OnInit, OnDestroy {
     //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
     //       }
     //     }, (err)=> {
-    //     });    
+    //     });
     //   } else {
     //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);  
+    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
     //   }
     // }
   }

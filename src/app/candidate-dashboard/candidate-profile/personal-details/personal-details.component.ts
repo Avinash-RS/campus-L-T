@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContentChecked, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContentChecked, HostListener, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -56,7 +56,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class PersonalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+export class PersonalDetailsComponent extends FormCanDeactivate implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('form', { static: false })
   // @ViewChild('form1', { static: false })
@@ -213,6 +213,15 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
     this.appConfig.scrollToTop();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   redirectToView() {
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
@@ -1305,7 +1314,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         reader.onload = async(event: any) => { // called once readAsDataURL is completed
           urls = event.target.result;
           this.url = urls;
-          
+
           this.appConfig.showLoader();
           const data = await (await this.candidateService.profileUpload(fd)).json();
             this.profileData = {
@@ -1317,7 +1326,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             // this.appConfig.clearLocalDataOne('localProfilePic');
             this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
                     this.appConfig.hideLoader();
-      
+
           // this.candidateService.profileUpload(fd).subscribe((data: any) => {
           //   this.appConfig.setLocalData('personalFormTouched', 'true');
           //   this.profileData = {

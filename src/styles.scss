@@ -864,13 +864,17 @@ h5 {
   width: 1.85rem;
   height: 1.85rem;
   outline: 0;
+  border-radius: 0px !important;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
 }
-
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $primary-bg !important;
+  border: solid $primary-bg !important;
+}
 .checkbox-xl .custom-control-label {
   padding-top: 23px;
   padding-left: 10px;
@@ -1473,7 +1477,7 @@ button:focus {
     th.mat-column-no_of_candidate {
       .mat-sort-header-container {
         justify-content: center;
-      }  
+      }
     }
     td.mat-column-no_of_candidate {
       text-align: center;
@@ -1482,7 +1486,7 @@ button:focus {
     th.mat-column-buttons {
       .mat-sort-header-container {
         justify-content: center;
-      }  
+      }
     }
     td.mat-column-buttons {
       display: flex;
@@ -2324,7 +2328,7 @@ th {
         //   break-inside: avoid; // New syntax
         //   page-break-inside: avoid; // avoid breaking inside pre and blockquotes
         // }
-      
+
       }
     }
   }

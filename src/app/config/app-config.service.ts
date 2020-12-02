@@ -39,7 +39,7 @@ export class AppConfigService {
 
   scrollToTop() {
     let pos = window.pageYOffset;
-   return window.scrollTo(0, pos - 100); // how far to scroll on each step
+   return window.scrollTo(0, pos - 20); // how far to scroll on each step
    // return window.scrollTo(0,0);
   }
 

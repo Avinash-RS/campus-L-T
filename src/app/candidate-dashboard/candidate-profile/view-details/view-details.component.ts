@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -14,7 +14,7 @@ import moment from 'moment';
   templateUrl: './view-details.component.html',
   styleUrls: ['./view-details.component.scss']
 })
-export class ViewDetailsComponent implements OnInit {
+export class ViewDetailsComponent implements OnInit, AfterViewInit {
 
   radioIsChecked = 'checked';
   userDetails: any;
@@ -59,6 +59,16 @@ export class ViewDetailsComponent implements OnInit {
       this.showNext = true;
     }
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
+
   print() {
     this.sharedService.printSubject.next();
     // window.print();
