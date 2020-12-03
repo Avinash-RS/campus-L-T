@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 
@@ -15,6 +15,9 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   styleUrls: ['./new-interviewpanel-assigned-details.component.scss']
 })
 export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
+  @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
 
   selectedInstitute: any;
   selectedDiscipline: any;
@@ -61,6 +64,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   // quickSearchValue: string;
   quickSearchValue = '';
   quickSearchValue1 = '';
+  panelOpenState1 = true;
 
   constructor(
     private appConfig: AppConfigService,
@@ -381,6 +385,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
 
     this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
+      if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];
           }, (err) => {
     });

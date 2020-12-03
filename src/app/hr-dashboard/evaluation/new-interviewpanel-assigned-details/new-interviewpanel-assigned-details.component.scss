@@ -110,16 +110,31 @@
   border: none;
   outline: none;
 }
-::ng-deep.ag-paging-panel {
-  background: #EAEAEA !important;
-  height: 30px !important;
-  font-weight: 400 !important;
-  color: black !important;
-  margin-bottom: 20px !important;
-}
+// ::ng-deep.ag-paging-panel {
+//   background: #EAEAEA !important;
+//   height: 30px !important;
+//   font-weight: 400 !important;
+//   color: black !important;
+//   margin-bottom: 20px !important;
+// }
 :host ::ng-deep.ag-row-hover {
   background-color: $ag-hover !important;
 }
 .ag-wrapper {
-  margin: 1.5em 0 0 0;
+  margin: 0em 0 0 0;
+}
+mat-expansion-panel {
+  border: none !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  padding: .10em !important;
+}
+mat-expansion-panel-header {
+  background: $primary-red !important;
+  height: 30px !important;
+  max-width: 100px !important;
+  padding: 0 16px 0px 24px !important;
+  mat-panel-title {
+    color: $white !important;
+  }
 }

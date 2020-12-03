@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -19,6 +19,8 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 
 export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
+  @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
@@ -97,7 +99,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   quickSearchValueHR = '';
   gridColumnApiHR: any;
   isCheckedHR: boolean;
-
+  panelOpenState = true;
 
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
@@ -160,7 +162,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
        top.scrollIntoView();
        top = null;
      }
-  }
+    }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
@@ -336,6 +338,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     }
     this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
+      if(!this.pannel) { return } else {this.pannel.close()}
       const datas = data ? data : [];
       this.showDefault = false;
       this.routeAssignedData = apiData;

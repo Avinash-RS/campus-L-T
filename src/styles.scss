@@ -226,7 +226,7 @@ h5 {
 // }
 .ag-paging-panel {
   background: $footer-bg !important;
-  height: 40px !important;
+  height: 35px !important;
   font-weight: 400 !important;
   color: black !important;
   margin-bottom: 0px !important;
@@ -2412,4 +2412,16 @@ th {
 
 .openClose,.sideClose {
   display: flex;
+}
+
+// Mat expansion panel
+.mat-expansion-indicator {
+  display: flex !important;
+  align-items: center !important;
+}
+.mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+  color: $white !important;
+}
+.mat-expansion-panel-body {
+  padding: 0 !important;
 }
