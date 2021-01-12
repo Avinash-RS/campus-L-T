@@ -37,6 +37,9 @@ export interface PeriodicElement {
   ],
 })
 export class InvSubEvaluateComponent implements OnInit {
+  intervieweeAttendance:any;
+  Notattended: any;
+  attendedStatusList: any;
   displayedColumns: string[] = ['name', 'veryGood', 'good', 'acceptable', 'notSuitable'];
   assessments: PeriodicElement[] = SampleJson;
   dataSource: MatTableDataSource<PeriodicElement>;
@@ -44,7 +47,7 @@ export class InvSubEvaluateComponent implements OnInit {
   getCandidateData: any;
   candidateId: any;
   nameOfAssessment: any;
-  uid:any;
+  uid: any;
   expValidation = "^[a-zA-Z0-9 ]*";
   constructor(
     private formBuilder: FormBuilder,
@@ -65,7 +68,7 @@ export class InvSubEvaluateComponent implements OnInit {
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
-
+    this.getMasters();
     this.editRouteParamGetter();
   }
   get f() {
@@ -75,77 +78,89 @@ export class InvSubEvaluateComponent implements OnInit {
   ngOnInit() {
   }
 
+  getMasters() {
+    this.adminService.keyMastersList().subscribe((data: any)=> {
+      this.intervieweeAttendance = data?.data?.intervieweeAttendance;
+      this.attendedStatusList = data?.data?.AttendedStatus;
+      this.Notattended = data?.data?.notAttendedStatus;
+    }, (err)=> {
+
+    });
+  }
   getCandidateDetails() {
     const apiData = {
       uid: this.candidateId ? this.candidateId : ''
     }
-    this.adminService.getEvaluationDetails(apiData).subscribe((success: any)=> {
+    this.adminService.getEvaluationDetails(apiData).subscribe((success: any) => {
       this.appConfig.hideLoader();
       const data = success && success.length > 0 ? success[0] : null;
-      if (data) {        
-        
-      this.evaluationForm.patchValue({
-        interview_date: data['interview_date'] ? data['interview_date'] : '',
-        interview_place: data['interview_place'] ? data['interview_place'] : '',
-        willing_work: data['willing_work'] ? data['willing_work'] : '',
-        physical_disability: data['physical_disability'] ? data['physical_disability'] : '',
-        candidates_strenght: data['candidates_strenght'] ? data['candidates_strenght'] : '',
-        candidates_weakness: data['candidates_weakness'] ? data['candidates_weakness'] : '',
-        panel_member1: data['panel_member1'] ? data['panel_member1'] : '',
-        panel_member2: data['panel_member2'] ? data['panel_member2'] : '',
-        panel_member3: data['panel_member3'] ? data['panel_member3'] : '',
-        panel_member4: data['panel_member4'] ? data['panel_member4'] : '',
-        ps_no1: data['ps_no1'] ? data['ps_no1'] : '',
-        ps_no2: data['ps_no2'] ? data['ps_no2'] : '',
-        ps_no3: data['ps_no3'] ? data['ps_no3'] : '',
-        ps_no4: data['ps_no4'] ? data['ps_no4'] : '',
-        topic_given: data['topic_given'] ? data['topic_given'] : '',
-        thought: data['thought'] ? data['thought'] : '',
-        content: data['content'] ? data['content'] : '',
-        language: data['language'] ? data['language'] : '',
-        idea: data['idea'] ? data['idea'] : '',
-        clues: data['clues'] ? data['clues'] : '',
-        time_taken: data['time_taken'] ? data['time_taken'] : '',
-        remarks: data['remarks'] ? data['remarks'] : '',
-        ASSESSMENT: data['candidate_assesment'] ? data['candidate_assesment'] : '',
-        depth_knowledge: data['depth_knowledge'] ? data['depth_knowledge'] : '',
-        breadth_knowledge: data['breadth_knowledge'] ? data['breadth_knowledge'] : '',
-        communicate_ability: data['communicate_ability'] ? data['communicate_ability'] : '',
-        personal_skill: data['personal_skill'] ? data['personal_skill'] : '',
-        personality: data['personality'] ? data['personality'] : '',
-        personality_1: data['personality_1'] ? data['personality_1'] : '',
-        curricular_activites: data['curricular_activites'] ? data['curricular_activites'] : '',
-        thought_clarity: data['thought_clarity'] ? data['thought_clarity'] : ''
-      })
-    this.assessments.forEach(element => {
-     if (element['id'] === 1) {
-       element['isChecked'] = data['depth_knowledge'] ? data['depth_knowledge'] : null
-     } 
-     if (element['id'] === 2) {
-      element['isChecked'] = data['breadth_knowledge'] ? data['breadth_knowledge'] : null
-    } 
-    if (element['id'] === 3) {
-      element['isChecked'] = data['thought_clarity'] ? data['thought_clarity'] : null
-    } 
-    if (element['id'] === 4) {
-      element['isChecked'] = data['communicate_ability'] ? data['communicate_ability'] : null
-    } 
-    if (element['id'] === 5) {
-      element['isChecked'] = data['personal_skill'] ? data['personal_skill'] : null
-    } 
-    if (element['id'] === 6) {
-      element['isChecked'] = data['personality'] ? data['personality'] : null
-    } 
-    if (element['id'] === 8) {
-      element['isChecked'] = data['personality_1'] ? data['personality_1'] : null
-    } 
-    if (element['id'] === 7) {
-      element['isChecked'] = data['curricular_activites'] ? data['curricular_activites'] : null
-    } 
-    });
-  }
+      if (data) {
 
-    }, (err)=> {
+        this.evaluationForm.patchValue({
+          attended: data['attended'] ? data['attended'] : '',
+          notAttendedStatus: data['notAttendedStatus'] ? data['notAttendedStatus'] : '',
+          attendedStatus: data['attendedStatus'] ? data['attendedStatus'] : '',
+          interview_date: data['interview_date'] ? data['interview_date'] : '',
+          interview_place: data['interview_place'] ? data['interview_place'] : '',
+          willing_work: data['willing_work'] ? data['willing_work'] : '',
+          physical_disability: data['physical_disability'] ? data['physical_disability'] : '',
+          candidates_strenght: data['candidates_strenght'] ? data['candidates_strenght'] : '',
+          candidates_weakness: data['candidates_weakness'] ? data['candidates_weakness'] : '',
+          panel_member1: data['panel_member1'] ? data['panel_member1'] : '',
+          panel_member2: data['panel_member2'] ? data['panel_member2'] : '',
+          panel_member3: data['panel_member3'] ? data['panel_member3'] : '',
+          panel_member4: data['panel_member4'] ? data['panel_member4'] : '',
+          ps_no1: data['ps_no1'] ? data['ps_no1'] : '',
+          ps_no2: data['ps_no2'] ? data['ps_no2'] : '',
+          ps_no3: data['ps_no3'] ? data['ps_no3'] : '',
+          ps_no4: data['ps_no4'] ? data['ps_no4'] : '',
+          topic_given: data['topic_given'] ? data['topic_given'] : '',
+          thought: data['thought'] ? data['thought'] : '',
+          content: data['content'] ? data['content'] : '',
+          language: data['language'] ? data['language'] : '',
+          idea: data['idea'] ? data['idea'] : '',
+          clues: data['clues'] ? data['clues'] : '',
+          time_taken: data['time_taken'] ? data['time_taken'] : '',
+          remarks: data['remarks'] ? data['remarks'] : '',
+          ASSESSMENT: data['candidate_assesment'] ? data['candidate_assesment'] : '',
+          depth_knowledge: data['depth_knowledge'] ? data['depth_knowledge'] : '',
+          breadth_knowledge: data['breadth_knowledge'] ? data['breadth_knowledge'] : '',
+          communicate_ability: data['communicate_ability'] ? data['communicate_ability'] : '',
+          personal_skill: data['personal_skill'] ? data['personal_skill'] : '',
+          personality: data['personality'] ? data['personality'] : '',
+          personality_1: data['personality_1'] ? data['personality_1'] : '',
+          curricular_activites: data['curricular_activites'] ? data['curricular_activites'] : '',
+          thought_clarity: data['thought_clarity'] ? data['thought_clarity'] : ''
+        })
+        this.assessments.forEach(element => {
+          if (element['id'] === 1) {
+            element['isChecked'] = data['depth_knowledge'] ? data['depth_knowledge'] : null
+          }
+          if (element['id'] === 2) {
+            element['isChecked'] = data['breadth_knowledge'] ? data['breadth_knowledge'] : null
+          }
+          if (element['id'] === 3) {
+            element['isChecked'] = data['thought_clarity'] ? data['thought_clarity'] : null
+          }
+          if (element['id'] === 4) {
+            element['isChecked'] = data['communicate_ability'] ? data['communicate_ability'] : null
+          }
+          if (element['id'] === 5) {
+            element['isChecked'] = data['personal_skill'] ? data['personal_skill'] : null
+          }
+          if (element['id'] === 6) {
+            element['isChecked'] = data['personality'] ? data['personality'] : null
+          }
+          if (element['id'] === 8) {
+            element['isChecked'] = data['personality_1'] ? data['personality_1'] : null
+          }
+          if (element['id'] === 7) {
+            element['isChecked'] = data['curricular_activites'] ? data['curricular_activites'] : null
+          }
+        });
+      }
+
+    }, (err) => {
 
     })
   }
@@ -176,6 +191,9 @@ export class InvSubEvaluateComponent implements OnInit {
   nginitFunc() {
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
     this.evaluationForm = this.formBuilder.group({
+      attended: new FormControl('', [Validators.required]),
+      notAttendedStatus: new FormControl('', [Validators.required]),
+      attendedStatus: new FormControl('', [Validators.required]),
       interview_date: new FormControl('', [Validators.required]),
       interview_place: new FormControl('', [RemoveWhitespace.whitespace(), myGlobals.req, myGlobals.alphaNum30]),
       willing_work: new FormControl('', [Validators.required]),
@@ -210,9 +228,115 @@ export class InvSubEvaluateComponent implements OnInit {
     });
   }
 
+  statusChange(status: any) {
+    setTimeout(() => {
+      if (status['value'] == '0') {
+        this.evaluationForm['controls']['notAttendedStatus'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['notAttendedStatus'].updateValueAndValidity();
+        this.evaluationForm['controls']['attendedStatus'].clearValidators();
+        this.evaluationForm['controls']['attendedStatus'].updateValueAndValidity();
+        this.evaluationForm['controls']['willing_work'].clearValidators();
+        this.evaluationForm['controls']['willing_work'].updateValueAndValidity();
+        this.evaluationForm['controls']['panel_member1'].clearValidators();
+        this.evaluationForm['controls']['panel_member1'].updateValueAndValidity();
+        this.evaluationForm['controls']['ps_no1'].clearValidators();
+        this.evaluationForm['controls']['ps_no1'].updateValueAndValidity();
+        this.evaluationForm['controls']['topic_given'].clearValidators();
+        this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
+        this.evaluationForm['controls']['remarks'].clearValidators();
+        this.evaluationForm['controls']['remarks'].updateValueAndValidity();
+        this.evaluationForm['controls']['ASSESSMENT'].clearValidators();
+        this.evaluationForm['controls']['ASSESSMENT'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['depth_knowledge'].clearValidators();
+        this.evaluationForm['controls']['depth_knowledge'].reset();
+        this.evaluationForm['controls']['depth_knowledge'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['breadth_knowledge'].clearValidators();
+        this.evaluationForm['controls']['breadth_knowledge'].reset();
+        this.evaluationForm['controls']['breadth_knowledge'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['communicate_ability'].clearValidators();
+        this.evaluationForm['controls']['communicate_ability'].reset();
+        this.evaluationForm['controls']['communicate_ability'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['personal_skill'].clearValidators();
+        this.evaluationForm['controls']['personal_skill'].reset();
+        this.evaluationForm['controls']['personal_skill'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['personality'].clearValidators();
+        this.evaluationForm['controls']['personality'].reset();
+        this.evaluationForm['controls']['personality'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['personality_1'].clearValidators();
+        this.evaluationForm['controls']['personality_1'].reset();
+        this.evaluationForm['controls']['personality_1'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['curricular_activites'].clearValidators();
+        this.evaluationForm['controls']['curricular_activites'].reset();
+        this.evaluationForm['controls']['curricular_activites'].updateValueAndValidity();
+
+        this.evaluationForm['controls']['thought_clarity'].clearValidators();
+        this.evaluationForm['controls']['thought_clarity'].reset();
+        this.evaluationForm['controls']['thought_clarity'].updateValueAndValidity();
+      } else {
+        this.evaluationForm['controls']['attendedStatus'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['attendedStatus'].updateValueAndValidity();
+        this.evaluationForm['controls']['notAttendedStatus'].clearValidators();
+        this.evaluationForm['controls']['notAttendedStatus'].updateValueAndValidity();
+        this.evaluationForm['controls']['willing_work'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['willing_work'].updateValueAndValidity();
+        this.evaluationForm['controls']['panel_member1'].setValidators([RemoveWhitespace.whitespace(), Validators.required, myGlobals.alphaWithDots, Validators.maxLength(50)]);
+        this.evaluationForm['controls']['panel_member1'].updateValueAndValidity();
+        this.evaluationForm['controls']['ps_no1'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(30), myGlobals.alphaNum]);
+        this.evaluationForm['controls']['ps_no1'].updateValueAndValidity();
+        this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
+        this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
+        this.evaluationForm['controls']['remarks'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
+        this.evaluationForm['controls']['remarks'].updateValueAndValidity();
+        this.evaluationForm['controls']['ASSESSMENT'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['ASSESSMENT'].updateValueAndValidity();
+        this.evaluationForm['controls']['depth_knowledge'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['depth_knowledge'].updateValueAndValidity();
+        this.evaluationForm['controls']['breadth_knowledge'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['breadth_knowledge'].updateValueAndValidity();
+        this.evaluationForm['controls']['communicate_ability'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['communicate_ability'].updateValueAndValidity();
+        this.evaluationForm['controls']['personal_skill'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['personal_skill'].updateValueAndValidity();
+        this.evaluationForm['controls']['personality'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['personality'].updateValueAndValidity();
+        this.evaluationForm['controls']['personality_1'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['personality_1'].updateValueAndValidity();
+        this.evaluationForm['controls']['curricular_activites'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['curricular_activites'].updateValueAndValidity();
+        this.evaluationForm['controls']['thought_clarity'].setValidators([Validators.required]);
+        this.evaluationForm['controls']['thought_clarity'].updateValueAndValidity();
+      }
+    }, 100);
+
+  }
+
   get interview_date() {
     return this.evaluationForm.get('interview_date');
   }
+
+  get notAttendedStatus() {
+    return this.evaluationForm.get('notAttendedStatus');
+  }
+
+  get attendedStatus() {
+    return this.evaluationForm.get('attendedStatus');
+  }
+
+  get nota() {
+    return this.evaluationForm.get('attended');
+  }
+
+  get attended() {
+    return this.evaluationForm.get('attended');
+  }
+
 
   get depth_knowledge() {
     return this.evaluationForm.get('depth_knowledge');
@@ -318,41 +442,44 @@ export class InvSubEvaluateComponent implements OnInit {
   submitEvaluationFormAPI() {
     const dateInterview = this.evaluationForm.value.interview_date ? moment(this.evaluationForm.value.interview_date).format('YYYY-MM-DD') : '';
     const apiData =
-        {
-          uid: this.uid ? this.uid : '',
-          interview_date: dateInterview,
-          interview_place: this.evaluationForm.value.interview_place,
-          depth_knowledge: this.evaluationForm.value.depth_knowledge,
-          breadth_knowledge: this.evaluationForm.value.breadth_knowledge,
-          thought_clarity: this.evaluationForm.value.thought_clarity,
-          communicate_ability: this.evaluationForm.value.communicate_ability,
-          personal_skill: this.evaluationForm.value.personal_skill,
-          personality: this.evaluationForm.value.personality,
-          personality_1: this.evaluationForm.value.personality_1,
-          curricular_activites: this.evaluationForm.value.curricular_activites,
-          candidate_assesment: this.evaluationForm.value.ASSESSMENT,
-          physical_disability: this.evaluationForm.value.physical_disability,
-          willing_work: this.evaluationForm.value.willing_work,
-          candidates_strenght: this.evaluationForm.value.candidates_strenght,
-          candidates_weakness: this.evaluationForm.value.candidates_weakness,
-          panel_member1: this.evaluationForm.value.panel_member1,
-          panel_member2: this.evaluationForm.value.panel_member2,
-          panel_member3: this.evaluationForm.value.panel_member3,
-          panel_member4: this.evaluationForm.value.panel_member4,
-          ps_no1: this.evaluationForm.value.ps_no1,
-          ps_no2: this.evaluationForm.value.ps_no2,
-          ps_no3: this.evaluationForm.value.ps_no3,
-          ps_no4: this.evaluationForm.value.ps_no4,
-          topic_given: this.evaluationForm.value.topic_given,
-          thought: this.evaluationForm.value.thought,
-          content: this.evaluationForm.value.content,
-          language: this.evaluationForm.value.language,
-          idea: this.evaluationForm.value.idea,
-          clues: this.evaluationForm.value.clues,
-          time_taken: this.evaluationForm.value.time_taken,
-          remarks: this.evaluationForm.value.remarks
-        };
-
+    {
+      notAttendedStatus: this.evaluationForm.value.notAttendedStatus,
+      attendedStatus: this.evaluationForm.value.attendedStatus,
+      attended: this.evaluationForm.value.attended,
+      uid: this.uid ? this.uid : '',
+      interview_date: dateInterview,
+      interview_place: this.evaluationForm.value.interview_place,
+      depth_knowledge: this.evaluationForm.value.depth_knowledge,
+      breadth_knowledge: this.evaluationForm.value.breadth_knowledge,
+      thought_clarity: this.evaluationForm.value.thought_clarity,
+      communicate_ability: this.evaluationForm.value.communicate_ability,
+      personal_skill: this.evaluationForm.value.personal_skill,
+      personality: this.evaluationForm.value.personality,
+      personality_1: this.evaluationForm.value.personality_1,
+      curricular_activites: this.evaluationForm.value.curricular_activites,
+      candidate_assesment: this.evaluationForm.value.ASSESSMENT,
+      physical_disability: this.evaluationForm.value.physical_disability,
+      willing_work: this.evaluationForm.value.willing_work,
+      candidates_strenght: this.evaluationForm.value.candidates_strenght,
+      candidates_weakness: this.evaluationForm.value.candidates_weakness,
+      panel_member1: this.evaluationForm.value.panel_member1,
+      panel_member2: this.evaluationForm.value.panel_member2,
+      panel_member3: this.evaluationForm.value.panel_member3,
+      panel_member4: this.evaluationForm.value.panel_member4,
+      ps_no1: this.evaluationForm.value.ps_no1,
+      ps_no2: this.evaluationForm.value.ps_no2,
+      ps_no3: this.evaluationForm.value.ps_no3,
+      ps_no4: this.evaluationForm.value.ps_no4,
+      topic_given: this.evaluationForm.value.topic_given,
+      thought: this.evaluationForm.value.thought,
+      content: this.evaluationForm.value.content,
+      language: this.evaluationForm.value.language,
+      idea: this.evaluationForm.value.idea,
+      clues: this.evaluationForm.value.clues,
+      time_taken: this.evaluationForm.value.time_taken,
+      remarks: this.evaluationForm.value.remarks
+    };
+    
     this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
       this.appConfig.hideLoader();
       this.appConfig.success('Evaluation completed successfully', '');

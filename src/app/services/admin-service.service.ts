@@ -582,4 +582,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  keyMastersList() {
+    return this.http.get(`${this.BASE_URL}/profile/master_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }
