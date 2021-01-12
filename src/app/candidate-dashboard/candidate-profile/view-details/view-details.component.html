@@ -147,17 +147,17 @@
           <div class="form-wrapper-right">
             <div class="form-group">
               <div style="pointer-events: none;"
-                [ngStyle]="{'visibility': dup['field_read'][0]['value'] ? 'show' : 'hidden'}"
+                [ngStyle]="{'visibility': dup['field_read'] && dup['field_read'][0] && dup['field_read'][0]['value'] ? 'show' : 'hidden'}"
                 class="custom-control custom-checkbox checkbox-xl">
                 <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
                 <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
               </div>
-              <div style="pointer-events: none;" [ngStyle]="{'visibility': dup['field_write'][0]['value'] ? 'show' : 'hidden'}"
+              <div style="pointer-events: none;" [ngStyle]="{'visibility': dup['field_write'] && dup['field_write'][0] && dup['field_write'][0]['value'] ? 'show' : 'hidden'}"
                 class="custom-control custom-checkbox checkbox-xl">
                 <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
                 <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
               </div>
-              <div style="pointer-events: none;" [ngStyle]="{'visibility': dup['field_speak'][0]['value'] ? 'show' : 'hidden'}"
+              <div style="pointer-events: none;" [ngStyle]="{'visibility': dup['field_speak'] && dup['field_speak'][0] && dup['field_speak'][0]['value'] ? 'show' : 'hidden'}"
                 class="custom-control custom-checkbox checkbox-xl">
                 <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
                 <label class="custom-control-label" [for]="i + 'three'">&#160;</label>

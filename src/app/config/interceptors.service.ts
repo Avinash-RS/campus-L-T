@@ -18,6 +18,7 @@ import { CONSTANT } from '../constants/app-constants.service';
 export class InterceptorsService implements HttpInterceptor {
 
   BASE_URL = environment.API_BASE_URL;
+  isLocal = environment.local;
 
   constructor(
     private appConfig: AppConfigService
@@ -34,7 +35,8 @@ export class InterceptorsService implements HttpInterceptor {
     });
 
     const clone = request.clone({
-      headers: request.headers.set('Accept', 'application/json')
+      headers: request.headers.set('Accept', 'application/json'),
+      withCredentials: this.isLocal ? false : true
     });
     return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
