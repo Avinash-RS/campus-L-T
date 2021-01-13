@@ -95,42 +95,41 @@ export class InvSubEvaluateComponent implements OnInit {
       this.appConfig.hideLoader();
       const data = success && success.length > 0 ? success[0] : null;
       if (data) {
-
         this.evaluationForm.patchValue({
           attended: data['attended'] ? data['attended'] : '',
-          notAttendedStatus: data['notAttendedStatus'] ? data['notAttendedStatus'] : '',
-          attendedStatus: data['attendedStatus'] ? data['attendedStatus'] : '',
-          interview_date: data['interview_date'] ? data['interview_date'] : '',
-          interview_place: data['interview_place'] ? data['interview_place'] : '',
-          willing_work: data['willing_work'] ? data['willing_work'] : '',
-          physical_disability: data['physical_disability'] ? data['physical_disability'] : '',
-          candidates_strenght: data['candidates_strenght'] ? data['candidates_strenght'] : '',
-          candidates_weakness: data['candidates_weakness'] ? data['candidates_weakness'] : '',
-          panel_member1: data['panel_member1'] ? data['panel_member1'] : '',
-          panel_member2: data['panel_member2'] ? data['panel_member2'] : '',
-          panel_member3: data['panel_member3'] ? data['panel_member3'] : '',
-          panel_member4: data['panel_member4'] ? data['panel_member4'] : '',
-          ps_no1: data['ps_no1'] ? data['ps_no1'] : '',
-          ps_no2: data['ps_no2'] ? data['ps_no2'] : '',
-          ps_no3: data['ps_no3'] ? data['ps_no3'] : '',
-          ps_no4: data['ps_no4'] ? data['ps_no4'] : '',
-          topic_given: data['topic_given'] ? data['topic_given'] : '',
-          thought: data['thought'] ? data['thought'] : '',
-          content: data['content'] ? data['content'] : '',
-          language: data['language'] ? data['language'] : '',
-          idea: data['idea'] ? data['idea'] : '',
-          clues: data['clues'] ? data['clues'] : '',
-          time_taken: data['time_taken'] ? data['time_taken'] : '',
-          remarks: data['remarks'] ? data['remarks'] : '',
-          ASSESSMENT: data['candidate_assesment'] ? data['candidate_assesment'] : '',
-          depth_knowledge: data['depth_knowledge'] ? data['depth_knowledge'] : '',
-          breadth_knowledge: data['breadth_knowledge'] ? data['breadth_knowledge'] : '',
-          communicate_ability: data['communicate_ability'] ? data['communicate_ability'] : '',
-          personal_skill: data['personal_skill'] ? data['personal_skill'] : '',
-          personality: data['personality'] ? data['personality'] : '',
-          personality_1: data['personality_1'] ? data['personality_1'] : '',
-          curricular_activites: data['curricular_activites'] ? data['curricular_activites'] : '',
-          thought_clarity: data['thought_clarity'] ? data['thought_clarity'] : ''
+          notAttendedStatus: data?.['notAttendedStatus'] ? data['notAttendedStatus'] : '',
+          attendedStatus: data?.['attendedStatus'] ? data['attendedStatus'] : '',
+          interview_date: data?.['interview_date'] ? data['interview_date'] : '',
+          interview_place: data?.['interview_place'] ? data['interview_place'] : '',
+          willing_work: data?.['willing_work'] ? data['willing_work'] : '',
+          physical_disability: data?.['physical_disability'] ? data['physical_disability'] : '',
+          candidates_strenght: data?.['candidates_strenght'] ? data['candidates_strenght'] : '',
+          candidates_weakness: data?.['candidates_weakness'] ? data['candidates_weakness'] : '',
+          panel_member1: data?.['panel_member1'] ? data['panel_member1'] : '',
+          panel_member2: data?.['panel_member2'] ? data['panel_member2'] : '',
+          panel_member3: data?.['panel_member3'] ? data['panel_member3'] : '',
+          panel_member4: data?.['panel_member4'] ? data['panel_member4'] : '',
+          ps_no1: data?.['ps_no1'] ? data['ps_no1'] : '',
+          ps_no2: data?.['ps_no2'] ? data['ps_no2'] : '',
+          ps_no3: data?.['ps_no3'] ? data['ps_no3'] : '',
+          ps_no4: data?.['ps_no4'] ? data['ps_no4'] : '',
+          topic_given: data?.['topic_given'] ? data['topic_given'] : '',
+          thought: data?.['thought'] ? data['thought'] : '',
+          content: data?.['content'] ? data['content'] : '',
+          language: data?.['language'] ? data['language'] : '',
+          idea: data?.['idea'] ? data['idea'] : '',
+          clues: data?.['clues'] ? data['clues'] : '',
+          time_taken: data?.['time_taken'] ? data['time_taken'] : '',
+          remarks: data?.['remarks'] ? data['remarks'] : '',
+          ASSESSMENT: data?.['candidate_assesment'] ? data['candidate_assesment'] : '',
+          depth_knowledge: data?.['depth_knowledge'] ? data['depth_knowledge'] : '',
+          breadth_knowledge: data?.['breadth_knowledge'] ? data['breadth_knowledge'] : '',
+          communicate_ability: data?.['communicate_ability'] ? data['communicate_ability'] : '',
+          personal_skill: data?.['personal_skill'] ? data['personal_skill'] : '',
+          personality: data?.['personality'] ? data['personality'] : '',
+          personality_1: data?.['personality_1'] ? data['personality_1'] : '',
+          curricular_activites: data?.['curricular_activites'] ? data['curricular_activites'] : '',
+          thought_clarity: data?.['thought_clarity'] ? data['thought_clarity'] : ''
         })
         this.assessments.forEach(element => {
           if (element['id'] === 1) {
@@ -158,8 +157,8 @@ export class InvSubEvaluateComponent implements OnInit {
             element['isChecked'] = data['curricular_activites'] ? data['curricular_activites'] : null
           }
         });
+        this.statusChange({value: data['attended']});
       }
-
     }, (err) => {
 
     })
