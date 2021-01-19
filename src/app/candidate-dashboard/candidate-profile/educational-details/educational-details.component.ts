@@ -26,7 +26,29 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form3: NgForm;
   form4: NgForm;
   form5: NgForm;
-
+  profileList: any = [
+    {
+        label: 'Diploma (DET)',
+        value: 'det'
+    },
+    {
+        label: 'Non-engineering graduate (GCT)',
+        value: 'gct'
+    },
+    {
+        label: 'Non-engineering postgraduate (PGCT)',
+        value: 'pgct'
+    },
+    {
+        label: 'Engineering graduate (GET)',
+        value: 'get'
+    },
+    {
+        label: 'Engineering postgraduate (PGET)',
+        value: 'pget'
+    }
+];
+selectedPost: any;
   levelList: any;
   UGList: any;
   DiplamoList: any;
@@ -67,6 +89,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     return differenceInCalendarDays(current, this.startingYear) < 0;
     // return differenceInCalendarDays(this.dummyendDate, this.dummystartDate) > 0;
   }
+  mastersList: any;
 
 
   constructor(
@@ -81,6 +104,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   }
 
   ngOnInit() {
+    this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -106,6 +130,12 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.PGSpecification();
     // this.defautValue();
     this.appConfig.scrollToTop();
+  }
+
+  detectSelectQualify() {
+    setTimeout(() => {
+      console.log('cs', this.selectedPost);      
+    }, 100);
   }
 
   educationLevels() {

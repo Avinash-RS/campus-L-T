@@ -1,32 +1,23 @@
-data: {
-    intervieweeAttendance: [
-        {
-            label: 'Attended Interview',
-            value: '0'
-        },
-        {
-            label: 'Not Attended',
-            value: '1'
-        }
-    ],
-    notAttendedStatus: [
-        {
-            label: 'No show',
-            value: '0'
-        },
-        {
-            label: 'requestes for reschedule',
-            value: '1'
-        }
-    ],
-    AttendedStatus: [
-        {
-            label: 'Selected',
-            value: '0'
-        },
-        {
-            label: 'Not Selected',
-            value: '1'
-        }
-    ]
+[
+{
+    label: 'Diploma (DET)',
+    value: '0'
+},
+{
+    label: 'Non-engineering graduate (GCT)',
+    value: '1'
+},
+{
+    label: 'Non-engineering postgraduate (PGCT)',
+    value: '2'
+},
+{
+    label: 'Engineering graduate (GET)',
+    value: '3'
+},
+{
+    label: 'Engineering postgraduate (PGET)',
+    value: '4'
 }
+]
+ 

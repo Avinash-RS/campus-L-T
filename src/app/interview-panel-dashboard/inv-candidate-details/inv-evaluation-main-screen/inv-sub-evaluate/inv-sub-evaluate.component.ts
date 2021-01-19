@@ -48,6 +48,7 @@ export class InvSubEvaluateComponent implements OnInit {
   candidateId: any;
   nameOfAssessment: any;
   uid: any;
+  mastersList: any;
   expValidation = "^[a-zA-Z0-9 ]*";
   constructor(
     private formBuilder: FormBuilder,
@@ -79,13 +80,14 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   getMasters() {
-    this.adminService.keyMastersList().subscribe((data: any)=> {
-      this.intervieweeAttendance = data?.data?.intervieweeAttendance;
-      this.attendedStatusList = data?.data?.AttendedStatus;
-      this.Notattended = data?.data?.notAttendedStatus;
-    }, (err)=> {
+    // this.adminService.keyMastersList().subscribe((data: any)=> {
+      this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
+      this.intervieweeAttendance = this.mastersList?.intervieweeAttendance;
+      this.attendedStatusList = this.mastersList?.AttendedStatus;
+      this.Notattended = this.mastersList?.notAttendedStatus;
+    // }, (err)=> {
 
-    });
+    // });
   }
   getCandidateDetails() {
     const apiData = {

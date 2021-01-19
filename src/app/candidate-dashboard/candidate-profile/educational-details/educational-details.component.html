@@ -1,11 +1,20 @@
-<div class="alert">
+<div class="row mainwrapper align-items-center h-25 d-flex ml-2">
+    <div class="d-flex f_size_16">Please select the profile applying for </div>
+    <nz-select style="width: auto !important; min-width: 40% !important;" class="d-flex f_size_16 nzSelect-revamp mw-100 ml-2" (ngModelChange)="detectSelectQualify()" nzAllowClear
+    nzShowSearch [(ngModel)]="selectedPost" nzPlaceHolder="Select a profile">
+    <nz-option *ngFor="let level of mastersList?.education_master; let j = index"
+      [nzDisabled]="false" [nzLabel]="level.label"
+      [nzValue]="level.value"></nz-option>
+  </nz-select>
+</div>
+<div *ngIf="false" class="alert">
   Note:
   <ol>
 <li>Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.</li>
 <li>Please fill all the educational qualifications till date (for example: 10th, 12th, B.Tech & M.Tech if relevant).</li>
 </ol>
 </div>
-<div class="mainwrapper">
+<div *ngIf="false" class="mainwrapper">
   <!-- <div class="legend">*All fields are mandatory</div> -->
   <div class="header">
     <form #form="ngForm" [formGroup]="educationForm">
