@@ -26,29 +26,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form3: NgForm;
   form4: NgForm;
   form5: NgForm;
-  profileList: any = [
-    {
-        label: 'Diploma (DET)',
-        value: 'det'
-    },
-    {
-        label: 'Non-engineering graduate (GCT)',
-        value: 'gct'
-    },
-    {
-        label: 'Non-engineering postgraduate (PGCT)',
-        value: 'pgct'
-    },
-    {
-        label: 'Engineering graduate (GET)',
-        value: 'get'
-    },
-    {
-        label: 'Engineering postgraduate (PGET)',
-        value: 'pget'
-    }
-];
-selectedPost: any;
+  selectedPost: any = 'get';
   levelList: any;
   UGList: any;
   DiplamoList: any;
@@ -134,7 +112,7 @@ selectedPost: any;
 
   detectSelectQualify() {
     setTimeout(() => {
-      console.log('cs', this.selectedPost);      
+      this.FormInitialization();
     }, 100);
   }
 
@@ -293,29 +271,62 @@ selectedPost: any;
   }
 
   onSubmit(OptA) {
-
+    let valid;
     if (this.educationForm.valid) { 
       let value = {
         hscDiploma: false,
-        ug: false
+        ug: false,
+        pg: false,
+        label: ''
       };
       // console.log(this.educationForm.value.educationArr);
 
-      this.educationForm.value.educationArr.forEach(element => {
-        if (element['leveling'] == 'HSC' || element['leveling'] == 'Diploma' ) {
-          value.hscDiploma = true;
-        }
-        if (element['leveling'] == 'UG') {
-          value.ug = true;
-        }
-      });
-      if (value.hscDiploma && value.ug) {
+      if (this.selectedPost == 'det') {
+        this.educationForm.value.educationArr.forEach(element => {
+          if (element['leveling'] == 'Diploma' ) {
+            value.hscDiploma = true;
+          }
+        });
+        valid = value.hscDiploma ? true : false;
+        value.label = 'det';
+      }
+
+      if (this.selectedPost == 'gct' || this.selectedPost == 'get') {
+        this.educationForm.value.educationArr.forEach(element => {
+          if (element['leveling'] == 'HSC' || element['leveling'] == 'Diploma' ) {
+            value.hscDiploma = true;
+          }
+          if (element['leveling'] == 'UG') {
+            value.ug = true;
+          }
+        });
+        valid = value.hscDiploma && value.ug ? true : false;
+        value.label = 'gct';
+      }
+      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget') {
+        this.educationForm.value.educationArr.forEach(element => {
+          if (element['leveling'] == 'HSC' || element['leveling'] == 'Diploma' ) {
+            value.hscDiploma = true;
+          }
+          if (element['leveling'] == 'UG') {
+            value.ug = true;
+          }
+          if (element['leveling'] == 'PG') {
+            value.pg = true;
+          }
+        });
+        valid = value.hscDiploma && value.ug && value.pg ? true : false;
+        value.label = 'pgct';
+      }
+
+      if (valid) {
 
       const edArrays = [];
       this.educationForm.value.educationArr.forEach((element, i) => {
         edArrays.push({ field_level: { value: element.leveling }, field_board_university: { value: element.board }, field_institute: { value: element.institute }, field_discipline: { value: element.discipline }, field_specification: { value: element.specification }, field_year_of_passing: { value: moment(element['passedYear']).format() }, field_backlogs: { value: element.backlogs }, field_percentage: { value: element.percentage } });
       });
       this.apiForm['eduArr'] = edArrays;
+      this.apiForm['selectedPost'] = {value: this.selectedPost};
       // this.apiForm.field_level = { value: this.educationForm.value.educationArr[0]['leveling'] },
       //   this.apiForm.field_board_university = { value: this.educationForm.value.educationArr[0]['board'] },
       //   this.apiForm.field_institute = { value: this.educationForm.value.educationArr[0]['institute'] },
@@ -333,7 +344,7 @@ selectedPost: any;
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS);
 
     } else {
-      this.appConfig.nzNotification('error', 'Not Submitted', '12th or Diploma and Undergraduate are mandatory');
+      this.appConfig.nzNotification('error', 'Not Submitted', value.label == 'gct' ? '12th or Diploma and Undergraduate are mandatory' : value.label == 'pgct' ? '12th or Diploma, Undergraduate and Postgraduate are mandatory' : value.label == 'det' ? 'Diploma is mandatory' : '');
     }
   } else {
       this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
@@ -350,45 +361,91 @@ selectedPost: any;
 
         this.addEducationForm(edu);
       });
-    } else {
-      for (let i = 0; i <= 2; i++) {
+    } else {      
+      if (this.selectedPost == 'det') {
+        for (let i = 0; i <= 1; i++) {
+          let edu;
+            if (i==0) {
+              edu = {
+                field_level: { value: 'SSLC' },
+                field_board_university: { value: null },
+                field_institute: { value: null },
+                field_discipline: { value: null },
+                field_specification: { value: null },
+                field_year_of_passing: { value: null },
+                field_backlogs: { value: 0 }, field_percentage: { value: null }
+              };
+            }
+            if (i==1) {
+              edu = {
+                field_level: { value: null },
+                field_board_university: { value: null },
+                field_institute: { value: null },
+                field_discipline: { value: null },
+                field_specification: { value: null },
+                field_year_of_passing: { value: null },
+                field_backlogs: { value: 0 }, field_percentage: { value: null }
+              };
+            }
+          this.addEducationForm(edu);
+        }  
+      } 
+      if (this.selectedPost == 'gct' || this.selectedPost == 'pgct') {
+        for (let i = 0; i <= 2; i++) {
+          let edu;
+            if (i==0) {
+              edu = {
+                field_level: { value: 'SSLC' },
+                field_board_university: { value: null },
+                field_institute: { value: null },
+                field_discipline: { value: null },
+                field_specification: { value: null },
+                field_year_of_passing: { value: null },
+                field_backlogs: { value: 0 }, field_percentage: { value: null }
+              };
+            }
+            if (i==1 || i==2) {
+              edu = {
+                field_level: { value: null },
+                field_board_university: { value: null },
+                field_institute: { value: null },
+                field_discipline: { value: null },
+                field_specification: { value: null },
+                field_year_of_passing: { value: null },
+                field_backlogs: { value: 0 }, field_percentage: { value: null }
+              };
+            }  
+          this.addEducationForm(edu);
+        }  
+      } 
+      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget') {
+      for (let i = 0; i <= 3; i++) {
         let edu;
-        if (i==0) {
-        edu = {
-          field_level: { value: 'SSLC' },
-          field_board_university: { value: null },
-          field_institute: { value: null },
-          field_discipline: { value: null },
-          field_specification: { value: null },
-          field_year_of_passing: { value: null },
-          field_backlogs: { value: 0 }, field_percentage: { value: null }
-        };
-      }
-      if (i==1) {
-        edu = {
-          field_level: { value: null },
-          field_board_university: { value: null },
-          field_institute: { value: null },
-          field_discipline: { value: null },
-          field_specification: { value: null },
-          field_year_of_passing: { value: null },
-          field_backlogs: { value: 0 }, field_percentage: { value: null }
-        };
-      }
-      if (i==2) {
-        edu = {
-          field_level: { value: null },
-          field_board_university: { value: null },
-          field_institute: { value: null },
-          field_discipline: { value: null },
-          field_specification: { value: null },
-          field_year_of_passing: { value: null },
-          field_backlogs: { value: 0 }, field_percentage: { value: null }
-        };
-      }
-
+          if (i==0) {
+            edu = {
+              field_level: { value: 'SSLC' },
+              field_board_university: { value: null },
+              field_institute: { value: null },
+              field_discipline: { value: null },
+              field_specification: { value: null },
+              field_year_of_passing: { value: null },
+              field_backlogs: { value: 0 }, field_percentage: { value: null }
+            };
+          }
+          if (i==1 || i==2 || i==3) {
+            edu = {
+              field_level: { value: null },
+              field_board_university: { value: null },
+              field_institute: { value: null },
+              field_discipline: { value: null },
+              field_specification: { value: null },
+              field_year_of_passing: { value: null },
+              field_backlogs: { value: 0 }, field_percentage: { value: null }
+            };
+          }    
         this.addEducationForm(edu);
       }
+    }
     }
   }
   FormInitialization() {
