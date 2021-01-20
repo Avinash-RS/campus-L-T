@@ -25,13 +25,13 @@
       width: 100%;
       font-size: 16px;
       // padding: .15em;
-      padding: 0 1em;
-      box-shadow: $shadow-light-black;
-      border: none;
+      padding: 0 .5em;
+      // box-shadow: $shadow-light-black;
+      border: solid $input-border 1px;
       color: $secondary;
       outline: none;
-      background: $white-primary;
-      border-radius: 5px;
+      // background: $white-primary;
+      // border-radius: 5px;
       min-height: 44px;
       // max-height: 38px;
     }
@@ -63,16 +63,16 @@
           margin: 0 0 .4em 0;
         }
         .experience {
-          box-shadow: $shadow-light-black;
-          border: none;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           color: $secondary;
           outline: none;
-          background: $white-primary;
+          // background: $white-primary;
           display: flex;
-          padding: 0 1em;
+          padding: 0 .5em;
           height: 50px;
           align-items: center;
-          justify-content: space-around;
+          justify-content: flex-start;
         }
       }
       .fields:last-child {
@@ -89,13 +89,13 @@
           width: 100%;
           font-size: 17px;
           // padding: .15em;
-          padding: 0 1em;
-          box-shadow: $shadow-light-black;
-          border: none;
+          padding: 0 .5em;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           color: $secondary;
           outline: none;
-          background: $white-primary;
-          border-radius: 5px;
+          // background: $white-primary;
+          // border-radius: 5px;
           min-height: 44px;
           // max-height: 38px;
         }
@@ -131,12 +131,12 @@
             font-size: 14px;
             // padding: .15em;
             padding: 0 .5em;
-            box-shadow: $shadow-light-black;
-            border: none;
+            // box-shadow: $shadow-light-black;
+            border: solid $input-border 1px;
             color: $secondary;
             outline: none;
-            background: $white-primary;
-            border-radius: 5px;
+            // background: $white-primary;
+            // border-radius: 5px;
             min-height: 30px;
             // max-height: 38px;
           }  
@@ -172,12 +172,13 @@
             font-size: 14px;
             // padding: .15em;
             padding: 0 .5em;
-            box-shadow: $shadow-light-black;
-            border: none;
+            // box-shadow: $shadow-light-black;
+            // border: none;
+            border: solid $input-border 1px;
             color: $secondary;
             outline: none;
-            background: $white-primary;
-            border-radius: 5px;
+            // background: $white-primary;
+            // border-radius: 5px;
             min-height: 30px;
             // max-height: 38px;
           }  
@@ -249,7 +250,7 @@
           width: 100%;
           font-size: 17px;
           // padding: .15em;
-          padding: 0 1em;
+          padding: 0 .5em;
           // box-shadow: $shadow-light-black;
           border: solid $input-border 1px;
           color: $secondary;
@@ -357,7 +358,7 @@
             width: 100%;
             font-size: 17px;
             // padding: .15em;
-            padding: 0 1em;
+            padding: 0 .5em;
             // box-shadow: $shadow-light-black;
             border: solid $input-border 1px;
             color: $secondary;
@@ -495,19 +496,19 @@
           width: 100%;
           font-size: 17px;
           // padding: .15em;
-          padding: 0 1em;
-          // // box-shadow: $shadow-light-black;
-          // border: solid $input-border 1px;
-          // color: $secondary;
-          // outline: none;
-          // // background: $white-primary;
-          // // border-radius: 5px;
-          border: none;
+          padding: 0 .5em;
+          // box-shadow: $shadow-light-black;
+          border: solid $input-border 1px;
           color: $secondary;
           outline: none;
-          box-shadow: $shadow-light-black;
-          background: $white-primary;
-          border-radius: 5px;
+          // background: $white-primary;
+          // border-radius: 5px;
+          // border: none;
+          // color: $secondary;
+          // outline: none;
+          // box-shadow: $shadow-light-black;
+          // background: $white-primary;
+          // border-radius: 5px;
           min-height: 38px;
           max-height: 38px;
         }
@@ -622,10 +623,12 @@
     .boxes {
       display: flex !important;
       flex-direction: row !important;
-      box-shadow: $shadow-light-black;
-      background: $white-primary;
-      border-radius: 5px;
+      // box-shadow: $shadow-light-black;
+      // background: $white-primary;
+      // border-radius: 5px;
       padding: 0 .5em;
+      border: solid $input-border 1px;
+      outline: none;
       margin: 0 !important;
       width: 100%;
       .head {

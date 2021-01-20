@@ -328,7 +328,6 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         edArrays.push({ field_level: { value: element.leveling }, field_board_university: { value: element.board }, field_institute: { value: element.institute }, field_discipline: { value: element.discipline }, field_specification: { value: element.specification }, field_year_of_passing: { value: moment(element['passedYear']).format() }, field_backlogs: { value: element.backlogs }, field_percentage: { value: element.percentage } });
       });
       this.apiForm['eduArr'] = edArrays;
-      this.apiForm['selectedPost'] = {value: this.selectedPost};
       // this.apiForm.field_level = { value: this.educationForm.value.educationArr[0]['leveling'] },
       //   this.apiForm.field_board_university = { value: this.educationForm.value.educationArr[0]['board'] },
       //   this.apiForm.field_institute = { value: this.educationForm.value.educationArr[0]['institute'] },

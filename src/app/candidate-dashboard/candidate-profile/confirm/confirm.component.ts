@@ -197,8 +197,7 @@ export class ConfirmComponent implements OnInit {
               "reason_leaving":"Change"
               }
             ]
-            
-            console.log(this.apiForm);
+            this.apiForm['selectedPost'] = {value: localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : ''};
         
   }
 
