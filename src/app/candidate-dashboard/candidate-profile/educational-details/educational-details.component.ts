@@ -26,7 +26,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form3: NgForm;
   form4: NgForm;
   form5: NgForm;
-  selectedPost: any = 'get';
+  selectedPost: any;
   levelList: any;
   UGList: any;
   DiplamoList: any;
@@ -83,6 +83,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   ngOnInit() {
     this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
+    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : '';
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -112,6 +113,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   detectSelectQualify() {
     setTimeout(() => {
+      this.appConfig.setLocalData('educationalFormTouched', 'true');
       this.FormInitialization();
     }, 100);
   }
@@ -336,6 +338,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       //   this.apiForm.field_percentage = { value: this.educationForm.value.educationArr[0]['percentage'] },
       //   this.apiForm.field_backlogs = { value: this.educationForm.value.educationArr[0]['backlogs'] ? this.educationForm.value.educationArr[0]['backlogs'] : '' },
 
+      this.appConfig.setLocalData('selectedPost', this.selectedPost);
       this.appConfig.setLocalData('educationalFormSubmitted', 'true');
       this.appConfig.clearLocalDataOne('educationalFormTouched');
       this.appConfig.setLocalData('kycForm', JSON.stringify(this.apiForm));
