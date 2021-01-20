@@ -124,5 +124,18 @@ export class FormCustomValidators {
     }
   }
 
+  static WorkanyOneSelected(g: FormGroup) {
+    if ((g.get('employment_name_address') && g.get('employment_name_address')['value']) || (g.get('duration_from') && g.get('duration_from')['value']) || (g.get('duration_to') && g.get('duration_to')['value']) || (g.get('postion_field') && g.get('postion_field')['value']) || (g.get('name_designation_supervisor') && g.get('name_designation_supervisor')['value']) || (g.get('gross_emploment') && g.get('gross_emploment')['value']) || (g.get('nature_work') && g.get('nature_work')['value']) || (g.get('reason_leaving') && g.get('reason_leaving')['value'])) {
+
+      if ((g.get('employment_name_address') && g.get('employment_name_address')['value']) && (g.get('duration_from') && g.get('duration_from')['value']) && (g.get('duration_to') && g.get('duration_to')['value']) && (g.get('postion_field') && g.get('postion_field')['value']) && (g.get('name_designation_supervisor') && g.get('name_designation_supervisor')['value']) && (g.get('gross_emploment') && g.get('gross_emploment')['value']) && (g.get('nature_work') && g.get('nature_work')['value']) && (g.get('reason_leaving') && g.get('reason_leaving')['value'])) {
+      return null;
+      } else {
+          return { notSelected: true };
+      }
+    } else {
+      return null;
+    }
+  }
+
 
 }

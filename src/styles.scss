@@ -1593,7 +1593,8 @@ button:focus {
 .main-wrapper {
   input.ng-invalid.ng-touched,
   nz-month-picker.ng-invalid.ng-touched,
-  nz-select.ng-invalid.ng-touched {
+  nz-select.ng-invalid.ng-touched,
+  textarea.ng-invalid.ng-touched {
     border: solid $red 1px !important;
   }
   .ant-input:placeholder-shown {
@@ -1800,7 +1801,7 @@ tr.mat-row:hover {
     border-right: solid $blue 1px !important;
   }
 }
-.main-wrap {
+.main-wrap,.form10 {
   .mat-checkbox {
     label {
       margin-bottom: 0.25rem !important;
