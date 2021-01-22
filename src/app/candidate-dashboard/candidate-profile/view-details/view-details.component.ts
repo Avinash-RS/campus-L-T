@@ -255,8 +255,8 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
         }
       }
     });
-
     this.userDetails = dump;
+    this.userDetails.full_employment = this.apiForm.full_employment;
 
     this.permanentStateId = this.userDetails['permanentState'];
     if (this.allStatess) {
@@ -274,6 +274,8 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       });
 
     }
+    console.log(this.userDetails);
+    
   }
 
   getUpdatedCity(Api) {
@@ -318,6 +320,8 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       if (this.appConfig.getLocalData('kycForm')) {
         const data = JSON.parse(this.appConfig.getLocalData('kycForm'));
         this.apiForm = data;
+        console.log('local form', this.apiForm);
+        
         this.getLocalForm(data);
       } else {
         this.getUserDetails();
@@ -745,6 +749,8 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
+        console.log('kyc modify data', this.KYCModifiedData);
+        
         this.getLocalForm(this.KYCModifiedData);
         this.appConfig.hideLoader();
       } else {

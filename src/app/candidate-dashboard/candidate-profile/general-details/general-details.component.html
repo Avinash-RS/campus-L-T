@@ -66,7 +66,7 @@
 
         </div>
         <div class="text-2">
-          <div class="label">Duration (DD/MM/YYYY)</div>
+          <div class="label" style="margin-bottom: 0 !important;">Duration (DD/MM/YYYY)</div>
           <div class="outer">
             <div class="upper">
               <div class="left">
@@ -157,8 +157,8 @@
             <span *ngIf="familyArr.controls[i].get('reason_leaving').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>
           </div>
-          <div class="error" *ngIf="familyArr.controls[i].invalid" style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: 0em !important; margin-top: 1em !important; border-top: solid red 1px; white-space: nowrap;">
-            <span>*Make sure, you have entered all the fields value, If you enter any one of the value</span>
+          <div class="error" *ngIf="familyArr.controls[i].invalid" style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: 0em !important; margin-top: 1em !important;">
+            <span style="position: absolute; border-top: solid red 1px;">*Make sure, you have entered all the fields value, If you enter any one of the value</span>
           </div>
         </div>
         </div>  

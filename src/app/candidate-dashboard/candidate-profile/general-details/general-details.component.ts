@@ -199,10 +199,10 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       this.criminal_record.setValue(this.apiForm.criminal_record ? this.apiForm.criminal_record : '');
       this.fullYearBinding = this.apiForm.total_exp_years ? this.apiForm.total_exp_years : '';
       this.monthYearBinding = this.apiForm.total_exp_months ? this.apiForm.total_exp_months : '';
-      this.emp_yes = this.apiForm.employed_us ? true : false;
-      this.emp_no = this.apiForm.employed_us ? false : true;
-      this.inv_yes = this.apiForm.interviewed_by_us ? true : false;
-      this.inv_no = this.apiForm.interviewed_by_us ? false : true;
+      this.emp_yes = this.apiForm.employed_us == true ? true : this.apiForm.employed_us == '1' ? true : false;
+      this.emp_no = this.apiForm.employed_us == true ? false : this.apiForm.employed_us == '1' ? false : true;
+      this.inv_yes = this.apiForm.interviewed_by_us == true ? true : this.apiForm.interviewed_by_us == '1' ? true : false;
+      this.inv_no = this.apiForm.interviewed_by_us == true ? false : this.apiForm.interviewed_by_us == '1' ? false : true;
       this.oc.setValue(this.apiForm.oc ? this.apiForm.oc : '');
       this.payslip.setValue(this.apiForm.payslip ? this.apiForm.payslip : '');
       this.break_in_emp.setValue(this.apiForm.break_in_emp ? this.apiForm.break_in_emp : '');

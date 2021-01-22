@@ -441,7 +441,99 @@
         </div>
       </div>
 
+      <!-- Criminal records -->
+      <div class="main-heading-bottom">
+        Criminal Records
+      </div>
+      <div class="criminal ml-4">
+        <div class="f_size_15">
+          {{apiForm?.criminal_record ? apiForm?.criminal_record : '-' }}
+        </div>
+      </div>
+      <div class="main-heading-bottom">
+        Work Experience
+      </div>
 
+      <div class="grid-wrapper-workexp">
+        <div class="qualify-wrapper-head">
+          <div class="emp">
+            Employer's name & address
+          </div>
+          <div class="duration">
+            Duration from
+          </div>
+          <div class="duration">
+            Duration to
+          </div>
+          <div class="position">
+            Position held
+          </div>
+          <div class="des">
+            Name & Designation of immediate superior
+          </div>
+          <div class="gross">
+            Gross emoluments (per month)
+          </div>
+          <div class="nature">
+            Nature of work done
+          </div>
+          <div class="reason">
+            Reason for leaving
+          </div>
+
+        </div>
+        <ng-container *ngIf="userDetails">
+        <div class="qualify-wrapper" *ngFor="let dup of userDetails?.full_employment">
+          <div class="emp">{{dup?.employment_name_address}}</div>
+          <!-- <input class="emp" readonly [value]="dup?.employment_name_address"> -->
+          <div class="duration">{{dup?.duration_from}}</div>
+          <div class="duration">{{dup?.duration_to}}</div>
+
+          <div class="position">{{dup?.postion_field}}</div>
+
+          <div class="des">{{dup?.name_designation_supervisor}}</div>
+
+          <div class="gross">{{dup?.gross_emploment}}</div>
+
+          <div class="nature">{{dup?.nature_work}}</div>
+
+          <div class="reason">{{dup?.reason_leaving}}</div>
+
+
+        </div>
+      </ng-container>
+      <div class="static-main d-flex mt-4">
+      <div class="static d-flex justify-content-between" style="width: 30% !important; align-items: center;">
+        <div class="label">Total experience</div>
+        <div class="value d-flex justify-content-between w-50 box-value"><span>{{apiForm?.total_exp_years ? apiForm?.total_exp_years : '0'}} Years</span> <span>{{apiForm?.total_exp_months ? apiForm?.total_exp_months : '0'}} Months</span></div>
+      </div>
+      <div class="static d-flex w-75" style="justify-content: space-evenly; margin-left: 2em;">
+        <div class="label" style="width: 35%;">Break in employment, If any, Should be indicated with reasons</div>
+        <div class="box w-75">{{apiForm?.break_in_emp}}</div>
+      </div>
+    </div>
+    <div style="padding: 0 1em; align-items: flex-start !important;" class="d-flex header">
+       <div class="w-50 sub-header">Have you ever been employed by us or by any of our subsidiary / associate companies? <span style="width: 50px !important;" class="box-value">{{apiForm?.employed_us == true ? 'Yes' : apiForm?.employed_us == '1' ? 'Yes' : 'No'}}</span>
+         <div *ngIf="apiForm?.employed_us == true || apiForm?.employed_us == 1" class="labels">
+          <div>OC</div>
+          <div class="box-value">{{apiForm?.oc}}</div>
+          <div>Payslip numer</div>
+          <div class="box-value">{{apiForm?.payslip}}</div>
+         </div>
+       </div>
+       <div class="w-50 sub-header ml-2">Have you ever been interviewed by us? <span style="width: 50px !important;" class="box-value">{{apiForm?.interviewed_by_us == true ? 'Yes' : apiForm?.interviewed_by_us == '1' ? 'Yes' : 'No'}}</span>
+        <div *ngIf="apiForm?.interviewed_by_us == true || apiForm?.interviewed_by_us == 1" class="labels">
+          <div>Post you applied before</div>
+          <div class="box-value">{{apiForm?.post}}</div>
+          <div>When</div>
+          <div class="box-value">{{apiForm?.when_interview}}</div>
+         </div>
+       </div>   
+   
+    </div>
+
+      </div>
+<!-- end -->
       <div class="main-heading-bottom">
         Faculty References
       </div>
