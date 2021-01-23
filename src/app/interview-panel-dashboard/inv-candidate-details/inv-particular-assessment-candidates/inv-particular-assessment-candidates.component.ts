@@ -273,7 +273,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   }
 
   finalSubmit() {
-    console.log(this.gridApi.getSelectedNodes());
     
     if(this.gridApi.getSelectedNodes().length > 0) {
       this.getSelectedCandidates = this.gridApi.getSelectedNodes();

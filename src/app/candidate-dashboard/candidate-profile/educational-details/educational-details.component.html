@@ -30,13 +30,13 @@
                   <div [matTooltip]="i == 0 ? 'SSLC is mandatory' : ''" class="input-box">
                     <!-- <input (focusout)="detectInput(educationForm)" placeholder="Level" formControlName="leveling"
                       type="text" value=""> -->
-                    <nz-select *ngIf="i != 1" [ngClass]="i == 0 ? 'disabled' : ''" (ngModelChange)="detectSelectChanges()" nzAllowClear
+                    <nz-select *ngIf="i != 1" [ngClass]="i == 0 ? 'disabled' : ''" (ngModelChange)="detectSelectChanges(i)" nzAllowClear
                       nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
                       <nz-option *ngFor="let level of levelList; let j = index"
                         [nzDisabled]="(level.education === 'SSLC' || level.education === 'HSC') ? true : false" [nzLabel]="level.label"
                         [nzValue]="level.education"></nz-option>
                     </nz-select>
-                    <nz-select *ngIf="i == 1" (ngModelChange)="detectSelectChanges()" nzAllowClear
+                    <nz-select *ngIf="i == 1" (ngModelChange)="detectSelectChanges(i)" nzAllowClear
                     nzShowSearch formControlName="leveling" nzPlaceHolder="Level">
                     <nz-option *ngFor="let level of levelList; let j = index"
                       [nzDisabled]="(level.education == 'HSC' || level.education == 'Diploma') ? false : true" [nzLabel]="level.label"
@@ -166,11 +166,11 @@
 
                     <div class="input-box">
                       <input
-                        *ngIf="(eduArr.controls[i].get('leveling').value == 'HSC' || eduArr.controls[i].get('leveling').value == 'Diploma')"
+                        *ngIf="(eduArr.controls[i].get('leveling').value == 'HSC')"
                         (focusout)="detectInput(educationForm)" placeholder="Specialization"
                         formControlName="specification" type="text" value="">
                       <nz-select
-                        *ngIf="(eduArr.controls[i].get('leveling').value != 'HSC' && eduArr.controls[i].get('leveling').value != 'Diploma')"
+                        *ngIf="(eduArr.controls[i].get('leveling').value != 'HSC')"
                         (ngModelChange)="detectSelectChange()" formControlName="specification" nzAllowClear nzShowSearch
                         nzPlaceHolder="Specification">
                         <ng-container *ngIf="(eduArr.controls[i].get('leveling').value == 'PG')">
@@ -178,9 +178,14 @@
                             [nzValue]="level.pg_specification">
                           </nz-option>
                         </ng-container>
-                        <ng-container *ngIf="(eduArr.controls[i].get('leveling').value != 'PG')">
+                        <ng-container *ngIf="(eduArr.controls[i].get('leveling').value == 'UG')">
                           <nz-option *ngFor="let level of ugSpecialization" [nzLabel]="level.ug_specification"
                             [nzValue]="level.ug_specification">
+                          </nz-option>
+                        </ng-container>
+                        <ng-container *ngIf="(eduArr.controls[i].get('leveling').value == 'Diploma')">
+                          <nz-option *ngFor="let level of diplamoSpecialization" [nzLabel]="level.value"
+                            [nzValue]="level.value">
                           </nz-option>
                         </ng-container>
 

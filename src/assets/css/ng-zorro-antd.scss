@@ -329,7 +329,8 @@ mark {
   line-height: 0;
   text-align: center;
   text-transform: none;
-  vertical-align: -0.125em;
+  vertical-align: 0em;
+  // vertical-align: -0.125em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -8838,11 +8839,16 @@ a.ant-btn-sm {
 }
 .ant-calendar-today .ant-calendar-date {
   // color: #1890ff;
-  font-weight: bold;
+  // font-weight: bold;
   background: transparent;
-  color: transparent;
+  color: rgba(0, 0, 0, 0.65);
   border-color: none;
 }
+.ant-calendar-today .ant-calendar-date:hover {
+  // color: #1890ff;
+  background: $primary-red-hover;
+}
+
 .ant-calendar-selected-day .ant-calendar-date {
   // background: $primary-red;
   font-weight: bold;

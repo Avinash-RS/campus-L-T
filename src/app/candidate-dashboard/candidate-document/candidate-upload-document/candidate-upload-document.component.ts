@@ -78,7 +78,6 @@ export class CandidateUploadDocumentComponent implements OnInit {
     };
     this.candidateService.getListofDocs(apiData).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('list of docs', data);
       this.filelists  = data ? data : [];
     }, (err) => {
 

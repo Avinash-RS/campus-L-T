@@ -44,7 +44,12 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   HSCDiscipline = DropdownListForKYC['HSCDiscipline'];
   specialization = DropdownListForKYC['specialization'];
   boards = DropdownListForKYC['boards'];
-
+  diplamoSpecialization = [
+    {
+      label: 'Diploma Engineering',
+      value: 'Diploma Engineering'
+    }
+  ]
   educationForm: FormGroup;
 
   startingYear = new Date("1995-01-01");
@@ -392,7 +397,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
           this.addEducationForm(edu);
         }  
       } 
-      if (this.selectedPost == 'gct' || this.selectedPost == 'pgct') {
+      if (this.selectedPost == 'gct' || this.selectedPost == 'get') {
         for (let i = 0; i <= 2; i++) {
           let edu;
             if (i==0) {
@@ -553,72 +558,151 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     }
   }
 
-  detectSelectChanges() {
-    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == null || this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == '') {
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].disable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].disable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].disable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].disable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+  detectSelectChanges(i) {
+ 
+    // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == null || this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == '') {
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].disable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].disable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].disable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].disable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+    // }
+    // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'HSC') {
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    // }
+    // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'Diploma') {
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).patchValue({
+    //     specification: 'Diploma Engineering'
+    //   })
+    //   console.log('diplaa', this.eduArr);
+    //   console.log('map', this.eduArr.at(Number(`${this.eduArr.length - 1}`)));
+      
+    // }
+    // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'UG') {
+    //   console.log('coming into ug');
+      
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    // }
+    // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'PG') {
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
+    //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    // }
+
+    if (this.eduArr.at(Number(`${i}`)).value.leveling == null || this.eduArr.at(Number(`${i}`)).value.leveling == '') {
+      this.eduArr.at(Number(`${i}`)).controls['board'].disable();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].disable();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].disable();
+      this.eduArr.at(Number(`${i}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].disable();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].updateValueAndValidity();
     }
-    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'HSC') {
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    if (this.eduArr.at(Number(`${i}`)).value.leveling == 'HSC') {
+      this.eduArr.at(Number(`${i}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${i}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${i}`)).controls['board'].updateValueAndValidity();
     }
-    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'Diploma') {
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    if (this.eduArr.at(Number(`${i}`)).value.leveling == 'Diploma') {
+      this.eduArr.at(Number(`${i}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['board'].clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${i}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${i}`)).controls['board'].updateValueAndValidity();
+      // this.eduArr.at(Number(`${i}`)).patchValue({
+      //   specification: 'Diploma Engineering'
+      // })      
     }
-    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'UG') {
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    if (this.eduArr.at(Number(`${i}`)).value.leveling == 'UG') {
+      this.eduArr.at(Number(`${i}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['board'].clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${i}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].setValidators([Validators.required]);
+      this.eduArr.at(Number(`${i}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${i}`)).controls['board'].updateValueAndValidity();
     }
-    if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'PG') {
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['discipline'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls.specification.clearValidators();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].enable();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].reset();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].setValidators([Validators.required]);
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['specification'].updateValueAndValidity();
-      this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].updateValueAndValidity();
+    if (this.eduArr.at(Number(`${i}`)).value.leveling == 'PG') {
+      this.eduArr.at(Number(`${i}`)).controls['board'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['board'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['board'].clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['institute'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['discipline'].reset();
+      this.eduArr.at(Number(`${i}`)).controls.specification.clearValidators();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].enable();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].reset();
+      this.eduArr.at(Number(`${i}`)).controls['specification'].setValidators([Validators.required]);
+      this.eduArr.at(Number(`${i}`)).controls['specification'].updateValueAndValidity();
+      this.eduArr.at(Number(`${i}`)).controls['board'].updateValueAndValidity();
     }
+
 
     this.appConfig.setLocalData('educationalFormTouched', 'true');
   }

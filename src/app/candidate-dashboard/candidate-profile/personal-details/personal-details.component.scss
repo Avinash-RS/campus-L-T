@@ -1135,3 +1135,11 @@
 .error {
   max-width: 200px;
 }
+.personalErr{
+  margin-left: 12% !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    div:first-child {
+      width: 100% !important;
+    }
+}

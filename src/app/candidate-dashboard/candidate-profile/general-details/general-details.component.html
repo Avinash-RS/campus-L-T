@@ -43,6 +43,12 @@
 <div class="criminal">
   <div class="text-criminal">Have you ever been involved in any criminal proceedings / convicted of any offense? If yes, please give details:</div>
   <textarea class="criminal-textarea" [formControl]="criminal_record" name="" id="" rows="3"></textarea>
+  <div class="error" *ngIf="criminal_record.invalid"
+  style="font-size: 12px; align-items: flex-start !important;">
+  <span>Accept only Alphanumeric characters and
+    maximum of 500 characters only allowed</span>
+</div>
+
 </div>
   <div class="main-heading">
     Work Experience
@@ -71,7 +77,9 @@
             <div class="upper">
               <div class="left">
                 <div class="label1"><span>From</span></div>
-                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="duration_from">
+                <nz-date-picker class="nzduration" (ngModelChange)="detectDateCalc(familyArr.controls, i)" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
+                formControlName="duration_from" [nzFormat]="dateFormat"></nz-date-picker>
+                <!-- <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="duration_from"> -->
                 <div class="error"
                   *ngIf="familyArr.controls[i].get('duration_from').invalid && familyArr.controls[i].get('duration_from').touched"
                   style="font-size: 12px; align-items: flex-start !important; min-width: 110px !important; max-width: 110px !important;">
@@ -83,7 +91,9 @@
 
               <div class="right">
                 <div class="label1"><span>To</span></div>
-                <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="duration_to">
+                <nz-date-picker class="nzduration" (ngModelChange)="detectDateCalc(familyArr.controls, i)" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
+                formControlName="duration_to" [nzFormat]="dateFormat"></nz-date-picker>
+                <!-- <input type="date" (change)="detectDateCalc(familyArr.controls, i)" formControlName="duration_to"> -->
                 <div class="error"
                   *ngIf="familyArr.controls[i].get('duration_to').invalid && familyArr.controls[i].get('duration_to').touched"
                   style="font-size: 12px; align-items: flex-start !important; min-width: 110px !important; max-width: 110px !important;">
@@ -217,6 +227,12 @@
           Break in employment, If any, Should be indicated with reasons
         </div>
         <textarea [formControl]="break_in_emp" name="" id="" rows="2"></textarea>
+        <div class="error" *ngIf="break_in_emp.invalid"
+        style="font-size: 12px; align-items: flex-start !important;">
+        <span>Accept only Alphanumeric characters and
+          maximum of 500 characters only allowed</span>
+      </div>
+      
       </div>
 
     </div>
@@ -235,9 +251,11 @@
           If, yes, Please give details
         </div> 
         <div class="in"><span>OC: </span> <span><input [formControl]="oc" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
-        <div *ngIf="oc.invalid && oc.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>OC is required </span></div>
+        <div *ngIf="oc.invalid && oc.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="oc.errors?.required">OC is required </span><span *ngIf="oc.errors?.pattern">Accept only Alphanumeric characters and
+          maximum of 255 characters only allowed </span></div>
         <div class="in"><span>Payslip number: </span> <span><input [formControl]="payslip" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
-        <div *ngIf="payslip.invalid && payslip.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Payslip number is required </span></div>
+        <div *ngIf="payslip.invalid && payslip.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="payslip.errors?.required">Payslip number is required </span><span *ngIf="payslip.errors?.pattern">Accept only Alphanumeric characters and
+          maximum of 255 characters only allowed </span></div>
       </div>
     </div>
     <div class="details1">
@@ -251,8 +269,13 @@
 
       <div class="explain">
         <div class="in"><span>If yes, For what post: </span> <span><input [formControl]="post" [ngClass]="inv_no ? 'disabled' : ''" type="text"></span></div>
-        <div *ngIf="post.invalid && post.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Post is required </span></div>
-        <div class="in"><span>When: </span> <span><input [formControl]="when_interview" [ngClass]="inv_no ? 'disabled' : ''" type="date"></span></div>
+        <div *ngIf="post.invalid && post.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="post.errors?.required">Post is required </span> <span *ngIf="post.errors?.pattern">Accept only Alphanumeric characters and
+          maximum of 255 characters only allowed </span></div>
+        <div class="in"><span>When: </span> <span>
+          <nz-date-picker class="nzdate" [ngClass]="inv_no ? 'disabled' : ''" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
+          [formControl]="when_interview" [nzFormat]="dateFormat"></nz-date-picker>
+          <!-- <input [formControl]="when_interview" type="date"> -->
+        </span></div>
         <div *ngIf="when_interview.invalid && when_interview.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span>Date of interview is required </span></div>
       </div>
     </div>

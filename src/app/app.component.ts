@@ -112,7 +112,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // Get the online/offline status from browser window
         this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
-      console.log('coming', this.isConnected);
+      // console.log('coming', this.isConnected);
       if (this.isConnected) {
         // this.status = 'You are back online';
       //  return this.appConfig.warning('You are online');

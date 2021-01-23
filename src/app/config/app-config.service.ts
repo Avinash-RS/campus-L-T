@@ -286,7 +286,7 @@ export class AppConfigService {
 
       /* save data */
       SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      console.log('excel to json', SavedData);
+      // console.log('excel to json', SavedData);
     };
     reader.readAsBinaryString(target.files[0]);
     return SavedData;
@@ -297,7 +297,6 @@ export class AppConfigService {
   }
 
   terms(comp, data) {
-    console.log('coming');
     this.openDialog(comp, data);
   }
 

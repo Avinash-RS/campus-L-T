@@ -578,6 +578,7 @@
     align-items: flex-start;
     div:first-child {
       min-height: 40px;
+      min-width: 100px;
       align-items: flex-start;
       box-shadow: $shadow-light-black;
       text-align: left;
@@ -776,6 +777,7 @@
     display: grid;
     // grid-template-columns: 15% 19% 28% 11% 11% 10% 6%;
     grid-template-columns: 1.5fr .5fr .5fr 1fr 2fr 0.5fr 1fr 1.5fr;
+    align-items: center;
     div {
       font-weight: 600;
       font-size: 15px;
@@ -802,6 +804,7 @@
     display: grid;
     // white-space: nowrap;
     grid-template-columns: 1.5fr .5fr .5fr 1fr 2fr 0.5fr 1fr 1.5fr;
+    align-items: center;
     // grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     div,
     input {
@@ -838,6 +841,7 @@
     margin: 1em 0 0 0;
     justify-content: space-between;
     padding: 0 1em;
+    align-items: flex-start;
     .box-value {
       border: none;
       outline: none;

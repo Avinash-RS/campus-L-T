@@ -474,7 +474,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
   submit() {
-    console.log(this.gridApiHR.getSelectedNodes());
     const selectedUserlist = this.gridApi.getSelectedNodes();
     const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
     const candidateID = [];

@@ -298,8 +298,6 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
 
   onCellClicked(event) {
     if (event.colDef.field === 'name') {
-      console.log(event.colDef);
-      console.log(event);
       const param = {
         assessment: event['data'] && event['data']['shortlist_name'] ? event['data']['shortlist_name'] : '',
         cid: event['data'] && event['data']['candidate_id'] ? event['data']['candidate_id'] : '',
