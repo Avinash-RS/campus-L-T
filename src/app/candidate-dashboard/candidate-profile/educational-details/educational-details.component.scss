@@ -8,12 +8,12 @@
 .alert {
   color: $primary-red;
   font-size: 14px;
-  padding-bottom: 0 !important;
+  padding: 0 !important;
 }
 
 .mainwrapper {
   margin: 1em 0 0 0;
-  padding: 1em 2em 2em 1em;
+  padding: 0em 2em 2em 1em;
 
   .header {
     font-weight: 600;
@@ -58,24 +58,24 @@
               }
               .input-box {
                 margin: 0 0.15em;
-                border-radius: 5px;
-                box-shadow: $shadow-light-black;
+                // border-radius: 5px;
+                // box-shadow: $shadow-light-black;
                 display: flex;
                 width: 240px;
                 max-width: 240px;
                 // width: 100%;
-                align-items: center;
-                background: $white;
+                // align-items: center;
+                // background: $white;
                 height: 38px;
                 padding: 0em 0px 0 0px;
-                border: solid $black-3 1px;
                 nz-month-picker {
+                  border: solid $input-border 1px;
                   width: 100%;
                   display: flex;
                   align-items: center;
                   // padding: .15em;
-                  border-radius: 5px;
-                  background: $white;
+                  // border-radius: 5px;
+                  // background: $white;
                   max-height: 38px;
                   min-height: 38px;
                   font-size: 17px;
@@ -85,13 +85,14 @@
                 nz-select {
                   // padding: .15em;
                   width: 100%;
-                  border-radius: 5px;
-                  background: $white;
+                  // border-radius: 5px;
+                  // background: $white;
                   max-height: 38px;
                   min-height: 38px;
                   font-size: 17px;
                   font-weight: 100;
                   color: $secondary;
+                  border: solid $input-border 1px;
                   nz-option {
                     background: black;
                     border: solid $light-blue 1px;
@@ -103,11 +104,11 @@
                   font-size: 17px;
                   // padding: .15em;
                   padding: 0 1em;
-                  border: none;
+                  border: solid $input-border 1px;
                   color: $secondary;
                   outline: none;
-                  background: $white;
-                  border-radius: 5px;
+                  // background: $white;
+                  // border-radius: 5px;
                   min-height: 38px;
                   max-height: 38px;
                 }
@@ -208,6 +209,8 @@
   display: none !important;
 }
 input:disabled,.disabled-1 {
-  background: #f5f5f5 !important;
+  // background: #f5f5f5 !important;
+  border: solid $input-border 1px;
+  opacity: 0.3 !important;
   cursor: not-allowed;
 }

@@ -1,10 +1,76 @@
 {
-  "/d8cintana/*": {
-    "target": "http://udapqa.southindia.cloudapp.azure.com",
+  "/user/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
     "secure": false,
-    "pathRewrite": {
-    "^/d8cintana": ""
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
+  "/sites/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/rest/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/entity/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/file/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/kyc_views/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/profile/*": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/states.php": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/cities.php": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/candidate-page": {
+    "target": "http://udapqa.southindia.cloudapp.azure.com/d8cintana2",
+    "secure": false,
+    "pathRewrite": {"^/" : ""},
     "changeOrigin": true,
     "logLevel": "debug"
   }

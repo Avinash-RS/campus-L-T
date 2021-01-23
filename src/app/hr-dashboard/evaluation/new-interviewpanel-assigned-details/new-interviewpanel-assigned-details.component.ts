@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 
@@ -14,7 +14,10 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   templateUrl: './new-interviewpanel-assigned-details.component.html',
   styleUrls: ['./new-interviewpanel-assigned-details.component.scss']
 })
-export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
+export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
+  @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
 
   selectedInstitute: any;
   selectedDiscipline: any;
@@ -61,6 +64,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
   // quickSearchValue: string;
   quickSearchValue = '';
   quickSearchValue1 = '';
+  panelOpenState1 = true;
 
   constructor(
     private appConfig: AppConfigService,
@@ -79,6 +83,15 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     this.getEducation();
     this.tabledef();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   editRouteParamGetter() {
     // Get url Param to view Edit user page
@@ -285,8 +298,6 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
 
   onCellClicked(event) {
     if (event.colDef.field === 'name') {
-      console.log(event.colDef);
-      console.log(event);
       const param = {
         assessment: event['data'] && event['data']['shortlist_name'] ? event['data']['shortlist_name'] : '',
         cid: event['data'] && event['data']['candidate_id'] ? event['data']['candidate_id'] : '',
@@ -294,7 +305,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
         status: event['data'] && event['data']['evaluation_status'] ? event['data']['evaluation_status'] : '',
         tag: event['data'] && event['data']['tag'] ? event['data']['tag'] : '',
         uid: event['data'] && event['data']['uid'] ? event['data']['uid'] : ''
-      }      
+      }
       // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION, { data: param['assessment'], id: param['cid'], name: param['name'], status: param['status'], tag: param['tag'], uid: param['uid'] });
     }
@@ -302,10 +313,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Not Found', 'No search results found');
+      this.appConfig.warning('No search results found');
     }
   }
 
@@ -313,7 +324,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
     this.gridApi.setQuickFilter(this.quickSearchValue);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Not Found', 'No global search results found');      
+      this.appConfig.warning('No search results found');
       // this.toast.warning('No reuslts found');
     }
   }
@@ -334,7 +345,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
   instituteChange() {
 
   }
-  
+
   instituteChangeForDiscipline(data) {
     this.getParticularAssessmentAndDiscipline(data);
   }
@@ -369,9 +380,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit {
       assement_name: this.selectedAssessment ? this.selectedAssessment : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
-    
+
     this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();      
+      this.appConfig.hideLoader();
+      if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];
           }, (err) => {
     });

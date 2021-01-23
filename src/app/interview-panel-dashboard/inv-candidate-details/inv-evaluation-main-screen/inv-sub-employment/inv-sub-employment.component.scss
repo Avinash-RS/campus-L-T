@@ -26,6 +26,8 @@
       .level {
         color: $light-black;
         font-size: 13px;
+        max-width: 90px !important;
+        word-break: break-all;
       }
       .box {
         background: $white;

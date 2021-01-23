@@ -5,10 +5,11 @@ import {
   HttpResponse,
   HttpHandler,
   HttpEvent,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 import { AppConfigService } from './app-config.service';
 import { environment } from 'src/environments/environment';
 import { CONSTANT } from '../constants/app-constants.service';
@@ -17,6 +18,7 @@ import { CONSTANT } from '../constants/app-constants.service';
 export class InterceptorsService implements HttpInterceptor {
 
   BASE_URL = environment.API_BASE_URL;
+  isLocal = environment.local;
 
   constructor(
     private appConfig: AppConfigService
@@ -27,21 +29,36 @@ export class InterceptorsService implements HttpInterceptor {
     if (request.url !== `${this.BASE_URL}/rest/session/token`) {
       this.appConfig.showLoader();
     }
+    // created on 28-Nov
+    const headers = new HttpHeaders({
+      'Accept': 'application/json'
+    });
 
-    return next.handle(request).pipe(
+    const clone = request.clone({
+      headers: request.headers.set('Accept', 'application/json'),
+      withCredentials: this.isLocal ? false : true
+    });
+    return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
-        if (!request.headers.has('Content-Type')) {
-          // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
-          request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
-        }
-
-        if (event instanceof HttpResponse) {
-          // this.appConfig.hideLoader();
-          return event;
-        }
-        // this.appConfig.hideLoader();
         return event;
       }),
+      retry(3),
+      // Hidden on 28-Nov
+      // return next.handle(request).pipe(
+      //   map((event: HttpEvent<any>) => {
+      //     if (!request.headers.has('Content-Type')) {
+      //       // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
+      //       request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
+      //     }
+
+      //     if (event instanceof HttpResponse) {
+      //       // this.appConfig.hideLoader();
+      //       return event;
+      //     }
+      //     // this.appConfig.hideLoader();
+      //     return event;
+      //   }),
+      //   retry(3),
       catchError((error: HttpErrorResponse) => {
         // let data = {};
         // data = {
@@ -54,7 +71,8 @@ export class InterceptorsService implements HttpInterceptor {
 
         if (error.status === 0) {
           this.appConfig.hideLoader();
-          this.appConfig.error(error.statusText + ': HTTP failure response', '');
+          // this.appConfig.error(error.statusText + ': HTTP failure response', '');
+          this.appConfig.errorWithTitle('Your network connection is down or Request is getting timed out.', 'Please try again later..');
           return throwError(error);
         }
         if (error.status === 400) {
@@ -71,7 +89,7 @@ export class InterceptorsService implements HttpInterceptor {
         }
 
         if (error.status === 403) {
-          if (error.error && error.error.FailureReason && error.error.FailureReason.message === "'csrf_token' URL query argument is invalid.") {
+          if (error.error && error.error.FailureReason && error.error.FailureReason.message == "'csrf_token' URL query argument is invalid.") {
             this.appConfig.hideLoader();
             this.appConfig.clearLocalData();
             this.appConfig.error('Session expired. Please log in again', '');
@@ -106,8 +124,8 @@ export class InterceptorsService implements HttpInterceptor {
         }
         if (error.status === 500) {
           this.appConfig.hideLoader();
-          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '500 Internal server error', '');
+          this.appConfig.errorWithTitle(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+            ? error.error.message : 'Please try again later', 'Something went wrong');
           return throwError(error);
         }
         // if (error.status === 403) {

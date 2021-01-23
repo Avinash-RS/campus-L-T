@@ -23,7 +23,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -35,6 +35,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
@@ -46,6 +47,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/hal+json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
     return headers;
@@ -59,6 +61,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -69,6 +72,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;
@@ -79,6 +83,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
     return headers;
@@ -435,7 +440,7 @@ export class AdminServiceService {
       return this.http.post(`${this.BASE_URL}/api/institute_candidate_shortlist`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true });
     }
-  
+
 
   // based on assessment get candidate details
   getEvaluationCandidateData(data) {
@@ -515,13 +520,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // hr shortlist base candidate 
+  // hr shortlist base candidate
   getShortlistCandidateList(data) {
     return this.http.post(`${this.BASE_URL}/profile/assement_select`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // hr scheduling assessment 
+  // hr scheduling assessment
   schedulingAssessment(data) {
     return this.http.post(`${this.BASE_URL}/profile/assement_insert`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
@@ -529,7 +534,7 @@ export class AdminServiceService {
 
 
   getInterviewpanelInstitutes() {
-    return this.http.get(`${this.BASE_URL}/profile/getall_institue_assement`, 
+    return this.http.get(`${this.BASE_URL}/profile/getall_institue_assement`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
@@ -577,4 +582,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  keyMastersList() {
+    return this.http.get(`${this.BASE_URL}/profile/master_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

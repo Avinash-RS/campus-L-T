@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -17,8 +17,10 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
   styleUrls: ['./new-interviewpanel-assignment-screen.component.scss']
 })
 
-export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
+export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
+  @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
@@ -97,7 +99,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
   quickSearchValueHR = '';
   gridColumnApiHR: any;
   isCheckedHR: boolean;
-
+  panelOpenState = true;
 
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
@@ -150,7 +152,17 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
+    this.appConfig.scrollToTop();
   }
+
+  ngAfterViewInit() {
+     // Hack: Scrolls to top of Page after page view initialized
+     let top = document.getElementById('top');
+     if (top !== null) {
+       top.scrollIntoView();
+       top = null;
+     }
+    }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
@@ -169,10 +181,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
+      // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
     }
   }
 
@@ -180,7 +193,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     this.gridApi.setQuickFilter(this.quickSearchValue);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
+      // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
     }
   }
   tabledef() {
@@ -249,10 +263,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
 
   getModelHR(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
+      // this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
     }
   }
 
@@ -260,7 +275,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
     this.gridApiHR.setQuickFilter(this.quickSearchValueHR);
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No global search results found');
+      this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
+      // this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No global search results found');
     }
   }
   tabledefHR() {
@@ -321,7 +337,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
       status: this.selectedStatus ? this.selectedStatus : ''
     }
     this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();      
+      this.appConfig.hideLoader();
+      if(!this.pannel) { return } else {this.pannel.close()}
       const datas = data ? data : [];
       this.showDefault = false;
       this.routeAssignedData = apiData;
@@ -435,7 +452,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
         });
         this.rowDataHR = this.userListHR;
     }
-  
+
 
   assigntoPanel(apiData) {
     this.adminService.assignToHR(apiData).subscribe((data: any) => {
@@ -451,13 +468,12 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
           interViwePanelAssign: 'noData',
           showCancel: '',
           showOk: ''
-        };    
+        };
         this.openDialog1(ShortlistBoxComponent, datas, this.routeAssignedData);
     }, (err) => {
     });
   }
   submit() {
-    console.log(this.gridApiHR.getSelectedNodes());
     const selectedUserlist = this.gridApi.getSelectedNodes();
     const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
     const candidateID = [];
@@ -490,7 +506,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
         member: HRID.length == 1 ? 'member' : 'members',
         showCancel: 'Cancel',
         showOk: ''
-      };  
+      };
     } else {
       if (candidateID.length < 1 && HRID.length < 1) {
         data = {
@@ -504,7 +520,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit {
           interViwePanelAssign: 'noData',
           showCancel: '',
           showOk: ''
-        };    
+        };
       } else {
           data = {
             iconName: '',

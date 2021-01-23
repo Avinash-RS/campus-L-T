@@ -23,6 +23,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
@@ -34,6 +35,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/hal+json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
@@ -46,6 +48,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -57,6 +60,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*',
     })
       .set('Content-Type', 'multipart/form-data')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -68,6 +72,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/octet-stream')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       // tslint:disable-next-line: quotemark
       .set('Content-Disposition', `filename="${uniqueName}"`)
@@ -80,7 +85,8 @@ export class CandidateMappersService {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-      .set('Content-Type', 'application/json')
+    .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
+    .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
     return headers;

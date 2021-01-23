@@ -34,7 +34,7 @@ export class HrMasterComponent implements OnInit {
     this.sharedService.subMenuSubject.subscribe((data: any) => {
       this.subMenus = data;
     });
-    this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);    
+    this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
   }
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class HrMasterComponent implements OnInit {
             if (route.outlet === "primary") {
 
               const routeSnapshot = route.snapshot;
-              
+
               url +=
                 "/" + routeSnapshot.url.map(segment => segment.path);
               // if (route.snapshot.data.breadcrumb !== undefined) {
@@ -90,7 +90,7 @@ export class HrMasterComponent implements OnInit {
 
   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
     // If no routeConfig is avalailable we are on the root path
-    
+
     let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
     let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
     let param = route.snapshot && route.snapshot['queryParams'] ? route.snapshot['queryParams'] : '';

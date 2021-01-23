@@ -119,7 +119,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
+      this.appConfig.warning('No search results found');
     }
   }
 
@@ -127,7 +127,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.gridApi.setQuickFilter(this.quickSearchValue);
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
+      this.appConfig.warning('No search results found');
     }
   }
   tabledef() {
@@ -273,7 +273,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   }
 
   finalSubmit() {
-    console.log(this.gridApi.getSelectedNodes());
     
     if(this.gridApi.getSelectedNodes().length > 0) {
       this.getSelectedCandidates = this.gridApi.getSelectedNodes();

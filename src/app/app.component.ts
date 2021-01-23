@@ -11,6 +11,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { CONSTANT } from './constants/app-constants.service';
 import { SharedServiceService } from './services/shared-service.service';
+import { ToastrService } from 'ngx-toastr';
+import { AdminServiceService } from './services/admin-service.service';
 
 @Component({
   selector: 'app-root',
@@ -38,12 +40,13 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private apiService: ApiServiceService,
-    private sharedService: SharedServiceService,
+    private adminService: AdminServiceService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private toastr: ToastrService
   ) {
-    this.connectionStatusMethod();
+    // this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
     this.appConfig.clearLocalDataOne('personalFormTouched');
     this.appConfig.clearLocalDataOne('educationalFormTouched');
@@ -52,14 +55,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        // this.appConfig.showLoaderManual();
+        // this.connectionStatusMethod();
       }
       // On NavigationEnd or NavigationError or NavigationCancel
       // set showLoadingIndicator to false
       if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
-        // this.appConfig.hideLoaderManual();
         }
     });
   }
@@ -67,9 +69,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getScreenSize();
     this.checkIE();
-    // const isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent)
-    
-    // this.connectionStatusMethod();
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -83,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
         type: 'resize'
       };
       if (!this.screenBoolean) {
-        this.openDialog(ScreenresolutionBoxComponent, data);        
+        this.openDialog(ScreenresolutionBoxComponent, data);
           }
     } else {
       const data = false;
@@ -111,14 +110,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   connectionStatusMethod() {
     // Get the online/offline status from browser window
-    this.connectionService.monitor().subscribe(isConnected => {
+        this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
+      // console.log('coming', this.isConnected);
       if (this.isConnected) {
-        this.status = 'You are back online';
+        // this.status = 'You are back online';
+      //  return this.appConfig.warning('You are online');
       } else {
-        this.status = 'You are offline';
+       return this.appConfig.warning('You are offline');
+        // this.status = 'You are offline';
       }
-      alert(this.status);
+      // alert(this.status);
     });
   }
 
@@ -159,10 +161,10 @@ export class AppComponent implements OnInit, OnDestroy {
     //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
     //       }
     //     }, (err)=> {
-    //     });    
+    //     });
     //   } else {
     //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);  
+    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
     //   }
     // } else {
     //   if (!this.appConfig.getLocalData('maintenance')) {
@@ -177,10 +179,10 @@ export class AppComponent implements OnInit, OnDestroy {
     //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
     //       }
     //     }, (err)=> {
-    //     });    
+    //     });
     //   } else {
     //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);  
+    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
     //   }
     // }
   }

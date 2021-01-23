@@ -127,6 +127,8 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
             this.appConfig.setLocalData('csrf-login', data && data.csrf_token ? data.csrf_token : '');
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
+            this.appConfig.setLocalData('selectedPost', data && data.selectedpost ? data.selectedpost : '');
+            this.appConfig.setLocalData('masters', data && data.master_list && data.master_list.data ? JSON.stringify(data.master_list.data) : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
             if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
               // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
@@ -146,6 +148,7 @@ export class LoginpageComponent implements OnInit {
               let day = todayDate.getDate()
               let date = todayDate.getFullYear() +'-'+(month <= 9 ? '0' + month : month) +'-' + (day <= 9? '0' + day : day)
               if(new Date(date) <= new Date(DropdownListForKYC['kycDate'])){
+                localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
                 // if(date.toString() != DropdownListForKYC['kycDate'].toString()){
                   if (data['first_shortlist'] && data['first_shortlist'] === '1') {
                   this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');

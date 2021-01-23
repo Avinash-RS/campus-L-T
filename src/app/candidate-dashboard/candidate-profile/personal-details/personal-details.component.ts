@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContentChecked, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContentChecked, HostListener, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -56,7 +56,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class PersonalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+export class PersonalDetailsComponent extends FormCanDeactivate implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('form', { static: false })
   // @ViewChild('form1', { static: false })
@@ -211,7 +211,17 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
+    this.appConfig.scrollToTop();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   redirectToView() {
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
@@ -714,6 +724,19 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         } else {
           this.hidePermanentCityDropDown = true;
         }
+        let a = JSON.parse(localStorage.getItem('empLogin'));
+        this.KYCModifiedData.criminal_record = a && a[0] && a[0]['criminal'] && a[0]['criminal'][0] && a[0]['criminal'][0]['criminal'] ? a[0]['criminal'][0]['criminal'] : '';
+        this.KYCModifiedData.total_exp_years = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['total_exp_years'] ? a[0]['kyc_full_emp'][0]['total_exp_years'] : '';
+        this.KYCModifiedData.total_exp_months = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['total_exp_months'] ? a[0]['kyc_full_emp'][0]['total_exp_months'] : '';
+        this.KYCModifiedData.employed_us = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['employed_us'] ? a[0]['kyc_full_emp'][0]['employed_us'] : '';
+        this.KYCModifiedData.oc =a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['oc'] ? a[0]['kyc_full_emp'][0]['oc'] : '';
+        this.KYCModifiedData.payslip = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['payslip'] ? a[0]['kyc_full_emp'][0]['payslip'] : '';
+        this.KYCModifiedData.interviewed_by_us = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['interviewed_by_us'] ? a[0]['kyc_full_emp'][0]['interviewed_by_us'] : '';
+        this.KYCModifiedData.break_in_emp = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['break_in_emp'] ? a[0]['kyc_full_emp'][0]['break_in_emp'] : '';
+        this.KYCModifiedData.post = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['post'] ? a[0]['kyc_full_emp'][0]['post'] : '';
+        this.KYCModifiedData.when_interview = a && a[0] && a[0]['kyc_full_emp'] && a[0]['kyc_full_emp'][0] && a[0]['kyc_full_emp'][0]['when_interview'] ? a[0]['kyc_full_emp'][0]['when_interview'] : '';
+        this.KYCModifiedData.full_employment = a && a[0] && a[0]['his'] ? a[0]['his'] : [];
+
 
 
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
@@ -1304,7 +1327,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         reader.onload = async(event: any) => { // called once readAsDataURL is completed
           urls = event.target.result;
           this.url = urls;
-          
+
           this.appConfig.showLoader();
           const data = await (await this.candidateService.profileUpload(fd)).json();
             this.profileData = {
@@ -1316,7 +1339,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             // this.appConfig.clearLocalDataOne('localProfilePic');
             this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
                     this.appConfig.hideLoader();
-      
+
           // this.candidateService.profileUpload(fd).subscribe((data: any) => {
           //   this.appConfig.setLocalData('personalFormTouched', 'true');
           //   this.profileData = {

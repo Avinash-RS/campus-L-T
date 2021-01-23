@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
 import * as XLSX from 'xlsx';
+import { ToastrService } from 'ngx-toastr';
 
 // tslint:disable-next-line: class-name
 export interface modalBox {
@@ -32,7 +33,53 @@ export class AppConfigService {
     private activatedRoute: ActivatedRoute,
     private message: NzMessageService,
     private notification: NzNotificationService,
+    public toast: ToastrService
   ) {
+  }
+
+  scrollToTop() {
+    let pos = window.pageYOffset;
+   return window.scrollTo(0, pos - 20); // how far to scroll on each step
+   // return window.scrollTo(0,0);
+  }
+
+  success(val, title?: any) {
+    this.toast.success(val);
+  }
+
+  error(val, title?: any) {
+    this.toast.warning(val);
+  }
+  errorWithTitle(val, title?: any) {
+    this.toast.warning(val, title);
+  }
+
+  warning(val) {
+    this.toast.warning(val);
+  }
+
+  warningWithTitle(val, title) {
+    this.toast.warning(val, title);
+  }
+
+   nzNotification(type: string, title: any, text: any): any {
+     if (type == 'error') {
+     return this.toast.warning(text, title);
+     }
+     if (type == 'success') {
+     return this.toast.success(text, title);
+     } else {
+           this.notification.create(
+      type,
+      title,
+      text,
+      { nzDuration: 3000 }
+    );
+     }
+}
+
+  errorToast(val) {
+    this.toast.error(val);
   }
 
   // get Current route
@@ -105,18 +152,18 @@ export class AppConfigService {
     });
   }
 
-  nzNotification(type: string, title: any, text: any): void {
-    this.notification.create(
-      type,
-      title,
-      text,
-      { nzDuration: 3000 }
-    );
-  }
+  // nzNotification(type: string, title: any, text: any): void {
+  //   this.notification.create(
+  //     type,
+  //     title,
+  //     text,
+  //     { nzDuration: 3000 }
+  //   );
+  // }
 
 
   // To show success Snack Bar Message
-  success(message: any, icon: any) {
+  successOld(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: 5000,
       verticalPosition: 'top',
@@ -126,7 +173,7 @@ export class AppConfigService {
   }
 
   // To show error Snack Bar Message
-  error(message: any, icon: any) {
+  errorOld(message: any, icon: any) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: 5000,
       verticalPosition: 'top',
@@ -239,7 +286,7 @@ export class AppConfigService {
 
       /* save data */
       SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      console.log('excel to json', SavedData);
+      // console.log('excel to json', SavedData);
     };
     reader.readAsBinaryString(target.files[0]);
     return SavedData;
@@ -250,7 +297,6 @@ export class AppConfigService {
   }
 
   terms(comp, data) {
-    console.log('coming');
     this.openDialog(comp, data);
   }
 

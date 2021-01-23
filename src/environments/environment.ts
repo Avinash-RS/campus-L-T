@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   qa: false,
+  local: true,
 
   // // For Dev
   //  API_BASE_URL: 'http://104.211.226.77/d8cintana2',
@@ -15,6 +16,11 @@ export const environment = {
   API_BASE_URL: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',
   API_BASE_URL_city: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',
   Image_Base_Url: 'http://udapqa.southindia.cloudapp.azure.com',
+  
+  // Local
+  // API_BASE_URL: '',
+  // API_BASE_URL_city: '',
+  // Image_Base_Url: '',
 
   // For UAT
   // API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',

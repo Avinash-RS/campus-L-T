@@ -85,9 +85,10 @@
             width: 70px;
             margin: 0 1em 0 0em;
             font-size: 17px;
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
-            background: $white-primary;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
+            // background: $white-primary;
+            border: solid $input-border 1px;
             color: $secondary;
             display: flex;
             height: 38px;
@@ -97,9 +98,10 @@
             width: 90px;
             margin-right: 0em;
             font-size: 17px;
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
-            background: $white-primary;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
+            // background: $white-primary;
+            border: solid $input-border 1px;
             color: $secondary;
             display: flex;
             height: 38px;
@@ -107,14 +109,14 @@
           }
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
           display: flex;
           min-width: 350px;
           max-width: 400px;
           width: 100%;
           align-items: center;
-          background: $white-primary;
+          // background: $white-primary;
           height: 38px;
           padding: 0em 0px 0 0px;
           margin: 0 !important;
@@ -128,10 +130,11 @@
             vertical-align: middle;
             border: none;
             outline: none;
-            background: $white-primary;
+            // background: $white-primary;
             display: flex !important;
             height: 38px;
-            border-radius: 5px;
+            // border-radius: 5px;
+            border: solid $input-border 1px;
           }
           nz-select {
             padding: 0;
@@ -318,7 +321,7 @@
 }
 .grid-wrapper-1 {
   display: grid;
-  padding: 3em 4em 0 4em;
+  padding: 1.25em 4em 0 3.8em;
   grid-template-columns: 1fr;
   .first-child {
     margin: 0 1em;
@@ -351,13 +354,13 @@
           color: $black-2;
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
           display: flex;
           min-width: 200px;
           width: 100%;
           align-items: center;
-          background: $white-primary;
+          // background: $white-primary;
           height: 38px;
           padding: 0em 0px 0 0px;
           margin: 0 !important;
@@ -369,12 +372,12 @@
             padding: 0 0.7em;
             color: $secondary;
             vertical-align: middle;
-            border: none;
+            border: solid $input-border 1px;
             outline: none;
-            background: $white-primary;
+            // background: $white-primary;
             display: flex !important;
             height: 38px;
-            border-radius: 5px;
+            // border-radius: 5px;
           }
           nz-select {
             padding: 0;
@@ -399,28 +402,28 @@
             color: $black-2;
           }
           .input-box {
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
             display: flex;
             min-width: 200px;
             width: 100%;
             align-items: center;
-            background: $white-primary;
+            // background: $white-primary;
             height: 38px;
             padding: 0em 0px 0 0px;
             margin: 0 !important;
             nz-select,
             input {
-              border-radius: 5px;
+              // border-radius: 5px;
               margin: 0 !important;
               width: 100%;
               font-size: 17px;
               padding: 0 0.7em;
               color: $secondary;
               vertical-align: middle;
-              border: none;
+              border: solid $input-border 1px;
               outline: none;
-              background: $white-primary;
+              // background: $white-primary;
               display: flex !important;
               height: 38px;
             }
@@ -442,13 +445,13 @@
             color: $black-2;
           }
           .input-box {
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
             display: flex;
             min-width: 200px;
             width: 100%;
             align-items: center;
-            background: $white-primary;
+            // background: $white-primary;
             height: 38px;
             padding: 0em 0px 0 0px;
             margin: 0 !important;
@@ -459,11 +462,11 @@
               padding: 0 0.7em;
               color: $secondary;
               vertical-align: middle;
-              border: none;
+              border: solid $input-border 1px;
               outline: none;
-              background: $white-primary;
+              // background: $white-primary;
               display: flex !important;
-              border-radius: 5px;
+              // border-radius: 5px;
               height: 38px;
             }
           }
@@ -490,13 +493,13 @@
             color: $black-2;
           }
           .input-box {
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
             display: flex;
             min-width: 200px;
             width: 100%;
             align-items: center;
-            background: $white-primary;
+            // background: $white-primary;
             height: 38px;
             padding: 0em 0px 0 0px;
             margin: 0 !important;
@@ -508,12 +511,12 @@
               padding: 0 0.7em;
               color: $secondary;
               vertical-align: middle;
-              border: none;
+              border: solid $input-border 1px;
               outline: none;
-              background: $white-primary;
+              // background: $white-primary;
               display: flex !important;
               height: 38px;
-              border-radius: 5px;
+              // border-radius: 5px;
             }
             nz-select {
               padding: 0;
@@ -533,13 +536,13 @@
             color: $black-2;
           }
           .input-box {
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
             display: flex;
             min-width: 200px;
             width: 100%;
             align-items: center;
-            background: $white-primary;
+            // background: $white-primary;
             height: 38px;
             padding: 0em 0px 0 0px;
             margin: 0 !important;
@@ -550,12 +553,12 @@
               padding: 0 0.7em;
               color: $secondary;
               vertical-align: middle;
-              border: none;
+              border: solid $input-border 1px;
               outline: none;
-              background: $white-primary;
+              // background: $white-primary;
               display: flex !important;
               height: 38px;
-              border-radius: 5px;
+              // border-radius: 5px;
             }
           }
           .error {
@@ -605,13 +608,13 @@
           color: $black-2;
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
           display: flex;
           min-width: 200px;
           width: 100%;
           align-items: center;
-          background: $white-primary;
+          // background: $white-primary;
           height: 38px;
           padding: 0em 0px 0 0px;
           margin: 0 !important;
@@ -622,12 +625,12 @@
             padding: 0 0.7em;
             color: $secondary;
             vertical-align: middle;
-            border: none;
+            border: solid $input-border 1px;
             outline: none;
-            background: $white-primary;
+            // background: $white-primary;
             display: flex !important;
             height: 38px;
-            border-radius: 5px;
+            // border-radius: 5px;
           }
         }
         .error {
@@ -651,13 +654,13 @@
             color: $black-2;
           }
           .input-box {
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
             display: flex;
             min-width: 200px;
             width: 100%;
             align-items: center;
-            background: $white-primary;
+            // background: $white-primary;
             height: 38px;
             padding: 0em 0px 0 0px;
             margin: 0 !important;
@@ -668,12 +671,12 @@
               padding: 0 0.7em;
               color: $secondary;
               vertical-align: middle;
-              border: none;
+              border: solid $input-border 1px;
               outline: none;
-              background: $white-primary;
+              // background: $white-primary;
               display: flex !important;
               height: 38px;
-              border-radius: 5px;
+              // border-radius: 5px;
             }
           }
           .error {
@@ -694,8 +697,8 @@
           .input-box {
             .check,
             input {
-              border-radius: 5px;
-              // border: 1px solid $gray-dark;
+              // border-radius: 5px;
+              border: 1px solid $input-border 1px;
               display: flex;
               // width: 35px;
               // width: 100%;
@@ -731,13 +734,13 @@
             color: $black-2;
           }
           .input-box {
-            border-radius: 5px;
-            box-shadow: $shadow-light-black;
+            // border-radius: 5px;
+            // box-shadow: $shadow-light-black;
             display: flex;
             min-width: 200px;
             width: 100%;
             align-items: center;
-            background: $white-primary;
+            // background: $white-primary;
             height: 38px;
             padding: 0em 0px 0 0px;
             margin: 0 !important;
@@ -748,12 +751,12 @@
               padding: 0 0.7em;
               color: $secondary;
               vertical-align: middle;
-              border: none;
+              border: solid $input-border 1px;
               outline: none;
-              background: $white-primary;
+              // background: $white-primary;
               display: flex !important;
               height: 38px;
-              border-radius: 5px;
+              // border-radius: 5px;
             }
           }
           .error {
@@ -819,13 +822,13 @@
     font-weight: 600;
     font-size: 18px;
     color: $light-black;
-    margin: 1em 0 1em 1em;
+    margin: .5em 0 .5em 1em;
   }
   form {
     display: flex;
     width: 100%;
     flex-direction: column;
-    padding: 4em 1em;
+    padding: 1em 1em;
     align-items: center;
     justify-content: space-between;
     background: $white-primary !important;
@@ -853,28 +856,28 @@
           }
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
           display: flex;
           min-width: 200px;
           width: 100%;
           align-items: center;
-          background: $white;
+          // background: $white;
           height: 38px;
           padding: 0em 0px 0 0px;
           margin: 0 !important;
           input {
             margin: 0 !important;
             width: 100%;
-            border: solid $black-3 1px;
+            border: solid $input-border 1px;
             font-size: 17px;
             padding: 0 0.7em;
             color: $secondary;
             vertical-align: middle;
             outline: none;
-            background: $white;
+            // background: $white;
             display: flex !important;
-            border-radius: 5px;
+            // border-radius: 5px;
             height: 38px;
           }
         }
@@ -886,7 +889,7 @@
       }
     }
     .above-three-flex {
-      margin: 3em 0 0 0;
+      margin: .25em 0 0 0;
       display: flex;
       width: 100%;
       // align-items: center;
@@ -902,19 +905,19 @@
           label {
             color: $light-black-1;
             width: 100%;
-            margin: 1em 0 0.5em 0;
+            margin: .25em 0 0.25em 0;
             font-size: 17px;
             white-space: nowrap;
           }
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
           display: flex;
           min-width: 200px;
           width: 100%;
           align-items: center;
-          background: $white;
+          // background: $white;
           height: 38px;
           padding: 0em 0px 0 0px;
           margin: 0 !important;
@@ -922,14 +925,14 @@
             margin: 0 !important;
             width: 100%;
             font-size: 17px;
-            border: solid $black-3 1px;
+            border: solid $input-border 1px;
             padding: 0 0.7em;
             color: $secondary;
             vertical-align: middle;
             outline: none;
-            background: $white;
+            // background: $white;
             display: flex !important;
-            border-radius: 5px;
+            // border-radius: 5px;
             height: 38px;
           }
         }
@@ -956,13 +959,13 @@
           }
         }
         .input-box {
-          border-radius: 5px;
-          box-shadow: $shadow-light-black;
+          // border-radius: 5px;
+          // box-shadow: $shadow-light-black;
           display: flex;
           // min-width: 200px;
           width: 100px;
           align-items: center;
-          background: $white;
+          // background: $white;
           height: 38px;
           padding: 0em 0px 0 0px;
           margin: 0 !important;
@@ -970,14 +973,14 @@
             margin: 0 !important;
             width: 100px;
             font-size: 17px;
-            border: solid $black-3 1px;
+            border: solid $input-border 1px;
             padding: 0 0.7em;
             color: $secondary;
             vertical-align: middle;
             outline: none;
-            background: $white;
+            // background: $white;
             display: flex !important;
-            border-radius: 5px;
+            // border-radius: 5px;
             height: 38px;
           }
         }
@@ -1002,12 +1005,12 @@
               }
             }
             .input-box {
-              border-radius: 5px;
-              box-shadow: $shadow-light-black;
+              // border-radius: 5px;
+              // box-shadow: $shadow-light-black;
               display: flex;
               width: 100px;
               align-items: center;
-              background: $white;
+              // background: $white;
               height: 38px;
               padding: 0em 0px 0 0px;
               margin: 0 !important;
@@ -1015,14 +1018,14 @@
                 margin: 0 !important;
                 width: 100px;
                 font-size: 17px;
-                border: solid $black-3 1px;
+                border: solid $input-border 1px;
                 padding: 0 0.7em;
                 color: $secondary;
                 vertical-align: middle;
                 outline: none;
-                background: $white;
+                // background: $white;
                 display: flex !important;
-                border-radius: 5px;
+                // border-radius: 5px;
                 height: 38px;
               }
             }
@@ -1128,4 +1131,15 @@
       grid-template-columns: 0.55fr;
     }
   }
+}
+.error {
+  max-width: 200px;
+}
+.personalErr{
+  margin-left: 12% !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    div:first-child {
+      width: 100% !important;
+    }
 }

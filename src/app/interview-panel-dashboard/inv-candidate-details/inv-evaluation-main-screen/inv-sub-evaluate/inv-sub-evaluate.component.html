@@ -104,11 +104,27 @@
     </div>
 
     <div class="space"></div>
-    <hr>
+    <div class="d-flex align-items-center justify-content-center mt-4 w-100">
+      <mat-radio-group style="margin-right: 5em;"
+      aria-labelledby="example-radio-group-label"
+      class="d-flex w-50 justify-content-around"
+      formControlName="attended">
+      <mat-radio-button (change)="statusChange(attended)" class="f_size_18" *ngFor="let attendance of intervieweeAttendance" [value]="attendance.value">
+        {{attendance.label}}
+      </mat-radio-button>
+    </mat-radio-group>
+    </div>
+    <ng-container *ngIf="attended.invalid && attended.touched">
+      <div class="d-flex justify-content-center w-100 mt-3 validation">
+          <span *ngIf="attended.errors?.required">Interview status required</span>
+        </div>
+        </ng-container>
+    
     <!-- <h5 class="head-h5 margin">   Assessment of the  candidate</h5>
       <div class="vertical"></div> -->
-
-    <table id="assessmentsTable" mat-table [dataSource]="dataSource">
+      <ng-container *ngIf="evaluationForm?.value?.attended == '1'">
+        <hr>
+        <table id="assessmentsTable" mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
         <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
         <td style="width: 390px;" mat-cell *matCellDef="let assessment">{{assessment.name}}<span class="asterick">*</span></td>
@@ -421,7 +437,7 @@
             <textarea matInput formControlName="content"></textarea>
             <div *ngIf="f.content.touched && f.content.errors" class="mand validation1">
                 <span *ngIf="f.content.errors?.maxlength">Maxlength of 100 characters only allowed</span>
-                <span *ngIf="f.contant.errors?.pattern">Alpha numerics only allowed</span>
+                <span *ngIf="f.content.errors?.pattern">Alpha numerics only allowed</span>
               </div>
 
           <!-- </mat-form-field> -->
@@ -520,7 +536,52 @@
           <!-- </mat-form-field> -->
         </div>
       </div>
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">STATUS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8 d-flex w-50">
+            <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option" formControlName="attendedStatus">
+              <mat-radio-button *ngFor="let attended of attendedStatusList" [value]="attended.value">
+                {{attended.label}}
+              </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <ng-container *ngIf="f?.attendedStatus?.touched && f?.attendedStatus?.errors">
+          <div class="col-4">
+              <span class="text">&#160;</span>
+            </div>
+          <div class="col-8 mand validation1">
+              <span *ngIf="f?.attendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+            </div>
+            </ng-container>
+  
+      </div>
+
     </div>
+    </ng-container>
+    <ng-container *ngIf="evaluationForm?.value?.attended == '0'">
+      <div class="row pad-bootom mt-5 d-flex align-items-center">
+        <div style="height: 10px; width: 25.5%;" class="mt-1 d-flex justify-content-center pl-4">
+          <span class="text">STATUS<span class="asterick">*</span>:</span>
+        </div>
+        <div class="d-flex w-50">
+          <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option" formControlName="notAttendedStatus">
+            <mat-radio-button *ngFor="let Notattended of Notattended" [value]="Notattended.value">
+              {{Notattended.label}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="notAttendedStatus?.touched && notAttendedStatus?.invalid">
+        <div class="col-4">
+            <span class="text">&#160;</span>
+          </div>
+        <div style="margin-top: 1em; margin-left: -7em;" class="mand validation1">
+            <span *ngIf="notAttendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+          </div>
+          </ng-container>
+      </div>
+    </ng-container>
     <div class="space"></div>
     <div class="last-button" style="text-align: center; padding: 1em 0;">
       <button class="submit" mat-raised-button>Submit</button>

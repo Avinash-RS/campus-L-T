@@ -23,6 +23,7 @@ export class ApiServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
     return headers;
@@ -32,6 +33,7 @@ export class ApiServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
     return headers;
@@ -40,7 +42,8 @@ export class ApiServiceService {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-      .set('Content-Type', 'application/json')
+    .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
+    .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
     return headers;
   }

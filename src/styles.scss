@@ -226,7 +226,7 @@ h5 {
 // }
 .ag-paging-panel {
   background: $footer-bg !important;
-  height: 40px !important;
+  height: 35px !important;
   font-weight: 400 !important;
   color: black !important;
   margin-bottom: 0px !important;
@@ -257,6 +257,63 @@ h5 {
   @media screen and (min-width: $min) and (max-width: $max) {
     @content;
   }
+}
+
+// Fontsizes
+.f_size_12 {
+  font-size: 12px !important;
+}
+
+.f_size_13 {
+  font-size: 13px !important;
+}
+
+.f_size_14 {
+  font-size: 14px !important;
+}
+
+.f_size_15 {
+  font-size: 15px !important;
+}
+
+.f_size_16 {
+  font-size: 16px !important;
+}
+
+.f_size_17 {
+  font-size: 17px !important;
+}
+
+.f_size_18 {
+  font-size: 18px !important;
+}
+
+.f_size_19 {
+  font-size: 19px !important;
+}
+
+.f_size_20 {
+  font-size: 20px !important;
+}
+
+.f_size_21 {
+  font-size: 21px !important;
+}
+
+.f_size_22 {
+  font-size: 22px !important;
+}
+
+.f_size_23 {
+  font-size: 23px !important;
+}
+
+.f_size_25 {
+  font-size: 25px !important;
+}
+
+.f_size_30 {
+  font-size: 30px !important;
 }
 
 // Mat drawer css override
@@ -864,13 +921,17 @@ h5 {
   width: 1.85rem;
   height: 1.85rem;
   outline: 0;
+  border-radius: 0px !important;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
 }
-
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $primary-bg !important;
+  border: solid $primary-bg !important;
+}
 .checkbox-xl .custom-control-label {
   padding-top: 23px;
   padding-left: 10px;
@@ -1473,7 +1534,7 @@ button:focus {
     th.mat-column-no_of_candidate {
       .mat-sort-header-container {
         justify-content: center;
-      }  
+      }
     }
     td.mat-column-no_of_candidate {
       text-align: center;
@@ -1482,7 +1543,7 @@ button:focus {
     th.mat-column-buttons {
       .mat-sort-header-container {
         justify-content: center;
-      }  
+      }
     }
     td.mat-column-buttons {
       display: flex;
@@ -1532,7 +1593,8 @@ button:focus {
 .main-wrapper {
   input.ng-invalid.ng-touched,
   nz-month-picker.ng-invalid.ng-touched,
-  nz-select.ng-invalid.ng-touched {
+  nz-select.ng-invalid.ng-touched,
+  textarea.ng-invalid.ng-touched {
     border: solid $red 1px !important;
   }
   .ant-input:placeholder-shown {
@@ -1739,7 +1801,7 @@ tr.mat-row:hover {
     border-right: solid $blue 1px !important;
   }
 }
-.main-wrap {
+.main-wrap,.form10 {
   .mat-checkbox {
     label {
       margin-bottom: 0.25rem !important;
@@ -2324,7 +2386,7 @@ th {
         //   break-inside: avoid; // New syntax
         //   page-break-inside: avoid; // avoid breaking inside pre and blockquotes
         // }
-      
+
       }
     }
   }
@@ -2404,4 +2466,20 @@ th {
   // .mat-column-col3,.mat-column-col4 {
   //   width: 140px;
   // }
+}
+
+.openClose,.sideClose {
+  display: flex;
+}
+
+// Mat expansion panel
+.mat-expansion-indicator {
+  display: flex !important;
+  align-items: center !important;
+}
+.mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+  color: $white !important;
+}
+.mat-expansion-panel-body {
+  padding: 0 !important;
 }

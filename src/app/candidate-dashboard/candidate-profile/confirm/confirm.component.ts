@@ -46,6 +46,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -160,7 +161,44 @@ export class ConfirmComponent implements OnInit {
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
     this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace(`${this.appConfig.imageBaseUrl()}`, '');
-
+    
+    const full_employment = [
+      { "employment_name_address" :"wekan company",
+              "duration_from" : "2020-10-16",
+              "duration_to" : "2020-10-26",
+              "duration_year" : "10",
+              "duration_month" : "05",
+              "postion_field" :"Software",
+              "name_designation_supervisor" : "Jefrey",
+              "nature_work":"Web application",
+              "gross_emploment":"500000",
+              "reason_leaving":"Change"
+              },
+              { "employment_name_address" :"SPI company",
+              "duration_from" : "2020-10-16",
+              "duration_to" : "2020-10-26",
+              "duration_year" : "10",
+              "duration_month" : "05",
+              "postion_field" :"Software",
+              "name_designation_supervisor" : "Jefrey",
+              "nature_work":"Web application",
+              "gross_emploment":"500000",
+              "reason_leaving":"Change"
+              },
+              { "employment_name_address" :"Newgen company",
+              "duration_from" : "2020-10-16",
+              "duration_to" : "2020-10-26",
+              "duration_year" : "10",
+              "duration_month" : "05",
+              "postion_field" :"Software",
+              "name_designation_supervisor" : "Jefrey",
+              "nature_work":"Web application",
+              "gross_emploment":"500000",
+              "reason_leaving":"Change"
+              }
+            ]
+            this.apiForm['selectedPost'] = {value: localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : ''};
+        
   }
 
   submitKYCData() {

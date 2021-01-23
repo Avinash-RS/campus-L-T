@@ -329,7 +329,8 @@ mark {
   line-height: 0;
   text-align: center;
   text-transform: none;
-  vertical-align: -0.125em;
+  vertical-align: 0em;
+  // vertical-align: -0.125em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -8829,7 +8830,7 @@ a.ant-btn-sm {
   outline: none;
 }
 .ant-calendar-date:hover {
-  background: #e6f7ff;
+  background: $primary-red-hover;
   cursor: pointer;
 }
 .ant-calendar-date:active {
@@ -8837,12 +8838,23 @@ a.ant-btn-sm {
   background: #40a9ff;
 }
 .ant-calendar-today .ant-calendar-date {
-  color: #1890ff;
-  font-weight: bold;
-  border-color: #1890ff;
+  // color: #1890ff;
+  // font-weight: bold;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.65);
+  border-color: none;
 }
+.ant-calendar-today .ant-calendar-date:hover {
+  // color: #1890ff;
+  background: $primary-red-hover;
+}
+
 .ant-calendar-selected-day .ant-calendar-date {
-  background: #bae7ff;
+  // background: $primary-red;
+  font-weight: bold;
+  background: $primary-red;
+  color: $white;
+  // background: #bae7ff;
 }
 .ant-calendar-last-month-cell .ant-calendar-date,
 .ant-calendar-next-month-btn-day .ant-calendar-date,
@@ -9282,12 +9294,12 @@ a.ant-btn-sm {
 .ant-calendar-range .ant-calendar-selected-start-date .ant-calendar-date,
 .ant-calendar-range .ant-calendar-selected-end-date .ant-calendar-date {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red;
   border: 1px solid transparent;
 }
 .ant-calendar-range .ant-calendar-selected-start-date .ant-calendar-date:hover,
 .ant-calendar-range .ant-calendar-selected-end-date .ant-calendar-date:hover {
-  background: #1890ff;
+  background: $primary-red-hover;
 }
 .ant-calendar-range.ant-calendar-time
   .ant-calendar-range-right
@@ -9927,11 +9939,11 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
 }
 .ant-calendar-month-panel-selected-cell .ant-calendar-month-panel-month {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red;
 }
 .ant-calendar-month-panel-selected-cell .ant-calendar-month-panel-month:hover {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red-hover;
 }
 .ant-calendar-month-panel-cell {
   text-align: center;
@@ -9939,7 +9951,7 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
 .ant-calendar-month-panel-cell-disabled .ant-calendar-month-panel-month,
 .ant-calendar-month-panel-cell-disabled .ant-calendar-month-panel-month:hover {
   color: rgba(0, 0, 0, 0.25);
-  background: #f5f5f5;
+  background: $primary-red-hover;
   cursor: not-allowed;
 }
 .ant-calendar-month-panel-month {
@@ -9955,7 +9967,7 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
   transition: background 0.3s ease;
 }
 .ant-calendar-month-panel-month:hover {
-  background: #e6f7ff;
+  background: $primary-red-hover;
   cursor: pointer;
 }
 .ant-calendar-year-panel {
@@ -10247,11 +10259,11 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
 }
 .ant-calendar-year-panel-selected-cell .ant-calendar-year-panel-year {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red;
 }
 .ant-calendar-year-panel-selected-cell .ant-calendar-year-panel-year:hover {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red-hover;
 }
 .ant-calendar-year-panel-last-decade-cell .ant-calendar-year-panel-year,
 .ant-calendar-year-panel-next-decade-cell .ant-calendar-year-panel-year {
@@ -10574,12 +10586,12 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
 }
 .ant-calendar-decade-panel-selected-cell .ant-calendar-decade-panel-decade {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red;
 }
 .ant-calendar-decade-panel-selected-cell
   .ant-calendar-decade-panel-decade:hover {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red-hover;
 }
 .ant-calendar-decade-panel-last-century-cell .ant-calendar-decade-panel-decade,
 .ant-calendar-decade-panel-next-century-cell .ant-calendar-decade-panel-decade {
@@ -23184,7 +23196,7 @@ li.ant-select-tree-treenode-disabled
 }
 .ant-fullcalendar-value:active {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red;
 }
 .ant-fullcalendar-month-panel-cell .ant-fullcalendar-value {
   width: 48px;
@@ -23196,7 +23208,7 @@ li.ant-select-tree-treenode-disabled
 .ant-fullcalendar-selected-day .ant-fullcalendar-value,
 .ant-fullcalendar-month-panel-selected-cell .ant-fullcalendar-value {
   color: #fff;
-  background: #1890ff;
+  background: $primary-red;
 }
 .ant-fullcalendar-disabled-cell-first-of-row .ant-fullcalendar-value {
   border-top-left-radius: 4px;

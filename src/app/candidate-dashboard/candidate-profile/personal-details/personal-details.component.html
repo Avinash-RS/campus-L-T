@@ -1,4 +1,4 @@
-<div class="alert">
+<div id="top" class="alert">
   Note: Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.
 </div>
 <div class="grid-wrapper forScrollDown" id="top">
@@ -11,7 +11,7 @@
             formControlName="name" type="text" value="">
         </div>
       </div>
-      <div class="error" *ngIf="name.invalid && name.touched">
+      <div class="error personalErr" *ngIf="name.invalid && name.touched">
         <div>
           &#160;
         </div>
@@ -27,7 +27,7 @@
             formControlName="mail" type="text" value="">
         </div>
       </div>
-      <div class="error" *ngIf="mail.invalid && mail.touched">
+      <div class="error personalErr" *ngIf="mail.invalid && mail.touched">
         <div>
           &#160;
         </div>
@@ -43,7 +43,7 @@
           <input (focusout)="detectInput(upToCategoryForm)" formControlName="mobile" type="text" value="">
         </div>
       </div>
-      <div class="error" *ngIf="mobile.invalid && mobile.touched">
+      <div class="error personalErr" *ngIf="mobile.invalid && mobile.touched">
         <div>
           &#160;
         </div>
@@ -60,7 +60,7 @@
           <input (focusout)="detectInput(upToCategoryForm)" formControlName="aadhaar" type="text" value="">
         </div>
       </div>
-      <div class="error" *ngIf="aadhaar.invalid && aadhaar.touched">
+      <div class="error personalErr" *ngIf="aadhaar.invalid && aadhaar.touched">
         <div>
           &#160;
         </div>
@@ -87,7 +87,7 @@
           </nz-radio-group> -->
         </div>
       </div>
-      <div class="error" *ngIf="gender.invalid && gender.touched">
+      <div class="error personalErr" *ngIf="gender.invalid && gender.touched">
         <div>
           &#160;
         </div>
@@ -111,7 +111,7 @@
           </nz-radio-group> -->
         </div>
       </div>
-      <div class="error" *ngIf="marital.invalid && marital.touched">
+      <div class="error personalErr" *ngIf="marital.invalid && marital.touched">
         <div>
           &#160;
         </div>
@@ -138,7 +138,7 @@
           </nz-select>
         </div>
       </div>
-      <div class="error"
+      <div class="error personalErr"
         *ngIf="(dobDate.invalid && dobDate.touched) || (dobMonth.invalid && dobMonth.touched) || (dobYear.invalid && dobYear.touched)">
         <div>
           &#160;
@@ -155,7 +155,7 @@
           <input (focusout)="detectInput(upToCategoryForm)" formControlName="nationality" type="text" value="">
         </div>
       </div>
-      <div class="error" *ngIf="nationality.invalid && nationality.touched">
+      <div class="error personalErr" *ngIf="nationality.invalid && nationality.touched">
         <div>
           &#160;
         </div>
@@ -174,7 +174,7 @@
           </nz-select>
         </div>
       </div>
-      <div class="error" *ngIf="categories.invalid && categories.touched">
+      <div class="error personalErr" *ngIf="categories.invalid && categories.touched">
         <div>
           &#160;
         </div>
