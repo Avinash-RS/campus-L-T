@@ -27,6 +27,22 @@
         </div>
       </div>
       <div class="filters">
+                <!-- Profile start -->
+                <div *ngIf="profileFilterShow" class="filter-wrapper-main">
+                  <div class="filter-heading">
+                    <span class="wrap"> <span (click)="clearProfileFilter()" class="icon"><img src="assets/images/error.svg"
+                          alt="" srcset=""></span> <span class="head-text">Profile</span></span>
+                  </div>
+                  <div class="filter-list">
+                    <ng-container *ngFor="let dup of mastersEducationFilterList; let i = index">
+                      <div class="list" *ngIf="dup.checkbox"><span (click)="ProfilecheckboxChanged(dup)" class="icon"><img
+                            src="assets/images/005-close-1.svg" alt="" srcset=""></span><span class="text"> {{dup.label}}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <!-- Profile close -->
+        
         <!-- Gender start -->
         <div *ngIf="genderFilterShow" class="filter-wrapper-main">
           <div class="filter-heading">
@@ -153,6 +169,32 @@
   <div class="second-main">
     <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
 
+            <!-- Gender Tab -->
+            <nz-tab [nzTitle]="titleProfile">
+              <ng-template #titleProfile>Profile List <span class="tab-span"></span></ng-template>
+      
+              <!-- Gender Content -->
+              <div class="content-wrapper-gender">
+                <div class="dropdown-wrapper">
+                  <div class="head">
+                    Choose profile from below list:
+                  </div>
+                  <div class="outlay">
+                    <div class="list">
+                      <div class="list-item" [ngClass]="(i % 2 === 0) ? '' : 'bg-change'"
+                        *ngFor="let dup of mastersEducation; let i = index">
+                        <div class="hanging">
+                          <span class="checkbox">
+                            <label (change)="toShowOrNotProfileFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                          </span>
+                          <span class="text">{{dup.label}}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-tab>
+      
       <!-- Gender Tab -->
       <nz-tab [nzTitle]="titleTemplate">
         <ng-template #titleTemplate>Gender <span class="tab-span"></span></ng-template>
