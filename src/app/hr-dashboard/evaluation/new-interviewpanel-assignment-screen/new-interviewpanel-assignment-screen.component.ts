@@ -360,6 +360,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       if (element && element['name'] == 'PG') {
         final.push(element);
       }
+      if (element && element['name'] == 'Diploma') {
+        final.push(element);
+      }
     });
     this.allEducations = final ? final : [];
   }

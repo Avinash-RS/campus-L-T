@@ -210,6 +210,8 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
             return 'Undergraduate';
           } else if (params.data.level == 'PG') {
             return 'Postgraduate';
+          } else if (params.data.level == 'Diploma') {
+            return 'Diploma';
           } else { return '-'; }
         },
       getQuickFilterText: (params) => {
@@ -358,6 +360,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         final.push(element);
       }
       if (element && element['name'] == 'PG') {
+        final.push(element);
+      }
+      if (element && element['name'] == 'Diploma') {
         final.push(element);
       }
     });
