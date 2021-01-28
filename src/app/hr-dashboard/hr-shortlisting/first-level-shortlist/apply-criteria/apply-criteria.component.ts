@@ -137,8 +137,6 @@ export class ApplyCriteriaComponent implements OnInit {
       element.checkbox = false;
     });
     this.mastersEducationFilterList = this.mastersEducation;
-    console.log('masters', this.mastersList);
-    
     //get candidate count 
     this.getCandidateCount();
 
@@ -194,6 +192,9 @@ export class ApplyCriteriaComponent implements OnInit {
     this.clearBacklogFilter();
     this.clearProfileFilter();
     this.submitFilterNoRedirect();
+    this.disciplineSelectAllCheck = false;
+    this.InstituteNameSelectAllCheck = false;
+    this.SpecializationNameSelectAllCheck = false;
   }
 
   // Filter Submit
@@ -997,10 +998,10 @@ export class ApplyCriteriaComponent implements OnInit {
 
   InstituteNameSelectAll(event) {
     this.InstituteNameDropDown.forEach((data) => {
-      if (event.target.checked === true) {
+      if (event.checked === true) {
         data.checkbox = true;
       }
-      if (event.target.checked === false) {
+      if (event.checked === false) {
         data.checkbox = false;
       }
     });
@@ -1096,10 +1097,10 @@ export class ApplyCriteriaComponent implements OnInit {
 
   DisciplineSelectAll(event) {
     this.disciplineList.forEach((data) => {
-      if (event.target.checked === true) {
+      if (event.checked === true) {
         data.checkbox = true;
       }
-      if (event.target.checked === false) {
+      if (event.checked === false) {
         data.checkbox = false;
       }
     });
@@ -1244,10 +1245,10 @@ export class ApplyCriteriaComponent implements OnInit {
   SpecializationNameSelectAll(event) {
     if (this.SpecializationNameDropDown) {
     this.SpecializationNameDropDown.forEach((data) => {
-      if (event.target.checked === true) {
+      if (event.checked === true) {
         data.checkbox = true;
       }
-      if (event.target.checked === false) {
+      if (event.checked === false) {
         data.checkbox = false;
       }
     });

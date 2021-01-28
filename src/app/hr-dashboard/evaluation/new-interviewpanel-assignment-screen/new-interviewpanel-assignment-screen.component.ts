@@ -396,6 +396,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   instituteChangeForDiscipline(data) {
+    this.selectedDiscipline = null;
+    this.selectedAssessment = null;
     this.getParticularAssessmentAndDiscipline(data);
   }
 

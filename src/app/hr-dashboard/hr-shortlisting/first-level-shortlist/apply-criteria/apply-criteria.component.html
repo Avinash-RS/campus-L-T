@@ -185,7 +185,8 @@
                         *ngFor="let dup of mastersEducation; let i = index">
                         <div class="hanging">
                           <span class="checkbox">
-                            <label (change)="toShowOrNotProfileFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                            <mat-checkbox (change)="toShowOrNotProfileFilter($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                            <!-- <label (change)="toShowOrNotProfileFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label> -->
                           </span>
                           <span class="text">{{dup.label}}</span></div>
                       </div>
@@ -211,7 +212,8 @@
                   *ngFor="let dup of genderList; let i = index">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label (change)="toShowOrNotGenderFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                      <mat-checkbox (change)="toShowOrNotGenderFilter($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                      <!-- <label (change)="toShowOrNotGenderFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label> -->
                     </span>
                     <span class="text">{{dup.name}}</span></div>
                 </div>
@@ -281,7 +283,8 @@
                     *ngFor="let dup of EduLevel; let i = index">
                     <div class="item no-space">
                       <span class="checkbox">
-                        <label (change)="eduCheckboxChange(dup)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                        <mat-checkbox (change)="eduCheckboxChange($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                        <!-- <label (change)="eduCheckboxChange(dup)" nz-checkbox [(ngModel)]="dup.checkbox"></label> -->
                       </span>
                       <span class="text">{{dup['label']}}</span>
                     </div>
@@ -367,16 +370,18 @@
                 <div class="item-list" *ngIf="InstituteNameShowSelectAll">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label nz-checkbox (change)="InstituteNameSelectAll($event)"
-                        [(ngModel)]="InstituteNameSelectAllCheck"></label>
+                      <mat-checkbox (change)="InstituteNameSelectAll($event)" [(ngModel)]="InstituteNameSelectAllCheck"></mat-checkbox>
+                      <!-- <label nz-checkbox (change)="InstituteNameSelectAll($event)"
+                        [(ngModel)]="InstituteNameSelectAllCheck"></label> -->
                     </span>
                     <span class="text">{{(InstituteNameSelectAllCheck ? 'Unselect All' : 'Select All')}}</span></div>
                 </div>
                 <div class="item-list" *ngFor="let dup of InstituteNameDropDown">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label (change)="toShowOrNotInstituteFilter($event)" nz-checkbox
-                        [(ngModel)]="dup.checkbox"></label>
+                      <mat-checkbox (change)="toShowOrNotInstituteFilter($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                      <!-- <label (change)="toShowOrNotInstituteFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label> -->
                     </span>
                     <span class="text">{{dup.name}}</span></div>
                 </div>
@@ -405,16 +410,18 @@
                 <div class="item-list" *ngIf="disciplineShowSelectAll">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label nz-checkbox (change)="DisciplineSelectAll($event)"
-                        [(ngModel)]="disciplineSelectAllCheck"></label>
+                      <mat-checkbox (change)="DisciplineSelectAll($event)" [(ngModel)]="disciplineSelectAllCheck"></mat-checkbox>
+                      <!-- <label nz-checkbox (change)="DisciplineSelectAll($event)"
+                        [(ngModel)]="disciplineSelectAllCheck"></label> -->
                     </span>
                     <span class="text">{{(disciplineSelectAllCheck ? 'Unselect All' : 'Select All')}}</span></div>
                 </div>
                 <div class="item-list" *ngFor="let dup of disciplineList">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label (change)="toShowOrNotDisciplineFilter($event)" nz-checkbox
-                        [(ngModel)]="dup.checkbox"></label>
+                      <mat-checkbox (change)="toShowOrNotDisciplineFilter($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                      <!-- <label (change)="toShowOrNotDisciplineFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label> -->
                     </span>
                     <span class="text">{{dup.name}}</span></div>
                 </div>
@@ -469,8 +476,9 @@
                 <div class="item-list" *ngIf="SpecializationNameShowSelectAll">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label nz-checkbox (change)="SpecializationNameSelectAll($event)"
-                        [(ngModel)]="SpecializationNameSelectAllCheck"></label>
+                      <mat-checkbox (change)="SpecializationNameSelectAll($event)" [(ngModel)]="SpecializationNameSelectAllCheck"></mat-checkbox>
+                      <!-- <label nz-checkbox (change)="SpecializationNameSelectAll($event)"
+                        [(ngModel)]="SpecializationNameSelectAllCheck"></label> -->
                     </span>
                     <span class="text">{{(SpecializationNameSelectAllCheck ? 'Unselect All' : 'Select All')}}</span>
                   </div>
@@ -478,8 +486,9 @@
                 <div class="item-list" *ngFor="let dup of SpecializationNameDropDown">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label (change)="toShowOrNotSpecializationFilter($event)" nz-checkbox
-                        [(ngModel)]="dup.checkbox"></label>
+                      <mat-checkbox (change)="toShowOrNotSpecializationFilter($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                      <!-- <label (change)="toShowOrNotSpecializationFilter($event)" nz-checkbox
+                        [(ngModel)]="dup.checkbox"></label> -->
                     </span>
                     <span class="text">{{dup.name}}</span></div>
                 </div>
@@ -505,7 +514,8 @@
                   *ngFor="let dup of backlogs; let i = index">
                   <div class="hanging">
                     <span class="checkbox">
-                      <label (change)="toShowOrNotBacklogFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label>
+                      <mat-checkbox (change)="toShowOrNotBacklogFilter($event)" [(ngModel)]="dup.checkbox"></mat-checkbox>
+                      <!-- <label (change)="toShowOrNotBacklogFilter($event)" nz-checkbox [(ngModel)]="dup.checkbox"></label> -->
                     </span>
                     <span class="text">{{dup.name}}</span></div>
                 </div>

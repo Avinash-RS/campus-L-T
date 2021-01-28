@@ -2,6 +2,9 @@
 
 .main-wrapper {
   padding: 8px;
+  input {
+    outline: none !important;
+  }
   .first-main {
     margin: 0 0 1em 0;
     .header {
