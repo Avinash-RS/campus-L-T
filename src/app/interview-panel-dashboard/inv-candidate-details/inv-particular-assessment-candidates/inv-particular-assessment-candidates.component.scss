@@ -140,3 +140,6 @@ th {
 .none {
   transform: none;
 }
+.user-list-wrapper button:focus {
+  border-radius: 0px !important;
+}

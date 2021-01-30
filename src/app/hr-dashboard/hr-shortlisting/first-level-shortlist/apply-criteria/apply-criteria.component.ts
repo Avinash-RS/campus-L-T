@@ -109,6 +109,10 @@ export class ApplyCriteriaComponent implements OnInit {
   percentageToRegexErrorIndex: string;
   totalCandidates: any;
   filteredCandidates: number;
+  mastersList: any;
+  mastersEducation: any;
+  profileFilterShow: boolean;
+  mastersEducationFilterList: any;
 
   // @ViewChild('perFromm', {static: false}) redel: ElementRef;
   constructor(
@@ -127,7 +131,12 @@ export class ApplyCriteriaComponent implements OnInit {
     this.getURLParam();
   }
   ngOnInit() {
-
+    this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
+    this.mastersEducation = this.mastersList?.education_master;
+    this.mastersEducation.forEach(element => {
+      element.checkbox = false;
+    });
+    this.mastersEducationFilterList = this.mastersEducation;
     //get candidate count 
     this.getCandidateCount();
 
@@ -181,7 +190,11 @@ export class ApplyCriteriaComponent implements OnInit {
     this.clearDisciplineFilter();
     this.clearSpecializationFilter();
     this.clearBacklogFilter();
+    this.clearProfileFilter();
     this.submitFilterNoRedirect();
+    this.disciplineSelectAllCheck = false;
+    this.InstituteNameSelectAllCheck = false;
+    this.SpecializationNameSelectAllCheck = false;
   }
 
   // Filter Submit
@@ -192,6 +205,7 @@ export class ApplyCriteriaComponent implements OnInit {
     const specializationAPIData = [];
     const backlogsAPIData = [];
     const educationData = [];
+    const profileData = [];
     let dobAPIData = [];
     let localUID = [];
     this.genderFilter.forEach((element) => {
@@ -226,6 +240,13 @@ export class ApplyCriteriaComponent implements OnInit {
     this.backlogFilter.forEach((element) => {
       if (element.checkbox) {
         backlogsAPIData.push(element.name);
+      }
+    });
+  }
+  if (this.mastersEducationFilterList) {
+    this.mastersEducationFilterList.forEach((element) => {
+      if (element.checkbox) {
+        profileData.push(element.value);
       }
     });
   }
@@ -268,6 +289,7 @@ export class ApplyCriteriaComponent implements OnInit {
       field_institute: instituteAPIData,
       field_discipline: disciplineAPIData,
       field_specification: specializationAPIData,
+      field_profile: profileData,
       field_backlogs: backlogsAPIData,
       field_dob: dobAPIData,
       educational_level: educationData,
@@ -305,6 +327,7 @@ export class ApplyCriteriaComponent implements OnInit {
     const specializationAPIData = [];
     const backlogsAPIData = [];
     const educationData = [];
+    const profileData = [];
     let dobAPIData = [];
 
     const apiDatas = {
@@ -315,6 +338,7 @@ export class ApplyCriteriaComponent implements OnInit {
       field_specification: specializationAPIData,
       field_backlogs: backlogsAPIData,
       field_dob: dobAPIData,
+      field_profile: profileData,
       educational_level: educationData,
       start: '1',
       counts: '50'
@@ -337,6 +361,7 @@ export class ApplyCriteriaComponent implements OnInit {
     const disciplineAPIData = [];
     const specializationAPIData = [];
     const backlogsAPIData = [];
+    const profileData = [];
     const educationData = [];
     let dobAPIData = [];
     let localUID = [];
@@ -364,6 +389,14 @@ export class ApplyCriteriaComponent implements OnInit {
       }
     });
 
+    if (this.mastersEducationFilterList) {
+      this.mastersEducationFilterList.forEach((element) => {
+        if (element.checkbox) {
+          profileData.push(element.value);
+        }
+      });
+    }
+  
     this.backlogFilter.forEach((element) => {
       if (element.checkbox) {
         backlogsAPIData.push(element.name);
@@ -409,6 +442,7 @@ export class ApplyCriteriaComponent implements OnInit {
       field_discipline: disciplineAPIData,
       field_specification: specializationAPIData,
       field_backlogs: backlogsAPIData,
+      field_profile: profileData,
       field_dob: dobAPIData,
       educational_level: educationData,
       start: '1',
@@ -419,6 +453,7 @@ export class ApplyCriteriaComponent implements OnInit {
       field_gender: genderAPIData,
       field_institute: instituteAPIData,
       field_discipline: disciplineAPIData,
+      field_profile: profileData,
       field_specification: specializationAPIData,
       field_backlogs: backlogsAPIData,
       field_dob: dobAPIData,
@@ -814,6 +849,41 @@ export class ApplyCriteriaComponent implements OnInit {
     });
   }
 
+  ProfilecheckboxChanged(genderName) {
+
+    this.mastersEducationFilterList.forEach(element => {
+      if (element['value'] === genderName['value']) {
+        element.checkbox = !element.checkbox;
+      }
+    });
+
+    this.toShowOrNotProfileFilter();
+  }
+
+  toShowOrNotProfileFilter(event?) {
+    let runGenderElse = true;
+    this.mastersEducation.forEach(element => {
+      if (element.checkbox) {
+        runGenderElse = false;
+        this.profileFilterShow = true;
+        return false;
+      } else {
+        if (runGenderElse) {
+          this.profileFilterShow = false;
+        }
+      }
+    });
+  }
+
+  clearProfileFilter() {
+    this.mastersEducationFilterList.forEach(element => {
+      if (element['value']) {
+        element.checkbox = false;
+      }
+    });
+    this.toShowOrNotProfileFilter();
+  }
+
   GendercheckboxChanged(genderName) {
 
     this.genderList.forEach(element => {
@@ -928,10 +998,10 @@ export class ApplyCriteriaComponent implements OnInit {
 
   InstituteNameSelectAll(event) {
     this.InstituteNameDropDown.forEach((data) => {
-      if (event.target.checked === true) {
+      if (event.checked === true) {
         data.checkbox = true;
       }
-      if (event.target.checked === false) {
+      if (event.checked === false) {
         data.checkbox = false;
       }
     });
@@ -1027,10 +1097,10 @@ export class ApplyCriteriaComponent implements OnInit {
 
   DisciplineSelectAll(event) {
     this.disciplineList.forEach((data) => {
-      if (event.target.checked === true) {
+      if (event.checked === true) {
         data.checkbox = true;
       }
-      if (event.target.checked === false) {
+      if (event.checked === false) {
         data.checkbox = false;
       }
     });
@@ -1175,10 +1245,10 @@ export class ApplyCriteriaComponent implements OnInit {
   SpecializationNameSelectAll(event) {
     if (this.SpecializationNameDropDown) {
     this.SpecializationNameDropDown.forEach((data) => {
-      if (event.target.checked === true) {
+      if (event.checked === true) {
         data.checkbox = true;
       }
-      if (event.target.checked === false) {
+      if (event.checked === false) {
         data.checkbox = false;
       }
     });

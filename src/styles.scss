@@ -806,7 +806,7 @@ h5 {
 .ant-tabs-tab {
   height: auto !important;
   color: $black;
-  min-width: 140px !important;
+  min-width: 120px !important;
   max-width: 100% !important;
   font-weight: 200 !important;
   line-height: 35px !important;
@@ -1608,6 +1608,24 @@ button:focus {
   }
   .ant-calendar-picker-clear {
     right: 0px !important;
+  }
+  .mat-checkbox {
+    label {
+      margin-bottom: 0.25rem !important;
+    }
+  }
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-red !important;
+  }
+  .mat-radio-outer-circle {
+        border-color: #707070 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: $primary-red !important;
+  }
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $primary-red !important;
   }
 }
 

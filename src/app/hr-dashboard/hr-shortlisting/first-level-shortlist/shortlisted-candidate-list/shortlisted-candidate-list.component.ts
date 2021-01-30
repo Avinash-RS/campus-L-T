@@ -89,6 +89,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
           educational_level: this.queryObject['educational_level'],
           field_backlogs: this.queryObject['field_backlogs'],
           field_discipline: this.queryObject['field_discipline'],
+          field_profile: this.queryObject['field_profile'],
           field_dob: this.queryObject['field_dob'],
           field_gender: this.queryObject['field_gender'],
           field_institute: this.queryObject['field_institute'],
@@ -342,6 +343,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       apiData.field_discipline = this.queryObject['field_discipline'];
       apiData.field_dob = this.queryObject['field_dob'];
       apiData.field_gender = this.queryObject['field_gender'];
+      apiData.field_profile = this.queryObject['field_profile'];
       apiData.field_institute = this.queryObject['field_institute'];
       apiData.field_specification = this.queryObject['field_specification'];
       apiData.user_id = this.queryObject['user_id'];
