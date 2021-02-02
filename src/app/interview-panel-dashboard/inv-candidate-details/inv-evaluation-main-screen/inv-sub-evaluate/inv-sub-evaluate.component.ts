@@ -50,6 +50,7 @@ export class InvSubEvaluateComponent implements OnInit {
   uid: any;
   mastersList: any;
   expValidation = "^[a-zA-Z0-9 ]*";
+  selectedPost: any = 'detad';
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -291,8 +292,13 @@ export class InvSubEvaluateComponent implements OnInit {
         this.evaluationForm['controls']['panel_member1'].updateValueAndValidity();
         this.evaluationForm['controls']['ps_no1'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(30), myGlobals.alphaNum]);
         this.evaluationForm['controls']['ps_no1'].updateValueAndValidity();
-        this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
-        this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
+        if (this.selectedPost == 'det') {
+          this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
+          this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
+        } else {
+          this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
+          this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
+        }
         this.evaluationForm['controls']['remarks'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
         this.evaluationForm['controls']['remarks'].updateValueAndValidity();
         this.evaluationForm['controls']['ASSESSMENT'].setValidators([Validators.required]);

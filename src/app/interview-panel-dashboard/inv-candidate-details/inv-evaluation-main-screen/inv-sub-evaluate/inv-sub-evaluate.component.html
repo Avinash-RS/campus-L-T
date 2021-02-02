@@ -386,7 +386,7 @@
     <div style="margin-left: 10px;">
       <div class="row pad-bootom">
         <div class="col-4">
-          <span class="text">TOPIC GIVEN<span class="asterick">*</span></span>
+          <span class="text">TOPIC GIVEN<span *ngIf="selectedPost && selectedPost != 'det'" class="asterick">*</span></span>
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
