@@ -141,7 +141,7 @@
             style="font-size: 12px; align-items: flex-start !important;">
             <span *ngIf="familyArr.controls[i].get('gross_emploment').errors?.required">Gross emoluments is Required</span>
             <span *ngIf="familyArr.controls[i].get('gross_emploment').errors?.pattern">Accept only Alphanumeric characters and
-              maximum of 255 characters only allowed</span>
+              maximum of 50 characters only allowed</span>
           </div>
         </div>
 
@@ -162,7 +162,7 @@
           <textarea (focusout)="detectInput(familyForm)" formControlName="reason_leaving" type="text"></textarea>
           <div class="error"
             *ngIf="familyArr.controls[i].get('reason_leaving').invalid && familyArr.controls[i].get('reason_leaving').touched"
-            style="font-size: 12px; align-items: flex-start !important; width: 100% !important; margin-left: -2em;">
+            style="font-size: 12px; align-items: flex-start !important; width: 100% !important;">
             <span *ngIf="familyArr.controls[i].get('reason_leaving').errors?.required">Reason for leaving is Required</span>
             <span *ngIf="familyArr.controls[i].get('reason_leaving').errors?.pattern">Accept only Alphanumeric characters and
               maximum of 255 characters only allowed</span>

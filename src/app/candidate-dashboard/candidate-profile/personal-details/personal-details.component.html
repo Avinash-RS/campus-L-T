@@ -584,7 +584,7 @@
           <label>Date of Issue</label>
         </div>
         <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, dp)" matInput [min]="minDate"
+          <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, dp)" matInput 
             [max]="maxDate" [matDatepicker]="dp" formControlName="passportIssueDate">
           <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp>
@@ -603,17 +603,18 @@
         <div class="form-field">
           <label>Valid Upto</label>
         </div>
+        <!-- [max]="passportValidmaxDate" [min]="passportValidminDate" -->
         <div class="input-box">
           <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, picker)"
-            formControlName="passportValid" matInput [max]="passportValidmaxDate" [min]="passportValidminDate"
+            formControlName="passportValid" matInput 
             [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </div>
         <div class="error" *ngIf="passportValid.invalid && passportValid.touched">
           <span *ngIf="passportValid.errors?.required">Expiry Date is Required</span>
-          <span *ngIf="!passportValid.errors?.required && passportValid.errors?.passportNotValid">Passport
-            Expired</span>
+          <!-- <span *ngIf="!passportValid.errors?.required && passportValid.errors?.passportNotValid">Passport
+            Expired</span> -->
         </div>
 
       </div>

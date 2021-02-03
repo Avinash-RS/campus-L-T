@@ -367,9 +367,16 @@
       Skills
     </div>
     <div class="skills-wrapper">
-      <div class="skills" *ngFor="let dup of userDetails['skillValueArray']">
-        {{dup.value ? dup.value : 'NA'}}
-      </div>
+      <ng-container *ngIf="userDetails['skillValueArray'].length > 0">
+        <div class="skills" *ngFor="let dup of userDetails['skillValueArray']">
+          {{dup.value ? dup.value : '-'}}
+        </div>  
+      </ng-container>
+      <ng-container *ngIf="userDetails['skillValueArray'].length < 1">
+        <div class="skills">
+          {{'-'}}
+        </div>  
+      </ng-container>
       <!-- When Array is empty -->
       <!-- <div class="skills" *ngIf="userDetails['skillArray'] && (userDetails['skillArray'].length < 1 || !userDetails['skillsArray'])">
         {{'NA'}}
@@ -437,6 +444,106 @@
       </div>
     </div>
 
+          <!-- Criminal records -->
+          <div class="main-heading-bottom">
+            Criminal Records
+          </div>
+          <div class="criminal ml-4">
+            <div class="f_size_15">
+              {{ criminalRecord ? criminalRecord : '-' }}
+            </div>
+          </div>
+          <div class="main-heading-bottom">
+            Work Experience
+          </div>
+    
+          <div *ngIf="workHistory && workHistory.length <= 1 && !workHistory[0]?.employment_name_address" class="criminal ml-4">
+            <div class="f_size_15">
+              {{ '-' }}
+            </div>
+          </div>
+    
+          <div class="grid-wrapper-workexp" *ngIf="workHistory.length > 0 && workHistory[0]?.employment_name_address">
+            <div class="qualify-wrapper-head">
+              <div class="emp">
+                Employer's name & address
+              </div>
+              <div class="duration">
+                Duration from
+              </div>
+              <div class="duration">
+                Duration to
+              </div>
+              <div class="position">
+                Position held
+              </div>
+              <div class="des">
+                Name & Designation of immediate superior
+              </div>
+              <div class="gross">
+                Gross emoluments (per month)
+              </div>
+              <div class="nature">
+                Nature of work done
+              </div>
+              <div class="reason">
+                Reason for leaving
+              </div>
+    
+            </div>
+            <ng-container *ngIf="workHistory">
+            <div class="qualify-wrapper" *ngFor="let dup of workHistory">
+              <div class="emp">{{dup?.employment_name_address}}</div>
+              <!-- <input class="emp" readonly [value]="dup?.employment_name_address"> -->
+              <div class="duration">{{dup?.duration_from}}</div>
+              <div class="duration">{{dup?.duration_to}}</div>
+    
+              <div class="position">{{dup?.postion_field}}</div>
+    
+              <div class="des">{{dup?.name_designation_supervisor}}</div>
+    
+              <div class="gross">{{dup?.gross_emploment}}</div>
+    
+              <div class="nature">{{dup?.nature_work}}</div>
+    
+              <div class="reason">{{dup?.reason_leaving}}</div>
+    
+    
+            </div>
+          </ng-container>
+          <div class="static-main d-flex mt-4">
+          <div class="static d-flex justify-content-between" style="width: 30% !important; align-items: center;">
+            <div class="label">Total experience</div>
+            <div class="value d-flex justify-content-between w-50 box-value"><span>{{workDetails?.total_exp_years ? workDetails?.total_exp_years : '0'}} Years</span> <span>{{workDetails?.total_exp_months ? workDetails?.total_exp_months : '0'}} Months</span></div>
+          </div>
+          <div class="static d-flex w-75" style="justify-content: space-evenly; margin-left: 2em;">
+            <div class="label" style="width: 35%;">Break in employment, If any, Should be indicated with reasons</div>
+            <div class="box w-75">{{workDetails?.break_in_emp}}</div>
+          </div>
+        </div>
+        <div style="padding: 0 1em; align-items: flex-start !important;" class="d-flex header">
+           <div class="w-50 sub-header">Have you ever been employed by us or by any of our subsidiary / associate companies? <span style="width: 50px !important;" class="box-value">{{workDetails?.employed_us == true ? 'Yes' : workDetails?.employed_us == '1' ? 'Yes' : 'No'}}</span>
+             <div *ngIf="workDetails?.employed_us == true || workDetails?.employed_us == 1" class="labels">
+              <div>OC</div>
+              <div class="box-value">{{workDetails?.oc}}</div>
+              <div>Payslip numer</div>
+              <div class="box-value">{{workDetails?.payslip}}</div>
+             </div>
+           </div>
+           <div class="w-50 sub-header ml-2">Have you ever been interviewed by us? <span style="width: 50px !important;" class="box-value">{{workDetails?.interviewed_by_us == true ? 'Yes' : workDetails?.interviewed_by_us == '1' ? 'Yes' : 'No'}}</span>
+            <div *ngIf="workDetails?.interviewed_by_us == true || workDetails?.interviewed_by_us == 1" class="labels">
+              <div>Post you applied before</div>
+              <div class="box-value">{{workDetails?.post}}</div>
+              <div>When</div>
+              <div class="box-value">{{workDetails?.when_interview}}</div>
+             </div>
+           </div>   
+       
+        </div>
+    
+          </div>
+    <!-- end -->
+    
 
     <div class="main-heading-bottom">
       Faculty References

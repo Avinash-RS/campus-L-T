@@ -351,6 +351,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     // /^[1-9][0-9]{9}$/;
     const onlyNumbers: RegExp = /^[1-9]\d*(\.\d+)?$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ \-,.;/\r\n|\r|\n/]){0,255}$/;
+    const alphaNumericMaxLength50: RegExp = /^([a-zA-Z0-9_ \-,.;/\r\n|\r|\n/]){0,49}$/;
     if (fam) {
       
       return this.fb.group({
@@ -361,7 +362,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         duration_month: [(fam['duration_month'] && fam['duration_month'] != 'Invalid date') ? fam['duration_month'] : null],
         postion_field: [fam['postion_field'] ? fam['postion_field'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         name_designation_supervisor: [fam['name_designation_supervisor'] ? fam['name_designation_supervisor'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        gross_emploment: [fam['gross_emploment'] ? fam['gross_emploment'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        gross_emploment: [fam['gross_emploment'] ? fam['gross_emploment'] : '', [Validators.pattern(alphaNumericMaxLength50), RemoveWhitespace.whitespace()]],
         nature_work: [fam['nature_work'] ? fam['nature_work'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         reason_leaving: [fam['reason_leaving'] ? fam['reason_leaving'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       },
@@ -376,7 +377,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         duration_month: [null],
         postion_field: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         name_designation_supervisor: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
-        gross_emploment: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
+        gross_emploment: [null, [Validators.pattern(alphaNumericMaxLength50), RemoveWhitespace.whitespace()]],
         nature_work: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         reason_leaving: [null, [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       },

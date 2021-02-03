@@ -50,7 +50,7 @@ export class InvSubEvaluateComponent implements OnInit {
   uid: any;
   mastersList: any;
   expValidation = "^[a-zA-Z0-9 ]*";
-  selectedPost: any = 'detad';
+  selectedPost: any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -78,6 +78,16 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  getWorkExp() {
+    const apiData = {
+      user_id: this.candidateId
+    };
+    this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
+      // this.appConfig.hideLoader();
+      this.selectedPost = data?.selected_post && (data?.selected_post == 'get' || data?.selected_post == 'pget') ? true : false;
+    });
   }
 
   getMasters() {
@@ -174,6 +184,7 @@ export class InvSubEvaluateComponent implements OnInit {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['uid'];
       this.uid = params['uid'];
+      this.getWorkExp();
       this.getEvaluationData(this.uid);
       this.nginitFunc();
       this.getCandidateDetails();
@@ -292,11 +303,11 @@ export class InvSubEvaluateComponent implements OnInit {
         this.evaluationForm['controls']['panel_member1'].updateValueAndValidity();
         this.evaluationForm['controls']['ps_no1'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(30), myGlobals.alphaNum]);
         this.evaluationForm['controls']['ps_no1'].updateValueAndValidity();
-        if (this.selectedPost == 'det') {
-          this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
+        if (this.selectedPost) {
+          this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
           this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
         } else {
-          this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
+          this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
           this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
         }
         this.evaluationForm['controls']['remarks'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);

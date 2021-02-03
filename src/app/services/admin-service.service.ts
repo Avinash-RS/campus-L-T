@@ -586,4 +586,9 @@ export class AdminServiceService {
     return this.http.get(`${this.BASE_URL}/profile/master_list`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  workExperienceList(uid) {
+    return this.http.post(`${this.BASE_URL}/profile/emp_work_experience?user_id=${uid.user_id}`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }
