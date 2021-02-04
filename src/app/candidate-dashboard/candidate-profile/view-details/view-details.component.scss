@@ -554,10 +554,10 @@
     flex-wrap: wrap;
     width: auto;
     .skills {
-      align-items: center;
+      align-items: flex-start;
       box-shadow: $shadow-light-black;
-      text-align: center;
       min-width: auto;
+      justify-content: flex-start;
       margin: 1em 0 0 1.5em;
       display: flex;
       border-radius: 5px;

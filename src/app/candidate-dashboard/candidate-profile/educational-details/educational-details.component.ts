@@ -54,8 +54,8 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   startingYear = new Date("1995-01-01");
   endYear = new Date();
-  dummystartDate = new Date("1995-01-01");
-  dummyendDate = new Date("2020-07-07");
+  // dummystartDate = new Date("1995-01-01");
+  // dummyendDate = new Date("2020-07-07");
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'MMM yyyy';
 
@@ -513,24 +513,25 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         element.controls.specification.clearValidators();
         element.controls.discipline.updateValueAndValidity();
         element.controls.specification.updateValueAndValidity();
-      }else if(j == 1){
+      }
+      if(j == 1){
         this.eduArr.value[0]['leveling'] = 'HSC';
         element.controls.specification.clearValidators();
         element.controls.specification.updateValueAndValidity();
       }
-      else if (element['value']['leveling'] == 'Diploma') {
+      if (element['value']['leveling'] == 'Diploma') {
         element.controls.specification.clearValidators();
         element.controls.specification.updateValueAndValidity();
         element.controls.board.clearValidators();
         element.controls.board.updateValueAndValidity();
       }
-      else if (element['value']['leveling'] == 'UG') {
+      if (element['value']['leveling'] == 'UG') {
         element.controls.specification.clearValidators();
         element.controls.specification.updateValueAndValidity();
         element.controls.board.clearValidators();
         element.controls.board.updateValueAndValidity();
       }
-      else if (element['value']['leveling'] == 'PG') {
+      if (element['value']['leveling'] == 'PG') {
         element.controls.specification.clearValidators();
         element.controls.specification.updateValueAndValidity();
         element.controls.board.clearValidators();

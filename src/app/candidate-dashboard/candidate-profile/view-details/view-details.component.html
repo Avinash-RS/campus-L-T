@@ -370,10 +370,17 @@
       <div class="main-heading-no-bottom">
         Skills
       </div>
-      <div *ngIf="userDetails" class="skills-wrapper">
-        <div class="skills" *ngFor="let dup of userDetails['skillValueArray']">
-          {{dup.value ? dup.value : 'NA'}}
+        <div *ngIf="userDetails" class="skills-wrapper">
+          <ng-container *ngIf="userDetails['skillValueArray'].length > 0">
+            <div class="skills" *ngFor="let dup of userDetails['skillValueArray']">
+          {{dup.value ? dup.value : '-'}}
         </div>
+      </ng-container>
+        <ng-container *ngIf="userDetails['skillValueArray'].length < 1">
+          <div class="skills">
+            {{'-'}}
+          </div>  
+        </ng-container>  
         <!-- When Array is empty -->
         <!-- <div class="skills" *ngIf="userDetails['skillArray'] && (userDetails['skillArray'].length < 1 || !userDetails['skillsArray'])">
           {{'NA'}}

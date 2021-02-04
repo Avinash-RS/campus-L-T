@@ -30,6 +30,9 @@ export class CommonKycProfileViewComponent implements OnInit {
   allCitiess: any;
   permanentStateId: any;
   candidateName: any;
+  workDetails: any;
+  workHistory: any;
+  criminalRecord: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -46,10 +49,24 @@ export class CommonKycProfileViewComponent implements OnInit {
 
   ngOnInit() {
     this.updatedStateAPI();
+    this.getWorkExp();
   }
 
   close() {
     this.dialogRef.close();
+  }
+
+  // const id = 
+  getWorkExp() {
+    const apiData = {
+      user_id: this.data ? this.data['candidateId'] : ''
+    };
+    this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
+      // this.appConfig.hideLoader();
+      this.workDetails = data?.work_experience_details;
+      this.criminalRecord = data?.criminal_record;
+      this.workHistory = data?.work_experience_history;
+    });
   }
 
 
