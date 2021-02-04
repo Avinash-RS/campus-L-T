@@ -41,12 +41,14 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   disable2 = false;
   alphaNumericMaxLength2: RegExp = /^([a-zA-Z0-9_ \-,.();/\r\n|\r|\n/]){0,255}$/;
   alphaNumericMaxLength3: RegExp = /^([a-zA-Z0-9_ \-,.();/\r\n|\r|\n/]){0,499}$/;
+  alphaNumericMaxLength50: RegExp = /^([a-zA-Z0-9_ \-,.();/\r\n|\r|\n/]){0,50}$/;
+  alphaNumericMaxLength100: RegExp = /^([a-zA-Z0-9_ \-,.();/\r\n|\r|\n/]){0,100}$/;
   criminal_record = new FormControl('', [Validators.pattern(this.alphaNumericMaxLength3), RemoveWhitespace.whitespace()]);
   break_in_emp = new FormControl('', [Validators.pattern(this.alphaNumericMaxLength3), RemoveWhitespace.whitespace()]);
   interviewed_by_us = new FormControl('', [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
-  oc = new FormControl({value: '', disabled: this.disable1 }, [Validators.pattern(this.alphaNumericMaxLength2), RemoveWhitespace.whitespace()]);
-  payslip = new FormControl({value: '', disabled: this.disable1 }, [Validators.pattern(this.alphaNumericMaxLength2), RemoveWhitespace.whitespace()]);
-  post = new FormControl({value: '', disabled: this.disable2 }, [Validators.pattern(this.alphaNumericMaxLength2), RemoveWhitespace.whitespace()]);
+  oc = new FormControl({value: '', disabled: this.disable1 }, [Validators.pattern(this.alphaNumericMaxLength100), RemoveWhitespace.whitespace()]);
+  payslip = new FormControl({value: '', disabled: this.disable1 }, [Validators.pattern(this.alphaNumericMaxLength50), RemoveWhitespace.whitespace()]);
+  post = new FormControl({value: '', disabled: this.disable2 }, [Validators.pattern(this.alphaNumericMaxLength50), RemoveWhitespace.whitespace()]);
   when_interview = new FormControl({value: '', disabled: this.disable2 }, [Validators.maxLength(254), RemoveWhitespace.whitespace()]);
 
   apiForm: any;
@@ -113,8 +115,8 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       this.disable1 = false;
       this.oc.enable();
       this.payslip.enable();
-      this.oc.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength2)]);
-      this.payslip.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength2)]);
+      this.oc.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength100)]);
+      this.payslip.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength50)]);
       this.oc.updateValueAndValidity();
       this.payslip.updateValueAndValidity();
     }
@@ -147,7 +149,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       this.disable2 = false;
       this.post.enable();
       this.when_interview.enable();
-      this.post.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength2)]);
+      this.post.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength50)]);
       this.when_interview.setValidators([Validators.required]);
       this.post.updateValueAndValidity();
       this.when_interview.updateValueAndValidity();
@@ -211,13 +213,13 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
       this.post.setValue(this.apiForm.post ? this.apiForm.post : '');
       this.when_interview.setValue(this.apiForm.when_interview ? this.apiForm.when_interview : null);
       if (this.emp_yes) {
-        this.oc.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength2)]);
-        this.payslip.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength2)]);
+        this.oc.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength100)]);
+        this.payslip.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength50)]);
         this.oc.updateValueAndValidity();
         this.payslip.updateValueAndValidity();
           }
       if (this.inv_yes) {
-        this.post.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength2)]);
+        this.post.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength50)]);
         this.when_interview.setValidators([Validators.required]);  
         this.post.updateValueAndValidity();
         this.when_interview.updateValueAndValidity();
@@ -256,6 +258,17 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         this.apiForm.employed_us = this.emp_yes ? this.emp_yes : false;
         this.apiForm.interviewed_by_us = this.inv_yes ? this.inv_yes : false;
         this.apiForm.full_employment = this.familyForm['value']['familyArr'];
+
+        if (this.apiForm.employed_us == '1' || this.apiForm.employed_us == true) {          
+        } else {
+          this.apiForm.oc = '';
+          this.apiForm.payslip = '';
+        }
+        if (this.apiForm.interviewed_by_us == '1' || this.apiForm.interviewed_by_us == true) {
+        } else {
+          this.apiForm.post = '';
+          this.apiForm.when_interview = '';          
+        }
         // if (this.apiForm.full_employment.length > 0) {
         //   this.apiForm.full_employment.forEach(element => {
         //     element.duration_from = moment(element.duration_from).format('DD-MM-YYYY');

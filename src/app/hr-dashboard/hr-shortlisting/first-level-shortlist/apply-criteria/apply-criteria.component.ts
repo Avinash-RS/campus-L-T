@@ -924,6 +924,7 @@ export class ApplyCriteriaComponent implements OnInit {
     this.candidateService.getoverallInstitute().subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data ? data : [];
+      list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
       this.InstituteNameDropdownList = list;
       // this.InstituteNameDropdownList = DropdownListForKYC['institutes'];
       this.InstituteNameDropDown = this.InstituteNameDropdownList;
@@ -1027,7 +1028,7 @@ export class ApplyCriteriaComponent implements OnInit {
       const listarr = data ? data : [];
 
       let list =  listarr.filter((v,i) => listarr.findIndex(item => item.value.trim() == v.value.trim()) === i);
-          
+      list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));          
       this.disciplineList = list;
       this.disciplineDropdownList = this.disciplineList;
       this.disciplineFilter = this.disciplineList;
@@ -1168,7 +1169,7 @@ export class ApplyCriteriaComponent implements OnInit {
     this.candidateService.getoverallSpecialization().subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data ? data : [];
-
+      list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
       this.specializationList = list;
 
       this.SpecializationNameDropdownList = this.specializationList;

@@ -252,10 +252,10 @@
         </div> 
         <div class="in"><span>OC: </span> <span><input [formControl]="oc" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="oc.invalid && oc.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="oc.errors?.required">OC is required </span><span *ngIf="oc.errors?.pattern">Accept only Alphanumeric characters and
-          maximum of 255 characters only allowed </span></div>
+          maximum of 100 characters only allowed </span></div>
         <div class="in"><span>Payslip number: </span> <span><input [formControl]="payslip" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="payslip.invalid && payslip.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="payslip.errors?.required">Payslip number is required </span><span *ngIf="payslip.errors?.pattern">Accept only Alphanumeric characters and
-          maximum of 255 characters only allowed </span></div>
+          maximum of 50 characters only allowed </span></div>
       </div>
     </div>
     <div class="details1">
@@ -270,7 +270,7 @@
       <div class="explain">
         <div class="in"><span>If yes, For what post: </span> <span><input [formControl]="post" [ngClass]="inv_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="post.invalid && post.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="post.errors?.required">Post is required </span> <span *ngIf="post.errors?.pattern">Accept only Alphanumeric characters and
-          maximum of 255 characters only allowed </span></div>
+          maximum of 50 characters only allowed </span></div>
         <div class="in"><span>When: </span> <span>
           <nz-date-picker class="nzdate" [ngClass]="inv_no ? 'disabled' : ''" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
           [formControl]="when_interview" [nzFormat]="dateFormat"></nz-date-picker>

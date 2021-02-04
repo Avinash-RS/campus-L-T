@@ -54,8 +54,8 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   startingYear = new Date("1995-01-01");
   endYear = new Date();
-  dummystartDate = new Date("1995-01-01");
-  dummyendDate = new Date("2020-07-07");
+  // dummystartDate = new Date("1995-01-01");
+  // dummyendDate = new Date("2020-07-07");
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'MMM yyyy';
 
