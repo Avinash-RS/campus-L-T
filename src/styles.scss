@@ -1797,20 +1797,6 @@ button {
 tr.mat-row:hover {
   background: $td-hover !important !important;
 }
-// Scrollbar
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px !important;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: $scroll-bg;
-}
 .register-wrapper {
   ::-webkit-scrollbar-track {
     background: $scroll-bg;
@@ -1830,13 +1816,24 @@ tr.mat-row:hover {
     background: $primary-red !important;
   }
 }
+// Scrollbar
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $scroll-bg;
+}
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #969696cb;
   // background: transparent linear-gradient(90deg, #e4e4e4 0%, #969696 100%) 0% 0%
   //   no-repeat padding-box;
-  border-radius: 50px;
-  height: 10px;
+  // border-radius: 100px !important;
+  // height: 10px;
 }
 
 /* Handle on hover */
@@ -1847,11 +1844,21 @@ tr.mat-row:hover {
 }
 .qualify-wrapper {
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
     display: none;
   }
 }
-
+.sidenav {
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px !important;
+  }  
+  li {
+    margin: 0 0 5px 0 !important;
+  }
+}
 // Ui revamp global
 .submit,
 .ok {
