@@ -1,0 +1,61 @@
+<div class="addIC-wrapper">
+
+    <form [formGroup]="addIcForm" class="forms d-flex flex-column justify-content-center align-items-center mt-3" (ngSubmit)="submitaddIC()">
+        <div class="form-field d-flex mb-3">
+            <label class="label-name">
+                IC Name<span class="asterick">*</span>
+            </label>
+            <div class="input-wrapper">
+                <mat-form-field class="new-input-box mat-select-custom" appearance="none">
+                    <!-- <mat-label>Choose IC</mat-label> -->
+                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="choose IC name" required>
+                      <!-- <mat-option>--</mat-option> -->
+                      <mat-option *ngFor="let ic of icListArr" matTooltipPosition="left" [matTooltip]="ic?.label?.length > 50 ? ic?.label : ''" [value]="ic.value">
+                        {{ic.label}}
+                      </mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+                  </mat-form-field>
+                <!-- <input class="new-input-box" matInput formControlName="icName" type="text" required> -->
+                <div class="error" *ngIf="icName.invalid && icName.touched">
+                    <span *ngIf="icName.errors?.required">IC Name is Required</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-field d-flex mb-1">
+            <label class="label-name">
+                User Name<span class="asterick">*</span>
+            </label>
+            <div class="input-wrapper">
+                <input class="new-input-box" matInput formControlName="userName" type="text" required>
+                <div class="error" *ngIf="userName.invalid && userName.touched">
+                    <span *ngIf="userName.errors?.required">Name is Required</span>
+                    <span *ngIf="userName.errors?.pattern">Alphanumeric characters only allowed and maximum character length is 255.</span>
+                </div>
+            </div>
+            <div class="add-field">
+                <span class="material-icons">person_add_alt</span>
+            </div>
+        </div>
+        <div class="form-field d-flex mb-1">
+            <label class="label-name">
+                Email ID<span class="asterick">*</span>
+            </label>
+            <div class="input-wrapper">
+                <input class="new-input-box" matInput formControlName="email" type="text" required>
+                <div class="error" *ngIf="email.invalid && email.touched">
+                    <span *ngIf="email.errors?.required">Email is Required</span>
+                    <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
+                </div>
+            </div>
+        </div>
+        <div class="button-wrapper d-flex mt-4">
+            <button style="margin-left: 0px !important;" class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button
+                type="button">Cancel</button>
+            <button class="submit" mat-raised-button type="submit">Save</button>
+        </div>        
+
+
+    </form>
+
+</div>

@@ -1,0 +1,29 @@
+@import '../../../themes/themes.scss';
+
+mat-tab-group {
+    margin-top: .5em;
+}
+:host ::ng-deep .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: none !important;
+  }
+
+:host ::ng-deep.mat-tab-label {
+    height: 25px !important;
+    padding: 0px 20px !important;
+    // min-width: 130px;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+    min-width: auto !important;
+    margin: 3px !important;
+    }
+
+::ng-deep .mat-ink-bar {
+    height: 2px !important;
+    background-color: $primary-red !important;
+    // left: 8px !important;
+    // width: 75px !important;
+  }

@@ -104,6 +104,17 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'selected-candidate-bulk'">
+  <div class="bulk-upload-text">
+    Confirm to upload the selected candidate details
+  </div>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'invPanel-bulk'">
   <div class="bulk-upload-text">
     Confirm to upload Interview panel details and send them mails to create an account

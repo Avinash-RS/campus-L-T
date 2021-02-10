@@ -243,17 +243,17 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
           return params.value;
         }
       },
-      {
-        headerName: 'Documents submitted', field: 'document_submit',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'document_submit',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
+      // {
+      //   headerName: 'Documents submitted', field: 'document_submit',
+      //   filter: true,
+      //   floatingFilterComponentParams: { suppressFilterButton: true },
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'document_submit',
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
       // {
       //   headerName: 'Status', field: 'total_count',
       //   filter: true,

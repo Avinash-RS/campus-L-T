@@ -1,0 +1,18 @@
+<mat-tab-group animationDuration="1000ms" (selectedTabChange)="tabChanged($event); activeTab($event)"
+    [(selectedIndex)]="TabIndex">
+    <mat-tab label="List of Selected Candidates">
+        <div *ngIf="TabIndex == '0'" class="pl-2 pr-2 pt-2 pb-2">
+            <app-listof-selected-candidates></app-listof-selected-candidates>
+        </div>
+    </mat-tab>
+    <mat-tab label="Upload Selected Candidates">
+        <div *ngIf="TabIndex == '1'" class="pl-2 pr-2 pt-2 pb-2">
+            <app-upload-selected-candidates (tabChange)="gotoNextTab($event)"></app-upload-selected-candidates>
+        </div>
+    </mat-tab>
+    <mat-tab label="Error Report">
+        <div *ngIf="TabIndex == '2'" class="pl-2 pr-2 pt-2 pb-2">
+            <app-upload-selected-candidates-error-report></app-upload-selected-candidates-error-report>
+        </div>
+    </mat-tab>
+</mat-tab-group>

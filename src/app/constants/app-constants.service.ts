@@ -120,7 +120,9 @@ export const CONSTANT = {
       HR_STATUS_PREASSESSMENT: '/hr/status/pre-assessment',
       HR_STATUS_RECRUITMENT: '/hr/status/recruitment',
       HR_ASSING_ASSESSMENT: '/hr/assing-assessment',
-      HR_SCHEDULING_ASSESSMENT: '/hr/assing-assessment/scheduling-assessment'
+      HR_SCHEDULING_ASSESSMENT: '/hr/assing-assessment/scheduling-assessment',
+      IC_ADDorLIST: '/hr/ic/list',
+      OfferedCandidatesLIST: '/hr/ic/candidates'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -257,7 +259,9 @@ export const CONSTANT = {
       HR_STATUS_PREASSESSMENT: 'pre-assessment',
       HR_STATUS_RECRUITMENT: 'recruitment',
       HR_ASSING_ASSESSMENT: 'assing-assessment',
-      HR_SCHEDULING_ASSESSMENT: 'scheduling-assessment'
+      HR_SCHEDULING_ASSESSMENT: 'scheduling-assessment',
+      IC_ADDorLIST: 'ic/list',
+      OfferedCandidatesLIST: 'ic/candidates'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',

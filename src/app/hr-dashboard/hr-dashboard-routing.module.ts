@@ -56,6 +56,8 @@ import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-int
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
 import { NewInterviewpanelResultsUploadComponent } from './evaluation/new-interviewpanel-results-upload/new-interviewpanel-results-upload.component';
 import { InvBulkAssignReportsComponent } from './hr-reports/inv-bulk-assign-reports/inv-bulk-assign-reports.component';
+import { IcAddorListComponent } from './pages/ic-AddorList/ic-addor-list.component';
+import { OfferedCandidatesListComponent } from './pages/offered-candidates-list/offered-candidates-list.component';
 
 const routes: Routes = [
   {
@@ -453,6 +455,20 @@ const routes: Routes = [
             pathMatch: 'full',
           }
         ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
+        component: IcAddorListComponent,
+        data: {
+          breadcrumb: 'IC List/Add'
+        },
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
+        component: OfferedCandidatesListComponent,
+        data: {
+          breadcrumb: 'Offered Candidates/Assign Candidates'
+        },
       },
       {
         path: '',
