@@ -596,4 +596,15 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/selected_user_upload`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  SelectedCandidatesList() {
+    return this.http.get(`${this.BASE_URL}/profile/selected_user_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  SelectedCandidatesBulkUploadErrorList() {
+    return this.http.get(`${this.BASE_URL}/profile/selected_user_error_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }

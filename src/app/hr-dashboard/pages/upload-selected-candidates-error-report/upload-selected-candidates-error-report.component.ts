@@ -92,12 +92,12 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
         }
       },
       {
-        headerName: 'Bussiness Name', field: 'name',
+        headerName: 'Bussiness Name', field: 'business_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'name',
+        tooltipField: 'business_name',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -155,7 +155,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
     const apiData = {
       uploaded_by: ''
     };
-    this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
+    this.adminService.SelectedCandidatesBulkUploadErrorList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
       let count = 0;

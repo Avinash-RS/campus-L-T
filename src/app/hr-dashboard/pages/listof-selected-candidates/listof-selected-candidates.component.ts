@@ -106,12 +106,23 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Candidate Id', field: 'id',
+        headerName: 'Email id', field: 'selected_candidate',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'selected_candidate',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate id', field: 'candidate_id',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         maxWidth: 140,
         sortable: true,
-        tooltipField: 'id',
+        tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -138,24 +149,24 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           return params.value;
         }
       },
+      // {
+      //   headerName: 'Status', field: 'status',
+      //   filter: true,
+      //   floatingFilterComponentParams: { suppressFilterButton: true },
+      //   maxWidth: 100,
+      //   sortable: true,
+      //   tooltipField: 'status',
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
       {
-        headerName: 'Status', field: 'status',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        maxWidth: 100,
-        sortable: true,
-        tooltipField: 'status',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Assigned to', field: 'assigned',
+        headerName: 'Assigned to', field: 'company',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 120,
         sortable: true,
-        tooltipField: 'assigned',
+        tooltipField: 'company',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -185,47 +196,9 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   }
   // To get all users
   getUsersList() {
-    // this.adminService.firstLevelReports().subscribe((datas: any) => {
+    this.adminService.SelectedCandidatesList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      this.userList = [
-        {
-          candidate_name: 'Avinash',
-          id: '213913913913913',
-          education: 'Undergraduate',
-          discipline: 'Computer Science',
-          status: 'Selected',
-          assigned: 'Edutech',
-          details: ''
-        },
-        {
-          candidate_name: 'Srini',
-          id: '213913914',
-          education: 'Undergraduate',
-          discipline: 'Computer Science',
-          status: 'Not Selected',
-          assigned: 'Edutech',
-          details: ''
-        },
-        {
-          candidate_name: 'Siva',
-          id: '213913915',
-          education: 'Undergraduate',
-          discipline: 'Computer Science',
-          status: 'Selected',
-          assigned: '',
-          details: ''
-        },
-        {
-          candidate_name: 'Seetha',
-          id: '213913917',
-          education: 'Undergraduate',
-          discipline: 'Computer Science',
-          status: 'Selected',
-          assigned: 'Edutech',
-          details: ''
-        }
-      ]
-      // this.userList = datas ? datas : [];
+      this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
@@ -233,8 +206,8 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         element['details'] = count;
       });
       this.rowData = this.userList;
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
 
   downloadExcel(element) {
