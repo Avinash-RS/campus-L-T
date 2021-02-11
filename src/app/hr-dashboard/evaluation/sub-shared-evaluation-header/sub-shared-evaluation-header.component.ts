@@ -18,6 +18,7 @@ export class SubSharedEvaluationHeaderComponent implements OnInit {
   @Input() cid: any;
   @Input() status: any;
   @Input() tag: any;
+  @Input() assess: any;
   bindDetails: any;
   nameOfAssessment: any;
   constructor(
