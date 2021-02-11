@@ -52,7 +52,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   }
 
   nextTab() {
-    this.tabChange.emit('2');
+    this.tabChange.emit('0');
   }
 
   downloadTemplate() {
@@ -116,18 +116,18 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     console.log(this.uploadedListArray);  
-    let data;
-    // this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
+    // let data;
+    this.adminService.SelectedCandidatesBulkUpload(this.uploadedListArray).subscribe((data: any) => {
       this.appConfig.hideLoader();
       const datas = {
         bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
-        errorLength: data ? data?.length : 5,
+        errorLength: data ? data?.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
-    // }, (err) => {
+    }, (err) => {
 
-    // });
+    });
   }
   upload() {
     this.appConfig.showLoader();

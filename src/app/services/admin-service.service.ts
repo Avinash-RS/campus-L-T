@@ -591,4 +591,9 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/emp_work_experience?user_id=${uid.user_id}`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  SelectedCandidatesBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/selected_user_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

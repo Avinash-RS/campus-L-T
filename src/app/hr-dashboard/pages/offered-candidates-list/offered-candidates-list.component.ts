@@ -28,11 +28,11 @@ export class OfferedCandidatesListComponent implements OnInit {
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-      // {
-      //   icon: '',
-      //   name: 'IC List/Add',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
-      // },
+      {
+        icon: '',
+        name: 'IC List/Add',
+        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
+      },
       {
         icon: '',
         name: 'Selected Candidates Upload/Assign',
