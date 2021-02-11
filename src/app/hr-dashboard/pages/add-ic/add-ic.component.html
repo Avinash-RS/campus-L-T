@@ -8,7 +8,7 @@
             <div class="input-wrapper">
                 <mat-form-field class="new-input-box mat-select-custom" appearance="none">
                     <!-- <mat-label>Choose IC</mat-label> -->
-                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="choose IC name" required>
+                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="Select the ic name" required>
                       <!-- <mat-option>--</mat-option> -->
                       <mat-option *ngFor="let ic of icListArr" matTooltipPosition="left" [matTooltip]="ic?.label?.length > 50 ? ic?.label : ''" [value]="ic.value">
                         {{ic.label}}
@@ -22,33 +22,40 @@
                 </div>
             </div>
         </div>
+        <ng-container formArrayName="addUser">
+            <div *ngFor="let add of addUser?.controls; index as i">
+                <ng-container [formGroupName]="i">
         <div class="form-field d-flex mb-1">
-            <label class="label-name">
+            <label class="label-name" [ngClass]="i == 0 ? '' : 'hidden'">
                 User Name<span class="asterick">*</span>
             </label>
             <div class="input-wrapper">
-                <input class="new-input-box" matInput formControlName="userName" type="text" required>
-                <div class="error" *ngIf="userName.invalid && userName.touched">
-                    <span *ngIf="userName.errors?.required">Name is Required</span>
-                    <span *ngIf="userName.errors?.pattern">Alphanumeric characters only allowed and maximum character length is 255.</span>
+                <input class="new-input-box" [placeholder]="'Enter username - ' + (i + 1)" matInput formControlName="userName" type="text" required>
+                <div class="error" *ngIf="addUser.controls[i].get('userName').invalid && addUser.controls[i].get('userName').touched">
+                    <span *ngIf="addUser.controls[i].get('userName').errors?.required">Name is Required</span>
+                    <span *ngIf="addUser.controls[i].get('userName').errors?.pattern">Alphanumeric characters only allowed and maximum character length is 255.</span>
                 </div>
             </div>
             <div class="add-field">
-                <span class="material-icons">person_add_alt</span>
+                <span *ngIf="(addUser?.controls?.length - 1 == i || addUser?.controls?.length == 1) && addUser?.controls?.length <= 10" (click)="addUsers()" style="cursor: pointer;" class="material-icons mr-2">person_add_alt</span>
+                <span *ngIf="addUser?.controls?.length != 1" (click)="removeUser(i)" style="cursor: pointer;" class="material-icons">close</span>
             </div>
         </div>
-        <div class="form-field d-flex mb-1">
-            <label class="label-name">
+        <div class="form-field d-flex mb-3">
+            <label class="label-name" [ngClass]="i == 0 ? '' : 'hidden'">
                 Email ID<span class="asterick">*</span>
             </label>
             <div class="input-wrapper">
-                <input class="new-input-box" matInput formControlName="email" type="text" required>
-                <div class="error" *ngIf="email.invalid && email.touched">
-                    <span *ngIf="email.errors?.required">Email is Required</span>
-                    <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
+                <input class="new-input-box" [placeholder]="'Enter email id - ' + (i + 1)" matInput formControlName="email" type="text" required>
+                <div class="error" *ngIf="addUser.controls[i].get('email').invalid && addUser.controls[i].get('email').touched">
+                    <span *ngIf="addUser.controls[i].get('email').errors?.required">Email is Required</span>
+                    <span *ngIf="addUser.controls[i].get('email').errors?.pattern">Please enter a valid Email id</span>
                 </div>
             </div>
         </div>
+                </ng-container>
+    </div>
+    </ng-container>
         <div class="button-wrapper d-flex mt-4">
             <button style="margin-left: 0px !important;" class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button
                 type="button">Cancel</button>

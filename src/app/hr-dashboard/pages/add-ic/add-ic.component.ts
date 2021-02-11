@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -50,19 +50,69 @@ export class AddICComponent implements OnInit {
     this.formInitialize();
   }
 
+  apiData() {
+   let dummy = 
+      {
+        company: 'idpl',
+        users: [
+          {
+            name: 'Avinash',
+            email: 'Avinash@lntecc.com'
+          },
+          {
+            name: 'seetha',
+            email: 'seeh@lntecc.com'
+          },
+          {
+            name: 'Srini',
+            email: 'srini@lntecc.com'
+          }
+        ]
+      }
+      this.addIcForm.patchValue({
+        icName: !dummy?.company ? dummy?.company : ''
+      });
+      if (dummy) {
+        dummy?.users.forEach(element => {
+          this.addUsers(element);
+        });  
+      } else {
+        this.addUsers();        
+      }
+  }
   formInitialize() {
+    this.addIcForm = this.fb.group({
+      icName: ['', [Validators.required]],
+      addUser: new FormArray([]) // Declaring form array
+    }), this.apiData(); // For updating the api values (patch), if no values are there, will go as empty.
+  }
 
+  addUsers(data?: any) {
+    // If data parameter has value then it will patch the values else will be passing empty array.
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     const alphaNumericMaxLengthWithSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.();/\r\n|\r|\n/]){0,255}$/;
-
-    this.addIcForm = this.fb.group({
-      icName: ['', [Validators.required]],
-      userName: ['', [Validators.required, Validators.pattern(alphaNumericMaxLengthWithSpecialCharacters), RemoveWhitespace.whitespace()]],
-      email: ['', [Validators.required, Validators.pattern(emailregex)]],
+  if (data) {
+    const group = this.fb.group({
+      userName: [data?.name, [Validators.required, Validators.pattern(alphaNumericMaxLengthWithSpecialCharacters), RemoveWhitespace.whitespace()]],
+      email: [data?.email, [Validators.required, Validators.pattern(emailregex)]],
     });
+    this.addUser.push(group);
+    } else {
+      const group = this.fb.group({
+        userName: ['', [Validators.required, Validators.pattern(alphaNumericMaxLengthWithSpecialCharacters), RemoveWhitespace.whitespace()]],
+        email: ['', [Validators.required, Validators.pattern(emailregex)]],
+      });
+      this.addUser.push(group);  
+    }
   }
-
+  removeUser(index: any) {
+    this.addUser.removeAt(Number(index));
+  }
+  // Declaring as addUser as formarray
+  get addUser() {
+    return this.addIcForm.get('addUser') as FormArray;
+  }
   get icName() {
     return this.addIcForm.get('icName');
   }
@@ -74,14 +124,20 @@ export class AddICComponent implements OnInit {
   }
 
   submitaddIC() {
+    console.log('form', this.addIcForm.value);
+    
     if (this.addIcForm.valid) {
       this.tabChange.emit('0');
     } else {
       this.validateAllFields(this.addIcForm);
+      this.validateAllFormArrays(this.addIcForm.get('addUser') as FormArray);
     }
   }
   cancel() {
+    // this.addUsers();
     this.addIcForm.reset();
+    this.addUser.clear();
+    this.addUsers();
   }
     // To validate all fields after submit
     validateAllFields(formGroup: FormGroup) {
@@ -94,5 +150,21 @@ export class AddICComponent implements OnInit {
         }
       });
     }
+
+      // To validate all fields after submit
+  validateAllFormArrays(formArray: FormArray) {
+    formArray.controls.forEach(formGroup => {
+      Object.keys(formGroup['controls']).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+          this.validateAllFields(control);
+        }
+      });
+
+    });
+  }
+
   
 }

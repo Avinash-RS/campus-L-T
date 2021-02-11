@@ -30,4 +30,8 @@ input.ng-touched.ng-invalid {
     left: 10px;
     width: 0px;
     top: 40px;
+    display: flex;
+}
+.hidden {
+    visibility: hidden;
 }
