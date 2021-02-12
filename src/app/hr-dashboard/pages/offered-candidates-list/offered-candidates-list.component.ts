@@ -30,7 +30,7 @@ export class OfferedCandidatesListComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '',
-        name: 'IC List/Add',
+        name: 'Business List/Add',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
       },
       {

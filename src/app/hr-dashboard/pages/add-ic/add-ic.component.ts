@@ -55,24 +55,12 @@ export class AddICComponent implements OnInit {
       {
         company: 'idpl',
         users: [
-          {
-            name: 'Avinash',
-            email: 'Avinash@lntecc.com'
-          },
-          {
-            name: 'seetha',
-            email: 'seeh@lntecc.com'
-          },
-          {
-            name: 'Srini',
-            email: 'srini@lntecc.com'
-          }
         ]
       }
       this.addIcForm.patchValue({
         icName: !dummy?.company ? dummy?.company : ''
       });
-      if (dummy) {
+      if (dummy?.users?.length > 0) {
         dummy?.users.forEach(element => {
           this.addUsers(element);
         });  

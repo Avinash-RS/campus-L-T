@@ -92,12 +92,12 @@ export class ListofICComponent implements OnInit {
         }
       },
       {
-        headerName: 'Employee Id', field: 'id',
+        headerName: 'Email id', field: 'email',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'id',
+        tooltipField: 'email',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -114,7 +114,7 @@ export class ListofICComponent implements OnInit {
         }
       },
       {
-        headerName: 'Bussiness name', field: 'ic_name',
+        headerName: 'Business', field: 'ic_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,

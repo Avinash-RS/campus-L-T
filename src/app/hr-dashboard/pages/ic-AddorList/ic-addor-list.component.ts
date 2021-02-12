@@ -21,12 +21,12 @@ export class IcAddorListComponent implements OnInit, OnDestroy {
     const subWrapperMenus = [
       {
         icon: '',
-        name: 'IC List/Add',
+        name: 'Business List/Add',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
       },
       {
         icon: '',
-        name: 'Offered Candidates/Assign Candidates',
+        name: 'Selected Candidates Upload/Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST
       },
       // {

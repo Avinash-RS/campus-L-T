@@ -1,11 +1,11 @@
 <mat-tab-group  animationDuration="1000ms" (selectedTabChange)="tabChanged($event); activeTab($event)"
 [(selectedIndex)]="TabIndex">
-  <mat-tab label="IC List">
+  <mat-tab label="Business List">
       <div class="pl-4 pr-4 pt-2 pb-2">
           <app-listof-ic></app-listof-ic>
       </div>
 </mat-tab>
-<mat-tab label="Add IC">
+<mat-tab label="Add Business">
     <div class="pl-4 pr-4 pt-2 pb-2">
     <app-add-ic (tabChange)="gotoNextTab($event)"></app-add-ic>
 </div>

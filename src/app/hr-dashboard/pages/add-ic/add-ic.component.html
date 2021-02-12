@@ -3,12 +3,12 @@
     <form [formGroup]="addIcForm" class="forms d-flex flex-column justify-content-center align-items-center mt-3" (ngSubmit)="submitaddIC()">
         <div class="form-field d-flex mb-3">
             <label class="label-name">
-                IC Name<span class="asterick">*</span>
+                Business<span class="asterick">*</span>
             </label>
             <div class="input-wrapper">
                 <mat-form-field class="new-input-box mat-select-custom" appearance="none">
                     <!-- <mat-label>Choose IC</mat-label> -->
-                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="Select the ic name" required>
+                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="Select business" required>
                       <!-- <mat-option>--</mat-option> -->
                       <mat-option *ngFor="let ic of icListArr" matTooltipPosition="left" [matTooltip]="ic?.label?.length > 50 ? ic?.label : ''" [value]="ic.value">
                         {{ic.label}}
@@ -18,7 +18,7 @@
                   </mat-form-field>
                 <!-- <input class="new-input-box" matInput formControlName="icName" type="text" required> -->
                 <div class="error" *ngIf="icName.invalid && icName.touched">
-                    <span *ngIf="icName.errors?.required">IC Name is Required</span>
+                    <span *ngIf="icName.errors?.required">Business is Required</span>
                 </div>
             </div>
         </div>
@@ -27,10 +27,10 @@
                 <ng-container [formGroupName]="i">
         <div class="form-field d-flex mb-1">
             <label class="label-name" [ngClass]="i == 0 ? '' : 'hidden'">
-                User Name<span class="asterick">*</span>
+                Name<span class="asterick">*</span>
             </label>
             <div class="input-wrapper">
-                <input class="new-input-box" [placeholder]="'Enter username - ' + (i + 1)" matInput formControlName="userName" type="text" required>
+                <input class="new-input-box" [placeholder]="'Enter name - ' + (i + 1)" matInput formControlName="userName" type="text" required>
                 <div class="error" *ngIf="addUser.controls[i].get('userName').invalid && addUser.controls[i].get('userName').touched">
                     <span *ngIf="addUser.controls[i].get('userName').errors?.required">Name is Required</span>
                     <span *ngIf="addUser.controls[i].get('userName').errors?.pattern">Alphanumeric characters only allowed and maximum character length is 255.</span>

@@ -179,7 +179,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
-      let bussinessName; let email;
+      let businessName; let email;
       if (i > 0 && dup) {
         count += 1;
         dup.forEach((element, index) => {
@@ -197,18 +197,18 @@ export class UploadSelectedCandidatesComponent implements OnInit {
                 this.enableList = false;
                 this.dateFormatExist = true;
               } else {
-                bussinessName = element ? element : '';
+                businessName = element ? element : '';
               }
             }
           }
         });
         const value = {
-          company: bussinessName ? bussinessName : '',
+          company: businessName ? businessName : '',
           email: email ? email : ''
         };
 
 
-        if ((bussinessName && bussinessName.toString().trim()) || (email && email.toString().trim())) {
+        if ((businessName && businessName.toString().trim()) || (email && email.toString().trim())) {
           listArray.push(value);
         }
       }

@@ -92,7 +92,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
         }
       },
       {
-        headerName: 'Bussiness Name', field: 'business_name',
+        headerName: 'Business Name', field: 'business_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,

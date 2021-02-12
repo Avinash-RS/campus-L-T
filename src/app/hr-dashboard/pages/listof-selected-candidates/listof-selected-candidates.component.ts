@@ -86,6 +86,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         headerName: 'S no', field: 'counter',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 90,
         maxWidth: 90,
         sortable: true,
         tooltipField: 'counter',
@@ -120,7 +121,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         headerName: 'Candidate id', field: 'candidate_id',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        maxWidth: 140,
+        minWidth: 140,
         sortable: true,
         tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
@@ -128,12 +129,34 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Education', field: 'education',
+        headerName: 'Profile', field: 'selectedPost',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        maxWidth: 120,
+        minWidth: 120,
         sortable: true,
-        tooltipField: 'education',
+        tooltipField: 'selectedPost',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Institute', field: 'institute',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'institute',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Specialization', field: 'specialization',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        sortable: true,
+        tooltipField: 'specialization',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -177,6 +200,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         // headerTooltip: 'Download documents',
         valueFormatter: this.tooltipFormatter,
         maxWidth: 60,
+        minWidth: 60,
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
       },
@@ -199,6 +223,11 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     this.adminService.SelectedCandidatesList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
+      this.userList.forEach(element => {
+        element.specialization = 'Mtech';
+        element.selectedPost = 'Pget';
+        element.institute = 'Sathyabama institute of college and engineering of technology';
+      });
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
