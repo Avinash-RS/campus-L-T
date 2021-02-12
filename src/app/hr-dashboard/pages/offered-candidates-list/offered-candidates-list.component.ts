@@ -14,6 +14,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 export class OfferedCandidatesListComponent implements OnInit {
 
   appConstant = CONSTANT.ENDPOINTS;
+  role = this.appConfig.getLocalData('roles');
   TabIndex: any = this.appConfig.getLocalData('tabIndex') ? this.appConfig.getLocalData('tabIndex') : '0';
   tab1Data: any;
   tab2Data: any;
@@ -44,6 +45,9 @@ export class OfferedCandidatesListComponent implements OnInit {
       //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       // }
     ];
+    if (this.role == 'ic') {
+      subWrapperMenus.shift();
+    }
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 

@@ -21,6 +21,7 @@ export class HrMasterComponent implements OnInit {
   breadcrumbs: Array<any>;
 
   appConstant = CONSTANT.ENDPOINTS;
+  role = this.appConfig.getLocalData('roles');
   sidebarOpen;
   subMenus: any;
   activeSubmenu;

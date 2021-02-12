@@ -112,7 +112,6 @@ export class AddICComponent implements OnInit {
   }
 
   submitaddIC() {
-    console.log('form', this.addIcForm.value);
     
     if (this.addIcForm.valid) {
       this.tabChange.emit('0');

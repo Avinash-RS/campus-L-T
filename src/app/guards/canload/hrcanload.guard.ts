@@ -16,7 +16,7 @@ export class HrcanloadGuard implements CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'hr')) {
+    if ((this.appConfig.getLocalData('csrf-login') && (this.appConfig.getLocalData('roles') == 'hr' || this.appConfig.getLocalData('roles') == 'ic'))) {
       return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {
@@ -39,7 +39,7 @@ export class HrcanloadGuard implements CanLoad {
     }
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'hr')) {
+    if ((this.appConfig.getLocalData('csrf-login') && (this.appConfig.getLocalData('roles') == 'hr' || this.appConfig.getLocalData('roles') == 'ic'))) {
       return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {

@@ -5,6 +5,7 @@
             <app-listof-selected-candidates></app-listof-selected-candidates>
         </div>
     </mat-tab>
+    <ng-container *ngIf="role == 'hr'">
     <mat-tab label="Upload/Assign Selected Candidates">
         <div *ngIf="TabIndex == '1'" class="pl-2 pr-2 pt-2 pb-2">
             <app-upload-selected-candidates (tabChange)="gotoNextTab($event)"></app-upload-selected-candidates>
@@ -15,4 +16,5 @@
             <app-upload-selected-candidates-error-report></app-upload-selected-candidates-error-report>
         </div>
     </mat-tab>
+</ng-container>
 </mat-tab-group>

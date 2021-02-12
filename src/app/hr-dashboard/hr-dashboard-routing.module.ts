@@ -460,14 +460,14 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
         component: IcAddorListComponent,
         data: {
-          breadcrumb: 'IC List/Add'
+          breadcrumb: 'Business Users List/Add'
         },
       },
       {
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
         component: OfferedCandidatesListComponent,
         data: {
-          breadcrumb: 'Offered Candidates/Assign Candidates'
+          breadcrumb: 'Selected Candidates Upload/Assign'
         },
       },
       {

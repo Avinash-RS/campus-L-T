@@ -11,6 +11,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 export class IcAddorListComponent implements OnInit, OnDestroy {
 
   appConstant = CONSTANT.ENDPOINTS;
+  role = this.appConfig.getLocalData('roles');
   TabIndex: any = this.appConfig.getLocalData('tabIndex') ? this.appConfig.getLocalData('tabIndex') : '0';
 
   constructor(
@@ -35,6 +36,9 @@ export class IcAddorListComponent implements OnInit, OnDestroy {
       //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       // }
     ];
+    if (this.role == 'ic') {
+      subWrapperMenus.shift();
+    }
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
