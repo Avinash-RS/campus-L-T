@@ -5,12 +5,12 @@
             <app-listof-selected-candidates></app-listof-selected-candidates>
         </div>
     </mat-tab>
-    <mat-tab label="Upload Selected Candidates">
+    <mat-tab label="Upload/Assign Selected Candidates">
         <div *ngIf="TabIndex == '1'" class="pl-2 pr-2 pt-2 pb-2">
             <app-upload-selected-candidates (tabChange)="gotoNextTab($event)"></app-upload-selected-candidates>
         </div>
     </mat-tab>
-    <mat-tab label="Error Report">
+    <mat-tab label="Error Reports">
         <div *ngIf="TabIndex == '2'" class="pl-2 pr-2 pt-2 pb-2">
             <app-upload-selected-candidates-error-report></app-upload-selected-candidates-error-report>
         </div>

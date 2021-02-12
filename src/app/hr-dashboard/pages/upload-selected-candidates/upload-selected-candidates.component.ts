@@ -153,6 +153,8 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      console.log(this.SavedData);
+      
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 2 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email Id') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Business Name')) {
         // this.enableList = true;
@@ -213,6 +215,8 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         }
       }
     });
+    console.log(listArray);
+    
     this.uploadedListArray = listArray;
     this.totalCountofCandidates = count - 1;
   }
