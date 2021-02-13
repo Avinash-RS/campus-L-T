@@ -7,7 +7,13 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy_qa": "ng build --configuration qa --aot=true --output-hashing=all --extract-css=true && npm run add_date --build-optimizer=false --base-href l",
+    "deploy_prd": "ng build --prod && npm run add_date",
+    "add_date": "npm run add_date_js && npm run add_date_css && npm run rm_bak_files",
+    "add_date_js": "for i in dist/*; do if [ -f $i ]; then LC_ALL=C sed -i.bak 's:js\":js?'$(date +%H%M%m%d%y)'\":g' $i; fi done",
+    "add_date_css": "sed -i.bak 's:css\":css?'$(date +%H%M%m%d%y)'\":g' dist/index.html",
+    "rm_bak_files": "find dist -name '*.bak' -exec rm -Rf {} \\;"
   },
   "private": true,
   "dependencies": {
