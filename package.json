@@ -1,6 +1,6 @@
 {
   "name": "udap-registration",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -14,7 +14,7 @@
     "add_date_js": "for i in dist/udap-registration/*; do if [ -f $i ]; then LC_ALL=C sed -i.bak 's:js\":js?'$(date +%H%M%m%d%y)'\":g' $i; fi done",
     "add_date_css": "sed -i.bak 's:css\":css?'$(date +%H%M%m%d%y)'\":g' dist/udap-registration/index.html",
     "rm_bak_files": "find dist -name '*.bak' -exec rm -Rf {} \\;",
-    "build-qa": "npm version patch -f && node ./replace.build.js && ng build --configuration=qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l"
+    "build-qa": "npm version patch -f && node ./build.js && ng build --configuration=qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l"
   },
   "private": true,
   "dependencies": {
