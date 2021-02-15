@@ -3,6 +3,7 @@ export const environment = {
   qa: true,
   uat: false,
   local: false,
+  versionCheckURL: 'http://udapqa.southindia.cloudapp.azure.com/version.json',
 
   // For Dev
   // API_BASE_URL: 'http://104.211.226.77/d8cintana2',

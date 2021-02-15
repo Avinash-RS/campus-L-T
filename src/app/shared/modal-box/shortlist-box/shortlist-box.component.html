@@ -398,3 +398,14 @@
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['update'] === 'update-available'">
+  <div class="bulk-upload-text">
+    New version available. Click on update to get the new available version.
+  </div>
+  <div class="buttons">
+    <!-- <button class="cancel-btn btn-margin-space" (click)="updateCancel()" mat-raised-button>Cancel</button> -->
+    <button class="submit" (click)="updateAvailable()" mat-raised-button>Update</button>
+  </div>
+</div>
+
