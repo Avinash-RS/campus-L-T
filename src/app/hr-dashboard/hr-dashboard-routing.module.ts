@@ -58,6 +58,7 @@ import { NewInterviewpanelResultsUploadComponent } from './evaluation/new-interv
 import { InvBulkAssignReportsComponent } from './hr-reports/inv-bulk-assign-reports/inv-bulk-assign-reports.component';
 import { IcAddorListComponent } from './pages/ic-AddorList/ic-addor-list.component';
 import { OfferedCandidatesListComponent } from './pages/offered-candidates-list/offered-candidates-list.component';
+import { BusinesspanelRouteComponent } from './pages/businesspanel-route/businesspanel-route.component';
 
 const routes: Routes = [
   {
@@ -456,19 +457,34 @@ const routes: Routes = [
           }
         ]
       },
+      // adad
       {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
-        component: IcAddorListComponent,
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.BUSINESSROUTE}`,
+        component: BusinesspanelRouteComponent,
         data: {
-          breadcrumb: 'Business Users List/Add'
+          breadcrumb: 'Business Panel'
         },
-      },
-      {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
-        component: OfferedCandidatesListComponent,
-        data: {
-          breadcrumb: 'Selected Candidates Upload/Assign'
-        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
+            component: IcAddorListComponent,
+            data: {
+              breadcrumb: 'Business Users List/Add'
+            },
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
+            component: OfferedCandidatesListComponent,
+            data: {
+              breadcrumb: 'Selected Candidates Upload/Assign'
+            },
+          },
+              {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
+            pathMatch: 'full',
+          }
+        ]
       },
       {
         path: '',

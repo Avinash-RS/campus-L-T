@@ -27,28 +27,6 @@ export class OfferedCandidatesListComponent implements OnInit {
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: '',
-        name: 'Business Users List/Add',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
-      },
-      {
-        icon: '',
-        name: 'Selected Candidates Upload/Assign',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST
-      },
-      // {
-      //   icon: '002-group-1.svg',
-      //   name: 'Bulk assign',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
-      // }
-    ];
-    if (this.role == 'ic') {
-      subWrapperMenus.shift();
-    }
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
   ngOnInit() {
