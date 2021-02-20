@@ -457,13 +457,13 @@
             Work Experience
           </div>
     
-          <div *ngIf="workHistory && workHistory.length <= 1 && !workHistory[0]?.employment_name_address" class="criminal ml-4">
+          <div *ngIf="(workHistory && workHistory?.length <= 1 && !workHistory[0]?.employment_name_address) || !workHistory" class="criminal ml-4">
             <div class="f_size_15">
               {{ '-' }}
             </div>
           </div>
     
-          <div class="grid-wrapper-workexp" *ngIf="workHistory.length > 0 && workHistory[0]?.employment_name_address">
+          <div class="grid-wrapper-workexp" *ngIf="workHistory?.length > 0 && workHistory[0]?.employment_name_address">
             <div class="qualify-wrapper-head">
               <div class="emp">
                 Employer's name & address

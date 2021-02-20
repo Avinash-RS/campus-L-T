@@ -49,7 +49,6 @@ export class CommonKycProfileViewComponent implements OnInit {
 
   ngOnInit() {
     this.updatedStateAPI();
-    this.getWorkExp();
   }
 
   close() {
@@ -63,9 +62,20 @@ export class CommonKycProfileViewComponent implements OnInit {
     };
     this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
       // this.appConfig.hideLoader();
+      data = data && data[0];
+      
       this.workDetails = data?.work_experience_details;
+      if (this.workDetails) {
+        this.workDetails.when_interview = this.workDetails?.when_interview ? moment(this.workDetails.when_interview).format('DD MMM YYYY') : '-';
+      }
       this.criminalRecord = data?.criminal_record;
       this.workHistory = data?.work_experience_history;
+      if (this.workHistory && this.workHistory?.length > 0) {
+        this.workHistory.forEach(element => {
+          element.duration_from = element?.duration_from ? moment(element.duration_from).format('DD MMM YYYY') : '-';
+          element.duration_to = element?.duration_to ? moment(element.duration_to).format('DD MMM YYYY') : '-';
+        });
+      }
     });
   }
 
@@ -75,7 +85,6 @@ export class CommonKycProfileViewComponent implements OnInit {
       const split = moment(date).format('DD MMM YYYY');
       const output = split.toUpperCase();
       return output;
-
     } else {
       return '';
     }
@@ -761,6 +770,7 @@ export class CommonKycProfileViewComponent implements OnInit {
       });
 
     }
+    this.getWorkExp();
   }
 
 
