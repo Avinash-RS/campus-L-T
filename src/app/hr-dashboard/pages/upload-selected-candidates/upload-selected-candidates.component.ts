@@ -51,8 +51,8 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   ngOnInit() {
   }
 
-  nextTab() {
-    this.tabChange.emit('0');
+  nextTab(index) {
+    this.tabChange.emit(index);
   }
 
   downloadTemplate() {
@@ -153,7 +153,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
       
-      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 2 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email Id') &&
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 2 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Candidate Email Id') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Business Name')) {
         // this.enableList = true;
         this.appConfig.hideLoader();
@@ -319,8 +319,14 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.enableList = false;
-      this.nextTab();
       if (result) {
+        const success = result?.totalLength - result?.errorLength;
+        const redirect = success > result?.errorLength;
+        if (success >= result?.errorLength) {
+          this.nextTab('0');
+        } else {
+          this.nextTab('2');
+        }
       }
     });
   }

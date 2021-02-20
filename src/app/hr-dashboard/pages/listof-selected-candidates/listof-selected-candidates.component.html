@@ -10,7 +10,7 @@
       </div>
       <!-- </mat-form-field> -->
 
-      <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+      <ag-grid-angular style="width: 98%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine"
       [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay" [pagination]="true" [suppressRowClickSelection]="true"
       [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
       (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"

@@ -103,7 +103,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
         }
       },
       {
-        headerName: 'Email id', field: 'email',
+        headerName: 'Candidate Email id', field: 'email',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,

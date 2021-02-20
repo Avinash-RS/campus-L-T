@@ -107,7 +107,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Email id', field: 'selected_candidate',
+        headerName: 'Candidate Email id', field: 'selected_candidate',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
@@ -185,6 +185,28 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       // },
       {
         headerName: 'Assigned to', field: 'company',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        sortable: true,
+        tooltipField: 'company',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Uploaded by', field: 'company',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        sortable: true,
+        tooltipField: 'company',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date & Time of upload', field: 'company',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 120,
