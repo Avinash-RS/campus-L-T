@@ -607,4 +607,8 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  documentsDownload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/pdf_select_download`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 }

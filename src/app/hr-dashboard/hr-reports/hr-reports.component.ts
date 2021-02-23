@@ -18,32 +18,32 @@ export class HrReportsComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '',
-        name: 'All reports',
+        name: 'All Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST
       },
       {
         icon: '',
-        name: '1st level shortlist',
+        name: '1st Level Shortlist Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Candidate bulk upload reports',
+        name: 'Candidate Bulk Upload Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Interview panel bulk upload reports',
+        name: 'Interview Panel Bulk Upload Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Test upload reports',
+        name: 'Test Upload Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Panel bulk assign reports',
+        name: 'Panel Bulk Assign Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST
       }
     ];

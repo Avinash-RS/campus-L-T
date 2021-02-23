@@ -263,17 +263,20 @@ export class ListofSelectedCandidatesComponent implements OnInit {
 
   downloadExcel(element) {
 
-    // let sendReq = {
-    //   "shortlist_name": element.shortlistname
-    // }
-    // this.adminService.firstShortlistExcelDownload(sendReq).subscribe((data: any) => {
-    //   this.appConfig.hideLoader();
+    let sendReq = {
+      uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      uname: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
+      email: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
+    }
+    this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      console.log('da', data);      
       
-    //   const excel = data && data.file ? data.file : '';
-    //   window.open(excel, '_blank');
+      // const excel = data && data.file ? data.file : '';
+      // window.open(excel, '_blank');
 
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
 
 }

@@ -363,7 +363,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`,
             component: FirstLevelShorlistReportsComponent,
             data: {
-              breadcrumb: '1st Level Reports'
+              breadcrumb: '1st Level Shortlist Reports'
             }
           },
           {
