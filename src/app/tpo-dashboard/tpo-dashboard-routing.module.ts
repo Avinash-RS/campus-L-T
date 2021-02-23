@@ -34,21 +34,21 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
             component: CandidateUploadsComponent,
             data: {
-              breadcrumb: 'Candidate'
+              breadcrumb: 'Candidate Details'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
                 component: UploadedListComponent,
                 data: {
-                  breadcrumb: 'Uploaded List'
+                  breadcrumb: ''
                 },
               },
               {
                 path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
                 component: BulkUploadComponent,
                 data: {
-                  breadcrumb: 'Bulk Upload'
+                  breadcrumb: 'Upload Candidate Details'
                 },
               },
               {
@@ -62,7 +62,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE}`,
             component: TpoAddCandidateComponent,
             data: {
-              breadcrumb: 'AddCandidate'
+              breadcrumb: 'Add Candidate'
             },
           },
           {
@@ -111,7 +111,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.TPO_DASHBOARD.TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: TpoBulkUploadReportsComponent,
             data: {
-              breadcrumb: 'Candidate Upload List'
+              breadcrumb: 'Candidate Bulk Upload Reports'
             },
           },
           {

@@ -86,21 +86,21 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`,
             component: FirstLevelShortlistComponent,
             data: {
-              breadcrumb: '1st level shortlist'
+              breadcrumb: '1st Level Shortlist'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_LIST}`,
                 component: ShortlistedCandidateListComponent,
                 data: {
-                  breadcrumb: 'List'
+                  breadcrumb: ''
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA}`,
                 component: ApplyCriteriaComponent,
                 data: {
-                  breadcrumb: 'Criteria'
+                  breadcrumb: 'Filter'
                 }
               },
               {
@@ -114,14 +114,14 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`,
             component: SecondLevelShortlistComponent,
             data: {
-              breadcrumb: '2nd level shortlist'
+              breadcrumb: '2nd Level Shortlist'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST}`,
                 component: SecondLevelAssessmentListComponent,
                 data: {
-                  breadcrumb: 'Assessment list'
+                  breadcrumb: ''
                 }
               },
               {
@@ -135,14 +135,14 @@ const routes: Routes = [
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST}`,
                 component: SecondLevelCandidateListofAssessComponent,
                 data: {
-                  breadcrumb: 'Candidates list'
+                  breadcrumb: 'Candidates List'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT}`,
                 component: SecondLevelShortlistedCandidatesReportComponent,
                 data: {
-                  breadcrumb: 'Shortlisted report'
+                  breadcrumb: 'Shortlisted Report'
                 }
               },
               {
@@ -156,7 +156,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.UPLOAD_TEST_RESULTS}`,
             component: UploadTestResultsComponent,
             data: {
-              breadcrumb: 'Upload test results'
+              breadcrumb: 'Upload Test Results'
             }
           },
           {
@@ -170,28 +170,28 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`,
         component: HrUserManagementComponent,
         data: {
-          breadcrumb: 'User management'
+          breadcrumb: 'User Management'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
             component: CandidateBulkUploadComponent,
             data: {
-              breadcrumb: 'Candidate'
+              breadcrumb: 'Candidate Details'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
                 component: UploadedListComponent,
                 data: {
-                  breadcrumb: 'Uploaded list'
+                  breadcrumb: ''
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
                 component: BulkUploadComponent,
                 data: {
-                  breadcrumb: 'Bulk upload'
+                  breadcrumb: 'Upload Candidate Details'
                 }
               },
               {
@@ -205,28 +205,28 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`,
             component: UserListComponent,
             data: {
-              breadcrumb: 'Panel details'
+              breadcrumb: 'Panel Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS}`,
             component: HrAddUserComponent,
             data: {
-              breadcrumb: 'Add user'
+              breadcrumb: 'Add User'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS}`,
             component: InterviewPanelBulkUploadComponent,
             data: {
-              breadcrumb: 'Interviewpanel upload'
+              breadcrumb: 'Interview Panel Upload'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_BULK_UPLOAD}`,
                 component: InvpanelBulkuploadComponent,
                 data: {
-                  breadcrumb: 'Interviewpanel bulk upload'
+                  breadcrumb: ''
                 }
               },
               {
@@ -248,45 +248,45 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION}`,
         component: EvaluationComponent,
         data: {
-          breadcrumb: 'Evaluation'
+          breadcrumb: 'Panel Assignment'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`,
             component: EvaluationCandidateDetailsComponent,
             data: {
-              breadcrumb: 'Candidate details'
+              breadcrumb: 'Candidate Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTDETAILS}`,
             component: AssessmentDetailsComponent,
             data: {
-              breadcrumb: 'Assessment details'
+              breadcrumb: 'Assessment Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
             data: {
-              breadcrumb: 'Candidate details'
+              breadcrumb: 'Candidate Details'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`, component: HrSubAssessmentsComponent,
                 data: {
-                  breadcrumb: 'Assessment questions'
+                  breadcrumb: 'Assessment Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EDUCATION}`, component: HrSubEducationComponent,
                 data: {
-                  breadcrumb: 'Education details'
+                  breadcrumb: 'Education Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EMPLOYMENT}`, component: HrSubEmploymentComponent,
                 data: {
-                  breadcrumb: 'Employment documents'
+                  breadcrumb: 'Employment Documents'
                 }
               },
               {
@@ -328,21 +328,21 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
-              breadcrumb: 'Interview panel assign'
+              breadcrumb: 'Interview Panel Assign'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED}`,
             component: NewInterviewpanelAssignedDetailsComponent,
             data: {
-              breadcrumb: 'Assigned details'
+              breadcrumb: 'Assigned Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD}`,
             component: NewInterviewpanelResultsUploadComponent,
             data: {
-              breadcrumb: 'Bulk assign'
+              breadcrumb: 'Bulk Assign'
             }
           },
           {
@@ -363,42 +363,42 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`,
             component: FirstLevelShorlistReportsComponent,
             data: {
-              breadcrumb: '1st Reports'
+              breadcrumb: '1st Level Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             component: ReportsListComponent,
             data: {
-              breadcrumb: 'Overall reports'
+              breadcrumb: 'All Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: BulkUploadReportsComponent,
             data: {
-              breadcrumb: 'Candidate bulk upload reports'
+              breadcrumb: 'Candidate Bulk Upload Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST}`,
             component: InvpanelBulkUploadReportComponent,
             data: {
-              breadcrumb: 'Interview panel bulk upload reports'
+              breadcrumb: 'Interview Panel Bulk Upload Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST}`,
             component: HrUploadTestReportComponent,
             data: {
-              breadcrumb: 'Test upload reports'
+              breadcrumb: 'Test Upload Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST}`,
             component: InvBulkAssignReportsComponent,
             data: {
-              breadcrumb: 'Panel bulk assign reports'
+              breadcrumb: 'Panel Bulk Assign Reports'
             }
           },
           {
@@ -440,14 +440,14 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_ASSING_ASSESSMENT}`,
         component: HrAssingAssessmentComponent,
         data: {
-          breadcrumb: 'Assessment assigning'
+          breadcrumb: 'Assigning Assessment'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_SCHEDULING_ASSESSMENT}`,
             component: SchedulingAssessmentComponent,
             data: {
-              breadcrumb: 'Scheduling assessment'
+              breadcrumb: 'Scheduling Assessment'
             }
           },
           {
@@ -462,7 +462,7 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.BUSINESSROUTE}`,
         component: BusinesspanelRouteComponent,
         data: {
-          breadcrumb: 'Business Panel'
+          breadcrumb: "IC's/Business"
         },
         children: [
           {

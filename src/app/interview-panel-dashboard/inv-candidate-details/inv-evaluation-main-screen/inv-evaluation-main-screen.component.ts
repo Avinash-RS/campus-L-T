@@ -35,7 +35,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: 'work.svg',
-        name: 'Assigned candidates',
+        name: 'Assigned Candidates',
         router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION
       },
     ];

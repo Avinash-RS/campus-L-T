@@ -30,7 +30,7 @@ export class HrShortlistingComponent implements OnInit {
       },
       {
         icon: '',
-        name: 'Upload test results',
+        name: 'Upload Test Results',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.UPLOAD_TEST_RESULTS
       }
     ];

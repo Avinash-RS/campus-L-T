@@ -47,14 +47,14 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
             component: UsersListComponent,
             data: {
-              breadcrumb: 'UserList'
+              breadcrumb: 'Users'
             }
           },
           {
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`,
             component: AddUserComponent,
             data: {
-              breadcrumb: 'AddUser'
+              breadcrumb: 'Add User'
             }
           },
           {
@@ -63,18 +63,18 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: AdminBulkUploadCandidatesComponent, data: {
-              breadcrumb: 'Candidate'
+              breadcrumb: 'Candidates'
             },
             children: [
               {
                 path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`, component: AdminUploadedCandidateListComponent, data: {
-                  breadcrumb: 'uploaded-list'
+                  breadcrumb: 'Candidate Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD}`, component: AdminBulkUploadCandidateCompComponent,
                 data: {
-                  breadcrumb: 'bulk-upload'
+                  breadcrumb: 'Upload Candidate Details'
                 }
               },
               {
@@ -93,13 +93,13 @@ const routes: Routes = [
               {
                 path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST}`, component: AdminUploadedInstituteListComponent,
                 data: {
-                  breadcrumb: 'uploaded-list'
+                  breadcrumb: 'Institute Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD}`, component: AdminBulkUploadInstituteComponent,
                 data: {
-                  breadcrumb: 'bulk-upload'
+                  breadcrumb: 'Upload Institute Details'
                 }
               },
               {
@@ -127,7 +127,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.APPROVALS_INSTITUTE}`,
             component: InstituteApprovalsComponent,
             data: {
-              breadcrumb: 'Institute Approval'
+              breadcrumb: 'Institute'
             }
           },
           {
@@ -141,21 +141,21 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_REPORTS}`,
         component: AdminReportComponent,
         data: {
-          breadcrumb: 'reports'
+          breadcrumb: 'Reports'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             component: AdminBulkUploadReportComponent,
             data: {
-              breadcrumb: 'Candidate Reports List'
+              breadcrumb: 'Candidate Bulk Upload Reports'
             }
           },
           {
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST}`,
             component: AdminInstitudeBulkUploadComponent,
             data: {
-              breadcrumb: 'Institute Reports List'
+              breadcrumb: 'Institute Bulk Upload Reports'
             }
           },
           {

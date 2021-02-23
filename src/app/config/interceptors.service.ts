@@ -68,7 +68,7 @@ export class InterceptorsService implements HttpInterceptor {
         //   reason: error && error.error.reason ? error.error.reason : '',
         //   status: error.status
         // };
-        if (error && error['status'] !== 200) {
+          if (error && error['status'] !== 200) {
           // console.log(error ? error : '');
         }
 
@@ -92,7 +92,7 @@ export class InterceptorsService implements HttpInterceptor {
         }
 
         if (error.status === 403) {
-          if (error.error && error.error.FailureReason && error.error.FailureReason.message == "'csrf_token' URL query argument is invalid.") {
+          if (error?.error && error?.error?.FailureReason?.message.includes('URL query argument is invalid')) {
             this.appConfig.hideLoader();
             this.appConfig.clearLocalData();
             this.appConfig.error('Session expired. Please log in again', '');
@@ -103,9 +103,9 @@ export class InterceptorsService implements HttpInterceptor {
               ? error.error.message : '403 Forbidden', '');
             return throwError(error);
           }
-          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            ? error.error.message : '401 UnAuthorized', '');
-          return throwError(error);
+          // this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+          //   ? error.error.message : '401 UnAuthorized', '');
+          // return throwError(error);
         }
 
         if (error.status === 422) {
@@ -152,8 +152,10 @@ export class InterceptorsService implements HttpInterceptor {
         if (error.status === 200) {
         } else {
           this.appConfig.hideLoader();
+          if (error.status != 403) {
           this.appConfig.error(error.error && error.error.FailureReason ? error.error.FailureReason.message : error.error.message
             ? error.error.message : `${error.status} Error`, '');
+          }
           return throwError(error);
         }
         return throwError(error);

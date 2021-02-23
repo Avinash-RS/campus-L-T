@@ -23,12 +23,12 @@ export class AdminReportComponent implements OnInit {
       // },
       {
         icon: '',
-        name: 'Candidate Bulk upload Reports',
+        name: 'Candidate Bulk Upload Reports',
         router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST
       },
       {
         icon: '',
-        name: 'Institute Bulk upload Reports',
+        name: 'Institute Bulk Upload Reports',
         router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST
       }
     ];

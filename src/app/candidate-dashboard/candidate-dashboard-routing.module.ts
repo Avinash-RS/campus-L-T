@@ -43,35 +43,35 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, 
             component: PersonalDetailsComponent, canActivate: [KycAccessGuard],
             data: {
-              breadcrumb: 'Personal'
+              breadcrumb: 'Personal Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, 
             component: EducationalDetailsComponent, canActivate: [KycAccessGuard],
             data: {
-              breadcrumb: 'Education'
+              breadcrumb: 'Education Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`, 
             component: FamilyDetailsComponent, canActivate: [KycAccessGuard],
             data: {
-              breadcrumb: 'Family'
+              breadcrumb: 'Family Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`, 
             component: GeneralDetailsComponent, canActivate: [KycAccessGuard],
             data: {
-              breadcrumb: 'General'
+              breadcrumb: 'General Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, 
             component: ViewDetailsComponent, canActivate: [KycAccessGuard],
             data: {
-              breadcrumb: 'View'
+              breadcrumb: 'View Details'
             }
           },
           {
