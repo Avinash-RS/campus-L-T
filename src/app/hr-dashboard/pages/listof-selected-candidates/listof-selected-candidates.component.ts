@@ -4,6 +4,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-listof-selected-candidates',
@@ -11,6 +12,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   styleUrls: ['./listof-selected-candidates.component.scss']
 })
 export class ListofSelectedCandidatesComponent implements OnInit {
+  BASE_URL = environment.API_BASE_URL;
 
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
@@ -262,16 +264,16 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   }
 
   downloadExcel(element) {
-
     let sendReq = {
-      uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      uid: element?.user_id ? element?.user_id : '',
       uname: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
       email: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
     this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      console.log('da', data);      
-      
+      const documents = `${this.BASE_URL}/${data?.url}`;
+      window.open(documents, '_blank');
+            
       // const excel = data && data.file ? data.file : '';
       // window.open(excel, '_blank');
 
