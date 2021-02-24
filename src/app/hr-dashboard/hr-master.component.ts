@@ -91,7 +91,7 @@ export class HrMasterComponent implements OnInit {
 
   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
     // If no routeConfig is avalailable we are on the root path
-
+                 
     let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
     let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
     let param = route.snapshot && route.snapshot['queryParams'] ? route.snapshot['queryParams'] : '';
@@ -119,7 +119,14 @@ export class HrMasterComponent implements OnInit {
     if (route.firstChild) {
       // If we are not on our current path yet,
       // there will be more children to look after, to build our breadcumb
-      return this.buildBreadCrumb(route.firstChild, nextUrl, newBreadcrumbs);
+      let mainPath = '';
+      if (breadcrumb?.label) {
+      const dum = this.router.url.startsWith('/') ? this.router.url.substring(1) : '';
+      const index = dum.indexOf('/');
+      const slice = dum.slice(0, index);
+      mainPath = nextUrl.includes('//') ? '' : `/${slice}/`;
+    }
+      return this.buildBreadCrumb(route.firstChild, (mainPath + nextUrl), newBreadcrumbs);
     }
     return newBreadcrumbs;
   }

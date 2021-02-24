@@ -15,12 +15,12 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 })
 export class AddICComponent implements OnInit {
 
-  @Output() tabChange:EventEmitter<any> =new EventEmitter<any>();
+  @Output() tabChange: EventEmitter<any> = new EventEmitter<any>();
   addIcForm: FormGroup;
   icListArr = [
     {
-      label: 'Edutech lajlajdlj aldj lajdl ajdl jaldj aldjl ajdl jaldj ',
-      value: 'Edutech lajlajdlj aldj lajdl ajdl jaldj aldjl ajdl jaldj'
+      label: 'Edutech',
+      value: 'edutech'
     },
     {
       label: 'Construction',
@@ -51,22 +51,22 @@ export class AddICComponent implements OnInit {
   }
 
   apiData() {
-   let dummy = 
-      {
-        company: 'idpl',
-        users: [
-        ]
-      }
-      this.addIcForm.patchValue({
-        icName: !dummy?.company ? dummy?.company : ''
+    let dummy =
+    {
+      company: 'idpl',
+      users: [
+      ]
+    }
+    this.addIcForm.patchValue({
+      icName: !dummy?.company ? dummy?.company : ''
+    });
+    if (dummy?.users?.length > 0) {
+      dummy?.users.forEach(element => {
+        this.addUsers(element);
       });
-      if (dummy?.users?.length > 0) {
-        dummy?.users.forEach(element => {
-          this.addUsers(element);
-        });  
-      } else {
-        this.addUsers();        
-      }
+    } else {
+      this.addUsers();
+    }
   }
   formInitialize() {
     this.addIcForm = this.fb.group({
@@ -80,18 +80,18 @@ export class AddICComponent implements OnInit {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     const alphaNumericMaxLengthWithSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.();/\r\n|\r|\n/]){0,255}$/;
-  if (data) {
-    const group = this.fb.group({
-      userName: [data?.name, [Validators.required, Validators.pattern(alphaNumericMaxLengthWithSpecialCharacters), RemoveWhitespace.whitespace()]],
-      email: [data?.email, [Validators.required, Validators.pattern(emailregex)]],
-    });
-    this.addUser.push(group);
+    if (data) {
+      const group = this.fb.group({
+        userName: [data?.name, [Validators.required, Validators.pattern(alphaNumericMaxLengthWithSpecialCharacters), RemoveWhitespace.whitespace()]],
+        email: [data?.email, [Validators.required, Validators.pattern(emailregex)]],
+      });
+      this.addUser.push(group);
     } else {
       const group = this.fb.group({
         userName: ['', [Validators.required, Validators.pattern(alphaNumericMaxLengthWithSpecialCharacters), RemoveWhitespace.whitespace()]],
         email: ['', [Validators.required, Validators.pattern(emailregex)]],
       });
-      this.addUser.push(group);  
+      this.addUser.push(group);
     }
   }
   removeUser(index: any) {
@@ -112,9 +112,29 @@ export class AddICComponent implements OnInit {
   }
 
   submitaddIC() {
-    
     if (this.addIcForm.valid) {
-      this.tabChange.emit('0');
+      const company = this.addIcForm.value.icName;
+      const arr = this.addIcForm.value.addUser;
+      const data = {
+        business: company,
+        ic_panel: [
+        ]
+      };
+      arr.forEach(element => {
+        data.ic_panel.push(
+          {
+            name: element.userName,
+            email: element.email,
+            company: company
+          }
+        )
+      });
+      this.adminService.addIC(data).subscribe((datas: any)=> {
+        this.appConfig.hideLoader();
+        this.appConfig.success('Users added successfully');
+        this.addIcForm.reset();
+        this.tabChange.emit('0');
+    });
     } else {
       this.validateAllFields(this.addIcForm);
       this.validateAllFormArrays(this.addIcForm.get('addUser') as FormArray);
@@ -126,19 +146,19 @@ export class AddICComponent implements OnInit {
     this.addUser.clear();
     this.addUsers();
   }
-    // To validate all fields after submit
-    validateAllFields(formGroup: FormGroup) {
-      Object.keys(formGroup.controls).forEach(field => {
-        const control = formGroup.get(field);
-        if (control instanceof FormControl) {
-          control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {
-          this.validateAllFields(control);
-        }
-      });
-    }
+  // To validate all fields after submit
+  validateAllFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
+  }
 
-      // To validate all fields after submit
+  // To validate all fields after submit
   validateAllFormArrays(formArray: FormArray) {
     formArray.controls.forEach(formGroup => {
       Object.keys(formGroup['controls']).forEach(field => {
@@ -153,5 +173,5 @@ export class AddICComponent implements OnInit {
     });
   }
 
-  
+
 }
