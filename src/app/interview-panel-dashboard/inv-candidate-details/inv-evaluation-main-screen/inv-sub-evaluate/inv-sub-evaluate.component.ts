@@ -21,7 +21,7 @@ export interface PeriodicElement {
   level: number;
   veryGood: string;
   good: string;
-  acceptable: string;
+  average: string;
   notSuitable: string;
 }
 
@@ -40,7 +40,7 @@ export class InvSubEvaluateComponent implements OnInit {
   intervieweeAttendance:any;
   Notattended: any;
   attendedStatusList: any;
-  displayedColumns: string[] = ['name', 'veryGood', 'good', 'acceptable', 'notSuitable'];
+  displayedColumns: string[] = ['name', 'veryGood', 'good', 'average', 'notSuitable'];
   assessments: PeriodicElement[] = SampleJson;
   dataSource: MatTableDataSource<PeriodicElement>;
   evaluationForm: FormGroup;
