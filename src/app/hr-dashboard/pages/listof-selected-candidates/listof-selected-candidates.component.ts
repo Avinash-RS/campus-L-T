@@ -271,8 +271,12 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     }
     this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
       this.appConfig.hideLoader();
-      const documents = `${this.BASE_URL}/${data?.url}`;
-      window.open(documents, '_blank');
+      if (data?.url) {
+        const documents = `${this.BASE_URL}/${data?.url}`;
+        window.open(documents, '_blank');  
+      } else {
+        this.appConfig.warning('No Documents Available');
+      }
             
       // const excel = data && data.file ? data.file : '';
       // window.open(excel, '_blank');

@@ -119,7 +119,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     this.adminService.SelectedCandidatesBulkUpload(this.uploadedListArray).subscribe((data: any) => {
       this.appConfig.hideLoader();
       const datas = {
-        bulk_upload_ok: 'candidate-bulk',
+        bulk_upload_ic: 'ic-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data?.length : 0,
       };

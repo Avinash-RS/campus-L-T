@@ -21,14 +21,14 @@ export class BusinesspanelRouteComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '',
-        name: 'Business Users List/Add',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
-      },
-      {
-        icon: '',
         name: 'Selected Candidates Upload/Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST
       },
+      // {
+      //   icon: '',
+      //   name: 'Business Users List/Add',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
+      // },
       // {
       //   icon: '002-group-1.svg',
       //   name: 'Bulk assign',

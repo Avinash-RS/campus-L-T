@@ -466,6 +466,13 @@ const routes: Routes = [
         },
         children: [
           {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
+            component: OfferedCandidatesListComponent,
+            data: {
+              breadcrumb: 'Selected Candidates Upload/Assign'
+            },
+          },
+          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
             component: IcAddorListComponent,
             data: {
@@ -473,15 +480,8 @@ const routes: Routes = [
             },
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
-            component: OfferedCandidatesListComponent,
-            data: {
-              breadcrumb: 'Selected Candidates Upload/Assign'
-            },
-          },
-              {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.IC_ADDorLIST}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
             pathMatch: 'full',
           }
         ]

@@ -160,7 +160,7 @@
       </ng-container>
 
       <ng-container matColumnDef="notSuitable">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not suitable
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [checked]="assessment['isChecked'] == 'notSuitable' ? true : false" (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
@@ -196,7 +196,7 @@
       <div class="box">
         <mat-radio-group class="radioDisp" formControlName="ASSESSMENT">
           <div class="col-3 border-right">
-            <mat-radio-button value="Verygood">Very good
+            <mat-radio-button value="Verygood">Very Good
             </mat-radio-button>
           </div>
           <div class="col-3 border-right">
@@ -208,7 +208,7 @@
             </mat-radio-button>
           </div>
           <div class="col-3 border-right">
-            <mat-radio-button value="Notsuitabl"> Not suitable
+            <mat-radio-button value="Notsuitabl"> Not Suitable
             </mat-radio-button>
           </div>
         </mat-radio-group>
