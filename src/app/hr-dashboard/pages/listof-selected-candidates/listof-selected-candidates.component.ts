@@ -131,12 +131,12 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Profile', field: 'selectedPost',
+        headerName: 'Profile', field: 'selectedpost',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 120,
         sortable: true,
-        tooltipField: 'selectedPost',
+        tooltipField: 'selectedpost',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -197,23 +197,23 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Uploaded by', field: 'company',
+        headerName: 'Uploaded by', field: 'uploaded_by',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 120,
         sortable: true,
-        tooltipField: 'company',
+        tooltipField: 'uploaded_by',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Date & Time of upload', field: 'company',
+        headerName: 'Date & Time of upload', field: 'date_time',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 120,
         sortable: true,
-        tooltipField: 'company',
+        tooltipField: 'date_time',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -247,11 +247,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     this.adminService.SelectedCandidatesList().subscribe((datas: any) => {
       this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
-      this.userList.forEach(element => {
-        element.specialization = 'Mtech';
-        element.selectedPost = 'Pget';
-        element.institute = 'Sathyabama institute of college and engineering of technology';
-      });
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
