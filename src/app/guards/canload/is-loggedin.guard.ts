@@ -29,6 +29,10 @@ export class IsLoggedinGuard implements CanActivate {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
         return false;
       }
+      if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'ic') {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST);
+        return false;
+      }
       if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'institute') {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
         return false;

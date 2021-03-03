@@ -1,0 +1,68 @@
+<div class="addIC-wrapper">
+
+    <form [formGroup]="addIcForm" class="forms d-flex flex-column justify-content-center align-items-center mt-3" (ngSubmit)="submitaddIC()">
+        <div class="form-field d-flex mb-3">
+            <label class="label-name">
+                Business<span class="asterick">*</span>
+            </label>
+            <div class="input-wrapper">
+                <mat-form-field class="new-input-box mat-select-custom" appearance="none">
+                    <!-- <mat-label>Choose IC</mat-label> -->
+                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="Select business" required>
+                      <!-- <mat-option>--</mat-option> -->
+                      <mat-option *ngFor="let ic of icListArr" matTooltipPosition="left" [matTooltip]="ic?.label?.length > 50 ? ic?.label : ''" [value]="ic.value">
+                        {{ic.label}}
+                      </mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+                  </mat-form-field>
+                <!-- <input class="new-input-box" matInput formControlName="icName" type="text" required> -->
+                <div class="error" *ngIf="icName.invalid && icName.touched">
+                    <span *ngIf="icName.errors?.required">Business is Required</span>
+                </div>
+            </div>
+        </div>
+        <ng-container formArrayName="addUser">
+            <div *ngFor="let add of addUser?.controls; index as i">
+                <ng-container [formGroupName]="i">
+        <div class="form-field d-flex mb-1">
+            <label class="label-name" [ngClass]="i == 0 ? '' : 'hidden'">
+                Name<span class="asterick">*</span>
+            </label>
+            <div class="input-wrapper">
+                <input class="new-input-box" [placeholder]="'Enter name - ' + (i + 1)" matInput formControlName="userName" type="text" required>
+                <div class="error" *ngIf="addUser.controls[i].get('userName').invalid && addUser.controls[i].get('userName').touched">
+                    <span *ngIf="addUser.controls[i].get('userName').errors?.required">Name is Required</span>
+                    <span *ngIf="addUser.controls[i].get('userName').errors?.pattern">Alphanumeric characters only allowed and maximum character length is 255.</span>
+                </div>
+            </div>
+            <div class="add-field">
+                <span *ngIf="(addUser?.controls?.length - 1 == i || addUser?.controls?.length == 1) && addUser?.controls?.length <= 10" (click)="addUsers()" style="cursor: pointer;" class="material-icons mr-2">person_add_alt</span>
+                <span *ngIf="addUser?.controls?.length != 1" (click)="removeUser(i)" style="cursor: pointer;" class="material-icons">close</span>
+            </div>
+        </div>
+        <div class="form-field d-flex mb-3">
+            <label class="label-name" [ngClass]="i == 0 ? '' : 'hidden'">
+                Email ID<span class="asterick">*</span>
+            </label>
+            <div class="input-wrapper">
+                <input class="new-input-box" [placeholder]="'Enter email id - ' + (i + 1)" matInput formControlName="email" type="text" required>
+                <div class="error" *ngIf="addUser.controls[i].get('email').invalid && addUser.controls[i].get('email').touched">
+                    <span *ngIf="addUser.controls[i].get('email').errors?.required">Email is Required</span>
+                    <span *ngIf="addUser.controls[i].get('email').errors?.pattern">Please enter a valid Email id</span>
+                </div>
+            </div>
+        </div>
+                </ng-container>
+    </div>
+    </ng-container>
+        <div style="margin-left: 6em;" class="button-wrapper d-flex mt-4">
+            <button style="margin-left: 0px !important;" class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button
+                type="button">Cancel</button>
+            <button class="submit" mat-raised-button type="submit">Save</button>
+        </div>        
+
+
+    </form>
+
+</div>

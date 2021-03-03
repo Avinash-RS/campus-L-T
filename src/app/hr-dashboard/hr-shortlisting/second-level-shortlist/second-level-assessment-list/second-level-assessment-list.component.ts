@@ -171,6 +171,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
         this.userList.forEach(element => {
           count = count + 1;
           element['counter'] = count;
+          element['no_of_candidate'] = Number(element['no_of_candidate']);
           element['status'] = element && element.status != 'completed' ? 'waiting' : 'completed';
           element['buttons'] = element && element.status != 'completed' ? 'waiting' : 'completed';
         });

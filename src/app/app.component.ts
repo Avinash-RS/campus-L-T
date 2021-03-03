@@ -13,6 +13,8 @@ import { CONSTANT } from './constants/app-constants.service';
 import { SharedServiceService } from './services/shared-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { AdminServiceService } from './services/admin-service.service';
+import { CommonService } from './services/common.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
+    private commonService: CommonService,
     private connectionService: ConnectionService,
     private toastr: ToastrService
   ) {
@@ -62,7 +65,10 @@ export class AppComponent implements OnInit, OnDestroy {
       if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
-        }
+          if (environment.local != true) {
+            this.commonService.initVersionCheck(environment.versionCheckURL);
+          }
+          }
     });
   }
 

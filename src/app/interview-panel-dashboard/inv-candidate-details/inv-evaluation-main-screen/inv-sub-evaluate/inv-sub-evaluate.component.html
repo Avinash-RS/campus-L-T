@@ -143,24 +143,25 @@
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          
           <mat-radio-button [checked]="assessment['isChecked'] == 'good' ? true : false" (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
             <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="acceptable">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef> Acceptable
+      <ng-container matColumnDef="average">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> Average
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
-          <mat-radio-button [checked]="assessment['isChecked'] == 'Acceptable' ? true : false" (change)="setAssessmentLevel(assessment,'Acceptable')" [name]="assessment.id" value="3">
-            <i class="material-icons" matTooltip="{{assessment.acceptable}}">info</i>
+          <mat-radio-button [checked]="assessment['isChecked'] == 'Average' ? true : false" (change)="setAssessmentLevel(assessment,'Average')" [name]="assessment.id" value="3">
+            <i class="material-icons" matTooltip="{{assessment.average}}">info</i>
           </mat-radio-button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="notSuitable">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not suitable
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [checked]="assessment['isChecked'] == 'notSuitable' ? true : false" (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
@@ -196,7 +197,7 @@
       <div class="box">
         <mat-radio-group class="radioDisp" formControlName="ASSESSMENT">
           <div class="col-3 border-right">
-            <mat-radio-button value="Verygood">Very good
+            <mat-radio-button value="Verygood">Very Good
             </mat-radio-button>
           </div>
           <div class="col-3 border-right">
@@ -204,11 +205,11 @@
             </mat-radio-button>
           </div>
           <div class="col-3 border-right">
-            <mat-radio-button value="Acceptable"> Acceptable
+            <mat-radio-button value="Average"> Average
             </mat-radio-button>
           </div>
           <div class="col-3 border-right">
-            <mat-radio-button value="Notsuitabl"> Not suitable
+            <mat-radio-button value="Notsuitabl"> Not Suitable
             </mat-radio-button>
           </div>
         </mat-radio-group>
@@ -220,6 +221,28 @@
     </div>
     <div class="space"></div>
     <div style="margin-left: 10px;">
+      <div class="row pad-bootom mt-2 mb-2">
+        <div class="col-4">
+          <span class="text">STATUS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8 d-flex w-50">
+            <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option" formControlName="attendedStatus">
+              <mat-radio-button *ngFor="let attended of attendedStatusList" [value]="attended.value">
+                {{attended.label}}
+              </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <ng-container *ngIf="f?.attendedStatus?.touched && f?.attendedStatus?.errors">
+          <div class="col-4">
+              <span class="text">&#160;</span>
+            </div>
+          <div class="col-8 mand validation1">
+              <span *ngIf="f?.attendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+            </div>
+            </ng-container>
+  
+      </div>
+
       <div class="row pad-bootom">
         <div class="col-4">
           <span class="text">WILLING TO WORK AT SITE<span class="asterick">*</span></span>
@@ -536,7 +559,7 @@
           <!-- </mat-form-field> -->
         </div>
       </div>
-      <div class="row pad-bootom">
+      <!-- <div class="row pad-bootom">
         <div class="col-4">
           <span class="text">STATUS<span class="asterick">*</span></span>
         </div>
@@ -556,7 +579,7 @@
             </div>
             </ng-container>
   
-      </div>
+      </div> -->
 
     </div>
     </ng-container>

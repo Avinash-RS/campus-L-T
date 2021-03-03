@@ -29,6 +29,7 @@
 <mat-drawer-container class="second-sidenav">
   <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
     <ul>
+      <ng-container *ngIf="role == 'hr'">
       <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD" routerLinkActive="active">
         <span><img src="assets/images/dashboard.svg" width="20px" height="20px" alt=""></span>
         <span>Dashboard</span>
@@ -64,6 +65,14 @@
           <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>
       </li>
+      <!--  OfferedCandidatesLIST-->
+      <li [routerLink]="appConstant.HR_DASHBOARD.BUSINESSROUTE" routerLinkActive="active">
+        <span><img src="assets/images/status-bar.svg" width="20px" height="20px" alt=""></span>
+        <span>IC's/Business</span>
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+        </span>
+      </li>
       <li [routerLink]="appConstant.HR_DASHBOARD.REPORTS" routerLinkActive="active">
         <span><img src="assets/images/003-statistics.svg" width="20px" height="20px" alt=""></span>
         <span>Reports</span>
@@ -78,7 +87,17 @@
           <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>
       </li>
-
+    </ng-container>
+    <ng-container *ngIf="role == 'ic'">
+      <!--  OfferedCandidatesLIST-->
+      <li [routerLink]="appConstant.HR_DASHBOARD.OfferedCandidatesLIST" routerLinkActive="active">
+        <span><img src="assets/images/status-bar.svg" width="20px" height="20px" alt=""></span>
+        <span>Business Panel</span>
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+        </span>
+      </li>
+  </ng-container>
     </ul>
 
   </mat-drawer>

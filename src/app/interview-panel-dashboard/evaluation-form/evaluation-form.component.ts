@@ -16,7 +16,7 @@ export interface PeriodicElement {
   level: number;
   veryGood: string;
   good: string;
-  acceptable: string;
+  average: string;
   notSuitable: string;
 }
 
@@ -27,7 +27,7 @@ export interface PeriodicElement {
 })
 
 export class EvaluationFormComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'excellent', 'veryGood', 'good', 'acceptable', 'notSuitable', 'comments'];
+  displayedColumns: string[] = ['name', 'excellent', 'veryGood', 'good', 'average', 'notSuitable', 'comments'];
   assessments: PeriodicElement[] = SampleJson['tab'];
   dataSource: MatTableDataSource<PeriodicElement>;
   dataSource1: MatTableDataSource<PeriodicElement>;

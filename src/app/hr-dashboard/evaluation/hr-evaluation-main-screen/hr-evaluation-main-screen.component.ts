@@ -22,6 +22,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
   candidateStatus: any;
   tagName: any;
   uid: any;
+  assess: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -45,18 +46,18 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview panel assign',
+        name: 'Interview Panel Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
         icon: '002-cv.svg',
-        name: 'Assigned details',
+        name: 'Assigned Details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION,
         active: true
       },
       {
         icon: '002-group-1.svg',
-        name: 'Bulk assign',
+        name: 'Bulk Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       }
   
@@ -78,6 +79,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       this.candidateStatus = params['status'];
       this.tagName = params['tag'];
       this.uid = params['uid'];
+      this.assess = params['assess'];
       this.appConfig.setLocalData('cname', this.candidateName);
       this.appConfig.setLocalData('cid', this.candidateId);
       this.appConfig.setLocalData('cstatus', this.candidateStatus);

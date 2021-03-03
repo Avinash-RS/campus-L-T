@@ -20,12 +20,12 @@ export class TpoUserManagementComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '002-cv.svg',
-        name: 'Candidate details',
+        name: 'Candidate Details',
         router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
       },
       {
         icon: 'add.svg',
-        name: 'Add candidate',
+        name: 'Add Candidate',
         router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE
       },
     ];

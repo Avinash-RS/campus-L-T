@@ -243,17 +243,17 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
           return params.value;
         }
       },
-      {
-        headerName: 'Documents submitted', field: 'document_submit',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'document_submit',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
+      // {
+      //   headerName: 'Documents submitted', field: 'document_submit',
+      //   filter: true,
+      //   floatingFilterComponentParams: { suppressFilterButton: true },
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'document_submit',
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
       // {
       //   headerName: 'Status', field: 'total_count',
       //   filter: true,
@@ -306,10 +306,11 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         name: event['data'] && event['data']['name'] ? event['data']['name'] : '',
         status: event['data'] && event['data']['evaluation_status'] ? event['data']['evaluation_status'] : '',
         tag: event['data'] && event['data']['tag'] ? event['data']['tag'] : '',
-        uid: event['data'] && event['data']['uid'] ? event['data']['uid'] : ''
+        uid: event['data'] && event['data']['uid'] ? event['data']['uid'] : '',
+        assess: event['data'] && event['data']['assement_name'] ? event['data']['assement_name'] : ''
       }
       // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION, { data: param['assessment'], id: param['cid'], name: param['name'], status: param['status'], tag: param['tag'], uid: param['uid'] });
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION, { data: param['assessment'], id: param['cid'], name: param['name'], status: param['status'], tag: param['tag'], uid: param['uid'], assess: param['assess'] });
     }
   }
 

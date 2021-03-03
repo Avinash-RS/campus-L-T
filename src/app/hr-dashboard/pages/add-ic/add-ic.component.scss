@@ -1,0 +1,37 @@
+@import '../../../themes/themes.scss';
+.addIC-wrapper {
+    height: 100%;
+    color: $light-black;
+    .forms {
+        .form-field {
+            min-width: 380px;
+            .label-name {
+                min-width: 120px;
+                font-size: 15px;
+            }
+            .input-wrapper {
+                width: 100%;
+            }
+        }
+    }
+}
+input.ng-touched.ng-invalid {
+    border: solid $red 1px;
+}
+.error {
+    color: $red;
+    font-size: 12px;
+    text-align: left;
+    max-width: 250px;
+  }
+  
+.add-field {
+    position: relative;
+    left: 10px;
+    width: 0px;
+    top: 40px;
+    display: flex;
+}
+.hidden {
+    visibility: hidden;
+}

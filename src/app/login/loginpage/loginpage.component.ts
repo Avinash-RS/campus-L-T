@@ -141,6 +141,9 @@ export class LoginpageComponent implements OnInit {
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
             }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ic') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST);
+            }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');              
               let todayDate = new Date();

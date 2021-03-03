@@ -7,99 +7,130 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
+$primary : $mat-blue;
+$accent  : $mat-orange;
+$warn    : $mat-red;
+
+
+$lxp-theme-primary:mat-palette($mat-blue , 800);
+$lxp-theme-accent:mat-palette($accent , 900);
+$lxp-theme-warn:mat-palette($warn );
+$lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-warn);
+@include angular-material-theme($lxp-theme);
+
+// $theme-orange-primary: mat-palette($mat-orange);
+// $theme-orange-accent:  mat-palette($mat-blue-grey, A200, A100, A400);
+// $theme-orange-warn:    mat-palette($mat-deep-orange);
+// $theme-orange:   mat-dark-theme($theme-orange-primary, $theme-orange-accent, $theme-orange-warn);
+// .theme-orange {
+//   @include angular-material-theme($theme-orange);
+  
+// }
+
+// // theme-4
+// $theme-pink-primary: mat-palette($mat-pink);
+// $theme-pink-accent:  mat-palette($mat-red, A200, A100, A400);
+// $theme-pink-warn:    mat-palette($mat-deep-orange);
+// $theme-pink:   mat-light-theme($theme-pink-primary, $theme-pink-accent, $theme-pink-warn);
+
+// .theme-pink {
+//   @include angular-material-theme($theme-pink);
+// }
+
+// @include mat-core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$udap-registration-primary: mat-palette($mat-indigo);
-$udap-registration-accent: mat-palette($mat-pink, A200, A100, A400);
+// $udap-registration-primary: mat-palette($mat-indigo);
+// $udap-registration-accent: mat-palette($mat-pink, A200, A100, A400);
 
-// The warn palette is optional (defaults to red).
-$udap-registration-warn: mat-palette($mat-red);
+// // The warn palette is optional (defaults to red).
+// $udap-registration-warn: mat-palette($mat-red);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$udap-registration-theme: mat-light-theme(
-  $udap-registration-primary,
-  $udap-registration-accent,
-  $udap-registration-warn
-);
+// // Create the theme object (a Sass map containing all of the palettes).
+// $udap-registration-theme: mat-light-theme(
+//   $udap-registration-primary,
+//   $udap-registration-accent,
+//   $udap-registration-warn
+// );
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($udap-registration-theme);
+// @include angular-material-theme($udap-registration-theme);
 
-$alt-registration-primary: mat-palette($mat-yellow, 600);
-$alt-registration-accent: mat-palette($mat-yellow, A200, A100, A400);
+// $alt-registration-primary: mat-palette($mat-yellow, 600);
+// $alt-registration-accent: mat-palette($mat-yellow, A200, A100, A400);
 
-$alt-registration-dark-theme: mat-dark-theme(
-  $alt-registration-primary,
-  $alt-registration-accent
-);
-.alternative {
-  @include angular-material-theme($alt-registration-dark-theme);
-}
+// $alt-registration-dark-theme: mat-dark-theme(
+//   $alt-registration-primary,
+//   $alt-registration-accent
+// );
+// .alternative {
+//   @include angular-material-theme($alt-registration-dark-theme);
+// }
 
 @import "./app/themes/themes.scss";
 
 // Font ROBOTO
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/roboto/Roboto-Black.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/roboto/Roboto-Black.woff") format("woff");
+//   font-weight: 700;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/roboto/Roboto-Bold.woff") format("woff");
-  font-weight: 600;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/roboto/Roboto-Bold.woff") format("woff");
+//   font-weight: 600;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/roboto/Roboto-Black.woff") format("woff");
-  // src: url("^assets/fonts/roboto/Roboto-Medium.woff") format("woff");
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/roboto/Roboto-Regular.woff") format("woff");
-  font-weight: 100;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/roboto/Roboto-Black.woff") format("woff");
+//   // src: url("^assets/fonts/roboto/Roboto-Medium.woff") format("woff");
+//   font-weight: 200;
+//   font-style: normal;
+// }
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/roboto/Roboto-Regular.woff") format("woff");
+//   font-weight: 100;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/roboto/Roboto-Light.woff") format("woff");
-  font-weight: 50;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/roboto/Roboto-Light.woff") format("woff");
+//   font-weight: 50;
+//   font-style: normal;
+// }
 
-// Font OPEN SANS
+// // Font OPEN SANS
 
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/OpenSans-Bold.woff") format("woff");
-  font-weight: 600;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/OpenSans-Bold.woff") format("woff");
+//   font-weight: 600;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/OpenSans-SemiBold.woff") format("woff");
-  font-weight: 200;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/OpenSans-SemiBold.woff") format("woff");
+//   font-weight: 200;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: Roboto Condensed !important;
-  src: url("^assets/fonts/OpenSans-Regular.woff") format("woff");
-  font-weight: 100;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: Roboto Condensed !important;
+//   src: url("^assets/fonts/OpenSans-Regular.woff") format("woff");
+//   font-weight: 100;
+//   font-style: normal;
+// }
 
 
 html,
@@ -236,6 +267,10 @@ h5 {
 }
 .ag-row-even {
   background-color: $th-bg;
+  }
+
+  .material-icons {
+    font-family: 'Material Icons' !important;
   }
 
 @mixin sm {
@@ -1572,6 +1607,7 @@ button:focus {
 // To Prevent aligning from center by default
 .mat-input-element {
   text-align: left !important;
+  caret-color: $light-black;
 }
 // Registerpage component
 .grid-wrapper,
@@ -1797,20 +1833,6 @@ button {
 tr.mat-row:hover {
   background: $td-hover !important !important;
 }
-// Scrollbar
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px !important;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: $scroll-bg;
-}
 .register-wrapper {
   ::-webkit-scrollbar-track {
     background: $scroll-bg;
@@ -1830,13 +1852,24 @@ tr.mat-row:hover {
     background: $primary-red !important;
   }
 }
+// Scrollbar
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $scroll-bg;
+}
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #969696cb;
   // background: transparent linear-gradient(90deg, #e4e4e4 0%, #969696 100%) 0% 0%
   //   no-repeat padding-box;
-  border-radius: 50px;
-  height: 10px;
+  // border-radius: 100px !important;
+  // height: 10px;
 }
 
 /* Handle on hover */
@@ -1847,11 +1880,21 @@ tr.mat-row:hover {
 }
 .qualify-wrapper {
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
     display: none;
   }
 }
-
+.sidenav {
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px !important;
+  }  
+  li {
+    margin: 0 0 5px 0 !important;
+  }
+}
 // Ui revamp global
 .submit,
 .ok {
@@ -2230,7 +2273,7 @@ th {
   input {
     margin: 0 !important;
     width: 100%;
-    padding: 0 1em;
+    padding: 0 .5em;
     font-size: 14px;
     color: $light-black;
     vertical-align: middle;
@@ -2245,6 +2288,51 @@ th {
   input:disabled {
     background: $gray-5 0% 0% no-repeat padding-box;
   }
+}
+
+.new-input-box {
+    border: solid $input-border 1px !important;
+    margin: 0 !important;
+    width: 120% !important;
+    padding: .15em .5em !important;
+    font-size: 15px !important;
+    color: $light-black !important;
+    vertical-align: middle !important;
+    outline: none !important;
+    // background: $white-primary;
+    display: flex !important;
+    box-sizing: border-box !important;
+    min-height: 32px !important;
+}
+
+.mat-select-custom {
+  width: 100% !important;
+  min-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  .mat-form-field-wrapper {
+    padding: 0px !important;
+    width: 100% !important;
+  }
+  .mat-select-trigger {
+    padding: 0 .5em !important;
+  }
+  .mat-form-field-infix {
+    // width: 100% !important;
+    border: none !important;
+  }
+  .mat-select-value {
+    max-width: 100% !important;
+  }
+  .mat-select-trigger {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }  
 }
 
 // Nzselect
@@ -2500,4 +2588,35 @@ th {
 }
 .mat-expansion-panel-body {
   padding: 0 !important;
+}
+.mat-tab-nav-bar,
+  .mat-tab-header {
+    border-bottom: none !important;
+  }
+  .mat-tab-label .mat-tab-label-content {
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    color: $black !important;
+    // margin-right: 58%;
+    // color: $lxp-gray !important;
+  }
+  .mat-tab-label-active {
+    // color: $color-blank !important;
+    opacity: 1 !important;
+}
+.list-wrapper {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+  .list-count {
+    position: absolute;
+    top: 30px !important;
+  }
+}  
+::placeholder {
+  color: $black !important;
+  opacity: 0.5 !important;
+  font-size: 14px !important;
+}
+.mat-focused .placeholder {
+  color: #00D318 !important;
 }

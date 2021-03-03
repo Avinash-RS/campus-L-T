@@ -1,6 +1,6 @@
 {
   "name": "udap-registration",
-  "version": "1.0.5",
+  "version": "0.0.31",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,13 +8,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy_qa": "ng build --configuration qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run add_date",
-    "deploy_prd": "ng build --prod && npm run add_date",
-    "add_date": "npm run add_date_js && npm run add_date_css",
-    "add_date_js": "for i in dist/udap-registration/*; do if [ -f $i ]; then LC_ALL=C sed -i.bak 's:js\":js?'$(date +%H%M%m%d%y)'\":g' $i; fi done",
-    "add_date_css": "sed -i.bak 's:css\":css?'$(date +%H%M%m%d%y)'\":g' dist/udap-registration/index.html",
-    "rm_bak_files": "find dist -name '*.bak' -exec rm -Rf {} \\;",
-    "build-qa": "npm version patch -f && node ./build.js && ng build --configuration=qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l"
+    "build-qa": "npm --no-git-tag-version version patch && ng build --configuration qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run post-build",
+    "build-uat": "npm --no-git-tag-version version patch && ng build --configuration uat --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run post-build",
+    "build-production": "npm --no-git-tag-version version patch && ng build --configuration production --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run post-build",
+    "post-build": "node ./build/post-build.js"
   },
   "private": true,
   "dependencies": {

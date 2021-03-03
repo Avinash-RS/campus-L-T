@@ -29,6 +29,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
   candidateId: any;
   displayNoRecords = false;
   uid:any;
+  assess: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -54,18 +55,18 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview panel assign',
+        name: 'Interview Panel Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
         icon: '002-cv.svg',
-        name: 'Assigned details',
+        name: 'Assigned Details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED,
         active: true
       },
       {
         icon: '002-group-1.svg',
-        name: 'Bulk assign',
+        name: 'Bulk Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       }
       ];
@@ -84,6 +85,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.uid = params['uid'];
+      this.assess = params['assess'];
       this.assessmentDetails(params['data']);
     });
   }
@@ -196,7 +198,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid, assess: this.assess });
   }
 
 }

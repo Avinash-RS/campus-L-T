@@ -39,10 +39,10 @@
         <div class="buttons">
           <!-- <button class="submit btn-margin-space-05" mat-raised-button (click)="applySearch()"><span>Search </span></button> -->
           <button class="submit btn-margin-space-05" [ngClass]="userList && userList.length === 0 ? 'disabled' : ''"
-            (click)="applyCriteria()" mat-raised-button><span class="icon"><i class="material-icons">filter_alt</i></span><span> Filter
+            (click)="applyCriteria()" mat-raised-button><span style="font-size: 18px;" class="icon material-icons">filter_alt</span><span> Filter
             </span></button>
           <button class="submit btn-margin-space-05" [ngClass]="notShowShortlist && !overallSelect ? 'disabled' : ''" (click)="shortlist()"
-          mat-raised-button><span class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span
+          mat-raised-button><span class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span style="padding-top: 2px;"
               class="text">
               Shortlist</span></button>
 
