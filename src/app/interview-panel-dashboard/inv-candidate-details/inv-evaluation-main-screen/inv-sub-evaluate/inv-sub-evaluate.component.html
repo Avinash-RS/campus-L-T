@@ -143,6 +143,7 @@
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          
           <mat-radio-button [checked]="assessment['isChecked'] == 'good' ? true : false" (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
             <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
           </mat-radio-button>

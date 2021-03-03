@@ -135,14 +135,14 @@ export class InvSubEvaluateComponent implements OnInit {
           time_taken: data?.['time_taken'] ? data['time_taken'] : '',
           remarks: data?.['remarks'] ? data['remarks'] : '',
           ASSESSMENT: data?.['candidate_assesment'] ? data['candidate_assesment'] : '',
-          depth_knowledge: data?.['depth_knowledge'] ? data['depth_knowledge'] : '',
-          breadth_knowledge: data?.['breadth_knowledge'] ? data['breadth_knowledge'] : '',
-          communicate_ability: data?.['communicate_ability'] ? data['communicate_ability'] : '',
-          personal_skill: data?.['personal_skill'] ? data['personal_skill'] : '',
-          personality: data?.['personality'] ? data['personality'] : '',
-          personality_1: data?.['personality_1'] ? data['personality_1'] : '',
-          curricular_activites: data?.['curricular_activites'] ? data['curricular_activites'] : '',
-          thought_clarity: data?.['thought_clarity'] ? data['thought_clarity'] : ''
+          depth_knowledge: data?.['depth_knowledge'] ? data['depth_knowledge'] : null,
+          breadth_knowledge: data?.['breadth_knowledge'] ? data['breadth_knowledge'] : null,
+          communicate_ability: data?.['communicate_ability'] ? data['communicate_ability'] : null,
+          personal_skill: data?.['personal_skill'] ? data['personal_skill'] : null,
+          personality: data?.['personality'] ? data['personality'] : null,
+          personality_1: data?.['personality_1'] ? data['personality_1'] : null,
+          curricular_activites: data?.['curricular_activites'] ? data['curricular_activites'] : null,
+          thought_clarity: data?.['thought_clarity'] ? data['thought_clarity'] : null
         })
         this.assessments.forEach(element => {
           if (element['id'] === 1) {
@@ -171,6 +171,10 @@ export class InvSubEvaluateComponent implements OnInit {
           }
         });
         this.statusChange({value: data['attended']});
+      } else {
+        this.assessments.forEach((element: any) => {
+          element.isChecked = 'false';
+        });
       }
     }, (err) => {
 
@@ -230,14 +234,14 @@ export class InvSubEvaluateComponent implements OnInit {
       time_taken: new FormControl('', [Validators.maxLength(30), myGlobals.alphaNum]),
       remarks: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]),
       ASSESSMENT: new FormControl('', [Validators.required]),
-      depth_knowledge: new FormControl('', [Validators.required]),
-      breadth_knowledge: new FormControl('', [Validators.required]),
-      communicate_ability: new FormControl('', [Validators.required]),
-      personal_skill: new FormControl('', [Validators.required]),
-      personality: new FormControl('', [Validators.required]),
-      personality_1: new FormControl('', [Validators.required]),
-      curricular_activites: new FormControl('', [Validators.required]),
-      thought_clarity: new FormControl('', [Validators.required]),
+      depth_knowledge: new FormControl(null, [Validators.required]),
+      breadth_knowledge: new FormControl(null, [Validators.required]),
+      communicate_ability: new FormControl(null, [Validators.required]),
+      personal_skill: new FormControl(null, [Validators.required]),
+      personality: new FormControl(null, [Validators.required]),
+      personality_1: new FormControl(null, [Validators.required]),
+      curricular_activites: new FormControl(null, [Validators.required]),
+      thought_clarity: new FormControl(null, [Validators.required]),
     });
   }
 
