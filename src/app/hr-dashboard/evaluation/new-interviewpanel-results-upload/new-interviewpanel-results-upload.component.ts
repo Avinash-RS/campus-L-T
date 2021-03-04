@@ -219,9 +219,9 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
           }
         });
         const value = {
-          user_email: user_email ? user_email : '',
-          college: college ? college : '',
-          hr_email: hr_email ? hr_email : ''
+          user_email: user_email ? user_email.toString().trim() : '',
+          college: college ? college.toString().trim() : '',
+          hr_email: hr_email ? hr_email.toString().trim() : ''
         };
 
 
