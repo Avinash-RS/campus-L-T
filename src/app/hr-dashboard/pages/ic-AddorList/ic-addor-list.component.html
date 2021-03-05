@@ -1,12 +1,12 @@
 <mat-tab-group  animationDuration="1000ms" (selectedTabChange)="tabChanged($event); activeTab($event)"
 [(selectedIndex)]="TabIndex">
   <mat-tab label="List of Business Users">
-      <div class="pl-4 pr-4 pt-2 pb-2">
+      <div *ngIf="TabIndex == 0" class="pl-4 pr-4 pt-2 pb-2">
           <app-listof-ic></app-listof-ic>
       </div>
 </mat-tab>
 <mat-tab label="Add Business Users">
-    <div class="pl-4 pr-4 pt-2 pb-2">
+    <div *ngIf="TabIndex == 1" class="pl-4 pr-4 pt-2 pb-2">
     <app-add-ic (tabChange)="gotoNextTab($event)"></app-add-ic>
 </div>
 </mat-tab>

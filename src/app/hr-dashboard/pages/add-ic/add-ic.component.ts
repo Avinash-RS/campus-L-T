@@ -35,6 +35,7 @@ export class AddICComponent implements OnInit {
       value: 'ecc'
     }
   ]
+  icLists: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -48,25 +49,32 @@ export class AddICComponent implements OnInit {
 
   ngOnInit() {
     this.formInitialize();
+    this.listOfIcs();
   }
 
-  apiData() {
-    let dummy =
-    {
-      company: 'idpl',
-      users: [
-      ]
-    }
-    this.addIcForm.patchValue({
-      icName: !dummy?.company ? dummy?.company : ''
+  listOfIcs() {
+    this.adminService.listOfICs().subscribe((datas: any)=> {
+      this.appConfig.hideLoader();
+      this.icLists = datas ? datas : [];
     });
-    if (dummy?.users?.length > 0) {
-      dummy?.users.forEach(element => {
-        this.addUsers(element);
-      });
-    } else {
+  }
+  apiData() {
+    // let dummy =
+    // {
+    //   company: 'idpl',
+    //   users: [
+    //   ]
+    // }
+    // this.addIcForm.patchValue({
+    //   icName: !dummy?.company ? dummy?.company : ''
+    // });
+    // if (dummy?.users?.length > 0) {
+    //   dummy?.users.forEach(element => {
+    //     this.addUsers(element);
+    //   });
+    // } else {
       this.addUsers();
-    }
+    // }
   }
   formInitialize() {
     this.addIcForm = this.fb.group({

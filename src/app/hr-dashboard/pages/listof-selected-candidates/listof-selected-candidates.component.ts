@@ -244,7 +244,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   }
   // To get all users
   getUsersList() {
-    this.adminService.SelectedCandidatesList().subscribe((datas: any) => {
+    const apiData = {
+      company: ''
+    }
+    this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
       let count = 0;
