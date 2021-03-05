@@ -120,33 +120,43 @@ export class AddICComponent implements OnInit {
   }
 
   submitaddIC() {
-    if (this.addIcForm.valid) {
-      const company = this.addIcForm.value.icName;
-      const arr = this.addIcForm.value.addUser;
-      const data = {
-        business: company,
-        ic_panel: [
-        ]
-      };
-      arr.forEach(element => {
-        data.ic_panel.push(
-          {
-            name: element.userName,
-            email: element.email,
-            company: company
-          }
-        )
-      });
-      this.adminService.addIC(data).subscribe((datas: any)=> {
-        this.appConfig.hideLoader();
-        this.appConfig.success('Users added successfully');
-        this.addIcForm.reset();
-        this.tabChange.emit('0');
-    });
+    if (this.addIcForm.valid) {      
+        const company = this.addIcForm.value.icName;
+        const arr = this.addIcForm.value.addUser;
+        const dup = [];
+        const data = {
+          business: company,
+          ic_panel: [
+          ]
+        };
+        arr.forEach(element => {
+          data.ic_panel.push(
+            {
+              name: element.userName,
+              email: element.email,
+              company: company
+            }
+          )
+          dup.push(element.email);
+        });
+        if (!this.checkForDuplicates(dup)) {
+          // this.adminService.addIC(data).subscribe((datas: any)=> {
+        //   this.appConfig.hideLoader();
+        //   this.appConfig.success('Users added successfully');
+        //   this.addIcForm.reset();
+        //   this.tabChange.emit('0');
+      // });  
+      } else {
+        this.appConfig.warning('Duplicate email id entries found. Please remove it and try again.');
+      }
     } else {
       this.validateAllFields(this.addIcForm);
       this.validateAllFormArrays(this.addIcForm.get('addUser') as FormArray);
     }
+  }
+
+  checkForDuplicates(array) {
+    return new Set(array).size !== array.length
   }
   cancel() {
     // this.addUsers();

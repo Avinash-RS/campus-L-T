@@ -8,7 +8,7 @@
             <div class="input-wrapper">
                 <mat-form-field class="new-input-box mat-select-custom" appearance="none">
                     <!-- <mat-label>Choose IC</mat-label> -->
-                    <mat-select formControlName="icName" [matTooltip]="icName?.company_name?.length > 50 ? icName?.company_name : ''" placeholder="Select business" required>
+                    <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="Select business" required>
                       <!-- <mat-option>--</mat-option> -->
                       <mat-option *ngFor="let ic of icLists" matTooltipPosition="left" [matTooltip]="ic?.company_name?.length > 50 ? ic?.company_name : ''" [value]="ic.company_id">
                         {{ic.company_name}}
