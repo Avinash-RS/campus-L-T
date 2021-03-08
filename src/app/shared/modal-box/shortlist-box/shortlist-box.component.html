@@ -311,6 +311,18 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['ic'] === 'add'">
+  <div class="bulk-upload-text">
+    Please confirm to add these users under the business name "{{data['role']}}". An email will be sent for account
+    creation.
+  </div>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="confirmWithData()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+
 <div class="modal-box-wrapper" *ngIf="data && data['documentUpload'] === 'uploadDoc'">
   <div class="bulk-upload-text">
     <!-- Please confirm, Are you sure you want to upload this documents -->

@@ -7,6 +7,7 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 
 @Component({
   selector: 'app-add-ic',
@@ -17,24 +18,6 @@ export class AddICComponent implements OnInit {
 
   @Output() tabChange: EventEmitter<any> = new EventEmitter<any>();
   addIcForm: FormGroup;
-  icListArr = [
-    {
-      label: 'Edutech',
-      value: 'edutech'
-    },
-    {
-      label: 'Construction',
-      value: 'construction'
-    },
-    {
-      label: 'IDPL',
-      value: 'idpl'
-    },
-    {
-      label: 'ECC',
-      value: 'ecc'
-    }
-  ]
   icLists: any;
   constructor(
     private fb: FormBuilder,
@@ -119,6 +102,15 @@ export class AddICComponent implements OnInit {
     return this.addIcForm.get('email');
   }
 
+  submitUsers(data) {
+    this.adminService.addIC(data).subscribe((datas: any)=> {
+      this.appConfig.hideLoader();
+      this.appConfig.success('Users added successfully');
+      this.addIcForm.reset();
+      this.tabChange.emit('0');
+  });  
+  };
+
   submitaddIC() {
     if (this.addIcForm.valid) {      
         const company = this.addIcForm.value.icName;
@@ -139,13 +131,19 @@ export class AddICComponent implements OnInit {
           )
           dup.push(element.email);
         });
+        const companyName = this.icLists.find((element) => element.company_id == company);
         if (!this.checkForDuplicates(dup)) {
-          // this.adminService.addIC(data).subscribe((datas: any)=> {
-        //   this.appConfig.hideLoader();
-        //   this.appConfig.success('Users added successfully');
-        //   this.addIcForm.reset();
-        //   this.tabChange.emit('0');
-      // });  
+          const datas = {
+            iconName: '',
+            showConfirm: 'Confirm',
+            dataParse: data,
+            ic: 'add',
+            role: companyName['company_name'],
+            showCancel: 'Cancel',
+            showOk: ''
+          };
+    
+          this.openDialog(ShortlistBoxComponent, datas);    
       } else {
         this.appConfig.warning('Duplicate email id entries found. Please remove it and try again.');
       }
@@ -164,6 +162,29 @@ export class AddICComponent implements OnInit {
     this.addUser.clear();
     this.addUsers();
   }
+
+  openDialog(component, data) {
+    let dialogDetails: any;
+
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.submitUsers(result?.dataParse);
+      }
+    });
+  }
+
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {

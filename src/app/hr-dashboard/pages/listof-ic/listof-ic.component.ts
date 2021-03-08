@@ -124,6 +124,28 @@ export class ListofICComponent implements OnInit {
           return params.value;
         }
       },
+      {
+        headerName: 'Created by', field: 'created_by',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'created_by',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Created Date & Time', field: 'date_time',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'date_time',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
     ];
     this.getUsersList();
   }
