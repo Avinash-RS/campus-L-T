@@ -244,8 +244,9 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   }
   // To get all users
   getUsersList() {
+    const role = this.appConfig.getLocalData('roles');
     const apiData = {
-      company: ''
+      company: role == 'ic' ? this.appConfig.getLocalData('userId') : ''
     }
     this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();

@@ -134,8 +134,8 @@ return currentHash !== newHash;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result == 'update') {
-              // window.location.reload(true);
+        if (result == 'update') {          
+              window.location.reload(true);
         }
       }
     });

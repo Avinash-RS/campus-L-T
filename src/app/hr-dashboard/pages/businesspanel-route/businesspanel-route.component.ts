@@ -36,7 +36,7 @@ export class BusinesspanelRouteComponent implements OnInit {
       // }
     ];
     if (this.role == 'ic') {
-      subWrapperMenus.shift();
+      subWrapperMenus.pop();
     }
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
