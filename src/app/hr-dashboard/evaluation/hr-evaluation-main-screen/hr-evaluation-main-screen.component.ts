@@ -90,9 +90,10 @@ export class HrEvaluationMainScreenComponent implements OnInit {
 
   assessmentDetails(name) {
     const apidata = {
-      shortlist_name: name
+      shortlist_name: name,
+      name: this.uid
     };
-    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
+    this.adminService.hrEvaluationParticularAssessmentDetailsHeader_CandidateParamAdded(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
 

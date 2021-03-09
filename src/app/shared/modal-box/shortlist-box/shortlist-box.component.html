@@ -313,7 +313,7 @@
 
 <div class="modal-box-wrapper" *ngIf="data && data['ic'] === 'add'">
   <div class="bulk-upload-text">
-    Please confirm to add these users under the business name "{{data['role']}}". An email will be sent for account
+    Please confirm to add {{data['dataParse']['ic_panel'].length > 1 ? 'these users' : 'this user'}} under the business name "{{data['role']}}". An email will be sent for account
     creation.
   </div>
   <div class="buttons">

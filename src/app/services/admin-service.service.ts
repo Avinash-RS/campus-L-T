@@ -331,6 +331,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+    // Hr evaluation particular assessment header
+    hrEvaluationParticularAssessmentDetailsHeader_CandidateParamAdded(data) {
+      return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true });
+    }
+  
+
   // Hr evaluation particular assessment header
   hrEvaluationSectionMarks(data) {
     return this.http.post(`${this.BASE_URL}/profile/marks_by_user`, data,
