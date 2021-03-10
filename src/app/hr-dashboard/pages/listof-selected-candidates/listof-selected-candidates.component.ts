@@ -98,6 +98,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Candidate name', field: 'candidate_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
@@ -115,17 +126,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         minWidth: 140,
         sortable: true,
         tooltipField: 'selected_candidate',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
