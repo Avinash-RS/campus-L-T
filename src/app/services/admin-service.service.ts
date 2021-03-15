@@ -331,6 +331,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+    // Hr evaluation particular assessment header
+    hrEvaluationParticularAssessmentDetailsHeader_CandidateParamAdded(data) {
+      return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true });
+    }
+  
+
   // Hr evaluation particular assessment header
   hrEvaluationSectionMarks(data) {
     return this.http.post(`${this.BASE_URL}/profile/marks_by_user`, data,
@@ -591,4 +598,40 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/emp_work_experience?user_id=${uid.user_id}`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  SelectedCandidatesBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/selected_user_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  SelectedCandidatesList(data) {
+    return this.http.get(`${this.BASE_URL}/profile/selected_user_list?company=${data.company}`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  SelectedCandidatesBulkUploadErrorList() {
+    return this.http.get(`${this.BASE_URL}/profile/selected_user_error_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  documentsDownload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/pdf_select_download`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  addIC(data) {
+    return this.http.post(`${this.BASE_URL}/profile/ic_panel_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  listOfICs() {
+    return this.http.get(`${this.BASE_URL}/profile/ic_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  listIC() {
+    return this.http.get(`${this.BASE_URL}/profile/ic_panel_list`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }

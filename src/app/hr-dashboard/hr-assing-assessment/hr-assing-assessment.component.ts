@@ -19,7 +19,7 @@ export class HrAssingAssessmentComponent implements OnInit {
       const subWrapperMenus = [
         {
           icon: '002-files-and-folders.svg',
-          name: 'Scheduling-assessment',
+          name: 'Scheduling Assessment',
           router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_SCHEDULING_ASSESSMENT
         }
       ];

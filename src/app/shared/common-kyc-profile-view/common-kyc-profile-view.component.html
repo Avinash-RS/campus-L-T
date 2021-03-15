@@ -457,13 +457,13 @@
             Work Experience
           </div>
     
-          <div *ngIf="workHistory && workHistory.length <= 1 && !workHistory[0]?.employment_name_address" class="criminal ml-4">
+          <div *ngIf="(workHistory && workHistory?.length <= 1 && !workHistory[0]?.employment_name_address) || !workHistory" class="criminal ml-4">
             <div class="f_size_15">
               {{ '-' }}
             </div>
           </div>
     
-          <div class="grid-wrapper-workexp" *ngIf="workHistory.length > 0 && workHistory[0]?.employment_name_address">
+          <div class="grid-wrapper-workexp" *ngIf="workHistory?.length > 0 && workHistory[0]?.employment_name_address">
             <div class="qualify-wrapper-head">
               <div class="emp">
                 Employer's name & address
@@ -514,7 +514,7 @@
           <div class="static-main d-flex mt-4">
           <div class="static d-flex justify-content-between" style="width: 30% !important; align-items: center;">
             <div class="label">Total experience</div>
-            <div class="value d-flex justify-content-between w-50 box-value"><span>{{workDetails?.total_exp_years ? workDetails?.total_exp_years : '0'}} Years</span> <span>{{workDetails?.total_exp_months ? workDetails?.total_exp_months : '0'}} Months</span></div>
+            <div class="value d-flex justify-content-between w-50 box-value"><span style="white-space: nowrap;">{{workDetails?.total_exp_years ? workDetails?.total_exp_years : '0'}} Years</span> <span style="white-space: nowrap;">{{workDetails?.total_exp_months ? workDetails?.total_exp_months : '0'}} Months</span></div>
           </div>
           <div class="static d-flex w-75" style="justify-content: space-evenly; margin-left: 2em;">
             <div class="label" style="width: 35%;">Break in employment, If any, Should be indicated with reasons</div>

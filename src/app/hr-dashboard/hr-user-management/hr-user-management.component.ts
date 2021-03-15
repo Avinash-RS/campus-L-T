@@ -20,12 +20,12 @@ export class HrUserManagementComponent implements OnInit, AfterViewInit {
     const subWrapperMenus = [
       {
         icon: '002-cv.svg',
-        name: 'Candidate details',
+        name: 'Candidate Details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
       },
       {
         icon: '002-group-1.svg',
-        name: 'Panel details',
+        name: 'Panel Details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST
       },
       {
@@ -35,7 +35,7 @@ export class HrUserManagementComponent implements OnInit, AfterViewInit {
       },
       {
         icon: '002-group-1.svg',
-        name: 'Interview panel upload',
+        name: 'Interview Panel Upload',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS
       }
     ];

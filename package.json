@@ -1,13 +1,17 @@
 {
   "name": "udap-registration",
-  "version": "0.0.0",
+  "version": "0.0.42",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-qa": "npm --no-git-tag-version version patch && ng build --configuration qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run post-build",
+    "build-uat": "npm --no-git-tag-version version patch && ng build --configuration uat --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run post-build",
+    "build-production": "npm --no-git-tag-version version patch && ng build --configuration production --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l && npm run post-build",
+    "post-build": "node ./build/post-build.js"
   },
   "private": true,
   "dependencies": {

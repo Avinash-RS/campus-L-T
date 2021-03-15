@@ -62,17 +62,17 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
     //   },
     {
       icon: '002-cv.svg',
-      name: 'Interview panel assign',
+      name: 'Interview Panel Assign',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
     },
     {
       icon: '002-cv.svg',
-      name: 'Assigned details',
+      name: 'Assigned Details',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED
     },
     {
       icon: '002-group-1.svg',
-      name: 'Bulk assign',
+      name: 'Bulk Assign',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
     }
 
@@ -219,9 +219,9 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
           }
         });
         const value = {
-          user_email: user_email ? user_email : '',
-          college: college ? college : '',
-          hr_email: hr_email ? hr_email : ''
+          user_email: user_email ? user_email.toString().trim() : '',
+          college: college ? college.toString().trim() : '',
+          hr_email: hr_email ? hr_email.toString().trim() : ''
         };
 
 

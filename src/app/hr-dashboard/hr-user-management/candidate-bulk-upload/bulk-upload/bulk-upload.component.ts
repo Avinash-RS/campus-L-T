@@ -199,9 +199,9 @@ export class BulkUploadComponent implements OnInit {
           }
         });
         const value = {
-          tag: tag ? tag : '',
-          name: name ? name : '',
-          email: email ? email : ''
+          tag: tag ? tag.toString().trim() : '',
+          name: name ? name.toString().trim() : '',
+          email: email ? email.toString().trim() : ''
         };
 
 

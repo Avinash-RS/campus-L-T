@@ -55,18 +55,18 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview panel assign',
+        name: 'Interview Panel Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
         icon: '002-cv.svg',
-        name: 'Assigned details',
+        name: 'Assigned Details',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED,
         active: true
       },
       {
         icon: '002-group-1.svg',
-        name: 'Bulk assign',
+        name: 'Bulk Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       }
       ];
@@ -92,9 +92,10 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
 
   assessmentDetails(name) {
     const apidata = {
-      shortlist_name: name
+      shortlist_name: name,
+      name: this.uid
     };
-    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
+    this.adminService.hrEvaluationParticularAssessmentDetailsHeader_CandidateParamAdded(apidata).subscribe((data: any) => {
       // this.appConfig.hideLoader();
       this.assessmentName = data;
       this.getUsersList(name, this.uid);

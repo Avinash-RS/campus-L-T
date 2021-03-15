@@ -241,10 +241,10 @@ export class InvpanelBulkuploadComponent implements OnInit {
           }
         });
         const value = {
-          name: name ? name : '',
-          employeeId: employeeId ? employeeId : '',
-          email: email ? email : '',
-          discipline: discipline ? discipline : '',
+          name: name ? name.toString().trim() : '',
+          employeeId: employeeId ? employeeId.toString().trim() : '',
+          email: email ? email.toString().trim() : '',
+          discipline: discipline ? discipline.toString().trim() : '',
         };
 
         if ((name && name.toString().trim()) || (employeeId && employeeId.toString().trim()) || (email && email.toString().trim()) || (discipline && discipline.toString().trim())) {

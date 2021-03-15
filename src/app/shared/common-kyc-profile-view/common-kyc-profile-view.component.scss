@@ -426,7 +426,7 @@
     .weight {
       width: 150px;
       input {
-        text-align: center;
+        text-align: left;
       }
     }
     .height {
@@ -452,7 +452,7 @@
           }
           input {
             border: solid 1px $black-3;
-            text-align: center;
+            text-align: left;
             height: 40px;
             outline: none;
             margin: 0 0 0 0;
@@ -749,7 +749,7 @@
     grid-template-columns: 1.5fr .5fr .5fr 1fr 2fr 0.5fr 1fr 1.5fr;
     align-items: center;
     div {
-      font-weight: 600;
+      font-weight: 500;
       font-size: 15px;
       margin: 0 0 0 1em;
       padding: 0 0em;
@@ -854,7 +854,7 @@
       .label {
         font-size: 15px;
         padding: 0 0em;
-        font-weight: 600;
+        font-weight: 500;
         color: $light-black-1;  
       }
     }
@@ -862,7 +862,7 @@
   .header {
     .sub-header {
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 500;
       .labels {
         display: grid;
         grid-template-columns: 1fr 1fr;

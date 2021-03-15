@@ -26,14 +26,14 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`,
         component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
         data: {
-          breadcrumb: 'Assigned candidates list'
+          breadcrumb: 'Assigned Candidates'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`,
             component: InvParticularAssessmentCandidatesComponent,
             data: {
-              breadcrumb: 'list'
+              breadcrumb: ''
             }
           },
           {
@@ -61,28 +61,28 @@ const routes: Routes = [
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`,
                 component: InvSubAssessmentsComponent,
                 data: {
-                  breadcrumb: 'Assessment details'
+                  breadcrumb: 'Assessment Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`,
                 component: InvSubEducationComponent,
                 data: {
-                  breadcrumb: 'Education details'
+                  breadcrumb: 'Education Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
                 component: InvSubEmploymentComponent,
                 data: {
-                  breadcrumb: 'Employment details'
+                  breadcrumb: 'Employment Documents'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`,
                 component: InvSubEvaluateComponent,
                 data: {
-                  breadcrumb: 'Evaluation form'
+                  breadcrumb: 'Evaluation Details'
                 }
               },
               {

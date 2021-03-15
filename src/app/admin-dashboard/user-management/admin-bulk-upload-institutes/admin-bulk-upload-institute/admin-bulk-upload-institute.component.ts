@@ -272,14 +272,14 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
           }
         });
         const value = {
-          name: name ? name : '',
-          email: email ? email : '',
-          field_institute_state: field_institute_state ? field_institute_state : '',
-          field_institute_city: field_institute_city ? field_institute_city : '',
-          field_institute_name: field_institute_name ? field_institute_name : '',
-          field_institute_last_name: field_institute_last_name ? field_institute_last_name : '',
-          field_institute_title: field_institute_title ? field_institute_title : '',
-          field_institute_mobile_number: field_institute_mobile_number ? field_institute_mobile_number : '',
+          name: name ? name.toString().trim() : '',
+          email: email ? email.toString().trim() : '',
+          field_institute_state: field_institute_state ? field_institute_state.toString().trim() : '',
+          field_institute_city: field_institute_city ? field_institute_city.toString().trim() : '',
+          field_institute_name: field_institute_name ? field_institute_name.toString().trim() : '',
+          field_institute_last_name: field_institute_last_name ? field_institute_last_name.toString().trim() : '',
+          field_institute_title: field_institute_title ? field_institute_title.toString().trim() : '',
+          field_institute_mobile_number: field_institute_mobile_number ? field_institute_mobile_number.toString().trim() : '',
         };
 
 
@@ -289,6 +289,8 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
       }
     });
     this.uploadedListArray = listArray;
+    console.log(this.uploadedListArray);
+    
     this.totalCountofCandidates = count - 1;
   }
 

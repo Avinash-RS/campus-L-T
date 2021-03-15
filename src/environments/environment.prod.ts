@@ -3,6 +3,7 @@ export const environment = {
   qa: false,
   uat: false,
   local: false,
+  versionCheckURL: 'https://campus.lntedutech.com/version.json',
 
   // For Dev
   // API_BASE_URL: 'http://104.211.226.77/d8cintana2',
