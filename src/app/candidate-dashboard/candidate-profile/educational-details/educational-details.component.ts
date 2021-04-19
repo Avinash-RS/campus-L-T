@@ -268,7 +268,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    if (this.apiForm['eduArr'] && this.apiForm['eduArr'].length > 0) {
+    if (this.apiForm && this.apiForm['eduArr'] && this.apiForm['eduArr'].length > 0) {
       this.educationValuearray = this.apiForm['eduArr'];
     } else {
       this.educationValuearray = [];
@@ -310,7 +310,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         valid = value.hscDiploma && value.ug ? true : false;
         value.label = 'gct';
       }
-      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget') {
+      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
         this.educationForm.value.educationArr.forEach(element => {
           if (element['leveling'] == 'HSC' || element['leveling'] == 'Diploma' ) {
             value.hscDiploma = true;
@@ -425,7 +425,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
           this.addEducationForm(edu);
         }  
       } 
-      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget') {
+      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
       for (let i = 0; i <= 3; i++) {
         let edu;
           if (i==0) {
