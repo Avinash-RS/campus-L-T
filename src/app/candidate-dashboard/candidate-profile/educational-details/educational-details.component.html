@@ -95,7 +95,12 @@
                         *ngIf="(eduArr.controls[i].get('leveling').value != 'SSLC' && eduArr.controls[i].get('leveling').value != 'HSC')"
                         (ngModelChange)="detectSelectChange()" formControlName="institute" nzAllowClear nzShowSearch
                         nzPlaceHolder="Institute">
-                        <ng-container *ngIf="(eduArr.controls[i].get('leveling').value != 'Diploma')">
+                        <ng-container *ngIf="(eduArr.controls[i].get('leveling').value == 'UG')">
+                          <nz-option *ngFor="let level of ugColleges" [nzLabel]="level.college_name"
+                            [nzValue]="level.college_name">
+                          </nz-option>
+                        </ng-container>
+                        <ng-container *ngIf="(eduArr.controls[i].get('leveling').value == 'PG')">
                           <nz-option *ngFor="let level of pgColleges" [nzLabel]="level.college_name"
                             [nzValue]="level.college_name">
                           </nz-option>

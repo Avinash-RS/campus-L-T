@@ -34,6 +34,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   pgDisciplines: any;
   ugDisciplines: any;
   pgColleges: any;
+  ugColleges: any;
   pgSpecialization: any;
   ugSpecialization: any;
 
@@ -190,7 +191,9 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data && data[0] ? data[0] : [];
-      this.pgColleges = list;
+      this.ugColleges = list;
+      const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
+      this.pgColleges = exceptOthers;
     }, (err) => {
 
     });

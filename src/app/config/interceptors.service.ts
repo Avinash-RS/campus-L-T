@@ -39,7 +39,7 @@ export class InterceptorsService implements HttpInterceptor {
 
     const clone = request.clone({
       headers: request.headers.set('Accept', 'application/json'),
-      withCredentials: this.isLocal ? true : true
+      withCredentials: this.isLocal ? false : true
     });
     return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
