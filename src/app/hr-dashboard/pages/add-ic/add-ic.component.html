@@ -10,8 +10,8 @@
                     <!-- <mat-label>Choose IC</mat-label> -->
                     <mat-select formControlName="icName" [matTooltip]="icName?.value?.length > 50 ? icName?.value : ''" placeholder="Select business" required>
                       <!-- <mat-option>--</mat-option> -->
-                      <mat-option *ngFor="let ic of icListArr" matTooltipPosition="left" [matTooltip]="ic?.label?.length > 50 ? ic?.label : ''" [value]="ic.value">
-                        {{ic.label}}
+                      <mat-option *ngFor="let ic of icLists" matTooltipPosition="left" [matTooltip]="ic?.company_name?.length > 50 ? ic?.company_name : ''" [value]="ic.company_id">
+                        {{ic.company_name}}
                       </mat-option>
                     </mat-select>
                     <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->

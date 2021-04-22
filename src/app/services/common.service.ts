@@ -49,11 +49,11 @@ private currentHash = '{{POST_BUILD_ENTERS_HASH_HERE}}';
 * @param url
 * @param {number} frequency - in milliseconds, defaults to 30 minutes
 */
-public initVersionCheck(url, frequency = 1000 * 60 * 2) {
-// setInterval(() => {
+public initVersionCheck(url, frequency = 1000 * 600 * 4) {
+setInterval(() => {
+  this.checkVersion(url);
+}, frequency);
 // this.checkVersion(url);
-// }, frequency);
-this.checkVersion(url);
 }
 /**
 * Will do the call and check if the hash has changed or not
@@ -82,7 +82,7 @@ console.log('hash changed', hashChanged);
     if (this.matDialog.openDialogs.length == 0) {
       this.openDialog(ShortlistBoxComponent, data);
     }
-  }, 5000);
+  }, 0);
 }
 // store the new hash so we wouldn't trigger versionChange again
 // only necessary in case you did not force refresh
@@ -134,7 +134,7 @@ return currentHash !== newHash;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result == 'update') {
+        if (result == 'update') {          
               window.location.reload(true);
         }
       }

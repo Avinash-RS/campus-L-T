@@ -92,12 +92,12 @@ export class ListofICComponent implements OnInit {
         }
       },
       {
-        headerName: 'Email id', field: 'email',
+        headerName: 'Email id', field: 'email_id',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'email',
+        tooltipField: 'email_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -114,12 +114,34 @@ export class ListofICComponent implements OnInit {
         }
       },
       {
-        headerName: 'Business', field: 'ic_name',
+        headerName: 'Business', field: 'company',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'ic_name',
+        tooltipField: 'company',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Created by', field: 'created_by',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'created_by',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Created Date & Time', field: 'date_time',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'date_time',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -131,44 +153,17 @@ export class ListofICComponent implements OnInit {
 
   // To get all users
   getUsersList() {
-    // this.adminService.firstLevelReports().subscribe((datas: any) => {
+    this.adminService.listIC().subscribe((datas: any) => {
       this.appConfig.hideLoader();
-      this.userList = [
-        {
-          id: '213913913913913',
-          email: 'avinash@lntecc.com',
-          ic_name: 'Edutech',
-          name: 'Avinash'
-        },
-        {
-          id: '213913914',
-          email: 'avinash@lntecc.com',
-          ic_name: 'Edutech',
-          name: 'Seetha'
-        },
-        {
-          id: '213913915',
-          email: 'avinash@lntecc.com',
-          ic_name: 'Edutech',
-          name: 'Srinii'
-        },
-        {
-          id: '213913917',
-          email: 'avinash@lntecc.com',
-          ic_name: 'Edutech',
-          name: 'Siiva'
-        }
-      ]
-      // this.userList = datas ? datas : [];
+      this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
         element['counter'] = count;
-        element['details'] = count;
       });
       this.rowData = this.userList;
-    // }, (err) => {
-    // });
+    }, (err) => {
+    });
   }
 
 }

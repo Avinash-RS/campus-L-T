@@ -101,4 +101,8 @@ export class ShortlistBoxComponent implements OnInit {
     this.dialogRef.close(this.data);
   }
 
+  confirmWithData() {
+    this.dialogRef.close(this.data);
+  }
+
 }

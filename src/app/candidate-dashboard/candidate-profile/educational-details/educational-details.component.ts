@@ -34,6 +34,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   pgDisciplines: any;
   ugDisciplines: any;
   pgColleges: any;
+  ugColleges: any;
   pgSpecialization: any;
   ugSpecialization: any;
 
@@ -190,7 +191,9 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
       this.appConfig.hideLoader();
       const list = data && data[0] ? data[0] : [];
-      this.pgColleges = list;
+      this.ugColleges = list;
+      const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
+      this.pgColleges = exceptOthers;
     }, (err) => {
 
     });
@@ -268,7 +271,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
-    if (this.apiForm['eduArr'] && this.apiForm['eduArr'].length > 0) {
+    if (this.apiForm && this.apiForm['eduArr'] && this.apiForm['eduArr'].length > 0) {
       this.educationValuearray = this.apiForm['eduArr'];
     } else {
       this.educationValuearray = [];
@@ -310,7 +313,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
         valid = value.hscDiploma && value.ug ? true : false;
         value.label = 'gct';
       }
-      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget') {
+      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
         this.educationForm.value.educationArr.forEach(element => {
           if (element['leveling'] == 'HSC' || element['leveling'] == 'Diploma' ) {
             value.hscDiploma = true;
@@ -425,7 +428,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
           this.addEducationForm(edu);
         }  
       } 
-      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget') {
+      if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
       for (let i = 0; i <= 3; i++) {
         let edu;
           if (i==0) {

@@ -98,6 +98,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Candidate name', field: 'candidate_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
@@ -115,17 +126,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         minWidth: 140,
         sortable: true,
         tooltipField: 'selected_candidate',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -244,7 +244,11 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   }
   // To get all users
   getUsersList() {
-    this.adminService.SelectedCandidatesList().subscribe((datas: any) => {
+    const role = this.appConfig.getLocalData('roles');
+    const apiData = {
+      company: role == 'ic' ? this.appConfig.getLocalData('userId') : ''
+    }
+    this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
       this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
       let count = 0;

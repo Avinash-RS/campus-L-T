@@ -203,8 +203,8 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           }
         });
         const value = {
-          company: businessName ? businessName : '',
-          email: email ? email : ''
+          company: businessName ? businessName.toString().trim() : '',
+          email: email ? email.toString().trim() : ''
         };
 
 

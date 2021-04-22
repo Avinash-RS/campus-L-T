@@ -248,13 +248,13 @@ export class UploadTestResultsComponent implements OnInit {
           }
         });
         const value = {
-          email: email ? email : '',
-          assement_name: assement_name ? assement_name : '',
-          date_times: date_times ? date_times : '',
-          shortlist_name: shortlist_name ? shortlist_name : '',
-          total_marks: total_marks ? total_marks : 0,
-          marks: marks ? marks : 0,
-          percentage: percentage ? percentage : 0,
+          email: email ? email.toString().trim() : '',
+          assement_name: assement_name ? assement_name.toString().trim() : '',
+          date_times: date_times ? date_times.toString().trim() : '',
+          shortlist_name: shortlist_name ? shortlist_name.toString().trim() : '',
+          total_marks: total_marks ? total_marks.toString().trim() : 0,
+          marks: marks ? marks.toString().trim() : 0,
+          percentage: percentage ? percentage.toString().trim() : 0,
           total_domain_marks: total_domain_marks ? total_domain_marks : 0,
           domain_marks: domain_marks ? domain_marks : 0,
           domain_percentage: domain_percentage ? domain_percentage : 0,
