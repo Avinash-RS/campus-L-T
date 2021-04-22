@@ -49,7 +49,7 @@ private currentHash = '{{POST_BUILD_ENTERS_HASH_HERE}}';
 * @param url
 * @param {number} frequency - in milliseconds, defaults to 30 minutes
 */
-public initVersionCheck(url, frequency = 1000 * 600 * 2) {
+public initVersionCheck(url, frequency = 1000 * 600 * 4) {
 setInterval(() => {
   this.checkVersion(url);
 }, frequency);
