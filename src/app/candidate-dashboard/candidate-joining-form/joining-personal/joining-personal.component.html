@@ -1,3 +1,60 @@
-<h5>
-    Personal Details
-</h5>
+<div class="joining-personal-wrapper">
+    <h5>
+        Personal Details
+    </h5>
+
+    <div class="grids-wrapper">
+        <form class="personalForm" [formGroup]="personalForm" (ngSubmit)="formSubmit()">
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-70">
+                    <label>Candidate Id<span>*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_candidate_id">
+                    <div class="form-error" *ngIf="candidate_id.invalid && candidate_id.touched">
+                        <div *ngIf="candidate_id.errors?.required">Name is Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-15">
+                    <label>Title<span></span></label>
+                    <input matInput class="input" placeholder="Title" type="text" [formControlName]="form_title">
+                    <div class="form-error" *ngIf="ftitle?.invalid && ftitle?.touched">
+                        <div *ngIf="ftitle?.errors?.required">Title is Required</div>
+                        <div *ngIf="ftitle?.errors?.noOption">Name not found</div>
+                    </div>
+                </div>
+                <div class="overall-input-wrapper width-80">
+                    <label>Name (as per Aadhar)<span>*</span></label>
+                    <input matInput class="input" placeholder="Name (as per Aadhar)" type="text" [formControlName]="form_name">
+                    <div class="form-error" *ngIf="fname?.invalid && fname?.touched">
+                        <div *ngIf="fname?.errors?.required">Name is Required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-45">
+                    <label>Date of Birth<span></span></label>
+                    <input matInput class="input" type="text" placeholder="DD-MM-YYYY" [formControlName]="form_dob">
+                    <div class="form-error" *ngIf="dob?.invalid && dob?.touched">
+                        <div *ngIf="dob?.errors?.required">Date of Birth is Required</div>
+                    </div>
+                </div>
+                <div class="overall-input-wrapper width-45">
+                    <label>Gender<span>*</span></label>
+                    <input matInput class="input" type="text" placeholder="Gender" [formControlName]="form_gender">
+                    <div class="form-error" *ngIf="gender?.invalid && gender?.touched">
+                        <div *ngIf="gender?.errors?.required">Gender is Required</div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="photo-wrapper">
+            <div class="avatar">
+                photo
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -5,8 +5,9 @@
     display: flex;
     position: relative;
     .stepper {
-        width: 250px !important;
-        min-width: 250px !important;
+        margin-right: 0em;
+        width: 215px !important;
+        min-width: 215px !important;
         position: relative;
         .stepper-wrapper {
             margin-top: .5em;
@@ -87,4 +88,5 @@
 
 .router {
     margin-top: 1em;
+    width: 100%;
 }
