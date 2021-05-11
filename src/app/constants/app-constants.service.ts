@@ -59,6 +59,8 @@ export const CONSTANT = {
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
       DASHBOARD: '/candidate/dashboard',
+      JOINING: '/candidate/joining',
+      JOINING_PERSONAL: '/candidate/joining/personal',
       PROFILE: '/candidate/profile',
       PROFILE_PERSONAL_DETAILS: '/candidate/profile/personal',
       PROFILE_EDUCATIONAL_DETAILS: '/candidate/profile/education',
@@ -199,6 +201,8 @@ export const CONSTANT = {
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
       DASHBOARD: 'dashboard',
+      JOINING: 'joining',
+      JOINING_PERSONAL: 'personal',
       PROFILE: 'profile',
       PROFILE_PERSONAL_DETAILS: 'personal',
       PROFILE_EDUCATIONAL_DETAILS: 'education',

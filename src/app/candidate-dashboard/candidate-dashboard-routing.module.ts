@@ -20,6 +20,8 @@ import { CandidateDocumentComponent } from './candidate-document/candidate-docum
 import { from } from 'rxjs';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 import {  RegistrationCloseComponent } from './registration-close/registration-close.component';
+import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
+import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
 
 
 const routes: Routes = [
@@ -89,6 +91,27 @@ const routes: Routes = [
         ]
       },
       {
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`, 
+        component: JoiningFormComponent, canActivate: [CanloadGuard], 
+        data: {
+          breadcrumb: 'Joining'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`, 
+            component: JoiningPersonalComponent,
+            data: {
+              breadcrumb: 'Personal'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`, 
         component: CandidateHallticketComponent, canActivate: [CanloadGuard], 
         data: {
@@ -132,7 +155,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`,
+        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
         pathMatch: 'full',
 
       }

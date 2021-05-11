@@ -20,10 +20,12 @@ import { CandidateMainDashboardComponent } from './candidate-main-dashboard/cand
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 import { RegistrationCloseComponent } from './registration-close/registration-close.component';
+import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
+import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent],
+  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent, JoiningFormComponent, JoiningPersonalComponent],
   imports: [
     CommonModule,
     SharedModule,

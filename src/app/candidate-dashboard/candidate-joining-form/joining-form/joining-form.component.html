@@ -1,0 +1,46 @@
+<div class="joining-form-wrapper">
+    <div class="stepper">
+        <div class="stepper-wrapper">
+            <ul>
+                <li (click)="activeStep = '0'; valid.personal = true; validCheck()"
+                    [ngClass]="activeStep == '0' ? 'active' : valid.personal ? 'valid' : ''">
+                    <div *ngIf="activeStep != '0'" class="check"></div>
+                    Personal Details
+                </li>
+                <li (click)="activeStep = '1'; valid.contact = true; validCheck()"
+                    [ngClass]="activeStep == '1' ? 'active' : valid.contact ? 'valid' : ''">
+                    <div *ngIf="activeStep != '1'" class="check"></div>
+                    Contact Details
+                </li>
+                <li (click)="activeStep = '2'; valid.dependent = true; validCheck()"
+                    [ngClass]="activeStep == '2' ? 'active' : valid.dependent ? 'valid' : ''">
+                    <div *ngIf="activeStep != '2'" class="check"></div>
+                    Dependent Details
+                </li>
+                <li (click)="activeStep = '3'; valid.education = true; validCheck()"
+                    [ngClass]="activeStep == '3' ? 'active' : valid.education ? 'valid' : ''">
+                    <div *ngIf="activeStep != '3'" class="check"></div>
+                    Education Details
+                </li>
+                <li (click)="activeStep = '4'; valid.upload = true; validCheck()"
+                    [ngClass]="activeStep == '4' ? 'active' : valid.upload ? 'valid' : ''">
+                    <div *ngIf="activeStep != '4'" class="check"></div>
+                    Upload Documents
+                </li>
+                <li (click)="activeStep = '5'; valid.preview = true; validCheck()"
+                    [ngClass]="activeStep == '5' ? 'active' : valid.preview ? 'valid' : ''">
+                    <div *ngIf="activeStep != '5'" class="check"></div>
+                    Preview
+                </li>
+                <li (click)="activeStep = '6'; valid.submit = true; validCheck()"
+                    [ngClass]="activeStep == '6' ? 'active' : valid.submit ? 'valid' : ''">
+                    <div *ngIf="activeStep != '6'" class="check"></div>
+                    Submit
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="router">
+        <router-outlet></router-outlet>
+    </div>
+</div>

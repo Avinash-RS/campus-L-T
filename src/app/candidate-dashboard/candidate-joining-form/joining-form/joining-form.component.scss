@@ -1,0 +1,90 @@
+@import "../../../themes/themes.scss";
+
+.joining-form-wrapper {
+    width: 100%;
+    display: flex;
+    position: relative;
+    .stepper {
+        width: 250px !important;
+        min-width: 250px !important;
+        position: relative;
+        .stepper-wrapper {
+            margin-top: .5em;
+            position: absolute;
+            left: 10%;
+            transform: translateX(-10%);
+            display: block;
+            counter-reset: step;
+
+            ul {
+                list-style: none;
+                position: relative;
+                li {
+                    padding: 12px 0;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 20px;
+                    cursor: pointer;
+                }
+                li:before {
+                    content: '';
+                    position: absolute;
+                    background: white;
+                    border: 1px solid #D3D3D3;
+                    width: 15px;
+                    height: 15px;
+                    left: 34px;
+                    border-radius: 50%;
+
+                }
+                li.active {
+                    color: $primary-red;
+                    transition: .5s ease-out;
+                }
+                li.valid {
+                    // color: $primary-red;
+                    // transition: .5s ease-out;
+                }
+                li.active::before {
+                    border: none;
+                    background: $primary-red !important;
+                    transition: .5s ease-in;
+                }
+                li.valid::before {
+                    border: none;
+                    background: #32BA7C !important;
+                    transition: 180ms linear;
+                }
+
+            }
+            ul::after {
+                content: '';
+                position: absolute;
+                width: 1.75px;
+                height: calc(100% - 50px) !important;
+                left: 41px;
+                top: 0;
+                background: #D3D3D3;
+                z-index: -1;
+                margin-top: 29px;
+            }
+        }
+    }
+}
+.check {
+    border-radius: 0px;
+    display: inline-block;
+    transform: rotate(45deg);
+    height: 8px;
+    width: 4px;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    position: absolute;
+    margin-left: -20px;
+    margin-bottom: 2px;
+    transition: .5s linear;
+}
+
+.router {
+    margin-top: 1em;
+}
