@@ -6,20 +6,8 @@
     <div class="grids-wrapper">
         <form class="personalForm" [formGroup]="personalForm">
             <div class="row-wrapper">
-                <div class="overall-input-wrapper width-70">
-                    <label>Candidate Id<span>*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text"
-                        [formControlName]="form_candidate_id">
-                    <div class="form-error" *ngIf="candidate_id.invalid && candidate_id.touched">
-                        <div *ngIf="candidate_id.errors?.required">ID is Required</div>
-                        <div *ngIf="candidate_id.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
-                            allowed</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row-wrapper">
                 <div class="overall-input-wrapper width-15">
-                    <label>Title<span></span></label>
+                    <label>Title<span>*</span></label>
                     <nz-select class="input select" [formControlName]="form_title" nzAllowClear nzShowSearch
                         nzPlaceHolder="Select">
                         <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
@@ -63,11 +51,13 @@
                 </div>
                 <div class="overall-input-wrapper width-45">
                     <label>Gender<span></span></label>
-                    <input matInput class="input" type="text" placeholder="Gender" [formControlName]="form_gender">
+                    <nz-select class="input select" [formControlName]="form_gender" nzAllowClear nzShowSearch
+                        nzPlaceHolder="Select">
+                        <nz-option *ngFor="let gender of genderDropdownList" [nzLabel]="gender.label"
+                            [nzValue]="gender.value"></nz-option>
+                    </nz-select>
                     <div class="form-error" *ngIf="gender?.invalid && gender?.touched">
                         <div *ngIf="gender?.errors?.required">Gender is Required</div>
-                        <div *ngIf="gender?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
-                            allowed</div>
                     </div>
                 </div>
             </div>
@@ -87,8 +77,8 @@
                     <label>State of Birth<span></span></label>
                     <nz-select class="input select" [formControlName]="form_state_of_birth" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
-                        <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                            [nzValue]="title.value"></nz-option>
+                        <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name"
+                            [nzValue]="state.id"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="state_of_birth?.invalid && state_of_birth?.touched">
                         <div *ngIf="state_of_birth?.errors?.required">State of Birth is Required</div>
@@ -99,13 +89,12 @@
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Nationality<span></span></label>
-                    <nz-select class="input select" [formControlName]="form_nationality" nzAllowClear nzShowSearch
-                        nzPlaceHolder="<--Select-->">
-                        <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                            [nzValue]="title.value"></nz-option>
-                    </nz-select>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_nationality">
                     <div class="form-error" *ngIf="nationality?.invalid && nationality?.touched">
                         <div *ngIf="nationality?.errors?.required">Nationality is Required</div>
+                        <div *ngIf="nationality?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                            allowed</div>
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
@@ -304,7 +293,7 @@
                 </div>
                 <button class="submit joining-form-submit mt-1" mat-raised-button (click)="formSubmit()">Save &
                     Continue</button>
-                <div class="d-flex align-content-center align-items-center text-right position-relative">
+                <div (click)="routeNext()" class="d-flex align-content-center align-items-center text-right position-relative pointer" style="cursor: pointer;">
                     <div class="right-arrow position-absolute"></div>
                     <div class="sections right-space">
                         <div class="label">Next Section</div>

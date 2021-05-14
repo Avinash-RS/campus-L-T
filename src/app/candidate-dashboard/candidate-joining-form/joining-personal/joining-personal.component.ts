@@ -1,3 +1,4 @@
+import { CONSTANT } from './../../../constants/app-constants.service';
 import { GlobalValidatorService } from './../../../custom-form-validators/globalvalidators/global-validator.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -61,17 +62,34 @@ export class JoiningPersonalComponent implements OnInit {
     }
   };
   personalForm: FormGroup;
+  // Title Dropdown list
   titleDropdownList = [
     {
-      id: '0',
+      id: 'Mr.',
       value: 'Mr.'
     },
     {
-      id: '1',
+      id: 'Ms.',
       value: 'Ms.'
     }
   ];
-  //form Variables
+
+  // Gender DropDown List 
+  genderDropdownList = [
+    {
+      label: 'Male',
+      value: 'Male'
+    },
+    {
+      label: 'Female',
+      value: 'Female'
+    },
+    {
+      label: 'Others',
+      value: 'Others'
+    },
+  ]
+  // Form control name declaration Start
   form_candidate_id = 'candidate_id';
   form_title = 'title';
   form_name = 'name';
@@ -85,18 +103,21 @@ export class JoiningPersonalComponent implements OnInit {
   form_caste = 'caste';
   form_blood_group = 'blood_group';
   form_father_name = 'father_name';
-  form_emergency_contact = 'emergency_contact';
+  form_emergency_contact = 'emergency_contact_no';
   form_mobile = 'mobile';
   form_email = 'email';
-  form_aadhar = 'aadhar';
-  form_pan = 'pan';
+  form_aadhar = 'aadharno';
+  form_pan = 'pan_no';
   form_offer_reference = 'offer_reference';
   form_offer_date = 'offer_date';
   form_height = 'height';
   form_weight = 'weight';
   form_identification_mark1 = 'identification_mark1';
   form_identification_mark2 = 'identification_mark2';
+// Form control name declaration end
 
+  personalDetails: any;
+  getAllStates: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -111,6 +132,37 @@ export class JoiningPersonalComponent implements OnInit {
 
   ngOnInit() {
     this.formInitialize();
+    this.getStateAPI();
+    this.getPersonalData();
+  }
+
+  getPersonalData() {
+    this.appConfig.showLoader();
+    this.candidateService.joiningFormGetPersonalDetails().subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      let personal = data?.length > 0 ? data[0] : null;
+      if (personal) {
+        this.personalDetails = {
+          ...personal?.personal_details,
+          ...personal?.profile_details,
+        }
+        console.log('ad', this.personalDetails);        
+        this.patchPersonalForm();
+      } else {
+        this.personalDetails = [];
+      }
+    });
+  }
+
+  getStateAPI() {
+    const datas = {
+      country_id: '101'
+    };
+    this.candidateService.updatedState(datas).subscribe((data: any) => {
+      this.getAllStates = data[0];
+    }, (err) => {
+
+    });
   }
 
   dateValidation() {
@@ -127,42 +179,30 @@ export class JoiningPersonalComponent implements OnInit {
     }
   }
 
-  formInitialize() {
-    this.personalForm = this.fb.group({
-      [this.form_candidate_id]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_title]: [null, [Validators.required]],
-      [this.form_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dob]: [null],
-      [this.form_gender]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_place_of_birth]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_state_of_birth]: [null],
-      [this.form_nationality]: [null],
-      [this.form_mother_tongue]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_religion]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_caste]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_blood_group]: [null, [Validators.required]],
-      [this.form_father_name]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_emergency_contact]: [null, [this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
-      [this.form_mobile]: [null, [Validators.required, this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
-      [this.form_email]: [null, [Validators.required, this.glovbal_validators.email(), RemoveWhitespace.whitespace()]],
-      [this.form_aadhar]: [null, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
-      [this.form_pan]: [null, [this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
-      [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_offer_date]: [null],
-      [this.form_height]: [null, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
-      [this.form_weight]: [null, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
-      [this.form_identification_mark1]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_identification_mark2]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],    
-    })
+  dateConvertion(date) {
+    if (date) {      
+      const split = moment(date).format();
+     return split == 'Invalid date' ? null : split;
+    }
   }
 
   formSubmit() {
     console.log('Form Values', this.personalForm.value);
-    if (this.personalForm.valid) {
-
+    if (this.personalForm.valid) {      
+      this.appConfig.nzNotification('success', 'Saved', 'Personal details has been updated');
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
     } else {
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.personalForm);
     }    
+  }
+
+
+  routeNext() {
+    if (this.personalForm.valid) {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
+    }
+    this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
   }
 
   async onSelectFile(event) {
@@ -218,11 +258,66 @@ export class JoiningPersonalComponent implements OnInit {
   public delete() {
     this.showSizeError.reset();
     this.url = null;
-  }  
-  // Form getters
-  get candidate_id() {
-    return this.personalForm.get(this.form_candidate_id);
   }
+
+
+  patchPersonalForm() {
+    this.personalForm.patchValue({
+      [this.form_title]: this.personalDetails[this.form_title], 
+      [this.form_name]: this.personalDetails[this.form_name] ? this.personalDetails[this.form_name] : this.appConfig.getLocalData('username'), 
+      [this.form_dob]: this.dateConvertion(this.personalDetails[this.form_dob]), 
+      [this.form_gender]: this.personalDetails[this.form_gender], 
+      [this.form_place_of_birth]: this.personalDetails[this.form_place_of_birth], 
+      [this.form_state_of_birth]: this.personalDetails[this.form_state_of_birth], 
+      [this.form_nationality]: this.personalDetails[this.form_nationality], 
+      [this.form_mother_tongue]: this.personalDetails[this.form_mother_tongue], 
+      [this.form_religion]: this.personalDetails[this.form_religion], 
+      [this.form_caste]: this.personalDetails[this.form_caste], 
+      [this.form_blood_group]: this.personalDetails[this.form_blood_group], 
+      [this.form_father_name]: this.personalDetails[this.form_father_name], 
+      [this.form_emergency_contact]: this.personalDetails[this.form_emergency_contact], 
+      [this.form_mobile]: this.personalDetails[this.form_mobile], 
+      [this.form_email]: this.personalDetails[this.form_email], 
+      [this.form_aadhar]: this.personalDetails[this.form_aadhar], 
+      [this.form_pan]: this.personalDetails[this.form_pan], 
+      [this.form_offer_reference]: this.personalDetails[this.form_offer_reference], 
+      [this.form_offer_date]: this.dateConvertion(this.personalDetails[this.form_offer_date]), 
+      [this.form_height]: this.personalDetails[this.form_height], 
+      [this.form_weight]: this.personalDetails[this.form_weight], 
+      [this.form_identification_mark1]: this.personalDetails[this.form_identification_mark1], 
+      [this.form_identification_mark2]: this.personalDetails[this.form_identification_mark2], 
+    })
+  }
+
+  formInitialize() {
+    this.personalForm = this.fb.group({
+      [this.form_title]: [null, [Validators.required]],
+      [this.form_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dob]: [null],
+      [this.form_gender]: [null],
+      [this.form_place_of_birth]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_state_of_birth]: [null],
+      [this.form_nationality]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_mother_tongue]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_religion]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_caste]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_blood_group]: [null, [Validators.required]],
+      [this.form_father_name]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_emergency_contact]: [null, [this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
+      [this.form_mobile]: [null, [Validators.required, this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
+      [this.form_email]: [{value: null, disabled: true}, [Validators.required, this.glovbal_validators.email(), RemoveWhitespace.whitespace()]],
+      [this.form_aadhar]: [null, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
+      [this.form_pan]: [null, [this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
+      [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_offer_date]: [null],
+      [this.form_height]: [null, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
+      [this.form_weight]: [null, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
+      [this.form_identification_mark1]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_identification_mark2]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],    
+    })
+  }
+
+  // Form getters
   get ftitle() {
     return this.personalForm.get(this.form_title);
   }

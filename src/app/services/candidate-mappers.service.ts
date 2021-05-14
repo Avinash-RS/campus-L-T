@@ -253,4 +253,12 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/profile/remove_certiticate`, data, { headers: this.withoutTokens(), withCredentials: true });    
   }
 
+
+    // Joining Form
+    joiningFormGetPersonalDetails() {
+     let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+      return this.http.get(`${this.BASE_URL}/profile/personal_pageload?user_id=${userId}`,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true});
+    }
+  
 }

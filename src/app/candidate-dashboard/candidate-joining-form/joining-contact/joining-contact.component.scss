@@ -5,7 +5,7 @@
     .grids-wrapper {
         display: flex;
         width: 100%;
-        .personalForm {
+        .contactForm {
             width: 80%;
             padding-right: 3em;
             font-size: 14px;
@@ -384,10 +384,12 @@
 }
 // Date picker end
 
-.date-relative {
-    position: relative; margin: 0 !important; padding: 0 !important;
+//mat-checkbox start
+:host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background: $primary-red !important;
 }
 
-:host ::ng-deep .mat-input-element:disabled {
-    background: #EEEEEE !important;
+.date-relative {
+    position: relative; margin: 0 !important; padding: 0 !important;
 }

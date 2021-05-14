@@ -1,3 +1,4 @@
+import { JoiningContactComponent } from './candidate-joining-form/joining-contact/joining-contact.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MasterDashboardComponent } from './master-dashboard.component';
@@ -94,14 +95,21 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`, 
         component: JoiningFormComponent, canActivate: [CanloadGuard], 
         data: {
-          breadcrumb: 'Joining'
+          breadcrumb: 'Joining Form'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`, 
             component: JoiningPersonalComponent,
             data: {
-              breadcrumb: 'Personal'
+              breadcrumb: 'Personal Details'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_CONTACT}`, 
+            component: JoiningContactComponent,
+            data: {
+              breadcrumb: 'Contact Details'
             }
           },
           {
@@ -155,7 +163,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
+        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`,
         pathMatch: 'full',
 
       }
