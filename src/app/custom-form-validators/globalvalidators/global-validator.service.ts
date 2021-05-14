@@ -38,7 +38,7 @@ export class GlobalValidatorService {
     // To validate all fields in the form group
     validateAllFields(formGroup: FormGroup) {
      return Object.keys(formGroup.controls).forEach(field => {
-        formGroup.get(field).setValue(formGroup.get(field).value ? formGroup.get(field).value.trim() : formGroup.get(field).value); // This line of code will trim the whitespaces before and after before validate
+        // formGroup.get(field).setValue(formGroup.get(field).value ? formGroup.get(field).value.trim() : formGroup.get(field).value); // This line of code will trim the whitespaces before and after before validate
         const control = formGroup.get(field);
         if (control instanceof FormControl) {
           control.markAsTouched({ onlySelf: true });

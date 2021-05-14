@@ -1,3 +1,5 @@
+import { JoiningEducationComponent } from './candidate-joining-form/joining-education/joining-education.component';
+import { JoiningDependentComponent } from './candidate-joining-form/joining-dependent/joining-dependent.component';
 import { JoiningContactComponent } from './candidate-joining-form/joining-contact/joining-contact.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -110,6 +112,20 @@ const routes: Routes = [
             component: JoiningContactComponent,
             data: {
               breadcrumb: 'Contact Details'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}`, 
+            component: JoiningDependentComponent,
+            data: {
+              breadcrumb: 'Dependent Details'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_EDUCATION}`, 
+            component: JoiningEducationComponent,
+            data: {
+              breadcrumb: 'Education Details'
             }
           },
           {

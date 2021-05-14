@@ -83,113 +83,6 @@
             width: 20%;
             height: 100%;
             position: relative;
-            .avatar {
-                position: absolute;
-                left: 50%;
-                width: 140px;
-                transform: translateX(-50%);
-                .photo {
-                    background-color: #F2F3F5;
-                    width: 140px;
-                    height: 155px;
-                    border: 1px dashed #AAAAAA;
-                    position: relative;
-                    .remove {
-                        cursor: pointer;
-                        position: absolute;
-                        z-index: 10;
-                        border-radius: 50% !important;
-                        opacity: 0.85;
-                        top: -12px;
-                        padding: 0;
-                        margin: 0 !important;
-                        right: -12px;
-                        img {
-                            width: 24px;
-                            height: 24px;
-                        }
-                      }              
-                    label {
-                        display: block !important;
-                        margin: 0 !important;
-                    }
-                    .urlExist {
-                        position: absolute;
-                        width: 138px;
-                        height: 153px;
-                        img {
-                            width: 138px;
-                            height: 153px;
-                        }
-                    }
-                    .icon {
-                        position: absolute;
-                        left: 50%;
-                        top: 45%;
-                        width: 35px;
-                        transform: translate(-50%, -50%);
-                        height: 35px;
-                        img {
-                            width: 100%;
-                            height: 100%;
-                        }
-                    }
-                    .add-image {
-                        padding: 0 1em;
-                        position: absolute;
-                        bottom: 5px;
-                        font-size: 10px;
-                        width: 100%;
-                        display: flex;
-                        align-items: center;
-                        .mini-icon {
-                            img {
-                                width: 20px;
-                            }
-                        }
-                        span {
-                            margin-left: .5em;
-                        }
-                    }
-                    input[type="file"] {
-                        cursor: pointer;
-                        opacity: 0;
-              
-                        /* IE 8 */
-                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-              
-                        /* IE 5-7 */
-                        filter: alpha(opacity=0);
-              
-                        /* Netscape or and older firefox browsers */
-                        -moz-opacity: 0;
-              
-                        /* older Safari browsers */
-                        -khtml-opacity: 0;
-              
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        bottom: 0;
-                        right: 0;
-                        width: 100%;
-                        height: 100%;
-                      }
-                      #file-upload-button {
-                          cursor: pointer !important;
-                      }              
-                }
-                .error-section {
-                    margin-top: .5em;    
-                    font-size: 11px;
-                    .notes {
-                        color: #717272;
-                    }
-                    .error {
-                        color: $primary-red;
-                    }
-                }
-            }   
         }
     }
     .footer {
@@ -341,16 +234,16 @@
     margin-top: 1px !important;
 }
 
-:host ::ng-deep .ant-select-dropdown-menu-item:first-child, :host ::ng-deep .ant-select-dropdown-menu-item:last-child {
+::ng-deep .ant-select-dropdown-menu-item:first-child, ::ng-deep .ant-select-dropdown-menu-item:last-child {
     border: none !important;
     border-radius: 0px !important;
 }
 
-:host ::ng-deep .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+::ng-deep .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
     background-color: #eaeaea !important;
 }
 
-:host ::ng-deep .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+::ng-deep .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
     background-color: rgb(211, 211, 211, .7) !important;
 }
 

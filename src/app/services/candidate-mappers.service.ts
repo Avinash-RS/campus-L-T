@@ -255,10 +255,18 @@ export class CandidateMappersService {
 
 
     // Joining Form
-    joiningFormGetPersonalDetails() {
+    getBloodGroups() {
+      return this.http.get(`${this.BASE_URL}/profile/bg_list`, { headers: this.withoutTokens(), withCredentials: true });
+    }
+
+      joiningFormGetPersonalDetails() {
      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
       return this.http.get(`${this.BASE_URL}/profile/personal_pageload?user_id=${userId}`,
         { headers: this.getAfterCustomHeaders(), withCredentials: true});
     }
-  
+
+    joiningFormGetPersonalDetailsSave(data) {
+      // let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+      return this.http.post(`${this.BASE_URL}/profile/personal_page`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });    
+    }
 }

@@ -27,7 +27,7 @@ export class InterceptorsService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (request.url !== `${this.BASE_URL}/rest/session/token`) {
-      if (!request?.url?.includes('/version.json') && !request?.url?.includes('api/state_api')) {
+      if (!request?.url?.includes('/version.json') && !request?.url?.includes('api/state_api') && !request?.url?.includes('profile/bg_list')) {
         this.appConfig.showLoader();
       }
     }
