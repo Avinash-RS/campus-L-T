@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ValidationErrors, ValidatorFn, AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { ValidationErrors, ValidatorFn, AbstractControl, FormControl, FormGroup, FormArray } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,21 @@ export class GlobalValidatorService {
      }
   }  
 
+    // To validate all fields after submit
+    validateAllFormArrays(formArray: FormArray) {
+      formArray.controls.forEach(formGroup => {
+        Object.keys(formGroup['controls']).forEach(field => {
+          const control = formGroup.get(field);
+          if (control instanceof FormControl) {
+            control.markAsTouched({ onlySelf: true });
+          } else if (control instanceof FormGroup) {
+            this.validateAllFields(control);
+          }
+        });
+  
+      });
+    }
+  
     // To validate all fields in the form group
     validateAllFields(formGroup: FormGroup) {
      return Object.keys(formGroup.controls).forEach(field => {

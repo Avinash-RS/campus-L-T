@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
@@ -7,15 +7,46 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import * as moment from 'moment'; //in your component
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+    // dateInput: 'DD MMM YYYY', // output ->  01 May 1995
+    dateInput: 'DD-MM-YYYY', // output ->  01-10-1995
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-joining-dependent',
   templateUrl: './joining-dependent.component.html',
-  styleUrls: ['./joining-dependent.component.scss']
+  styleUrls: ['./joining-dependent.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class JoiningDependentComponent implements OnInit {
 
   dependentForm: FormGroup;
+  minDate: Date;
+  maxDate: Date;
+
   titleDropdownList = [
     {
       id: '0',
@@ -27,22 +58,43 @@ export class JoiningDependentComponent implements OnInit {
     }
   ];
   //form Variables
-  form_present_address_1 = 'present_address_1';
-  form_present_address_2 = 'present_address_2';
-  form_present_address_3 = 'present_address_3';
-  form_present_city = 'present_city';
-  form_present_state = 'present_state';
-  form_present_zip_code = 'present_zip_code';
-  form_present_region = 'present_region';
-  form_same_as_checkbox = 'same_as_checkbox';
-  form_permanent_address_1 = 'permanent_address_1';
-  form_permanent_address_2 = 'permanent_address_2';
-  form_permanent_address_3 = 'permanent_address_3';
-  form_permanent_city = 'permanent_city';
-  form_permanent_state = 'permanent_state';
-  form_permanent_zip_code = 'permanent_zip_code';
-  form_permanent_region = 'permanent_region';
+  form_dependentArray = 'dependentArray';
+  form_dependent_name = 'dependent_name';
+  form_dependent_dob = 'dependent_dob';
+  form_dependent_relationship = 'dependent_relationship';
+  form_dependent_differently_abled = 'dependent_differently_abled';
+  form_dependent_status = 'dependent_status';
 
+  dummyvalues = [
+    {
+    dependent_name: 'Avinash',
+    dependent_dob: '1995-10-29T00:00:00+05:30',
+    dependent_relationship: 'Ms.',
+    dependent_differently_abled: 'Ms.',
+    dependent_status: 'Ms.'
+    },
+    {
+      dependent_name: 'Selva',
+      dependent_dob: '2012-10-29T00:00:00+05:30',
+      dependent_relationship: 'Mr.',
+      dependent_differently_abled: 'Mr.',
+      dependent_status: 'Mr.'
+      },
+      {
+        dependent_name: 'Thilaga',
+        dependent_dob: '2018-07-25T00:00:00+05:30',
+        dependent_relationship: 'Ms.',
+        dependent_differently_abled: 'Ms.',
+        dependent_status: 'Ms.'
+        },
+        {
+          dependent_name: 'Selva',
+          dependent_dob: '2012-01-04T00:00:00+05:30',
+          dependent_relationship: 'Mr.',
+          dependent_differently_abled: 'Mr.',
+          dependent_status: 'Mr.'
+          }
+  ]
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -52,13 +104,50 @@ export class JoiningDependentComponent implements OnInit {
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) { 
+    this.dateValidation();
   }
 
   ngOnInit() {
     this.formInitialize();
+      this.patchDependentForm();
   }
 
+  getDependentApiValues() {
+
+  }
+  dateValidation() {
+    // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 50, 0, 1);
+    this.maxDate = new Date(currentYear + 20, 11, 31);
+}
+
+momentForm(date) {
+if (date) {
+  const split = moment(date).format('DD-MM-YYYY');
+ return split;    
+}
+}
+
+dateConvertion(date) {
+  if (date) {      
+    const split = moment(date).format();
+    if (split == 'Invalid date') {
+      const ddFormat = moment(date, 'DD-MM-YYYY').format();
+      return ddFormat == 'Invalid date' ? null : ddFormat;
+    }
+   return split == 'Invalid date' ? null : split;
+  }
+}
+
   formSubmit() {
+    console.log('form', this.dependentForm.value);
+    
+    if(this.dependentForm.valid) {
+
+    } else {
+      this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
+    }
 
   }
 
@@ -66,71 +155,71 @@ export class JoiningDependentComponent implements OnInit {
 
   }
 
+  patchDependentForm() {
+    if (this.dummyvalues.length > 1) {
+      return this.getDependentArr.push(this.initDependentArray());
+    }
+    this.getDependentArr.clear();
+    this.dummyvalues.forEach((element, i) => {
+      this.getDependentArr.push(this.patching(element));
+    });
+  }
+
+  patching(data) {
+    return this.fb.group({
+      [this.form_dependent_name]: [data[this.form_dependent_name], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
+      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [Validators.required]],
+      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled]],
+      [this.form_dependent_status]: [data[this.form_dependent_status]],
+    })    
+  }
+
   formInitialize() {
     this.dependentForm = this.fb.group({
-      [this.form_present_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_present_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_present_address_3]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_present_city]: [null],
-      [this.form_present_state]: [null],
-      [this.form_present_region]: [null],
-      [this.form_present_zip_code]: [null, [this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]],
-      [this.form_same_as_checkbox]: [null],
-      [this.form_permanent_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_permanent_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_permanent_address_3]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_permanent_city]: [null],
-      [this.form_permanent_state]: [null],
-      [this.form_permanent_region]: [null],
-      [this.form_permanent_zip_code]: [null, [this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]]
+      [this.form_dependentArray]: this.fb.array([])
     })
   }
 
+  initDependentArray() {
+    return this.fb.group({
+      [this.form_dependent_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_dob]: [null],
+      [this.form_dependent_relationship]: [null, [Validators.required]],
+      [this.form_dependent_differently_abled]: [null],
+      [this.form_dependent_status]: [null],
+    })    
+  }
+
+  addToDependentArray() {
+    if (this.dependentForm.valid) {
+     return this.getDependentArr.push(this.initDependentArray());
+    }
+    this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
+  }
+
+  removeDependentArray(i) {
+    this.getDependentArr.removeAt(i);
+  }
+
   // Form getters
-  get present_address_1() {
-  return this.dependentForm.get(this.form_present_address_1);
+  // convenience getters for easy access to form fields
+  get getDependentArr() { return this.dependentForm.get([this.form_dependentArray]) as FormArray; }
+
+  get dependent_name() {
+  return this.dependentForm.get(this.form_dependent_name);
   }
-  get present_address_2() {
-  return this.dependentForm.get(this.form_present_address_2);
+  get dependent_dob() {
+  return this.dependentForm.get(this.form_dependent_dob);
   }
-  get present_address_3() {
-  return this.dependentForm.get(this.form_present_address_3);
+  get dependent_relationship() {
+  return this.dependentForm.get(this.form_dependent_relationship);
   }
-  get present_city() {
-  return this.dependentForm.get(this.form_present_city);
+  get dependent_differently_abled() {
+  return this.dependentForm.get(this.form_dependent_differently_abled);
   }
-  get present_state() {
-  return this.dependentForm.get(this.form_present_state);
-  }
-  get present_zip_code() {
-  return this.dependentForm.get(this.form_present_zip_code);
-  }
-  get present_region() {
-  return this.dependentForm.get(this.form_present_region);
-  }
-  get same_as_checkbox() {
-  return this.dependentForm.get(this.form_same_as_checkbox);
-  }
-  get permanent_address_1() {
-  return this.dependentForm.get(this.form_permanent_address_1);
-  }
-  get permanent_address_2() {
-  return this.dependentForm.get(this.form_permanent_address_2);
-  }
-  get permanent_address_3() {
-  return this.dependentForm.get(this.form_permanent_address_3);
-  }
-  get permanent_city() {
-  return this.dependentForm.get(this.form_permanent_city);
-  }
-  get permanent_state() {
-  return this.dependentForm.get(this.form_permanent_state);
-  }
-  get permanent_zip_code() {
-  return this.dependentForm.get(this.form_permanent_zip_code);
-  }
-  get permanent_region() {
-  return this.dependentForm.get(this.form_permanent_region);
+  get dependent_status() {
+  return this.dependentForm.get(this.form_dependent_status);
   }
 
 

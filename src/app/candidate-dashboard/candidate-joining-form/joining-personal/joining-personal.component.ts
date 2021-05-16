@@ -129,16 +129,9 @@ export class JoiningPersonalComponent implements OnInit {
     this.appConfig.showLoader();
     this.candidateService.joiningFormGetPersonalDetails().subscribe((data: any)=> {
       this.appConfig.hideLoader();
-      let personal = data?.length > 0 ? data[0] : null;
-      this.nonMergedPersonalDetails = personal;
-      if (personal) {
-        this.personalDetails = {
-          ...personal?.personal_details,
-          ...personal?.profile_details,
-        }
+      this.personalDetails = data ? data : null;
+      if (this.personalDetails) {        
         this.patchPersonalForm();
-      } else {
-        this.personalDetails = [];
       }
     });
   }
@@ -179,6 +172,10 @@ export class JoiningPersonalComponent implements OnInit {
   dateConvertion(date) {
     if (date) {      
       const split = moment(date).format();
+      if (split == 'Invalid date') {
+        const ddFormat = moment(date, 'DD-MM-YYYY').format();
+        return ddFormat == 'Invalid date' ? null : ddFormat;
+      }
      return split == 'Invalid date' ? null : split;
     }
   }
@@ -186,7 +183,8 @@ export class JoiningPersonalComponent implements OnInit {
   formSubmit() {
     if (this.personalForm.valid) {      
       let rawPersonalFormValue = this.personalForm.getRawValue();
-      let profile_details= {
+      const apiData = {
+       [this.form_name]: rawPersonalFormValue[this.form_name],
        [this.form_aadhar]: rawPersonalFormValue[this.form_aadhar],
        [this.form_dob]: this.momentForm(rawPersonalFormValue[this.form_dob]),
        [this.form_email]: rawPersonalFormValue[this.form_email],
@@ -195,10 +193,6 @@ export class JoiningPersonalComponent implements OnInit {
        [this.form_mobile]: rawPersonalFormValue[this.form_mobile],
        [this.form_nationality]: rawPersonalFormValue[this.form_nationality],
        [this.form_weight]: rawPersonalFormValue[this.form_weight],
-       profile_image: this.personalDetails.profile_image,
-       user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
-      };
-      let personal_details= {
        [this.form_blood_group]: rawPersonalFormValue[this.form_blood_group],
        [this.form_caste]: rawPersonalFormValue[this.form_caste],
        [this.form_emergency_contact]: rawPersonalFormValue[this.form_emergency_contact],
@@ -207,14 +201,14 @@ export class JoiningPersonalComponent implements OnInit {
        [this.form_identification_mark2]: rawPersonalFormValue[this.form_identification_mark2],
        [this.form_mother_tongue]: rawPersonalFormValue[this.form_mother_tongue],
        [this.form_pan]: rawPersonalFormValue[this.form_pan],
+       [this.form_offer_reference]: rawPersonalFormValue[this.form_offer_reference], 
+       [this.form_offer_date]: this.dateConvertion(rawPersonalFormValue[this.form_offer_date]), 
        [this.form_place_of_birth]: rawPersonalFormValue[this.form_place_of_birth],
        [this.form_religion]: rawPersonalFormValue[this.form_religion],
        [this.form_state_of_birth]: rawPersonalFormValue[this.form_state_of_birth],
+       profile_image: this.personalDetails.profile_image,
+       user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
       };
-       const apiData = [{
-         personal_details,
-         profile_details
-         }];  
       
       this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
         this.appConfig.hideLoader();
@@ -294,7 +288,7 @@ export class JoiningPersonalComponent implements OnInit {
   patchPersonalForm() {
     this.personalForm.patchValue({
       // [this.form_title]: this.personalDetails[this.form_title], 
-      [this.form_name]: this.personalDetails[this.form_name] ? this.personalDetails[this.form_name] : this.appConfig.getLocalData('username'), 
+      [this.form_name]: this.personalDetails[this.form_name], 
       [this.form_dob]: this.dateConvertion(this.personalDetails[this.form_dob]), 
       [this.form_gender]: this.personalDetails[this.form_gender], 
       [this.form_place_of_birth]: this.personalDetails[this.form_place_of_birth], 
@@ -310,8 +304,8 @@ export class JoiningPersonalComponent implements OnInit {
       [this.form_email]: this.personalDetails[this.form_email], 
       [this.form_aadhar]: this.personalDetails[this.form_aadhar], 
       [this.form_pan]: this.personalDetails[this.form_pan], 
-      // [this.form_offer_reference]: this.personalDetails[this.form_offer_reference], 
-      // [this.form_offer_date]: this.dateConvertion(this.personalDetails[this.form_offer_date]), 
+      [this.form_offer_reference]: this.personalDetails[this.form_offer_reference], 
+      [this.form_offer_date]: this.dateConvertion(this.personalDetails[this.form_offer_date]), 
       [this.form_height]: this.personalDetails[this.form_height], 
       [this.form_weight]: this.personalDetails[this.form_weight], 
       [this.form_identification_mark1]: this.personalDetails[this.form_identification_mark1], 
@@ -339,8 +333,8 @@ export class JoiningPersonalComponent implements OnInit {
       [this.form_email]: [{value: null, disabled: true}, [Validators.required, this.glovbal_validators.email(), RemoveWhitespace.whitespace()]],
       [this.form_aadhar]: [{value: null, disabled: true}, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
       [this.form_pan]: [null, [this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
-      // [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      // [this.form_offer_date]: [null],
+      [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_offer_date]: [null],
       [this.form_height]: [{value: null, disabled: true}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
       [this.form_weight]: [{value: null, disabled: true}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
       [this.form_identification_mark1]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
@@ -400,12 +394,12 @@ export class JoiningPersonalComponent implements OnInit {
   get pan() {
     return this.personalForm.get(this.form_pan);
   }
-  // get offer_reference() {
-  //   return this.personalForm.get(this.form_offer_reference);
-  // }
-  // get offer_date() {
-  //   return this.personalForm.get(this.form_offer_date);
-  // }
+  get offer_reference() {
+    return this.personalForm.get(this.form_offer_reference);
+  }
+  get offer_date() {
+    return this.personalForm.get(this.form_offer_date);
+  }
   get height() {
     return this.personalForm.get(this.form_height);
   }

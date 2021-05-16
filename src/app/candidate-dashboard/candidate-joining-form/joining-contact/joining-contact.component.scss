@@ -138,6 +138,19 @@
     }
 }
 
+.animation {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+.animation-zoom:hover {
+    transform: perspective(1px) scale(1.04);
+    // font-size: 15px;
+    transition: transform .5s ease;
+}
+
 // Common nz-select wrapper
 
 :host ::ng-deep .mat-autocomplete-panel {
@@ -285,4 +298,8 @@
 
 .date-relative {
     position: relative; margin: 0 !important; padding: 0 !important;
+}
+
+:host ::ng-deep .mat-input-element:disabled {
+    background: #EEEEEE !important;
 }

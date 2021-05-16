@@ -205,7 +205,7 @@
                 </div>
             </div>
 
-            <!-- <div class="row-wrapper">
+            <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Offer Reference<span></span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
@@ -235,7 +235,7 @@
                         <div *ngIf="offer_date?.errors?.matDatepickerParse">Invalid Date Format</div>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
@@ -291,7 +291,7 @@
                         <div class="value">Personal Details</div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1" mat-raised-button (click)="formSubmit()">Save &
+                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button (click)="formSubmit()">Save &
                     Continue</button>
                 <div (click)="routeNext()" class="d-flex align-content-center align-items-center text-right position-relative pointer" style="cursor: pointer;">
                     <div class="right-arrow position-absolute"></div>
