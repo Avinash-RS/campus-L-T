@@ -1,6 +1,6 @@
 import { CONSTANT } from './../../../constants/app-constants.service';
 import { GlobalValidatorService } from './../../../custom-form-validators/globalvalidators/global-validator.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -44,7 +44,7 @@ export const MY_FORMATS = {
 })
 
 
-export class JoiningPersonalComponent implements OnInit {
+export class JoiningPersonalComponent implements OnInit, AfterViewInit {
   minDate: Date;
   maxDate: Date;
   url: '';
@@ -123,6 +123,15 @@ export class JoiningPersonalComponent implements OnInit {
     this.getBloodGroup();
     this.getStateAPI();
     this.getPersonalData();
+  }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 
   getPersonalData() {
@@ -216,6 +225,7 @@ export class JoiningPersonalComponent implements OnInit {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
       });
     } else {
+      this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.personalForm);
     }    
@@ -226,6 +236,7 @@ export class JoiningPersonalComponent implements OnInit {
     if (this.personalForm.valid) {
       return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
     }
+    this.ngAfterViewInit();
     this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
   }
 

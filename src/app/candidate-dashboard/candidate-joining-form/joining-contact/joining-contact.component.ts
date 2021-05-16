@@ -6,7 +6,7 @@ import { SharedServiceService } from './../../../services/shared-service.service
 import { AdminServiceService } from './../../../services/admin-service.service';
 import { ApiServiceService } from './../../../services/api-service.service';
 import { AppConfigService } from './../../../config/app-config.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
@@ -14,9 +14,12 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
   templateUrl: './joining-contact.component.html',
   styleUrls: ['./joining-contact.component.scss']
 })
-export class JoiningContactComponent implements OnInit {
+export class JoiningContactComponent implements OnInit, AfterViewInit {
 
   contactForm: FormGroup;
+  allStatesList: any;
+  allPresentCityList: any;
+  allPermanentCityList: any;
   titleDropdownList = [
     {
       id: '0',
@@ -28,22 +31,23 @@ export class JoiningContactComponent implements OnInit {
     }
   ];
   //form Variables
-  form_present_address_1 = 'present_address_1';
-  form_present_address_2 = 'present_address_2';
-  form_present_address_3 = 'present_address_3';
-  form_present_city = 'present_city';
+  form_present_address_1 = 'present_line_street_addres';
+  form_present_address_2 = 'present_line2_street_addre';
+  form_present_address_3 = 'present_address_line_3';
+  form_present_city = 'preset_city';
   form_present_state = 'present_state';
-  form_present_zip_code = 'present_zip_code';
-  form_present_region = 'present_region';
+  form_present_zip_code = 'present_zip';
+  form_present_region = 'present_country';
   form_same_as_checkbox = 'same_as_checkbox';
-  form_permanent_address_1 = 'permanent_address_1';
-  form_permanent_address_2 = 'permanent_address_2';
-  form_permanent_address_3 = 'permanent_address_3';
+  form_permanent_address_1 = 'permanent_line1_street_add';
+  form_permanent_address_2 = 'permanent_line2_street_add';
+  form_permanent_address_3 = 'permanent_address_line_3';
   form_permanent_city = 'permanent_city';
   form_permanent_state = 'permanent_state';
-  form_permanent_zip_code = 'permanent_zip_code';
-  form_permanent_region = 'permanent_region';
+  form_permanent_zip_code = 'permanent_zip';
+  form_permanent_region = 'permanent_country';
 
+  contactDetails: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -57,27 +61,55 @@ export class JoiningContactComponent implements OnInit {
 
   ngOnInit() {
     this.formInitialize();
-    // this.valueChangesForAddress();
+    this.getAllStates();
+    this.getContactDetails();
   }
 
-  updatePermanentAsPerPresent() {
-    this.contactForm.patchValue({
-      [this.form_permanent_address_1]: this.contactForm['value'][this.form_present_address_1] ? this.contactForm['value'][this.form_present_address_1] : null,
-      [this.form_permanent_address_2]: this.contactForm['value'][this.form_present_address_2] ? this.contactForm['value'][this.form_present_address_2] : null,
-      [this.form_permanent_address_3]: this.contactForm['value'][this.form_present_address_3] ? this.contactForm['value'][this.form_present_address_3] : null,
-      [this.form_permanent_city]: this.contactForm['value'][this.form_present_city] ? this.contactForm['value'][this.form_present_city] : null,
-      [this.form_permanent_state]: this.contactForm['value'][this.form_present_state] ? this.contactForm['value'][this.form_present_state] : null,
-      [this.form_permanent_region]: this.contactForm['value'][this.form_present_region] ? this.contactForm['value'][this.form_present_region] : null,
-      [this.form_permanent_zip_code]: this.contactForm['value'][this.form_present_zip_code] ? this.contactForm['value'][this.form_present_zip_code] : null
-    }, { emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_address_1].disable({ emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_address_2].disable({ emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_address_3].disable({ emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_city].disable({ emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_state].disable({ emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_region].disable({ emitEvent: false });
-    // this.contactForm.controls[this.form_permanent_zip_code].disable({ emitEvent: false });
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
+
+  getAllStates() {
+    const datas = {
+      country_id: '101'
+    };
+    this.candidateService.updatedState(datas).subscribe((data: any) => {
+      this.allStatesList = data[0];
+    }, (err) => {
+
+    });
+  }
+
+  getAllPresentCities(id) {
+    const ApiData = {
+      state_id: id
+    };
+    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+      // this.hideCityDropDown = false;
+      this.appConfig.hideLoader();
+      this.allPresentCityList = datas[0];
+    }, (err) => {
+    });
+  }
+
+  getAllPermanentCities(id) {
+    const ApiData = {
+      state_id: id
+    };
+    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+      // this.hideCityDropDown = false;
+      this.appConfig.hideLoader();
+      this.allPermanentCityList = datas[0];
+    }, (err) => {
+    });
+  }
+
+
 
   matchangeYes(e) {
     if (e.checked) {
@@ -87,14 +119,26 @@ export class JoiningContactComponent implements OnInit {
     }
   }
 
+  getContactDetails() {
+    this.appConfig.showLoader();
+    this.candidateService.joiningFormGetContactDetails().subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.contactDetails = data ? data : null;
+      if (this.contactDetails) {
+        this.patchContactForm();
+      }
+    });
+  }
+
   formSubmit() {
     if (this.contactForm['value'][this.form_same_as_checkbox]) {
-        this.updatePermanentAsPerPresent();      
+      this.updatePermanentAsPerPresent();
     }
     if (this.contactForm.valid) {
       this.appConfig.nzNotification('success', 'Saved', 'Contact details has been updated');
       console.log(this.contactForm.value);
     } else {
+      this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.contactForm);
     }
@@ -105,9 +149,40 @@ export class JoiningContactComponent implements OnInit {
       if (route == 'personal') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
       }
-      return
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
     }
+    this.glovbal_validators.validateAllFields(this.contactForm);
     this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+  }
+
+  async patchContactForm() {
+    this.contactForm.patchValue({
+      [this.form_present_address_1]: this.contactDetails[this.form_present_address_1],
+      [this.form_present_address_2]: this.contactDetails[this.form_present_address_2],
+      [this.form_present_address_3]: this.contactDetails[this.form_present_address_3],
+      [this.form_present_city]: this.contactDetails[this.form_present_city],
+      [this.form_present_state]: this.contactDetails[this.form_present_state],
+      [this.form_present_region]: this.contactDetails[this.form_present_region],
+      [this.form_present_zip_code]: this.contactDetails[this.form_present_zip_code],
+      [this.form_same_as_checkbox]: this.contactDetails[this.form_same_as_checkbox],
+      [this.form_permanent_address_1]: this.contactDetails[this.form_permanent_address_1],
+      [this.form_permanent_address_2]: this.contactDetails[this.form_permanent_address_2],
+      [this.form_permanent_address_3]: this.contactDetails[this.form_permanent_address_3],
+      [this.form_permanent_city]: this.contactDetails[this.form_permanent_city],
+      [this.form_permanent_state]: this.contactDetails[this.form_permanent_state],
+      [this.form_permanent_region]: this.contactDetails[this.form_permanent_region],
+      [this.form_permanent_zip_code]: this.contactDetails[this.form_permanent_zip_code]
+    });
+    this.disableOrEnableState(this.form_present_state);
+    this.disableOrEnableState(this.form_permanent_state);
+    this.patchApiCityId();
+  }
+
+  patchApiCityId() {
+    this.contactForm.patchValue({
+      [this.form_present_city]: this.contactDetails[this.form_present_city],
+      [this.form_permanent_city]: this.contactDetails[this.form_permanent_city]
+    })
   }
 
   formInitialize() {
@@ -115,7 +190,7 @@ export class JoiningContactComponent implements OnInit {
       [this.form_present_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_present_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_present_address_3]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_present_city]: [null],
+      [this.form_present_city]: [{ value: null, disabled: true }],
       [this.form_present_state]: [null],
       [this.form_present_region]: [null],
       [this.form_present_zip_code]: [null, [this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]],
@@ -123,7 +198,7 @@ export class JoiningContactComponent implements OnInit {
       [this.form_permanent_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_permanent_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_permanent_address_3]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_permanent_city]: [null],
+      [this.form_permanent_city]: [{ value: null, disabled: true }],
       [this.form_permanent_state]: [null],
       [this.form_permanent_region]: [null],
       [this.form_permanent_zip_code]: [null, [this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]]
@@ -177,6 +252,25 @@ export class JoiningContactComponent implements OnInit {
     return this.contactForm.get(this.form_permanent_region);
   }
 
+  updatePermanentAsPerPresent() {
+    this.contactForm.patchValue({
+      [this.form_permanent_address_1]: this.contactForm['value'][this.form_present_address_1] ? this.contactForm['value'][this.form_present_address_1] : null,
+      [this.form_permanent_address_2]: this.contactForm['value'][this.form_present_address_2] ? this.contactForm['value'][this.form_present_address_2] : null,
+      [this.form_permanent_address_3]: this.contactForm['value'][this.form_present_address_3] ? this.contactForm['value'][this.form_present_address_3] : null,
+      [this.form_permanent_city]: this.contactForm['value'][this.form_present_city] ? this.contactForm['value'][this.form_present_city] : null,
+      [this.form_permanent_state]: this.contactForm['value'][this.form_present_state] ? this.contactForm['value'][this.form_present_state] : null,
+      [this.form_permanent_region]: this.contactForm['value'][this.form_present_region] ? this.contactForm['value'][this.form_present_region] : null,
+      [this.form_permanent_zip_code]: this.contactForm['value'][this.form_present_zip_code] ? this.contactForm['value'][this.form_present_zip_code] : null
+    }, { emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_address_1].disable({ emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_address_2].disable({ emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_address_3].disable({ emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_city].disable({ emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_state].disable({ emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_region].disable({ emitEvent: false });
+    // this.contactForm.controls[this.form_permanent_zip_code].disable({ emitEvent: false });
+  }
+
   releaseDisabledValue() {
     this.contactForm.controls[this.form_permanent_address_1].enable({ emitEvent: false });
     this.contactForm.controls[this.form_permanent_address_2].enable({ emitEvent: false });
@@ -186,14 +280,50 @@ export class JoiningContactComponent implements OnInit {
     this.contactForm.controls[this.form_permanent_region].enable({ emitEvent: false });
     this.contactForm.controls[this.form_permanent_zip_code].enable({ emitEvent: false });
   }
-  // Value changes to check present and permanent are same
-  valueChangesForAddress() {
-    this.contactForm.valueChanges.subscribe((data: any) => {
-      if (data[this.form_same_as_checkbox]) {
-        return this.updatePermanentAsPerPresent();
-      } else {
-        return this.releaseDisabledValue();
+  disablePresentCity() {
+    this.contactForm.patchValue({
+      [this.form_present_city]: null,
+    }), { emitEvent: false };
+    return this.contactForm.controls[this.form_present_city].disable({ emitEvent: false });
+  }
+  enablePresentCity(id) {
+    this.contactForm.controls[this.form_present_city].enable({ emitEvent: false });
+    return this.getAllPresentCities(id);
+  }
+  disablePermanentCity() {
+    this.contactForm.patchValue({
+      [this.form_permanent_city]: null,
+    }), { emitEvent: false };
+    return this.contactForm.controls[this.form_permanent_city].disable({ emitEvent: false });
+  }
+  enablePermanentCity(id) {
+    this.contactForm.controls[this.form_permanent_city].enable({ emitEvent: false });
+    return this.getAllPermanentCities(id);
+  }
+
+  disableOrEnableState(formField) {
+    if (this.form_present_state == formField) {
+      if (this.contactForm['value'][formField]) {
+        return this.enablePresentCity(this.contactForm['value'][formField]);
       }
+      this.disablePresentCity();
+    } else {
+      if (this.contactForm['value'][formField]) {
+        return this.enablePermanentCity(this.contactForm['value'][formField]);
+      }
+      this.disablePermanentCity();
+    }
+  }
+
+  // Value changes to check present and permanent are same
+  valueChanges() {
+    this.contactForm.valueChanges.subscribe((data: any) => {
+      // Below is for automatic update of permanent address
+      // if (data[this.form_same_as_checkbox]) {
+      //   return this.updatePermanentAsPerPresent();
+      // } else {
+      //   return this.releaseDisabledValue();
+      // }
     });
   }
 

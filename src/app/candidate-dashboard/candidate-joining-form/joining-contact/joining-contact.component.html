@@ -1,3 +1,4 @@
+<div id="top"></div>
 <div class="joining-personal-wrapper">
     <h5>
         Contact Details
@@ -46,25 +47,25 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Present City<span></span></label>
-                    <nz-select class="input select" [formControlName]="form_present_city" nzAllowClear nzShowSearch
-                        nzPlaceHolder="Select">
-                        <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                            [nzValue]="title.value"></nz-option>
-                    </nz-select>
-                    <div class="form-error" *ngIf="present_city?.invalid && present_city?.touched">
-                        <div *ngIf="present_city?.errors?.required">Present city is Required</div>
-                    </div>
-                </div>
-                <div class="overall-input-wrapper width-45">
                     <label>Present State/Province<span></span></label>
-                    <nz-select class="input select" [formControlName]="form_present_state" nzAllowClear nzShowSearch
+                    <nz-select class="input select" (ngModelChange)="disableOrEnableState(form_present_state)" [formControlName]="form_present_state" nzAllowClear nzShowSearch
                         nzPlaceHolder="Select">
-                        <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                            [nzValue]="title.value"></nz-option>
+                        <nz-option *ngFor="let state of allStatesList" [nzLabel]="state.name"
+                            [nzValue]="state.id"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="present_state?.invalid && present_state?.touched">
                         <div *ngIf="present_state?.errors?.required">Present state is Required</div>
+                    </div>
+                </div>
+                <div [matTooltip]="contactForm.value[form_present_state] ? '' : 'Select State and then select city'" class="overall-input-wrapper width-45">
+                    <label>Present City<span></span></label>
+                    <nz-select class="input select" [formControlName]="form_present_city" nzAllowClear nzShowSearch
+                        nzPlaceHolder="Select">
+                        <nz-option *ngFor="let city of allPresentCityList" [nzLabel]="city.name"
+                            [nzValue]="city.id"></nz-option>
+                    </nz-select>
+                    <div class="form-error" *ngIf="present_city?.invalid && present_city?.touched">
+                        <div *ngIf="present_city?.errors?.required">Present city is Required</div>
                     </div>
                 </div>
             </div>
@@ -141,25 +142,25 @@
 
 <div class="row-wrapper">
     <div class="overall-input-wrapper width-45">
-        <label>Permanent City<span></span></label>
-        <nz-select class="input select" [formControlName]="form_permanent_city" nzAllowClear nzShowSearch
-            nzPlaceHolder="Select">
-            <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                [nzValue]="title.value"></nz-option>
-        </nz-select>
-        <div class="form-error" *ngIf="permanent_city?.invalid && permanent_city?.touched">
-            <div *ngIf="permanent_city?.errors?.required">Permanent city is Required</div>
-        </div>
-    </div>
-    <div class="overall-input-wrapper width-45">
         <label>Permanent State/Province<span></span></label>
-        <nz-select class="input select" [formControlName]="form_permanent_state" nzAllowClear nzShowSearch
+        <nz-select class="input select" (ngModelChange)="disableOrEnableState(form_permanent_state)" [formControlName]="form_permanent_state" nzAllowClear nzShowSearch
             nzPlaceHolder="Select">
-            <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                [nzValue]="title.value"></nz-option>
+            <nz-option *ngFor="let state of allStatesList" [nzLabel]="state.name"
+                [nzValue]="state.id"></nz-option>
         </nz-select>
         <div class="form-error" *ngIf="permanent_state?.invalid && permanent_state?.touched">
             <div *ngIf="permanent_state?.errors?.required">Permanent state is Required</div>
+        </div>
+    </div>
+    <div [matTooltip]="contactForm.value[form_permanent_state] ? '' : 'Select State and then select city'" class="overall-input-wrapper width-45">
+        <label>Permanent City<span></span></label>
+        <nz-select class="input select" [formControlName]="form_permanent_city" nzAllowClear nzShowSearch
+            nzPlaceHolder="Select">
+            <nz-option *ngFor="let city of allPermanentCityList" [nzLabel]="city.name"
+                [nzValue]="city.id"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="permanent_city?.invalid && permanent_city?.touched">
+            <div *ngIf="permanent_city?.errors?.required">Permanent city is Required</div>
         </div>
     </div>
 </div>

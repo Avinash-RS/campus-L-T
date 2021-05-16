@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
@@ -41,7 +42,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class JoiningDependentComponent implements OnInit {
+export class JoiningDependentComponent implements OnInit, AfterViewInit {
 
   dependentForm: FormGroup;
   minDate: Date;
@@ -109,7 +110,16 @@ export class JoiningDependentComponent implements OnInit {
 
   ngOnInit() {
     this.formInitialize();
-      this.patchDependentForm();
+    this.patchDependentForm();
+  }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 
   getDependentApiValues() {
@@ -141,18 +151,25 @@ dateConvertion(date) {
 }
 
   formSubmit() {
-    console.log('form', this.dependentForm.value);
-    
     if(this.dependentForm.valid) {
 
     } else {
+      this.ngAfterViewInit();
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
     }
 
   }
 
   routeNext(route) {
-
+    if (this.dependentForm.valid) {
+      if (route == 'contact') {
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+      }
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+    }
+    this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
+    this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
   }
 
   patchDependentForm() {

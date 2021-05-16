@@ -133,12 +133,12 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 // }
 
 
-html,
-body {
+html {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: Roboto Condensed !important;
+  // scroll-behavior: smooth !important;
 }
 body {
   margin: 0;
@@ -2644,3 +2644,10 @@ th {
 //   -webkit-transform-style: preserve-3d;
 //   -webkit-backface-visibility: hidden;
 // }
+.joining-personal-wrapper {
+  padding-top: 1em;
+}
+
+:root {
+  scroll-behavior: smooth;
+}

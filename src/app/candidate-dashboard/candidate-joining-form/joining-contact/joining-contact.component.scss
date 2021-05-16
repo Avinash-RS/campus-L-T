@@ -300,6 +300,6 @@
     position: relative; margin: 0 !important; padding: 0 !important;
 }
 
-:host ::ng-deep .mat-input-element:disabled {
+:host ::ng-deep .mat-input-element:disabled, :host ::ng-deep .ant-select-disabled {
     background: #EEEEEE !important;
 }
