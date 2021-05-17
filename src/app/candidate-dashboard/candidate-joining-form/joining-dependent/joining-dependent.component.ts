@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
@@ -42,8 +43,9 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class JoiningDependentComponent implements OnInit, AfterViewInit {
+export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  sendPopupResultSubscription: Subscription;
   dependentForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -106,11 +108,13 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit {
     private glovbal_validators: GlobalValidatorService
   ) { 
     this.dateValidation();
+    this.sharedService.joiningFormActiveSelector.next('dependent');
   }
 
   ngOnInit() {
     this.formInitialize();
     this.patchDependentForm();
+    this.saveRequestRxJs();
   }
 
   ngAfterViewInit() {
@@ -150,9 +154,10 @@ dateConvertion(date) {
   }
 }
 
-  formSubmit() {
+  formSubmit(routeValue?: any) {
     if(this.dependentForm.valid) {
-
+      this.sharedService.joiningFormStepperStatus.next();
+      return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -161,15 +166,30 @@ dateConvertion(date) {
 
   }
 
+  saveRequestRxJs() {
+    this.sendPopupResultSubscription =  this.sharedService.sendPopupResult.subscribe((result: any)=> {
+      
+      if (result.result == 'save') {
+      this.formSubmit(result.route);
+      }     
+    });
+  }
+
   routeNext(route) {
     if (this.dependentForm.valid) {
-      if (route == 'contact') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+      if (!this.dependentForm.dirty) {
+        if (route == 'contact') {
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+        }
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+      } else {
+       return this.sharedService.openJoiningRoutePopUp.next(route == 'contact' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       }
-      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+    } else {
+      this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
+      this.ngAfterViewInit();
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
     }
-    this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
-    this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
   }
 
   patchDependentForm() {
@@ -239,5 +259,8 @@ dateConvertion(date) {
   return this.dependentForm.get(this.form_dependent_status);
   }
 
+  ngOnDestroy() {
+    this.sendPopupResultSubscription.unsubscribe();
+  }
 
 }

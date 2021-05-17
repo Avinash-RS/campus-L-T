@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { CONSTANT } from './../../../constants/app-constants.service';
 import { GlobalValidatorService } from './../../../custom-form-validators/globalvalidators/global-validator.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -44,7 +45,8 @@ export const MY_FORMATS = {
 })
 
 
-export class JoiningPersonalComponent implements OnInit, AfterViewInit {
+export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestroy {
+  sendPopupResultSubscription: Subscription;
   minDate: Date;
   maxDate: Date;
   url: '';
@@ -116,6 +118,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit {
     private glovbal_validators: GlobalValidatorService
   ) { 
     this.dateValidation();
+    this.sharedService.joiningFormActiveSelector.next('personal');
   }
 
   ngOnInit() {
@@ -123,6 +126,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit {
     this.getBloodGroup();
     this.getStateAPI();
     this.getPersonalData();
+    this.saveRequestRxJs();
   }
 
   ngAfterViewInit() {
@@ -189,7 +193,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit {
     }
   }
 
-  formSubmit() {
+  formSubmit(routeValue?:any) {
     if (this.personalForm.valid) {      
       let rawPersonalFormValue = this.personalForm.getRawValue();
       const apiData = {
@@ -222,6 +226,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit {
       this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
         this.appConfig.hideLoader();
         this.appConfig.nzNotification('success', 'Saved', 'Personal details has been updated');
+        this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
       });
     } else {
@@ -232,12 +237,26 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit {
   }
 
 
+  saveRequestRxJs() {
+    this.sendPopupResultSubscription = this.sharedService.sendPopupResult.subscribe((result: any)=> {
+      if (result.result == 'save') {
+      this.formSubmit(result.route);
+      }     
+    });
+  }
+
   routeNext() {
     if (this.personalForm.valid) {
-      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
-    }
+      if (!this.personalForm.dirty) {
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+      } else {
+       return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+      }
+    } else {
+    this.glovbal_validators.validateAllFields(this.personalForm);
     this.ngAfterViewInit();
     this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+    }
   }
 
   async onSelectFile(event) {
@@ -424,5 +443,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit {
     return this.personalForm.get(this.form_identification_mark2);
   }
 
-
+ngOnDestroy() {
+  this.sendPopupResultSubscription.unsubscribe();
+}
 }

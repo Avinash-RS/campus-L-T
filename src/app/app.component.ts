@@ -73,10 +73,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getScreenSize();
+    // this.getScreenSize();
     this.checkIE();
   }
-  @HostListener('window:resize', ['$event'])
+  // @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;

@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { GlobalValidatorService } from './../../../custom-form-validators/globalvalidators/global-validator.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,7 +7,7 @@ import { SharedServiceService } from './../../../services/shared-service.service
 import { AdminServiceService } from './../../../services/admin-service.service';
 import { ApiServiceService } from './../../../services/api-service.service';
 import { AppConfigService } from './../../../config/app-config.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
@@ -14,8 +15,9 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
   templateUrl: './joining-contact.component.html',
   styleUrls: ['./joining-contact.component.scss']
 })
-export class JoiningContactComponent implements OnInit, AfterViewInit {
+export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  sendPopupResultSubscription: Subscription;
   contactForm: FormGroup;
   allStatesList: any;
   allPresentCityList: any;
@@ -53,12 +55,14 @@ export class JoiningContactComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
+    this.sharedService.joiningFormActiveSelector.next('contact');
   }
 
   ngOnInit() {
     this.formInitialize();
     this.getAllStates();
     this.getContactDetails();
+    this.saveRequestRxJs();
   }
 
   ngAfterViewInit() {
@@ -126,29 +130,45 @@ export class JoiningContactComponent implements OnInit, AfterViewInit {
     });
   }
 
-  formSubmit() {
+  formSubmit(routeValue?: any) {
     if (this.contactForm['value'][this.form_same_as_checkbox]) {
       this.updatePermanentAsPerPresent();
     }
     if (this.contactForm.valid) {
       this.appConfig.nzNotification('success', 'Saved', 'Contact details has been updated');
-      console.log(this.contactForm.value);
+      this.sharedService.joiningFormStepperStatus.next();
+      return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.contactForm);
     }
-
   }
+
+  saveRequestRxJs() {
+    this.sendPopupResultSubscription = this.sharedService.sendPopupResult.subscribe((result: any)=> {
+     if (result.result == 'save') {
+            this.formSubmit(result.route);
+      }     
+    });
+  }
+
   routeNext(route) {
     if (this.contactForm.valid) {
-      if (route == 'personal') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+      console.log('contact', this.contactForm);
+      if (!this.contactForm.dirty) {
+        if (route == 'personal') {
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+        }
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+      } else {
+       return this.sharedService.openJoiningRoutePopUp.next(route == 'personal' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
       }
-      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+    } else {
+      this.glovbal_validators.validateAllFields(this.contactForm);
+      this.ngAfterViewInit();
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
     }
-    this.glovbal_validators.validateAllFields(this.contactForm);
-    this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
   }
 
   async patchContactForm() {
@@ -323,4 +343,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngOnDestroy() {
+    this.sendPopupResultSubscription.unsubscribe();
+  }
 }
