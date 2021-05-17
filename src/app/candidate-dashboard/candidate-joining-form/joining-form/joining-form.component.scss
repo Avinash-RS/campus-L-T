@@ -40,11 +40,15 @@
                 }
                 li.active {
                     color: $primary-red;
-                    transition: .5s ease-out;
+                    transition: color .5s ease-out;
+                }
+                li.routeActive {
+                    color: $primary-red;
+                    transition: color .5s ease-out;
                 }
                 li.valid {
-                    // color: $primary-red;
-                    // transition: .5s ease-out;
+                    color: #228B22;
+                    transition: color .5s ease-out;
                 }
                 li.active::before {
                     border: none;
@@ -55,6 +59,14 @@
                     border: none;
                     background: #32BA7C !important;
                     transition: 180ms linear;
+                }
+                .noCursor {
+                    cursor: not-allowed;
+                    // pointer-events: none;
+                }
+                .noCursor:active {
+                    // cursor: not-allowed;
+                    pointer-events: none;
                 }
 
             }

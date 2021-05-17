@@ -259,6 +259,12 @@ export class CandidateMappersService {
       return this.http.get(`${this.BASE_URL}/profile/bg_list`, { headers: this.withoutTokens(), withCredentials: true });
     }
 
+    FormStatus() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/saved_details?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+ 
     joiningFormGetPersonalDetails() {
      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
       return this.http.get(`${this.BASE_URL}/profile/personal_pageload?user_id=${userId}`,

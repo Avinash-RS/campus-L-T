@@ -84,8 +84,8 @@
                     <label>Present Country/Region<span></span></label>
                     <nz-select class="input select" [formControlName]="form_present_region" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
-                        <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                            [nzValue]="title.value"></nz-option>
+                        <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"
+                        [nzValue]="region.value"></nz-option>        
                     </nz-select>
                     <div class="form-error" *ngIf="present_region?.invalid && present_region?.touched">
                         <div *ngIf="present_region?.errors?.required">Present country is Required</div>
@@ -179,8 +179,8 @@
         <label>Permanent Country/Region<span></span></label>
         <nz-select class="input select" [formControlName]="form_permanent_region" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">
-            <nz-option *ngFor="let title of titleDropdownList" [nzLabel]="title.value"
-                [nzValue]="title.value"></nz-option>
+            <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"
+                [nzValue]="region.value"></nz-option>
         </nz-select>
         <div class="form-error" *ngIf="permanent_region?.invalid && permanent_region?.touched">
             <div *ngIf="permanent_region?.errors?.required">Permanent country is Required</div>

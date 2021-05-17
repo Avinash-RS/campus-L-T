@@ -14,3 +14,5 @@
  "field_specification": ["B.E."], 
  "user_id": [] 
 }
+http://campus-qa.lntedutech.com/d8cintana2/profile/saved_details?user_id=15828 
+http://campus-qa.lntedutech.com/d8cintana2/profile/contact_pageload?user_id=15828

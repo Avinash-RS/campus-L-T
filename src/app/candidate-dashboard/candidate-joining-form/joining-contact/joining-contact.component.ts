@@ -20,14 +20,10 @@ export class JoiningContactComponent implements OnInit, AfterViewInit {
   allStatesList: any;
   allPresentCityList: any;
   allPermanentCityList: any;
-  titleDropdownList = [
+  regionList = [
     {
-      id: '0',
-      value: 'Mr.'
-    },
-    {
-      id: '1',
-      value: 'Ms.'
+      label: 'India',
+      value: 'India'
     }
   ];
   //form Variables
