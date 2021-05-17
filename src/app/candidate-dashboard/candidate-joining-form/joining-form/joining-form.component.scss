@@ -120,21 +120,28 @@
             text-align: center;
         }
         .button-wrapper-form-pop-up {
-            display: flex;
-            margin: 1em 0;
-            justify-content: center;
-            button {
-                background-color: $primary-red;
-                color: white;
-                line-height: 2.3;
-                border-radius: 2px;
+        display: grid;
+        margin: 1em 0 0.5em 0;
+        grid-template-columns: 110px 110px 110px;
+        justify-content: center;
+        width: 100%;
+        justify-items: center;
+            .b1,.b2,.b3 {
+                border: 1px solid $primary-red;
+                background-color: $white;
+                color: #666666;
+                line-height: 2;
+                border-radius: 4px;
                 font-size: 14px;
+                /* "to left" / "to right" - affects initial color */
+                background: linear-gradient(to left, white 50%, $primary-red 50%) right;
+                background-size: 200%;
+                transition: .5s ease-out;
+                width: 90px;
             }
-            button:nth-of-type(2) {
-                margin: 0 1em;
-            }
-            button:hover {
-                background-color: #961111;
+            .b1:hover,.b2:hover,.b3:hover {
+                background-position: left;
+                color: white;
             }
             .animation {
                 -webkit-transform: translateZ(0);
