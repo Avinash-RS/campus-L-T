@@ -94,7 +94,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   stepperStatus() {
     this.sharedService.joiningFormStepperStatus.subscribe((data: any)=> {
-      this.statusOfForms('noRouting');
+      this.statusOfForms('data');
     });
   }
 
@@ -106,29 +106,31 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
       data?.upload_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
       data?.preview_details == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
+      
       if (data.dependent_details == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
-       return this.activeStep = 'education', this.routingSelection = 'education';
+       return this.activeStep = 'education';//, this.routingSelection = param ? param : 'education';
       }
       if (data.contact_details == '1') {
         this.valid.tillContact();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
-        return this.activeStep = 'dependent', this.routingSelection = 'dependent';
+        return this.activeStep = 'dependent';//, this.routingSelection = param ? param : 'dependent';
       }
       if (data.personal_details == '1') {
         this.valid.tillPersonal();        
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
-        return this.activeStep = 'contact', this.routingSelection = 'contact';
+        return this.activeStep = 'contact';//, this.routingSelection = param ? param : 'contact';
       }
       else {
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
-        return this.activeStep = 'personal', this.routingSelection = 'personal';
+        return this.activeStep = 'personal';//, this.routingSelection = param ? param : 'personal';
       }
     });
   }
 
   validCheck(clickedStep) {
+    
     if (clickedStep == 'personal') {
       if (this.routingSelection != 'personal') {
         let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL}

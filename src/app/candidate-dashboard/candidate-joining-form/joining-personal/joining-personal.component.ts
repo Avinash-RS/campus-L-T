@@ -119,7 +119,6 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     private glovbal_validators: GlobalValidatorService
   ) { 
     this.dateValidation();
-    this.sharedService.joiningFormActiveSelector.next('personal');
   }
 
   ngOnInit() {
@@ -128,9 +127,11 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.getStateAPI();
     this.getPersonalData();
     this.saveRequestRxJs();
+    this.checkFormValidRequestFromRxjs();
   }
 
   ngAfterViewInit() {
+    this.sharedService.joiningFormActiveSelector.next('personal');
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -250,7 +251,6 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
       if(data.current == 'personal') {
         if (!this.personalForm.dirty) {
-          this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(data.goto);
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
@@ -262,7 +262,6 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   routeNext() {
       if(this.personalForm.valid || this.appConfig.getLocalData('personal') == '1') {
       if (!this.personalForm.dirty) {
-        this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
        return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);

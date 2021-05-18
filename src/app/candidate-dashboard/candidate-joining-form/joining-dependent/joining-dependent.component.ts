@@ -109,16 +109,17 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     private glovbal_validators: GlobalValidatorService
   ) { 
     this.dateValidation();
-    this.sharedService.joiningFormActiveSelector.next('dependent');
   }
 
   ngOnInit() {
     this.formInitialize();
     this.patchDependentForm();
     this.saveRequestRxJs();
+    this.checkFormValidRequestFromRxjs();
   }
 
   ngAfterViewInit() {
+    this.sharedService.joiningFormActiveSelector.next('dependent');
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -180,7 +181,6 @@ dateConvertion(date) {
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
       if(data.current == 'dependent') {
         if (!this.dependentForm.dirty) {
-          this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(data.goto);
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
@@ -192,14 +192,12 @@ dateConvertion(date) {
   routeNext(route) {
     if (!this.dependentForm.dirty) {
       if (route == 'contact') {
-        this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
         if (this.dependentForm.valid || this.appConfig.getLocalData('dependent') == '1') {
-          this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
         } else {
-          this.glovbal_validators.validateAllFields(this.dependentForm);
+          this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
           this.ngAfterViewInit();
           this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
         }

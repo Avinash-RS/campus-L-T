@@ -8,7 +8,7 @@
         margin-right: 0em;
         width: 230px !important;
         min-width: 230px !important;
-        position: relative;
+        position: fixed;
         .stepper-wrapper {
             margin-top: .5em;
             position: absolute;
@@ -105,6 +105,7 @@
 }
 
 .router {
+    margin-left: 230px;
     width: 100%;
 }
 

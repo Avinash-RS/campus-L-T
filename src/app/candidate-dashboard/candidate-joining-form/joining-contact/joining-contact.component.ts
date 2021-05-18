@@ -56,7 +56,6 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
-    this.sharedService.joiningFormActiveSelector.next('contact');
   }
 
   ngOnInit() {
@@ -68,6 +67,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
+    this.sharedService.joiningFormActiveSelector.next('contact');
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -182,7 +182,6 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
       if(data.current == 'contact') {
         if (!this.contactForm.dirty) {
-          this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(data.goto);
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
@@ -194,11 +193,9 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   routeNext(route) {
     if (!this.contactForm.dirty) {
       if (route == 'personal') {
-        this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
       } else {
         if (this.contactForm.valid || this.appConfig.getLocalData('contact') == '1') {
-          this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
         } else {
           this.glovbal_validators.validateAllFields(this.contactForm);
