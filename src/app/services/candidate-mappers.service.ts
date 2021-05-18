@@ -281,5 +281,12 @@ export class CandidateMappersService {
        return this.http.get(`${this.BASE_URL}/profile/contact_pageload?user_id=${userId}`,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
+
+     joiningFormGetContactDetailsSave(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/contact_page?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
  
 }

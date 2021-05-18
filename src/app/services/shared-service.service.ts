@@ -19,4 +19,5 @@ export class SharedServiceService {
   sendPopupResult = new Subject();
   joiningFormActiveSelector = new Subject();
   joiningFormStepperStatus = new Subject();
+  StepperNavigationCheck = new Subject();
 }

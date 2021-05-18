@@ -55,6 +55,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   routingSelection: any;
   requestnavigationRoute: any;
+  noSave: boolean;
   constructor(
     private appConfig: AppConfigService,
     private candidateService: CandidateMappersService,
@@ -67,12 +68,24 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.removeLocalStorage();
     this.statusOfForms();
     this.openPopupRequest();
     this.activeSelectorRxJs();
     this.stepperStatus();
   }
 
+  removeLocalStorage() {
+    this.appConfig.clearLocalDataOne('kycForm');
+    this.appConfig.clearLocalDataOne('educationalFormSubmitted');
+    this.appConfig.clearLocalDataOne('personalFormSubmitted');
+    this.appConfig.clearLocalDataOne('confirmClick');
+    this.appConfig.clearLocalDataOne('field_isformsubmitted');
+    this.appConfig.clearLocalDataOne('familyFormSubmitted');
+    this.appConfig.clearLocalDataOne('confirmFormSubmitted');
+    this.appConfig.clearLocalDataOne('KYCAPI');
+    this.appConfig.clearLocalDataOne('generalFormSubmitted');
+  }
   activeSelectorRxJs() {
     this.sharedService.joiningFormActiveSelector.subscribe((data: any)=> {
       this.routingSelection = data ? data : this.routingSelection;
@@ -87,6 +100,12 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   statusOfForms(param?: any) {
     this.candidateService.FormStatus().subscribe((data: any)=> {
+      data?.personal_details == '1' ? this.appConfig.setLocalData('personal', '1') : this.appConfig.setLocalData('personal', '0');
+      data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
+      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
+      data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
+      data?.upload_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
+      data?.preview_details == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
       if (data.dependent_details == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
@@ -111,16 +130,32 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   validCheck(clickedStep) {
     if (clickedStep == 'personal') {
-     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+      if (this.routingSelection != 'personal') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+    //  this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
     }
     if (clickedStep == 'contact') {
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+      if (this.routingSelection != 'contact') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+      // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
     }
     if (clickedStep == 'dependent') {
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+      if (this.routingSelection != 'dependent') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+      // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
     }
     if (clickedStep == 'education') {
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+      if (this.routingSelection != 'education') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+      // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
     
     // array.forEach(element => {
@@ -169,12 +204,40 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   openPopupRequest() {
     this.openJoiningRoutePopUpSubscribe = this.sharedService.openJoiningRoutePopUp.subscribe((route: any)=> {
-      
+      this.noSave = false;
       this.requestnavigationRoute = route;
+      this.noSave = this.checkSaveOption(route) == true ? true : false;
       this.openMatDialog();
     });
   }
 
+  checkSaveOption(route) {
+    if (this.activeStep == 'personal') {
+      if (route.includes('contact')) {
+        return true;
+      }  
+    }
+    if (this.activeStep == 'contact') {
+      if (route.includes('dependent')) {
+        return true;
+      }  
+    }
+    if (this.activeStep == 'dependent') {
+      if (route.includes('education')) {
+        return true;
+      }  
+    }
+    if (this.activeStep == 'education') {
+      if (route.includes('preview')) {
+        return true;
+      }  
+    }
+    if (this.activeStep == 'preview') {
+      if (route.includes('submit')) {
+        return true;
+      }  
+    }
+  }
   ngOnDestroy() {
     this.openJoiningRoutePopUpSubscribe.unsubscribe();
   }

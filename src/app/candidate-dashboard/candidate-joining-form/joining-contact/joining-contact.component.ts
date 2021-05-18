@@ -17,6 +17,7 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 })
 export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
   contactForm: FormGroup;
   allStatesList: any;
@@ -25,7 +26,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   regionList = [
     {
       label: 'India',
-      value: 'India'
+      value: '101'
     }
   ];
   //form Variables
@@ -63,6 +64,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.getAllStates();
     this.getContactDetails();
     this.saveRequestRxJs();
+    this.checkFormValidRequestFromRxjs();
   }
 
   ngAfterViewInit() {
@@ -135,9 +137,32 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       this.updatePermanentAsPerPresent();
     }
     if (this.contactForm.valid) {
-      this.appConfig.nzNotification('success', 'Saved', 'Contact details has been updated');
-      this.sharedService.joiningFormStepperStatus.next();
-      return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+      let rawContactFormValue = this.contactForm.getRawValue();
+      // form_same_as_checkbox = 'same_as_checkbox';
+        const apiData = {
+        [this.form_present_address_1]: rawContactFormValue[this.form_present_address_1],
+        [this.form_present_address_2]: rawContactFormValue[this.form_present_address_2],
+        [this.form_present_address_3]: rawContactFormValue[this.form_present_address_3],
+        [this.form_present_city]: rawContactFormValue[this.form_present_city],
+        [this.form_present_state]: rawContactFormValue[this.form_present_state],
+        [this.form_present_zip_code]: rawContactFormValue[this.form_present_zip_code],
+        [this.form_permanent_address_1]: rawContactFormValue[this.form_permanent_address_1],
+        [this.form_permanent_address_2]: rawContactFormValue[this.form_permanent_address_2],
+        [this.form_permanent_city]: rawContactFormValue[this.form_permanent_city],
+        [this.form_permanent_state]: rawContactFormValue[this.form_permanent_state],
+        [this.form_permanent_zip_code]: rawContactFormValue[this.form_permanent_zip_code],
+        [this.form_present_region]: rawContactFormValue[this.form_present_region],
+        [this.form_permanent_address_3]: rawContactFormValue[this.form_permanent_address_3],
+        [this.form_permanent_region]: rawContactFormValue[this.form_permanent_region],
+        [this.form_same_as_checkbox]: rawContactFormValue[this.form_same_as_checkbox] ? rawContactFormValue[this.form_same_as_checkbox] : false,
+        user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+        }
+        this.candidateService.joiningFormGetContactDetailsSave(apiData).subscribe((data: any)=> {
+          this.appConfig.hideLoader();
+          this.appConfig.nzNotification('success', 'Saved', 'Contact details has been updated');
+          this.sharedService.joiningFormStepperStatus.next();
+          return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);    
+      });
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -153,25 +178,40 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
-  routeNext(route) {
-    if (this.contactForm.valid) {
-      console.log('contact', this.contactForm);
-      if (!this.contactForm.dirty) {
-        if (route == 'personal') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+  checkFormValidRequestFromRxjs() {
+    this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
+      if(data.current == 'contact') {
+        if (!this.contactForm.dirty) {
+          this.sharedService.joiningFormStepperStatus.next();
+          return this.appConfig.routeNavigation(data.goto);
+        } else {
+          return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+      } 
+    });
+  }
+
+  routeNext(route) {
+    if (!this.contactForm.dirty) {
+      if (route == 'personal') {
+        this.sharedService.joiningFormStepperStatus.next();
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
       } else {
-       return this.sharedService.openJoiningRoutePopUp.next(route == 'personal' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+        if (this.contactForm.valid || this.appConfig.getLocalData('contact') == '1') {
+          this.sharedService.joiningFormStepperStatus.next();
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+        } else {
+          this.glovbal_validators.validateAllFields(this.contactForm);
+          this.ngAfterViewInit();
+          this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+        }
       }
     } else {
-      this.glovbal_validators.validateAllFields(this.contactForm);
-      this.ngAfterViewInit();
-      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+      return this.sharedService.openJoiningRoutePopUp.next(route == 'personal' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
     }
   }
 
-  async patchContactForm() {
+  patchContactForm() {
     this.contactForm.patchValue({
       [this.form_present_address_1]: this.contactDetails[this.form_present_address_1],
       [this.form_present_address_2]: this.contactDetails[this.form_present_address_2],
@@ -300,10 +340,22 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.contactForm.patchValue({
       [this.form_present_city]: null,
     }), { emitEvent: false };
+    if (this.contactForm['value'][this.form_same_as_checkbox]) {
+      this.contactForm.patchValue({
+        [this.form_permanent_city]: null,
+      }), { emitEvent: false };
+      this.contactForm.controls[this.form_present_city].disable({ emitEvent: false });
+      return this.contactForm.controls[this.form_permanent_city].disable({ emitEvent: false });
+    }
     return this.contactForm.controls[this.form_present_city].disable({ emitEvent: false });
   }
   enablePresentCity(id) {
     this.contactForm.controls[this.form_present_city].enable({ emitEvent: false });
+    if (this.contactForm['value'][this.form_same_as_checkbox]) {
+      this.contactForm.controls[this.form_permanent_city].enable({ emitEvent: false });
+      this.getAllPresentCities(id);
+      return this.getAllPermanentCities(id);  
+    }
     return this.getAllPresentCities(id);
   }
   disablePermanentCity() {
@@ -344,6 +396,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnDestroy() {
-    this.sendPopupResultSubscription.unsubscribe();
+    this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
+    this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
   }
 }

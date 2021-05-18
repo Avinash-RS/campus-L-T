@@ -46,6 +46,7 @@ export const MY_FORMATS = {
 
 
 export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestroy {
+  checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
   minDate: Date;
   maxDate: Date;
@@ -245,9 +246,23 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
+  checkFormValidRequestFromRxjs() {
+    this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
+      if(data.current == 'personal') {
+        if (!this.personalForm.dirty) {
+          this.sharedService.joiningFormStepperStatus.next();
+          return this.appConfig.routeNavigation(data.goto);
+        } else {
+          return this.sharedService.openJoiningRoutePopUp.next(data.goto);
+        }
+      } 
+    });
+  }
+
   routeNext() {
-    if (this.personalForm.valid) {
+      if(this.personalForm.valid || this.appConfig.getLocalData('personal') == '1') {
       if (!this.personalForm.dirty) {
+        this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
        return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
@@ -348,11 +363,11 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
       [this.form_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dob]: [null],
+      [this.form_dob]: [{value: null, disabled: true}],
       [this.form_gender]: [{value: null, disabled: true}],
       [this.form_place_of_birth]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_state_of_birth]: [null],
-      [this.form_nationality]: [{value: null, disabled: true}, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_nationality]: [{value: null, disabled: false}, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_mother_tongue]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_religion]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_caste]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
@@ -361,12 +376,12 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_emergency_contact]: [null, [this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
       [this.form_mobile]: [null, [Validators.required, this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
       [this.form_email]: [{value: null, disabled: true}, [Validators.required, this.glovbal_validators.email(), RemoveWhitespace.whitespace()]],
-      [this.form_aadhar]: [{value: null, disabled: true}, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
+      [this.form_aadhar]: [{value: null, disabled: false}, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
       [this.form_pan]: [null, [this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
       [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_offer_date]: [null],
-      [this.form_height]: [{value: null, disabled: true}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
-      [this.form_weight]: [{value: null, disabled: true}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
+      [this.form_height]: [{value: null, disabled: false}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
+      [this.form_weight]: [{value: null, disabled: false}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
       [this.form_identification_mark1]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_identification_mark2]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],    
     })
@@ -444,6 +459,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
 ngOnDestroy() {
-  this.sendPopupResultSubscription.unsubscribe();
+  this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
+  this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
 }
 }

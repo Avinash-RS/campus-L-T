@@ -38,6 +38,9 @@
                     border-radius: 50%;
 
                 }
+                li:hover {
+                    font-weight: 600;
+                }
                 li.active {
                     color: $primary-red;
                     transition: color .5s ease-out;
@@ -67,6 +70,9 @@
                 .noCursor:active {
                     // cursor: not-allowed;
                     pointer-events: none;
+                }
+                .noCursor:hover {
+                    font-weight: 400;
                 }
 
             }
