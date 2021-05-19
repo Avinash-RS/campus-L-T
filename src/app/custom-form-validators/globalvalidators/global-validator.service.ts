@@ -130,6 +130,14 @@ export class GlobalValidatorService {
       return this.regexValidator(aadhaar, {aadhaar: true});
     }
 
+    backlog() {
+      const backlog: RegExp = /^[0-9][0-9]{0,1}$/;
+      return this.regexValidator(backlog, {backlog: true});
+    }
 
+    percentage() {
+      const percentage = /(^100(\.0{1,2})?$)|(^(?:[2-9]\d|\d{2}?)(\.[0-9]{1,2})?$)/;
+      return this.regexValidator(percentage, {percentage: true});
+    }
 
 }

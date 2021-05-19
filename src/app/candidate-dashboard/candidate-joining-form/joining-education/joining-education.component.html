@@ -13,10 +13,10 @@
                         <div class="row-wrapper">
                             <div class="overall-input-wrapper width-45">
                                 <label>Qualification Type<span>*</span></label>
-                                <nz-select class="input select" [formControlName]="form_qualification_type"
+                                <nz-select class="input select" (ngModelChange)="educationLevelChange(i)" [formControlName]="form_qualification_type"
                                     nzAllowClear nzShowSearch nzPlaceHolder="Select">
-                                    <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
-                                        [nzValue]="diff.value"></nz-option>
+                                    <nz-option *ngFor="let level of educationLevels" [nzDisabled]="(level.education != 'SSLC') ? false : true" [nzLabel]="level.label"
+                                        [nzValue]="level.education"></nz-option>
                                 </nz-select>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_qualification_type).invalid && getEducationArr.controls[i].get(form_qualification_type).touched">
@@ -27,14 +27,37 @@
                             </div>
                         </div>
 
-                        <div class="row-wrapper">
+                        <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value)">
+
+                        <div *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'SSLC')" class="row-wrapper">
                             <div class="overall-input-wrapper width-45">
-                                <label>Qualification<span>*</span></label>
+                                <label>Qualification<!-- Asterick --><span *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'HSC' && getEducationArr.controls[i].get(form_qualification_type).value != 'Diploma')">*</span>
+                                </label>
+                            <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                [formControlName]="form_qualification">
+                            </ng-container>
+                            <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma')">
                                 <nz-select class="input select" [formControlName]="form_qualification" nzAllowClear
                                     nzShowSearch nzPlaceHolder="Select">
-                                    <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label"
+                                    <nz-option *ngFor="let active of diplamoSpecialization" [nzLabel]="active.value"
                                         [nzValue]="active.value"></nz-option>
                                 </nz-select>
+                            </ng-container>
+                            <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'UG')">
+                                <nz-select class="input select" [formControlName]="form_qualification" nzAllowClear
+                                nzShowSearch nzPlaceHolder="Select">
+                                <nz-option *ngFor="let active of ugSpecializationList" [nzLabel]="active.ug_specification"
+                                    [nzValue]="active.ug_specification"></nz-option>
+                            </nz-select>
+                            </ng-container>
+                            <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
+                                <nz-select class="input select" [formControlName]="form_qualification" nzAllowClear
+                                nzShowSearch nzPlaceHolder="Select">
+                                <nz-option *ngFor="let active of pgSpecializationList" [nzLabel]="active.pg_specification"
+                                    [nzValue]="active.pg_specification"></nz-option>
+                            </nz-select>
+                            </ng-container>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_qualification).invalid && getEducationArr.controls[i].get(form_qualification).touched">
                                     <div
@@ -47,8 +70,22 @@
                                 <label>Specialization<span>*</span></label>
                                 <nz-select class="input select" [formControlName]="form_specialization"
                                     nzAllowClear nzShowSearch nzPlaceHolder="Select">
-                                    <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
-                                        [nzValue]="diff.value"></nz-option>
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">
+                                <nz-option *ngFor="let discipline of HSCDiscipline" [nzLabel]="discipline.name"
+                                [nzValue]="discipline.value"></nz-option>
+                                </ng-container>
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma')">
+                                <nz-option *ngFor="let discipline of diplomaDisciplineList" [nzLabel]="discipline.diploma_discipline"
+                                [nzValue]="discipline.diploma_discipline"></nz-option>
+                                </ng-container>
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'UG')">
+                                <nz-option *ngFor="let discipline of ugDisciplineList" [nzLabel]="discipline.ug_descipline"
+                                [nzValue]="discipline.ug_descipline"></nz-option>
+                                </ng-container>
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
+                                <nz-option *ngFor="let discipline of pgDisciplineList" [nzLabel]="discipline.pg_discipline"
+                                [nzValue]="discipline.pg_discipline"></nz-option>
+                                </ng-container>                        
                                 </nz-select>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_specialization).invalid && getEducationArr.controls[i].get(form_specialization).touched">
@@ -62,9 +99,31 @@
                         <div class="row-wrapper">
                             <div class="overall-input-wrapper width-45">
                                 <label>School/Collage Name<span>*</span></label>
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'SSLC') || (getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">
                                 <input matInput placeholder="Enter here" class="input" type="text"
                                     [formControlName]="form_collegeName">
-                                <div class="form-error"
+                                    </ng-container>
+                                    <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'SSLC') && (getEducationArr.controls[i].get(form_qualification_type).value != 'HSC')">
+                                        <nz-select class="input select" [formControlName]="form_collegeName" nzAllowClear
+                                        nzShowSearch nzPlaceHolder="Select">
+                                        <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma')">
+                                            <nz-option *ngFor="let institute of diplomaInstitutesList" [nzLabel]="institute.diploma_college"
+                                            [nzValue]="institute.diploma_college">
+                                          </nz-option>
+                                        </ng-container>
+                                        <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'UG')">
+                                            <nz-option *ngFor="let institute of ugInstitutesList" [nzLabel]="institute.college_name"
+                                            [nzValue]="institute.college_name">
+                                          </nz-option>
+                                        </ng-container>
+                                        <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
+                                            <nz-option *ngFor="let institute of pgInstitutesList" [nzLabel]="institute.college_name"
+                                            [nzValue]="institute.college_name">
+                                          </nz-option>
+                                        </ng-container>
+                                      </nz-select> 
+                                </ng-container>
+                                    <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_collegeName).invalid && getEducationArr.controls[i].get(form_collegeName).touched">
                                     <div *ngIf="getEducationArr.controls[i].get(form_collegeName).errors?.required">
                                         School/Collage Name is Required</div>
@@ -75,9 +134,21 @@
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-45">
-                                <label>Board/university<span>*</span></label>
+                                <label>Board/university<span *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'SSLC' || getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">*</span>
+                                </label>
+                                <!-- For Non SSLC and HSC -->
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma') || (getEducationArr.controls[i].get(form_qualification_type).value == 'UG') || (getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
                                 <input matInput placeholder="Enter here" class="input" type="text"
                                     [formControlName]="form_boardUniversity">
+                                </ng-container>
+                                <!-- For SSLC and HSC -->
+                                <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'SSLC') || (getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">
+                                    <nz-select class="input select" [formControlName]="form_boardUniversity" nzAllowClear nzShowSearch
+                                    nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let level of boardsList" [nzLabel]="level.name" [nzValue]="level.name">
+                                    </nz-option>
+                                  </nz-select>            
+                                    </ng-container>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_boardUniversity).invalid && getEducationArr.controls[i].get(form_boardUniversity).touched">
                                     <div *ngIf="getEducationArr.controls[i].get(form_boardUniversity).errors?.required">
@@ -169,14 +240,17 @@
                                 <div
                                     *ngIf="getEducationArr.controls[i].get(form_backlog)?.errors?.required">
                                     No. Backlogs is Required</div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_backlog).errors?.backlog">
+                                        Accept Numbers only and Maximum of 2 digits only Allowed</div>
                             </div>
                         </div>
                         <div class="overall-input-wrapper width-32">
                             <label>Mode<span>*</span></label>
                             <nz-select class="input select" [formControlName]="form_mode"
                                 nzAllowClear nzShowSearch nzPlaceHolder="Select">
-                                <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
-                                    [nzValue]="diff.value"></nz-option>
+                                <nz-option *ngFor="let modes of modesList" [nzLabel]="modes.label"
+                                    [nzValue]="modes.value"></nz-option>
                             </nz-select>
                             <div class="form-error"
                                 *ngIf="getEducationArr.controls[i].get(form_mode).invalid && getEducationArr.controls[i].get(form_mode).touched">
@@ -192,19 +266,18 @@
                             <div class="form-error"
                                 *ngIf="getEducationArr.controls[i].get(form_cgpa).invalid && getEducationArr.controls[i].get(form_cgpa).touched">
                                 <div *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.required">
-                                    CGPA is Required</div>
+                                    Percentage is Required</div>
                                 <div
-                                    *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.alphaNum255">
-                                    Alpha numeric with maximum of 255 characters only
-                                    allowed</div>
+                                    *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.percentage">
+                                    Percentage should be in the range of 10 to 100</div>
                             </div>
                         </div>
                     </div>
-
+                </ng-container>
 
                     </div>
                     <div class="remove-wrapper">
-                        <div (click)="removeEducationArray(i)" *ngIf="getEducationArr.controls.length > 1 " matTooltip="Remove" class="remove">
+                        <div (click)="removeEducationArray(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
                             <i class="material-icons material-icons-outlined">
                                 remove_circle_outline
                                 </i>
