@@ -1,1 +1,249 @@
-<p>joining-education works!</p>
+<div id="top"></div>
+<div class="joining-personal-wrapper">
+    <h5>
+        Education Details
+    </h5>
+
+    <div class="grids-wrapper">
+        <form class="educatonForm" [formGroup]="educationForm" (ngSubmit)="formSubmit()">
+            <ng-container *ngIf="getEducationArr && getEducationArr.controls" [formArrayName]="form_educationArray">
+                <ng-container *ngFor="let item of getEducationArr.controls; let i = index;" [formGroupName]="i">
+                    <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
+                    <div class="form-grouping">
+                        <div class="row-wrapper">
+                            <div class="overall-input-wrapper width-45">
+                                <label>Qualification Type<span>*</span></label>
+                                <nz-select class="input select" [formControlName]="form_qualification_type"
+                                    nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
+                                        [nzValue]="diff.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_qualification_type).invalid && getEducationArr.controls[i].get(form_qualification_type).touched">
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_qualification_type)?.errors?.required">
+                                        Qualification Type is Required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper">
+                            <div class="overall-input-wrapper width-45">
+                                <label>Qualification<span>*</span></label>
+                                <nz-select class="input select" [formControlName]="form_qualification" nzAllowClear
+                                    nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label"
+                                        [nzValue]="active.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_qualification).invalid && getEducationArr.controls[i].get(form_qualification).touched">
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_qualification)?.errors?.required">
+                                        Qualification is Required</div>
+                                </div>
+                            </div>
+
+                            <div class="overall-input-wrapper width-45">
+                                <label>Specialization<span>*</span></label>
+                                <nz-select class="input select" [formControlName]="form_specialization"
+                                    nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
+                                        [nzValue]="diff.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_specialization).invalid && getEducationArr.controls[i].get(form_specialization).touched">
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_specialization)?.errors?.required">
+                                        Specialization is Required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper">
+                            <div class="overall-input-wrapper width-45">
+                                <label>School/Collage Name<span>*</span></label>
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                    [formControlName]="form_collegeName">
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_collegeName).invalid && getEducationArr.controls[i].get(form_collegeName).touched">
+                                    <div *ngIf="getEducationArr.controls[i].get(form_collegeName).errors?.required">
+                                        School/Collage Name is Required</div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_collegeName).errors?.alphaNum255">
+                                        Alpha numeric with maximum of 255 characters only
+                                        allowed</div>
+                                </div>
+                            </div>
+                            <div class="overall-input-wrapper width-45">
+                                <label>Board/university<span>*</span></label>
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                    [formControlName]="form_boardUniversity">
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_boardUniversity).invalid && getEducationArr.controls[i].get(form_boardUniversity).touched">
+                                    <div *ngIf="getEducationArr.controls[i].get(form_boardUniversity).errors?.required">
+                                        Board/university is Required</div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_boardUniversity).errors?.alphaNum255">
+                                        Alpha numeric with maximum of 255 characters only
+                                        allowed</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper">
+                                <div class="overall-input-wrapper width-32">
+                                <label>Start Date<span>*</span></label>
+                                <div class="date-relative">
+                                    <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                        [matDatepicker]="picker" placeholder="DD-MM-YYYY"
+                                        [formControlName]="form_startDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </div>
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_startDate).invalid && getEducationArr.controls[i].get(form_startDate).touched">
+                                    <div *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.required">
+                                        Start Date is Required</div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax">
+                                        {{getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax.max) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMin">
+                                        {{getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMin.min) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerParse">
+                                        Invalid Date Format</div>
+                                </div>
+                            </div>
+                            <div class="overall-input-wrapper width-32">
+                                <label>End Date<span>*</span></label>
+                                <div class="date-relative">
+                                    <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                        [matDatepicker]="picker1" placeholder="DD-MM-YYYY"
+                                        [formControlName]="form_endDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </div>
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_endDate).invalid && getEducationArr.controls[i].get(form_endDate).touched">
+                                    <div *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.required">
+                                        End Date is Required</div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerMax">
+                                        {{getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerMax.max) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerMin">
+                                        {{getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerMin.min) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerParse">
+                                        Invalid Date Format</div>
+                                </div>
+                            </div>
+                            <div class="overall-input-wrapper width-32">
+                                <label>Year of Passing<span>*</span></label>
+                                <nz-select class="input select" [formControlName]="form_yearpassing" nzAllowClear
+                                    nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label"
+                                        [nzValue]="active.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getEducationArr.controls[i].get(form_yearpassing).invalid && getEducationArr.controls[i].get(form_yearpassing).touched">
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.required">
+                                        Year of Passing is Required</div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row-wrapper">
+                        <div class="overall-input-wrapper width-32">
+                            <label>No. of Backlogs<span>*</span></label>
+                            <input matInput placeholder="Enter here" class="input" type="text"
+                                [formControlName]="form_backlog">
+                            <div class="form-error"
+                                *ngIf="getEducationArr.controls[i].get(form_backlog).invalid && getEducationArr.controls[i].get(form_backlog).touched">
+                                <div
+                                    *ngIf="getEducationArr.controls[i].get(form_backlog)?.errors?.required">
+                                    No. Backlogs is Required</div>
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper width-32">
+                            <label>Mode<span>*</span></label>
+                            <nz-select class="input select" [formControlName]="form_mode"
+                                nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
+                                    [nzValue]="diff.value"></nz-option>
+                            </nz-select>
+                            <div class="form-error"
+                                *ngIf="getEducationArr.controls[i].get(form_mode).invalid && getEducationArr.controls[i].get(form_mode).touched">
+                                <div
+                                    *ngIf="getEducationArr.controls[i].get(form_mode)?.errors?.required">
+                                    Mode is Required</div>
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper width-32">
+                            <label>%/CGPA<span>*</span></label>
+                            <input matInput placeholder="Enter here" class="input" type="text"
+                                [formControlName]="form_cgpa">
+                            <div class="form-error"
+                                *ngIf="getEducationArr.controls[i].get(form_cgpa).invalid && getEducationArr.controls[i].get(form_cgpa).touched">
+                                <div *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.required">
+                                    CGPA is Required</div>
+                                <div
+                                    *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.alphaNum255">
+                                    Alpha numeric with maximum of 255 characters only
+                                    allowed</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    </div>
+                    <div class="remove-wrapper">
+                        <div (click)="removeEducationArray(i)" *ngIf="getEducationArr.controls.length > 1 " matTooltip="Remove" class="remove">
+                            <i class="material-icons material-icons-outlined">
+                                remove_circle_outline
+                                </i>
+                        </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <div *ngIf="getEducationArr.controls.length < 7 " class="row-wrapper mt-3">
+                <div class="overall-input-wrapper">
+                    <button class="add-button" mat-raised-button type="button" (click)="addToEducationArray()">+ Add</button>
+                </div>
+            </div>
+
+            <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer" style="width: 80%;">
+                <div (click)="routeNext('dependent')"
+                    class="d-flex align-content-center align-items-center position-relative" style="cursor: pointer;">
+                    <div class="left-arrow position-absolute"></div>
+                    <div class="sections left-space">
+                        <div class="label">Previous Section</div>
+                        <div class="value">Dependent Details</div>
+                    </div>
+                </div>
+                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button type="submit">Save &
+                    Continue</button>
+                <div (click)="routeNext('upload')"
+                    class="d-flex align-content-center align-items-center text-right position-relative pointer"
+                    style="cursor: pointer;">
+                    <div class="right-arrow position-absolute"></div>
+                    <div class="sections right-space">
+                        <div class="label">Next Section</div>
+                        <div class="value">Upload Documents</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="photo-wrapper">
+        </div>
+    </div>
+
+</div>

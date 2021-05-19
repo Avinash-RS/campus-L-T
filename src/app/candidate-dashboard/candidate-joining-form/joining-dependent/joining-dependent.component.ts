@@ -51,54 +51,36 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   minDate: Date;
   maxDate: Date;
 
-  titleDropdownList = [
+  diffAbledDropdownList = [
     {
-      id: '0',
-      value: 'Mr.'
+      label: 'Yes',
+      value: 'yes'
     },
     {
-      id: '1',
-      value: 'Ms.'
+      label: 'No',
+      value: 'no'
+    }
+  ];
+  activeDropdownList = [
+    {
+      label: 'Active',
+      value: 'active'
+    },
+    {
+      label: 'Inactive',
+      value: 'inactive'
     }
   ];
   //form Variables
   form_dependentArray = 'dependentArray';
-  form_dependent_name = 'dependent_name';
-  form_dependent_dob = 'dependent_dob';
-  form_dependent_relationship = 'dependent_relationship';
-  form_dependent_differently_abled = 'dependent_differently_abled';
-  form_dependent_status = 'dependent_status';
+  form_dependent_name = 'name_of_your_family';
+  form_dependent_dob = 'family_date_of_birth';
+  form_dependent_relationship = 'relationship';
+  form_dependent_differently_abled = 'differently_abled';
+  form_dependent_status = 'status';
+  form_isDependent = 'isDependent'
 
-  dummyvalues = [
-    {
-    dependent_name: 'Avinash',
-    dependent_dob: '1995-10-29T00:00:00+05:30',
-    dependent_relationship: 'Ms.',
-    dependent_differently_abled: 'Ms.',
-    dependent_status: 'Ms.'
-    },
-    {
-      dependent_name: 'Selva',
-      dependent_dob: '2012-10-29T00:00:00+05:30',
-      dependent_relationship: 'Mr.',
-      dependent_differently_abled: 'Mr.',
-      dependent_status: 'Mr.'
-      },
-      {
-        dependent_name: 'Thilaga',
-        dependent_dob: '2018-07-25T00:00:00+05:30',
-        dependent_relationship: 'Ms.',
-        dependent_differently_abled: 'Ms.',
-        dependent_status: 'Ms.'
-        },
-        {
-          dependent_name: 'Selva',
-          dependent_dob: '2012-01-04T00:00:00+05:30',
-          dependent_relationship: 'Mr.',
-          dependent_differently_abled: 'Mr.',
-          dependent_status: 'Mr.'
-          }
-  ]
+  dependedentDetails: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -113,7 +95,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnInit() {
     this.formInitialize();
-    this.patchDependentForm();
+    this.getDependentApiDetails();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
   }
@@ -128,7 +110,31 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-  getDependentApiValues() {
+  getDependentApiDetails() {
+    this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      if (data && data.dependents && data.dependents.length > 0) {
+        this.dependedentDetails = data.dependents;
+        this.patchDependentForm();
+      } else {
+        this.dependedentDetails = [];
+        for (let index = 0; index < 2; index++) {
+          this.getDependentArr.push(this.initDependentArray());
+          if (index == 0) {
+            this.getDependentArr.at(0).patchValue({
+              [this.form_dependent_relationship]: 'Father',
+            });
+            this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+          }
+          if (index == 1) {
+            this.getDependentArr.at(1).patchValue({
+              [this.form_dependent_relationship]: 'Mother',
+            });
+            this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+          }
+        }
+      }
+    });
 
   }
   dateValidation() {
@@ -208,22 +214,39 @@ dateConvertion(date) {
   }
 
   patchDependentForm() {
-    if (this.dummyvalues.length > 1) {
-      return this.getDependentArr.push(this.initDependentArray());
-    }
     this.getDependentArr.clear();
-    this.dummyvalues.forEach((element, i) => {
+    this.dependedentDetails.forEach((element, i) => {
       this.getDependentArr.push(this.patching(element));
     });
+    this.getDependentArr.at(0).patchValue({
+      [this.form_dependent_relationship]: 'Father',
+    });
+    this.getDependentArr.at(1).patchValue({
+      [this.form_dependent_relationship]: 'Mother',
+    });
+    this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+    this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
   }
 
   patching(data) {
     return this.fb.group({
       [this.form_dependent_name]: [data[this.form_dependent_name], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
-      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [Validators.required]],
+      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled]],
       [this.form_dependent_status]: [data[this.form_dependent_status]],
+      [this.form_isDependent]: [data[this.form_isDependent]]
+    })    
+  }
+
+  initDependentArray() {
+    return this.fb.group({
+      [this.form_dependent_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_dob]: [null],
+      [this.form_dependent_relationship]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_differently_abled]: [null],
+      [this.form_dependent_status]: [null],
+      [this.form_isDependent]: [null]
     })    
   }
 
@@ -231,16 +254,6 @@ dateConvertion(date) {
     this.dependentForm = this.fb.group({
       [this.form_dependentArray]: this.fb.array([])
     })
-  }
-
-  initDependentArray() {
-    return this.fb.group({
-      [this.form_dependent_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_dob]: [null],
-      [this.form_dependent_relationship]: [null, [Validators.required]],
-      [this.form_dependent_differently_abled]: [null],
-      [this.form_dependent_status]: [null],
-    })    
   }
 
   addToDependentArray() {
@@ -273,7 +286,10 @@ dateConvertion(date) {
   get dependent_status() {
   return this.dependentForm.get(this.form_dependent_status);
   }
-
+  get isDependent() {
+    return this.dependentForm.get(this.form_isDependent);
+  }
+  
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';

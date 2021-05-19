@@ -25,10 +25,13 @@ import { JoiningPersonalComponent } from './candidate-joining-form/joining-perso
 import { JoiningContactComponent } from './candidate-joining-form/joining-contact/joining-contact.component';
 import { JoiningDependentComponent } from './candidate-joining-form/joining-dependent/joining-dependent.component';
 import { JoiningEducationComponent } from './candidate-joining-form/joining-education/joining-education.component';
+import { JoiningUploadComponent } from './candidate-joining-form/joining-upload/joining-upload.component';
+import { JoiningPreviewComponent } from './candidate-joining-form/joining-preview/joining-preview.component';
+import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent],
+  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent],
   imports: [
     CommonModule,
     SharedModule,

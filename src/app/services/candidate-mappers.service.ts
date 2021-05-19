@@ -288,5 +288,9 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
-//  http://campus-qa.lntedutech.com/d8cintana2/profile/dependent_pageload?user_id=15828
+     joiningFormGetDependentDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/dependent_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
 }

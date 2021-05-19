@@ -50,6 +50,42 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.upload = false;
       this.preview = false;
       this.submit = false;
+    },
+    tilleducation() {
+      this.personal = true;
+      this.contact = true;
+      this.dependent = true;
+      this.education = true;
+      this.upload = false;
+      this.preview = false;
+      this.submit = false;
+    },
+    tillupload() {
+      this.personal = true;
+      this.contact = true;
+      this.dependent = true;
+      this.education = true;
+      this.upload = true;
+      this.preview = false;
+      this.submit = false;
+    },
+    tillpreview() {
+      this.personal = true;
+      this.contact = true;
+      this.dependent = true;
+      this.education = true;
+      this.upload = true;
+      this.preview = true;
+      this.submit = false;
+    },
+    tillsbmit() {
+      this.personal = true;
+      this.contact = true;
+      this.dependent = true;
+      this.education = true;
+      this.upload = true;
+      this.preview = true;
+      this.submit = true;
     }
   }
 
@@ -102,12 +138,17 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     this.candidateService.FormStatus().subscribe((data: any)=> {
       data?.personal_details == '1' ? this.appConfig.setLocalData('personal', '1') : this.appConfig.setLocalData('personal', '0');
       data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
-      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
+      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '1');
       data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
       data?.upload_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
       data?.preview_details == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
       
-      if (data.dependent_details == '1') {
+      if (data.education_details == '1') {
+        this.valid.tilleducation();
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+        return this.activeStep = 'upload';//, this.routingSelection = param ? param : 'dependent';
+      }
+      if (data.dependent_details == '1' || this.appConfig.getLocalData('dependent') == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
        return this.activeStep = 'education';//, this.routingSelection = param ? param : 'education';
@@ -155,6 +196,20 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     if (clickedStep == 'education') {
       if (this.routingSelection != 'education') {
         let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+      // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+    }
+    if (clickedStep == 'upload') {
+      if (this.routingSelection != 'upload') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+      // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+    }
+    if (clickedStep == 'preview') {
+      if (this.routingSelection != 'preview') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
@@ -230,6 +285,11 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }  
     }
     if (this.activeStep == 'education') {
+      if (route.includes('upload')) {
+        return true;
+      }  
+    }
+    if (this.activeStep == 'upload') {
       if (route.includes('preview')) {
         return true;
       }  

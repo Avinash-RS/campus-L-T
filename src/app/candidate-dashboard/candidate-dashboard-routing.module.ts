@@ -1,3 +1,6 @@
+import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
+import { JoiningPreviewComponent } from './candidate-joining-form/joining-preview/joining-preview.component';
+import { JoiningUploadComponent } from './candidate-joining-form/joining-upload/joining-upload.component';
 import { JoiningEducationComponent } from './candidate-joining-form/joining-education/joining-education.component';
 import { JoiningDependentComponent } from './candidate-joining-form/joining-dependent/joining-dependent.component';
 import { JoiningContactComponent } from './candidate-joining-form/joining-contact/joining-contact.component';
@@ -126,6 +129,27 @@ const routes: Routes = [
             component: JoiningEducationComponent,
             data: {
               breadcrumb: 'Education Details'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_UPLOAD}`, 
+            component: JoiningUploadComponent,
+            data: {
+              breadcrumb: 'Upload Documents'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PREVIEW}`, 
+            component: JoiningPreviewComponent,
+            data: {
+              breadcrumb: 'Preview'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_SUBMIT}`, 
+            component: JoiningSubmitComponent,
+            data: {
+              breadcrumb: 'Submit'
             }
           },
           {

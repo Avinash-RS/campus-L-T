@@ -358,4 +358,5 @@
 
 :host ::ng-deep .mat-input-element:disabled {
     background: #EEEEEE !important;
+    cursor: not-allowed;
 }
