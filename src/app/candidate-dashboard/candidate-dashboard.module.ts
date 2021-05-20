@@ -34,8 +34,8 @@ import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/
   declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent],
   imports: [
     CommonModule,
-    SharedModule,
     MaterialModule,
+    SharedModule,
     CandidateDashboardRoutingModule
   ],
   providers: [CanDeactivateGuard]

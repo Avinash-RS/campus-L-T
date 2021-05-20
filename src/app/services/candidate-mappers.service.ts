@@ -293,4 +293,17 @@ export class CandidateMappersService {
        return this.http.get(`${this.BASE_URL}/profile/dependent_pageload?user_id=${userId}`,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
+
+     joiningFormGetDependentDetailsSave(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/dependent_page?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetEducationDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/education_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
 }

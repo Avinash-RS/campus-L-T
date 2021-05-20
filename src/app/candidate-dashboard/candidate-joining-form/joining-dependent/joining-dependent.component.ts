@@ -76,9 +76,10 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   form_dependent_name = 'name_of_your_family';
   form_dependent_dob = 'family_date_of_birth';
   form_dependent_relationship = 'relationship';
+  form_dependent_occupation = 'occupation';
   form_dependent_differently_abled = 'differently_abled';
   form_dependent_status = 'status';
-  form_isDependent = 'isDependent'
+  form_isDependent = 'dependent'
 
   dependedentDetails: any;
   constructor(
@@ -114,7 +115,12 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
       this.appConfig.hideLoader();
       if (data && data.dependents && data.dependents.length > 0) {
-        this.dependedentDetails = data.dependents;
+        this.dependedentDetails = [];
+        data.dependents.forEach(element => {
+          if (element) {
+            this.dependedentDetails.push(element);
+          }          
+        });
         this.patchDependentForm();
       } else {
         this.dependedentDetails = [];
@@ -164,8 +170,18 @@ dateConvertion(date) {
 
   formSubmit(routeValue?: any) {
     if(this.dependentForm.valid) {
-      this.sharedService.joiningFormStepperStatus.next();
-      return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+      let formArray = this.dependentForm.getRawValue()[this.form_dependentArray];
+      formArray.forEach(element => {
+        if (element[this.form_dependent_dob]) {
+          element[this.form_dependent_dob] = this.momentForm(element[this.form_dependent_dob]);
+        }
+      });
+      this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {
+        this.appConfig.hideLoader();
+        this.appConfig.nzNotification('success', 'Saved', 'Dependent details has been updated');
+        this.sharedService.joiningFormStepperStatus.next();
+        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+      });
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -200,9 +216,12 @@ dateConvertion(date) {
       if (route == 'contact') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
-        if (this.dependentForm.valid || this.appConfig.getLocalData('dependent') == '1') {
+        if (this.appConfig.getLocalData('dependent') == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
         } else {
+         if (this.dependentForm.valid) {
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'contact' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+          }
           this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
           this.ngAfterViewInit();
           this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -232,6 +251,7 @@ dateConvertion(date) {
     return this.fb.group({
       [this.form_dependent_name]: [data[this.form_dependent_name], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
+      [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled]],
       [this.form_dependent_status]: [data[this.form_dependent_status]],
@@ -243,6 +263,7 @@ dateConvertion(date) {
     return this.fb.group({
       [this.form_dependent_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_dob]: [null],
+      [this.form_dependent_occupation]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_relationship]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_dependent_differently_abled]: [null],
       [this.form_dependent_status]: [null],

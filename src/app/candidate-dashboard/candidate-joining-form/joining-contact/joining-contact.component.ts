@@ -195,9 +195,12 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       if (route == 'personal') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
       } else {
-        if (this.contactForm.valid || this.appConfig.getLocalData('contact') == '1') {
+        if (this.appConfig.getLocalData('contact') == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
         } else {
+         if (this.contactForm.valid) {
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'personal' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+            }
           this.glovbal_validators.validateAllFields(this.contactForm);
           this.ngAfterViewInit();
           this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');

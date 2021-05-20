@@ -1,3 +1,5 @@
+import { DateMonthYearDirective } from './../directives/customDateFormats/date-month-year.directive';
+import { YearMonthDirective } from './../directives/customDateFormats/year-month.directive';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -89,7 +91,8 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent],
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective,
+],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -194,6 +197,8 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     CommonKycProfileViewComponent,
     SharedUploadPreviewerComponent,
     ScreenresolutionBoxComponent,
+    YearMonthDirective,
+    DateMonthYearDirective,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

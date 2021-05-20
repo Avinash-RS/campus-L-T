@@ -72,6 +72,21 @@
 
                         <div class="row-wrapper">
                             <div class="overall-input-wrapper width-32">
+                                <label>Occupation<span></span></label>
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                    [formControlName]="form_dependent_occupation">
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_occupation).invalid && getDependentArr.controls[i].get(form_dependent_occupation).touched">
+                                    <div *ngIf="getDependentArr.controls[i].get(form_dependent_occupation).errors?.required">
+                                        Occupation is Required</div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_occupation).errors?.alphaNum255">
+                                        Alpha numeric with maximum of 255 characters only
+                                        allowed</div>
+                                </div>
+                            </div>
+
+                            <div class="overall-input-wrapper width-32">
                                 <label>Differently Abled<span></span></label>
                                 <nz-select class="input select" [formControlName]="form_dependent_differently_abled"
                                     nzAllowClear nzShowSearch nzPlaceHolder="Select">
@@ -99,7 +114,9 @@
                                         Status is Required</div>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="row-wrapper">
                             <div class="overall-input-wrapper width-32">
                                 <label>Is Dependent<span></span></label>
                                 <nz-select class="input select" [formControlName]="form_isDependent" nzAllowClear
@@ -111,12 +128,10 @@
                                     *ngIf="getDependentArr.controls[i].get(form_isDependent).invalid && getDependentArr.controls[i].get(form_isDependent).touched">
                                     <div
                                         *ngIf="getDependentArr.controls[i].get(form_isDependent)?.errors?.required">
-                                        Status is Required</div>
+                                        Is Dependent is Required</div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                     <div class="remove-wrapper">
                         <div (click)="removeDependentArray(i)" *ngIf="i !==0  && i !==1 " matTooltip="Remove" class="remove">

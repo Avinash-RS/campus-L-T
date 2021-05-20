@@ -5,6 +5,13 @@
     </h5>
 
     <div class="grids-wrapper">
+        <div class="row-wrapper">
+
+    <div class="overall-input-wrapper w-75 d-flex align-items-center f_size_14 mt-2 mb-2" style="color: #565656;">
+        <div style="width: 140px;">Profile Applied For: </div>
+        <input type="text" disabled class="input-1 ml-3" [value]="selectedPostLabel">
+</div></div>
+
         <form class="educatonForm" [formGroup]="educationForm" (ngSubmit)="formSubmit()">
             <ng-container *ngIf="getEducationArr && getEducationArr.controls" [formArrayName]="form_educationArray">
                 <ng-container *ngFor="let item of getEducationArr.controls; let i = index;" [formGroupName]="i">
@@ -161,8 +168,8 @@
                             </div>
                         </div>
 
-                        <div class="row-wrapper">
-                                <div class="overall-input-wrapper width-32">
+                         <div class="row-wrapper">
+                               <div class="overall-input-wrapper width-32">
                                 <label>Start Date<span>*</span></label>
                                 <div class="date-relative">
                                     <input matInput class="input" [min]="minDate" [max]="maxDate"
@@ -216,16 +223,35 @@
                             </div>
                             <div class="overall-input-wrapper width-32">
                                 <label>Year of Passing<span>*</span></label>
-                                <nz-select class="input select" [formControlName]="form_yearpassing" nzAllowClear
-                                    nzShowSearch nzPlaceHolder="Select">
-                                    <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label"
-                                        [nzValue]="active.value"></nz-option>
-                                </nz-select>
+                                <div class="date-relative">
+                                    <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                        [matDatepicker]="pickerYearOfPassing" placeholder="DD-MM-YYYY"
+                                        [formControlName]="form_yearpassing" appYearMonth>
+                                    <mat-datepicker-toggle matSuffix [for]="pickerYearOfPassing"></mat-datepicker-toggle>
+                                    <!-- <mat-datepicker #pickerYearOfPassing></mat-datepicker> -->
+                                    <mat-datepicker #pickerYearOfPassing
+                  startView="multi-year"
+                  (monthSelected)="chosenMonthHandler($event, pickerYearOfPassing, i)"
+                  panelClass="example-month-picker">
+  </mat-datepicker>
+  <!--                   (yearSelected)="chosenYearHandler($event, i)"
+ -->
+                                </div>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_yearpassing).invalid && getEducationArr.controls[i].get(form_yearpassing).touched">
+                                    <div *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.required">
+                                        Start Date is Required</div>
                                     <div
-                                        *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.required">
-                                        Year of Passing is Required</div>
+                                        *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMax">
+                                        {{getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMax.max) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMin">
+                                        {{getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMin.min) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerParse">
+                                        Format Should be MMM YYYY(Jan 2000)</div>
                                 </div>
                             </div>
                     </div>

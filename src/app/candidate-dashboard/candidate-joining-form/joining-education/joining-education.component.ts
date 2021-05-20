@@ -11,8 +11,9 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDatepicker } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { Moment } from 'moment';
 
 export const MY_FORMATS = {
   parse: {
@@ -21,6 +22,18 @@ export const MY_FORMATS = {
   display: {
     // dateInput: 'DD MMM YYYY', // output ->  01 May 1995
     dateInput: 'DD-MM-YYYY', // output ->  01-10-1995
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const MY_FORMATS_Month = {
+  parse: {
+    dateInput: 'MM-YYYY',
+  },
+  display: {
+    // dateInput: 'DD MMM YYYY', // output ->  01 May 1995
+    dateInput: 'DD-MM', // output ->  01-10-1995
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -41,7 +54,7 @@ export const MY_FORMATS = {
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
 
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS || MY_FORMATS_Month },
   ],
 })
 export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -93,17 +106,17 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
   ];
   //form Variables
   form_educationArray = 'educationArray';
-  form_qualification_type = 'qualification_type';
-  form_qualification = 'qualification';
-  form_specialization = 'specialization';
-  form_collegeName = 'collegeName';
-  form_boardUniversity = 'boardUniversity';
-  form_startDate = 'startDate';
-  form_endDate = 'endDate';
-  form_yearpassing = 'yearpassing';
-  form_backlog = 'backlog';
+  form_qualification_type = 'level';
+  form_qualification = 'specification';
+  form_specialization = 'discipline';
+  form_collegeName = 'institute';
+  form_boardUniversity = 'board_university';
+  form_startDate = 'start_date';
+  form_endDate = 'end_date';
+  form_yearpassing = 'year_of_passing';
+  form_backlog = 'backlogs';
   form_mode = 'mode';
-  form_cgpa = 'cgpa';
+  form_cgpa = 'percentage';
 
   educationLevels: any;
   pgSpecializationList: any;
@@ -114,75 +127,11 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
   diplomaInstitutesList: any;
   pgInstitutesList: any;
   ugInstitutesList: any;
-  educationDetails = [
-{
-backlog: "0",
-boardUniversity: "CBSE",
-cgpa: "20",
-collegeName: "Bishop",
-endDate: '04-05-2011',
-mode: "fulltime",
-qualification: null,
-qualification_type: 'SSLC',
-specialization: null,
-startDate: "01-06-2010",
-yearpassing: "active",
-},
-{
-backlog: "0",
-boardUniversity: "State Board",
-cgpa: "10",
-collegeName: "Bishop Heber",
-endDate: '05-03-2013',
-mode: "parttime",
-qualification: "Board",
-qualification_type: "HSC",
-specialization: "Science",
-startDate: "03-06-2011",
-yearpassing: "inactive"
-},
-{
-backlog: "0",
-boardUniversity: "Autonomous",
-cgpa: "90",
-collegeName: "Government Polytechnic College, Betul",
-endDate: "12-03-2016",
-mode: "fulltime",
-qualification: "Diploma Engineering",
-qualification_type: "Diploma",
-specialization: "Electrical ",
-startDate: "05-06-2013",
-yearpassing: "active",
-},
-{
-backlog: "2",
-boardUniversity: "Dot",
-cgpa: "67",
-collegeName: "Atmaram Sanatan College",
-endDate: "20-04-2020",
-mode: "fulltime",
-qualification: "B.E.",
-qualification_type: "UG",
-specialization: "Computer Science",
-startDate: "10-06-2016",
-yearpassing: "active",
-},
-{
-backlog: "01",
-boardUniversity: "Autonomous",
-cgpa: "76",
-collegeName: "Gmr Institute Of Technology, Rajam",
-endDate: "12-05-2021",
-mode: "fulltime",
-qualification: "M.E.",
-qualification_type: "PG",
-specialization: "Chemical",
-startDate: "11-06-2020",
-yearpassing: "inactive",
-}
-];
 
-  
+educationDetails: any;
+mastersList: any;
+selectedPost: any;
+selectedPostLabel: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -196,6 +145,7 @@ yearpassing: "inactive",
   }
 
   ngOnInit() {
+    this.getSelectedPost();
     this.formInitialize();
     // Getting required datas for dropdowns
     this.getEducationLevels();
@@ -222,19 +172,47 @@ yearpassing: "inactive",
     }
   }
 
+  chosenYearHandler(normalizedYear: Moment, i) {
+    const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];    
+    if (ctrlValue) {
+      ctrlValue.year(normalizedYear.year());
+      console.log('ctrlValue', ctrlValue);
+      this.getEducationArr.at(i).patchValue({
+        [this.form_yearpassing]: ctrlValue,
+      });    
+    }
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>, i) {
+    if (this.dateConvertion(normalizedMonth['_d'])) {
+    this.getEducationArr.at(i).patchValue({
+      [this.form_yearpassing]: this.dateConvertionMonth(normalizedMonth['_d']),
+    });      
+  }
+    datepicker.close();
+  }
+
+  getSelectedPost() {
+    this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
+    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : '';
+    this.mastersList?.education_master.forEach(element => {
+      if (element.value == this.selectedPost) {
+        this.selectedPostLabel = element.label;
+      }  
+    });
+  }
 
   getEducationApiDetails() {
-    // this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
-    //   this.appConfig.hideLoader();
-    let data = this.educationDetails;
-      if (data && data.length > 0) {
-        this.educationDetails = data;
+    this.candidateService.joiningFormGetEducationDetails().subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      if (data && data.education &&  data.education.length > 0) {
+        this.educationDetails = data.education;
         this.patchEducationForm();
       } else {
         this.educationDetails = [];
         this.initalPatchWithValidations();
       }
-    // });
+    });
   }
 
   initalPatchWithValidations() {
@@ -289,11 +267,87 @@ dateConvertion(date) {
   }
 }
 
+dateConvertionMonth(date) {
+  if (date) {      
+    const split = moment(date).format();
+    if (split == 'Invalid date') {
+      const ddFormat = moment(date, 'DD-MM-YYYY').format();
+      return ddFormat == 'Invalid date' ? null : ddFormat;
+    }
+   return split == 'Invalid date' ? null : split;
+  }
+}
+
+
+validSelectedPost() {
+  let valid;
+    let value = {
+      hscDiploma: false,
+      ug: false,
+      pg: false,
+      label: ''
+    };
+    if (this.selectedPost == 'det') {
+      this.getEducationArr.controls.forEach((element: any, j) => {
+        if (element['controls'][this.form_qualification_type]['value'] == 'Diploma') {
+          value.hscDiploma = true;
+        }
+      });
+      valid = value.hscDiploma ? true : false;
+      value.label = 'det';
+      return {
+        valid,
+        value
+      }
+    }
+
+    if (this.selectedPost == 'gct' || this.selectedPost == 'get') {
+      this.getEducationArr.controls.forEach((element: any, j) => {
+        if (element['controls'][this.form_qualification_type]['value'] == 'HSC' || element['controls'][this.form_qualification_type]['value'] == 'Diploma') {
+          value.hscDiploma = true;
+        }
+        if (element['controls'][this.form_qualification_type]['value'] == 'UG') {
+          value.ug = true;
+        }
+      });
+      valid = value.hscDiploma && value.ug ? true : false;
+      value.label = 'gct';
+      return {
+        valid,
+        value
+      }
+    }
+    if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
+      this.getEducationArr.controls.forEach((element: any, j) => {
+        if (element['controls'][this.form_qualification_type]['value'] == 'HSC' || element['controls'][this.form_qualification_type]['value'] == 'Diploma') {
+          value.hscDiploma = true;
+        }
+        if (element['controls'][this.form_qualification_type]['value'] == 'UG') {
+          value.ug = true;
+        }
+        if (element['controls'][this.form_qualification_type]['value'] == 'PG') {
+          value.pg = true;
+        }
+      });
+      valid = value.hscDiploma && value.ug && value.pg ? true : false;
+      value.label = 'pgct';
+      return {
+        valid,
+        value
+      }
+    }
+
+}
   formSubmit(routeValue?: any) {
-    console.log(this.educationForm.getRawValue());    
-    if(this.educationForm.valid) {
-      this.sharedService.joiningFormStepperStatus.next();
-      return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+    console.log(this.educationForm.getRawValue());
+    if (this.educationForm.valid) {
+      let entryValid = this.validSelectedPost();
+      if (entryValid.valid) {
+        this.sharedService.joiningFormStepperStatus.next();
+        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+      } else {
+        this.appConfig.nzNotification('error', 'Not Submitted', entryValid?.value?.label == 'gct' ? '12th or Diploma and Undergraduate are mandatory' : entryValid?.value?.label == 'pgct' ? '12th or Diploma, Undergraduate and Postgraduate are mandatory' : entryValid?.value?.label == 'det' ? 'Diploma is mandatory' : '');
+      }
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -328,9 +382,12 @@ dateConvertion(date) {
       if (route == 'dependent') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
       } else {
-        if (this.educationForm.valid || this.appConfig.getLocalData('education') == '1') {
+        if (this.appConfig.getLocalData('education') == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
         } else {
+         if (this.educationForm.valid) {
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'dependent' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+         }
           this.glovbal_validators.validateAllFormArrays(this.educationForm.get([this.form_educationArray]) as FormArray);
           this.ngAfterViewInit();
           this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -358,7 +415,7 @@ dateConvertion(date) {
       [this.form_boardUniversity]: [data[this.form_boardUniversity], [Validators.required]],
       [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), [Validators.required]],
       [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), [Validators.required]],
-      [this.form_yearpassing]: [data[this.form_yearpassing], [Validators.required]],
+      [this.form_yearpassing]: [this.dateConvertionMonth(data[this.form_yearpassing]), [Validators.required]],
       [this.form_backlog]: [data[this.form_backlog], [Validators.required, this.glovbal_validators.backlog(), RemoveWhitespace.whitespace()]],
       [this.form_mode]: [data[this.form_mode], [Validators.required]],
       [this.form_cgpa]: [data[this.form_cgpa], [Validators.required, this.glovbal_validators.percentage(), RemoveWhitespace.whitespace()]],

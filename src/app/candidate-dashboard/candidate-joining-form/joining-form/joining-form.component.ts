@@ -138,7 +138,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     this.candidateService.FormStatus().subscribe((data: any)=> {
       data?.personal_details == '1' ? this.appConfig.setLocalData('personal', '1') : this.appConfig.setLocalData('personal', '0');
       data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
-      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '1');
+      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
       data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
       data?.upload_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
       data?.preview_details == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
@@ -148,7 +148,8 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
         return this.activeStep = 'upload';//, this.routingSelection = param ? param : 'dependent';
       }
-      if (data.dependent_details == '1' || this.appConfig.getLocalData('dependent') == '1') {
+      //  || this.appConfig.getLocalData('dependent') == '1'
+      if (data.dependent_details == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
        return this.activeStep = 'education';//, this.routingSelection = param ? param : 'education';
