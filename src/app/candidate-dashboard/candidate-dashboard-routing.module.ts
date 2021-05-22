@@ -154,7 +154,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`,
+            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
             pathMatch: 'full',
           }
         ]

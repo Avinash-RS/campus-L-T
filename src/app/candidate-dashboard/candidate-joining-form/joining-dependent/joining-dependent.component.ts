@@ -54,21 +54,21 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   diffAbledDropdownList = [
     {
       label: 'Yes',
-      value: 'yes'
+      value: '1'
     },
     {
       label: 'No',
-      value: 'no'
+      value: '0'
     }
   ];
   activeDropdownList = [
     {
       label: 'Active',
-      value: 'active'
+      value: '1'
     },
     {
       label: 'Inactive',
-      value: 'inactive'
+      value: '0'
     }
   ];
   //form Variables

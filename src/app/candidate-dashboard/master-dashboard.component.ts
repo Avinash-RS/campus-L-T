@@ -145,4 +145,8 @@ export class MasterDashboardComponent implements OnInit {
 
     });
   }
+
+  checkJoiningRoute() {
+    this.sharedService.joiningFormStepperStatus.next('dataFromMasterDashboard');
+  }
 }

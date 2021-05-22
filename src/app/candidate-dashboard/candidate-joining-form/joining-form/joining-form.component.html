@@ -1,5 +1,5 @@
 <div class="joining-form-wrapper">
-    <div class="stepper">
+    <div *ngIf="!hideStepper" class="stepper">
         <div class="stepper-wrapper">
             <ul>
                 <li (click)="validCheck('personal')"
@@ -40,7 +40,7 @@
             </ul>
         </div>
     </div>
-    <div class="router joining-form-main">
+    <div class="router joining-form-main" [ngClass]="hideStepper ? 'routerLeft' : ''">
         <router-outlet></router-outlet>
     </div>
 </div>
