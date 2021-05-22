@@ -114,6 +114,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     nonMergedPersonalDetails: any;
   allPresentCityList: any;
   allPermanentCityList: any;
+  formSubmitted: boolean;
   
   constructor(
     private appConfig: AppConfigService,
@@ -128,10 +129,14 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit() {
+    this.checkFormSubmitted();
     this.getStateAPI();
     this.checkFormValidRequestFromRxjs();
   }
 
+  checkFormSubmitted() {
+    this.formSubmitted = this.appConfig.getLocalData('submit') && this.appConfig.getLocalData('submit') == '1' ? true : false;
+  }
   ngAfterViewInit() {
     this.sharedService.joiningFormActiveSelector.next('preview');
     // Hack: Scrolls to top of Page after page view initialized
@@ -285,7 +290,6 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       // this.hideCityDropDown = false;
       this.appConfig.hideLoader();
       this.allPermanentCityList = datas[0];
-      console.log('coming', this.allPermanentCityList, cityId);
       this.allPermanentCityList.forEach(element => {
         if (element.id == cityId) {
           city = element.name;
@@ -343,7 +347,6 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     this.contactDetailsMap = data;
     this.contactDetailsMap.presentAddress = `${this.contactDetails?.[this.form_present_address_1]}, ${this.contactDetails?.[this.form_present_address_2]}, ${this.contactDetails?.[this.form_present_address_3]}`;
     this.contactDetailsMap.permanentAddress = `${this.contactDetails?.[this.form_permanent_address_1]}, ${this.contactDetails?.[this.form_permanent_address_2]}, ${this.contactDetails?.[this.form_permanent_address_3]}`;
-    console.log('contact', this.contactDetailsMap);
     
   }
 
