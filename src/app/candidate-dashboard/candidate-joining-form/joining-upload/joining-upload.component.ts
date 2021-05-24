@@ -51,26 +51,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   minDate: Date;
   maxDate: Date;
 
-  diffAbledDropdownList = [
-    {
-      label: 'Yes',
-      value: 'yes'
-    },
-    {
-      label: 'No',
-      value: 'no'
-    }
-  ];
-  activeDropdownList = [
-    {
-      label: 'Active',
-      value: 'active'
-    },
-    {
-      label: 'Inactive',
-      value: 'inactive'
-    }
-  ];
   //form Variables
   form_dependentArray = 'dependentArray';
   form_dependent_name = 'name_of_your_family';
@@ -95,8 +75,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnInit() {
-    this.formInitialize();
-    this.getDependentApiDetails();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
   }
@@ -111,38 +89,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  getDependentApiDetails() {
-    this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
-      if (data && data.dependents && data.dependents.length > 0) {
-        this.dependedentDetails = [];
-        data.dependents.forEach(element => {
-          if (element) {
-            this.dependedentDetails.push(element);
-          }          
-        });
-        this.patchDependentForm();
-      } else {
-        this.dependedentDetails = [];
-        for (let index = 0; index < 2; index++) {
-          this.getDependentArr.push(this.initDependentArray());
-          if (index == 0) {
-            this.getDependentArr.at(0).patchValue({
-              [this.form_dependent_relationship]: 'Father',
-            });
-            this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-          }
-          if (index == 1) {
-            this.getDependentArr.at(1).patchValue({
-              [this.form_dependent_relationship]: 'Mother',
-            });
-            this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-          }
-        }
-      }
-    });
-
-  }
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
@@ -169,24 +115,18 @@ dateConvertion(date) {
 }
 
   formSubmit(routeValue?: any) {
-    if(this.dependentForm.valid) {
-      let formArray = this.dependentForm.getRawValue()[this.form_dependentArray];
-      formArray.forEach(element => {
-        if (element[this.form_dependent_dob]) {
-          element[this.form_dependent_dob] = this.momentForm(element[this.form_dependent_dob]);
-        }
-      });
-      // this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {
-      //   this.appConfig.hideLoader();
-      //   this.appConfig.nzNotification('success', 'Saved', 'Dependent details has been updated');
+    // if(this.dependentForm.valid) {
+      this.candidateService.joiningFormUpload().subscribe((data: any)=> {
+        this.appConfig.hideLoader();
+        this.appConfig.nzNotification('success', 'Saved', 'Upload details has been updated');
         this.sharedService.joiningFormStepperStatus.next();
-        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
-      // });
-    } else {
-      this.ngAfterViewInit();
-      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-      this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
-    }
+        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+      });
+    // } else {
+    //   this.ngAfterViewInit();
+    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+    //   this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
+    // }
 
   }
 
@@ -202,114 +142,38 @@ dateConvertion(date) {
   checkFormValidRequestFromRxjs() {
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
       if(data.current == 'upload') {
-        if (!this.dependentForm.dirty) {
+        // if (!this.dependentForm.dirty) {
           return this.appConfig.routeNavigation(data.goto);
-        } else {
-          return this.sharedService.openJoiningRoutePopUp.next(data.goto);
-        }
+        // } else {
+        //   return this.sharedService.openJoiningRoutePopUp.next(data.goto);
+        // }
       } 
     });
   }
 
   routeNext(route) {
-    if (!this.dependentForm.dirty) {
+    // if (!this.dependentForm.dirty) {
       if (route == 'education') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       } else {
-        if (this.appConfig.getLocalData('upload') == '1') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-        } else {
-         if (this.dependentForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-          }
-          this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
-          this.ngAfterViewInit();
-          this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-        }
+        this.formSubmit();
+        // if (this.appConfig.getLocalData('upload') == '1') {
+        //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        // } else {
+        //  if (this.dependentForm.valid) {
+        //   return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        //   // }
+        //   this.ngAfterViewInit();
+        //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+        // }
       }
-    } else {
-      return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-    }
+    // } else {
+      // return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+    // }
   }
 
-  patchDependentForm() {
-    this.getDependentArr.clear();
-    this.dependedentDetails.forEach((element, i) => {
-      this.getDependentArr.push(this.patching(element));
-    });
-    this.getDependentArr.at(0).patchValue({
-      [this.form_dependent_relationship]: 'Father',
-    });
-    this.getDependentArr.at(1).patchValue({
-      [this.form_dependent_relationship]: 'Mother',
-    });
-    this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-    this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-  }
 
-  patching(data) {
-    return this.fb.group({
-      [this.form_dependent_name]: [data[this.form_dependent_name], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
-      [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled]],
-      [this.form_dependent_status]: [data[this.form_dependent_status]],
-      [this.form_isDependent]: [data[this.form_isDependent]]
-    })    
-  }
 
-  initDependentArray() {
-    return this.fb.group({
-      [this.form_dependent_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_dob]: [null],
-      [this.form_dependent_occupation]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_relationship]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_differently_abled]: [null],
-      [this.form_dependent_status]: [null],
-      [this.form_isDependent]: [null]
-    })    
-  }
-
-  formInitialize() {
-    this.dependentForm = this.fb.group({
-      [this.form_dependentArray]: this.fb.array([])
-    })
-  }
-
-  addToDependentArray() {
-    if (this.dependentForm.valid) {
-     return this.getDependentArr.push(this.initDependentArray());
-    }
-    this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
-  }
-
-  removeDependentArray(i) {
-    this.getDependentArr.removeAt(i);
-  }
-
-  // Form getters
-  // convenience getters for easy access to form fields
-  get getDependentArr() { return this.dependentForm.get([this.form_dependentArray]) as FormArray; }
-
-  get dependent_name() {
-  return this.dependentForm.get(this.form_dependent_name);
-  }
-  get dependent_dob() {
-  return this.dependentForm.get(this.form_dependent_dob);
-  }
-  get dependent_relationship() {
-  return this.dependentForm.get(this.form_dependent_relationship);
-  }
-  get dependent_differently_abled() {
-  return this.dependentForm.get(this.form_dependent_differently_abled);
-  }
-  get dependent_status() {
-  return this.dependentForm.get(this.form_dependent_status);
-  }
-  get isDependent() {
-    return this.dependentForm.get(this.form_isDependent);
-  }
   
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';

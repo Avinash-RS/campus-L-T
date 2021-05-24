@@ -312,6 +312,12 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
+     joiningFormUpload() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/document_page?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
      joiningFormGetPreviewDetails() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
        return this.http.get(`${this.BASE_URL}/profile/preview_pageload?user_id=${userId}`,
