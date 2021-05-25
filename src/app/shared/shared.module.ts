@@ -90,6 +90,7 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective,
 ],
@@ -101,6 +102,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     RouterModule,
     HttpClientModule,
     MaterialModule,
+    PdfViewerModule,
     NgMultiSelectDropDownModule.forRoot(),
 
     // Ant design Modules
@@ -183,6 +185,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
+    PdfViewerModule,
     SignupHeaderComponent,
     HomeHeaderComponent,
     SnackbarComponent,

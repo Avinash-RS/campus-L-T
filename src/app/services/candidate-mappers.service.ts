@@ -312,11 +312,29 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
+     joiningFormDownloadableDocuments() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/joiningtemplate_downloads?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
      joiningFormUpload() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
        return this.http.get(`${this.BASE_URL}/profile/document_page?user_id=${userId}`,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
+
+     uploadJoiningDocs(documentData) {
+      // this.datas is api body data
+      // return this.http.post(`${this.BASE_URL}/profile/upload_certificate`, documentData, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      return fetch(`${this.BASE_URL}/profile/upload_joining_docs`, {
+        method: 'POST',
+        body: documentData,
+        // headers: this.getAfterCustomHeaders(), withCredentials: true
+      });
+  
+    }
+  
 
      joiningFormGetPreviewDetails() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';

@@ -1,6 +1,6 @@
 {
   "name": "udap-registration",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -40,6 +40,7 @@
     "ng-connection-service": "^1.0.4",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-zorro-antd": "^8.5.2",
+    "ng2-pdf-viewer": "^7.0.1",
     "ng2-pdfjs-viewer": "^5.0.7",
     "ngx-spinner": "^9.0.2",
     "ngx-toastr": "^10.1.0",

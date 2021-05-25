@@ -1,8 +1,8 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog, MatAccordion } from '@angular/material';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import moment from 'moment';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
@@ -45,6 +45,8 @@ export const MY_FORMATS = {
 })
 export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
+  @ViewChild(MatAccordion, {static: false}) accordion: MatAccordion;
   checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
   dependentForm: FormGroup;
@@ -62,6 +64,9 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   form_isDependent = 'dependent'
 
   dependedentDetails: any;
+  downloadabledocs: any;
+  pdfsrc: any;
+  selectedImage: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -69,12 +74,14 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private dialog: MatDialog,
   ) { 
     this.dateValidation();
   }
 
   ngOnInit() {
+    this.getDownloadableDocs();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
   }
@@ -114,6 +121,59 @@ dateConvertion(date) {
   }
 }
 
+async uploadImage(file) {
+
+  try {
+    this.appConfig.showLoader();
+    const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+
+    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
+    console.log('response', data);
+    
+    this.appConfig.hideLoader();
+
+
+    this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
+  } catch (e) {
+    this.appConfig.hideLoader();
+  }
+  // }, (err) => {
+
+  // });
+}
+
+onSelectFile(event) {
+    
+  const fd = new FormData();
+    if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
+      // this.showResumeImgError = false;
+      if (event.target.files[0].size < 2000000) {
+        // this.showResumeImgSizeError = false;
+        // this.urlResume = event.target.files[0].name;
+        this.selectedImage = event.target.files[0];
+        fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+        fd.append('description', 'Testing');
+        fd.append('label', 'joining');
+        fd.append('level', 'other');
+        console.log('selected', this.selectedImage);
+        
+        fd.append('product_image', this.selectedImage);
+        this.uploadImage(fd);
+      } else {
+        // this.showResumeImgSizeError = true;
+      }
+    } else {
+      // this.showResumeImgError = true;
+    }
+  // console.log(this.otherDocArr.controls, 'otherDocFile');
+}
+
+getDownloadableDocs() {
+  this.candidateService.joiningFormDownloadableDocuments().subscribe((data: any)=> {
+    this.appConfig.hideLoader();
+    this.downloadabledocs = data ? data : [];
+  });
+}
   formSubmit(routeValue?: any) {
     // if(this.dependentForm.valid) {
       this.candidateService.joiningFormUpload().subscribe((data: any)=> {
@@ -173,6 +233,32 @@ dateConvertion(date) {
   }
 
 
+  openMatDialog(src) {
+    this.pdfsrc = src;
+    // this.pdfsrc = 'http://campus-qa.lntedutech.com/d8cintana2/sites/default/files/Templates/BGV_Declaration.pdf';
+    const dialogRef = this.dialog.open(this.matDialogRef, {
+      width: '600px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForPDFViewer'
+    });
+  }
+  closeBox() {
+    this.dialog.closeAll();
+  }
+
+  downloadPDF(src, filename) {
+    let link = document.createElement('a');
+link.setAttribute('type', 'hidden');
+link.href = src;
+link.download = src;
+link.target = '_blank';
+document.body.appendChild(link);
+link.click();
+link.remove();
+  }
 
   
   ngOnDestroy() {

@@ -38,7 +38,8 @@ import {
   MatSidenavModule,
   MatSnackBarModule,
   MatDatepickerModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatCardModule
 } from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -69,7 +70,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatTabsModule,
     MatMomentDateModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule
   ],
   exports: [
     CommonModule,
@@ -94,7 +96,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatTabsModule,
     MatMomentDateModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule
   ]
 })
 export class MaterialModule { }

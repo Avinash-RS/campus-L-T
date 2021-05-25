@@ -6,15 +6,52 @@
 
     <div class="grids-wrapper">
         <div class="uploadForm">
-            <h5 style="margin: 5em 0em; width: 100%; text-align: center;">In Progress</h5>
-            <div class="downloadable-wrapper">
-                <div>
-                    <!-- Pdf -->
+                <mat-card class="downloadable-wrapper">
+                    <div>
+                    <h6 class="mt-0 mb-0 ml-0 mr-0 pl-2">Downloadable Docs</h6>
                 </div>
+                <div class="d-flex flex-wrap justify-content-start">
+                <mat-card class="sub-card-wrapper" *ngFor="let doc of downloadabledocs">
+                    <i class="far fa-file-pdf"></i>
+                    <div class="filename">
+                        {{doc.filename}}
+                    </div>
+                    <div class="onHover overlay">
+                        <button class="add-button" type="button" (click)="openMatDialog(doc.filepath)" mat-raised-button>Preview</button>
+                        <button class="add-button" type="button" (click)="downloadPDF(doc.filepath, doc.filename)" mat-raised-button>Download</button>
+                    </div>
+
+                </mat-card>
             </div>
+            </mat-card>
 
+            <!-- <div class="example-action-buttons">
+                <button mat-button (click)="accordion.openAll()">Expand All</button>
+                <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+              </div> -->
+              <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Education Certificates Upload
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <!-- Type your name and age -->
+                      <!-- <mat-icon>account_circle</mat-icon> -->
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+             
+                  <div>HI Avinash</div>
+                </mat-expansion-panel>
+              
+              </mat-accordion>
 
+              input
+              <br>
+              <input id="file-input" type="file" accept=".pdf" (click)="files.value = null" #files
+              (change)="onSelectFile($event)">
 
+              <!-- <button type="button"> Save</button> -->
 
             
             <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer">
@@ -44,3 +81,19 @@
     </div>
 
 </div>
+<ng-template #matDialog>
+    <div class="main-wrappers">
+        <div class="position-relative text-right">
+            <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
+                file_download
+                </span> -->
+            <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()" class="material-icons">cancel</i>
+        </div>
+    
+        <pdf-viewer [src]="pdfsrc"
+        [original-size]="true"
+></pdf-viewer>
+    </div>
+  
+  </ng-template>
+  
