@@ -6,131 +6,300 @@
 
     <div class="grids-wrapper">
         <div class="uploadForm">
-                <mat-card class="downloadable-wrapper">
-                    <div>
+            <mat-card class="downloadable-wrapper">
+                <div>
                     <h6 class="mt-0 mb-0 ml-0 mr-0 pl-2">Downloadable Docs</h6>
                 </div>
                 <div class="d-flex flex-wrap justify-content-start">
-                <mat-card class="sub-card-wrapper" *ngFor="let doc of downloadabledocs">
-                    <i class="far fa-file-pdf"></i>
-                    <div class="filename">
-                        {{doc.label}}
-                    </div>
-                    <div class="onHover overlay">
-                        <button class="add-button" type="button" (click)="openMatDialog(doc.filepath)" mat-raised-button>Preview</button>
-                        <button class="add-button" type="button" (click)="downloadPDF(doc.filepath, doc.filename)" mat-raised-button>Download</button>
-                    </div>
+                    <mat-card class="sub-card-wrapper" *ngFor="let doc of downloadabledocs">
+                        <i class="far fa-file-pdf"></i>
+                        <div class="filename">
+                            {{doc.label}}
+                        </div>
+                        <div class="onHover overlay">
+                            <button class="add-button" type="button" (click)="openMatDialog(doc.filepath)"
+                                mat-raised-button>Preview</button>
+                            <button class="add-button" type="button" (click)="downloadPDF(doc.filepath, doc.filename)"
+                                mat-raised-button>Download</button>
+                        </div>
 
-                </mat-card>
-            </div>
+                    </mat-card>
+                </div>
             </mat-card>
 
             <!-- <div class="example-action-buttons">
                 <button mat-button (click)="accordion.openAll()">Expand All</button>
                 <button mat-button (click)="accordion.closeAll()">Collapse All</button>
               </div> -->
-              <form class="dependentForm" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
-    
-              <mat-accordion class="example-headers-align" multi>
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h6 class="mt-0 mb-0 ml-0 mr-0">Joining Documents Upload</h6>
-                        
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      <!-- Type your name and age -->
-                      <!-- <mat-icon>account_circle</mat-icon> -->
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-                  <ng-container *ngIf="getJoiningArr && getJoiningArr.controls" [formArrayName]="form_joiningArray">
-                    <ng-container *ngFor="let item of getJoiningArr.controls; let j = index;" [formGroupName]="j">
+            <form class="dependentForm" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
 
-                  <div class="row-wrapper flexEnd">
-                    <div class="overall-input-wrapper min200 top22">
-                        <!-- {{j + 1 }}.  -->
-                        <div class="readonlyTitle">
-                            {{getJoiningArr.controls[j].get(form_label).value}}{{' Upload'}}
-                            <span class="f_size_14" style="color: #C02222;">*</span>
-                        </div>
-                    </div>
+                <mat-accordion class="example-headers-align" multi>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h6 class="mt-0 mb-0 ml-0 mr-0">Joining Documents Upload</h6>
 
-                    <div class="overall-input-wrapper width-20">
-                        <label>Document Description<span></span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_description">
-                        <div class="form-error"
-                            *ngIf="getJoiningArr.controls[j].get(form_description).invalid && getJoiningArr.controls[j].get(form_description).touched">
-                            <div *ngIf="getJoiningArr.controls[j].get(form_description).errors?.required">
-                                Occupation is Required</div>
-                            <div
-                                *ngIf="getJoiningArr.controls[j].get(form_description).errors?.alphaNum255">
-                                Alpha numeric with maximum of 255 characters only
-                                allowed</div>
-                        </div>
-                    </div>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <!-- Type your name and age -->
+                                <!-- <mat-icon>account_circle</mat-icon> -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <ng-container *ngIf="getJoiningArr && getJoiningArr.controls"
+                            [formArrayName]="form_joiningArray">
+                            <ng-container *ngFor="let item of getJoiningArr.controls; let j = index;"
+                                [formGroupName]="j">
 
-                    <div class="overall-input-wrapper width-30 alignCenter top20">
-                                <!-- our custom upload button -->
-                        <label class="custom-upload" [ngClass]="!getJoiningArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'" [for]="j">
-                                <ng-container *ngIf="!getJoiningArr.controls[j].get(form_file_name).value">
-                                <i class="fas fa-upload"></i>
-                                <div class="choose">Choose a file</div>
-                            </ng-container>
-                            <ng-container *ngIf="getJoiningArr.controls[j].get(form_file_name).value">
-                                <div class="uploaded-view">
-                                    <div [matTooltip]="'Choose another file'" class="ufilename">{{getJoiningArr.controls[j].get(form_file_name).value ? getJoiningArr.controls[j].get(form_file_name).value : ''}}</div>
-                                    <i [matTooltip]="'Remove'" (click)="removeFile(j, conditionJoining); $event.preventDefault()" class="far fa-times-circle"></i>
+                                <div class="row-wrapper flexEnd">
+                                    <div class="overall-input-wrapper min200 top22">
+                                        <!-- {{j + 1 }}.  -->
+                                        <div class="readonlyTitle">
+                                            {{getJoiningArr.controls[j].get(form_label).value}}{{' Upload'}}
+                                            <span class="f_size_14" style="color: #C02222;">*</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-20">
+                                        <label>Document Description<span></span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                            [formControlName]="form_description">
+                                        <div class="form-error"
+                                            *ngIf="getJoiningArr.controls[j].get(form_description).invalid && getJoiningArr.controls[j].get(form_description).touched">
+                                            <div
+                                                *ngIf="getJoiningArr.controls[j].get(form_description).errors?.required">
+                                                Document Description is Required</div>
+                                            <div
+                                                *ngIf="getJoiningArr.controls[j].get(form_description).errors?.alphaNum255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-30 alignCenter top20">
+                                        <!-- our custom upload button -->
+                                        <label class="custom-upload"
+                                            [ngClass]="!getJoiningArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
+                                            [for]="j">
+                                            <ng-container *ngIf="!getJoiningArr.controls[j].get(form_file_name).value">
+                                                <i class="fas fa-upload"></i>
+                                                <div class="choose">Choose a file</div>
+                                            </ng-container>
+                                            <ng-container *ngIf="getJoiningArr.controls[j].get(form_file_name).value">
+                                                <div class="uploaded-view">
+                                                    <div [matTooltip]="'Choose another file'" class="ufilename">
+                                                        {{getJoiningArr.controls[j].get(form_file_name).value ? getJoiningArr.controls[j].get(form_file_name).value : ''}}
+                                                    </div>
+                                                    <i [matTooltip]="'Remove'"
+                                                        (click)="removeFile(j, conditionJoining); $event.preventDefault()"
+                                                        class="far fa-times-circle"></i>
+                                                </div>
+                                            </ng-container>
+                                        </label>
+                                        <input [id]="j" type="file" accept=".pdf" (click)="files.value = null" #files
+                                            (change)="onSelectFile($event, j, conditionJoining)" hidden>
+
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-20 alignCenter top20">
+                                        <button class="choose-button btnView" mat-raised-button
+                                            (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value)"
+                                            [disabled]="getJoiningArr.controls[j].get(form_file_path).value ? false : true"
+                                            type="button"> View</button>
+                                    </div>
+
+
                                 </div>
                             </ng-container>
-                        </label>
-                        <input [id]="j" type="file" accept=".pdf" (click)="files.value = null" #files
-                        (change)="onSelectFile($event, j, conditionJoining)" hidden>
+                        </ng-container>
+                    </mat-expansion-panel>
 
-                    </div>
+                    <!-- Education Uploads -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h6 class="mt-0 mb-0 ml-0 mr-0">Education Documents Upload</h6>
 
-                    <div class="overall-input-wrapper width-20 alignCenter top20">
-                                <button class="choose-button btnView" mat-raised-button (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value)" [disabled]="getJoiningArr.controls[j].get(form_file_path).value ? false : true" type="button"> View</button>
-    </div>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <!-- Type your name and age -->
+                                <!-- <mat-icon>account_circle</mat-icon> -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <!-- new -->
+                        <mat-accordion class="example-headers-align sub-acc">
+                            <ng-container *ngIf="getEducationArr && getEducationArr.controls"
+                                [formArrayName]="form_educationArray">
+                                <ng-container *ngFor="let education of getEducationArr.controls; let i = index;"
+                                    [formGroupName]="i">
+
+                                    <mat-expansion-panel style="margin-top: .25em !important;" [expanded]="step === 0"
+                                        (opened)="setStep(0)">
+                                        <mat-expansion-panel-header class="sub-header-accordion">
+                                            <mat-panel-title class="f_size_14" style="color: #333333;">
+                                                {{getEducationArr.controls[i].get(form_education_level).value}} Certificate Uploads<span class="f_size_14"
+                                                    style="color: #C02222;">*</span>
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+
+                                        <ng-container *ngIf="getEducationArr.controls[i].get(form_education_level).value != 'SSLC' && getEducationArr.controls[i].get(form_education_level).value != 'HSC'">
+                                            <div class="row-wrapper flexEnd">
+                                                <div class="overall-input-wrapper width-100 align-items-center flex-row">
+                                                    <label class="f_size_14" style="width: 26%;">How many semesters, do you have<span>*</span></label>
+                                                    <nz-select class="input select" (ngModelChange)="changeSemesterCount(education, i)" style="width: 9%;" [formControlName]="form_noofSemester" nzAllowClear nzShowSearch
+                                                        nzPlaceHolder="Select">
+                                                        <nz-option *ngFor="let sem of semesterList" [nzLabel]="sem" [nzValue]="sem"></nz-option>
+                                                    </nz-select>
+                                                    <div class="form-error ml-2"
+                                                        *ngIf="getEducationArr.controls[i].get(form_noofSemester).invalid && getEducationArr.controls[i].get(form_noofSemester).touched">
+                                                        <div *ngIf="getEducationArr.controls[i].get(form_noofSemester)?.errors?.required">
+                                                            No. of Semesters is Required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="getSemesterArr(i) && getSemesterArr(i).controls"
+                                            [formArrayName]="form_semesterArray">
+                                            <ng-container
+                                                *ngFor="let item of getSemesterArr(i).controls; let j = index;"
+                                                [formGroupName]="j">
+
+                                                <div class="row-wrapper flexEnd">
+                                                    <div class="overall-input-wrapper min200 top22">
+                                                        <!-- {{j + 1 }}.  -->
+                                                        <div class="readonlyTitle1">
+                                                            {{getSemesterArr(i).controls[j].get(form_label).value}}<span
+                                                                class="f_size_14" style="color: #C02222;">*</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="overall-input-wrapper width-20">
+                                                        <label>Document Description<span></span></label>
+                                                        <input matInput placeholder="Enter here" class="input"
+                                                            type="text" [formControlName]="form_description">
+                                                        <div class="form-error"
+                                                            *ngIf="getSemesterArr(i).controls[j].get(form_description).invalid && getSemesterArr(i).controls[j].get(form_description).touched">
+                                                            <div
+                                                                *ngIf="getSemesterArr(i).controls[j].get(form_description).errors?.required">
+                                                                Document Description is Required</div>
+                                                            <div
+                                                                *ngIf="getSemesterArr(i).controls[j].get(form_description).errors?.alphaNum255">
+                                                                Alpha numeric with maximum of 255 characters only
+                                                                allowed</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="overall-input-wrapper width-30 alignCenter top20">
+                                                        <!-- our custom upload button -->
+                                                        <label class="custom-upload"
+                                                            [ngClass]="!getSemesterArr(i).controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
+                                                            [for]="j">
+                                                            <ng-container
+                                                                *ngIf="!getSemesterArr(i).controls[j].get(form_file_name).value">
+                                                                <i class="fas fa-upload"></i>
+                                                                <div class="choose">Choose a file</div>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="getSemesterArr(i).controls[j].get(form_file_name).value">
+                                                                <div class="uploaded-view">
+                                                                    <div [matTooltip]="'Choose another file'"
+                                                                        class="ufilename">
+                                                                        {{getSemesterArr(i).controls[j].get(form_file_name).value ? getSemesterArr(i).controls[j].get(form_file_name).value : ''}}
+                                                                    </div>
+                                                                    <i [matTooltip]="'Remove'"
+                                                                        (click)="removeFile(j, conditionEducation); $event.preventDefault()"
+                                                                        class="far fa-times-circle"></i>
+                                                                </div>
+                                                            </ng-container>
+                                                        </label>
+                                                        <input [id]="j" type="file" accept=".pdf"
+                                                            (click)="files.value = null" #files
+                                                            (change)="onSelectFile($event, j, conditionEducation)"
+                                                            hidden>
+
+                                                    </div>
+
+                                                    <div class="overall-input-wrapper width-15 alignCenter top20">
+                                                        <button class="choose-button btnView" mat-raised-button
+                                                            (click)="openMatDialog(getSemesterArr(i).controls[j].get(form_file_path).value)"
+                                                            [disabled]="getSemesterArr(i).controls[j].get(form_file_path).value ? false : true"
+                                                            type="button"> View</button>
+                                                    </div>
+                                                    <div class="overall-input-wrapper width-5 alignCenter top20">
+
+                                                        <div class="remove-wrapper">
+                                                            <div *ngIf="false" (click)="removeInSemesterArray(i, j)"
+                                                                matTooltip="Remove" class="remove">
+                                                                <i class="material-icons material-icons-outlined">
+                                                                    remove_circle_outline
+                                                                </i>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
 
 
-                </div>
-            </ng-container>
-        </ng-container>
-                </mat-expansion-panel>
-              
-              </mat-accordion>
+                                                </div>
+
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="getEducationArr.controls[i].get(form_education_level).value != 'SSLC' && getEducationArr.controls[i].get(form_education_level).value != 'HSC'">
+                                        <div *ngIf="false"
+                                            (click)="addToSemesterArray(i)"
+                                            class="row-wrapper mt-3 justify-content-center">
+                                            <div class="overall-input-wrapper">
+                                                <button class="add-button-sub" mat-raised-button type="button">+
+                                                    Add</button>
+                                            </div>
+                                        </div>
+                                        </ng-container>
+
+                                    </mat-expansion-panel>
+                                </ng-container>
+                            </ng-container>
+
+                        </mat-accordion>
+                        <!-- end -->
+                    </mat-expansion-panel>
+
+                </mat-accordion>
 
 
-              <!-- input
+                <!-- input
               <br>
               <input id="file-input" type="file" accept=".pdf" (click)="files.value = null" #files
               (change)="onSelectFile($event)"> -->
 
-              <!-- <button type="button"> Save</button> -->
+                <!-- <button type="button"> Save</button> -->
 
-            
-            <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer">
-                <div (click)="routeNext('education')"
-                    class="d-flex align-content-center align-items-center position-relative" style="cursor: pointer;">
-                    <div class="left-arrow position-absolute"></div>
-                    <div class="sections left-space">
-                        <div class="label">Previous Section</div>
-                        <div class="value">Education Details</div>
+
+                <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer">
+                    <div (click)="routeNext('education')"
+                        class="d-flex align-content-center align-items-center position-relative"
+                        style="cursor: pointer;">
+                        <div class="left-arrow position-absolute"></div>
+                        <div class="sections left-space">
+                            <div class="label">Previous Section</div>
+                            <div class="value">Education Details</div>
+                        </div>
+                    </div>
+                    <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button
+                        type="submit">Save &
+                        Continue</button>
+                    <div (click)="routeNext('preview')"
+                        class="d-flex align-content-center align-items-center text-right position-relative pointer"
+                        style="cursor: pointer;">
+                        <div class="right-arrow position-absolute"></div>
+                        <div class="sections right-space">
+                            <div class="label">Next Section</div>
+                            <div class="value">Preview Details</div>
+                        </div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button type="submit">Save &
-                    Continue</button>
-                <div (click)="routeNext('preview')"
-                    class="d-flex align-content-center align-items-center text-right position-relative pointer"
-                    style="cursor: pointer;">
-                    <div class="right-arrow position-absolute"></div>
-                    <div class="sections right-space">
-                        <div class="label">Next Section</div>
-                        <div class="value">Preview Details</div>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
         </div>
         <div class="photo-wrapper">
         </div>
@@ -143,16 +312,15 @@
             <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
                 file_download
                 </span> -->
-            <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()" class="material-icons">cancel</i>
+            <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()"
+                class="material-icons">cancel</i>
         </div>
-    
-        <pdf-viewer [src]="pdfsrc"
-        [original-size]="true"
-></pdf-viewer>
+
+        <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
     </div>
-  
-  </ng-template>
-  
+
+</ng-template>
+
 <ng-template #noDocs>
     <div class="no-doc-wrapper">
         <div class="note">
@@ -210,8 +378,11 @@
             </div>
         </div>
         <div class="row-wrapper justify-content-center align-items-center mt-4">
-            <button class="add-button" style="color: #C02222; background-color: white; border: 1px solid #C02222; height: 28px;" type="button" (click)="closeBox()" mat-raised-button>Cancel</button>
-            <button class="add-button ml-3" (click)="validateNotUploaded()" type="button" mat-raised-button>Submit</button>
+            <button class="add-button"
+                style="color: #C02222; background-color: white; border: 1px solid #C02222; height: 28px;" type="button"
+                (click)="closeBox()" mat-raised-button>Cancel</button>
+            <button class="add-button ml-3" (click)="validateNotUploaded()" type="button"
+                mat-raised-button>Submit</button>
         </div>
 
     </div>

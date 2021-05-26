@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog, MatAccordion } from '@angular/material';
@@ -48,14 +48,30 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
   @ViewChild('noDocs', {static: false}) matNoDocs: TemplateRef<any>;
   @ViewChild(MatAccordion, {static: false}) accordion: MatAccordion;
+  step = 0;
+  getEducationDocuments: any[];
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+  semesterList = [1,2,3,4,5,6,7,8,9,10];
   checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
   uploadForm: FormGroup;
   minDate: Date;
   maxDate: Date;
 
-  conditionJoining = 'joining'
-  //form Variables
+  conditionJoining = 'joining';
+  conditionEducation = 'education';
+  //Joining Variables
   form_joiningArray = 'joiningArray';
   form_name = 'name';
   form_label = 'label';
@@ -69,6 +85,14 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   form_Not_Submitted_Description = 'Not_Submitted_Description';
   form_expectedDate = 'expectedDate';
 
+  // Education variables
+  form_educationArray = 'educationArray';
+  form_noofSemester = 'no_of_semester';
+  form_education_level = 'Education_level';
+  form_eourse_Completion = 'course_completion_certificate';
+  form_degree_Completion = 'degree_completion_certificate';
+  form_semesterArray = 'semesterArray';
+
   dependedentDetails: any;
   downloadabledocs: any;
   pdfsrc: any;
@@ -79,6 +103,49 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   reason = new FormControl(null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]);
   joiningNotUploadedDocs: any[];
   isRoute: any;
+
+
+  dummyValue = [
+    {
+      [this.form_education_level]: 'SSLC',
+      [this.form_noofSemester]: null,
+      [this.form_semesterArray]: [
+        {
+          [this.form_file_id]: "2297",
+          [this.form_id]: "166",
+          [this.form_file_path]: "http://campus-qa.lntedutech.com/d8cintana2/profile/get_certificate_name_test?certificate_id=2297",
+          [this.form_file_size]: "190.04 KB",
+          [this.form_file_name]: "Caste Declaration.pdf",
+          [this.form_name]: "SSLC",
+          [this.form_label]: "SSLC Certificate",
+          [this.form_description]: null,
+          [this.form_Not_Submitted_Description]: null,
+          [this.form_expectedDate]: null
+        }
+      ]
+    },
+    {
+      [this.form_education_level]: 'HSC',
+      [this.form_noofSemester]: null,
+      [this.form_semesterArray]: []
+    },
+    {
+      [this.form_education_level]: 'Diploma',
+      [this.form_noofSemester]: null,
+      [this.form_semesterArray]: []
+    },
+    {
+      [this.form_education_level]: 'UG',
+      [this.form_noofSemester]: null,
+      [this.form_semesterArray]: []
+    },
+    {
+      [this.form_education_level]: 'PG',
+      [this.form_noofSemester]: null,
+      [this.form_semesterArray]: []
+    },
+  ];
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -112,7 +179,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   formInitialize() {
     this.uploadForm = this.fb.group({
-      [this.form_joiningArray]: this.fb.array([])
+      [this.form_joiningArray]: this.fb.array([]),
+      [this.form_educationArray]: this.fb.array([])
     })
   }
 
@@ -120,6 +188,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     this.candidateService.joiningFormGetDocuments().subscribe((data: any)=> {
       this.appConfig.hideLoader();
       this.getJoiningDocuments = data && data['Joining_Details'] ? data['Joining_Details'] : [];
+      this.getEducationDocuments = this.dummyValue;
       this.checkJoiningArrayinitalize();      
     }, (err)=> {
 
@@ -127,6 +196,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   checkJoiningArrayinitalize() {
+    // Joining
     let arr = [];
     this.getJoiningDocuments.forEach(element => {
       if (element) {
@@ -141,6 +211,18 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     } else {
       this.getJoiningArr.push(this.initJoiningArray());
     }
+
+  // Education
+    if (this.getEducationDocuments && this.getEducationDocuments.length > 0) {
+      this.getEducationDocuments.forEach(element => {
+        this.getEducationArr.push(this.patchEducationArray(element));
+      });
+    } else {
+      this.getEducationArr.push(this.initEducationArray());
+      // console.log('adda', this.getEducationArr.controls[0]['controls']);
+    }
+
+
   }
 
   patchJoiningArray(data) {
@@ -159,6 +241,52 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     })    
   }
 
+  patchEducationArray(data) {
+    return this.fb.group({
+      [this.form_education_level]: [data[this.form_education_level]],
+      [this.form_noofSemester]: [data[this.form_noofSemester], (data[this.form_education_level] != 'SSLC' && data[this.form_education_level] != 'HSC' ? [Validators.required] : null)],
+      [this.form_semesterArray]: data[this.form_semesterArray] && data[this.form_semesterArray].length > 0 ? this.patchSubArray(data[this.form_noofSemester], data[this.form_education_level], data) : this.patchSubInitArray(data[this.form_education_level], data)
+      // [this.form_semesterArray]: this.fb.array([])
+    });
+  }
+
+  patchSemesterArray(data, level) {
+    return this.fb.group({
+      [this.form_name]: level == 'SSLC' || level == 'HSC' ? level : [data[this.form_name]],
+      [this.form_label]: level == 'SSLC' || level == 'HSC' ? level + ' Certificate' : [data[this.form_label]],
+      [this.form_file_size]: [data[this.form_file_size]],
+      [this.form_file_path]: [data[this.form_file_path]],
+      [this.form_file_name]: [data[this.form_file_name]],
+      [this.form_file_type]: [data[this.form_file_type]],
+      [this.form_file_id]: [data[this.form_file_id]],
+      [this.form_description]: [data[this.form_description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_expectedDate]: [data[this.form_expectedDate] ? this.dateConvertion(data[this.form_expectedDate]) : null]
+    })        
+  }
+
+  patchSubArray(semestercount, level, form) {
+    let subSem = [];
+    if (form[this.form_semesterArray].length > 0) {
+      form[this.form_semesterArray].forEach(element => {
+        subSem.push(this.patchSemesterArray(element, level));
+      });  
+      return this.fb.array(subSem);
+    }
+  }
+  patchSubInitArray(level, form) {
+    if (level == 'SSLC' || level == 'HSC') {
+      let data = {
+        label: level == 'SSLC' ? 'SSLC Certificate' : 'HSC Certificate',
+        name: level
+      }
+       return this.fb.array([this.initSemesterArray(data)]);
+    } else {
+      return this.fb.array([]);
+    }
+  }
+
+
   initJoiningArray() {
     return this.fb.group({
       [this.form_name]: [null],
@@ -175,6 +303,56 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     })    
   }
 
+  initSemesterArray(data?) {
+    return this.fb.group({
+      [this.form_name]: [data ? data.name : null],
+      [this.form_label]: [data ? data.label : null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_Not_Submitted_Description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_expectedDate]: [null]
+    })        
+  }
+  initEducationArray() {
+    return this.fb.group({
+      [this.form_education_level]: [null],
+      [this.form_noofSemester]: [null, [Validators.required]],
+      [this.form_semesterArray]: this.fb.array([this.initSemesterArray()]),
+    });
+  }
+  
+  addToSemesterArray(i?: any) {
+    console.log('smeser', this.getSemesterArr(i));
+    this.getSemesterArr(i).push(this.initSemesterArray());
+  }
+
+  removeInSemesterArray(i, j) {
+    this.getSemesterArr(i).removeAt(j);
+  }
+
+  changeSemesterCount(form, i) {
+    console.log(form, i);
+    console.log('adad', form.value[this.form_noofSemester]);
+    
+    if (form.value[this.form_semesterArray].length < Number(form.value[this.form_noofSemester])) {
+
+    } else {
+
+    }
+    console.log(this.getSemesterArr(i));
+    
+    // this.getSemesterArr(i).push(this.initSemesterArray());
+
+  }
+/*
+    form.patchValue({
+      [this.form_label]: ['SSLCcccccccccccccccccc'],
+    });
+*/
 validateNotUploaded() {
   if (this.reason.valid && this.expectedDate.valid) {
     this.dialog.closeAll();
@@ -316,7 +494,15 @@ onSelectFile(event, i, form) {
         fd.append('label', form);
         fd.append('level', this.getJoiningArr.at(i).value[this.form_name]);
         fd.append('product_image', this.selectedImage);
-        this.uploadImage(fd, i, form);
+        // this.uploadImage(fd, i, form);
+        this.getEducationArr.at(i).patchValue({
+          [this.form_file_name]: 'hi',
+          [this.form_file_id]: 'hi',
+          [this.form_file_path]: 'hi',
+          [this.form_file_size]: 'hi',
+          [this.form_file_type]: 'hi',
+        });        
+      
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
@@ -421,6 +607,11 @@ link.remove();
     // Form getters
   // convenience getters for easy access to form fields
   get getJoiningArr() { return this.uploadForm.get([this.form_joiningArray]) as FormArray; }
+  get getEducationArr() { return this.uploadForm.get([this.form_educationArray]) as FormArray; }
+  getSemesterArr(i: any) : FormArray {
+        return this.getEducationArr.at(i).get([this.form_semesterArray]) as FormArray
+      }
+
 
 
   dateValidation() {

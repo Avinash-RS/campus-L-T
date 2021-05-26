@@ -2655,3 +2655,9 @@ th {
 .mat-button-focus-overlay { 
   background-color: transparent!important; 
   }
+  .sub-header-accordion {
+    .mat-expansion-indicator::after {
+      color: rgb(0, 0, 0, 0.4) !important;
+    }
+   }
+    

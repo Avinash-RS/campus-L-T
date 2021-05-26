@@ -313,7 +313,7 @@
                 </ng-container>
             </ng-container>
 
-            <div *ngIf="getEducationArr.controls.length < 7 " class="row-wrapper mt-3">
+            <div *ngIf="getEducationArr.controls && getEducationArr.controls.length < 7 " class="row-wrapper mt-3">
                 <div class="overall-input-wrapper">
                     <button class="add-button" mat-raised-button type="button" (click)="addToEducationArray()">+ Add</button>
                 </div>
