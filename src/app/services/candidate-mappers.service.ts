@@ -318,9 +318,15 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
-     joiningFormUpload() {
+     joiningFormGetDocuments() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
-       return this.http.get(`${this.BASE_URL}/profile/document_page?user_id=${userId}`,
+       return this.http.get(`${this.BASE_URL}/profile/uploaddocument_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormUpload(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/uploaddocument_pagesave?user_id=${userId}`, data,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 

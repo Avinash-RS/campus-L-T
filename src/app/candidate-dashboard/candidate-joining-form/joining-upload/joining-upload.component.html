@@ -14,7 +14,7 @@
                 <mat-card class="sub-card-wrapper" *ngFor="let doc of downloadabledocs">
                     <i class="far fa-file-pdf"></i>
                     <div class="filename">
-                        {{doc.filename}}
+                        {{doc.label}}
                     </div>
                     <div class="onHover overlay">
                         <button class="add-button" type="button" (click)="openMatDialog(doc.filepath)" mat-raised-button>Preview</button>
@@ -29,27 +29,82 @@
                 <button mat-button (click)="accordion.openAll()">Expand All</button>
                 <button mat-button (click)="accordion.closeAll()">Collapse All</button>
               </div> -->
+              <form class="dependentForm" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
+    
               <mat-accordion class="example-headers-align" multi>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
-                      Education Certificates Upload
+                        <h6 class="mt-0 mb-0 ml-0 mr-0">Joining Documents Upload</h6>
+                        
                     </mat-panel-title>
                     <mat-panel-description>
                       <!-- Type your name and age -->
                       <!-- <mat-icon>account_circle</mat-icon> -->
                     </mat-panel-description>
                   </mat-expansion-panel-header>
-             
-                  <div>HI Avinash</div>
+                  <ng-container *ngIf="getJoiningArr && getJoiningArr.controls" [formArrayName]="form_joiningArray">
+                    <ng-container *ngFor="let item of getJoiningArr.controls; let j = index;" [formGroupName]="j">
+
+                  <div class="row-wrapper flexEnd">
+                    <div class="overall-input-wrapper min200 top22">
+                        <!-- {{j + 1 }}.  -->
+                        <div class="readonlyTitle">
+                            {{getJoiningArr.controls[j].get(form_label).value}}{{' Upload'}}
+                            <span class="f_size_14" style="color: #C02222;">*</span>
+                        </div>
+                    </div>
+
+                    <div class="overall-input-wrapper width-20">
+                        <label>Document Description<span></span></label>
+                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_description">
+                        <div class="form-error"
+                            *ngIf="getJoiningArr.controls[j].get(form_description).invalid && getJoiningArr.controls[j].get(form_description).touched">
+                            <div *ngIf="getJoiningArr.controls[j].get(form_description).errors?.required">
+                                Occupation is Required</div>
+                            <div
+                                *ngIf="getJoiningArr.controls[j].get(form_description).errors?.alphaNum255">
+                                Alpha numeric with maximum of 255 characters only
+                                allowed</div>
+                        </div>
+                    </div>
+
+                    <div class="overall-input-wrapper width-30 alignCenter top20">
+                                <!-- our custom upload button -->
+                        <label class="custom-upload" [ngClass]="!getJoiningArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'" [for]="j">
+                                <ng-container *ngIf="!getJoiningArr.controls[j].get(form_file_name).value">
+                                <i class="fas fa-upload"></i>
+                                <div class="choose">Choose a file</div>
+                            </ng-container>
+                            <ng-container *ngIf="getJoiningArr.controls[j].get(form_file_name).value">
+                                <div class="uploaded-view">
+                                    <div [matTooltip]="'Choose another file'" class="ufilename">{{getJoiningArr.controls[j].get(form_file_name).value ? getJoiningArr.controls[j].get(form_file_name).value : ''}}</div>
+                                    <i [matTooltip]="'Remove'" (click)="removeFile(j, conditionJoining); $event.preventDefault()" class="far fa-times-circle"></i>
+                                </div>
+                            </ng-container>
+                        </label>
+                        <input [id]="j" type="file" accept=".pdf" (click)="files.value = null" #files
+                        (change)="onSelectFile($event, j, conditionJoining)" hidden>
+
+                    </div>
+
+                    <div class="overall-input-wrapper width-20 alignCenter top20">
+                                <button class="choose-button btnView" mat-raised-button (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value)" [disabled]="getJoiningArr.controls[j].get(form_file_path).value ? false : true" type="button"> View</button>
+    </div>
+
+
+                </div>
+            </ng-container>
+        </ng-container>
                 </mat-expansion-panel>
               
               </mat-accordion>
 
-              input
+
+              <!-- input
               <br>
               <input id="file-input" type="file" accept=".pdf" (click)="files.value = null" #files
-              (change)="onSelectFile($event)">
+              (change)="onSelectFile($event)"> -->
 
               <!-- <button type="button"> Save</button> -->
 
@@ -63,7 +118,7 @@
                         <div class="value">Education Details</div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button type="button" (click)="formSubmit()">Save &
+                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button type="submit">Save &
                     Continue</button>
                 <div (click)="routeNext('preview')"
                     class="d-flex align-content-center align-items-center text-right position-relative pointer"
@@ -75,6 +130,7 @@
                     </div>
                 </div>
             </div>
+        </form>
         </div>
         <div class="photo-wrapper">
         </div>
@@ -97,3 +153,67 @@
   
   </ng-template>
   
+<ng-template #noDocs>
+    <div class="no-doc-wrapper">
+        <div class="note">
+            Note:
+        </div>
+        <div class="doctext">* Below Documents are not uploaded. If you wish to upload now, Go back and upload these
+            docs.</div>
+        <div class="doctext">* If you Don't have these documents, Please mention the Reason below and Select the date,
+            when we can expext those Documents</div>
+        <h6 class="title">Not Uploaded Documents</h6>
+        <div class="nodoc-list">
+            <ng-container *ngIf="joiningNotUploadedDocs && joiningNotUploadedDocs.length > 0">
+                <div class="sub-title">Joining Documents</div>
+                <ol>
+                    <li *ngFor="let doc of joiningNotUploadedDocs">{{doc.label}}</li>
+                </ol>
+            </ng-container>
+
+        </div>
+        <h6 class="title">Not Having Documents</h6>
+        <div class="row-wrapper">
+            <div class="overall-input-wrapper width-45">
+                <label>Reason<span>*</span></label>
+                <textarea matInput placeholder="Enter here" class="input text-area" type="text"
+                    [formControl]="reason"></textarea>
+                <div class="form-error" *ngIf="reason.invalid && reason.touched">
+                    <div *ngIf="reason.errors?.required">
+                        Reason is Required</div>
+                    <div *ngIf="reason.errors?.alphaNum255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                </div>
+
+            </div>
+            <div class="overall-input-wrapper width-32">
+                <label class="dateInput">Expected Date<span></span></label>
+                <div class="date-relative">
+                    <input matInput class="input dateInput" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                        placeholder="DD-MM-YYYY" [formControl]="expectedDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <div class="form-error dateInput" *ngIf="expectedDate.invalid && expectedDate.touched">
+                    <div *ngIf="expectedDate?.errors?.required">
+                        Expected Date is Required</div>
+                    <div *ngIf="expectedDate?.errors?.matDatepickerMax">
+                        {{expectedDate?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(expectedDate?.errors?.matDatepickerMax.max) : ''}}
+                    </div>
+                    <div *ngIf="expectedDate?.errors?.matDatepickerMin">
+                        {{expectedDate?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(expectedDate?.errors?.matDatepickerMin.min) : ''}}
+                    </div>
+                    <div *ngIf="expectedDate?.errors?.matDatepickerParse">
+                        Invalid Date Format</div>
+                </div>
+            </div>
+        </div>
+        <div class="row-wrapper justify-content-center align-items-center mt-4">
+            <button class="add-button" style="color: #C02222; background-color: white; border: 1px solid #C02222; height: 28px;" type="button" (click)="closeBox()" mat-raised-button>Cancel</button>
+            <button class="add-button ml-3" (click)="validateNotUploaded()" type="button" mat-raised-button>Submit</button>
+        </div>
+
+    </div>
+
+</ng-template>
