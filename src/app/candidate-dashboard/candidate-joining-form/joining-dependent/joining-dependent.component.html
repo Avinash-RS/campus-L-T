@@ -144,7 +144,7 @@
                 </ng-container>
             </ng-container>
 
-            <div *ngIf="getDependentArr.controls.length < 5 " class="row-wrapper mt-3">
+            <div *ngIf="getDependentArr && getDependentArr.controls && getDependentArr.controls.length < 5 " class="row-wrapper mt-3">
                 <div class="overall-input-wrapper">
                     <button class="add-button" mat-raised-button type="button" (click)="addToDependentArray()">+ Add</button>
                 </div>

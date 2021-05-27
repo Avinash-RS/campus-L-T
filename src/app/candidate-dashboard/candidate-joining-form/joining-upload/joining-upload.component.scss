@@ -828,3 +828,12 @@ mat-expansion-panel-header {
         }
     }
 }
+.no-cursor {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .8;
+    background: rgb(0,0,0, .1) !important;
+}
+.non-edit {
+    background-color: #eaeaea !important;
+}
