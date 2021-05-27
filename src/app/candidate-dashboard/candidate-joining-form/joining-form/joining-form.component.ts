@@ -148,7 +148,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
       data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
       data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
-      data?.joining_details == '0' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
+      data?.joining_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
       data?.previewed == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
       data?.submitted == '1' ? this.appConfig.setLocalData('submit', '1') : this.appConfig.setLocalData('submit', '0');
       this.hideStepper = data?.submitted == '1' ? true : false;
@@ -165,7 +165,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         return this.activeStep = 'submit';//, this.routingSelection = param ? param : 'dependent';
       }
 
-      if (data.joining_details == '0') {
+      if (data.joining_details == '1') {
         this.valid.tillupload();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'dependent';

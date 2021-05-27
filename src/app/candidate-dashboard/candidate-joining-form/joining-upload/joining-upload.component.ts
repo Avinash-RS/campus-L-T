@@ -50,6 +50,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild(MatAccordion, {static: false}) accordion: MatAccordion;
   step = 0;
   getEducationDocuments: any[];
+  educationNotUploadedDocs: any[];
 
   setStep(index: number) {
     this.step = index;
@@ -73,25 +74,25 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   conditionEducation = 'education';
   //Joining Variables
   form_joiningArray = 'joiningArray';
+  form_file_id = 'file_id';
+  form_id = 'id';
+  form_file_path = 'file_path';
+  form_file_type = 'filetype';
+  form_file_size = 'file_size';
+  form_file_name = 'filename';
   form_name = 'name';
   form_label = 'label';
-  form_id = 'id';
-  form_file_name = 'filename';
-  form_file_path = 'file_path';
-  form_file_type = 'file_type';
-  form_file_size = 'file_size';
-  form_file_id = 'file_id';
   form_description = 'description';
-  form_Not_Submitted_Description = 'Not_Submitted_Description';
-  form_expectedDate = 'expectedDate';
+  form_Not_Submitted_Description = 'not_submitted_description';
+  form_expectedDate = 'expected_date';
 
   // Education variables
-  form_educationArray = 'educationArray';
+  form_educationArray = 'Education_Documents';
+  form_semesterArray = 'sub_documents';
   form_noofSemester = 'no_of_semester';
-  form_education_level = 'Education_level';
+  form_education_level = 'Education_Level';
   form_eourse_Completion = 'course_completion_certificate';
   form_degree_Completion = 'degree_completion_certificate';
-  form_semesterArray = 'semesterArray';
 
   dependedentDetails: any;
   downloadabledocs: any;
@@ -188,7 +189,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     this.candidateService.joiningFormGetDocuments().subscribe((data: any)=> {
       this.appConfig.hideLoader();
       this.getJoiningDocuments = data && data['Joining_Details'] ? data['Joining_Details'] : [];
-      this.getEducationDocuments = this.dummyValue;
+      this.getEducationDocuments = data && data['Education_Documents'] ? data['Education_Documents'] : [];
       this.checkJoiningArrayinitalize();      
     }, (err)=> {
 
@@ -326,7 +327,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   
   addToSemesterArray(i?: any) {
-    console.log('smeser', this.getSemesterArr(i));
     this.getSemesterArr(i).push(this.initSemesterArray());
   }
 
@@ -334,31 +334,73 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     this.getSemesterArr(i).removeAt(j);
   }
 
-  changeSemesterCount(form, i) {
-    console.log(form, i);
-    console.log('adad', form.value[this.form_noofSemester]);
-    
-    if (form.value[this.form_semesterArray].length < Number(form.value[this.form_noofSemester])) {
-
-    } else {
-
-    }
-    console.log(this.getSemesterArr(i));
-    
-    // this.getSemesterArr(i).push(this.initSemesterArray());
-
+  changeSemesterCount(form, formIndex) {
+    let nosemCount = form.value[this.form_noofSemester] ? form.value[this.form_noofSemester] : 0;
+    let NoOfSemcount = Number(nosemCount) + 2;
+    let level = form.value[this.form_education_level];
+    let existingSemCount = form.value[this.form_semesterArray].length;
+    this.addOrRemoveArray(level, NoOfSemcount, existingSemCount, form, formIndex);
   }
-/*
-    form.patchValue({
-      [this.form_label]: ['SSLCcccccccccccccccccc'],
-    });
-*/
-validateNotUploaded() {
+
+  addOrRemoveArray(level, NoOfSemcount, existingSemCount, form, formIndex) {
+    level = level == 'Diploma' ? 'Diploma' : 'Degree';
+    let data: any;
+      if (existingSemCount == 0) {
+        for (let i = 0; i < NoOfSemcount; i++) {
+          if (i == 0 || i == 1) {
+            data = {
+              label: i == 0 ? `${level} Certificate` : 'Course Completion Certificate',
+              name: i == 0 ? 'degree' : 'course'
+            }
+          this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+        }
+          if (i > 1) {
+            data = {
+              label: `Semester ${i - 1 }`,
+              name: `sem${i - 1 }`
+            }
+            this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+          }
+        }
+      } else if (existingSemCount != 0 && (NoOfSemcount > existingSemCount)) {
+        let i = existingSemCount;
+        for (i; i < NoOfSemcount; i++) {
+          if (i == 0 || i == 1) {
+            data = {
+              label: i == 0 ? `${level} Certificate` : 'Course Completion Certificate',
+              name: i == 0 ? 'degree' : 'course'
+            }
+          this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+        }
+          if (i > 1) {
+            data = {
+              label: `Semester ${i - 1 }`,
+              name: `sem${i - 1 }`
+            }
+            this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+          }
+        }
+      } else {
+        let i = existingSemCount;
+        for (i; i >= NoOfSemcount; i--) {
+          this.getSemesterArr(formIndex).removeAt(i);
+        }
+      }
+  }
+
+  validateNotUploaded() {
   if (this.reason.valid && this.expectedDate.valid) {
     this.dialog.closeAll();
+    // Joining Mapping of reason and expected value
     let joiningArray = this.getJoiningArr.getRawValue();
     joiningArray.forEach((element, i) => {
-      if (!element[this.form_file_path]) {
+        // Nulling the not sub and exp date
+        this.getJoiningArr.at(i).patchValue({
+        [this.form_Not_Submitted_Description]: null,
+        [this.form_expectedDate]: null
+      });
+       // If file path not found, patching the not sub desc and exp date
+       if (!element[this.form_file_path]) {
     this.getJoiningArr.at(i).patchValue({
       [this.form_file_name]: null,
       [this.form_file_id]: null,
@@ -368,8 +410,33 @@ validateNotUploaded() {
       [this.form_Not_Submitted_Description]: this.reason.value,
       [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
     });                  
-      }
+    }
     });
+
+    let educationArray = this.getEducationArr.getRawValue();
+    educationArray.forEach((ele, i) => {
+      ele[this.form_semesterArray].forEach((element, subIndex) => {
+        // Nulling the not sub and exp date
+        this.getSemesterArr(i).at(subIndex).patchValue({
+        [this.form_Not_Submitted_Description]: null,
+        [this.form_expectedDate]: null
+        });  
+       // If file path not found, patching the not sub desc and exp date
+       if (!element[this.form_file_path]) {
+          this.getSemesterArr(i).at(subIndex).patchValue({
+            [this.form_file_name]: null,
+            [this.form_file_id]: null,
+            [this.form_file_path]: null,
+            [this.form_file_size]: null,
+            [this.form_file_type]: null,
+            [this.form_Not_Submitted_Description]: this.reason.value,
+            [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
+          });
+        }
+      });
+    });
+
+
     this.finalSubmit(this.isRoute ? this.isRoute : '');
   } else {
     this.reason.markAllAsTouched();
@@ -378,14 +445,29 @@ validateNotUploaded() {
 }
 
   formSubmit(routeValue?: any) {
+    console.log('ad', this.uploadForm);    
+    if (this.uploadForm.valid) {
     if (this.checkJoiningNotUploaded()) {
       this.openNodocs(routeValue ? routeValue : '');
     } else {
       this.beforeSubmit(routeValue ? routeValue : '');
     }
+    } else {
+      this.ngAfterViewInit();
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
+    }  
   }
 
+
   checkJoiningNotUploaded() {
+    let isValid = {
+      joining: true,
+      education: true,
+      resume: true,
+      other: true,
+    }
+    // Joining
     let joiningArray = this.uploadForm.getRawValue()[this.form_joiningArray];
     this.joiningNotUploadedDocs = [];
     joiningArray.forEach(element => {
@@ -396,14 +478,36 @@ validateNotUploaded() {
         this.joiningNotUploadedDocs.push(ele);
       }
     });
+    
     if (this.joiningNotUploadedDocs && this.joiningNotUploadedDocs.length > 0) {
-      return true;
-    } else {
-      return false;
+      isValid.joining = false;
     }
+
+    // Education
+    let educationArray = this.uploadForm.getRawValue()[this.form_educationArray];
+    this.educationNotUploadedDocs = [];
+    educationArray.forEach(element => {
+      let subData = {
+        label: element[this.form_education_level],
+        subDocs: []
+      };
+      element[this.form_semesterArray].forEach(sub => {
+          if (!sub[this.form_file_path]) {
+          subData.subDocs.push({'label': sub[this.form_label]});
+        }
+      });
+      subData.subDocs.length > 0 ? this.educationNotUploadedDocs.push(subData) : '';
+    });
+    if (this.educationNotUploadedDocs && this.educationNotUploadedDocs.length > 0) {
+      isValid.education = false;
+    }    
+
+    let finalValidCheck = JSON.stringify(isValid);
+    return finalValidCheck.includes('false') ? true : false;
   }
 
   beforeSubmit(routeValue?: any) {
+    // Nulling the not sub desc and exp date.
     let joiningArray = this.getJoiningArr.getRawValue();
     joiningArray.forEach((element, i) => {
       if (element[this.form_file_path]) {
@@ -413,28 +517,40 @@ validateNotUploaded() {
     });                  
       }
     });
+
+    // Nulling the not sub desc and exp date.
+    let educationArray = this.getEducationArr.getRawValue();
+    educationArray.forEach((ele, i) => {
+      ele[this.form_semesterArray].forEach((element, subIndex) => {
+       if (element[this.form_file_path]) {
+          this.getSemesterArr(i).at(subIndex).patchValue({
+            [this.form_Not_Submitted_Description]: null,
+            [this.form_expectedDate]: null
+          });
+        }
+      });
+    });
+
+
     this.finalSubmit(routeValue ? routeValue : '');
   }
 
   finalSubmit(routeValue?: any) {
     let joiningArray = this.getJoiningArr.getRawValue();
-    console.log('final Submit', joiningArray);
+    let educationArray = this.getEducationArr.getRawValue();
+    console.log('final Submit', joiningArray, educationArray);
     const apiData = {
-      Joining_Details: joiningArray
+      Joining_Details: joiningArray,
+      Education_Documents: educationArray
     }
     
     // if(this.dependentForm.valid) {
       this.candidateService.joiningFormUpload(apiData).subscribe((data: any)=> {
         this.appConfig.hideLoader();
         this.appConfig.nzNotification('success', 'Saved', 'Upload details has been updated');
-        // this.sharedService.joiningFormStepperStatus.next();
-        // return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        this.sharedService.joiningFormStepperStatus.next();
+        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
       });
-    // } else {
-    //   this.ngAfterViewInit();
-    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-    //   this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
-    // }
 
   }
 
@@ -442,7 +558,6 @@ async uploadImage(file, i, form) {
   try {
     this.appConfig.showLoader();
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
-
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     console.log('response', data);
     if (data && data.file_id) {
@@ -456,10 +571,7 @@ async uploadImage(file, i, form) {
       });            
     }
     }
-    
     this.appConfig.hideLoader();
-
-
     this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
   } catch (e) {
     this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
@@ -494,15 +606,67 @@ onSelectFile(event, i, form) {
         fd.append('label', form);
         fd.append('level', this.getJoiningArr.at(i).value[this.form_name]);
         fd.append('product_image', this.selectedImage);
-        // this.uploadImage(fd, i, form);
-        this.getEducationArr.at(i).patchValue({
-          [this.form_file_name]: 'hi',
-          [this.form_file_id]: 'hi',
-          [this.form_file_path]: 'hi',
-          [this.form_file_size]: 'hi',
-          [this.form_file_type]: 'hi',
-        });        
-      
+        this.uploadImage(fd, i, form);      
+      } else {
+        // this.showResumeImgSizeError = true;
+        this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
+      }
+    } else {
+      this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF files only');
+      // this.showResumeImgError = true;
+    }
+}
+
+async uploadEducationImage(file, mainIndex, subIndex, form) {
+  try {
+    this.appConfig.showLoader();
+    const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
+    console.log('response', data);
+    if (data && data.file_id) {
+        this.getSemesterArr(mainIndex).at(subIndex).patchValue({
+          [this.form_file_name]: data.file_name,
+          [this.form_file_id]: data.file_id,
+          [this.form_file_path]: data.file_path,
+          [this.form_file_size]: data.file_size,
+          [this.form_file_type]: data.type
+        });  
+    }
+    this.appConfig.hideLoader();
+    this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
+  } catch (e) {
+    this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+    this.appConfig.hideLoader();
+  }
+  // }, (err) => {
+
+  // });
+}
+
+removeEducationFile(mainIndex, subIndex, form) {
+    this.getSemesterArr(mainIndex).at(subIndex).patchValue({
+    [this.form_file_name]: null,
+    [this.form_file_id]: null,
+    [this.form_file_path]: null,
+    [this.form_file_size]: null,
+    [this.form_file_type]: null,
+  });        
+  this.selectedImage = null;
+}
+
+onEducationFileUpload(event, mainIndex, subIndex, form) {
+    
+  const fd = new FormData();
+    if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
+      if (event.target.files[0].size < 2000000) {
+        this.selectedImage = event.target.files[0];
+
+        fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+        fd.append('description', this.getSemesterArr(mainIndex).at(subIndex).value[this.form_description]);
+        fd.append('label', form);
+        fd.append('level', this.getSemesterArr(mainIndex).at(subIndex).value[this.form_name]);
+        fd.append('product_image', this.selectedImage);
+        this.uploadEducationImage(fd, mainIndex, subIndex, form);      
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
@@ -533,34 +697,32 @@ onSelectFile(event, i, form) {
   checkFormValidRequestFromRxjs() {
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
       if(data.current == 'upload') {
-        // if (!this.dependentForm.dirty) {
+        if (!this.uploadForm.dirty) {
           return this.appConfig.routeNavigation(data.goto);
-        // } else {
-        //   return this.sharedService.openJoiningRoutePopUp.next(data.goto);
-        // }
+        } else {
+          return this.sharedService.openJoiningRoutePopUp.next(data.goto);
+        }
       } 
     });
   }
 
   routeNext(route) {
-    // if (!this.dependentForm.dirty) {
+    if (!this.uploadForm.dirty) {
       if (route == 'education') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       } else {
-        this.formSubmit();
-        // if (this.appConfig.getLocalData('upload') == '1') {
-        //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-        // } else {
-        //  if (this.dependentForm.valid) {
-        //   return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-        //   // }
-        //   this.ngAfterViewInit();
-        //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-        // }
+        if (this.appConfig.getLocalData('upload') == '1') {
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        } else {
+         if (this.uploadForm.valid) {
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+          }
+          this.formSubmit();
+        }
       }
-    // } else {
-      // return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-    // }
+    } else {
+      return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+    }
   }
 
   openNodocs(routeValue?: any) {
@@ -568,7 +730,7 @@ onSelectFile(event, i, form) {
     // this.pdfsrc = src;
     // this.pdfsrc = 'http://campus-qa.lntedutech.com/d8cintana2/sites/default/files/Templates/BGV_Declaration.pdf';
     const dialogRef = this.dialog.open(this.matNoDocs, {
-      width: '800px',
+      width: '850px',
       height: 'auto',
       autoFocus: false,
       closeOnNavigation: true,

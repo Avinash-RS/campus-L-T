@@ -196,7 +196,7 @@
                                                         <!-- our custom upload button -->
                                                         <label class="custom-upload"
                                                             [ngClass]="!getSemesterArr(i).controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
-                                                            [for]="j">
+                                                            [for]="j + getEducationArr.controls[i].get(form_education_level).value">
                                                             <ng-container
                                                                 *ngIf="!getSemesterArr(i).controls[j].get(form_file_name).value">
                                                                 <i class="fas fa-upload"></i>
@@ -210,14 +210,14 @@
                                                                         {{getSemesterArr(i).controls[j].get(form_file_name).value ? getSemesterArr(i).controls[j].get(form_file_name).value : ''}}
                                                                     </div>
                                                                     <i [matTooltip]="'Remove'"
-                                                                        (click)="removeFile(j, conditionEducation); $event.preventDefault()"
+                                                                        (click)="removeEducationFile(i, j, conditionEducation); $event.preventDefault()"
                                                                         class="far fa-times-circle"></i>
                                                                 </div>
                                                             </ng-container>
                                                         </label>
-                                                        <input [id]="j" type="file" accept=".pdf"
+                                                        <input [id]="j + getEducationArr.controls[i].get(form_education_level).value" type="file" accept=".pdf"
                                                             (click)="files.value = null" #files
-                                                            (change)="onSelectFile($event, j, conditionEducation)"
+                                                            (change)="onEducationFileUpload($event, i, j, conditionEducation)"
                                                             hidden>
 
                                                     </div>
@@ -334,8 +334,20 @@
         <div class="nodoc-list">
             <ng-container *ngIf="joiningNotUploadedDocs && joiningNotUploadedDocs.length > 0">
                 <div class="sub-title">Joining Documents</div>
-                <ol>
+                <ol class="no-nested">
                     <li *ngFor="let doc of joiningNotUploadedDocs">{{doc.label}}</li>
+                </ol>
+            </ng-container>
+
+            <ng-container *ngIf="educationNotUploadedDocs && educationNotUploadedDocs.length > 0">
+                <div class="sub-title">Education Documents</div>
+                <ol class="nested">
+                    <li *ngFor="let doc of educationNotUploadedDocs">{{doc.label}}
+                        <ul class="no-nested pl-0 pt-0">
+                            <li *ngFor="let sub of doc.subDocs" style="font-size: 13.5px;">{{sub.label}}</li>
+                        </ul>
+
+                        </li>
                 </ol>
             </ng-container>
 
