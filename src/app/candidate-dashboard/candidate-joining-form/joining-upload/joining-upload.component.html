@@ -31,7 +31,7 @@
                 <button mat-button (click)="accordion.openAll()">Expand All</button>
                 <button mat-button (click)="accordion.closeAll()">Collapse All</button>
               </div> -->
-            <form class="dependentForm" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
+            <form class="uploadF" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
 
                 <mat-accordion class="example-headers-align" multi>
                     <!-- Joining Uploads -->
@@ -52,11 +52,10 @@
                                 [formGroupName]="j">
 
                                 <div class="row-wrapper flexEnd">
-                                    <div class="overall-input-wrapper min200 top22">
+                                    <div class="overall-input-wrapper min200 label-title">
                                         <!-- {{j + 1 }}.  -->
                                         <div class="readonlyTitle">
-                                            {{getJoiningArr.controls[j].get(form_label).value}}{{' Upload'}}
-                                            <span class="f_size_14" style="color: #C02222;">*</span>
+                                            {{getJoiningArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
                                         </div>
                                     </div>
 
@@ -97,14 +96,14 @@
                                             </ng-container>
                                         </label>
                                         <!-- image/* -->
-                                        <input [id]="j + getJoiningArr.controls[j].get(form_name).value" type="file" [accept]="getJoiningArr.controls[j].get(form_name).value == 'PassportSizePhoto' ? 'image/*' : '.pdf'" (click)="files.value = null" #files
+                                        <input [id]="j + getJoiningArr.controls[j].get(form_name).value" type="file" [accept]="getJoiningArr.controls[j].get(form_name).value == 'PhotoID' ? 'image/*' : '.pdf'" (click)="files.value = null" #files
                                             (change)="onSelectFile($event, j, conditionJoining)" hidden>
 
                                     </div>
 
                                     <div class="overall-input-wrapper width-20 alignCenter top20">
                                         <button class="choose-button btnView" mat-raised-button
-                                            (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value, getJoiningArr.controls[j].get(form_name).value == 'PassportSizePhoto' ? 'photo' : null)"
+                                            (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value, getJoiningArr.controls[j].get(form_name).value == 'PhotoID' ? 'photo' : null)"
                                             [disabled]="getJoiningArr.controls[j].get(form_file_path).value ? false : true"
                                             type="button"> View</button>
                                     </div>
@@ -135,7 +134,7 @@
                                 <ng-container *ngFor="let education of getEducationArr.controls; let i = index;"
                                     [formGroupName]="i">
 
-                                    <mat-expansion-panel style="margin-top: .25em !important;" [expanded]="step === 0"
+                                    <mat-expansion-panel style="margin-top: .5em !important;" [expanded]="step === 0"
                                         (opened)="setStep(0)">
                                         <mat-expansion-panel-header class="sub-header-accordion">
                                             <mat-panel-title class="f_size_14" style="color: #333333;">
@@ -170,7 +169,7 @@
                                                 [formGroupName]="j">
 
                                                 <div class="row-wrapper flexEnd">
-                                                    <div class="overall-input-wrapper min200 top22">
+                                                    <div class="overall-input-wrapper min200 label-title">
                                                         <!-- {{j + 1 }}.  -->
                                                         <div class="readonlyTitle1">
                                                             {{getSemesterArr(i).controls[j].get(form_label).value}}<span
@@ -285,8 +284,7 @@
                                 <div class="row-wrapper flexEnd">
                                     <div class="overall-input-wrapper min200 top22">
                                         <div class="readonlyTitle">
-                                            {{getTransferArr.controls[j].get(form_label).value}}
-                                            <span class="f_size_14" style="color: #C02222;">*</span>
+                                            {{getTransferArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
                                         </div>
                                     </div>
 
@@ -362,8 +360,7 @@
                                 <div class="row-wrapper flexEnd">
                                     <div class="overall-input-wrapper min200 top22">
                                         <div class="readonlyTitle">
-                                            {{getResumeArr.controls[j].get(form_label).value}}
-                                            <span class="f_size_14" style="color: #C02222;">*</span>
+                                            {{getResumeArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
                                         </div>
                                     </div>
 
@@ -420,6 +417,139 @@
                         </ng-container>
                     </mat-expansion-panel>
 
+                    <!-- Banking Uploads -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h6 class="mt-0 mb-0 ml-0 mr-0">Bank Details</h6>
+
+                            </mat-panel-title>
+                            <mat-panel-description>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <ng-container *ngIf="getBankArr && getBankArr.controls"
+                            [formArrayName]="form_bankArray">
+                            <ng-container *ngFor="let item of getBankArr.controls; let j = index;"
+                                [formGroupName]="j">
+
+                                <div class="row-wrapper flexEnd">
+                                    <div class="overall-input-wrapper width-32">
+                                        <label>Bank Name<span style="color: #C02222;">*</span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_label">
+                                        <div class="form-error"
+                                            *ngIf="getBankArr.controls[j].get(form_label).invalid && getBankArr.controls[j].get(form_label).touched">
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_label).errors?.required">
+                                                Bank name is Required</div>
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_label).errors?.alphaNum255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-32">
+                                        <label>Bank Account No.<span style="color: #C02222;">*</span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_acc_no">
+                                        <div class="form-error"
+                                            *ngIf="getBankArr.controls[j].get(form_acc_no).invalid && getBankArr.controls[j].get(form_acc_no).touched">
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_acc_no).errors?.required">
+                                                Account Number is Required</div>
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_acc_no).errors?.numberOnly">
+                                                Numericals only allowed</div>
+                                                <div
+                                                *ngIf="getBankArr.controls[j].get(form_acc_no).errors?.maxlength">
+                                                Maximum of 50 digits only allowed</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-32">
+                                        <label>Bank IFSC code<span style="color: #C02222;">*</span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_ifsc_code">
+                                        <div class="form-error"
+                                            *ngIf="getBankArr.controls[j].get(form_ifsc_code).invalid && getBankArr.controls[j].get(form_ifsc_code).touched">
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_ifsc_code).errors?.required">
+                                                IFSC code is Required</div>
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_ifsc_code).errors?.alphaNum255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row-wrapper flexEnd">
+                                    <div class="overall-input-wrapper width-20">
+                                        <label>Branch Name<span style="color: #C02222;">*</span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_branch">
+                                        <div class="form-error"
+                                            *ngIf="getBankArr.controls[j].get(form_branch).invalid && getBankArr.controls[j].get(form_branch).touched">
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_branch).errors?.required">
+                                                Branch name is Required</div>
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_branch).errors?.alphaNum255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-20">
+                                        <label>Document Description<span></span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                            [formControlName]="form_description">
+                                        <div class="form-error"
+                                            *ngIf="getBankArr.controls[j].get(form_description).invalid && getBankArr.controls[j].get(form_description).touched">
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_description).errors?.required">
+                                                Document Description is Required</div>
+                                            <div
+                                                *ngIf="getBankArr.controls[j].get(form_description).errors?.alphaNum255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-30 alignCenter top20">
+                                        <label class="custom-upload"
+                                            [ngClass]="!getBankArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
+                                            [for]="j + 555">
+                                            <ng-container *ngIf="!getBankArr.controls[j].get(form_file_name).value">
+                                                <i class="fas fa-upload"></i>
+                                                <div class="choose">Choose a file</div>
+                                            </ng-container>
+                                            <ng-container *ngIf="getBankArr.controls[j].get(form_file_name).value">
+                                                <div class="uploaded-view">
+                                                    <div [matTooltip]="'Choose another file'" class="ufilename">
+                                                        {{getBankArr.controls[j].get(form_file_name).value ? getBankArr.controls[j].get(form_file_name).value : ''}}
+                                                    </div>
+                                                    <i [matTooltip]="'Remove'"
+                                                        (click)="removeFile(j, conditionBank); $event.preventDefault()"
+                                                        class="far fa-times-circle"></i>
+                                                </div>
+                                            </ng-container>
+                                        </label>
+                                        <input [id]="j + 555" type="file" accept=".pdf, image/*" (click)="files.value = null" #files
+                                            (change)="onSelectFile($event, j, conditionBank)" hidden>
+
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-20 alignCenter top20">
+                                        <button class="choose-button btnView" mat-raised-button
+                                            (click)="openMatDialog(getBankArr.controls[j].get(form_file_path).value)"
+                                            [disabled]="getBankArr.controls[j].get(form_file_path).value ? false : true"
+                                            type="button"> View</button>
+                                    </div>
+
+
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </mat-expansion-panel>
+                    
 
                     <!-- Other Certificates Upload -->
                     <mat-expansion-panel>
@@ -442,14 +572,14 @@
                                 <div class="overall-input-wrapper width-20">
                                         <label>Certificate Name<span style="color: #C02222;">*</span></label>
                                         <input [matTooltip]="getOtherCertArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getOtherCertArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
-                                            type="text" [formControlName]="form_name" [readonly]="getOtherCertArr.controls[k].get(form_file_path).value ? true : false">
+                                            type="text" [formControlName]="form_label" [readonly]="getOtherCertArr.controls[k].get(form_file_path).value ? true : false">
                                         <div class="form-error"
-                                            *ngIf="getOtherCertArr.controls[k].get(form_name).invalid && getOtherCertArr.controls[k].get(form_name).touched">
+                                            *ngIf="getOtherCertArr.controls[k].get(form_label).invalid && getOtherCertArr.controls[k].get(form_label).touched">
                                             <div
-                                                *ngIf="getOtherCertArr.controls[k].get(form_name).errors?.required">
+                                                *ngIf="getOtherCertArr.controls[k].get(form_label).errors?.required">
                                                 Certificate name is Required</div>
                                             <div
-                                                *ngIf="getOtherCertArr.controls[k].get(form_name).errors?.alphaNum255">
+                                                *ngIf="getOtherCertArr.controls[k].get(form_label).errors?.alphaNum255">
                                                 Alpha numeric with maximum of 255 characters only
                                                 allowed</div>
                                         </div>
@@ -471,10 +601,10 @@
                                     </div>
                                 </div>
 
-                                <div class="overall-input-wrapper width-30 alignCenter top20" [matTooltip]="getOtherCertArr.controls[k].get(form_name).value ? '' : 'Please enter Certificate name'">
+                                <div class="overall-input-wrapper width-30 alignCenter top20" [matTooltip]="getOtherCertArr.controls[k].get(form_label).value ? '' : 'Please enter Certificate name'">
                                     <!-- our custom upload button -->
                                     <label class="custom-upload"
-                                        [ngClass]="[!getOtherCertArr.controls[k].get(form_file_name).value ? 'choose-button' : 'preview', getOtherCertArr.controls[k].get(form_name).value ? '' : 'no-cursor']"
+                                        [ngClass]="[!getOtherCertArr.controls[k].get(form_file_name).value ? 'choose-button' : 'preview', getOtherCertArr.controls[k].get(form_label).value ? '' : 'no-cursor']"
                                         [for]="k + 100">
                                         <ng-container
                                             *ngIf="!getOtherCertArr.controls[k].get(form_file_name).value">
@@ -501,14 +631,12 @@
 
                                 </div>
 
-                                <ng-container *ngIf="getOtherCertArr.controls[k].get(form_file_path).value">
                                 <div class="overall-input-wrapper width-15 alignCenter top20">
                                     <button class="choose-button btnView" mat-raised-button
                                         (click)="openMatDialog(getOtherCertArr.controls[k].get(form_file_path).value)"
                                         [disabled]="getOtherCertArr.controls[k].get(form_file_path).value ? false : true"
                                         type="button"> View</button>
                                 </div>
-                            </ng-container>
 
                                 <div class="overall-input-wrapper width-5 alignCenter top20">
 
@@ -620,6 +748,27 @@
                         </ul>
 
                         </li>
+                </ol>
+            </ng-container>
+
+            <ng-container *ngIf="transferNotUploadedDocs && transferNotUploadedDocs.length > 0">
+                <div class="sub-title">Transfer Certificate</div>
+                <ol class="no-nested">
+                    <li *ngFor="let doc of transferNotUploadedDocs">{{doc.label}}</li>
+                </ol>
+            </ng-container>
+
+            <ng-container *ngIf="resumeNotUploadedDocs && resumeNotUploadedDocs.length > 0">
+                <div class="sub-title">Resume</div>
+                <ol class="no-nested">
+                    <li *ngFor="let doc of resumeNotUploadedDocs">{{doc.label}}</li>
+                </ol>
+            </ng-container>
+
+            <ng-container *ngIf="bankNotUploadedDocs && bankNotUploadedDocs.length > 0">
+                <div class="sub-title">Bank Details</div>
+                <ol class="no-nested">
+                    <li *ngFor="let doc of bankNotUploadedDocs">{{doc.label}}</li>
                 </ol>
             </ng-container>
 

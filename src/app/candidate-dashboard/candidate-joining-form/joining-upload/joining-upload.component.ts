@@ -56,6 +56,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   getTransferDocuments: any[];
   transferNotUploadedDocs: any[];
   getOtherCertificationDocuments: any[];
+  getbankDocuments: any[];
+  bankNotUploadedDocs: any[];
+  IsreasonAvailable: any;
+  isReasonDate: any;
 
   setStep(index: number) {
     this.step = index;
@@ -68,7 +72,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   prevStep() {
     this.step--;
   }
-  semesterList = [1,2,3,4,5,6,7,8,9,10];
+  semesterList = ['1','2','3','4','5','6','7','8','9','10'];
   checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
   uploadForm: FormGroup;
@@ -109,8 +113,14 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   // Transfer certificate Variables
   form_transferCertArray = 'transfer';
 
-  // Transfer certificate Variables
+  // Other certificate Variables
   form_otherCertArray = 'otherCertificates';
+
+  // Banking
+  form_bankArray = 'bank';
+  form_acc_no = 'account_no';
+  form_ifsc_code = 'ifsc_code';
+  form_branch = 'branch';
 
   dependedentDetails: any;
   downloadabledocs: any;
@@ -202,6 +212,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_educationArray]: this.fb.array([]),
       [this.form_transferCertArray]: this.fb.array([]),
       [this.form_resumeArray]: this.fb.array([]),
+      [this.form_bankArray]: this.fb.array([]),
       [this.form_otherCertArray]: this.fb.array([]),
     })
   }
@@ -212,14 +223,19 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       this.getJoiningDocuments = data && data['Joining_Details'] ? data['Joining_Details'] : [];
       this.getEducationDocuments = data && data['Education_Documents'] ? data['Education_Documents'] : [];
       this.getResumeDocuments = data && data['Resume'] ? data['Resume'] : [];
-      this.getTransferDocuments = [];
-      this.getOtherCertificationDocuments = [];
-      this.checkJoiningArrayinitalize();      
+      this.getTransferDocuments = data && data['Transfer_Certificate'] ? data['Transfer_Certificate'] : [];
+      this.getbankDocuments = data && data['Banking_Details'] ? data['Banking_Details'] : [];
+      this.getOtherCertificationDocuments = data && data['Other_Certifications'] ? data['Other_Certifications'] : [];
+      this.checkJoiningArrayinitalize();
     }, (err)=> {
 
     });
   }
 
+  checkNotSubmittedReasonAndDate(element) {
+    this.IsreasonAvailable = element[this.form_Not_Submitted_Description] && !this.IsreasonAvailable ? element[this.form_Not_Submitted_Description] : null;
+    this.isReasonDate = element[this.form_Not_Submitted_Description] && !this.IsreasonAvailable ? element[this.form_expectedDate] : null;
+  }
   checkJoiningArrayinitalize() {
     // Joining
     let arr = [];
@@ -231,6 +247,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     this.getJoiningDocuments = arr;
     if (this.getJoiningDocuments && this.getJoiningDocuments.length > 0) {
       this.getJoiningDocuments.forEach(element => {
+        this.checkNotSubmittedReasonAndDate(element);
         this.getJoiningArr.push(this.patchJoiningArray(element));
       });
     } else {
@@ -252,6 +269,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       // Trans
       if (this.getTransferDocuments && this.getTransferDocuments.length > 0) {
         this.getTransferDocuments.forEach(element => {
+          this.checkNotSubmittedReasonAndDate(element);
           this.getTransferArr.push(this.patchJoiningArray(element));
         });
       } else {
@@ -261,12 +279,23 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     // Resume
       if (this.getResumeDocuments && this.getResumeDocuments.length > 0 && this.getResumeDocuments[0] && this.getResumeDocuments[0][this.form_name]) {
         this.getResumeDocuments.forEach(element => {
+          this.checkNotSubmittedReasonAndDate(element);
           this.getResumeArr.push(this.patchJoiningArray(element));
         });
       } else {
         this.getResumeArr.push(this.initJoiningArray());
       }
 
+      // Banking Details
+      if (this.getbankDocuments && this.getbankDocuments.length > 0) {
+        this.getbankDocuments.forEach(element => {
+          this.checkNotSubmittedReasonAndDate(element);
+          this.getBankArr.push(this.patchBankingArray(element));
+        });
+      } else {
+        this.getBankArr.push(this.initBankingArray());
+      }      
+      
       // Other
       if (this.getOtherCertificationDocuments && this.getOtherCertificationDocuments.length > 0) {
         this.getOtherCertificationDocuments.forEach(element => {
@@ -275,12 +304,21 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       } else {
         // this.getOtherCertArr.push(this.initJoiningArray());
       }      
+
+      this.patchNotSubmittedReason();
+  }
+
+  patchNotSubmittedReason() {
+    if (this.IsreasonAvailable) {
+      this.reason.patchValue(this.IsreasonAvailable);
+      this.isReasonDate ? this.expectedDate.patchValue(this.dateConvertion(this.isReasonDate)) : ''
+    }
   }
 
   patchJoiningArray(data, otherCert?) {
     return this.fb.group({
-      [this.form_name]: [data[this.form_name], [(otherCert == 'otherCert' ? Validators.required : Validators.nullValidator), this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_label]: [data[this.form_label]],
+      [this.form_name]: [data[this.form_name], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_label]: [data[this.form_label], (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()] : [Validators.nullValidator])],
       // [this.form_id]: [data[this.form_id]],
       [this.form_file_size]: [data[this.form_file_size]],
       [this.form_file_path]: [data[this.form_file_path]],
@@ -320,6 +358,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     let subSem = [];
     if (form[this.form_semesterArray].length > 0) {
       form[this.form_semesterArray].forEach(element => {
+        this.checkNotSubmittedReasonAndDate(element);
         subSem.push(this.patchSemesterArray(element, level));
       });  
       return this.fb.array(subSem);
@@ -339,8 +378,46 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   initJoiningArray(otherCert?) {
     return this.fb.group({
-      [this.form_name]: [null, [(otherCert == 'otherCert' ? Validators.required : Validators.nullValidator), this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_label]: [null],
+      [this.form_name]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_label]: [null, (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()] : [Validators.nullValidator])],
+      // [this.form_id]: [null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_Not_Submitted_Description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_expectedDate]: [null]
+    })    
+  }
+
+  patchBankingArray(data) {
+    return this.fb.group({
+      [this.form_name]: [data[this.form_name]],
+      [this.form_label]: [data[this.form_label], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]], // Bank name
+      [this.form_acc_no]: [data[this.form_acc_no], [Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50), RemoveWhitespace.whitespace()]],
+      [this.form_ifsc_code]: [data[this.form_ifsc_code], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_branch]: [data[this.form_branch], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      // [this.form_id]: [data[this.form_id]],
+      [this.form_file_size]: [data[this.form_file_size]],
+      [this.form_file_path]: [data[this.form_file_path]],
+      [this.form_file_name]: [data[this.form_file_name]],
+      [this.form_file_type]: [data[this.form_file_type]],
+      [this.form_file_id]: [data[this.form_file_id]],
+      [this.form_description]: [data[this.form_description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_expectedDate]: [data[this.form_expectedDate]],
+    })    
+  }
+
+  initBankingArray() {
+    return this.fb.group({
+      [this.form_name]: [null],
+      [this.form_label]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]], // Bank name
+      [this.form_acc_no]: [null, [Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50), RemoveWhitespace.whitespace()]],
+      [this.form_ifsc_code]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_branch]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       // [this.form_id]: [null],
       [this.form_file_size]: [null],
       [this.form_file_path]: [null],
@@ -394,6 +471,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   changeSemesterCount(form, formIndex) {
+    form['controls'][this.form_noofSemester].markAsTouched({ onlySelf: true });
+    
     let nosemCount = form.value[this.form_noofSemester] ? form.value[this.form_noofSemester] : 0;
     let NoOfSemcount = Number(nosemCount) + 1;
     let level = form.value[this.form_education_level];
@@ -408,7 +487,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         for (let i = 0; i < NoOfSemcount; i++) {
           if (i == 0) {
             data = {
-              label: level == 'Diploma' ? `${level} Certificate or Provisional Certificate` : `${level} or Provisional Certificate`,
+              label: `${level} or Provisional Certificate`,
               name: 'degreeOrProvision'
             }
           this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
@@ -516,7 +595,29 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       });                  
       }
       });
-    
+
+        // Bank Mapping of reason and expected value
+        let bankArray = this.getBankArr.getRawValue();
+        bankArray.forEach((element, i) => {
+            // Nulling the not sub and exp date
+            this.getBankArr.at(i).patchValue({
+            [this.form_Not_Submitted_Description]: null,
+            [this.form_expectedDate]: null
+          });
+            // If file path not found, patching the not sub desc and exp date
+            if (!element[this.form_file_path]) {
+        this.getBankArr.at(i).patchValue({
+          [this.form_file_name]: null,
+          [this.form_file_id]: null,
+          [this.form_file_path]: null,
+          [this.form_file_size]: null,
+          [this.form_file_type]: null,
+          [this.form_Not_Submitted_Description]: this.reason.value,
+          [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
+        });                  
+        }
+        });
+      
     // Education Mapping of reason and expected value
     let educationArray = this.getEducationArr.getRawValue();
     educationArray.forEach((ele, i) => {
@@ -548,7 +649,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       }
       if (element[this.form_file_path]) {
         this.getOtherCertArr.at(i).patchValue({
-          [this.form_label]: this.form_file_name
+          [this.form_name]: this.form_label
         });                  
         }
     });
@@ -570,8 +671,20 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
     } else {
       this.ngAfterViewInit();
-      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+      if (this.getEducationArr.invalid) {
+        return this.appConfig.nzNotification('error', 'Education Uploads', 'Please fill all the red highlighted fields in Education Uploads to proceed further');
+      }
+      if (this.getBankArr.invalid) {
+        return this.appConfig.nzNotification('error', 'Banking Details', 'Please fill all the red highlighted fields in Banking Details to proceed further');
+      }
+      if (this.getOtherCertArr.invalid) {
+        return this.appConfig.nzNotification('error', 'Other Certifications', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
+      } else {
+        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');        
+      }
+      
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_otherCertArray]) as FormArray);
     }  
   }
@@ -583,6 +696,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       education: true,
       transfer: true,
       resume: true,
+      bank: true,
       other: true,
     }
     // Joining
@@ -632,6 +746,23 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     if (this.resumeNotUploadedDocs && this.resumeNotUploadedDocs.length > 0) {
       isValid.resume = false;
     }
+
+    // Banking
+    let bankArray = this.uploadForm.getRawValue()[this.form_bankArray];
+    this.bankNotUploadedDocs = [];
+    bankArray.forEach(element => {
+      if (!element[this.form_file_path]) {
+        let ele = {
+          label: 'Bank Passbook Front Page or Bank Cheque Leaf',
+        }
+        this.bankNotUploadedDocs.push(ele);
+      }
+    });
+    
+    if (this.bankNotUploadedDocs && this.bankNotUploadedDocs.length > 0) {
+      isValid.bank = false;
+    }
+    
     
     // Education
     let educationArray = this.uploadForm.getRawValue()[this.form_educationArray];
@@ -689,7 +820,18 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       });                  
         }
       });
-    
+
+    // Banking Nulling the not sub desc and exp date.
+    let bankingArray = this.getBankArr.getRawValue();
+    bankingArray.forEach((element, i) => {
+      if (element[this.form_file_path]) {
+      this.getBankArr.at(i).patchValue({
+      [this.form_Not_Submitted_Description]: null,
+      [this.form_expectedDate]: null
+    });                  
+      }
+    });
+  
     // Education Nulling the not sub desc and exp date.
     let educationArray = this.getEducationArr.getRawValue();
     educationArray.forEach((ele, i) => {
@@ -710,7 +852,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       }
       if (element[this.form_file_path]) {
         this.getOtherCertArr.at(i).patchValue({
-          [this.form_label]: this.form_file_name
+          [this.form_name]: this.form_label
         });                  
         }
     });
@@ -723,6 +865,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     let educationArray = this.getEducationArr.getRawValue();
     let transferArray = this.getTransferArr.getRawValue();
     let resumeArray = this.getResumeArr.getRawValue();
+    let bankArray = this.getBankArr.getRawValue();
     let otherArray = this.getOtherCertArr.getRawValue();
     const apiData = {
       Joining_Details: joiningArray,
@@ -730,7 +873,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       Resume: resumeArray,
       Other_Certifications: otherArray,
       Transfer_Certificate: transferArray,
-      // Banking_Details: []
+      Banking_Details: bankArray
     }
     console.log('Final Submit', apiData);
 
@@ -771,6 +914,15 @@ async uploadImage(file, i, form) {
     }
     if (form == this.conditionResume) {
       this.getResumeArr.at(i).patchValue({
+        [this.form_file_name]: data.file_name,
+        [this.form_file_id]: data.file_id,
+        [this.form_file_path]: data.file_path,
+        [this.form_file_size]: data.file_size,
+        [this.form_file_type]: data.type,
+      });            
+    }
+    if (form == this.conditionBank) {
+      this.getBankArr.at(i).patchValue({
         [this.form_file_name]: data.file_name,
         [this.form_file_id]: data.file_id,
         [this.form_file_path]: data.file_path,
@@ -827,6 +979,15 @@ if (form == this.conditionResume) {
   [this.form_file_type]: null,
 });        
 }
+if (form == this.conditionBank) {
+  this.getBankArr.at(i).patchValue({
+  [this.form_file_name]: null,
+  [this.form_file_id]: null,
+  [this.form_file_path]: null,
+  [this.form_file_size]: null,
+  [this.form_file_type]: null,
+});        
+}
 if (form == this.conditionOther) {
   this.getOtherCertArr.at(i).patchValue({
   [this.form_file_name]: null,
@@ -834,7 +995,6 @@ if (form == this.conditionOther) {
   [this.form_file_path]: null,
   [this.form_file_size]: null,
   [this.form_file_type]: null,
-  [this.form_name]: null,
 });        
 }
 
@@ -842,8 +1002,14 @@ if (form == this.conditionOther) {
 }
 
 onSelectFile(event, i, form) {
-  if (form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'PassportSizePhoto') {
+  if (form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'PhotoID') {
     return this.onPhotoUpload(event, i, form);
+  }
+  if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking') {
+    if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
+    } else {
+      return this.onPhotoUpload(event, i, form);
+    }
   }
   const fd = new FormData();
     if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
@@ -874,11 +1040,19 @@ onSelectFile(event, i, form) {
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);        
         }
+        if (form == this.conditionBank) {
+          fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+          fd.append('description', this.getBankArr.at(i).value[this.form_description]);
+          fd.append('label', form);
+          fd.append('level', this.getBankArr.at(i).value[this.form_name]);
+          fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, i, form);        
+        }
         if (form == this.conditionOther) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
           fd.append('description', this.getOtherCertArr.at(i).value[this.form_description]);
           fd.append('label', form);
-          fd.append('level', this.getOtherCertArr.at(i).value[this.form_name]);
+          fd.append('level', this.getOtherCertArr.at(i).value[this.form_label]);
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);        
         }
@@ -887,6 +1061,9 @@ onSelectFile(event, i, form) {
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
       }
     } else {
+      if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking') {
+        return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF or PNG/JPEG files only');
+      }
       this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF files only');
       // this.showResumeImgError = true;
     }
@@ -906,11 +1083,22 @@ onPhotoUpload(event, i, form) {
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);        
         }
+        if (form == this.conditionBank) {
+          fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+          fd.append('description', this.getBankArr.at(i).value[this.form_description]);
+          fd.append('label', form);
+          fd.append('level', this.getBankArr.at(i).value[this.form_name]);
+          fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, i, form);        
+        }
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
       }
     } else {
+      if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking') {
+        return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF or PNG/JPEG files only');
+      }
       this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
       // this.showResumeImgError = true;
     }
@@ -1074,6 +1262,7 @@ link.remove();
   get getJoiningArr() { return this.uploadForm.get([this.form_joiningArray]) as FormArray; }
   get getResumeArr() { return this.uploadForm.get([this.form_resumeArray]) as FormArray; }
   get getTransferArr() { return this.uploadForm.get([this.form_transferCertArray]) as FormArray; }
+  get getBankArr() { return this.uploadForm.get([this.form_bankArray]) as FormArray; }
   get getOtherCertArr() { return this.uploadForm.get([this.form_otherCertArray]) as FormArray; }
   get getEducationArr() { return this.uploadForm.get([this.form_educationArray]) as FormArray; }
   getSemesterArr(i: any) : FormArray {

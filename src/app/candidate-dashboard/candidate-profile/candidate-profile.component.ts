@@ -65,6 +65,8 @@ export class CandidateProfileComponent implements OnInit {
           router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
         },
       ];
+      console.log('adad coming');
+      
       this.sharedService.subMenuSubject.next(subWrapperMenus);
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
     }
