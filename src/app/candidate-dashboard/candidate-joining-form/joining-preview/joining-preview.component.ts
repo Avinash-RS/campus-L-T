@@ -19,6 +19,7 @@ import * as moment from 'moment'; //in your component
 export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
+  @ViewChild('matDialogDocViewer', {static: false}) matDialogRefDocViewer: TemplateRef<any>;
 
   checkFormValidRequest: Subscription;
     // Title Dropdown list
@@ -100,6 +101,28 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   form_mode = 'mode';
   form_cgpa = 'percentage';
 
+  // Upload
+  form_file_id = 'file_id';
+  form_id = 'id';
+  form_file_path = 'file_path';
+  form_file_type = 'filetype';
+  form_file_size = 'file_size';
+  form_file_name = 'filename';
+  form_name_document = 'name';
+  form_label = 'label';
+  form_description = 'description';
+  form_Not_Submitted_Description = 'not_submitted_description';
+  form_expectedDate = 'expected_date';  
+  form_semesterArray = 'sub_documents';
+  form_noofSemester = 'no_of_semester';
+  form_education_level = 'Education_Level';
+  form_bankArray = 'bank';
+  form_acc_no = 'account_no';
+  form_ifsc_code = 'ifsc_code';
+  form_branch = 'branch';
+
+  pdfsrc: any;
+
     personalDetails: any;
     personalDetailsMap: any;
     contactDetails: any;
@@ -115,7 +138,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   allPresentCityList: any;
   allPermanentCityList: any;
   formSubmitted: boolean;
-  
+  documentDetails: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -191,7 +214,6 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
   
-
   getPreviewData() {
     this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any)=> {
       this.appConfig.hideLoader();
@@ -211,7 +233,24 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       } else {
         this.educationDetailsMap = [];
       }
+      this.documentDetails = data && data.documents ? data.documents : null
     });
+  }
+
+  customEducationLabel(label) {
+    if (label == 'SSLC') {
+      return 'SSLC/10th';
+    }
+    if (label == 'HSC') {
+      return 'HSC/12th';
+    }
+    if (label == 'UG') {
+      return 'Undergraduate';
+    }
+    if (label == 'PG') {
+      return 'Postgraduate';
+    }
+    return label;
   }
 
   patchEducation() {
@@ -422,6 +461,27 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       this.dialog.closeAll();
     }
   }
+
+  openMatDialog(src, type) {
+    if (!type.includes('pdf')) {
+      return window.open(src, '_blank');
+    }
+    this.pdfsrc = src;
+    // this.pdfsrc = 'http://campus-qa.lntedutech.com/d8cintana2/sites/default/files/Templates/BGV_Declaration.pdf';
+    const dialogRef = this.dialog.open(this.matDialogRefDocViewer, {
+      width: '600px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForPDFViewer'
+    });
+  }
+  closeBox() {
+    this.dialog.closeAll();
+  }
+
+
 
 
   formSubmit(routeValue?: any) {
