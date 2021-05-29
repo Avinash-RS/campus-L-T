@@ -128,7 +128,7 @@
                         </mat-expansion-panel-header>
 
                         <!-- new -->
-                        <mat-accordion class="example-headers-align sub-acc">
+                        <mat-accordion class="example-headers-align sub-acc" multi>
                             <ng-container *ngIf="getEducationArr && getEducationArr.controls"
                                 [formArrayName]="form_educationArray">
                                 <ng-container *ngFor="let education of getEducationArr.controls; let i = index;"

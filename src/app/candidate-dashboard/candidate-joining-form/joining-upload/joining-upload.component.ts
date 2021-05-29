@@ -472,7 +472,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   changeSemesterCount(form, formIndex) {
     form['controls'][this.form_noofSemester].markAsTouched({ onlySelf: true });
-    
+
     let nosemCount = form.value[this.form_noofSemester] ? form.value[this.form_noofSemester] : 0;
     let NoOfSemcount = Number(nosemCount) + 1;
     let level = form.value[this.form_education_level];
@@ -671,6 +671,11 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
     } else {
       this.ngAfterViewInit();
+      console.log('acc', this.accordion);      
+      this.accordion.openAll()      
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_otherCertArray]) as FormArray);
       if (this.getEducationArr.invalid) {
         return this.appConfig.nzNotification('error', 'Education Uploads', 'Please fill all the red highlighted fields in Education Uploads to proceed further');
       }
@@ -682,10 +687,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       } else {
         this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');        
       }
-      
-      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
-      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
-      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_otherCertArray]) as FormArray);
     }  
   }
 
