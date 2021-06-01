@@ -144,7 +144,8 @@ export class LoginpageComponent implements OnInit {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');              
+              this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');   
+              this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');           
               let todayDate = new Date();
               let month = todayDate.getMonth()+1;
               let day = todayDate.getDate()

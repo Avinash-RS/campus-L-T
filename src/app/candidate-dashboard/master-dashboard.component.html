@@ -70,7 +70,7 @@
         </span>
       </li>
 <!-- [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING" routerLinkActive="active" -->
-      <li (click)="checkJoiningRoute()" [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING" routerLinkActive="active">
+      <li *ngIf="showJoiningForm" (click)="checkJoiningRoute()" [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING" routerLinkActive="active">
         <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
         <span>Joining Form</span>
         <span>

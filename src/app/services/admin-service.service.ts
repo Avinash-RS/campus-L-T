@@ -634,4 +634,10 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // Send email to selected candidates and edit access for joining form
+  sendMailOrEditAccess(data, option) {
+    return this.http.post(`${this.BASE_URL}/profile/joining_mail?mail=${option}`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 }

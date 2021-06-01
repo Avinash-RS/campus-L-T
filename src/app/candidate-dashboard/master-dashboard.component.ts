@@ -26,6 +26,7 @@ export class MasterDashboardComponent implements OnInit {
   activeSubmenu;
   showProfileOnly = false;
   showDocuments = false;
+  showJoiningForm: boolean;
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService,
@@ -38,7 +39,10 @@ export class MasterDashboardComponent implements OnInit {
     if (this.appConfig.getLocalData('secondShortlist') && this.appConfig.getLocalData('secondShortlist') === 'true') {
       this.showDocuments = true;
     }
-
+    if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
+      this.showJoiningForm = true;
+    }
+    
     // Assigning sub menus for the current router
     this.sharedService.subMenuSubject.subscribe((data: any) => {
       this.subMenus = data;

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -12,6 +13,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./listof-selected-candidates.component.scss']
 })
 export class ListofSelectedCandidatesComponent implements OnInit {
+  @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
   BASE_URL = environment.API_BASE_URL;
 
   paginationPageSize = 500;
@@ -34,12 +36,14 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   quickSearchValue = '';
 
   userList: any;
+  popUpdata: any;
 
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
+    private dialog: MatDialog,
     private sharedService: SharedServiceService
   ) { }
 
@@ -85,17 +89,50 @@ export class ListofSelectedCandidatesComponent implements OnInit {
 
     this.columnDefs = [
       {
-        headerName: 'S no', field: 'counter',
+        headerCheckboxSelection: true,
+        maxWidth: 50,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        suppressMenu: true,
+        field: 'is_checked',
+        headerName: ''
+      },
+      {
+        headerName: 'Mail Sent', field: 'mailed',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 90,
-        maxWidth: 90,
+        minWidth: 120,
+        maxWidth: 120,
         sortable: true,
-        tooltipField: 'counter',
-        // comparator: this.customComparator,
+        valueGetter: (params) => {
+          if (params.data.mailed == '0') {
+            return 'Not Sent';
+          } else {
+            return 'Sent'
+          }
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
+      },
+      {
+        headerName: 'Edit Access', field: 'is_editable',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        maxWidth: 120,
+        sortable: true,
+        valueGetter: (params) => {
+          if (params.data.is_editable == '1') {
+            return 'No';
+          } else {
+            return 'Yes'
+          }
+        },
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
@@ -242,6 +279,50 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   tooltipFormatter(params) {
     return "Download documents";
   }
+
+  openMatDialog(data) {
+    if (data) {
+      this.popUpdata = {
+        value: 1,
+        text: `Confirm to trigger an email for the selected ${this.gridApi.getSelectedNodes().length} ${(this.gridApi.getSelectedNodes().length) == 1 ? 'candidate' : 'candidates'}.`,
+      }
+    } else {
+      this.popUpdata = {
+        value: 0,
+        text: `Confirm to give Edit Access to Joining Form for the selected ${this.gridApi.getSelectedNodes().length} ${(this.gridApi.getSelectedNodes().length) == 1 ? 'candidate' : 'candidates'}.` 
+      }
+    }
+    const dialogRef = this.dialog.open(this.matDialogRef, {
+      width: '400px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForForms'
+    });
+  }
+
+  closeDialog(e) {
+    this.dialog.closeAll();
+  }
+
+  saveDialog() {
+    this.dialog.closeAll();
+    const apiData = [];
+    const selectedUserlist = this.gridApi.getSelectedNodes();
+    selectedUserlist.forEach(element => {
+      let api = {
+        email: element['data']['selected_candidate'],
+        company: element['data']['company'],
+        user_id: element['data']['user_id']
+      }
+      apiData.push(api);      
+    });
+    this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      this.ngOnInit();
+    });
+  }
   // To get all users
   getUsersList() {
     const role = this.appConfig.getLocalData('roles');
@@ -254,7 +335,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
-        element['counter'] = count;
+        element['is_checked'] = false;
         element['details'] = count;
       });
       this.rowData = this.userList;
