@@ -115,14 +115,14 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
 
   removeLocalStorage() {
-    // this.appConfig.clearLocalDataOne('kycForm');
+    this.appConfig.clearLocalDataOne('kycForm');
     // this.appConfig.clearLocalDataOne('educationalFormSubmitted');
     // this.appConfig.clearLocalDataOne('personalFormSubmitted');
     // this.appConfig.clearLocalDataOne('confirmClick');
     // this.appConfig.clearLocalDataOne('field_isformsubmitted');
     // this.appConfig.clearLocalDataOne('familyFormSubmitted');
     // this.appConfig.clearLocalDataOne('confirmFormSubmitted');
-    // this.appConfig.clearLocalDataOne('KYCAPI');
+    this.appConfig.clearLocalDataOne('KYCAPI');
     // this.appConfig.clearLocalDataOne('generalFormSubmitted');
   }
   activeSelectorRxJs() {

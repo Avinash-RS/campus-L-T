@@ -302,7 +302,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     });
   }
 
-  closeDialog(e) {
+  closeDialog() {
     this.dialog.closeAll();
   }
 
