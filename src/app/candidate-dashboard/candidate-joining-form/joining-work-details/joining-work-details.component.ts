@@ -1,3 +1,4 @@
+import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
@@ -72,40 +73,40 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
   ];
   //form Variables
-    form_workDetails = "workDetails";
-    form_total_exp_years = "total_exp_years";
-    form_total_exp_months = "total_exp_months";
-    form_break_in_emp = "break_in_emp";
-    form_employed_us = "employed_us";
-    form_oc = "oc";
-    form_payslip = "payslip";
-    form_interviewed_by_us = "interviewed_by_us";
-    form_post = "post";
-    form_when_interview = "when_interview"
-    form_employment_name_address = "employment_name_address";
-    form_duration_from = "duration_from";
-    form_duration_to = "duration_to";
-    form_duration_year = "duration_year";
-    form_duration_month = "duration_month";
-    form_postion_field = "postion_field";
-    form_name_designation_supervisor = "name_designation_supervisor";
-    form_nature_work = "nature_work";
-    form_gross_emploment = "gross_emploment";
-    form_reason_leaving = "reason_leaving";
-    form_bgvDetails = "bgvDetails";
-    form_convicted_by_Court = "convicted_by_Court";
-    form_arrested = "arrested";
-    form_prosecuted = "prosecuted";
-    form_detention = "detention";
-    form_fined_by_court = "fined_by_court";
-    form_debarred_exam_university = "debarred_exam_university";
-    form_debarred_psc_company = "debarred_psc_company";
-    form_court_case_pending = "court_case_pending";
-    form_university_case_pending = "university_case_pending";
-    form_disciplinary_proceedings = "disciplinary_proceedings";
-    form_full_particulars = "full_particulars"
+  form_workDetails = "workDetails";
+  form_total_exp_years = "total_exp_years";
+  form_total_exp_months = "total_exp_months";
+  form_break_in_emp = "break_in_emp";
+  form_employed_us = "employed_us";
+  form_oc = "oc";
+  form_payslip = "payslip";
+  form_interviewed_by_us = "interviewed_by_us";
+  form_post = "post";
+  form_when_interview = "when_interview"
+  form_employment_name_address = "employment_name_address";
+  form_duration_from = "duration_from";
+  form_duration_to = "duration_to";
+  form_duration_year = "duration_year";
+  form_duration_month = "duration_month";
+  form_postion_field = "postion_field";
+  form_name_designation_supervisor = "name_designation_supervisor";
+  form_nature_work = "nature_work";
+  form_gross_emploment = "gross_emploment";
+  form_reason_leaving = "reason_leaving";
+  form_bgvDetails = "bgvDetails";
+  form_convicted_by_Court = "convicted_by_Court";
+  form_arrested = "arrested";
+  form_prosecuted = "prosecuted";
+  form_detention = "detention";
+  form_fined_by_court = "fined_by_court";
+  form_debarred_exam_university = "debarred_exam_university";
+  form_debarred_psc_company = "debarred_psc_company";
+  form_court_case_pending = "court_case_pending";
+  form_university_case_pending = "university_case_pending";
+  form_disciplinary_proceedings = "disciplinary_proceedings";
+  form_full_particulars = "full_particulars"
 
-    form_Employment_Array = "Employment"
+  form_Employment_Array = "Employment"
 
   workDetails: any;
   constructor(
@@ -116,7 +117,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
-  ) { 
+  ) {
     this.dateValidation();
   }
 
@@ -138,7 +139,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getWorkApiDetails() {
-    this.candidateService.joiningFormGetWorkDetails().subscribe((data: any)=> {
+    this.candidateService.joiningFormGetWorkDetails().subscribe((data: any) => {
       this.appConfig.hideLoader();
       if (data) {
         let work = {
@@ -161,30 +162,38 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 50, 0, 1);
     this.maxDate = new Date(currentYear + 20, 11, 31);
-}
-
-momentForm(date) {
-if (date) {
-  const split = moment(date).format('DD-MM-YYYY');
- return split;    
-}
-}
-
-dateConvertion(date) {
-  if (date) {      
-    const split = moment(date).format();
-    if (split == 'Invalid date') {
-      const ddFormat = moment(date, 'DD-MM-YYYY').format();
-      return ddFormat == 'Invalid date' ? null : ddFormat;
-    }
-   return split == 'Invalid date' ? null : split;
   }
-}
+
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+      return split;
+    }
+  }
+
+  momentForm1(date) {
+    if (date) {
+      const split = moment(date).format();
+      return split;
+    }
+  }
+
+
+  dateConvertion(date) {
+    if (date) {
+      const split = moment(date).format();
+      if (split == 'Invalid date') {
+        const ddFormat = moment(date, 'DD-MM-YYYY').format();
+        return ddFormat == 'Invalid date' ? null : ddFormat;
+      }
+      return split == 'Invalid date' ? null : split;
+    }
+  }
 
 
   patchWorkForm() {
     if (this.workDetails && this.workDetails.bgvDetails) {
-     this.OtherConditionsPatch(this.workDetails.bgvDetails);
+      this.OtherConditionsPatch(this.workDetails.bgvDetails);
     }
     if (this.workDetails && this.workDetails.workDetails) {
       this.OtherDetailsPatch(this.workDetails.workDetails);
@@ -226,7 +235,9 @@ dateConvertion(date) {
       [this.form_post]: data[this.form_post],
       [this.form_when_interview]: this.dateConvertion(data[this.form_when_interview])
     });
-  }
+    this.requiredValidator(data[this.form_employed_us] && data[this.form_employed_us] == '1' ? '1' : '0', this.form_oc, this.form_payslip);
+    this.requiredValidator(data[this.form_interviewed_by_us] && data[this.form_interviewed_by_us] == '1' ? '1' : '0', this.form_post, this.form_when_interview);
+    }
   EmploymentArrayPatch(data) {
     return this.fb.group({
       [this.form_employment_name_address]: [data[this.form_employment_name_address], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
@@ -239,7 +250,9 @@ dateConvertion(date) {
       [this.form_nature_work]: [data[this.form_nature_work], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_gross_emploment]: [data[this.form_gross_emploment], [this.glovbal_validators.address50(), RemoveWhitespace.whitespace()]],
       [this.form_reason_leaving]: [data[this.form_reason_leaving], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-    })    
+    },
+      { validator: FormCustomValidators.WorkanyOneSelected }
+    )
   }
 
   initEmploymentArray() {
@@ -254,7 +267,9 @@ dateConvertion(date) {
       [this.form_nature_work]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_gross_emploment]: [null, [this.glovbal_validators.address50(), RemoveWhitespace.whitespace()]],
       [this.form_reason_leaving]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      })    
+    },
+      { validator: FormCustomValidators.WorkanyOneSelected }
+    )
   }
 
   formInitialize() {
@@ -269,7 +284,7 @@ dateConvertion(date) {
       [this.form_court_case_pending]: [null],
       [this.form_university_case_pending]: [null],
       [this.form_disciplinary_proceedings]: [null],
-      [this.form_full_particulars]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],  
+      [this.form_full_particulars]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_total_exp_years]: [null],
       [this.form_total_exp_months]: [null],
       [this.form_break_in_emp]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
@@ -278,26 +293,86 @@ dateConvertion(date) {
       [this.form_payslip]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_interviewed_by_us]: ['0'],
       [this.form_post]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_when_interview]: [null],  
+      [this.form_when_interview]: [null],
       [this.form_Employment_Array]: this.fb.array([])
     })
   }
 
   addToEmploymentArray() {
+    let i = this.getEmploymentArr['controls'].length - 1;
     if (this.getEmploymentArr.valid) {
-     return this.getEmploymentArr.push(this.initEmploymentArray());
+      if (this.getEmploymentArr && this.getEmploymentArr['controls'] && this.getEmploymentArr['controls'][i] && this.getEmploymentArr['controls'][i]['value'] && this.getEmploymentArr['controls'][i]['value'][this.form_employment_name_address]) {
+        return this.getEmploymentArr.push(this.initEmploymentArray());
+      } else {
+        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Work Details section');
+        this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
+      }
+    } else {
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Work Details section');
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);  
     }
-    this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
-  }
+}
 
   removeEmploymentArray(i) {
     this.getEmploymentArr.removeAt(i);
   }
 
+  radioChange(e, form) {
+    if (form == 1) {
+      this.requiredValidator(e.value, this.form_oc, this.form_payslip);
+    } else {
+      this.requiredValidator(e.value, this.form_post, this.form_when_interview);
+    }
+  }
+
+  requiredValidator(value, form, form1) {
+    if (value == '1') {
+      this.workDetailsForm.get(form).setValidators([Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+      if (form1 == this.form_when_interview) {
+        this.workDetailsForm.get(form1).setValidators([Validators.required]), { emitEvent: false };
+      } else {
+        this.workDetailsForm.get(form1).setValidators([Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+      }
+    } else {
+      this.workDetailsForm.patchValue({
+        [form]: null,
+        [form1]: null
+      });
+      this.workDetailsForm.get(form).clearValidators(), { emitEvent: false };
+      this.workDetailsForm.get(form1).clearValidators(), { emitEvent: false };
+    }
+    this.workDetailsForm.get(form).updateValueAndValidity(), { emitEvent: false };
+    this.workDetailsForm.get(form1).updateValueAndValidity(), { emitEvent: false };
+  }
+
+  requiredDesc() {
+    let formValues = this.workDetailsForm.getRawValue();
+    const bgvDetails = {
+      [this.form_convicted_by_Court]: formValues[this.form_convicted_by_Court] && (formValues[this.form_convicted_by_Court] == '1' || formValues[this.form_convicted_by_Court] == true) ? '1' : '0',
+      [this.form_arrested]: formValues[this.form_arrested] && (formValues[this.form_arrested] == '1' || formValues[this.form_arrested] == true) ? '1' : '0',
+      [this.form_prosecuted]: formValues[this.form_prosecuted] && (formValues[this.form_prosecuted] == '1' || formValues[this.form_prosecuted] == true) ? '1' : '0',
+      [this.form_detention]: formValues[this.form_detention] && (formValues[this.form_detention] == '1' || formValues[this.form_detention] == true) ? '1' : '0',
+      [this.form_fined_by_court]: formValues[this.form_fined_by_court] && (formValues[this.form_fined_by_court] == '1' || formValues[this.form_fined_by_court] == true) ? '1' : '0',
+      [this.form_debarred_exam_university]: formValues[this.form_debarred_exam_university] && (formValues[this.form_debarred_exam_university] == '1' || formValues[this.form_debarred_exam_university] == true) ? '1' : '0',
+      [this.form_debarred_psc_company]: formValues[this.form_debarred_psc_company] && (formValues[this.form_debarred_psc_company] == '1' || formValues[this.form_debarred_psc_company] == true) ? '1' : '0',
+      [this.form_court_case_pending]: formValues[this.form_court_case_pending] && (formValues[this.form_court_case_pending] == '1' || formValues[this.form_court_case_pending] == true) ? '1' : '0',
+      [this.form_university_case_pending]: formValues[this.form_university_case_pending] && (formValues[this.form_university_case_pending] == '1' || formValues[this.form_university_case_pending] == true) ? '1' : '0',
+      [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings] && (formValues[this.form_disciplinary_proceedings] == '1' || formValues[this.form_disciplinary_proceedings] == true) ? '1' : '0',
+      [this.form_full_particulars]: formValues[this.form_full_particulars]
+    }
+    if (bgvDetails[this.form_convicted_by_Court] == '1' || bgvDetails[this.form_arrested] == '1' || bgvDetails[this.form_prosecuted] == '1' || bgvDetails[this.form_detention] == '1' || bgvDetails[this.form_fined_by_court] == '1' || bgvDetails[this.form_debarred_exam_university] == '1' || bgvDetails[this.form_debarred_psc_company] == '1' || bgvDetails[this.form_court_case_pending] == '1' || bgvDetails[this.form_university_case_pending] == '1' || bgvDetails[this.form_disciplinary_proceedings] == '1') {
+      this.workDetailsForm.get(this.form_full_particulars).setValidators([Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+    } else {
+      this.workDetailsForm.get(this.form_full_particulars).setValidators([this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+    }
+    this.workDetailsForm.get(this.form_full_particulars).updateValueAndValidity(), { emitEvent: false };
+  }
+
   formSubmit(routeValue?: any) {
+    this.requiredDesc();
     console.log('form', this.workDetailsForm.getRawValue());
     let formValues = this.workDetailsForm.getRawValue();
-    if(this.workDetailsForm.valid) {
+    if (this.workDetailsForm.valid) {
       const workDetails = {
         [this.form_total_exp_years]: formValues[this.form_total_exp_years],
         [this.form_total_exp_months]: formValues[this.form_total_exp_months],
@@ -328,8 +403,8 @@ dateConvertion(date) {
         bgvDetails,
         Employment
       }
-      console.log('apiData', apiData);      
-      this.candidateService.joiningFormGetWorkDetailsSave(apiData).subscribe((data: any)=> {
+      console.log('apiData', apiData);
+      this.candidateService.joiningFormGetWorkDetailsSave(apiData).subscribe((data: any) => {
         this.appConfig.hideLoader();
         this.appConfig.nzNotification('success', 'Saved', 'Work Experience details has been updated');
         this.sharedService.joiningFormStepperStatus.next();
@@ -346,23 +421,23 @@ dateConvertion(date) {
 
 
   saveRequestRxJs() {
-    this.sendPopupResultSubscription =  this.sharedService.sendPopupResult.subscribe((result: any)=> {
-      
+    this.sendPopupResultSubscription = this.sharedService.sendPopupResult.subscribe((result: any) => {
+
       if (result.result == 'save') {
-      this.formSubmit(result.route);
-      }     
+        this.formSubmit(result.route);
+      }
     });
   }
 
   checkFormValidRequestFromRxjs() {
-    this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
-      if(data.current == 'work') {
+    this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any) => {
+      if (data.current == 'work') {
         if (!this.workDetailsForm.dirty) {
           return this.appConfig.routeNavigation(data.goto);
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -374,8 +449,8 @@ dateConvertion(date) {
         if (this.appConfig.getLocalData('work') == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
         } else {
-         if (this.workDetailsForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+          if (this.workDetailsForm.valid) {
+            return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
           }
           this.glovbal_validators.validateAllFields(this.workDetailsForm);
           this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
@@ -388,10 +463,52 @@ dateConvertion(date) {
     }
   }
 
+
+  detectDateCalc(form, i) {
+      let yearCount = 0;
+      let monthCount = 0;
+      let element = form.value;
+      if (element[this.form_duration_from] && element[this.form_duration_to]) {
+        let eventStartTime = new Date(`${this.momentForm1(element[this.form_duration_from])}`);
+        let eventEndTime = new Date(`${this.momentForm1(element[this.form_duration_to])}`);  
+        let m = moment(eventEndTime);
+        let years = m.diff(eventStartTime, 'years');
+        m.add(-years, 'years');
+        let months = m.diff(eventStartTime, 'months');
+        m.add(-months, 'months');
+        let days = m.diff(eventStartTime, 'days');
+
+        this.getEmploymentArr.at(i).patchValue({
+            [this.form_duration_month]: months,
+            [this.form_duration_year]: years
+        });
+
+          this.getEmploymentArr.getRawValue().forEach(ele => {
+          monthCount += Number(ele[this.form_duration_month] ? ele[this.form_duration_month] : 0);
+          yearCount += Number(ele[this.form_duration_year] ? ele[this.form_duration_year] : 0);
+          if (monthCount > 12) {
+            let y; let m;
+            y = Math.floor(monthCount / 12);
+            m = monthCount % 12;
+            this.workDetailsForm.patchValue({
+              [this.form_total_exp_years]: yearCount + y,
+              [this.form_total_exp_months]: m
+            })
+          } else {
+            this.workDetailsForm.patchValue({
+              [this.form_total_exp_years]: yearCount,
+              [this.form_total_exp_months]: monthCount
+            })
+          }
+        });
+
+      }
+  }
+
   // Form getters
   // convenience getters for easy access to form fields
   get getEmploymentArr() { return this.workDetailsForm.get([this.form_Employment_Array]) as FormArray; }
-  
+
   get convicted_by_Court() {
     return this.workDetailsForm.get(this.form_convicted_by_Court);
   }
@@ -452,7 +569,7 @@ dateConvertion(date) {
   get when_interview() {
     return this.workDetailsForm.get(this.form_when_interview);
   }
-  
+
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';

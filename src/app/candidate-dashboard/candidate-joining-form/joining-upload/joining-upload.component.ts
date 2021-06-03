@@ -1162,10 +1162,11 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
 }
 
   getDownloadableDocs() {
-  this.candidateService.joiningFormDownloadableDocuments().subscribe((data: any)=> {
-    this.appConfig.hideLoader();
-    this.downloadabledocs = data ? data : [];
-  });
+    this.downloadabledocs = [];
+  // this.candidateService.joiningFormDownloadableDocuments().subscribe((data: any)=> {
+    // this.appConfig.hideLoader();
+    // this.downloadabledocs = data ? data : [];
+  // });
   }
 
 

@@ -321,7 +321,7 @@
     box-shadow: none !important;
 }
 
-:host ::ng-deep input.ng-invalid.ng-touched,
+:host ::ng-deep input.ng-invalid.ng-touched, :host ::ng-deep textarea.ng-invalid.ng-touched,
 :host ::ng-deep nz-select.ng-invalid.ng-touched {
     border: solid $primary-red 1px !important;
     .ant-select-selection {
@@ -443,4 +443,7 @@
 }
 :host ::ng-deep .mat-radio-outer-circle {
     border-color: $primary-red !important;
+}
+.hide {
+    visibility: hidden;
 }

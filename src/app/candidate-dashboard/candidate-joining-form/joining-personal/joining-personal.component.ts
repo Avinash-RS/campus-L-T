@@ -272,9 +272,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
         this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');    
       }
     } else {
-      this.glovbal_validators.validateAllFields(this.personalForm);
-      this.ngAfterViewInit();
-      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+      return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       }
     }
 
