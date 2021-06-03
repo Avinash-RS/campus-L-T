@@ -85,6 +85,11 @@ export class GlobalValidatorService {
       return this.regexValidator(address255, {address255: true});
     }
 
+    address50() {
+      const address50: RegExp = /^([a-zA-Z0-9_ \-,.:;/\r\n|\r|\n/]){0,49}$/;
+      return this.regexValidator(address50, {address50: true});
+    }
+
     // Email pattern regex
     email() {
       const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
