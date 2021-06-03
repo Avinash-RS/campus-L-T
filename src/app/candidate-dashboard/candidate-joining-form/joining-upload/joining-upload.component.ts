@@ -662,7 +662,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 }
 
   formSubmit(routeValue?: any) {
-    console.log('ad', this.uploadForm);    
     if (this.uploadForm.valid) {
     if (this.checkJoiningNotUploaded()) {
       this.openNodocs(routeValue ? routeValue : '');
@@ -671,7 +670,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
     } else {
       this.ngAfterViewInit();
-      console.log('acc', this.accordion);      
       this.accordion.openAll()      
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
@@ -876,7 +874,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       Transfer_Certificate: transferArray,
       Banking_Details: bankArray
     }
-    console.log('Final Submit', apiData);
 
     
     // if(this.dependentForm.valid) {
@@ -893,7 +890,6 @@ async uploadImage(file, i, form) {
     this.appConfig.showLoader();
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
-    console.log('response', data);
     if (data && data.file_id) {
       if (form == this.conditionJoining) {
       this.getJoiningArr.at(i).patchValue({
@@ -1111,7 +1107,6 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
     this.appConfig.showLoader();
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
-    console.log('response', data);
     if (data && data.file_id) {
         this.getSemesterArr(mainIndex).at(subIndex).patchValue({
           [this.form_file_name]: data.file_name,
@@ -1197,20 +1192,20 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
 
   routeNext(route) {
     if (!this.uploadForm.dirty) {
-      if (route == 'education') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+      if (route == 'work') {
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
       } else {
         if (this.appConfig.getLocalData('upload') == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         } else {
          if (this.uploadForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'work' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
           }
           this.formSubmit();
         }
       }
     } else {
-      return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+      return this.sharedService.openJoiningRoutePopUp.next(route == 'work' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
     }
   }
 

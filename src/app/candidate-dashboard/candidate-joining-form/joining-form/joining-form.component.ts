@@ -23,6 +23,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     contact: false,
     dependent: false,
     education: false,
+    work: false,
     upload: false,
     preview: false,
     submit: false,
@@ -31,6 +32,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.contact = false;
       this.dependent = false;
       this.education = false;
+      this.work = false;
       this.upload = false;
       this.preview = false;
       this.submit = false;
@@ -40,6 +42,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         this.contact = false;
         this.dependent = false;
         this.education = false;
+        this.work = false;
         this.upload = false;
         this.preview = false;
         this.submit = false;
@@ -49,6 +52,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.contact = true;
       this.dependent = true;
       this.education = false;
+      this.work = false;
       this.upload = false;
       this.preview = false;
       this.submit = false;
@@ -58,6 +62,17 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.contact = true;
       this.dependent = true;
       this.education = true;
+      this.work = false;
+      this.upload = false;
+      this.preview = false;
+      this.submit = false;
+    },
+    tillwork() {
+      this.personal = true;
+      this.contact = true;
+      this.dependent = true;
+      this.education = true;
+      this.work = true;
       this.upload = false;
       this.preview = false;
       this.submit = false;
@@ -67,6 +82,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.contact = true;
       this.dependent = true;
       this.education = true;
+      this.work = true;
       this.upload = true;
       this.preview = false;
       this.submit = false;
@@ -76,6 +92,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.contact = true;
       this.dependent = true;
       this.education = true;
+      this.work = true;
       this.upload = true;
       this.preview = true;
       this.submit = false;
@@ -85,6 +102,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.contact = true;
       this.dependent = true;
       this.education = true;
+      this.work = true;
       this.upload = true;
       this.preview = true;
       this.submit = true;
@@ -148,6 +166,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
       data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
       data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
+      data?.bgv_details == '1' ? this.appConfig.setLocalData('work', '1') : this.appConfig.setLocalData('work', '0');
       data?.joining_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
       data?.previewed == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
       data?.submitted == '1' ? this.appConfig.setLocalData('submit', '1') : this.appConfig.setLocalData('submit', '0');
@@ -171,10 +190,16 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'dependent';
       }
 
-      if (data.education_details == '1') {
-        this.valid.tilleducation();
+      if (data.bgv_details == '1') {
+        this.valid.tillwork();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
         return this.activeStep = 'upload';//, this.routingSelection = param ? param : 'dependent';
+      }
+
+      if (data.education_details == '1') {
+        this.valid.tilleducation();
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
+        return this.activeStep = 'work';//, this.routingSelection = param ? param : 'dependent';
       }
       
       if (data.dependent_details == '1') {
@@ -225,6 +250,13 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     if (clickedStep == 'education') {
       if (this.routingSelection != 'education') {
         let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION}
+        this.sharedService.StepperNavigationCheck.next(data);
+      }
+      // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+    }
+    if (clickedStep == 'work') {      
+      if (this.routingSelection != 'work') {
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
@@ -321,6 +353,11 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }  
     }
     if (this.activeStep == 'education') {
+      if (route.includes('work')) {
+        return true;
+      }  
+    }
+    if (this.activeStep == 'work') {
       if (route.includes('upload')) {
         return true;
       }  

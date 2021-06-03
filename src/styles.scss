@@ -2635,6 +2635,18 @@ th {
 }
 }
 
+.sub-grid {
+  .joining-form-main .mat-datepicker-toggle .mat-icon-button {
+    min-height: 30px !important;
+    max-height: 30px !important;
+    height: 30px !important;
+  }
+  .mat-datepicker-toggle {
+    min-height: 30px !important;
+    max-height: 30px !important;
+  }
+}
+
 // .no-flickr {
 //   -webkit-transform: translateZ(0);
 //   -moz-transform: translateZ(0);

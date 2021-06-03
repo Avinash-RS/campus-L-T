@@ -1,3 +1,4 @@
+import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
 import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 import { JoiningPreviewComponent } from './candidate-joining-form/joining-preview/joining-preview.component';
 import { JoiningUploadComponent } from './candidate-joining-form/joining-upload/joining-upload.component';
@@ -129,6 +130,13 @@ const routes: Routes = [
             component: JoiningEducationComponent,
             data: {
               breadcrumb: 'Education Details'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_WORK}`, 
+            component: JoiningWorkDetailsComponent,
+            data: {
+              breadcrumb: 'Work Experience Details'
             }
           },
           {
