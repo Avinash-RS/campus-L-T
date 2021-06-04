@@ -243,6 +243,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   formSubmitted: boolean;
   documentDetails: any;
   actualDate: any;
+  noShowWork: boolean;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -368,8 +369,12 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
         let work = {
           workDetails: data && data.workDetails ? data.workDetails : null,
           Employment: data && data.Employment ? data.Employment : [],
-          bgvDetails: data && data.bgvDetails ? data.bgvDetails : null,
-
+          bgvDetails: data && data.bgvDetails ? data.bgvDetails : null
+        }
+        if (work.workDetails || work.bgvDetails || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] )) {
+          this.noShowWork = false;
+        } else {
+          this.noShowWork = true;
         }
         this.workDetails = work;
         this.patchWorkDetails();
@@ -442,7 +447,15 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       });
       this.workDetails.Employment = experience;
       console.log(this.workDetails);
-
+    }
+    if (this.workDetails.workDetails) {
+      let work = this.workDetails.workDetails;
+      work[this.form_break_in_emp] = work[this.form_break_in_emp] ? work[this.form_break_in_emp] : null;
+      work[this.form_employed_us] = work[this.form_employed_us] == '1' ? true : false;
+      work[this.form_interviewed_by_us] = work[this.form_interviewed_by_us] == '1' ? true : false;
+      work[this.form_total_exp_months] = work[this.form_total_exp_months] ? Number(work[this.form_total_exp_months]) : 0;
+      work[this.form_total_exp_years] = work[this.form_total_exp_years] ? Number(work[this.form_total_exp_years]) : 0;
+      this.workDetails.workDetails = work;
     }
   }
 

@@ -588,7 +588,7 @@
                             mode_edit
                         </span></div>
                 </div>
-                <ng-container *ngIf="workDetails else noWork">
+                <ng-container *ngIf="workDetails && !noShowWork else noWork">
                     <ng-container *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show">
                         <div class="row-wrappper mt-2 padding-1">
                             <div class="subDocumentTitle m-0 p-0">Disciplinary Details</div>
@@ -713,18 +713,18 @@
 
                             <div class="row-wrapper mt-0">
 
-                                <div class="overall-input-wrapper mt-3 width-32">
+                                <div class="overall-input-wrapper mt-3 width-40">
                                     <label>Position Held</label>
                                     <div class="input f_size_16 bold-700 color-black">{{work[form_postion_field]}}
                                     </div>
                                 </div>
 
-                                <div class="overall-input-wrapper mt-3 width-32">
+                                <div class="overall-input-wrapper mt-3 width-35">
                                     <label>Name & Designation of Immediate Superior</label>
                                     <div class="input f_size_16 bold-700 color-black">
                                         {{work[form_name_designation_supervisor]}}</div>
                                 </div>
-                                <div class="overall-input-wrapper mt-3 width-32">
+                                <div class="overall-input-wrapper mt-3 width-22">
                                     <label>Gross Emoluments (Per Month)</label>
                                     <div class="input f_size_16 bold-700 color-black">
                                         {{work[form_gross_emploment]}}</div>
@@ -737,12 +737,12 @@
                                     <div class="input f_size_16 bold-700 color-black">{{work[form_nature_work]}}
                                     </div>
                                 </div>
-                                <div class="overall-input-wrapper mt-3 width-40">
+                                <div class="overall-input-wrapper mt-3 width-35">
                                     <label>Reason for Leaving</label>
                                     <div class="input f_size_16 bold-700 color-black">{{work[form_reason_leaving]}}
                                     </div>
                                 </div>
-                                <div class="overall-input-wrapper mt-3 width-17">
+                                <div class="overall-input-wrapper mt-3 width-22">
                                     <label>Duration</label>
                                     <div class="input f_size_16 bold-700 color-black">{{work[form_duration_year]}} Years
                                         {{work[form_duration_month]}} Months
@@ -753,9 +753,49 @@
 
                         </div>
                     </ng-container>
+                    <ng-container *ngIf="(workDetails.workDetails && workDetails.workDetails[form_total_exp_months] && workDetails.workDetails[form_total_exp_months] > 0) || (workDetails.workDetails && workDetails.workDetails[form_total_exp_years] && workDetails.workDetails[form_total_exp_years] > 0)">
+                        <div class="row-wrapper mt-0" class="border-wrapper">
+                            <span class="mr-3 custom-label">Total Experience:</span> <span class="input f_size_16 bold-700 color-black">{{workDetails.workDetails[form_total_exp_years]}} Years </span> <span class="ml-2 input f_size_16 bold-700 color-black">{{workDetails.workDetails[form_total_exp_months]}} Months</span>
+                        </div>
+                    </ng-container>
+                <!-- Contant Work details -->
+                    <ng-container *ngIf="workDetails.workDetails">
+                        <div *ngIf="workDetails.workDetails && workDetails.workDetails[form_break_in_emp]" class="row-wrapper mt-0" class="border-wrapper">
+                            <div class="overall-input-wrapper mt-0">
+                                <label class="custom-label">Break in Employment, If any, Should be indicated with reasons</label>
+                                <div class="input f_size_16 bold-700 color-black box-border">{{ workDetails.workDetails[form_break_in_emp] }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="workDetails.workDetails && workDetails.workDetails[form_employed_us]">
+                            <div class="row-wrapper mt-0" class="border-wrapper">
+                                <div class="overall-input-wrapper mt-0">
+                                    <label class="custom-label">Have you ever been employed by us or by any of our subsidiary / associate companies? <span style="font-weight: 600;" class="ml-2 f_size_17  bold-700 color-black" style="color: #000 !important;">Yes</span></label>
+                                    <div class="input custom-flex">
+                                        <div><span class="custom-label mr-2">OC:</span>  <span class="input f_size_16 bold-700 color-black box-border">{{workDetails.workDetails[form_oc]}}</span></div>
+                                        <div class="ml-4"><span class="custom-label mr-2">Payslip Number:</span>  <span class="input f_size_16 bold-700 color-black box-border" style="color: #000 !important;">{{workDetails.workDetails[form_payslip]}}</span></div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </ng-container>
+
+                        <ng-container *ngIf="workDetails.workDetails && workDetails.workDetails[form_interviewed_by_us]">
+                            <div class="row-wrapper mt-0" class="border-wrapper">
+                                <div class="overall-input-wrapper mt-0">
+                                    <label class="custom-label">Have you ever been interviewed by us? <span style="font-weight: 600;" class="ml-2 f_size_17  bold-700 color-black" style="color: #000 !important;">Yes</span></label>
+                                    <div class="input custom-flex">
+                                        <div><span class="custom-label mr-2">Post Applied for:</span>  <span class="input f_size_16 bold-700 color-black box-border">{{workDetails.workDetails[form_post]}}</span></div>
+                                        <div class="ml-4"><span class="custom-label mr-2">When:</span>  <span class="input f_size_16 bold-700 color-black box-border" style="color: #000 !important;">{{workDetails.workDetails[form_when_interview] ? dateConvertion(workDetails.workDetails[form_when_interview]) : 'NA' }}</span></div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </ng-container>
+
+
+                    </ng-container>
                 </ng-container>
             </div>
-
 
             <!-- Acknowledge -->
             <ng-container *ngIf="!formSubmitted">
@@ -948,6 +988,18 @@
 
             </ng-container>
 
+            <!-- Signature -->
+            <div *ngIf="formSubmitted" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <div class="header d-flex mb-1 custom-header-padding flex-column">
+                    <h6>Signature</h6>
+                </div>
+                <div class="row-wrapper mt-0 mb-2" style="padding: 0 16px;">
+                        <div class="signatureShow">
+                            <img class="sign" *ngIf="signature && signature.file_path" [src]="signature && signature.file_path"
+                            alt="" srcset="">
+                        </div>
+                    </div>
+            </div>            
 
             <div *ngIf="!formSubmitted" class="row-wrapper justify-content-between align-items-center mt-4 mb-3 footer">
                 <div (click)="routeNext('upload')"

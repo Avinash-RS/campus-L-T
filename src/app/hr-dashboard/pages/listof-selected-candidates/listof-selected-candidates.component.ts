@@ -99,11 +99,11 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         headerName: ''
       },
       {
-        headerName: 'Mail Sent', field: 'mailed',
+        headerName: 'Mail', field: 'mailed',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 120,
-        maxWidth: 120,
+        minWidth: 85,
+        maxWidth: 85,
         sortable: true,
         valueGetter: (params) => {
           if (params.data.mailed == '0') {
@@ -117,11 +117,11 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Edit Access', field: 'is_editable',
+        headerName: 'Edit', field: 'is_editable',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 120,
-        maxWidth: 120,
+        minWidth: 85,
+        maxWidth: 85,
         sortable: true,
         valueGetter: (params) => {
           if (params.data.is_editable == '1') {
@@ -314,12 +314,14 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       let api = {
         email: element['data']['selected_candidate'],
         company: element['data']['company'],
-        user_id: element['data']['user_id']
+        user_id: element['data']['user_id'],
+        name: element['data']['candidate_name']
       }
       apiData.push(api);      
     });
     this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
       this.appConfig.hideLoader();
+      this.appConfig.success(this.popUpdata.value == 1 ? 'Mail Sent to the Candidates Successfully' : 'Edit Access given to the Candidates Successfully');
       this.ngOnInit();
     });
   }

@@ -782,7 +782,41 @@ background-color: #eaeaea;
 .width-56 {
     width: 56%;
 }
+.width-35 {
+    width: 35%;
+}
+
+.width-22 {
+    width: 22%;
+}
+
 .box-border {
     border: 1px solid rgba(147, 147, 147, 0.5);
     padding: 4px 6px;
+}
+
+.custom-label {
+    color: #878787;
+    padding: 0 0 0px 0;
+    margin: 0;
+    font-size: 14px;
+}
+.custom-flex {
+    display: flex;
+    margin: 8px 0;
+}
+.signatureShow {
+    max-width: 480px;
+    min-width: 400px;
+    height: 100px !important;
+    border: solid 0.5px rgba(112, 112, 112, 0.411);
+    padding: 0.5em;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .sign {
+    max-width: 400px;
+    min-width: 200px;
+    height: 70px;
+    } 
 }
