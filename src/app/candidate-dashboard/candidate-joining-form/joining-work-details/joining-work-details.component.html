@@ -7,54 +7,54 @@
     <div class="grids-wrapper">
         <form class="workDetailsForm" [formGroup]="workDetailsForm" (ngSubmit)="formSubmit()">
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox class="mr-2" [formControlName]="form_convicted_by_Court"></mat-checkbox> Have you ever
+                <mat-checkbox class="mr-2" (change)="requiredDesc()" [formControlName]="form_convicted_by_Court"></mat-checkbox> Have you ever
                 been convicted by a Court of Law?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_debarred_exam_university" class="mr-2"></mat-checkbox> Have you
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_debarred_exam_university" class="mr-2"></mat-checkbox> Have you
                 ever been debarred/disqualified from any examination or restricted by any University or any other
                 educational institute?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_arrested" class="mr-2"></mat-checkbox> Have you ever been
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_arrested" class="mr-2"></mat-checkbox> Have you ever been
                 arrested?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_debarred_psc_company" class="mr-2"></mat-checkbox> Have you ever
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_debarred_psc_company" class="mr-2"></mat-checkbox> Have you ever
                 been debarred/disqualified from any Public Service Commission or any other recruiting company for
                 appearing at its examination / selection?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_prosecuted" class="mr-2"></mat-checkbox> Have you ever been
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_prosecuted" class="mr-2"></mat-checkbox> Have you ever been
                 prosecuted?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_court_case_pending" class="mr-2"></mat-checkbox> Is any case
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_court_case_pending" class="mr-2"></mat-checkbox> Is any case
                 pending against you in any Court of Law at the time of filling this form?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_detention" class="mr-2"></mat-checkbox> Have you ever been kept
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_detention" class="mr-2"></mat-checkbox> Have you ever been kept
                 under detention?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_university_case_pending" class="mr-2"></mat-checkbox> Is any case
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_university_case_pending" class="mr-2"></mat-checkbox> Is any case
                 pending against you in any University or Educational Institute at the time of filling this form?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_fined_by_court" class="mr-2"></mat-checkbox> Have you ever been
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_fined_by_court" class="mr-2"></mat-checkbox> Have you ever been
                 fined by a Court of Law?
             </div>
 
             <div class="row-wrappper mt-2 hanging">
-                <mat-checkbox [formControlName]="form_disciplinary_proceedings" class="mr-2"></mat-checkbox> In the
+                <mat-checkbox (change)="requiredDesc()" [formControlName]="form_disciplinary_proceedings" class="mr-2"></mat-checkbox> In the
                 previous employment, were any disciplinary proceedings framed against you or had you been called upon to
                 explain your conduct in any matter at the time you served notice for resignation?
             </div>
@@ -76,14 +76,14 @@
                     </div>
                 </div>
             </div>
-            <h6 class="mt-3">Work Details</h6>
+            <h6 class="mt-3">Employment Details</h6>
             <ng-container *ngIf="getEmploymentArr && getEmploymentArr.controls" [formArrayName]="form_Employment_Array">
                 <ng-container *ngFor="let item of getEmploymentArr.controls; let i = index;" [formGroupName]="i">
                     <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
                         <div class="form-grouping">
                             <div class="row-wrapper">
                                 <div class="overall-input-wrapper width-32">
-                                    <label>Employer's name & address<span></span></label>
+                                    <label>Employer's Name & Address<span></span></label>
                                     <textarea matInput placeholder="Enter here" class="input text-area" type="text"
                                         [formControlName]="form_employment_name_address"></textarea>
                                     <div class="form-error"

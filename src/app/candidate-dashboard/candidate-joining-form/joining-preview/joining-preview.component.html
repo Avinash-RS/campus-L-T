@@ -579,8 +579,187 @@
                 </ng-container>
             </div>
 
+            <!-- Work Experience -->
+            <div class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+                    <h6>Work Experience Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span (click)="editRoute('work')"
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="workDetails else noWork">
+                    <ng-container *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show">
+                        <div class="row-wrappper mt-2 padding-1">
+                            <div class="subDocumentTitle m-0 p-0">Disciplinary Details</div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_convicted_by_Court]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been convicted by a Court of Law? <span
+                                        style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_exam_university]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you
+                                    ever been debarred/disqualified from any examination or restricted by any University
+                                    or any other
+                                    educational institute? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_arrested]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    arrested? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_psc_company]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever
+                                    been debarred/disqualified from any Public Service Commission or any other
+                                    recruiting company for
+                                    appearing at its examination / selection? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_prosecuted]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    prosecuted? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_court_case_pending]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Is any case
+                                    pending against you in any Court of Law at the time of filling this form? <span
+                                        style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_detention]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been kept
+                                    under detention? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_university_case_pending]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Is any case
+                                    pending against you in any University or Educational Institute at the time of
+                                    filling this form? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_fined_by_court]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    fined by a Court of Law? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_disciplinary_proceedings]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">In the
+                                    previous employment, were any disciplinary proceedings framed against you or had you
+                                    been called upon to
+                                    explain your conduct in any matter at the time you served notice for resignation?
+                                    <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_full_particulars]"
+                                class="row-wrapper mt-2">
+                                <div class="overall-input-wrapper mt-0 width-100">
+                                    <label>Full particulars of the case/arrest/detention/conviction/punishment etc. and
+                                        / or nature of the case pending in the Court/University/Educational
+                                        Authority</label>
+                                    <div class="input f_size_16 bold-700 color-black box-border">
+                                        {{workDetails.bgvDetails[this.form_full_particulars]}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="workDetails.Employment && workDetails.Employment.length > 0">
+                        <div class="subDocumentTitle">Employment Details</div>
+
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let work of workDetails.Employment; let i = index">
+                            <div class="row-wrapper mt-0">
+                                <div class="overall-input-wrapper mt-0 width-56">
+                                    <label>Employer's Name & Address</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_employment_name_address]}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-20">
+                                    <label>Start Date</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{dateConvertion(work[form_duration_from])}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-20">
+                                    <label>End Date</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{dateConvertion(work[form_duration_to])}}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="row-wrapper mt-0">
+
+                                <div class="overall-input-wrapper mt-3 width-32">
+                                    <label>Position Held</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_postion_field]}}
+                                    </div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-3 width-32">
+                                    <label>Name & Designation of Immediate Superior</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_name_designation_supervisor]}}</div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-32">
+                                    <label>Gross Emoluments (Per Month)</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_gross_emploment]}}</div>
+                                </div>
+                            </div>
+
+                            <div class="row-wrapper mt-0">
+                                <div class="overall-input-wrapper mt-3 width-40">
+                                    <label>Nature of Work Done</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_nature_work]}}
+                                    </div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-40">
+                                    <label>Reason for Leaving</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_reason_leaving]}}
+                                    </div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-17">
+                                    <label>Duration</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_duration_year]}} Years
+                                        {{work[form_duration_month]}} Months
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+
+            <!-- Acknowledge -->
             <ng-container *ngIf="!formSubmitted">
-                    <form  [formGroup]="acknowledgmentForm" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <form [formGroup]="acknowledgmentForm" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
                     <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
                         <h6>Acknowledgements and Declarations</h6>
                     </div>
@@ -614,7 +793,8 @@
                                 <div class="row-wrapper mt-0 w-100 justify-content-start hanging">
                                     <!-- <label>Name of the Dependent</label> -->
                                     <div>
-                                        <mat-checkbox [formControlName]="form_bgv" class="mr-2"></mat-checkbox> I agree to have read and understood
+                                        <mat-checkbox [formControlName]="form_bgv" class="mr-2"></mat-checkbox> I agree
+                                        to have read and understood
                                         the <span style="color: #007bff; cursor: pointer; text-decoration: underline;"
                                             (click)="matDialogOpenTerms('bgv')">Terms and Conditions</span> of
                                         Background Verfication and will abide by the same during the assessment and the
@@ -627,7 +807,8 @@
                                 <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
                                     <!-- <label>Name of the Dependent</label> -->
                                     <div>
-                                        <mat-checkbox [formControlName]="form_coc" class="mr-2"></mat-checkbox> I agree to have read and understood
+                                        <mat-checkbox [formControlName]="form_coc" class="mr-2"></mat-checkbox> I agree
+                                        to have read and understood
                                         the <span style="color: #007bff; cursor: pointer; text-decoration: underline;"
                                             (click)="matDialogOpenTerms('coc')">Terms and Conditions</span> of Code of
                                         Conduct and will abide by the same during the assessment and the selection
@@ -641,11 +822,13 @@
                                 <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
                                     <!-- <label>Name of the Dependent</label> -->
                                     <div>
-                                        <mat-checkbox [formControlName]="form_caste_preview" class="mr-2"></mat-checkbox> I agree that the Caste Name and Caste
+                                        <mat-checkbox [formControlName]="form_caste_preview" class="mr-2">
+                                        </mat-checkbox> I agree that the Caste Name and Caste
                                         Certificate provided in this form is true to the best of my knowledge and
                                         belief.
                                     </div>
-                                    <div class="form-error mt-1" *ngIf="caste_preview?.invalid && caste_preview?.touched">
+                                    <div class="form-error mt-1"
+                                        *ngIf="caste_preview?.invalid && caste_preview?.touched">
                                         Please click to agree the above checkbox
                                     </div>
 
@@ -654,7 +837,8 @@
                                 <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
                                     <!-- <label>Name of the Dependent</label> -->
                                     <div>
-                                        <mat-checkbox [formControlName]="form_joining" class="mr-2"></mat-checkbox> I am accepting to the terms and
+                                        <mat-checkbox [formControlName]="form_joining" class="mr-2"></mat-checkbox> I am
+                                        accepting to the terms and
                                         conditions mentioned therein and I am joining for my duties at the mentioned
                                         date.
                                     </div>
@@ -666,12 +850,14 @@
                                 <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
                                     <!-- <label>Name of the Dependent</label> -->
                                     <div>
-                                        <mat-checkbox [formControlName]="form_terms_conditions" class="mr-2"></mat-checkbox> I agree to have read and understood
+                                        <mat-checkbox [formControlName]="form_terms_conditions" class="mr-2">
+                                        </mat-checkbox> I agree to have read and understood
                                         the <span style="color: #007bff; cursor: pointer; text-decoration: underline;"
                                             (click)="matDialogOpenTerms('terms')">Terms and Conditions</span> and will
                                         abide by the same during the assessment and the selection process.
                                     </div>
-                                    <div class="form-error mt-1" *ngIf="terms_conditions?.invalid && terms_conditions?.touched">
+                                    <div class="form-error mt-1"
+                                        *ngIf="terms_conditions?.invalid && terms_conditions?.touched">
                                         Please click to agree the above Terms and Conditions.
                                     </div>
                                 </div>
@@ -682,66 +868,75 @@
                         <div class="row-wrapper-preview checkbox-pad">
                             <div class="overall-input-wrapper width-45">
                                 <label>Place<span></span></label>
-                                <input matInput [formControlName]="form_ack_place" placeholder="Enter here" class="input" type="text">
+                                <input matInput [formControlName]="form_ack_place" placeholder="Enter here"
+                                    class="input" type="text">
                                 <div class="form-error" *ngIf="ack_place?.invalid && ack_place?.touched">
-                                            <div *ngIf="ack_place?.errors?.required">Place is Required</div>
-                                            <div *ngIf="ack_place?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters
-                                                only allowed</div>
-                                        </div>
+                                    <div *ngIf="ack_place?.errors?.required">Place is Required</div>
+                                    <div *ngIf="ack_place?.errors?.alphaNum255">Alpha numeric with maximum of 255
+                                        characters
+                                        only allowed</div>
+                                </div>
                             </div>
                             <div class="overall-input-wrapper width-30">
                                 <label>Date<span></span></label>
                                 <div class="date-relative">
-                                    <input matInput [formControlName]="form_ack_date" class="input" [min]="minDate" [max]="maxDate"
-                                        [matDatepicker]="picker" placeholder="DD-MM-YYYY">
+                                    <input matInput [formControlName]="form_ack_date" class="input" [min]="minDate"
+                                        [max]="maxDate" [matDatepicker]="picker" placeholder="DD-MM-YYYY">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </div>
                                 <div class="form-error" *ngIf="ack_date?.invalid && ack_date?.touched">
-                                            <div *ngIf="ack_date?.errors?.required">Date is Required</div>
-                                            <div *ngIf="ack_date?.errors?.matDatepickerMax">
-                                                {{ack_date?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(ack_date?.errors?.matDatepickerMax.max) : ''}}
-                                            </div>
-                                            <div *ngIf="ack_date?.errors?.matDatepickerMin">
-                                                {{ack_date?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(ack_date?.errors?.matDatepickerMin.min) : ''}}
-                                            </div>
-                                            <div *ngIf="ack_date?.errors?.matDatepickerParse">Invalid Date Format</div>
-                                        </div>
+                                    <div *ngIf="ack_date?.errors?.required">Date is Required</div>
+                                    <div *ngIf="ack_date?.errors?.matDatepickerMax">
+                                        {{ack_date?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(ack_date?.errors?.matDatepickerMax.max) : ''}}
+                                    </div>
+                                    <div *ngIf="ack_date?.errors?.matDatepickerMin">
+                                        {{ack_date?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(ack_date?.errors?.matDatepickerMin.min) : ''}}
+                                    </div>
+                                    <div *ngIf="ack_date?.errors?.matDatepickerParse">Invalid Date Format</div>
+                                </div>
                             </div>
 
                         </div>
 
                         <div class="row-wrapper mt-4 mb-3 justify-content-center">
-                            <div class="signature-wrapper" [ngClass]="signature && signature.file_path ? 'height-100' : ''">
-                                <div *ngIf="signature && signature.file_path" matTooltip="Remove Signature" matTooltipPostion="after" (click)="delete()" class="remove">
-                                  <i style="font-size: 25px;" class="material-icons">
-                                    cancel
-                                  </i>
+                            <div class="signature-wrapper"
+                                [ngClass]="signature && signature.file_path ? 'height-100' : ''">
+                                <div *ngIf="signature && signature.file_path" matTooltip="Remove Signature"
+                                    matTooltipPostion="after" (click)="delete()" class="remove">
+                                    <i style="font-size: 25px;" class="material-icons">
+                                        cancel
+                                    </i>
                                 </div>
                                 <div class="label-input-holder">
-                                  <label class="hoverable m-0" for="fileInput">
-                                    <img class="sign" *ngIf="signature && signature.file_path" [ngClass]="!signature.file_path ? 'default' : 'profile'"
-                                      [src]="signature && signature.file_path ? signature.file_path : 'assets/images/paper-clip.svg'" alt="" srcset="">
-                                    <!-- (load)="afterImgLoad()" -->
-                                    <div *ngIf="!signature.file_path" class="grid">
-                                      <div class="left">
-                                        <img class="default" src="assets/images/paper-clip.svg" alt="" srcset="">
-                                      </div>
-                                      <div class="right">
-                                        Upload Image of your Handwriting Signature
-                                      </div>
-                                    </div>
-                                  </label>
-                                  <input [matTooltip]="signature && signature.file_path ? 'Click to Change Signature' : 'No File Chosen'" matTooltipPostion="after" title=""
-                                    (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept="image/*"
-                                    (change)="onSelectFile($event)">
+                                    <label class="hoverable m-0" for="fileInput">
+                                        <img class="sign" *ngIf="signature && signature.file_path"
+                                            [ngClass]="!signature.file_path ? 'default' : 'profile'"
+                                            [src]="signature && signature.file_path ? signature.file_path : 'assets/images/paper-clip.svg'"
+                                            alt="" srcset="">
+                                        <!-- (load)="afterImgLoad()" -->
+                                        <div *ngIf="!signature.file_path" class="grid">
+                                            <div class="left">
+                                                <img class="default" src="assets/images/paper-clip.svg" alt=""
+                                                    srcset="">
+                                            </div>
+                                            <div class="right">
+                                                Upload Image of your Handwriting Signature
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <input
+                                        [matTooltip]="signature && signature.file_path ? 'Click to Change Signature' : 'No File Chosen'"
+                                        matTooltipPostion="after" title="" (click)="files.value = null" id="fileInput"
+                                        #files type='file' name="profile" accept="image/*"
+                                        (change)="onSelectFile($event)">
                                 </div>
                                 <!-- <div *ngIf="!signature.file_path" class="text-wrapper">
                                   <div class="bold-text">Upload image of your handwriting signature</div>
                                   <div class="footer-text">Image types can include PNG, JPG, JPEG (file size 40 KB - 2 MB)</div>
                                 </div> -->
-                            
-                              </div>
+
+                            </div>
                         </div>
                         <div class="row-wrapper mt-2 w-100 justify-content-start checkbox-pad" style="color: #C02222;">
                             Note: Please make sure to complete the form and fill the information’s correctly. You will
@@ -785,6 +980,9 @@
 </div>
 <ng-template #noDependent>
     <div class="nodata"> No Dependent Details Available</div>
+</ng-template>
+<ng-template #noWork>
+    <div class="nodata"> No Work Experience Details Available</div>
 </ng-template>
 <ng-template #noContact>
     <div class="nodata"> No Contact Details Available</div>

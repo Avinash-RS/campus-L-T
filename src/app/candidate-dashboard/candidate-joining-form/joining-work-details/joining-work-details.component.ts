@@ -222,7 +222,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_disciplinary_proceedings]: data[this.form_disciplinary_proceedings] && data[this.form_disciplinary_proceedings] == '1' ? true : false,
       [this.form_full_particulars]: data[this.form_full_particulars]
     });
+    this.requiredDesc();
   }
+  
   OtherDetailsPatch(data) {
     this.workDetailsForm.patchValue({
       [this.form_total_exp_years]: data[this.form_total_exp_years],
@@ -369,7 +371,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   formSubmit(routeValue?: any) {
-    this.requiredDesc();
+    // this.requiredDesc();
     console.log('form', this.workDetailsForm.getRawValue());
     let formValues = this.workDetailsForm.getRawValue();
     if (this.workDetailsForm.valid) {
