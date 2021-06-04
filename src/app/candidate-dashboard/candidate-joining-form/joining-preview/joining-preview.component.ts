@@ -1,8 +1,10 @@
-import { MatDialog } from '@angular/material';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace.js';
+import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
+import { DateAdapter, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -10,18 +12,69 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+    // dateInput: 'DD MMM YYYY', // output ->  01 May 1995
+    dateInput: 'DD-MM-YYYY', // output ->  01-10-1995
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-joining-preview',
   templateUrl: './joining-preview.component.html',
-  styleUrls: ['./joining-preview.component.scss']
+  styleUrls: ['./joining-preview.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
+  @ViewChild('matDialogTerms', {static: false}) matDialogRefTerms: TemplateRef<any>;
+  @ViewChild('matDialogBGV', {static: false}) matDialogRefBGV: TemplateRef<any>;
+  @ViewChild('matDialogCaste', {static: false}) matDialogRefCaste: TemplateRef<any>;
+  @ViewChild('matDialogCoc', {static: false}) matDialogRefCoc: TemplateRef<any>;
+  @ViewChild('matDialogJoin', {static: false}) matDialogRefJoin: TemplateRef<any>;
   @ViewChild('matDialogDocViewer', {static: false}) matDialogRefDocViewer: TemplateRef<any>;
 
   checkFormValidRequest: Subscription;
+  minDate: Date;
+  maxDate: Date;
+
+  showSizeError = {
+    image: false,
+    size: false,
+    maxsize: '',
+    minsize: ''
+  };
+  signature = {
+    name: null,
+    file_id: null,
+    file_path: null,
+    file_size: null,
+    filename: null,
+    filetype: null,
+    label: null
+  };
+
+  selectedImage: any;
     // Title Dropdown list
     bloodGroupDropdownList: any;
 
@@ -121,7 +174,17 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   form_ifsc_code = 'ifsc_code';
   form_branch = 'branch';
 
-  pdfsrc: any;
+    pdfsrc: any;
+
+    // Acknowledgements
+    acknowledgmentForm: FormGroup;
+    form_bgv = 'bgv';
+    form_caste_preview = 'caste';
+    form_coc = 'coc';
+    form_joining = 'joining';
+    form_terms_conditions = 'terms_conditions';
+    form_ack_place = 'ack_place';
+    form_ack_date = 'ack_date';
 
     personalDetails: any;
     personalDetailsMap: any;
@@ -139,6 +202,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   allPermanentCityList: any;
   formSubmitted: boolean;
   documentDetails: any;
+  actualDate: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -149,14 +213,41 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     private dialog: MatDialog,
     private glovbal_validators: GlobalValidatorService
   ) { 
+    this.dateValidation();
   }
 
   ngOnInit() {
+    this.formInitialization();
     this.checkFormSubmitted();
     this.getStateAPI();
     this.checkFormValidRequestFromRxjs();
   }
 
+  dateValidation() {
+    // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 0, 0, 1);
+    this.maxDate = new Date(currentYear + 1, 0, 0);
+}
+
+momentForm(date) {
+  if (date) {
+    const split = moment(date).format('DD-MM-YYYY');
+   return split;    
+  }
+  }
+  
+  dateConvertionForm(date) {
+    if (date) {      
+      const split = moment(date).format();
+      if (split == 'Invalid date') {
+        const ddFormat = moment(date, 'DD-MM-YYYY').format();
+        return ddFormat == 'Invalid date' ? null : ddFormat;
+      }
+     return split == 'Invalid date' ? null : split;
+    }
+  }
+  
   checkFormSubmitted() {
     this.formSubmitted = this.appConfig.getLocalData('submit') && this.appConfig.getLocalData('submit') == '1' ? true : false;
   }
@@ -214,6 +305,21 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
   
+  formInitialization() {
+    this.acknowledgmentForm = this.fb.group({
+      [this.form_bgv]: [null, [Validators.requiredTrue]],
+      [this.form_caste_preview]: [null, [Validators.requiredTrue]],
+      [this.form_coc]: [null, [Validators.requiredTrue]],
+      [this.form_joining]: [null, [Validators.requiredTrue]],
+      [this.form_terms_conditions]: [null, [Validators.requiredTrue]],
+      [this.form_ack_place]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_ack_date]: [{value: this.dateConvertionForm(new Date()), disabled: true} , [Validators.required]]
+    });
+  }
+
+  patchAcknowledgementForm(data) {
+    this.acknowledgmentForm.patchValue(data);
+  }
   getPreviewData() {
     this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any)=> {
       this.appConfig.hideLoader();
@@ -233,7 +339,43 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       } else {
         this.educationDetailsMap = [];
       }
-      this.documentDetails = data && data.documents ? data.documents : null
+      this.documentDetails = data && data.documents ? data.documents : null;
+      if (this.documentDetails && this.documentDetails.Joining_Details && this.documentDetails.Joining_Details.length>0) {
+        let joinCheck = [];
+        this.documentDetails.Joining_Details.forEach(element => {
+          if (element) {
+            joinCheck.push(element);
+          }
+        });
+        this.documentDetails.Joining_Details = joinCheck;
+      }
+
+      if (data && data.acknowledgment) {
+        let ackData = data.acknowledgment;
+        let ack = {
+          [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? true : false,
+          [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? true : false,
+          [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? true : false,
+          [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? true : false,
+          [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? true : false,
+          [this.form_ack_place]:  ackData.ack_place ? ackData.ack_place : null,
+          [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
+        }
+        this.actualDate = ackData.ack_date;
+        this.patchAcknowledgementForm(ack);
+      }
+      if (data && data.signature) {
+        let sign = data.signature;
+        this.signature = {
+          name: 'Signature',
+          label: 'Signature',
+          file_id: sign.file_id,
+          file_path: sign.file_path,
+          file_size: sign.file_size,
+          filename: sign.filename,
+          filetype: sign.filetype,
+        }
+      }
     });
   }
 
@@ -442,6 +584,17 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
+  formSubmitFinal() {
+    if (this.acknowledgmentForm.valid) {
+      if (this.signature && this.signature.file_path) {
+        return this.matDialogOpen();
+      }
+      this.appConfig.nzNotification('error', 'Not Submitted', 'Please upload your Signature to submit the form');
+    } else {
+      this.glovbal_validators.validateAllFields(this.acknowledgmentForm);
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields in Acknowledgements and Declarations');
+    }
+  }
   matDialogOpen() {
     const dialogRef = this.dialog.open(this.matDialogRef, {
       width: '400px',
@@ -462,8 +615,52 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
+  matDialogOpenTerms(type) {
+    let name;
+    if (type == 'terms') {
+      name = this.matDialogRefTerms;
+    } 
+    if (type == 'bgv') {
+      name = this.matDialogRefBGV;
+    } 
+    if (type == 'coc') {
+      name = this.matDialogRefCoc;
+    } 
+    if (type == 'caste') {
+      name = this.matDialogRefCaste;
+    } 
+    if (type == 'join') {
+      name = this.matDialogRefJoin;
+    } 
+
+    const dialogRef = this.dialog.open(name, {
+      width: '890px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'wrapper-kyc-terms'
+    });
+  }
+
+  kycTerms() {
+    const data = {
+      iconName: '',
+      sharedData: {
+        confirmText: 'Bulk Upload helper video',
+        componentData: '',
+        type: 'kyc-terms',
+        identity: 'kyc-terms'
+      },
+      showConfirm: 'Confirm',
+      showCancel: 'Cancel',
+      showOk: ''
+    };
+    this.appConfig.terms(ModalBoxComponent, data);
+  }
+
   openMatDialog(src, type) {
-    if (!type.includes('pdf')) {
+    if (!type.includes('application/pdf')) {
       return window.open(src, '_blank');
     }
     this.pdfsrc = src;
@@ -485,7 +682,17 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   formSubmit(routeValue?: any) {
-        this.candidateService.joiningFormSubmit().subscribe((data: any)=> {
+      let ackForm = this.acknowledgmentForm.getRawValue();
+      ackForm[this.form_bgv] = ackForm[this.form_bgv] && (ackForm[this.form_bgv] == '1' || ackForm[this.form_bgv] == true) ? '1' : '0';
+      ackForm[this.form_coc] = ackForm[this.form_coc] && (ackForm[this.form_coc] == '1' || ackForm[this.form_coc] == true) ? '1' : '0';
+      ackForm[this.form_joining] = ackForm[this.form_joining] && (ackForm[this.form_joining] == '1' || ackForm[this.form_joining] == true) ? '1' : '0';
+      ackForm[this.form_caste_preview] = ackForm[this.form_caste_preview] && (ackForm[this.form_caste_preview] == '1' || ackForm[this.form_caste_preview] == true) ? '1' : '0';
+      ackForm[this.form_terms_conditions] = ackForm[this.form_terms_conditions] && (ackForm[this.form_terms_conditions] == '1' || ackForm[this.form_terms_conditions] == true) ? '1' : '0';
+      let apiData = {
+        acknowledgment: ackForm,
+        signature: this.signature
+      }
+        this.candidateService.joiningFormSubmit(apiData).subscribe((data: any)=> {
           this.appConfig.hideLoader();
           this.appConfig.nzNotification('success', 'Saved', 'Congrats, Form has been successfully submitted');
           this.sharedService.joiningFormStepperStatus.next();
@@ -505,6 +712,9 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
     if (route == 'education') {
       return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);      
+    }
+    if (route == 'work') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);      
     }
     if (route == 'upload') {
       return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);      
@@ -531,7 +741,85 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     //   }
     }
 
+    //Form Getter
+    get bgv() {
+   return this.acknowledgmentForm.get(this.form_bgv);
+    }
+    get caste_preview() {
+   return this.acknowledgmentForm.get(this.form_caste_preview);
+    }
+    get coc() {
+   return this.acknowledgmentForm.get(this.form_coc);
+    }
+    get joining() {
+   return this.acknowledgmentForm.get(this.form_joining);
+    }
+    get terms_conditions() {
+   return this.acknowledgmentForm.get(this.form_terms_conditions);
+    }
+    get ack_place() {
+   return this.acknowledgmentForm.get(this.form_ack_place);
+    }
+    get ack_date() {
+   return this.acknowledgmentForm.get(this.form_ack_date);
+    }
 
+
+    async uploadImage(file) {
+      try {
+        this.appConfig.showLoader();
+        const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+        // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
+        if (data && data.file_id) {
+          this.signature = {
+            name: 'Signature',
+            label: 'Signature',
+            file_id: data.file_id,
+            file_path: data.file_path,
+            file_size: data.file_size,
+            filename: data.file_name,
+            filetype: data.type,
+          };
+        }
+        this.appConfig.hideLoader();
+        this.appConfig.nzNotification('success', 'Uploaded', 'Signature uploaded successfully');
+      } catch (e) {
+        this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+        this.appConfig.hideLoader();
+      }
+    }
+    
+    public delete() {
+      this.signature = {
+        name: null,
+        file_id: null,
+        file_path: null,
+        file_size: null,
+        filename: null,
+        filetype: null,
+        label: null
+      };
+    }
+    onSelectFile(event) {
+      const fd = new FormData();
+      if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
+        if (event.target.files[0].size < 2000000) {
+            let image = event.target.files[0];
+    
+              fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+              fd.append('description', 'signature');
+              fd.append('label', 'signature');
+              fd.append('level', 'signature');
+              fd.append('product_image', image);
+              this.uploadImage(fd);        
+          } else {
+            this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
+          }
+        } else {
+            return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
+        }
+    }
+      
   ngOnDestroy() {
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
   }

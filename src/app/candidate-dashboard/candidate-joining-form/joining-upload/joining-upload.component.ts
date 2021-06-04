@@ -233,8 +233,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   checkNotSubmittedReasonAndDate(element) {
-    this.IsreasonAvailable = element[this.form_Not_Submitted_Description] && !this.IsreasonAvailable ? element[this.form_Not_Submitted_Description] : null;
-    this.isReasonDate = element[this.form_Not_Submitted_Description] && !this.IsreasonAvailable ? element[this.form_expectedDate] : null;
+    if (!this.IsreasonAvailable) {
+      this.IsreasonAvailable = element[this.form_Not_Submitted_Description] ? element[this.form_Not_Submitted_Description] : null;
+      this.isReasonDate = element[this.form_expectedDate] ? element[this.form_expectedDate] : null;
+    }    
   }
   checkJoiningArrayinitalize() {
     // Joining
@@ -1002,7 +1004,8 @@ onSelectFile(event, i, form) {
   if (form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'PhotoID') {
     return this.onPhotoUpload(event, i, form);
   }
-  if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking') {
+  if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking' || form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'Aadhar' || form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'PAN' || form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'CasteDeclaration' || form == this.conditionTransfer && this.getTransferArr.at(i).value[this.form_name] == 'TransferCertificate'
+  ) {
     if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
     } else {
       return this.onPhotoUpload(event, i, form);
@@ -1224,8 +1227,8 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
     });
   }
 
-  openMatDialog(src, photo?) {
-    if (photo == 'photo') {
+  openMatDialog(src, type?) {
+    if (!type.includes('application/pdf')) {
       return window.open(src, '_blank');
     }
     this.pdfsrc = src;

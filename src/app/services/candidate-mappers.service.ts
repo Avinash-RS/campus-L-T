@@ -360,9 +360,9 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
-     joiningFormSubmit() {
+     joiningFormSubmit(data) {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
-       return this.http.get(`${this.BASE_URL}/profile/submit_joiningform?user_id=${userId}`,
+       return this.http.post(`${this.BASE_URL}/profile/submit_joiningform?user_id=${userId}`, data,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 

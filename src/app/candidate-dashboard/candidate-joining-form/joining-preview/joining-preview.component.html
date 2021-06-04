@@ -381,14 +381,16 @@
                                         {{document[form_description] ? document[form_description] : 'NA'}}</div>
                                 </div>
 
-                                <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <div *ngIf="document && document[form_file_path]"
+                                    class="overall-input-wrapper mt-0 width-32">
                                     <button class="add-button"
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
                                 </div>
-                                <div *ngIf="!document[form_file_path]"
-                                     class="overall-input-wrapper mt-0 width-32">
-                                    <button class="add-button yet-to-submit" [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''" mat-raised-button type="button">Yet to
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
                                         Submit</button>
                                 </div>
                             </div>
@@ -418,9 +420,10 @@
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
                                 </div>
-                                <div *ngIf="!document[form_file_path]"
-                                     class="overall-input-wrapper mt-0 width-32">
-                                    <button class="add-button yet-to-submit" [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''" mat-raised-button type="button">Yet to
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
                                         Submit</button>
                                 </div>
                             </div>
@@ -450,9 +453,10 @@
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
                                 </div>
-                                <div *ngIf="!document[form_file_path]"
-                                     class="overall-input-wrapper mt-0 width-32">
-                                    <button class="add-button yet-to-submit" [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''" mat-raised-button type="button">Yet to
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
                                         Submit</button>
                                 </div>
                             </div>
@@ -483,9 +487,10 @@
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
                                 </div>
-                                <div *ngIf="!document[form_file_path]"
-                                     class="overall-input-wrapper mt-0 width-32">
-                                    <button class="add-button yet-to-submit" [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''" mat-raised-button type="button">Yet to
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
                                         Submit</button>
                                 </div>
                             </div>
@@ -525,7 +530,9 @@
                                         </div>
                                         <div *ngIf="!document[form_file_path]"
                                             class="overall-input-wrapper mt-0 width-32">
-                                            <button class="add-button yet-to-submit" [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''" mat-raised-button type="button">Yet
+                                            <button class="add-button yet-to-submit"
+                                                [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                                mat-raised-button type="button">Yet
                                                 to Submit</button>
                                         </div>
                                     </div>
@@ -558,9 +565,10 @@
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
                                 </div>
-                                <div *ngIf="!document[form_file_path]"
-                                     class="overall-input-wrapper mt-0 width-32">
-                                    <button class="add-button yet-to-submit" [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''" mat-raised-button type="button">Yet to
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
                                         Submit</button>
                                 </div>
                             </div>
@@ -570,6 +578,181 @@
 
                 </ng-container>
             </div>
+
+            <ng-container *ngIf="!formSubmitted">
+                    <form  [formGroup]="acknowledgmentForm" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                    <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+                        <h6>Acknowledgements and Declarations</h6>
+                    </div>
+                    <ng-container *ngIf="dependentDetailsMap && dependentDetailsMap.length > 0 else noDependent">
+                        <div class="row-wrapper mt-0 w-100 checkbox-pad justify-content-start">
+
+                            <div class="row-wrapper">
+                                <div class="content-1">
+                                    I hereby declare that I am not connected with any director of the company as his
+                                    partner or his relative as detailed
+                                    as under section 6 of companies act 1956.
+                                </div>
+                                <div class="content-2 mt-2">
+                                    I understand that the information provided by me may be used by the organization or
+                                    an outside agency to verify and validate the information that I have provided.I
+                                    understand that the organization or an outside background verification agency may
+                                    obtain information it deems appropriate from various sources including but not
+                                    limited to the following: current and past employers, criminal conviction records,
+                                    school records, college records and personal & professional references.I authorize,
+                                    without reservations, any individual, corporation or other public or private entity
+                                    to furnish the organization or outside background verification agency all
+                                    information about me.I unconditionally release and hold harmless any individual,
+                                    corporation, or public or private entity from any and all causes of action that
+                                    might arise from furnishing to the organization or outside background verification
+                                    agency that they may request pursuant to this release. This authorization and
+                                    release, in original, faxed or photocopied form, shall be valid for this and any
+                                    further reports and updates that may be requested.
+                                </div>
+                            </div>
+                            <div class="row-wrapper mt-3">
+                                <div class="row-wrapper mt-0 w-100 justify-content-start hanging">
+                                    <!-- <label>Name of the Dependent</label> -->
+                                    <div>
+                                        <mat-checkbox [formControlName]="form_bgv" class="mr-2"></mat-checkbox> I agree to have read and understood
+                                        the <span style="color: #007bff; cursor: pointer; text-decoration: underline;"
+                                            (click)="matDialogOpenTerms('bgv')">Terms and Conditions</span> of
+                                        Background Verfication and will abide by the same during the assessment and the
+                                        selection process.
+                                    </div>
+                                    <div class="form-error mt-1" *ngIf="bgv?.invalid && bgv?.touched">
+                                        Please click to agree the above checkbox
+                                    </div>
+                                </div>
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
+                                    <!-- <label>Name of the Dependent</label> -->
+                                    <div>
+                                        <mat-checkbox [formControlName]="form_coc" class="mr-2"></mat-checkbox> I agree to have read and understood
+                                        the <span style="color: #007bff; cursor: pointer; text-decoration: underline;"
+                                            (click)="matDialogOpenTerms('coc')">Terms and Conditions</span> of Code of
+                                        Conduct and will abide by the same during the assessment and the selection
+                                        process.
+                                    </div>
+                                    <div class="form-error mt-1" *ngIf="coc?.invalid && coc?.touched">
+                                        Please click to agree the above checkbox
+                                    </div>
+
+                                </div>
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
+                                    <!-- <label>Name of the Dependent</label> -->
+                                    <div>
+                                        <mat-checkbox [formControlName]="form_caste_preview" class="mr-2"></mat-checkbox> I agree that the Caste Name and Caste
+                                        Certificate provided in this form is true to the best of my knowledge and
+                                        belief.
+                                    </div>
+                                    <div class="form-error mt-1" *ngIf="caste_preview?.invalid && caste_preview?.touched">
+                                        Please click to agree the above checkbox
+                                    </div>
+
+                                </div>
+
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
+                                    <!-- <label>Name of the Dependent</label> -->
+                                    <div>
+                                        <mat-checkbox [formControlName]="form_joining" class="mr-2"></mat-checkbox> I am accepting to the terms and
+                                        conditions mentioned therein and I am joining for my duties at the mentioned
+                                        date.
+                                    </div>
+                                    <div class="form-error mt-1" *ngIf="joining?.invalid && joining?.touched">
+                                        Please click to agree the above checkbox
+                                    </div>
+                                </div>
+
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
+                                    <!-- <label>Name of the Dependent</label> -->
+                                    <div>
+                                        <mat-checkbox [formControlName]="form_terms_conditions" class="mr-2"></mat-checkbox> I agree to have read and understood
+                                        the <span style="color: #007bff; cursor: pointer; text-decoration: underline;"
+                                            (click)="matDialogOpenTerms('terms')">Terms and Conditions</span> and will
+                                        abide by the same during the assessment and the selection process.
+                                    </div>
+                                    <div class="form-error mt-1" *ngIf="terms_conditions?.invalid && terms_conditions?.touched">
+                                        Please click to agree the above Terms and Conditions.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper-preview checkbox-pad">
+                            <div class="overall-input-wrapper width-45">
+                                <label>Place<span></span></label>
+                                <input matInput [formControlName]="form_ack_place" placeholder="Enter here" class="input" type="text">
+                                <div class="form-error" *ngIf="ack_place?.invalid && ack_place?.touched">
+                                            <div *ngIf="ack_place?.errors?.required">Place is Required</div>
+                                            <div *ngIf="ack_place?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters
+                                                only allowed</div>
+                                        </div>
+                            </div>
+                            <div class="overall-input-wrapper width-30">
+                                <label>Date<span></span></label>
+                                <div class="date-relative">
+                                    <input matInput [formControlName]="form_ack_date" class="input" [min]="minDate" [max]="maxDate"
+                                        [matDatepicker]="picker" placeholder="DD-MM-YYYY">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </div>
+                                <div class="form-error" *ngIf="ack_date?.invalid && ack_date?.touched">
+                                            <div *ngIf="ack_date?.errors?.required">Date is Required</div>
+                                            <div *ngIf="ack_date?.errors?.matDatepickerMax">
+                                                {{ack_date?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(ack_date?.errors?.matDatepickerMax.max) : ''}}
+                                            </div>
+                                            <div *ngIf="ack_date?.errors?.matDatepickerMin">
+                                                {{ack_date?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(ack_date?.errors?.matDatepickerMin.min) : ''}}
+                                            </div>
+                                            <div *ngIf="ack_date?.errors?.matDatepickerParse">Invalid Date Format</div>
+                                        </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row-wrapper mt-4 mb-3 justify-content-center">
+                            <div class="signature-wrapper" [ngClass]="signature && signature.file_path ? 'height-100' : ''">
+                                <div *ngIf="signature && signature.file_path" matTooltip="Remove Signature" matTooltipPostion="after" (click)="delete()" class="remove">
+                                  <i style="font-size: 25px;" class="material-icons">
+                                    cancel
+                                  </i>
+                                </div>
+                                <div class="label-input-holder">
+                                  <label class="hoverable m-0" for="fileInput">
+                                    <img class="sign" *ngIf="signature && signature.file_path" [ngClass]="!signature.file_path ? 'default' : 'profile'"
+                                      [src]="signature && signature.file_path ? signature.file_path : 'assets/images/paper-clip.svg'" alt="" srcset="">
+                                    <!-- (load)="afterImgLoad()" -->
+                                    <div *ngIf="!signature.file_path" class="grid">
+                                      <div class="left">
+                                        <img class="default" src="assets/images/paper-clip.svg" alt="" srcset="">
+                                      </div>
+                                      <div class="right">
+                                        Upload Image of your Handwriting Signature
+                                      </div>
+                                    </div>
+                                  </label>
+                                  <input [matTooltip]="signature && signature.file_path ? 'Click to Change Signature' : 'No File Chosen'" matTooltipPostion="after" title=""
+                                    (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept="image/*"
+                                    (change)="onSelectFile($event)">
+                                </div>
+                                <!-- <div *ngIf="!signature.file_path" class="text-wrapper">
+                                  <div class="bold-text">Upload image of your handwriting signature</div>
+                                  <div class="footer-text">Image types can include PNG, JPG, JPEG (file size 40 KB - 2 MB)</div>
+                                </div> -->
+                            
+                              </div>
+                        </div>
+                        <div class="row-wrapper mt-2 w-100 justify-content-start checkbox-pad" style="color: #C02222;">
+                            Note: Please make sure to complete the form and fill the information’s correctly. You will
+                            not be able to edit after the submission.
+                        </div>
+
+                    </ng-container>
+                </form>
+
+            </ng-container>
+
 
             <div *ngIf="!formSubmitted" class="row-wrapper justify-content-between align-items-center mt-4 mb-3 footer">
                 <div (click)="routeNext('upload')"
@@ -581,7 +764,7 @@
                     </div>
                 </div>
                 <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button
-                    (click)="matDialogOpen()" type="button">Submit</button>
+                    (click)="formSubmitFinal()" type="button">Submit</button>
                 <div class="d-flex align-content-center align-items-center text-right position-relative pointer"
                     style="cursor: pointer; visibility: hidden;">
                     <div class="right-arrow position-absolute"></div>
@@ -641,4 +824,355 @@
         <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
     </div>
 
+</ng-template>
+
+<ng-template #matDialogTerms>
+    <div class="wrapper-kyc-terms">
+        <div class="header">
+            <div class="text">
+                <span>
+                    &#160;
+                </span>
+                <span>
+                    Terms and Conditions
+                </span>
+                <span class="icons">
+                    <i style="cursor: pointer;" (click)="closeBox()" class="material-icons">cancel</i>
+                    <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
+                </span>
+            </div>
+        </div>
+        <div class="main-text">
+            <div class="text bold">
+                Exam Terms and Conditions
+            </div>
+            <div class="no-top">
+                THESE TERMS ARE SUBJECT TO CHANGE FROM TIME TO TIME IN LARSEN & TOUBRO’S SOLE DISCRETION. IT IS YOUR
+                RESPONSIBILITY TO REVIEW THESE TERMS CAREFULLY AS YOU MUST COMPLY WITH THE MOST CURRENT VERSION OF THE
+                AGREEMENT.
+            </div>
+
+            <div class="text bold">
+                Details
+            </div>
+            <div class="no-top">
+                Larsen & Toubro’s Exam Terms and Conditions (the "Terms") are entered into between the examinee ("You")
+                and Larsen & Toubro LLC. ("Larsen & Toubro") as of the date you click "I agree" below (the "Effective
+                Date").
+            </div>
+
+            <div class="text bold">
+                Eligibility
+            </div>
+            <div class="no-top">
+                Larsen & Toubro’s Exams: you must be at least 18 years of age to be eligible for any Larsen & Toubro
+                exam.
+            </div>
+
+            <div class="text bold">
+                Confidential Information
+            </div>
+            <div class="no-top">
+                The content of the Exam, including without limitation, questions, answers, or any communication,
+                including oral communication, regarding or related to the Exam is Larsen & Toubro’s confidential
+                information ("Confidential Information"). Any disclosure of Confidential Information is a violation of
+                these Terms and could compromise the integrity and security of this exam. Larsen & Toubro makes exams
+                available to you solely for the purpose of demonstrating competency in the content area assessed by the
+                Exam. You are expressly prohibited from disclosing, publishing, reproducing, copying, selling, posting,
+                downloading or transmitting any Confidential Information, in whole or in part, in any form or by any
+                means, oral or written, electronic or mechanical, for any purpose
+            </div>
+
+            <div class="text bold">
+                Certification/Revocation
+            </div>
+            <div class="no-top">
+                If you violate these Terms, you may be prohibited from taking the Exam and/or any other Larsen & Toubro
+                Exam; you may be decertified from any Larsen & Toubro Certification Program; and Larsen & Toubro, in its
+                sole discretion, may terminate any applicable business relationship with you and prohibit you from
+                accessing any of our exam services.
+            </div>
+
+            <div class="text bold">
+                Misconduct
+            </div>
+            <div class="no-top">
+                If Larsen & Toubro discovers that you have violated these Terms or assisted others in doing so:
+                <div class="ul">
+                    <ul>
+                        <li>you may lose all Larsen & Toubro certifications </li>
+                        <li>you may be barred from taking or retaking any exam, and </li>
+                        <li>Larsen & Toubro, at its sole discretion, may choose to terminate any applicable relationship
+                            with you, if one exists.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text">
+                Examples of misconduct and/or misuse of the Exam include but are not limited to:
+                <div class="ul">
+                    <ul>
+                        <li>Providing false or fraudulent identification</li>
+                        <li>Providing or accepting improper assistance</li>
+                        <li>Disseminating actual Exam content by any means including, but not limited to, web postings,
+                            formal or informal test preparation or discussion groups, reconstruction through
+                            memorization or any other method</li>
+                        <li>Having non-authorized items in your possession during the Exam</li>
+                        <li>Using unauthorized materials (including brain-dump material and/or unauthorized publication
+                            of Exam questions with or without answers) to prepare for the Exam</li>
+                        <li>Making notes of any kind during the Exam</li>
+                        <li>Removing or attempting to remove Exam material (in any format)</li>
+                        <li>Intentionally causing a disturbance of any kind during the Exam</li>
+                        <li>Modifying and/or altering the results and/or score report for this Exam or any other Exam
+                            record</li>
+                        <li>Circumventing the Exam retake policy, if any</li>
+                        <li>Misrepresentation of certification status</li>
+                        <li>Misconduct as determined by statistical analysis</li>
+                        <li>Unauthorized accessing of Exam or Exam content (including access of materials in forums,
+                            chat rooms, discussion groups, blogs or other sharing sites with intent to circumvent Exam
+                            procedures)</li>
+                        <li>Failing and/or Retaking the Exam</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">
+                Personal Information and Privacy
+            </div>
+            <div class="no-top">
+                When we collect and process your personal information during participation in the Exam, your personal
+                information is handled in accordance with Larsen & Toubro’s Privacy Policy, as well as the additional
+                Exam Privacy and Policies Terms below.
+            </div>
+
+            <div class="text">
+                In providing Exam services, we may collect personal information such as:
+                <div class="ul">
+                    <ul>
+                        <li>Your answers to exam questions and the results of the exam</li>
+                        <li>A record of your interactions with our performance-based exams</li>
+                        <li>Your certification status</li>
+                        <li>Photographic and/or video recordings taken to confirm your identity, prevent fraud, and to
+                            otherwise help administer and score the test</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">
+                Larsen & Toubro Exam Privacy and Policies
+            </div>
+            <div class="no-top">
+                Below is the Exam Privacy and Policies agreement that is presented to the examinee during the
+                registration process.
+            </div>
+
+            <div class="text bold">
+                Instructions to examinee
+            </div>
+            <div class="no-top">
+                Read the following terms carefully. If you accept the terms, please click the checkbox next to the Start
+                button alongside. If you do not accept the terms of this agreement, you will not be permitted to take
+                the exam.
+            </div>
+
+            <div class="text bold">
+                Privacy
+            </div>
+            <div class="no-top">
+                As part of taking the Exam, Larsen & Toubro will capture your personal information which includes, but
+                is not limited to, your photograph, your digital keystroke patterns, and your personally identifying
+                information (including, but not limited to, name, address, company, title). In addition, as part of the
+                online proctoring of each Exam, if applicable, Larsen & Toubro or an agent of Larsen & Toubro may be
+                watching a live webcast of you at your session (and can communicate with you, tell you to stop taking
+                cell phone calls, etc.). All information collected in connection with the Exam shall collectively be
+                referred to as "Exam Information". The Larsen & Toubro Privacy Policy describes how we treat personal
+                information when you use Larsen & Toubro’s products and services, including the Exam Information. In
+                addition, the following describes our privacy practices that are specific to the Exam. All Exam
+                Information you submit to Larsen & Toubro is collected by Larsen & Toubro or its authorized agents in
+                India, as well as the jurisdiction where you take the Exam. Exam Information may be shared with our
+                affiliates, subsidiaries or joint ventures in other jurisdictions for Exam purposes. This Policy is
+                governed by the laws of India.
+            </div>
+
+            <div class="text bold">
+                How will Exam Information be used?
+            </div>
+            <div class="no-top">
+                The Exam Information you submit is used for the following purposes:
+                <div class="ul">
+                    <ul>
+                        <li>Registering test takers to take exams</li>
+                        <li>Ensuring the security of the Exam process</li>
+                        <li>Your Choices</li>
+                        <li>Submitting your Exam Information is voluntary. However, if you choose not to submit your
+                            Exam Information, you will not be permitted to take the Exam.</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">
+                Who may access your data?
+            </div>
+            <div class="no-top">
+                Larsen & Toubro employees, affiliated companies or entities acting on behalf of Larsen & Toubro process
+                Exam Information for the purposes listed above. Larsen & Toubro takes appropriate technical,
+                organizational, and legal steps to protect Exam Information. Affiliate companies or entities acting on
+                behalf of Larsen & Toubro with whom we share your Exam Information will be bound by terms of
+                confidentiality.
+            </div>
+
+            <div class="text bold">
+                Does Larsen & Toubro keep your data?
+            </div>
+            <div class="no-top">
+                Exam Information is retained in accordance with local law. We may also retain Exam Information to:
+                <div class="ul">
+                    <ul>
+                        <li>Dispute resolutions around test taking and passing</li>
+                        <li>Do demographic and similar non-personally identifiable analyses regarding the test taker
+                            populations, pass rates, and other behaviours</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">
+                Contacting Us
+            </div>
+            <div class="no-top">
+                For more information about our privacy practices, please contact us through this website any time, or
+                write to us at:
+                <div class="text-half">
+                    Larsen & Toubro
+                </div>
+                <div class="text-half">HQ Chennai</div>
+                <div class="text-half">Manapakkam</div>
+            </div>
+
+
+            <div class="button-wrappers">
+                <button (click)="closeBox()" mat-raised-button class="submit" type="button">Done</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+
+<ng-template #matDialogBGV>
+    <div class="wrapper-kyc-terms">
+        <div class="header">
+            <div class="text">
+                <span>
+                    &#160;
+                </span>
+                <span>
+                    Terms and Conditions
+                </span>
+                <span class="icons">
+                    <i style="cursor: pointer;" (click)="closeBox()" class="material-icons">cancel</i>
+                    <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
+                </span>
+            </div>
+        </div>
+        <div class="main-text">
+            <div class="no-top mt-2">
+                THESE TERMS ARE SUBJECT TO CHANGE FROM TIME TO TIME IN LARSEN & TOUBRO’S SOLE DISCRETION. IT IS YOUR
+                RESPONSIBILITY TO REVIEW THESE TERMS CAREFULLY AS YOU MUST COMPLY WITH THE MOST CURRENT VERSION OF THE
+                AGREEMENT.
+            </div>
+
+            <div class="text bold">
+                Declaration and Authorization for Verification
+            </div>
+            <div class="no-top">
+                I hereby authorize Larsen & Toubro Limited (or a third party agent appointed by the Company) to contact
+                any former employers as declared in my L&T’s Employment Application Form and carry out all Background
+                Checks not restricted to education and past employment.
+            </div>
+            <div class="no-top mt-2">
+                I also authorize former employers, agencies, educational institutes, etc. to release any information
+                pertaining to my employment/education and I release them from any liability in doing so.
+            </div>
+            <div class="no-top mt-2">
+                I declare that the information given above is true to the best of my knowledge. Any false or incorrect
+                information furnished in Employment Application Form will result in disciplinary action being taken
+                against me including removal from service.
+            </div>
+
+            <div class="text bold">
+                Contacting Us
+            </div>
+            <div class="no-top">
+                For more information about our privacy practices, please contact us through this website any time, or
+                write to us at:
+                <div class="text-half">
+                    Larsen & Toubro
+                </div>
+                <div class="text-half">HQ Chennai</div>
+                <div class="text-half">Manapakkam</div>
+            </div>
+
+
+            <div class="button-wrappers">
+                <button (click)="closeBox()" mat-raised-button class="submit" type="button">Done</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #matDialogCoc>
+    <div class="wrapper-kyc-terms">
+        <div class="header">
+            <div class="text">
+                <span>
+                    &#160;
+                </span>
+                <span>
+                    Terms and Conditions
+                </span>
+                <span class="icons">
+                    <i style="cursor: pointer;" (click)="closeBox()" class="material-icons">cancel</i>
+                    <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
+                </span>
+            </div>
+        </div>
+        <div class="main-text">
+            <div class="no-top mt-2">
+                THESE TERMS ARE SUBJECT TO CHANGE FROM TIME TO TIME IN LARSEN & TOUBRO’S SOLE DISCRETION. IT IS YOUR
+                RESPONSIBILITY TO REVIEW THESE TERMS CAREFULLY AS YOU MUST COMPLY WITH THE MOST CURRENT VERSION OF THE
+                AGREEMENT.
+            </div>
+
+            <div class="text bold">
+                ACKNOWLEDGEMENT / DECLARATION
+            </div>
+            <div class="no-top">
+                I have received the communication “Larsen & Toubro Limited - Code of Conduct for S&E and Covenanted
+                officers 2014”. I have read and understood the above and will abide by the same.
+            </div>
+
+            <div class="text bold">
+                Contacting Us
+            </div>
+            <div class="no-top">
+                For more information about our privacy practices, please contact us through this website any time, or
+                write to us at:
+                <div class="text-half">
+                    Larsen & Toubro
+                </div>
+                <div class="text-half">HQ Chennai</div>
+                <div class="text-half">Manapakkam</div>
+            </div>
+
+
+            <div class="button-wrappers">
+                <button (click)="closeBox()" mat-raised-button class="submit" type="button">Done</button>
+            </div>
+        </div>
+
+    </div>
 </ng-template>

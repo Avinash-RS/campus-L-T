@@ -96,14 +96,14 @@
                                             </ng-container>
                                         </label>
                                         <!-- image/* -->
-                                        <input [id]="j + getJoiningArr.controls[j].get(form_name).value" type="file" [accept]="getJoiningArr.controls[j].get(form_name).value == 'PhotoID' ? 'image/*' : '.pdf'" (click)="files.value = null" #files
+                                        <input [id]="j + getJoiningArr.controls[j].get(form_name).value" type="file" [accept]="getJoiningArr.controls[j].get(form_name).value == 'PhotoID' ? 'image/*' : (getJoiningArr.controls[j].get(form_name).value == 'Aadhar' || getJoiningArr.controls[j].get(form_name).value == 'PAN' || getJoiningArr.controls[j].get(form_name).value == 'CasteDeclaration') ? '.pdf, image/*' : '.pdf'" (click)="files.value = null" #files
                                             (change)="onSelectFile($event, j, conditionJoining)" hidden>
 
                                     </div>
 
                                     <div class="overall-input-wrapper width-20 alignCenter top20">
                                         <button class="choose-button btnView" mat-raised-button
-                                            (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value, getJoiningArr.controls[j].get(form_name).value == 'PhotoID' ? 'photo' : null)"
+                                            (click)="openMatDialog(getJoiningArr.controls[j].get(form_file_path).value, getJoiningArr.controls[j].get(form_file_type).value)"
                                             [disabled]="getJoiningArr.controls[j].get(form_file_path).value ? false : true"
                                             type="button"> View</button>
                                     </div>
@@ -225,7 +225,7 @@
 
                                                     <div class="overall-input-wrapper width-15 alignCenter top20">
                                                         <button class="choose-button btnView" mat-raised-button
-                                                            (click)="openMatDialog(getSemesterArr(i).controls[j].get(form_file_path).value)"
+                                                            (click)="openMatDialog(getSemesterArr(i).controls[j].get(form_file_path).value, getSemesterArr(i).controls[j].get(form_file_type).value)"
                                                             [disabled]="getSemesterArr(i).controls[j].get(form_file_path).value ? false : true"
                                                             type="button"> View</button>
                                                     </div>
@@ -323,14 +323,14 @@
                                                 </div>
                                             </ng-container>
                                         </label>
-                                        <input [id]="j + getTransferArr.controls[j].get(form_label).value" type="file" accept=".pdf" (click)="files.value = null" #files
+                                        <input [id]="j + getTransferArr.controls[j].get(form_label).value" type="file" accept=".pdf, image/*" (click)="files.value = null" #files
                                             (change)="onSelectFile($event, j, conditionTransfer)" hidden>
 
                                     </div>
 
                                     <div class="overall-input-wrapper width-20 alignCenter top20">
                                         <button class="choose-button btnView" mat-raised-button
-                                            (click)="openMatDialog(getTransferArr.controls[j].get(form_file_path).value)"
+                                            (click)="openMatDialog(getTransferArr.controls[j].get(form_file_path).value, getTransferArr.controls[j].get(form_file_type).value)"
                                             [disabled]="getTransferArr.controls[j].get(form_file_path).value ? false : true"
                                             type="button"> View</button>
                                     </div>
@@ -406,7 +406,7 @@
 
                                     <div class="overall-input-wrapper width-20 alignCenter top20">
                                         <button class="choose-button btnView" mat-raised-button
-                                            (click)="openMatDialog(getResumeArr.controls[j].get(form_file_path).value)"
+                                            (click)="openMatDialog(getResumeArr.controls[j].get(form_file_path).value, getResumeArr.controls[j].get(form_file_type).value)"
                                             [disabled]="getResumeArr.controls[j].get(form_file_path).value ? false : true"
                                             type="button"> View</button>
                                     </div>
@@ -539,7 +539,7 @@
 
                                     <div class="overall-input-wrapper width-20 alignCenter top20">
                                         <button class="choose-button btnView" mat-raised-button
-                                            (click)="openMatDialog(getBankArr.controls[j].get(form_file_path).value)"
+                                            (click)="openMatDialog(getBankArr.controls[j].get(form_file_path).value, getBankArr.controls[j].get(form_file_type).value)"
                                             [disabled]="getBankArr.controls[j].get(form_file_path).value ? false : true"
                                             type="button"> View</button>
                                     </div>
@@ -633,7 +633,7 @@
 
                                 <div class="overall-input-wrapper width-15 alignCenter top20">
                                     <button class="choose-button btnView" mat-raised-button
-                                        (click)="openMatDialog(getOtherCertArr.controls[k].get(form_file_path).value)"
+                                        (click)="openMatDialog(getOtherCertArr.controls[k].get(form_file_path).value, getOtherCertArr.controls[k].get(form_file_type).value)"
                                         [disabled]="getOtherCertArr.controls[k].get(form_file_path).value ? false : true"
                                         type="button"> View</button>
                                 </div>
