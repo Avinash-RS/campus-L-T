@@ -78,20 +78,32 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   category = [
     {
-      name: 'GEN',
-      caste: 'GEN'
-    },
-    {
-      name: 'OBC',
-      caste: 'OBC'
-    },
-    {
-      name: 'SC',
+      name: 'Scheduled Caste',
       caste: 'SC'
     },
     {
-      name: 'ST',
+      name: 'Scheduled Tribe',
       caste: 'ST'
+    },
+    {
+      name: 'De-notified Tribe',
+      caste: 'DenotifiedTribe'
+    },
+    {
+      name: 'Nomadic Tribe',
+      caste: 'NomadicTribe'
+    },
+    {
+      name: 'Special Backward Category',
+      caste: 'SBC'
+    },
+    {
+      name: 'Other Backward Classes',
+      caste: 'OBC'
+    },
+    {
+      name: 'General / Open Category',
+      caste: 'GEN'
     },
     {
       name: 'Other',

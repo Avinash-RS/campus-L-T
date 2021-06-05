@@ -94,6 +94,10 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
       this.appConfig.hideLoader();
+      if(datas && datas[0] && datas[0].error) {
+        this.allPresentCityList = [];
+        return this.appConfig.warning('No City Data available for the selected state');
+      }
       this.allPresentCityList = datas[0];
     }, (err) => {
     });
@@ -106,6 +110,10 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
       this.appConfig.hideLoader();
+      if(datas && datas[0] && datas[0].error) {
+        this.allPermanentCityList = [];
+        return this.appConfig.warning('No City Data available for the selected state');
+      }
       this.allPermanentCityList = datas[0];
     }, (err) => {
     });
@@ -372,11 +380,17 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   disableOrEnableState(formField) {
     if (this.form_present_state == formField) {
       if (this.contactForm['value'][formField]) {
-        return this.enablePresentCity(this.contactForm['value'][formField]);
+        this.contactForm.patchValue({
+          [this.form_present_city]: null,
+        }), { emitEvent: false };
+            return this.enablePresentCity(this.contactForm['value'][formField]);
       }
       this.disablePresentCity();
     } else {
       if (this.contactForm['value'][formField]) {
+        this.contactForm.patchValue({
+          [this.form_permanent_city]: null,
+        }), { emitEvent: false };    
         return this.enablePermanentCity(this.contactForm['value'][formField]);
       }
       this.disablePermanentCity();

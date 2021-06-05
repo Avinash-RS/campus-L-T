@@ -54,6 +54,41 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild('matDialogJoin', { static: false }) matDialogRefJoin: TemplateRef<any>;
   @ViewChild('matDialogDocViewer', { static: false }) matDialogRefDocViewer: TemplateRef<any>;
 
+  category = [
+    {
+      name: 'Scheduled Caste',
+      caste: 'SC'
+    },
+    {
+      name: 'Scheduled Tribe',
+      caste: 'ST'
+    },
+    {
+      name: 'De-notified Tribe',
+      caste: 'DenotifiedTribe'
+    },
+    {
+      name: 'Nomadic Tribe',
+      caste: 'NomadicTribe'
+    },
+    {
+      name: 'Special Backward Category',
+      caste: 'SBC'
+    },
+    {
+      name: 'Other Backward Classes',
+      caste: 'OBC'
+    },
+    {
+      name: 'General / Open Category',
+      caste: 'GEN'
+    },
+    {
+      name: 'Other',
+      caste: 'Other'
+    },
+  ];
+
   checkFormValidRequest: Subscription;
   minDate: Date;
   maxDate: Date;
@@ -362,31 +397,6 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     this.acknowledgmentForm.patchValue(data);
   }
 
-  getWorkApiDetails() {
-    this.candidateService.joiningFormGetWorkDetails().subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      if (data) {
-        let work = {
-          workDetails: data && data.workDetails ? data.workDetails : null,
-          Employment: data && data.Employment ? data.Employment : [],
-          bgvDetails: data && data.bgvDetails ? data.bgvDetails : null
-        }
-        if (work.workDetails || work.bgvDetails || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] )) {
-          this.noShowWork = false;
-        } else {
-          this.noShowWork = true;
-        }
-        this.workDetails = work;
-        this.patchWorkDetails();
-        this.patchingCriminal();
-        console.log('add', this.workDetails);
-
-      } else {
-      }
-    });
-
-  }
-
   patchingCriminal() {
     let bgv;
     if (this.workDetails.bgvDetails) {
@@ -459,6 +469,27 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
+  getWorkApiDetails(datas) {
+    if (datas && datas['work_experience']) {
+      let data = datas['work_experience'];
+      let work = {
+        workDetails: data && data.workDetails ? data.workDetails : null,
+        Employment: data && data.Employment ? data.Employment : [],
+        bgvDetails: data && data.bgvDetails ? data.bgvDetails : null
+      }
+      if (work.workDetails || work.bgvDetails || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] )) {
+        this.noShowWork = false;
+      } else {
+        this.noShowWork = true;
+      }
+      this.workDetails = work;
+      this.patchWorkDetails();
+      this.patchingCriminal();
+    } else {
+      this.workDetails = null;
+    }
+}
+
   getPreviewData() {
     this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any) => {
       this.appConfig.hideLoader();
@@ -490,7 +521,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       }
 
       // Work Experience
-      this.getWorkApiDetails();
+      this.getWorkApiDetails(data);
 
 
       if (data && data.acknowledgment) {

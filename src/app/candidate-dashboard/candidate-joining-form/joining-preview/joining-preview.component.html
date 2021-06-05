@@ -17,7 +17,7 @@
                                 [src]="url ? url : 'assets/images/img_avatar2.jpg'" alt="" srcset=""> </div>
                         <div style="width: 66%;" class="row-wrapper mt-0">
                             <div class="overall-input-wrapper width-50">
-                                <label>Firstname<span></span></label>
+                                <label>Name (as per Aadhar)<span></span></label>
                                 <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_name]}}</div>
                             </div>
                             <div class="overall-input-wrapper width-50">
@@ -164,7 +164,7 @@
                             </div>
                         </div>
                         <div class="overall-input-wrapper mt-3 width-32">
-                            <label>Postal/Zipcode<span></span></label>
+                            <label>Postal/Zip code<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{contactDetailsMap[form_present_zip_code]}}
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                                     {{contactDetailsMap[form_permanent_state]}}</div>
                             </div>
                             <div class="overall-input-wrapper mt-3 width-32">
-                                <label>Postal/Zipcode<span></span></label>
+                                <label>Postal/Zip code<span></span></label>
                                 <div class="input size-16 bold-700 color-black">
                                     {{contactDetailsMap[form_permanent_zip_code]}}</div>
                             </div>
@@ -372,13 +372,13 @@
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_label] ? document[form_label] : 'NA'}}</div>
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
                                 </div>
 
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Description</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_description] ? document[form_description] : 'NA'}}</div>
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
                                 <div *ngIf="document && document[form_file_path]"
@@ -406,13 +406,13 @@
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Bank Name</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_label] ? document[form_label] : 'NA'}}</div>
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
                                 </div>
 
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Bank Account Number</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_acc_no] ? document[form_acc_no] : 'NA'}}</div>
+                                        {{document[form_acc_no] ? document[form_acc_no] : '-'}}</div>
                                 </div>
 
                                 <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
@@ -439,13 +439,13 @@
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_label] ? document[form_label] : 'NA'}}</div>
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
                                 </div>
 
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Description</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_description] ? document[form_description] : 'NA'}}</div>
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
                                 <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
@@ -473,13 +473,13 @@
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_label] ? document[form_label] : 'NA'}}</div>
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
                                 </div>
 
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Description</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_description] ? document[form_description] : 'NA'}}</div>
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
                                 <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
@@ -504,7 +504,7 @@
                         <div class="subDocumentTitle">Education Documents</div>
                         <ng-container *ngFor="let doc of documentDetails.Education_Documents; let j = index">
                             <div class="subDocumentTitle" style="font-size: 16px; padding-bottom: 0 !important;">
-                                {{doc[form_education_level] ? customEducationLabel(doc[form_education_level]) : 'NA'}}
+                                {{doc[form_education_level] ? customEducationLabel(doc[form_education_level]) : '-'}}
                             </div>
                             <ng-container *ngIf="doc.sub_documents && doc.sub_documents.length > 0">
                                 <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'custom-pad' : 'custom-pad'"
@@ -513,13 +513,13 @@
                                         <div class="overall-input-wrapper mt-0 width-32">
                                             <label>Document Name</label>
                                             <div class="input size-16 bold-700 color-black">
-                                                {{document[form_label] ? document[form_label] : 'NA'}}</div>
+                                                {{document[form_label] ? document[form_label] : '-'}}</div>
                                         </div>
 
                                         <div class="overall-input-wrapper mt-0 width-32">
                                             <label>Document Description</label>
                                             <div class="input size-16 bold-700 color-black">
-                                                {{document[form_description] ? document[form_description] : 'NA'}}</div>
+                                                {{document[form_description] ? document[form_description] : '-'}}</div>
                                         </div>
 
                                         <div *ngIf="document[form_file_path]"
@@ -551,13 +551,13 @@
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_label] ? document[form_label] : 'NA'}}</div>
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
                                 </div>
 
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Description</label>
                                     <div class="input size-16 bold-700 color-black">
-                                        {{document[form_description] ? document[form_description] : 'NA'}}</div>
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
                                 <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
@@ -589,102 +589,6 @@
                         </span></div>
                 </div>
                 <ng-container *ngIf="workDetails && !noShowWork else noWork">
-                    <ng-container *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show">
-                        <div class="row-wrappper mt-2 padding-1">
-                            <div class="subDocumentTitle m-0 p-0">Disciplinary Details</div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_convicted_by_Court]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you ever been convicted by a Court of Law? <span
-                                        style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_exam_university]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you
-                                    ever been debarred/disqualified from any examination or restricted by any University
-                                    or any other
-                                    educational institute? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_arrested]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you ever been
-                                    arrested? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_psc_company]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you ever
-                                    been debarred/disqualified from any Public Service Commission or any other
-                                    recruiting company for
-                                    appearing at its examination / selection? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_prosecuted]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you ever been
-                                    prosecuted? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_court_case_pending]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Is any case
-                                    pending against you in any Court of Law at the time of filling this form? <span
-                                        style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_detention]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you ever been kept
-                                    under detention? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_university_case_pending]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Is any case
-                                    pending against you in any University or Educational Institute at the time of
-                                    filling this form? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_fined_by_court]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">Have you ever been
-                                    fined by a Court of Law? <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_disciplinary_proceedings]"
-                                class="row-wrappper f_size_16 mt-2">
-                                <div style="width: 95%;">In the
-                                    previous employment, were any disciplinary proceedings framed against you or had you
-                                    been called upon to
-                                    explain your conduct in any matter at the time you served notice for resignation?
-                                    <span style="font-weight: 600;"
-                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
-                            </div>
-
-                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_full_particulars]"
-                                class="row-wrapper mt-2">
-                                <div class="overall-input-wrapper mt-0 width-100">
-                                    <label>Full particulars of the case/arrest/detention/conviction/punishment etc. and
-                                        / or nature of the case pending in the Court/University/Educational
-                                        Authority</label>
-                                    <div class="input f_size_16 bold-700 color-black box-border">
-                                        {{workDetails.bgvDetails[this.form_full_particulars]}}</div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </ng-container>
                     <ng-container *ngIf="workDetails.Employment && workDetails.Employment.length > 0">
                         <div class="subDocumentTitle">Employment Details</div>
 
@@ -794,6 +698,104 @@
 
 
                     </ng-container>
+
+                    <ng-container *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show">
+                        <div class="row-wrappper mt-0 border-wrapper">
+                            <div class="subDocumentTitle m-0 p-0">Disciplinary Details</div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_convicted_by_Court]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been convicted by a Court of Law? <span
+                                        style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_exam_university]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you
+                                    ever been debarred/disqualified from any examination or restricted by any University
+                                    or any other
+                                    educational institute? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_arrested]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    arrested? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_psc_company]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever
+                                    been debarred/disqualified from any Public Service Commission or any other
+                                    recruiting company for
+                                    appearing at its examination / selection? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_prosecuted]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    prosecuted? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_court_case_pending]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Is any case
+                                    pending against you in any Court of Law at the time of filling this form? <span
+                                        style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_detention]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been kept
+                                    under detention? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_university_case_pending]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Is any case
+                                    pending against you in any University or Educational Institute at the time of
+                                    filling this form? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_fined_by_court]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    fined by a Court of Law? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_disciplinary_proceedings]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">In the
+                                    previous employment, were any disciplinary proceedings framed against you or had you
+                                    been called upon to
+                                    explain your conduct in any matter at the time you served notice for resignation?
+                                    <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_full_particulars]"
+                                class="row-wrapper mt-2">
+                                <div class="overall-input-wrapper mt-0 width-100">
+                                    <label>Full particulars of the case/arrest/detention/conviction/punishment etc. and
+                                        / or nature of the case pending in the Court/University/Educational
+                                        Authority</label>
+                                    <div class="input f_size_16 bold-700 color-black box-border">
+                                        {{workDetails.bgvDetails[this.form_full_particulars]}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-container>
+
                 </ng-container>
             </div>
 
@@ -803,7 +805,7 @@
                     <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
                         <h6>Acknowledgements and Declarations</h6>
                     </div>
-                    <ng-container *ngIf="dependentDetailsMap && dependentDetailsMap.length > 0 else noDependent">
+                    <ng-container>
                         <div class="row-wrapper mt-0 w-100 checkbox-pad justify-content-start">
 
                             <div class="row-wrapper">
@@ -830,8 +832,8 @@
                                 </div>
                             </div>
                             <div class="row-wrapper mt-3">
-                                <div class="row-wrapper mt-0 w-100 justify-content-start hanging">
-                                    <!-- <label>Name of the Dependent</label> -->
+                                <div class="row-wrapper mt-0 w-100 justify-content-start hanging flex-column">
+                                    <h6 class="d-head">Background Verification Declaration</h6>
                                     <div>
                                         <mat-checkbox [formControlName]="form_bgv" class="mr-2"></mat-checkbox> I agree
                                         to have read and understood
@@ -844,8 +846,8 @@
                                         Please click to agree the above checkbox
                                     </div>
                                 </div>
-                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
-                                    <!-- <label>Name of the Dependent</label> -->
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
+                                    <h6 class="d-head">Code of Conduct Declaration</h6>
                                     <div>
                                         <mat-checkbox [formControlName]="form_coc" class="mr-2"></mat-checkbox> I agree
                                         to have read and understood
@@ -859,8 +861,8 @@
                                     </div>
 
                                 </div>
-                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
-                                    <!-- <label>Name of the Dependent</label> -->
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
+                                    <h6 class="d-head">Caste Declaration</h6>
                                     <div>
                                         <mat-checkbox [formControlName]="form_caste_preview" class="mr-2">
                                         </mat-checkbox> I agree that the Caste Name and Caste
@@ -874,8 +876,8 @@
 
                                 </div>
 
-                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
-                                    <!-- <label>Name of the Dependent</label> -->
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
+                                    <h6 class="d-head">Joining Declaration</h6>
                                     <div>
                                         <mat-checkbox [formControlName]="form_joining" class="mr-2"></mat-checkbox> I am
                                         accepting to the terms and
@@ -887,8 +889,8 @@
                                     </div>
                                 </div>
 
-                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging">
-                                    <!-- <label>Name of the Dependent</label> -->
+                                <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
+                                    <h6 class="d-head">Terms and Conditions Declaration</h6>
                                     <div>
                                         <mat-checkbox [formControlName]="form_terms_conditions" class="mr-2">
                                         </mat-checkbox> I agree to have read and understood

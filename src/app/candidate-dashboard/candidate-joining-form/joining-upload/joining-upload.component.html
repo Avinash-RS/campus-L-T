@@ -513,13 +513,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="overall-input-wrapper width-30 alignCenter top20">
-                                        <label class="custom-upload"
-                                            [ngClass]="!getBankArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
+                                    <div class="overall-input-wrapper width-30 alignCenter top20" [ngClass]="!getBankArr.controls[j].get(form_file_name).value ? 'cus-ht' : ''">
+                                        <label style="text-align: center;" class="custom-upload"
+                                            [ngClass]="!getBankArr.controls[j].get(form_file_name).value ? 'choose-button cus-wt' : 'preview'"
                                             [for]="j + 555">
                                             <ng-container *ngIf="!getBankArr.controls[j].get(form_file_name).value">
-                                                <i class="fas fa-upload"></i>
-                                                <div class="choose">Choose a file</div>
+                                                <i style="height: 19px;
+                                                font-size: 19px;
+                                                margin-left: 8px;
+                                                margin-right: 4px;" class="fas fa-upload"></i>
+                                                <div class="choose" style="padding: 3px; padding-left:10px; line-height: 20px;">Upload Passbook First Page or Cancelled Cheque Leaf</div>
                                             </ng-container>
                                             <ng-container *ngIf="getBankArr.controls[j].get(form_file_name).value">
                                                 <div class="uploaded-view">
@@ -555,7 +558,7 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                <h6 class="mt-0 mb-0 ml-0 mr-0">Other Certificactes Upload</h6>
+                                <h6 class="mt-0 mb-0 ml-0 mr-0">Other Certifications Upload</h6>
 
                             </mat-panel-title>
                             <mat-panel-description>

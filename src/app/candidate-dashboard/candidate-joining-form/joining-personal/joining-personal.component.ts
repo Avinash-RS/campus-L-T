@@ -48,6 +48,40 @@ export const MY_FORMATS = {
 export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestroy {
   checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
+  category = [
+    {
+      name: 'Scheduled Caste',
+      caste: 'SC'
+    },
+    {
+      name: 'Scheduled Tribe',
+      caste: 'ST'
+    },
+    {
+      name: 'De-notified Tribe',
+      caste: 'DenotifiedTribe'
+    },
+    {
+      name: 'Nomadic Tribe',
+      caste: 'NomadicTribe'
+    },
+    {
+      name: 'Special Backward Category',
+      caste: 'SBC'
+    },
+    {
+      name: 'Other Backward Classes',
+      caste: 'OBC'
+    },
+    {
+      name: 'General / Open Category',
+      caste: 'GEN'
+    },
+    {
+      name: 'Other',
+      caste: 'Other'
+    },
+  ];
   minDate: Date;
   maxDate: Date;
   url: '';
