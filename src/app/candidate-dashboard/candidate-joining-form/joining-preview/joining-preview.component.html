@@ -123,19 +123,24 @@
                             </div>
                         </div>
 
-                        <!-- <div class="overall-input-wrapper mt-3 width-32">
+                        <div class="overall-input-wrapper mt-3 width-66">
                             <label>Identification Mark<span></span></label>
-                            <div class="input size-16 bold-700 color-black">
-                                <span *ngIf="(personalDetails && personalDetails[form_identification_mark1]) || (personalDetails && personalDetails[form_identification_mark2]) else noScar">
-                                {{(personalDetails && personalDetails[form_identification_mark1] ? personalDetails[form_identification_mark1] : '')}} 
-                                {{(', ' + personalDetails && personalDetails[form_identification_mark2] ? personalDetails[form_identification_mark2] : '')}}
-                            </span>
-                            </div>
-                        </div> -->
+                            <div class="d-flex align-content-center">
+                            <div *ngIf="personalDetails && personalDetails[form_identification_mark1]"
+                                class="input f_size_15 bold-700 color-black" style="width: auto !important;">&#8226;
+                                {{personalDetailsMap[form_identification_mark1]}}</div>
+                            <div *ngIf="personalDetails && personalDetails[form_identification_mark2]"
+                                class="input f_size_15 bold-700 color-black ml-3" style="width: auto !important;">&#8226;
+                                {{personalDetailsMap[form_identification_mark2]}}</div>
+                            <div *ngIf="!personalDetails[form_identification_mark1] && !personalDetails[form_identification_mark2]"
+                            class="input f_size_15 bold-700 color-black" style="width: auto !important;">NA</div>
+                                </div>
+                        </div>
+
 
                     </div>
 
-                    <div class="row-wrapper mt-0">
+                    <!-- <div class="row-wrapper mt-0">
                         <div class="overall-input-wrapper mt-3 width-100">
                             <label>Identification Mark<span></span></label>
                             <div *ngIf="personalDetails && personalDetails[form_identification_mark1]"
@@ -146,7 +151,7 @@
                                 {{personalDetailsMap[form_identification_mark2]}}</div>
                         </div>
 
-                    </div>
+                    </div> -->
                 </ng-container>
             </div>
 
