@@ -125,6 +125,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   form_mother_tongue = 'mother_tongue';
   form_religion = 'religion';
   form_caste = 'caste';
+  form_category = 'category';
   form_blood_group = 'blood_group';
   form_father_name = 'father_name';
   form_emergency_contact = 'emergency_contact_no';
@@ -378,6 +379,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_mother_tongue]: this.personalDetails[this.form_mother_tongue], 
       [this.form_religion]: this.personalDetails[this.form_religion], 
       [this.form_caste]: this.personalDetails[this.form_caste], 
+      [this.form_category]: this.personalDetails[this.form_category], 
       [this.form_blood_group]: this.personalDetails[this.form_blood_group], 
       [this.form_father_name]: this.personalDetails[this.form_father_name], 
       [this.form_emergency_contact]: this.personalDetails[this.form_emergency_contact], 
@@ -407,6 +409,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_mother_tongue]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_religion]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_caste]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_category]: [null, [Validators.required]],
       [this.form_blood_group]: [null, [Validators.required]],
       [this.form_father_name]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_emergency_contact]: [null, [this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
@@ -453,6 +456,9 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
   get caste() {
     return this.personalForm.get(this.form_caste);
+  }
+  get category1() {
+    return this.personalForm.get(this.form_category);
   }
   get blood_group() {
     return this.personalForm.get(this.form_blood_group);

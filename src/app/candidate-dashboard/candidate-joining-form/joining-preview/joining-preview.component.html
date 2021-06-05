@@ -65,6 +65,11 @@
                         </div>
 
                         <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Caste Category<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_category]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
                             <label>Mother Tongue<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_mother_tongue]}}
                             </div>
@@ -117,6 +122,17 @@
                                 {{personalDetails && personalDetails[form_height] ? personalDetailsMap[form_height] : 'NA'}}
                             </div>
                         </div>
+
+                        <!-- <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Identification Mark<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                <span *ngIf="(personalDetails && personalDetails[form_identification_mark1]) || (personalDetails && personalDetails[form_identification_mark2]) else noScar">
+                                {{(personalDetails && personalDetails[form_identification_mark1] ? personalDetails[form_identification_mark1] : '')}} 
+                                {{(', ' + personalDetails && personalDetails[form_identification_mark2] ? personalDetails[form_identification_mark2] : '')}}
+                            </span>
+                            </div>
+                        </div> -->
+
                     </div>
 
                     <div class="row-wrapper mt-0">
@@ -256,7 +272,7 @@
                                 <div class="input size-16 bold-700 color-black">{{dependent[form_isDependent]}}</div>
                             </div>
                             <div class="overall-input-wrapper mt-3 width-32">
-                                <label>Diffrently Abled</label>
+                                <label>Differently Abled</label>
                                 <div class="input size-16 bold-700 color-black">
                                     {{dependent[form_dependent_differently_abled]}}</div>
                             </div>
@@ -409,10 +425,31 @@
                                         {{document[form_label] ? document[form_label] : '-'}}</div>
                                 </div>
 
-                                <div class="overall-input-wrapper mt-0 width-32">
+                                <div class="overall-input-wrapper mt-0 width-35" style="padding-left: 4px;">
                                     <label>Bank Account Number</label>
                                     <div class="input size-16 bold-700 color-black">
                                         {{document[form_acc_no] ? document[form_acc_no] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-30">
+                                    <label>Bank IFSC Code</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_ifsc_code] ? document[form_ifsc_code] : '-'}}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="row-wrapper mt-2" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Branch Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_branch] ? document[form_branch] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Description</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
                                 <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
@@ -427,6 +464,7 @@
                                         Submit</button>
                                 </div>
                             </div>
+
                         </div>
                     </ng-container>
 
@@ -866,7 +904,7 @@
                                     <div>
                                         <mat-checkbox [formControlName]="form_caste_preview" class="mr-2">
                                         </mat-checkbox> I agree that the Caste Name and Caste
-                                        Certificate provided in this form is true to the best of my knowledge and
+                                        Certificate provided in this form are true to the best of my knowledge and
                                         belief.
                                     </div>
                                     <div class="form-error mt-1"
@@ -1050,13 +1088,16 @@
 <ng-template #noDocuments>
     <div class="nodata"> No Documents Available</div>
 </ng-template>
+<ng-template #noScar>
+     NA
+</ng-template>
 
 <ng-template #matDialog>
     <div class="main-wrapper">
         <div class="text">Please confirm to submit your details. Once submitted, You cannot able to edit the details.
         </div>
         <div class="button-wrapper-form-pop-up">
-            <button class="b1" (click)="closeDialog('save')" type="button" mat-raised-button>Submit</button>
+            <button class="b1" (click)="closeDialog('save')" type="button" mat-raised-button>Confirm</button>
             <button class="b3" (click)="closeDialog('cancel')" type="button" mat-raised-button>Cancel</button>
         </div>
     </div>
