@@ -528,11 +528,11 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       if (data && data.acknowledgment) {
         let ackData = data.acknowledgment;
         let ack = {
-          [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? true : false,
-          [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? true : false,
-          [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? true : false,
-          [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? true : false,
-          [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? true : false,
+          [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? false : false,
+          [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? false : false,
+          [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? false : false,
+          [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? false : false,
+          [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? false : false,
           [this.form_ack_place]: ackData.ack_place ? ackData.ack_place : null,
           [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
         }

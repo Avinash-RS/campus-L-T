@@ -245,6 +245,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
        [this.form_weight]: rawPersonalFormValue[this.form_weight],
        [this.form_blood_group]: rawPersonalFormValue[this.form_blood_group],
        [this.form_caste]: rawPersonalFormValue[this.form_caste],
+       [this.form_category]: rawPersonalFormValue[this.form_category],
        [this.form_emergency_contact]: rawPersonalFormValue[this.form_emergency_contact],
        [this.form_father_name]: rawPersonalFormValue[this.form_father_name],
        [this.form_identification_mark1]: rawPersonalFormValue[this.form_identification_mark1],
