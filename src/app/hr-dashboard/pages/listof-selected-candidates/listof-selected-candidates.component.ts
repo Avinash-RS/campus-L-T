@@ -280,6 +280,41 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     return "Download documents";
   }
 
+  excelExport() {
+    if (this.gridApi.getSelectedNodes() && this.gridApi.getSelectedNodes().length > 0) {
+      const apiData = [];
+      const selectedUserlist = this.gridApi.getSelectedNodes();
+      selectedUserlist.forEach(element => {
+        let api = {
+          // email: element['data']['selected_candidate'],
+          // company: element['data']['company'],
+          user_id: element['data']['user_id'],
+          // name: element['data']['candidate_name']
+        }
+        apiData.push(api);      
+      });  
+      this.excelApi(apiData);
+    } else {
+      let data = [];
+      this.excelApi(data);
+    }
+  }
+
+  excelApi(data) {
+    let apiData = {
+      uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      users: data
+    };
+    this.adminService.excelExportSelectedCandidates(apiData).subscribe((datas: any)=> {
+      this.appConfig.hideLoader();
+      this.appConfig.success('Excel Report downloaded successfully');
+    });
+  }
+  getAllNodes() {
+    let rowData = [];
+    this.gridApi.forEachNode(node => rowData.push(node.data));
+    return rowData;
+  }
   openMatDialog(data) {
     if (data) {
       this.popUpdata = {

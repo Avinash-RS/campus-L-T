@@ -72,7 +72,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Present Postal/Zip code<span></span></label>
+                    <label>Present Postal/Zip code<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_present_zip_code">
                     <div class="form-error" *ngIf="present_zip_code?.invalid && present_zip_code?.touched">
@@ -167,7 +167,7 @@
 
 <div class="row-wrapper">
     <div class="overall-input-wrapper width-45">
-        <label>Permanent Postal/Zip code<span></span></label>
+        <label>Permanent Postal/Zip code<span>*</span></label>
         <input matInput placeholder="Enter here" class="input" type="text"
             [formControlName]="form_permanent_zip_code">
         <div class="form-error" *ngIf="permanent_zip_code?.invalid && permanent_zip_code?.touched">

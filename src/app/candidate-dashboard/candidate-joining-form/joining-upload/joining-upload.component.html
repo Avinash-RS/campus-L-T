@@ -277,7 +277,7 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <ng-container *ngIf="getTransferArr && getTransferArr.controls"
-                            [formArrayName]="form_resumeArray">
+                            [formArrayName]="form_transferCertArray">
                             <ng-container *ngFor="let item of getTransferArr.controls; let j = index;"
                                 [formGroupName]="j">
 

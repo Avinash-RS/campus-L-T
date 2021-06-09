@@ -257,7 +257,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_present_city]: [{ value: null, disabled: true }],
       [this.form_present_state]: [null],
       [this.form_present_region]: [null],
-      [this.form_present_zip_code]: [null, [this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]],
+      [this.form_present_zip_code]: [null, [Validators.required, this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]],
       [this.form_same_as_checkbox]: [null],
       [this.form_permanent_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
       [this.form_permanent_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
@@ -265,7 +265,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_permanent_city]: [{ value: null, disabled: true }],
       [this.form_permanent_state]: [null],
       [this.form_permanent_region]: [null],
-      [this.form_permanent_zip_code]: [null, [this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]]
+      [this.form_permanent_zip_code]: [null, [Validators.required, this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]]
     })
   }
 

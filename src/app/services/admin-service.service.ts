@@ -640,4 +640,12 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // Excel export of selected candidates
+  excelExportSelectedCandidates(data) {
+    return this.http.post(`${this.BASE_URL}/profile/Joining_export`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+ 
+
+
 }
