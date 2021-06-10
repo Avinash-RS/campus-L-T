@@ -1,4 +1,7 @@
 <div id="top"></div>
+<div style="margin: .5em 2em 0 0; float: right;">
+    <mat-icon style="font-size: 32px; cursor: pointer;" (click)="closeComp()" class="close-icon">close</mat-icon>
+  </div>  
 <div class="joining-personal-wrapper">
     <div class="grids-wrapper">
         <div class="dependentForm">
@@ -1039,14 +1042,13 @@
                     <h6>Signature</h6>
                 </div>
                 <ng-container *ngIf="signature && signature.file_path else noSign">
-                    <div class="row-wrapper mt-0 mb-2" style="padding: 0 16px;">
+                <div class="row-wrapper mt-0 mb-2" style="padding: 0 16px;">
                         <div class="signatureShow">
                             <img class="sign" *ngIf="signature && signature.file_path" [src]="signature && signature.file_path"
                             alt="" srcset="">
                         </div>
                     </div>
                 </ng-container>
-
             </div>            
 
             <div *ngIf="!formSubmitted" class="row-wrapper justify-content-between align-items-center mt-4 mb-3 footer">
@@ -1096,11 +1098,12 @@
 <ng-template #noDocuments>
     <div class="nodata"> No Documents Available</div>
 </ng-template>
-<ng-template #noScar>
-     NA
-</ng-template>
 <ng-template #noSign>
     <div class="nodata"> No Signature Available</div>
+</ng-template>
+
+<ng-template #noScar>
+     NA
 </ng-template>
 
 <ng-template #matDialog>

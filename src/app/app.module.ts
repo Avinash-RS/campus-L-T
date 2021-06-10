@@ -1,3 +1,4 @@
+import { CommonJoiningFormComponent } from './shared/common-joining-form/common-joining-form.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -67,7 +68,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     // AgGridModule.withComponents([])
     ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
+  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent, CommonJoiningFormComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},

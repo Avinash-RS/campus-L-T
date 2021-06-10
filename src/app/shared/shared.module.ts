@@ -91,8 +91,9 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { CommonJoiningFormComponent } from './common-joining-form/common-joining-form.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective,
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent,
 ],
   imports: [
     CommonModule,
@@ -202,6 +203,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ScreenresolutionBoxComponent,
     YearMonthDirective,
     DateMonthYearDirective,
+    CommonJoiningFormComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

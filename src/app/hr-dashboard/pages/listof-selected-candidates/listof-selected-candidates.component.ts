@@ -1,3 +1,4 @@
+import { CommonJoiningFormComponent } from './../../../shared/common-joining-form/common-joining-form.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -66,7 +67,40 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     if (event.colDef.field === 'details') {
       this.downloadExcel(event['data']);
     }
+
+    if (event.colDef.field === 'candidate_name') {
+      const data = {
+        candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+      };
+      this.openDialog4(CommonJoiningFormComponent, data);      
+    }
+
   }
+
+      // Open dailog
+      openDialog4(component, data) {
+        let dialogDetails: any;
+    
+        /**
+         * Dialog modal window
+         */
+        // tslint:disable-next-line: one-variable-per-declaration
+        const dialogRef = this.dialog.open(component, {
+          width: 'auto',
+          height: 'auto',
+          autoFocus: false,
+          closeOnNavigation: true,
+          disableClose: true,
+          panelClass: 'common-joining-form',    
+          data
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+          }
+        });
+      }
+  
 
   getModel(e) {
     // console.log(e);
@@ -154,6 +188,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         tooltipField: 'candidate_name',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellStyle: { color: '#C02222' },
+        cellRenderer: (params) => {
+          return `<span style="border-bottom: solid #C02222 1px; cursor: pointer">${params['data']['candidate_name']} </span>`;
         }
       },
       {

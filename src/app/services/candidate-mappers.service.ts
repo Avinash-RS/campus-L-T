@@ -360,6 +360,11 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
+     joiningFormGetPreviewDetailsCommon(userId) {
+       return this.http.get(`${this.BASE_URL}/profile/preview_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
      joiningFormSubmit(data) {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
        return this.http.post(`${this.BASE_URL}/profile/submit_joiningform?user_id=${userId}`, data,

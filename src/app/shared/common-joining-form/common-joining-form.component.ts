@@ -1,18 +1,18 @@
-import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace.js';
-import { ModalBoxComponent } from 'src/app/shared/modal-box/modal-box.component';
-import { DateAdapter, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
-import { Subscription } from 'rxjs';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, MatDialog, MatDialogRef, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA } from '@angular/material';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { Subscription } from 'rxjs';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { ModalBoxComponent } from '../modal-box/modal-box.component';
 import * as moment from 'moment'; //in your component
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 export const MY_FORMATS = {
   parse: {
@@ -28,9 +28,9 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-joining-preview',
-  templateUrl: './joining-preview.component.html',
-  styleUrls: ['./joining-preview.component.scss'],
+  selector: 'app-common-joining-form',
+  templateUrl: './common-joining-form.component.html',
+  styleUrls: ['./common-joining-form.component.scss'],
   providers: [
     // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
     // application's root module. We provide it at the component level here, due to limitations of
@@ -44,8 +44,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class CommonJoiningFormComponent implements OnInit {
   @ViewChild('matDialog', { static: false }) matDialogRef: TemplateRef<any>;
   @ViewChild('matDialogTerms', { static: false }) matDialogRefTerms: TemplateRef<any>;
   @ViewChild('matDialogBGV', { static: false }) matDialogRefBGV: TemplateRef<any>;
@@ -280,25 +279,35 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   documentDetails: any;
   actualDate: any;
   noShowWork: boolean;
+  CustomdialogRef: MatDialogRef<any, any>;
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
+    private sharedService: SharedServiceService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    public dialogRefComp: MatDialogRef<ModalBoxComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data
   ) {
     this.dateValidation();
-  }
+   }
 
-  ngOnInit() {
+   ngOnInit() {
     this.formInitialization();
     this.checkFormSubmitted();
     this.getStateAPI();
     this.checkFormValidRequestFromRxjs();
   }
+
+  closeComp() {
+    this.dialogRefComp.close();
+  }
+
 
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -326,7 +335,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   checkFormSubmitted() {
-    this.formSubmitted = this.appConfig.getLocalData('submit') && this.appConfig.getLocalData('submit') == '1' ? true : false;
+    this.formSubmitted =  true;
   }
   ngAfterViewInit() {
     this.sharedService.joiningFormActiveSelector.next('preview');
@@ -485,13 +494,15 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       } else {
         this.noShowWork = true;
       }
+      
     } else {
       this.workDetails = null;
     }
 }
 
   getPreviewData() {
-    this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any) => {
+    const userId = this.data && this.data['candidateId'] ? this.data['candidateId'] : '';
+    this.candidateService.joiningFormGetPreviewDetailsCommon(userId).subscribe((data: any) => {
       this.appConfig.hideLoader();
       this.personalDetails = data && data.personal ? data.personal : null;
       this.patchPersonalForm();
@@ -779,7 +790,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
   matDialogOpen() {
-    const dialogRef = this.dialog.open(this.matDialogRef, {
+    this.CustomdialogRef = this.dialog.open(this.matDialogRef, {
       width: '400px',
       height: 'auto',
       autoFocus: false,
@@ -816,7 +827,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       name = this.matDialogRefJoin;
     }
 
-    const dialogRef = this.dialog.open(name, {
+    this.CustomdialogRef = this.dialog.open(name, {
       width: '890px',
       height: 'auto',
       autoFocus: false,
@@ -848,7 +859,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     }
     this.pdfsrc = src;
     // this.pdfsrc = 'http://campus-qa.lntedutech.com/d8cintana2/sites/default/files/Templates/BGV_Declaration.pdf';
-    const dialogRef = this.dialog.open(this.matDialogRefDocViewer, {
+    this.CustomdialogRef = this.dialog.open(this.matDialogRefDocViewer, {
       width: '600px',
       height: 'auto',
       autoFocus: false,
@@ -858,7 +869,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
   closeBox() {
-    this.dialog.closeAll();
+    this.CustomdialogRef.close();
   }
 
 
@@ -1006,4 +1017,5 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnDestroy() {
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
   }
+
 }
