@@ -173,7 +173,7 @@ dateConvertion(date) {
       let formArray = this.dependentForm.getRawValue()[this.form_dependentArray];
       formArray.forEach(element => {
         if (element[this.form_dependent_dob]) {
-          element[this.form_dependent_dob] = this.momentForm(element[this.form_dependent_dob]);
+          element[this.form_dependent_dob] = element[this.form_dependent_dob];
         }
       });
       this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {

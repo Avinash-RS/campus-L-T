@@ -19,6 +19,40 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
   radioIsChecked = 'checked';
   userDetails: any;
   radioValue = 'pre';
+  category = [
+    {
+      name: 'Scheduled Caste',
+      caste: 'SC'
+    },
+    {
+      name: 'Scheduled Tribe',
+      caste: 'ST'
+    },
+    {
+      name: 'De-notified Tribe',
+      caste: 'DenotifiedTribe'
+    },
+    {
+      name: 'Nomadic Tribe',
+      caste: 'NomadicTribe'
+    },
+    {
+      name: 'Special Backward Category',
+      caste: 'SBC'
+    },
+    {
+      name: 'Other Backward Classes',
+      caste: 'OBC'
+    },
+    {
+      name: 'General / Open Category',
+      caste: 'GEN'
+    },
+    {
+      name: 'Other',
+      caste: 'Other'
+    },
+  ];
 
   userData: any;
   apiForm: any;
@@ -112,6 +146,13 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getCategory(data) {
+    this.category.forEach(element => {
+      if (element.caste == data) {
+        return element.name;
+      }
+    });
+}
   getLocalForm(form) {
     this.apiForm = form;
     this.userData = this.apiForm;
@@ -147,7 +188,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       dobYear: dob.year,
       nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '-',
       aadhaar: organizeUserDetails && organizeUserDetails.field_aadharno && organizeUserDetails['field_aadharno'] ? organizeUserDetails['field_aadharno']['value'] : '-',
-      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '-',
+      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? this.getCategory(organizeUserDetails['field_category']['value']) : '-',
 
       presentAddress1: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'] ? organizeUserDetails['field_present_line_street_addres']['value'] : '-',
       presentAddress2: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'] ? organizeUserDetails['field_present_line2_street_addre']['value'] : '-',
@@ -407,7 +448,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
           field_dob: { value: organizeUserDetails && organizeUserDetails['field_dob'] && organizeUserDetails['field_dob'][0] ? organizeUserDetails['field_dob'][0]['value'] : '' },
           field_nationality: { value: organizeUserDetails && organizeUserDetails['field_nationality'] && organizeUserDetails['field_nationality'][0] ? organizeUserDetails['field_nationality'][0]['value'] : '' },
           field_aadharno: { value: organizeUserDetails && organizeUserDetails['field_aadharno'] && organizeUserDetails['field_aadharno'][0] ? organizeUserDetails['field_aadharno'][0]['value'] : '' },
-          field_category: { value: organizeUserDetails && organizeUserDetails['field_category'] && organizeUserDetails['field_category'][0] ? organizeUserDetails['field_category'][0]['value'] : '' },
+          field_category: { value: organizeUserDetails && organizeUserDetails['field_category'] && organizeUserDetails['field_category'][0] ? this.getCategory(organizeUserDetails['field_category'][0]['value']) : '' },
 
           field_present_line_street_addres: { value: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'][0] ? organizeUserDetails['field_present_line_street_addres'][0]['value'] : '' },
           field_present_line2_street_addre: { value: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'][0] ? organizeUserDetails['field_present_line2_street_addre'][0]['value'] : '' },

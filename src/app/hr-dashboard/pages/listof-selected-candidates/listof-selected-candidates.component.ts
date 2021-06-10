@@ -301,13 +301,20 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   }
 
   excelApi(data) {
+    const role = this.appConfig.getLocalData('roles');
     let apiData = {
-      uid: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      uid: role == 'ic' ? this.appConfig.getLocalData('userId') : '',
       users: data
     };
     this.adminService.excelExportSelectedCandidates(apiData).subscribe((datas: any)=> {
+      if (datas && datas.url) {
+        this.appConfig.success('Excel Report downloaded successfully');
+        window.open(datas.url, '_blank');
+      } else {
+        this.appConfig.warning('Please try again later');
+      }
+      
       this.appConfig.hideLoader();
-      this.appConfig.success('Excel Report downloaded successfully');
     });
   }
   getAllNodes() {
