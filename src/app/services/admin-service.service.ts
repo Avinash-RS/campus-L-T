@@ -604,6 +604,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  SelectedCandidatesHRMappingBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/selected_user_ps_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   SelectedCandidatesList(data) {
     return this.http.get(`${this.BASE_URL}/profile/selected_user_list?company=${data.company}`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

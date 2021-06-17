@@ -38,6 +38,17 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   totalCountofCandidates: any;
   uploadedListArray: any;
   dateFormatExist: boolean;
+  selectedTemplate = '0';
+  templates = [
+    {
+      value: '0',
+      name: 'Upload Selected Candidates'
+    },
+    {
+      value: '1',
+      name: 'HR Details Mapping'
+    }
+  ]
   constructor(
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
@@ -51,17 +62,33 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   ngOnInit() {
   }
 
+  changeTemp(e) {
+    this.delete();
+    this.selectedTemplate = e.value;
+  }
   nextTab(index) {
     this.tabChange.emit(index);
   }
 
   downloadTemplate() {
-    const excel = `${this.BASE_URL}/sites/default/files/Selected_Candidates_Template.csv`;
-    window.open(excel, '_blank');
+    if (this.selectedTemplate == '0') {
+      const excel = `${this.BASE_URL}/sites/default/files/Selected_Candidates_Template.csv`;
+      window.open(excel, '_blank');  
+    } else {
+      const excel = `${this.BASE_URL}/sites/default/files/Joiners_Template.csv`;
+      window.open(excel, '_blank');
+    }
   }
   submit() {
     const data = {
       bulk_upload: 'selected-candidate-bulk'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
+  }
+
+  submitHR() {
+    const data = {
+      bulk_upload: 'selected-candidate-bulk-hr-mapping'
     };
     this.openDialog(ShortlistBoxComponent, data);
   }
@@ -116,17 +143,33 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     // let data;
-    this.adminService.SelectedCandidatesBulkUpload(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      const datas = {
-        bulk_upload_ic: 'ic-bulk',
-        totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
-        errorLength: data ? data?.length : 0,
-      };
-      this.openDialog1(ShortlistBoxComponent, datas);
-    }, (err) => {
-
-    });
+    console.log('submit', this.uploadedListArray);
+    
+    if (this.selectedTemplate == '0') {
+      this.adminService.SelectedCandidatesBulkUpload(this.uploadedListArray).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        const datas = {
+          bulk_upload_ic: 'ic-bulk',
+          totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
+          errorLength: data ? data?.length : 0,
+        };
+        this.openDialog1(ShortlistBoxComponent, datas);
+      }, (err) => {
+  
+      });  
+    } else {
+      this.adminService.SelectedCandidatesHRMappingBulkUpload(this.uploadedListArray).subscribe((data: any) => {
+        this.appConfig.hideLoader();
+        const datas = {
+          bulk_upload_ic: 'ic-bulk',
+          totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
+          errorLength: data ? data?.length : 0,
+        };
+        this.openDialog1(ShortlistBoxComponent, datas);
+      }, (err) => {
+  
+      });  
+    }
   }
   upload() {
     this.appConfig.showLoader();
@@ -172,6 +215,178 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
     // });
   }
+
+  uploadHRDetails() {
+    this.appConfig.showLoader();
+    this.validFile = false;
+    const apiData = {
+      source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
+    };
+    /* wire up file reader */
+    const target: DataTransfer = (this.selectedTarget) as DataTransfer;
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
+
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary', cellDates: true });
+
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Cadre') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Designation') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'DOJ') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][4] && this.SavedData[0][4].trim() === 'Job_Code') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][5] && this.SavedData[0][5].trim() === 'Function') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Sub_Function') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'IS_PS NO.') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][8] && this.SavedData[0][8].trim() === 'DH_PSNO') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][9] && this.SavedData[0][9].trim() === 'HR_PSNO')
+        ) {
+        // this.enableList = true;
+        this.appConfig.hideLoader();
+        this.totalCountHR(this.SavedData);
+      } else {
+        this.validFile = true;
+        this.appConfig.hideLoader();
+      }
+    };
+    reader.readAsBinaryString(target.files[0]);
+    // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
+    //   console.log(datas);
+    //   this.appConfig.hideLoader();
+
+    // }, (err) => {
+
+    // });
+  }
+
+  totalCountHR(data) {
+    this.dateFormatExist = false;
+    this.enableList = true;
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let email; let cadre; let designation; let doj; let job_code; let function1; let sub_function; let is_ps_no; let dh_ps_no; let hr_ps_no;
+      if (i > 0 && dup) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 10) {
+            if (index == 0) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                email = element ? element : '';
+              }
+            }
+            if (index == 1) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                cadre = element ? element : '';
+              }
+            }
+            if (index == 2) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                designation = element ? element : '';
+              }
+            }
+            if (index == 3) {
+              // if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+              //   this.enableList = false;
+              //   this.dateFormatExist = true;
+              // } else {
+                doj = element ? element : '';
+              // }
+            }
+            if (index == 4) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                job_code = element ? element : '';
+              }
+            }
+            if (index == 5) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                function1 = element ? element : '';
+              }
+            }
+            if (index == 6) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                sub_function = element ? element : '';
+              }
+            }
+            if (index == 7) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                is_ps_no = element ? element : '';
+              }
+            }
+            if (index == 8) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                dh_ps_no = element ? element : '';
+              }
+            }
+            if (index == 9) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                hr_ps_no = element ? element : '';
+              }
+            }
+          }
+        });
+        const value = {
+          email: email ? email.toString().trim() : '',
+          cadre: cadre ? cadre.toString().trim() : '',
+          designation: designation ? designation.toString().trim() : '',
+          doj: doj ? doj : '',
+          job_code: job_code ? job_code.toString().trim() : '',
+          function1: function1 ? function1.toString().trim() : '',
+          sub_function: sub_function ? sub_function.toString().trim() : '',
+          is_ps_no: is_ps_no ? is_ps_no.toString().trim() : '',
+          dh_ps_no: dh_ps_no ? dh_ps_no.toString().trim() : '',
+          hr_ps_no: hr_ps_no ? hr_ps_no.toString().trim() : ''
+        };
+
+
+        if (email && email.toString().trim()) {
+          listArray.push(value);
+        }
+      }
+    });
+    
+    this.uploadedListArray = listArray;
+    this.totalCountofCandidates = count - 1;
+  }
+
 
   totalCount(data) {
     this.dateFormatExist = false;

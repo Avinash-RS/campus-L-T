@@ -86,6 +86,14 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }
 
+    if (this.status === 'hrMapping') {
+      this.displayedColumns = ['email', 'cadre', 'designation', 'doj', 'job_code', 'function1', 'sub_function', 'is_ps_no', 'dh_ps_no', 'hr_ps_no', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
   }
 
   ngAfterViewInit() {
