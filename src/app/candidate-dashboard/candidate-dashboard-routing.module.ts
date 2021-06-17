@@ -1,3 +1,4 @@
+import { CandidateFaqComponent } from './candidate-faq/candidate-faq.component';
 import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
 import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 import { JoiningPreviewComponent } from './candidate-joining-form/joining-preview/joining-preview.component';
@@ -208,6 +209,13 @@ const routes: Routes = [
             pathMatch: 'full',
           }
         ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_FAQ}`, 
+        component: CandidateFaqComponent, canActivate: [CanloadGuard], 
+        data: {
+          breadcrumb: 'FAQ'
+        },
       },
       {
         path: '',

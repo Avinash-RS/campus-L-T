@@ -1,0 +1,63 @@
+.faq {
+    padding: 1em;
+}
+
+.hanging {
+    margin-left: 1em !important;
+    text-indent: -1em;
+    line-height: 20px;
+    padding: 8px 0;
+}
+
+.ans {
+    font-size: 15px;
+}
+
+// :host ::ng-deep .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+//     flex-grow: 60 !important;
+// }
+
+:host ::ng-deep .mat-expansion-panel-header.mat-expanded {
+    .hanging {
+        padding-bottom: 4px !important;
+    }
+}
+
+mat-expansion-panel {
+    box-shadow: 2px 2px 5px #0000001a !important;
+    margin-top: 4px !important;
+    border: 1px solid rgba(147, 147, 149, 0.5) !important;
+}
+mat-expansion-panel-header {
+    height: auto !important;
+    padding: 0px 16px !important;
+    background-color: #F5F5F5 !important;
+}
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+    color: #000 !important;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+    color: rgb(0, 0, 0, 0.6) !important;
+}
+::ng-deep .mat-expansion-panel-body {
+    padding: 8px 16px !important;
+}
+::ng-deep .mat-expansion-panel-spacing {
+    margin: 0 !important;
+}
