@@ -584,10 +584,44 @@
                         </ng-container>
                     </ng-container>
 
-                    <!-- Other -->
+                    <!-- Certifications -->
+                    <ng-container
+                    *ngIf="documentDetails.Certifications && documentDetails.Certifications.length > 0">
+                    <div class="subDocumentTitle">Certifications</div>
+                    <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                        *ngFor="let document of documentDetails.Certifications; let i = index">
+                        <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Document Name</label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{document[form_label] ? document[form_label] : '-'}}</div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Document Description</label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{document[form_description] ? document[form_description] : '-'}}</div>
+                            </div>
+
+                            <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <button class="add-button"
+                                    (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                    mat-raised-button type="button">View</button>
+                            </div>
+                            <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <button class="add-button yet-to-submit"
+                                    [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                    mat-raised-button type="button">Yet to
+                                    Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                
+                    <!-- Other uploads -->
                     <ng-container
                         *ngIf="documentDetails.Other_Certifications && documentDetails.Other_Certifications.length > 0">
-                        <div class="subDocumentTitle">Other Certifications</div>
+                        <div class="subDocumentTitle">Other Uploads</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
                             *ngFor="let document of documentDetails.Other_Certifications; let i = index">
                             <div class="row-wrapper mt-0" style="align-items: flex-end;">

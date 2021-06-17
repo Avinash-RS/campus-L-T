@@ -84,6 +84,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   conditionTransfer = 'transfer';
   conditionResume = 'resume';
   conditionOther = 'others';
+  conditionCert = 'cert';
   conditionBank = 'bank';
   //Joining Variables
   form_joiningArray = 'joiningArray';
@@ -116,6 +117,9 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   // Other certificate Variables
   form_otherCertArray = 'otherCertificates';
 
+  // Certifications array
+  form_CertificationArray = 'CertificationArray';
+  getCertificationDocuments: any;
   // Banking
   form_bankArray = 'bank';
   form_acc_no = 'account_no';
@@ -132,48 +136,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   reason = new FormControl(null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]);
   joiningNotUploadedDocs: any[];
   isRoute: any;
-
-
-  dummyValue = [
-    {
-      [this.form_education_level]: 'SSLC',
-      [this.form_noofSemester]: null,
-      [this.form_semesterArray]: [
-        {
-          [this.form_file_id]: "2297",
-          [this.form_id]: "166",
-          [this.form_file_path]: "http://campus-qa.lntedutech.com/d8cintana2/profile/get_certificate_name_test?certificate_id=2297",
-          [this.form_file_size]: "190.04 KB",
-          [this.form_file_name]: "Caste Declaration.pdf",
-          [this.form_name]: "SSLC",
-          [this.form_label]: "SSLC Certificate",
-          [this.form_description]: null,
-          [this.form_Not_Submitted_Description]: null,
-          [this.form_expectedDate]: null
-        }
-      ]
-    },
-    {
-      [this.form_education_level]: 'HSC',
-      [this.form_noofSemester]: null,
-      [this.form_semesterArray]: []
-    },
-    {
-      [this.form_education_level]: 'Diploma',
-      [this.form_noofSemester]: null,
-      [this.form_semesterArray]: []
-    },
-    {
-      [this.form_education_level]: 'UG',
-      [this.form_noofSemester]: null,
-      [this.form_semesterArray]: []
-    },
-    {
-      [this.form_education_level]: 'PG',
-      [this.form_noofSemester]: null,
-      [this.form_semesterArray]: []
-    },
-  ];
 
   constructor(
     private appConfig: AppConfigService,
@@ -213,6 +175,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_transferCertArray]: this.fb.array([]),
       [this.form_resumeArray]: this.fb.array([]),
       [this.form_bankArray]: this.fb.array([]),
+      [this.form_CertificationArray]: this.fb.array([]),
       [this.form_otherCertArray]: this.fb.array([]),
     })
   }
@@ -225,6 +188,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       this.getResumeDocuments = data && data['Resume'] ? data['Resume'] : [];
       this.getTransferDocuments = data && data['Transfer_Certificate'] ? data['Transfer_Certificate'] : [];
       this.getbankDocuments = data && data['Banking_Details'] ? data['Banking_Details'] : [];
+      this.getCertificationDocuments = data && data['Certifications'] ? data['Certifications'] : [];
       this.getOtherCertificationDocuments = data && data['Other_Certifications'] ? data['Other_Certifications'] : [];
       this.checkJoiningArrayinitalize();
     }, (err)=> {
@@ -298,7 +262,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.getBankArr.push(this.initBankingArray());
       }      
       
-      // Other
+      // Other Certifications
       if (this.getOtherCertificationDocuments && this.getOtherCertificationDocuments.length > 0) {
         this.getOtherCertificationDocuments.forEach(element => {
           this.getOtherCertArr.push(this.patchJoiningArray(element, 'otherCert'));
@@ -307,6 +271,15 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         // this.getOtherCertArr.push(this.initJoiningArray());
       }      
 
+      // Certifications
+      if (this.getCertificationDocuments && this.getCertificationDocuments.length > 0) {
+        this.getCertificationDocuments.forEach(element => {
+          this.getCertificationsArr.push(this.patchJoiningArray(element, 'otherCert'));
+        });
+      } else {
+        // this.getOtherCertArr.push(this.initJoiningArray());
+      }      
+      
       this.patchNotSubmittedReason();
   }
 
@@ -462,6 +435,16 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     return this.getOtherCertArr.push(this.initJoiningArray('otherCert'));
     }
     this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_otherCertArray]) as FormArray);
+  }
+
+  removeInCertificationsArray(i) {
+    this.getCertificationsArr.removeAt(i);    
+  }
+  addToCertificationsArray(i?: any) {
+   if (this.getCertificationsArr.valid) {
+    return this.getCertificationsArr.push(this.initJoiningArray('otherCert'));
+    }
+    this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
   }
 
   addToSemesterArray(i?: any) {
@@ -644,6 +627,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       });
     });
 
+    // other
     let otherCertArray = this.getOtherCertArr.getRawValue();
     otherCertArray.forEach((element, i) => {
       if (!element[this.form_file_path]) {
@@ -651,6 +635,19 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       }
       if (element[this.form_file_path]) {
         this.getOtherCertArr.at(i).patchValue({
+          [this.form_name]: this.form_label
+        });                  
+        }
+    });
+
+    // Certifications
+    let certificationsArray = this.getCertificationsArr.getRawValue();
+    certificationsArray.forEach((element, i) => {
+      if (!element[this.form_file_path]) {
+        this.getCertificationsArr.removeAt(i);
+      }
+      if (element[this.form_file_path]) {
+        this.getCertificationsArr.at(i).patchValue({
           [this.form_name]: this.form_label
         });                  
         }
@@ -675,12 +672,16 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       this.accordion.openAll()      
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_otherCertArray]) as FormArray);
       if (this.getEducationArr.invalid) {
         return this.appConfig.nzNotification('error', 'Education Uploads', 'Please fill all the red highlighted fields in Education Uploads to proceed further');
       }
       if (this.getBankArr.invalid) {
         return this.appConfig.nzNotification('error', 'Banking Details', 'Please fill all the red highlighted fields in Banking Details to proceed further');
+      }
+      if (this.getCertificationsArr.invalid) {
+        return this.appConfig.nzNotification('error', 'Certification Uploads', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
       }
       if (this.getOtherCertArr.invalid) {
         return this.appConfig.nzNotification('error', 'Other Certifications', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
@@ -846,6 +847,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       });
     });
 
+    // Other
     let otherCertArray = this.getOtherCertArr.getRawValue();
     otherCertArray.forEach((element, i) => {
       if (!element[this.form_file_path]) {
@@ -858,6 +860,19 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         }
     });
 
+      // Certificatopms
+      let certificationsArray = this.getCertificationsArr.getRawValue();
+      certificationsArray.forEach((element, i) => {
+        if (!element[this.form_file_path]) {
+          this.getCertificationsArr.removeAt(i);
+        }
+        if (element[this.form_file_path]) {
+          this.getCertificationsArr.at(i).patchValue({
+            [this.form_name]: this.form_label
+          });                  
+          }
+      });
+    
     this.finalSubmit(routeValue ? routeValue : '');
   }
 
@@ -867,11 +882,13 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     let transferArray = this.getTransferArr.getRawValue();
     let resumeArray = this.getResumeArr.getRawValue();
     let bankArray = this.getBankArr.getRawValue();
+    let certArray = this.getCertificationsArr.getRawValue();
     let otherArray = this.getOtherCertArr.getRawValue();
     const apiData = {
       Joining_Details: joiningArray,
       Education_Documents: educationArray,
       Resume: resumeArray,
+      Certifications: certArray,
       Other_Certifications: otherArray,
       Transfer_Certificate: transferArray,
       Banking_Details: bankArray
@@ -922,6 +939,15 @@ async uploadImage(file, i, form) {
     }
     if (form == this.conditionBank) {
       this.getBankArr.at(i).patchValue({
+        [this.form_file_name]: data.file_name,
+        [this.form_file_id]: data.file_id,
+        [this.form_file_path]: data.file_path,
+        [this.form_file_size]: data.file_size,
+        [this.form_file_type]: data.type,
+      });            
+    }
+    if (form == this.conditionCert) {
+      this.getCertificationsArr.at(i).patchValue({
         [this.form_file_name]: data.file_name,
         [this.form_file_id]: data.file_id,
         [this.form_file_path]: data.file_path,
@@ -987,6 +1013,15 @@ if (form == this.conditionBank) {
   [this.form_file_type]: null,
 });        
 }
+if (form == this.conditionCert) {
+  this.getCertificationsArr.at(i).patchValue({
+  [this.form_file_name]: null,
+  [this.form_file_id]: null,
+  [this.form_file_path]: null,
+  [this.form_file_size]: null,
+  [this.form_file_type]: null,
+});        
+}
 if (form == this.conditionOther) {
   this.getOtherCertArr.at(i).patchValue({
   [this.form_file_name]: null,
@@ -1045,6 +1080,14 @@ onSelectFile(event, i, form) {
           fd.append('description', this.getBankArr.at(i).value[this.form_description]);
           fd.append('label', form);
           fd.append('level', this.getBankArr.at(i).value[this.form_name]);
+          fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, i, form);        
+        }
+        if (form == this.conditionCert) {
+          fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+          fd.append('description', this.getCertificationsArr.at(i).value[this.form_description]);
+          fd.append('label', form);
+          fd.append('level', this.getCertificationsArr.at(i).value[this.form_label]);
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);        
         }
@@ -1264,6 +1307,7 @@ link.remove();
   get getTransferArr() { return this.uploadForm.get([this.form_transferCertArray]) as FormArray; }
   get getBankArr() { return this.uploadForm.get([this.form_bankArray]) as FormArray; }
   get getOtherCertArr() { return this.uploadForm.get([this.form_otherCertArray]) as FormArray; }
+  get getCertificationsArr() { return this.uploadForm.get([this.form_CertificationArray]) as FormArray; }
   get getEducationArr() { return this.uploadForm.get([this.form_educationArray]) as FormArray; }
   getSemesterArr(i: any) : FormArray {
         return this.getEducationArr.at(i).get([this.form_semesterArray]) as FormArray
