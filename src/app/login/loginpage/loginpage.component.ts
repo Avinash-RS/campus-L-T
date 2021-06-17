@@ -152,6 +152,17 @@ export class LoginpageComponent implements OnInit {
               let date = todayDate.getFullYear() +'-'+(month <= 9 ? '0' + month : month) +'-' + (day <= 9? '0' + day : day)
               if(new Date(date) <= new Date(DropdownListForKYC['kycDate'])){
                 localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
+                if (data['joiningform'] && data['joiningform'] === '1') {
+                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
+                  this.appConfig.setLocalData('field_isformsubmitted', 'true');
+                  this.appConfig.setLocalData('personalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('familyFormSubmitted', 'true');
+                  this.appConfig.setLocalData('generalFormSubmitted', 'true');
+                  this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
+                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                }
                 // if(date.toString() != DropdownListForKYC['kycDate'].toString()){
                   if (data['first_shortlist'] && data['first_shortlist'] === '1') {
                   this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');

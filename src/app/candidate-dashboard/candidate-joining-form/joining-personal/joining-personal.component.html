@@ -212,7 +212,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>PAN No.<span></span></label>
+                    <label>PAN No.<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
                     <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
                         <div *ngIf="pan?.errors?.required">PAN No. is Required</div>

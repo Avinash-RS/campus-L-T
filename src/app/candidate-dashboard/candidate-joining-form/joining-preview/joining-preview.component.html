@@ -457,7 +457,7 @@
                                         {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
-                                <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
                                     <button class="add-button"
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
@@ -491,7 +491,7 @@
                                         {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
-                                <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
                                     <button class="add-button"
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
@@ -525,7 +525,7 @@
                                         {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
-                                <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
                                     <button class="add-button"
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>
@@ -565,7 +565,7 @@
                                                 {{document[form_description] ? document[form_description] : '-'}}</div>
                                         </div>
 
-                                        <div *ngIf="document[form_file_path]"
+                                        <div *ngIf="document && document[form_file_path]"
                                             class="overall-input-wrapper mt-0 width-32">
                                             <button class="add-button"
                                                 (click)="openMatDialog(document[form_file_path], document[form_file_type])"
@@ -603,7 +603,7 @@
                                         {{document[form_description] ? document[form_description] : '-'}}</div>
                                 </div>
 
-                                <div *ngIf="document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
                                     <button class="add-button"
                                         (click)="openMatDialog(document[form_file_path], document[form_file_type])"
                                         mat-raised-button type="button">View</button>

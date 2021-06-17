@@ -7,6 +7,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { environment } from 'src/environments/environment';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-listof-selected-candidates',
@@ -69,14 +70,44 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     }
 
     if (event.colDef.field === 'candidate_name') {
-      const data = {
-        candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
-      };
-      this.openDialog4(CommonJoiningFormComponent, data);      
+      console.log(event['data']);      
+      if (event['data']['mailed'] == '1' && event['data']['is_editable'] == '1') {
+        const data = {
+          candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+        };
+        this.openDialog4(CommonJoiningFormComponent, data);
+      } else {
+        const data = {
+          candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+          candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
+        };
+        this.openDialog5(CommonKycProfileViewComponent, data);  
+      }
     }
 
   }
 
+      // Open dailog
+      openDialog5(component, data) {
+        let dialogDetails: any;
+    
+        /**
+         * Dialog modal window
+         */
+        // tslint:disable-next-line: one-variable-per-declaration
+        const dialogRef = this.dialog.open(component, {
+          width: 'auto',
+          height: 'auto',
+          autoFocus: false,
+          data
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+          }
+        });
+      }
+  
       // Open dailog
       openDialog4(component, data) {
         let dialogDetails: any;
@@ -158,10 +189,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         maxWidth: 85,
         sortable: true,
         valueGetter: (params) => {
-          if (params.data.is_editable == '1') {
-            return 'No';
-          } else {
+          if (params.data.is_editable == '0') {
             return 'Yes'
+          } else {
+            return 'No';
           }
         },
         getQuickFilterText: (params) => {

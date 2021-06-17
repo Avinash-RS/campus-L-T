@@ -417,7 +417,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_mobile]: [null, [Validators.required, this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
       [this.form_email]: [{value: null, disabled: true}, [Validators.required, this.glovbal_validators.email(), RemoveWhitespace.whitespace()]],
       [this.form_aadhar]: [{value: null, disabled: false}, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
-      [this.form_pan]: [null, [this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
+      [this.form_pan]: [null, [Validators.required, this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
       [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
       [this.form_offer_date]: [null],
       [this.form_height]: [{value: null, disabled: false}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
