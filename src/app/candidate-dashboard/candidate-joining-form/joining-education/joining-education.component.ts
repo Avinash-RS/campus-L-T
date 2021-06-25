@@ -2,7 +2,7 @@ import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
@@ -117,6 +117,7 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
   form_backlog = 'backlogs';
   form_mode = 'mode';
   form_cgpa = 'percentage';
+  form_Finalcgpa = 'final_percentage';
 
   educationLevels: any;
   pgSpecializationList: any;
@@ -132,6 +133,8 @@ educationDetails: any;
 mastersList: any;
 selectedPost: any;
 selectedPostLabel: any;
+educationLength: any;
+maxDateStartField: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -172,6 +175,7 @@ selectedPostLabel: any;
     }
   }
 
+
   chosenYearHandler(normalizedYear: Moment, i) {
     const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];    
     if (ctrlValue) {
@@ -207,8 +211,10 @@ selectedPostLabel: any;
       this.appConfig.hideLoader();
       if (data && data.education &&  data.education.length > 0) {
         this.educationDetails = data.education;
+        this.educationLength = data.education.length;
         this.patchEducationForm();
       } else {
+        this.educationLength = 1;
         this.educationDetails = [];
         this.initalPatchWithValidations();
       }
@@ -237,7 +243,8 @@ selectedPostLabel: any;
           [this.form_yearpassing]: null,
           [this.form_backlog]: null,
           [this.form_mode]: null,
-          [this.form_cgpa]: null
+          [this.form_cgpa]: null,
+          [this.form_Finalcgpa]: null
           });
      return this.setValidations();
     }
@@ -255,6 +262,14 @@ if (date) {
  return split;    
 }
 }
+
+momentFormMonth(date) {
+  if (date) {
+    const split = moment(date).format('MMM YYYY');
+   return split;    
+  }
+  }
+  
 
 dateConvertion(date) {
   if (date) {      
@@ -346,7 +361,7 @@ validSelectedPost() {
         let formArray = this.educationForm.getRawValue()[this.form_educationArray];
         this.candidateService.joiningFormGetEducationDetailsSave(formArray).subscribe((data: any)=> {
         this.appConfig.hideLoader();
-        this.appConfig.nzNotification('success', 'Saved', 'Education details has been updated');
+        this.appConfig.nzNotification('success', 'Saved', 'Education details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
       });
@@ -406,24 +421,25 @@ validSelectedPost() {
   patchEducationForm() {
     this.getEducationArr.clear();
     this.educationDetails.forEach((element, i) => {
-      this.getEducationArr.push(this.patching(element));
+      this.getEducationArr.push(this.patching(element, i));
     });
     this.setValidations();
   }
 
-  patching(data) {
+  patching(data, i) {
     return this.fb.group({
-      [this.form_qualification_type]: [data[this.form_qualification_type], [Validators.required]],
-      [this.form_qualification]: [data[this.form_qualification], [Validators.required]],
-      [this.form_specialization]: [data[this.form_specialization], [Validators.required]],
-      [this.form_collegeName]: [data[this.form_collegeName], [Validators.required]],
-      [this.form_boardUniversity]: [data[this.form_boardUniversity], [Validators.required]],
-      [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), [Validators.required]],
-      [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), [Validators.required]],
-      [this.form_yearpassing]: [this.dateConvertionMonth(data[this.form_yearpassing]), [Validators.required]],
-      [this.form_backlog]: [data[this.form_backlog], [Validators.required, this.glovbal_validators.backlog(), RemoveWhitespace.whitespace()]],
-      [this.form_mode]: [data[this.form_mode], [Validators.required]],
-      [this.form_cgpa]: [data[this.form_cgpa], [Validators.required, this.glovbal_validators.percentage(), RemoveWhitespace.whitespace()]],
+      [this.form_qualification_type]: [{ value: data[this.form_qualification_type], disabled: true }, [Validators.required]],
+      [this.form_qualification]: [{ value: data[this.form_qualification], disabled: true }, [Validators.required]],
+      [this.form_specialization]: [{ value: data[this.form_specialization], disabled: true }, [Validators.required]],
+      [this.form_collegeName]: [{ value: data[this.form_collegeName], disabled: true }, [Validators.required]],
+      [this.form_boardUniversity]: [{ value: data[this.form_boardUniversity], disabled: true }, [Validators.required]],
+      [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), [Validators.required, this.startTrue(false)]],
+      [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), [Validators.required, this.startTrue(false)]],
+      [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: true }, [Validators.required, this.startTrue(true)]],
+      [this.form_backlog]: [{ value: data[this.form_backlog], disabled: data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
+      [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, [Validators.required]],
+      [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: true }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
+      [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
     })    
   }
 
@@ -434,15 +450,68 @@ validSelectedPost() {
       [this.form_specialization]: [null, [Validators.required]],
       [this.form_collegeName]: [null, [Validators.required]],
       [this.form_boardUniversity]: [null, [Validators.required]],
-      [this.form_startDate]: [null, [Validators.required]],
-      [this.form_endDate]: [null, [Validators.required]],
-      [this.form_yearpassing]: [null, [Validators.required]],
-      [this.form_backlog]: [null, [Validators.required, this.glovbal_validators.backlog(), RemoveWhitespace.whitespace()]],
+      [this.form_startDate]: [null, [Validators.required, this.startTrue(false)]],
+      [this.form_endDate]: [null, [Validators.required, this.startTrue(false)]],
+      [this.form_yearpassing]: [null, [Validators.required, this.startTrue(true)]],
+      [this.form_backlog]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [null, [Validators.required]],
-      [this.form_cgpa]: [null, [Validators.required, this.glovbal_validators.percentage(), RemoveWhitespace.whitespace()]],
+      [this.form_cgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
+      [this.form_Finalcgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
     })      
   }
 
+    // Custom regex validator
+    regexValidator(error: ValidationErrors, param): ValidatorFn {
+      return (control: AbstractControl): {[key: string]: any} => {
+        if (!control.value) {
+          return null;
+        }
+        let check;
+        let yearofPassing = control && control['_parent'] && control['_parent']['controls'] && control['_parent']['controls'][this.form_yearpassing]['value'] ? control['_parent']['controls'][this.form_yearpassing]['value'] : null;
+        let startDate = control && control['_parent'] && control['_parent']['controls'] && control['_parent']['controls'][this.form_yearpassing]['value'] ? control['_parent']['controls'][this.form_startDate]['value'] : null;
+        let endDate = control && control['_parent'] && control['_parent']['controls'] && control['_parent']['controls'][this.form_yearpassing]['value'] ? control['_parent']['controls'][this.form_endDate]['value'] : null;
+        if (yearofPassing) {
+          let start = moment(control.value).format('YYYY-MM-DD');
+          let yearofPassing1 = moment(yearofPassing).format('YYYY-MM-DD');
+          error.notValid = this.momentFormMonth(yearofPassing);
+          check = moment(start).isSameOrBefore(yearofPassing1, 'month');
+          check = !check;
+        }
+        if (!param) {
+          return check ? error : null;
+        } else {
+          this.detectStartDateCalc(yearofPassing, startDate, endDate, control);
+          return null;
+        }
+      };
+    }
+
+    detectStartDateCalc(yearofPassing, startDate, endDate, control) {
+      let startCheck;
+      let endCheck;
+      if (yearofPassing && startDate) {
+        let start = moment(startDate).format('YYYY-MM-DD');
+        let yearofPassing1 = moment(yearofPassing).format('YYYY-MM-DD');
+        // error.notValid = this.momentFormMonth(yearofPassing);
+        startCheck = moment(start).isSameOrBefore(yearofPassing1, 'month');
+        startCheck = !startCheck;
+        startCheck ? control['_parent']['controls'][this.form_startDate].setErrors({notValid: this.momentFormMonth(yearofPassing)}) : control['_parent']['controls'][this.form_startDate].setErrors(null);
+      }
+      if (yearofPassing && endDate) {
+        let end = moment(endDate).format('YYYY-MM-DD');
+        let yearofPassing1 = moment(yearofPassing).format('YYYY-MM-DD');
+        // error.notValid = this.momentFormMonth(yearofPassing);
+        endCheck = moment(end).isSameOrBefore(yearofPassing1, 'month');
+        endCheck = !endCheck;
+        endCheck ? control['_parent']['controls'][this.form_endDate].setErrors({notValid: this.momentFormMonth(yearofPassing)}) : control['_parent']['controls'][this.form_endDate].setErrors(null);
+      }
+
+    }
+  
+    startTrue(param) {
+      return this.regexValidator({notValid: true}, param);
+    }
+  
   formInitialize() {
     this.educationForm = this.fb.group({
       [this.form_educationArray]: this.fb.array([])
@@ -453,6 +522,7 @@ validSelectedPost() {
     if (this.educationForm.valid) {
      return this.getEducationArr.push(this.initEducationArray());
     }
+    this.appConfig.nzNotification('error', 'Not added', 'Please fill all the red highlighted fields to proceed further');
     this.glovbal_validators.validateAllFormArrays(this.educationForm.get([this.form_educationArray]) as FormArray);
   }
 
@@ -475,8 +545,8 @@ validSelectedPost() {
         element['controls'][this.form_collegeName].clearValidators({ emitEvent: false });
         element['controls'][this.form_boardUniversity].clearValidators({ emitEvent: false });
 
-        element['controls'][this.form_collegeName].setValidators([Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
-        element['controls'][this.form_boardUniversity].setValidators([Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
+        element['controls'][this.form_collegeName].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()],{ emitEvent: false });
+        element['controls'][this.form_boardUniversity].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()],{ emitEvent: false });
 
         element['controls'][this.form_qualification].updateValueAndValidity({ emitEvent: false });
         element['controls'][this.form_specialization].updateValueAndValidity({ emitEvent: false });
@@ -491,8 +561,8 @@ validSelectedPost() {
         element['controls'][this.form_boardUniversity].clearValidators({ emitEvent: false });
 
         element['controls'][this.form_specialization].setValidators([Validators.required],{ emitEvent: false });
-        element['controls'][this.form_qualification].setValidators([this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
-        element['controls'][this.form_collegeName].setValidators([Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
+        element['controls'][this.form_qualification].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()],{ emitEvent: false });
+        element['controls'][this.form_collegeName].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()],{ emitEvent: false });
         element['controls'][this.form_boardUniversity].setValidators([Validators.required],{ emitEvent: false });
 
         element['controls'][this.form_qualification].updateValueAndValidity({ emitEvent: false });
@@ -509,7 +579,7 @@ validSelectedPost() {
 
         element['controls'][this.form_specialization].setValidators([Validators.required],{ emitEvent: false });
         element['controls'][this.form_collegeName].setValidators([Validators.required],{ emitEvent: false });
-        element['controls'][this.form_boardUniversity].setValidators([this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
+        element['controls'][this.form_boardUniversity].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()],{ emitEvent: false });
 
         element['controls'][this.form_qualification].updateValueAndValidity({ emitEvent: false });
         element['controls'][this.form_specialization].updateValueAndValidity({ emitEvent: false });
@@ -526,7 +596,7 @@ validSelectedPost() {
         element['controls'][this.form_qualification].setValidators([Validators.required],{ emitEvent: false });
         element['controls'][this.form_specialization].setValidators([Validators.required],{ emitEvent: false });
         element['controls'][this.form_collegeName].setValidators([Validators.required],{ emitEvent: false });
-        element['controls'][this.form_boardUniversity].setValidators([this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
+        element['controls'][this.form_boardUniversity].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()],{ emitEvent: false });
 
         element['controls'][this.form_qualification].updateValueAndValidity({ emitEvent: false });
         element['controls'][this.form_specialization].updateValueAndValidity({ emitEvent: false });
@@ -543,7 +613,7 @@ validSelectedPost() {
         element['controls'][this.form_qualification].setValidators([Validators.required],{ emitEvent: false });
         element['controls'][this.form_specialization].setValidators([Validators.required],{ emitEvent: false });
         element['controls'][this.form_collegeName].setValidators([Validators.required],{ emitEvent: false });
-        element['controls'][this.form_boardUniversity].setValidators([this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()],{ emitEvent: false });
+        element['controls'][this.form_boardUniversity].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()],{ emitEvent: false });
 
         element['controls'][this.form_qualification].updateValueAndValidity({ emitEvent: false });
         element['controls'][this.form_specialization].updateValueAndValidity({ emitEvent: false });

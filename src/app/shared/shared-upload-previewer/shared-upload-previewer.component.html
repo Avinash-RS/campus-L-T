@@ -322,7 +322,19 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Business Name </th>
         <td mat-cell *matCellDef="let element"> {{element.company ? element.company : '-'}} </td>
       </ng-container>
-      
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="reference">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Reference </th>
+              <td mat-cell *matCellDef="let element"> {{element.hr_offer_reference ? element.hr_offer_reference : '-'}} </td>
+            </ng-container>
+
+                  <!-- Name Column -->
+      <ng-container matColumnDef="offDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.hr_offer_date ? element.hr_offer_date : '-'}} </td>
+      </ng-container>
+
       <!-- Symbol Column -->
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>

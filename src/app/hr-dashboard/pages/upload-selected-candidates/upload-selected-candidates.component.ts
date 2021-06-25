@@ -125,7 +125,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       return '-';
     }
   }
-
   uploadListToAPI() {
     const date = new Date();
     const currentDate = this.getDateFormat1(date);
@@ -196,7 +195,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
       
-      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 2 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Candidate Email Id') &&
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 4 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Candidate Email Id') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Business Name')) {
         // this.enableList = true;
         this.appConfig.hideLoader();
@@ -394,11 +393,11 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
-      let businessName; let email;
+      let businessName; let email; let hr_offer_reference; let hr_offer_date; 
       if (i > 0 && dup) {
         count += 1;
         dup.forEach((element, index) => {
-          if (index < 2) {
+          if (index < 4) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
                 this.enableList = false;
@@ -415,11 +414,29 @@ export class UploadSelectedCandidatesComponent implements OnInit {
                 businessName = element ? element : '';
               }
             }
+            if (index == 2) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                hr_offer_reference = element ? element : '';
+              }
+            }
+            if (index == 3) {
+              // if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+              //   this.enableList = false;
+              //   this.dateFormatExist = true;
+              // } else {
+                hr_offer_date = element ? element : '';
+              // }
+            }
           }
         });
         const value = {
           company: businessName ? businessName.toString().trim() : '',
-          email: email ? email.toString().trim() : ''
+          email: email ? email.toString().trim() : '',
+          hr_offer_reference : hr_offer_reference ? hr_offer_reference.toString().trim() : '',
+          hr_offer_date: hr_offer_date ? hr_offer_date : ''
         };
 
 

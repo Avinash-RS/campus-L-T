@@ -4,8 +4,12 @@
         Work Experience Details
     </h5>
 
+    <div class="row-wrappper mt-3 hanging">
+        <mat-checkbox [formControl]="isWorkExp" (change)="changeWorkExp($event)" class="mr-2"></mat-checkbox> Do you have any Work Experience?</div>
+
     <div class="grids-wrapper">
         <form class="workDetailsForm" [formGroup]="workDetailsForm" (ngSubmit)="formSubmit()">
+            <ng-container *ngIf="showWorkExp == '1'">
             <h6 class="mt-3">Employment Details</h6>
             <ng-container *ngIf="getEmploymentArr && getEmploymentArr.controls" [formArrayName]="form_Employment_Array">
                 <ng-container *ngFor="let item of getEmploymentArr.controls; let i = index;" [formGroupName]="i">
@@ -225,7 +229,7 @@
                 </div>
 
             </div>
-
+        </ng-container>
             <div class="row-wrapper mt-3">
                 <div class="overall-input-wrapper width-50">
                     <!-- <label>Total Experience<span></span></label> -->

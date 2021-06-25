@@ -83,6 +83,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     },
   ];
   minDate: Date;
+  minDateDOB: Date;
   maxDate: Date;
   url: '';
   // url = 'assets/images/img_avatar2.jpg';
@@ -209,6 +210,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
         // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
         const currentYear = new Date().getFullYear();
         this.minDate = new Date(currentYear - 50, 0, 1);
+        this.minDateDOB = new Date(currentYear - 90, 0, 1);
         this.maxDate = new Date(currentYear + 20, 11, 31);
   }
 
@@ -263,7 +265,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       
       this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
         this.appConfig.hideLoader();
-        this.appConfig.nzNotification('success', 'Saved', 'Personal details has been updated');
+        this.appConfig.nzNotification('success', 'Saved', 'Personal details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
       });
@@ -401,29 +403,29 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   formInitialize() {
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
-      [this.form_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dob]: [{value: null, disabled: true}],
       [this.form_gender]: [{value: null, disabled: true}],
-      [this.form_place_of_birth]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null],
-      [this.form_nationality]: [{value: null, disabled: false}, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_mother_tongue]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_religion]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_caste]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_nationality]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_religion]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],
       [this.form_blood_group]: [null, [Validators.required]],
-      [this.form_father_name]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_emergency_contact]: [null, [this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
-      [this.form_mobile]: [null, [Validators.required, this.glovbal_validators.mobileRegex(), RemoveWhitespace.whitespace()]],
-      [this.form_email]: [{value: null, disabled: true}, [Validators.required, this.glovbal_validators.email(), RemoveWhitespace.whitespace()]],
-      [this.form_aadhar]: [{value: null, disabled: false}, [this.glovbal_validators.aadhaar(), RemoveWhitespace.whitespace()]],
-      [this.form_pan]: [null, [Validators.required, this.glovbal_validators.alphaNum10(), RemoveWhitespace.whitespace()]],
-      [this.form_offer_reference]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.mobileRegex()]],
+      [this.form_mobile]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
+      [this.form_email]: [{value: null, disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+      [this.form_aadhar]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.aadhaar()]],
+      [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum10()]],
+      [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_offer_date]: [null],
-      [this.form_height]: [{value: null, disabled: false}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
-      [this.form_weight]: [{value: null, disabled: false}, [this.glovbal_validators.numberDecimals(), RemoveWhitespace.whitespace()]],
-      [this.form_identification_mark1]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_identification_mark2]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],    
+      [this.form_height]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.numberDecimals()]],
+      [this.form_weight]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.numberDecimals()]],
+      [this.form_identification_mark1]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_identification_mark2]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],    
     })
   }
 

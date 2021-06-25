@@ -133,7 +133,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   hoverHide: any;
   getJoiningDocuments: any;
   expectedDate = new FormControl(null, [Validators.required]);
-  reason = new FormControl(null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]);
+  reason = new FormControl(null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
   joiningNotUploadedDocs: any[];
   isRoute: any;
 
@@ -292,16 +292,16 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   patchJoiningArray(data, otherCert?) {
     return this.fb.group({
-      [this.form_name]: [data[this.form_name], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_label]: [data[this.form_label], (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()] : [Validators.nullValidator])],
+      [this.form_name]: [data[this.form_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [data[this.form_label], (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
       // [this.form_id]: [data[this.form_id]],
       [this.form_file_size]: [data[this.form_file_size]],
       [this.form_file_path]: [data[this.form_file_path]],
       [this.form_file_name]: [data[this.form_file_name]],
       [this.form_file_type]: [data[this.form_file_type]],
       [this.form_file_id]: [data[this.form_file_id]],
-      [this.form_description]: [data[this.form_description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [data[this.form_expectedDate]],
     })    
   }
@@ -323,8 +323,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_file_name]: [data[this.form_file_name]],
       [this.form_file_type]: [data[this.form_file_type]],
       [this.form_file_id]: [data[this.form_file_id]],
-      [this.form_description]: [data[this.form_description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [data[this.form_expectedDate] ? this.dateConvertion(data[this.form_expectedDate]) : null]
     })        
   }
@@ -353,16 +353,16 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   initJoiningArray(otherCert?) {
     return this.fb.group({
-      [this.form_name]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_label]: [null, (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()] : [Validators.nullValidator])],
+      [this.form_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [null, (otherCert == 'otherCert' ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
       // [this.form_id]: [null],
       [this.form_file_size]: [null],
       [this.form_file_path]: [null],
       [this.form_file_name]: [null],
       [this.form_file_type]: [null],
       [this.form_file_id]: [null],
-      [this.form_description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_Not_Submitted_Description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [null]
     })    
   }
@@ -370,18 +370,18 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   patchBankingArray(data) {
     return this.fb.group({
       [this.form_name]: [data[this.form_name]],
-      [this.form_label]: [data[this.form_label], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]], // Bank name
-      [this.form_acc_no]: [data[this.form_acc_no], [Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50), RemoveWhitespace.whitespace()]],
-      [this.form_ifsc_code]: [data[this.form_ifsc_code], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_branch]: [data[this.form_branch], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_label]: [data[this.form_label], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]], // Bank name
+      [this.form_acc_no]: [data[this.form_acc_no], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50)]],
+      [this.form_ifsc_code]: [data[this.form_ifsc_code], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_branch]: [data[this.form_branch], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       // [this.form_id]: [data[this.form_id]],
       [this.form_file_size]: [data[this.form_file_size]],
       [this.form_file_path]: [data[this.form_file_path]],
       [this.form_file_name]: [data[this.form_file_name]],
       [this.form_file_type]: [data[this.form_file_type]],
       [this.form_file_id]: [data[this.form_file_id]],
-      [this.form_description]: [data[this.form_description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [data[this.form_expectedDate]],
     })    
   }
@@ -389,18 +389,18 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   initBankingArray() {
     return this.fb.group({
       [this.form_name]: [null],
-      [this.form_label]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]], // Bank name
-      [this.form_acc_no]: [null, [Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50), RemoveWhitespace.whitespace()]],
-      [this.form_ifsc_code]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_branch]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_label]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]], // Bank name
+      [this.form_acc_no]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50)]],
+      [this.form_ifsc_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_branch]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       // [this.form_id]: [null],
       [this.form_file_size]: [null],
       [this.form_file_path]: [null],
       [this.form_file_name]: [null],
       [this.form_file_type]: [null],
       [this.form_file_id]: [null],
-      [this.form_description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_Not_Submitted_Description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [null]
     })    
   }
@@ -414,8 +414,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_file_name]: [null],
       [this.form_file_type]: [null],
       [this.form_file_id]: [null],
-      [this.form_description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_Not_Submitted_Description]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [null]
     })        
   }

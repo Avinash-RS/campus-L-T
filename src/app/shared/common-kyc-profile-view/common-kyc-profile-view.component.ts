@@ -27,6 +27,41 @@ export class CommonKycProfileViewComponent implements OnInit {
   url: any;
   allStatess: any;
   radioValue = 'pre';
+  category = [
+    {
+      name: 'Scheduled Caste',
+      caste: 'SC'
+    },
+    {
+      name: 'Scheduled Tribe',
+      caste: 'ST'
+    },
+    {
+      name: 'De-notified Tribe',
+      caste: 'DenotifiedTribe'
+    },
+    {
+      name: 'Nomadic Tribe',
+      caste: 'NomadicTribe'
+    },
+    {
+      name: 'Special Backward Category',
+      caste: 'SBC'
+    },
+    {
+      name: 'Other Backward Classes',
+      caste: 'OBC'
+    },
+    {
+      name: 'General / Open Category',
+      caste: 'GEN'
+    },
+    {
+      name: 'Other',
+      caste: 'Other'
+    },
+  ];
+
   allCitiess: any;
   permanentStateId: any;
   candidateName: any;
@@ -618,6 +653,15 @@ export class CommonKycProfileViewComponent implements OnInit {
     });
   }
 
+  getCategory(data) {
+    let name = '';
+    this.category.forEach(element => {
+      if (element.caste == data) {
+        name = element.name;
+      }
+    });
+    return name;
+}
 
   getLocalForm(form) {
     this.apiForm = form;
@@ -652,7 +696,7 @@ export class CommonKycProfileViewComponent implements OnInit {
       dobYear: dob.year,
       nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '-',
       aadhaar: organizeUserDetails && organizeUserDetails.field_aadharno && organizeUserDetails['field_aadharno'] ? organizeUserDetails['field_aadharno']['value'] : '-',
-      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '-',
+      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? this.getCategory(organizeUserDetails['field_category']['value']) : '-',
 
       presentAddress1: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'] ? organizeUserDetails['field_present_line_street_addres']['value'] : '-',
       presentAddress2: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'] ? organizeUserDetails['field_present_line2_street_addre']['value'] : '-',

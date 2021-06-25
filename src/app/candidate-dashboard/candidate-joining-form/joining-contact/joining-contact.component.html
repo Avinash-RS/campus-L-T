@@ -34,7 +34,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-100">
-                    <label>Present Address 3<span>*</span></label>
+                    <label>Present Address 3<span></span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_present_address_3">
                     <div class="form-error" *ngIf="present_address_3.invalid && present_address_3.touched">
@@ -77,7 +77,7 @@
                         [formControlName]="form_present_zip_code">
                     <div class="form-error" *ngIf="present_zip_code?.invalid && present_zip_code?.touched">
                         <div *ngIf="present_zip_code?.errors?.required">Present zip code is Required</div>
-                        <div *ngIf="present_zip_code?.errors?.numberOnly">Numericals only allowed</div>
+                        <div *ngIf="present_zip_code?.errors?.zipOnly">Should be numberic only and should be exact 6 digits</div>
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
@@ -129,7 +129,7 @@
 
 <div class="row-wrapper">
     <div class="overall-input-wrapper width-100">
-        <label>Permanent Address 3<span>*</span></label>
+        <label>Permanent Address 3<span></span></label>
         <input matInput placeholder="Enter here" class="input" type="text"
             [formControlName]="form_permanent_address_3">
         <div class="form-error" *ngIf="permanent_address_3.invalid && permanent_address_3.touched">
@@ -172,7 +172,7 @@
             [formControlName]="form_permanent_zip_code">
         <div class="form-error" *ngIf="permanent_zip_code?.invalid && permanent_zip_code?.touched">
             <div *ngIf="permanent_zip_code?.errors?.required">Permanent zip code is Required</div>
-            <div *ngIf="permanent_zip_code?.errors?.numberOnly">Numericals only allowed</div>
+            <div *ngIf="permanent_zip_code?.errors?.zipOnly">Should be numberic only and should be exact 6 digits</div>
         </div>
     </div>
     <div class="overall-input-wrapper width-45">

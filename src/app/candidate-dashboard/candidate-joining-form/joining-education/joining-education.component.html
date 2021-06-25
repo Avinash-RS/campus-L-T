@@ -36,7 +36,7 @@
 
                         <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value)">
 
-                        <div *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'SSLC')" class="row-wrapper">
+                        <div *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'SSLC') && (getEducationArr.controls[i].get(form_qualification_type).value != 'HSC')" class="row-wrapper">
                             <div class="overall-input-wrapper width-45">
                                 <label>Qualification<!-- Asterick --><span *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'HSC' && getEducationArr.controls[i].get(form_qualification_type).value != 'Diploma')">*</span>
                                 </label>
@@ -184,7 +184,7 @@
                                         Start Date is Required</div>
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax">
-                                        {{getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax.max) : ''}}
+                                        {{getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentFormMonth(getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMax.max) : ''}}
                                     </div>
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerMin">
@@ -193,6 +193,10 @@
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.matDatepickerParse">
                                         Invalid Date Format</div>
+                                    <div
+                                    *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.notValid">
+                                    {{'Start date should not go beyond ' + getEducationArr.controls[i].get(form_startDate)?.errors?.notValid}}</div>
+
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-32">
@@ -219,6 +223,10 @@
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerParse">
                                         Invalid Date Format</div>
+                                        <div
+                                        *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.notValid">
+                                        {{'End date should not go beyond ' + getEducationArr.controls[i].get(form_endDate)?.errors?.notValid}}</div>
+    
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-32">
@@ -257,7 +265,7 @@
                     </div>
 
                     <div class="row-wrapper">
-                        <div class="overall-input-wrapper width-32">
+                        <div class="overall-input-wrapper width-24">
                             <label>No. of Backlogs<span>*</span></label>
                             <input matInput placeholder="Enter here" class="input" type="text"
                                 [formControlName]="form_backlog">
@@ -271,7 +279,7 @@
                                         Accept Numbers only and Maximum of 2 digits only Allowed</div>
                             </div>
                         </div>
-                        <div class="overall-input-wrapper width-32">
+                        <div class="overall-input-wrapper width-24">
                             <label>Mode<span>*</span></label>
                             <nz-select class="input select" [formControlName]="form_mode"
                                 nzAllowClear nzShowSearch nzPlaceHolder="Select">
@@ -285,7 +293,7 @@
                                     Mode is Required</div>
                             </div>
                         </div>
-                        <div class="overall-input-wrapper width-32">
+                        <div class="overall-input-wrapper width-24">
                             <label>Percentage(%)<span>*</span></label>
                             <input matInput placeholder="Enter here" class="input" type="text"
                                 [formControlName]="form_cgpa">
@@ -298,12 +306,29 @@
                                     Percentage should be in the range of 10 to 100</div>
                             </div>
                         </div>
+
+                        <ng-container *ngIf="((getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma') || (getEducationArr.controls[i].get(form_qualification_type).value == 'UG') || (getEducationArr.controls[i].get(form_qualification_type).value == 'PG'))">
+                            <div class="overall-input-wrapper width-24">
+                            <label>Final Percentage(%)<span>*</span></label>
+                            <input matInput placeholder="Enter here" class="input" type="text"
+                                [formControlName]="form_Finalcgpa">
+                            <div class="form-error"
+                                *ngIf="getEducationArr.controls[i].get(form_Finalcgpa).invalid && getEducationArr.controls[i].get(form_Finalcgpa).touched">
+                                <div *ngIf="getEducationArr.controls[i].get(form_Finalcgpa).errors?.required">
+                                    Final Percentage is Required</div>
+                                <div
+                                    *ngIf="getEducationArr.controls[i].get(form_Finalcgpa).errors?.percentage">
+                                    Final Percentage should be in the range of 10 to 100</div>
+                            </div>
+                        </div>
+                        </ng-container>
+
                     </div>
                 </ng-container>
 
                     </div>
                     <div class="remove-wrapper">
-                        <div (click)="removeEducationArray(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
+                        <div (click)="removeEducationArray(i)" *ngIf="i !==0 && (i > educationLength - 1)" matTooltip="Remove" class="remove">
                             <i class="material-icons material-icons-outlined">
                                 remove_circle_outline
                                 </i>

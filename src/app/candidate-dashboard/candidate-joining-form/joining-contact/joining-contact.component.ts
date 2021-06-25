@@ -167,7 +167,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
         }
         this.candidateService.joiningFormGetContactDetailsSave(apiData).subscribe((data: any)=> {
           this.appConfig.hideLoader();
-          this.appConfig.nzNotification('success', 'Saved', 'Contact details has been updated');
+          this.appConfig.nzNotification('success', 'Saved', 'Contact details is updated');
           this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);    
       });
@@ -251,21 +251,21 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
 
   formInitialize() {
     this.contactForm = this.fb.group({
-      [this.form_present_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_present_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_present_address_3]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_present_address_1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_present_address_2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_present_address_3]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_present_city]: [{ value: null, disabled: true }],
       [this.form_present_state]: [null],
       [this.form_present_region]: [null],
-      [this.form_present_zip_code]: [null, [Validators.required, this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]],
+      [this.form_present_zip_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.zipOnly()]],
       [this.form_same_as_checkbox]: [null],
-      [this.form_permanent_address_1]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_permanent_address_2]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_permanent_address_3]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_permanent_address_1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_permanent_address_2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_permanent_address_3]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_permanent_city]: [{ value: null, disabled: true }],
       [this.form_permanent_state]: [null],
       [this.form_permanent_region]: [null],
-      [this.form_permanent_zip_code]: [null, [Validators.required, this.glovbal_validators.numberOnly(), RemoveWhitespace.whitespace()]]
+      [this.form_permanent_zip_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.zipOnly()]]
     })
   }
 

@@ -1,6 +1,6 @@
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import moment from 'moment';
@@ -109,6 +109,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   form_Employment_Array = "Employment"
 
   workDetails: any;
+
+  isWorkExp = new FormControl(null);
+  showWorkExp: any = '0';
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -126,6 +129,14 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     this.getWorkApiDetails();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+  }
+
+  changeWorkExp(e) {
+    if (e.checked) {
+      this.showWorkExp = '1';
+    } else {
+      this.showWorkExp = '0';
+    }
   }
 
   ngAfterViewInit() {
@@ -146,8 +157,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
           workDetails: data && data.workDetails ? data.workDetails : null,
           Employment: data && data.Employment ? data.Employment : [],
           bgvDetails: data && data.bgvDetails ? data.bgvDetails : null,
-
         }
+        this.showWorkExp = data && data['isworkexp'] =='1' ? '1' : '0';        
+        this.isWorkExp.setValue(data && data['isworkexp'] && data['isworkexp'] == '1' ? true : false);
         this.workDetails = work;
         this.patchWorkForm();
       } else {
@@ -242,16 +254,16 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
   EmploymentArrayPatch(data) {
     return this.fb.group({
-      [this.form_employment_name_address]: [data[this.form_employment_name_address], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_employment_name_address]: [data[this.form_employment_name_address], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_duration_from]: [this.dateConvertion(data[this.form_duration_from])],
       [this.form_duration_to]: [this.dateConvertion(data[this.form_duration_to])],
       [this.form_duration_year]: [data[this.form_duration_year]],
       [this.form_duration_month]: [data[this.form_duration_month]],
-      [this.form_postion_field]: [data[this.form_postion_field], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_name_designation_supervisor]: [data[this.form_name_designation_supervisor], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_nature_work]: [data[this.form_nature_work], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_gross_emploment]: [data[this.form_gross_emploment], [this.glovbal_validators.address50(), RemoveWhitespace.whitespace()]],
-      [this.form_reason_leaving]: [data[this.form_reason_leaving], [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_postion_field]: [data[this.form_postion_field], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_name_designation_supervisor]: [data[this.form_name_designation_supervisor], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_nature_work]: [data[this.form_nature_work], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_gross_emploment]: [data[this.form_gross_emploment], [RemoveWhitespace.whitespace(), this.glovbal_validators.address50()]],
+      [this.form_reason_leaving]: [data[this.form_reason_leaving], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
     },
       { validator: FormCustomValidators.WorkanyOneSelected }
     )
@@ -259,16 +271,16 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   initEmploymentArray() {
     return this.fb.group({
-      [this.form_employment_name_address]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_employment_name_address]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_duration_from]: [null],
       [this.form_duration_to]: [null],
       [this.form_duration_year]: [null],
       [this.form_duration_month]: [null],
-      [this.form_postion_field]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_name_designation_supervisor]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_nature_work]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_gross_emploment]: [null, [this.glovbal_validators.address50(), RemoveWhitespace.whitespace()]],
-      [this.form_reason_leaving]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_postion_field]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_name_designation_supervisor]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_nature_work]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_gross_emploment]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address50()]],
+      [this.form_reason_leaving]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
     },
       { validator: FormCustomValidators.WorkanyOneSelected }
     )
@@ -286,15 +298,15 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_court_case_pending]: [null],
       [this.form_university_case_pending]: [null],
       [this.form_disciplinary_proceedings]: [null],
-      [this.form_full_particulars]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_full_particulars]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_total_exp_years]: [null],
       [this.form_total_exp_months]: [null],
-      [this.form_break_in_emp]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_break_in_emp]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_employed_us]: ['0'],
-      [this.form_oc]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
-      [this.form_payslip]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_oc]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_payslip]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_interviewed_by_us]: ['0'],
-      [this.form_post]: [null, [this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_post]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_when_interview]: [null],
       [this.form_Employment_Array]: this.fb.array([])
     })
@@ -329,11 +341,11 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   requiredValidator(value, form, form1) {
     if (value == '1') {
-      this.workDetailsForm.get(form).setValidators([Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+      this.workDetailsForm.get(form).setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]), { emitEvent: false };
       if (form1 == this.form_when_interview) {
         this.workDetailsForm.get(form1).setValidators([Validators.required]), { emitEvent: false };
       } else {
-        this.workDetailsForm.get(form1).setValidators([Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+        this.workDetailsForm.get(form1).setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]), { emitEvent: false };
       }
     } else {
       this.workDetailsForm.patchValue({
@@ -363,9 +375,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_full_particulars]: formValues[this.form_full_particulars]
     }
     if (bgvDetails[this.form_convicted_by_Court] == '1' || bgvDetails[this.form_arrested] == '1' || bgvDetails[this.form_prosecuted] == '1' || bgvDetails[this.form_detention] == '1' || bgvDetails[this.form_fined_by_court] == '1' || bgvDetails[this.form_debarred_exam_university] == '1' || bgvDetails[this.form_debarred_psc_company] == '1' || bgvDetails[this.form_court_case_pending] == '1' || bgvDetails[this.form_university_case_pending] == '1' || bgvDetails[this.form_disciplinary_proceedings] == '1') {
-      this.workDetailsForm.get(this.form_full_particulars).setValidators([Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+      this.workDetailsForm.get(this.form_full_particulars).setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]), { emitEvent: false };
     } else {
-      this.workDetailsForm.get(this.form_full_particulars).setValidators([this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]), { emitEvent: false };
+      this.workDetailsForm.get(this.form_full_particulars).setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]), { emitEvent: false };
     }
     this.workDetailsForm.get(this.form_full_particulars).updateValueAndValidity(), { emitEvent: false };
   }
@@ -376,9 +388,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     let formValues = this.workDetailsForm.getRawValue();
     if (this.workDetailsForm.valid) {
       const workDetails = {
-        [this.form_total_exp_years]: formValues[this.form_total_exp_years],
-        [this.form_total_exp_months]: formValues[this.form_total_exp_months],
-        [this.form_break_in_emp]: formValues[this.form_break_in_emp],
+        [this.form_total_exp_years]: this.showWorkExp == '1' ? formValues[this.form_total_exp_years] : null,
+        [this.form_total_exp_months]: this.showWorkExp == '1' ? formValues[this.form_total_exp_months] : null,
+        [this.form_break_in_emp]: this.showWorkExp == '1' ? formValues[this.form_break_in_emp] : null,
         [this.form_employed_us]: formValues[this.form_employed_us] && (formValues[this.form_employed_us] == '1' || formValues[this.form_employed_us] == true) ? '1' : '0',
         [this.form_oc]: formValues[this.form_oc],
         [this.form_payslip]: formValues[this.form_payslip],
@@ -399,13 +411,13 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
         [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings] && (formValues[this.form_disciplinary_proceedings] == '1' || formValues[this.form_disciplinary_proceedings] == true) ? '1' : '0',
         [this.form_full_particulars]: formValues[this.form_full_particulars]
       }
-      const Employment = this.workDetailsForm.getRawValue()[this.form_Employment_Array];
+      const Employment = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : [];
       let apiData = {
         workDetails,
         bgvDetails,
-        Employment
+        Employment,
+        isworkexp: this.showWorkExp == '1' ? '1' : '0'
       }
-      console.log('apiData', apiData);
       this.candidateService.joiningFormGetWorkDetailsSave(apiData).subscribe((data: any) => {
         this.appConfig.hideLoader();
         this.appConfig.nzNotification('success', 'Saved', 'Work Experience details has been updated');

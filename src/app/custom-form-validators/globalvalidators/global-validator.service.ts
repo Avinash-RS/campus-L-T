@@ -110,6 +110,11 @@ export class GlobalValidatorService {
       return this.regexValidator(numberOnly, {numberOnly: true});
     }
 
+    zipOnly() {
+      const zipOnly: RegExp = /^[0-9]{6}$/;
+      return this.regexValidator(zipOnly, {zipOnly: true});
+    }
+
     alphaNum10() {
       const alphaNum10: RegExp = /^([a-zA-Z0-9_ ]){0,10}$/;
       return this.regexValidator(alphaNum10, {alphaNum10: true});

@@ -79,7 +79,7 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
     }
     
     if (this.status === 'selectedCandidates') {
-      this.displayedColumns = ['email', 'name', 'delete'];
+      this.displayedColumns = ['email', 'name', 'reference', 'offDate', 'delete'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

@@ -146,7 +146,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 50, 0, 1);
+    this.minDate = new Date(currentYear - 90, 0, 1);
     this.maxDate = new Date(currentYear + 20, 11, 31);
 }
 
@@ -178,7 +178,7 @@ dateConvertion(date) {
       });
       this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {
         this.appConfig.hideLoader();
-        this.appConfig.nzNotification('success', 'Saved', 'Dependent details has been updated');
+        this.appConfig.nzNotification('success', 'Saved', 'Dependent details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       });
@@ -249,10 +249,10 @@ dateConvertion(date) {
 
   patching(data) {
     return this.fb.group({
-      [this.form_dependent_name]: [data[this.form_dependent_name], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_name]: [data[this.form_dependent_name], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
-      [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled]],
       [this.form_dependent_status]: [data[this.form_dependent_status]],
       [this.form_isDependent]: [data[this.form_isDependent]]
@@ -261,10 +261,10 @@ dateConvertion(date) {
 
   initDependentArray() {
     return this.fb.group({
-      [this.form_dependent_name]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_dob]: [null],
-      [this.form_dependent_occupation]: [null, [this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
-      [this.form_dependent_relationship]: [null, [Validators.required, this.glovbal_validators.alphaNum255(), RemoveWhitespace.whitespace()]],
+      [this.form_dependent_occupation]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_relationship]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_differently_abled]: [null],
       [this.form_dependent_status]: [null],
       [this.form_isDependent]: [null]

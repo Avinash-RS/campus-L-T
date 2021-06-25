@@ -188,6 +188,7 @@ export class CommonJoiningFormComponent implements OnInit {
   form_backlog = 'backlogs';
   form_mode = 'mode';
   form_cgpa = 'percentage';
+  form_finalcgpa = 'final_percentage';
 
   // Upload
   form_file_id = 'file_id';
@@ -301,13 +302,75 @@ export class CommonJoiningFormComponent implements OnInit {
     this.formInitialization();
     this.checkFormSubmitted();
     this.getStateAPI();
-    this.checkFormValidRequestFromRxjs();
   }
 
   closeComp() {
     this.dialogRefComp.close();
   }
 
+  getPreviewData() {
+    const userId = this.data && this.data['candidateId'] ? this.data['candidateId'] : '';
+    this.candidateService.joiningFormGetPreviewDetailsCommon(userId).subscribe((data: any) => {
+      this.appConfig.hideLoader();
+      this.personalDetails = data && data.personal ? data.personal : null;
+      this.patchPersonalForm();
+      this.contactDetails = data && data.contact ? data.contact : null;
+      this.patchContactForm();
+      this.dependentDetails = data && data.dependent && data.dependent.length > 0 ? data.dependent : [];
+      if (this.dependentDetails.length > 0) {
+        this.patchDependent();
+      } else {
+        this.dependentDetailsMap = [];
+      }
+      this.educationDetails = data && data.education && data.education.length > 0 ? data.education : [];
+      if (this.educationDetails.length > 0) {
+        this.patchEducation();
+      } else {
+        this.educationDetailsMap = [];
+      }
+      this.documentDetails = data && data.documents ? data.documents : null;
+      if (this.documentDetails && this.documentDetails.Joining_Details && this.documentDetails.Joining_Details.length > 0) {
+        let joinCheck = [];
+        this.documentDetails.Joining_Details.forEach(element => {
+          if (element) {
+            joinCheck.push(element);
+          }
+        });
+        this.documentDetails.Joining_Details = joinCheck;
+      }
+
+      // Work Experience
+      this.getWorkApiDetails(data);
+
+
+      if (data && data.acknowledgment) {
+        let ackData = data.acknowledgment;
+        let ack = {
+          [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? false : false,
+          [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? false : false,
+          [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? false : false,
+          [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? false : false,
+          [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? false : false,
+          [this.form_ack_place]: ackData.ack_place ? ackData.ack_place : null,
+          [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
+        }
+        this.actualDate = ackData.ack_date;
+        this.patchAcknowledgementForm(ack);
+      }
+      if (data && data.signature) {
+        let sign = data.signature;
+        this.signature = {
+          name: 'Signature',
+          label: 'Signature',
+          file_id: sign.file_id,
+          file_path: sign.file_path,
+          file_size: sign.file_size,
+          filename: sign.filename,
+          filetype: sign.filetype,
+        }
+      }
+    });
+  }
 
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -335,10 +398,9 @@ export class CommonJoiningFormComponent implements OnInit {
   }
 
   checkFormSubmitted() {
-    this.formSubmitted =  true;
+    this.formSubmitted = true;
   }
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('preview');
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -398,7 +460,7 @@ export class CommonJoiningFormComponent implements OnInit {
       [this.form_coc]: [null, [Validators.requiredTrue]],
       [this.form_joining]: [null, [Validators.requiredTrue]],
       [this.form_terms_conditions]: [null, [Validators.requiredTrue]],
-      [this.form_ack_place]: [null, [Validators.required, this.glovbal_validators.address255(), RemoveWhitespace.whitespace()]],
+      [this.form_ack_place]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
       [this.form_ack_date]: [{ value: this.dateConvertionForm(new Date()), disabled: true }, [Validators.required]]
     });
   }
@@ -494,75 +556,10 @@ export class CommonJoiningFormComponent implements OnInit {
       } else {
         this.noShowWork = true;
       }
-      
     } else {
       this.workDetails = null;
     }
 }
-
-  getPreviewData() {
-    const userId = this.data && this.data['candidateId'] ? this.data['candidateId'] : '';
-    this.candidateService.joiningFormGetPreviewDetailsCommon(userId).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      this.personalDetails = data && data.personal ? data.personal : null;
-      this.patchPersonalForm();
-      this.contactDetails = data && data.contact ? data.contact : null;
-      this.patchContactForm();
-      this.dependentDetails = data && data.dependent && data.dependent.length > 0 ? data.dependent : [];
-      if (this.dependentDetails.length > 0) {
-        this.patchDependent();
-      } else {
-        this.dependentDetailsMap = [];
-      }
-      this.educationDetails = data && data.education && data.education.length > 0 ? data.education : [];
-      if (this.educationDetails.length > 0) {
-        this.patchEducation();
-      } else {
-        this.educationDetailsMap = [];
-      }
-      this.documentDetails = data && data.documents ? data.documents : null;
-      if (this.documentDetails && this.documentDetails.Joining_Details && this.documentDetails.Joining_Details.length > 0) {
-        let joinCheck = [];
-        this.documentDetails.Joining_Details.forEach(element => {
-          if (element) {
-            joinCheck.push(element);
-          }
-        });
-        this.documentDetails.Joining_Details = joinCheck;
-      }
-
-      // Work Experience
-      this.getWorkApiDetails(data);
-
-
-      if (data && data.acknowledgment) {
-        let ackData = data.acknowledgment;
-        let ack = {
-          [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? false : false,
-          [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? false : false,
-          [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? false : false,
-          [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? false : false,
-          [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? false : false,
-          [this.form_ack_place]: ackData.ack_place ? ackData.ack_place : null,
-          [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
-        }
-        this.actualDate = ackData.ack_date;
-        this.patchAcknowledgementForm(ack);
-      }
-      if (data && data.signature) {
-        let sign = data.signature;
-        this.signature = {
-          name: 'Signature',
-          label: 'Signature',
-          file_id: sign.file_id,
-          file_path: sign.file_path,
-          file_size: sign.file_size,
-          filename: sign.filename,
-          filetype: sign.filetype,
-        }
-      }
-    });
-  }
 
   customEducationLabel(label) {
     if (label == 'SSLC') {
@@ -603,6 +600,7 @@ export class CommonJoiningFormComponent implements OnInit {
         element[this.form_collegeName] = element?.[this.form_collegeName] ? element?.[this.form_collegeName] : 'NA';
         element[this.form_specialization] = element?.[this.form_specialization] ? element?.[this.form_specialization] : 'NA';
         element[this.form_cgpa] = element?.[this.form_cgpa] ? element?.[this.form_cgpa] : 'NA';
+        element[this.form_finalcgpa] = element?.[this.form_finalcgpa] ? element?.[this.form_finalcgpa] : 'NA';
         element[this.form_backlog] = element?.[this.form_backlog] ? element?.[this.form_backlog] : 'NA';
         element[this.form_startDate] = element[this.form_startDate] ? this.dateConvertion(element[this.form_startDate]) : 'NA';
         element[this.form_endDate] = element[this.form_endDate] ? this.dateConvertion(element[this.form_endDate]) : 'NA';
@@ -711,8 +709,8 @@ export class CommonJoiningFormComponent implements OnInit {
       [this.form_permanent_zip_code]: this.contactDetails?.[this.form_permanent_zip_code] ? this.contactDetails[this.form_permanent_zip_code] : 'NA'
     };
     this.contactDetailsMap = data;
-    this.contactDetailsMap.presentAddress = `${this.contactDetails?.[this.form_present_address_1]}, ${this.contactDetails?.[this.form_present_address_2]}, ${this.contactDetails?.[this.form_present_address_3]}`;
-    this.contactDetailsMap.permanentAddress = `${this.contactDetails?.[this.form_permanent_address_1]}, ${this.contactDetails?.[this.form_permanent_address_2]}, ${this.contactDetails?.[this.form_permanent_address_3]}`;
+    this.contactDetailsMap.presentAddress = `${this.contactDetails?.[this.form_present_address_1]}, ${this.contactDetails?.[this.form_present_address_2]}${this.contactDetails?.[this.form_present_address_3] ? ', ' + this.contactDetails?.[this.form_present_address_3] : ''}`;
+    this.contactDetailsMap.permanentAddress = `${this.contactDetails?.[this.form_permanent_address_1]}, ${this.contactDetails?.[this.form_permanent_address_2]}${this.contactDetails?.[this.form_permanent_address_3] ? ', ' + this.contactDetails?.[this.form_permanent_address_3] : ''}`;
 
   }
 
@@ -1015,7 +1013,5 @@ export class CommonJoiningFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
   }
-
 }

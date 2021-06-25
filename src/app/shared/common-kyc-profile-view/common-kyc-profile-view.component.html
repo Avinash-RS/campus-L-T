@@ -73,7 +73,7 @@
       <div class="form-wrapper-right">
         <div class="form-group">
           <label>Category</label>
-          <input class="input" readonly type="text" [value]="userDetails['category']">
+          <input class="input" readonly type="text" [value]="userDetails && userDetails['category'] ? userDetails['category'] : ''">
         </div>
       </div>
     </div>
