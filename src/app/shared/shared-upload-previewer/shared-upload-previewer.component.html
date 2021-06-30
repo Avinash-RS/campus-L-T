@@ -335,6 +335,73 @@
         <td mat-cell *matCellDef="let element"> {{element.hr_offer_date ? element.hr_offer_date : '-'}} </td>
       </ng-container>
 
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="offValidity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Validity </th>
+                    <td mat-cell *matCellDef="let element"> {{element.offer_validity ? element.offer_validity : '-'}} </td>
+                  </ng-container>
+            
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <img style="cursor: pointer; padding-left: 1em;" (click)="removeSelectedCandidate(i)"
+            src="assets/images/005-close-1.svg" alt="" srcset="">
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="status === 'decliners_upload'">
+  <div class="user-list-wrapper" [ngClass]="status && status === 'decliners_upload' ? '' : 'hide'">
+    <!-- <mat-form-field>
+          <mat-label>Filter</mat-label> -->
+    <div class="search-bar">
+      <div class="search-icon">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+      </div>
+    </div>
+    <!-- </mat-form-field> -->
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="remarks">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+        <td mat-cell *matCellDef="let element"> {{element.remarks ? element.remarks : '-'}} </td>
+      </ng-container>
+
+                  <!-- Name Column -->
+      <ng-container matColumnDef="decline">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Declined Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.decline_date ? element.decline_date : '-'}} </td>
+      </ng-container>
+
+            
       <!-- Symbol Column -->
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>

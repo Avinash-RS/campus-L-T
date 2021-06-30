@@ -609,6 +609,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  declinedCandidatesUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/decliners_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   SelectedCandidatesList(data) {
     return this.http.get(`${this.BASE_URL}/profile/selected_user_list?company=${data.company}`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

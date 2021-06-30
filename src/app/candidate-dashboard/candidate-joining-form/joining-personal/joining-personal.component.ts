@@ -415,7 +415,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
       [this.form_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dob]: [{value: null, disabled: true}, [Validators.required]],
+      [this.form_dob]: [null, [Validators.required]],
       [this.form_gender]: [{value: null, disabled: true}, [Validators.required]],
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null, [Validators.required]],

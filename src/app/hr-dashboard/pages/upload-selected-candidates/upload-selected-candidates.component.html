@@ -50,7 +50,7 @@
         </div>
         <div class="buttons">
           <button (click)="delete()" class="cancel-btn btn-margin-space" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
-          <button (click)="selectedTemplate == '0' ? upload() : uploadHRDetails()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+          <button (click)="uploadType()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
         </div>
       </div>
       <div class="download">
@@ -90,16 +90,16 @@
           </div>
             </div>
   
-    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate == '1'}" *ngIf="enableList">
+    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate == this.secondForm}" *ngIf="enableList">
       <div class="list-count">
         Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
       </div>
-      <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate == '0' ? 'selectedCandidates' : 'hrMapping'" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
+      <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
   
 
       <div class="button-wrapper">
         <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
-        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="selectedTemplate == '0' ?  submit() : submitHR()" class="ok" mat-raised-button>Ok</button>
+        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submitType()" class="ok" mat-raised-button>Ok</button>
       </div>
     </div>
   </div>
