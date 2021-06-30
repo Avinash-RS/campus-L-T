@@ -50,6 +50,9 @@
                                 <!-- <mat-icon>account_circle</mat-icon> -->
                             </mat-panel-description>
                         </mat-expansion-panel-header>
+                            <div class="alert">
+                                Note: Upload passport size photo with light (or) plain background.
+                              </div>
                         <ng-container *ngIf="getJoiningArr && getJoiningArr.controls"
                             [formArrayName]="form_joiningArray">
                             <ng-container *ngFor="let item of getJoiningArr.controls; let j = index;"

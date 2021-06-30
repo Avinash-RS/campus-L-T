@@ -149,6 +149,54 @@
                             </div>
 
                             <div class="row-wrapper">
+                                <div class="overall-input-wrapper width-30">
+                                    <label>HR Name<span></span></label>
+                                    <input matInput placeholder="Enter here" class="input" type="text"
+                                        [formControlName]="form_hr_name">
+                                    <div class="form-error"
+                                        *ngIf="getEmploymentArr.controls[i].get(form_hr_name).invalid && getEmploymentArr.controls[i].get(form_hr_name).touched">
+                                        <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_name).errors?.required">
+                                            HR Name is Required</div>
+                                        <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_name).errors?.alphaNum255">
+                                            Alpha numeric with maximum of 255 characters only
+                                            allowed</div>
+                                    </div>
+                                </div>
+
+                                <div class="overall-input-wrapper width-38">
+                                    <label>HR Contact Number<span></span></label>
+                                    <input matInput placeholder="Enter here" class="input" type="text"
+                                        [formControlName]="form_hr_contact_no">
+                                    <div class="form-error"
+                                        *ngIf="getEmploymentArr.controls[i].get(form_hr_contact_no).invalid && getEmploymentArr.controls[i].get(form_hr_contact_no).touched">
+                                        <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_contact_no)?.errors?.required">
+                                            HR Contact Number is Required</div>
+                                        <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_contact_no).errors?.mobileRegex">
+                                            Please enter a valid 10 digit mobile number</div>
+
+                                    </div>
+                                </div>
+                                <div class="overall-input-wrapper width-30">
+                                    <label>HR Email ID<span></span></label>
+                                    <input matInput placeholder="Enter here" class="input" type="text"
+                                        [formControlName]="form_hr_email">
+                                    <div class="form-error"
+                                        *ngIf="getEmploymentArr.controls[i].get(form_hr_email).invalid && getEmploymentArr.controls[i].get(form_hr_email).touched">
+                                        <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_email)?.errors?.required">
+                                            HR Email ID is Required</div>
+                                        <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_email).errors?.email">
+                                            Not an Valid Email ID</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-wrapper">
                                 <div class="overall-input-wrapper width-45">
                                     <label>Nature of Work Done<span></span></label>
                                     <textarea matInput placeholder="Enter here" class="input text-area" type="text"

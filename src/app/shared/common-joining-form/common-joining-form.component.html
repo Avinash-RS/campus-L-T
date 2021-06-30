@@ -85,16 +85,29 @@
                         </div>
 
                         <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Blood Group<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_blood_group]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
                             <label>Emergency Contact No.<span></span></label>
                             <div class="input size-16 bold-700 color-black">
                                 {{personalDetailsMap[form_emergency_contact]}}</div>
                         </div>
 
                         <div class="overall-input-wrapper mt-3 width-32">
-                            <label>Blood Group<span></span></label>
-                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_blood_group]}}
-                            </div>
+                            <label>Emergency Contact Person Name<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                {{personalDetailsMap[form_emergency_contact_name]}}</div>
                         </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Relation with Emergency Contact<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                {{personalDetailsMap[form_emergency_contact_relation]}}</div>
+                        </div>
+
                         <div class="overall-input-wrapper mt-3 width-32">
                             <label>Mobile No.<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_mobile]}}</div>
@@ -123,6 +136,12 @@
                                 {{personalDetails && personalDetails[form_height] ? personalDetailsMap[form_height] : 'NA'}}
                                 /
                                 {{personalDetails && personalDetails[form_weight] ? personalDetailsMap[form_weight] : 'NA'}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Alternate Email ID<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_personal_email]}}
                             </div>
                         </div>
 
@@ -718,6 +737,25 @@
                                     <label>Gross Emoluments (Per Month)</label>
                                     <div class="input f_size_16 bold-700 color-black">
                                         {{work[form_gross_emploment]}}</div>
+                                </div>
+                            </div>
+
+                            <div class="row-wrapper mt-0">
+                                <div class="overall-input-wrapper mt-3 width-40">
+                                    <label>HR Name</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_hr_name]}}
+                                    </div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-3 width-35">
+                                    <label>HR Contact Number</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_hr_contact_no]}}</div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-22">
+                                    <label>HR Email ID</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_hr_email]}}</div>
                                 </div>
                             </div>
 

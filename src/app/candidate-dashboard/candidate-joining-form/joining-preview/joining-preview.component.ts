@@ -150,6 +150,9 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   form_weight = 'weight';
   form_identification_mark1 = 'identification_mark1';
   form_identification_mark2 = 'identification_mark2';
+  form_emergency_contact_name = 'emergency_contact_name';
+  form_emergency_contact_relation = 'emergency_contact_relation';
+  form_personal_email = 'personal_email';
   // Form control name declaration end
 
   form_present_address_1 = 'present_line_street_addres';
@@ -245,6 +248,9 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   form_nature_work = "nature_work";
   form_gross_emploment = "gross_emploment";
   form_reason_leaving = "reason_leaving";
+  form_hr_name = 'hr_name';
+  form_hr_contact_no = 'hr_contact_no';
+  form_hr_email = 'hr_email';
   form_bgvDetails = "bgvDetails";
   form_convicted_by_Court = "convicted_by_Court";
   form_arrested = "arrested";
@@ -753,6 +759,9 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_offer_date]: this.personalDetails?.[this.form_offer_date] ? this.dateConvertion(this.personalDetails[this.form_offer_date]) : 'NA',
       [this.form_height]: this.personalDetails?.[this.form_height] ? this.personalDetails[this.form_height] : 'NA',
       [this.form_weight]: this.personalDetails?.[this.form_weight] ? this.personalDetails[this.form_weight] : 'NA',
+      [this.form_emergency_contact_name]: this.personalDetails?.[this.form_emergency_contact_name] ? this.personalDetails[this.form_emergency_contact_name] : 'NA',
+      [this.form_emergency_contact_relation]: this.personalDetails?.[this.form_emergency_contact_relation] ? this.personalDetails[this.form_emergency_contact_relation] : 'NA',
+      [this.form_personal_email]: this.personalDetails?.[this.form_personal_email] ? this.personalDetails[this.form_personal_email] : 'NA',
       [this.form_identification_mark1]: this.personalDetails?.[this.form_identification_mark1] ? this.personalDetails[this.form_identification_mark1] : 'NA',
       [this.form_identification_mark2]: this.personalDetails?.[this.form_identification_mark2] ? this.personalDetails[this.form_identification_mark2] : 'NA',
     };

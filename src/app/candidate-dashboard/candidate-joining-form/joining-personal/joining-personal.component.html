@@ -34,7 +34,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Date of Birth<span></span></label>
+                    <label>Date of Birth<span>*</span></label>
                     <div class="date-relative">
                         <input matInput class="input" [min]="minDateDOB" [max]="maxDate" [matDatepicker]="picker"
                             placeholder="DD-MM-YYYY" [formControlName]="form_dob">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Gender<span></span></label>
+                    <label>Gender<span>*</span></label>
                     <nz-select class="input select" [formControlName]="form_gender" nzAllowClear nzShowSearch
                         nzPlaceHolder="Select">
                         <nz-option *ngFor="let gender of genderDropdownList" [nzLabel]="gender.label"
@@ -67,7 +67,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Place of Birth<span></span></label>
+                    <label>Place of Birth<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_place_of_birth">
                     <div class="form-error" *ngIf="place_of_birth?.invalid && place_of_birth?.touched">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>State of Birth<span></span></label>
+                    <label>State of Birth<span>*</span></label>
                     <nz-select class="input select" [formControlName]="form_state_of_birth" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name"
@@ -91,7 +91,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Nationality<span></span></label>
+                    <label>Nationality<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_nationality">
                     <div class="form-error" *ngIf="nationality?.invalid && nationality?.touched">
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Mother Tongue<span></span></label>
+                    <label>Mother Tongue<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_mother_tongue">
                     <div class="form-error" *ngIf="mother_tongue?.invalid && mother_tongue?.touched">
@@ -114,7 +114,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Religion<span></span></label>
+                    <label>Religion<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_religion">
                     <div class="form-error" *ngIf="religion?.invalid && religion?.touched">
@@ -163,7 +163,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Father Name<span></span></label>
+                    <label>Father Name<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_father_name">
                     <div class="form-error" *ngIf="father_name?.invalid && father_name?.touched">
@@ -173,13 +173,36 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Emergency Contact No.<span></span></label>
+                    <label>Emergency Contact No.<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_emergency_contact">
                     <div class="form-error" *ngIf="emergency_contact?.invalid && emergency_contact?.touched">
                         <div *ngIf="emergency_contact?.errors?.required">Emergency Contact No. is Required</div>
                         <div *ngIf="emergency_contact?.errors?.mobileRegex">Please enter a valid 10 digit mobile number
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-45">
+                    <label>Emergency Contact Person Name<span>*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_emergency_contact_name">
+                    <div class="form-error" *ngIf="emergency_contact_name?.invalid && emergency_contact_name?.touched">
+                        <div *ngIf="emergency_contact_name?.errors?.required">Contact Person Name is Required</div>
+                        <div *ngIf="emergency_contact_name?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                            allowed</div>
+                    </div>
+                </div>
+                <div class="overall-input-wrapper width-45">
+                    <label>Relation with Emergency Contact<span>*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_emergency_contact_relation">
+                    <div class="form-error" *ngIf="emergency_contact_relation?.invalid && emergency_contact_relation?.touched">
+                        <div *ngIf="emergency_contact_relation?.errors?.required">Relation is Required</div>
+                        <div *ngIf="emergency_contact_relation?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                            allowed</div>
                     </div>
                 </div>
             </div>
@@ -205,7 +228,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Aadhar No.<span></span></label>
+                    <label>Aadhar No.<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
                     <div class="form-error" *ngIf="aadhar?.invalid && aadhar?.touched">
                         <div *ngIf="aadhar?.errors?.required">Aadhaar No. is Required</div>
@@ -218,7 +241,7 @@
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
                     <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
                         <div *ngIf="pan?.errors?.required">PAN No. is Required</div>
-                        <div *ngIf="pan?.errors?.alphaNum10">PAN No. should be alpha numberic and should not exceed 10
+                        <div *ngIf="pan?.errors?.panNo">PAN No. should be alpha numberic and should be 10
                             characters</div>
                     </div>
                 </div>
@@ -226,7 +249,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Offer Reference<span></span></label>
+                    <label>Offer Reference<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_offer_reference">
                     <div class="form-error" *ngIf="offer_reference?.invalid && offer_reference?.touched">
@@ -236,7 +259,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Offer Date<span></span></label>
+                    <label>Offer Date<span>*</span></label>
                     <div class="date-relative">
                         <input matInput class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker_offer"
                             placeholder="DD-MM-YYYY" [formControlName]="form_offer_date">
@@ -258,7 +281,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Height (in Cms)<span></span></label>
+                    <label>Height (in Cms)<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
                     <div class="form-error" *ngIf="height?.invalid && height?.touched">
                         <div *ngIf="height?.errors?.required">Height (in Cms) is Required</div>
@@ -267,7 +290,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Weight (in Kgs)<span></span></label>
+                    <label>Weight (in Kgs)<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_weight">
                     <div class="form-error" *ngIf="weight?.invalid && weight?.touched">
                         <div *ngIf="weight?.errors?.required">Weight (in Kgs) is Required</div>
@@ -278,8 +301,19 @@
             </div>
 
             <div class="row-wrapper">
+                <div class="overall-input-wrapper width-45">
+                    <label>Alternate Email ID<span>*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
+                    <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
+                        <div *ngIf="personal_email?.errors?.required">Alternate Email ID is Required</div>
+                        <div *ngIf="personal_email?.errors?.email">Not an Valid Email ID</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
                 <div class="overall-input-wrapper width-100">
-                    <label>Identification Mark<span></span></label>
+                    <label>Identification Mark<span>*</span></label>
                     <div class="d-flex align-content-start">
                         <span class="mr-1 mt-2">1.</span> <input matInput placeholder="Enter here" class="input"
                             type="text" [formControlName]="form_identification_mark1">

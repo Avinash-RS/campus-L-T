@@ -253,18 +253,18 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.contactForm = this.fb.group({
       [this.form_present_address_1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
       [this.form_present_address_2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
-      [this.form_present_address_3]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
-      [this.form_present_city]: [{ value: null, disabled: true }],
-      [this.form_present_state]: [null],
-      [this.form_present_region]: [null],
+      [this.form_present_address_3]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_present_city]: [{ value: null, disabled: true }, [Validators.required]],
+      [this.form_present_state]: [null, [Validators.required]],
+      [this.form_present_region]: [null, [Validators.required]],
       [this.form_present_zip_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.zipOnly()]],
       [this.form_same_as_checkbox]: [null],
       [this.form_permanent_address_1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
       [this.form_permanent_address_2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
-      [this.form_permanent_address_3]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
-      [this.form_permanent_city]: [{ value: null, disabled: true }],
-      [this.form_permanent_state]: [null],
-      [this.form_permanent_region]: [null],
+      [this.form_permanent_address_3]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_permanent_city]: [{ value: null, disabled: true }, [Validators.required]],
+      [this.form_permanent_state]: [null, [Validators.required]],
+      [this.form_permanent_region]: [null, [Validators.required]],
       [this.form_permanent_zip_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.zipOnly()]]
     })
   }

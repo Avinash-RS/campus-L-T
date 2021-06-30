@@ -120,6 +120,11 @@ export class GlobalValidatorService {
       return this.regexValidator(alphaNum10, {alphaNum10: true});
     }
 
+    panNo() {
+      const panNo: RegExp = /^([a-zA-Z0-9_ ]){10}$/;
+      return this.regexValidator(panNo, {panNo: true});
+    }
+
     numberDecimals() {
       const numberDecimals: RegExp = /^\d*(\.\d{0,2})?$/;
       return this.regexValidator(numberDecimals, {numberDecimals: true});

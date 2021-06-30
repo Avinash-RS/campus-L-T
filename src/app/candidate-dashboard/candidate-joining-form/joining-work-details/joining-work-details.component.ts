@@ -93,6 +93,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   form_nature_work = "nature_work";
   form_gross_emploment = "gross_emploment";
   form_reason_leaving = "reason_leaving";
+  form_hr_name = 'hr_name';
+  form_hr_contact_no = 'hr_contact_no';
+  form_hr_email = 'hr_email';
   form_bgvDetails = "bgvDetails";
   form_convicted_by_Court = "convicted_by_Court";
   form_arrested = "arrested";
@@ -264,8 +267,11 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_nature_work]: [data[this.form_nature_work], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_gross_emploment]: [data[this.form_gross_emploment], [RemoveWhitespace.whitespace(), this.glovbal_validators.address50()]],
       [this.form_reason_leaving]: [data[this.form_reason_leaving], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_hr_contact_no]: [data[this.form_hr_contact_no], [RemoveWhitespace.whitespace(), this.glovbal_validators.mobileRegex()]],
+      [this.form_hr_email]: [data[this.form_hr_email], [RemoveWhitespace.whitespace(), this.glovbal_validators.email()]],
+      [this.form_hr_name]: [data[this.form_hr_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
     },
-      { validator: FormCustomValidators.WorkanyOneSelected }
+      { validator: FormCustomValidators.WorkanyOneSelectedInJoiningForm }
     )
   }
 
@@ -281,8 +287,11 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_nature_work]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_gross_emploment]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address50()]],
       [this.form_reason_leaving]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_hr_contact_no]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.mobileRegex()]],
+      [this.form_hr_email]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.email()]],
+      [this.form_hr_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
     },
-      { validator: FormCustomValidators.WorkanyOneSelected }
+      { validator: FormCustomValidators.WorkanyOneSelectedInJoiningForm }
     )
   }
 
@@ -318,11 +327,11 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       if (this.getEmploymentArr && this.getEmploymentArr['controls'] && this.getEmploymentArr['controls'][i] && this.getEmploymentArr['controls'][i]['value'] && this.getEmploymentArr['controls'][i]['value'][this.form_employment_name_address]) {
         return this.getEmploymentArr.push(this.initEmploymentArray());
       } else {
-        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Work Details section');
+        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Employment Details');
         this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
       }
     } else {
-      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Work Details section');
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Employment Details');
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);  
     }
 }

@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-32">
-                                <label>Date of Birth<span></span></label>
+                                <label>Date of Birth<span>*</span></label>
                                 <div class="date-relative">
                                     <input matInput class="input" [min]="minDate" [max]="maxDate"
                                         [matDatepicker]="picker" placeholder="DD-MM-YYYY"
@@ -87,7 +87,7 @@
                             </div>
 
                             <div class="overall-input-wrapper width-32">
-                                <label>Differently Abled<span></span></label>
+                                <label>Differently Abled<span>*</span></label>
                                 <nz-select class="input select" [formControlName]="form_dependent_differently_abled"
                                     nzAllowClear nzShowSearch nzPlaceHolder="Select">
                                     <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-32">
-                                <label>Status<span></span></label>
+                                <label>Status<span>*</span></label>
                                 <nz-select class="input select" [formControlName]="form_dependent_status" nzAllowClear
                                     nzShowSearch nzPlaceHolder="Select">
                                     <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label"

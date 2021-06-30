@@ -34,7 +34,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-100">
-                    <label>Present Address 3<span></span></label>
+                    <label>Present Address 3<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_present_address_3">
                     <div class="form-error" *ngIf="present_address_3.invalid && present_address_3.touched">
@@ -47,7 +47,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Present State/Province<span></span></label>
+                    <label>Present State/Province<span>*</span></label>
                     <nz-select class="input select" (ngModelChange)="disableOrEnableState(form_present_state)" [formControlName]="form_present_state" nzAllowClear nzShowSearch
                         nzPlaceHolder="Select">
                         <nz-option *ngFor="let state of allStatesList" [nzLabel]="state.name"
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div [matTooltip]="contactForm.value[form_present_state] ? '' : 'Select State and then select city'" class="overall-input-wrapper width-45">
-                    <label>Present City<span></span></label>
+                    <label>Present City<span>*</span></label>
                     <nz-select class="input select" [formControlName]="form_present_city" nzAllowClear nzShowSearch
                         nzPlaceHolder="Select">
                         <nz-option *ngFor="let city of allPresentCityList" [nzLabel]="city.name"
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Present Country/Region<span></span></label>
+                    <label>Present Country/Region<span>*</span></label>
                     <nz-select class="input select" [formControlName]="form_present_region" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"
@@ -129,7 +129,7 @@
 
 <div class="row-wrapper">
     <div class="overall-input-wrapper width-100">
-        <label>Permanent Address 3<span></span></label>
+        <label>Permanent Address 3<span>*</span></label>
         <input matInput placeholder="Enter here" class="input" type="text"
             [formControlName]="form_permanent_address_3">
         <div class="form-error" *ngIf="permanent_address_3.invalid && permanent_address_3.touched">
@@ -142,7 +142,7 @@
 
 <div class="row-wrapper">
     <div class="overall-input-wrapper width-45">
-        <label>Permanent State/Province<span></span></label>
+        <label>Permanent State/Province<span>*</span></label>
         <nz-select class="input select" (ngModelChange)="disableOrEnableState(form_permanent_state)" [formControlName]="form_permanent_state" nzAllowClear nzShowSearch
             nzPlaceHolder="Select">
             <nz-option *ngFor="let state of allStatesList" [nzLabel]="state.name"
@@ -153,7 +153,7 @@
         </div>
     </div>
     <div [matTooltip]="contactForm.value[form_permanent_state] ? '' : 'Select State and then select city'" class="overall-input-wrapper width-45">
-        <label>Permanent City<span></span></label>
+        <label>Permanent City<span>*</span></label>
         <nz-select class="input select" [formControlName]="form_permanent_city" nzAllowClear nzShowSearch
             nzPlaceHolder="Select">
             <nz-option *ngFor="let city of allPermanentCityList" [nzLabel]="city.name"
@@ -176,7 +176,7 @@
         </div>
     </div>
     <div class="overall-input-wrapper width-45">
-        <label>Permanent Country/Region<span></span></label>
+        <label>Permanent Country/Region<span>*</span></label>
         <nz-select class="input select" [formControlName]="form_permanent_region" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">
             <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"

@@ -140,6 +140,11 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   form_weight = 'weight';
   form_identification_mark1 = 'identification_mark1';
   form_identification_mark2 = 'identification_mark2';
+
+  form_emergency_contact_name = 'emergency_contact_name';
+  form_emergency_contact_relation = 'emergency_contact_relation';
+  form_personal_email = 'personal_email';
+
 // Form control name declaration end
 
   personalDetails: any;
@@ -259,6 +264,9 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
        [this.form_place_of_birth]: rawPersonalFormValue[this.form_place_of_birth],
        [this.form_religion]: rawPersonalFormValue[this.form_religion],
        [this.form_state_of_birth]: rawPersonalFormValue[this.form_state_of_birth],
+       [this.form_emergency_contact_name]: rawPersonalFormValue[this.form_emergency_contact_name],
+       [this.form_emergency_contact_relation]: rawPersonalFormValue[this.form_emergency_contact_relation],
+       [this.form_personal_email]: rawPersonalFormValue[this.form_personal_email], 
        profile_image: this.personalDetails.profile_image,
        user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
       };
@@ -396,6 +404,9 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_weight]: this.personalDetails[this.form_weight], 
       [this.form_identification_mark1]: this.personalDetails[this.form_identification_mark1], 
       [this.form_identification_mark2]: this.personalDetails[this.form_identification_mark2], 
+      [this.form_emergency_contact_name]: this.personalDetails[this.form_emergency_contact_name],
+      [this.form_emergency_contact_relation]: this.personalDetails[this.form_emergency_contact_relation],
+      [this.form_personal_email]: this.personalDetails[this.form_personal_email]
     });
     this.url = this.personalDetails.profile_image;
   }
@@ -404,28 +415,31 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
       [this.form_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dob]: [{value: null, disabled: true}],
-      [this.form_gender]: [{value: null, disabled: true}],
-      [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_state_of_birth]: [null],
-      [this.form_nationality]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_religion]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dob]: [{value: null, disabled: true}, [Validators.required]],
+      [this.form_gender]: [{value: null, disabled: true}, [Validators.required]],
+      [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_state_of_birth]: [null, [Validators.required]],
+      [this.form_nationality]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],
       [this.form_blood_group]: [null, [Validators.required]],
-      [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.mobileRegex()]],
+      [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
       [this.form_mobile]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
       [this.form_email]: [{value: null, disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
-      [this.form_aadhar]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.aadhaar()]],
-      [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum10()]],
-      [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_offer_date]: [null],
-      [this.form_height]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.numberDecimals()]],
-      [this.form_weight]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), this.glovbal_validators.numberDecimals()]],
-      [this.form_identification_mark1]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_identification_mark2]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],    
+      [this.form_aadhar]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
+      [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]],
+      [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_offer_date]: [null, [Validators.required]],
+      [this.form_height]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
+      [this.form_weight]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
+      [this.form_identification_mark1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_identification_mark2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_emergency_contact_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_emergency_contact_relation]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_personal_email]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
     })
   }
 
@@ -501,6 +515,18 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
   get identification_mark2() {
     return this.personalForm.get(this.form_identification_mark2);
+  }
+
+  get emergency_contact_name() {
+    return this.personalForm.get(this.form_emergency_contact_name);
+  }
+
+  get emergency_contact_relation() {
+    return this.personalForm.get(this.form_emergency_contact_relation);
+  }
+
+  get personal_email() {
+    return this.personalForm.get(this.form_personal_email);
   }
 
 ngOnDestroy() {
