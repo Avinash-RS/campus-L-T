@@ -325,6 +325,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
+        headerName: 'Declined Status', field: 'decline_status',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 120,
+        sortable: true,
+        tooltipField: 'decline_status',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: '', field: 'details',
         cellClass: 'agCellStyle',
         // headerTooltip: 'Download documents',
@@ -449,6 +460,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       this.userList.forEach(element => {
         count = count + 1;
         element['is_checked'] = false;
+        element['decline_status'] = element['decline_status'] == '1' ? 'Yes' : 'No';
         element['details'] = count;
       });
       this.rowData = this.userList;

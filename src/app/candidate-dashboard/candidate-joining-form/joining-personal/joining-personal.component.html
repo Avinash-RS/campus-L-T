@@ -64,7 +64,48 @@
                     </div>
                 </div>
             </div>
+<!-- sf -->
+<div class="row-wrapper">
+    <div class="overall-input-wrapper" [ngClass]="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married') ? 'width-22' : 'width-45'">
+        <label>Marital Status<span>*</span></label>
+        <nz-select class="input select" (ngModelChange)="maritalStatusChange()" [formControlName]="form_marital_status" nzAllowClear nzShowSearch
+            nzPlaceHolder="<--Select-->">
+            <nz-option *ngFor="let marital of marital_list" [nzLabel]="marital.name"
+                [nzValue]="marital.value"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="marital_status?.invalid && marital_status?.touched">
+            <div *ngIf="marital_status?.errors?.required">Marital Status is Required</div>
+        </div>
+    </div>
 
+    <div *ngIf="personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married'" class="overall-input-wrapper width-22">
+        <label>No. of Children<span>*</span></label>
+        <nz-select class="input select" [formControlName]="form_no_of_children" nzAllowClear nzShowSearch
+            nzPlaceHolder="<--Select-->">
+            <nz-option *ngFor="let children of no_children_list" [nzLabel]="children"
+                [nzValue]="children"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="no_of_children?.invalid && no_of_children?.touched">
+            <div style="white-space: nowrap;" *ngIf="no_of_children?.errors?.required">No. of Children is Required</div>
+        </div>
+    </div>
+
+    <div class="overall-input-wrapper width-45">
+        <label>Domicile State<span>*</span></label>
+        <nz-select class="input select" [formControlName]="form_domicile_state" nzAllowClear nzShowSearch
+            nzPlaceHolder="<--Select-->">
+            <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name"
+                [nzValue]="state.id"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="domicile_state?.invalid && domicile_state?.touched">
+            <div *ngIf="domicile_state?.errors?.required">Domicile State is Required</div>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- sd -->
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Place of Birth<span>*</span></label>

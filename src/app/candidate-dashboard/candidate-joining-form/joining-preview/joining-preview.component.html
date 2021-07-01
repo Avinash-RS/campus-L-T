@@ -27,7 +27,7 @@
                                     {{personalDetailsMap[form_email]}}</div>
                             </div>
                             <div class="overall-input-wrapper mt-2 width-50">
-                                <label>Date of Birth<span></span></label>
+                                <label>Date of Birth (as per Std X certificate)<span></span></label>
                                 <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_dob]}}</div>
                             </div>
                             <div class="overall-input-wrapper mt-2 width-50">
@@ -39,6 +39,24 @@
                     </div>
 
                     <div class="row-wrapper mt-0">
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>Marital Status<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_marital_status]}}
+                            </div>
+                        </div>
+
+                        <div *ngIf="personalDetailsMap[form_marital_status] == 'Married'" class="overall-input-wrapper mt-2 width-32">
+                            <label>No. of Children<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_no_of_children]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>Domicile State<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_domicile_state]}}
+                            </div>
+                        </div>
+
                         <div class="overall-input-wrapper mt-2 width-32">
                             <label>Place of Birth<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_place_of_birth]}}

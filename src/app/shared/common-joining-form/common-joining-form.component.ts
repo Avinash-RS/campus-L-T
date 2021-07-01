@@ -152,6 +152,10 @@ export class CommonJoiningFormComponent implements OnInit {
   form_emergency_contact_name = 'emergency_contact_name';
   form_emergency_contact_relation = 'emergency_contact_relation';
   form_personal_email = 'personal_email';
+  form_marital_status = 'marital_status';
+  form_domicile_state = 'domicile_state';
+  form_no_of_children = 'no_of_children';
+
   // Form control name declaration end
 
   form_present_address_1 = 'present_line_street_addres';
@@ -724,10 +728,14 @@ export class CommonJoiningFormComponent implements OnInit {
     let stateOfBirth: any;
     let bloodGroup: any;
     let category: any;
+    let domicile: any;
     if (this.getAllStates && this.bloodGroupDropdownList) {
       this.getAllStates.forEach(element => {
         if (element.id == this.personalDetails[this.form_state_of_birth]) {
           stateOfBirth = element.name;
+        }
+        if (element.id == this.personalDetails[this.form_domicile_state]) {
+          domicile = element.name;
         }
       });
       this.bloodGroupDropdownList.forEach(element => {
@@ -769,6 +777,9 @@ export class CommonJoiningFormComponent implements OnInit {
       [this.form_emergency_contact_name]: this.personalDetails?.[this.form_emergency_contact_name] ? this.personalDetails[this.form_emergency_contact_name] : 'NA',
       [this.form_emergency_contact_relation]: this.personalDetails?.[this.form_emergency_contact_relation] ? this.personalDetails[this.form_emergency_contact_relation] : 'NA',
       [this.form_personal_email]: this.personalDetails?.[this.form_personal_email] ? this.personalDetails[this.form_personal_email] : 'NA',
+      [this.form_marital_status]: this.personalDetails?.[this.form_marital_status] ? this.personalDetails[this.form_marital_status] : 'NA',
+      [this.form_no_of_children]: this.personalDetails?.[this.form_no_of_children] ? this.personalDetails[this.form_no_of_children] : 'NA',
+      [this.form_domicile_state]: domicile ? domicile : 'NA',
       [this.form_identification_mark1]: this.personalDetails?.[this.form_identification_mark1] ? this.personalDetails[this.form_identification_mark1] : 'NA',
       [this.form_identification_mark2]: this.personalDetails?.[this.form_identification_mark2] ? this.personalDetails[this.form_identification_mark2] : 'NA',
     };
