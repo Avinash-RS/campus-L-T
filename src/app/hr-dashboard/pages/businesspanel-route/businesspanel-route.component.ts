@@ -18,7 +18,7 @@ export class BusinesspanelRouteComponent implements OnInit {
     private sharedService: SharedServiceService
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
+    let subWrapperMenus = [
       {
         icon: '',
         name: 'Selected Candidates Upload/Assign',
@@ -38,6 +38,10 @@ export class BusinesspanelRouteComponent implements OnInit {
     if (this.role == 'ic') {
       subWrapperMenus.pop();
     }
+    if (this.role == 'ssc_hr') {
+      subWrapperMenus.pop();
+    }
+
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 

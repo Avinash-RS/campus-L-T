@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="personalDetailsMap[form_marital_status] == 'Married'" class="overall-input-wrapper mt-2 width-32">
+                        <div *ngIf="(personalDetailsMap[form_marital_status] == 'Married' || personalDetailsMap[form_marital_status] == 'Widow')" class="overall-input-wrapper mt-2 width-32">
                             <label>No. of Children<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_no_of_children]}}
                             </div>

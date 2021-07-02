@@ -98,6 +98,17 @@
         </span>
       </li>
   </ng-container>
+  <ng-container *ngIf="role == 'ssc_hr'">
+    <!--  OfferedCandidatesLIST-->
+    <li [routerLink]="appConstant.HR_DASHBOARD.OfferedCandidatesLIST" routerLinkActive="active">
+      <span><img src="assets/images/status-bar.svg" width="20px" height="20px" alt=""></span>
+      <span>SSC Panel</span>
+      <span>
+        <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+      </span>
+    </li>
+</ng-container>
+
     </ul>
 
   </mat-drawer>

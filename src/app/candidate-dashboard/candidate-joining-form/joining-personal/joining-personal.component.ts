@@ -440,7 +440,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.checkIsMarried();
   }
   checkIsMarried() {
-    if (this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Married') {
+    if (this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Married' || this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Widow') {
       this.personalForm.controls[this.form_no_of_children].setValidators([Validators.required]);
       this.personalForm['controls'][this.form_no_of_children].updateValueAndValidity({ emitEvent: false });
     } else {

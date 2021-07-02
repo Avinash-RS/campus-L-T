@@ -66,7 +66,7 @@
             </div>
 <!-- sf -->
 <div class="row-wrapper">
-    <div class="overall-input-wrapper" [ngClass]="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married') ? 'width-22' : 'width-45'">
+    <div class="overall-input-wrapper" [ngClass]="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married') || (personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow') ? 'width-22' : 'width-45'">
         <label>Marital Status<span>*</span></label>
         <nz-select class="input select" (ngModelChange)="maritalStatusChange()" [formControlName]="form_marital_status" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div *ngIf="personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married'" class="overall-input-wrapper width-22">
+    <div *ngIf="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married' || personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow')" class="overall-input-wrapper width-22">
         <label>No. of Children<span>*</span></label>
         <nz-select class="input select" [formControlName]="form_no_of_children" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">

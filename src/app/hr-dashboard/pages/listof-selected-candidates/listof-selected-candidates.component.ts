@@ -363,15 +363,18 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   excelExport() {
     if (this.gridApi.getSelectedNodes() && this.gridApi.getSelectedNodes().length > 0) {
       const apiData = [];
-      const selectedUserlist = this.gridApi.getSelectedNodes();
+      
+      const selectedUserlist = this.gridApi.rowModel.rowsToDisplay;
       selectedUserlist.forEach(element => {
-        let api = {
-          // email: element['data']['selected_candidate'],
-          // company: element['data']['company'],
-          user_id: element['data']['user_id'],
-          // name: element['data']['candidate_name']
+        if (element && element.selected) {
+          let api = {
+            // email: element['data']['selected_candidate'],
+            // company: element['data']['company'],
+            user_id: element['data']['user_id'],
+            // name: element['data']['candidate_name']
+          }
+          apiData.push(api);        
         }
-        apiData.push(api);      
       });  
       this.excelApi(apiData);
     } else {
@@ -388,6 +391,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     };
     this.adminService.excelExportSelectedCandidates(apiData).subscribe((datas: any)=> {
       if (datas && datas.url) {
+        this.gridApi.deselectAll();
         this.appConfig.success('Excel Report downloaded successfully');
         window.open(datas.url, '_blank');
       } else {

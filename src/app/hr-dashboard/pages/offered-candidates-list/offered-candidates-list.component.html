@@ -17,4 +17,18 @@
         </div>
     </mat-tab>
 </ng-container>
+<ng-container *ngIf="role == 'ssc_hr'">
+    <mat-tab label="Upload/Assign Selected Candidates">
+        <div *ngIf="TabIndex == '1'" class="pl-2 pr-2 pt-2 pb-2">
+            <app-upload-selected-candidates (tabChange)="gotoNextTab($event)"></app-upload-selected-candidates>
+            <!-- <app-ssc-upload-section (tabChange)="gotoNextTab($event)"></app-ssc-upload-section>     -->
+        </div>
+    </mat-tab>
+    <mat-tab label="Error Reports">
+        <div *ngIf="TabIndex == '2'" class="pl-2 pr-2 pt-2 pb-2">
+            <app-upload-selected-candidates-error-report></app-upload-selected-candidates-error-report>
+        </div>
+    </mat-tab>
+
+</ng-container>
 </mat-tab-group>
