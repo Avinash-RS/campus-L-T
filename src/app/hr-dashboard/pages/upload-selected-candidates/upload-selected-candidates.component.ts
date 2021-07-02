@@ -388,12 +388,11 @@ export class UploadSelectedCandidatesComponent implements OnInit {
               }
             }
             if (index == 3) {
-              // if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              //   this.enableList = false;
-              //   this.dateFormatExist = true;
-              // } else {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                doj = element ? this.momentForm(element) : '';
+              } else {
                 doj = element ? element : '';
-              // }
+              }
             }
             if (index == 4) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
@@ -497,12 +496,11 @@ export class UploadSelectedCandidatesComponent implements OnInit {
               }
             }
             if (index == 2) {
-              // if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              //   this.enableList = false;
-              //   this.dateFormatExist = true;
-              // } else {
+                if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                decline_date = element ? this.momentForm(element) : '';
+              } else {
                 decline_date = element ? element : '';
-              // }
+              }
             }
           }
         });
@@ -523,6 +521,13 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     this.totalCountofCandidates = count - 1;
   }
 
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+     return split;    
+    }
+    }
+    
 
   totalCount(data) {
     this.dateFormatExist = false;
@@ -560,20 +565,18 @@ export class UploadSelectedCandidatesComponent implements OnInit {
               }
             }
             if (index == 3) {
-              // if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              //   this.enableList = false;
-              //   this.dateFormatExist = true;
-              // } else {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                hr_offer_date = element ? this.momentForm(element) : '';
+              } else {
                 hr_offer_date = element ? element : '';
-              // }
+              }
             }
             if (index == 4) {
-              // if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              //   this.enableList = false;
-              //   this.dateFormatExist = true;
-              // } else {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                offer_validity = element ? this.momentForm(element) : '';
+              } else {
                 offer_validity = element ? element : '';
-              // }
+              }
             }
           }
         });
@@ -609,7 +612,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     if (this.selectedTemplate == this.firstForm) {
       this.upload();
     }
-    if (this.selectedTemplate == this.firstForm) {
+    if (this.selectedTemplate == this.secondForm) {
       this.uploadHRDetails();
     } else {
       this.uploadDeclinersDetails();

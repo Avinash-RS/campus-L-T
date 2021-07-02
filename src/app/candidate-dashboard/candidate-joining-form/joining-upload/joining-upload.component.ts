@@ -1104,10 +1104,11 @@ onSelectFile(event, i, form) {
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
       }
     } else {
-      if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking') {
+      if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking' || form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'Aadhar' || form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'PAN' || form == this.conditionJoining && this.getJoiningArr.at(i).value[this.form_name] == 'CasteDeclaration' || form == this.conditionTransfer && this.getTransferArr.at(i).value[this.form_name] == 'TransferCertificate') {
         return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF or PNG/JPEG files only');
+      } else {
+        this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF files only');
       }
-      this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF files only');
       // this.showResumeImgError = true;
     }
 }
@@ -1134,15 +1135,24 @@ onPhotoUpload(event, i, form) {
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);        
         }
+        if (form == this.conditionTransfer) {
+          fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+          fd.append('description', this.getTransferArr.at(i).value[this.form_description]);
+          fd.append('label', form);
+          fd.append('level', this.getTransferArr.at(i).value[this.form_name]);
+          fd.append('product_image', this.selectedImage);
+          this.uploadImage(fd, i, form);        
+        }
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
       }
     } else {
-      if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'Banking') {
+      if (form == this.conditionBank && this.getBankArr.at(i).value[this.form_name] == 'PhotoID') {
+        return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
+      } else {
         return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PDF or PNG/JPEG files only');
       }
-      this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
       // this.showResumeImgError = true;
     }
 }
