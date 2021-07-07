@@ -1,0 +1,620 @@
+<form class="main-evaluation" [formGroup]="evaluationForm" (ngSubmit)="submitEvaluationForm()">
+  <div class="contant">
+
+    <div class="row bg">
+      <div class="col-12">
+        <div class="text-cnt">BIS INTERVIEW EVALUATION FORM
+        </div>
+      </div>
+    </div><br>
+
+    <div class="row no-center-align">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-5">
+            <span class="head"> Candidate name </span>
+          </div>
+          <div style="white-space: nowrap;" class="col-7 indent">
+            <span class="ans">: {{getCandidateData?.name}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-4">
+            <span class="head">Discipline </span>
+          </div>
+          <div class="col-8 indent">
+            <span class="ans">: {{getCandidateData?.field_discipline}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-5">
+            <span class="head"> Date of interview<span class="asterick">*</span> </span>
+          </div>
+          <div class="col-7">
+            <mat-form-field class="date" appearance="none">
+              <input style="padding-left: 12px;" formControlName="interview_date" matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+          <ng-container *ngIf="interview_date.invalid && interview_date.touched">
+            <div class="col-5">
+              <span>&#160;</span>
+            </div>
+            <div style="margin-top: .25em;" class="col-7 validation">
+              <span *ngIf="interview_date.errors?.required">Interview Date is required</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+
+    <div class="row no-center-align">
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-5">
+            <span class="head">Date of birth </span>
+          </div>
+          <div style="white-space: nowrap;" class="col-7 indent">
+            <span class="ans">: {{getCandidateData?.field_dob}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-4">
+            <span class="head">Institute name </span>
+          </div>
+          <div class="col-8 indent">
+
+            <span class="ans">:
+              {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0] && getCandidateData['education'][0]['field_institute'] ? getCandidateData['education'][0]['field_institute'] : ''}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div style="white-space: nowrap;" class="col-5">
+            <span class="head">Place of interview<span class="asterick">*</span> </span>
+          </div>
+          <div class="col-7">
+            <input class="place" formControlName="interview_place" matInput>
+          </div>
+          <ng-container *ngIf="interview_place.invalid && interview_place.touched">
+            <div class="col-5">
+              <span>&#160;</span>
+            </div>
+            <div style="margin-top: .25em;" class="col-7 validation">
+              <span *ngIf="interview_place.errors?.required">Interview place is required</span>
+              <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="space"></div>
+  <div class="d-flex align-items-center justify-content-center mt-4 w-100">
+    <mat-radio-group style="margin-right: 5em;" aria-labelledby="example-radio-group-label"
+      class="d-flex w-50 justify-content-around" formControlName="attended">
+      <mat-radio-button (change)="statusChange(attended)" class="f_size_18"
+        *ngFor="let attendance of intervieweeAttendance" [value]="attendance.value">
+        {{attendance.label}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <ng-container *ngIf="attended.invalid && attended.touched">
+    <div class="d-flex justify-content-center w-100 mt-3 validation">
+      <span *ngIf="attended.errors?.required">Interview status required</span>
+    </div>
+  </ng-container>
+
+  <!-- <h5 class="head-h5 margin">   Assessment of the  candidate</h5>
+      <div class="vertical"></div> -->
+  <ng-container *ngIf="evaluationForm?.value?.attended == '1'">
+    <hr>
+    <table id="assessmentsTable" mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="name">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
+        <td style="width: 390px;" mat-cell *matCellDef="let assessment">{{assessment.name}}<span
+            class="asterick">*</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="veryGood">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Excellent </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'veryGood' ? true : false"
+            (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
+            <i class="material-icons" matTooltip="{{assessment.veryGood}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="good">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+
+          <mat-radio-button [checked]="assessment['isChecked'] == 'good' ? true : false"
+            (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
+            <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="average">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> Average
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'Average' ? true : false"
+            (change)="setAssessmentLevel(assessment,'Average')" [name]="assessment.id" value="3">
+            <i class="material-icons" matTooltip="{{assessment.average}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="notSuitable">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
+            (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
+            <i class="material-icons" matTooltip="{{assessment.notSuitable}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="(depth_knowledge.touched && depth_knowledge.errors) || (breadth_knowledge.touched && breadth_knowledge.errors) ||
+    (communicate_ability.touched && communicate_ability.errors) || (personal_skill.touched && personal_skill.errors) ||
+    (personality.touched && personality.errors) || (curricular_activites.touched && curricular_activites.errors) ||
+    (thought_clarity.touched && thought_clarity.errors)" class="mand validation1">
+      <span *ngIf="(depth_knowledge.errors?.required) || (breadth_knowledge.errors?.required) ||
+        (communicate_ability.errors?.required) || (personal_skill.errors?.required) ||
+        (personality.errors?.required) || (curricular_activites.errors?.required) ||
+        (thought_clarity.errors?.required)">Make sure you have selected the radio buttons for all the above rows</span>
+    </div>
+    <div class="space"></div>
+    <div class="row bg">
+      <div class="col-12">
+        <div class="text-cnt">PANEL’S OVERALL ASSESSMENT OF THE CANDIDATE</div>
+      </div>
+    </div><br>
+    <!-- <h5 class="head-h5 margin"> Panel’s overall  assessment of the  candidate </h5>
+  <div class="vertical"></div> -->
+    <br>
+    <div class="row">
+      <div class="box">
+        <mat-radio-group class="radioDisp" formControlName="ASSESSMENT">
+          <div class="col-3 border-right">
+            <mat-radio-button value="Verygood">Excellent
+            </mat-radio-button>
+          </div>
+          <div class="col-3 border-right">
+            <mat-radio-button value="Good"> Good
+            </mat-radio-button>
+          </div>
+          <div class="col-3 border-right">
+            <mat-radio-button value="Average"> Average
+            </mat-radio-button>
+          </div>
+          <div class="col-3 border-right">
+            <mat-radio-button value="Notsuitabl"> Not Suitable
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+      <div *ngIf="f.ASSESSMENT.touched && f.ASSESSMENT.errors" class="mand validation1">
+        <span *ngIf="f.ASSESSMENT.errors?.required">Anyone of the above criteria needs to be selected</span>
+      </div>
+
+    </div>
+    <div class="space"></div>
+    <div style="margin-left: 10px;">
+      <div class="row pad-bootom mt-2 mb-2">
+        <div class="col-4">
+          <span class="text">STATUS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8 d-flex w-50">
+          <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option"
+            formControlName="attendedStatus">
+            <mat-radio-button *ngFor="let attended of attendedStatusList" [value]="attended.value">
+              {{attended.label && attended.label == 'Not Selected' ? 'Not Recommended' : attended.label == 'Selected' ? 'Recommended' : '' }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="f?.attendedStatus?.touched && f?.attendedStatus?.errors">
+          <div class="col-4">
+            <span class="text">&#160;</span>
+          </div>
+          <div class="col-8 mand validation1">
+            <span *ngIf="f?.attendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">WILLING TO WORK AT SITE<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8">
+          <mat-radio-group aria-label="Select an option" formControlName="willing_work">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button style="margin-left: 67px" value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="f.willing_work.touched && f.willing_work.errors">
+          <div class="col-4">
+            <span class="text">&#160;</span>
+          </div>
+          <div class="col-8 mand validation1">
+            <span *ngIf="f.willing_work.errors?.required">Anyone of the above criteria needs to be selected</span>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">PHYSICAL DISABILITY, IF ANY PLEASE SPECIFY <br> (e.g., Limping,Deformity, Stammering,
+            etc.)</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput formControlName="physical_disability"></textarea>
+          <div *ngIf="f.physical_disability.touched && f.physical_disability.errors" class="mand validation1">
+            <span *ngIf="f.physical_disability.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="f.physical_disability.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div *ngIf="false" class="row pad-bootom">
+        <div class="col-4">
+          <span class="text"> CANDIDATES STRENGTHS</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width" style="border: solid #000 1px !important" appearance="none"> -->
+          <textarea matInput formControlName="candidates_strenght"
+            [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+          <!-- </mat-form-field> -->
+          <div *ngIf="f.candidates_strenght.touched && f.candidates_strenght.errors" class="mand validation1">
+            <span *ngIf="f.candidates_strenght.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+            <span *ngIf="f.candidates_strenght.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="false" class="row pad-bootom">
+        <div class="col-4">
+          <span class="text"> CANDIDATES WEAKNESSES</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput formControlName="candidates_weakness"></textarea>
+          <div *ngIf="f.candidates_weakness.touched && f.candidates_weakness.errors" class="mand validation1">
+            <span *ngIf="f.candidates_weakness.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+            <span *ngIf="f.candidates_weakness.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row pad-bootom no-center-align">
+        <div class="col-4">
+          <span class="text"> NAME OF THE PANEL MEMBERS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="panel_member1" matInput>
+          <div *ngIf="f.panel_member1.touched && f.panel_member1.errors" class="mand validation1">
+            <span *ngIf="f.panel_member1.errors?.required">Panel member 1 is required</span>
+            <span *ngIf="f.panel_member1.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="f.panel_member1.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="panel_member2" matInput>
+          <div *ngIf="f.panel_member2.touched && f.panel_member2.errors" class="mand validation1">
+            <span *ngIf="f.panel_member2.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="f.panel_member2.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="panel_member3" matInput>
+          <div *ngIf="f.panel_member3.touched && f.panel_member3.errors" class="mand validation1">
+            <span *ngIf="f.panel_member3.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="f.panel_member3.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="panel_member4" matInput>
+          <div *ngIf="f.panel_member4.touched && f.panel_member4.errors" class="mand validation1">
+            <span *ngIf="f.panel_member4.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="f.panel_member4.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pad-bootom no-center-align">
+        <div class="col-4">
+          <span class="text">P.S.NO. OF PANEL MEMBERS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="ps_no1" matInput>
+          <div *ngIf="f.ps_no1.touched && f.ps_no1.errors" class="mand validation1">
+            <span *ngIf="f.ps_no1.errors?.required">PS number is required</span>
+            <span *ngIf="f.ps_no1.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="f.ps_no1.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="ps_no2" matInput>
+          <div *ngIf="f.ps_no2.touched && f.ps_no2.errors" class="mand validation1">
+            <span *ngIf="f.ps_no2.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="f.ps_no2.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="ps_no3" matInput>
+          <div *ngIf="f.ps_no3.touched && f.ps_no3.errors" class="mand validation1">
+            <span *ngIf="f.ps_no3.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="f.ps_no3.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+        <div class="col-2">
+          <input class="in-box" formControlName="ps_no4" matInput>
+          <div *ngIf="f.ps_no4.touched && f.ps_no4.errors" class="mand validation1">
+            <span *ngIf="f.ps_no4.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="f.ps_no4.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="false">
+      <div class="space"></div>
+      <div class="row bg">
+        <div class="col-12">
+          <div class="text-cnt">EXTEMPORE EVALUATION</div>
+        </div>
+      </div><br>
+      <!-- <h5 class="head-h5 margin"> Extempore evaluation</h5>
+  <div class="vertical"></div> -->
+      <h5 class="head-h5 margin"> GUIDELINES</h5>
+      <ul>
+        <li> THE EVALUATION NEEDS TO BE DONE WHILE THE CANDIDATE APPEARS FOR INTERVIEW.</li>
+        <li>CANDIDATE NEEDS TO BE PROVIDED WITH A TOPIC OF GENERAL INTEREST.</li>
+        <li> 1 MIN OF TIME SHOULD BE PROVIDED TO THE CANDIDATE TO PREPARE AND 2 MIN TO DELIVER.</li>
+        <li>CLARITY OF THOUGHT, ABILITY TO COMMUNICATE AND SELF CONFIDENCE & PERSONALITY ATTRIBUTES TO BE EVALUATED
+          CONSIDERING THIS EXERCISE.
+        </li>
+      </ul>
+
+      <div class="space"></div>
+      <br>
+      <div style="margin-left: 10px;">
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">TOPIC GIVEN<span *ngIf="selectedPost" class="asterick">*</span></span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="topic_given"></textarea>
+            <div *ngIf="f.topic_given.touched && f.topic_given.errors" class="mand validation1">
+              <span *ngIf="f.topic_given.errors?.required">Topic given is required</span>
+              <span *ngIf="f.topic_given.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.thought.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+        <div class="row pad-bootom bg-2">
+          <div class="col-4">
+            <span class="text">PARAMETERS</span>
+          </div>
+          <div class="col-8">
+            <span class="text">PANEL COMMENTS</span>
+          </div>
+        </div><br><br>
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">CLARITY OF THOUGHT
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="thought"></textarea>
+            <div *ngIf="f.thought.touched && f.thought.errors" class="mand validation1">
+              <span *ngIf="f.thought.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.thought.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">LOGICAL ORGANISATION OF CONTENT
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="content"></textarea>
+            <div *ngIf="f.content.touched && f.content.errors" class="mand validation1">
+              <span *ngIf="f.content.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.content.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">COMMAND OVER LANGUAGE
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="language"></textarea>
+            <div *ngIf="f.language.touched && f.language.errors" class="mand validation1">
+              <span *ngIf="f.language.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.language.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">IDEA GENERATION
+
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="idea"></textarea>
+            <div *ngIf="f.idea.touched && f.idea.errors" class="mand validation1">
+              <span *ngIf="f.idea.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.idea.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">NON-VERBAL CUES
+
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="clues"></textarea>
+            <div *ngIf="f.clues.touched && f.clues.errors" class="mand validation1">
+              <span *ngIf="f.clues.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.clues.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">TIME TAKEN
+
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="time_taken"></textarea>
+            <div *ngIf="f.time_taken.touched && f.time_taken.errors" class="mand validation1">
+              <span *ngIf="f.time_taken.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+              <span *ngIf="f.time_taken.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+
+
+        <div class="row pad-bootom">
+          <div class="col-4">
+            <span class="text">OVERALL REMARKS<span class="asterick">*</span>
+            </span>
+          </div>
+          <div class="col-8">
+            <!-- <mat-form-field class="example-full-width"> -->
+            <textarea matInput formControlName="remarks"></textarea>
+            <div *ngIf="f.remarks.touched && f.remarks.errors" class="mand validation1">
+              <span *ngIf="f.remarks.errors?.required">Overall remarks is required</span>
+              <span *ngIf="f.remarks.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+              <span *ngIf="f.remarks.errors?.pattern">Alpha numerics only allowed</span>
+            </div>
+
+            <!-- </mat-form-field> -->
+          </div>
+        </div>
+        <!-- <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">STATUS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8 d-flex w-50">
+            <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option" formControlName="attendedStatus">
+              <mat-radio-button *ngFor="let attended of attendedStatusList" [value]="attended.value">
+                {{attended.label}}
+              </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <ng-container *ngIf="f?.attendedStatus?.touched && f?.attendedStatus?.errors">
+          <div class="col-4">
+              <span class="text">&#160;</span>
+            </div>
+          <div class="col-8 mand validation1">
+              <span *ngIf="f?.attendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+            </div>
+            </ng-container>
+  
+      </div> -->
+
+      </div>
+    </ng-container>
+
+  </ng-container>
+  <ng-container *ngIf="evaluationForm?.value?.attended == '0'">
+    <div style="margin-left: 1em !important;" class="row pad-bootom mt-5 d-flex align-items-center">
+      <div style="height: 10px; width: 10%;" class="mt-1 d-flex pl-4">
+        <span class="text">STATUS<span class="asterick">*</span>:</span>
+      </div>
+      <div class="d-flex w-50">
+        <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option"
+          formControlName="notAttendedStatus">
+          <mat-radio-button *ngFor="let Notattended of Notattended" [value]="Notattended.value">
+            {{Notattended.label}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <ng-container *ngIf="notAttendedStatus?.touched && notAttendedStatus?.invalid">
+        <div class="col-4">
+          <span class="text">&#160;</span>
+        </div>
+        <div style="margin-top: 1em; margin-left: -7em;" class="mand validation1">
+          <span *ngIf="notAttendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <div class="space"></div>
+  <div class="last-button" style="text-align: center; padding: 1em 0;">
+    <button class="submit" mat-raised-button>Save</button>
+  </div>
+</form>
+<div class="space"></div>

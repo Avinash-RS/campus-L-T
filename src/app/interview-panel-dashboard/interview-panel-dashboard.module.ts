@@ -18,10 +18,11 @@ import { SharedInvPanelHeaderComponent } from './inv-candidate-details/shared-in
 import { SubSharedInvPanelHeaderComponent } from './inv-candidate-details/sub-shared-inv-panel-header/sub-shared-inv-panel-header.component';
 import { InvShortlistedCandidatesViewScreenComponent } from './inv-candidate-details/inv-shortlisted-candidates-view-screen/inv-shortlisted-candidates-view-screen.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { BisEvaluationFormComponent } from './bis-evaluation-form/bis-evaluation-form.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvAssessmentShortlistedCandidatesComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SharedInvPanelHeaderComponent, SubSharedInvPanelHeaderComponent, InvShortlistedCandidatesViewScreenComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvAssessmentShortlistedCandidatesComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SharedInvPanelHeaderComponent, SubSharedInvPanelHeaderComponent, InvShortlistedCandidatesViewScreenComponent, BisEvaluationFormComponent],
   imports: [
     CommonModule,
     SharedModule,
