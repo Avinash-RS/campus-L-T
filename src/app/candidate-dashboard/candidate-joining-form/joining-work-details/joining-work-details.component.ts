@@ -393,7 +393,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   formSubmit(routeValue?: any) {
     // this.requiredDesc();
-    console.log('form', this.workDetailsForm.getRawValue());
+    let some = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : this.getEmploymentArr.clear();
     let formValues = this.workDetailsForm.getRawValue();
     if (this.workDetailsForm.valid) {
       const workDetails = {
