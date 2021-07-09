@@ -39,6 +39,7 @@ export class InvSubEvaluateComponent implements OnInit {
   candidateId: any;
   nameOfAssessment: any;
   uid: any;
+  BIS = this.appConfig.getLocalData('BIS');
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
