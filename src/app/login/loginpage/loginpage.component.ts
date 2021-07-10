@@ -120,7 +120,7 @@ export class LoginpageComponent implements OnInit {
           this.candidateService.getEducationList().subscribe((datas: any) => {
             this.apiService.login(apiData).subscribe((data: any) => {
             this.appConfig.hideLoader();
-            this.appConfig.setLocalData('BIS', 'true');
+            this.appConfig.setLocalData('BIS', 'false');
             // this.appConfig.setLocalData('username', "data && data.current_user.name ? data.current_user.name : ''");
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
