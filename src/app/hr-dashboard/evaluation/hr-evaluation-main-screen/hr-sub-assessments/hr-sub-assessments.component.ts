@@ -16,6 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
+  BIS = this.appConfig.getLocalData('BIS');
 
   displayedColumns: any[] = ['name', 'percentage', 'question'];
   dataSource: MatTableDataSource<any>;
@@ -117,7 +118,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       this.appConfig.hideLoader();
 
       let arr = [];
-      if (datas) {
+      if (datas && this.BIS != 'true') {
         arr = [
           {
             name: 'Domain',
@@ -134,6 +135,22 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
           {
             name: 'Quantitative',
             percentage: datas['quantitative_percentage'] ? datas['quantitative_percentage'] : ''
+          },
+          {
+            name: 'Total percentage',
+            percentage: datas['percentage'] ? datas['percentage'] : ''
+          },
+        ];
+      }
+      if (datas && this.BIS == 'true') {
+        arr = [
+          {
+            name: 'Domain',
+            percentage: datas['domain_percentage'] ? datas['domain_percentage'] : ''
+          },
+          {
+            name: 'Aptitude',
+            percentage: datas['analytical_percentage'] ? datas['analytical_percentage'] : ''
           },
           {
             name: 'Total percentage',

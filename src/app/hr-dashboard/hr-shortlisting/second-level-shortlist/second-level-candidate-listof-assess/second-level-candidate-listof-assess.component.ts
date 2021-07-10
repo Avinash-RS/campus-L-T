@@ -15,6 +15,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./second-level-candidate-listof-assess.component.scss']
 })
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit {
+
+  BIS = this.appConfig.getLocalData('BIS');
   percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
   validInput = new FormControl('', Validators.pattern(this.percentageDecimals));
   validInput1 = new FormControl('', Validators.pattern(this.percentageDecimals));
@@ -26,20 +28,33 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   showApply = false;
   showShortlisted = false;
   displayedColumns1: any[] = ['filter'];
-  displayedColumns: any[] = ['uid', 'candidate_new_id', 'user_name',
+  displayedColumns: any[] = this.BIS == 'true' ? ['uid', 'candidate_new_id', 'user_name',
     'domain_marks',
     'domain_percentage',
-    'verbal_marks',
-    'verbal_percentage',
+    // 'verbal_marks',
+    // 'verbal_percentage',
     'analytical_mark',
     'analytical_percentage',
-    'quantitive_mark',
-    'quantitative_percentage',
+    // 'quantitive_mark',
+    // 'quantitative_percentage',
     'marks',
     'percentage',
     // 'heading',
     // 'checked'
-  ];
+  ] : ['uid', 'candidate_new_id', 'user_name',
+  'domain_marks',
+  'domain_percentage',
+  'verbal_marks',
+  'verbal_percentage',
+  'analytical_mark',
+  'analytical_percentage',
+  'quantitive_mark',
+  'quantitative_percentage',
+  'marks',
+  'percentage',
+  // 'heading',
+  // 'checked'
+];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
   selectedUserDetail: any;
