@@ -211,7 +211,7 @@ maxDateStartField: any;
       this.appConfig.hideLoader();
       if (data && data.education &&  data.education.length > 0) {
         this.educationDetails = data.education;
-        this.educationLength = data.education.length;
+        this.getEducationLength(data.education);
         this.patchEducationForm();
       } else {
         this.educationLength = 1;
@@ -219,6 +219,13 @@ maxDateStartField: any;
         this.initalPatchWithValidations();
       }
     });
+  }
+
+  getEducationLength(education) {
+    let sp = this.selectedPost;
+    let label = sp == 'det' ? 'Diploma' : (sp == 'get' || sp == 'gct') ? 'UG' : (sp == 'pget' || sp == 'pgct' || sp == 'pgt') ? 'PG' : '';
+    const findIndex = education.findIndex(data => data.level == label);
+    this.educationLength = findIndex != -1 ? findIndex + 1 : 1;
   }
 
   initalPatchWithValidations() {

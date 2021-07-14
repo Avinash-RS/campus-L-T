@@ -36,7 +36,9 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   searchBox = false;
   filterValue: string;
   quickSearchValue = '';
-
+  rowStyle = { background: '#fcfcfc' };
+  getRowStyle: any;
+  public isRowSelectable;
   userList: any;
   popUpdata: any;
 
@@ -51,6 +53,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
 
   ngOnInit() {
     this.tabledef();
+    this.GetRowStyle();
+  }
+
+  GetRowStyle() {
+    this.getRowStyle = (params) => {
+      let rowsArray = params.node.rowModel.rowsToDisplay;
+      let rowI = params.node.rowIndex;
+      if (rowsArray[rowI].data.decline_status == 'Yes') {
+          return {opacity: '0.5'};
+      }
+  };
   }
 
   onGridReady(params: any) {
@@ -70,7 +83,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     }
 
     if (event.colDef.field === 'candidate_name') {
-      console.log(event['data']);      
       if (event['data']['mailed'] == '1' && event['data']['is_editable'] == '1') {
         const data = {
           candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
@@ -353,6 +365,11 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         sortable: false,
       }
     ];
+
+    this.isRowSelectable = function (rowNode) {
+      return rowNode.data && rowNode.data.decline_status == 'Yes' ? false : true;
+    };
+
     this.getUsersList();
   }
 
@@ -463,7 +480,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
-        element['is_checked'] = false;
+        element['is_checked'] = element['decline_status'] == '1' ? '' : false;
         element['decline_status'] = element['decline_status'] == '1' ? 'Yes' : 'No';
         element['details'] = count;
       });
