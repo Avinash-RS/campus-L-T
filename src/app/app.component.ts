@@ -73,11 +73,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.getScreenSize();
+    this.getScreenSize();
     this.checkIE();
   }
-  // @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
+    // if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
 
@@ -96,7 +97,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.matDialog.closeAll();
       }
     }
-  }
+  // }
+}
 
   @HostListener('window:mousemove', ['$event'])
   checkIE(event?) {

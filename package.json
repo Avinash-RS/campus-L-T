@@ -1,6 +1,6 @@
 {
   "name": "udap-registration",
-  "version": "0.0.128",
+  "version": "0.0.131",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -47,7 +47,7 @@
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "videogular2": "^7.0.2",
-    "zone.js": "~0.9.1"
+    "zone.js": "^0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.6",
