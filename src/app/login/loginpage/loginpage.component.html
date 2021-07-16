@@ -117,7 +117,7 @@
             <div class="space-20"></div>
 
             <div class="center">
-              <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid" type="submit">{{'SIGN IN'}}</button>
+              <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid || disableLogin" type="submit">{{'SIGN IN'}}</button>
               <div style="
               margin-top: 1.5em;
              color: #C02222;
