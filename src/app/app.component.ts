@@ -78,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-    // if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
+    if (!environment.local) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
 
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.matDialog.closeAll();
       }
     }
-  // }
+  }
 }
 
   @HostListener('window:mousemove', ['$event'])

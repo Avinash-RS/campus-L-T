@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   qa: false,
   local: true,
+  ASSETS: 'https://assets.lntedutech.com',
   versionCheckURL: 'http://campus-qa.lntedutech.com/version.json',
   // // For Dev
   //  API_BASE_URL: 'http://104.211.226.77/d8cintana2',
@@ -21,7 +22,7 @@ export const environment = {
     API_BASE_URL: 'http://campus-qa.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'http://campus-qa.lntedutech.com/d8cintana2',
     Image_Base_Url: 'http://campus-qa.lntedutech.com',
-  
+
   // Local
   // API_BASE_URL: '',
   // API_BASE_URL_city: '',
