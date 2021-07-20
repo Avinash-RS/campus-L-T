@@ -20,148 +20,105 @@
   pointer-events: none;
   background: rgba(128, 128, 128, 0.328) !important;
 }
+label {
+  margin: 0 1em 0 0em;
+  color: $light-black;
+  font-weight: 200;
+  width: 30%;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.overlap-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+nz-select,
+input {
+  width: 100%;
+  font-size: 14px;
+  padding: 0 4px;
+  color: $secondary;
+  border: .8px solid $input-border;
+  border-radius: 2px;
+  background: $white;
+  display: flex !important;
+  box-sizing: border-box;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  line-height: 35px;
+  outline: none;
+}
+input:focus,input:hover {
+  border: 1px solid $primary-red;
+}
+nz-select:focus,nz-select:hover {
+  border: 1px solid $primary-red;
+}
+
+
+
+.error {
+  margin: 0 0 0 0;
+  display: flex;
+  font-size: 12px;
+  font-weight: 200;
+  color: $red;
+  width: 100%;
+}
+
+.radio-grp {
+  display: flex;
+  height: 22px;
+}
+
+.dob-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  justify-content: space-between;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  padding: 0px !important;
+  border: none !important;
+}
+
+.width-100p {
+  width: 100% !important;
+}
+
+.width-250 {
+  width: 250px !important;
+}
+
 .grid-wrapper {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  padding: 1em 4em 0 4em;
+  grid-template-columns: 2fr .75fr;
+  padding: 1em 2em 0 2em;
   form {
     width: 100%;
     margin: 0;
-    // display: flex;
     .first-child {
-      margin: 0 1em;
-      width: auto !important;
+      // display: flex;
+      width: 100%;
       .flex-box {
         width: 100%;
-        align-items: center;
-        margin: 1.25em 0 0 0;
-        justify-content: space-between;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        label {
-          margin: 0 1em 0 0em;
-          color: $light-black;
-          font-weight: 200;
-          width: 100%;
-          font-size: 17px;
-          white-space: nowrap;
-        }
-        .input-box-radio {
-          display: flex;
-          align-items: center;
-          width: 100%;
-          margin: 0;
-          .radio-button {
-            margin: 0 1em 0 0;
-            width: auto;
-            font-size: 17px;
-            padding: 0 1em;
-            color: $secondary;
-            vertical-align: middle;
-            border: none;
-            outline: none;
-            background: $white-primary;
-            display: flex !important;
-            // height: 33px;
-          }
-          .text-right {
-            font-size: 17px;
-            margin-left: 0em;
-            color: $secondary;
-            margin: 0 2em 0 0;
-          }
-          .text {
-            font-size: 17px;
-            margin-left: 0em;
-            color: $secondary;
-          }
-        }
-        .input-box-dob {
-          display: inline-flex;
-          justify-content: start;
-          align-items: center;
-          width: 100%;
-          nz-select {
-            width: 70px;
-            margin: 0 1em 0 0em;
-            font-size: 17px;
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            // background: $white-primary;
-            border: solid $input-border 1px;
-            color: $secondary;
-            display: flex;
-            height: 38px;
-            align-items: center;
-          }
-          nz-select:last-child {
-            width: 90px;
-            margin-right: 0em;
-            font-size: 17px;
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            // background: $white-primary;
-            border: solid $input-border 1px;
-            color: $secondary;
-            display: flex;
-            height: 38px;
-            align-items: center;
-          }
-        }
-        .input-box {
-          // border-radius: 5px;
-          // box-shadow: $shadow-light-black;
-          display: flex;
-          min-width: 350px;
-          max-width: 400px;
-          width: 100%;
-          align-items: center;
-          // background: $white-primary;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          margin: 0 !important;
-          nz-select,
-          input {
-            margin: 0 !important;
-            width: 100%;
-            font-size: 17px;
-            padding: 0 0.7em;
-            color: $secondary;
-            vertical-align: middle;
-            border: none;
-            outline: none;
-            // background: $white-primary;
-            display: flex !important;
-            height: 38px;
-            // border-radius: 5px;
-            border: solid $input-border 1px;
-          }
-          nz-select {
-            padding: 0;
-          }
-        }
-      }
-      width: 100%;
-      .error {
-        margin: 0.35em 0 0 0;
         display: flex;
-        // justify-content: space-between;
-        font-size: 12px;
-        font-weight: 200;
-        color: $red;
-        div:first-child {
-          margin: 0em 1em 0 0;
-        }
-        div {
-          width: 32%;
-        }
+        align-items: center;
+        margin: 1em 0 0 0;
+        justify-content: space-between;
       }
     }
   }
   .second-child {
     width: 100%;
     display: inline-flex;
-    justify-content: center;
+    justify-content: flex-end;
     .photo-wrapper {
       width: 190px;
       height: 230px;
@@ -319,6 +276,37 @@
   opacity: 0.85;
   font-weight: 200;
 }
+
+.contact-address-section {
+  padding: .5em 2em 0 2em;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+    .contact-label {
+      margin-top: .5em;
+      width: 21.7%;
+    }
+    .addresslane-section {
+      width: 78%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .flex-box {
+      width: 100%;
+      display: flex;
+      margin-right: 1em;
+      margin-top: .5em;
+      width: 46%;
+      flex-direction: column;
+    }
+    .lane-label {
+      color: #A5A5A5 !important;
+      font-size: 13px;
+    }
+}
+
 .grid-wrapper-1 {
   display: grid;
   padding: 1.25em 4em 0 3.8em;
@@ -1133,13 +1121,114 @@
   }
 }
 .error {
-  max-width: 200px;
+  width: 100%;
 }
 .personalErr{
-  margin-left: 12% !important;
     width: 100% !important;
     white-space: nowrap !important;
     div:first-child {
       width: 100% !important;
     }
 }
+
+
+:host ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: $primary-red !important;
+}
+:host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: $primary-red !important;
+}
+:host ::ng-deep .mat-radio-outer-circle {
+  border-color: $primary-red !important;
+}
+
+
+// Ant select drop down css
+// :host ::ng-deep .ant-select-selection {
+//   border: solid .8px #BEBEBE !important;
+//   height: 35px !important;
+//   padding: 4px 8px;
+//   border-radius: 0px !important;
+// }
+
+// :host ::ng-deep .ant-select-selection:hover,:host ::ng-deep .ant-select-selection:focus,:host ::ng-deep .ant-select-selection:active{
+//   border: solid $primary-red 1px !important;
+//   border-radius: 0px !important;
+//   z-index: 0 !important;
+//   box-shadow: none !important;
+// }
+
+
+:host ::ng-deep .ant-select-selection__placeholder, :host ::ng-deep .ant-select-search__field__placeholder {
+  color: #A5A5A5 !important;
+  font-family: 'Roboto Condensed' !important;
+  font-size: 14px !important;
+}
+
+::placeholder {
+  color: #A5A5A5 !important;
+  opacity: 1 !important;
+  font-family: 'Roboto Condensed' !important;
+  font-size: 14px;
+}
+
+:host ::ng-deep .ant-select-selection__rendered {
+  position: relative;
+  display: block;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  line-height: 35px !important;
+}
+
+:host ::ng-deep .ant-select-arrow {
+  right: 0 !important;
+  padding: 0 8px !important;
+}
+
+:host ::ng-deep .ant-select-selection__clear {
+  right: 18px !important;
+  margin-top: -7px !important;
+}
+:host ::ng-deep .anticon.ant-select-arrow-icon::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  margin-top: 0.25em;
+  border-top: 0.5em solid;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0;
+  border-left: 0.4em solid transparent;
+  color: #666666;
+  opacity: 0.9;
+  border: solid #A5A5A5 !important;
+  border-width: 0 1px 1px 0 !important;
+  display: inline-block !important;
+  padding: 3px !important;
+  transform: rotate(45deg) !important;
+  -webkit-transform: rotate(45deg) !important;
+  margin-top: 1px !important;
+}
+
+::ng-deep .ant-select-dropdown-menu-item:first-child, ::ng-deep .ant-select-dropdown-menu-item:last-child {
+  border: none !important;
+  border-radius: 0px !important;
+}
+
+::ng-deep .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+  background-color: #eaeaea !important;
+}
+
+::ng-deep .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+  background-color: rgb(211, 211, 211, .7) !important;
+}
+
+:host ::ng-deep .ant-select-dropdown {
+  border: 1px solid #BEBEBE !important;
+}
+
+:host ::ng-deep .ant-select-selection-selected-value {
+  padding-right: 16px !important;
+}
+
+// Ant Select dropdown css close

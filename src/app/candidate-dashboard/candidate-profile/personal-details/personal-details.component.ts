@@ -1014,7 +1014,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobYear: [null, [Validators.required]],
       nationality: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       aadhaar: ['', [Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
-      category: [''],
+      category: [null],
     }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
@@ -1168,7 +1168,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobYear: dob.year,
       nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '',
       aadhaar: organizeUserDetails && organizeUserDetails.field_aadharno && organizeUserDetails['field_aadharno'] ? organizeUserDetails['field_aadharno']['value'] : '',
-      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '',
+      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : null,
     });
   }
 
