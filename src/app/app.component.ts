@@ -78,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-    if (!environment.local) {
+    if (environment.production) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
 
