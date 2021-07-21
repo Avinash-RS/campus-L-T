@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  uat: false,
   qa: false,
   local: true,
   ASSETS: 'https://assets.lntedutech.com',
