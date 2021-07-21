@@ -268,16 +268,15 @@ nz-select:focus,nz-select:hover {
   }
 }
 .checkbox {
-  display: grid;
-  padding: 3em 4em 0 2em;
-  grid-template-columns: 24% 80%;
-  color: $light-black;
-  font-size: 17px;
-  opacity: 0.85;
-  font-weight: 200;
+    margin: 1em 1em 0 1em;
+    color: #333333;
+    font-size: 15px;
+    opacity: 1;
+    font-weight: 200;
+    padding-left: 1em;
 }
 
-.contact-address-section {
+.contact-address-section, .language-section {
   padding: .5em 2em 0 2em;
   box-sizing: border-box;
   display: flex;
@@ -302,730 +301,105 @@ nz-select:focus,nz-select:hover {
       flex-direction: column;
     }
     .lane-label {
-      color: #A5A5A5 !important;
+      color: #4B4B4B !important;
       font-size: 13px;
     }
 }
 
-.grid-wrapper-1 {
-  display: grid;
-  padding: 1.25em 4em 0 3.8em;
-  grid-template-columns: 1fr;
-  .first-child {
-    margin: 0 1em;
-    // justify-content: space-between;
-    display: grid;
-    grid-template-columns: 0.55fr 2fr;
-    width: 100%;
-    .flex-box {
-      // width: 100%;
-      // align-items: center;
-      // margin: 1.25em 0 0 0;
-      width: 34.5%;
-      label {
-        margin: 1em 1em 0 0em;
-        color: $light-black;
-        font-weight: 200;
-        width: 100%;
-        font-size: 17px;
-        white-space: nowrap;
-      }
-    }
-    .sub-input-box {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      .label-box {
-        margin: 0.5em 0 0 0;
-        label {
-          font-size: 14px;
-          color: $black-2;
-        }
-        .input-box {
-          // border-radius: 5px;
-          // box-shadow: $shadow-light-black;
-          display: flex;
-          min-width: 200px;
-          width: 100%;
-          align-items: center;
-          // background: $white-primary;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          margin: 0 !important;
-          nz-select,
-          input {
-            margin: 0 !important;
-            width: 100%;
-            font-size: 17px;
-            padding: 0 0.7em;
-            color: $secondary;
-            vertical-align: middle;
-            border: solid $input-border 1px;
-            outline: none;
-            // background: $white-primary;
-            display: flex !important;
-            height: 38px;
-            // border-radius: 5px;
-          }
-          nz-select {
-            padding: 0;
-          }
-        }
-        .error {
-          color: $red;
-          font-size: 12px;
-          font-weight: 200;
-        }
-      }
-      .label-box-2 {
-        margin: 0.5em 0 0 0;
-        display: flex;
-        .input-boxes-1 {
-          display: inline-flex;
-          flex-grow: 3;
-          margin: 0 0.5em 0 0;
-          flex-direction: column;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            display: flex;
-            min-width: 200px;
-            width: 100%;
-            align-items: center;
-            // background: $white-primary;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            margin: 0 !important;
-            nz-select,
-            input {
-              // border-radius: 5px;
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              padding: 0 0.7em;
-              color: $secondary;
-              vertical-align: middle;
-              border: solid $input-border 1px;
-              outline: none;
-              // background: $white-primary;
-              display: flex !important;
-              height: 38px;
-            }
-            nz-select {
-              padding: 0;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-        .input-boxes-2 {
-          display: inline-flex;
-          flex-direction: column;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            display: flex;
-            min-width: 200px;
-            width: 100%;
-            align-items: center;
-            // background: $white-primary;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            margin: 0 !important;
-            input {
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              padding: 0 0.7em;
-              color: $secondary;
-              vertical-align: middle;
-              border: solid $input-border 1px;
-              outline: none;
-              // background: $white-primary;
-              display: flex !important;
-              // border-radius: 5px;
-              height: 38px;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-      }
-      .label-box-2-auto-complete {
-        margin: 0.5em 0 0 0;
-        display: flex;
-        // form {
-        //   width: 100%;
-        //   display: inline-flex;
-        .input-boxes-1 {
-          display: inline-flex;
-          flex-grow: 3;
-          margin: 0 0.5em 0 0;
-          flex-direction: column;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            display: flex;
-            min-width: 200px;
-            width: 100%;
-            align-items: center;
-            // background: $white-primary;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            margin: 0 !important;
-            nz-select,
-            input {
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              padding: 0 0.7em;
-              color: $secondary;
-              vertical-align: middle;
-              border: solid $input-border 1px;
-              outline: none;
-              // background: $white-primary;
-              display: flex !important;
-              height: 38px;
-              // border-radius: 5px;
-            }
-            nz-select {
-              padding: 0;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-        .input-boxes-2 {
-          display: inline-flex;
-          flex-direction: column;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            display: flex;
-            min-width: 200px;
-            width: 100%;
-            align-items: center;
-            // background: $white-primary;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            margin: 0 !important;
-            input {
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              padding: 0 0.7em;
-              color: $secondary;
-              vertical-align: middle;
-              border: solid $input-border 1px;
-              outline: none;
-              // background: $white-primary;
-              display: flex !important;
-              height: 38px;
-              // border-radius: 5px;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-      }
-    }
-    width: 100%;
+.language-section {
+  margin-bottom: 1em;
+}
+.language-wrapper {
+  width: 100%;
+}
+.language-label {
+  color: #333;
+  font-size: 14px;
+}
+.language-knowns {
+  height: 35px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  margin: 0 !important;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.close-icon {
+  position: relative;
+  cursor: pointer;
+  height: 24px;
+  i {
+      color: $primary-red;
+  }
+  i:hover {
+      color: white;
+      background-color: $primary-red;
+      border-radius: 50%;
   }
 }
 
-.grid-wrapper-languages {
-  display: grid;
-  padding: 3em 4em 0 4em;
-  grid-template-columns: 1fr;
-  .first-child {
-    margin: 0 1em;
-    // justify-content: space-between;
-    display: grid;
-    grid-template-columns: 0.55fr 2fr;
-    width: 100%;
-    .flex-box {
-      // width: 100%;
-      // align-items: center;
-      // margin: 1.25em 0 0 0;
-      width: 34.5%;
-      label {
-        margin: 2em 1em 0 0em;
-        color: $light-black;
-        font-weight: 200;
-        width: 100%;
-        font-size: 17px;
-        white-space: nowrap;
-      }
-    }
-    .sub-input-box {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      .label-box {
-        margin: 0.5em 0 0 0;
-        label {
-          font-size: 14px;
-          color: $black-2;
-        }
-        .input-box {
-          // border-radius: 5px;
-          // box-shadow: $shadow-light-black;
-          display: flex;
-          min-width: 200px;
-          width: 100%;
-          align-items: center;
-          // background: $white-primary;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          margin: 0 !important;
-          input {
-            margin: 0 !important;
-            width: 100%;
-            font-size: 17px;
-            padding: 0 0.7em;
-            color: $secondary;
-            vertical-align: middle;
-            border: solid $input-border 1px;
-            outline: none;
-            // background: $white-primary;
-            display: flex !important;
-            height: 38px;
-            // border-radius: 5px;
-          }
-        }
-        .error {
-          color: $red;
-          font-size: 12px;
-          font-weight: 200;
-        }
-      }
-      .label-box-2 {
-        margin: 0.5em 0 0 0;
-        display: flex;
-        align-items: flex-end;
-        .input-boxes-1 {
-          display: inline-flex;
-          flex-grow: 1;
-          margin: 0 0.5em 0 0;
-          width: 100%;
-          flex-direction: column;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            display: flex;
-            min-width: 200px;
-            width: 100%;
-            align-items: center;
-            // background: $white-primary;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            margin: 0 !important;
-            input {
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              padding: 0 0.7em;
-              color: $secondary;
-              vertical-align: middle;
-              border: solid $input-border 1px;
-              outline: none;
-              // background: $white-primary;
-              display: flex !important;
-              height: 38px;
-              // border-radius: 5px;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-        .input-boxes-4 {
-          display: inline-flex;
-          justify-content: space-evenly;
-          // flex-direction: column;
-          width: 100%;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            .check,
-            input {
-              // border-radius: 5px;
-              border: 1px solid $input-border 1px;
-              display: flex;
-              // width: 35px;
-              // width: 100%;
-              align-items: center;
-              outline: none;
-              flex-direction: column;
-              // background: $white;
-              // height: 35px;
-              padding: 0em 0px 0 0px;
-              margin: 0 !important;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-      }
-      .label-box-3 {
-        align-items: center;
-        margin: 0.5em 0 0 0;
-        display: flex;
-        width: 100%;
-        .input-boxes-1 {
-          display: inline-flex;
-          flex-grow: 1;
-          margin: 0 0.5em 0 0;
-          width: 100%;
-          flex-direction: column;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            // border-radius: 5px;
-            // box-shadow: $shadow-light-black;
-            display: flex;
-            min-width: 200px;
-            width: 100%;
-            align-items: center;
-            // background: $white-primary;
-            height: 38px;
-            padding: 0em 0px 0 0px;
-            margin: 0 !important;
-            input {
-              margin: 0 !important;
-              width: 100%;
-              font-size: 17px;
-              padding: 0 0.7em;
-              color: $secondary;
-              vertical-align: middle;
-              border: solid $input-border 1px;
-              outline: none;
-              // background: $white-primary;
-              display: flex !important;
-              height: 38px;
-              // border-radius: 5px;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-        .input-boxes-4 {
-          display: inline-flex;
-          justify-content: space-evenly;
-          // flex-direction: column;
-          width: 100%;
-          label {
-            font-size: 14px;
-            color: $black-2;
-          }
-          .input-box {
-            input {
-              border-radius: 5px;
-              border: 1px solid $gray-dark;
-              display: flex;
-              width: 35px;
-              // width: 100%;
-              align-items: center;
-              outline: none;
-              background: $white;
-              height: 35px;
-              padding: 0em 0px 0 0px;
-              margin: 0 !important;
-            }
-          }
-          .error {
-            color: $red;
-            font-size: 12px;
-            font-weight: 200;
-          }
-        }
-      }
+.margin-0 {
+  margin: 0 !important;
+}
 
-      .language-add-button {
-        display: flex;
-        text-align: left;
-        margin: 1em 0 0 0;
-        span {
-          cursor: pointer;
-          margin: 0 0 0 0.5em;
-          color: $light-blue;
-          padding: 0 0 0.15em 0;
-          border-bottom: solid $light-blue 1px;
-          font-size: 17px;
-        }
-      }
-    }
-    width: 100%;
+.language-add-button {
+  cursor: pointer;
+}
+
+.flex-column-wrapper {
+  min-width: 300px;
+  display: flex;
+  padding-top: 1em;
+  flex-direction: column;
+}
+.passport-form {
+  display: flex;
+  justify-content: space-between;
+  background: $white-primary !important;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  box-shadow: $shadow-light-black;
+  padding: 0em 1em 1em 1em;
+}
+.label-flex-column {
+  font-size: 14px;
+}
+
+.height-weight {
+  flex-direction: row;
+  min-width: 300px;
+  justify-content: space-between;
+  .flex-column-wrapper {
+    padding-top: 0;
+    min-width: 140px !important;
+    max-width: 140px !important;
   }
 }
 
 .bottom-form-wrapper {
-  margin: 1em 0 0 0;
   padding: 10px;
   .header {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     color: $light-black;
     margin: .5em 0 .5em 1em;
   }
-  form {
+}
+
+.power-wrapper {
+  min-width: 300px;
+  display: flex;
+  padding-top: 1em;
+  flex-direction: column;
+  justify-content: center;
+  .eye-wrapper {
     display: flex;
-    width: 100%;
-    flex-direction: column;
-    padding: 1em 1em;
     align-items: center;
-    justify-content: space-between;
-    background: $white-primary !important;
-    border-radius: 5px;
-    box-shadow: $shadow-light-black;
-    .three-column-flex {
-      display: flex;
-      width: 100%;
-      // align-items: center;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      // flex-direction: column;
-      background: $white-primary !important;
-      .wrapper {
-        // width: 100%;
-        flex: auto;
-        margin: 0 2em;
-        .form-field {
-          label {
-            color: $light-black-1;
-            width: 100%;
-            margin: 1em 0 0.5em 0;
-            font-size: 17px;
-            white-space: nowrap;
-          }
-        }
-        .input-box {
-          // border-radius: 5px;
-          // box-shadow: $shadow-light-black;
-          display: flex;
-          min-width: 200px;
-          width: 100%;
-          align-items: center;
-          // background: $white;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          margin: 0 !important;
-          input {
-            margin: 0 !important;
-            width: 100%;
-            border: solid $input-border 1px;
-            font-size: 17px;
-            padding: 0 0.7em;
-            color: $secondary;
-            vertical-align: middle;
-            outline: none;
-            // background: $white;
-            display: flex !important;
-            // border-radius: 5px;
-            height: 38px;
-          }
-        }
-        .error {
-          color: $red;
-          font-size: 12px;
-          font-weight: 200;
-        }
-      }
-    }
-    .above-three-flex {
-      margin: .25em 0 0 0;
-      display: flex;
-      width: 100%;
-      // align-items: center;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      // flex-direction: column;
-      background: $white-primary !important;
-      .wrapper {
-        // width: 100%;
-        flex: auto;
-        margin: 0 2em;
-        .form-field {
-          label {
-            color: $light-black-1;
-            width: 100%;
-            margin: .25em 0 0.25em 0;
-            font-size: 17px;
-            white-space: nowrap;
-          }
-        }
-        .input-box {
-          // border-radius: 5px;
-          // box-shadow: $shadow-light-black;
-          display: flex;
-          min-width: 200px;
-          width: 100%;
-          align-items: center;
-          // background: $white;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          margin: 0 !important;
-          input {
-            margin: 0 !important;
-            width: 100%;
-            font-size: 17px;
-            border: solid $input-border 1px;
-            padding: 0 0.7em;
-            color: $secondary;
-            vertical-align: middle;
-            outline: none;
-            // background: $white;
-            display: flex !important;
-            // border-radius: 5px;
-            height: 38px;
-          }
-        }
-        .max-200 {
-          max-width: 120px !important;
-        }
-        .error {
-          color: $red;
-          font-size: 12px;
-          font-weight: 200;
-        }
-      }
-      .wrapper-sub-wrapper {
-        // width: 100%;
-        flex: auto;
-        margin: 0 2em;
-        .form-field {
-          label {
-            color: $light-black-1;
-            width: 100%;
-            margin: 1em 0 0.5em 0;
-            font-size: 17px;
-            white-space: nowrap;
-          }
-        }
-        .input-box {
-          // border-radius: 5px;
-          // box-shadow: $shadow-light-black;
-          display: flex;
-          // min-width: 200px;
-          width: 100px;
-          align-items: center;
-          // background: $white;
-          height: 38px;
-          padding: 0em 0px 0 0px;
-          margin: 0 !important;
-          input {
-            margin: 0 !important;
-            width: 100px;
-            font-size: 17px;
-            border: solid $input-border 1px;
-            padding: 0 0.7em;
-            color: $secondary;
-            vertical-align: middle;
-            outline: none;
-            // background: $white;
-            display: flex !important;
-            // border-radius: 5px;
-            height: 38px;
-          }
-        }
-        .error {
-          color: $red;
-          font-size: 12px;
-          font-weight: 200;
-        }
-        .power-wrapper {
-          display: flex;
-          align-items: center;
-          .sub-power-wrapper {
-            display: flex;
-            align-items: center;
-            .form-field {
-              label {
-                color: $primary;
-                width: 100%;
-                margin: 0 0.5em 0em 0;
-                font-size: 15px;
-                white-space: nowrap;
-              }
-            }
-            .input-box {
-              // border-radius: 5px;
-              // box-shadow: $shadow-light-black;
-              display: flex;
-              width: 100px;
-              align-items: center;
-              // background: $white;
-              height: 38px;
-              padding: 0em 0px 0 0px;
-              margin: 0 !important;
-              input {
-                margin: 0 !important;
-                width: 100px;
-                font-size: 17px;
-                border: solid $input-border 1px;
-                padding: 0 0.7em;
-                color: $secondary;
-                vertical-align: middle;
-                outline: none;
-                // background: $white;
-                display: flex !important;
-                // border-radius: 5px;
-                height: 38px;
-              }
-            }
-            .error {
-              color: $red;
-              font-size: 12px;
-              font-weight: 200;
-            }
-          }
-        }
-      }
-    }
+  }
+  .sub-power-wrapper {
+    width: 120px;
   }
 }
 .submit-button-wrapper {
@@ -1033,29 +407,6 @@ nz-select:focus,nz-select:hover {
   justify-content: center;
   align-items: center;
   margin: 3em 0;
-  // button:first-child {
-  //   width: 220px;
-  //   height: 35px;
-  //   background: $light-blue 0% 0% no-repeat padding-box;
-  //   box-shadow: $shadow-light-black-1;
-  //   border-radius: 8px;
-  //   font-weight: 700;
-  //   font-size: 15px;
-  //   color: $white;
-  //   outline: none;
-  //   font-weight: bold;
-  // }
-  // button:last-child {
-  //   width: 120px;
-  //   height: 35px;
-  //   margin-left: 30px;
-  //   border-radius: 8px;
-  //   border: 1px solid $blue-1;
-  //   font-weight: 600;
-  //   font-size: 15px;
-  //   color: $blue-1;
-  //   outline: none;
-  // }
 }
 
 @media only screen and (max-width: 1200px) and (min-width: 750px) {
@@ -1122,13 +473,6 @@ nz-select:focus,nz-select:hover {
 }
 .error {
   width: 100%;
-}
-.personalErr{
-    width: 100% !important;
-    white-space: nowrap !important;
-    div:first-child {
-      width: 100% !important;
-    }
 }
 
 
@@ -1232,3 +576,25 @@ nz-select:focus,nz-select:hover {
 }
 
 // Ant Select dropdown css close
+//mat-checkbox start
+:host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-red !important;
+}
+
+.language-knowns {
+ ::ng-deep .mat-checkbox-inner-container {
+  width: 28px !important;
+  height: 28px !important;
+  }
+}
+
+mat-datepicker-toggle {
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    border: 0.8px solid #bebebe !important;
+    border-left: none !important;
+    justify-content: center !important;
+}

@@ -478,35 +478,27 @@
         </div>
   </form>
   <div class="checkbox">
-    <label class="text-label">&#160;</label>
+    <!-- <label class="text-label">&#160;</label>
     <label
       nz-checkbox
       (ngModelChange)="checkboxChanged(checked)"
       [(ngModel)]="checked"
       >Click here if permanent address is same as present address</label
-    >
-    <!-- <input type="checkbox" name=""  id=""> -->
+    > -->
+    <mat-checkbox [(ngModel)]="checked" (change)="checkboxChanged(checked)" class="mr-2"></mat-checkbox> Click here if permanent address is same as present address
   </div>
-  <form #form2="ngForm" [formGroup]="permanentAddressForm">
-    <div
-      class="grid-wrapper-1"
-      [ngStyle]="{ display: checked == true ? 'none' : 'block' }"
-    >
-      <div class="first-child">
-        <div class="flex-box">
-          <label>Permanent Address</label>
-        </div>
-        <div class="sub-input-box">
-          <div class="label-box">
-            <label>Line 1 Street Address</label>
-            <div class="input-box">
-              <input
+  <form class="contact-address-section" #form2="ngForm" [formGroup]="permanentAddressForm">
+    <ng-container *ngIf="!checked">
+          <label class="contact-label">Permanent Address</label>
+        <div class="addresslane-section">
+          <div class="flex-box width-100p">
+            <label class="lane-label">Line 1 Street Address</label>
+              <input matInput
                 (focusout)="detectInput(permanentAddressForm)"
                 formControlName="permanentAddress1"
                 type="text"
-                value=""
-              />
-            </div>
+                placeholder="Enter here..."
+                />
             <div
               class="error"
               *ngIf="permanentAddress1.invalid && permanentAddress1.touched"
@@ -519,17 +511,14 @@
               >
             </div>
           </div>
-          <div class="label-box-2">
-            <div class="input-boxes-1">
-              <label>Line 2 Street Address</label>
-              <div class="input-box">
-                <input
+          <div class="flex-box width-100p">
+            <label class="lane-label">Line 2 Street Address</label>
+                <input matInput
                   (focusout)="detectInput(permanentAddressForm)"
                   formControlName="permanentAddress2"
                   type="text"
-                  value=""
+                  placeholder="Enter here..."
                 />
-              </div>
               <div
                 class="error"
                 *ngIf="permanentAddress2.invalid && permanentAddress2.touched"
@@ -542,16 +531,14 @@
                 >
               </div>
             </div>
-            <div class="input-boxes-2">
-              <label>Postal / Zip code</label>
-              <div class="input-box">
-                <input
+            <div class="flex-box">
+              <label class="lane-label">Postal / Zip code</label>
+                <input matInput
                   (focusout)="detectInput(permanentAddressForm)"
                   formControlName="permanentZipCode"
                   type="text"
-                  value=""
-                />
-              </div>
+                  placeholder="Enter here..."
+                  />
               <div
                 class="error"
                 *ngIf="permanentZipCode.invalid && permanentZipCode.touched"
@@ -567,16 +554,14 @@
                 >
               </div>
             </div>
-          </div>
-          <div class="label-box-2">
-            <div class="input-boxes-1">
-              <label>State / Province</label>
-              <div class="input-box">
+            <div class="flex-box">
+              <label class="lane-label">State / Province</label>
                 <nz-select
                   (ngModelChange)="
                     detectPermanentStateSelectChange(permanentState)
                   "
                   formControlName="permanentState"
+                  nzPlaceHolder="<--Select-->"
                   nzAllowClear
                   nzShowSearch
                 >
@@ -586,7 +571,6 @@
                     [nzValue]="state.id"
                   ></nz-option>
                 </nz-select>
-              </div>
               <div
                 class="error"
                 *ngIf="permanentState.invalid && permanentState.touched"
@@ -604,11 +588,9 @@
               </div>
             </div>
 
-            <div class="input-boxes-1">
-              <label>City</label>
-              <div
-                class="input-box"
-                [matTooltip]="
+            <div class="flex-box">
+              <label class="lane-label">City</label>
+              <div [matTooltip]="
                   hidePermanentCityDropDown ? 'Please select your state' : ''
                 "
               >
@@ -616,6 +598,7 @@
                   (ngModelChange)="detectSelectChange()"
                   [ngClass]="hidePermanentCityDropDown ? 'hideDropDown' : ''"
                   formControlName="permanentCity"
+                  nzPlaceHolder="<--Select-->"
                   nzAllowClear
                   nzShowSearch
                 >
@@ -646,174 +629,51 @@
                 >
               </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
+    </ng-container>
   </form>
-  <form #form3="ngForm" [formGroup]="languagesForm">
-    <div class="grid-wrapper-languages">
-      <div class="first-child">
-        <div class="flex-box">
-          <label>Languages Known</label>
-        </div>
-
-        <div class="sub-input-box">
-          <div class="label-box-2">
-            <div style="height: 18px" class="input-boxes-1">
-              <div style="visibility: hidden" class="input-box">
-                <input
-                  (focusout)="detectInput(languagesForm)"
-                  formControlName="languageRequired"
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                style="visibility: hidden"
-                class="error"
-                *ngIf="
-                  (languageRequired.invalid && languageRequired.touched) ||
-                  (languageRequired.touched &&
-                    !firstRead.value && !firstWrite.value && !firstSpeak.value)
-                "
-              >
-                <span *ngIf="languageRequired.errors?.required"
-                  >Language is Required</span
-                >
-                <span
-                  style="white-space: nowrap"
-                  *ngIf="languageRequired.errors?.pattern"
-                  >Accept only Alphanumeric characters and maximum of 255
-                  characters only allowed
-                </span>
-                <span
-                  *ngIf="
-                    !languageRequired.errors?.required &&
-                    !firstRead.value && !firstWrite.value && !firstSpeak.value
-                  "
-                  >Language Proficiency needs to be ticked</span
-                >
-              </div>
-            </div>
-            <div style="height: 18px" class="input-boxes-4">
-              <div class="input-box">
-                <label> Read</label>
-
-                <div
-                  style="visibility: hidden"
-                  class="custom-control custom-checkbox checkbox-xl"
-                >
-                  <input
-                    (focusout)="detectInput(languagesForm)"
-                    formControlName="firstRead"
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="checkbox-one"
-                  />
-                  <label class="custom-control-label" for="checkbox-one"
-                    >&#160;</label
-                  >
-                </div>
-              </div>
-              <div class="input-box">
-                <label> Write</label>
-                <div
-                  style="visibility: hidden"
-                  class="custom-control custom-checkbox checkbox-xl"
-                >
-                  <input
-                    (focusout)="detectInput(languagesForm)"
-                    formControlName="firstWrite"
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="checkbox-two"
-                  />
-                  <label class="custom-control-label" for="checkbox-two"
-                    >&#160;</label
-                  >
-                </div>
-              </div>
-              <div class="input-box">
-                <label> Speak</label>
-                <div
-                  style="visibility: hidden"
-                  class="custom-control custom-checkbox checkbox-xl"
-                >
-                  <input
-                    (focusout)="detectInput(languagesForm)"
-                    formControlName="firstSpeak"
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="checkbox-three"
-                  />
-                  <label class="custom-control-label" for="checkbox-three"
-                    >&#160;</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div
-              style="margin: 0; padding: 0; display: flex; pointer-events: none"
-            >
-              <button
-                style="
-                  display: inline-flex;
-                  background: transparent;
-                  border: none;
-                "
-                type="button"
-              >
-                <span style="color: transparent; visibility: hidden"
-                  ><img
-                    src="assets/images/close-black-18dp.svg"
-                    alt=""
-                    srcset=""
-                /></span>
-              </button>
-            </div>
-          </div>
+  <form class="language-section" #form3="ngForm" [formGroup]="languagesForm">
+    <label class="contact-label mt-2">Languages Known</label>
+    <div class="addresslane-section">
           <ng-container *ngIf="t && t.controls" formArrayName="languageAdd">
-            <div
-              class="label-box-3"
-              *ngFor="let item of t.controls; let i = index"
-              [formGroupName]="i"
-            >
-              <div class="input-boxes-1">
-                <div class="input-box">
-                  <input
+            <div class="language-wrapper mt-2" *ngFor="let item of t.controls; let i = index"
+            [formGroupName]="i">
+            <div class="flex-box language-knowns">
+              <div class="flex-box margin-0">
+                  <input matInput
                     (focusout)="detectInput(languagesForm)"
                     formControlName="language"
                     type="text"
-                    value=""
+                    placeholder="Enter Language Name"
                   />
-                </div>
-                <div
-                  class="error"
-                  *ngIf="
-                    t.controls[i].get('language').invalid &&
-                    t.controls[i].get('language').touched
-                  "
-                >
-                  <span *ngIf="t.controls[i].get('language').errors?.required"
-                    >Language is Required</span
-                  >
-                  <span *ngIf="t.controls[i].get('language').errors?.pattern"
-                    >Accept only Alphanumeric characters and maximum of 255
-                    characters only allowed</span
-                  >
-                  <span *ngIf="t.hasError('notSelected')"
-                    >Please select any one of the language proficiency</span
-                  >
-                </div>
-                <div
-                  class="error"
-                  *ngIf="
-                    t.controls[i].get('language').valid &&
-                    t.controls[i].get('language').touched
-                  "
-                >
-                  <span *ngIf="t.controls[i].get('language').errors?.required"
+              </div>
+
+              <div class="flex-box language-knowns">
+              <div>
+                <label class="language-label">Read</label>
+                <mat-checkbox formControlName="read" class="mr-2"></mat-checkbox>
+              </div>
+              <div>
+                <label class="language-label">Write</label>
+                <mat-checkbox formControlName="write" class="mr-2"></mat-checkbox>
+              </div>
+              <div>
+                <label class="language-label">Speak</label>
+                <mat-checkbox formControlName="speak" class="mr-2"></mat-checkbox>
+              </div>
+
+              <div [ngClass]="i == 0 ? 'hideClose' : ''" matTooltip="Remove" class="close-icon">
+                <i (click)="i == 0 ? '' : removeLanguage(i)" class="material-icons material-icons-outlined">
+                    remove_circle_outline
+                </i>
+            </div>
+
+              </div>
+            </div>
+            <div
+            class="error"
+            *ngIf="t.controls[i].invalid">
+            <span *ngIf="t.controls[i].get('language').errors?.required"
                     >Language is Required</span
                   >
                   <span *ngIf="t.controls[i].get('language').errors?.pattern"
@@ -821,108 +681,35 @@
                     characters only allowed</span
                   >
                   <span *ngIf="t.controls[i].get('read').errors?.notSelected"
-                    >Please select any one of the language proficiency</span
+                    >Make sure, you have entered Language name and selected any one of the language proficiency</span
                   >
-                </div>
-              </div>
+          </div>
 
-              <div class="input-boxes-4">
-                <div class="input-box">
-                  <div class="custom-control custom-checkbox checkbox-xl">
-                    <input
-                      (focusout)="detectInput(languagesForm)"
-                      formControlName="read"
-                      type="checkbox"
-                      class="custom-control-input"
-                      [id]="i + 'one'"
-                    />
-                    <label class="custom-control-label" [for]="i + 'one'"
-                      >&#160;</label
-                    >
-                  </div>
-                </div>
-                <div class="input-box">
-                  <div class="custom-control custom-checkbox checkbox-xl">
-                    <input
-                      (focusout)="detectInput(languagesForm)"
-                      formControlName="write"
-                      type="checkbox"
-                      class="custom-control-input"
-                      [id]="i + 'two'"
-                    />
-                    <label class="custom-control-label" [for]="i + 'two'"
-                      >&#160;</label
-                    >
-                  </div>
-                </div>
-                <div class="input-box">
-                  <div class="custom-control custom-checkbox checkbox-xl">
-                    <input
-                      (focusout)="detectInput(languagesForm)"
-                      formControlName="speak"
-                      type="checkbox"
-                      class="custom-control-input"
-                      [id]="i + 'three'"
-                    />
-                    <label class="custom-control-label" [for]="i + 'three'"
-                      >&#160;</label
-                    >
-                  </div>
-                </div>
-              </div>
-              <div
-                style="margin: 0; padding: 0; display: flex"
-                [ngClass]="t['controls'].length == 1 ? 'hideClose' : ''"
-              >
-                <button
-                  (click)="removeLanguage(i)"
-                  style="
-                    display: inline-flex;
-                    background: transparent;
-                    border: none;
-                  "
-                  type="button"
-                >
-                  <span
-                    ><img
-                      src="assets/images/close-black-18dp.svg"
-                      alt=""
-                      srcset=""
-                  /></span>
-                </button>
-              </div>
-            </div>
+          </div>
           </ng-container>
-          <div *ngIf="!notShow" class="language-add-button">
+          <div (click)="addLanguage1()" *ngIf="!notShow" class="language-add-button mt-2">
             <img
               src="assets/images/interface.svg"
               width="25px"
               height="25px"
               alt=""
             />
-            <span (click)="addLanguage()">Add</span>
+            <span class="ml-1">Add</span>
           </div>
-        </div>
       </div>
-    </div>
   </form>
 
   <div class="bottom-form-wrapper">
     <div class="header">Passport Related Details</div>
     <form #form4="ngForm" [formGroup]="passportForm" class="passport-form">
-      <div class="three-column-flex">
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Passport Number</label>
-          </div>
-          <div class="input-box">
-            <input
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Passport Number</label>
+            <input matInput
               (focusout)="detectInput(passportForm)"
               formControlName="passportNumber"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div
             class="error"
             *ngIf="passportNumber.invalid && passportNumber.touched"
@@ -936,18 +723,14 @@
             >
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Name as in Passport</label>
-          </div>
-          <div class="input-box">
-            <input
+        <div class="flex-column-wrapper">
+          <label class="label-flex-column">Name as in Passport</label>
+            <input matInput
               (focusout)="detectInput(passportForm)"
               formControlName="passportName"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div
             class="error"
             *ngIf="passportName.invalid && passportName.touched"
@@ -959,18 +742,14 @@
             >
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Profession as in Passport</label>
-          </div>
-          <div class="input-box">
-            <input
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Profession as in Passport</label>
+            <input matInput
               (focusout)="detectInput(passportForm)"
               formControlName="passportProfession"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div
             class="error"
             *ngIf="passportProfession.invalid && passportProfession.touched"
@@ -984,27 +763,21 @@
             >
           </div>
         </div>
-      </div>
-      <div class="above-three-flex">
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Date of Issue</label>
-          </div>
-          <div class="input-box">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Date of Issue</label>
+            <!--               (keydown)="preventDate($event, dp)" -->
+          <div class="d-flex align-items-center">
             <input
               (focusout)="detectInput(passportForm)"
-              (keydown)="preventDate($event, dp)"
               matInput
               [max]="maxDate"
+              [min]="minDate"
+              placeholder="DD-MM-YYYY"
               [matDatepicker]="dp"
               formControlName="passportIssueDate"
             />
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
             <mat-datepicker #dp> </mat-datepicker>
-            <!-- To select only month and year -->
-            <!-- startView="multi-year" (yearSelected)="chosenYearHandler($event)"
-            (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker" -->
-            <!-- <input formControlName="passportIssueDate" type="text" value=""> -->
           </div>
           <div
             class="error"
@@ -1013,20 +786,26 @@
             <span *ngIf="passportIssueDate.errors?.required"
               >Date of issue is Required</span
             >
+            <span *ngIf="passportIssueDate?.errors?.matDatepickerMax">
+              {{passportIssueDate?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(passportIssueDate?.errors?.matDatepickerMax.max) : ''}}
+          </span>
+          <span *ngIf="passportIssueDate?.errors?.matDatepickerMin">
+              {{passportIssueDate?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(passportIssueDate?.errors?.matDatepickerMin.min) : ''}}
+          </span>
+          <span *ngIf="passportIssueDate?.errors?.matDatepickerParse">Invalid Date Format</span>
+
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Valid Upto</label>
-          </div>
-          <!-- [max]="passportValidmaxDate" [min]="passportValidminDate" -->
-          <div class="input-box">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Valid Upto</label>
+          <div class="d-flex align-items-center">
             <input
               (focusout)="detectInput(passportForm)"
-              (keydown)="preventDate($event, picker)"
               formControlName="passportValid"
+              [max]="passportValidmaxDate" [min]="passportValidminDate"
               matInput
               [matDatepicker]="picker"
+              placeholder="DD-MM-YYYY"
             />
             <mat-datepicker-toggle
               matSuffix
@@ -1041,22 +820,24 @@
             <span *ngIf="passportValid.errors?.required"
               >Expiry Date is Required</span
             >
-            <!-- <span *ngIf="!passportValid.errors?.required && passportValid.errors?.passportNotValid">Passport
-            Expired</span> -->
+            <span *ngIf="passportValid?.errors?.matDatepickerMax">
+              {{passportValid?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(passportValid?.errors?.matDatepickerMax.max) : ''}}
+          </span>
+          <span *ngIf="passportValid?.errors?.matDatepickerMin">
+              {{passportValid?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(passportValid?.errors?.matDatepickerMin.min) : ''}}
+          </span>
+          <span *ngIf="passportValid?.errors?.matDatepickerParse">Invalid Date Format</span>
+
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Place of Issue</label>
-          </div>
-          <div class="input-box">
-            <input
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Place of Issue</label>
+            <input matInput
               (focusout)="detectInput(passportForm)"
               formControlName="passportIssuePlace"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div
             class="error"
             *ngIf="passportIssuePlace.invalid && passportIssuePlace.touched"
@@ -1070,18 +851,14 @@
             >
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Countries valid for</label>
-          </div>
-          <div class="input-box">
-            <input
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Countries valid for</label>
+            <input matInput
               (focusout)="detectInput(passportForm)"
               formControlName="passportValidFor"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div
             class="error"
             *ngIf="passportValidFor.invalid && passportValidFor.touched"
@@ -1095,26 +872,20 @@
             >
           </div>
         </div>
-      </div>
     </form>
   </div>
 
   <div class="bottom-form-wrapper">
     <div class="header">Health-related details</div>
     <form #form5="ngForm" [formGroup]="healthForm" class="passport-form">
-      <div class="three-column-flex">
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Most Serious Recent Illness</label>
-          </div>
-          <div class="input-box">
-            <input
+      <div class="flex-column-wrapper">
+            <label class="label-flex-column">Most Serious Recent Illness</label>
+            <input matInput
               (focusout)="detectInput(healthForm)"
               formControlName="illness"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div class="error" *ngIf="illness.invalid && illness.touched">
             <span *ngIf="illness.errors?.required">Mandatory Field</span>
             <span *ngIf="illness.errors?.pattern"
@@ -1123,18 +894,14 @@
             >
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>No. of Days Ill</label>
-          </div>
-          <div class="input-box">
-            <input
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">No. of Days Ill</label>
+            <input matInput
               (focusout)="detectInput(healthForm)"
               formControlName="daysofIll"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div class="error" *ngIf="daysofIll.invalid && daysofIll.touched">
             <span *ngIf="daysofIll.errors?.required"
               >No. of days is Required</span
@@ -1145,18 +912,14 @@
             <span *ngIf="daysofIll.errors?.pattern">Accept only numbers</span>
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Nature of Illness</label>
-          </div>
-          <div class="input-box">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Nature of Illness</label>
             <input
               (focusout)="detectInput(healthForm)"
               formControlName="natureofIll"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div class="error" *ngIf="natureofIll.invalid && natureofIll.touched">
             <span *ngIf="natureofIll.errors?.required"
               >Nature of Ill is Required</span
@@ -1167,20 +930,14 @@
             >
           </div>
         </div>
-      </div>
-      <div class="above-three-flex">
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Physical Disability (if any)</label>
-          </div>
-          <div class="input-box">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Physical Disability (if any)</label>
             <input
               (focusout)="detectInput(healthForm)"
               formControlName="disability"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div class="error" *ngIf="disability.invalid && disability.touched">
             <span *ngIf="disability.errors?.required"
               >Disability is Required</span
@@ -1191,18 +948,15 @@
             >
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Height (cms)</label>
-          </div>
-          <div class="input-box max-200">
+        <div class="flex-column-wrapper height-weight">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Height (cms)</label>
             <input
               (focusout)="detectInput(healthForm)"
               formControlName="height"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div class="error" *ngIf="height.invalid && height.touched">
             <span *ngIf="height.errors?.required">Height is Required</span>
             <span *ngIf="height.errors?.pattern"
@@ -1210,18 +964,14 @@
             >
           </div>
         </div>
-        <div class="wrapper">
-          <div class="form-field">
-            <label>Weight (kg)</label>
-          </div>
-          <div class="input-box max-200">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Weight (kg)</label>
             <input
               (focusout)="detectInput(healthForm)"
               formControlName="weight"
               type="text"
-              value=""
+              placeholder="Enter here..."
             />
-          </div>
           <div class="error" *ngIf="weight.invalid && weight.touched">
             <span *ngIf="weight.errors?.required">Weight is Required</span>
             <span *ngIf="weight.errors?.pattern"
@@ -1229,38 +979,27 @@
             >
           </div>
         </div>
-        <div class="wrapper-sub-wrapper">
-          <div class="form-field">
-            <label>Power of Eye glass</label>
-          </div>
-          <div formGroupName="eyePower" class="power-wrapper">
+      </div>
+        <div class="power-wrapper">
+            <label class="label-flex-column">Power of Eye glass</label>
+          <div formGroupName="eyePower" class="eye-wrapper">
             <div class="sub-power-wrapper">
-              <div class="form-field">
-                <label>Left Eye</label>
-              </div>
-
-              <div class="input-box">
-                <input
+                <!-- <label class="lane-label">Left Eye</label> -->
+                <input matInput
                   (focusout)="detectInput(healthForm)"
                   formControlName="left"
                   type="text"
-                  value=""
-                />
-              </div>
+                  placeholder="Left Eye Power"
+                  />
             </div>
             <div style="margin: 0 0 0 1em" class="sub-power-wrapper">
-              <div class="form-field">
-                <label>Right Eye</label>
-              </div>
-
-              <div class="input-box">
-                <input
+                <!-- <label class="lane-label">Right Eye</label> -->
+                <input matInput
                   (focusout)="detectInput(healthForm)"
                   formControlName="right"
                   type="text"
-                  value=""
-                />
-              </div>
+                  placeholder="Right Eye Power"
+                  />
             </div>
           </div>
           <div
@@ -1281,7 +1020,6 @@
           <span *ngIf="right.errors?.pattern">Numeric Decimals only Allowed</span>
         </div> -->
         </div>
-      </div>
     </form>
   </div>
 
