@@ -92,8 +92,11 @@ import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CommonJoiningFormComponent } from './common-joining-form/common-joining-form.component';
+import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent,
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent,
 ],
   imports: [
     CommonModule,
@@ -104,6 +107,7 @@ import { CommonJoiningFormComponent } from './common-joining-form/common-joining
     HttpClientModule,
     MaterialModule,
     PdfViewerModule,
+    NgxChartsModule,
     NgMultiSelectDropDownModule.forRoot(),
 
     // Ant design Modules
@@ -187,6 +191,7 @@ import { CommonJoiningFormComponent } from './common-joining-form/common-joining
     VgOverlayPlayModule,
     VgBufferingModule,
     PdfViewerModule,
+    NgxChartsModule,
     SignupHeaderComponent,
     HomeHeaderComponent,
     SnackbarComponent,
@@ -204,6 +209,8 @@ import { CommonJoiningFormComponent } from './common-joining-form/common-joining
     YearMonthDirective,
     DateMonthYearDirective,
     CommonJoiningFormComponent,
+    BarChartComponent,
+    HorizontalBarChartComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

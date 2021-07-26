@@ -18,6 +18,7 @@ export const environment = {
   // Image_Base_Url: 'http://udapqa.southindia.cloudapp.azure.com',
 
     // Campus QA
+    NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
     API_BASE_URL: 'http://campus-qa.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'http://campus-qa.lntedutech.com/d8cintana2',
     Image_Base_Url: 'http://campus-qa.lntedutech.com',

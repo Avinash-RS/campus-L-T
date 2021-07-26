@@ -15,6 +15,8 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class InvUnifiedreportsComponent implements OnInit {
 
   queryParams: any;
+  getAllReportsData: any;
+  driveName: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -54,9 +56,32 @@ export class InvUnifiedreportsComponent implements OnInit {
         email: params['email'],
         form: params['form']
       };
+      this.getReports(params['email']);
     });
   }
 
+  getReports(data) {
+    const apiData = {
+      email: data
+    };
+    this.adminService.getReportsDataAPI(apiData).subscribe((response: any)=> {
+      console.log('res', response);
+      this.appConfig.hideLoader();
+      if (response && response.success) {
+        this.getAllReportsData = response.data && response.data[0] ? response.data[0] : null;
+      } else {
+        this.appConfig.warning('No Reports Available');
+        this.getAllReportsData = [];
+      }
+    });
+  }
+
+  getSelectedDriveName(e) {
+    if (this.getAllReportsData) {
+      this.getAllReportsData.selectedDriveName = e;
+      this.driveName = e;
+    }
+  }
   next() {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, this.queryParams);
   }
