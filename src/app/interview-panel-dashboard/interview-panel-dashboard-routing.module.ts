@@ -11,6 +11,7 @@ import { InvSubEmploymentComponent } from './inv-candidate-details/inv-evaluatio
 import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-evaluate/inv-sub-evaluate.component';
 import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
 import { InvpanelGuard } from '../guards/canload/invpanel.guard';
+import { InvUnifiedreportsComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/inv-unifiedreports.component';
 
 
 const routes: Routes = [
@@ -70,8 +71,15 @@ const routes: Routes = [
                 }
               },
               {
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS}`,
+                component: InvUnifiedreportsComponent,
+                data: {
+                  breadcrumb: 'Test Sections'
+                }
+              },
+              {
                 path: '',
-                redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`,
+                redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
                 pathMatch: 'full',
               }
             ]

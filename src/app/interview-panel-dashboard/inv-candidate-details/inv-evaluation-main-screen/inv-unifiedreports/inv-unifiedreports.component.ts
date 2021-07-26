@@ -1,26 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
-  selector: 'app-inv-sub-education',
-  templateUrl: './inv-sub-education.component.html',
-  styleUrls: ['./inv-sub-education.component.scss']
+  selector: 'app-inv-unifiedreports',
+  templateUrl: './inv-unifiedreports.component.html',
+  styleUrls: ['./inv-unifiedreports.component.scss']
 })
-export class InvSubEducationComponent implements OnInit {
+export class InvUnifiedreportsComponent implements OnInit {
 
-  appConstant = CONSTANT.ENDPOINTS;
-  nameOfAssessment: any;
-  candidateId: any;
-  certificateArr: any;
-  uid:any;
-  queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
-
+  queryParams: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -29,7 +23,7 @@ export class InvSubEducationComponent implements OnInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
-    // // Sub-Navigation menus. This will be retrieved in Admin master component
+    // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
         icon: 'work.svg',
@@ -60,37 +54,11 @@ export class InvSubEducationComponent implements OnInit {
         email: params['email'],
         form: params['form']
       };
-      this.nameOfAssessment = params['data'];
-      this.candidateId = params['id'];
-      this.uid = params['uid'];
-      this.userlist(params['uid']);
     });
   }
-
-  userlist(cid) {
-    const apiData = {
-      id: cid
-    };
-    this.adminService.getCertificates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
-
-    }, (err) => {
-
-    });
-  }
-
-  viewCerificates(path) {
-    // const excel = element && element.download ? element.download : '';
-    window.open(path, '_blank');
-  }
-
 
   next() {
-    const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
-    const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
-    const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS, this.queryParams);
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, this.queryParams);
   }
 
 }
