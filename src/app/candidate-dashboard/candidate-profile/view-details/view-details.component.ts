@@ -19,6 +19,40 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
   radioIsChecked = 'checked';
   userDetails: any;
   radioValue = 'pre';
+  category = [
+    {
+      name: 'Scheduled Caste',
+      caste: 'SC'
+    },
+    {
+      name: 'Scheduled Tribe',
+      caste: 'ST'
+    },
+    {
+      name: 'De-notified Tribe',
+      caste: 'DenotifiedTribe'
+    },
+    {
+      name: 'Nomadic Tribe',
+      caste: 'NomadicTribe'
+    },
+    {
+      name: 'Special Backward Category',
+      caste: 'SBC'
+    },
+    {
+      name: 'Other Backward Classes',
+      caste: 'OBC'
+    },
+    {
+      name: 'General / Open Category',
+      caste: 'GEN'
+    },
+    {
+      name: 'Other',
+      caste: 'Other'
+    },
+  ];
 
   userData: any;
   apiForm: any;
@@ -29,6 +63,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
   allStatess: any;
   allCitiess: any;
   permanentStateId: any;
+  workDetails: any;
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.appConfig.getLocalData('confirmClick') == 'true') {
@@ -45,6 +80,10 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
     private sharedService: SharedServiceService,
     private fb: FormBuilder
   ) {
+    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') == 'true') {
+      this.showNext = true;
+      this.getWorkExp();
+    }
     this.appConfig.showLoader();
     this.updatedStateAPI();
   }
@@ -54,10 +93,33 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
-
     if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') == 'true') {
       this.showNext = true;
     }
+  }
+
+  getWorkExp() {
+    const apiData = {
+      user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    };
+    this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      this.workDetails = data && data[0] ? data[0] : null;
+      // data = data && data[0];
+      
+      // this.workDetails = data?.work_experience_details;
+      // if (this.workDetails) {
+      //   this.workDetails.when_interview = this.workDetails?.when_interview ? moment(this.workDetails.when_interview).format('DD MMM YYYY') : '-';
+      // }
+      // this.criminalRecord = data?.criminal_record;
+      // this.workHistory = data?.work_experience_history;
+      // if (this.workHistory && this.workHistory?.length > 0) {
+      //   this.workHistory.forEach(element => {
+      //     element.duration_from = element?.duration_from ? moment(element.duration_from).format('DD MMM YYYY') : '-';
+      //     element.duration_to = element?.duration_to ? moment(element.duration_to).format('DD MMM YYYY') : '-';
+      //   });
+      // }
+    });
   }
 
   ngAfterViewInit() {
@@ -112,6 +174,15 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getCategory(data) {
+    let name = '';
+    this.category.forEach(element => {
+      if (element.caste == data) {
+        name = element.name;
+      }
+    });
+    return name;
+}
   getLocalForm(form) {
     this.apiForm = form;
     this.userData = this.apiForm;
@@ -147,7 +218,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       dobYear: dob.year,
       nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '-',
       aadhaar: organizeUserDetails && organizeUserDetails.field_aadharno && organizeUserDetails['field_aadharno'] ? organizeUserDetails['field_aadharno']['value'] : '-',
-      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '-',
+      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? this.getCategory(organizeUserDetails['field_category']['value']) : '-',
 
       presentAddress1: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'] ? organizeUserDetails['field_present_line_street_addres']['value'] : '-',
       presentAddress2: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'] ? organizeUserDetails['field_present_line2_street_addre']['value'] : '-',
@@ -754,7 +825,19 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
-        
+        if (this.showNext) {
+          this.KYCModifiedData.criminal_record = this.workDetails && this.workDetails.criminal_record ? this.workDetails.criminal_record : null;
+          this.KYCModifiedData.total_exp_years = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.total_exp_years ? this.workDetails.work_experience_details.total_exp_years : null;
+          this.KYCModifiedData.total_exp_months = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.total_exp_months ? this.workDetails.work_experience_details.total_exp_months : null;
+          this.KYCModifiedData.employed_us = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.employed_us ? this.workDetails.work_experience_details.employed_us : null;
+          this.KYCModifiedData.oc = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.oc ? this.workDetails.work_experience_details.oc : null;
+          this.KYCModifiedData.payslip = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.payslip ? this.workDetails.work_experience_details.payslip : null;
+          this.KYCModifiedData.interviewed_by_us = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.interviewed_by_us ? this.workDetails.work_experience_details.interviewed_by_us : null;
+          this.KYCModifiedData.break_in_emp = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.break_in_emp ? this.workDetails.work_experience_details.break_in_emp : null;
+          this.KYCModifiedData.post = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.post ? this.workDetails.work_experience_details.post : null;
+          this.KYCModifiedData.when_interview = this.workDetails && this.workDetails.work_experience_details && this.workDetails.work_experience_details.when_interview ? this.workDetails.work_experience_details.when_interview : null;
+          this.KYCModifiedData.full_employment = this.workDetails && this.workDetails.work_experience_history ? this.workDetails.work_experience_history : [];
+        }
         this.getLocalForm(this.KYCModifiedData);
         this.appConfig.hideLoader();
       } else {

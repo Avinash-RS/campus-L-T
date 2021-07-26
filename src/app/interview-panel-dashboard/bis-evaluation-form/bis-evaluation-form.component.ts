@@ -250,35 +250,35 @@ export class BisEvaluationFormComponent implements OnInit {
           this.evaluationForm['controls']['ASSESSMENT'].updateValueAndValidity();
   
           this.evaluationForm['controls']['depth_knowledge'].clearValidators();
-          this.evaluationForm['controls']['depth_knowledge'].reset();
+          // this.evaluationForm['controls']['depth_knowledge'].reset();
           this.evaluationForm['controls']['depth_knowledge'].updateValueAndValidity();
   
           this.evaluationForm['controls']['breadth_knowledge'].clearValidators();
-          this.evaluationForm['controls']['breadth_knowledge'].reset();
+          // this.evaluationForm['controls']['breadth_knowledge'].reset();
           this.evaluationForm['controls']['breadth_knowledge'].updateValueAndValidity();
   
           this.evaluationForm['controls']['communicate_ability'].clearValidators();
-          this.evaluationForm['controls']['communicate_ability'].reset();
+          // this.evaluationForm['controls']['communicate_ability'].reset();
           this.evaluationForm['controls']['communicate_ability'].updateValueAndValidity();
   
           this.evaluationForm['controls']['personal_skill'].clearValidators();
-          this.evaluationForm['controls']['personal_skill'].reset();
+          // this.evaluationForm['controls']['personal_skill'].reset();
           this.evaluationForm['controls']['personal_skill'].updateValueAndValidity();
   
           this.evaluationForm['controls']['personality'].clearValidators();
-          this.evaluationForm['controls']['personality'].reset();
+          // this.evaluationForm['controls']['personality'].reset();
           this.evaluationForm['controls']['personality'].updateValueAndValidity();
   
           this.evaluationForm['controls']['personality_1'].clearValidators();
-          this.evaluationForm['controls']['personality_1'].reset();
+          // this.evaluationForm['controls']['personality_1'].reset();
           this.evaluationForm['controls']['personality_1'].updateValueAndValidity();
   
           this.evaluationForm['controls']['curricular_activites'].clearValidators();
-          this.evaluationForm['controls']['curricular_activites'].reset();
+          // this.evaluationForm['controls']['curricular_activites'].reset();
           this.evaluationForm['controls']['curricular_activites'].updateValueAndValidity();
   
           this.evaluationForm['controls']['thought_clarity'].clearValidators();
-          this.evaluationForm['controls']['thought_clarity'].reset();
+          // this.evaluationForm['controls']['thought_clarity'].reset();
           this.evaluationForm['controls']['thought_clarity'].updateValueAndValidity();
         } else {
           this.evaluationForm['controls']['attendedStatus'].setValidators([Validators.required]);
@@ -439,18 +439,41 @@ export class BisEvaluationFormComponent implements OnInit {
   
     submitEvaluationForm() {
       this.evaluationForm.controls.topic_given.setValue(null);
+      this.evaluationForm.controls.topic_given.clearValidators();
+      this.evaluationForm.controls.topic_given.updateValueAndValidity();
       this.evaluationForm.controls.thought.setValue(null);
+      this.evaluationForm.controls.thought.clearValidators();
+      this.evaluationForm.controls.thought.updateValueAndValidity();
       this.evaluationForm.controls.content.setValue(null);
+      this.evaluationForm.controls.content.clearValidators();
+      this.evaluationForm.controls.content.updateValueAndValidity();
       this.evaluationForm.controls.language.setValue(null);
+      this.evaluationForm.controls.language.clearValidators();
+      this.evaluationForm.controls.language.updateValueAndValidity();
       this.evaluationForm.controls.idea.setValue(null);
+      this.evaluationForm.controls.idea.clearValidators();
+      this.evaluationForm.controls.idea.updateValueAndValidity();
       this.evaluationForm.controls.clues.setValue(null);
+      this.evaluationForm.controls.clues.clearValidators();
+      this.evaluationForm.controls.clues.updateValueAndValidity();
       this.evaluationForm.controls.time_taken.setValue(null);
+      this.evaluationForm.controls.time_taken.clearValidators();
+      this.evaluationForm.controls.time_taken.updateValueAndValidity();
       this.evaluationForm.controls.remarks.setValue(null);
+      this.evaluationForm.controls.remarks.clearValidators();
+      this.evaluationForm.controls.remarks.updateValueAndValidity();
       this.evaluationForm.controls.personality_1.setValue(null);
+      this.evaluationForm.controls.personality_1.clearValidators();
+      this.evaluationForm.controls.personality_1.updateValueAndValidity();
       this.evaluationForm.controls.curricular_activites.setValue(null);
+      this.evaluationForm.controls.curricular_activites.clearValidators();
+      this.evaluationForm.controls.curricular_activites.updateValueAndValidity();
       this.evaluationForm.controls.candidates_strenght.setValue(null);
+      this.evaluationForm.controls.candidates_strenght.clearValidators();
+      this.evaluationForm.controls.candidates_strenght.updateValueAndValidity();
       this.evaluationForm.controls.candidates_weakness.setValue(null);
-
+      this.evaluationForm.controls.candidates_weakness.clearValidators();
+      this.evaluationForm.controls.candidates_weakness.updateValueAndValidity();
       if (this.evaluationForm.valid) {
         const data = {
           evaluation: 'submit'

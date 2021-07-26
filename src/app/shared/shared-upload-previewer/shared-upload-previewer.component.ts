@@ -79,7 +79,23 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
     }
     
     if (this.status === 'selectedCandidates') {
-      this.displayedColumns = ['email', 'name', 'delete'];
+      this.displayedColumns = ['email', 'name', 'reference', 'offDate', 'offValidity', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'hrMapping') {
+      this.displayedColumns = ['email', 'cadre', 'designation', 'doj', 'job_code', 'function1', 'sub_function', 'is_ps_no', 'dh_ps_no', 'hr_ps_no', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'decliners_upload') {
+      this.displayedColumns = ['email', 'remarks', 'decline', 'delete'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

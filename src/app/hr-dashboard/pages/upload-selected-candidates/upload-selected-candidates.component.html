@@ -1,7 +1,26 @@
 <div class="main-wrapper-uploaded-list">
     <!-- <div class="line">
     </div> -->
+    <div class="selectedTemp d-flex align-items-center" *ngIf="!enableList">
+      <div class="mr-3">
+      Selected Template: 
+    </div>
+      <div style="width: 280px;" class="input-wrapper">
+        <mat-form-field class="new-input-box mat-select-custom" appearance="none">
+            <!-- <mat-label>Choose IC</mat-label> -->
+            <mat-select placeholder="Select business" (selectionChange)="changeTemp($event)" [(ngModel)]="selectedTemplate">
+              <!-- <mat-option>--</mat-option> -->
+              <mat-option *ngFor="let template of templates" [value]="template.value">
+                {{template.name}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+          </mat-form-field>
+    </div>
+
+    </div>
     <div class="upload-wrapper" *ngIf="!enableList">
+
       <div class="top-wrapper">
         <div class="upload">
           <div class="outer-wrapper">
@@ -31,7 +50,7 @@
         </div>
         <div class="buttons">
           <button (click)="delete()" class="cancel-btn btn-margin-space" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
-          <button (click)="upload()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+          <button (click)="uploadType()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
         </div>
       </div>
       <div class="download">
@@ -71,16 +90,16 @@
           </div>
             </div>
   
-    <div class="list-wrapper" *ngIf="enableList">
+    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate == this.secondForm}" *ngIf="enableList">
       <div class="list-count">
         Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
       </div>
-      <app-shared-upload-previewer *ngIf="enableList" [status]="'selectedCandidates'" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
+      <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
   
 
       <div class="button-wrapper">
         <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
-        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Ok</button>
+        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submitType()" class="ok" mat-raised-button>Ok</button>
       </div>
     </div>
   </div>

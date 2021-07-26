@@ -154,9 +154,9 @@ mat-form-field {
 
 a:hover {
   color: $lxp-theme-green !important;
-  
+
       text-decoration: underline;
-  
+
 }
 
 .link {
@@ -311,7 +311,7 @@ mat-card-title {
   width: 100%;
   padding-left: 40px;
   padding-right: 40px;
-  height: 610px;
+  // height: 610px;
   border-radius: 0px !important;
   margin-left: 0% !important;
   overflow: hidden !important;
@@ -369,7 +369,7 @@ input.mat-input-element {
       margin-left: 23%;
       margin-right: 23%;
       margin-top: 10%;
-  
+
 }
 .center{
   text-align: center;
@@ -396,8 +396,8 @@ font-size: 16px;
   margin: 0em 0 !important;
 }
 
-::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline-thick { 
-  color: $primary-red; 
+::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: $primary-red;
 }
 :host ::ng-deep.mat-form-field-wrapper {
   padding-bottom: .5em;
@@ -406,7 +406,7 @@ font-size: 16px;
 color:  #8c8c8c !important;
 position: relative;
 top: -2px;
-} 
+}
 
 .icon-color-1{
   color:  #8c8c8c !important;
@@ -426,7 +426,7 @@ top: -2px;
 @media (max-width: 480px) and (max-width: 320px) {
   .kauhalya {
       margin-top: 11%;
-       margin-left: 0%  !important; 
+       margin-left: 0%  !important;
       margin-right: 0% !important;
   }
   .wrap-reg {
@@ -459,7 +459,7 @@ top: -2px;
 @media (max-width: 568px) {
   .kauhalya {
       margin-top: 11%;
-       margin-left: 0%  !important; 
+       margin-left: 0%  !important;
       margin-right: 0% !important;
   }
   .wrap-reg {
@@ -495,7 +495,7 @@ top: -2px;
 
   .beforeloginimg {
       width: 100%;
-       height: 0vh !important; 
+       height: 0vh !important;
        padding: 10px;
   }
   .footer20 {
@@ -555,7 +555,7 @@ top: -2px;
 
   .beforeloginimg {
       width: 100%;
-       height: 0vh !important; 
+       height: 0vh !important;
        padding: 10px;
   }
   .forgot1{

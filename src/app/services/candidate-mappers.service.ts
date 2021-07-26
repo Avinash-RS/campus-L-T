@@ -253,4 +253,123 @@ export class CandidateMappersService {
     return this.http.post(`${this.BASE_URL}/profile/remove_certiticate`, data, { headers: this.withoutTokens(), withCredentials: true });    
   }
 
+
+    // Joining Form
+    getBloodGroups() {
+      return this.http.get(`${this.BASE_URL}/profile/bg_list`, { headers: this.withoutTokens(), withCredentials: true });
+    }
+
+    FormStatus() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/saved_details?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+ 
+    joiningFormGetPersonalDetails() {
+     let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+      return this.http.get(`${this.BASE_URL}/profile/personal_pageload?user_id=${userId}`,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true});
+    }
+
+    joiningFormGetPersonalDetailsSave(data) {
+      // let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+      return this.http.post(`${this.BASE_URL}/profile/personal_page`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });    
+    }
+
+    joiningFormGetContactDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/contact_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetContactDetailsSave(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/contact_page?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetDependentDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/dependent_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetDependentDetailsSave(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/dependent_page?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetWorkDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/employment_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetWorkDetailsSave(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/employment_page?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetEducationDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/education_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetEducationDetailsSave(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/education_page?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormDownloadableDocuments() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/joiningtemplate_downloads?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetDocuments() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/uploaddocument_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormUpload(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/uploaddocument_pagesave?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     uploadJoiningDocs(documentData) {
+      // this.datas is api body data
+      // return this.http.post(`${this.BASE_URL}/profile/upload_certificate`, documentData, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      return fetch(`${this.BASE_URL}/profile/upload_joining_docs`, {
+        method: 'POST',
+        body: documentData,
+        // headers: this.getAfterCustomHeaders(), withCredentials: true
+      });
+  
+    }
+  
+
+     joiningFormGetPreviewDetails() {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/preview_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetPreviewDetailsCommon(userId) {
+       return this.http.get(`${this.BASE_URL}/profile/preview_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormSubmit(data) {
+      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.post(`${this.BASE_URL}/profile/submit_joiningform?user_id=${userId}`, data,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+
 }

@@ -20,14 +20,24 @@ import { CandidateMainDashboardComponent } from './candidate-main-dashboard/cand
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 import { RegistrationCloseComponent } from './registration-close/registration-close.component';
+import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
+import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
+import { JoiningContactComponent } from './candidate-joining-form/joining-contact/joining-contact.component';
+import { JoiningDependentComponent } from './candidate-joining-form/joining-dependent/joining-dependent.component';
+import { JoiningEducationComponent } from './candidate-joining-form/joining-education/joining-education.component';
+import { JoiningUploadComponent } from './candidate-joining-form/joining-upload/joining-upload.component';
+import { JoiningPreviewComponent } from './candidate-joining-form/joining-preview/joining-preview.component';
+import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
+import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
+import { CandidateFaqComponent } from './candidate-faq/candidate-faq.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent],
+  declarations: [MasterDashboardComponent, CandidateProfileComponent, PersonalDetailsComponent, EducationalDetailsComponent, FamilyDetailsComponent, GeneralDetailsComponent, ViewDetailsComponent, ConfirmComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent],
   imports: [
     CommonModule,
-    SharedModule,
     MaterialModule,
+    SharedModule,
     CandidateDashboardRoutingModule
   ],
   providers: [CanDeactivateGuard]

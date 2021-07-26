@@ -7,13 +7,15 @@
   background-position: center center;
   background-attachment: fixed;
   display: flex;
-  align-items: center;
+  // align-items: center;
   position: relative;
   // height: 100%;
   // height: calc(100% - 90px);
   justify-content: center;
   box-sizing: border-box;
-  top: 179px;
+  // top: 179px;
+  overflow: auto;
+  height: calc(100vh - 90px);
   .layer-only {
     // background-color: $overlay-layer-bg;
     position: absolute;
@@ -25,7 +27,7 @@
   }
   .sub-wrapper {
     // margin: 5em auto;
-    margin-top: -15em;
+    // margin-top: -15em;
     padding: 0 36px 0 40px;
     color: $primary;
     display: flex;
@@ -43,6 +45,6 @@
 @media only screen and (max-height: 600px) {
   .main-wrapper-login {
     // height: 608px;
-    align-items: center;
+    // align-items: center;
   }
 }

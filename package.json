@@ -1,6 +1,6 @@
 {
   "name": "udap-registration",
-  "version": "0.0.51",
+  "version": "0.0.136",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -40,13 +40,14 @@
     "ng-connection-service": "^1.0.4",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-zorro-antd": "^8.5.2",
+    "ng2-pdf-viewer": "^7.0.1",
     "ng2-pdfjs-viewer": "^5.0.7",
     "ngx-spinner": "^9.0.2",
     "ngx-toastr": "^10.1.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "videogular2": "^7.0.2",
-    "zone.js": "~0.9.1"
+    "zone.js": "^0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.6",

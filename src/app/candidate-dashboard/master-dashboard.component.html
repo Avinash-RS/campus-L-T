@@ -48,6 +48,7 @@
           <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>
         </li> -->
+        <ng-container *ngIf="!showJoiningForm">
       <li [routerLink]="appConstant.CANDIDATE_DASHBOARD.PROFILE" routerLinkActive="active">
         <span><img src="assets/images/003-user.svg" width="20px" height="20px" alt=""></span>
         <span>Profile</span>
@@ -65,6 +66,22 @@
       <li [ngClass]="showDocuments ? '' : 'hide'" [routerLink]="appConstant.CANDIDATE_DASHBOARD.DOCUMENT" routerLinkActive="active">
         <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
         <span>Documents</span>
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+        </span>
+      </li>
+    </ng-container>
+<!-- [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING" routerLinkActive="active" -->
+      <li *ngIf="showJoiningForm" (click)="checkJoiningRoute()" [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING" routerLinkActive="active">
+        <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
+        <span>Joining Form</span>
+        <span>
+          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+        </span>
+      </li>
+      <li *ngIf="showJoiningForm" [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING_FAQ" routerLinkActive="active">
+        <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
+        <span>FAQ</span>
         <span>
           <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
         </span>

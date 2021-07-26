@@ -3,6 +3,8 @@ export const environment = {
   qa: false,
   uat: false,
   local: false,
+  ASSETS: 'https://assets.lntedutech.com',
+
   versionCheckURL: 'https://campus.lntedutech.com/version.json',
 
   // For Dev

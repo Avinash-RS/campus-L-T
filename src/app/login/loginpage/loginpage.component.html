@@ -68,7 +68,7 @@
   <div class="row container-reg200">
     <div class="col-md-8 col-sm-12 col-12 border-right no_pl  no_pr">
       <div class="main-logo">
-      <img alt="" class="beforeloginimg" style="width : 300px; padding-bottom: 30px;" src="assets/images/Layer2_old.svg">
+      <img alt="" class="beforeloginimg" style="width : 300px;" src="https://assets.lntedutech.com/edutech_logo.svg">
     </div>
     </div>
     <div class="col-md-4 col-sm-12 col-12">
@@ -117,18 +117,18 @@
             <div class="space-20"></div>
 
             <div class="center">
-              <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid" type="submit">{{'SIGN IN'}}</button>
+              <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid || disableLogin" type="submit">{{'SIGN IN'}}</button>
               <div style="
               margin-top: 1.5em;
              color: #C02222;
              font-size: 15px;
              text-align: left;
-         ">Note: 
+         ">Note:
          <ul>
            <li style="margin-left: -1.5em;">Please clear browser cache before logging into the application for uploading the documents.</li>
          </ul>
          </div>
-         
+
             </div>
 
             <!-- <div class="sign_up">

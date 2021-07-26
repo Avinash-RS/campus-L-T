@@ -73,7 +73,7 @@ export class CreateComponent implements OnInit {
       this.appConfig.hideLoader();
       if (success) {
         this.prePoulteEmailId = success.decode_id;
-      }     
+      }
       this.autoPopulateMail();     // Function to auto populate mail after form loads.
 
     }, (error) => {

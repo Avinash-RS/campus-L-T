@@ -22,6 +22,7 @@ export class LoginpageComponent implements OnInit {
   prePoulteEmailId: any;
   capsOn; any;
   verifyArr = [];
+  disableLogin = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -58,8 +59,8 @@ export class LoginpageComponent implements OnInit {
 
   apiCalling() {
     // this.apiService.getAllState().subscribe((datas: any) => {
-      this.candidateService.getEducationList().subscribe((datas: any) => {
-        this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
+    this.candidateService.getEducationList().subscribe((datas: any) => {
+      this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
 
         this.appConfig.hideLoader();
         this.prePoulteEmailId = this.verifyArr[0]['name'];
@@ -108,6 +109,7 @@ export class LoginpageComponent implements OnInit {
 
 
   submit() {
+    this.disableLogin = true;
     const apiData = {
       name: this.loginForm.value.email,
       pass: this.loginForm.value.password
@@ -117,11 +119,10 @@ export class LoginpageComponent implements OnInit {
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
         // this.apiService.getAllState().subscribe((datas: any) => {
-          this.candidateService.getEducationList().subscribe((datas: any) => {
-            this.apiService.login(apiData).subscribe((data: any) => {
+        this.candidateService.getEducationList().subscribe((datas: any) => {
+          this.apiService.login(apiData).subscribe((data: any) => {
             this.appConfig.hideLoader();
-            this.appConfig.setLocalData('BIS', 'true');
-            // this.appConfig.setLocalData('username', "data && data.current_user.name ? data.current_user.name : ''");
+            this.appConfig.setLocalData('BIS', 'false');
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
@@ -131,12 +132,10 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('masters', data && data.master_list && data.master_list.data ? JSON.stringify(data.master_list.data) : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
             if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
-              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
-              // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
@@ -144,74 +143,57 @@ export class LoginpageComponent implements OnInit {
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ic') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
             }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');              
-              let todayDate = new Date();
-              let month = todayDate.getMonth()+1;
-              let day = todayDate.getDate()
-              let date = todayDate.getFullYear() +'-'+(month <= 9 ? '0' + month : month) +'-' + (day <= 9? '0' + day : day)
-              if(new Date(date) <= new Date(DropdownListForKYC['kycDate'])){
-                localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
-                // if(date.toString() != DropdownListForKYC['kycDate'].toString()){
-                  if (data['first_shortlist'] && data['first_shortlist'] === '1') {
-                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
-                  this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                  this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                  this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                } 
-                  if (data['form_submmited'] && data['form_submmited'] === '1') {
-                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
-                  this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                  this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                  this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                  this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                } else {
-                  this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
-                  // return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.HOME);
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                }
-              }else{
-                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE);
-              }
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ssc_hr') {
+              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'interview_panel') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
+            } 
+            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
+              this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
+              this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
+              let todayDate = new Date();
+              let month = todayDate.getMonth() + 1;
+              let day = todayDate.getDate()
+              let date = todayDate.getFullYear() + '-' + (month <= 9 ? '0' + month : month) + '-' + (day <= 9 ? '0' + day : day)
+              if (new Date(date) <= new Date(DropdownListForKYC['kycDate'])) {
+                localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
+                this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
+                this.appConfig.setLocalData('field_isformsubmitted', 'true');
+                this.appConfig.setLocalData('personalFormSubmitted', 'true');
+                this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+                this.appConfig.setLocalData('familyFormSubmitted', 'true');
+                this.appConfig.setLocalData('generalFormSubmitted', 'true');
+                this.appConfig.setLocalData('confirmFormSubmitted', 'true');
+                if (data['joiningform'] && data['joiningform'] === '1') {
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
+                }
+                if (data['first_shortlist'] && data['first_shortlist'] === '1') {
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                }
+                if (data['form_submmited'] && data['form_submmited'] === '1') {
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                } else {
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                }
+              } else {
+                return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE);
+              }
             } else {
-              // if (data['form_submmited'] && data['form_submmited'] === '1') {
-
-              //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-              //   this.appConfig.setLocalData('field_isformsubmitted', 'true');
-              //   this.appConfig.setLocalData('personalFormSubmitted', 'true');
-              //   this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-              //   this.appConfig.setLocalData('familyFormSubmitted', 'true');
-              //   this.appConfig.setLocalData('generalFormSubmitted', 'true');
-              //   this.appConfig.setLocalData('confirmFormSubmitted', 'true');
-              //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-              // } else {
-              //   this.appConfig.setLocalData('reDirectView', data && ['form_submmited'] && data['form_submmited'] === '1' ? 'true' : 'false');
-              //   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-              // }
             }
 
           }, (error) => {
-
+            this.disableLogin = false;
           });
         }, (err) => {
+          this.disableLogin = false;
           // if (err.status === 200) {
           //   this.appConfig.setSessionData('csrf', err.error.text);
           // }
         });
       }
     } else {
+      this.disableLogin = false;
       this.validateAllFields(this.loginForm);
     }
 
@@ -225,7 +207,7 @@ export class LoginpageComponent implements OnInit {
   createAccount() {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.PASSWORD.SETUP);
   }
-  candidateSignup(){
+  candidateSignup() {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.REGISTER.CANDIDATE);
   }
   // To validate all fields after submit

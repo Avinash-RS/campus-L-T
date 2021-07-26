@@ -78,6 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
+    if (environment.production) {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
 
@@ -97,6 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     }
   }
+}
 
   @HostListener('window:mousemove', ['$event'])
   checkIE(event?) {

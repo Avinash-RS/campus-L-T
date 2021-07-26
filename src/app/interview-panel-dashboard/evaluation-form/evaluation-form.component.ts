@@ -7,12 +7,12 @@ import * as myGlobals from '../../custom-form-validators/validation';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace.js';
-import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component.js';
 import { ApiServiceService } from 'src/app/services/api-service.service.js';
 import { SharedServiceService } from 'src/app/services/shared-service.service.js';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import moment from 'moment';
+import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 
 export interface PeriodicElement {
   id: number;
@@ -251,35 +251,35 @@ export class EvaluationFormComponent implements OnInit {
         this.evaluationForm['controls']['ASSESSMENT'].updateValueAndValidity();
 
         this.evaluationForm['controls']['depth_knowledge'].clearValidators();
-        this.evaluationForm['controls']['depth_knowledge'].reset();
+        // this.evaluationForm['controls']['depth_knowledge'].reset();
         this.evaluationForm['controls']['depth_knowledge'].updateValueAndValidity();
 
         this.evaluationForm['controls']['breadth_knowledge'].clearValidators();
-        this.evaluationForm['controls']['breadth_knowledge'].reset();
+        // this.evaluationForm['controls']['breadth_knowledge'].reset();
         this.evaluationForm['controls']['breadth_knowledge'].updateValueAndValidity();
 
         this.evaluationForm['controls']['communicate_ability'].clearValidators();
-        this.evaluationForm['controls']['communicate_ability'].reset();
+        // this.evaluationForm['controls']['communicate_ability'].reset();
         this.evaluationForm['controls']['communicate_ability'].updateValueAndValidity();
 
         this.evaluationForm['controls']['personal_skill'].clearValidators();
-        this.evaluationForm['controls']['personal_skill'].reset();
+        // this.evaluationForm['controls']['personal_skill'].reset();
         this.evaluationForm['controls']['personal_skill'].updateValueAndValidity();
 
         this.evaluationForm['controls']['personality'].clearValidators();
-        this.evaluationForm['controls']['personality'].reset();
+        // this.evaluationForm['controls']['personality'].reset();
         this.evaluationForm['controls']['personality'].updateValueAndValidity();
 
         this.evaluationForm['controls']['personality_1'].clearValidators();
-        this.evaluationForm['controls']['personality_1'].reset();
+        // this.evaluationForm['controls']['personality_1'].reset();
         this.evaluationForm['controls']['personality_1'].updateValueAndValidity();
 
         this.evaluationForm['controls']['curricular_activites'].clearValidators();
-        this.evaluationForm['controls']['curricular_activites'].reset();
+        // this.evaluationForm['controls']['curricular_activites'].reset();
         this.evaluationForm['controls']['curricular_activites'].updateValueAndValidity();
 
         this.evaluationForm['controls']['thought_clarity'].clearValidators();
-        this.evaluationForm['controls']['thought_clarity'].reset();
+        // this.evaluationForm['controls']['thought_clarity'].reset();
         this.evaluationForm['controls']['thought_clarity'].updateValueAndValidity();
       } else {
         this.evaluationForm['controls']['attendedStatus'].setValidators([Validators.required]);

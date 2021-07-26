@@ -467,7 +467,7 @@
         </div>
       </div>
 
-      <div class="grid-wrapper-workexp" *ngIf="userDetails?.full_employment.length > 0 && userDetails?.full_employment[0]?.employment_name_address">
+      <div class="grid-wrapper-workexp" *ngIf="userDetails?.full_employment && userDetails?.full_employment.length > 0 && userDetails?.full_employment[0]?.employment_name_address">
         <div class="qualify-wrapper-head">
           <div class="emp">
             Employer's name & address

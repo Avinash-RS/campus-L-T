@@ -1,8 +1,10 @@
 export const environment = {
   production: false,
+  uat: false,
   qa: false,
   dev: true,
   local: false,
+  ASSETS: 'https://assets.lntedutech.com',
 
   // For Dev
   // API_BASE_URL: 'http://104.211.226.77/d8cintana2',

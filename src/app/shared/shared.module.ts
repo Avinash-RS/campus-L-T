@@ -1,3 +1,5 @@
+import { DateMonthYearDirective } from './../directives/customDateFormats/date-month-year.directive';
+import { YearMonthDirective } from './../directives/customDateFormats/year-month.directive';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -88,8 +90,11 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { CommonJoiningFormComponent } from './common-joining-form/common-joining-form.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent],
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent,
+],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -98,6 +103,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     RouterModule,
     HttpClientModule,
     MaterialModule,
+    PdfViewerModule,
     NgMultiSelectDropDownModule.forRoot(),
 
     // Ant design Modules
@@ -180,6 +186,7 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
+    PdfViewerModule,
     SignupHeaderComponent,
     HomeHeaderComponent,
     SnackbarComponent,
@@ -194,6 +201,9 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     CommonKycProfileViewComponent,
     SharedUploadPreviewerComponent,
     ScreenresolutionBoxComponent,
+    YearMonthDirective,
+    DateMonthYearDirective,
+    CommonJoiningFormComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

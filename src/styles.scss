@@ -24,7 +24,7 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 // $theme-orange:   mat-dark-theme($theme-orange-primary, $theme-orange-accent, $theme-orange-warn);
 // .theme-orange {
 //   @include angular-material-theme($theme-orange);
-  
+
 // }
 
 // // theme-4
@@ -133,17 +133,18 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 // }
 
 
-html,
-body {
+html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Roboto Condensed !important;
+  font-family: 'Roboto Condensed', sans-serif !important;
+  // scroll-behavior: smooth !important;
 }
 body {
   margin: 0;
   padding: 0;
-  font-family: Roboto Condensed !important;
+  // font-family: Roboto Condensed !important;
+  font-family: 'Roboto Condensed', sans-serif !important;
   font-size: 14px;
   font-weight: 100;
   transition-duration: 580ms;
@@ -164,7 +165,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: Roboto Condensed !important;
+  font-family: 'Roboto Condensed', sans-serif !important;
 }
 
 // // @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
@@ -1776,7 +1777,7 @@ button:focus {
   }
 
   .ng-touched.ng-invalid {
-    border: solid $red 1px;
+    border: solid $primary-red 1px;
   }
   .date {
     input.ng-touched.ng-invalid {
@@ -1890,7 +1891,7 @@ tr.mat-row:hover {
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 100px !important;
-  }  
+  }
   li {
     margin: 0 0 5px 0 !important;
   }
@@ -2332,7 +2333,7 @@ th {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-  }  
+  }
 }
 
 // Nzselect
@@ -2611,7 +2612,7 @@ th {
     position: absolute;
     top: 30px !important;
   }
-}  
+}
 ::placeholder {
   color: $black !important;
   opacity: 0.5 !important;
@@ -2620,3 +2621,59 @@ th {
 .mat-focused .placeholder {
   color: #00D318 !important;
 }
+
+.toolbar-wrapper {
+  background-color: #eeeeee !important;
+}
+
+.joining-form-main {
+.mat-datepicker-toggle {
+  .mat-icon-button {
+    min-height: 35px !important;
+    max-height: 35px !important;
+    height: 35px !important;
+  }
+}
+}
+
+.sub-grid {
+  .joining-form-main .mat-datepicker-toggle .mat-icon-button {
+    min-height: 30px !important;
+    max-height: 30px !important;
+    height: 30px !important;
+  }
+  .mat-datepicker-toggle {
+    min-height: 30px !important;
+    max-height: 30px !important;
+  }
+}
+
+// .no-flickr {
+//   -webkit-transform: translateZ(0);
+//   -moz-transform: translateZ(0);
+//   -ms-transform: translateZ(0);
+//   -o-transform: translateZ(0);
+//   transform: translateZ(0);
+//   -webkit-transform-style: preserve-3d;
+//   -webkit-backface-visibility: hidden;
+// }
+.joining-personal-wrapper {
+  padding-top: 1em;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+.mat-button-focus-overlay {
+  background-color: transparent!important;
+  }
+  .sub-header-accordion {
+    .mat-expansion-indicator::after {
+      color: rgb(0, 0, 0, 0.4) !important;
+    }
+   }
+
+   .common-joining-form {
+     height: 600px !important;
+   }

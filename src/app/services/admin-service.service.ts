@@ -604,6 +604,16 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  SelectedCandidatesHRMappingBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/selected_user_ps_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  declinedCandidatesUpload(data) {
+    return this.http.post(`${this.BASE_URL}/profile/decliners_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   SelectedCandidatesList(data) {
     return this.http.get(`${this.BASE_URL}/profile/selected_user_list?company=${data.company}`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
@@ -633,5 +643,19 @@ export class AdminServiceService {
     return this.http.get(`${this.BASE_URL}/profile/ic_panel_list`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+
+  // Send email to selected candidates and edit access for joining form
+  sendMailOrEditAccess(data, option) {
+    return this.http.post(`${this.BASE_URL}/profile/joining_mail?mail=${option}`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  // Excel export of selected candidates
+  excelExportSelectedCandidates(data) {
+    return this.http.post(`${this.BASE_URL}/profile/Joining_export`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+ 
+
 
 }

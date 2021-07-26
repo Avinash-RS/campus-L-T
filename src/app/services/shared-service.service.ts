@@ -14,4 +14,10 @@ export class SharedServiceService {
   updateUserlist = new Subject();
   printSubject = new Subject();
   maintenanceSubject = new Subject();
+
+  openJoiningRoutePopUp = new Subject();
+  sendPopupResult = new Subject();
+  joiningFormActiveSelector = new Subject();
+  joiningFormStepperStatus = new Subject();
+  StepperNavigationCheck = new Subject();
 }

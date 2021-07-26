@@ -231,6 +231,11 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
   onSubmit(OptA, OptB) {
     if (this.aquaintancesForm.valid && this.skillForm.valid && this.facultyReference1Form.valid && this.facultyReference2Form.valid) {
+      this.familyForm['value']['familyArr'].forEach((element, i) => {
+        if (element && !element['employment_name_address']) {
+          this.familyForm['value']['familyArr'].splice(i, 1);
+        }
+      });
       this.apiForm.field_skills = this.skillForm['value']['skillsArr'];
       this.apiForm.field_relatives_l_t_group_name = { value: this.aquaintancesForm.value.relativesArr[0]['names'] ? this.aquaintancesForm.value.relativesArr[0]['names'] : '' },
         this.apiForm.field_realationship = { value: this.aquaintancesForm.value.relativesArr[0]['relationship'] ? this.aquaintancesForm.value.relativesArr[0]['relationship'] : '' },
