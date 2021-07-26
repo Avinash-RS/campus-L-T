@@ -136,7 +136,6 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 html {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: 'Roboto Condensed', sans-serif !important;
   // scroll-behavior: smooth !important;
 }
@@ -1787,7 +1786,7 @@ button:focus {
 }
 td,
 th {
-  padding: 0px 8px !important !important;
+  padding: 0px 8px !important;
 }
 th {
   white-space: nowrap !important;
@@ -1832,7 +1831,7 @@ button {
   background: $td-hover !important;
 }
 tr.mat-row:hover {
-  background: $td-hover !important !important;
+  background: $td-hover !important;
 }
 .register-wrapper {
   ::-webkit-scrollbar-track {
@@ -1893,7 +1892,7 @@ tr.mat-row:hover {
     border-radius: 100px !important;
   }
   li {
-    margin: 0 0 5px 0 !important;
+    margin: 0 !important;
   }
 }
 // Ui revamp global
@@ -2511,7 +2510,7 @@ th {
 }
 
 ::ng-deep .ant-select-dropdown {
-  width: 100% !important !important;
+  width: 100% !important;
 }
 // .ant-select-dropdown {
 //     width: auto !important !important;
@@ -2622,9 +2621,9 @@ th {
   color: #00D318 !important;
 }
 
-.toolbar-wrapper {
+/*.toolbar-wrapper {
   background-color: #eeeeee !important;
-}
+}*/
 
 .joining-form-main {
 .mat-datepicker-toggle {

@@ -80,7 +80,7 @@ export class HrMasterComponent implements OnInit {
                   updateUrl.push(element);
                 }
               });
-              this.breadcrumbs = updateUrl;
+              this.breadcrumbs = updateUrl; 
               currentRoute = route;
               // }
             }
