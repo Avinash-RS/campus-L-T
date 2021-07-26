@@ -108,7 +108,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     if (event.colDef.field === 'evaluation_btn') {
       if (event['data'] && event['data']['evaluation_status'] != '2') {
-        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid']);
+        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
       }
     }
 
@@ -268,8 +268,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     });
   }
 
-  submit(cid, name, status, tag, uid) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment ? this.nameOfAssessment : '', id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '' });
+  submit(cid, name, status, tag, uid, email, form) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment ? this.nameOfAssessment : '', id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '', email: email ? email : '', form: form ? form : '' });
   }
 
   finalSubmit() {
