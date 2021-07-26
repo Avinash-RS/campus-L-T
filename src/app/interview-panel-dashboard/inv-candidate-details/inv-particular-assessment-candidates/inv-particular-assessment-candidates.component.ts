@@ -103,12 +103,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         candidateId: event['data'] && event['data']['uid'] ? event['data']['uid'] : '',
         candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
       };
-      this.openDialog4(CommonKycProfileViewComponent, data);      
+      this.openDialog4(CommonKycProfileViewComponent, data);
     }
 
     if (event.colDef.field === 'evaluation_btn') {
       if (event['data'] && event['data']['evaluation_status'] != '2') {
-        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid']);
+        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
       }
     }
 
@@ -116,7 +116,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -268,18 +268,18 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     });
   }
 
-  submit(cid, name, status, tag, uid) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment ? this.nameOfAssessment : '', id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '' });
+  submit(cid, name, status, tag, uid, email, form) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION, { data: this.nameOfAssessment ? this.nameOfAssessment : '', id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag : '', uid: uid ? uid : '', email: email ? email : '', form: form ? form : '' });
   }
 
   finalSubmit() {
-    
+
     if(this.gridApi.getSelectedNodes().length > 0) {
       this.getSelectedCandidates = this.gridApi.getSelectedNodes();
       const data = {
         evaluation: 'candidates'
       };
-      this.openDialog(ShortlistBoxComponent, data);  
+      this.openDialog(ShortlistBoxComponent, data);
     } else {
       this.appConfig.nzNotification('error', 'Not selected', 'No candidates have been selected');
     }
@@ -306,7 +306,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         interViwePanelAssign: 'noData',
         showCancel: '',
         showOk: ''
-      };    
+      };
       this.openDialog(ShortlistBoxComponent, datas);
 
       // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
@@ -344,7 +344,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     // Open dailog
     openDialog4(component, data) {
       let dialogDetails: any;
-  
+
       /**
        * Dialog modal window
        */
@@ -355,11 +355,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         autoFocus: false,
         data
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
         }
       });
     }
-  
+
 }

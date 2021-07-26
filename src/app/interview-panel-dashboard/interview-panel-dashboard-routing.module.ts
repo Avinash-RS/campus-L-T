@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { InterviewPanelMasterComponent } from './interview-panel-master.component';
 import { CONSTANT } from '../constants/app-constants.service';
 import { InvCandidateDetailsComponent } from './inv-candidate-details/inv-candidate-details.component';
-import { InvAssessmentShortlistedCandidatesComponent } from './inv-candidate-details/inv-assessment-shortlisted-candidates/inv-assessment-shortlisted-candidates.component';
 import { InvParticularAssessmentCandidatesComponent } from './inv-candidate-details/inv-particular-assessment-candidates/inv-particular-assessment-candidates.component';
 import { InvEvaluationMainScreenComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-evaluation-main-screen.component';
 import { InvSubAssessmentsComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-assessments/inv-sub-assessments.component';
@@ -11,7 +10,6 @@ import { InvSubEducationComponent } from './inv-candidate-details/inv-evaluation
 import { InvSubEmploymentComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-employment/inv-sub-employment.component';
 import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-sub-evaluate/inv-sub-evaluate.component';
 import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
-import { InvShortlistedCandidatesViewScreenComponent } from './inv-candidate-details/inv-shortlisted-candidates-view-screen/inv-shortlisted-candidates-view-screen.component';
 import { InvpanelGuard } from '../guards/canload/invpanel.guard';
 
 
@@ -34,20 +32,6 @@ const routes: Routes = [
             component: InvParticularAssessmentCandidatesComponent,
             data: {
               breadcrumb: ''
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_ASSESSMENT_LIST}`,
-            component: InvAssessmentShortlistedCandidatesComponent,
-            data: {
-              breadcrumb: 'Assigned list'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED}`,
-            component: InvShortlistedCandidatesViewScreenComponent,
-            data: {
-              breadcrumb: 'Evaluation status list'
             }
           },
           {
