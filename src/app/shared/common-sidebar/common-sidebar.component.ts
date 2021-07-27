@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -17,6 +17,7 @@ export interface IBreadCrumb {
 })
 export class CommonSidebarComponent implements OnInit {
 
+  @Input() sideBar;
    // public breadcrumbs: IBreadCrumb[];
    breadcrumbs: Array<any>;
 
