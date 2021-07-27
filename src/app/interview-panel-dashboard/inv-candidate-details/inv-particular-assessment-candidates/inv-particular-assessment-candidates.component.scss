@@ -4,6 +4,7 @@
   height: 100%;
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
+    margin-top: 20px;
     /* Structure */
     .search-bar {
       margin: 0em 1em 0em 1em;
@@ -159,15 +160,14 @@ th {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      width: 60%;
+      width: 55%;
       align-items: center;
       div {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         border-right: 1px solid #cacaca;
-        padding-left: 25px;
-        padding-left: 6%;
+        padding-left: 5%;
         flex-grow: 1;
         color: #808080;
         &:first-child {
@@ -184,14 +184,49 @@ th {
       }
     }
     .rightinfo {
+      display: flex;
+      align-items: center;
       width: 30%;
+      justify-content: flex-end;
+    
       div {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
       }
+      .filterbtn {
+        border-radius: 4px;
+        background-color: #fff;
+        border: 1px solid #c5c5c5 !important;
+        box-shadow: 0px 0px 5px #00000029 !important;
+        color: #808080;
+        width: 100px;
+        display: flex !important;
+        align-content: space-around;
+        flex-direction: row !important;
+        height: 33px;
+        em {
+          margin-right: 10px;
+        }
+      }
     } 
 }
 ::ng-deep .first-sidenav {
   display: none;
+}
+.headerbtn {
+  display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-top: -33px;
+   button { 
+     font-size: 16px !important;
+            border-radius: 4px !important;
+            margin-right: 13px;
+       }
+  em {
+    margin-right: 10px;
+
+  }
 }

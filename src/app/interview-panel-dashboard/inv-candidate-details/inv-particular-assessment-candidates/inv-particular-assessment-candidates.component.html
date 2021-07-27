@@ -1,3 +1,8 @@
+<div class="headerbtn">
+  <button (click)="finalSubmit()" class="submit" *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>
+    <em class="icon-checked"></em>Sent to HR for Processing
+  </button>
+</div>
 <div class="inv-particular-assessment-candidate">
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <div class="leftinfo">
@@ -18,14 +23,11 @@
         Rejected
       </div>
     </div>
-    <div class="right info">
+    <div class="rightinfo">
+      <div>
+        <button class="filterbtn"><em class="icon-Filter"></em> Filter</button>
+      </div>
       <div class="search-bar">
-        <div>
-          <button style="height: 28px !important;" (click)="finalSubmit()" class="submit"
-            *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>Sent to
-            HR
-            for Processing</button>
-        </div>
         <div class="search-icon">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
           <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">

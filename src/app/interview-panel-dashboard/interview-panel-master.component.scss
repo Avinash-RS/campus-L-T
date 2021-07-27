@@ -107,18 +107,13 @@
       display: grid !important;
     }
   }
-}
-.toolbar-bg {
-}
+} 
 .toolbar-hide {
   display: none;
 }
 
-.second-sidenav {
-  // margin: 130px 0 0 0;
-  // margin: 190px 0 0 0;
-  position: relative;
-  // height: calc(100vh - 145px);
+.second-sidenav { 
+  position: relative; 
   top: 0;
   bottom: 0;
   left: 0;
