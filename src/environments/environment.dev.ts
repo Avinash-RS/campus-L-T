@@ -14,7 +14,7 @@ export const environment = {
   API_BASE_URL: 'http://104.211.226.77/DRUPA_DEV_HEADLESS',
   API_BASE_URL_city: 'http://104.211.226.77/DRUPA_DEV_HEADLESS',
   Image_Base_Url: 'http://104.211.226.77',
-
+  WEBRTC_NODE_API : 'https://uapdevinterviewer.lntiggnite.com',
   // For QA
   // API_BASE_URL: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',
   // API_BASE_URL_city: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',

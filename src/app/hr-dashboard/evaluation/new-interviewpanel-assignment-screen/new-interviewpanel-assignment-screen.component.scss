@@ -225,6 +225,11 @@ mat-expansion-panel-header {
 
 ::ng-deep .schedule-container {
   padding: 3em;
+  .text-overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .input-container{
     width: 100%;
     padding: 0.5em;
@@ -249,8 +254,8 @@ mat-expansion-panel-header {
     }
     .card-details {
       display: inline-block;
-      width: 50%;
-      margin-right: 1em;
+      width: 49%;
+      // margin-right: 1em;
       margin-bottom: 1em;
       background: #f5f5f5;
       padding: 10px;
@@ -278,6 +283,9 @@ mat-expansion-panel-header {
     margin: 0 !important;
     padding-bottom: 0em !important;
   }
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #c02222;
+}
   .date-pick{
     cursor: pointer;
   }
@@ -288,7 +296,10 @@ mat-expansion-panel-header {
 
 ::ng-deep.custom-modalbox {
   max-width: 45% !important;
-
+  .mat-dialog-container{
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
   .pop-up-header {
       padding: 5px 5px 8px 7px;
       font-size: 22px;

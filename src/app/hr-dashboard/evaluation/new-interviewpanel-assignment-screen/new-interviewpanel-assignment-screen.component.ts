@@ -109,6 +109,10 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   password;
   startDate;
   endDate;
+  selectedCandidate = [];
+  selectedInterviewer = [];
+  attendeesList = [];
+  objList;
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
   constructor(
@@ -483,9 +487,33 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
           showCancel: '',
           showOk: ''
         };
+        this.matDialog.closeAll();
         this.openDialog1(ShortlistBoxComponent, datas, this.routeAssignedData);
     }, (err) => {
     });
+  }
+  scheduleHirerachy(){
+    const selectedUserlist = this.gridApi.getSelectedNodes();
+    const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
+    const candidateID = [];
+    const HRID = [];
+    selectedUserlist.forEach(element => {
+      if (element['data']) {
+        candidateID.push(element['data']['email'])
+      }
+    });
+
+    selectedUserlistHR.forEach(element => {
+      if (element['data']) {
+        HRID.push(element['data']['email'])
+      }
+    });
+    const apiData = {
+      user_email: candidateID,
+      hr_email: HRID,
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    };
+    this.assigntoPanel(apiData);
   }
   submit() {
     const selectedUserlist = this.gridApi.getSelectedNodes();
@@ -604,9 +632,20 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   scheduleInterview(){
+    if(this.selectedCandidate.length == 0){
+      this.appConfig.warningWithTitle('Please select a candidate','');
+      return false;
+    }
+    if(this.selectedCandidate.length > 1){
+      this.appConfig.warningWithTitle('Please select one candidate at a time','');
+      return false;
+    }
+    if(this.selectedInterviewer.length == 0){
+      this.appConfig.warningWithTitle('Please select a interviewer','');
+      return false;
+    }
     this.minDate = new Date();
-    console.log(this.rowData)
-    console.log(this.rowDataHR)
+    this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer)
     const dialogRef = this.matDialog.open(this.schedulePopup, {
       width: '55%',
       height: '70%',
@@ -625,7 +664,64 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.endDate = '';
   }
 
-  scheduleRoom(){
+    onCandidateSelect(e) {
+      const selectedRows = e.api.getSelectedRows();
+      // tslint:disable-next-line: prefer-const
+      let sData = [];
+      selectedRows.forEach((d) => {
+        d.type = 'Candidate'
+        sData.push(d);
+      });
+      this.selectedCandidate = sData;
+    }
 
+    onInterviewerSelect(e) {
+      const selectedRows = e.api.getSelectedRows();
+      // tslint:disable-next-line: prefer-const
+      let sData = [];
+      selectedRows.forEach((d) => {
+        d.type = 'Interviewer'
+        sData.push(d);
+      });
+      this.selectedInterviewer = sData;
+    }
+
+  scheduleRoom(){
+    if(!this.roomName){
+      this.appConfig.warningWithTitle('Room name cannot be empty','');
+    }
+    if(!this.roomName){
+      this.appConfig.warningWithTitle('Password cannot be empty','');
+    }
+    if(!this.startDate || !this.endDate){
+      this.appConfig.warningWithTitle('Date cannot be empty','');
+    }
+    let userDetails = [];
+    this.attendeesList.forEach((value)=>{
+      const vl = {
+        'emailId': value.email,
+        'userFullName':value?.name ? value.name : value.employee_name,
+        'type':value.type,
+      }
+      userDetails.push(vl)
+    })
+    var obj = {
+      'roomId':Math.floor(Math.random() * 10000000).toString(),
+      'password': this.password,
+      'roomName':this.roomName,
+      'startTime': this.startDate,
+      'endTime': this.endDate,
+      "userDtl": userDetails
+    }
+    this.objList = obj;
+    this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
+      if(result.success){
+        this.scheduleHirerachy();
+      } else {
+        this.appConfig.hideLoader();
+        this.appConfig.warningWithTitle('Something went wrong','');
+      }
+      
+    })
   }
 }
