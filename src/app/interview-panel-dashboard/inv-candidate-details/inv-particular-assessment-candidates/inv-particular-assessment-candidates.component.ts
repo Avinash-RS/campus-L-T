@@ -9,6 +9,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ActivatedRoute } from '@angular/router';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import * as moment from 'moment'; //in your component
 
 @Component({
   selector: 'app-inv-particular-assessment-candidates',
@@ -48,6 +49,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   isChecked: boolean;
   public rowSelection;
   public isRowSelectable;
+  selectedCount: any = [];
+  rejectedCount: any = [];
 
   constructor(
     private appConfig: AppConfigService,
@@ -131,7 +134,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     }
   }
   tabledef() {
-    this.columnDefs = [ 
+    this.columnDefs = [
       {
         headerCheckboxSelection: true,
         Width: 50,
@@ -141,7 +144,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         sortable: false,
         field: 'is_checked',
         headerName: ''
-      }, 
+      },
       {
         headerName: 'Candidate Name', field: 'candidate_name',
         filter: true,
@@ -178,36 +181,43 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         tooltipField: 'datetime_Interview'
       },
       {
-        headerName: 'Assigned By', field: 'datetime_Interview',
+        headerName: 'Assigned By', field: 'assigned_by',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         Width: 120,
         sortable: true,
-        tooltipField: 'datetime_Interview'
+        tooltipField: 'assigned_by'
       },
       {
-        headerName: 'Interview Status', field: 'datetime_Interview',
+        headerName: 'Interview Status', field: 'evaluation_status_1',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 170,
+        minWidth: 140,
         sortable: true,
-        tooltipField: 'datetime_Interview'
+        tooltipField: 'evaluation_status_1'
       },
       {
-        headerName: ' ', field: 'evaluation_status_1',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 120,
-        sortable: true,
-        tooltipField: 'evaluation_status_1',
+        headerName: '', field: 'join_interview',
+        filter: false,
+        floatingFilterComponentParams: { suppressFilterButton: false },
+        Width: 90,
+        sortable: false,
         getQuickFilterText: (params) => {
           return params.value;
-        }
+        },
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellRenderer: (params) => {
+          if (params['data'] && params['data']['join_interview'] == 'yes') {
+            return `<button class="table-btn agTable" mat-raised-button>Join Interview</button>`;
+          } else {
+            return `<button class="table-btn agTable disabled-ag" mat-raised-button>Join Interview</button>`;
+          }
+        },
       },
       {
-        headerName: ' ', field: 'evaluation_btn',
+        headerName: '', field: 'evaluation_btn',
         filter: false,
-        floatingFilterComponentParams: { suppressFilterButton: false }, 
+        floatingFilterComponentParams: { suppressFilterButton: false },
         Width: 90,
         sortable: false,
         getQuickFilterText: (params) => {
@@ -219,6 +229,32 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
             return `<button class="table-btn agTable disabled-ag" mat-raised-button>Evaluated</button>`;
           } else {
             return `<button class="table-btn agTable" mat-raised-button>Evaluate</button>`;
+          }
+        },
+      },
+      {
+        headerName: 'Status', field: 'interview_status',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        Width: 90,
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellRenderer: (params) => {
+          if (params['data'] && params['data']['interview_status'] == 'Selected') {
+            return `<button class="table-btn agTable" mat-raised-button>Selected</button>`;
+          }
+          if (params['data'] && params['data']['interview_status'] == 'Not Selected') {
+            return `<button class="table-btn agTable" mat-raised-button>Rejected</button>`;
+          }
+          else {
+            if (params['data'] && params['data']['interview_status']) {
+              return `<button class="table-btn agTable disabled-ag" mat-raised-button>${params['data']['interview_status']}</button>`;
+            } else {
+              return '';
+            }
           }
         },
       }
@@ -262,6 +298,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       const align = datas ? datas : [];
       let counting = 0;
       this.userList = [];
+      this.selectedCount = [];
+      this.rejectedCount = [];
       align.forEach(element => {
         if (element) {
           counting = counting + 1;
@@ -270,6 +308,15 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           if (element.evaluation_status == '1') {
             this.buttonCheck = true;
           }
+          if (element.interview_status == 'Selected' || element.interview_status == 'Not Selected') {
+            element.interview_status == 'Selected' ? this.selectedCount.push(element) : this.rejectedCount.push(element);
+          }
+
+          let dummy = '2021-07-05T07:00:00.000Z';
+          element.assigned_by = 'Avinash';
+          element.join_interview = 'yes';
+          element.status = 'Selected';
+          element.datetime_Interview = this.momentForm(dummy);
           element['evaluation_status_1'] = element.evaluation_status && element.evaluation_status == '2' ? 'submitted' : element.evaluation_status == '1' ? 'completed' : 'waiting';
           this.userList.push(element);
         }
@@ -324,6 +371,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     }, (err) => {
 
     });
+  }
+
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('LLL');
+      return split;
+    }
   }
 
 
