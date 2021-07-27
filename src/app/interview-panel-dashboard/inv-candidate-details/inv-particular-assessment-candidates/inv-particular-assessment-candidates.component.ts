@@ -149,7 +149,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Candidate Name', field: 'candidate_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 170,
+        minWidth: 180,
         sortable: true,
         tooltipField: 'candidate_name',
         getQuickFilterText: (params) => {
@@ -157,7 +157,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         },
         cellStyle: { color: '#C02222' },
         cellRenderer: (params) => {
-          return `<span style="border-bottom: solid #C02222 1px; cursor: pointer">${params['data']['candidate_name']} </span>`;
+          return `<span style="cursor: pointer">${params['data']['candidate_name']} </span>`;
         }
       },
       {
@@ -175,8 +175,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Date/Time of Interview', field: 'datetime_Interview',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth:180,
-        Width: 180,
+        minWidth:200,
+        Width: 200,
         sortable: true,
         tooltipField: 'datetime_Interview'
       },
@@ -184,7 +184,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Assigned By', field: 'assigned_by',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 120,
+        Width: 100,
         sortable: true,
         tooltipField: 'assigned_by'
       },
@@ -192,18 +192,18 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Interview Status', field: 'evaluation_status_1',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
+        minWidth: 170,
         sortable: true,
         tooltipField: 'evaluation_status_1',
         cellRenderer: (params) => {
           if (params['data'] && params['data']['evaluation_status_1'] == 'completed') {
-            return `<span class="table-btn agTable">Completed</button>`;
+            return `<span class="status completed ">Completed</button>`;
           }
           if (params['data'] && params['data']['evaluation_status_1'] == 'submitted') {
-            return `<span class="table-btn agTable">Submitted</button>`;
+            return `<span class=" status ">Submitted</button>`;
           }
           else {
-            return `<span class="table-btn agTable">Waiting</button>`;
+            return `<span class="status ">Schedule</button>`;
           }
         },
       },
@@ -219,9 +219,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
         cellRenderer: (params) => {
           if (params['data'] && params['data']['join_interview'] == 'yes') {
-            return `<button class="table-btn agTable" mat-raised-button>Join Interview</button>`;
+            return `<button class="join-inter"><em class="icon-Join_Video"></em> Join Interview</button>`;
           } else {
-            return `<button class="table-btn agTable disabled-ag" mat-raised-button>Join Interview</button>`;
+            return `<button class="join-inter disabled" ><em class="icon-Join_Video"></em> Join Interview</button>`;
           }
         },
       },
@@ -237,9 +237,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
         cellRenderer: (params) => {
           if (params['data'] && params['data']['evaluation_status'] == '2') {
-            return `<button class="table-btn agTable disabled-ag" mat-raised-button>Evaluated</button>`;
+            return `<button class=" btn-outline" >Evaluated</button>`;
           } else {
-            return `<button class="table-btn agTable" mat-raised-button>Evaluate</button>`;
+            return `<button class=" btn-outline checked"><em class="icon-checked"></em>Evaluate</button>`;
           }
         },
       },
@@ -255,14 +255,14 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
         cellRenderer: (params) => {
           if (params['data'] && params['data']['interview_status'] == 'Selected') {
-            return `<button class="table-btn agTable" mat-raised-button>Selected</button>`;
+            return `<span class="status completed">Selected</span>`;
           }
           if (params['data'] && params['data']['interview_status'] == 'Not Selected') {
-            return `<button class="table-btn agTable" mat-raised-button>Rejected</button>`;
+            return `<span class="status rejected">Rejected</span>`;
           }
           else {
             if (params['data'] && params['data']['interview_status']) {
-              return `<button class="table-btn agTable disabled-ag" mat-raised-button>${params['data']['interview_status']}</button>`;
+              return `<span class="status" >${params['data']['interview_status']}</span>`;
             } else {
               return '';
             }
