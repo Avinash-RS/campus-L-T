@@ -25,7 +25,7 @@ export class HrMasterComponent implements OnInit {
   sidebarOpen;
   subMenus: any;
   activeSubmenu;
-
+  hrSideMenu: any;
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService,
@@ -36,8 +36,77 @@ export class HrMasterComponent implements OnInit {
       this.subMenus = data;
     });
     this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    this.sendMenus();
   }
 
+  sendMenus() {
+    if (this.role == 'hr') {
+    this.hrSideMenu = [
+      {
+        url: this.appConstant.HR_DASHBOARD.DASHBOARD,
+        name: 'Dashboard',
+        icon: 'assets/images/dashboard.svg',
+        hide: false
+      },
+      {
+        url: this.appConstant.HR_DASHBOARD.USER_MANAGEMENT,
+        name: 'User Management',
+        icon: 'assets/images/001-people.svg',
+        hide: false
+      },
+      {
+        url: this.appConstant.HR_DASHBOARD.SHORTLISTING,
+        name: 'Shortlists',
+        icon: 'assets/images/Human Resource-Job Search-Magnifying Glass-Paper-Search.svg',
+        hide: false
+      },
+      {
+        url: this.appConstant.HR_DASHBOARD.EVALUATION,
+        name: 'Panel Assignment',
+        icon: 'assets/images/evaluation.svg',
+        hide: false
+      },
+      {
+        url: this.appConstant.HR_DASHBOARD.BUSINESSROUTE,
+        name: `IC's/Business`,
+        icon: 'assets/images/status-bar.svg',
+        hide: false
+      },
+      {
+        url: this.appConstant.HR_DASHBOARD.REPORTS,
+        name: `Reports`,
+        icon: 'assets/images/003-statistics.svg',
+        hide: false
+      },
+      {
+        url: this.appConstant.HR_DASHBOARD.HR_STATUS,
+        name: `Status`,
+        icon: 'assets/images/status-bar.svg',
+        hide: false
+      },
+  ]
+}
+if (this.role == 'ic') {
+  this.hrSideMenu = [
+    {
+      url: this.appConstant.HR_DASHBOARD.OfferedCandidatesLIST,
+      name: 'Business Panel',
+      icon: 'assets/images/status-bar.svg',
+      hide: false
+    }
+  ]
+}
+if (this.role == 'ssc_hr') {
+  this.hrSideMenu = [
+    {
+      url: this.appConstant.HR_DASHBOARD.OfferedCandidatesLIST,
+      name: 'SSC Panel',
+      icon: 'assets/images/status-bar.svg',
+      hide: false
+    }
+  ]
+}
+}
   ngOnInit() {
     this.sidebarOpen = true;
 
@@ -80,7 +149,7 @@ export class HrMasterComponent implements OnInit {
                   updateUrl.push(element);
                 }
               });
-              this.breadcrumbs = updateUrl; 
+              this.breadcrumbs = updateUrl;
               currentRoute = route;
               // }
             }
@@ -91,7 +160,7 @@ export class HrMasterComponent implements OnInit {
 
   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
     // If no routeConfig is avalailable we are on the root path
-                 
+
     let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
     let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
     let param = route.snapshot && route.snapshot['queryParams'] ? route.snapshot['queryParams'] : '';
