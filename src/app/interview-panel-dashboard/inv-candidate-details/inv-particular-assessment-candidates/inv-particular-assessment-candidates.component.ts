@@ -149,7 +149,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Candidate Name', field: 'candidate_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 170,
+        minWidth: 180,
         sortable: true,
         tooltipField: 'candidate_name',
         getQuickFilterText: (params) => {
@@ -175,8 +175,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Date/Time of Interview', field: 'datetime_Interview',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth:180,
-        Width: 180,
+        minWidth:200,
+        Width: 200,
         sortable: true,
         tooltipField: 'datetime_Interview'
       },
@@ -184,7 +184,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Assigned By', field: 'assigned_by',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 120,
+        Width: 100,
         sortable: true,
         tooltipField: 'assigned_by'
       },
@@ -192,7 +192,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Interview Status', field: 'evaluation_status_1',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
+        minWidth: 170,
         sortable: true,
         tooltipField: 'evaluation_status_1'
       },
