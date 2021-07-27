@@ -1,0 +1,65 @@
+@import "../../themes/themes.scss";
+
+.joinInterviewWrapper {
+    padding: 15px;
+}
+.interview {
+    h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: normal;
+        color: $secondary;
+    }
+    p {
+        font-size: 15px;
+        font-weight: normal;
+        color: $secondary;
+        margin-bottom: 10px;
+        strong {
+            font-weight: bold;
+        }
+    }
+}
+.joinInterview {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    .meetingID {
+        font-size: 12px;
+        font-weight: normal;
+        color: $secondary;
+    }
+    > div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .designation {
+        margin: 10px 0;
+    }
+    h2 {
+        font-size: 24px;
+        font-weight: lighter;
+        color: $secondary;
+        margin: 0;
+        line-height: normal;
+    }
+    button {
+        background-color: #c02222;
+        padding: 5px 10px;
+        border-radius: 4px;
+        border: none;
+        font-size: 14px;
+        font-weight: normal;
+        color: $white;
+    }
+    .timing, .note {
+        font-size: 13px;
+        font-weight: normal;
+        color: $gray-dark;
+    }
+}
