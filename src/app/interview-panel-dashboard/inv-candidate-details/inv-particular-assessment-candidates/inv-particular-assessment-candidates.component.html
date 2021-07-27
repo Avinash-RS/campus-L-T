@@ -1,26 +1,47 @@
 <div class="inv-particular-assessment-candidate">
-    <!-- <app-shared-inv-panel-header *ngIf="assessmentName"
-    [details]="assessmentName ? assessmentName : ''"></app-shared-inv-panel-header> -->
-
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
-    <!-- <mat-form-field>
-            <mat-label>Filter</mat-label> -->            
-    <div class="search-bar d-flex justify-content-end align-items-center">
-      <div class="search-icon">
-        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
+    <div class="leftinfo">
+      <div>
+        <span>23</span>
+        Assigned Candidates
       </div>
-      <div class="ml-2">
-        <button style="height: 28px !important;" (click)="finalSubmit()" class="submit" *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>Submit</button>
+      <div>
+        <span>16</span>
+        Candidates Evaluated
       </div>
-
+      <div>
+        <span>08</span>
+        Shortlisted
+      </div>
+      <div>
+        <span>03</span>
+        Rejected
+      </div>
     </div>
-    <!-- </mat-form-field> -->
+    <div class="right info">
+      <div class="search-bar">
+        <div>
+          <button style="height: 28px !important;" (click)="finalSubmit()" class="submit"
+            *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>Sent to
+            HR
+            for Processing</button>
+        </div>
+        <div class="search-icon">
+          <img src="assets/images/feather-search.svg" alt="" srcset="">
+          <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+        </div>
+      </div>
+    </div>
 
-    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
-    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
-    [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
-    (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" [rowSelection]="rowSelection" [isRowSelectable]="isRowSelectable" headerHeight="40">
-    </ag-grid-angular>    
-</div>
+  </div>
+  <div>
+
+    <ag-grid-angular style="width: 100%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+      [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
+      [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'"
+      [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)"
+      (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" [rowSelection]="rowSelection"
+      [isRowSelectable]="isRowSelectable" headerHeight="40">
+    </ag-grid-angular>
+  </div>
 </div>

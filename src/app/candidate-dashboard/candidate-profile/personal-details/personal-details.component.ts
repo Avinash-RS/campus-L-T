@@ -29,10 +29,11 @@ const moment = _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'DD-MM-YYYY',
   },
   display: {
-    dateInput: 'DD MMM YYYY',
+    // dateInput: 'DD MMM YYYY', // output ->  01 May 1995
+    dateInput: 'DD-MM-YYYY', // output ->  01-10-1995
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -189,11 +190,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 20, 0, 1);
+    this.minDate = new Date(currentYear - 90, 0, 1);
     this.maxDate = new Date();
     let oneDayAdd = new Date().getDate() + 1;
-    this.passportValidminDate = new Date();
-    this.passportValidmaxDate = new Date(currentYear + 20, 0, 1);
+    this.passportValidminDate = new Date(currentYear - 15, 0, 1);
+    this.passportValidmaxDate = new Date(currentYear + 40, 0, 1);
   }
 
   ngOnInit() {
@@ -224,6 +225,13 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
     this.appConfig.scrollToTop();
+  }
+
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+     return split;
+    }
   }
 
   ngAfterViewInit() {
@@ -264,7 +272,9 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
 
   checkboxChanged(check) {
-    if (check === true) {
+    console.log('c', check);
+
+    if (!check) {
       this.permanentAddressForm.patchValue({
         permanentAddress1: null,
         permanentAddress2: null,
@@ -277,8 +287,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         permanentAddress1: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '',
         permanentAddress2: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '',
         permanentZipCode: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '',
-        permanentCity: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '',
-        permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '',
+        permanentCity: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : null,
+        permanentState: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : null,
       });
     }
 
@@ -904,20 +914,20 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.KYCModifiedData.field_present_line_street_addres = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
         this.KYCModifiedData.field_present_line2_street_addre = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
         this.KYCModifiedData.field_present_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
-        this.KYCModifiedData.field_preset_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
-        this.KYCModifiedData.field_present_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
+        this.KYCModifiedData.field_preset_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : null };
+        this.KYCModifiedData.field_present_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : null };
         if (this.checked === true) {
           this.KYCModifiedData.field_permanent_line1_street_add = { value: this.presentAddressForm.value.presentAddress1 ? this.presentAddressForm.value.presentAddress1 : '' };
           this.KYCModifiedData.field_permanent_line2_street_add = { value: this.presentAddressForm.value.presentAddress2 ? this.presentAddressForm.value.presentAddress2 : '' };
           this.KYCModifiedData.field_permanent_zip = { value: this.presentAddressForm.value.presentZipCode ? this.presentAddressForm.value.presentZipCode : '' };
-          this.KYCModifiedData.field_permanent_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : '' };
-          this.KYCModifiedData.field_permanent_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : '' };
+          this.KYCModifiedData.field_permanent_city = { value: this.presentAddressForm.value.presentCity ? this.presentAddressForm.value.presentCity : null };
+          this.KYCModifiedData.field_permanent_state = { value: this.presentAddressForm.value.presentState ? this.presentAddressForm.value.presentState : null };
         } else {
           this.KYCModifiedData.field_permanent_line1_street_add = { value: this.permanentAddressForm.value.permanentAddress1 ? this.permanentAddressForm.value.permanentAddress1 : '' };
           this.KYCModifiedData.field_permanent_line2_street_add = { value: this.permanentAddressForm.value.permanentAddress2 ? this.permanentAddressForm.value.permanentAddress2 : '' };
           this.KYCModifiedData.field_permanent_zip = { value: this.permanentAddressForm.value.permanentZipCode ? this.permanentAddressForm.value.permanentZipCode : '' };
-          this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : '' };
-          this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : '' };
+          this.KYCModifiedData.field_permanent_city = { value: this.permanentAddressForm.value.permanentCity ? this.permanentAddressForm.value.permanentCity : null };
+          this.KYCModifiedData.field_permanent_state = { value: this.permanentAddressForm.value.permanentState ? this.permanentAddressForm.value.permanentState : null };
         }
 
         const langArrays = [];
@@ -965,9 +975,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS);
 
       } else {
-        setTimeout(() => {
-          window.scroll(0, 0);
-        }, 10);
+        this.ngAfterViewInit();
         this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
 
         this.validateOnSubmit = true;
@@ -980,6 +988,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
         this.validateAllFields(this.healthForm);
       }
     } else {
+      this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Submitted', 'Profile Image is mandatory to proceed further');
     }
 
@@ -987,6 +996,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
   cancel() {
     this.ngOnInit();
+    this.ngAfterViewInit();
     this.appConfig.nzNotification('success', 'Resetted', 'Personal details form has been resetted');
   }
 
@@ -1014,7 +1024,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobYear: [null, [Validators.required]],
       nationality: ['', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
       aadhaar: ['', [Validators.minLength(12), Validators.maxLength(12), Validators.pattern(numberOnly)]],
-      category: [''],
+      category: [null],
     }), this.upToCategoryFormPatchvalues();
 
     // Present Address Form
@@ -1022,8 +1032,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       presentAddress1: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       presentAddress2: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       presentZipCode: ['', [Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
-      presentState: [''],
-      presentCity: [''],
+      presentState: [null],
+      presentCity: [null],
     }), this.presentAddressPatchValue();
 
     // Present Address Form
@@ -1031,8 +1041,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       permanentAddress1: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       permanentAddress2: ['', [Validators.maxLength(255), RemoveWhitespace.whitespace()]],
       permanentZipCode: ['', [Validators.maxLength(7), Validators.pattern(numberOnly), RemoveWhitespace.whitespace()]],
-      permanentState: [''],
-      permanentCity: [''],
+      permanentState: [null],
+      permanentCity: [null],
     }), this.permanentAddressPatchValue();
 
 
@@ -1115,6 +1125,30 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       this.validateAllFormArrays(this.languagesForm.get('languageAdd') as FormArray);
     }
   }
+
+  addLanguage1(data?: any) {
+    let lanLength = this.languagesForm.controls.languageAdd.value.length - 1;
+    if (this.languagesForm['status'] !== 'INVALID') {
+      if (this.languagesForm.controls.languageAdd.value[lanLength].language) {
+        this.languagesForm.controls.languageAdd['controls'][lanLength].controls['read'].setErrors(null);
+        if (this.t.length < 6) {
+          this.t.push(this.createItem(data));
+          if (this.t.length < 6) {
+            this.notShow = false;
+          } else {
+            this.notShow = true;
+          }
+        } else {
+          this.notShow = true;
+        }
+      } else {
+        this.languagesForm.controls.languageAdd['controls'][lanLength].controls['read'].setErrors({ notSelected: true });
+      }
+    } else {
+      this.validateAllFormArrays(this.languagesForm.get('languageAdd') as FormArray);
+    }
+  }
+
   createItem(data): FormGroup {
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ ]){0,255}$/;
     if (data) {
@@ -1168,7 +1202,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       dobYear: dob.year,
       nationality: organizeUserDetails && organizeUserDetails.field_nationality && organizeUserDetails['field_nationality'] ? organizeUserDetails['field_nationality']['value'] : '',
       aadhaar: organizeUserDetails && organizeUserDetails.field_aadharno && organizeUserDetails['field_aadharno'] ? organizeUserDetails['field_aadharno']['value'] : '',
-      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : '',
+      category: organizeUserDetails && organizeUserDetails.field_category && organizeUserDetails['field_category'] ? organizeUserDetails['field_category']['value'] : null,
     });
   }
 
@@ -1179,8 +1213,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       presentAddress1: organizeUserDetails && organizeUserDetails['field_present_line_street_addres'] && organizeUserDetails['field_present_line_street_addres'] ? organizeUserDetails['field_present_line_street_addres']['value'] : '',
       presentAddress2: organizeUserDetails && organizeUserDetails['field_present_line2_street_addre'] && organizeUserDetails['field_present_line2_street_addre'] ? organizeUserDetails['field_present_line2_street_addre']['value'] : '',
       presentZipCode: organizeUserDetails && organizeUserDetails['field_present_zip'] && organizeUserDetails['field_present_zip'] ? organizeUserDetails['field_present_zip']['value'] : '',
-      presentCity: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'] ? organizeUserDetails['field_preset_city']['value'] : '',
-      presentState: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'] ? organizeUserDetails['field_present_state']['value'] : '',
+      presentCity: organizeUserDetails && organizeUserDetails['field_preset_city'] && organizeUserDetails['field_preset_city'] ? organizeUserDetails['field_preset_city']['value'] : null,
+      presentState: organizeUserDetails && organizeUserDetails['field_present_state'] && organizeUserDetails['field_present_state'] ? organizeUserDetails['field_present_state']['value'] : null,
     });
   }
 
@@ -1191,8 +1225,8 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       permanentAddress1: organizeUserDetails && organizeUserDetails['field_permanent_line1_street_add'] && organizeUserDetails['field_permanent_line1_street_add'] ? organizeUserDetails['field_permanent_line1_street_add']['value'] : '',
       permanentAddress2: organizeUserDetails && organizeUserDetails['field_permanent_line2_street_add'] && organizeUserDetails['field_permanent_line2_street_add'] ? organizeUserDetails['field_permanent_line2_street_add']['value'] : '',
       permanentZipCode: organizeUserDetails && organizeUserDetails['field_permanent_zip'] && organizeUserDetails['field_permanent_zip'] ? organizeUserDetails['field_permanent_zip']['value'] : '',
-      permanentCity: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'] ? organizeUserDetails['field_permanent_city']['value'] : '',
-      permanentState: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'] ? organizeUserDetails['field_permanent_state']['value'] : '',
+      permanentCity: organizeUserDetails && organizeUserDetails['field_permanent_city'] && organizeUserDetails['field_permanent_city'] ? organizeUserDetails['field_permanent_city']['value'] : null,
+      permanentState: organizeUserDetails && organizeUserDetails['field_permanent_state'] && organizeUserDetails['field_permanent_state'] ? organizeUserDetails['field_permanent_state']['value'] : null,
     });
   }
   languageFormPatchValue() {

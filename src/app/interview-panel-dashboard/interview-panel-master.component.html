@@ -1,57 +1,67 @@
+ 
+
 <app-common-header></app-common-header>
-<div class="toolbar-wrapper">
-    <ol class="breadcrumb">
-        <li *ngFor="let breadcrumb of breadcrumbs">
-          <span [routerLink]="breadcrumb.url" [queryParams]="breadcrumb.params" routerLinkActive="router-link-active">
-            {{ breadcrumb.label }}
+
+<mat-drawer-container class="second-sidenav">
+  <mat-drawer class="sidenav" mode="side" [opened]="!sidebarOpen">
+    <ul>
+      <li (click)="sidebar()">
+        <span><img src="assets/images/keyboard_arrow_left.svg"></span>
+      </li>  
+        <!--  OfferedCandidatesLIST-->
+        <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS" routerLinkActive="active">
+          <span><img src="assets/images/evaluation.svg" alt=""></span>
+          <span>Candidate Details</span>
+          <span>
+            <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
           </span>
-        </li>
-      </ol>
-    </div>
-    <mat-drawer-container class="first-sidenav">
-        <mat-drawer class="sub-wrapper-nav" mode="side" [opened]="sidebarOpen">
-          &#160;
-        </mat-drawer>
-        <mat-drawer-content class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
+        </li> 
+    </ul>
+  </mat-drawer>
+  <mat-drawer-content class="main-container content">
+    <mat-drawer class="side-iconmenu" [class.nil]="!sidebarOpen" mode="side" [opened]="sidebarOpen">
+      <div class="sidemenu">
+        <ul>
+          <li (click)="sidebar()">
+            <span><img src="assets/images/keyboard_arrow_right.svg"></span>
+          </li>  
+            <!--  OfferedCandidatesLIST-->
+            <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS" routerLinkActive="active">
+              <span><img src="assets/images/evaluation.svg" matTooltip="Candidate Details" alt=""></span>
+            </li> 
+          
+        </ul>
+      </div>
+    </mat-drawer>
+    <div class="content-section">
+      <div>
+        <div class="toolbar-wrapper">
+          <ol class="breadcrumb">
+            <li *ngFor="let breadcrumb of breadcrumbs">
+              <span [routerLink]="breadcrumb.url" [queryParams]="breadcrumb.params"
+                routerLinkActive="router-link-active">
+                {{ breadcrumb.label }}
+              </span>
+            </li>
+          </ol>
+        </div>
+        <div class="heading3">{{breadcrumbs[1].label}}</div>
+      </div>
+      <div class="first-sidenav">
+        <div class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
+
           <ng-container *ngIf="subMenus && subMenus.length > 0">
-            <div [routerLink]="subMenus.router" [queryParams]="subMenus.data ? {data: subMenus.data ? subMenus.data : ''} : ''" *ngFor="let subMenus of subMenus; let i = index" class="sub-navs"
-              routerLinkActive="active" [ngClass]="subMenus.active ? 'active' : ''" [ngClass]="subMenus.router === null ? 'non-active' : ''">
+            <div [routerLink]="subMenus.router"
+              [queryParams]="subMenus.data ? {data: subMenus.data ? subMenus.data : ''} : ''"
+              *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active"
+              [ngClass]="subMenus.active ? 'active' : ''" [ngClass]="subMenus.router === null ? 'non-active' : ''">
               <div *ngIf="subMenus.icon"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
               <div *ngIf="subMenus.name">{{subMenus.name}}</div>
             </div>
           </ng-container>
-        </mat-drawer-content>
-      </mat-drawer-container>
-      <div (click)="sidebar()" [ngClass]="sidebarOpen ? 'sideOpen' : 'sideClose'" class="openClose">
-        <span *ngIf="sidebarOpen"><img src="assets/images/keyboard_arrow_left.svg" alt="" srcset=""></span>
-        <span *ngIf="!sidebarOpen"><img src="assets/images/keyboard_arrow_right.svg" alt="" srcset=""></span>
-            </div>
-      <mat-drawer-container class="second-sidenav">
-
-        <mat-drawer class="sidenav" mode="side" [opened]="sidebarOpen">
-          <ul>
-            <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS" routerLinkActive="active">
-              <span><img src="assets/images/evaluation.svg" width="20px" height="20px" alt=""></span>
-              <span>Candidate Details</span>
-              <span>
-                <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
-              </span>
-                  </li>
-
-            <!-- <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM" routerLinkActive="active">
-              <span><img src="assets/images/hired.svg" width="20px" height="20px" alt=""></span>
-              <span>Evaluation form</span>
-        <span>
-          <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
-        </span>
-            </li> -->
-
-          </ul>
-
-        </mat-drawer>
-        <mat-drawer-content class="main-container">
-
-          <router-outlet></router-outlet>
-
-        </mat-drawer-content>
-      </mat-drawer-container>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

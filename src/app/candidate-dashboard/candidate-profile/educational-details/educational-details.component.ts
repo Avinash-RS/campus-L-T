@@ -282,7 +282,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   onSubmit(OptA) {
     let valid;
-    if (this.educationForm.valid) { 
+    if (this.educationForm.valid) {
       let value = {
         hscDiploma: false,
         ug: false,
@@ -371,7 +371,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
         this.addEducationForm(edu);
       });
-    } else {      
+    } else {
       if (this.selectedPost == 'det') {
         for (let i = 0; i <= 1; i++) {
           let edu;
@@ -398,8 +398,8 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
               };
             }
           this.addEducationForm(edu);
-        }  
-      } 
+        }
+      }
       if (this.selectedPost == 'gct' || this.selectedPost == 'get') {
         for (let i = 0; i <= 2; i++) {
           let edu;
@@ -424,10 +424,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
                 field_year_of_passing: { value: null },
                 field_backlogs: { value: 0 }, field_percentage: { value: null }
               };
-            }  
+            }
           this.addEducationForm(edu);
-        }  
-      } 
+        }
+      }
       if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
       for (let i = 0; i <= 3; i++) {
         let edu;
@@ -452,7 +452,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
               field_year_of_passing: { value: null },
               field_backlogs: { value: 0 }, field_percentage: { value: null }
             };
-          }    
+          }
         this.addEducationForm(edu);
       }
     }
@@ -553,7 +553,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
 
   addEducationForm(data?: any) {
-    
+
     if (true) {
       // if (this.educationForm['status'] !== 'INVALID') {
       this.eduArr.push(this.createItem(data));
@@ -562,8 +562,17 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     }
   }
 
+  addEducationForm1(data?: any) {
+    if (this.educationForm['status'] !== 'INVALID') {
+      this.eduArr.push(this.createItem(data));
+    } else {
+      this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
+    }
+  }
+
+
   detectSelectChanges(i) {
- 
+
     // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == null || this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == '') {
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].disable();
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].disable();
@@ -603,11 +612,11 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     //   })
     //   console.log('diplaa', this.eduArr);
     //   console.log('map', this.eduArr.at(Number(`${this.eduArr.length - 1}`)));
-      
+
     // }
     // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'UG') {
     //   console.log('coming into ug');
-      
+
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
@@ -674,7 +683,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${i}`)).controls['board'].updateValueAndValidity();
       // this.eduArr.at(Number(`${i}`)).patchValue({
       //   specification: 'Diploma Engineering'
-      // })      
+      // })
     }
     if (this.eduArr.at(Number(`${i}`)).value.leveling == 'UG') {
       this.eduArr.at(Number(`${i}`)).controls['board'].enable();
