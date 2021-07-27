@@ -17,182 +17,43 @@ $lxp-theme-accent:mat-palette($accent , 900);
 $lxp-theme-warn:mat-palette($warn );
 $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-warn);
 @include angular-material-theme($lxp-theme);
-
-// $theme-orange-primary: mat-palette($mat-orange);
-// $theme-orange-accent:  mat-palette($mat-blue-grey, A200, A100, A400);
-// $theme-orange-warn:    mat-palette($mat-deep-orange);
-// $theme-orange:   mat-dark-theme($theme-orange-primary, $theme-orange-accent, $theme-orange-warn);
-// .theme-orange {
-//   @include angular-material-theme($theme-orange);
-
-// }
-
-// // theme-4
-// $theme-pink-primary: mat-palette($mat-pink);
-// $theme-pink-accent:  mat-palette($mat-red, A200, A100, A400);
-// $theme-pink-warn:    mat-palette($mat-deep-orange);
-// $theme-pink:   mat-light-theme($theme-pink-primary, $theme-pink-accent, $theme-pink-warn);
-
-// .theme-pink {
-//   @include angular-material-theme($theme-pink);
-// }
-
-// @include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-// $udap-registration-primary: mat-palette($mat-indigo);
-// $udap-registration-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// // The warn palette is optional (defaults to red).
-// $udap-registration-warn: mat-palette($mat-red);
-
-// // Create the theme object (a Sass map containing all of the palettes).
-// $udap-registration-theme: mat-light-theme(
-//   $udap-registration-primary,
-//   $udap-registration-accent,
-//   $udap-registration-warn
-// );
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-// @include angular-material-theme($udap-registration-theme);
-
-// $alt-registration-primary: mat-palette($mat-yellow, 600);
-// $alt-registration-accent: mat-palette($mat-yellow, A200, A100, A400);
-
-// $alt-registration-dark-theme: mat-dark-theme(
-//   $alt-registration-primary,
-//   $alt-registration-accent
-// );
-// .alternative {
-//   @include angular-material-theme($alt-registration-dark-theme);
-// }
+ 
 
 @import "./app/themes/themes.scss";
-
-// Font ROBOTO
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/roboto/Roboto-Black.woff") format("woff");
-//   font-weight: 700;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/roboto/Roboto-Bold.woff") format("woff");
-//   font-weight: 600;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/roboto/Roboto-Black.woff") format("woff");
-//   // src: url("^assets/fonts/roboto/Roboto-Medium.woff") format("woff");
-//   font-weight: 200;
-//   font-style: normal;
-// }
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/roboto/Roboto-Regular.woff") format("woff");
-//   font-weight: 100;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/roboto/Roboto-Light.woff") format("woff");
-//   font-weight: 50;
-//   font-style: normal;
-// }
-
-// // Font OPEN SANS
-
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/OpenSans-Bold.woff") format("woff");
-//   font-weight: 600;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/OpenSans-SemiBold.woff") format("woff");
-//   font-weight: 200;
-//   font-style: normal;
-// }
-
-// @font-face {
-//   font-family: Roboto Condensed !important;
-//   src: url("^assets/fonts/OpenSans-Regular.woff") format("woff");
-//   font-weight: 100;
-//   font-style: normal;
-// }
-
+@import "fonts";
+ 
 
 html {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto Condensed', sans-serif !important;
-  // scroll-behavior: smooth !important;
 }
 body {
   margin: 0;
   padding: 0;
-  // font-family: Roboto Condensed !important;
-  font-family: 'Roboto Condensed', sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
   font-size: 14px;
   font-weight: 100;
   transition-duration: 580ms;
   transition-timing-function: ease;
-  // transition: 5s ease-in-out;
-  // background-color: $overlay-layer-bg;
 }
 
-button,
-input,
-optgroup,
-select,
-textarea,
-h1,
-span,
-div,
-h2,
-h3,
-h4,
-h5 {
-  font-family: 'Roboto Condensed', sans-serif !important;
-}
 
-// // @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-// @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
-// @import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
-// @import "../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin.scss";
-// @import "../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham-mixin.scss";
-// // @import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
-// /* You can add global styles to this file, and also import other style files */
-// /* Import font family */
-
-
+ 
 @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
 @import "../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin.scss";
 @import "../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham-mixin.scss";
 
 .ag-theme-alpine {
-    @include ag-theme-alpine();
+    @include ag-theme-alpine(); 
 }
 
 .ag-theme-balham {
-    @include ag-theme-balham();
+    @include ag-theme-balham(); 
 }
 
 .ag-theme-material {
-    @include ag-theme-material();
-    font-family: "agGridMaterial" !important;
+    @include ag-theme-material(); 
   }
 
 .ag-theme-material .ag-checkbox-input-wrapper {
@@ -203,13 +64,7 @@ h5 {
 }
 .ag-theme-material .ag-checkbox-input-wrapper.ag-indeterminate::after {
   color: $primary-red;
-}
-.ag-icon {
-  font-family: "agGridAlpine" !important;
-}
-.ag-checkbox-input-wrapper {
-  font-family: "agGridMaterial" !important;
-}
+}  
 
 // New
 .ag-theme-material .ag-checkbox-input-wrapper {
@@ -2447,55 +2302,7 @@ th {
   .print {
     display: none !important;
   }
-
-  body {
-    // Roboto not printing ok on Chrome, fallback on supported fonts
-    font-family: 'Helvetica Neue', sans-serif !important;
-
-    mat-drawer-container {
-      // Position needs to be relative
-      min-height: 200%;
-      position: relative !important;
-
-      mat-drawer {
-        // Remove the content margin if sidenav is expanded when hidden for print
-        margin: 0 !important;
-
-        // Remove max width and padding from containers to flow text depending on printer page sizes
-        .main-container {
-          min-width: 0 !important;
-          padding: 0 !important;
-        }
-
-        // // Roboto not printing ok on Chrome, fallback on supported fonts
-        // .mat-typography, .mat-card {
-        //   font-family: 'Helvetica Neue', sans-serif !important;
-        //   h1, h2, h3, h4, h5 {
-        //     font-family: 'Helvetica Neue', sans-serif !important;
-        //   }
-        // }
-        // .mat-button, .mat-raised-button, .mat-icon-button,
-        // .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
-        //   font-family: 'Helvetica Neue', sans-serif !important;
-        // }
-
-        // // Define where a page break should occur when printing
-        // .main-heading-bottom {
-        //   break-after: always; // New syntax
-        //   page-break-before: always; // always break before h2 elements, for chapters for example
-        // }
-        // .flex-wrapper-passport  {
-        //   break-after: avoid; // New syntax
-        //   page-break-after: avoid; // avoid breaking after subtitles, it looks weird
-        // }
-        // pre, blockquote, img, mat-row, .thumbnail {
-        //   break-inside: avoid; // New syntax
-        //   page-break-inside: avoid; // avoid breaking inside pre and blockquotes
-        // }
-
-      }
-    }
-  }
+ 
 }
 
 .green-1 {
@@ -2676,3 +2483,9 @@ th {
    .common-joining-form {
      height: 600px !important;
    }
+
+   .heading3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+  }   

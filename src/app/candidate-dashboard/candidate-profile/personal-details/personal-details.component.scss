@@ -504,15 +504,13 @@ nz-select:focus,nz-select:hover {
 
 
 :host ::ng-deep .ant-select-selection__placeholder, :host ::ng-deep .ant-select-search__field__placeholder {
-  color: #A5A5A5 !important;
-  font-family: 'Roboto Condensed' !important;
-  font-size: 14px !important;
+  color: #A5A5A5 ; 
+  font-size: 14px ;
 }
 
 ::placeholder {
-  color: #A5A5A5 !important;
-  opacity: 1 !important;
-  font-family: 'Roboto Condensed' !important;
+  color: #A5A5A5 ;
+  opacity: 1 ; 
   font-size: 14px;
 }
 

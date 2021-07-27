@@ -1,7 +1,6 @@
 @import "../../../themes/themes.scss";
 
 .inv-particular-assessment-candidate {
-  background: $white-3;
   height: 100%;
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
@@ -11,23 +10,24 @@
       text-align: right;
       .search-icon {
         display: inline-flex;
-        align-items: center;
-        margin: 8px 0;
-        width: auto;
-        // min-width: 280px;
-        color: $header-blue;
-        font-size: 14px;
-        border: 0.5px solid $borderColor-2;
-        background: $white-2 0% 0% no-repeat padding-box !important;
-        border-radius: 5px;
-        box-shadow: $shadow-light-black;
-        box-sizing: border-box;
-        padding: 0.25em 0.15em;
-        height: 27px;
-        position: relative;
+    align-items: center;
+    margin: 8px 0;
+    width: auto;
+    color: #333333;
+    font-size: 14px;
+    border: 1px solid #c5c5c5 !important;
+    background: #fff !important;
+    border-radius: 4px !important;
+    box-shadow: 0px 0px 5px #00000029 !important;
+    box-sizing: border-box;
+    padding: 0.25em 0.15em;
+    height: 33px;
+    position: relative;
+    width: 210px;
         img {
           width: 20px;
           height: 13px;
+          filter: invert(98%) sepia(0%) saturate(0%) hue-rotate(134deg) brightness(85%) contrast(82%);
         }
         input {
           position: relative;
@@ -41,7 +41,8 @@
           box-sizing: border-box;
           border: none;
           padding: 0.15em 0.5em;
-          height: 24px;
+          height: 26px;
+          width: 176px;
         }
         ::placeholder {
           color: $black-1;
@@ -99,6 +100,13 @@
     //   display: flex;
     // }
   }
+  .leftinfo {
+    > div {
+      display: flex;
+      display: flex;
+    flex-direction: column;
+    }
+  }
 }
 
 td {
@@ -142,4 +150,48 @@ th {
 }
 .user-list-wrapper button:focus {
   border-radius: 0px !important;
+}
+
+.user-list-wrapper {
+    display: flex;
+    justify-content: space-between;
+    .leftinfo {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 60%;
+      align-items: center;
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-right: 1px solid #cacaca;
+        padding-left: 25px;
+        padding-left: 6%;
+        flex-grow: 1;
+        color: #808080;
+        &:first-child {
+          padding: 0;
+        }
+        &:last-child {
+          border: none;
+        }
+      } 
+      span {
+        font-weight: 700;
+        color: #000;
+        font-size: 18px;
+      }
+    }
+    .rightinfo {
+      width: 30%;
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+    } 
+}
+::ng-deep .first-sidenav {
+  display: none;
 }

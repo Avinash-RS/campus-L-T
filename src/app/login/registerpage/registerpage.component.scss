@@ -15,8 +15,7 @@
   display: flex;
   color: $primary;
   align-items: center;
-  justify-content: center;
-  font-family: "Roboto";
+  justify-content: center; 
   .layer-only {
     background-color: $overlay-layer-bg;
     position: fixed;
@@ -46,8 +45,7 @@
         text-align: center;
         color: $white;
         font-weight: 600;
-        font-size: 24px;
-        font-family: "Open Sans";
+        font-size: 24px; 
         margin-left: 220px;
       }
     }
@@ -91,8 +89,7 @@
           height: 40px;
           color: $white;
         }
-        h5 {
-          font-family: "Roboto";
+        h5 { 
           color: $white;
           font-size: 18px;
           font-weight: 700;
