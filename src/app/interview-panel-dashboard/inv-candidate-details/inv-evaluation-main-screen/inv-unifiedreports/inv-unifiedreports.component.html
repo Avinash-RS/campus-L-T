@@ -1,0 +1,13 @@
+<div class="reportContainer">
+
+  <app-profile-info (driveName)="getSelectedDriveName($event)" [getAllReportsData]="getAllReportsData">
+  </app-profile-info>
+  <app-doc-info [getAllReportsData]="getAllReportsData"></app-doc-info>
+  <app-assessment-info [driveName]="driveName" [getAllReportsData]="getAllReportsData"></app-assessment-info>
+  <app-competency-areas [getAllReportsData]="getAllReportsData"></app-competency-areas>
+  <app-quality-area [getAllReportsData]="getAllReportsData"></app-quality-area>
+</div>
+
+<div class="button-wrapper">
+  <button class="submit" mat-button (click)="next()">Next</button>
+</div>

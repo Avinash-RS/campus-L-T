@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class AdminServiceService {
   BASE_URL = environment.API_BASE_URL;
+  NODE_BASE_URL = environment.NODE_API_BASE_URL;
   httpOptions: { headers: HttpHeaders };
 
 
@@ -336,7 +337,7 @@ export class AdminServiceService {
       return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true });
     }
-  
+
 
   // Hr evaluation particular assessment header
   hrEvaluationSectionMarks(data) {
@@ -655,7 +656,12 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/Joining_export`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
- 
+
+// Node service urls
+
+getReportsDataAPI(data) {
+  return this.http.post(`${this.NODE_BASE_URL}/getunifiedReport`, data, {headers: this.withoutTokens(), withCredentials: false});
+}
 
 
 }

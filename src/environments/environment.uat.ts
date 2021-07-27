@@ -20,6 +20,7 @@ export const environment = {
     // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
     // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
     // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
+    NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
     API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'https://uat-campus.lntedutech.com/d8cintana2',
     Image_Base_Url: 'https://uat-campus.lntedutech.com',

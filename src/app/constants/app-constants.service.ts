@@ -160,6 +160,8 @@ export const CONSTANT = {
       SUB_EDUCATION: '/interview-panel/candidates/evaluation/education',
       SUB_EMPLOYMENT: '/interview-panel/candidates/evaluation/employment',
       SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate',
+      UNIFIEDREPORTS: '/interview-panel/candidates/evaluation/unifiedreports',
+      JOIN_INTERVIEW: '/interview-panel/candidates/evaluation/join',
       EVALUATION_FORM: '/interview-panel/evaluation-form'
     }
 
@@ -309,6 +311,8 @@ export const CONSTANT = {
       SUB_ASSESSMENTS: 'assessment',
       SUB_EDUCATION: 'education',
       SUB_EMPLOYMENT: 'employment',
+      UNIFIEDREPORTS: 'unifiedreports',
+      JOIN_INTERVIEW: 'join',
       SUB_EVALUATION: 'evaluate',
       EVALUATION_FORM: 'evaluation-form'
     }

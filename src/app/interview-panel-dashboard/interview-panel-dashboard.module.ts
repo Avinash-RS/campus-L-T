@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InterviewPanelDashboardRoutingModule } from './interview-panel-dashboard-routing.module';
@@ -17,16 +17,28 @@ import { SubSharedInvPanelHeaderComponent } from './inv-candidate-details/sub-sh
 
 import { AgGridModule } from 'ag-grid-angular';
 import { BisEvaluationFormComponent } from './bis-evaluation-form/bis-evaluation-form.component';
+import { InvUnifiedreportsComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/inv-unifiedreports.component';
+import { AssessmentInfoComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/sub-pages/assessment-info/assessment-info.component';
+import { DocInfoComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/sub-pages/doc-info/doc-info.component';
+import { QualityAreaComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/sub-pages/quality-area/quality-area.component';
+import { ProfileInfoComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/sub-pages/profile-info/profile-info.component';
+import { CompetencyAreasComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/sub-pages/competency-areas/competency-areas.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { InvJoinInterviewComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-join-interview/inv-join-interview.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, AssessmentInfoComponent, CompetencyAreasComponent, DocInfoComponent, ProfileInfoComponent, QualityAreaComponent, InvJoinInterviewComponent],
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
     InterviewPanelDashboardRoutingModule,
+    DragScrollModule,
+    PdfViewerModule,
     AgGridModule.withComponents([])
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class InterviewPanelDashboardModule { }

@@ -22,6 +22,9 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   candidateStatus: any;
   tagName: any;
   uid: any;
+  email: any;
+  form: any;
+  queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
 
   constructor(
     private appConfig: AppConfigService,
@@ -50,12 +53,24 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
+      this.queryParams = {
+        data: params['data'],
+        id: params['id'],
+        name: params['name'] ? params['name'] : '',
+        status: params['status'],
+        tag: params['tag'],
+        uid: params['uid'],
+        email: params['email'],
+        form: params['form']
+      };
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
       this.candidateStatus = params['status'];
       this.tagName = params['tag'];
       this.uid = params['uid'];
+      this.email = params['email'];
+      this.form = params['form'];
       this.appConfig.setLocalData('cname', this.candidateName);
       this.appConfig.setLocalData('cid', this.candidateId);
       this.appConfig.setLocalData('cstatus', this.candidateStatus);

@@ -1,790 +1,1053 @@
 <div id="top" class="alert">
-  Note: Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.
+  Note: Please make sure to complete the form and fill the information’s
+  correctly. You will not be able to edit after the shortlisting process.
 </div>
-<div class="grid-wrapper forScrollDown" id="top">
-  <form #form="ngForm" [formGroup]="upToCategoryForm">
-    <div class="first-child">
-      <div class="flex-box">
-        <label>Name<span class="asterick">*</span></label>
-        <div class="input-box" matTooltipPosition="after" [matTooltip]="localUsername ? 'Non-Editable' : ''">
-          <input [ngClass]="localUsername ? 'nonEdit' : ''" (focusout)="detectInput(upToCategoryForm)"
-            formControlName="name" type="text" value="">
+<div class="personal-revam">
+  <div class="grid-wrapper forScrollDown" id="top">
+    <form #form="ngForm" [formGroup]="upToCategoryForm">
+      <div class="first-child">
+        <div class="flex-box">
+          <label>Name<span class="asterick">*</span></label>
+          <div
+            class="overlap-wrapper"
+            matTooltipPosition="after"
+            [matTooltip]="localUsername ? 'Non-Editable' : ''"
+          >
+            <input
+              matInput
+              [ngClass]="localUsername ? 'nonEdit' : ''"
+              (focusout)="detectInput(upToCategoryForm)"
+              formControlName="name"
+              type="text"
+            />
+            <div class="error personalErr" *ngIf="name.invalid && name.touched">
+              <span *ngIf="name.errors?.required">Name is Required</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="error personalErr" *ngIf="name.invalid && name.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="name.errors?.required">Name is Required</span>
-        </div>
-      </div>
 
-      <div class="flex-box">
-        <label>Email ID<span class="asterick">*</span></label>
-        <div class="input-box" matTooltipPosition="after" [matTooltip]="localUserEmail ? 'Non-Editable' : ''">
-          <input [ngClass]="localUserEmail ? 'nonEdit' : ''" (focusout)="detectInput(upToCategoryForm)"
-            formControlName="mail" type="text" value="">
+        <div class="flex-box">
+          <label>Email ID<span class="asterick">*</span></label>
+          <div
+            class="overlap-wrapper"
+            matTooltipPosition="after"
+            [matTooltip]="localUserEmail ? 'Non-Editable' : ''"
+          >
+            <input
+              matInput
+              [ngClass]="localUserEmail ? 'nonEdit' : ''"
+              (focusout)="detectInput(upToCategoryForm)"
+              formControlName="mail"
+              type="text"
+            />
+            <div class="error" *ngIf="mail.invalid && mail.touched">
+              <span *ngIf="mail.errors?.required">Mail is Required</span>
+              <span *ngIf="mail.errors?.pattern"
+                >Please enter a valid Email ID</span
+              >
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="error personalErr" *ngIf="mail.invalid && mail.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="mail.errors?.required">Mail is Required</span>
-          <span *ngIf="mail.errors?.pattern">Please enter a valid Email ID</span>
-        </div>
-      </div>
 
-      <div class="flex-box">
-        <label>Mobile Number<span class="asterick">*</span></label>
-        <div class="input-box">
-          <input (focusout)="detectInput(upToCategoryForm)" formControlName="mobile" type="text" value="">
+        <div class="flex-box">
+          <label>Mobile Number<span class="asterick">*</span></label>
+          <div class="overlap-wrapper">
+            <input
+              matInput
+              placeholder="Enter Mobile no."
+              (focusout)="detectInput(upToCategoryForm)"
+              formControlName="mobile"
+              type="text"
+              placeholder="Enter here..."
+            />
+            <div class="error" *ngIf="mobile.invalid && mobile.touched">
+              <span *ngIf="mobile.errors?.required"
+                >Mobile Number is Required</span
+              >
+              <span *ngIf="mobile.errors?.pattern"
+                >Please enter valid 10 digit Mobile Number</span
+              >
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="error personalErr" *ngIf="mobile.invalid && mobile.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="mobile.errors?.required">Mobile Number is Required</span>
-          <span *ngIf="mobile.errors?.pattern">Please enter valid 10 digit Mobile
-            Number</span>
-        </div>
-      </div>
 
-      <div class="flex-box">
-        <label>Aadhaar Number</label>
-        <div class="input-box">
-          <input (focusout)="detectInput(upToCategoryForm)" formControlName="aadhaar" type="text" value="">
+        <div class="flex-box">
+          <label>Aadhaar Number</label>
+          <div class="overlap-wrapper">
+            <input
+              (focusout)="detectInput(upToCategoryForm)"
+              formControlName="aadhaar"
+              type="text"
+              placeholder="Enter here..."
+            />
+            <div
+              class="error"
+              *ngIf="aadhaar.invalid && aadhaar.touched"
+            >
+              <span *ngIf="aadhaar.errors?.required"
+                >Aadhaar Number is Required</span
+              >
+              <span *ngIf="aadhaar.errors?.pattern">Numbers only allowed</span>
+              <span
+                *ngIf="
+                  !aadhaar.errors?.pattern &&
+                  (aadhaar.errors?.minlength || aadhaar.errors?.maxlength)
+                "
+                >Aadhaar should be exact 12 digits</span
+              >
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="error personalErr" *ngIf="aadhaar.invalid && aadhaar.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="aadhaar.errors?.required">Aadhaar Number is Required</span>
-          <span *ngIf="aadhaar.errors?.pattern">Numbers only allowed</span>
-          <span *ngIf="!aadhaar.errors?.pattern && (aadhaar.errors?.minlength || aadhaar.errors?.maxlength)">Aadhaar
-            should be exact 12 digits</span>
-        </div>
-      </div>
 
-      <div class="flex-box">
-        <label>Gender<span class="asterick">*</span></label>
-        <div class="input-box-radio">
-            <mat-radio-group style="display: flex; justify-content: space-between; width: 30%; margin-top: -1em;" (change)="detectSelectChange()" formControlName="gender">
-                <mat-radio-button value="Male" style="font-size: 17px;">Male
-                </mat-radio-button>
-                <mat-radio-button value="Female" style="font-size: 17px;">Female</mat-radio-button>
-              </mat-radio-group>
+        <div class="flex-box">
+          <label>Gender<span class="asterick">*</span></label>
+          <div class="overlap-wrapper">
+            <mat-radio-group
+              class="radio-grp"
+              (change)="detectSelectChange()"
+              formControlName="gender"
+            >
+              <mat-radio-button value="Male">Male </mat-radio-button>
+              <mat-radio-button value="Female" style="margin-left: 8em"
+                >Female</mat-radio-button
+              >
+            </mat-radio-group>
+            <div class="error" *ngIf="gender.invalid && gender.touched">
+              <span *ngIf="gender.errors?.required">Gender is Required</span>
+            </div>
+          </div>
+        </div>
 
-          <!-- <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="gender">
-            <label nz-radio nzValue="Male">Male</label>
-            <label nz-radio nzValue="Female">Female</label>
-          </nz-radio-group> -->
+        <div class="flex-box">
+          <label>Marital Status</label>
+          <div class="overlap-wrapper">
+            <mat-radio-group
+              class="radio-grp"
+              (change)="detectSelectChange()"
+              formControlName="marital"
+            >
+              <mat-radio-button value="Married">Married </mat-radio-button>
+              <mat-radio-button value="Unmarried" style="margin-left: 8em"
+                >Unmarried</mat-radio-button
+              >
+            </mat-radio-group>
+            <div class="error" *ngIf="marital.invalid && marital.touched">
+              <span *ngIf="marital.errors?.required"
+                >Marital Status is Required</span
+              >
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="error personalErr" *ngIf="gender.invalid && gender.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="gender.errors?.required">Gender is Required</span>
-        </div>
-      </div>
 
-      <div class="flex-box">
-        <label>Marital Status</label>
-        <div class="input-box-radio">
-            <mat-radio-group style="display: flex; justify-content: space-between; width: 30%; margin-top: -1em;" (change)="detectSelectChange()" formControlName="marital">
-                <mat-radio-button value="Married" style="font-size: 17px;">Married
-                </mat-radio-button>
-                <mat-radio-button value="Unmarried" style="font-size: 17px;">Unmarried</mat-radio-button>
-              </mat-radio-group>
+        <div class="flex-box">
+          <label for="dob">Date of Birth<span class="asterick">*</span></label>
+          <div class="overlap-wrapper">
+            <div class="dob-wrapper">
+              <nz-select
+                (ngModelChange)="detectSelectChange()"
+                formControlName="dobDate"
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="DD"
+                style="margin-right: 8px;"
+              >
+                <nz-option
+                  *ngFor="let date of date"
+                  [nzLabel]="date.date"
+                  [nzValue]="date.date"
+                ></nz-option>
+              </nz-select>
+              <nz-select
+                (ngModelChange)="detectSelectChange()"
+                formControlName="dobMonth"
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="MM"
+                style="margin-right: 8px;"
+              >
+                <nz-option
+                  *ngFor="let month of month"
+                  [nzLabel]="month.month"
+                  [nzValue]="month.month"
+                ></nz-option>
+              </nz-select>
+              <nz-select
+                (ngModelChange)="detectSelectChange()"
+                formControlName="dobYear"
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="YYYY"
+                style="margin-right: 8px;"
+              >
+                <nz-option
+                  *ngFor="let year of year"
+                  [nzLabel]="year.year"
+                  [nzValue]="year.year"
+                ></nz-option>
+              </nz-select>
+            </div>
+            <div
+              class="error"
+              *ngIf="
+                (dobDate.invalid && dobDate.touched) ||
+                (dobMonth.invalid && dobMonth.touched) ||
+                (dobYear.invalid && dobYear.touched)
+              "
+            >
+              <span
+                *ngIf="
+                  dobDate.errors?.required ||
+                  dobMonth.errors?.required ||
+                  dobYear.errors?.required
+                "
+                >Date of Birth is Invalid</span
+              >
+            </div>
+          </div>
+        </div>
 
-          <!-- <nz-radio-group (ngModelChange)="detectSelectChange()" formControlName="marital">
-            <label nz-radio nzValue="Married">Married</label>
-            <label nz-radio nzValue="Unmarried">Unmarried</label>
-          </nz-radio-group> -->
+        <div class="flex-box">
+          <label>Nationality</label>
+          <div class="overlap-wrapper">
+            <input
+              (focusout)="detectInput(upToCategoryForm)"
+              formControlName="nationality"
+              type="text"
+              placeholder="Enter here..."
+            />
+            <div
+            class="error personalErr"
+            *ngIf="nationality.invalid && nationality.touched"
+          >
+              <span *ngIf="nationality.errors?.required"
+                >Nationality is Required</span
+              >
+              <span
+                style="white-space: nowrap"
+                *ngIf="nationality.errors?.pattern"
+                >Accept only Alphanumeric characters and maximum of 255 characters
+                only allowed
+              </span>
+          </div>
+          </div>
         </div>
-      </div>
-      <div class="error personalErr" *ngIf="marital.invalid && marital.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="marital.errors?.required">Marital Status is Required</span>
-        </div>
-      </div>
 
-      <div class="flex-box">
-        <label for="dob">Date of Birth<span class="asterick">*</span></label>
-        <div class="input-box-dob">
+        <div class="flex-box">
+          <label>Category</label>
+          <div class="overlap-wrapper">
+            <nz-select
+              (ngModelChange)="detectSelectChange()"
+              formControlName="category"
+              nzPlaceHolder="<--Select-->"
+              nzAllowClear
+              nzShowSearch
+            >
+              <nz-option
+                *ngFor="let caste of category"
+                [nzLabel]="caste.name"
+                [nzValue]="caste.caste"
+              ></nz-option>
+            </nz-select>
+            <div
+            class="error"
+            *ngIf="categories.invalid && categories.touched"
+          >
+              <span *ngIf="categories.errors?.required"
+                >Category is Required</span
+              >
+          </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="second-child">
+      <div class="photo-wrapper">
+        <div class="photo-sub-wrapper">
+          <div *ngIf="!url" class="head">
+            Upload your photo<span class="asterick">*</span>
+          </div>
+          <div class="profile-pic-container">
+            <div
+              *ngIf="url"
+              matTooltip="Remove Photo"
+              matTooltipPostion="after"
+              (click)="delete()"
+              class="remove"
+            >
+              <span style="font-size: 30px">
+                <img
+                  src="assets/images/cancel-black-36dp.svg"
+                  alt=""
+                  srcset=""
+                />
+              </span>
+            </div>
 
-          <nz-select (ngModelChange)="detectSelectChange()" formControlName="dobDate" nzAllowClear nzShowSearch
-            nzPlaceHolder="DD">
-            <nz-option *ngFor="let date of date" [nzLabel]="date.date" [nzValue]="date.date"></nz-option>
-          </nz-select>
-          <nz-select (ngModelChange)="detectSelectChange()" formControlName="dobMonth" nzAllowClear nzShowSearch
-            nzPlaceHolder="MM">
-            <nz-option *ngFor="let month of month" [nzLabel]="month.month" [nzValue]="month.month"></nz-option>
-          </nz-select>
-          <nz-select (ngModelChange)="detectSelectChange()" formControlName="dobYear" nzAllowClear nzShowSearch
-            nzPlaceHolder="YYYY">
-            <nz-option *ngFor="let year of year" [nzLabel]="year.year" [nzValue]="year.year"></nz-option>
-          </nz-select>
+            <label [ngClass]="url ? 'hoverable' : 'hoverable1'" for="fileInput">
+              <!-- (load)="afterImgLoad()" -->
+              <div *ngIf="!url" class="image-wrapper">
+                <img
+                  [ngClass]="!url ? 'default1' : 'profile1'"
+                  [src]="url ? url : 'assets/images/camera.svg'"
+                  alt=""
+                  srcset=""
+                />
+                <img
+                  [ngClass]="!url ? 'default' : 'profile'"
+                  [src]="url ? url : 'assets/images/awesome-user-circle.svg'"
+                  alt=""
+                  srcset=""
+                />
+              </div>
+              <img
+                *ngIf="url"
+                [ngClass]="!url ? 'default' : 'profile'"
+                [src]="url ? url : 'assets/images/camera.svg'"
+                alt=""
+                srcset=""
+              />
+              <div *ngIf="!url" class="bottom-label">
+                Drag and drop or browse here
+              </div>
+            </label>
+            <input
+              [matTooltip]="url ? 'Click to Change Photo' : 'No File Chosen'"
+              matTooltipPostion="after"
+              title=""
+              (click)="files.value = null"
+              id="fileInput"
+              #files
+              type="file"
+              name="profile"
+              accept="image/*"
+              (change)="onSelectFile($event)"
+            />
+          </div>
+          <div *ngIf="!url" class="info-text">
+            <span>(Size: 40kb to 2MB - Format: jpeg & png)</span>
+          </div>
+          <div
+            *ngIf="
+              (showSizeError && showSizeError.size) ||
+              (showSizeError && showSizeError.image)
+            "
+            class="sizeError"
+          >
+            {{
+              showSizeError.size
+                ? showSizeError.maxsize
+                : "Valid File Format is PNG or JPEG"
+            }}
+          </div>
         </div>
       </div>
-      <div class="error personalErr"
-        *ngIf="(dobDate.invalid && dobDate.touched) || (dobMonth.invalid && dobMonth.touched) || (dobYear.invalid && dobYear.touched)">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="dobDate.errors?.required || dobMonth.errors?.required || dobYear.errors?.required">Date of Birth
-            is Invalid</span>
-        </div>
-      </div>
-
-      <div class="flex-box">
-        <label>Nationality</label>
-        <div class="input-box">
-          <input (focusout)="detectInput(upToCategoryForm)" formControlName="nationality" type="text" value="">
-        </div>
-      </div>
-      <div class="error personalErr" *ngIf="nationality.invalid && nationality.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="nationality.errors?.required">Nationality is Required</span>
-          <span style="white-space: nowrap;" *ngIf="nationality.errors?.pattern">Accept only Alphanumeric characters and
-            maximum of 255 characters only allowed </span>
-        </div>
-      </div>
-
-      <div class="flex-box">
-        <label>Category</label>
-        <div class="input-box">
-          <nz-select (ngModelChange)="detectSelectChange()" formControlName="category" nzAllowClear nzShowSearch>
-            <nz-option *ngFor="let caste of category" [nzLabel]="caste.name" [nzValue]="caste.caste"></nz-option>
-          </nz-select>
-        </div>
-      </div>
-      <div class="error personalErr" *ngIf="categories.invalid && categories.touched">
-        <div>
-          &#160;
-        </div>
-        <div>
-          <span *ngIf="categories.errors?.required">Category is Required</span>
-        </div>
-      </div>
-
     </div>
+  </div>
+  <form class="contact-address-section" #form1="ngForm" [formGroup]="presentAddressForm">
+          <label class="contact-label">Present Address</label>
+        <div class="addresslane-section">
+          <div class="flex-box width-100p">
+            <label class="lane-label">Line 1 Street Address</label>
+              <input matInput
+                (focusout)="detectInput(presentAddressForm)"
+                formControlName="presentAddress1"
+                type="text"
+                placeholder="Enter here..."
+              />
+            <div
+              class="error"
+              *ngIf="presentAddress1.invalid && presentAddress1.touched"
+            >
+              <span *ngIf="presentAddress1.errors?.required"
+                >Address is Required</span
+              >
+              <span *ngIf="presentAddress1.errors?.maxlength"
+                >Maximum of 255 characters only allowed</span
+              >
+            </div>
+          </div>
+          <div class="flex-box width-100p">
+            <label class="lane-label">Line 2 Street Address</label>
+                <input matInput
+                  (focusout)="detectInput(presentAddressForm)"
+                  formControlName="presentAddress2"
+                  type="text"
+                  placeholder="Enter here..."
+                  />
+              <div
+                class="error"
+                *ngIf="presentAddress2.invalid && presentAddress2.touched"
+              >
+                <span *ngIf="presentAddress2.errors?.required"
+                  >Address is Required</span
+                >
+                <span *ngIf="presentAddress2.errors?.maxlength"
+                  >Maximum of 255 characters only allowed</span
+                >
+              </div>
+            </div>
+            <div class="flex-box">
+              <label class="lane-label">Postal / Zip code</label>
+                <input
+                  (focusout)="detectInput(presentAddressForm)"
+                  formControlName="presentZipCode"
+                  type="text"
+                  placeholder="Enter here..."
+                />
+              <div
+                class="error"
+                *ngIf="presentZipCode.invalid && presentZipCode.touched"
+              >
+                <span *ngIf="presentZipCode.errors?.required"
+                  >Zip code is Required</span
+                >
+                <span *ngIf="presentZipCode.errors?.maxlength"
+                  >Maximum of 7 digits only allowed</span
+                >
+                <span *ngIf="presentZipCode.errors?.pattern"
+                  >Numbers only allowed</span
+                >
+              </div>
+            </div>
+            <div class="flex-box">
+              <label class="lane-label">State / Province</label>
+                <nz-select
+                  (ngModelChange)="detectStateSelectChange(presentState)"
+                  formControlName="presentState"
+                  nzPlaceHolder="<--Select-->"
+                  nzAllowClear
+                  nzShowSearch
+                >
+                  <nz-option
+                    *ngFor="let state of allStatess"
+                    [nzLabel]="state.name"
+                    [nzValue]="state.id"
+                  ></nz-option>
+                </nz-select>
+              <div
+                class="error"
+                *ngIf="presentState.invalid && presentState.touched"
+              >
+                <span *ngIf="presentState.errors?.required"
+                  >State is Required</span
+                >
+                <span
+                  *ngIf="
+                    !presentState.errors?.required &&
+                    presentState.errors?.dropdownNotMatch
+                  "
+                  >Please select the state from drop down</span
+                >
+              </div>
+            </div>
+            <div class="flex-box">
+              <label class="lane-label">City</label>
+              <div
+                [matTooltip]="
+                  hideCityDropDown ? 'Please select your state' : ''
+                "
+              >
+                <nz-select
+                  (ngModelChange)="detectSelectChange()"
+                  [ngClass]="hideCityDropDown ? 'hideDropDown' : ''"
+                  formControlName="presentCity"
+                  nzPlaceHolder="<--Select-->"
+                  nzAllowClear
+                  nzShowSearch
+                >
+                  <nz-option
+                    [nzLabel]="'Other'"
+                    [nzValue]="'Other'"
+                  ></nz-option>
+                  <nz-option
+                    *ngFor="let city of allCitiess"
+                    [nzLabel]="city.name"
+                    [nzValue]="city.id"
+                  ></nz-option>
+                </nz-select>
+              </div>
+              <div
+                class="error"
+                *ngIf="presentCity.invalid && presentCity.touched"
+              >
+                <span *ngIf="presentCity.errors?.required"
+                  >City is Required</span
+                >
+              </div>
+            </div>
+        </div>
   </form>
-  <div class="second-child">
-    <div class="photo-wrapper">
-      <div class="photo-sub-wrapper">
-      <div *ngIf="!url" class="head">
-        Upload your photo<span class="asterick">*</span>
+  <div class="checkbox">
+    <!-- <label class="text-label">&#160;</label>
+    <label
+      nz-checkbox
+      (ngModelChange)="checkboxChanged(checked)"
+      [(ngModel)]="checked"
+      >Click here if permanent address is same as present address</label
+    > -->
+    <mat-checkbox [(ngModel)]="checked" (change)="checkboxChanged(checked)" class="mr-2"></mat-checkbox> Click here if permanent address is same as present address
+  </div>
+  <form class="contact-address-section" #form2="ngForm" [formGroup]="permanentAddressForm">
+    <ng-container *ngIf="!checked">
+          <label class="contact-label">Permanent Address</label>
+        <div class="addresslane-section">
+          <div class="flex-box width-100p">
+            <label class="lane-label">Line 1 Street Address</label>
+              <input matInput
+                (focusout)="detectInput(permanentAddressForm)"
+                formControlName="permanentAddress1"
+                type="text"
+                placeholder="Enter here..."
+                />
+            <div
+              class="error"
+              *ngIf="permanentAddress1.invalid && permanentAddress1.touched"
+            >
+              <span *ngIf="permanentAddress1.errors?.required"
+                >Address Required</span
+              >
+              <span *ngIf="permanentAddress1.errors?.maxlength"
+                >Maximum of 255 characters only allowed</span
+              >
+            </div>
+          </div>
+          <div class="flex-box width-100p">
+            <label class="lane-label">Line 2 Street Address</label>
+                <input matInput
+                  (focusout)="detectInput(permanentAddressForm)"
+                  formControlName="permanentAddress2"
+                  type="text"
+                  placeholder="Enter here..."
+                />
+              <div
+                class="error"
+                *ngIf="permanentAddress2.invalid && permanentAddress2.touched"
+              >
+                <span *ngIf="permanentAddress2.errors?.required"
+                  >Address Required</span
+                >
+                <span *ngIf="permanentAddress2.errors?.maxlength"
+                  >Maximum of 255 characters only allowed</span
+                >
+              </div>
+            </div>
+            <div class="flex-box">
+              <label class="lane-label">Postal / Zip code</label>
+                <input matInput
+                  (focusout)="detectInput(permanentAddressForm)"
+                  formControlName="permanentZipCode"
+                  type="text"
+                  placeholder="Enter here..."
+                  />
+              <div
+                class="error"
+                *ngIf="permanentZipCode.invalid && permanentZipCode.touched"
+              >
+                <span *ngIf="permanentZipCode.errors?.required"
+                  >Zip code is Required</span
+                >
+                <span *ngIf="permanentZipCode.errors?.maxlength"
+                  >Maximum of 7 digits only allowed</span
+                >
+                <span *ngIf="permanentZipCode.errors?.pattern"
+                  >Numbers only allowed</span
+                >
+              </div>
+            </div>
+            <div class="flex-box">
+              <label class="lane-label">State / Province</label>
+                <nz-select
+                  (ngModelChange)="
+                    detectPermanentStateSelectChange(permanentState)
+                  "
+                  formControlName="permanentState"
+                  nzPlaceHolder="<--Select-->"
+                  nzAllowClear
+                  nzShowSearch
+                >
+                  <nz-option
+                    *ngFor="let state of allStatess"
+                    [nzLabel]="state.name"
+                    [nzValue]="state.id"
+                  ></nz-option>
+                </nz-select>
+              <div
+                class="error"
+                *ngIf="permanentState.invalid && permanentState.touched"
+              >
+                <span *ngIf="permanentState.errors?.required"
+                  >State is Required</span
+                >
+                <span
+                  *ngIf="
+                    !permanentState.errors?.required &&
+                    permanentState.errors?.dropdownNotMatch
+                  "
+                  >Please select the state from drop down</span
+                >
+              </div>
+            </div>
+
+            <div class="flex-box">
+              <label class="lane-label">City</label>
+              <div [matTooltip]="
+                  hidePermanentCityDropDown ? 'Please select your state' : ''
+                "
+              >
+                <nz-select
+                  (ngModelChange)="detectSelectChange()"
+                  [ngClass]="hidePermanentCityDropDown ? 'hideDropDown' : ''"
+                  formControlName="permanentCity"
+                  nzPlaceHolder="<--Select-->"
+                  nzAllowClear
+                  nzShowSearch
+                >
+                  <nz-option
+                    [nzLabel]="'Other'"
+                    [nzValue]="'Other'"
+                  ></nz-option>
+                  <nz-option
+                    *ngFor="let city of allPCitiess"
+                    [nzLabel]="city.name"
+                    [nzValue]="city.id"
+                  ></nz-option>
+                </nz-select>
+              </div>
+              <div
+                class="error"
+                *ngIf="permanentCity.invalid && permanentCity.touched"
+              >
+                <span *ngIf="permanentCity.errors?.required"
+                  >City is Required</span
+                >
+                <span
+                  *ngIf="
+                    !permanentCity.errors?.required &&
+                    permanentCity.errors?.dropdownNotMatch
+                  "
+                  >Please select the city from drop down</span
+                >
+              </div>
+            </div>
+        </div>
+    </ng-container>
+  </form>
+  <form class="language-section" #form3="ngForm" [formGroup]="languagesForm">
+    <label class="contact-label mt-2">Languages Known</label>
+    <div class="addresslane-section">
+          <ng-container *ngIf="t && t.controls" formArrayName="languageAdd">
+            <div class="language-wrapper mt-2" *ngFor="let item of t.controls; let i = index"
+            [formGroupName]="i">
+            <div class="flex-box language-knowns">
+              <div class="flex-box margin-0">
+                  <input matInput
+                    (focusout)="detectInput(languagesForm)"
+                    formControlName="language"
+                    type="text"
+                    placeholder="Enter Language Name"
+                  />
+              </div>
+
+              <div class="flex-box language-knowns">
+              <div>
+                <label class="language-label">Read</label>
+                <mat-checkbox formControlName="read" class="mr-2"></mat-checkbox>
+              </div>
+              <div>
+                <label class="language-label">Write</label>
+                <mat-checkbox formControlName="write" class="mr-2"></mat-checkbox>
+              </div>
+              <div>
+                <label class="language-label">Speak</label>
+                <mat-checkbox formControlName="speak" class="mr-2"></mat-checkbox>
+              </div>
+
+              <div [ngClass]="i == 0 ? 'hideClose' : ''" matTooltip="Remove" class="close-icon">
+                <i (click)="i == 0 ? '' : removeLanguage(i)" class="material-icons material-icons-outlined">
+                    remove_circle_outline
+                </i>
+            </div>
+
+              </div>
+            </div>
+            <div
+            class="error"
+            *ngIf="t.controls[i].invalid">
+            <span *ngIf="t.controls[i].get('language').errors?.required"
+                    >Language is Required</span
+                  >
+                  <span *ngIf="t.controls[i].get('language').errors?.pattern"
+                    >Accept only Alphanumeric characters and maximum of 255
+                    characters only allowed</span
+                  >
+                  <span *ngIf="t.controls[i].get('read').errors?.notSelected"
+                    >Make sure, you have entered Language name and selected any one of the language proficiency</span
+                  >
+          </div>
+
+          </div>
+          </ng-container>
+          <div (click)="addLanguage1()" *ngIf="!notShow" class="language-add-button mt-2">
+            <img
+              src="assets/images/interface.svg"
+              width="25px"
+              height="25px"
+              alt=""
+            />
+            <span class="ml-1">Add</span>
+          </div>
       </div>
-      <div class="profile-pic-container">
-        <div *ngIf="url" matTooltip="Remove Photo" matTooltipPostion="after" (click)="delete()" class="remove">
-          <span style="font-size: 30px;">
-            <img src="assets/images/cancel-black-36dp.svg" alt="" srcset="">
+  </form>
+
+  <div class="bottom-form-wrapper">
+    <div class="header">Passport Related Details</div>
+    <form #form4="ngForm" [formGroup]="passportForm" class="passport-form">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Passport Number</label>
+            <input matInput
+              (focusout)="detectInput(passportForm)"
+              formControlName="passportNumber"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div
+            class="error"
+            *ngIf="passportNumber.invalid && passportNumber.touched"
+          >
+            <span *ngIf="passportNumber.errors?.required"
+              >Passport Number is Required</span
+            >
+            <span *ngIf="passportNumber.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255
+              characters</span
+            >
+          </div>
+        </div>
+        <div class="flex-column-wrapper">
+          <label class="label-flex-column">Name as in Passport</label>
+            <input matInput
+              (focusout)="detectInput(passportForm)"
+              formControlName="passportName"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div
+            class="error"
+            *ngIf="passportName.invalid && passportName.touched"
+          >
+            <span *ngIf="passportName.errors?.required">Name is Required</span>
+            <span *ngIf="passportName.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
+          </div>
+        </div>
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Profession as in Passport</label>
+            <input matInput
+              (focusout)="detectInput(passportForm)"
+              formControlName="passportProfession"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div
+            class="error"
+            *ngIf="passportProfession.invalid && passportProfession.touched"
+          >
+            <span *ngIf="passportProfession.errors?.required"
+              >Profession is Required</span
+            >
+            <span *ngIf="passportProfession.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
+          </div>
+        </div>
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Date of Issue</label>
+            <!--               (keydown)="preventDate($event, dp)" -->
+          <div class="d-flex align-items-center">
+            <input
+              (focusout)="detectInput(passportForm)"
+              matInput
+              [max]="maxDate"
+              [min]="minDate"
+              placeholder="DD-MM-YYYY"
+              [matDatepicker]="dp"
+              formControlName="passportIssueDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp> </mat-datepicker>
+          </div>
+          <div
+            class="error"
+            *ngIf="passportIssueDate.invalid && passportIssueDate.touched"
+          >
+            <span *ngIf="passportIssueDate.errors?.required"
+              >Date of issue is Required</span
+            >
+            <span *ngIf="passportIssueDate?.errors?.matDatepickerMax">
+              {{passportIssueDate?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(passportIssueDate?.errors?.matDatepickerMax.max) : ''}}
           </span>
+          <span *ngIf="passportIssueDate?.errors?.matDatepickerMin">
+              {{passportIssueDate?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(passportIssueDate?.errors?.matDatepickerMin.min) : ''}}
+          </span>
+          <span *ngIf="passportIssueDate?.errors?.matDatepickerParse">Invalid Date Format</span>
+
+          </div>
         </div>
-
-        <label [ngClass]="url ? 'hoverable' : 'hoverable1'" for="fileInput">
-          <!-- (load)="afterImgLoad()" -->
-          <div *ngIf="!url" class="image-wrapper">
-            <img [ngClass]="!url ? 'default1' : 'profile1'" [src]="url ? url : 'assets/images/camera.svg'" alt=""
-              srcset="">
-            <img [ngClass]="!url ? 'default' : 'profile'" [src]="url ? url : 'assets/images/awesome-user-circle.svg'" alt=""
-              srcset="">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Valid Upto</label>
+          <div class="d-flex align-items-center">
+            <input
+              (focusout)="detectInput(passportForm)"
+              formControlName="passportValid"
+              [max]="passportValidmaxDate" [min]="passportValidminDate"
+              matInput
+              [matDatepicker]="picker"
+              placeholder="DD-MM-YYYY"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </div>
-          <img *ngIf="url" [ngClass]="!url ? 'default' : 'profile'" [src]="url ? url : 'assets/images/camera.svg'"
-            alt="" srcset="">
-          <div *ngIf="!url" class="bottom-label">
-            Drag and drop or browse here
-          </div>
-        </label>
-        <input [matTooltip]="url ? 'Click to Change Photo' : 'No File Chosen'" matTooltipPostion="after" title=""
-          (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept="image/*"
-          (change)="onSelectFile($event)">
-      </div>
-      <div *ngIf="!url" class="info-text">
-        <span>(Size: 40kb to 2MB - Format: jpeg & png)</span>
-      </div>
-      <div *ngIf="(showSizeError && showSizeError.size) || (showSizeError && showSizeError.image)" class="sizeError">
-        {{(showSizeError.size ? showSizeError.maxsize : 'Valid File Format is PNG or JPEG')}}
-      </div>
-</div>
-    </div>
+          <div
+            class="error"
+            *ngIf="passportValid.invalid && passportValid.touched"
+          >
+            <span *ngIf="passportValid.errors?.required"
+              >Expiry Date is Required</span
+            >
+            <span *ngIf="passportValid?.errors?.matDatepickerMax">
+              {{passportValid?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(passportValid?.errors?.matDatepickerMax.max) : ''}}
+          </span>
+          <span *ngIf="passportValid?.errors?.matDatepickerMin">
+              {{passportValid?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(passportValid?.errors?.matDatepickerMin.min) : ''}}
+          </span>
+          <span *ngIf="passportValid?.errors?.matDatepickerParse">Invalid Date Format</span>
 
+          </div>
+        </div>
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Place of Issue</label>
+            <input matInput
+              (focusout)="detectInput(passportForm)"
+              formControlName="passportIssuePlace"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div
+            class="error"
+            *ngIf="passportIssuePlace.invalid && passportIssuePlace.touched"
+          >
+            <span *ngIf="passportIssuePlace.errors?.required"
+              >Issue place is Required</span
+            >
+            <span *ngIf="passportIssuePlace.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
+          </div>
+        </div>
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Countries valid for</label>
+            <input matInput
+              (focusout)="detectInput(passportForm)"
+              formControlName="passportValidFor"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div
+            class="error"
+            *ngIf="passportValidFor.invalid && passportValidFor.touched"
+          >
+            <span *ngIf="passportValidFor.errors?.required"
+              >Countries valid for is Required</span
+            >
+            <span *ngIf="passportValidFor.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
+          </div>
+        </div>
+    </form>
   </div>
-</div>
-<form #form1="ngForm" [formGroup]="presentAddressForm">
 
-  <div class="grid-wrapper-1">
-    <div class="first-child">
-      <div class="flex-box">
-        <label>Present Address</label>
-      </div>
-      <div class="sub-input-box">
-        <div class="label-box">
-          <label>Line 1 Street Address</label>
-          <div class="input-box">
-            <input (focusout)="detectInput(presentAddressForm)" formControlName="presentAddress1" type="text" value="">
-          </div>
-          <div class="error" *ngIf="presentAddress1.invalid && presentAddress1.touched">
-            <span *ngIf="presentAddress1.errors?.required">Address is Required</span>
-            <span *ngIf="presentAddress1.errors?.maxlength">Maximum of 255 characters only allowed</span>
-          </div>
-
-        </div>
-        <div class="label-box-2">
-          <div class="input-boxes-1">
-            <label>Line 2 Street Address</label>
-            <div class="input-box">
-              <input (focusout)="detectInput(presentAddressForm)" formControlName="presentAddress2" type="text"
-                value="">
-            </div>
-            <div class="error" *ngIf="presentAddress2.invalid && presentAddress2.touched">
-              <span *ngIf="presentAddress2.errors?.required">Address is Required</span>
-              <span *ngIf="presentAddress2.errors?.maxlength">Maximum of 255 characters only allowed</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-2">
-            <label>Postal / Zip code</label>
-            <div class="input-box">
-              <input (focusout)="detectInput(presentAddressForm)" formControlName="presentZipCode" type="text" value="">
-            </div>
-            <div class="error" *ngIf="presentZipCode.invalid && presentZipCode.touched">
-              <span *ngIf="presentZipCode.errors?.required">Zip code is Required</span>
-              <span *ngIf="presentZipCode.errors?.maxlength">Maximum of 7 digits only allowed</span>
-              <span *ngIf="presentZipCode.errors?.pattern">Numbers only allowed</span>
-            </div>
-
+  <div class="bottom-form-wrapper">
+    <div class="header">Health-related details</div>
+    <form #form5="ngForm" [formGroup]="healthForm" class="passport-form">
+      <div class="flex-column-wrapper">
+            <label class="label-flex-column">Most Serious Recent Illness</label>
+            <input matInput
+              (focusout)="detectInput(healthForm)"
+              formControlName="illness"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div class="error" *ngIf="illness.invalid && illness.touched">
+            <span *ngIf="illness.errors?.required">Mandatory Field</span>
+            <span *ngIf="illness.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
           </div>
         </div>
-        <div class="label-box-2-auto-complete">
-          <div class="input-boxes-1">
-            <label>State / Province</label>
-            <div class="input-box">
-              <nz-select (ngModelChange)="detectStateSelectChange(presentState)" formControlName="presentState"
-                nzAllowClear nzShowSearch>
-                <nz-option *ngFor="let state of allStatess" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
-              </nz-select>
-            </div>
-            <div class="error" *ngIf="presentState.invalid && presentState.touched">
-              <span *ngIf="presentState.errors?.required">State is Required</span>
-              <span *ngIf="!presentState.errors?.required && presentState.errors?.dropdownNotMatch">Please select
-                the
-                state from drop down</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-1">
-            <label>City</label>
-            <div class="input-box" [matTooltip]="hideCityDropDown ? 'Please select your state' : ''">
-              <nz-select (ngModelChange)="detectSelectChange()" [ngClass]="hideCityDropDown ? 'hideDropDown' : ''"
-                formControlName="presentCity" nzAllowClear nzShowSearch>
-                <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
-                <nz-option *ngFor="let city of allCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
-              </nz-select>
-            </div>
-            <div class="error" *ngIf="presentCity.invalid && presentCity.touched">
-              <span *ngIf="presentCity.errors?.required">City is Required</span>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-</form>
-<div class="checkbox">
-  <label class="text-label">&#160;</label>
-  <label nz-checkbox (ngModelChange)="checkboxChanged(checked)" [(ngModel)]="checked">Click here if permanent address is
-    same as present address</label>
-  <!-- <input type="checkbox" name=""  id=""> -->
-</div>
-<form #form2="ngForm" [formGroup]="permanentAddressForm">
-  <div class="grid-wrapper-1" [ngStyle]="{display: checked == true ? 'none' : 'block'}">
-    <div class="first-child">
-      <div class="flex-box">
-        <label>Permanent Address</label>
-      </div>
-      <div class="sub-input-box">
-        <div class="label-box">
-          <label>Line 1 Street Address</label>
-          <div class="input-box">
-            <input (focusout)="detectInput(permanentAddressForm)" formControlName="permanentAddress1" type="text"
-              value="">
-          </div>
-          <div class="error" *ngIf="permanentAddress1.invalid && permanentAddress1.touched">
-            <span *ngIf="permanentAddress1.errors?.required">Address Required</span>
-            <span *ngIf="permanentAddress1.errors?.maxlength">Maximum of 255 characters only allowed</span>
-          </div>
-
-        </div>
-        <div class="label-box-2">
-          <div class="input-boxes-1">
-            <label>Line 2 Street Address</label>
-            <div class="input-box">
-              <input (focusout)="detectInput(permanentAddressForm)" formControlName="permanentAddress2" type="text"
-                value="">
-            </div>
-            <div class="error" *ngIf="permanentAddress2.invalid && permanentAddress2.touched">
-              <span *ngIf="permanentAddress2.errors?.required">Address Required</span>
-              <span *ngIf="permanentAddress2.errors?.maxlength">Maximum of 255 characters only allowed</span>
-            </div>
-
-          </div>
-          <div class="input-boxes-2">
-            <label>Postal / Zip code</label>
-            <div class="input-box">
-              <input (focusout)="detectInput(permanentAddressForm)" formControlName="permanentZipCode" type="text"
-                value="">
-            </div>
-            <div class="error" *ngIf="permanentZipCode.invalid && permanentZipCode.touched">
-              <span *ngIf="permanentZipCode.errors?.required">Zip code is Required</span>
-              <span *ngIf="permanentZipCode.errors?.maxlength">Maximum of 7 digits only allowed</span>
-              <span *ngIf="permanentZipCode.errors?.pattern">Numbers only allowed</span>
-            </div>
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">No. of Days Ill</label>
+            <input matInput
+              (focusout)="detectInput(healthForm)"
+              formControlName="daysofIll"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div class="error" *ngIf="daysofIll.invalid && daysofIll.touched">
+            <span *ngIf="daysofIll.errors?.required"
+              >No. of days is Required</span
+            >
+            <span *ngIf="daysofIll.errors?.maxlength"
+              >Maximum of 5 characters only allowed</span
+            >
+            <span *ngIf="daysofIll.errors?.pattern">Accept only numbers</span>
           </div>
         </div>
-        <div class="label-box-2">
-          <div class="input-boxes-1">
-            <label>State / Province</label>
-            <div class="input-box">
-              <nz-select (ngModelChange)="detectPermanentStateSelectChange(permanentState)"
-                formControlName="permanentState" nzAllowClear nzShowSearch>
-                <nz-option *ngFor="let state of allStatess" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
-              </nz-select>
-            </div>
-            <div class="error" *ngIf="permanentState.invalid && permanentState.touched">
-              <span *ngIf="permanentState.errors?.required">State is Required</span>
-              <span *ngIf="!permanentState.errors?.required && permanentState.errors?.dropdownNotMatch">Please select
-                the
-                state from drop down</span>
-            </div>
-
-          </div>
-
-          <div class="input-boxes-1">
-            <label>City</label>
-            <div class="input-box" [matTooltip]="hidePermanentCityDropDown ? 'Please select your state' : ''">
-              <nz-select (ngModelChange)="detectSelectChange()"
-                [ngClass]="hidePermanentCityDropDown ? 'hideDropDown' : ''" formControlName="permanentCity" nzAllowClear
-                nzShowSearch>
-                <nz-option [nzLabel]="'Other'" [nzValue]="'Other'"></nz-option>
-                <nz-option *ngFor="let city of allPCitiess" [nzLabel]="city.name" [nzValue]="city.id"></nz-option>
-              </nz-select>
-            </div>
-            <div class="error" *ngIf="permanentCity.invalid && permanentCity.touched">
-              <span *ngIf="permanentCity.errors?.required">City is Required</span>
-              <span *ngIf="!permanentCity.errors?.required && permanentCity.errors?.dropdownNotMatch">Please select
-                the
-                city from drop down</span>
-            </div>
-
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Nature of Illness</label>
+            <input
+              (focusout)="detectInput(healthForm)"
+              formControlName="natureofIll"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div class="error" *ngIf="natureofIll.invalid && natureofIll.touched">
+            <span *ngIf="natureofIll.errors?.required"
+              >Nature of Ill is Required</span
+            >
+            <span *ngIf="natureofIll.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
           </div>
         </div>
-
-      </div>
-    </div>
-  </div>
-</form>
-<form #form3="ngForm" [formGroup]="languagesForm">
-  <div class="grid-wrapper-languages">
-    <div class="first-child">
-      <div class="flex-box">
-        <label>Languages Known</label>
-      </div>
-
-      <div class="sub-input-box">
-        <div class="label-box-2">
-          <div style="height: 18px;" class="input-boxes-1">
-            <div style="visibility: hidden;" class="input-box">
-              <input (focusout)="detectInput(languagesForm)" formControlName="languageRequired" type="text" value="">
-            </div>
-            <div style="visibility: hidden;" class="error" *ngIf="languageRequired.invalid && languageRequired.touched ||
-            languageRequired.touched && (!firstRead.value && !firstWrite.value && !firstSpeak.value)">
-              <span *ngIf="languageRequired.errors?.required">Language is Required</span>
-              <span style="white-space: nowrap;" *ngIf="languageRequired.errors?.pattern">Accept only Alphanumeric
-                characters and maximum of 255 characters only allowed </span>
-              <span *ngIf="!languageRequired.errors?.required &&
-                (!firstRead.value && !firstWrite.value && !firstSpeak.value)">Language Proficiency needs to be
-                ticked</span>
-            </div>
-
-          </div>
-          <div style="height: 18px;" class="input-boxes-4">
-            <div class="input-box">
-              <label> Read</label>
-
-              <div style="visibility: hidden;" class="custom-control custom-checkbox checkbox-xl">
-                <input (focusout)="detectInput(languagesForm)" formControlName="firstRead" type="checkbox"
-                  class="custom-control-input" id="checkbox-one">
-                <label class="custom-control-label" for="checkbox-one">&#160;</label>
-              </div>
-
-            </div>
-            <div class="input-box">
-              <label> Write</label>
-              <div style="visibility: hidden;" class="custom-control custom-checkbox checkbox-xl">
-                <input (focusout)="detectInput(languagesForm)" formControlName="firstWrite" type="checkbox"
-                  class="custom-control-input" id="checkbox-two">
-                <label class="custom-control-label" for="checkbox-two">&#160;</label>
-              </div>
-            </div>
-            <div class="input-box">
-              <label> Speak</label>
-              <div style="visibility: hidden;" class="custom-control custom-checkbox checkbox-xl">
-                <input (focusout)="detectInput(languagesForm)" formControlName="firstSpeak" type="checkbox"
-                  class="custom-control-input" id="checkbox-three">
-                <label class="custom-control-label" for="checkbox-three">&#160;</label>
-              </div>
-            </div>
-          </div>
-          <div style="margin: 0; padding: 0; display: flex; pointer-events: none;">
-            <button style="display: inline-flex; background: transparent; border: none;" type="button">
-              <span style="color: transparent; visibility: hidden;"><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
-            </button>
-          </div>
-
-        </div>
-        <ng-container *ngIf="t && t.controls" formArrayName="languageAdd">
-          <div class="label-box-3" *ngFor="let item of t.controls; let i = index;" [formGroupName]="i">
-            <div class="input-boxes-1">
-              <div class="input-box">
-                <input (focusout)="detectInput(languagesForm)" formControlName="language" type="text" value="">
-              </div>
-              <div class="error" *ngIf="t.controls[i].get('language').invalid && t.controls[i].get('language').touched">
-                <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
-                <span *ngIf="t.controls[i].get('language').errors?.pattern">Accept only Alphanumeric characters and
-                  maximum of 255 characters only allowed</span>
-                <span *ngIf="t.hasError('notSelected')">Please select any one of the language proficiency</span>
-              </div>
-              <div class="error" *ngIf="t.controls[i].get('language').valid && t.controls[i].get('language').touched">
-                <span *ngIf="t.controls[i].get('language').errors?.required">Language is Required</span>
-                <span *ngIf="t.controls[i].get('language').errors?.pattern">Accept only Alphanumeric characters and
-                  maximum of 255 characters only allowed</span>
-                <span *ngIf="t.controls[i].get('read').errors?.notSelected">Please select any one of the language
-                  proficiency</span>
-              </div>
-
-            </div>
-
-            <div class="input-boxes-4">
-              <div class="input-box">
-                <div class="custom-control custom-checkbox checkbox-xl">
-                  <input (focusout)="detectInput(languagesForm)" formControlName="read" type="checkbox"
-                    class="custom-control-input" [id]="i + 'one'">
-                  <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
-                </div>
-
-              </div>
-              <div class="input-box">
-                <div class="custom-control custom-checkbox checkbox-xl">
-                  <input (focusout)="detectInput(languagesForm)" formControlName="write" type="checkbox"
-                    class="custom-control-input" [id]="i + 'two'">
-                  <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
-                </div>
-
-              </div>
-              <div class="input-box">
-                <div class="custom-control custom-checkbox checkbox-xl">
-                  <input (focusout)="detectInput(languagesForm)" formControlName="speak" type="checkbox"
-                    class="custom-control-input" [id]="i + 'three'">
-                  <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
-                </div>
-
-              </div>
-
-            </div>
-            <div style="margin: 0; padding: 0; display: flex;" [ngClass]="t['controls'].length == 1 ? 'hideClose' : ''">
-              <button (click)="removeLanguage(i)" style="display: inline-flex; background: transparent; border: none;"
-                type="button">
-                <span><img src="assets/images/close-black-18dp.svg" alt="" srcset=""></span>
-              </button>
-            </div>
-          </div>
-        </ng-container>
-        <div *ngIf="!notShow" class="language-add-button">
-          <img src="assets/images/interface.svg" width="25px" height="25px" alt="">
-          <span (click)="addLanguage()">Add</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</form>
-
-<div class="bottom-form-wrapper">
-  <div class="header">
-    Passport Related Details
-  </div>
-  <form #form4="ngForm" [formGroup]="passportForm" class="passport-form">
-    <div class="three-column-flex">
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Passport Number</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" formControlName="passportNumber" type="text" value="">
-        </div>
-        <div class="error" *ngIf="passportNumber.invalid && passportNumber.touched">
-          <span *ngIf="passportNumber.errors?.required">Passport Number is Required</span>
-          <span *ngIf="passportNumber.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Name as in Passport</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" formControlName="passportName" type="text" value="">
-        </div>
-        <div class="error" *ngIf="passportName.invalid && passportName.touched">
-          <span *ngIf="passportName.errors?.required">Name is Required</span>
-          <span *ngIf="passportName.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters
-            only allowed</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Profession as in Passport</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" formControlName="passportProfession" type="text" value="">
-        </div>
-        <div class="error" *ngIf="passportProfession.invalid && passportProfession.touched">
-          <span *ngIf="passportProfession.errors?.required">Profession is Required</span>
-          <span *ngIf="passportProfession.errors?.pattern">Accept only Alphanumeric characters and maximum of 255
-            characters only allowed</span>
-        </div>
-
-      </div>
-    </div>
-    <div class="above-three-flex">
-
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Date of Issue</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, dp)" matInput 
-            [max]="maxDate" [matDatepicker]="dp" formControlName="passportIssueDate">
-          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-          <mat-datepicker #dp>
-          </mat-datepicker>
-          <!-- To select only month and year -->
-          <!-- startView="multi-year" (yearSelected)="chosenYearHandler($event)"
-            (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker" -->
-          <!-- <input formControlName="passportIssueDate" type="text" value=""> -->
-        </div>
-        <div class="error" *ngIf="passportIssueDate.invalid && passportIssueDate.touched">
-          <span *ngIf="passportIssueDate.errors?.required">Date of issue is Required</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Valid Upto</label>
-        </div>
-        <!-- [max]="passportValidmaxDate" [min]="passportValidminDate" -->
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" (keydown)="preventDate($event, picker)"
-            formControlName="passportValid" matInput 
-            [matDatepicker]="picker">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </div>
-        <div class="error" *ngIf="passportValid.invalid && passportValid.touched">
-          <span *ngIf="passportValid.errors?.required">Expiry Date is Required</span>
-          <!-- <span *ngIf="!passportValid.errors?.required && passportValid.errors?.passportNotValid">Passport
-            Expired</span> -->
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Place of Issue</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" formControlName="passportIssuePlace" type="text" value="">
-        </div>
-        <div class="error" *ngIf="passportIssuePlace.invalid && passportIssuePlace.touched">
-          <span *ngIf="passportIssuePlace.errors?.required">Issue place is Required</span>
-          <span *ngIf="passportIssuePlace.errors?.pattern">Accept only Alphanumeric characters and maximum of 255
-            characters only allowed</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Countries valid for</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(passportForm)" formControlName="passportValidFor" type="text" value="">
-        </div>
-        <div class="error" *ngIf="passportValidFor.invalid && passportValidFor.touched">
-          <span *ngIf="passportValidFor.errors?.required">Countries valid for is Required</span>
-          <span *ngIf="passportValidFor.errors?.pattern">Accept only Alphanumeric characters and maximum of 255
-            characters only allowed</span>
-        </div>
-
-      </div>
-    </div>
-  </form>
-</div>
-
-<div class="bottom-form-wrapper">
-  <div class="header">
-    Health-related details
-  </div>
-  <form #form5="ngForm" [formGroup]="healthForm" class="passport-form">
-    <div class="three-column-flex">
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Most Serious Recent Illness</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(healthForm)" formControlName="illness" type="text" value="">
-        </div>
-        <div class="error" *ngIf="illness.invalid && illness.touched">
-          <span *ngIf="illness.errors?.required">Mandatory Field</span>
-          <span *ngIf="illness.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only
-            allowed</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>No. of Days Ill</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(healthForm)" formControlName="daysofIll" type="text" value="">
-        </div>
-        <div class="error" *ngIf="daysofIll.invalid && daysofIll.touched">
-          <span *ngIf="daysofIll.errors?.required">No. of days is Required</span>
-          <span *ngIf="daysofIll.errors?.maxlength">Maximum of 5 characters only allowed</span>
-          <span *ngIf="daysofIll.errors?.pattern">Accept only numbers</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Nature of Illness</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(healthForm)" formControlName="natureofIll" type="text" value="">
-        </div>
-        <div class="error" *ngIf="natureofIll.invalid && natureofIll.touched">
-          <span *ngIf="natureofIll.errors?.required">Nature of Ill is Required</span>
-          <span *ngIf="natureofIll.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters
-            only allowed</span>
-        </div>
-
-      </div>
-    </div>
-    <div class="above-three-flex">
-
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Physical Disability (if any)</label>
-        </div>
-        <div class="input-box">
-          <input (focusout)="detectInput(healthForm)" formControlName="disability" type="text" value="">
-        </div>
-        <div class="error" *ngIf="disability.invalid && disability.touched">
-          <span *ngIf="disability.errors?.required">Disability is Required</span>
-          <span *ngIf="disability.errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters
-            only allowed</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Height (cms)</label>
-        </div>
-        <div class="input-box max-200">
-          <input (focusout)="detectInput(healthForm)" formControlName="height" type="text" value="">
-        </div>
-        <div class="error" *ngIf="height.invalid && height.touched">
-          <span *ngIf="height.errors?.required">Height is Required</span>
-          <span *ngIf="height.errors?.pattern">Numeric Decimals only Allowed</span>
-        </div>
-
-      </div>
-      <div class="wrapper">
-        <div class="form-field">
-          <label>Weight (kg)</label>
-        </div>
-        <div class="input-box max-200">
-          <input (focusout)="detectInput(healthForm)" formControlName="weight" type="text" value="">
-        </div>
-        <div class="error" *ngIf="weight.invalid && weight.touched">
-          <span *ngIf="weight.errors?.required">Weight is Required</span>
-          <span *ngIf="weight.errors?.pattern">Numeric Decimals only Allowed</span>
-        </div>
-
-      </div>
-      <div class="wrapper-sub-wrapper">
-        <div class="form-field">
-          <label>Power of Eye glass</label>
-        </div>
-        <div formGroupName="eyePower" class="power-wrapper">
-          <div class="sub-power-wrapper">
-            <div class="form-field">
-              <label>Left Eye</label>
-            </div>
-
-            <div class="input-box">
-              <input (focusout)="detectInput(healthForm)" formControlName="left" type="text" value="">
-            </div>
-
-          </div>
-          <div style="margin: 0 0 0 1em;" class="sub-power-wrapper">
-            <div class="form-field">
-              <label>Right Eye</label>
-            </div>
-
-            <div class="input-box">
-              <input (focusout)="detectInput(healthForm)" formControlName="right" type="text" value="">
-            </div>
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Physical Disability (if any)</label>
+            <input
+              (focusout)="detectInput(healthForm)"
+              formControlName="disability"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div class="error" *ngIf="disability.invalid && disability.touched">
+            <span *ngIf="disability.errors?.required"
+              >Disability is Required</span
+            >
+            <span *ngIf="disability.errors?.pattern"
+              >Accept only Alphanumeric characters and maximum of 255 characters
+              only allowed</span
+            >
           </div>
         </div>
-        <div class="error" *ngIf="left.invalid && left.touched || right.invalid && right.touched">
-          <span *ngIf="(left.errors?.required) || (right.errors?.required)">Eye Power Left and Right is Required</span>
-          <span *ngIf="(left.errors?.pattern) || (right.errors?.pattern)">Should allow only Numeric Decimals and ('+' or
-            '-') signs</span>
+        <div class="flex-column-wrapper height-weight">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Height (cms)</label>
+            <input
+              (focusout)="detectInput(healthForm)"
+              formControlName="height"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div class="error" *ngIf="height.invalid && height.touched">
+            <span *ngIf="height.errors?.required">Height is Required</span>
+            <span *ngIf="height.errors?.pattern"
+              >Numeric Decimals only Allowed</span
+            >
+          </div>
         </div>
-        <!-- <div class="error" *ngIf="right.invalid && right.touched">
+        <div class="flex-column-wrapper">
+            <label class="label-flex-column">Weight (kg)</label>
+            <input
+              (focusout)="detectInput(healthForm)"
+              formControlName="weight"
+              type="text"
+              placeholder="Enter here..."
+            />
+          <div class="error" *ngIf="weight.invalid && weight.touched">
+            <span *ngIf="weight.errors?.required">Weight is Required</span>
+            <span *ngIf="weight.errors?.pattern"
+              >Numeric Decimals only Allowed</span
+            >
+          </div>
+        </div>
+      </div>
+        <div class="power-wrapper">
+            <label class="label-flex-column">Power of Eye glass</label>
+          <div formGroupName="eyePower" class="eye-wrapper">
+            <div class="sub-power-wrapper">
+                <!-- <label class="lane-label">Left Eye</label> -->
+                <input matInput
+                  (focusout)="detectInput(healthForm)"
+                  formControlName="left"
+                  type="text"
+                  placeholder="Left Eye Power"
+                  />
+            </div>
+            <div style="margin: 0 0 0 1em" class="sub-power-wrapper">
+                <!-- <label class="lane-label">Right Eye</label> -->
+                <input matInput
+                  (focusout)="detectInput(healthForm)"
+                  formControlName="right"
+                  type="text"
+                  placeholder="Right Eye Power"
+                  />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="
+              (left.invalid && left.touched) || (right.invalid && right.touched)
+            "
+          >
+            <span *ngIf="left.errors?.required || right.errors?.required"
+              >Eye Power Left and Right is Required</span
+            >
+            <span *ngIf="left.errors?.pattern || right.errors?.pattern"
+              >Should allow only Numeric Decimals and ('+' or '-') signs</span
+            >
+          </div>
+          <!-- <div class="error" *ngIf="right.invalid && right.touched">
           <span *ngIf="right.errors?.required">Eye Power Right is Required</span>
           <span *ngIf="right.errors?.pattern">Numeric Decimals only Allowed</span>
         </div> -->
+        </div>
+    </form>
+  </div>
 
-      </div>
-    </div>
-  </form>
-</div>
-
-<div class="submit-button-wrapper">
-  <button class="submit btn-margin-space"
-    (click)="onSubmit(upToCategoryForm.value, presentAddressForm.value, permanentAddressForm.value, languagesForm.value, passportForm.value, healthForm.value)"
-    mat-raised-button type="submit">Continue</button>
-    <button class="cancel-btn" (click)="cancel()" mat-raised-button type="button">Cancel</button>
-
+  <div class="submit-button-wrapper">
+    <button
+      class="submit btn-margin-space"
+      (click)="
+        onSubmit(
+          upToCategoryForm.value,
+          presentAddressForm.value,
+          permanentAddressForm.value,
+          languagesForm.value,
+          passportForm.value,
+          healthForm.value
+        )
+      "
+      mat-raised-button
+      type="submit"
+    >
+      Continue
+    </button>
+    <button
+      class="cancel-btn"
+      (click)="cancel()"
+      mat-raised-button
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </div>

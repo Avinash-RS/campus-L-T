@@ -131,24 +131,22 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     }
   }
   tabledef() {
-    this.columnDefs = [
+    this.columnDefs = [ 
       {
-        headerName: 'S no', field: 'counter',
+        headerCheckboxSelection: true,
+        Width: 50,
+        maxWidth:50,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        field: 'is_checked',
+        headerName: ''
+      }, 
+      {
+        headerName: 'Candidate Name', field: 'candidate_name',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 85,
-        maxWidth: 100,
-        sortable: true,
-        tooltipField: 'counter',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Candidate name', field: 'candidate_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
+        Width: 170,
         sortable: true,
         tooltipField: 'candidate_name',
         getQuickFilterText: (params) => {
@@ -160,10 +158,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Candidate id', field: 'candidate_id',
+        headerName: 'CID', field: 'candidate_id',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
+        Width: 100,
         sortable: true,
         tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
@@ -171,10 +169,35 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Evaluation status', field: 'evaluation_status_1',
+        headerName: 'Date/Time of Interview', field: 'datetime_Interview',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
+        minWidth:180,
+        Width: 180,
+        sortable: true,
+        tooltipField: 'datetime_Interview'
+      },
+      {
+        headerName: 'Assigned By', field: 'datetime_Interview',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        Width: 120,
+        sortable: true,
+        tooltipField: 'datetime_Interview'
+      },
+      {
+        headerName: 'Interview Status', field: 'datetime_Interview',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        Width: 170,
+        sortable: true,
+        tooltipField: 'datetime_Interview'
+      },
+      {
+        headerName: ' ', field: 'evaluation_status_1',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        Width: 120,
         sortable: true,
         tooltipField: 'evaluation_status_1',
         getQuickFilterText: (params) => {
@@ -182,11 +205,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'View', field: 'evaluation_btn',
+        headerName: ' ', field: 'evaluation_btn',
         filter: false,
-        floatingFilterComponentParams: { suppressFilterButton: false },
-        minWidth: 90,
-        maxWidth: 90,
+        floatingFilterComponentParams: { suppressFilterButton: false }, 
+        Width: 90,
         sortable: false,
         getQuickFilterText: (params) => {
           return params.value;
@@ -199,17 +221,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
             return `<button class="table-btn agTable" mat-raised-button>Evaluate</button>`;
           }
         },
-      },
-      {
-        headerCheckboxSelection: true,
-        minWidth: 80,
-        maxWidth: 80,
-        checkboxSelection: true,
-        filter: false,
-        sortable: false,
-        suppressMenu: true,
-        field: 'is_checked',
-        headerName: ''
       }
     ];
     this.rowSelection = 'multiple';

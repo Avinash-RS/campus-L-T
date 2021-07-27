@@ -21,6 +21,7 @@ export class InvSubEmploymentComponent implements OnInit {
   certificateArr: any;
   candidateName: any;
   uid:any;
+  queryParams: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -52,6 +53,16 @@ export class InvSubEmploymentComponent implements OnInit {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
+      this.queryParams = {
+        data: params['data'],
+        id: params['id'],
+        name: params['name'] ? params['name'] : '',
+        status: params['status'],
+        tag: params['tag'],
+        uid: params['uid'],
+        email: params['email'],
+        form: params['form']
+      };
       this.candidateId = params['id'];
       this.candidateName = params['name'];
       this.uid = params['uid']
@@ -90,7 +101,7 @@ export class InvSubEmploymentComponent implements OnInit {
     const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
     const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
     const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid:this.uid });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, this.queryParams);
   }
 
   // Open dailog
