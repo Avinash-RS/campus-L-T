@@ -36,7 +36,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     flex: 1,
     minWidth: 40,
     resizable: true,
-    floatingFilter: true,
+    floatingFilter: false,
     lockPosition: true,
     suppressMenu: true,
     unSortIcon: true,

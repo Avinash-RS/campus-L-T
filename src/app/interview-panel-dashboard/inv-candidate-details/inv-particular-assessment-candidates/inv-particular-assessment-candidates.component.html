@@ -3,7 +3,7 @@
     <em class="icon-checked"></em>Sent to HR for Processing
   </button>
 </div>
-<div class="inv-particular-assessment-candidate">
+<div class="inv-particular-assessment-candidate" #agheight>
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <div class="leftinfo">
       <div>
@@ -38,7 +38,7 @@
   </div>
   <div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+    <ag-grid-angular style="width: 100%;" [ngStyle]="{ height: (agheight.offsetHeight - 75) + 'px' }" class="ag-theme-alpine"
       [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
       [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'"
       [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)"
