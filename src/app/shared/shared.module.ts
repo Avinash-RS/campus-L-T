@@ -95,8 +95,9 @@ import { CommonJoiningFormComponent } from './common-joining-form/common-joining
 import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CommonSidebarComponent } from './common-sidebar/common-sidebar.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent,
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent,
 ],
   imports: [
     CommonModule,
@@ -211,6 +212,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     CommonJoiningFormComponent,
     BarChartComponent,
     HorizontalBarChartComponent,
+    CommonSidebarComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
