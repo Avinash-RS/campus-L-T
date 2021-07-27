@@ -669,7 +669,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       // tslint:disable-next-line: prefer-const
       let sData = [];
       selectedRows.forEach((d) => {
-        d.type = 'Candidate'
+        d.type = 'candidate'
         sData.push(d);
       });
       this.selectedCandidate = sData;
@@ -680,7 +680,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       // tslint:disable-next-line: prefer-const
       let sData = [];
       selectedRows.forEach((d) => {
-        d.type = 'Interviewer'
+        d.type = 'interviewer'
         sData.push(d);
       });
       this.selectedInterviewer = sData;
