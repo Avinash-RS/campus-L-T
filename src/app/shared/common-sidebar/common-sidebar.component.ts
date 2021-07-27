@@ -137,5 +137,22 @@ export class CommonSidebarComponent implements OnInit {
    }
 
 
+   // Configuration for candidate role
+   rxjsSubjectForPrint() {
+    this.sharedService.printSubject.subscribe((data: any)=> {
+      this.sidebarOpen = false;
+      setTimeout(() => {
+        window.print();
+      }, 1000);
+      // this.sidebarOpen = true;
+    }, (err)=> {
+
+    });
+  }
+
+  checkJoiningRoute() {
+    this.sharedService.joiningFormStepperStatus.next('dataFromMasterDashboard');
+  }
+
 
 }

@@ -1,4 +1,4 @@
-<div id="top" class="alert">
+<div class="alert">
   Note: Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.
 </div>
 <div class="main-wrapper">
@@ -171,7 +171,7 @@
             <span style="position: absolute; border-top: solid red 1px;">*Make sure, you have entered all the fields value, If you enter any one of the value</span>
           </div>
         </div>
-        </div>  
+        </div>
       </div>
       <div class="add-form">
         <div *ngIf="!notShow" (click)="addfamilyForm()">
@@ -187,9 +187,9 @@
             Remove
           </div>
         </div>
-    
+
       </div>
-  
+
     </ng-container>
   </form>
   <!-- <div *ngIf="!notShow" class="add-form">
@@ -232,7 +232,7 @@
         <span>Accept only Alphanumeric characters and
           maximum of 500 characters only allowed</span>
       </div>
-      
+
       </div>
 
     </div>
@@ -249,7 +249,7 @@
       <div class="explain">
         <div class="text">
           If, yes, Please give details
-        </div> 
+        </div>
         <div class="in"><span>OC: </span> <span><input [formControl]="oc" [ngClass]="emp_no ? 'disabled' : ''" type="text"></span></div>
         <div *ngIf="oc.invalid && oc.touched" style="margin: -.5em 0 0 0;" class="in error"><span>&#160; </span> <span *ngIf="oc.errors?.required">OC is required </span><span *ngIf="oc.errors?.pattern">Accept only Alphanumeric characters and
           maximum of 100 characters only allowed </span></div>
