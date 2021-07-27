@@ -12,6 +12,7 @@ import { InvSubEvaluateComponent } from './inv-candidate-details/inv-evaluation-
 import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
 import { InvpanelGuard } from '../guards/canload/invpanel.guard';
 import { InvUnifiedreportsComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/inv-unifiedreports.component';
+import { InvJoinInterviewComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-join-interview/inv-join-interview.component';
 
 
 const routes: Routes = [
@@ -75,6 +76,13 @@ const routes: Routes = [
                 component: InvUnifiedreportsComponent,
                 data: {
                   breadcrumb: 'Test Sections'
+                }
+              },
+              {
+                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW}`,
+                component: InvJoinInterviewComponent,
+                data: {
+                  breadcrumb: 'Join Interview'
                 }
               },
               {

@@ -25,10 +25,11 @@ import { ProfileInfoComponent } from './inv-candidate-details/inv-evaluation-mai
 import { CompetencyAreasComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/sub-pages/competency-areas/competency-areas.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { InvJoinInterviewComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-join-interview/inv-join-interview.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, AssessmentInfoComponent, CompetencyAreasComponent, DocInfoComponent, ProfileInfoComponent, QualityAreaComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, AssessmentInfoComponent, CompetencyAreasComponent, DocInfoComponent, ProfileInfoComponent, QualityAreaComponent, InvJoinInterviewComponent],
   imports: [
     CommonModule,
     SharedModule,
