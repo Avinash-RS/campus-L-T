@@ -230,3 +230,71 @@ th {
 
   }
 }
+
+::ng-deep .ag-theme-alpine .ag-header-cell, .ag-theme-alpine .ag-header-group-cell, ::ng-deep .ag-theme-alpine .ag-cell {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+::ng-deep span.status { 
+      background-color: #bababa;
+      color: #666666 ;
+      border-radius: 4px;
+      display: inline-block;
+      line-height: 0.7;
+      font-size: 11px;
+      padding: 7px 8px;
+
+      &.inprogress {
+      background-color: #ffbc00;  
+      color: #fff;
+      }
+      &.completed {
+        background-color: #48cc83;  
+        color: #fff;
+        } 
+      &.rejected {
+        background-color: #c02222;  
+      color: #fff;
+      }
+  }
+  ::ng-deep .join-inter {
+    background-color: #c02222;
+    color: #fff;
+    height: 27px;
+    border: none;
+    border-radius: 5px !important;
+    padding: 6px 12px;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+
+    &.disabled {
+      background-color: #bababa; 
+    }
+    em {
+      margin-right: 7px;
+    }
+  }
+
+  ::ng-deep .btn-outline {
+    height: 27px;
+    border: 1px solid #c02222;
+    background-color: #fff;
+    border-radius: 4px;
+    min-width: 95px;
+    color: #666;
+    cursor: none;
+
+    &.checked {
+      border: none;
+      background-color: #48cc83;  
+      color: #fff; 
+      flex-direction: row !important;
+      justify-content: center !important;
+      cursor: pointer;
+    }
+    em {
+      margin-right: 7px;
+    }
+  }
