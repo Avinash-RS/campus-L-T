@@ -194,7 +194,18 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'evaluation_status_1'
+        tooltipField: 'evaluation_status_1',
+        cellRenderer: (params) => {
+          if (params['data'] && params['data']['evaluation_status_1'] == 'completed') {
+            return `<span class="table-btn agTable">Completed</button>`;
+          }
+          if (params['data'] && params['data']['evaluation_status_1'] == 'submitted') {
+            return `<span class="table-btn agTable">Submitted</button>`;
+          }
+          else {
+            return `<span class="table-btn agTable">Waiting</button>`;
+          }
+        },
       },
       {
         headerName: '', field: 'join_interview',
