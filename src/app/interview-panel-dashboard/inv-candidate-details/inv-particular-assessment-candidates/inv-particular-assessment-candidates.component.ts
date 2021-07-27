@@ -49,6 +49,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   isChecked: boolean;
   public rowSelection;
   public isRowSelectable;
+  selectedCount: any = [];
+  rejectedCount: any = [];
 
   constructor(
     private appConfig: AppConfigService,
@@ -190,7 +192,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Interview Status', field: 'evaluation_status_1',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 170,
+        minWidth: 140,
         sortable: true,
         tooltipField: 'evaluation_status_1'
       },
@@ -231,20 +233,28 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         },
       },
       {
-        headerName: 'Status', field: 'status',
-        filter: false,
-        floatingFilterComponentParams: { suppressFilterButton: false },
+        headerName: 'Status', field: 'interview_status',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
         Width: 90,
-        sortable: false,
+        sortable: true,
         getQuickFilterText: (params) => {
           return params.value;
         },
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
         cellRenderer: (params) => {
-          if (params['data'] && params['data']['status'] == 'Selected') {
-            return `<button class="table-btn agTable disabled-ag" mat-raised-button>Selected</button>`;
-          } else {
+          if (params['data'] && params['data']['interview_status'] == 'Selected') {
+            return `<button class="table-btn agTable" mat-raised-button>Selected</button>`;
+          }
+          if (params['data'] && params['data']['interview_status'] == 'Not Selected') {
             return `<button class="table-btn agTable" mat-raised-button>Rejected</button>`;
+          }
+          else {
+            if (params['data'] && params['data']['interview_status']) {
+              return `<button class="table-btn agTable disabled-ag" mat-raised-button>${params['data']['interview_status']}</button>`;
+            } else {
+              return '';
+            }
           }
         },
       }
@@ -288,6 +298,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       const align = datas ? datas : [];
       let counting = 0;
       this.userList = [];
+      this.selectedCount = [];
+      this.rejectedCount = [];
       align.forEach(element => {
         if (element) {
           counting = counting + 1;
@@ -296,6 +308,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           if (element.evaluation_status == '1') {
             this.buttonCheck = true;
           }
+          if (element.interview_status == 'Selected' || element.interview_status == 'Not Selected') {
+            element.interview_status == 'Selected' ? this.selectedCount.push(element) : this.rejectedCount.push(element);
+          }
+
           let dummy = '2021-07-05T07:00:00.000Z';
           element.assigned_by = 'Avinash';
           element.join_interview = 'yes';
