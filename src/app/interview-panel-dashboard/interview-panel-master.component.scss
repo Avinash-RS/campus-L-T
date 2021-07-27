@@ -126,7 +126,7 @@
     align-items: center;
   }
   .sidenav {
-    width: 220px;
+    width: 235px;
     background-color: #f1f1f1;
     ul {
       overflow: hidden;
@@ -261,13 +261,17 @@ mat-drawer ul li span img {
   }
 }
 
+
 .sidemenu li {
-    padding: 10px 15px;
-    cursor: pointer;
-    &.active {
-      background-color: #fff;
-      color: #000;
-    }
+  padding: 10px 15px;
+  cursor: pointer;
+  &.active {
+    background-color: #fff;
+    color: #000;
+  }
+  &:first-child {
+    font-size: 18px;
+  }
 }
 
 
