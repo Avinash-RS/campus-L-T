@@ -222,3 +222,85 @@ mat-expansion-panel-header {
     color: $white !important;
   }
 }
+
+::ng-deep .schedule-container {
+  padding: 3em;
+  .input-container{
+    width: 100%;
+    padding: 0.5em;
+    .header-label{
+      font-size: 16px;
+      color: grey;
+      margin-bottom: 0.5em;
+    }
+    .tex-input{
+      width: 100%;
+      height: 3em;
+      border: 1px solid #b3b2b2;
+    }
+  }
+  .card-container {
+    flex-wrap: wrap;
+    margin-top: 1em;
+    .header-label{
+      font-size: 16px;
+      color: grey;
+      margin-bottom: 0.5em;
+    }
+    .card-details {
+      display: inline-block;
+      width: 50%;
+      margin-right: 1em;
+      margin-bottom: 1em;
+      background: #f5f5f5;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #dadada;
+    }
+  }
+  .button-conatiner{
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+    button {
+      width:20%;
+      border: 1px solid #c02222;
+      margin-right: 1em;
+    }
+  }    
+  .schedule{
+    color: white;
+    background: #c02222;
+
+  }
+  .mat-form-field-appearance-outline .mat-form-field-wrapper{
+    margin: 0 !important;
+    padding-bottom: 0em !important;
+  }
+  .date-pick{
+    cursor: pointer;
+  }
+  .th{
+    background: white !important;
+  }
+}
+
+::ng-deep.custom-modalbox {
+  max-width: 45% !important;
+
+  .pop-up-header {
+      padding: 5px 5px 8px 7px;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > div {
+          font-size: 20px;
+      }
+      span:nth-of-type(2) {
+          cursor: pointer;
+      }
+  }
+}

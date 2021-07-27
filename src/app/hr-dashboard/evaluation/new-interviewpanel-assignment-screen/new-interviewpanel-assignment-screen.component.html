@@ -1,4 +1,5 @@
 <div id="top" class="new-inv-particular-assessment-candidate">
+  <button (click)="scheduleInterview()">Open</button>
   <div class="borders"></div>
   <mat-accordion>
     <mat-expansion-panel [expanded]="panelOpenState">
@@ -115,7 +116,8 @@
 </mat-expansion-panel>
   </mat-accordion>
   <div class="button-wrapper">
-    <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="submit()" mat-raised-button>Assign</button>
+    <!-- <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="submit()" mat-raised-button>Assign</button> -->
+    <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="scheduleInterview()" mat-raised-button>Schedule</button>
   </div>
 
   <div class="user-list-wrapper">
@@ -169,3 +171,59 @@
   </div>
 
 </div>
+<ng-template #schedulePopup>
+  <div class="schedule-container">
+    <div class="pop-up-header"><span>Create A New Room</span> <span (click)="closePopup()" class="material-icons" style="float: right;cursor: pointer;">close</span></div>
+    <div class="input-container">
+      <div class="header-label">Room Name</div>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput >
+      </mat-form-field>
+    </div>
+    <div class="input-container">
+      <div class="header-label">Password</div>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput >
+      </mat-form-field>
+    </div>
+    <div class="d-flex">
+      <div class="input-container">
+        <div class="header-label">Start Date & Time</div>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput [min]="minDate" [max]="maxDate" onDrop="return false" onPaste="return false" onkeydown="return false" onkeypress="return false" [owlDateTime]="sdt" [(ngModel)]="startDate">
+          <mat-icon class="date-pick" [owlDateTimeTrigger]="sdt" (click)="dateChange()" matSuffix>calendar_today</mat-icon>
+          <owl-date-time [startAt]="minDate" #sdt></owl-date-time>
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <div class="header-label">End Date & Time</div>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput [min]="minDate" [max]="maxDate" onDrop="return false" onPaste="return false" onkeydown="return false" onkeypress="return false" [owlDateTime]="edt" [(ngModel)]="endDate" >
+          <mat-icon class="date-pick" matSuffix (click)="dateChange()" [owlDateTimeTrigger]="edt">calendar_today</mat-icon>
+        </mat-form-field>
+        <owl-date-time [startAt]="minDate" #edt></owl-date-time>
+      </div>
+    </div>
+    <div class="card-container">
+        <div class="header-label">Attendees</div>
+        <div class="d-flex">
+          <div class="card-details">
+            <div class="font-weight-bold">Adams mark</div>
+            <div>adamsmark_55@gmail.com</div>
+            <div>Type : Candiate</div>
+          </div>
+          <div class="card-details">
+            <div class="font-weight-bold">Adams mark</div>
+            <div>adamsmark_55@gmail.com</div>
+            <div>Type : Interviewer</div>
+          </div>
+        </div>
+    </div>
+    <div class="button-conatiner">
+      <button mat-raised-button (click)="closePopup()">Cancel</button>
+      <button mat-raised-button class="schedule">Schedule</button>
+    </div>
+    
+  </div>
+  
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -10,7 +10,6 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
   templateUrl: './new-interviewpanel-assignment-screen.component.html',
@@ -22,6 +21,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
   @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
+  @ViewChild('schedulePopup', {static: false}) schedulePopup: TemplateRef<any>;
   selectedUserDetail: any;
   userList: any;
   radioCheck;
@@ -101,6 +101,14 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   isCheckedHR: boolean;
   panelOpenState = true;
 
+
+  //ScheduleForm
+  minDate;
+  maxDate;
+  roomName;
+  password;
+  startDate;
+  endDate;
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
   constructor(
@@ -152,7 +160,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
-    this.appConfig.scrollToTop();
+    this.appConfig.scrollToTop();    
   }
 
   ngAfterViewInit() {
@@ -177,6 +185,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   onCellClicked(event) {
+    console.log(event)
   }
 
   getModel(e) {
@@ -594,4 +603,29 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
+  scheduleInterview(){
+    this.minDate = new Date();
+    console.log(this.rowData)
+    console.log(this.rowDataHR)
+    const dialogRef = this.matDialog.open(this.schedulePopup, {
+      width: '55%',
+      height: '70%',
+      panelClass: 'custom-modalbox'
+    });
+  }
+
+  dateChange(){
+    this.minDate = new Date();
+  }
+  closePopup(){
+    this.matDialog.closeAll();
+    this.roomName = '';
+    this.password = '';
+    this.startDate = '';
+    this.endDate = '';
+  }
+
+  scheduleRoom(){
+
+  }
 }

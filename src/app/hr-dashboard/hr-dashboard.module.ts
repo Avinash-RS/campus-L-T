@@ -65,6 +65,7 @@ import { ListofSelectedCandidatesComponent } from './pages/listof-selected-candi
 import { UploadSelectedCandidatesErrorReportComponent } from './pages/upload-selected-candidates-error-report/upload-selected-candidates-error-report.component';
 import { BusinesspanelRouteComponent } from './pages/businesspanel-route/businesspanel-route.component';
 import { SscUploadSectionComponent } from './pages/ssc-upload-section/ssc-upload-section.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -75,7 +76,9 @@ import { SscUploadSectionComponent } from './pages/ssc-upload-section/ssc-upload
     SharedModule,
     MaterialModule,
     HrDashboardRoutingModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ]
 })
 export class HrDashboardModule { }

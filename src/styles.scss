@@ -2677,3 +2677,14 @@ th {
    .common-joining-form {
      height: 600px !important;
    }
+
+::ng-deep .owl-dt-calendar-header {
+  th {
+    background: white !important;
+  }
+}
+::ng-deep .owl-dt-container-row {
+  &:first-child{
+    border-bottom: 0 !important;
+  }
+}
