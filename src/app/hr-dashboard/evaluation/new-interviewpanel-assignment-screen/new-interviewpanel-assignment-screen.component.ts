@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -10,7 +10,6 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
   templateUrl: './new-interviewpanel-assignment-screen.component.html',
@@ -22,6 +21,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
   @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
+  @ViewChild('schedulePopup', {static: false}) schedulePopup: TemplateRef<any>;
   selectedUserDetail: any;
   userList: any;
   radioCheck;
@@ -101,6 +101,18 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   isCheckedHR: boolean;
   panelOpenState = true;
 
+
+  //ScheduleForm
+  minDate;
+  maxDate;
+  roomName;
+  password;
+  startDate;
+  endDate;
+  selectedCandidate = [];
+  selectedInterviewer = [];
+  attendeesList = [];
+  objList;
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
 
   constructor(
@@ -152,7 +164,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
-    this.appConfig.scrollToTop();
+    this.appConfig.scrollToTop();    
   }
 
   ngAfterViewInit() {
@@ -177,6 +189,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   onCellClicked(event) {
+    console.log(event)
   }
 
   getModel(e) {
@@ -474,9 +487,33 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
           showCancel: '',
           showOk: ''
         };
+        this.matDialog.closeAll();
         this.openDialog1(ShortlistBoxComponent, datas, this.routeAssignedData);
     }, (err) => {
     });
+  }
+  scheduleHirerachy(){
+    const selectedUserlist = this.gridApi.getSelectedNodes();
+    const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
+    const candidateID = [];
+    const HRID = [];
+    selectedUserlist.forEach(element => {
+      if (element['data']) {
+        candidateID.push(element['data']['email'])
+      }
+    });
+
+    selectedUserlistHR.forEach(element => {
+      if (element['data']) {
+        HRID.push(element['data']['email'])
+      }
+    });
+    const apiData = {
+      user_email: candidateID,
+      hr_email: HRID,
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    };
+    this.assigntoPanel(apiData);
   }
   submit() {
     const selectedUserlist = this.gridApi.getSelectedNodes();
@@ -594,4 +631,97 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
+  scheduleInterview(){
+    if(this.selectedCandidate.length == 0){
+      this.appConfig.warningWithTitle('Please select a candidate','');
+      return false;
+    }
+    if(this.selectedCandidate.length > 1){
+      this.appConfig.warningWithTitle('Please select one candidate at a time','');
+      return false;
+    }
+    if(this.selectedInterviewer.length == 0){
+      this.appConfig.warningWithTitle('Please select a interviewer','');
+      return false;
+    }
+    this.minDate = new Date();
+    this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer)
+    const dialogRef = this.matDialog.open(this.schedulePopup, {
+      width: '55%',
+      height: '70%',
+      panelClass: 'custom-modalbox'
+    });
+  }
+
+  dateChange(){
+    this.minDate = new Date();
+  }
+  closePopup(){
+    this.matDialog.closeAll();
+    this.roomName = '';
+    this.password = '';
+    this.startDate = '';
+    this.endDate = '';
+  }
+
+    onCandidateSelect(e) {
+      const selectedRows = e.api.getSelectedRows();
+      // tslint:disable-next-line: prefer-const
+      let sData = [];
+      selectedRows.forEach((d) => {
+        d.type = 'Candidate'
+        sData.push(d);
+      });
+      this.selectedCandidate = sData;
+    }
+
+    onInterviewerSelect(e) {
+      const selectedRows = e.api.getSelectedRows();
+      // tslint:disable-next-line: prefer-const
+      let sData = [];
+      selectedRows.forEach((d) => {
+        d.type = 'Interviewer'
+        sData.push(d);
+      });
+      this.selectedInterviewer = sData;
+    }
+
+  scheduleRoom(){
+    if(!this.roomName){
+      this.appConfig.warningWithTitle('Room name cannot be empty','');
+    }
+    if(!this.roomName){
+      this.appConfig.warningWithTitle('Password cannot be empty','');
+    }
+    if(!this.startDate || !this.endDate){
+      this.appConfig.warningWithTitle('Date cannot be empty','');
+    }
+    let userDetails = [];
+    this.attendeesList.forEach((value)=>{
+      const vl = {
+        'emailId': value.email,
+        'userFullName':value?.name ? value.name : value.employee_name,
+        'type':value.type,
+      }
+      userDetails.push(vl)
+    })
+    var obj = {
+      'roomId':Math.floor(Math.random() * 10000000).toString(),
+      'password': this.password,
+      'roomName':this.roomName,
+      'startTime': this.startDate,
+      'endTime': this.endDate,
+      "userDtl": userDetails
+    }
+    this.objList = obj;
+    this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
+      if(result.success){
+        this.scheduleHirerachy();
+      } else {
+        this.appConfig.hideLoader();
+        this.appConfig.warningWithTitle('Something went wrong','');
+      }
+      
+    })
+  }
 }

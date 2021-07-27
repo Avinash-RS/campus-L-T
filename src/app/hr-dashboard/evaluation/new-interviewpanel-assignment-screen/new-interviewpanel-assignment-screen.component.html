@@ -118,9 +118,8 @@
   </mat-accordion>
 </div>
   <div class="button-wrapper">
-    <button class="submit"
-      [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'"
-      (click)="submit()" mat-raised-button>Assign</button>
+    <!-- <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="submit()" mat-raised-button>Assign</button> -->
+    <button class="submit" [ngClass]="(userList && userList.length > 0) && (userListHR && userListHR.length > 0) ? '' : 'disabled'" (click)="scheduleInterview()" mat-raised-button>Schedule</button>
   </div>
 
   <div class="user-list-wrapper">
@@ -137,12 +136,11 @@
           </div>
         </div>
         <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
-          <ag-grid-angular style="width: 99%; height: 250px; margin:auto !important;" [ngStyle]="{ height: (scrollbox.offsetHeight / 1.5) + 'px' }"
-            class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
-            [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
-            [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)"
-            (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
-            headerHeight="40">
+          <ag-grid-angular style="width: 99%; height: 250px; margin:auto !important;" [ngStyle]="{ height: (scrollbox.offsetHeight / 1.5) + 'px' }" class="ag-theme-alpine"
+          [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
+          (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+          headerHeight="40" (selectionChanged)="onCandidateSelect($event)">
           </ag-grid-angular>
         </div>
       </div>
@@ -161,12 +159,11 @@
           </div>
         </div>
         <div [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'">
-          <ag-grid-angular style="width: 99%;  margin:auto !important;" [ngStyle]="{ height: (scrollbox.offsetHeight / 1.5) + 'px' }"
-            class="ag-theme-alpine" [rowData]="rowDataHR" [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR"
-            [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSizeHR"
-            [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSizeHR" (gridReady)="onGridReadyHR($event)"
-            (sortChanged)="sorteventHR($event)" (cellClicked)="onCellClickedHR($event)"
-            (filterModified)="getModelHR($event)" headerHeight="40">
+          <ag-grid-angular style="width: 99%; height: 250px; margin:auto !important;" [ngStyle]="{ height: (scrollbox.offsetHeight / 1.5) + 'px' }" class="ag-theme-alpine"
+          [rowData]="rowDataHR" [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR" [pagination]="true" [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSizeHR" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSizeHR"
+          (gridReady)="onGridReadyHR($event)" (sortChanged)="sorteventHR($event)" (cellClicked)="onCellClickedHR($event)" (filterModified)="getModelHR($event)"
+          headerHeight="40" (selectionChanged)="onInterviewerSelect($event)">
           </ag-grid-angular>
 
         </div>
@@ -176,3 +173,57 @@
   </div>
 
 </div>
+<ng-template #schedulePopup>
+  <div class="schedule-container">
+    <div class="pop-up-header"><span>Create A New Room</span> <span (click)="closePopup()" class="material-icons" style="float: right;cursor: pointer;">close</span></div>
+    <div class="input-container">
+      <div class="header-label">Room Name</div>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput [(ngModel)]="roomName">
+      </mat-form-field>
+    </div>
+    <div class="input-container">
+      <div class="header-label">Password</div>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput [(ngModel)]="password">
+      </mat-form-field>
+    </div>
+    <div class="d-flex">
+      <div class="input-container">
+        <div class="header-label">Start Date & Time</div>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput [min]="minDate" [max]="maxDate" onDrop="return false" onPaste="return false" onkeydown="return false" onkeypress="return false" [owlDateTime]="sdt" [(ngModel)]="startDate" >
+          <mat-icon class="date-pick" matSuffix (click)="dateChange()" [owlDateTimeTrigger]="sdt">calendar_today</mat-icon>
+          <owl-date-time [startAt]="minDate" #sdt></owl-date-time>
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <div class="header-label">End Date & Time</div>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput [min]="minDate" [max]="maxDate" onDrop="return false" onPaste="return false" onkeydown="return false" onkeypress="return false" [owlDateTime]="edt" [(ngModel)]="endDate" >
+          <mat-icon class="date-pick" matSuffix (click)="dateChange()" [owlDateTimeTrigger]="edt">calendar_today</mat-icon>
+          <owl-date-time [startAt]="minDate" #edt></owl-date-time>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="card-container">
+        <div class="header-label">Attendees</div>
+        <div class="d-flex justify-content-between flex-wrap">
+          <ng-container *ngFor="let attendees of attendeesList">
+            <div class="card-details">
+              <div class="font-weight-bold text-overflow" *ngIf="attendees.name">{{attendees.name}}</div>
+              <div class="font-weight-bold text-overflow" *ngIf="attendees.employee_name">{{attendees.employee_name}}</div>
+              <div class="text-overflow">{{attendees.email}}</div>
+              <div class="text-overflow">Type : {{attendees.type}}</div>
+            </div>
+          </ng-container>
+        </div>
+    </div>
+    <div class="button-conatiner">
+      <button mat-raised-button (click)="closePopup()">Cancel</button>
+      <button mat-raised-button class="schedule" (click)="scheduleRoom()">Schedule</button>
+    </div>
+    
+  </div>
+  
+</ng-template>
