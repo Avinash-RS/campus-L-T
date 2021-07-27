@@ -68,10 +68,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     flex: 1,
     minWidth: 40,
     resizable: true,
-    floatingFilter: true,
+    floatingFilter: false,
     lockPosition: true,
     suppressMenu: true,
     unSortIcon: true,
+    
   };
   rowData: any = [];
   searchBox = false;
@@ -88,7 +89,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     flex: 1,
     minWidth: 40,
     resizable: true,
-    floatingFilter: true,
+    floatingFilter: false,
     lockPosition: true,
     suppressMenu: true,
     unSortIcon: true,
@@ -647,8 +648,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.minDate = new Date();
     this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer)
     const dialogRef = this.matDialog.open(this.schedulePopup, {
-      width: '55%',
-      height: '70%',
+      // width: '55%',
+      // height: '70%',
       panelClass: 'custom-modalbox'
     });
   }
