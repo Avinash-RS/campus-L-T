@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: "app-join-interview",
@@ -7,12 +9,34 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class JoinInterviewComponent implements OnInit {
-  
-  constructor() { 
-
+  interview;
+  userEmail;
+  constructor(private adminService: AdminServiceService,private appConfig: AppConfigService,
+    ) { 
+  this.userEmail = this.appConfig.getLocalData('userEmail')
+  this.getInterview()
   }
 
   ngOnInit() {
 
+  }
+  getInterview(){
+    var obj = {
+      'userDtl.emailId': this.userEmail
+    }
+    this.adminService.getScheduledList(obj).subscribe((result:any)=>{
+      if(result.success){
+        this.interview = result.data[0];
+        this.interview.userDtl.forEach((element,index) => {
+              if(element.type != 'candidate'){
+                this.interview.userDtl.splice(index,1)
+              }
+            });
+        console.log(this.interview)
+      }
+    })
+  }
+  openRTC(view){
+    window.open(view.userDtl[0].link, '_blank').focus();
   }
 }

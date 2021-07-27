@@ -19,6 +19,7 @@
     &#160;
   </mat-drawer>
   <mat-drawer-content class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
+    <br>
     <ng-container *ngIf="subMenus && subMenus.length > 0">
       <div [routerLink]="subMenus.router" *ngFor="let subMenus of subMenus; let i = index" class="sub-navs"
         routerLinkActive="active">
