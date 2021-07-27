@@ -36,7 +36,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     flex: 1,
     minWidth: 40,
     resizable: true,
-    floatingFilter: true,
+    floatingFilter: false,
     lockPosition: true,
     suppressMenu: true,
     unSortIcon: true,
@@ -192,7 +192,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Interview Status', field: 'evaluation_status_1',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 170,
+        minWidth: 160,
         sortable: true,
         tooltipField: 'evaluation_status_1',
         cellRenderer: (params) => {
@@ -211,7 +211,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: '', field: 'join_interview',
         filter: false,
         floatingFilterComponentParams: { suppressFilterButton: false },
-        Width: 90,
+        minWidth: 150,
         sortable: false,
         getQuickFilterText: (params) => {
           return params.value;
@@ -229,7 +229,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: '', field: 'evaluation_btn',
         filter: false,
         floatingFilterComponentParams: { suppressFilterButton: false },
-        Width: 90,
+        minWidth: 110,
         sortable: false,
         getQuickFilterText: (params) => {
           return params.value;
@@ -247,7 +247,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         headerName: 'Status', field: 'interview_status',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        Width: 90,
+        minWidth: 110,
         sortable: true,
         getQuickFilterText: (params) => {
           return params.value;

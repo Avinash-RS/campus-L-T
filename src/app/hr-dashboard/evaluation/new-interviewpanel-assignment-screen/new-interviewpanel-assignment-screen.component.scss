@@ -3,6 +3,7 @@
 .new-inv-particular-assessment-candidate {
   background: $white;
   height: 100%;
+  padding-top: 25px;
   .total-wrap {
     display: flex;
     justify-content: space-between;
@@ -20,6 +21,10 @@
     justify-content: space-between;
     margin-top: 0em;
     padding-left: 5px;
+    .text {
+      font-weight: 600;
+      font-size:16px;
+    }
   }
   .top-wrapper {
     display: grid;
@@ -137,6 +142,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: -30px;
+    button {
+      border-radius: 5px !important;
+    }
   }
 }
 
@@ -212,11 +221,140 @@ mat-expansion-panel {
   padding: .10em !important;
 }
 mat-expansion-panel-header {
-  background: $primary-red !important;
+  background-color: #5c6873  !important;
   height: 30px !important;
   max-width: 100px !important;
   padding: 0 16px 0px 24px !important;
+  float: right;
+  margin-right: 132px;
+  margin-bottom: 15px; 
+  border-radius: 5px;
   mat-panel-title {
     color: $white !important;
+    font-size: 14px;
+  }
+ 
+}
+::ng-deep .mat-expansion-indicator::after {
+  color: #ffffff !important;
+  font-size: 14px;
+}
+::ng-deep .schedule-container {
+  padding:1.5em 2em;
+  .text-overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .input-container{
+    width: 100%;
+    padding: 0.5em;
+    .header-label{
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 3px;
+    }
+    .tex-input{
+      width: 100%;
+      height: 3em;
+      border: 1px solid #b3b2b2;
+    }
+  }
+  .card-container {
+    flex-wrap: wrap;
+    margin-top: 1em;
+    padding: 0 7px;
+    .header-label{
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 5px;
+    }
+    .card-details {
+      display: inline-block;
+      width: 49%;
+      // margin-right: 1em;
+      margin-bottom: 1em;
+      background: #f5f5f5;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #dadada;
+    }
+  }
+  .button-conatiner{
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+    button {
+      width:20%;
+      border: 1px solid #c02222;
+      margin-right: 1em;
+    }
+  }    
+  .schedule{
+    color: white;
+    background: #c02222;
+
+  }
+  .mat-form-field-appearance-outline .mat-form-field-wrapper{
+    margin: 0 !important;
+    padding-bottom: 0em !important;
+  }
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #c02222;
+}
+  .date-pick{
+    cursor: pointer;
+  }
+  .th{
+    background: white !important;
+  }
+}
+
+::ng-deep.custom-modalbox {
+  max-width: 45% !important;
+  .mat-dialog-container{
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+  .pop-up-header {
+      padding: 5px 5px 8px 7px;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > div {
+          font-size: 20px;
+      }
+      span:nth-of-type(2) {
+          cursor: pointer;
+      }
+  }
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0 0.5em 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: -4px !important;
+  right: -6px;
+}
+.arrowalign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2em;
+}
+.text-color {
+  color: #808080;
+  font-size: 14px;
+}
+.radiogroup {
+  color: #808080;
+  font-size:14px !important ;
+  margin-top: 3px;
+  .mat-radio-button {
+    min-width:200px;
   }
 }

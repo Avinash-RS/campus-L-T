@@ -34,6 +34,6 @@ export const environment = {
   API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
   API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
   Image_Base_Url: 'https://campus.lntedutech.com',
-
+  WEBRTC_NODE_API : 'https://uapdevinterviewer.lntiggnite.com',
 
 };
