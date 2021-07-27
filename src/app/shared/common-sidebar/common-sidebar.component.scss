@@ -289,8 +289,9 @@ mat-drawer ul li span img {
 }
 
 .content-section {
-  padding: 10px 25px;
+  padding: 4px 25px;
   width: 100%;
+  height: calc(100vh - 85px);
 }
 
 .mat-drawer-side {

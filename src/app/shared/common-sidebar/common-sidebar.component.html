@@ -96,7 +96,8 @@
           </div>
           <div class="heading3">{{breadcrumbs[1].label}}</div>
         </div>
-        <div class="first-sidenav">
+        <app-join-interview *ngIf="role == 'candidate' && false"></app-join-interview>
+        <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">
           <div class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
 
             <ng-container *ngIf="subMenus && subMenus.length > 0">

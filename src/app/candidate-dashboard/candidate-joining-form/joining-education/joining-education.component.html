@@ -1,4 +1,4 @@
-<div id="top"></div>
+<div></div>
 <div class="joining-personal-wrapper">
     <h5>
         Education Details
@@ -92,7 +92,7 @@
                                 <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
                                 <nz-option *ngFor="let discipline of pgDisciplineList" [nzLabel]="discipline.pg_discipline"
                                 [nzValue]="discipline.pg_discipline"></nz-option>
-                                </ng-container>                        
+                                </ng-container>
                                 </nz-select>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_specialization).invalid && getEducationArr.controls[i].get(form_specialization).touched">
@@ -128,7 +128,7 @@
                                             [nzValue]="institute.college_name">
                                           </nz-option>
                                         </ng-container>
-                                      </nz-select> 
+                                      </nz-select>
                                 </ng-container>
                                     <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_collegeName).invalid && getEducationArr.controls[i].get(form_collegeName).touched">
@@ -154,7 +154,7 @@
                                     nzPlaceHolder="Select">
                                     <nz-option *ngFor="let level of boardsList" [nzLabel]="level.name" [nzValue]="level.name">
                                     </nz-option>
-                                  </nz-select>            
+                                  </nz-select>
                                     </ng-container>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_boardUniversity).invalid && getEducationArr.controls[i].get(form_boardUniversity).touched">
@@ -226,7 +226,7 @@
                                         <div
                                         *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.notValid">
                                         {{'End date should not go beyond ' + getEducationArr.controls[i].get(form_endDate)?.errors?.notValid}}</div>
-    
+
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-32">
