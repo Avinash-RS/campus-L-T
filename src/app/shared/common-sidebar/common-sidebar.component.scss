@@ -131,7 +131,7 @@
   background: $wrapper-light-gray 0% 0% no-repeat padding-box;
   .toolbar-wrapper {
     position: relative;
-    height: 40px;
+    height: 35px;
     display: flex;
     align-items: center;
   }
@@ -146,21 +146,25 @@
       box-sizing: border-box;
       justify-content: center;
       li {
-        padding: 10px 15px;
+        padding: 15px 20px;
         outline: none;
         list-style: none;
         margin: 0 0 15px 0;
         color: $sidebar-black;
-        opacity: 1;
-        font-weight: 100;
+        opacity: 1; 
         box-sizing: border-box;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        em {
+          font-size: 21px;
+        }
         span:first-child {
           padding: 0 0px;
           font-size: 14px;
         }
         span:nth-of-type(2) {
-          padding: 0 0 0 18px;
+          padding: 0 0 0 15px;
           font-size: 14px;
         }
         span:nth-of-type(3) {
@@ -171,11 +175,19 @@
       }
       li:hover {
         background: #fff;
-        color: #000;
+        color: #000; 
+        border-left-width: 5px;
+        border-right-width: 0;
+        border-style: solid;
+        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%;
       }
       .active {
         background-color: #fff;
         color: #000;
+        border-left-width: 5px;
+        border-right-width: 0;
+        border-style: solid;
+        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%;
         span:nth-of-type(3) {
           display: block;
         }
@@ -273,11 +285,19 @@ mat-drawer ul li span img {
 }
 
 .sidemenu li {
-    padding: 10px 15px;
+    padding: 15px 20px;
     cursor: pointer;
+    font-size: 21px;
+    line-height: 0;
+    border-left: 5px solid transparent;
+
     &.active {
       background-color: #fff;
       color: #000;
+      border-left-width: 5px;
+        border-right-width: 0;
+        border-style: solid;
+        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%;
     }
     &:first-child {
       font-size: 18px;
@@ -285,7 +305,8 @@ mat-drawer ul li span img {
 }
 
 .heading3 {
-  font-size: 24px;
+  font-size: 22px;
+  padding-bottom: 10px;
 }
 
 .content-section {
@@ -296,8 +317,7 @@ mat-drawer ul li span img {
   z-index: 5;
 }
 
-.mat-drawer-side {
-  border-right: solid 1px #e6e6e67d;
+.mat-drawer-side { 
   z-index: 8;
     box-shadow: 1px 3px 3px #0003 !important;
 

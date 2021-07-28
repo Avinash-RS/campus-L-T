@@ -46,7 +46,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview Panel Assign',
+        name: 'Panel Assignment',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
