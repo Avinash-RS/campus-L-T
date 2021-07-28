@@ -1603,8 +1603,9 @@ button:focus {
     }
   }
   .date {
-    border: 1px solid rgba(0, 0, 0, 0.527);
+    border: 1px solid #d9d9d9;
     height: 30px !important;
+    border-radius: 4px;
     .mat-form-field-wrapper {
       height: 30px !important;
     }
