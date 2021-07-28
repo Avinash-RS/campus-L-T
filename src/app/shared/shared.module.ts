@@ -1,6 +1,6 @@
 import { DateMonthYearDirective } from './../directives/customDateFormats/date-month-year.directive';
 import { YearMonthDirective } from './../directives/customDateFormats/year-month.directive';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -96,8 +96,9 @@ import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-b
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CommonSidebarComponent } from './common-sidebar/common-sidebar.component';
+import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/join-interview.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent,
+  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent
 ],
   imports: [
     CommonModule,
@@ -213,6 +214,7 @@ import { CommonSidebarComponent } from './common-sidebar/common-sidebar.componen
     BarChartComponent,
     HorizontalBarChartComponent,
     CommonSidebarComponent,
+    JoinInterviewComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
@@ -280,5 +282,6 @@ import { CommonSidebarComponent } from './common-sidebar/common-sidebar.componen
     PdfJsViewerModule
 
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SharedModule { }

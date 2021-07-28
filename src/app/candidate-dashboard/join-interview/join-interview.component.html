@@ -1,17 +1,17 @@
-<div class="joinInterviewWrapper">
+<div class="joinInterviewWrapper" *ngIf="interview">
     <div class="interview">
         <h5>Dear Candidate</h5>
         <p>You have been invited for an interview by <strong>'LnT EduTech'</strong> on below date and time for Technical/HR interview.</p>
     </div>
     <div class="joinInterview">
-        <span class="meetingID">Meeting Room ID: xxx xxx xxx</span>
+        <span class="meetingID">Meeting Room ID: {{interview.roomId}}</span>
         <div class="designation">
-            <h2>Sr. UI/UX Designer - 2nd Round Interview</h2>
-            <button>Join Interview</button>
+            <h2>{{interview.roomName}}</h2>
+            <button (click)="openRTC(interview)">Join Interview</button>
         </div>
         <div>
-            <span class="timing">15 May 2021 - 03:30PM - 04:30PM</span>
-            <span class="note"><b>Note:</b> The link will be active 30 mins prior to the interview time as mentioned above.</span>
+            <span class="timing">{{interview.startTime | date:'dd MMM yyyy - HH:mm a'}} - {{interview.endTime | date:'HH:mm a'}}</span>
+            <span class="note"><b>Note:</b> The link will be active 1 hour prior to the interview time as mentioned above.</span>
         </div>
     </div>
 </div>

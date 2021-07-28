@@ -1,4 +1,4 @@
-<div id="top"></div>
+<div></div>
 <div class="joining-personal-wrapper">
     <div class="grids-wrapper">
         <div class="dependentForm">
@@ -660,7 +660,7 @@
                         </div>
                     </div>
                 </ng-container>
-                
+
                     <!-- Other uploads -->
                     <ng-container
                         *ngIf="documentDetails.Other_Certifications && documentDetails.Other_Certifications.length > 0">
@@ -820,7 +820,7 @@
                                         <div class="ml-4"><span class="custom-label mr-2">Payslip Number:</span>  <span class="input f_size_16 bold-700 color-black box-border" style="color: #000 !important;">{{workDetails.workDetails[form_payslip]}}</span></div>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </ng-container>
 
                         <ng-container *ngIf="workDetails.workDetails && workDetails.workDetails[form_interviewed_by_us]">
@@ -832,7 +832,7 @@
                                         <div class="ml-4"><span class="custom-label mr-2">When:</span>  <span class="input f_size_16 bold-700 color-black box-border" style="color: #000 !important;">{{workDetails.workDetails[form_when_interview] ? dateConvertion(workDetails.workDetails[form_when_interview]) : 'NA' }}</span></div>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </ng-container>
 
 
@@ -1142,7 +1142,7 @@
                     </div>
                 </ng-container>
 
-            </div>            
+            </div>
 
             <div *ngIf="!formSubmitted" class="row-wrapper justify-content-between align-items-center mt-4 mb-3 footer">
                 <div (click)="routeNext('upload')"

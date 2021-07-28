@@ -51,7 +51,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   public isRowSelectable;
   selectedCount: any = [];
   rejectedCount: any = [];
-
+  scheduleListDetails: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -293,6 +293,30 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   }
 
 
+  getInterview(){
+    var obj = {
+      'userDtl.emailId': this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
+    }
+    this.adminService.getScheduledList(obj).subscribe((result:any)=>{
+      this.appConfig.hideLoader();
+      if(result.success){
+        this.scheduleListDetails = result.data;
+        this.scheduleListDetails.forEach((element, i) => {
+          if (element.userDtl) {
+            let candidateData = this.removeInterviewer(element.userDtl);
+            element.emailId = candidateData && candidateData.emailId ? candidateData.emailId : '';
+            element.userFullName = candidateData && candidateData.userFullName ? candidateData.userFullName : '';
+          }
+        });
+        console.log('ad', this.scheduleListDetails)
+      }
+    })
+  }
+
+  removeInterviewer(userDetail) {
+   return userDetail.find(element => element.type == 'Candidate');
+  }
+
   // To get all users
   getUsersList() {
 
@@ -326,12 +350,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           let dummy = '2021-07-05T07:00:00.000Z';
           element.assigned_by = 'Avinash';
           element.join_interview = 'yes';
-          element.status = 'Selected';
           element.datetime_Interview = this.momentForm(dummy);
           element['evaluation_status_1'] = element.evaluation_status && element.evaluation_status == '2' ? 'submitted' : element.evaluation_status == '1' ? 'completed' : 'waiting';
           this.userList.push(element);
         }
       });
+      this.getInterview();
       this.rowData = this.userList;
     }, (err) => {
     });
