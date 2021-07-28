@@ -102,23 +102,16 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     if (event.colDef.field === 'evaluation_btn') {
       if (event['data'] && event['data']['evaluation_status'] != '2') {
+        this.appConfig.setLocalData('cProPic', event['data']['profile_image_url']);
         this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
       }
     }
 
     if (event.colDef.field === 'join_interview') {
       if (event['data'] && event['data']['join_interview'] == 'yes') {
+        this.appConfig.setLocalData('cProPic', event['data']['profile_image_url']);
         this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
-        // this.openInterview(event['data']['link']);
       }
-    }
-  }
-
-  openInterview(link) {
-    console.log('link', link);
-    const filterLink = link.find(element=> element.type == 'interviewer');
-    if (filterLink && filterLink.link) {
-      window.open(filterLink && filterLink.link, 'webrtc');
     }
   }
 

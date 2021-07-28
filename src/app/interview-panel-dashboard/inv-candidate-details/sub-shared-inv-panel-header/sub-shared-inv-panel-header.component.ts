@@ -20,6 +20,7 @@ export class SubSharedInvPanelHeaderComponent implements OnInit {
   @Input() tag: any;
   bindDetails: any;
   nameOfAssessment: any;
+  profilePic: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -37,6 +38,7 @@ export class SubSharedInvPanelHeaderComponent implements OnInit {
 
 
   assessmentDetails() {
+    this.profilePic = this.appConfig.getLocalData('cProPic') ? this.appConfig.getLocalData('cProPic') : null;
     this.bindDetails = {
       assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '-',
       date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '-',
