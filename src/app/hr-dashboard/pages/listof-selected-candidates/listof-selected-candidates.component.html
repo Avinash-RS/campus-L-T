@@ -15,7 +15,7 @@
       <!-- </mat-form-field> -->
       <!-- <div (click)="sendEmail()">Send email</div>
       <div (click)="sendEmail()">Edit Access to Joining form</div> -->
-      <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 98%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine"
+      <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine"
       [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay" [pagination]="true" [suppressRowClickSelection]="true"
       [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [cacheBlockSize]="cacheBlockSize"
       (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
