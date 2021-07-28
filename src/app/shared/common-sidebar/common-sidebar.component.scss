@@ -156,6 +156,11 @@
         cursor: pointer;
         display: flex;
         align-items: center;
+        border-width: 0;
+        border-left-width: 5px;
+        border-style: solid;
+        border-color: transparent;
+        transition: all 750ms ease-in-out;
         em {
           font-size: 21px;
         }
@@ -175,19 +180,15 @@
       }
       li:hover {
         background: #fff;
-        color: #000; 
-        border-left-width: 5px;
-        border-right-width: 0;
-        border-style: solid;
-        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%;
+        color: #000;  
+        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%; 
+        transition: all 750ms ease-in-out;
       }
       .active {
         background-color: #fff;
-        color: #000;
-        border-left-width: 5px;
-        border-right-width: 0;
-        border-style: solid;
-        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%;
+        color: #000; 
+        border-image: linear-gradient(to bottom, #41b865, #00bcef) 1 100%; 
+        transition: all 750ms ease-in-out;
         span:nth-of-type(3) {
           display: block;
         }

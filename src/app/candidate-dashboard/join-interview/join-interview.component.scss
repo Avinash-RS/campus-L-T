@@ -2,7 +2,43 @@
 
 .joinInterviewWrapper {
     padding: 15px;
+
+    &.candidate {
+        padding: 20px 25px 0px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    h5 {
+        font-weight: 600;
+    }
+    .joinInterview { 
+        padding: 15px 0;
+    }
+    .designation + div {
+        height: 35px;
+    }
+    .meetingID {
+        line-height: 0.3;
+    }
+    .iconinfo {
+        flex-grow: 0.5;
+        display: flex;
+        justify-content: center;
+        em {
+            font-size: 24px
+        }
+
+        &+ div {
+            flex-grow: 15;;
+        }
+    }
+    }
 }
+
+
+
 .interview {
     h5 {
         margin: 0;
