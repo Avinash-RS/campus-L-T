@@ -115,6 +115,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       }
     }
 
+    if (event.colDef.field === 'join_interview') {
+      if (event['data'] && event['data']['join_interview'] == 'yes') {
+        this.openInterview(event['data']['link']);
+      }
+    }
+  }
+
+  openInterview(link) {
+    console.log('link', link);
+    const filterLink = link.find(element=> element.type == 'interviewer');
+    if (filterLink && filterLink.link) {
+      window.open(filterLink && filterLink.link, 'webrtc');
+    }
   }
 
   getModel(e) {
@@ -172,13 +185,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: 'Date/Time of Interview', field: 'datetime_Interview',
+        headerName: 'Date/Time of Interview', field: 'startTime',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth:200,
         Width: 200,
         sortable: true,
-        tooltipField: 'datetime_Interview'
+        tooltipField: 'startTime'
       },
       {
         headerName: 'Assigned By', field: 'assigned_by',
@@ -221,7 +234,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           if (params['data'] && params['data']['join_interview'] == 'yes') {
             return `<button class="join-inter"><em class="icon-Join_Video"></em> Join Interview</button>`;
           } else {
-            return `<button class="join-inter disabled" ><em class="icon-Join_Video"></em> Join Interview</button>`;
+            return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> Time Expired</button>`;
           }
         },
       },
@@ -236,10 +249,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         },
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
         cellRenderer: (params) => {
-          if (params['data'] && params['data']['evaluation_status'] == '2') {
-            return `<button class=" btn-outline" >Evaluated</button>`;
+          if (params['data'] && (params['data']['evaluation_status'] == '1' || params['data']['evaluation_status'] == '2')) {
+            return `<button class=" btn-outline checked"><em class="icon-checked"></em>Evaluated</button>`;
           } else {
-            return `<button class=" btn-outline checked"><em class="icon-checked"></em>Evaluate</button>`;
+            return `<button class=" btn-outline">Evaluate</button>`;
           }
         },
       },
@@ -303,20 +316,67 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         this.scheduleListDetails = result.data;
         this.scheduleListDetails.forEach((element, i) => {
           if (element.userDtl) {
+            element.link = element.userDtl && element.userDtl ? element.userDtl : '';
             let candidateData = this.removeInterviewer(element.userDtl);
             element.emailId = candidateData && candidateData.emailId ? candidateData.emailId : '';
-            element.userFullName = candidateData && candidateData.userFullName ? candidateData.userFullName : '';
           }
         });
-        console.log('ad', this.scheduleListDetails)
+        this.mergePhpAndEdgeService(this.scheduleListDetails);
+      } else {
+        this.rowData = this.userList;
       }
+    }, (err)=> {
+      this.rowData = this.userList;
     })
   }
 
-  removeInterviewer(userDetail) {
-   return userDetail.find(element => element.type == 'Candidate');
+  mergePhpAndEdgeService(edgeSeviceData) {
+    // element.datetime_Interview = this.momentForm(dummy);
+    this.userList.forEach(element => {
+      edgeSeviceData.forEach(edgeData => {
+        if (element.email == edgeData.emailId) {
+          element.startTime = this.momentForm(edgeData.startTime);
+          element.endTime = this.momentForm(edgeData.endTime);
+          element.roomId = edgeData.roomId;
+          element.roomName = edgeData.roomName;
+          element.password = edgeData.password;
+          element.link = edgeData.link;
+          element.assigned_by = 'Avinash';
+          element.join_interview = this.isTimeExpired(edgeData.startTime, edgeData.endTime);
+        }
+      });
+    });
+
+    this.userList = this.userList.filter(element => element.link);
+    this.rowData = this.userList;
+    this.getSummaryCount();
+    console.log('usr', this.userList)
   }
 
+  isTimeExpired(startTime, endTime) {
+    if (startTime && endTime) {
+      let custom = moment(endTime).diff(moment.now(), 'minutes');
+      if (custom > 0) {
+        return 'yes'; // Not expired
+      }
+      return 'yes'; // Expired
+    }
+  }
+
+  removeInterviewer(userDetail) {
+   return userDetail.find(element => element.type == 'candidate');
+  }
+
+  getSummaryCount() {
+    this.selectedCount = [];
+    this.rejectedCount = [];
+    this.userList.forEach(element => {
+      if (element.interview_status == 'Selected' || element.interview_status == 'Not Selected') {
+        element.interview_status == 'Selected' ? this.selectedCount.push(element) : this.rejectedCount.push(element);
+      }
+    });
+
+  }
   // To get all users
   getUsersList() {
 
@@ -333,8 +393,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       const align = datas ? datas : [];
       let counting = 0;
       this.userList = [];
-      this.selectedCount = [];
-      this.rejectedCount = [];
       align.forEach(element => {
         if (element) {
           counting = counting + 1;
@@ -343,20 +401,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           if (element.evaluation_status == '1') {
             this.buttonCheck = true;
           }
-          if (element.interview_status == 'Selected' || element.interview_status == 'Not Selected') {
-            element.interview_status == 'Selected' ? this.selectedCount.push(element) : this.rejectedCount.push(element);
-          }
-
-          let dummy = '2021-07-05T07:00:00.000Z';
-          element.assigned_by = 'Avinash';
-          element.join_interview = 'yes';
-          element.datetime_Interview = this.momentForm(dummy);
-          element['evaluation_status_1'] = element.evaluation_status && element.evaluation_status == '2' ? 'submitted' : element.evaluation_status == '1' ? 'completed' : 'waiting';
+          element['evaluation_status_1'] = element.evaluation_status && element.evaluation_status == '2' ? 'submitted' : element.evaluation_status == '1' ? 'completed' : 'schedule';
           this.userList.push(element);
         }
       });
       this.getInterview();
-      this.rowData = this.userList;
     }, (err) => {
     });
   }
