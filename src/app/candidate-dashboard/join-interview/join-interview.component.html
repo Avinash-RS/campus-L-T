@@ -1,22 +1,24 @@
 <div class="joinInterviewWrapper" *ngIf="showInterview">
-    <div class="interview">
+    <!-- <div class="interview">
         <h5>Dear Candidate</h5>
         <p>You have been invited for an interview by <strong>'LnT EduTech'</strong> on below date and time for Technical/HR interview.</p>
-    </div>
+    </div> -->
     <div class="joinInterview">
         <span class="meetingID">Meeting Room ID: {{interview.roomId}}</span>
         <div class="designation">
             <h2>{{interview.roomName}}</h2>
-            <button (click)="openRTC(interview)">Join Interview</button>
+
         </div>
         <div>
-            <span class="timing">{{interview.startTime | date:'dd MMM yyyy - HH:mm a'}} - {{interview.endTime | date:'HH:mm a'}}</span>
-            <span class="note"><b>Note:</b> The link will be active 1 hour prior to the interview time as mentioned above.</span>
+            <span class="timing"><em class="icon-Calendar"></em> {{interview.startTime | date:'dd MMM yyyy - HH:mm a'}} - {{interview.endTime |
+                date:'HH:mm a'}}</span>
+            <!-- <span class="note"><b>Note:</b> The link will be active 1 hour prior to the interview time as mentioned above.</span> -->
         </div>
+        <button (click)="openRTC(interview)"><em class="icon-Join_Video"></em>Join Interview</button>
     </div>
 </div>
 <div class="joinInterviewWrapper" *ngIf="showInterview == false">
-<div class="joinInterview">
-    No interview scheduled at this moment
-</div>
+    <div class="joinInterview">
+        No interview scheduled at this moment
+    </div>
 </div>
