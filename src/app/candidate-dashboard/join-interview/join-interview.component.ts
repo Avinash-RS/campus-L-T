@@ -12,7 +12,7 @@ import moment from 'moment';
 export class JoinInterviewComponent implements OnInit {
   interview;
   userEmail;
-  showInterview = false;
+  showInterview;
   role;
   roleType;
   constructor(private adminService: AdminServiceService,private appConfig: AppConfigService,
@@ -50,7 +50,7 @@ export class JoinInterviewComponent implements OnInit {
         this.interview = result.data[0];
         if(this.interview?.userDtl){
           this.interview.userDtl.forEach((element,index) => {
-            if(element.type != this.roleType && this.userEmail == element.emailId){
+            if(element.type != this.roleType && this.userEmail != element.emailId){
               this.interview.userDtl.splice(index,1);
             }
           });
