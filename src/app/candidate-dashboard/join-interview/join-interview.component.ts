@@ -28,7 +28,7 @@ export class JoinInterviewComponent implements OnInit {
       if(result.success){
         this.interview = result.data[0];
         this.interview.userDtl.forEach((element,index) => {
-              if(element.type != 'candidate'){
+              if(element.type != 'candidate' && element.emailId == this.userEmail){
                 this.interview.userDtl.splice(index,1)
               }
             });
