@@ -117,7 +117,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     if (event.colDef.field === 'join_interview') {
       if (event['data'] && event['data']['join_interview'] == 'yes') {
-        this.openInterview(event['data']['link']);
+        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
+        // this.openInterview(event['data']['link']);
       }
     }
   }
@@ -311,7 +312,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       'userDtl.emailId': this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
     this.adminService.getScheduledList(obj).subscribe((result:any)=>{
-      this.appConfig.hideLoader();
       if(result.success){
         this.scheduleListDetails = result.data;
         this.scheduleListDetails.forEach((element, i) => {
@@ -324,8 +324,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         this.mergePhpAndEdgeService(this.scheduleListDetails);
       } else {
         this.rowData = this.userList;
+        this.appConfig.hideLoader();
       }
     }, (err)=> {
+      this.appConfig.hideLoader();
       this.rowData = this.userList;
     })
   }
@@ -337,18 +339,15 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         if (element.email == edgeData.emailId) {
           element.startTime = this.momentForm(edgeData.startTime);
           element.endTime = this.momentForm(edgeData.endTime);
-          element.roomId = edgeData.roomId;
-          element.roomName = edgeData.roomName;
-          element.password = edgeData.password;
-          element.link = edgeData.link;
           element.assigned_by = 'Avinash';
           element.join_interview = this.isTimeExpired(edgeData.startTime, edgeData.endTime);
         }
       });
     });
 
-    this.userList = this.userList.filter(element => element.link);
+    this.userList = this.userList.filter(element => element.startTime);
     this.rowData = this.userList;
+    this.appConfig.hideLoader();
     this.getSummaryCount();
     console.log('usr', this.userList)
   }
@@ -388,7 +387,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     };
 
     this.adminService.invSubmittedCandidatesList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
 
       const align = datas ? datas : [];
       let counting = 0;

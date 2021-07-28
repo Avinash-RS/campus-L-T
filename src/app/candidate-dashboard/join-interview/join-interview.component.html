@@ -1,4 +1,4 @@
-<div class="joinInterviewWrapper" *ngIf="interview">
+<div class="joinInterviewWrapper" *ngIf="showInterview">
     <div class="interview">
         <h5>Dear Candidate</h5>
         <p>You have been invited for an interview by <strong>'LnT EduTech'</strong> on below date and time for Technical/HR interview.</p>
@@ -14,4 +14,9 @@
             <span class="note"><b>Note:</b> The link will be active 1 hour prior to the interview time as mentioned above.</span>
         </div>
     </div>
+</div>
+<div class="joinInterviewWrapper" *ngIf="showInterview == false">
+<div class="joinInterview">
+    No interview scheduled at this moment
+</div>
 </div>
