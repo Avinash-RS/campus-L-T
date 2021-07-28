@@ -17,7 +17,8 @@ export class JoinInterviewComponent implements OnInit {
   role;
   roleType;
   userId;
-  findIndex
+  findIndex;
+  enableButton = false;
   constructor(private adminService: AdminServiceService,private appConfig: AppConfigService,private activatedRoute: ActivatedRoute
     ) {
       this.activatedRoute.queryParams.subscribe(params => {
@@ -39,12 +40,10 @@ export class JoinInterviewComponent implements OnInit {
   }
 
   isTimeExpired(startTime, endTime) {
-    if (startTime && endTime) {
-      let custom = moment(endTime).diff(moment.now(), 'minutes');
-      if (custom > 0) {
-        return 'yes'; // Not expired
-      }
-      return 'no'; // Expired
+  var returned_startdate = moment(startTime).subtract(1, 'hours');
+  var returned_endate = moment(endTime).add(1, 'hours'); 
+    if (returned_startdate && returned_endate) {
+    this.enableButton = moment(moment.now()).isBetween(returned_startdate,returned_endate);
     }
 }
   getInterview(){
@@ -75,7 +74,7 @@ export class JoinInterviewComponent implements OnInit {
           this.interview = this.interview[0]
           if(this.interview?.userDtl?.length > 0){
             this.showInterview = true;
-            //this.isTimeExpired(this.interview.startTime, this.interview.endTime)
+            this.isTimeExpired(this.interview.startTime, this.interview.endTime)
           } else {
             this.showInterview = false;
           }
