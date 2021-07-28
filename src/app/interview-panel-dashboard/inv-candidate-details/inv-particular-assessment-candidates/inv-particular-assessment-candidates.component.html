@@ -7,7 +7,7 @@
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <div class="leftinfo">
       <div>
-        <span>{{userList ? userList.length : 0}}</span>
+        <span>{{rowData ? rowData.length : 0}}</span>
         Assigned Candidates
       </div>
       <div>
@@ -43,7 +43,7 @@
       [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'"
       [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)"
       (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" [rowSelection]="rowSelection"
-      [isRowSelectable]="isRowSelectable" headerHeight="40">
+      [isRowSelectable]="isRowSelectable" headerHeight="35">
     </ag-grid-angular>
   </div>
 </div>
