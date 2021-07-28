@@ -4,8 +4,9 @@
             <mat-label>Filter</mat-label> -->
       <div class="search-bar mb-1 d-flex justify-content-end align-items-center mr-3">
         <div class="search-icon">
+          <img src="assets/images/feather-search.svg" alt="" srcset="">
           <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        
       </div>
       <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(true)" type="button" mat-raised-button>Send Mail</button>
       <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(false)" type="button" mat-raised-button>Edit Access</button>

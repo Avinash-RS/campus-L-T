@@ -12,7 +12,7 @@ export class JoinInterviewComponent implements OnInit {
   interview;
   userEmail;
   constructor(private adminService: AdminServiceService,private appConfig: AppConfigService,
-    ) { 
+    ) {
   this.userEmail = this.appConfig.getLocalData('userEmail')
   this.getInterview()
   }
@@ -27,11 +27,13 @@ export class JoinInterviewComponent implements OnInit {
     this.adminService.getScheduledList(obj).subscribe((result:any)=>{
       if(result.success){
         this.interview = result.data[0];
-        this.interview.userDtl.forEach((element,index) => {
-              if(element.type != 'candidate' && element.emailId == this.userEmail){
-                this.interview.userDtl.splice(index,1)
-              }
-            });
+        if(this.interview?.userDtl){
+          this.interview.userDtl.forEach((element,index) => {
+            if(element.type != 'candidate' && element.emailId == this.userEmail){
+              this.interview.userDtl.splice(index,1)
+            }
+          });
+        }
         console.log(this.interview)
       }
     })

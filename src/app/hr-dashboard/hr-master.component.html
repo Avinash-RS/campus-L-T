@@ -1,10 +1,12 @@
+<app-common-sidebar [sideBar]="hrSideMenu"></app-common-sidebar>
+<div *ngIf="false" class="scroll-bar-height">
 <app-common-header></app-common-header>
 
 <mat-drawer-container class="second-sidenav">
   <mat-drawer class="sidenav" mode="side" [opened]="!sidebarOpen">
     <ul>
       <li (click)="sidebar()">
-        <span><img src="assets/images/keyboard_arrow_left.svg"></span>
+        <span><em class="icon-Hamburger"></em></span>
       </li>
       <ng-container *ngIf="role == 'hr'">
         <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD" routerLinkActive="active">
@@ -92,7 +94,7 @@
       <div class="sidemenu">
         <ul>
           <li (click)="sidebar()">
-            <span><img src="assets/images/keyboard_arrow_right.svg"></span>
+            <span><em class="icon-List"></em></span>
           </li>
           <ng-container *ngIf="role == 'hr'">
             <li [routerLink]="appConstant.HR_DASHBOARD.DASHBOARD" routerLinkActive="active">
@@ -169,3 +171,4 @@
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
+</div>

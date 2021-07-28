@@ -3,12 +3,12 @@
     <span (click)="goToHome()">
       <img src="https://assets.lntedutech.com/edutech_logo.svg" alt="">
     </span>
-    <span>
+    <span class="rightlog">
       <span class="title">
         {{username ? 'Welcome, ' + username : ''}}
       </span>
       <span matTooltip="Logout" class="logout" (click)="logOut()">
-        <img src="assets/images/logout.svg" alt="">
+        <em class="icon-logout"></em>
       </span>
     </span>
   </div>

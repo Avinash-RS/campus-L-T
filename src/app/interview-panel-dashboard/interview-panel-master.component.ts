@@ -18,6 +18,8 @@ export interface IBreadCrumb {
 export class InterviewPanelMasterComponent implements OnInit {
 
   // public breadcrumbs: IBreadCrumb[];
+  role = this.appConfig.getLocalData('roles');
+  SideMenu: any;
   breadcrumbs: Array<any>;
 
   appConstant = CONSTANT.ENDPOINTS;
@@ -35,7 +37,21 @@ export class InterviewPanelMasterComponent implements OnInit {
       this.subMenus = data;
     });
     this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    this.sendMenus();
   }
+
+  sendMenus() {
+    if (this.role == 'interview_panel') {
+    this.SideMenu = [
+      {
+        url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS,
+        name: 'Dashboard',
+        icon: 'assets/images/evaluation.svg',
+        hide: false
+      }
+  ]
+}
+}
 
   ngOnInit() {
     this.sidebarOpen = true;

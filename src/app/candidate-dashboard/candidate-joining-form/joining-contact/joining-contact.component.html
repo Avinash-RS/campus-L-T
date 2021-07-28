@@ -1,4 +1,4 @@
-<div id="top"></div>
+<div></div>
 <div class="joining-personal-wrapper">
     <h5>
         Contact Details
@@ -85,7 +85,7 @@
                     <nz-select class="input select" [formControlName]="form_present_region" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"
-                        [nzValue]="region.value"></nz-option>        
+                        [nzValue]="region.value"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="present_region?.invalid && present_region?.touched">
                         <div *ngIf="present_region?.errors?.required">Present country is Required</div>

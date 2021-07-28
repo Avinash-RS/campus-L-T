@@ -1,31 +1,7 @@
 // @import "variables";
 $fontPath: "/assets/fonts";
 
-
-// /* Roboto Font */
-// @font-face {
-//   font-family: 'Roboto';
-//   src: url('#{$fontPath}/Roboto-Light.woff2') format('woff2'),
-//        url('#{$fontPath}/Roboto-Light.woff') format('woff');
-//   font-weight: 300;
-//   font-style: normal;
-// }
-// @font-face {
-//     font-family: 'Roboto';
-//     src: url('#{$fontPath}/Roboto-Regular.woff2') format('woff2'),
-//          url('#{$fontPath}/Roboto-Regular.woff') format('woff');
-//     font-weight: 400;
-//     font-style: normal;
-// }
-// @font-face {
-//     font-family: 'Roboto';
-//     src: url('#{$fontPath}/Roboto-Bold.woff2') format('woff2'),
-//          url('#{$fontPath}/Roboto-Bold.woff') format('woff');
-//     font-weight: 700;
-//     font-style: normal;
-// }
-
-// Icon Fonts - Icomoon
+ 
 @font-face {
     font-family: 'icomoon';
     src:  url('#{$fontPath}/icomoon.woff?bkp143') format('woff'),

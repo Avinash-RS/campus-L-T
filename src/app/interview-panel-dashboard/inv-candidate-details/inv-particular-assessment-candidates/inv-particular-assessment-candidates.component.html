@@ -1,31 +1,33 @@
-<div class="inv-particular-assessment-candidate">
+<div class="headerbtn" *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'"  >
+  <button (click)="finalSubmit()" class="submit" mat-raised-button>
+    <em class="icon-checked"></em>Sent to HR for Processing
+  </button>
+</div>
+<div class="inv-particular-assessment-candidate" #agheight>
   <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
     <div class="leftinfo">
       <div>
-        <span>23</span>
+        <span>{{userList ? userList.length : 0}}</span>
         Assigned Candidates
       </div>
       <div>
-        <span>16</span>
+        <span>{{selectedCount.length + rejectedCount.length}}</span>
         Candidates Evaluated
       </div>
       <div>
-        <span>08</span>
+        <span>{{selectedCount.length}}</span>
         Shortlisted
       </div>
       <div>
-        <span>03</span>
+        <span>{{rejectedCount.length}}</span>
         Rejected
       </div>
     </div>
-    <div class="right info">
+    <div class="rightinfo">
+      <div>
+        <button class="filterbtn"><em class="icon-Filter"></em> Filter</button>
+      </div>
       <div class="search-bar">
-        <div>
-          <button style="height: 28px !important;" (click)="finalSubmit()" class="submit"
-            *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>Sent to
-            HR
-            for Processing</button>
-        </div>
         <div class="search-icon">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
           <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
@@ -36,7 +38,7 @@
   </div>
   <div>
 
-    <ag-grid-angular style="width: 100%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+    <ag-grid-angular style="width: 100%;" [ngStyle]="{ height: (agheight.offsetHeight - 75) + 'px' }" class="ag-theme-alpine"
       [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
       [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'"
       [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)"

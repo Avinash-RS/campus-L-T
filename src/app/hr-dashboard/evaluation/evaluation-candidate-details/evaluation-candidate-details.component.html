@@ -2,8 +2,9 @@
     <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
         <div class="search-bar">
             <div class="search-icon">
-              <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
+              <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+              
             </div>
           </div>
 

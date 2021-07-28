@@ -1,4 +1,4 @@
-<div id="top" class="assign-assessment-wrapper">
+<div class="assign-assessment-wrapper">
   <div class="top-wrapper">
     <div class="flex-wrapper">
       <div class="left">
@@ -65,8 +65,9 @@
                   <mat-label>Filter</mat-label> -->
     <div class="search-bar">
       <div class="search-icon">
-        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+
       </div>
 
       <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">

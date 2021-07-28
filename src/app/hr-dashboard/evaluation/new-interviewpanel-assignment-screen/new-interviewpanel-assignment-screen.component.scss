@@ -3,18 +3,16 @@
 .new-inv-particular-assessment-candidate {
   background: $white;
   height: 100%;
+  padding-top: 25px;
   .total-wrap {
     display: flex;
     justify-content: space-between;
     width: 100%;
     padding: 0 .5em;
-    .lefttable {
-      min-width: 540px;
-      max-width: 540px;
-    }
-    .righttable {
-      min-width: 540px;
-      max-width: 540px;
+    height: 100%;
+    .lefttable, .righttable {
+      width:49%;
+      
     }
   }
   .head-flex {
@@ -23,6 +21,10 @@
     justify-content: space-between;
     margin-top: 0em;
     padding-left: 5px;
+    .text {
+      font-weight: 600;
+      font-size:16px;
+    }
   }
   .top-wrapper {
     display: grid;
@@ -59,6 +61,7 @@
 }
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
+    height: 100%;
     /* Structure */
     .search-bar {
       margin: 0em .5em 0em 0em;
@@ -139,6 +142,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: -30px;
+    button {
+      border-radius: 5px !important;
+    }
   }
 }
 
@@ -214,17 +221,26 @@ mat-expansion-panel {
   padding: .10em !important;
 }
 mat-expansion-panel-header {
-  background: $primary-red !important;
+  background-color: #5c6873  !important;
   height: 30px !important;
   max-width: 100px !important;
   padding: 0 16px 0px 24px !important;
+  float: right;
+  margin-right: 132px;
+  margin-bottom: 15px; 
+  border-radius: 5px;
   mat-panel-title {
     color: $white !important;
+    font-size: 14px;
   }
+ 
 }
-
+::ng-deep .mat-expansion-indicator::after {
+  color: #ffffff !important;
+  font-size: 14px;
+}
 ::ng-deep .schedule-container {
-  padding: 3em;
+  padding:1.5em 2em;
   .text-overflow{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -234,9 +250,9 @@ mat-expansion-panel-header {
     width: 100%;
     padding: 0.5em;
     .header-label{
-      font-size: 16px;
-      color: grey;
-      margin-bottom: 0.5em;
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 3px;
     }
     .tex-input{
       width: 100%;
@@ -247,10 +263,11 @@ mat-expansion-panel-header {
   .card-container {
     flex-wrap: wrap;
     margin-top: 1em;
+    padding: 0 7px;
     .header-label{
-      font-size: 16px;
-      color: grey;
-      margin-bottom: 0.5em;
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 5px;
     }
     .card-details {
       display: inline-block;
@@ -313,5 +330,31 @@ mat-expansion-panel-header {
       span:nth-of-type(2) {
           cursor: pointer;
       }
+  }
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0 0.5em 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: -4px !important;
+  right: -6px;
+}
+.arrowalign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2em;
+}
+.text-color {
+  color: #808080;
+  font-size: 14px;
+}
+.radiogroup {
+  color: #808080;
+  font-size:14px !important ;
+  margin-top: 3px;
+  .mat-radio-button {
+    min-width:200px;
   }
 }

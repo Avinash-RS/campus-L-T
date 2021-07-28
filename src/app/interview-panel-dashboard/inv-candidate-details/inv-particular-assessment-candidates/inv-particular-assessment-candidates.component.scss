@@ -1,9 +1,10 @@
 @import "../../../themes/themes.scss";
 
 .inv-particular-assessment-candidate {
-  height: 100%;
+  height: 78vh;
   .user-list-wrapper {
     margin: 0em 0 0.5em 0;
+    margin-top: 20px;
     /* Structure */
     .search-bar {
       margin: 0em 1em 0em 1em;
@@ -159,22 +160,33 @@ th {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      width: 60%;
+      width: 40%;
       align-items: center;
       div {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        border-right: 1px solid #cacaca;
-        padding-left: 25px;
-        padding-left: 6%;
+        padding-left: 3%;
         flex-grow: 1;
         color: #808080;
+        position: relative;
+        line-height: 1.1;
         &:first-child {
-          padding: 0;
+         padding-left:0 ;
         }
         &:last-child {
-          border: none;
+          &:before {
+            content: none;
+          }  
+          
+         }
+        &:before {
+          content: '';
+          border-right: 1px solid #aaa;
+          position: absolute;
+          right: 0;
+          height: 70%;
+          top: 7px;
         }
       } 
       span {
@@ -184,14 +196,118 @@ th {
       }
     }
     .rightinfo {
+      display: flex;
+      align-items: center;
       width: 30%;
+      justify-content: flex-end;
+    
       div {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+      }
+      .filterbtn {
+        border-radius: 4px;
+        background-color: #fff;
+        border: 1px solid #c5c5c5 !important;
+        box-shadow: 0px 0px 5px #00000029 !important;
+        color: #808080;
+        width: 100px;
+        display: flex !important;
+        align-content: space-around;
+        flex-direction: row !important;
+        height: 33px;
+        margin-right: 15px;
+        em {
+          margin-right: 10px;
+        }
       }
     } 
 }
 ::ng-deep .first-sidenav {
   display: none;
 }
+.headerbtn {
+  display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-top: -33px;
+   button { 
+     font-size: 16px !important;
+            border-radius: 4px !important;
+            margin-right: 13px;
+       }
+  em {
+    margin-right: 10px;
+
+  }
+}
+
+::ng-deep .ag-theme-alpine .ag-header-cell, .ag-theme-alpine .ag-header-group-cell, ::ng-deep .ag-theme-alpine .ag-cell {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+::ng-deep span.status { 
+      background-color: #bababa;
+      color: #666666 ;
+      border-radius: 4px;
+      display: inline-block;
+      line-height: 0.7;
+      font-size: 11px;
+      padding: 7px 8px;
+
+      &.inprogress {
+      background-color: #ffbc00;  
+      color: #fff;
+      }
+      &.completed {
+        background-color: #48cc83;  
+        color: #fff;
+        } 
+      &.rejected {
+        background-color: #c02222;  
+      color: #fff;
+      }
+  }
+  ::ng-deep .join-inter {
+    background-color: #c02222;
+    color: #fff;
+    height: 27px;
+    border: none;
+    border-radius: 5px !important;
+    padding: 6px 12px;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+
+    &.disabled {
+      background-color: #bababa; 
+    }
+    em {
+      margin-right: 7px;
+    }
+  }
+
+  ::ng-deep .btn-outline {
+    height: 27px;
+    border: 1px solid #c02222;
+    background-color: #fff;
+    border-radius: 4px;
+    min-width: 95px;
+    color: #666;
+    cursor: none;
+
+    &.checked {
+      border: none;
+      background-color: #48cc83;  
+      color: #fff; 
+      flex-direction: row !important;
+      justify-content: center !important;
+      cursor: pointer;
+    }
+    em {
+      margin-right: 7px;
+    }
+  }

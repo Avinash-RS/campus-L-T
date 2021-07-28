@@ -32,15 +32,7 @@ export class InvSubEmploymentComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: 'work.svg',
-        name: 'Assigned Candidates',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST,
-        data: `${this.activatedRoute.queryParams['_value']['data']}`,
-        active: true
-      },
-    ];
+    const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }

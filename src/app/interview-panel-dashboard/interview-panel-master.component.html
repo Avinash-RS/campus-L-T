@@ -1,13 +1,13 @@
- 
-
+<app-common-sidebar [sideBar]="SideMenu"></app-common-sidebar>
+<ng-container *ngIf="false">
 <app-common-header></app-common-header>
 
 <mat-drawer-container class="second-sidenav">
   <mat-drawer class="sidenav" mode="side" [opened]="!sidebarOpen">
     <ul>
       <li (click)="sidebar()">
-        <span><img src="assets/images/keyboard_arrow_left.svg"></span>
-      </li>  
+        <span><em class="icon-Hamburger"></em></span>
+      </li>
         <!--  OfferedCandidatesLIST-->
         <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS" routerLinkActive="active">
           <span><img src="assets/images/evaluation.svg" alt=""></span>
@@ -15,7 +15,7 @@
           <span>
             <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
           </span>
-        </li> 
+        </li>
     </ul>
   </mat-drawer>
   <mat-drawer-content class="main-container content">
@@ -23,13 +23,13 @@
       <div class="sidemenu">
         <ul>
           <li (click)="sidebar()">
-            <span><img src="assets/images/keyboard_arrow_right.svg"></span>
-          </li>  
+            <span><em class="icon-List"></em></span>
+          </li>
             <!--  OfferedCandidatesLIST-->
             <li [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS" routerLinkActive="active">
               <span><img src="assets/images/evaluation.svg" matTooltip="Candidate Details" alt=""></span>
-            </li> 
-          
+            </li>
+
         </ul>
       </div>
     </mat-drawer>
@@ -65,3 +65,4 @@
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
+</ng-container>
