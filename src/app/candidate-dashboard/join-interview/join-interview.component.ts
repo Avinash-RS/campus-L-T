@@ -63,10 +63,10 @@ export class JoinInterviewComponent implements OnInit {
           });
         })
         this.interview = this.interview.filter((_, index) => index == this.findIndex);
-        if(this.interview?.userDtl){
-          this.interview.userDtl.forEach((element,index) => {
+        if(this.interview[0]?.userDtl){
+          this.interview[0]?.userDtl.forEach((element,index) => {
             if(element.type != this.roleType && this.userEmail != element.emailId){
-              this.interview.userDtl.splice(index,1);
+              this.interview[0]?.userDtl.splice(index,1);
             }
           });
         }
