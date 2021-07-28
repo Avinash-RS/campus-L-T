@@ -1603,8 +1603,9 @@ button:focus {
     }
   }
   .date {
-    border: 1px solid rgba(0, 0, 0, 0.527);
+    border: 1px solid #d9d9d9;
     height: 30px !important;
+    border-radius: 4px;
     .mat-form-field-wrapper {
       height: 30px !important;
     }
@@ -1754,11 +1755,11 @@ tr.mat-row:hover {
 .submit,
 .ok {
   background: $primary-red;
-  box-shadow: 0px 3px 6px #00000040 !important;
   color: $white;
   font-weight: 200;
   font-size: 13px;
-  border-radius: 0px !important;
+  box-shadow: none !important;
+  border-radius: 3px !important;
   height: 30px !important;
   padding: 0 1em !important;
   min-width: 100px !important;
