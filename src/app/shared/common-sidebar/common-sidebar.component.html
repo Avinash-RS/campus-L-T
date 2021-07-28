@@ -18,7 +18,8 @@
         </ng-container>
 
         <ng-container *ngIf="role == 'candidate'">
-          <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+          <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index"
+            [routerLink]="menu.url" routerLinkActive="active">
             <span><em class="{{menu.icon}}"></em></span>
             <span>{{menu.name}}</span>
             <span>
@@ -72,7 +73,8 @@
             </ng-container>
 
             <ng-container *ngIf="role == 'candidate'">
-              <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+              <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index"
+                [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
@@ -112,10 +114,9 @@
           </div>
           <div class="heading3">{{breadcrumbs[1].label}}</div>
         </div>
-        <app-join-interview *ngIf="role == 'candidate' && false"></app-join-interview>
+        <app-join-interview *ngIf="role == 'candidate'"></app-join-interview>
         <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">
           <div class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
-
             <ng-container *ngIf="subMenus && subMenus.length > 0">
               <div [routerLink]="subMenus.router"
                 [queryParams]="subMenus.data ? {data: subMenus.data ? subMenus.data : ''} : ''"
@@ -131,4 +132,4 @@
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
-  </div>
+</div>
