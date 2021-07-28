@@ -1,5 +1,5 @@
 <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview">
-    <div class="iconinfo"><em class="icon-Info"></em></div>
+    <div *ngIf="role == 'candidate'" class="iconinfo"><em class="icon-Info"></em></div>
     <div>
         <div *ngIf="role == 'candidate'" class="interview">
             <h5>Dear Candidate</h5>
