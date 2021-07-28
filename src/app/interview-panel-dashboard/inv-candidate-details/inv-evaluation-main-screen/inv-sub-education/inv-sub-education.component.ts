@@ -79,9 +79,6 @@ export class InvSubEducationComponent implements OnInit {
 
 
   next() {
-    const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
-    const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
-    const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS, this.queryParams);
   }
 

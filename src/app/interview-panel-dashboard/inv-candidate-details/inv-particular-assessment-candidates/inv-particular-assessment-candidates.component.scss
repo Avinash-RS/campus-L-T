@@ -291,6 +291,16 @@ th {
     }
   }
 
+  ::ng-deep .profileAvatar {
+    width: 30px;
+    height: 30px;
+    img {
+      width: 30px;
+      height: 30px;
+        border-radius: 50%
+    }
+  }
+
   ::ng-deep .btn-outline {
     height: 27px;
     border: 1px solid #c02222;

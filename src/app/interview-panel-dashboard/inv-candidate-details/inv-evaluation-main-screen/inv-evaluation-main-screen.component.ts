@@ -65,24 +65,6 @@ export class InvEvaluationMainScreenComponent implements OnInit {
       this.uid = params['uid'];
       this.email = params['email'];
       this.form = params['form'];
-      this.appConfig.setLocalData('cname', this.candidateName);
-      this.appConfig.setLocalData('cid', this.candidateId);
-      this.appConfig.setLocalData('cstatus', this.candidateStatus);
-      this.appConfig.setLocalData('ctag', this.tagName);
-      this.assessmentDetails(params['data']);
-    });
-  }
-
-  assessmentDetails(name) {
-    const apidata = {
-      shortlist_name: name
-    };
-    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
-      this.assessmentName = data;
-
-    }, (err) => {
-
     });
   }
 

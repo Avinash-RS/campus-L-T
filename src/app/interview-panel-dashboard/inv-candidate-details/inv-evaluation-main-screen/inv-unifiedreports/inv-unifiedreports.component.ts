@@ -61,7 +61,11 @@ export class InvUnifiedreportsComponent implements OnInit {
       console.log('res', response);
       this.appConfig.hideLoader();
       if (response && response.success) {
-        this.getAllReportsData = response.data && response.data[0] ? response.data[0] : null;
+        if (response.data[0] && response.data[0].firstname) {
+          this.getAllReportsData = response.data && response.data[0] ? response.data[0] : null;
+        } else {
+          this.getAllReportsData = [];
+        }
       } else {
         this.appConfig.warning('No Reports Available');
         this.getAllReportsData = [];

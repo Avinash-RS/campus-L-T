@@ -1,4 +1,4 @@
-<div class="reportContainer">
+<div class="reportContainer" *ngIf="getAllReportsData && getAllReportsData.length > 0 else noData">
 
   <app-profile-info (driveName)="getSelectedDriveName($event)" [getAllReportsData]="getAllReportsData">
   </app-profile-info>
@@ -7,7 +7,11 @@
   <app-competency-areas [getAllReportsData]="getAllReportsData"></app-competency-areas>
   <app-quality-area [getAllReportsData]="getAllReportsData"></app-quality-area>
 </div>
-
+<ng-template #noData>
+  <div class="noData">
+    No Assessment Details Available
+  </div>
+</ng-template>
 <div class="button-wrapper">
   <button class="submit" mat-button (click)="next()">Next</button>
 </div>

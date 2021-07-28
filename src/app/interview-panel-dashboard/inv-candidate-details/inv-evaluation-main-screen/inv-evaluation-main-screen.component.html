@@ -1,7 +1,7 @@
 <div class="inv-evaluation">
 <div class="sticky">
-    <app-sub-shared-inv-panel-header *ngIf="assessmentName"
-    [details]="assessmentName ? assessmentName : ''" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-inv-panel-header>
+    <app-sub-shared-inv-panel-header
+    [details]="nameOfAssessment ? nameOfAssessment : ''" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-inv-panel-header>
 
   <div class="router-wrapper">
     <div class="main-toolbar">

@@ -70,7 +70,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       },
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
-    // this.editRouteParamGetter();
   }
 
   ngOnInit() {
@@ -79,14 +78,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.tabledef();
   }
 
-  // Get url param for edit route
-  editRouteParamGetter() {
-    // Get url Param to view Edit user page
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.nameOfAssessment = params['data'];
-      this.assessmentDetails(params['data']);
-    });
-  }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
@@ -170,8 +161,20 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           return params.value;
         },
         cellStyle: { color: '#C02222' },
+        // cellRenderer: (params) => {
+        //   if (params['data'] && params['data']['evaluation_status_1'] == 'completed') {
+        //     return `<span class="status completed ">Completed</button>`;
+        //   }
+        //   if (params['data'] && params['data']['evaluation_status_1'] == 'submitted') {
+        //     return `<span class=" status ">Submitted</button>`;
+        //   }
+        //   else {
+        //     return `<span class="status ">Schedule</button>`;
+        //   }
+        // },
+
         cellRenderer: (params) => {
-          return `<span style="cursor: pointer">${params['data']['candidate_name']} </span>`;
+          return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params['data']['profile_image_url']}"></span> <span>${params['data']['candidate_name']}</span> </span>`;
         }
       },
       {
@@ -291,21 +294,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.getUsersList();
   }
 
-  assessmentDetails(name) {
-    const apidata = {
-      shortlist_name: name
-    };
-
-    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
-      this.assessmentName = data;
-      this.getUsersList();
-
-    }, (err) => {
-
-    });
-  }
-
 
   getInterview(){
     var obj = {
@@ -315,6 +303,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       if(result.success){
         this.scheduleListDetails = result.data;
         this.scheduleListDetails.forEach((element, i) => {
+          element.assigned_by = element.createdByName ? element.createdByName : '-';
           if (element.userDtl) {
             element.link = element.userDtl && element.userDtl ? element.userDtl : '';
             let candidateData = this.removeInterviewer(element.userDtl);
@@ -333,13 +322,14 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   }
 
   mergePhpAndEdgeService(edgeSeviceData) {
-    // element.datetime_Interview = this.momentForm(dummy);
     this.userList.forEach(element => {
       edgeSeviceData.forEach(edgeData => {
         if (element.email == edgeData.emailId) {
+          if (element.evaluation_status == '1') {
+            this.buttonCheck = true;
+          }
           element.startTime = this.momentForm(edgeData.startTime);
           element.endTime = this.momentForm(edgeData.endTime);
-          element.assigned_by = 'Avinash';
           element.join_interview = this.isTimeExpired(edgeData.startTime, edgeData.endTime);
         }
       });
@@ -396,9 +386,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           counting = counting + 1;
           element['counter'] = counting;
           element['evaluation_btn'] = element.evaluation_status;
-          if (element.evaluation_status == '1') {
-            this.buttonCheck = true;
-          }
           element['evaluation_status_1'] = element.evaluation_status && element.evaluation_status == '2' ? 'submitted' : element.evaluation_status == '1' ? 'completed' : 'schedule';
           this.userList.push(element);
         }
