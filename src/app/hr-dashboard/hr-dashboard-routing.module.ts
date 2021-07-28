@@ -488,7 +488,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.DASHBOARD}`,
+        redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`,
         pathMatch: 'full',
 
       }
