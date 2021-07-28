@@ -49,7 +49,7 @@ export class JoinInterviewComponent implements OnInit {
 }
   getInterview(){
     var obj = {
-      'userDtl.emailId': this.userEmail
+      'email': this.userEmail
     }
     this.adminService.getScheduledList(obj).subscribe((result:any)=>{
       this.appConfig.hideLoader();
