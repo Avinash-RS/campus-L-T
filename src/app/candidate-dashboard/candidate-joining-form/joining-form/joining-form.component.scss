@@ -21,21 +21,22 @@
             ul {
                 list-style: none;
                 position: relative;
+                padding-left: 5px;
                 li {
-                    padding: 12px 0;
+                    padding: 10px 0 10px 20px;
                     display: flex;
                     align-items: center;
-                    padding-left: 20px;
                     cursor: pointer;
+                    position: relative;
                 }
                 li:before {
                     content: '';
                     position: absolute;
                     background: white;
                     border: 1px solid #D3D3D3;
-                    width: 15px;
-                    height: 15px;
-                    left: 34px;
+                    width: 17px;
+                    height: 17px;
+                    left: -9px;
                     border-radius: 50%;
 
                 }
@@ -78,15 +79,15 @@
 
             }
             ul::after {
-                content: '';
+                content: ' ';
                 position: absolute;
-                width: 1.75px;
-                height: calc(100% - 50px) !important;
-                left: 41px;
+                width: 1px;
+                height: calc(100% - 40px);
+                left: 4px;
                 top: 0;
-                background: #D3D3D3;
+                background: #50635a;
                 z-index: -1;
-                margin-top: 29px;
+                margin-top: 18px; 
             }
         }
     }
@@ -94,15 +95,15 @@
 .check {
     border-radius: 0px;
     display: inline-block;
-    transform: rotate(45deg);
+    transform: rotate( 45deg);
     height: 8px;
     width: 4px;
     border-bottom: 2px solid white;
     border-right: 2px solid white;
     position: absolute;
-    margin-left: -20px;
+    margin-left: -22px;
     margin-bottom: 2px;
-    transition: .5s linear;
+    transition: 0.5s linear;
 }
 
 .router {

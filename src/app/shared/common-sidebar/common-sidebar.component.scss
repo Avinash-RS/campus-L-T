@@ -292,8 +292,13 @@ mat-drawer ul li span img {
   padding: 4px 25px;
   width: 100%;
   height: calc(100vh - 85px);
+  position: relative;
+  z-index: 5;
 }
 
 .mat-drawer-side {
   border-right: solid 1px #e6e6e67d;
+  z-index: 8;
+    box-shadow: 1px 3px 3px #0003 !important;
+
 }
