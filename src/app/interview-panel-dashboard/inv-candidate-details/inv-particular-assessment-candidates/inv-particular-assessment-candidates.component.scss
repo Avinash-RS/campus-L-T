@@ -177,8 +177,8 @@ th {
         &:last-child {
           &:before {
             content: none;
-          }  
-          
+          }
+
          }
         &:before {
           content: '';
@@ -188,7 +188,7 @@ th {
           height: 70%;
           top: 7px;
         }
-      } 
+      }
       span {
         font-weight: 700;
         color: #000;
@@ -200,7 +200,7 @@ th {
       align-items: center;
       width: 30%;
       justify-content: flex-end;
-    
+
       div {
         display: flex;
         flex-direction: column;
@@ -222,7 +222,7 @@ th {
           margin-right: 10px;
         }
       }
-    } 
+    }
 }
 ::ng-deep .first-sidenav {
   display: none;
@@ -233,7 +233,7 @@ th {
     justify-content: flex-end;
     margin-bottom: 10px;
     margin-top: -33px;
-   button { 
+   button {
      font-size: 16px !important;
             border-radius: 4px !important;
             margin-right: 13px;
@@ -250,7 +250,7 @@ th {
 }
 
 
-::ng-deep span.status { 
+::ng-deep span.status {
       background-color: #bababa;
       color: #666666 ;
       border-radius: 4px;
@@ -260,15 +260,15 @@ th {
       padding: 7px 8px;
 
       &.inprogress {
-      background-color: #ffbc00;  
+      background-color: #ffbc00;
       color: #fff;
       }
       &.completed {
-        background-color: #48cc83;  
+        background-color: #48cc83;
         color: #fff;
-        } 
+        }
       &.rejected {
-        background-color: #c02222;  
+        background-color: #c02222;
       color: #fff;
       }
   }
@@ -283,7 +283,8 @@ th {
     justify-content: space-between !important;
 
     &.disabled {
-      background-color: #bababa; 
+      background-color: #bababa;
+      cursor: not-allowed;
     }
     em {
       margin-right: 7px;
@@ -301,8 +302,8 @@ th {
 
     &.checked {
       border: none;
-      background-color: #48cc83;  
-      color: #fff; 
+      background-color: #48cc83;
+      color: #fff;
       flex-direction: row !important;
       justify-content: center !important;
       cursor: pointer;
