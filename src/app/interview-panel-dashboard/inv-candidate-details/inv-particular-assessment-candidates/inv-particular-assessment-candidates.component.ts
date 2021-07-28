@@ -285,12 +285,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       return rowNode.data ? rowNode.data.evaluation_status == '1' : false;
     };
     this.getUsersList();
+    
   }
 
 
   getInterview(){
     var obj = {
-      'userDtl.emailId': this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
+      'email': this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
     this.adminService.getScheduledList(obj).subscribe((result:any)=>{
       if(result.success){

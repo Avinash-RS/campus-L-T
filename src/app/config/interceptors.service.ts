@@ -31,16 +31,23 @@ export class InterceptorsService implements HttpInterceptor {
         this.appConfig.showLoader();
       }
     }
-    
+
     // created on 28-Nov
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
-
-    const clone = request.clone({
-      headers: request.headers.set('Accept', 'application/json'),
-      withCredentials: this.isLocal ? false : true
-    });
+    let clone: any;
+    if (request.url.includes('/getunifiedReport') || request.url.includes('/scheduleinterview') || request.url.includes('/getscheduleList')) {
+      clone = request.clone({
+        headers: request.headers.set('Accept', 'application/json'),
+        withCredentials: this.isLocal ? false : false
+      });
+    } else {
+      clone = request.clone({
+        headers: request.headers.set('Accept', 'application/json'),
+        withCredentials: this.isLocal ? false : true
+      });
+    }
     return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
         return event;
