@@ -61,7 +61,6 @@ export class JoinInterviewComponent implements OnInit {
             this.showInterview = false;
           }
         }
-        console.log(this.interview)
       }
     })
   }
