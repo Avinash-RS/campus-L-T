@@ -311,7 +311,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       'userDtl.emailId': this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
     this.adminService.getScheduledList(obj).subscribe((result:any)=>{
-      this.appConfig.hideLoader();
       if(result.success){
         this.scheduleListDetails = result.data;
         this.scheduleListDetails.forEach((element, i) => {
@@ -324,8 +323,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         this.mergePhpAndEdgeService(this.scheduleListDetails);
       } else {
         this.rowData = this.userList;
+        this.appConfig.hideLoader();
       }
     }, (err)=> {
+      this.appConfig.hideLoader();
       this.rowData = this.userList;
     })
   }
@@ -349,6 +350,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     this.userList = this.userList.filter(element => element.link);
     this.rowData = this.userList;
+    this.appConfig.hideLoader();
     this.getSummaryCount();
     console.log('usr', this.userList)
   }
@@ -388,7 +390,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     };
 
     this.adminService.invSubmittedCandidatesList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
 
       const align = datas ? datas : [];
       let counting = 0;
