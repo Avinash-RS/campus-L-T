@@ -7,6 +7,16 @@
         <li (click)="sidebar()">
           <span><em class="icon-Hamburger"></em></span>
         </li>
+        <ng-container *ngIf="role == 'candidate'">
+          <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+            <span><img [src]="menu.icon" alt=""></span>
+            <span>{{menu.name}}</span>
+            <span>
+              <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+            </span>
+          </li>
+        </ng-container>
+
         <ng-container *ngIf="role == 'hr'">
           <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
             <span><img [src]="menu.icon" alt=""></span>
@@ -45,6 +55,12 @@
             <li (click)="sidebar()">
               <span><em class="icon-List"></em></span>
             </li>
+            <ng-container *ngIf="role == 'candidate'">
+              <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+                <span><img [src]="menu.icon" alt=""></span>
+              </li>
+            </ng-container>
+
             <ng-container *ngIf="role == 'hr'">
               <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
                 <span><img [src]="menu.icon" alt=""></span>

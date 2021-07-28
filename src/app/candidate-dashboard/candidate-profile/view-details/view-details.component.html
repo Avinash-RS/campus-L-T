@@ -1,4 +1,4 @@
-<div id="top" class="printContentDiv">     <!-- This div using for print -->
+<div class="printContentDiv">     <!-- This div using for print -->
   <div class="top-main-wrapper view-page">
     <div *ngIf="showNext" (click)="print()" class="print printBtn">
       <label style="cursor: pointer;" class="submit">Print</label>
@@ -379,8 +379,8 @@
         <ng-container *ngIf="userDetails['skillValueArray'].length < 1">
           <div class="skills">
             {{'-'}}
-          </div>  
-        </ng-container>  
+          </div>
+        </ng-container>
         <!-- When Array is empty -->
         <!-- <div class="skills" *ngIf="userDetails['skillArray'] && (userDetails['skillArray'].length < 1 || !userDetails['skillsArray'])">
           {{'NA'}}
@@ -541,8 +541,8 @@
           <div>When</div>
           <div class="box-value">{{apiForm?.when_interview}}</div>
          </div>
-       </div>   
-   
+       </div>
+
     </div>
 
       </div>

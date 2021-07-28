@@ -27,6 +27,7 @@ export class MasterDashboardComponent implements OnInit {
   showProfileOnly = false;
   showDocuments = false;
   showJoiningForm: boolean;
+  candidateSideMenu: any;
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService,
@@ -42,15 +43,89 @@ export class MasterDashboardComponent implements OnInit {
     if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
       this.showJoiningForm = true;
     }
-    
+
     // Assigning sub menus for the current router
     this.sharedService.subMenuSubject.subscribe((data: any) => {
       this.subMenus = data;
     });
 
     this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    this.sendMenus();
   }
 
+  sendMenus() {
+    if (!this.showJoiningForm) {
+      this.candidateSideMenu = [
+        {
+          url: this.appConstant.CANDIDATE_DASHBOARD.PROFILE,
+          name: 'Profile',
+          icon: 'assets/images/003-user.svg',
+          hide: false
+        }
+      ]
+      if (this.showDocuments) {
+        let add = {
+          url: this.appConstant.CANDIDATE_DASHBOARD.DOCUMENT,
+          name: 'Documents',
+          icon: 'assets/images/Page-1.svg',
+          hide: false
+        }
+        this.candidateSideMenu.push(add);
+      }
+  }
+  if (this.showJoiningForm) {
+    this.candidateSideMenu = [
+      {
+        url: this.appConstant.CANDIDATE_DASHBOARD.JOINING,
+        name: 'Joining Form',
+        icon: 'assets/images/Page-1.svg',
+        hide: false,
+        click: true
+      },
+      // {
+      //   url: this.appConstant.CANDIDATE_DASHBOARD.JOINING_FAQ,
+      //   name: 'FAQ',
+      //   icon: 'assets/images/Page-1.svg',
+      //   hide: false
+      // }
+    ]
+}
+
+    //     <ul>
+    //     <ng-container *ngIf="!showJoiningForm">
+    //   <li [routerLink]="appConstant.CANDIDATE_DASHBOARD.PROFILE" routerLinkActive="active">
+    //     <span><img src="assets/images/003-user.svg" width="20px" height="20px" alt=""></span>
+    //     <span>Profile</span>
+    //     <span>
+    //       <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+    //     </span>
+    //   </li>
+    //   <li [ngClass]="showDocuments ? '' : 'hide'" [routerLink]="appConstant.CANDIDATE_DASHBOARD.DOCUMENT" routerLinkActive="active">
+    //     <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
+    //     <span>Documents</span>
+    //     <span>
+    //       <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+    //     </span>
+    //   </li>
+    // </ng-container>
+    //   <li *ngIf="showJoiningForm" (click)="checkJoiningRoute()" [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING" routerLinkActive="active">
+    //     <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
+    //     <span>Joining Form</span>
+    //     <span>
+    //       <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+    //     </span>
+    //   </li>
+    //   <li *ngIf="showJoiningForm && false" [routerLink]="appConstant.CANDIDATE_DASHBOARD.JOINING_FAQ" routerLinkActive="active">
+    //     <span><img src="assets/images/Page-1.svg" width="20px" height="20px" alt=""></span>
+    //     <span>FAQ</span>
+    //     <span>
+    //       <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+    //     </span>
+    //   </li>
+
+    // </ul>
+
+  }
   ngOnInit() {
     this.sidebarOpen = true;
 
@@ -142,7 +217,7 @@ export class MasterDashboardComponent implements OnInit {
     this.sharedService.printSubject.subscribe((data: any)=> {
       this.sidebarOpen = false;
       setTimeout(() => {
-        window.print();        
+        window.print();
       }, 1000);
       // this.sidebarOpen = true;
     }, (err)=> {
