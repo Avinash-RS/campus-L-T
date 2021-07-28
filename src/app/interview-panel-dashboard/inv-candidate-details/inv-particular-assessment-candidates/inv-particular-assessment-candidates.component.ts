@@ -117,7 +117,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     if (event.colDef.field === 'join_interview') {
       if (event['data'] && event['data']['join_interview'] == 'yes') {
-        this.openInterview(event['data']['link']);
+        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
+        // this.openInterview(event['data']['link']);
       }
     }
   }
