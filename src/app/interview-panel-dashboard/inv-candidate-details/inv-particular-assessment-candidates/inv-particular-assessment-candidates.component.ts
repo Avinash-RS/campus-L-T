@@ -117,7 +117,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     if (event.colDef.field === 'join_interview') {
       if (event['data'] && event['data']['join_interview'] == 'yes') {
-        this.openInterview(event['data']['link']);
+        this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
+        // this.openInterview(event['data']['link']);
       }
     }
   }
@@ -338,17 +339,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         if (element.email == edgeData.emailId) {
           element.startTime = this.momentForm(edgeData.startTime);
           element.endTime = this.momentForm(edgeData.endTime);
-          element.roomId = edgeData.roomId;
-          element.roomName = edgeData.roomName;
-          element.password = edgeData.password;
-          element.link = edgeData.link;
           element.assigned_by = 'Avinash';
           element.join_interview = this.isTimeExpired(edgeData.startTime, edgeData.endTime);
         }
       });
     });
 
-    this.userList = this.userList.filter(element => element.link);
+    this.userList = this.userList.filter(element => element.startTime);
     this.rowData = this.userList;
     this.appConfig.hideLoader();
     this.getSummaryCount();
