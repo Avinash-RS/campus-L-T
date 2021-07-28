@@ -59,7 +59,7 @@ export class MasterDashboardComponent implements OnInit {
         {
           url: this.appConstant.CANDIDATE_DASHBOARD.PROFILE,
           name: 'Profile',
-          icon: 'assets/images/003-user.svg',
+          icon: 'icon-Job',
           hide: false
         }
       ]
@@ -67,7 +67,7 @@ export class MasterDashboardComponent implements OnInit {
         let add = {
           url: this.appConstant.CANDIDATE_DASHBOARD.DOCUMENT,
           name: 'Documents',
-          icon: 'assets/images/Page-1.svg',
+          icon: 'icon-Role',
           hide: false
         }
         this.candidateSideMenu.push(add);
@@ -78,7 +78,7 @@ export class MasterDashboardComponent implements OnInit {
       {
         url: this.appConstant.CANDIDATE_DASHBOARD.JOINING,
         name: 'Joining Form',
-        icon: 'assets/images/Page-1.svg',
+        icon: 'icon-Assessment',
         hide: false,
         click: true
       },
