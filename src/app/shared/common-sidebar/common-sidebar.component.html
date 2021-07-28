@@ -5,11 +5,11 @@
     <mat-drawer class="sidenav" mode="side" [opened]="!sidebarOpen">
       <ul>
         <li (click)="sidebar()">
-          <span><em class="icon-Hamburger"></em></span>
+          <span><em class="icon-menu_open"></em></span>
         </li>
         <ng-container *ngIf="role == 'interview_panel'">
           <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-            <span><img [src]="menu.icon" alt=""></span>
+            <span><em class="{{menu.icon}}"></em></span>
             <span>{{menu.name}}</span>
             <span>
               <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
@@ -19,7 +19,7 @@
 
         <ng-container *ngIf="role == 'candidate'">
           <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-            <span><img [src]="menu.icon" alt=""></span>
+            <span><em class="{{menu.icon}}"></em></span>
             <span>{{menu.name}}</span>
             <span>
               <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
@@ -29,7 +29,7 @@
 
         <ng-container *ngIf="role == 'hr'">
           <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-            <span><img [src]="menu.icon" alt=""></span>
+            <span><em class="{{menu.icon}}"></em></span>
             <span>{{menu.name}}</span>
             <span>
               <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
@@ -63,23 +63,23 @@
         <div class="sidemenu">
           <ul>
             <li (click)="sidebar()">
-              <span><em class="icon-List"></em></span>
+              <span><em class="icon-menu"></em></span>
             </li>
             <ng-container *ngIf="role == 'interview_panel'">
               <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-                <span><img [src]="menu.icon" alt=""></span>
+                <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'candidate'">
               <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-                <span><img [src]="menu.icon" alt=""></span>
+                <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'hr'">
               <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-                <span><img [src]="menu.icon" alt=""></span>
+                <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
@@ -112,7 +112,7 @@
           </div>
           <div class="heading3">{{breadcrumbs[1].label}}</div>
         </div>
-        <app-join-interview *ngIf="role == 'candidate'"></app-join-interview>
+        <app-join-interview *ngIf="role == 'candidate' && false"></app-join-interview>
         <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">
           <div class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
 

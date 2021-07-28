@@ -45,43 +45,43 @@ export class HrMasterComponent implements OnInit {
       // {
       //   url: this.appConstant.HR_DASHBOARD.DASHBOARD,
       //   name: 'Dashboard',
-      //   icon: 'assets/images/dashboard.svg',
+      //   icon: 'icon-dashboard',
       //   hide: false
       // },
       {
         url: this.appConstant.HR_DASHBOARD.USER_MANAGEMENT,
         name: 'User Management',
-        icon: 'assets/images/001-people.svg',
+        icon: 'icon-manage_accounts',
         hide: false
       },
       {
         url: this.appConstant.HR_DASHBOARD.SHORTLISTING,
         name: 'Shortlists',
-        icon: 'assets/images/Human Resource-Job Search-Magnifying Glass-Paper-Search.svg',
+        icon: 'icon-person_search',
         hide: false
       },
       {
         url: this.appConstant.HR_DASHBOARD.EVALUATION,
         name: 'Panel Assignment',
-        icon: 'assets/images/evaluation.svg',
+        icon: 'icon-reg',
         hide: false
       },
       {
         url: this.appConstant.HR_DASHBOARD.BUSINESSROUTE,
         name: `IC's/Business`,
-        icon: 'assets/images/status-bar.svg',
+        icon: 'icon-portrait',
         hide: false
       },
       {
         url: this.appConstant.HR_DASHBOARD.REPORTS,
         name: `Reports`,
-        icon: 'assets/images/003-statistics.svg',
+        icon: 'icon-Statistics',
         hide: false
       },
       {
         url: this.appConstant.HR_DASHBOARD.HR_STATUS,
         name: `Status`,
-        icon: 'assets/images/status-bar.svg',
+        icon: 'icon-track_changes',
         hide: false
       },
   ]

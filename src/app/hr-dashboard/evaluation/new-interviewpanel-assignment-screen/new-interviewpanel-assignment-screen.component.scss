@@ -3,7 +3,7 @@
 .new-inv-particular-assessment-candidate {
   background: $white;
   height: 100%;
-  padding-top: 25px;
+  padding-top: 15px;
   .total-wrap {
     display: flex;
     justify-content: space-between;
@@ -60,7 +60,7 @@
   }
 }
   .user-list-wrapper {
-    margin: 0em 0 0.5em 0;
+    margin: 0.5em 0 0.9em 0;
     height: 100%;
     /* Structure */
     .search-bar {
@@ -76,11 +76,9 @@
         font-size: 14px;
         border: 0.5px solid $borderColor-2;
         background: $white-2 0% 0% no-repeat padding-box !important;
-        border-radius: 5px;
-        box-shadow: $shadow-light-black;
+        border-radius: 5px; 
         box-sizing: border-box;
-        padding: 0.25em 0.15em;
-        height: 27px;
+        padding: 0.25em 0.15em; 
         position: relative;
         img {
           width: 20px;
@@ -227,7 +225,7 @@ mat-expansion-panel-header {
   padding: 0 16px 0px 24px !important;
   float: right;
   margin-right: 132px;
-  margin-bottom: 15px; 
+  margin-bottom: 0; 
   border-radius: 5px;
   mat-panel-title {
     color: $white !important;

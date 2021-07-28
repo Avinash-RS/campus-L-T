@@ -46,7 +46,7 @@ export class InterviewPanelMasterComponent implements OnInit {
       {
         url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS,
         name: 'Dashboard',
-        icon: 'assets/images/evaluation.svg',
+        icon: 'icon-dashboard',
         hide: false
       }
   ]

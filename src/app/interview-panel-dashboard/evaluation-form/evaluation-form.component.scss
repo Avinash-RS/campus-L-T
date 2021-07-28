@@ -105,7 +105,7 @@ table {
   padding-right: 7%;
 }
 .in-box {
-  border: 1px solid $borderColor-9;
+  border: 1px solid #d9d9d9;
   height: 31px;
 }
 .box {
@@ -161,6 +161,7 @@ textarea {
   textarea {
     padding: 4px !important;
     color: $secondary !important;
+    border-radius: 3px;
   }
 }
 
@@ -180,7 +181,7 @@ textarea {
   color: $red;
 }
 textarea {
-  border: 1px solid $borderColor-9;
+  border: 1px solid #d9d9d9;
 }
 textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
   border: solid $red 1px;
