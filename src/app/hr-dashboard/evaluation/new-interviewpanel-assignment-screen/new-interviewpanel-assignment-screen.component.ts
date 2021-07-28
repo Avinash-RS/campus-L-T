@@ -713,7 +713,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       'startTime': this.startDate,
       'endTime': this.endDate,
       "userDtl": userDetails,
-      "createdBy" : this.appConfig.getLocalData('userEmail')
+      "createdByID" : this.appConfig.getLocalData('userEmail'),
+      "createdByName": this.appConfig.getLocalData('username'),
     }
     this.objList = obj;
     this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{

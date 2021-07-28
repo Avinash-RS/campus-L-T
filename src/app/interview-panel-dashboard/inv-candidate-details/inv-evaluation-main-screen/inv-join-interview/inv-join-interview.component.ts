@@ -31,7 +31,7 @@ export class InvJoinInterviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appConfig.hideLoader();
+    
   }
 
   // Get url param for edit route
