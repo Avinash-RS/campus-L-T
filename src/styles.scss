@@ -1754,11 +1754,11 @@ tr.mat-row:hover {
 .submit,
 .ok {
   background: $primary-red;
-  box-shadow: 0px 3px 6px #00000040 !important;
   color: $white;
   font-weight: 200;
   font-size: 13px;
-  border-radius: 0px !important;
+  box-shadow: none !important;
+  border-radius: 3px !important;
   height: 30px !important;
   padding: 0 1em !important;
   min-width: 100px !important;

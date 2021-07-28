@@ -22,6 +22,23 @@ mat-toolbar {
   justify-content: space-between;
   width: 100%;
   align-items: center;
+  &.open {
+
+    &:before {
+      width: 235px;
+    }
+  }
+  &:before {
+    content: ' ';
+    position: absolute;
+    width: 50px;
+    height: 4px;
+    background-color: #f1f1f1;
+    bottom: -4px;
+    left: 0;
+    box-shadow: 1px 5px 5px #0003 !important;
+  }
+
   img {
     height: 45px;
   }
