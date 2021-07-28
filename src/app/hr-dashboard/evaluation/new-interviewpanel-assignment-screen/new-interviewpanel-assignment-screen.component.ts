@@ -140,7 +140,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     //   },
     {
       icon: '002-cv.svg',
-      name: 'Interview Panel Assign',
+      name: 'Panel Assignment',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
     },
     {

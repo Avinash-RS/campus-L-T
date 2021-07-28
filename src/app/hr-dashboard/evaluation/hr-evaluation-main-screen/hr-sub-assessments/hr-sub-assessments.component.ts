@@ -56,7 +56,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview Panel Assign',
+        name: 'Panel Assignment',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
