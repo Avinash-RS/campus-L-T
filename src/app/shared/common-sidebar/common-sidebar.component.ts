@@ -36,7 +36,11 @@ export class CommonSidebarComponent implements OnInit {
      this.sharedService.subMenuSubject.subscribe((data: any) => {
        this.subMenus = data;
      });
-     this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+     setTimeout(() => {
+      this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+      // this.breadcrumbs[0].url = this.breadcrumbs[1] && this.breadcrumbs[1].url ? this.breadcrumbs[1].url : this.breadcrumbs[0].url;
+      // console.log('ad', this.breadcrumbs);
+     }, 1000);
    }
 
    ngOnInit() {
@@ -82,6 +86,7 @@ export class CommonSidebarComponent implements OnInit {
                  }
                });
                this.breadcrumbs = updateUrl;
+              //  console.log('bb', this.breadcrumbs);
                currentRoute = route;
                // }
              }
@@ -91,7 +96,7 @@ export class CommonSidebarComponent implements OnInit {
        this.rxjsSubjectForPrint();
       }
 
-   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
+   buildBreadCrumb(route: ActivatedRoute, url: string = '/', breadcrumbs: IBreadCrumb[] = []): any[] {
      // If no routeConfig is avalailable we are on the root path
 
      let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
@@ -114,7 +119,7 @@ export class CommonSidebarComponent implements OnInit {
      const breadcrumb: any = {
        label: label,
        url: nextUrl,
-       // params: param
+       params: param
      };
      // Only adding route with non-empty label
      const newBreadcrumbs = breadcrumb.label ? [...breadcrumbs, breadcrumb] : [...breadcrumbs];

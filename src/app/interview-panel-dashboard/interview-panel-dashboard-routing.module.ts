@@ -61,7 +61,7 @@ const routes: Routes = [
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
                 component: InvSubEmploymentComponent,
                 data: {
-                  breadcrumb: 'Employment Documents'
+                  breadcrumb: 'Candidate Profile'
                 }
               },
               {
@@ -75,14 +75,14 @@ const routes: Routes = [
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS}`,
                 component: InvUnifiedreportsComponent,
                 data: {
-                  breadcrumb: 'Test Sections'
+                  breadcrumb: 'Test Details'
                 }
               },
               {
                 path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW}`,
                 component: InvJoinInterviewComponent,
                 data: {
-                  breadcrumb: 'Join Interview'
+                  breadcrumb: 'Join Sessions'
                 }
               },
               {
