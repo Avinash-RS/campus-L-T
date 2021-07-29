@@ -38,8 +38,6 @@ export class CommonSidebarComponent implements OnInit {
      });
      setTimeout(() => {
       this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-      // this.breadcrumbs[0].url = this.breadcrumbs[1] && this.breadcrumbs[1].url ? this.breadcrumbs[1].url : this.breadcrumbs[0].url;
-      // console.log('ad', this.breadcrumbs);
      }, 1000);
    }
 
@@ -96,7 +94,7 @@ export class CommonSidebarComponent implements OnInit {
        this.rxjsSubjectForPrint();
       }
 
-   buildBreadCrumb(route: ActivatedRoute, url: string = '/', breadcrumbs: IBreadCrumb[] = []): any[] {
+   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
      // If no routeConfig is avalailable we are on the root path
 
      let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';

@@ -7,6 +7,7 @@ import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
+import { InvpanelGuard } from './guards/canload/invpanel.guard';
 
 const routes: Routes = [
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
     path: `${CONSTANT.ROUTES.TPO_DASHBOARD.HOME}`, loadChildren: './tpo-dashboard/tpo-dashboard.module#TpoDashboardModule', canLoad: [ TpocanloadGuard ]
   },
   {
-    path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.HOME}`, loadChildren: './interview-panel-dashboard/interview-panel-dashboard.module#InterviewPanelDashboardModule',
+    path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.HOME}`, loadChildren: './interview-panel-dashboard/interview-panel-dashboard.module#InterviewPanelDashboardModule', canLoad: [ InvpanelGuard ]
   }
 ];
 
