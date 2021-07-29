@@ -297,7 +297,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       if(result.success){
         this.scheduleListDetails = result.data;
         this.scheduleListDetails.forEach((element, i) => {
-          element.assigned_by = element.createdByName ? element.createdByName : '-';
           if (element.userDtl) {
             element.link = element.userDtl && element.userDtl ? element.userDtl : '';
             let candidateData = this.removeInterviewer(element.userDtl);
@@ -322,6 +321,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           if (element.evaluation_status == '1') {
             this.buttonCheck = true;
           }
+          element.assigned_by = edgeData.createdByName ? edgeData.createdByName : '-';
           element.startTime = this.momentForm(edgeData.startTime);
           element.endTime = this.momentForm(edgeData.endTime);
           element.join_interview = this.isTimeExpired(edgeData.startTime, edgeData.endTime);

@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { environment } from 'src/environments/environment';
 import { LoaderService } from './services/loader-service.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isIE = false;
   subscriptions: Subscription[] = [];
   maintenanceMessage: any;
-
+  loading: boolean = true;
 
   constructor(
     private router: Router,
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getScreenSize();
     this.checkIE();
+    this.listenToLoading();
   }
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -81,7 +83,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.openDialog(ScreenresolutionBoxComponent, data);
           }
     } else {
-      const data = false;
       if (this.screenBoolean) {
         this.matDialog.closeAll();
       }
@@ -126,6 +127,16 @@ export class AppComponent implements OnInit, OnDestroy {
       if (result) {
       }
     });
+  }
+
+     /**
+   * Listen and display the loading spinner.
+   */
+  listenToLoading(): void {
+    this.loadingService.isLoadingSub.pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
   }
 
   ngOnDestroy(): void {

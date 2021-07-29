@@ -29,13 +29,14 @@ export class InterceptorsService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.totalRequests++;
     this.loadingService.setLoading(true);
-      //  && !request?.url?.includes('api/state_api') && !request?.url?.includes('profile/bg_list') && !request?.url?.includes('profile/saved_details')) {
 
     // created on 28-Nov
     const headers = new HttpHeaders({
       'Accept': 'application/json'
     });
+
     let clone: any;
+    // For node service, we are setting false to withCredentials
     if (request.url.includes('/getunifiedReport') || request.url.includes('/scheduleinterview') || request.url.includes('/getscheduleList')) {
       clone = request.clone({
         headers: request.headers.set('Accept', 'application/json'),
@@ -48,11 +49,12 @@ export class InterceptorsService implements HttpInterceptor {
       });
     }
 
-    console.log('reques', this.totalRequests);
+    // Request Handling
     return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
-          this.totalRequests--;
+        // Loader set to True
+        this.totalRequests--;
         if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
         }
@@ -77,6 +79,7 @@ export class InterceptorsService implements HttpInterceptor {
       //   }),
       //   retry(3),
       catchError((error: HttpErrorResponse) => {
+        // Loader set to False
         this.totalRequests--;
         if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
@@ -87,7 +90,6 @@ export class InterceptorsService implements HttpInterceptor {
         }
 
         if (error.status === 0) {
-          // this.appConfig.error(error.statusText + ': HTTP failure response', '');
           this.appConfig.errorWithTitle('Your network connection is down or Request is getting timed out.', 'Please try again later..');
           return throwError(error);
         }
