@@ -77,15 +77,19 @@
     .sub-navs {
       cursor: pointer;
       height: 100%;
-      padding: 2px 2.5em;
+      padding: 2px 2em;
       display: flex;
-      border-left: solid white 1px;
-      background: $non-active-sub-bg 0% 0% no-repeat padding-box;
+      border-left: solid #fff 1px;
+      background-color: #eff0f2;
       align-items: center;
       flex-direction: row;
       justify-content: center;
       text-align: center;
       outline: none;
+      color: #5c6873;
+      img {
+        filter: invert(43%) sepia(13%) saturate(450%) hue-rotate(167deg) brightness(88%) contrast(90%);
+      }
       div:first-child {
         img {
           width: 30px;
@@ -93,20 +97,19 @@
         }
       }
       div:last-child {
-        margin: 0px 0 0 0;
-        color: $white;
+        margin: 0px 0 0 0; 
         padding: 0 0 0 0.5em;
         font-size: 13px;
       }
-    }
-    .sub-navs:hover {
-      background: $active-sub-bg-hover;
-      opacity: 1;
-    }
+    } 
     .active {
       background: $primary-red !important;
       outline: none;
       font-weight: 200;
+      color: #fff;
+      img {
+        filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+      }
     }
     .grid {
       display: grid !important;

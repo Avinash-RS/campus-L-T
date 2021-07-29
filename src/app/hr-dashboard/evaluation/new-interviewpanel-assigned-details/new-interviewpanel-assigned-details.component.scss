@@ -1,6 +1,7 @@
 @import "../../../themes/themes.scss";
 
 .main-new-interview-assigned {
+  padding: 1em 0;
     .total-wrap {
         display: flex;
         justify-content: space-around;
@@ -34,8 +35,7 @@
           grid-template-columns: .7fr 1fr;
           align-items: center;
           max-width: 400px;
-          margin-top: 1em;
-          // margin: 0 0 0.5em 0;
+          margin-top: 1em; 
           .label {
             color: $light-black;
             font-size: 14px;
@@ -43,13 +43,10 @@
           .input-box {
             nz-select {
               height: 30px;
-              color: $light-black;
-              // background: $white 0% 0% no-repeat padding-box;
-              // box-shadow: $shadow-light-black;
-              // border-radius: 5px;
-              // font-size: 13px;
+              color: $light-black; 
               min-width: 235px;
               max-width: 235px;
+              border-radius: 4px;
             }
           }
         }
@@ -68,8 +65,7 @@
     display: inline-flex;
     align-items: center;
     margin: 8px 0;
-    width: auto;
-    // min-width: 280px;
+    width: auto; 
     color: $header-blue;
     font-size: 14px;
     border: 0.5px solid $borderColor-2;
@@ -105,18 +101,10 @@
     }
   }
 }
-:focus {
-  border-radius: 0px;
+:focus { 
   border: none;
   outline: none;
-}
-// ::ng-deep.ag-paging-panel {
-//   background: #EAEAEA !important;
-//   height: 30px !important;
-//   font-weight: 400 !important;
-//   color: black !important;
-//   margin-bottom: 20px !important;
-// }
+} 
 :host ::ng-deep.ag-row-hover {
   background-color: $ag-hover !important;
 }
@@ -127,14 +115,45 @@ mat-expansion-panel {
   border: none !important;
   border-radius: 0px !important;
   box-shadow: none !important;
-  padding: .10em !important;
+  padding: 0.1em !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
 }
 mat-expansion-panel-header {
-  background: $primary-red !important;
+  background-color: #5c6873  !important;
   height: 30px !important;
   max-width: 100px !important;
-  padding: 0 16px 0px 24px !important;
+  padding: 0 16px 0px 24px !important; 
+  border-radius: 4px; 
+  margin: 0 0.5em;
   mat-panel-title {
     color: $white !important;
+    font-size: 14px;
   }
+ 
+}
+.heading4 {
+  font-weight: 600;
+  font-size: 16px; 
+  display: flex;
+  align-items: center;
+}
+::ng-deep .mat-expansion-panel-body {
+  margin: 10px 0;
+  background-color: #f8f8f8;
+  padding: 1em !important;
+  border-radius: 4px;
+  border: 1px solid #e8e6e6;
+}
+::ng-deep .mat-expansion-panel-content {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  width: 100%;
+  padding: 0 0.6em;
+}
+::ng-deep .mat-expansion-indicator::after {
+  color: #ffffff !important;
+  font-size: 14px;
 }

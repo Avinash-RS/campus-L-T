@@ -22,6 +22,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   @ViewChild('schedulePopup', {static: false}) schedulePopup: TemplateRef<any>;
+  fltractive= false;
   selectedUserDetail: any;
   userList: any;
   radioCheck;
@@ -726,5 +727,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       }
       
     })
+  }
+  togglefltr() {
+    this.fltractive = !this.fltractive
   }
 }

@@ -1,6 +1,6 @@
 <div class="main-new-interview-assigned">
   <mat-accordion>
-    <mat-expansion-panel [expanded]="panelOpenState1">
+    <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Filter
@@ -9,7 +9,8 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="top-wrapper">
-      <div style="padding-left: 1em;" class="left">
+      <div class="heading4">Filters</div>
+      <div  class="left">
         <div class="flex-wrap">
           <div class="label">
             Institute name
@@ -71,14 +72,11 @@
             </nz-select>
           </div>
         </div>
-        <div class="flex-wrap">
-          <div class="label">
-            &#160;
-          </div>
+        <div class="flex-wrap"> 
           <div class="input-box">
             <div style="display: flex;">
               <button [disabled]="selectedStatus ? false : true" class="submit" (click)="go()"
-                mat-raised-button>Go</button>
+                mat-raised-button>Apply</button>
             </div>
           </div>
         </div>
