@@ -61,14 +61,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: 'work.svg',
-        name: 'Assigned Candidates',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST,
-        active: true
-      },
-    ];
+    const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
@@ -108,7 +101,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     }
 
     if (event.colDef.field === 'join_interview') {
-      if (event['data'] && event['data']['join_interview'] == 'yes') {
+      if (event['data'] && event['data']['join_interview'] == 'yes' && event['data'] && event['data']['evaluation_status'] != '2') {
         this.appConfig.setLocalData('cProPic', event['data']['profile_image_url']);
         this.submit(event['data']['candidate_id'], event['data']['candidate_name'], event['data']['evaluation_status'], event['data']['tag'], event['data']['uid'], event['data']['email'], event['data']['form_id']);
       }
