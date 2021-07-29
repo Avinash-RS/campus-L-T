@@ -167,7 +167,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.DASHBOARD}`,
+        redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT}`,
         pathMatch: 'full',
 
       }

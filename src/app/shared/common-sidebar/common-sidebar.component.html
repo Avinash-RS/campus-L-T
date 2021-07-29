@@ -7,6 +7,26 @@
         <li (click)="sidebar()">
           <span><em class="icon-menu_open"></em></span>
         </li>
+        <ng-container *ngIf="role == 'administrator'">
+          <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+            <span><em class="{{menu.icon}}"></em></span>
+            <span>{{menu.name}}</span>
+            <span>
+              <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+            </span>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="role == 'institute'">
+          <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+            <span><em class="{{menu.icon}}"></em></span>
+            <span>{{menu.name}}</span>
+            <span>
+              <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
+            </span>
+          </li>
+        </ng-container>
+
         <ng-container *ngIf="role == 'interview_panel'">
           <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
             <span><em class="{{menu.icon}}"></em></span>
@@ -66,6 +86,18 @@
             <li (click)="sidebar()">
               <span><em class="icon-menu"></em></span>
             </li>
+            <ng-container *ngIf="role == 'administrator'">
+              <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+                <span><em class="{{menu.icon}}"></em></span>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="role == 'institute'">
+              <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+                <span><em class="{{menu.icon}}"></em></span>
+              </li>
+            </ng-container>
+
             <ng-container *ngIf="role == 'interview_panel'">
               <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
