@@ -78,7 +78,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
       uid: id
     };
     this.adminService.hrEvaluationSectionMarks(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       let arr = [];
       if (datas && this.BIS != 'true') {

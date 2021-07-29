@@ -69,7 +69,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList() {
     this.adminService.getInterviewPanelDetails().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       const align = datas;
       this.userList = align ? align : [];
@@ -232,7 +232,7 @@ export class InterviewpanelSelectComponent implements OnInit, AfterViewInit {
       'hr_id': this.defaultFormSelecterHrPanel
     }
     this.adminService.assignCandidateTOPanel(assignData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       this.appConfig.success(`Interview panel has been assigned Successfully`, '');
 

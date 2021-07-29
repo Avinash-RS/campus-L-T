@@ -144,7 +144,7 @@ export class InvBulkAssignReportsComponent implements OnInit {
     ];
 
     this.adminService.bulkUploadInvAssignReports().subscribe((data: any) => {
-      this.appConfig.hideLoader();      
+
       const userlist = data ? data : [];
       let count = 0;
       userlist.forEach(element => {
@@ -165,7 +165,7 @@ export class InvBulkAssignReportsComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');

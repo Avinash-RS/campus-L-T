@@ -56,7 +56,7 @@ export class EvaluationCandidateDetailsComponent implements OnInit {
 
   getUsersList() {
     this.adminService.hrEvaluationAssessmentDetails().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data ? data : [];
       let count = 0;

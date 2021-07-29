@@ -58,7 +58,7 @@ export class HrAddUserComponent implements OnInit {
   // get discipline dropdown value
   getDiscipline() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.disciplineDropdown = data;
     }, (err) => {
     });
@@ -107,7 +107,7 @@ export class HrAddUserComponent implements OnInit {
       }
 
       this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
-        this.appConfig.hideLoader();
+
         this.addUserForm.reset();
         this.appConfig.success(`User has been added Successfully`, '');
       }, (error) => {

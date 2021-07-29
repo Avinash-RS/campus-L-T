@@ -81,7 +81,7 @@ export class CandidateProfileComponent implements OnInit {
   getUserKYC() {
     this.candidateService.getUserProfile().subscribe((data: any) => {
       this.appConfig.setLocalData('ParentKYCAPI', JSON.stringify(data));
-      this.appConfig.hideLoader();
+
       if (data && data.length > 0) {
         if (data[0]['field_isformsubmitted'][0]['value'] === true) {
           this.appConfig.setLocalData('field_isformsubmitted', 'true');

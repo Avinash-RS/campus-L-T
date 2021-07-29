@@ -206,7 +206,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   // get discipline dropdown value
   getDiscipline() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.disciplineDropdown = data;
     }, (err) => {
     });
@@ -214,7 +214,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
 
   getShortlistNames() {
     this.adminService.TPOStatusShortlistLists().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.shortlistLists = data && data ? data : [];
 
     }, (err) => {
@@ -227,7 +227,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       "shortlistname": this.selectedShortlistname
     };
     this.adminService.getShortlistCandidateList(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data ? data : [];
       this.userList.forEach(element => {
@@ -254,7 +254,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
     }
 
     this.adminService.schedulingAssessment(data).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success(`Mail send successfully`, '');
 
     }, (err) => {

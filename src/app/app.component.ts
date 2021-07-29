@@ -3,18 +3,12 @@ import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event, ResolveEnd
 } from '@angular/router';
-import { ApiServiceService } from './services/api-service.service';
 import { AppConfigService } from './config/app-config.service';
 import { Observable, Subscription, fromEvent } from 'rxjs';
-import { ConnectionService } from 'ng-connection-service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
-import { CONSTANT } from './constants/app-constants.service';
-import { SharedServiceService } from './services/shared-service.service';
-import { ToastrService } from 'ngx-toastr';
-import { AdminServiceService } from './services/admin-service.service';
-import { CommonService } from './services/common.service';
 import { environment } from 'src/environments/environment';
+import { LoaderService } from './services/loader-service.service';
 
 @Component({
   selector: 'app-root',
@@ -41,13 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
+    public loadingService: LoaderService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
-    private commonService: CommonService,
-    private connectionService: ConnectionService,
-    private toastr: ToastrService
   ) {
     // this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
@@ -58,7 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        // this.connectionStatusMethod();
       }
       // On NavigationEnd or NavigationError or NavigationCancel
       // set showLoadingIndicator to false
@@ -66,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
           if (environment.local != true) {
-            this.commonService.initVersionCheck(environment.versionCheckURL);
+            // this.commonService.initVersionCheck(environment.versionCheckURL);
           }
           }
     });
@@ -116,22 +105,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  connectionStatusMethod() {
-    // Get the online/offline status from browser window
-        this.connectionService.monitor().subscribe(isConnected => {
-      this.isConnected = isConnected;
-      // console.log('coming', this.isConnected);
-      if (this.isConnected) {
-        // this.status = 'You are back online';
-      //  return this.appConfig.warning('You are online');
-      } else {
-       return this.appConfig.warning('You are offline');
-        // this.status = 'You are offline';
-      }
-      // alert(this.status);
-    });
-  }
-
   openDialog(component, data) {
     let dialogDetails: any;
 
@@ -153,46 +126,6 @@ export class AppComponent implements OnInit, OnDestroy {
       if (result) {
       }
     });
-  }
-
-  getMaintenanceStatus() {
-    // if (!this.maintenanceStatus) {
-    //   if (!this.appConfig.getLocalData('maintenance')) {
-    //     this.apiService.getStatus().subscribe((data: any)=> {
-    //       this.appConfig.hideLoader();
-    //       console.log('status', data);
-    //       if (data && data['status'] == '0') {
-    //         this.maintenanceStatus = true;
-    //         this.sharedService.maintenanceSubject.next(data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //         this.appConfig.setLocalData('maintenance', data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
-    //       }
-    //     }, (err)=> {
-    //     });
-    //   } else {
-    //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //   }
-    // } else {
-    //   if (!this.appConfig.getLocalData('maintenance')) {
-    //     this.apiService.getStatus().subscribe((data: any)=> {
-    //       this.appConfig.hideLoader();
-    //       console.log('status', data);
-    //       if (data && data['status'] == '0') {
-    //         this.maintenanceStatus = true;
-    //         this.sharedService.maintenanceSubject.next(data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //         this.appConfig.setLocalData('maintenance', data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
-    //       }
-    //     }, (err)=> {
-    //     });
-    //   } else {
-    //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //   }
-    // }
   }
 
   ngOnDestroy(): void {

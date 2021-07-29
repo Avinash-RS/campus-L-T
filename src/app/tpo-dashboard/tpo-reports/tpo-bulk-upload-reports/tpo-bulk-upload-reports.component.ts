@@ -56,31 +56,31 @@ export class TpoBulkUploadReportsComponent implements OnInit {
     ngOnInit() {
       this.tabledef();
     }
-  
+
     onGridReady(params: any) {
       this.gridApi = params.api;
       this.gridColumnApi = params.columnApi;
     }
-  
+
     sortevent(e) {
     }
-  
+
     customComparator = (valueA, valueB) => {
       return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
     }
-  
+
     onCellClicked(event) {
     }
-  
+
     getModel(e) {
       // console.log(e);
-      
+
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
       if (filteredArray && filteredArray.length === 0) {
         this.appConfig.warning('No search results found');
       }
     }
-  
+
     onQuickFilterChanged() {
       this.gridApi.setQuickFilter(this.quickSearchValue);
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
@@ -90,7 +90,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
       }
     }
     tabledef() {
-  
+
       this.columnDefs = [
         {
           headerName: 'S no', field: 'counter',
@@ -173,14 +173,14 @@ export class TpoBulkUploadReportsComponent implements OnInit {
       ];
       this.getUsersList();
     }
-  
+
   // To get all users
   getUsersList() {
     const apiData = {
       uploaded_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

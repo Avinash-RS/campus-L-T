@@ -126,7 +126,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   educationLevels() {
     this.candidateService.getEducationList().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       list.forEach((element, i) => {
         if (element['id'] === '1') {
@@ -158,7 +158,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.DiplamoList = list;
     }, (err) => {
@@ -173,7 +173,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.diplamoDiscipline = list;
     }, (err) => {
@@ -189,7 +189,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugColleges = list;
       const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
@@ -206,7 +206,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugDisciplines = list;
     }, (err) => {
@@ -222,7 +222,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgDisciplines = list;
     }, (err) => {
@@ -237,7 +237,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: 'UG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugSpecialization = list;
     }, (err) => {
@@ -253,7 +253,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: 'PG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgSpecialization = list;
     }, (err) => {

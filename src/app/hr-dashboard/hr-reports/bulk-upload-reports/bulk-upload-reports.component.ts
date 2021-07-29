@@ -72,7 +72,7 @@ export class BulkUploadReportsComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -178,7 +178,7 @@ export class BulkUploadReportsComponent implements OnInit {
       uploaded_by: ''
     };
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

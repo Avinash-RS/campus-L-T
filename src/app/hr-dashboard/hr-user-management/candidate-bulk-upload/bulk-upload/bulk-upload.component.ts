@@ -112,7 +112,7 @@ export class BulkUploadComponent implements OnInit {
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -124,7 +124,7 @@ export class BulkUploadComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -151,17 +151,17 @@ export class BulkUploadComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'name') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && (this.SavedData[0][2].trim() === 'Email ID' || this.SavedData[0][2].trim() === 'email'))) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 

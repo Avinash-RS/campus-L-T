@@ -133,9 +133,9 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
         element['field_user_created_by'] = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
       }
     });
-    
+
     this.adminService.bulkUploadInvAssign(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         inv_assign_bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -147,7 +147,7 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -174,17 +174,17 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'College') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interviewer Email')) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 

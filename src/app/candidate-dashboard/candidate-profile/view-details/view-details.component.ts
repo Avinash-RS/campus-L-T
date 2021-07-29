@@ -84,7 +84,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       this.showNext = true;
       this.getWorkExp();
     }
-    this.appConfig.showLoader();
+
     this.updatedStateAPI();
   }
 
@@ -103,10 +103,10 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
     this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.workDetails = data && data[0] ? data[0] : null;
       // data = data && data[0];
-      
+
       // this.workDetails = data?.work_experience_details;
       // if (this.workDetails) {
       //   this.workDetails.when_interview = this.workDetails?.when_interview ? moment(this.workDetails.when_interview).format('DD MMM YYYY') : '-';
@@ -326,7 +326,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
         }
       }
     });
-    this.userDetails = dump;    
+    this.userDetails = dump;
             if (this.apiForm.full_employment.length > 0) {
           this.apiForm.full_employment.forEach(element => {
             element.duration_from = moment(element.duration_from).format('DD MMM YYYY');
@@ -352,7 +352,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       });
 
     }
-    
+
   }
 
   getUpdatedCity(Api) {
@@ -367,7 +367,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
         }
       });
       this.getPermanentUpdatedCity(this.permanentStateId);
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -382,7 +382,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
           this.userDetails['permanentCity'] = element.name;
         }
       });
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -397,7 +397,7 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
       if (this.appConfig.getLocalData('kycForm')) {
         const data = JSON.parse(this.appConfig.getLocalData('kycForm'));
         this.apiForm = data;
-        
+
         this.getLocalForm(data);
       } else {
         this.getUserDetails();
@@ -839,9 +839,9 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
           this.KYCModifiedData.full_employment = this.workDetails && this.workDetails.work_experience_history ? this.workDetails.work_experience_history : [];
         }
         this.getLocalForm(this.KYCModifiedData);
-        this.appConfig.hideLoader();
+
       } else {
-        this.appConfig.hideLoader();
+
         this.userDetails = {
           name: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
           mail: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '',

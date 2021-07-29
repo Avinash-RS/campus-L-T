@@ -50,7 +50,7 @@ export class RegisterpageComponent implements OnInit {
       country_id: '101'
     };
     this.candidateService.updatedState(datas).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allStatess = data[0];
 
     }, (err) => {
@@ -82,7 +82,7 @@ export class RegisterpageComponent implements OnInit {
   getUpdatedCity(ApiData) {
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       this.allCitiess = datas[0];
     }, (err) => {
     });
@@ -141,7 +141,7 @@ export class RegisterpageComponent implements OnInit {
       // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.RegistrationForm(datas).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         this.appConfig.success(`Form has been Registered Successfully`, '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {

@@ -239,7 +239,7 @@ export class AdminUploadedInstituteListComponent implements OnInit {
         cellRenderer: (params) => {
           if (params &&  params['data'] && params['data']['admin_status'] == 'Approved') {
             return `<span class="green-1"> Approved </span>`;
-          } 
+          }
           if (params &&  params['data'] && params['data']['admin_status'] == 'Rejected') {
             return `<span class="red-1"> Rejected </span>`;
           } else {
@@ -266,7 +266,7 @@ export class AdminUploadedInstituteListComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.instituteListAfterBulkUpload().subscribe((data1: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data1 ? data1 : [];
       let count = 0;

@@ -338,7 +338,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       institute: data ? data : ''
     }
     this.adminService.getParticularInstituteDiscipline(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allAssessments = data && data['assement_name'] ? data['assement_name'] : [];
       this.allDisciplines = data && data['discipline_array'] ? data['discipline_array'] : [];
     }, (err) => {
@@ -374,7 +374,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
 
   getInstitute() {
     this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allInstitutes = data ? data : [];
     }, (err) => {
     });
@@ -390,7 +390,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
     }
 
     this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];
           }, (err) => {

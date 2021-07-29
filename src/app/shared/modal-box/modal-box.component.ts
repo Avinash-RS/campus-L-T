@@ -50,7 +50,7 @@ export class ModalBoxComponent implements OnInit {
         }, (err) => {
 
         }, () => {
-          this.appConfig.hideLoader();
+
           this.appConfig.success('Email with verification link has sent successfully', '');
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST);
         });
@@ -62,7 +62,7 @@ export class ModalBoxComponent implements OnInit {
     // To Edit User
     if (dataToBeShared.identity === 'user-update') {
       this.adminService.editUser(dataToBeShared.componentData, dataToBeShared.userId).subscribe((success: any) => {
-        this.appConfig.hideLoader();
+
         this.appConfig.success('User updated successfully', '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST);
       }, (error) => {

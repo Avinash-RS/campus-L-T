@@ -88,7 +88,7 @@ export class HrSubEmploymentComponent implements OnInit {
       id: cid
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
     }, (err) => {
 
@@ -133,7 +133,7 @@ export class HrSubEmploymentComponent implements OnInit {
       hr_id: this.appConfig.getLocalData('userId')
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success('Document Resubmit request has been done', '');
       this.editRouteParamGetter();
     }, (err) => {

@@ -71,7 +71,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -188,7 +188,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       uploaded_by: ''
     };
     this.adminService.invBulkReports().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

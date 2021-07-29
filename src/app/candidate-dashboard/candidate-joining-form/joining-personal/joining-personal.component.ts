@@ -109,7 +109,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     size: false,
     minsize: false,
     maxsize: false,
-    reset() { 
+    reset() {
       this.image = false
       this.minsize = false
       this.maxsize = false
@@ -119,7 +119,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   // Title Dropdown list
   bloodGroupDropdownList: any;
 
-  // Gender DropDown List 
+  // Gender DropDown List
   genderDropdownList = [
     {
       label: 'Male',
@@ -177,7 +177,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
-  ) { 
+  ) {
     this.dateValidation();
   }
 
@@ -201,11 +201,11 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getPersonalData() {
-    this.appConfig.showLoader();
+
     this.candidateService.joiningFormGetPersonalDetails().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.personalDetails = data ? data : null;
-      if (this.personalDetails) {        
+      if (this.personalDetails) {
         this.patchPersonalForm();
       }
     });
@@ -241,12 +241,12 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   momentForm(date) {
     if (date) {
       const split = moment(date).format('DD-MM-YYYY');
-     return split;    
+     return split;
     }
   }
 
   dateConvertion(date) {
-    if (date) {      
+    if (date) {
       const split = moment(date).format();
       if (split == 'Invalid date') {
         const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -257,7 +257,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   formSubmit(routeValue?:any) {
-    if (this.personalForm.valid) {      
+    if (this.personalForm.valid) {
       let rawPersonalFormValue = this.personalForm.getRawValue();
       const apiData = {
        [this.form_name]: rawPersonalFormValue[this.form_name],
@@ -278,32 +278,32 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
        [this.form_identification_mark2]: rawPersonalFormValue[this.form_identification_mark2],
        [this.form_mother_tongue]: rawPersonalFormValue[this.form_mother_tongue],
        [this.form_pan]: rawPersonalFormValue[this.form_pan],
-       [this.form_offer_reference]: rawPersonalFormValue[this.form_offer_reference], 
-       [this.form_offer_date]: this.dateConvertion(rawPersonalFormValue[this.form_offer_date]), 
+       [this.form_offer_reference]: rawPersonalFormValue[this.form_offer_reference],
+       [this.form_offer_date]: this.dateConvertion(rawPersonalFormValue[this.form_offer_date]),
        [this.form_place_of_birth]: rawPersonalFormValue[this.form_place_of_birth],
        [this.form_religion]: rawPersonalFormValue[this.form_religion],
        [this.form_state_of_birth]: rawPersonalFormValue[this.form_state_of_birth],
        [this.form_emergency_contact_name]: rawPersonalFormValue[this.form_emergency_contact_name],
        [this.form_emergency_contact_relation]: rawPersonalFormValue[this.form_emergency_contact_relation],
-       [this.form_personal_email]: rawPersonalFormValue[this.form_personal_email], 
+       [this.form_personal_email]: rawPersonalFormValue[this.form_personal_email],
        [this.form_domicile_state]: rawPersonalFormValue[this.form_domicile_state],
        [this.form_marital_status]: rawPersonalFormValue[this.form_marital_status],
-       [this.form_no_of_children]: rawPersonalFormValue[this.form_no_of_children], 
+       [this.form_no_of_children]: rawPersonalFormValue[this.form_no_of_children],
        profile_image: this.personalDetails.profile_image,
        user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
       };
-      
+
       this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Personal details is updated');
         this.sharedService.joiningFormStepperStatus.next();
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT); 
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       });
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.personalForm);
-    }    
+    }
   }
 
 
@@ -311,7 +311,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     this.sendPopupResultSubscription = this.sharedService.sendPopupResult.subscribe((result: any)=> {
       if (result.result == 'save') {
       this.formSubmit(result.route);
-      }     
+      }
     });
   }
 
@@ -323,7 +323,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -337,7 +337,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
         }
         this.glovbal_validators.validateAllFields(this.personalForm);
         this.ngAfterViewInit();
-        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');    
+        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       }
     } else {
       return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
@@ -368,7 +368,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
           urls = event.target.result;
           this.url = urls;
 
-          // this.appConfig.showLoader();
+          //
           // const data = await (await this.candidateService.profileUpload(fd)).json();
             // this.profileData = {
             //   fid: data[0].id,
@@ -377,7 +377,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
             //   apiUrl: data[0].backend_url
             // };
             // this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-            //         this.appConfig.hideLoader();
+            //
 
         };
       } else {
@@ -402,30 +402,30 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
 
   patchPersonalForm() {
     this.personalForm.patchValue({
-      // [this.form_title]: this.personalDetails[this.form_title], 
-      [this.form_name]: this.personalDetails[this.form_name], 
-      [this.form_dob]: this.dateConvertion(this.personalDetails[this.form_dob]), 
-      [this.form_gender]: this.personalDetails[this.form_gender], 
-      [this.form_place_of_birth]: this.personalDetails[this.form_place_of_birth], 
-      [this.form_state_of_birth]: this.personalDetails[this.form_state_of_birth], 
-      [this.form_nationality]: this.personalDetails[this.form_nationality], 
-      [this.form_mother_tongue]: this.personalDetails[this.form_mother_tongue], 
-      [this.form_religion]: this.personalDetails[this.form_religion], 
-      [this.form_caste]: this.personalDetails[this.form_caste], 
-      [this.form_category]: this.personalDetails[this.form_category], 
-      [this.form_blood_group]: this.personalDetails[this.form_blood_group], 
-      [this.form_father_name]: this.personalDetails[this.form_father_name], 
-      [this.form_emergency_contact]: this.personalDetails[this.form_emergency_contact], 
-      [this.form_mobile]: this.personalDetails[this.form_mobile], 
-      [this.form_email]: this.personalDetails[this.form_email], 
-      [this.form_aadhar]: this.personalDetails[this.form_aadhar], 
-      [this.form_pan]: this.personalDetails[this.form_pan], 
-      [this.form_offer_reference]: this.personalDetails[this.form_offer_reference], 
-      [this.form_offer_date]: this.dateConvertion(this.personalDetails[this.form_offer_date]), 
-      [this.form_height]: this.personalDetails[this.form_height], 
-      [this.form_weight]: this.personalDetails[this.form_weight], 
-      [this.form_identification_mark1]: this.personalDetails[this.form_identification_mark1], 
-      [this.form_identification_mark2]: this.personalDetails[this.form_identification_mark2], 
+      // [this.form_title]: this.personalDetails[this.form_title],
+      [this.form_name]: this.personalDetails[this.form_name],
+      [this.form_dob]: this.dateConvertion(this.personalDetails[this.form_dob]),
+      [this.form_gender]: this.personalDetails[this.form_gender],
+      [this.form_place_of_birth]: this.personalDetails[this.form_place_of_birth],
+      [this.form_state_of_birth]: this.personalDetails[this.form_state_of_birth],
+      [this.form_nationality]: this.personalDetails[this.form_nationality],
+      [this.form_mother_tongue]: this.personalDetails[this.form_mother_tongue],
+      [this.form_religion]: this.personalDetails[this.form_religion],
+      [this.form_caste]: this.personalDetails[this.form_caste],
+      [this.form_category]: this.personalDetails[this.form_category],
+      [this.form_blood_group]: this.personalDetails[this.form_blood_group],
+      [this.form_father_name]: this.personalDetails[this.form_father_name],
+      [this.form_emergency_contact]: this.personalDetails[this.form_emergency_contact],
+      [this.form_mobile]: this.personalDetails[this.form_mobile],
+      [this.form_email]: this.personalDetails[this.form_email],
+      [this.form_aadhar]: this.personalDetails[this.form_aadhar],
+      [this.form_pan]: this.personalDetails[this.form_pan],
+      [this.form_offer_reference]: this.personalDetails[this.form_offer_reference],
+      [this.form_offer_date]: this.dateConvertion(this.personalDetails[this.form_offer_date]),
+      [this.form_height]: this.personalDetails[this.form_height],
+      [this.form_weight]: this.personalDetails[this.form_weight],
+      [this.form_identification_mark1]: this.personalDetails[this.form_identification_mark1],
+      [this.form_identification_mark2]: this.personalDetails[this.form_identification_mark2],
       [this.form_emergency_contact_name]: this.personalDetails[this.form_emergency_contact_name],
       [this.form_emergency_contact_relation]: this.personalDetails[this.form_emergency_contact_relation],
       [this.form_personal_email]: this.personalDetails[this.form_personal_email],

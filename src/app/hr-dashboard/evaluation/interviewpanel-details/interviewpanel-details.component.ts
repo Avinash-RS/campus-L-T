@@ -69,26 +69,26 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
     editRouteParamGetter() {
       // Get url Param to view Edit user page
       this.activatedRoute.queryParams.subscribe(params => {
-        this.urlParsedData = params['data'] ? JSON.parse(params['data']) : '';        
+        this.urlParsedData = params['data'] ? JSON.parse(params['data']) : '';
         this.assessmentDetails(this.urlParsedData);
         this.getUsersList(this.urlParsedData);
       });
     }
-  
+
     assessmentDetails(data) {
       const apidata = {
         institute_name: data.institute ? data.institute : '',
         assement_name: data.assement_name ? data.assement_name : ''
         };
       this.adminService.getHrEvaluationInterviewPanelHeader(apidata).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         // this.assessmentName = data;
-  
+
       }, (err) => {
-  
+
       });
     }
-  
+
   // To get all users
   getUsersList(data) {
     let assessment = {
@@ -96,8 +96,8 @@ export class InterviewpanelDetailsComponent implements OnInit, AfterViewInit {
       assement_name: data.assement_name ? data.assement_name : ''
     }
     this.adminService.getEvaluationCandidateData(assessment).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
-      
+
+
       const dummy = [
         {
           user_name: 'Avinash',

@@ -123,7 +123,7 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
       date2_get: ''
     };
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data ? data : [];
       let count = 0;
@@ -140,7 +140,7 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
 
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       if (data) {
         this.userList = data ? data : [];
@@ -170,7 +170,7 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   selectedUser(userDetail) {
-    
+
   }
 
   getDateFormat(date) {
@@ -276,7 +276,7 @@ export class HrPreAssessmentComponent implements OnInit, AfterViewInit {
     };
 
     this.adminService.getStatusExcelDownload(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       const excel = data && data[0].url ? data[0].url : '';
       window.open(excel, '_blank');

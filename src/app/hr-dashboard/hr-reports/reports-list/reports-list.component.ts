@@ -84,7 +84,7 @@ export class ReportsListComponent implements OnInit {
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService
-    ) { 
+    ) {
       // this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
     }
 
@@ -98,12 +98,12 @@ export class ReportsListComponent implements OnInit {
     this.getAllCitys();
     this.getAllAssessmentName();
     this.evaluationInstitute();
-    
+
   }
 
   getInstitute() {
     this.candidateService.getoverallInstitute().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data ? data : [];
       this.institutesList = list;
       this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
@@ -111,13 +111,13 @@ export class ReportsListComponent implements OnInit {
 
     });
   }
-  
+
   // To get all users
   getUsersList() {
     // this.adminService.userList().subscribe((data: any) => {
-    // this.appConfig.hideLoader();
+    //
     const today = moment();
-    
+
     const data = [{
       'reportname': 'abc',
       'col2': 'a',
@@ -186,7 +186,7 @@ export class ReportsListComponent implements OnInit {
   // To get all users
   getTagName() {
     this.adminService.getTagName().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.tagNameDropdown = data;
 
@@ -197,7 +197,7 @@ export class ReportsListComponent implements OnInit {
   // To get all city
   getAllCitys() {
     this.adminService.getAllCandidateCity().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.cityListDropdown = data;
 
@@ -208,10 +208,10 @@ export class ReportsListComponent implements OnInit {
   // To get assessment name
   getAllAssessmentName() {
     this.adminService.shortlist2ReportAPI().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.assessmentNameDropdown = data ? data : [];
-      
+
 
     }, (err) => {
     });
@@ -219,7 +219,7 @@ export class ReportsListComponent implements OnInit {
 
   evaluationInstitute() {
     this.adminService.evalationReportAPI().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.evaluationReportInstitutes = data ? data : [];
 
       // this.assessmentNameDropdown = data;
@@ -250,17 +250,17 @@ export class ReportsListComponent implements OnInit {
         'institute': data.instituteName
       }
       if(sendReq.to >= sendReq.from){
-      
+
         this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           if(data && data[0] && data[0].url == 'No Data Found'){
             this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 1st shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
           }
-  
+
         }, (err) => {
         });
       }else{
@@ -274,17 +274,17 @@ export class ReportsListComponent implements OnInit {
         'city': data.city,
         'institute': data.instituteName
       }
-      
+
         this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           if(data && data[0] && data[0].url == 'No Data Found'){
             this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 1st shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
           }
-  
+
         }, (err) => {
         });
 
@@ -294,7 +294,7 @@ export class ReportsListComponent implements OnInit {
 
   // To get interview panel report
   interviewPanelRepots(data) {
-  
+
     let sendReq = {
       'to_date': '',
       'from_date': ''
@@ -308,11 +308,11 @@ export class ReportsListComponent implements OnInit {
       }
       if(sendReq.to_date >= sendReq.from_date){
         this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-    
+
+
           const excel = data && data.url ? data.url : '';
           window.open(excel, '_blank');
-    
+
         }, (err) => {
         });
       }else{
@@ -325,7 +325,7 @@ export class ReportsListComponent implements OnInit {
 
   // To get 2nd  shortlist report
   secondShortlistRepots(data) {
-    
+
     let sendReq = {
       'to': '',
       'from': '',
@@ -342,15 +342,15 @@ export class ReportsListComponent implements OnInit {
       }
       if(sendReq.to >= sendReq.from){
         this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           if(data[0].url == 'No Data Found'){
             this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 2nd shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
           }
-  
+
         }, (err) => {
         });
       }else{
@@ -363,15 +363,15 @@ export class ReportsListComponent implements OnInit {
         'institute_name': data.institute_name
       }
         this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           if(data[0].url == 'No Data Found'){
             this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 2nd shortlist");
           }else{
             const excel = data && data[0].url ? data[0].url : '';
             window.open(excel, '_blank');
           }
-  
+
         }, (err) => {
         });
       // this.appConfig.error("Date should be selected", '');
@@ -396,11 +396,11 @@ export class ReportsListComponent implements OnInit {
       }
       if(sendReq.to_date >= sendReq.from_date){
         this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           const excel = data && data.url ? data.url : '';
           window.open(excel, '_blank');
-    
+
         }, (err) => {
         });
       }else{
@@ -413,11 +413,11 @@ export class ReportsListComponent implements OnInit {
         'institute_name': data.institute_name
       }
         this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           const excel = data && data.url ? data.url : '';
           window.open(excel, '_blank');
-    
+
         }, (err) => {
         });
 
@@ -446,13 +446,13 @@ export class ReportsListComponent implements OnInit {
         'institute': data.instituteName
       }
       if(sendReq.to >= sendReq.from){
-      
+
         this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           const excel = data && data.url ? data.url : '';
           window.open(excel, '_blank');
-  
+
         }, (err) => {
         });
       }else{
@@ -466,13 +466,13 @@ export class ReportsListComponent implements OnInit {
         'city': data.city,
         'institute': data.instituteName
       }
-      
+
         this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
-          this.appConfig.hideLoader();
-          
+
+
           const excel = data && data.url ? data.url : '';
           window.open(excel, '_blank');
-  
+
         }, (err) => {
         });
 
@@ -500,7 +500,7 @@ export class ReportsListComponent implements OnInit {
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
         }
-    
+
         this.getFirstsortlistRepots(sendData);
       }else{
         this.appConfig.nzNotification("error", "1st Shortlist", "Tag name or City or Insitute name is required");
@@ -527,7 +527,7 @@ export class ReportsListComponent implements OnInit {
           'institute_name': this.selectedevaluationReportInstitute ? this.selectedevaluationReportInstitute : '',
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
-        }                
+        }
         this.feedbackRepots(sendData);
       }else{
         this.appConfig.nzNotification("error", "Evaluation Feedback", "Either Institute name Or Date field is mandatory");
@@ -552,7 +552,7 @@ export class ReportsListComponent implements OnInit {
     //       "to": this.userList[index].tdate,
     //       "from": this.userList[index].fdate
     //     }
-    
+
     //     this.getCandidateRepots(sendData);
     //   }else{
     //     this.appConfig.error("Please select a filter criteria", '');

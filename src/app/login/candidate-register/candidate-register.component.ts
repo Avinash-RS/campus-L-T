@@ -67,7 +67,7 @@ export class CandidateRegisterComponent implements OnInit {
       // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
       this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         this.appConfig.success(`Email has been captured. Further instructions have been sent to your email ID`, '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
       }, (error) => {

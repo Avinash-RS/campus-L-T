@@ -98,7 +98,7 @@ export class AdminServiceService {
   }
   getToken() {
     // this.csrfToken().subscribe((data: any) => {
-    //   this.appConfig.hideLoader();
+    //
     //   // localStorage.setItem('csrf', data);
     // }, (err) => {
     //   if (err.status === 200) {

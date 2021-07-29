@@ -72,7 +72,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     lockPosition: true,
     suppressMenu: true,
     unSortIcon: true,
-    
+
   };
   rowData: any = [];
   searchBox = false;
@@ -165,7 +165,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
-    this.appConfig.scrollToTop();    
+    this.appConfig.scrollToTop();
   }
 
   ngAfterViewInit() {
@@ -351,7 +351,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       status: this.selectedStatus ? this.selectedStatus : ''
     }
     this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if(!this.pannel) { return } else {this.pannel.close()}
       const datas = data ? data : [];
       this.showDefault = false;
@@ -383,7 +383,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getInstitute() {
     this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allInstitutes = data ? data : [];
     }, (err) => {
     });
@@ -391,7 +391,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getHRDisciplines() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allHRDisciplines = data ? data : [];
     }, (err) => {
     });
@@ -402,7 +402,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       institute: data ? data : ''
     }
     this.adminService.getParticularInstituteDiscipline(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allAssessments = data && data['assement_name'] ? data['assement_name'] : [];
       this.allDisciplines = data && data['discipline_array'] ? data['discipline_array'] : [];
     }, (err) => {
@@ -420,7 +420,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       discipline: data ? data : ''
     }
     this.adminService.getParticularInterviewpanelist(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = data ? data : [];
       this.getUsersList1(datas);
     }, (err) => {
@@ -475,7 +475,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   assigntoPanel(apiData) {
     this.adminService.assignToHR(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
        const datas = {
           iconName: '',
           dataToBeShared: {
@@ -721,10 +721,10 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       if(result.success){
         this.scheduleHirerachy();
       } else {
-        this.appConfig.hideLoader();
+
         this.appConfig.warningWithTitle('Something went wrong','');
       }
-      
+
     })
   }
 }

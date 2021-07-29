@@ -69,7 +69,7 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -80,7 +80,7 @@ export class SecondLevelAssessmentReportsComponent implements OnInit, AfterViewI
   }
 
   selectedUser(userDetail) {
-    
+
   }
 
   ngAfterViewInit() {

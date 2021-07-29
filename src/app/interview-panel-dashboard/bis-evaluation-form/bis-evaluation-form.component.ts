@@ -50,9 +50,9 @@ export class BisEvaluationFormComponent implements OnInit {
     mastersList: any;
     expValidation = "^[a-zA-Z0-9 ]*";
     selectedPost: any;
-  
-  
-  
+
+
+
     constructor(
       private formBuilder: FormBuilder,
       private appConfig: AppConfigService,
@@ -63,31 +63,31 @@ export class BisEvaluationFormComponent implements OnInit {
       private activatedRoute: ActivatedRoute
     ) {
     }
-  
+
     get f() {
       return this.evaluationForm.controls;
     }
-  
+
     ngOnInit() {
       this.getMasters();
       if (this.candidateId) {
         this.getWorkExp();
         this.getEvaluationData(this.uid);
         this.nginitFunc();
-        this.getCandidateDetails();  
+        this.getCandidateDetails();
       }
     }
-  
+
     getWorkExp() {
       const apiData = {
         user_id: this.candidateId
       };
       this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
-        // this.appConfig.hideLoader();
+        //
         this.selectedPost = data?.selected_post && (data?.selected_post == 'get' || data?.selected_post == 'pget') ? true : false;
       });
     }
-  
+
     getMasters() {
       // this.adminService.keyMastersList().subscribe((data: any)=> {
         this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
@@ -95,7 +95,7 @@ export class BisEvaluationFormComponent implements OnInit {
         this.attendedStatusList = this.mastersList?.AttendedStatus;
         this.Notattended = this.mastersList?.notAttendedStatus;
       // }, (err)=> {
-  
+
       // });
     }
     getCandidateDetails() {
@@ -103,7 +103,7 @@ export class BisEvaluationFormComponent implements OnInit {
         uid: this.candidateId ? this.candidateId : ''
       }
       this.adminService.getEvaluationDetails(apiData).subscribe((success: any) => {
-        this.appConfig.hideLoader();
+
         const data = success && success.length > 0 ? success[0] : null;
         if (data) {
           this.evaluationForm.patchValue({
@@ -175,20 +175,20 @@ export class BisEvaluationFormComponent implements OnInit {
           });
         }
       }, (err) => {
-  
+
       })
     }
-  
+
     getEvaluationData(cid) {
       const apiData = {
         id: cid
       };
       this.adminService.getEvaluationData(apiData).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         this.getCandidateData = data[0];
       });
     }
-  
+
     nginitFunc() {
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
       this.evaluationForm = this.formBuilder.group({
@@ -228,7 +228,7 @@ export class BisEvaluationFormComponent implements OnInit {
         thought_clarity: new FormControl(null, [Validators.required]),
       });
     }
-  
+
     statusChange(status: any) {
       setTimeout(() => {
         if (status['value'] == '0') {
@@ -248,35 +248,35 @@ export class BisEvaluationFormComponent implements OnInit {
           this.evaluationForm['controls']['remarks'].updateValueAndValidity();
           this.evaluationForm['controls']['ASSESSMENT'].clearValidators();
           this.evaluationForm['controls']['ASSESSMENT'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['depth_knowledge'].clearValidators();
           // this.evaluationForm['controls']['depth_knowledge'].reset();
           this.evaluationForm['controls']['depth_knowledge'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['breadth_knowledge'].clearValidators();
           // this.evaluationForm['controls']['breadth_knowledge'].reset();
           this.evaluationForm['controls']['breadth_knowledge'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['communicate_ability'].clearValidators();
           // this.evaluationForm['controls']['communicate_ability'].reset();
           this.evaluationForm['controls']['communicate_ability'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['personal_skill'].clearValidators();
           // this.evaluationForm['controls']['personal_skill'].reset();
           this.evaluationForm['controls']['personal_skill'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['personality'].clearValidators();
           // this.evaluationForm['controls']['personality'].reset();
           this.evaluationForm['controls']['personality'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['personality_1'].clearValidators();
           // this.evaluationForm['controls']['personality_1'].reset();
           this.evaluationForm['controls']['personality_1'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['curricular_activites'].clearValidators();
           // this.evaluationForm['controls']['curricular_activites'].reset();
           this.evaluationForm['controls']['curricular_activites'].updateValueAndValidity();
-  
+
           this.evaluationForm['controls']['thought_clarity'].clearValidators();
           // this.evaluationForm['controls']['thought_clarity'].reset();
           this.evaluationForm['controls']['thought_clarity'].updateValueAndValidity();
@@ -293,10 +293,10 @@ export class BisEvaluationFormComponent implements OnInit {
           this.evaluationForm['controls']['ps_no1'].updateValueAndValidity();
           if (this.selectedPost) {
             this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
-            this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
+            this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
           } else {
             this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
-            this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
+            this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
           }
           this.evaluationForm['controls']['remarks'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
           this.evaluationForm['controls']['remarks'].updateValueAndValidity();
@@ -324,30 +324,30 @@ export class BisEvaluationFormComponent implements OnInit {
           this.evaluationForm['controls']['remarks'].updateValueAndValidity();
         }
       }, 100);
-  
+
     }
-  
+
     get interview_date() {
       return this.evaluationForm.get('interview_date');
     }
-  
+
     get notAttendedStatus() {
       return this.evaluationForm.get('notAttendedStatus');
     }
-  
+
     get attendedStatus() {
       return this.evaluationForm.get('attendedStatus');
     }
-  
+
     get nota() {
       return this.evaluationForm.get('attended');
     }
-  
+
     get attended() {
       return this.evaluationForm.get('attended');
     }
-  
-  
+
+
     get depth_knowledge() {
       return this.evaluationForm.get('depth_knowledge');
     }
@@ -381,7 +381,7 @@ export class BisEvaluationFormComponent implements OnInit {
     get candidates_weakness() {
       return this.evaluationForm.get('candidates_weakness');
     }
-  
+
     setAssessmentLevel(assessment, value) {
       this.assessments[this.assessments.indexOf(assessment)] = {
         ...assessment,
@@ -436,7 +436,7 @@ export class BisEvaluationFormComponent implements OnInit {
         this.evaluationForm.value.depth_knowledge = value;
       }
     }
-  
+
     submitEvaluationForm() {
       this.evaluationForm.controls.topic_given.setValue(null);
       this.evaluationForm.controls.topic_given.clearValidators();
@@ -484,7 +484,7 @@ export class BisEvaluationFormComponent implements OnInit {
         this.appConfig.nzNotification('error', 'Not Submitted', 'Please fill all the red highlighted fields to proceed further');
       }
     }
-  
+
     submitEvaluationFormAPI() {
       const dateInterview = this.evaluationForm.value.interview_date ? moment(this.evaluationForm.value.interview_date).format('YYYY-MM-DD') : '';
       const apiData =
@@ -527,15 +527,15 @@ export class BisEvaluationFormComponent implements OnInit {
       };
 
       this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
-        this.appConfig.hideLoader();
+
         this.appConfig.success('Evaluation completed successfully', '');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
       }, (err) => {
-  
+
       });
-  
+
     }
-  
+
     // To validate all fields after submit
     validateAllFields(formGroup: FormGroup) {
       Object.keys(formGroup.controls).forEach(field => {
@@ -547,11 +547,11 @@ export class BisEvaluationFormComponent implements OnInit {
         }
       });
     }
-  
+
     // Open dailog
     openDialog(component, data) {
       let dialogDetails: any;
-  
+
       /**
        * Dialog modal window
        */
@@ -562,15 +562,14 @@ export class BisEvaluationFormComponent implements OnInit {
         autoFocus: false,
         data
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.submitEvaluationFormAPI();
         }
       });
     }
-  
-  
-  
+
+
+
   }
-  

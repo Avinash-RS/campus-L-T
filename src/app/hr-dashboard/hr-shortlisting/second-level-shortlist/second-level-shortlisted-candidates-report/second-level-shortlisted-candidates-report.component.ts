@@ -89,7 +89,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -226,7 +226,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       shortlist_name: name
     };
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
+      //
       this.assessmentName = data;
 
     }, (err) => {
@@ -344,7 +344,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       this.userList = align ? align : [];
       this.selectedCandidates = this.userList.length;
       this.rowData = this.userList;
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }

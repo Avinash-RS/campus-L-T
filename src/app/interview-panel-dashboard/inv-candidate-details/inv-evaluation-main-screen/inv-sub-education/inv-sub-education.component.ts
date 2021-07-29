@@ -64,7 +64,7 @@ export class InvSubEducationComponent implements OnInit {
       id: cid
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
 
     }, (err) => {

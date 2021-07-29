@@ -113,7 +113,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   // Title Dropdown list
   bloodGroupDropdownList: any;
 
-  // Gender DropDown List 
+  // Gender DropDown List
   genderDropdownList = [
     {
       label: 'Male',
@@ -313,7 +313,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   getPreviewData() {
     this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.personalDetails = data && data.personal ? data.personal : null;
       this.patchPersonalForm();
       this.contactDetails = data && data.contact ? data.contact : null;
@@ -413,7 +413,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getStateAPI() {
-    this.appConfig.showLoader();
+
     const datas = {
       country_id: '101'
     };
@@ -635,7 +635,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     let city;
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       this.allPresentCityList = datas[0];
       this.allPresentCityList.forEach(element => {
         if (element.id == cityId) {
@@ -655,7 +655,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     let city;
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       this.allPermanentCityList = datas[0];
       this.allPermanentCityList.forEach(element => {
         if (element.id == cityId) {
@@ -745,7 +745,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       });
     }
     const data = {
-      // [this.form_title]: this.personalDetails[this.form_title], 
+      // [this.form_title]: this.personalDetails[this.form_title],
       [this.form_name]: this.personalDetails?.[this.form_name] ? this.personalDetails[this.form_name] : 'NA',
       [this.form_dob]: this.personalDetails?.[this.form_dob] ? this.dateConvertion(this.personalDetails[this.form_dob]) : 'NA',
       [this.form_gender]: this.personalDetails?.[this.form_gender] ? this.personalDetails[this.form_gender] : 'NA',
@@ -898,7 +898,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       signature: [this.signature]
     }
     this.candidateService.joiningFormSubmit(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.nzNotification('success', 'Saved', 'Congrats, Form has been successfully submitted');
       this.sharedService.joiningFormStepperStatus.next();
       return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
@@ -937,7 +937,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     //   }
     //   this.glovbal_validators.validateAllFields(this.personalForm);
     //   this.ngAfterViewInit();
-    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');    
+    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
     // }
     // } else {
     //   this.glovbal_validators.validateAllFields(this.personalForm);
@@ -972,7 +972,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   async uploadImage(file) {
     try {
-      this.appConfig.showLoader();
+
       const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
       // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
       if (data && data.file_id) {
@@ -986,11 +986,11 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
           filetype: data.type,
         };
       }
-      this.appConfig.hideLoader();
+
       this.appConfig.nzNotification('success', 'Uploaded', 'Signature uploaded successfully');
     } catch (e) {
       this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
-      this.appConfig.hideLoader();
+
     }
   }
 

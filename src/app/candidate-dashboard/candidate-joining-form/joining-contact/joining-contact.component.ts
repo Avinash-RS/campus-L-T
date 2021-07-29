@@ -93,7 +93,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     };
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       if(datas && datas[0] && datas[0].error) {
         this.allPresentCityList = [];
         return this.appConfig.warning('No City Data available for the selected state');
@@ -109,7 +109,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     };
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       if(datas && datas[0] && datas[0].error) {
         this.allPermanentCityList = [];
         return this.appConfig.warning('No City Data available for the selected state');
@@ -130,9 +130,9 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getContactDetails() {
-    this.appConfig.showLoader();
+
     this.candidateService.joiningFormGetContactDetails().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.contactDetails = data ? data : null;
       if (this.contactDetails) {
         this.patchContactForm();
@@ -166,10 +166,10 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
         user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
         }
         this.candidateService.joiningFormGetContactDetailsSave(apiData).subscribe((data: any)=> {
-          this.appConfig.hideLoader();
+
           this.appConfig.nzNotification('success', 'Saved', 'Contact details is updated');
           this.sharedService.joiningFormStepperStatus.next();
-          return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);    
+          return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
       });
     } else {
       this.ngAfterViewInit();
@@ -182,7 +182,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.sendPopupResultSubscription = this.sharedService.sendPopupResult.subscribe((result: any)=> {
      if (result.result == 'save') {
             this.formSubmit(result.route);
-      }     
+      }
     });
   }
 
@@ -194,7 +194,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -362,7 +362,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.contactForm['value'][this.form_same_as_checkbox]) {
       this.contactForm.controls[this.form_permanent_city].enable({ emitEvent: false });
       this.getAllPresentCities(id);
-      return this.getAllPermanentCities(id);  
+      return this.getAllPermanentCities(id);
     }
     return this.getAllPresentCities(id);
   }
@@ -390,7 +390,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       if (this.contactForm['value'][formField]) {
         this.contactForm.patchValue({
           [this.form_permanent_city]: null,
-        }), { emitEvent: false };    
+        }), { emitEvent: false };
         return this.enablePermanentCity(this.contactForm['value'][formField]);
       }
       this.disablePermanentCity();

@@ -82,7 +82,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-  
+
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.uid = params['uid'];
@@ -97,7 +97,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       name: this.uid
     };
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader_CandidateParamAdded(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
+      //
       this.assessmentName = data;
       this.getUsersList(name, this.uid);
 
@@ -115,7 +115,7 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
       uid: id
     };
     this.adminService.hrEvaluationSectionMarks(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       let arr = [];
       if (datas && this.BIS != 'true') {

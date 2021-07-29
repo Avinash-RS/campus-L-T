@@ -41,7 +41,7 @@ export class JoinInterviewComponent implements OnInit {
 
   isTimeExpired(startTime, endTime) {
   var returned_startdate = moment(startTime).subtract(1, 'hours');
-  var returned_endate = moment(endTime).add(1, 'hours'); 
+  var returned_endate = moment(endTime).add(1, 'hours');
     if (returned_startdate && returned_endate) {
     this.enableButton = moment(moment.now()).isBetween(returned_startdate,returned_endate);
     }
@@ -51,15 +51,15 @@ export class JoinInterviewComponent implements OnInit {
       'email': this.userEmail
     }
     this.adminService.getScheduledList(obj).subscribe((result:any)=>{
-      this.appConfig.hideLoader();
+
       if(result.success && result?.data?.length > 0){
         this.interview = result.data;
-        if(this.roleType == 'interviewer'){        
+        if(this.roleType == 'interviewer'){
         this.interview.forEach((value,index)=>{
           value.userDtl.forEach(element => {
               if(element.emailId == this.userId) {
                 this.findIndex = index
-              } 
+              }
           });
         })
         this.interview = this.interview.filter((_, index) => index == this.findIndex);
@@ -78,7 +78,7 @@ export class JoinInterviewComponent implements OnInit {
           } else {
             this.showInterview = false;
           }
-        
+
       }
     })
   }
