@@ -21,7 +21,7 @@ export const environment = {
     // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
     // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
     NODE_API_BASE_URL: 'https://candidateuat.lntedutech.com',
-    WEBRTC_NODE_API : 'https://uapinterviewer.lntedutech.com',
+    WEBRTC_NODE_API : 'https://uapuatapplicationgateway.lntedutech.com',
     API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'https://uat-campus.lntedutech.com/d8cintana2',
     Image_Base_Url: 'https://uat-campus.lntedutech.com',
