@@ -151,7 +151,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     //   uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
     // };
     this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
-      this.appConfig.hideLoader();
+
       this.length = data1 && data1['count'] ? data1['count'] : '0';
       this.userList = data1 && data1['result'] ? data1['result'] : [];
       let count = 0;
@@ -194,7 +194,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       // uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
     };
     this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = data1 && data1['result'] ? data1['result'] : [];
       let count = 0;
       this.userList.forEach((element, i) => {

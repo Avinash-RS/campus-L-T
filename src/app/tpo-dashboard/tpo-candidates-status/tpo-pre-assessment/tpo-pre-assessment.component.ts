@@ -123,7 +123,7 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
       date2_get: ''
     };
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = data ? data : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -139,7 +139,7 @@ export class TpoPreAssessmentComponent implements OnInit, AfterViewInit {
 
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       if (data) {
         this.userList = data ? data : [];

@@ -70,7 +70,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
   // To get all users
   getUsersList() {
     this.adminService.getHrEvaluationInterviewPanel().subscribe((data1: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data1 ? data1 : [];
       let count = 0;
@@ -115,7 +115,7 @@ export class EvaluationInterviewPanelComponent implements OnInit, AfterViewInit 
     }
   }
 
-  selectedUser(userDetail) {   
+  selectedUser(userDetail) {
     const urlData = {
         assement_name: userDetail.assement_name,
         institute: userDetail.institute

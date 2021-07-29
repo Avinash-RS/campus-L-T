@@ -103,7 +103,7 @@ export class UploadTestResultsComponent implements OnInit {
 
   uploadListToAPI() {
     this.adminService.testResultsUpload(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         test_results: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -115,7 +115,7 @@ export class UploadTestResultsComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -159,11 +159,11 @@ export class UploadTestResultsComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][19] && this.SavedData[0][19].trim() === 'Quantitative Marks') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][20] && this.SavedData[0][20].trim() === 'Quantitative Percentage')
       ) {
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);

@@ -68,7 +68,7 @@ export class EvalutionInterviewpanelFormComponent implements OnInit, AfterViewIn
   // To get all users
   getUsersList() {
     this.adminService.getInterviewPanelFormlist().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       const align = datas;
       this.userList = align ? align : [];

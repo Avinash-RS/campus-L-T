@@ -37,7 +37,7 @@ export class AddICComponent implements OnInit {
 
   listOfIcs() {
     this.adminService.listOfICs().subscribe((datas: any)=> {
-      this.appConfig.hideLoader();
+
       this.icLists = datas ? datas : [];
     });
   }
@@ -104,15 +104,15 @@ export class AddICComponent implements OnInit {
 
   submitUsers(data) {
     this.adminService.addIC(data).subscribe((datas: any)=> {
-      this.appConfig.hideLoader();
+
       this.appConfig.success('Users added successfully');
       this.addIcForm.reset();
       this.tabChange.emit('0');
-  });  
+  });
   };
 
   submitaddIC() {
-    if (this.addIcForm.valid) {      
+    if (this.addIcForm.valid) {
         const company = this.addIcForm.value.icName;
         const arr = this.addIcForm.value.addUser;
         const dup = [];
@@ -142,8 +142,8 @@ export class AddICComponent implements OnInit {
             showCancel: 'Cancel',
             showOk: ''
           };
-    
-          this.openDialog(ShortlistBoxComponent, datas);    
+
+          this.openDialog(ShortlistBoxComponent, datas);
       } else {
         this.appConfig.warning('Duplicate email id entries found. Please remove it and try again.');
       }

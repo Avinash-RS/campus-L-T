@@ -93,7 +93,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
           candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
         };
-        this.openDialog5(CommonKycProfileViewComponent, data);  
+        this.openDialog5(CommonKycProfileViewComponent, data);
       }
     }
 
@@ -102,7 +102,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       // Open dailog
       openDialog5(component, data) {
         let dialogDetails: any;
-    
+
         /**
          * Dialog modal window
          */
@@ -113,17 +113,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           autoFocus: false,
           data
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
           }
         });
       }
-  
+
       // Open dailog
       openDialog4(component, data) {
         let dialogDetails: any;
-    
+
         /**
          * Dialog modal window
          */
@@ -134,20 +134,20 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           autoFocus: false,
           closeOnNavigation: true,
           disableClose: true,
-          panelClass: 'common-joining-form',    
+          panelClass: 'common-joining-form',
           data
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
           }
         });
       }
-  
+
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -360,7 +360,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         cellRenderer: (params) => {
             return `<span style="cursor: pointer;" class="material-icons d-flex justify-content-center align-items-center">
             file_download
-            </span>`;            
+            </span>`;
         },
         sortable: false,
       }
@@ -380,7 +380,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   excelExport() {
     if (this.gridApi.getSelectedNodes() && this.gridApi.getSelectedNodes().length > 0) {
       const apiData = [];
-      
+
       const selectedUserlist = this.gridApi.rowModel.rowsToDisplay;
       selectedUserlist.forEach(element => {
         if (element && element.selected) {
@@ -390,9 +390,9 @@ export class ListofSelectedCandidatesComponent implements OnInit {
             user_id: element['data']['user_id'],
             // name: element['data']['candidate_name']
           }
-          apiData.push(api);        
+          apiData.push(api);
         }
-      });  
+      });
       this.excelApi(apiData);
     } else {
       let data = [];
@@ -414,8 +414,8 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       } else {
         this.appConfig.warning('Please try again later');
       }
-      
-      this.appConfig.hideLoader();
+
+
     });
   }
   getAllNodes() {
@@ -432,7 +432,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     } else {
       this.popUpdata = {
         value: 0,
-        text: `Confirm to give Edit Access to Joining Form for the selected ${this.gridApi.getSelectedNodes().length} ${(this.gridApi.getSelectedNodes().length) == 1 ? 'candidate' : 'candidates'}.` 
+        text: `Confirm to give Edit Access to Joining Form for the selected ${this.gridApi.getSelectedNodes().length} ${(this.gridApi.getSelectedNodes().length) == 1 ? 'candidate' : 'candidates'}.`
       }
     }
     const dialogRef = this.dialog.open(this.matDialogRef, {
@@ -460,10 +460,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         user_id: element['data']['user_id'],
         name: element['data']['candidate_name']
       }
-      apiData.push(api);      
+      apiData.push(api);
     });
     this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.appConfig.success(this.popUpdata.value == 1 ? 'Mail Sent to the Candidates Successfully' : 'Edit Access given to the Candidates Successfully');
       this.ngOnInit();
     });
@@ -475,7 +475,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       company: role == 'ic' ? this.appConfig.getLocalData('userId') : ''
     }
     this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -496,14 +496,14 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       email: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
     this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if (data?.url) {
         const documents = `${this.BASE_URL}/${data?.url}`;
-        window.open(documents, '_blank');  
+        window.open(documents, '_blank');
       } else {
         this.appConfig.warning('No Documents Available');
       }
-            
+
       // const excel = data && data.file ? data.file : '';
       // window.open(excel, '_blank');
 

@@ -154,14 +154,14 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   getWorkApiDetails() {
     this.candidateService.joiningFormGetWorkDetails().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if (data) {
         let work = {
           workDetails: data && data.workDetails ? data.workDetails : null,
           Employment: data && data.Employment ? data.Employment : [],
           bgvDetails: data && data.bgvDetails ? data.bgvDetails : null,
         }
-        this.showWorkExp = data && data['isworkexp'] =='1' ? '1' : '0';        
+        this.showWorkExp = data && data['isworkexp'] =='1' ? '1' : '0';
         this.isWorkExp.setValue(data && data['isworkexp'] && data['isworkexp'] == '1' ? true : false);
         this.workDetails = work;
         this.patchWorkForm();
@@ -239,7 +239,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     });
     this.requiredDesc();
   }
-  
+
   OtherDetailsPatch(data) {
     this.workDetailsForm.patchValue({
       [this.form_total_exp_years]: data[this.form_total_exp_years],
@@ -332,7 +332,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       }
     } else {
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the fields in the Employment Details');
-      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);  
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
     }
 }
 
@@ -428,7 +428,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
         isworkexp: this.showWorkExp == '1' ? '1' : '0'
       }
       this.candidateService.joiningFormGetWorkDetailsSave(apiData).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Work Experience details has been updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
@@ -493,7 +493,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       let element = form.value;
       if (element[this.form_duration_from] && element[this.form_duration_to]) {
         let eventStartTime = new Date(`${this.momentForm1(element[this.form_duration_from])}`);
-        let eventEndTime = new Date(`${this.momentForm1(element[this.form_duration_to])}`);  
+        let eventEndTime = new Date(`${this.momentForm1(element[this.form_duration_to])}`);
         let m = moment(eventEndTime);
         let years = m.diff(eventStartTime, 'years');
         m.add(-years, 'years');

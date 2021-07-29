@@ -202,7 +202,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
-    this.appConfig.showLoader();
+
     this.FormsInitialization();
     if (!this.appConfig.getLocalData('allStates') || !this.appConfig.getLocalData('allCities')) {
       this.cityAPI();
@@ -763,7 +763,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
         this.appConfig.setLocalData('kycForm', JSON.stringify(this.KYCModifiedData));
 
-        this.appConfig.hideLoader();
+
 
       } else {
         this.KYCModifiedData = {
@@ -798,7 +798,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
         this.hideCityDropDown = true;
         this.hidePermanentCityDropDown = true;
-        this.appConfig.hideLoader();
+
       }
       this.FormsInitialization();
 
@@ -815,7 +815,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       this.hideCityDropDown = false;
       this.allCitiess = datas[0];
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -824,7 +824,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       this.hidePermanentCityDropDown = false;
       this.allPCitiess = datas[0];
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -1282,7 +1282,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
       }
 
     });
-    this.appConfig.hideLoader();
+
   }
 
   getDateFormat(date) {
@@ -1320,7 +1320,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
   // To get all cities
   cityAPI() {
     this.apiService.getAllCity().subscribe((data) => {
-      this.appConfig.hideLoader();
+
       this.allCities = data;
       this.appConfig.setLocalData('allCities', JSON.stringify(this.allCities));
       this.allPermanentCities = data;
@@ -1374,7 +1374,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           urls = event.target.result;
           this.url = urls;
 
-          this.appConfig.showLoader();
+
           const data = await (await this.candidateService.profileUpload(fd)).json();
             this.profileData = {
               fid: data[0].id,
@@ -1384,7 +1384,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             };
             // this.appConfig.clearLocalDataOne('localProfilePic');
             this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-                    this.appConfig.hideLoader();
+
 
           // this.candidateService.profileUpload(fd).subscribe((data: any) => {
           //   this.appConfig.setLocalData('personalFormTouched', 'true');
@@ -1394,7 +1394,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           //     localShowUrl: data[0].frontend_url,
           //     apiUrl: data[0].backend_url
           //   };
-          //   this.appConfig.hideLoader();
+          //
 
           // }, (err) => {
 

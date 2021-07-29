@@ -138,7 +138,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
       apiData.push(ele);
     });
     this.adminService.invBulk(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         invpanel_bulk_upload_ok: 'candidate-bulk',
         totalLength: apiData ? apiData.length : 0,
@@ -150,7 +150,7 @@ export class InvpanelBulkuploadComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -178,17 +178,17 @@ export class InvpanelBulkuploadComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'email') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'discipline')) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 

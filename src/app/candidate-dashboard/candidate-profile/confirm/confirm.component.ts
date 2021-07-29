@@ -161,9 +161,9 @@ export class ConfirmComponent implements OnInit {
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
     this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace(`${this.appConfig.imageBaseUrl()}`, '');
-    
+
     this.apiForm['selectedPost'] = {value: localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : ''};
-        
+
   }
 
   submitKYCData() {
@@ -192,7 +192,7 @@ export class ConfirmComponent implements OnInit {
 
 
     this.candidateService.editUser(this.apiForm).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.clearLocalDataOne('KYCAPI');
       this.appConfig.clearLocalDataOne('kycForm');
       this.appConfig.clearLocalDataOne('confirmClick');
@@ -298,7 +298,7 @@ export class ConfirmComponent implements OnInit {
             urls = event.target.result;
             this.url = urls;
 
-            this.appConfig.showLoader();
+
             const data = await (await this.candidateService.profileUpload(fd)).json();
               this.signatureData = {
                 target_id: data[0].id,
@@ -311,7 +311,7 @@ export class ConfirmComponent implements OnInit {
                 status: 'true'
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-              this.appConfig.hideLoader();
+
 
             // this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
 
@@ -327,7 +327,7 @@ export class ConfirmComponent implements OnInit {
             //   };
             //   this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
 
-            //   this.appConfig.hideLoader();
+            //
 
             // }, (err) => {
 

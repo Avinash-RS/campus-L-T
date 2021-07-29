@@ -90,15 +90,15 @@ export class CommonKycProfileViewComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  // const id = 
+  // const id =
   getWorkExp() {
     const apiData = {
       user_id: this.data ? this.data['candidateId'] : ''
     };
     this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
-      // this.appConfig.hideLoader();
+      //
       data = data && data[0];
-      
+
       this.workDetails = data?.work_experience_details;
       if (this.workDetails) {
         this.workDetails.when_interview = this.workDetails?.when_interview ? moment(this.workDetails.when_interview).format('DD MMM YYYY') : '-';
@@ -147,7 +147,7 @@ export class CommonKycProfileViewComponent implements OnInit {
         }
       });
       this.getPermanentUpdatedCity(this.permanentStateId);
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -162,7 +162,7 @@ export class CommonKycProfileViewComponent implements OnInit {
           this.userDetails['permanentCity'] = element.name;
         }
       });
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -547,9 +547,9 @@ export class CommonKycProfileViewComponent implements OnInit {
 
         this.url = !this.KYCModifiedData['field_profile_image'][0]['url'].includes('filename1_1.jpg') ? this.KYCModifiedData['field_profile_image'][0]['url'] : this.KYCModifiedData['field_profile_image'][0]['url'];
         this.getLocalForm(this.KYCModifiedData);
-        this.appConfig.hideLoader();
+
       } else {
-        this.appConfig.hideLoader();
+
         this.userDetails = {
           name: '',
           mail: '',

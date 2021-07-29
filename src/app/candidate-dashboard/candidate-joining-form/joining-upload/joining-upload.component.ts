@@ -146,7 +146,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService,
     private dialog: MatDialog,
-  ) { 
+  ) {
     this.dateValidation();
   }
 
@@ -182,7 +182,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   getDocuments() {
     this.candidateService.joiningFormGetDocuments().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.getJoiningDocuments = data && data['Joining_Details'] ? data['Joining_Details'] : [];
       this.getEducationDocuments = data && data['Education_Documents'] ? data['Education_Documents'] : [];
       this.getResumeDocuments = data && data['Resume'] ? data['Resume'] : [];
@@ -200,7 +200,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     if (!this.IsreasonAvailable) {
       this.IsreasonAvailable = element[this.form_Not_Submitted_Description] ? element[this.form_Not_Submitted_Description] : null;
       this.isReasonDate = element[this.form_expectedDate] ? element[this.form_expectedDate] : null;
-    }    
+    }
   }
   checkJoiningArrayinitalize() {
     // Joining
@@ -260,8 +260,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         });
       } else {
         this.getBankArr.push(this.initBankingArray());
-      }      
-      
+      }
+
       // Other Certifications
       if (this.getOtherCertificationDocuments && this.getOtherCertificationDocuments.length > 0) {
         this.getOtherCertificationDocuments.forEach(element => {
@@ -269,7 +269,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         });
       } else {
         // this.getOtherCertArr.push(this.initJoiningArray());
-      }      
+      }
 
       // Certifications
       if (this.getCertificationDocuments && this.getCertificationDocuments.length > 0) {
@@ -278,8 +278,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         });
       } else {
         // this.getOtherCertArr.push(this.initJoiningArray());
-      }      
-      
+      }
+
       this.patchNotSubmittedReason();
   }
 
@@ -303,7 +303,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [data[this.form_expectedDate]],
-    })    
+    })
   }
 
   patchEducationArray(data) {
@@ -326,7 +326,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [data[this.form_expectedDate] ? this.dateConvertion(data[this.form_expectedDate]) : null]
-    })        
+    })
   }
 
   patchSubArray(semestercount, level, form) {
@@ -335,7 +335,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       form[this.form_semesterArray].forEach(element => {
         this.checkNotSubmittedReasonAndDate(element);
         subSem.push(this.patchSemesterArray(element, level));
-      });  
+      });
       return this.fb.array(subSem);
     }
   }
@@ -364,7 +364,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [null]
-    })    
+    })
   }
 
   patchBankingArray(data) {
@@ -383,7 +383,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [data[this.form_expectedDate]],
-    })    
+    })
   }
 
   initBankingArray() {
@@ -402,7 +402,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [null]
-    })    
+    })
   }
 
   initSemesterArray(data?) {
@@ -417,7 +417,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_expectedDate]: [null]
-    })        
+    })
   }
   initEducationArray() {
     return this.fb.group({
@@ -426,9 +426,9 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_semesterArray]: this.fb.array([this.initSemesterArray()]),
     });
   }
-  
+
   removeInOtherArray(i) {
-    this.getOtherCertArr.removeAt(i);    
+    this.getOtherCertArr.removeAt(i);
   }
   addToOtherArray(i?: any) {
    if (this.getOtherCertArr.valid) {
@@ -438,7 +438,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   removeInCertificationsArray(i) {
-    this.getCertificationsArr.removeAt(i);    
+    this.getCertificationsArr.removeAt(i);
   }
   addToCertificationsArray(i?: any) {
    if (this.getCertificationsArr.valid) {
@@ -475,14 +475,14 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
               label: `${level} or Provisional Certificate`,
               name: 'degreeOrProvision'
             }
-          this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+          this.getSemesterArr(formIndex).push(this.initSemesterArray(data));
         }
           if (i > 0) {
             data = {
               label: `Semester ${i}`,
               name: `sem${i}`
             }
-            this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+            this.getSemesterArr(formIndex).push(this.initSemesterArray(data));
           }
         }
       } else if (existingSemCount != 0 && (NoOfSemcount > existingSemCount)) {
@@ -493,14 +493,14 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
               label: level == 'Diploma' ? `${level} Certificate or Provisional Certificate` : `${level} or Provisional Certificate`,
               name: 'degreeOrProvision'
             }
-          this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+          this.getSemesterArr(formIndex).push(this.initSemesterArray(data));
         }
           if (i > 0) {
             data = {
               label: `Semester ${i}`,
               name: `sem${i}`
             }
-            this.getSemesterArr(formIndex).push(this.initSemesterArray(data));  
+            this.getSemesterArr(formIndex).push(this.initSemesterArray(data));
           }
         }
       } else {
@@ -532,7 +532,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       [this.form_file_type]: null,
       [this.form_Not_Submitted_Description]: this.reason.value,
       [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
-    });                  
+    });
     }
     });
 
@@ -554,10 +554,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         [this.form_file_type]: null,
         [this.form_Not_Submitted_Description]: this.reason.value,
         [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
-      });                  
+      });
       }
       });
-    
+
 
       // Resume Mapping of reason and expected value
       let resumeArray = this.getResumeArr.getRawValue();
@@ -577,7 +577,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         [this.form_file_type]: null,
         [this.form_Not_Submitted_Description]: this.reason.value,
         [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
-      });                  
+      });
       }
       });
 
@@ -599,10 +599,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
           [this.form_file_type]: null,
           [this.form_Not_Submitted_Description]: this.reason.value,
           [this.form_expectedDate]: this.momentForm(this.expectedDate.value)
-        });                  
+        });
         }
         });
-      
+
     // Education Mapping of reason and expected value
     let educationArray = this.getEducationArr.getRawValue();
     educationArray.forEach((ele, i) => {
@@ -611,7 +611,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.getSemesterArr(i).at(subIndex).patchValue({
         [this.form_Not_Submitted_Description]: null,
         [this.form_expectedDate]: null
-        });  
+        });
        // If file path not found, patching the not sub desc and exp date
        if (!element[this.form_file_path]) {
           this.getSemesterArr(i).at(subIndex).patchValue({
@@ -636,7 +636,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       if (element[this.form_file_path]) {
         this.getOtherCertArr.at(i).patchValue({
           [this.form_name]: this.form_label
-        });                  
+        });
         }
     });
 
@@ -649,7 +649,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       if (element[this.form_file_path]) {
         this.getCertificationsArr.at(i).patchValue({
           [this.form_name]: this.form_label
-        });                  
+        });
         }
     });
 
@@ -669,7 +669,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
     } else {
       this.ngAfterViewInit();
-      this.accordion.openAll()      
+      this.accordion.openAll()
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
@@ -686,9 +686,9 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.getOtherCertArr.invalid) {
         return this.appConfig.nzNotification('error', 'Other Certifications', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
       } else {
-        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');        
+        this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       }
-    }  
+    }
   }
 
 
@@ -712,7 +712,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.joiningNotUploadedDocs.push(ele);
       }
     });
-    
+
     if (this.joiningNotUploadedDocs && this.joiningNotUploadedDocs.length > 0) {
       isValid.joining = false;
     }
@@ -728,11 +728,11 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.transferNotUploadedDocs.push(ele);
       }
     });
-    
+
     if (this.transferNotUploadedDocs && this.transferNotUploadedDocs.length > 0) {
       isValid.transfer = false;
     }
-    
+
     // Resume
     let resumeArray = this.uploadForm.getRawValue()[this.form_resumeArray];
     this.resumeNotUploadedDocs = [];
@@ -744,7 +744,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.resumeNotUploadedDocs.push(ele);
       }
     });
-    
+
     if (this.resumeNotUploadedDocs && this.resumeNotUploadedDocs.length > 0) {
       isValid.resume = false;
     }
@@ -760,12 +760,12 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.bankNotUploadedDocs.push(ele);
       }
     });
-    
+
     if (this.bankNotUploadedDocs && this.bankNotUploadedDocs.length > 0) {
       isValid.bank = false;
     }
-    
-    
+
+
     // Education
     let educationArray = this.uploadForm.getRawValue()[this.form_educationArray];
     this.educationNotUploadedDocs = [];
@@ -783,7 +783,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     });
     if (this.educationNotUploadedDocs && this.educationNotUploadedDocs.length > 0) {
       isValid.education = false;
-    }    
+    }
 
     let finalValidCheck = JSON.stringify(isValid);
     return finalValidCheck.includes('false') ? true : false;
@@ -797,7 +797,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       this.getJoiningArr.at(i).patchValue({
       [this.form_Not_Submitted_Description]: null,
       [this.form_expectedDate]: null
-    });                  
+    });
       }
     });
 
@@ -808,10 +808,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       this.getTransferArr.at(i).patchValue({
       [this.form_Not_Submitted_Description]: null,
       [this.form_expectedDate]: null
-    });                  
+    });
       }
     });
-    
+
       // Resume Nulling the not sub desc and exp date.
       let resumeArray = this.getResumeArr.getRawValue();
       resumeArray.forEach((element, i) => {
@@ -819,7 +819,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.getResumeArr.at(i).patchValue({
         [this.form_Not_Submitted_Description]: null,
         [this.form_expectedDate]: null
-      });                  
+      });
         }
       });
 
@@ -830,10 +830,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       this.getBankArr.at(i).patchValue({
       [this.form_Not_Submitted_Description]: null,
       [this.form_expectedDate]: null
-    });                  
+    });
       }
     });
-  
+
     // Education Nulling the not sub desc and exp date.
     let educationArray = this.getEducationArr.getRawValue();
     educationArray.forEach((ele, i) => {
@@ -856,7 +856,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       if (element[this.form_file_path]) {
         this.getOtherCertArr.at(i).patchValue({
           [this.form_name]: this.form_label
-        });                  
+        });
         }
     });
 
@@ -869,10 +869,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         if (element[this.form_file_path]) {
           this.getCertificationsArr.at(i).patchValue({
             [this.form_name]: this.form_label
-          });                  
+          });
           }
       });
-    
+
     this.finalSubmit(routeValue ? routeValue : '');
   }
 
@@ -894,10 +894,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       Banking_Details: bankArray
     }
 
-    
+
     // if(this.dependentForm.valid) {
       this.candidateService.joiningFormUpload(apiData).subscribe((data: any)=> {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Upload details has been updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
@@ -906,7 +906,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
 async uploadImage(file, i, form) {
   try {
-    this.appConfig.showLoader();
+
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
@@ -917,7 +917,7 @@ async uploadImage(file, i, form) {
         [this.form_file_path]: data.file_path,
         [this.form_file_size]: data.file_size,
         [this.form_file_type]: data.type,
-      });            
+      });
     }
     if (form == this.conditionTransfer) {
       this.getTransferArr.at(i).patchValue({
@@ -926,7 +926,7 @@ async uploadImage(file, i, form) {
         [this.form_file_path]: data.file_path,
         [this.form_file_size]: data.file_size,
         [this.form_file_type]: data.type,
-      });            
+      });
     }
     if (form == this.conditionResume) {
       this.getResumeArr.at(i).patchValue({
@@ -935,7 +935,7 @@ async uploadImage(file, i, form) {
         [this.form_file_path]: data.file_path,
         [this.form_file_size]: data.file_size,
         [this.form_file_type]: data.type,
-      });            
+      });
     }
     if (form == this.conditionBank) {
       this.getBankArr.at(i).patchValue({
@@ -944,7 +944,7 @@ async uploadImage(file, i, form) {
         [this.form_file_path]: data.file_path,
         [this.form_file_size]: data.file_size,
         [this.form_file_type]: data.type,
-      });            
+      });
     }
     if (form == this.conditionCert) {
       this.getCertificationsArr.at(i).patchValue({
@@ -953,7 +953,7 @@ async uploadImage(file, i, form) {
         [this.form_file_path]: data.file_path,
         [this.form_file_size]: data.file_size,
         [this.form_file_type]: data.type,
-      });            
+      });
     }
     if (form == this.conditionOther) {
       this.getOtherCertArr.at(i).patchValue({
@@ -962,14 +962,14 @@ async uploadImage(file, i, form) {
         [this.form_file_path]: data.file_path,
         [this.form_file_size]: data.file_size,
         [this.form_file_type]: data.type,
-      });            
+      });
     }
     }
-    this.appConfig.hideLoader();
+
     this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
   } catch (e) {
     this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
-    this.appConfig.hideLoader();
+
   }
   // }, (err) => {
 
@@ -984,7 +984,7 @@ removeFile(i, form) {
     [this.form_file_path]: null,
     [this.form_file_size]: null,
     [this.form_file_type]: null,
-  });        
+  });
 }
 if (form == this.conditionTransfer) {
   this.getTransferArr.at(i).patchValue({
@@ -993,7 +993,7 @@ if (form == this.conditionTransfer) {
   [this.form_file_path]: null,
   [this.form_file_size]: null,
   [this.form_file_type]: null,
-});        
+});
 }
 if (form == this.conditionResume) {
   this.getResumeArr.at(i).patchValue({
@@ -1002,7 +1002,7 @@ if (form == this.conditionResume) {
   [this.form_file_path]: null,
   [this.form_file_size]: null,
   [this.form_file_type]: null,
-});        
+});
 }
 if (form == this.conditionBank) {
   this.getBankArr.at(i).patchValue({
@@ -1011,7 +1011,7 @@ if (form == this.conditionBank) {
   [this.form_file_path]: null,
   [this.form_file_size]: null,
   [this.form_file_type]: null,
-});        
+});
 }
 if (form == this.conditionCert) {
   this.getCertificationsArr.at(i).patchValue({
@@ -1020,7 +1020,7 @@ if (form == this.conditionCert) {
   [this.form_file_path]: null,
   [this.form_file_size]: null,
   [this.form_file_type]: null,
-});        
+});
 }
 if (form == this.conditionOther) {
   this.getOtherCertArr.at(i).patchValue({
@@ -1029,7 +1029,7 @@ if (form == this.conditionOther) {
   [this.form_file_path]: null,
   [this.form_file_size]: null,
   [this.form_file_type]: null,
-});        
+});
 }
 
   this.selectedImage = null;
@@ -1057,7 +1057,7 @@ onSelectFile(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getJoiningArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionTransfer) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1065,7 +1065,7 @@ onSelectFile(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getTransferArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionResume) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1073,7 +1073,7 @@ onSelectFile(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getResumeArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionBank) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1081,7 +1081,7 @@ onSelectFile(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getBankArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionCert) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1089,7 +1089,7 @@ onSelectFile(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getCertificationsArr.at(i).value[this.form_label]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionOther) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1097,7 +1097,7 @@ onSelectFile(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getOtherCertArr.at(i).value[this.form_label]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
       } else {
         // this.showResumeImgSizeError = true;
@@ -1113,7 +1113,7 @@ onSelectFile(event, i, form) {
     }
 }
 
-onPhotoUpload(event, i, form) {    
+onPhotoUpload(event, i, form) {
   const fd = new FormData();
   if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       if (event.target.files[0].size < 2000000) {
@@ -1125,7 +1125,7 @@ onPhotoUpload(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getJoiningArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionBank) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1133,7 +1133,7 @@ onPhotoUpload(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getBankArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
         if (form == this.conditionTransfer) {
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1141,7 +1141,7 @@ onPhotoUpload(event, i, form) {
           fd.append('label', form);
           fd.append('level', this.getTransferArr.at(i).value[this.form_name]);
           fd.append('product_image', this.selectedImage);
-          this.uploadImage(fd, i, form);        
+          this.uploadImage(fd, i, form);
         }
       } else {
         // this.showResumeImgSizeError = true;
@@ -1160,7 +1160,7 @@ onPhotoUpload(event, i, form) {
 
 async uploadEducationImage(file, mainIndex, subIndex, form) {
   try {
-    this.appConfig.showLoader();
+
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
@@ -1170,13 +1170,13 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
           [this.form_file_path]: data.file_path,
           [this.form_file_size]: data.file_size,
           [this.form_file_type]: data.type
-        });  
+        });
     }
-    this.appConfig.hideLoader();
+
     this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
   } catch (e) {
     this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
-    this.appConfig.hideLoader();
+
   }
   // }, (err) => {
 
@@ -1190,12 +1190,12 @@ removeEducationFile(mainIndex, subIndex, form) {
     [this.form_file_path]: null,
     [this.form_file_size]: null,
     [this.form_file_type]: null,
-  });        
+  });
   this.selectedImage = null;
 }
 
 onEducationFileUpload(event, mainIndex, subIndex, form) {
-    
+
   const fd = new FormData();
     if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
       if (event.target.files[0].size < 2000000) {
@@ -1206,7 +1206,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
         fd.append('label', this.getEducationArr.at(mainIndex).value[this.form_education_level]);
         fd.append('level', this.getSemesterArr(mainIndex).at(subIndex).value[this.form_name]);
         fd.append('product_image', this.selectedImage);
-        this.uploadEducationImage(fd, mainIndex, subIndex, form);      
+        this.uploadEducationImage(fd, mainIndex, subIndex, form);
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
@@ -1220,7 +1220,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
   getDownloadableDocs() {
     this.downloadabledocs = [];
   // this.candidateService.joiningFormDownloadableDocuments().subscribe((data: any)=> {
-    // this.appConfig.hideLoader();
+    //
     // this.downloadabledocs = data ? data : [];
   // });
   }
@@ -1228,10 +1228,10 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
 
   saveRequestRxJs() {
     this.sendPopupResultSubscription =  this.sharedService.sendPopupResult.subscribe((result: any)=> {
-      
+
       if (result.result == 'save') {
       this.formSubmit(result.route);
-      }     
+      }
     });
   }
 
@@ -1243,7 +1243,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -1335,12 +1335,12 @@ link.remove();
 momentForm(date) {
 if (date) {
   const split = moment(date).format('DD-MM-YYYY');
- return split;    
+ return split;
 }
 }
 
 dateConvertion(date) {
-  if (date) {      
+  if (date) {
     const split = moment(date).format();
     if (split == 'Invalid date') {
       const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -1350,7 +1350,7 @@ dateConvertion(date) {
   }
 }
 
-  
+
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';

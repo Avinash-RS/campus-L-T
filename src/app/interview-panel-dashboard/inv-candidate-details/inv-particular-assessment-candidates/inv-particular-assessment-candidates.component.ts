@@ -285,7 +285,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       return rowNode.data ? rowNode.data.evaluation_status == '1' : false;
     };
     this.getUsersList();
-    
+
   }
 
 
@@ -307,10 +307,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         this.mergePhpAndEdgeService(this.scheduleListDetails);
       } else {
         this.rowData = this.userList;
-        this.appConfig.hideLoader();
+
       }
     }, (err)=> {
-      this.appConfig.hideLoader();
+
       this.rowData = this.userList;
     })
   }
@@ -331,7 +331,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
     this.userList = this.userList.filter(element => element.startTime);
     this.rowData = this.userList;
-    this.appConfig.hideLoader();
+
     this.getSummaryCount();
     console.log('usr', this.userList)
   }
@@ -415,7 +415,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       }
     });
     this.adminService.invSubmittingCandidates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         iconName: '',
         dataToBeShared: {

@@ -137,7 +137,7 @@ export class ApplyCriteriaComponent implements OnInit {
       element.checkbox = false;
     });
     this.mastersEducationFilterList = this.mastersEducation;
-    //get candidate count 
+    //get candidate count
     this.getCandidateCount();
 
     // For Gender
@@ -250,7 +250,7 @@ export class ApplyCriteriaComponent implements OnInit {
       }
     });
   }
- 
+
     if (this.onlyForEDUFilterArray) {
       if (!this.percentageRegexError && !this.percentageToRegexError) {
         this.onlyForEDUFilterArray.forEach(element => {
@@ -296,10 +296,10 @@ export class ApplyCriteriaComponent implements OnInit {
       start: '1',
       counts: '50'
     };
-    
+
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      
+
+
       // const apiData = {
       //   user_id: []
       // };
@@ -343,11 +343,11 @@ export class ApplyCriteriaComponent implements OnInit {
       start: '1',
       counts: '50'
     };
-    
+
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      
-      
+
+
+
       this.totalCandidates = data[1] ? data[1] : '0';
 
 
@@ -396,7 +396,7 @@ export class ApplyCriteriaComponent implements OnInit {
         }
       });
     }
-  
+
     this.backlogFilter.forEach((element) => {
       if (element.checkbox) {
         backlogsAPIData.push(element.name);
@@ -459,10 +459,10 @@ export class ApplyCriteriaComponent implements OnInit {
       field_dob: dobAPIData,
       educational_level: educationData
     };
-  
+
     this.adminService.getCandidateListForShortlist(apiDatas).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
-      
+      //
+
       // const apiData = {
       //   user_id: []
       // };
@@ -533,7 +533,7 @@ export class ApplyCriteriaComponent implements OnInit {
     )
     .subscribe((term) => {
       this.applyDateFilter();
-      
+
     });
   }
   valueChangesDateTo() {
@@ -543,10 +543,10 @@ export class ApplyCriteriaComponent implements OnInit {
     )
     .subscribe((term) => {
       this.applyDateFilter();
-      
+
     });
   }
-  
+
   // Apply Date Filter
   applyDateFilter() {
     // Change Date format to yyyy-mm-dd and date Validation
@@ -715,7 +715,7 @@ export class ApplyCriteriaComponent implements OnInit {
             }
             if (document.getElementById(`perTo${i}`)['value']) {
               const percentageToRegex = this.percentageDecimals.test(document.getElementById(`perTo${i}`)['value']);
-        
+
               if (percentageToRegex === false) {
                 this.percentageToRegexError = true;
                 this.percentageToRegexErrorIndex = i.toString();
@@ -737,7 +737,7 @@ export class ApplyCriteriaComponent implements OnInit {
       this.percentageToRegexError = false;
       this.eduFilter.forEach((element, i) => {
         if (element['checkbox']) {
-        
+
           if (document.getElementById(`yearFrom${i}`)['value']) {
             this.yearFromShow = this.getDateFormat(this.yearFrom.value);
             element['yearFrom'] = this.yearFrom.value;
@@ -922,7 +922,7 @@ export class ApplyCriteriaComponent implements OnInit {
   // For Institute
   InstituteNameNgOnInIt() {
     this.candidateService.getoverallInstitute().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data ? data : [];
       list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
       this.InstituteNameDropdownList = list;
@@ -1024,11 +1024,11 @@ export class ApplyCriteriaComponent implements OnInit {
   // For Discpline
   DisciplineNgOnInIt() {
     this.candidateService.getoverallDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const listarr = data ? data : [];
 
       let list =  listarr.filter((v,i) => listarr.findIndex(item => item.value.trim() == v.value.trim()) === i);
-      list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));          
+      list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
       this.disciplineList = list;
       this.disciplineDropdownList = this.disciplineList;
       this.disciplineFilter = this.disciplineList;
@@ -1109,7 +1109,7 @@ export class ApplyCriteriaComponent implements OnInit {
     // this.InstituteNameDropDown = this.InstituteNameFilter;
   }
 
-  
+
   clearDisciplineFilter() {
     if (this.disciplineList) {
     this.disciplineList.forEach(element => {
@@ -1167,7 +1167,7 @@ export class ApplyCriteriaComponent implements OnInit {
   // For Specialization
   SpecializationNameNgOnInIt() {
     this.candidateService.getoverallSpecialization().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data ? data : [];
       list.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
       this.specializationList = list;

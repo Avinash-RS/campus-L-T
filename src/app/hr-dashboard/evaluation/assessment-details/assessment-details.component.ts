@@ -34,7 +34,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component    
+    // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
         icon: 'work.svg',
@@ -70,7 +70,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
       shortlist_name: name
     };
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
+      //
       this.assessmentName = data;
 
     }, (err) => {
@@ -86,7 +86,7 @@ export class AssessmentDetailsComponent implements OnInit, AfterViewInit {
       shortlist_name: name,
     };
     this.adminService.hrEvaluationParticularAssessmentDetails(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       const align = datas;
       this.userList = align ? align : [];

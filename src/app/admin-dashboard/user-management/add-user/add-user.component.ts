@@ -56,7 +56,7 @@ export class AddUserComponent implements OnInit {
   // To find the selected user to edit from all users
   getUsersList() {
     this.adminService.userList().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const userList = data;
       const selectedUser = userList.find((user) => user.uid === this.editUserId);
       this.editDetails = selectedUser;
@@ -68,7 +68,7 @@ export class AddUserComponent implements OnInit {
   // get discipline dropdown value
   getDiscipline() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.disciplineDropdown = data;
     }, (err) => {
     });
@@ -192,7 +192,7 @@ export class AddUserComponent implements OnInit {
       }
 
       this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
-        this.appConfig.hideLoader();
+
         this.addUserForm.reset();
         this.appConfig.success(`User has been added Successfully`, '');
       }, (error) => {

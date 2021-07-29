@@ -70,7 +70,7 @@ export class CreateComponent implements OnInit {
       "email_id": this.prePoulteEmailId
     }
     this.apiService.getEmailDecryption(apiData).subscribe((success: any) => {
-      this.appConfig.hideLoader();
+
       if (success) {
         this.prePoulteEmailId = success.decode_id;
       }
@@ -122,7 +122,7 @@ export class CreateComponent implements OnInit {
         new_pass: this.createForm.value.password
       };
       this.apiService.passwordReset(apiData).subscribe((success: any) => {
-        this.appConfig.hideLoader();
+
         // this.appConfig.consoleLog('success', success);
         this.appConfig.success((this.currentRoute.includes('Reset')) ? `Password has been reset successfully` :
           `Account has been created Successfully`, '');

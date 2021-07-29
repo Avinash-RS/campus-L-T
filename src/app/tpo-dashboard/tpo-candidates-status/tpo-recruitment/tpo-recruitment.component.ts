@@ -225,7 +225,7 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data && data['result'] ? data['result'] : [];
       let count = 0;
@@ -252,7 +252,7 @@ export class TpoRecruitmentComponent implements OnInit, AfterViewInit {
 
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       if (data) {
         // this.userList = data ? data : [];

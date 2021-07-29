@@ -72,7 +72,7 @@ export class CommonHeaderComponent implements OnInit {
         const token = this.appConfig.getLocalData('logout-token');
         this.apiService.logout(token).subscribe((data: any) => {
           this.appConfig.clearLocalData();
-          this.appConfig.hideLoader();
+
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
         }, (err) => {
         });

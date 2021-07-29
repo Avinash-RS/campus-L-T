@@ -78,7 +78,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -148,9 +148,9 @@ export class SecondLevelAssessmentListComponent implements OnInit {
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
           if (params['data']['buttons'] == 'completed') {
-            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;            
+            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;
           } else {
-            return `<button class="table-btn agTable" mat-raised-button>Shortlist</button>`;            
+            return `<button class="table-btn agTable" mat-raised-button>Shortlist</button>`;
           }
         },
         sortable: true,
@@ -163,7 +163,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       if (datas) {
         this.userList = datas ? datas : [];

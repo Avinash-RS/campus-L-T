@@ -73,7 +73,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
 
     this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
 
-      this.appConfig.hideLoader();
+
       const data = {
         tpo_bulk_upload_ok: 'ok'
       };
@@ -196,7 +196,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     // };
     apiData['uploaded_id'] = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '00209';
     this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
-      this.appConfig.hideLoader();
+
       this.length = data1 && data1['count'] ? data1['count'] : '0';
       this.userList = data1 && data1['result'] ? data1['result'] : [];
       let count = 0;
@@ -225,7 +225,7 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
       uploaded_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '00209'
     };
     this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = data1 && data1['result'] ? data1['result'] : [];
       let count = 0;
       this.userList.forEach((element, i) => {

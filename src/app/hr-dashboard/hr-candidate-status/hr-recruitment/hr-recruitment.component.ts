@@ -134,7 +134,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     if(loggedInUserRole == 'institute'){
       dataObj.current_user_id = this.appConfig.getLocalData('userId');
     }
-  
+
     this.adminService.TPOStatusTagLists(dataObj).subscribe((data: any) => {
       this.tagLists = data && data ? data : [];
 
@@ -227,7 +227,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data && data['result'] ? data['result'] : [];
       let count = 0;
@@ -254,7 +254,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
 
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       if (data) {
         // this.userList = data ? data : [];
@@ -424,7 +424,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     };
 
     this.adminService.getStatusExcelDownload(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       const excel = data && data[0].url ? data[0].url : '';
       window.open(excel, '_blank');

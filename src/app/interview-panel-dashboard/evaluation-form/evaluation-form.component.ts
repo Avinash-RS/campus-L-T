@@ -75,7 +75,7 @@ export class EvaluationFormComponent implements OnInit {
       this.getWorkExp();
       this.getEvaluationData(this.uid);
       this.nginitFunc();
-      this.getCandidateDetails();  
+      this.getCandidateDetails();
     }
   }
 
@@ -84,7 +84,7 @@ export class EvaluationFormComponent implements OnInit {
       user_id: this.candidateId
     };
     this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
-      // this.appConfig.hideLoader();
+      //
       this.selectedPost = data?.selected_post && (data?.selected_post == 'get' || data?.selected_post == 'pget') ? true : false;
     });
   }
@@ -104,7 +104,7 @@ export class EvaluationFormComponent implements OnInit {
       uid: this.candidateId ? this.candidateId : ''
     }
     this.adminService.getEvaluationDetails(apiData).subscribe((success: any) => {
-      this.appConfig.hideLoader();
+
       const data = success && success.length > 0 ? success[0] : null;
       if (data) {
         this.evaluationForm.patchValue({
@@ -185,7 +185,7 @@ export class EvaluationFormComponent implements OnInit {
       id: cid
     };
     this.adminService.getEvaluationData(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.getCandidateData = data[0];
     });
   }
@@ -294,10 +294,10 @@ export class EvaluationFormComponent implements OnInit {
         this.evaluationForm['controls']['ps_no1'].updateValueAndValidity();
         if (this.selectedPost) {
           this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
-          this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
+          this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
         } else {
           this.evaluationForm['controls']['topic_given'].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
-          this.evaluationForm['controls']['topic_given'].updateValueAndValidity();  
+          this.evaluationForm['controls']['topic_given'].updateValueAndValidity();
         }
         this.evaluationForm['controls']['remarks'].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
         this.evaluationForm['controls']['remarks'].updateValueAndValidity();
@@ -486,9 +486,9 @@ export class EvaluationFormComponent implements OnInit {
       time_taken: this.evaluationForm.value.time_taken,
       remarks: this.evaluationForm.value.remarks
     };
-    
+
     this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success('Evaluation completed successfully', '');
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
     }, (err) => {

@@ -88,7 +88,8 @@ export class CommonSidebarComponent implements OnInit {
            });
          } while (currentRoute);
        });
-   }
+       this.rxjsSubjectForPrint();
+      }
 
    buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
      // If no routeConfig is avalailable we are on the root path

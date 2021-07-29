@@ -61,7 +61,7 @@ export class ListofICComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -154,7 +154,7 @@ export class ListofICComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.listIC().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

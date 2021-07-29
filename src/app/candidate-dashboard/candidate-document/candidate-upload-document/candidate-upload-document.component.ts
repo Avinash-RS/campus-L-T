@@ -60,7 +60,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
     private candidateService: CandidateMappersService,
     private matDialog: MatDialog) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.saveAndSubmitBtnDisable = false;
     this.urlCertificate = null;
     this.urlOther = null;
@@ -77,14 +77,14 @@ export class CandidateUploadDocumentComponent implements OnInit {
       user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
     };
     this.candidateService.getListofDocs(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.filelists  = data ? data : [];
     }, (err) => {
 
     });
   }
 
-  viewDocs(url) {    
+  viewDocs(url) {
     let path = url && url['certificate_url'] ? url['certificate_url'] : '';
     window.open(path, '_blank');
 
@@ -116,7 +116,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
       }
       this.NewcertificateName.patchValue(data[0][0].certificate_array[0] && data[0][0].certificate_array[0]['certificate_name'] ? data[0][0].certificate_array[0]['certificate_name'] : '');
       this.NewOther.patchValue(data[0][0].other_array[0] && data[0][0].other_array[0]['description'] ? data[0][0].other_array[0]['description'] : '');
-      this.appConfig.hideLoader();
+
       // this.FormInitialization();
 
     }, (err) => {
@@ -131,7 +131,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   edudropdownChange(i) {
-    
+
   }
 
   removeCert(id, label) {
@@ -157,7 +157,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
   removeCertApi(apiData) {
     this.candidateService.removeCeritficate(apiData).subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.appConfig.nzNotification('success', 'Removed', 'Document removed successfully');
       this.ngOnInit();
     }, (err)=> {
@@ -166,8 +166,8 @@ export class CandidateUploadDocumentComponent implements OnInit {
   }
 
   onSelectFile(event, uploadType, i) {
-    
-    
+
+
     this.documentUploadType = uploadType;
     this.updateDocumentIndex = i;
     const fd = new FormData();
@@ -218,7 +218,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
         this.showCertificateImgErr = false;
         if (event.target.files[0].size < 2000000) {
           this.showCertificateImgSizeErr = false;
-          
+
           this.urlCertificate = event.target.files[0].name;
           this.selectedImage = event.target.files[0];
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -261,18 +261,18 @@ export class CandidateUploadDocumentComponent implements OnInit {
   async uploadImage(file, selectType, i) {
 
     try {
-      this.appConfig.showLoader();
+
       const data = await (await this.candidateService.uploadCandidateDocument(file)).json();
 
       // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
 
-      this.appConfig.hideLoader();
+
 
 
       this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
       this.ngOnInit();
     } catch (e) {
-      this.appConfig.hideLoader();
+
     }
     // }, (err) => {
 

@@ -143,7 +143,7 @@ maxDateStartField: any;
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
-  ) { 
+  ) {
     this.dateValidation();
   }
 
@@ -177,13 +177,13 @@ maxDateStartField: any;
 
 
   chosenYearHandler(normalizedYear: Moment, i) {
-    const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];    
+    const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];
     if (ctrlValue) {
       ctrlValue.year(normalizedYear.year());
       console.log('ctrlValue', ctrlValue);
       this.getEducationArr.at(i).patchValue({
         [this.form_yearpassing]: ctrlValue,
-      });    
+      });
     }
   }
 
@@ -191,7 +191,7 @@ maxDateStartField: any;
     if (this.dateConvertion(normalizedMonth['_d'])) {
     this.getEducationArr.at(i).patchValue({
       [this.form_yearpassing]: this.dateConvertionMonth(normalizedMonth['_d']),
-    });      
+    });
   }
     datepicker.close();
   }
@@ -202,13 +202,13 @@ maxDateStartField: any;
     this.mastersList?.education_master.forEach(element => {
       if (element.value == this.selectedPost) {
         this.selectedPostLabel = element.label;
-      }  
+      }
     });
   }
 
   getEducationApiDetails() {
     this.candidateService.joiningFormGetEducationDetails().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       if (data && data.education &&  data.education.length > 0) {
         this.educationDetails = data.education;
         this.getEducationLength(data.education);
@@ -233,12 +233,12 @@ maxDateStartField: any;
       this.getEducationArr.push(this.initEducationArray());
       this.getEducationArr.at(0).patchValue({
         [this.form_qualification_type]: 'SSLC',
-      });  
+      });
       this.setValidations();
     }
   }
-  
-  
+
+
     educationLevelChange(i) {
         this.getEducationArr.at(i).patchValue({
           [this.form_qualification]: null,
@@ -266,20 +266,20 @@ maxDateStartField: any;
 momentForm(date) {
 if (date) {
   const split = moment(date).format('DD-MM-YYYY');
- return split;    
+ return split;
 }
 }
 
 momentFormMonth(date) {
   if (date) {
     const split = moment(date).format('MMM YYYY');
-   return split;    
+   return split;
   }
   }
-  
+
 
 dateConvertion(date) {
-  if (date) {      
+  if (date) {
     const split = moment(date).format();
     if (split == 'Invalid date') {
       const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -290,7 +290,7 @@ dateConvertion(date) {
 }
 
 dateConvertionMonth(date) {
-  if (date) {      
+  if (date) {
     const split = moment(date).format();
     if (split == 'Invalid date') {
       const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -367,7 +367,7 @@ validSelectedPost() {
       if (entryValid.valid) {
         let formArray = this.educationForm.getRawValue()[this.form_educationArray];
         this.candidateService.joiningFormGetEducationDetailsSave(formArray).subscribe((data: any)=> {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Education details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
@@ -385,10 +385,10 @@ validSelectedPost() {
 
   saveRequestRxJs() {
     this.sendPopupResultSubscription =  this.sharedService.sendPopupResult.subscribe((result: any)=> {
-      
+
       if (result.result == 'save') {
       this.formSubmit(result.route);
-      }     
+      }
     });
   }
 
@@ -400,7 +400,7 @@ validSelectedPost() {
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -447,7 +447,7 @@ validSelectedPost() {
       [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, [Validators.required]],
       [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: true }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
       [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
-    })    
+    })
   }
 
   initEducationArray() {
@@ -464,7 +464,7 @@ validSelectedPost() {
       [this.form_mode]: [null, [Validators.required]],
       [this.form_cgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
       [this.form_Finalcgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
-    })      
+    })
   }
 
     // Custom regex validator
@@ -514,11 +514,11 @@ validSelectedPost() {
       }
 
     }
-  
+
     startTrue(param) {
       return this.regexValidator({notValid: true}, param);
     }
-  
+
   formInitialize() {
     this.educationForm = this.fb.group({
       [this.form_educationArray]: this.fb.array([])
@@ -634,7 +634,7 @@ validSelectedPost() {
 
   getEducationLevels() {
     this.candidateService.getEducationList().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       list.forEach((element, i) => {
         if (element['id'] === '1') {
@@ -666,7 +666,7 @@ validSelectedPost() {
       specification: 'UG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugSpecializationList = list;
     }, (err) => {
@@ -682,7 +682,7 @@ validSelectedPost() {
       specification: 'PG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgSpecializationList = list;
     }, (err) => {
@@ -697,7 +697,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.diplomaDisciplineList = list;
     }, (err) => {
@@ -712,7 +712,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugDisciplineList = list;
     }, (err) => {
@@ -727,7 +727,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgDisciplineList = list;
     }, (err) => {
@@ -742,7 +742,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.diplomaInstitutesList = list;
     }, (err) => {
@@ -757,7 +757,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugInstitutesList = list;
       const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');

@@ -60,13 +60,13 @@ export class UserListComponent implements OnInit {
     // event['data']
     if (event.colDef.field === 'user_id') {
       this.selectedUserDetail = event['data'] ? event['data'] : '';
-      this.removeUser(this.selectedUserDetail);  
+      this.removeUser(this.selectedUserDetail);
     }
   }
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -178,7 +178,7 @@ export class UserListComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.hruserList().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = data ? data : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -198,7 +198,7 @@ export class UserListComponent implements OnInit {
     };
 
     this.adminService.hrDeleteUser(removeUser).subscribe((success: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success(`User has been removed Successfully`, '');
       this.tabledef();
     }, (error) => {

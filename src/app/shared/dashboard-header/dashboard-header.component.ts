@@ -23,7 +23,7 @@ export class DashboardHeaderComponent implements OnInit {
   logOut() {
     const token = this.appConfig.getLocalData('logout-token');
     this.apiService.logout(token).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.clearLocalData();
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
     }, (err) => {
