@@ -18,3 +18,37 @@
   box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
   font-weight: 600;
 }
+
+
+.heading6 {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 1em 0 0.58em;
+}
+
+.sort {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+    .mat-icon {
+        cursor: pointer;
+        height: 30px;
+        width: 30px;
+        line-height: 1.5;
+        border: 1px solid #cac9c9;
+        background-color: #f2f2f2;
+        color: #000;
+        text-align: center;
+        border-radius: 4px;
+       
+        &.bothbtn {
+            &:first-child {
+                border-radius: 4px 0 0 4px;
+                }
+                &:last-child {
+                border-radius: 0 4px 4px 0;
+                border-left-width: 0;
+                }
+        }
+    }
+}
