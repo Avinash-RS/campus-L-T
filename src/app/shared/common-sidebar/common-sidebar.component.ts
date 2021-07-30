@@ -39,7 +39,6 @@ export class CommonSidebarComponent implements OnInit {
      });
      setTimeout(() => {
       this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-      console.log('ad', this.breadcrumbs);
     }, 1000);
    }
 
@@ -86,7 +85,6 @@ export class CommonSidebarComponent implements OnInit {
                  }
                });
                this.breadcrumbs = updateUrl;
-               console.log('bb', this.breadcrumbs);
                currentRoute = route;
                // }
              }

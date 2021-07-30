@@ -191,7 +191,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   onCellClicked(event) {
-    console.log(event)
   }
 
   getModel(e) {

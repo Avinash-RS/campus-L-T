@@ -390,7 +390,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.rowData = this.userList;
 
     this.getSummaryCount();
-    console.log("usr", this.userList);
   }
 
   isTimeExpired(startTime, endTime) {

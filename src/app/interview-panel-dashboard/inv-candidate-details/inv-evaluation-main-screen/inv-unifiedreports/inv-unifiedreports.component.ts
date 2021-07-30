@@ -58,7 +58,6 @@ export class InvUnifiedreportsComponent implements OnInit {
       email: data
     };
     this.adminService.getReportsDataAPI(apiData).subscribe((response: any)=> {
-      console.log('res', response);
 
       if (response && response.success) {
         if (response.data[0] && response.data[0].firstname) {

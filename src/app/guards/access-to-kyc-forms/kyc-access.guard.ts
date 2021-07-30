@@ -27,14 +27,21 @@ export class KycAccessGuard implements CanActivate {
     // Route to education
     } else {
     if (url === 'personal') {
+      if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
+        this.appConfig.setLocalData('personalFormSubmitted', 'true');
+        this.appConfig.setLocalData('educationalFormSubmitted', 'true');
+        this.appConfig.setLocalData('familyFormSubmitted', 'true');
+        this.appConfig.setLocalData('generalFormSubmitted', 'true');
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
+      } else {
       if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
         const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
         const localData = 'clearAllTouched';
         this.openDialog(data, localData, url);
       } else {
-
         return true;
       }
+    }
     }
     // Route to education
     if (url === 'education') {

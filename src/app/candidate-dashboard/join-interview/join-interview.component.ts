@@ -92,7 +92,6 @@ export class JoinInterviewComponent implements OnInit {
         }
 
         this.interview = this.interview[(this.interview && this.interview.length ? this.interview.length - 1 : 0)];
-        console.log('ine', this.interview);
 
         if (this.interview?.userDtl?.length > 0) {
           this.showInterview = true;

@@ -186,7 +186,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     private fb: FormBuilder,
   ) {
     super();
-    this.redirectToView();
 
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
@@ -243,20 +242,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     }
  }
 
-  redirectToView() {
-    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'true') {
-      // Sub-Navigation menus. This will be retrieved in Admin master component
-      const subWrapperMenus = [
-        {
-          icon: '',
-          name: 'VIEW DETAILS',
-          router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS
-        },
-      ];
-      this.sharedService.subMenuSubject.next(subWrapperMenus);
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS);
-    }
-  }
 
   updatedStateAPI() {
     const datas = {
@@ -272,8 +257,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
 
   checkboxChanged(check) {
-    console.log('c', check);
-
     if (!check) {
       this.permanentAddressForm.patchValue({
         permanentAddress1: null,

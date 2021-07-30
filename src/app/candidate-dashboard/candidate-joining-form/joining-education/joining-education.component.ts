@@ -180,7 +180,6 @@ maxDateStartField: any;
     const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];
     if (ctrlValue) {
       ctrlValue.year(normalizedYear.year());
-      console.log('ctrlValue', ctrlValue);
       this.getEducationArr.at(i).patchValue({
         [this.form_yearpassing]: ctrlValue,
       });
@@ -361,7 +360,6 @@ validSelectedPost() {
 
 }
   formSubmit(routeValue?: any) {
-    console.log(this.educationForm.getRawValue());
     if (this.educationForm.valid) {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
