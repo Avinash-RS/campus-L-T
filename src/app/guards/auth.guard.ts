@@ -15,13 +15,10 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.appConfig.getLocalData('field_isformsubmitted') != 'true') {
-
-      // this.appConfig.routeNavigation(`${CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME}`);
+    if (this.appConfig.getLocalData('submit') != '1') {
       return true;
     }
-    return false;
-
+    return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
   }
 
 

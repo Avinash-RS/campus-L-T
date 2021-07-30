@@ -39,7 +39,8 @@ export class CommonSidebarComponent implements OnInit {
      });
      setTimeout(() => {
       this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-     }, 1000);
+      console.log('ad', this.breadcrumbs);
+    }, 1000);
    }
 
    ngOnInit() {
@@ -85,7 +86,7 @@ export class CommonSidebarComponent implements OnInit {
                  }
                });
                this.breadcrumbs = updateUrl;
-              //  console.log('bb', this.breadcrumbs);
+               console.log('bb', this.breadcrumbs);
                currentRoute = route;
                // }
              }

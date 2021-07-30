@@ -5,6 +5,7 @@ import { Component, OnInit, TemplateRef, ViewChild, OnDestroy } from '@angular/c
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-joining-form',
@@ -144,7 +145,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     // this.appConfig.clearLocalDataOne('generalFormSubmitted');
   }
   activeSelectorRxJs() {
-    this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.subscribe((data: any)=> {
+    this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.pipe(delay(0)).subscribe((data: any)=> {
       this.routingSelection = null;
       this.routingSelection = data ? data : this.routingSelection;
     });
@@ -201,7 +202,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
         return this.activeStep = 'work';//, this.routingSelection = param ? param : 'dependent';
       }
-      
+
       if (data.dependent_details == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
@@ -213,7 +214,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         return this.activeStep = 'dependent';//, this.routingSelection = param ? param : 'dependent';
       }
       if (data.personal_details == '1') {
-        this.valid.tillPersonal();        
+        this.valid.tillPersonal();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
         return this.activeStep = 'contact';//, this.routingSelection = param ? param : 'contact';
       }
@@ -225,7 +226,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
 
   validCheck(clickedStep) {
-    
+
     if (clickedStep == 'personal') {
       if (this.routingSelection != 'personal') {
         let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL}
@@ -254,7 +255,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
-    if (clickedStep == 'work') {      
+    if (clickedStep == 'work') {
       if (this.routingSelection != 'work') {
         let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK}
         this.sharedService.StepperNavigationCheck.next(data);
@@ -282,13 +283,13 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
-    
+
     // array.forEach(element => {
-      
+
     // });
     // for (let index = 0; index < array.length; index++) {
     //   const element = array[index];
-      
+
     // }
     for (const property in this.valid) {
 
@@ -320,7 +321,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         result,
         route: this.requestnavigationRoute
       }
-      
+
      return this.sharedService.sendPopupResult.next(data);
     } else {
       return this.appConfig.routeNavigation(this.requestnavigationRoute);
@@ -340,37 +341,37 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     if (this.activeStep == 'personal') {
       if (route.includes('contact')) {
         return true;
-      }  
+      }
     }
     if (this.activeStep == 'contact') {
       if (route.includes('dependent')) {
         return true;
-      }  
+      }
     }
     if (this.activeStep == 'dependent') {
       if (route.includes('education')) {
         return true;
-      }  
+      }
     }
     if (this.activeStep == 'education') {
       if (route.includes('work')) {
         return true;
-      }  
+      }
     }
     if (this.activeStep == 'work') {
       if (route.includes('upload')) {
         return true;
-      }  
+      }
     }
     if (this.activeStep == 'upload') {
       if (route.includes('preview')) {
         return true;
-      }  
+      }
     }
     if (this.activeStep == 'preview') {
       if (route.includes('submit')) {
         return true;
-      }  
+      }
     }
   }
   ngOnDestroy() {
