@@ -2547,6 +2547,12 @@ th {
   border: 1px solid #bebebe;
   padding: 4px;
 }
+.heading6 {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 1em 0 0.58em;
+}
+
 }
 
 /***********Document********************/
@@ -2726,6 +2732,12 @@ margin-top: 3em;
     cursor: pointer;
 }
 }
+.heading6 {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 1em 0 0.58em;
+}
+
 
 }
 .assessmentInfoarea {
@@ -2884,12 +2896,13 @@ span.mat-expansion-indicator {
     .summaryTable  tr th {
         color: $lightGrey;
         text-align: left;
-        padding: 0.8em 1.2em;
+        padding: 0.8em 0.9em !important;
         white-space: nowrap;
         font-weight: normal;
         border: 1px solid #dbdbdb;
         border-right-width: 0;
         width: 12%;
+        background-color: #fff !important;
         &:first-child {
             width: 30%;
         }
@@ -2963,6 +2976,7 @@ span.mat-expansion-indicator {
             border-right: 0.3em solid #fbe8a9;
         }
     }
+   
 }
 
 .mat-expansion-panel:not([class*=mat-elevation-z]) {
@@ -2974,6 +2988,12 @@ span.mat-expansion-indicator {
 
 .CompetencyArea {
   margin-top: 35px;
+  .heading6 {
+    font-size: 21px;
+    font-weight: 700;
+    margin: 1em 0 0.58em;
+  }
+  
 .InfoDetailsArea {
   position: relative;
   display: flex;
@@ -3120,6 +3140,29 @@ span.mat-expansion-indicator {
           padding-left: 25px;
       }
   }
+  .subhtxt {
+    color: $blackColor;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 1em 0 0;
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 535px;
+    margin-bottom: 10px;
+}
+.ResetBtn {
+    color:#C02222;
+    font-weight: normal;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+    em {
+        padding-right: 4px;
+    }
+}
 
 }
 
@@ -3132,6 +3175,35 @@ mat-card {
       display: block;
   }
 }
+
+.sort {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  min-width: 70px;
+    .mat-icon {
+        cursor: pointer;
+        height: 30px;
+        width: 30px;
+        line-height: 1.5;
+        border: 1px solid #cac9c9;
+        background-color: #f2f2f2;
+        color: #000;
+        text-align: center;
+        border-radius: 4px;
+       
+        &.bothbtn {
+            &:first-child {
+                border-radius: 4px 0 0 4px;
+                }
+                &:last-child {
+                border-radius: 0 4px 4px 0;
+                border-left-width: 0;
+                }
+        }
+    }
+}
+
 }
 .draggable-button-container {
   position: absolute;
