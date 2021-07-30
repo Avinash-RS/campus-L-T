@@ -115,35 +115,35 @@ const routes: Routes = [
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_CONTACT}`,
-            component: JoiningContactComponent,
+            component: JoiningContactComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Contact Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}`,
-            component: JoiningDependentComponent,
+            component: JoiningDependentComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Dependent Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_EDUCATION}`,
-            component: JoiningEducationComponent,
+            component: JoiningEducationComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Education Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_WORK}`,
-            component: JoiningWorkDetailsComponent,
+            component: JoiningWorkDetailsComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Work Experience Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_UPLOAD}`,
-            component: JoiningUploadComponent,
+            component: JoiningUploadComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Upload Documents'
             }

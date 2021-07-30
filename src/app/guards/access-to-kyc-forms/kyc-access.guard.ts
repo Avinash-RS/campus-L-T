@@ -22,7 +22,10 @@ export class KycAccessGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let url: any = route['url'].toString();
 
+    if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
     // Route to education
+    } else {
     if (url === 'personal') {
       if (this.appConfig.getLocalData('personalFormTouched') || this.appConfig.getLocalData('educationalFormTouched') || this.appConfig.getLocalData('familyFormTouched') || this.appConfig.getLocalData('generalFormTouched')) {
         const data = 'If you have made any changes, please click "Continue" or your changes will be lost.';
@@ -174,6 +177,8 @@ export class KycAccessGuard implements CanActivate {
         }
       }
     }
+
+  }
 
   }
 
