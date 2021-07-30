@@ -479,7 +479,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
        const datas = {
           iconName: '',
           dataToBeShared: {
-            confirmText: `Candidate have been successfully assigned to respective interview panels`,
+            confirmText: `Candidate has been successfully assigned to respective interview panels`,
             type: 'assign-hr',
             identity: 'panel-assign'
           },
