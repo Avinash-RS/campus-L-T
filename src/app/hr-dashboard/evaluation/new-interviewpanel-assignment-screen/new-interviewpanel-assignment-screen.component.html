@@ -21,6 +21,7 @@
               <span [class.active]="fltractive" (click)="togglefltr()" >Interview</span>
             </div>
           </div>
+          <div class="left" *ngIf="!fltractive">
             <div class="flex-wrap">
               <div class="label">
                 Institute name<span class="asterick">*</span>
