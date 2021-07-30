@@ -54,8 +54,8 @@ export class InvUnifiedreportsComponent implements OnInit {
 
   getReports(data) {
     const apiData = {
-      // email: 'sr-venkadesh@lntecc.com'
-      email: data
+      email: 'sr-venkadesh@lntecc.com'
+      // email: data
     };
     this.adminService.getReportsDataAPI(apiData).subscribe((response: any)=> {
       console.log('res', response);
@@ -64,11 +64,11 @@ export class InvUnifiedreportsComponent implements OnInit {
         if (response.data[0] && response.data[0].firstname) {
           this.getAllReportsData = response.data && response.data[0] ? response.data[0] : null;
         } else {
-          this.getAllReportsData = [];
+          this.getAllReportsData = null;
         }
       } else {
         this.appConfig.warning('No Reports Available');
-        this.getAllReportsData = [];
+        this.getAllReportsData = null;
       }
     });
   }

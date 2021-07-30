@@ -8,19 +8,19 @@
         </div>
         <div class="joinInterview">
             <span class="meetingID">Meeting Room ID: {{interview.roomId}}</span>
+            <!-- Candidate Join interview button -->
             <div class="designation">
                 <h2>{{interview.roomName}}</h2>
-                <button *ngIf="role == 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>Join
-                    Interview</button>
+                <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : 'disabled'" *ngIf="role == 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
             </div>
             <div>
                 <span class="timing"><em class="icon-Calendar"></em> {{interview.startTime | date:'dd MMM yyyy - HH:mm a'}}
-                    -> {{interview.endTime | date:'dd MMM yyyy - HH:mm a'}}</span>
+                    - {{interview.endTime | date:'dd MMM yyyy - HH:mm a'}}</span>
                 <span *ngIf="role == 'candidate'" class="note"><b>Note:</b> The link will be active 1 hour prior to the
                     interview time as mentioned above.</span>
             </div>
-            <button [disabled]="enableButton ? false : true" [ngClass]="enableButton ? '' : 'disabled'" *ngIf="role != 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>Join
-                Interview</button>
+            <!-- Interviewer Join interview button -->
+            <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : 'disabled'" *ngIf="role != 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
         </div>
     </div>
 

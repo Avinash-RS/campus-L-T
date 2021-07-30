@@ -114,7 +114,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     if (event.colDef.field === "join_interview") {
       if (
         event["data"] &&
-        event["data"]["join_interview"] == "yes" &&
+        event["data"]["join_interview"] == "Join Interview" &&
         event["data"] &&
         event["data"]["evaluation_status"] != "2"
       ) {
@@ -175,18 +175,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           return params.value;
         },
         cellStyle: { color: "#C02222" },
-        // cellRenderer: (params) => {
-        //   if (params['data'] && params['data']['evaluation_status_1'] == 'completed') {
-        //     return `<span class="status completed ">Completed</button>`;
-        //   }
-        //   if (params['data'] && params['data']['evaluation_status_1'] == 'submitted') {
-        //     return `<span class=" status ">Submitted</button>`;
-        //   }
-        //   else {
-        //     return `<span class="status ">Schedule</button>`;
-        //   }
-        // },
-
         cellRenderer: (params) => {
           return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image_url"]}"></span> <span>${params["data"]["candidate_name"]}</span> </span>`;
         },
@@ -208,7 +196,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         field: "startTime",
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 250,
+        minWidth: 310,
         sortable: true,
         tooltipField: "startTime",
         cellRenderer: (params) => {
@@ -220,7 +208,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         field: "assigned_by",
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 100,
+        minWidth: 150,
         sortable: true,
         tooltipField: "assigned_by",
       },
@@ -245,7 +233,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           ) {
             return `<span class=" status ">Submitted</button>`;
           } else {
-            return `<span class="status ">Schedule</button>`;
+            return `<span class="status ">Scheduled</button>`;
           }
         },
       },
@@ -266,10 +254,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           "justify-content": "center",
         },
         cellRenderer: (params) => {
-          if (params["data"] && params["data"]["join_interview"] == "yes") {
-            return `<button class="join-inter"><em class="icon-Join_Video"></em> Join Interview</button>`;
+          if (params["data"] && params["data"]["join_interview"] == "Join Interview") {
+            return `<button class="join-inter"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
           } else {
-            return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> Time Expired</button>`;
+            return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
           }
         },
       },
@@ -416,9 +404,14 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       );
     }
     if (isValidTime) {
-      return "yes";
+      return "Join Interview";
     } else {
-      return "no";
+      let custom = moment(returned_endate).diff(moment.now(), 'minutes');
+      if (custom > 0) {
+        return 'Yet to Start';
+      } else {
+        return "Time Expired";
+      }
     }
   }
 

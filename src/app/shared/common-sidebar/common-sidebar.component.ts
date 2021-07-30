@@ -26,6 +26,7 @@ export class CommonSidebarComponent implements OnInit {
    sidebarOpen;
    subMenus: any;
    activeSubmenu;
+  showJoiningForm: boolean;
 
    constructor(
      private appConfig: AppConfigService,
@@ -92,6 +93,7 @@ export class CommonSidebarComponent implements OnInit {
          } while (currentRoute);
        });
        this.rxjsSubjectForPrint();
+       this.checkJoiningComponentNeeded();
       }
 
    buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
@@ -142,6 +144,12 @@ export class CommonSidebarComponent implements OnInit {
 
 
    // Configuration for candidate role
+
+   checkJoiningComponentNeeded() {
+    if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
+      this.showJoiningForm = true;
+    }
+   }
    rxjsSubjectForPrint() {
     this.sharedService.printSubject.subscribe((data: any)=> {
       this.sidebarOpen = false;

@@ -1,4 +1,4 @@
-<div class="reportContainer" *ngIf="getAllReportsData && getAllReportsData.length > 0 else noData">
+<div class="reportContainer" *ngIf="getAllReportsData else noData">
 
   <app-profile-info (driveName)="getSelectedDriveName($event)" [getAllReportsData]="getAllReportsData">
   </app-profile-info>
