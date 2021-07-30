@@ -73,7 +73,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges {
 @Output() selectedArea:EventEmitter<any> =new EventEmitter<any>();
 @Input() chartData: any;
 @Input() domains: any;
-indexNum: any = 0;
+indexNum: any = 1;
 single: any;
 view: any[] = [480, 450];
 
@@ -165,6 +165,7 @@ yAxisTicks = [0, 40, 80, 100];
   sorting(data) {
     let sortingArray = this.single;
     this.single = [];
+    data = data > 2 ? 1 : data;
     if (data == 1) {
       this.indexNum = data;
       sortingArray.sort(function(a, b) {
@@ -189,8 +190,8 @@ yAxisTicks = [0, 40, 80, 100];
       });
       this.colorScheme.domain = colorCode;
     } else {
-      this.indexNum = 0;
-      this.getSkillData();
+      // this.indexNum = 0;
+      // this.getSkillData();
     }
   }
 

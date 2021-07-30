@@ -1,10 +1,10 @@
 <div class="subhtxt">Skills
     <span class="sort" matTooltip="Sort Skills" (click)="sorting(indexNum + 1)" name="fieldName" ngDefaultControl
-        [(ngModel)]="indexNum"> 
-        <mat-icon   *ngIf="indexNum == 2 || indexNum == 0" [ngClass]="{'bothbtn' : indexNum == 0 }">
+        [(ngModel)]="indexNum">
+        <mat-icon   *ngIf="indexNum == 1" [ngClass]="{'bothbtn' : indexNum == 0 }">
             arrow_downward
        </mat-icon>
-       <mat-icon   *ngIf="indexNum == 1 || indexNum == 0" [ngClass]="{'bothbtn' : indexNum == 0 }">
+       <mat-icon   *ngIf="indexNum == 2" [ngClass]="{'bothbtn' : indexNum == 0 }">
            arrow_upward
            </mat-icon>
     </span>

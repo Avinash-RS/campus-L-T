@@ -1064,7 +1064,7 @@ button:focus {
 .mat-tooltip {
   // background-color: $red-1;
   color: $white;
-  font: 12.5px "Open Sans";
+  font-size: 12.5px;
   font-weight: 200;
 }
 // Admin sidenav scrollbar
@@ -1855,7 +1855,7 @@ th {
   color: $light-black;
   font-size: 14px;
   border: 1px solid $search-box-border !important;
-  background: $white-2 0% 0% no-repeat padding-box !important; 
+  background: $white-2 0% 0% no-repeat padding-box !important;
   box-sizing: border-box;
   padding: 0.25em 0.15em;
   height: 27px;
@@ -2976,7 +2976,7 @@ span.mat-expansion-indicator {
             border-right: 0.3em solid #fbe8a9;
         }
     }
-   
+
 }
 
 .mat-expansion-panel:not([class*=mat-elevation-z]) {
@@ -2993,7 +2993,7 @@ span.mat-expansion-indicator {
     font-weight: 700;
     margin: 1em 0 0.58em;
   }
-  
+
 .InfoDetailsArea {
   position: relative;
   display: flex;
@@ -3191,7 +3191,7 @@ mat-card {
         color: #000;
         text-align: center;
         border-radius: 4px;
-       
+
         &.bothbtn {
             &:first-child {
                 border-radius: 4px 0 0 4px;
@@ -3411,7 +3411,7 @@ font-size: 14px !important;
   font-size: 14px;
   border: 1px solid #c5c5c5 !important;
   background: #fff !important;
-  border-radius: 4px !important; 
+  border-radius: 4px !important;
   box-sizing: border-box;
   padding: 0.25em 0.15em;
   height: 33px;

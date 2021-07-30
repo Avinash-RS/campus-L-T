@@ -359,14 +359,15 @@ mat-expansion-panel-header {
           cursor: pointer;
       }
   }
-}
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0.5em 0 0.5em 0;
-}
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0;
+  }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
-  top: -4px !important;
-  right: -6px;
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: -4px !important;
+    right: -6px;
+  }
+
 }
 .arrowalign {
   display: flex;

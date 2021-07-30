@@ -54,8 +54,8 @@ export class InvUnifiedreportsComponent implements OnInit {
 
   getReports(data) {
     const apiData = {
-      email: 'sr-venkadesh@lntecc.com'
-      // email: data
+      // email: 'sr-venkadesh@lntecc.com'
+      email: data
     };
     this.adminService.getReportsDataAPI(apiData).subscribe((response: any)=> {
       console.log('res', response);

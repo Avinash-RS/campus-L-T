@@ -58,20 +58,18 @@
           </li>
         </ng-container>
         <ng-container *ngIf="role == 'ic'">
-          <!--  OfferedCandidatesLIST-->
-          <li [routerLink]="appConstant.HR_DASHBOARD.OfferedCandidatesLIST" routerLinkActive="active">
-            <span><img src="assets/images/status-bar.svg" alt=""></span>
-            <span>Business Panel</span>
+          <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+            <span><em class="{{menu.icon}}"></em></span>
+            <span>{{menu.name}}</span>
             <span>
               <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
             </span>
           </li>
         </ng-container>
         <ng-container *ngIf="role == 'ssc_hr'">
-          <!--  OfferedCandidatesLIST-->
-          <li [routerLink]="appConstant.HR_DASHBOARD.OfferedCandidatesLIST" routerLinkActive="active">
-            <span><img src="assets/images/status-bar.svg" alt=""></span>
-            <span>SSC Panel</span>
+          <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+            <span><em class="{{menu.icon}}"></em></span>
+            <span>{{menu.name}}</span>
             <span>
               <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
             </span>
@@ -87,46 +85,44 @@
               <span><em class="icon-menu"></em></span>
             </li>
             <ng-container *ngIf="role == 'administrator'">
-              <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+              <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'institute'">
-              <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+              <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'interview_panel'">
-              <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+              <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'candidate'">
-              <li (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index"
+              <li [matTooltip]="menu.name" (click)="menu && menu.click ? checkJoiningRoute() : ''" *ngFor="let menu of sideBar; let i = index"
                 [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'hr'">
-              <li *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+              <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
                 <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
 
             <ng-container *ngIf="role == 'ic'">
-              <!--  OfferedCandidatesLIST-->
-              <li [routerLink]="appConstant.HR_DASHBOARD.OfferedCandidatesLIST" routerLinkActive="active">
-                <span><img src="assets/images/status-bar.svg" matTooltip="Business Panel" alt=""></span>
+              <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+                <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
             <ng-container *ngIf="role == 'ssc_hr'">
-              <!--  OfferedCandidatesLIST-->
-              <li [routerLink]="appConstant.HR_DASHBOARD.OfferedCandidatesLIST" routerLinkActive="active">
-                <span><img src="assets/images/status-bar.svg" matTooltip="SSC Panel" alt=""></span>
+              <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
+                <span><em class="{{menu.icon}}"></em></span>
               </li>
             </ng-container>
           </ul>
