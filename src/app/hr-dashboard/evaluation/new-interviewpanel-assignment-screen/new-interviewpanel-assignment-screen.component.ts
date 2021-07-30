@@ -480,7 +480,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
        const datas = {
           iconName: '',
           dataToBeShared: {
-            confirmText: `Candidates have been successfully assigned to respective interview panels`,
+            confirmText: `Candidate have been successfully assigned to respective interview panels`,
             type: 'assign-hr',
             identity: 'panel-assign'
           },
@@ -690,13 +690,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   scheduleRoom(){
     if(!this.roomName){
-      this.appConfig.warningWithTitle('Room name cannot be empty','');
+     return this.appConfig.warningWithTitle('Room name cannot be empty','');
     }
-    if(!this.roomName){
-      this.appConfig.warningWithTitle('Password cannot be empty','');
+    if(!this.password){
+     return this.appConfig.warningWithTitle('Password cannot be empty','');
     }
     if(!this.startDate || !this.endDate){
-      this.appConfig.warningWithTitle('Date cannot be empty','');
+      return this.appConfig.warningWithTitle('Date cannot be empty','');
     }
     let userDetails = [];
     this.attendeesList.forEach((value)=>{
@@ -722,10 +722,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       if(result.success){
         this.scheduleHirerachy();
       } else {
-
         this.appConfig.warningWithTitle('Something went wrong','');
       }
-
     })
   }
   togglefltr() {
