@@ -82,15 +82,24 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
   onCellClicked(event) {
     if (event.colDef.field === "candidate_name") {
-      const data = {
-        candidateId:
-          event["data"] && event["data"]["uid"] ? event["data"]["uid"] : "",
-        candidateName:
-          event["data"] && event["data"]["candidate_name"]
-            ? event["data"]["candidate_name"]
-            : "",
-      };
-      this.openDialog4(CommonKycProfileViewComponent, data);
+      // const data = {
+      //   candidateId:
+      //     event["data"] && event["data"]["uid"] ? event["data"]["uid"] : "",
+      //   candidateName:
+      //     event["data"] && event["data"]["candidate_name"]
+      //       ? event["data"]["candidate_name"]
+      //       : "",
+      // };
+      // this.openDialog4(CommonKycProfileViewComponent, data);
+      this.redirectToProfile(
+        event["data"]["candidate_id"],
+        event["data"]["candidate_name"],
+        event["data"]["evaluation_status"],
+        event["data"]["tag"],
+        event["data"]["uid"],
+        event["data"]["email"],
+        event["data"]["form_id"]
+      );
     }
 
     if (event.colDef.field === "evaluation_btn") {
@@ -122,7 +131,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           "cProPic",
           event["data"]["profile_image_url"]
         );
-        this.submit(
+        this.redirectToEvaluationForm(
           event["data"]["candidate_id"],
           event["data"]["candidate_name"],
           event["data"]["evaluation_status"],
@@ -470,7 +479,39 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
   submit(cid, name, status, tag, uid, email, form) {
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION,
+      {
+        data: this.nameOfAssessment ? this.nameOfAssessment : "",
+        id: cid ? cid : "",
+        name: name ? name : "",
+        status: status ? status : "",
+        tag: tag ? tag : "",
+        uid: uid ? uid : "",
+        email: email ? email : "",
+        form: form ? form : "",
+      }
+    );
+  }
+
+  redirectToEvaluationForm(cid, name, status, tag, uid, email, form) {
+    this.appConfig.routeNavigationWithQueryParam(
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW,
+      {
+        data: this.nameOfAssessment ? this.nameOfAssessment : "",
+        id: cid ? cid : "",
+        name: name ? name : "",
+        status: status ? status : "",
+        tag: tag ? tag : "",
+        uid: uid ? uid : "",
+        email: email ? email : "",
+        form: form ? form : "",
+      }
+    );
+  }
+
+  redirectToProfile(cid, name, status, tag, uid, email, form) {
+    this.appConfig.routeNavigationWithQueryParam(
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",
