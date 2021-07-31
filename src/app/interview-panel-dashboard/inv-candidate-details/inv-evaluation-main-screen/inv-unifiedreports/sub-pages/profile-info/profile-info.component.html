@@ -1,4 +1,5 @@
 <section class="profilearea">
+  <ng-container *ngIf="false">
     <div class="heading6">
         Drive Information
     </div>
@@ -9,10 +10,16 @@
             {{list.drivename}}
         </mat-option>
     </mat-select>
-    <div class="heading6 mt-5">
-        Candidate Details
-    </div>
-    <div class="profileInfoarea" *ngIf="personalInfo">
+  </ng-container>
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <div class="expandheaderArea">
+          <div class="heading6">
+            Candidate Details
+        </div>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="profileInfoarea" *ngIf="personalInfo">
         <div class="profileInfoSec">
             <div>
                 First Name:
@@ -70,4 +77,6 @@
             </div>
         </div>
     </div>
+
+</mat-expansion-panel>
 </section>

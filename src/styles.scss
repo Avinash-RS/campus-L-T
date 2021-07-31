@@ -2500,8 +2500,41 @@ th {
    /*********Profile*****************/
 .reportContainer {
   padding: 0 3.8em;
+
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+  }
+
+  .mat-expansion-panel {
+    margin-bottom: 1.5em;
+    }
+    .mat-expansion-panel-header {
+        height: auto;
+        display: grid;
+        padding: 0 0.6em;
+        grid-template-areas: "mat-expansion mat-content";
+        grid-template-columns: 2em auto;
+        border-bottom: 0.1em solid #e8e8e8;
+        border-radius: 0;
+        min-height: 72px;
+    }
+    .mat-expansion-panel-body {
+        padding: 0;
+    }
+    span.mat-content {
+      display: initial;
+      grid-area: mat-content;
+  }
+  span.mat-expansion-indicator {
+      display: flex;
+      align-items: center;
+      grid-area: mat-expansion;
+      justify-content: center;
+  }
+
 }
 .profilearea {
+  margin-top: 1em;
 .profileHeaderinfo {
   font-weight: 700;
   line-height: 2.2;
@@ -2520,6 +2553,7 @@ th {
 
 .profileInfoarea {
   display: flex;
+  padding: 1em;
   .profileInfoSec {
       color: $mediumGrey;
       width: 49%;
@@ -2550,14 +2584,14 @@ th {
 .heading6 {
   font-size: 21px;
   font-weight: 700;
-  margin: 1em 0 0.58em;
+  // margin: 1em 0 0.58em;
 }
 
 }
 
 /***********Document********************/
 .docInfoarea {
-margin-top: 3em;
+padding: 1em 3em 1em 1em;
 display: flex;
 flex-direction: row;
 > div {
@@ -2657,6 +2691,12 @@ span {
     }
   }
 }
+.heading6 {
+  font-size: 21px;
+  font-weight: 700;
+  // margin: 1em 0 0.58em;
+}
+
 }
 .pdfView {
 position: relative !important;
