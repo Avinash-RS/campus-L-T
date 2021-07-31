@@ -82,15 +82,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
   onCellClicked(event) {
     if (event.colDef.field === "candidate_name") {
-      // const data = {
-      //   candidateId:
-      //     event["data"] && event["data"]["uid"] ? event["data"]["uid"] : "",
-      //   candidateName:
-      //     event["data"] && event["data"]["candidate_name"]
-      //       ? event["data"]["candidate_name"]
-      //       : "",
-      // };
-      // this.openDialog4(CommonKycProfileViewComponent, data);
       this.redirectToProfile(
         event["data"]["candidate_id"],
         event["data"]["candidate_name"],

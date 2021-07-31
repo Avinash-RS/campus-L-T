@@ -2531,6 +2531,10 @@ th {
       grid-area: mat-expansion;
       justify-content: center;
   }
+  .heading6 {
+    font-size: 21px;
+    font-weight: 700;
+  }
 
 }
 .profilearea {
@@ -2691,12 +2695,6 @@ span {
     }
   }
 }
-.heading6 {
-  font-size: 21px;
-  font-weight: 700;
-  // margin: 1em 0 0.58em;
-}
-
 }
 .pdfView {
 position: relative !important;

@@ -426,12 +426,18 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getBloodGroup() {
-    this.candidateService.getBloodGroups().subscribe((data: any) => {
-      this.bloodGroupDropdownList = data;
+    if (this.appConfig.getLocalData('bloodgroup')) {
+      this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
       this.getPreviewData();
-    }, (err) => {
+    } else {
+      this.candidateService.getBloodGroups().subscribe((data: any) => {
+        this.bloodGroupDropdownList = data;
+        this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
+        this.getPreviewData();
+      }, (err) => {
 
-    });
+      });
+    }
   }
 
   dateConvertion(date) {

@@ -269,6 +269,7 @@ mat-expansion-panel-header {
 }
 ::ng-deep .schedule-container {
   padding:1.5em 2em;
+  max-height: 570px;
   .text-overflow{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -312,7 +313,7 @@ mat-expansion-panel-header {
   .button-conatiner{
     display: flex;
     justify-content: center;
-    margin-top: 1em;
+    padding: 1em 0;
     button {
       width:20%;
       border: 1px solid #c02222;

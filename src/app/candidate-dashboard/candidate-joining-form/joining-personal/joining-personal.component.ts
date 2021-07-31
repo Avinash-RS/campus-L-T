@@ -223,11 +223,16 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getBloodGroup() {
-    this.candidateService.getBloodGroups().subscribe((data: any) => {
-      this.bloodGroupDropdownList = data;
-    }, (err) => {
+    if (this.appConfig.getLocalData('bloodgroup')) {
+      this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
+    } else {
+      this.candidateService.getBloodGroups().subscribe((data: any) => {
+        this.bloodGroupDropdownList = data;
+        this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
+      }, (err) => {
 
-    });
+      });
+    }
   }
 
   dateValidation() {

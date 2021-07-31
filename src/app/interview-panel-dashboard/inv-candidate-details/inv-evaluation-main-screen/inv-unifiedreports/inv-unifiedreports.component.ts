@@ -6,6 +6,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-inv-unifiedreports',
@@ -14,6 +15,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 export class InvUnifiedreportsComponent implements OnInit {
 
+  isLocal = environment.local;
   queryParams: any;
   getAllReportsData: any;
   driveName: any;
@@ -54,7 +56,7 @@ export class InvUnifiedreportsComponent implements OnInit {
 
   getReports(data) {
     const apiData = {
-      email: 'sr-venkadesh@lntecc.com'
+      email: this.isLocal ? 'sr-venkadesh@lntecc.com' : data
       // email: data
     };
     this.adminService.getReportsDataAPI(apiData).subscribe((response: any)=> {

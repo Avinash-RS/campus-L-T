@@ -1,523 +1,1005 @@
-<!-- <div style="margin: .5em 2em 0 0; float: right;" class="remove">
-  <mat-icon style="font-size: 32px; cursor: pointer;" (click)="close()" class="close-icon">close</mat-icon>
-</div> -->
-<div class="top-width" style="width: 100%; max-height: 500px; overflow: auto;">
-  <div class="top-main-wrapper view-page" *ngIf="userDetails">
+<div class="joining-personal-wrapper">
+    <div class="grids-wrapper">
+        <div class="dependentForm">
 
-    <div class="top-grid">
-      <div class="profile-wrapper">
-        <div class="profile">
-          <img *ngIf="url" [src]="url" alt="">
-          <img *ngIf="!url" src="assets/images/img_avatar2.jpg" alt="" srcset="">
-        </div>
-      </div>
-      <div class="form-wrapper">
-        <div class="form-group">
-          <label>Name</label>
-          <input class="input" readonly type="text" [value]="candidateName">
-        </div>
-        <div class="form-group">
-          <label>Email ID</label>
-          <input class="input" readonly type="text" [value]="userDetails['mail']">
-        </div>
-        <div class="form-group">
-          <label>Mobile Number</label>
-          <input class="input" readonly type="text" [value]="userDetails['mobile']">
-        </div>
-        <div class="form-group">
-          <label>Aadhaar Number</label>
-          <input class="input" readonly type="text" [value]="userDetails['aadhaar']">
-        </div>
-        <div class="form-group">
-          <label class="label-radio">Gender</label>
-          <div class="radio" style="overflow: hidden; pointer-events: none;">
-              <mat-radio-group [(ngModel)]="radioValue">
-                <mat-radio-button value="pre">{{userDetails['gender']}}
-                </mat-radio-button>
-                </mat-radio-group>
-          </div>
-        </div>
-        <div *ngIf="userDetails && userDetails['marital']" class="form-group">
-          <label>Marital Status</label>
-          <div class="radio" style="overflow: hidden; pointer-events: none;">
-            <mat-radio-group [(ngModel)]="radioValue">
-              <mat-radio-button value="pre">{{userDetails['marital']}}
-              </mat-radio-button>
-              </mat-radio-group>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Date of Birth</label>
-          <div class="dob">
-            <input class="dob-input" readonly type="text" [value]="userDetails['dobDate']">
-            <input class="dob-input" readonly type="text" [value]="userDetails['dobMonth']">
-            <input class="dob-input" readonly type="text" [value]="userDetails['dobYear']">
-          </div>
-        </div>
+            <div class="section">
+                <div class="header d-flex justify-content-between mb-1 align-items-center">
+                    <h6>Primary Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="personalDetailsMap else noPersonal">
+                    <div class="d-flex">
+                        <div style="width: 34%;" class="d-flex align-items-center"> <img height="117px" width="104px"
+                                [src]="url ? url : 'assets/images/img_avatar2.jpg'" alt="" srcset=""> </div>
+                        <div style="width: 66%;" class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper width-50">
+                                <label>Name (as per Aadhar)<span></span></label>
+                                <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_name]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper width-50">
+                                <label>Email Id<span></span></label>
+                                <div style="word-wrap: break-word;" class="input size-16 bold-700 color-black"
+                                    [ngClass]="personalDetailsMap[form_email].length > 23 ? 'f_size_16' : ''">
+                                    {{personalDetailsMap[form_email]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-2 width-50">
+                                <label>Date of Birth (as per Std X certificate)<span></span></label>
+                                <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_dob]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-2 width-50">
+                                <label>Gender<span></span></label>
+                                <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_gender]}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-wrapper mt-0">
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>Marital Status<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_marital_status]}}
+                            </div>
+                        </div>
+
+                        <div *ngIf="(personalDetailsMap[form_marital_status] == 'Married' || personalDetailsMap[form_marital_status] == 'Widow')" class="overall-input-wrapper mt-2 width-32">
+                            <label>No. of Children<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_no_of_children]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>Domicile State<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_domicile_state]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>Place of Birth<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_place_of_birth]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>State of Birth<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_state_of_birth]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-2 width-32">
+                            <label>Nationality<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_nationality]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Religion<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_religion]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Caste<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_caste]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Caste Category<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_category]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Mother Tongue<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_mother_tongue]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Father Name<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_father_name]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Blood Group<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_blood_group]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Emergency Contact No.<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                {{personalDetailsMap[form_emergency_contact]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Emergency Contact Person Name<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                {{personalDetailsMap[form_emergency_contact_name]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Relation with Emergency Contact<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                {{personalDetailsMap[form_emergency_contact_relation]}}</div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Mobile No.<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_mobile]}}</div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Aadhar No.<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_aadhar]}}</div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>PAN No.<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_pan]}}</div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Offer Reference<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_offer_reference]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Offer Date<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_offer_date]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Height/Weight<span></span></label>
+                            <div class="input size-16 bold-700 color-black">
+                                {{personalDetails && personalDetails[form_height] ? personalDetailsMap[form_height] : 'NA'}}
+                                /
+                                {{personalDetails && personalDetails[form_weight] ? personalDetailsMap[form_weight] : 'NA'}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Alternate Email ID<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_personal_email]}}
+                            </div>
+                        </div>
+
+                        <div class="overall-input-wrapper mt-3 width-66">
+                            <label>Identification Mark<span></span></label>
+                            <div class="d-flex align-content-center">
+                            <div *ngIf="personalDetails && personalDetails[form_identification_mark1]"
+                                class="input f_size_15 bold-700 color-black" style="width: auto !important;">&#8226;
+                                {{personalDetailsMap[form_identification_mark1]}}</div>
+                            <div *ngIf="personalDetails && personalDetails[form_identification_mark2]"
+                                class="input f_size_15 bold-700 color-black ml-3" style="width: auto !important;">&#8226;
+                                {{personalDetailsMap[form_identification_mark2]}}</div>
+                            <div *ngIf="!personalDetails[form_identification_mark1] && !personalDetails[form_identification_mark2]"
+                            class="input f_size_15 bold-700 color-black" style="width: auto !important;">NA</div>
+                                </div>
+                        </div>
 
 
-      </div>
+                    </div>
 
-    </div>
+                    <!-- <div class="row-wrapper mt-0">
+                        <div class="overall-input-wrapper mt-3 width-100">
+                            <label>Identification Mark<span></span></label>
+                            <div *ngIf="personalDetails && personalDetails[form_identification_mark1]"
+                                class="input f_size_15 bold-700 color-black">-
+                                {{personalDetailsMap[form_identification_mark1]}}</div>
+                            <div *ngIf="personalDetails && personalDetails[form_identification_mark2]"
+                                class="input mt-2 f_size_15 bold-700 color-black">-
+                                {{personalDetailsMap[form_identification_mark2]}}</div>
+                        </div>
 
-    <div class="two-grid">
-      <div class="form-wrapper-left">
-        <div class="form-group">
-          <label>Nationality</label>
-          <input class="input" readonly type="text" [value]="userDetails['nationality']">
-        </div>
-      </div>
-      <div class="form-wrapper-right">
-        <div class="form-group">
-          <label>Category</label>
-          <input class="input" readonly type="text" [value]="userDetails && userDetails['category'] ? userDetails['category'] : ''">
-        </div>
-      </div>
-    </div>
-
-    <div class="addressgrid">
-      <div class="form-wrapper-left">
-        <div class="form-group">
-          <label>Present Address</label>
-          <div class="input addr" style="flex-wrap: wrap;">
-            <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentAddress1']}}
-            </div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentAddress2']}}
-            </div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentCity']}}
-            </div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['presentState']}}
-            </div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">
-              {{userDetails['presentZipCode']}}</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Permanent Address</label>
-          <div class="input addr" style="flex-wrap: wrap;">
-            <div style="border: none; box-shadow: none; background: transparent;">
-              {{userDetails['permanentAddress1']}}</div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">
-              {{userDetails['permanentAddress2']}}</div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['permanentCity']}}
-            </div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">{{userDetails['permanentState']}}
-            </div> <br>
-            <div style="border: none; box-shadow: none; background: transparent;">
-              {{userDetails['permanentZipCode']}}</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <ng-container *ngIf="userDetails && userDetails['languagesknown'] && userDetails['languagesknown'].length > 0">
-      <div style="margin: 1em 0 0 0 !important; height: 25px;" class="language-grid">
-        <div class="form-wrapper-left" style="height: 0;">
-          <div style="visibility: hidden;" class="form-group">
-            <label>&#160;</label>
-            <input class="input" type="text" [value]="'Indian'">
-          </div>
-        </div>
-        <div class="form-wrapper-right" style="height: 25px;">
-          <div class="form-group">
-            <label style="padding: 0 !important;">Read</label>
-            <label style="padding: 0 !important;">Write</label>
-            <label style="padding: 0 !important;">Speak</label>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="userDetails && userDetails['languagesknown'] && userDetails['languagesknown'].length > 0">
-      <div class="language-grid" *ngFor="let dup of userDetails['languagesknown']; let i = index">
-        <div class="form-wrapper-left">
-          <div class="form-group">
-            <label>{{(i === 0 ? 'Languages Known' : '')}}</label>
-            <input class="input" readonly type="text"
-              [value]="dup['field_language'] ? dup['field_language']['value'] : ''">
-          </div>
-        </div>
-        <div class="form-wrapper-right">
-          <div class="form-group">
-            <div style="pointer-events: none;"
-              [ngStyle]="{'visibility': dup['field_read'] && dup['field_read'][0] && dup['field_read'][0]['value'] ? 'show' : 'hidden'}"
-              class="custom-control custom-checkbox checkbox-xl">
-              <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
-              <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
+                    </div> -->
+                </ng-container>
             </div>
-            <div style="pointer-events: none;"
-              [ngStyle]="{'visibility': dup['field_write'] && dup['field_write'][0] && dup['field_write'][0]['value'] ? 'show' : 'hidden'}"
-              class="custom-control custom-checkbox checkbox-xl">
-              <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
-              <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
-            </div>
-            <div style="pointer-events: none;"
-              [ngStyle]="{'visibility': dup['field_speak'] && dup['field_speak'][0] && dup['field_speak'][0]['value'] ? 'show' : 'hidden'}"
-              class="custom-control custom-checkbox checkbox-xl">
-              <input readonly type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
-              <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-container>
 
+            <div class="section">
+                <div class="header d-flex justify-content-between mb-1 align-items-center">
+                    <h6>Contact Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="contactDetailsMap else noContact">
+                    <div class="row-wrapper mt-0">
+                        <div class="overall-input-wrapper mt-0 width-100">
+                            <label>Present Address<span *ngIf="contactDetailsMap[form_same_as_checkbox]">/Permanent
+                                    Address</span></label>
+                            <div class="input size-16 bold-700 color-black">{{contactDetailsMap['presentAddress']}}
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row-wrapper mt-0">
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>City<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{contactDetailsMap[form_present_city]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>State/Province<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{contactDetailsMap[form_present_state]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Postal/Zip code<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{contactDetailsMap[form_present_zip_code]}}
+                            </div>
+                        </div>
+                        <div class="overall-input-wrapper mt-3 width-32">
+                            <label>Country/Region<span></span></label>
+                            <div class="input size-16 bold-700 color-black">{{contactDetailsMap[form_present_region]}}
+                            </div>
+                        </div>
 
-  </div>
-  <div class="main-wrapper" *ngIf="userDetails">
-    <div class="main-heading-bottom">
-      Passport related details
-    </div>
-    <div class="flex-wrapper-passport">
-      <div class="edu-wrapper-head number">
-        <label>Passport Number</label>
-        <input type="text" readonly [value]="userDetails['passportNumber']">
-      </div>
-      <div class="edu-wrapper-head name">
-        <label>Name as in Passport</label>
-        <input type="text" readonly [value]="userDetails['passportName']">
-      </div>
-      <div class="edu-wrapper-head profession">
-        <label>Profession as in Passport</label>
-        <input type="text" readonly [value]="userDetails['passportProfession']">
-      </div>
-      <div class="edu-wrapper-head date">
-        <label>Date of Issue</label>
-        <input type="text" readonly [value]="userDetails['passportIssueDate']">
-      </div>
-      <div class="edu-wrapper-head valid">
-        <label>Valid Upto</label>
-        <input type="text" readonly [value]="userDetails['passportValid']">
-      </div>
-      <div class="edu-wrapper-head place">
-        <label>Place of Issue</label>
-        <input type="text" readonly [value]="userDetails['passportIssuePlace']">
-      </div>
-      <div class="edu-wrapper-head country">
-        <label>Countries valid for</label>
-        <input type="text" readonly [value]="userDetails['passportValidFor']">
-      </div>
+                    </div>
 
-    </div>
-    <div class="main-heading-bottom">
-      Health-related details
-    </div>
-    <div class="flex-wrapper-passport">
-      <div class="edu-wrapper-head number">
-        <label>Most Serious Recent Illness</label>
-        <input type="text" readonly [value]="userDetails['illness']">
-      </div>
-      <div class="edu-wrapper-head name">
-        <label>No. of Days Ill</label>
-        <input type="text" readonly [value]="userDetails['daysofIll']">
-      </div>
-      <div class="edu-wrapper-head profession">
-        <label>Nature of Illness</label>
-        <input type="text" readonly [value]="userDetails['natureofIll']">
-      </div>
-      <div class="edu-wrapper-head physical">
-        <label>Physical Disability (if any)</label>
-        <input type="text" readonly [value]="userDetails['disability']">
-      </div>
-      <div class="edu-wrapper-head height-weight-wrapper">
-        <div class="sub-edu">
-          <div class="height">
-            <label>Height (cms)</label>
-            <input type="text" readonly [value]="userDetails['height']">
-          </div>
-          <div class="weight">
-            <label>Weight (kg)</label>
-            <input type="text" readonly [value]="userDetails['weight']">
-          </div>
-        </div>
-      </div>
-      <div class="edu-wrapper-head power">
-        <label>Power of Eye glass</label>
-        <div class="power-wrapper">
-          <div class="left-wrapper">
-            <span class="label-1">Left Eye</span>
-            <input type="text" readonly [value]="userDetails['left']">
-          </div>
-          <div class="right-wrapper">
-            <span class="label-2">Right Eye</span>
-            <input type="text" readonly [value]="userDetails['right']">
-          </div>
-        </div>
-      </div>
+                    <ng-container *ngIf="!contactDetailsMap[form_same_as_checkbox]">
+                        <div class="row-wrapper mt-4">
+                            <div class="overall-input-wrapper mt-0 width-100">
+                                <label>Permanent Address<span></span></label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{contactDetailsMap['permanentAddress']}}</div>
+                            </div>
+                        </div>
 
-    </div>
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>City<span></span></label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{contactDetailsMap[form_permanent_city]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>State/Province<span></span></label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{contactDetailsMap[form_permanent_state]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Postal/Zip code<span></span></label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{contactDetailsMap[form_permanent_zip_code]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Country/Region<span></span></label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{contactDetailsMap[form_permanent_region]}}</div>
+                            </div>
 
-
-
-
-    <div class="main-heading-bottom">
-      Educational details
-    </div>
-    <div class="grid-wrapper-qualify">
-      <div class="qualify-wrapper-head">
-        <div class="level-head">
-          Level
-        </div>
-        <div class="board-head">
-          Board / University
-        </div>
-        <div class="institute-head">
-          Institute name
-        </div>
-        <div class="discipline-head">
-          Discipline
-        </div>
-        <div class="specification-head">
-          Specialization
-        </div>
-        <div class="year-head">
-          Year of passing
-        </div>
-        <div class="percentage-head">
-          Backlogs
-        </div>
-        <div class="percentage-head">
-          Percentage
-        </div>
-
-      </div>
-
-      <div class="qualify-wrapper" *ngFor="let dup of userDetails['educationValuearray']">
-        <input class="level" readonly [value]="dup['field_level']['value']">
-        <input class="board" type="text" readonly [value]="dup['field_board_university']['value']">
-        <input class="institute" readonly [value]="dup['field_institute']['value']">
-
-        <input class="discipline" readonly [value]="dup['field_discipline']['value']">
-
-        <input class="specification" readonly [value]="dup['field_specification']['value']">
-
-        <input class="year" readonly [value]="dup['field_year_of_passing']['value']">
-
-        <input class="percentage" readonly [value]="dup['field_backlogs']['value']">
-
-        <input class="percentage" readonly [value]="dup['field_percentage']['value']">
-
-
-      </div>
-    </div>
-
-
-    <div class="main-heading-bottom">
-      Family details
-    </div>
-    <div class="scroll-enable">
-      <div class="heading-grid">
-        <div class="head-1">
-          Name of your family members
-          <span>&#160;</span>
-        </div>
-        <div class="head-2">
-          Date of birth
-          <span>&#160;</span>
-        </div>
-        <div class="head-3">
-          Relationship
-          <span>&#160;</span>
-        </div>
-        <div class="head-4">
-          Occupation
-        </div>
-
-      </div>
-
-      <div class="form">
-        <ng-container>
-          <div class="text-box-grid" *ngFor="let dup of userDetails['familyValuesArr']">
-            <div class="text-1">
-              {{dup['field_name_of_your_family'] && dup['field_name_of_your_family']['value'] ? dup['field_name_of_your_family']['value'] : '-'}}
-            </div>
-            <div class="text-2">
-              {{(dup['field_family_date_of_birth'] && dup['field_family_date_of_birth']['value'] && dup['field_family_date_of_birth']['value']!= 'INVALID DATE') ? dup['field_family_date_of_birth']['value'] : '-'}}
-            </div>
-            <div class="text-3">
-              {{dup['field_relationship'] && dup['field_relationship']['value'] ? dup['field_relationship']['value'] : '-'}}
-            </div>
-            <div class="text-4">
-              {{dup['field_occupation'] && dup['field_occupation']['value'] ? dup['field_occupation']['value'] : '-'}}
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="main-heading-no-bottom">
-      Skills
-    </div>
-    <div class="skills-wrapper">
-      <ng-container *ngIf="userDetails['skillValueArray'].length > 0">
-        <div class="skills" *ngFor="let dup of userDetails['skillValueArray']">
-          {{dup.value ? dup.value : '-'}}
-        </div>
-      </ng-container>
-      <ng-container *ngIf="userDetails['skillValueArray'].length < 1">
-        <div class="skills">
-          {{'-'}}
-        </div>
-      </ng-container>
-
-    </div>
-
-
-    <div class="main-heading-bottom">
-      Relatives / Acquaintances in L & T group of companies
-    </div>
-    <div class="scroll-enable">
-      <div class="heading-grid">
-        <div class="head-1">
-          Name
-          <span>&#160;</span>
-        </div>
-        <div class="head-2">
-          Relationship
-          <span>&#160;</span>
-        </div>
-        <div class="head-3">
-          Position
-          <span>&#160;</span>
-        </div>
-        <div class="head-4">
-          Company
-        </div>
-
-      </div>
-
-      <div class="form">
-        <ng-container>
-          <div class="text-box-grid" *ngFor="let dup of userDetails['generalArray']">
-            <div class="text-1">
-              {{dup.names ? dup.names : '-'}}
-            </div>
-            <div class="text-2">
-              {{dup.relationship ? dup.relationship : '-'}}
-            </div>
-            <div class="text-3">
-              {{dup.position ? dup.position : '-'}}
-            </div>
-            <div class="text-4">
-              {{dup.company ? dup.company : '-'}}
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-
-          <!-- Criminal records -->
-          <div class="main-heading-bottom">
-            Criminal Records
-          </div>
-          <div class="criminal ml-4">
-            <div class="f_size_15">
-              {{ criminalRecord ? criminalRecord : '-' }}
-            </div>
-          </div>
-          <div class="main-heading-bottom">
-            Work Experience
-          </div>
-
-          <div *ngIf="(workHistory && workHistory?.length <= 1 && !workHistory[0]?.employment_name_address) || !workHistory" class="criminal ml-4">
-            <div class="f_size_15">
-              {{ '-' }}
-            </div>
-          </div>
-
-          <div class="grid-wrapper-workexp" *ngIf="workHistory?.length > 0 && workHistory[0]?.employment_name_address">
-            <div class="qualify-wrapper-head">
-              <div class="emp">
-                Employer's name & address
-              </div>
-              <div class="duration">
-                Duration from
-              </div>
-              <div class="duration">
-                Duration to
-              </div>
-              <div class="position">
-                Position held
-              </div>
-              <div class="des">
-                Name & Designation of immediate superior
-              </div>
-              <div class="gross">
-                Gross emoluments (per month)
-              </div>
-              <div class="nature">
-                Nature of work done
-              </div>
-              <div class="reason">
-                Reason for leaving
-              </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
 
             </div>
-            <ng-container *ngIf="workHistory">
-            <div class="qualify-wrapper" *ngFor="let dup of workHistory">
-              <div class="emp">{{dup?.employment_name_address}}</div>
-              <!-- <input class="emp" readonly [value]="dup?.employment_name_address"> -->
-              <div class="duration">{{dup?.duration_from}}</div>
-              <div class="duration">{{dup?.duration_to}}</div>
 
-              <div class="position">{{dup?.postion_field}}</div>
+            <div class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+                    <h6>Dependent Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="dependentDetailsMap && dependentDetailsMap.length > 0 else noDependent">
+                    <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                        *ngFor="let dependent of dependentDetailsMap; let i = index">
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Name of the Dependent</label>
+                                <div class="input size-16 bold-700 color-black">{{dependent[form_dependent_name]}}</div>
+                            </div>
 
-              <div class="des">{{dup?.name_designation_supervisor}}</div>
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Relationship</label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{dependent[form_dependent_relationship]}}</div>
+                            </div>
 
-              <div class="gross">{{dup?.gross_emploment}}</div>
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Date of Birth</label>
+                                <div class="input size-16 bold-700 color-black">{{dependent[form_dependent_dob]}}</div>
+                            </div>
 
-              <div class="nature">{{dup?.nature_work}}</div>
+                        </div>
 
-              <div class="reason">{{dup?.reason_leaving}}</div>
+                        <div class="row-wrapper mt-0">
 
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Occupation</label>
+                                <div class="input size-16 bold-700 color-black">{{dependent[form_dependent_occupation]}}
+                                </div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Is Dependent</label>
+                                <div class="input size-16 bold-700 color-black">{{dependent[form_isDependent]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Differently Abled</label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{dependent[form_dependent_differently_abled]}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-3 width-66">
+                                <label>Status</label>
+                                <div class="input size-16 bold-700 color-black">{{dependent[form_dependent_status]}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+                    <h6>Education Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="educationDetailsMap && educationDetailsMap.length > 0 else noEducation">
+                    <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                        *ngFor="let education of educationDetailsMap; let i = index">
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Qualification Type</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_qualification_type]}}
+                                </div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-0 width-66">
+                                <label>Board/University</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_boardUniversity]}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="education[form_qualification_type] != 'SSLC/10th' && education[form_qualification_type] != 'HSC/12th'" class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Qualification</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_qualification]}}</div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-3 width-66">
+                                <label>Specialization</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_specialization]}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-3 width-100">
+                                <label>School/College Name</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_collegeName]}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Start Date</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_startDate]}}</div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>End Date</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_endDate]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-3 width-32">
+                                <label>Year of Passing</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_yearpassing]}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row-wrapper mt-0">
+                            <div class="overall-input-wrapper mt-3" [ngClass]="education[form_qualification_type] != 'SSLC/10th' && education[form_qualification_type] != 'HSC/12th' ? 'width-24' : 'width-32'">
+                                <label>Mode</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_mode]}}</div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-3" [ngClass]="education[form_qualification_type] != 'SSLC/10th' && education[form_qualification_type] != 'HSC/12th' ? 'width-24' : 'width-32'">
+                                <label>Backlogs</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_backlog]}}</div>
+                            </div>
+                            <div class="overall-input-wrapper mt-3" [ngClass]="education[form_qualification_type] != 'SSLC/10th' && education[form_qualification_type] != 'HSC/12th' ? 'width-24' : 'width-32'">
+                                <label>Percentage(%)</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_cgpa]}}</div>
+                            </div>
+                            <ng-container *ngIf="education[form_qualification_type] != 'SSLC/10th' && education[form_qualification_type] != 'HSC/12th'">
+                            <div class="overall-input-wrapper mt-3 width-24">
+                                <label>Final Percentage(%)</label>
+                                <div class="input size-16 bold-700 color-black">{{education[form_finalcgpa]}}</div>
+                            </div>
+                        </ng-container>
+                        </div>
+
+
+                    </div>
+                </ng-container>
+            </div>
+
+            <div *ngIf="!data.documents" class="section pl-0 pt-0 pr-0 pb-0 custom-padding custom-spacing-1">
+                <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+                    <h6>Documents Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="documentDetails else noDocuments">
+                    <ng-container *ngIf="documentDetails.Joining_Details && documentDetails.Joining_Details.length > 0">
+                        <div class="subDocumentTitle">Joining Details</div>
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let document of documentDetails.Joining_Details; let i = index">
+                            <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Description</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
+                                </div>
+
+                                <div *ngIf="document && document[form_file_path]"
+                                    class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button"
+                                        (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                        mat-raised-button type="button">View</button>
+                                </div>
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
+                                        Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Banking -->
+                    <ng-container *ngIf="documentDetails.Banking_Details && documentDetails.Banking_Details.length > 0">
+                        <div class="subDocumentTitle">Bank Details</div>
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let document of documentDetails.Banking_Details; let i = index">
+                            <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Bank Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-35" style="padding-left: 4px;">
+                                    <label>Bank Account Number</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_acc_no] ? document[form_acc_no] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-30">
+                                    <label>Bank IFSC Code</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_ifsc_code] ? document[form_ifsc_code] : '-'}}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="row-wrapper mt-2" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Branch Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_branch] ? document[form_branch] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Description</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
+                                </div>
+
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button"
+                                        (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                        mat-raised-button type="button">View</button>
+                                </div>
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
+                                        Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-container>
+
+                    <!-- Resume -->
+                    <ng-container *ngIf="documentDetails.Resume && documentDetails.Resume.length > 0">
+                        <div class="subDocumentTitle">Resume</div>
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let document of documentDetails.Resume; let i = index">
+                            <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Description</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
+                                </div>
+
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button"
+                                        (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                        mat-raised-button type="button">View</button>
+                                </div>
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
+                                        Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Transfer -->
+                    <ng-container
+                        *ngIf="documentDetails.Transfer_Certificate && documentDetails.Transfer_Certificate.length > 0">
+                        <div class="subDocumentTitle">Transfer/Conduct Certificate</div>
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let document of documentDetails.Transfer_Certificate; let i = index">
+                            <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Description</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
+                                </div>
+
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button"
+                                        (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                        mat-raised-button type="button">View</button>
+                                </div>
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
+                                        Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+
+                    <!-- Education -->
+                    <ng-container
+                        *ngIf="documentDetails.Education_Documents && documentDetails.Education_Documents.length > 0">
+                        <div class="subDocumentTitle">Education Documents</div>
+                        <ng-container *ngFor="let doc of documentDetails.Education_Documents; let j = index">
+                            <div class="subDocumentTitle" style="font-size: 16px; padding-bottom: 0 !important;">
+                                {{doc[form_education_level] ? customEducationLabel(doc[form_education_level]) : '-'}}
+                            </div>
+                            <ng-container *ngIf="doc.sub_documents && doc.sub_documents.length > 0">
+                                <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'custom-pad' : 'custom-pad'"
+                                    *ngFor="let document of doc.sub_documents; let i = index">
+                                    <div class="row-wrapper mt-0 semester" style="align-items: flex-end;">
+                                        <div class="overall-input-wrapper mt-0 width-32">
+                                            <label>Document Name</label>
+                                            <div class="input size-16 bold-700 color-black">
+                                              {{document[form_label] ? document[form_label] : (doc[form_education_level] == 'SSLC' || doc[form_education_level] == 'HSC') ? doc[form_education_level] : '-' }}</div>
+                                            </div>
+
+                                        <div class="overall-input-wrapper mt-0 width-32">
+                                            <label>Document Description</label>
+                                            <div class="input size-16 bold-700 color-black">
+                                                {{document[form_description] ? document[form_description] : '-'}}</div>
+                                        </div>
+
+                                        <div *ngIf="document && document[form_file_path]"
+                                            class="overall-input-wrapper mt-0 width-32">
+                                            <button class="add-button"
+                                                (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                                mat-raised-button type="button">View</button>
+                                        </div>
+                                        <div *ngIf="!document[form_file_path]"
+                                            class="overall-input-wrapper mt-0 width-32">
+                                            <button class="add-button yet-to-submit"
+                                                [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                                mat-raised-button type="button">Yet
+                                                to Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- Certifications -->
+                    <ng-container
+                    *ngIf="documentDetails.Certifications && documentDetails.Certifications.length > 0">
+                    <div class="subDocumentTitle">Certifications</div>
+                    <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                        *ngFor="let document of documentDetails.Certifications; let i = index">
+                        <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Document Name</label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{document[form_label] ? document[form_label] : '-'}}</div>
+                            </div>
+
+                            <div class="overall-input-wrapper mt-0 width-32">
+                                <label>Document Description</label>
+                                <div class="input size-16 bold-700 color-black">
+                                    {{document[form_description] ? document[form_description] : '-'}}</div>
+                            </div>
+
+                            <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <button class="add-button"
+                                    (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                    mat-raised-button type="button">View</button>
+                            </div>
+                            <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                <button class="add-button yet-to-submit"
+                                    [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                    mat-raised-button type="button">Yet to
+                                    Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                    <!-- Other uploads -->
+                    <ng-container
+                        *ngIf="documentDetails.Other_Certifications && documentDetails.Other_Certifications.length > 0">
+                        <div class="subDocumentTitle">Other Uploads</div>
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let document of documentDetails.Other_Certifications; let i = index">
+                            <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Name</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_label] ? document[form_label] : '-'}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-32">
+                                    <label>Document Description</label>
+                                    <div class="input size-16 bold-700 color-black">
+                                        {{document[form_description] ? document[form_description] : '-'}}</div>
+                                </div>
+
+                                <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button"
+                                        (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                        mat-raised-button type="button">View</button>
+                                </div>
+                                <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                                    <button class="add-button yet-to-submit"
+                                        [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                        mat-raised-button type="button">Yet to
+                                        Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+
+                </ng-container>
 
             </div>
-          </ng-container>
-          <div class="static-main d-flex mt-4">
-          <div class="static d-flex justify-content-between" style="width: 30% !important; align-items: center;">
-            <div class="label">Total experience</div>
-            <div class="value d-flex justify-content-between w-50 box-value"><span style="white-space: nowrap;">{{workDetails?.total_exp_years ? workDetails?.total_exp_years : '0'}} Years</span> <span style="white-space: nowrap;">{{workDetails?.total_exp_months ? workDetails?.total_exp_months : '0'}} Months</span></div>
-          </div>
-          <div class="static d-flex w-75" style="justify-content: space-evenly; margin-left: 2em;">
-            <div class="label" style="width: 35%;">Break in employment, If any, Should be indicated with reasons</div>
-            <div class="box w-75">{{workDetails?.break_in_emp}}</div>
-          </div>
-        </div>
-        <div style="padding: 0 1em; align-items: flex-start !important;" class="d-flex header">
-           <div class="w-50 sub-header">Have you ever been employed by us or by any of our subsidiary / associate companies? <span style="width: 50px !important;" class="box-value">{{workDetails?.employed_us == true ? 'Yes' : workDetails?.employed_us == '1' ? 'Yes' : 'No'}}</span>
-             <div *ngIf="workDetails?.employed_us == true || workDetails?.employed_us == 1" class="labels">
-              <div>OC</div>
-              <div class="box-value">{{workDetails?.oc}}</div>
-              <div>Payslip numer</div>
-              <div class="box-value">{{workDetails?.payslip}}</div>
-             </div>
-           </div>
-           <div class="w-50 sub-header ml-2">Have you ever been interviewed by us? <span style="width: 50px !important;" class="box-value">{{workDetails?.interviewed_by_us == true ? 'Yes' : workDetails?.interviewed_by_us == '1' ? 'Yes' : 'No'}}</span>
-            <div *ngIf="workDetails?.interviewed_by_us == true || workDetails?.interviewed_by_us == 1" class="labels">
-              <div>Post you applied before</div>
-              <div class="box-value">{{workDetails?.post}}</div>
-              <div>When</div>
-              <div class="box-value">{{workDetails?.when_interview}}</div>
-             </div>
-           </div>
+
+            <!-- Work Experience -->
+            <div class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+                    <h6>Work Experience Details</h6>
+                    <div *ngIf="!formSubmitted" class="icon"><span
+                            class="material-icons material-icons-outlined">
+                            mode_edit
+                        </span></div>
+                </div>
+                <ng-container *ngIf="workDetails && !noShowWork else noWork">
+                    <ng-container *ngIf="workDetails.Employment && workDetails.Employment.length > 0">
+                        <div class="subDocumentTitle">Employment Details</div>
+
+                        <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+                            *ngFor="let work of workDetails.Employment; let i = index">
+                            <div class="row-wrapper mt-0">
+                                <div class="overall-input-wrapper mt-0 width-56">
+                                    <label>Employer's Name & Address</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_employment_name_address]}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-20">
+                                    <label>Start Date</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{dateConvertion(work[form_duration_from])}}</div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-0 width-20">
+                                    <label>End Date</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{dateConvertion(work[form_duration_to])}}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="row-wrapper mt-0">
+
+                                <div class="overall-input-wrapper mt-3 width-40">
+                                    <label>Position Held</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_postion_field]}}
+                                    </div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-3 width-35">
+                                    <label>Name & Designation of Immediate Superior</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_name_designation_supervisor]}}</div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-22">
+                                    <label>Gross Emoluments (Per Month)</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_gross_emploment]}}</div>
+                                </div>
+                            </div>
+
+                            <div class="row-wrapper mt-0">
+                                <div class="overall-input-wrapper mt-3 width-40">
+                                    <label>HR Name</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_hr_name]}}
+                                    </div>
+                                </div>
+
+                                <div class="overall-input-wrapper mt-3 width-35">
+                                    <label>HR Contact Number</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_hr_contact_no]}}</div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-22">
+                                    <label>HR Email ID</label>
+                                    <div class="input f_size_16 bold-700 color-black">
+                                        {{work[form_hr_email]}}</div>
+                                </div>
+                            </div>
+
+                            <div class="row-wrapper mt-0">
+                                <div class="overall-input-wrapper mt-3 width-40">
+                                    <label>Nature of Work Done</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_nature_work]}}
+                                    </div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-35">
+                                    <label>Reason for Leaving</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_reason_leaving]}}
+                                    </div>
+                                </div>
+                                <div class="overall-input-wrapper mt-3 width-22">
+                                    <label>Duration</label>
+                                    <div class="input f_size_16 bold-700 color-black">{{work[form_duration_year]}} Years
+                                        {{work[form_duration_month]}} Months
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="(workDetails.workDetails && workDetails.workDetails[form_total_exp_months] && workDetails.workDetails[form_total_exp_months] > 0) || (workDetails.workDetails && workDetails.workDetails[form_total_exp_years] && workDetails.workDetails[form_total_exp_years] > 0)">
+                        <div class="row-wrapper mt-0" class="border-wrapper">
+                            <span class="mr-3 custom-label">Total Experience:</span> <span class="input f_size_16 bold-700 color-black">{{workDetails.workDetails[form_total_exp_years]}} Years </span> <span class="ml-2 input f_size_16 bold-700 color-black">{{workDetails.workDetails[form_total_exp_months]}} Months</span>
+                        </div>
+                    </ng-container>
+                <!-- Contant Work details -->
+                    <ng-container *ngIf="workDetails.workDetails">
+                        <div *ngIf="workDetails.workDetails && workDetails.workDetails[form_break_in_emp]" class="row-wrapper mt-0" class="border-wrapper">
+                            <div class="overall-input-wrapper mt-0">
+                                <label class="custom-label">Break in Employment, If any, Should be indicated with reasons</label>
+                                <div class="input f_size_16 bold-700 color-black box-border">{{ workDetails.workDetails[form_break_in_emp] }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="workDetails.workDetails && workDetails.workDetails[form_employed_us]">
+                            <div class="row-wrapper mt-0" class="border-wrapper">
+                                <div class="overall-input-wrapper mt-0">
+                                    <label class="custom-label">Have you ever been employed by us or by any of our subsidiary / associate companies? <span style="font-weight: 600;" class="ml-2 f_size_17  bold-700 color-black" style="color: #000 !important;">Yes</span></label>
+                                    <div class="input custom-flex">
+                                        <div><span class="custom-label mr-2">OC:</span>  <span class="input f_size_16 bold-700 color-black box-border">{{workDetails.workDetails[form_oc]}}</span></div>
+                                        <div class="ml-4"><span class="custom-label mr-2">Payslip Number:</span>  <span class="input f_size_16 bold-700 color-black box-border" style="color: #000 !important;">{{workDetails.workDetails[form_payslip]}}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="workDetails.workDetails && workDetails.workDetails[form_interviewed_by_us]">
+                            <div class="row-wrapper mt-0" class="border-wrapper">
+                                <div class="overall-input-wrapper mt-0">
+                                    <label class="custom-label">Have you ever been interviewed by us? <span style="font-weight: 600;" class="ml-2 f_size_17  bold-700 color-black" style="color: #000 !important;">Yes</span></label>
+                                    <div class="input custom-flex">
+                                        <div><span class="custom-label mr-2">Post Applied for:</span>  <span class="input f_size_16 bold-700 color-black box-border">{{workDetails.workDetails[form_post]}}</span></div>
+                                        <div class="ml-4"><span class="custom-label mr-2">When:</span>  <span class="input f_size_16 bold-700 color-black box-border" style="color: #000 !important;">{{workDetails.workDetails[form_when_interview] ? dateConvertion(workDetails.workDetails[form_when_interview]) : 'NA' }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+
+                    </ng-container>
+
+                    <ng-container *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show">
+                        <div class="row-wrappper mt-0 border-wrapper">
+                            <div class="subDocumentTitle m-0 p-0">Disciplinary Details</div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_convicted_by_Court]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been convicted by a Court of Law? <span
+                                        style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_exam_university]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you
+                                    ever been debarred/disqualified from any examination or restricted by any University
+                                    or any other
+                                    educational institute? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_arrested]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    arrested? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_debarred_psc_company]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever
+                                    been debarred/disqualified from any Public Service Commission or any other
+                                    recruiting company for
+                                    appearing at its examination / selection? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_prosecuted]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    prosecuted? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_court_case_pending]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Is any case
+                                    pending against you in any Court of Law at the time of filling this form? <span
+                                        style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_detention]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been kept
+                                    under detention? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_university_case_pending]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Is any case
+                                    pending against you in any University or Educational Institute at the time of
+                                    filling this form? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_fined_by_court]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">Have you ever been
+                                    fined by a Court of Law? <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_disciplinary_proceedings]"
+                                class="row-wrappper f_size_16 mt-2">
+                                <div style="width: 95%;">In the
+                                    previous employment, were any disciplinary proceedings framed against you or had you
+                                    been called upon to
+                                    explain your conduct in any matter at the time you served notice for resignation?
+                                    <span style="font-weight: 600;"
+                                        class="ml-2 f_size_17  bold-700 color-black">Yes</span></div>
+                            </div>
+
+                            <div *ngIf="workDetails.bgvDetails && workDetails.bgvDetails[this.form_full_particulars]"
+                                class="row-wrapper mt-2">
+                                <div class="overall-input-wrapper mt-0 width-100">
+                                    <label>Full particulars of the case/arrest/detention/conviction/punishment etc. and
+                                        / or nature of the case pending in the Court/University/Educational
+                                        Authority</label>
+                                    <div class="input f_size_16 bold-700 color-black box-border">
+                                        {{workDetails.bgvDetails[this.form_full_particulars]}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-container>
+
+                </ng-container>
+            </div>
+
+            <!-- Signature -->
+            <div *ngIf="formSubmitted" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+                <div class="header d-flex mb-1 custom-header-padding flex-column">
+                    <h6>Signature</h6>
+                </div>
+                <ng-container *ngIf="signature && signature.file_path else noSign">
+                    <div class="row-wrapper mt-0 mb-2" style="padding: 0 16px;">
+                        <div class="signatureShow">
+                            <img class="sign" *ngIf="signature && signature.file_path" [src]="signature && signature.file_path"
+                            alt="" srcset="">
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+
+
 
         </div>
 
-          </div>
-    <!-- end -->
+        <div class="photo-wrapper">
+        </div>
 
-
-    <div class="main-heading-bottom">
-      Faculty References
-    </div>
-    <div class="faculty-wrapper">
-      <div>
-        {{userDetails['facultyReference1'] ? userDetails['facultyReference1'] : '-'}}
-      </div>
-      <div>
-        {{userDetails['facultyReference2'] ? userDetails['facultyReference2'] : '-'}}
-      </div>
     </div>
 
-  </div>
-  <div class="space" style="margin-top: 1.5em;"></div>
 </div>
+<ng-template #noDependent>
+    <div class="nodata"> No Dependent Details Available</div>
+</ng-template>
+<ng-template #noWork>
+    <div class="nodata"> No Work Experience Details Available</div>
+</ng-template>
+<ng-template #noContact>
+    <div class="nodata"> No Contact Details Available</div>
+</ng-template>
+<ng-template #noPersonal>
+    <div class="nodata"> No Personal Details Available</div>
+</ng-template>
+<ng-template #noEducation>
+    <div class="nodata"> No Education Details Available</div>
+</ng-template>
+<ng-template #noDocuments>
+    <div class="nodata"> No Documents Available</div>
+</ng-template>
+<ng-template #noScar>
+     NA
+</ng-template>
+<ng-template #noSign>
+    <div class="nodata"> No Signature Available</div>
+</ng-template>
+
+<ng-template #matDialogDocViewer>
+    <div class="main-wrappers">
+        <div class="position-relative text-right">
+            <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
+                file_download
+                </span> -->
+            <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()"
+                class="material-icons">cancel</i>
+        </div>
+
+        <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
+    </div>
+
+</ng-template>

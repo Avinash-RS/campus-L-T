@@ -173,7 +173,8 @@ export class CandidateMappersService {
   }
 
   updatedState(Id) {
-    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
+    // return this.http.post(`${this.BASE_URL}/api/state_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
+    return this.http.get(`../assets/files/state.json`, { headers: this.withoutTokens(), withCredentials: true });
   }
 
   updatedCity(Id) {
@@ -332,6 +333,12 @@ export class CandidateMappersService {
 
      joiningFormGetDocuments() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+       return this.http.get(`${this.BASE_URL}/profile/uploaddocument_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
+     joiningFormGetDocumentsinv(uid) {
+      let userId = uid;
        return this.http.get(`${this.BASE_URL}/profile/uploaddocument_pageload?user_id=${userId}`,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
