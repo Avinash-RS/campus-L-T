@@ -39,7 +39,8 @@ export class BisEvaluationFormComponent implements OnInit {
   @Input() candidateId;
   @Input() nameOfAssessment;
   @Input() uid;
-    intervieweeAttendance:any;
+  @Input() status;
+  intervieweeAttendance:any;
     Notattended: any;
     attendedStatusList: any;
     displayedColumns: string[] = ['name', 'veryGood', 'good', 'average', 'notSuitable'];

@@ -1,7 +1,7 @@
 <ng-container *ngIf="candidateId && uid && BIS != 'true'">
-<app-evaluation-form [candidateId]="candidateId" [uid]="uid" [nameOfAssessment]="nameOfAssessment"></app-evaluation-form>
+<app-evaluation-form [candidateId]="candidateId" [uid]="uid" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-evaluation-form>
 </ng-container>
 
 <ng-container *ngIf="candidateId && uid && BIS == 'true'">
-    <app-bis-evaluation-form [candidateId]="candidateId" [uid]="uid" [nameOfAssessment]="nameOfAssessment"></app-bis-evaluation-form>
+    <app-bis-evaluation-form [candidateId]="candidateId" [uid]="uid" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-bis-evaluation-form>
 </ng-container>

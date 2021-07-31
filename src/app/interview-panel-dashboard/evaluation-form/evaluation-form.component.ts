@@ -40,6 +40,7 @@ export class EvaluationFormComponent implements OnInit {
 @Input() candidateId;
 @Input() nameOfAssessment;
 @Input() uid;
+@Input() status;
   intervieweeAttendance:any;
   Notattended: any;
   attendedStatusList: any;

@@ -608,7 +608,7 @@
     </div>
   </ng-container>
   <div class="space"></div>
-  <div class="last-button" style="text-align: center; padding: 1em 0;">
+  <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
     <button class="submit" mat-raised-button>Save</button>
   </div>
 </form>

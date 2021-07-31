@@ -40,6 +40,7 @@ export class InvSubEvaluateComponent implements OnInit {
   nameOfAssessment: any;
   uid: any;
   BIS = this.appConfig.getLocalData('BIS');
+  status: any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -64,6 +65,7 @@ export class InvSubEvaluateComponent implements OnInit {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['uid'];
       this.uid = params['uid'];
+      this.status = params['status'];
     });
   }
 

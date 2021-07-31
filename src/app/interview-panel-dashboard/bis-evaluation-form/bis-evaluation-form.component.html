@@ -582,7 +582,7 @@
               <span *ngIf="f?.attendedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
             </div>
             </ng-container>
-  
+
       </div> -->
 
       </div>
@@ -613,7 +613,7 @@
     </div>
   </ng-container>
   <div class="space"></div>
-  <div class="last-button" style="text-align: center; padding: 1em 0;">
+  <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
     <button class="submit" mat-raised-button>Save</button>
   </div>
 </form>
