@@ -21,7 +21,7 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
   }
 
   assessmentDetails() {
-  
+
     this.bindDetails = {
       assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '-',
       date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '-',
@@ -33,7 +33,4 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
     };
   }
 
-  viewReports() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS);
-  }
 }

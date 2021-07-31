@@ -189,8 +189,5 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   shortlistedReport(detail) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
   }
-  viewReports(selectedCandidate) {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS);
-  }
 
 }
