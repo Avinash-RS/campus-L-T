@@ -59,12 +59,6 @@ export class MasterDashboardComponent implements OnInit {
         hide: false,
         click: true
       },
-      // {
-      //   url: this.appConstant.CANDIDATE_DASHBOARD.JOINING_FAQ,
-      //   name: 'FAQ',
-      //   icon: 'assets/images/Page-1.svg',
-      //   hide: false
-      // }
     ]
 }
   }
