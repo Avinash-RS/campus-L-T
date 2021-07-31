@@ -81,8 +81,6 @@ import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.c
 import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { CommonHeaderComponent } from './common-header/common-header.component';
 import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
-import { PdfreaderComponent } from './pdfreader/pdfreader.component';
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { CommonKycProfileViewComponent } from './common-kyc-profile-view/common-kyc-profile-view.component';
 import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared-upload-previewer.component';
 import { ScreenresolutionBoxComponent } from './screenresolution-box/screenresolution-box.component';
@@ -97,8 +95,9 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CommonSidebarComponent } from './common-sidebar/common-sidebar.component';
 import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/join-interview.component';
+import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-kyc-profile-view.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, PdfreaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent
 ],
   imports: [
     CommonModule,
@@ -175,8 +174,6 @@ import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/jo
     NzTypographyModule,
     NzUploadModule,
     NzResizableModule,
-    // PdfreaderComponent,
-    PdfJsViewerModule,
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
@@ -204,7 +201,6 @@ import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/jo
     ShortlistBoxComponent,
     CommonHeaderComponent,
     CdkDetailRowDirective,
-    PdfreaderComponent,
     CommonKycProfileViewComponent,
     SharedUploadPreviewerComponent,
     ScreenresolutionBoxComponent,
@@ -215,6 +211,7 @@ import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/jo
     HorizontalBarChartComponent,
     CommonSidebarComponent,
     JoinInterviewComponent,
+    SharedKycProfileViewComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
@@ -278,8 +275,6 @@ import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/jo
     NzTypographyModule,
     NzUploadModule,
     NzResizableModule,
-    // PdfreaderComponent,
-    PdfJsViewerModule
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
