@@ -129,7 +129,8 @@
         </div>
       </mat-drawer>
       <div class="content-section">
-        <div id="top">
+        <div id="top"></div>
+        <div class="sticky-subheaders">
           <div class="toolbar-wrapper">
             <ol class="breadcrumb">
               <li *ngFor="let breadcrumb of breadcrumbs">
@@ -141,8 +142,6 @@
             </ol>
           </div>
           <div class="heading3">{{breadcrumbs && breadcrumbs[1] && breadcrumbs[1].label ? breadcrumbs[1].label : ''}}</div>
-        </div>
-        <div>
           <!-- Interview Component for Candidate Login -->
         <app-join-interview *ngIf="role == 'candidate' && !showJoiningForm"></app-join-interview>
         <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">
@@ -158,8 +157,8 @@
             </ng-container>
           </div>
         </div>
+      </div>
         <router-outlet></router-outlet>
-        </div>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>

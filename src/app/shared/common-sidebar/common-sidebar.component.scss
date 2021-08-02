@@ -322,5 +322,11 @@ mat-drawer ul li span img {
 .mat-drawer-side {
   z-index: 8;
     box-shadow: 1px 3px 3px #0003 !important;
+}
 
+.sticky-subheaders {
+  position: sticky;
+  top: -4px;
+  z-index: 500;
+  background: white;
 }
