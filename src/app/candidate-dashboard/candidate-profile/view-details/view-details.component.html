@@ -1,4 +1,4 @@
-<div class="printContentDiv">     <!-- This div using for print -->
+<div class="printContentDiv">
   <div class="top-main-wrapper view-page">
     <div *ngIf="showNext" (click)="print()" class="print printBtn">
       <label style="cursor: pointer;" class="submit">Print</label>
@@ -7,7 +7,6 @@
         <div class="profile-wrapper">
           <div class="profile ad">
             <img *ngIf="url" [src]="url" alt="">
-            <!-- <img *ngIf="!url" src="assets/images/img_avatar2.jpg" alt="" srcset=""> -->
           </div>
         </div>
         <div class="form-wrapper">
@@ -34,12 +33,7 @@
                   <mat-radio-button value="pre">{{userDetails && userDetails['gender'] ? userDetails['gender'] : ''}}
                   </mat-radio-button>
                   </mat-radio-group>
-                <!-- <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label> -->
             </div>
-
-            <!-- <div class="radio">
-              <label nz-radio [ngModel]="true">{{userDetails['gender']}}</label>
-            </div> -->
           </div>
           <div *ngIf="userDetails && userDetails['marital']" class="form-group">
             <label>Marital Status</label>
@@ -48,12 +42,7 @@
                   <mat-radio-button value="pre">{{userDetails && userDetails['marital'] ? userDetails['marital'] : ''}}
                   </mat-radio-button>
                   </mat-radio-group>
-                  <!-- <mat-radio-button [value]="userDetails['marital']">{{userDetails['marital']}}</mat-radio-button> -->
-                  <!-- <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label> -->
               </div>
-            <!-- <div class="radio">
-              <label nz-radio [ngModel]="true">{{userDetails['marital']}}</label>
-            </div> -->
           </div>
           <div class="form-group">
             <label>Date of Birth</label>
@@ -348,22 +337,6 @@
                 {{dup['field_occupation'] && dup['field_occupation']['value'] ? dup['field_occupation']['value'] : '-'}}
               </div>
             </div>
-            <!-- When Array is empty -->
-            <!-- <div class="text-box-grid" *ngIf="userDetails['familyArray'].length < 1">
-              <div class="text-1">
-                {{'-'}}
-              </div>
-              <div class="text-2">
-                {{'-'}}
-              </div>
-              <div class="text-3">
-                {{'-'}}
-              </div>
-              <div class="text-4">
-                {{'-'}}
-              </div>
-
-            </div> -->
           </ng-container>
         </div>
       </div>
@@ -381,10 +354,6 @@
             {{'-'}}
           </div>
         </ng-container>
-        <!-- When Array is empty -->
-        <!-- <div class="skills" *ngIf="userDetails['skillArray'] && (userDetails['skillArray'].length < 1 || !userDetails['skillsArray'])">
-          {{'NA'}}
-        </div> -->
 
       </div>
 
@@ -428,22 +397,7 @@
                 {{dup.company ? dup.company : '-'}}
               </div>
             </div>
-            <!-- When Array is Empty -->
-            <!-- <div class="text-box-grid" *ngIf="userDetails['generalArray'].length < 1">
-              <div class="text-1">
-                {{'-'}}
-              </div>
-              <div class="text-2">
-                {{'-'}}
-              </div>
-              <div class="text-3">
-                {{'-'}}
-              </div>
-              <div class="text-4">
-                {{'-'}}
-              </div>
 
-            </div> -->
           </ng-container>
         </div>
       </div>
@@ -560,390 +514,6 @@
       </div>
 
     </div>
-
-    <!-- When empty array comes -->
-    <!-- <div class="top-main-wrapper" *ngIf="!userData || userData.length < 1">
-
-      <div class="top-grid">
-        <div class="profile-wrapper">
-          <div class="profile">
-            <img src="assets/images/img_avatar2.jpg" alt="">
-          </div>
-        </div>
-        <div class="form-wrapper">
-          <div class="form-group">
-            <label>Name</label>
-            <input class="input" readonly type="text" [value]="''">
-          </div>
-          <div class="form-group">
-            <label>Email ID</label>
-            <input class="input" readonly type="text" [value]="''">
-          </div>
-          <div class="form-group">
-            <label>Mobile Number</label>
-            <input class="input" readonly type="text" [value]="''">
-          </div>
-          <div class="form-group">
-            <label class="label-radio">Gender</label>
-            <div class="radio">
-              <label style="pointer-events: none;" nz-radio [ngModel]="false">{{'Male'}}</label>
-              <label style="pointer-events: none;" nz-radio [ngModel]="false">{{'Female'}}</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Marital Status</label>
-            <div class="radio">
-              <label style="pointer-events: none;" nz-radio [ngModel]="false">{{'Married'}}</label>
-              <label style="pointer-events: none;" nz-radio [ngModel]="false">{{'Unmarried'}}</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Date of Birth</label>
-            <div class="dob">
-              <input class="dob-input" readonly type="text" [value]="''">
-              <input class="dob-input" readonly type="text" [value]="''">
-              <input class="dob-input" readonly type="text" [value]="''">
-            </div>
-          </div>
-
-
-        </div>
-
-      </div>
-
-      <div class="two-grid">
-        <div class="form-wrapper-left">
-          <div class="form-group">
-            <label>Nationality</label>
-            <input class="input" readonly type="text" [value]="''">
-          </div>
-        </div>
-        <div class="form-wrapper-right">
-          <div class="form-group">
-            <label>Category</label>
-            <input class="input" readonly type="text" [value]="''">
-          </div>
-        </div>
-      </div>
-
-      <div class="addressgrid">
-        <div class="form-wrapper-left">
-          <div class="form-group">
-            <label>Present Address</label>
-            <div class="input addr" style="flex-wrap: wrap;">
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Permanent Address</label>
-            <div class="input addr" style="flex-wrap: wrap;">
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div> <br>
-              <div style="border: none; box-shadow: none; background: transparent;">{{''}}</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div style="margin: 1em 0 0 0 !important; height: 25px;" class="language-grid">
-        <div class="form-wrapper-left" style="height: 0;">
-          <div style="visibility: hidden;" class="form-group">
-            <label>&#160;</label>
-            <input class="input" type="text" [value]="'Indian'">
-          </div>
-        </div>
-        <div class="form-wrapper-right" style="height: 25px;">
-          <div class="form-group">
-            <label style="padding: 0 !important;">Read</label>
-            <label style="padding: 0 !important;">Write</label>
-            <label style="padding: 0 !important;">Speak</label>
-          </div>
-        </div>
-      </div>
-      <ng-container>
-        <div class="language-grid" *ngFor="let dup of [0]; let i = index">
-          <div class="form-wrapper-left">
-            <div class="form-group">
-              <label>{{(i === 0 ? 'Languages Known' : '')}}</label>
-              <input class="input" type="text" readonly [value]="''">
-            </div>
-          </div>
-          <div class="form-wrapper-right">
-            <div class="form-group">
-              <div [ngStyle]="{'visibility': dup.read ? 'show' : 'hidden'}"
-                class="custom-control custom-checkbox checkbox-xl">
-                <input type="checkbox" checked class="custom-control-input" [id]="i + 'one'">
-                <label class="custom-control-label" [for]="i + 'one'">&#160;</label>
-              </div>
-              <div [ngStyle]="{'visibility': dup.write ? 'show' : 'hidden'}"
-                class="custom-control custom-checkbox checkbox-xl">
-                <input type="checkbox" checked class="custom-control-input" [id]="i + 'two'">
-                <label class="custom-control-label" [for]="i + 'two'">&#160;</label>
-              </div>
-              <div [ngStyle]="{'visibility': dup.speak ? 'show' : 'hidden'}"
-                class="custom-control custom-checkbox checkbox-xl">
-                <input type="checkbox" checked class="custom-control-input" [id]="i + 'three'">
-                <label class="custom-control-label" [for]="i + 'three'">&#160;</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-
-
-
-    </div>
-    <div class="main-wrapper" *ngIf="!userData || userData.length < 1">
-      <div class="main-heading-bottom">
-        Passport related details
-      </div>
-      <div class="flex-wrapper-passport">
-        <div class="edu-wrapper-head number">
-          <label>Passport Number</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head name">
-          <label>Name as in Passport</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head profession">
-          <label>Profession as in Passport</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head date">
-          <label>Date of Issue</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head valid">
-          <label>Valid Upto</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head place">
-          <label>Place of Issue</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head country">
-          <label>Countries valid for</label>
-          <input type="text" readonly [value]="''">
-        </div>
-
-      </div>
-      <div class="main-heading-bottom">
-        Health-related details
-      </div>
-      <div class="flex-wrapper-passport">
-        <div class="edu-wrapper-head number">
-          <label>Most Serious Recent Illness</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head name">
-          <label>No. of Days Ill</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head profession">
-          <label>Nature of Illness</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head physical">
-          <label>Physical Disability (if any)</label>
-          <input type="text" readonly [value]="''">
-        </div>
-        <div class="edu-wrapper-head height-weight-wrapper">
-          <div class="sub-edu">
-            <div class="height">
-              <label>Height (cms)</label>
-              <input type="text" readonly [value]="''">
-            </div>
-            <div class="weight">
-              <label>Weight (kg)</label>
-              <input type="text" readonly [value]="''">
-            </div>
-          </div>
-        </div>
-        <div class="edu-wrapper-head power">
-          <label>Power of Eye glass</label>
-          <div class="power-wrapper">
-            <div class="left-wrapper">
-              <span class="label-1">Left Eye</span>
-              <input type="text" readonly [value]="''">
-            </div>
-            <div class="right-wrapper">
-              <span class="label-2">Right Eye</span>
-              <input type="text" readonly [value]="''">
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-
-
-
-      <div class="main-heading-bottom">
-        Educational details
-      </div>
-      <div class="grid-wrapper-qualify">
-        <div class="qualify-wrapper-head">
-          <div class="level-head">
-            Level
-          </div>
-          <div class="board-head">
-            Board / University
-          </div>
-          <div class="institute-head">
-            Institute name
-          </div>
-          <div class="discipline-head">
-            Discipline
-          </div>
-          <div class="specification-head">
-            Specialization
-          </div>
-          <div class="year-head">
-            Year of passing
-          </div>
-          <div class="percentage-head">
-            Percentage
-          </div>
-
-        </div>
-
-        <div class="qualify-wrapper" *ngFor="let dup of [0,1,2]">
-          <input class="level" readonly [value]="'NA'">
-          <input class="board" type="text" readonly [value]="'NA'">
-          <input class="institute" readonly [value]="'NA'">
-
-          <input class="discipline" readonly [value]="'NA'">
-
-          <input class="specification" readonly [value]="'NA'">
-
-          <input class="year" readonly [value]="'NA'">
-
-          <input class="percentage" readonly [value]="'NA'">
-
-          <input class="percentage" readonly [value]="'NA'">
-
-
-        </div>
-      </div>
-
-
-      <div class="main-heading-bottom">
-        Family details
-      </div>
-      <div class="scroll-enable">
-        <div class="heading-grid">
-          <div class="head-1">
-            Name of your family members
-            <span>&#160;</span>
-          </div>
-          <div class="head-2">
-            Date of birth
-            <span>&#160;</span>
-          </div>
-          <div class="head-3">
-            Relationship
-            <span>&#160;</span>
-          </div>
-          <div class="head-4">
-            Occupation
-          </div>
-
-        </div>
-
-        <div class="form">
-          <ng-container>
-            <div class="text-box-grid" *ngFor="let dup of [0,1,2]">
-              <div class="text-1">
-                NA
-              </div>
-              <div class="text-2">
-                NA
-              </div>
-              <div class="text-3">
-                NA
-              </div>
-              <div class="text-4">
-                NA
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      </div>
-      <div class="main-heading-no-bottom">
-        Skills
-      </div>
-      <div class="skills-wrapper">
-        <div class="skills" *ngFor="let dup of [0]">
-          NA
-        </div>
-      </div>
-
-
-      <div class="main-heading-bottom">
-        Relatives / Acquaintances in L & T group of companies
-      </div>
-      <div class="scroll-enable">
-        <div class="heading-grid">
-          <div class="head-1">
-            Name
-            <span>&#160;</span>
-          </div>
-          <div class="head-2">
-            Relationship
-            <span>&#160;</span>
-          </div>
-          <div class="head-3">
-            Position
-            <span>&#160;</span>
-          </div>
-          <div class="head-4">
-            Company
-          </div>
-
-        </div>
-
-        <div class="form">
-          <ng-container>
-            <div class="text-box-grid" *ngFor="let dup of [0,1,2]">
-              <div class="text-1">
-                NA
-              </div>
-              <div class="text-2">
-                NA
-              </div>
-              <div class="text-3">
-                NA
-              </div>
-              <div class="text-4">
-                NA
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      </div>
-
-
-      <div class="main-heading-bottom">
-        Faculty References
-      </div>
-      <div class="faculty-wrapper">
-        <div>
-          NA
-        </div>
-        <div>
-          NA
-        </div>
-      </div>
-
-    </div> -->
 
     <div class="submit-button-wrapper">
       <button class="submit btn-margin-space" *ngIf="!showNext" (click)="edit()" mat-raised-button type="button">Edit</button>
