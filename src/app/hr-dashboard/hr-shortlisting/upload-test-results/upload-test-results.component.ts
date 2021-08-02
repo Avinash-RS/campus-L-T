@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { environment } from 'src/environments/environment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
@@ -17,7 +17,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   templateUrl: './upload-test-results.component.html',
   styleUrls: ['./upload-test-results.component.scss']
 })
-export class UploadTestResultsComponent implements OnInit {
+export class UploadTestResultsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
   url = null;
@@ -50,6 +50,15 @@ export class UploadTestResultsComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+}
 
   downloadTemplate() {
     const excel = `${this.BASE_URL}/sites/default/files/sample.csv`;

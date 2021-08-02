@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
@@ -8,14 +8,14 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   templateUrl: './hr-candidate-status.component.html',
   styleUrls: ['./hr-candidate-status.component.scss']
 })
-export class HrCandidateStatusComponent implements OnInit {
+export class HrCandidateStatusComponent implements OnInit, AfterViewInit {
 
   appConstant = CONSTANT.ENDPOINTS;
 
   constructor(
     private appConfig: AppConfigService,
-    private sharedService: SharedServiceService) { 
-    
+    private sharedService: SharedServiceService) {
+
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       // {
@@ -35,4 +35,12 @@ export class HrCandidateStatusComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+   }
 }

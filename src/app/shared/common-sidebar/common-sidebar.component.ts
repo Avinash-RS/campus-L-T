@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -15,7 +15,7 @@ export interface IBreadCrumb {
   templateUrl: './common-sidebar.component.html',
   styleUrls: ['./common-sidebar.component.scss']
 })
-export class CommonSidebarComponent implements OnInit {
+export class CommonSidebarComponent implements OnInit, AfterViewInit {
 
   @Input() sideBar;
    // public breadcrumbs: IBreadCrumb[];
@@ -41,6 +41,15 @@ export class CommonSidebarComponent implements OnInit {
       this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
     }, 1000);
    }
+
+   ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+}
 
    ngOnInit() {
      this.sidebarOpen = true;

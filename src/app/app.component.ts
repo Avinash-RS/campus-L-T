@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event, ResolveEnd
@@ -16,7 +16,7 @@ import { delay } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'udap-registration';
   showLoadingIndicator = true;
   screenHeight;
@@ -67,6 +67,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.checkIE();
     this.listenToLoading();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+}
+
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     if (environment.production) {

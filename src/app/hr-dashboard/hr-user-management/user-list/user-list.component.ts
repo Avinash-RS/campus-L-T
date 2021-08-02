@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, AfterViewInit {
 
 
   selectedUserDetail: any;
@@ -44,6 +44,15 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.tabledef();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   onGridReady(params: any) {
     this.gridApi = params.api;

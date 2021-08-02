@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './first-level-shortlist.component.html',
   styleUrls: ['./first-level-shortlist.component.scss']
 })
-export class FirstLevelShortlistComponent implements OnInit {
+export class FirstLevelShortlistComponent implements OnInit, AfterViewInit {
 
   dropdownList = [];
   selectedItems = [];
@@ -25,6 +25,15 @@ export class FirstLevelShortlistComponent implements OnInit {
     this.dropDownNgOnInIt();
     this.custom();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+}
 
   candidateChildEmittedData(emittedData) {
     this.showCriteria = true;

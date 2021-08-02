@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -17,7 +17,7 @@ import moment from 'moment';
   templateUrl: './new-interviewpanel-results-upload.component.html',
   styleUrls: ['./new-interviewpanel-results-upload.component.scss']
 })
-export class NewInterviewpanelResultsUploadComponent implements OnInit {
+export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
   url = null;
@@ -82,6 +82,15 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+   }
 
   downloadTemplate() {
     const excel = `${this.BASE_URL}/sites/default/files/Results_upload.csv`;
