@@ -9,7 +9,9 @@
         margin-right: 0em;
         width: 230px !important;
         min-width: 230px !important;
-        position: absolute;
+        position: sticky;
+        top: 0;
+        height: 500px;
         .stepper-wrapper {
             margin-top: 1em;
             position: absolute;
@@ -87,7 +89,7 @@
                 top: 0;
                 background: #50635a;
                 z-index: -1;
-                margin-top: 18px; 
+                margin-top: 18px;
             }
         }
     }
@@ -107,7 +109,7 @@
 }
 
 .router {
-    margin-left: 230px;
+    margin-left: 0px;
     width: 100%;
 }
 .routerLeft {

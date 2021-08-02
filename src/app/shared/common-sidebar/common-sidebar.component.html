@@ -1,4 +1,4 @@
-<div class="scroll-bar-height">
+<!-- <div class="scroll-bar-height"> -->
   <app-common-header></app-common-header>
 
   <mat-drawer-container class="second-sidenav">
@@ -129,7 +129,7 @@
         </div>
       </mat-drawer>
       <div class="content-section">
-        <div>
+        <div id="top">
           <div class="toolbar-wrapper">
             <ol class="breadcrumb">
               <li *ngFor="let breadcrumb of breadcrumbs">
@@ -142,7 +142,8 @@
           </div>
           <div class="heading3">{{breadcrumbs && breadcrumbs[1] && breadcrumbs[1].label ? breadcrumbs[1].label : ''}}</div>
         </div>
-        <!-- Interview Component for Candidate Login -->
+        <div>
+          <!-- Interview Component for Candidate Login -->
         <app-join-interview *ngIf="role == 'candidate' && !showJoiningForm"></app-join-interview>
         <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">
           <div class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
@@ -158,7 +159,8 @@
           </div>
         </div>
         <router-outlet></router-outlet>
+        </div>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
-</div>
+<!-- </div> -->

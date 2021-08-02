@@ -6,10 +6,10 @@
   position: relative;
   .sticky {
     position: sticky;
-    top: 0;
+    top: -4px;
     position: -webkit-sticky; /* Safari */
     background: $white;
-    z-index: 3;
+    z-index: 999;
 
   .router-wrapper {
     margin: 1em 0 0 0;

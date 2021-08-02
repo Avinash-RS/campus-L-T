@@ -133,8 +133,7 @@
           </div>
         </div>
         <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
-          <ag-grid-angular style="width: 99%; height: 250px; margin:auto !important;"
-            [ngStyle]="{ height: (scrollbox.offsetHeight / 1.5) + 'px' }" class="ag-theme-alpine" [rowData]="rowData"
+          <ag-grid-angular style="width: 99%; height: 450px; margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData"
             [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
             [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'"
             [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)"
@@ -158,8 +157,7 @@
           </div>
         </div>
         <div [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'">
-          <ag-grid-angular style="width: 99%; height: 250px; margin:auto !important;"
-            [ngStyle]="{ height: (scrollbox.offsetHeight / 1.5) + 'px' }" class="ag-theme-alpine" [rowData]="rowDataHR"
+          <ag-grid-angular style="width: 99%; height: 450px; margin:auto !important;" class="ag-theme-alpine" [rowData]="rowDataHR"
             [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR" [pagination]="true"
             [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSizeHR" [rowSelection]="'multiple'"
             [cacheBlockSize]="cacheBlockSizeHR" (gridReady)="onGridReadyHR($event)" (sortChanged)="sorteventHR($event)"

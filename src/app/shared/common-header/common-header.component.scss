@@ -1,6 +1,6 @@
 @import "../../themes/themes.scss";
 
- 
+
 .headerShadow {
   box-shadow: 0 3px 3px rgba(0, 0, 0, .2) !important;
 }
@@ -13,7 +13,11 @@ mat-toolbar {
   margin-bottom: 3px;
   box-shadow: $header-shadow;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
+  // position: sticky !important;
+  // position: -webkit-sticky !important;
+  // top: 0 !important;
+  // z-index: 99999 !important;
 }
 
 .header-cont {
@@ -53,7 +57,7 @@ mat-toolbar {
       height: 22px;
     }
   }
-   
+
 }
 .rightlog {
   display: flex;

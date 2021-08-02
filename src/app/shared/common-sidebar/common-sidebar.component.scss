@@ -268,7 +268,7 @@
 }
 
 mat-drawer-container {
-  height: 100%;
+  height: calc(100vh - 85px) !important;
 }
 
 mat-drawer ul li span img {
@@ -278,7 +278,6 @@ mat-drawer ul li span img {
 .main-container.content {
   display: flex;
   flex-direction:row;
-  height: 90%;
 }
 .side-iconmenu {
   background-color: #f1f1f1;
@@ -316,7 +315,6 @@ mat-drawer ul li span img {
 .content-section {
   padding: 4px 25px;
   width: 100%;
-  height: calc(100vh - 85px);
   position: relative;
   z-index: 5;
 }
