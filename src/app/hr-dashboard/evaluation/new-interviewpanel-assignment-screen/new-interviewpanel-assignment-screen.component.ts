@@ -166,7 +166,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
-    this.appConfig.scrollToTop();
   }
 
   ngAfterViewInit() {

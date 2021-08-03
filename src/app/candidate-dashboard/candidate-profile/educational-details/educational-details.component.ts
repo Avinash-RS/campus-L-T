@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './educational-details.component.html',
   styleUrls: ['./educational-details.component.scss']
 })
-export class EducationalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+export class EducationalDetailsComponent extends FormCanDeactivate implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', { static: false })
   form: NgForm;
   form1: NgForm;
@@ -114,8 +114,16 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.UGSpecification();
     this.PGSpecification();
     // this.defautValue();
-    this.appConfig.scrollToTop();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   detectSelectQualify() {
     setTimeout(() => {

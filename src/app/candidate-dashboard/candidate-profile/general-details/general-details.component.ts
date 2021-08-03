@@ -89,7 +89,6 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
 
   ngOnInit() {
-    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -194,7 +193,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     this.facultyReference1Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference']) ? this.apiForm['field_faculty_reference'].value : '');
     this.facultyReference2Form.patchValue((this.apiForm && this.apiForm['field_faculty_reference1']) ? this.apiForm['field_faculty_reference1'].value : '');
 
-    if (this.apiForm['full_employment'] && this.apiForm['full_employment'].length > 0) {      
+    if (this.apiForm['full_employment'] && this.apiForm['full_employment'].length > 0) {
       this.familyValuesArr = this.apiForm['full_employment'];
     } else {
       this.familyValuesArr = [];
@@ -220,7 +219,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
           }
       if (this.inv_yes) {
         this.post.setValidators([Validators.required, Validators.pattern(this.alphaNumericMaxLength50)]);
-        this.when_interview.setValidators([Validators.required]);  
+        this.when_interview.setValidators([Validators.required]);
         this.post.updateValueAndValidity();
         this.when_interview.updateValueAndValidity();
         }
@@ -249,7 +248,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
 
         this.apiForm.field_faculty_reference = { value: this.facultyReference1Form ? this.facultyReference1Form.value : '' },
         this.apiForm.field_faculty_reference1 = { value: this.facultyReference2Form ? this.facultyReference2Form.value : '' };
-      
+
       if (this.familyForm.valid && this.break_in_emp.valid && this.oc.valid && this.payslip.valid && this.post.valid && this.when_interview.valid && this.criminal_record.valid) {
         this.apiForm.criminal_record = this.criminal_record.value ? this.criminal_record.value : '';
         this.apiForm.total_exp_years = this.fullYearBinding ? this.fullYearBinding : '';
@@ -263,7 +262,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         this.apiForm.interviewed_by_us = this.inv_yes ? this.inv_yes : false;
         this.apiForm.full_employment = this.familyForm['value']['familyArr'];
 
-        if (this.apiForm.employed_us == '1' || this.apiForm.employed_us == true) {          
+        if (this.apiForm.employed_us == '1' || this.apiForm.employed_us == true) {
         } else {
           this.apiForm.oc = '';
           this.apiForm.payslip = '';
@@ -271,7 +270,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
         if (this.apiForm.interviewed_by_us == '1' || this.apiForm.interviewed_by_us == true) {
         } else {
           this.apiForm.post = '';
-          this.apiForm.when_interview = '';          
+          this.apiForm.when_interview = '';
         }
         // if (this.apiForm.full_employment.length > 0) {
         //   this.apiForm.full_employment.forEach(element => {
@@ -338,7 +337,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
   // Family Patch
   familyPatch(dataArray) {
     if (dataArray && dataArray.length > 0) {
-      dataArray.forEach(fam => {        
+      dataArray.forEach(fam => {
         this.addfamilyForm(fam);
       });
     } else {
@@ -370,7 +369,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
     const alphaNumericMaxLength: RegExp = /^([a-zA-Z0-9_ \-,.;/\r\n|\r|\n/]){0,255}$/;
     const alphaNumericMaxLength50: RegExp = /^([a-zA-Z0-9_ \-,.;/\r\n|\r|\n/]){0,49}$/;
     if (fam) {
-      
+
       return this.fb.group({
         employment_name_address: [fam['employment_name_address'] ? fam['employment_name_address'] : '', [Validators.pattern(alphaNumericMaxLength), RemoveWhitespace.whitespace()]],
         duration_from: [(fam['duration_from'] && fam['duration_from'] != 'Invalid date') ? fam['duration_from'] : null],
@@ -439,7 +438,7 @@ export class GeneralDetailsComponent extends FormCanDeactivate implements OnInit
           if (this.familyArr && this.familyArr['controls'] && this.familyArr['controls'][i] && this.familyArr['controls'][i]['value'] && this.familyArr['controls'][i]['value']['employment_name_address']) {
             this.familyArr.push(this.createItem1(data));
           } else {
-          }        
+          }
         } else {
           this.familyArr.push(this.createItem1(data));
         }

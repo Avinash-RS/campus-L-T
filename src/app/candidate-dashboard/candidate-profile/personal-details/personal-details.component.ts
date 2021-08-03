@@ -223,7 +223,6 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
 
     this.localUsername = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '';
     this.localUserEmail = this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : '';
-    this.appConfig.scrollToTop();
   }
 
   momentForm(date) {

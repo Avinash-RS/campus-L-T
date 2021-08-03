@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -16,7 +16,7 @@ import { FormCustomValidators } from 'src/app/custom-form-validators/autocomplet
   templateUrl: './family-details.component.html',
   styleUrls: ['./family-details.component.scss']
 })
-export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', { static: false })
   form: NgForm;
   form1: NgForm;
@@ -51,7 +51,6 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
   }
 
   ngOnInit() {
-    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -66,6 +65,15 @@ export class FamilyDetailsComponent extends FormCanDeactivate implements OnInit,
       this.appConfig.setLocalData('familyFormSubmitted', 'true');
     }
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   cancel() {
     this.ngOnInit();

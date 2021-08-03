@@ -174,9 +174,9 @@
 </div>
 <ng-template #schedulePopup>
   <div class="schedule-container">
-    <div class="pop-up-header"><span>Create A New Room</span> <span (click)="closePopup()" class="material-icons"
+    <div class="pop-up-header"><span>Create a New Room</span> <span (click)="closePopup()" class="material-icons"
         style="float: right;cursor: pointer;">close</span></div>
-    <div class="input-container">
+    <div *ngIf="false" class="input-container">
       Select Meeting Room ID
       <div class="radiogroup">
         <mat-radio-group aria-label="Select an option">
@@ -186,7 +186,7 @@
       </div>
     </div>
     <div class="input-container">
-      <div class="header-label">Room ID</div>
+      <div class="header-label">Room Title</div>
       <mat-form-field class="w-100" appearance="outline">
         <input matInput [(ngModel)]="roomName">
       </mat-form-field>

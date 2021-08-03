@@ -89,7 +89,6 @@ export class ViewDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }

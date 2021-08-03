@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -15,7 +15,7 @@ import { async } from 'rxjs/internal/scheduler/async';
   templateUrl: './confirm.component.html',
   styleUrls: ['./confirm.component.scss']
 })
-export class ConfirmComponent implements OnInit {
+export class ConfirmComponent implements OnInit, AfterViewInit {
   apiForm: any;
   agree = false;
   url = null;
@@ -46,7 +46,6 @@ export class ConfirmComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -55,6 +54,15 @@ export class ConfirmComponent implements OnInit {
 
     this.convertEduArrToSingleVar();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   kycTerms() {
     const data = {
