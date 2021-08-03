@@ -1,12 +1,12 @@
 <section class="CompetencyArea">
-        <div class="heading6">
-            Competencies Areas
+    <div class="heading6">
+        Cognitive and Technical Competencies
 
-        </div>
+    </div>
     <div class="InfoDetailsArea">
         <div class="leftPan">
-            <div *ngIf="verticalChartData && verticalChartData.length > 0" >
-                <app-bar-chart (competencyId)="getParticularCompetencySkills($event)"  [domains]="verticalChartData" [chartData]="verticalChartData"></app-bar-chart>
+            <div *ngIf="verticalChartData && verticalChartData.length > 0">
+                <app-bar-chart (competencyId)="getParticularCompetencySkills($event)" [domains]="verticalChartData" [chartData]="verticalChartData"></app-bar-chart>
                 <!-- Below commented is for chart.js charts -->
                 <!-- <app-bar-chart [orientation]="'x'" [chartType]="'bar'" [values]="Skills" [labels]="competencieslabels"></app-bar-chart> -->
             </div>
@@ -16,17 +16,14 @@
             <ng-container *ngFor="let competency of competancyData; let i = index">
                 <div *ngIf="i===counter" class="chartContainer">
                     <div class="sPan">
-                    <div class="heading4">{{competency && competency.competencyname ? competency.competencyname :
-                        ''}} <span>{{competency && competency.score ? competency.score : ''}}%</span>
-                    </div>
-                    <app-horizontal-bar-chart (selectedArea)="selectedHorizontalArrayIndex($event, i)" [domains]="domain"
-                        [chartData]="competency.skills"></app-horizontal-bar-chart>
+                        <div class="heading4">{{competency && competency.competencyname ? competency.competencyname : ''}} <span>{{competency && competency.score ? competency.score : ''}}%</span>
+                        </div>
+                        <app-horizontal-bar-chart (selectedArea)="selectedHorizontalArrayIndex($event, i)" [domains]="domain" [chartData]="competency.skills"></app-horizontal-bar-chart>
                     </div>
                     <div class="aPan">
-                        <div class="subhtxt">Areas <span (click)="resetAreas(i, competency)" class="ResetBtn "> <em class="icon-Refresh"></em>Reset</span></div>
+                        <div class="subhtxt">Skill areas <span (click)="resetAreas(i, competency)" class="ResetBtn "> <em class="icon-Refresh"></em>Reset</span></div>
                         <div class="areasbtnsec" *ngIf="competency.areaSkills">
-                            <span class="btnBox btnBlue" [ngStyle]="{'background-color': area1.areaColor ? area1.areaColor : ''}"
-                                *ngFor="let area1 of competency.areaSkills">{{area1.areaname}} -
+                            <span class="btnBox btnBlue" [ngStyle]="{'background-color': area1.areaColor ? area1.areaColor : ''}" *ngFor="let area1 of competency.areaSkills">{{area1.areaname}} -
                                 {{area1.score}}</span>
                         </div>
                     </div>
@@ -35,11 +32,10 @@
 
             <button type="button" class="sliderBtn left" (click)="onPrevious()" [disabled]="counter===0"><em
                     class="icon-Back"></em></button>
-            <button type="button" class="sliderBtn right" (click)="onNext()"
-                [disabled]="this.counter == this.list.length - 1"><em class="icon-right-next"></em></button>
-                <div class="slideDots">
-                    <span (click)="dotChange(i)" *ngFor="let competency of competancyData; let i = index" [class.active]="i===counter" >{{competency && competency.score ? competency.score : ''}}</span>
-                </div>
+            <button type="button" class="sliderBtn right" (click)="onNext()" [disabled]="this.counter == this.list.length - 1"><em class="icon-right-next"></em></button>
+            <div class="slideDots">
+                <span (click)="dotChange(i)" *ngFor="let competency of competancyData; let i = index" [class.active]="i===counter">{{competency && competency.score ? competency.score : ''}}</span>
+            </div>
         </div>
         <span class="triangle-left"></span>
 

@@ -226,7 +226,10 @@ export class BarChartComponent implements OnInit, OnChanges, AfterViewInit {
   emitCompetencyId(id) {
     this.competencyId.emit(id);
   }
-
+  reset(){
+    this.indexNum = 1;
+     this.ngOnInit();
+ }
   chartsModule() {
     this.canvas = this.chartContainer.nativeElement;
     this.ctx = this.canvas.getContext('2d');

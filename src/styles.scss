@@ -2909,6 +2909,7 @@ ng-image-slider {
                 flex-grow: 3.6;
                 justify-content: flex-start;
                 padding-left: 1.6em;
+                white-space: nowrap;
             }
             em {
                 color: #b3b3b3;
@@ -3057,12 +3058,15 @@ ng-image-slider {
             }
             .icon-Like {
                 color: $successColorDark;
+                font-weight: 700;
             }
             .average-color {
                 color: #d68f0c;
+                font-weight: 700;
             }
             .icon-Dislike {
                 color: $primaryColor;
+                font-weight: 700;
             }
             .progressbar {
                 display: block;
@@ -3147,6 +3151,7 @@ ng-image-slider {
             .comphtxt {
                 font-size: 20px;
                 color: #808080;
+                display: flex;
             }
         }
         .rightPan {
@@ -3551,4 +3556,21 @@ mat-icon {
             font-size: 12px;
         }
     }
+}
+
+// report css
+.width-51 {
+    width: 51% !important;
+}
+
+.width-270 {
+    width: 270px !important;
+}
+
+.width-150 {
+    width: 150px !important;
+}
+
+.width-168 {
+    width: 167px !important;
 }
