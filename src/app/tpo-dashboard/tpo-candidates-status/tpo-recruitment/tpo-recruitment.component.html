@@ -20,7 +20,7 @@
               Tag name:
             </div>
             <div class="input-box">
-              <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="">
+              <nz-select class="nzSelect-revamp" (ngModelChange)="selectChange()" [formControl]="tagValue" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                 <nz-option *ngFor="let level of tagLists" [nzLabel]="level.field_tag_value"
                   [nzValue]="level.field_tag_value"></nz-option>
               </nz-select>
@@ -84,7 +84,7 @@
       <div class="search-icon">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
         <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
-        
+
       </div>
     </div>
     <!-- </mat-form-field> -->

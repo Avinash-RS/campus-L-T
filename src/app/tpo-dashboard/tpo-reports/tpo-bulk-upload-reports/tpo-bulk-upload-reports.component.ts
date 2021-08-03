@@ -14,7 +14,7 @@ import moment from 'moment';
   templateUrl: './tpo-bulk-upload-reports.component.html',
   styleUrls: ['./tpo-bulk-upload-reports.component.scss']
 })
-export class TpoBulkUploadReportsComponent implements OnInit {
+export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
 
@@ -56,6 +56,15 @@ export class TpoBulkUploadReportsComponent implements OnInit {
     ngOnInit() {
       this.tabledef();
     }
+
+    ngAfterViewInit() {
+      // Hack: Scrolls to top of Page after page view initialized
+      let top = document.getElementById('top');
+      if (top !== null) {
+        top.scrollIntoView();
+        top = null;
+      }
+   }
 
     onGridReady(params: any) {
       this.gridApi = params.api;

@@ -44,6 +44,7 @@
                             </div>
                         </div>
 
+                        <ng-container *ngIf="data && data.isSelected">
                         <div *ngIf="(personalDetailsMap[form_marital_status] == 'Married' || personalDetailsMap[form_marital_status] == 'Widow')" class="overall-input-wrapper mt-2 width-32">
                             <label>No. of Children<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_no_of_children]}}
@@ -66,12 +67,14 @@
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_state_of_birth]}}
                             </div>
                         </div>
+                      </ng-container>
                         <div class="overall-input-wrapper mt-2 width-32">
                             <label>Nationality<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_nationality]}}
                             </div>
                         </div>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <ng-container *ngIf="data && data.isSelected">
+                          <div class="overall-input-wrapper mt-3 width-32">
                             <label>Religion<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_religion]}}</div>
                         </div>
@@ -80,13 +83,14 @@
                             <label>Caste<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_caste]}}</div>
                         </div>
-
+                        </ng-container>
                         <div class="overall-input-wrapper mt-3 width-32">
                             <label>Caste Category<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_category]}}</div>
                         </div>
 
-                        <div class="overall-input-wrapper mt-3 width-32">
+                      <ng-container *ngIf="data && data.isSelected">
+                          <div class="overall-input-wrapper mt-3 width-32">
                             <label>Mother Tongue<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_mother_tongue]}}
                             </div>
@@ -121,7 +125,7 @@
                             <div class="input size-16 bold-700 color-black">
                                 {{personalDetailsMap[form_emergency_contact_relation]}}</div>
                         </div>
-
+                   </ng-container>
                         <div class="overall-input-wrapper mt-3 width-32">
                             <label>Mobile No.<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_mobile]}}</div>
@@ -130,11 +134,12 @@
                             <label>Aadhar No.<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_aadhar]}}</div>
                         </div>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <ng-container *ngIf="data && data.isSelected">
+                          <div class="overall-input-wrapper mt-3 width-32">
                             <label>PAN No.<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_pan]}}</div>
                         </div>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                          <div class="overall-input-wrapper mt-3 width-32">
                             <label>Offer Reference<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_offer_reference]}}
                             </div>
@@ -144,6 +149,7 @@
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_offer_date]}}
                             </div>
                         </div>
+                        </ng-container>
                         <div class="overall-input-wrapper mt-3 width-32">
                             <label>Height/Weight<span></span></label>
                             <div class="input size-16 bold-700 color-black">
@@ -153,7 +159,8 @@
                             </div>
                         </div>
 
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <ng-container *ngIf="data && data.isSelected">
+                          <div class="overall-input-wrapper mt-3 width-32">
                             <label>Alternate Email ID<span></span></label>
                             <div class="input size-16 bold-700 color-black">{{personalDetailsMap[form_personal_email]}}
                             </div>
@@ -172,22 +179,10 @@
                             class="input f_size_15 bold-700 color-black" style="width: auto !important;">NA</div>
                                 </div>
                         </div>
-
+                      </ng-container>
 
                     </div>
 
-                    <!-- <div class="row-wrapper mt-0">
-                        <div class="overall-input-wrapper mt-3 width-100">
-                            <label>Identification Mark<span></span></label>
-                            <div *ngIf="personalDetails && personalDetails[form_identification_mark1]"
-                                class="input f_size_15 bold-700 color-black">-
-                                {{personalDetailsMap[form_identification_mark1]}}</div>
-                            <div *ngIf="personalDetails && personalDetails[form_identification_mark2]"
-                                class="input mt-2 f_size_15 bold-700 color-black">-
-                                {{personalDetailsMap[form_identification_mark2]}}</div>
-                        </div>
-
-                    </div> -->
                 </ng-container>
             </div>
 
