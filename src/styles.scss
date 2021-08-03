@@ -1479,9 +1479,6 @@ button:focus {
   textarea.ng-invalid.ng-touched {
     border: solid $red 1px !important;
   }
-  .ant-input:placeholder-shown {
-    visibility: hidden !important;
-  }
   .ant-calendar-picker-input {
     padding: 0 !important;
   }
@@ -2307,8 +2304,8 @@ th {
   opacity: 0.6 !important;
 }
 
-::ng-deep .ant-select-dropdown {
-  width: 100% !important;
+.ant-select-dropdown {
+  width: 200% !important;
 }
 // .ant-select-dropdown {
 //     width: auto !important !important;

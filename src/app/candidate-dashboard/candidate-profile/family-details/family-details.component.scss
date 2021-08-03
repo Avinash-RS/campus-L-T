@@ -8,7 +8,7 @@
 .alert {
   color: $primary-red;
   font-size: 14px;
-  margin-left: 0.5em;
+  padding-left: 14px !important;
   padding-bottom: 0 !important;
 }
 
@@ -152,13 +152,16 @@ nz-date-picker:focus,nz-date-picker:hover {
 
 
 :host ::ng-deep .ant-select-selection__placeholder, :host ::ng-deep .ant-select-search__field__placeholder {
-  color: #A5A5A5 !important; 
+  color: #A5A5A5 !important;
   font-size: 14px !important;
 }
-
+:host ::ng-deep .ant-input:placeholder-shown {
+  color: #A5A5A5 !important;
+  font-size: 14px !important;
+}
 ::placeholder {
   color: #A5A5A5 !important;
-  opacity: 1 !important; 
+  opacity: 1 !important;
   font-size: 14px;
 }
 

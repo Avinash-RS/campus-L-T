@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { LoaderService } from 'src/app/services/loader-service.service';
 import { FormBuilder } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
@@ -38,7 +38,7 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
-    private sharedService: SharedServiceService,
+    private loadingService: LoaderService,
     private fb: FormBuilder,
     private matDialog: MatDialog,
   ) {
@@ -307,6 +307,7 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
             this.url = urls;
 
 
+            this.loadingService.setLoading(true);
             const data = await (await this.candidateService.profileUpload(fd)).json();
               this.signatureData = {
                 target_id: data[0].id,
@@ -319,29 +320,8 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
                 status: 'true'
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-
-
-            // this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
-
-            //   this.signatureData = {
-            //     target_id: data.fid[0].value,
-            //     alt: 'signature',
-            //     title: '',
-            //     width: 480,
-            //     height: 100,
-            //     localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
-            //     url: data.uri[0].url,
-            //     status: 'true'
-            //   };
-            //   this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-
-            //
-
-            // }, (err) => {
-
-            // });
-
-          };
+              this.loadingService.setLoading(false);
+            };
         } else {
           this.showSizeError.image = false;
           this.showSizeError.size = true;

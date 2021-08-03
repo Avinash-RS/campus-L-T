@@ -1,6 +1,6 @@
 /* stylelint-disable at-rule-no-unknown */
 @import "../../app/themes/themes.scss";
- 
+
 input::-ms-clear,
 input::-ms-reveal {
   display: none;
@@ -10,7 +10,7 @@ input::-ms-reveal {
 *::after {
   box-sizing: border-box;
 }
-html { 
+html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -36,7 +36,7 @@ section {
 body {
   margin: 0;
   color: rgba(0, 0, 0, 0.65);
-  font-size: 14px; 
+  font-size: 14px;
   line-height: 1.5;
   background-color: #fff;
   font-feature-settings: "tnum";
@@ -156,7 +156,7 @@ pre,
 code,
 kbd,
 samp {
-  font-size: 1em; 
+  font-size: 1em;
 }
 pre {
   margin-top: 0;
@@ -204,7 +204,7 @@ optgroup,
 textarea {
   margin: 0;
   color: inherit;
-  font-size: inherit; 
+  font-size: inherit;
   line-height: inherit;
 }
 button,
@@ -8414,7 +8414,7 @@ a.ant-btn-sm {
   list-style: none;
   font-feature-settings: "tnum";
   position: absolute;
-  z-index: 1050; 
+  z-index: 1050;
 }
 .ant-calendar-picker-container.slide-up-enter.slide-up-enter-active.ant-calendar-picker-container-placement-topLeft,
 .ant-calendar-picker-container.slide-up-enter.slide-up-enter-active.ant-calendar-picker-container-placement-topRight,
@@ -8513,7 +8513,7 @@ a.ant-btn-sm {
 }
 .ant-calendar {
   position: relative;
-  width: 280px;
+  width: 300px;
   font-size: 14px;
   line-height: 1.5;
   text-align: left;
@@ -8528,6 +8528,7 @@ a.ant-btn-sm {
 .ant-calendar-input-wrap {
   height: 34px;
   padding: 6px 10px;
+  display: none;
   border-bottom: 1px solid #e8e8e8;
 }
 .ant-calendar-input {
@@ -8597,7 +8598,7 @@ a.ant-btn-sm {
   display: inline-block;
   padding: 0 5px;
   color: rgba(0, 0, 0, 0.45);
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 40px;
 }
 .ant-calendar-header .ant-calendar-prev-century-btn,
@@ -9685,7 +9686,7 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
   display: inline-block;
   padding: 0 5px;
   color: rgba(0, 0, 0, 0.45);
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 40px;
 }
 .ant-calendar-month-panel-header .ant-calendar-month-panel-prev-century-btn,
@@ -10010,7 +10011,7 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
   display: inline-block;
   padding: 0 5px;
   color: rgba(0, 0, 0, 0.45);
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 40px;
 }
 .ant-calendar-year-panel-header .ant-calendar-year-panel-prev-century-btn,
@@ -10308,7 +10309,7 @@ li.ant-calendar-time-picker-select-option-disabled:hover {
   display: inline-block;
   padding: 0 5px;
   color: rgba(0, 0, 0, 0.45);
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 40px;
 }
 .ant-calendar-decade-panel-header .ant-calendar-decade-panel-prev-century-btn,
@@ -11143,7 +11144,7 @@ textarea.ant-input {
   list-style: none;
   font-feature-settings: "tnum";
   position: absolute;
-  z-index: 1050; 
+  z-index: 1050;
 }
 .ant-time-picker-panel-inner {
   position: relative;
@@ -12804,7 +12805,7 @@ textarea.ant-input-number {
   display: inline-block;
   margin-right: 4px;
   color: #f5222d;
-  font-size: 14px; 
+  font-size: 14px;
   line-height: 1;
   content: "*";
 }
@@ -13943,7 +13944,7 @@ form .ant-input-group-wrapper {
   display: inline-block;
   min-width: 32px;
   height: 32px;
-  margin-right: 8px; 
+  margin-right: 8px;
   line-height: 30px;
   text-align: center;
   vertical-align: middle;
@@ -14078,7 +14079,7 @@ form .ant-input-group-wrapper {
   display: inline-block;
   min-width: 32px;
   height: 32px;
-  color: rgba(0, 0, 0, 0.65); 
+  color: rgba(0, 0, 0, 0.65);
   line-height: 32px;
   text-align: center;
   vertical-align: middle;
@@ -17890,7 +17891,7 @@ span.ant-radio + * {
 }
 .ant-statistic-content {
   color: rgba(0, 0, 0, 0.85);
-  font-size: 24px; 
+  font-size: 24px;
 }
 .ant-statistic-content-value-decimal {
   font-size: 16px;
@@ -17949,7 +17950,7 @@ span.ant-radio + * {
   width: 32px;
   height: 32px;
   margin-right: 8px;
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 32px;
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.25);

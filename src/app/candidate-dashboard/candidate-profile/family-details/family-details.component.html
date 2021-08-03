@@ -19,8 +19,8 @@
         <div class="flex-column-wrapper">
           <label class="label">Date of Birth</label>
           <!-- <input formControlName="dob" type="text"> -->
-          <nz-date-picker placeholder="Select" (ngModelChange)="detectSelectChange()" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
-            formControlName="dob" [nzFormat]="dateFormat" nzPlaceHolder="Select DOB"></nz-date-picker>
+          <nz-date-picker (ngModelChange)="detectSelectChange()" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
+            formControlName="dob" [nzFormat]="dateFormat" [nzPlaceHolder]="'Select DOB'"></nz-date-picker>
           <div class="error"
             *ngIf="familyArr.controls[i].get('dob').invalid && familyArr.controls[i].get('dob').touched">
             <span *ngIf="familyArr.controls[i].get('dob').errors?.required">Date of Birth is Required</span>

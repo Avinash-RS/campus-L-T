@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, AfterContent
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { LoaderService } from 'src/app/services/loader-service.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
@@ -181,7 +181,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private sharedService: SharedServiceService,
+    private loadingService: LoaderService,
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
   ) {
@@ -1357,6 +1357,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           this.url = urls;
 
 
+         this.loadingService.setLoading(true);
           const data = await (await this.candidateService.profileUpload(fd)).json();
             this.profileData = {
               fid: data[0].id,
@@ -1366,22 +1367,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             };
             // this.appConfig.clearLocalDataOne('localProfilePic');
             this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-
-
-          // this.candidateService.profileUpload(fd).subscribe((data: any) => {
-          //   this.appConfig.setLocalData('personalFormTouched', 'true');
-          //   this.profileData = {
-          //     fid: data[0].id,
-          //     uuid: '',
-          //     localShowUrl: data[0].frontend_url,
-          //     apiUrl: data[0].backend_url
-          //   };
-          //
-
-          // }, (err) => {
-
-          // });
-
+            this.loadingService.setLoading(false);
         };
       } else {
         this.showSizeError.size = true;

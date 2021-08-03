@@ -1,6 +1,6 @@
 {
   "name": "udap-registration",
-  "version": "0.0.154",
+  "version": "0.0.156",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

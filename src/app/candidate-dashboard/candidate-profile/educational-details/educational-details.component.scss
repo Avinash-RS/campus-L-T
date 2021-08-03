@@ -178,13 +178,13 @@ input:disabled,.disabled-1 {
 
 
 :host ::ng-deep .ant-select-selection__placeholder, :host ::ng-deep .ant-select-search__field__placeholder {
-  color: #A5A5A5 !important; 
+  color: #A5A5A5 !important;
   font-size: 14px !important;
 }
 
 ::placeholder {
   color: #A5A5A5 !important;
-  opacity: 1 !important; 
+  opacity: 1 !important;
   font-size: 14px;
 }
 
@@ -259,12 +259,6 @@ input:disabled,.disabled-1 {
     height: 35px;
     padding: 0;
     font-size: 14px;
-  }
-}
-.language-knowns {
- ::ng-deep .mat-checkbox-inner-container {
-  width: 28px !important;
-  height: 28px !important;
   }
 }
 

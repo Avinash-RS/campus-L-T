@@ -26,7 +26,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form3: NgForm;
   form4: NgForm;
   form5: NgForm;
-  selectedPost: any;
+  selectedPost: any = null;
   levelList: any;
   UGList: any;
   DiplamoList: any;
@@ -89,7 +89,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   ngOnInit() {
     this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
-    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : '';
+    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : null;
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
