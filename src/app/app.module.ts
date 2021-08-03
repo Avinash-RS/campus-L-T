@@ -36,6 +36,9 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { NgxChartsModule} from '@swimlane/ngx-charts';
 // import { AgGridModule } from 'ag-grid-angular';
+// ag grid enterprise
+import 'ag-grid-enterprise';
+import { AgGridModule } from 'ag-grid-angular';
 
 registerLocaleData(en);
 
@@ -70,7 +73,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
       preventDuplicates: true,
       autoDismiss: true
     }),
-    // AgGridModule.withComponents([])
+    AgGridModule.withComponents([])
     ],
   // providers: [],
   entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent, CommonJoiningFormComponent],

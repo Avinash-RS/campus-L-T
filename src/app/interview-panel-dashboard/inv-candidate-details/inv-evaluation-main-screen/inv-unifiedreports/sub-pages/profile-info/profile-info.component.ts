@@ -43,7 +43,7 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
 
   getContactAddress(val) {
     let address = this.getAllReportsData && this.getAllReportsData.presentAddress ? this.getAllReportsData.presentAddress : null
-    if (address) {
+    if (address && address.line1 != '') {
       let currAddress = address.line1 + ', ' + address.line2 + ', ' + address.city + ', ' + address.state + ', ' + address.pincode
       let city = address.city + ', ' + address.state;
       return val == 'address' ? currAddress : city;

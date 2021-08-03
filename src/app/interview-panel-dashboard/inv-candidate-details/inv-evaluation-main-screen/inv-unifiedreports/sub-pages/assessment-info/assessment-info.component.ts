@@ -12,6 +12,11 @@ export class AssessmentInfoComponent implements OnInit, OnChanges {
   assessmentsList: any;
   colorCode = 'Good';
   iconBase = 'like';
+  timeTaker: number;
+  TimeTakerMins: number;
+  timeTakerSec: any;
+  TimeTakenMins: number;
+  timeTakenSec: any;
   constructor() { }
 
   ngOnInit(): void {
@@ -60,6 +65,30 @@ export class AssessmentInfoComponent implements OnInit, OnChanges {
     if (date) {
       const split = moment(date).format('LLL');
       return split;
+    }
+  }
+
+  getTimetaker(time){
+    if(time){
+      // debugger
+      let convertTime = time.toString();
+      let SplitTime = convertTime.split(/([.])/);
+      this.TimeTakerMins = parseInt(SplitTime[0]);
+      let sec = '0.' + SplitTime[2];
+      let conIntoSec = parseFloat(sec) * 60;
+      this.timeTakerSec = conIntoSec.toFixed(0);
+      // console.log( this.timeTakerSec,' this.timeTakerSec')
+    }
+  }
+
+  getTimetaken(takenTime){
+    if(takenTime){
+      let convertTime1 = takenTime.toString();
+      let SplitTime1 = convertTime1.split(/([.])/);
+      this.TimeTakenMins = parseInt(SplitTime1[0]);
+      let sec = '0.' + SplitTime1[2];
+      let conIntoSec1 = parseFloat(sec) * 60;
+      this.timeTakenSec = conIntoSec1.toFixed(0);
     }
   }
 

@@ -17,15 +17,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   gridColumnApi: any;
   rowData: any;
   searchBox = false;
@@ -41,6 +33,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -81,8 +74,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'counter',
@@ -93,8 +85,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
       },
       {
         headerName: 'Business Name', field: 'business_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'business_name',
@@ -104,8 +95,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
       },
       {
         headerName: 'Candidate Email id', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -115,8 +105,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
       },
       {
         headerName: 'Date', field: 'date',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'date',
@@ -126,8 +115,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
       },
       {
         headerName: 'Time', field: 'time',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'time',
@@ -137,8 +125,7 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
       },
       {
         headerName: 'Reason for not uploaded', field: 'reason',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'reason',

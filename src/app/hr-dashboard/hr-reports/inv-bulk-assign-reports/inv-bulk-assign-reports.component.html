@@ -1,19 +1,16 @@
 <div class="bulk-assign-reports">
     <div class="ag-wrapper">
         <div class="search-bar">
-        <div class="search-icon">
-          <img src="assets/images/feather-search.svg" alt="" srcset="">
-          <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-          
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+
+            </div>
         </div>
-      </div>      
-    
-    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
-    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
-    [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
-    (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
-    headerHeight="40">
-    </ag-grid-angular>
+
+        <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
+            [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40" [animateRows]="true">
+        </ag-grid-angular>
     </div>
-    
+
 </div>

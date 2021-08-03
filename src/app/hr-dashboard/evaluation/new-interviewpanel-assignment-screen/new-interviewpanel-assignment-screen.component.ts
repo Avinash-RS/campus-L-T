@@ -10,6 +10,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
   templateUrl: './new-interviewpanel-assignment-screen.component.html',
@@ -65,16 +66,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: false,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-
-  };
+  defaultColDef:any
   rowData: any = [];
   searchBox = false;
   filterValue: string;
@@ -86,15 +78,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   cacheBlockSizeHR: any = 500;
   gridApiHR: any;
   columnDefsHR = [];
-  defaultColDefHR = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: false,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDefHR:any
   rowDataHR: any = [];
   searchBoxHR = false;
   filterValueHR: string;
@@ -160,6 +144,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
+    this.defaultColDefHR = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.tabledefHR();
     this.getInstitute();
@@ -224,8 +210,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Candidate name', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -235,8 +220,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -246,8 +230,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Education level', field: 'level',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',
@@ -306,8 +289,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Employee name', field: 'employee_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'employee_name',
@@ -317,8 +299,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -328,8 +309,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Email', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',

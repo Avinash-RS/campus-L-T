@@ -11,6 +11,10 @@ import { environment } from 'src/environments/environment';
 import { LoaderService } from './services/loader-service.service';
 import { delay } from 'rxjs/operators';
 
+import { LicenseManager } from 'ag-grid-enterprise';
+LicenseManager.setLicenseKey('CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=L&T EduTech,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=3,LicensedProductionInstancesCount=3,AssetReference=AG-017299,ExpiryDate=15_July_2022_[v2]_MTY1NzgzOTYwMDAwMA==d6a472ece2e8481f35e75c20066f8e49');
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

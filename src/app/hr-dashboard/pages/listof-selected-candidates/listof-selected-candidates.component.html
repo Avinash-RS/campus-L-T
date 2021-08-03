@@ -1,37 +1,34 @@
 <div class="list-selected-candidates">
     <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
-      <!-- <mat-form-field>
+        <!-- <mat-form-field>
             <mat-label>Filter</mat-label> -->
-      <div class="search-bar mb-1 d-flex justify-content-end align-items-center mr-3">
-        <div class="search-icon">
-          <img src="assets/images/feather-search.svg" alt="" srcset="">
-          <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        
-      </div>
-      <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(true)" type="button" mat-raised-button>Send Mail</button>
-      <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(false)" type="button" mat-raised-button>Edit Access</button>
-      <button class="add-button ml-2" (click)="excelExport()" type="button" mat-raised-button>Export as Excel</button>
-      </div>
-      <!-- </mat-form-field> -->
-      <!-- <div (click)="sendEmail()">Send email</div>
-      <div (click)="sendEmail()">Edit Access to Joining form</div> -->
-      <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine"
-      [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay" [pagination]="true" [suppressRowClickSelection]="true"
-      [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [cacheBlockSize]="cacheBlockSize"
-      (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
-      headerHeight="40">
-      </ag-grid-angular>
-      </div>
-  </div>
+        <div class="search-bar mb-1 d-flex justify-content-end align-items-center mr-3">
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
 
-  <ng-template #matDialog>
+            </div>
+            <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(true)" type="button" mat-raised-button>Send Mail</button>
+            <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(false)" type="button" mat-raised-button>Edit Access</button>
+            <button class="add-button ml-2" (click)="excelExport()" type="button" mat-raised-button>Export as Excel</button>
+        </div>
+        <!-- </mat-form-field> -->
+        <!-- <div (click)="sendEmail()">Send email</div>
+      <div (click)="sendEmail()">Edit Access to Joining form</div> -->
+        <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
+            [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true"
+            (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40" [animateRows]="true">
+        </ag-grid-angular>
+    </div>
+</div>
+
+<ng-template #matDialog>
     <div class="main-wrapper">
-<div class="text">{{popUpdata.text}}</div>
+        <div class="text">{{popUpdata.text}}</div>
         <div class="button-wrapper-form-pop-up">
             <button class="b1" (click)="saveDialog()" type="button" mat-raised-button>Confirm</button>
             <button class="b3" (click)="closeDialog()" type="button" mat-raised-button>Cancel</button>
         </div>
     </div>
-  
-  </ng-template>
-  
+
+</ng-template>

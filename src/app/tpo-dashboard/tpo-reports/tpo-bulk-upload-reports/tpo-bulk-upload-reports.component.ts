@@ -30,15 +30,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   gridColumnApi: any;
   rowData: any;
   searchBox = false;
@@ -54,6 +46,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit() {
+      this.defaultColDef = this.appConfig.agGridWithAllFunc();
       this.tabledef();
     }
 
@@ -103,8 +96,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
       this.columnDefs = [
         {
           headerName: 'S no', field: 'counter',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agNumberColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'counter',
@@ -115,8 +107,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
         },
         {
           headerName: 'Tag name', field: 'tag',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'tag',
@@ -126,8 +117,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
         },
         {
           headerName: 'Name', field: 'name',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'name',
@@ -137,8 +127,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
         },
         {
           headerName: 'Email id', field: 'email',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'email',
@@ -148,8 +137,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
         },
         {
           headerName: 'Date', field: 'date',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           maxWidth: 120,
           sortable: true,
           tooltipField: 'date',
@@ -159,8 +147,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
         },
         {
           headerName: 'Time', field: 'time',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           maxWidth: 120,
           sortable: true,
           tooltipField: 'time',
@@ -170,8 +157,7 @@ export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
         },
         {
           headerName: 'Reason for not uploaded', field: 'reason',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'reason',

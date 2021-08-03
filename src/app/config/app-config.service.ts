@@ -300,6 +300,34 @@ export class AppConfigService {
     this.openDialog(comp, data);
   }
 
+  // AG grid common functions
+  agGridWithAllFunc(){
+  return {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    filter:true,
+    suppressSizeToFit: true,
+    };
+   }
+
+   agGridwithoutfloatingFilter(){
+    return {
+      flex: 1,
+      minWidth: 40,
+      resizable: true,
+      floatingFilter: false,
+      filter:true,
+      suppressSizeToFit: true,
+      };
+     }
+
+
+
+     // Ag-grid commom functions end
+  
+
   // Open dailog
   openDialog(component, data) {
     let dialogDetails: modalBox;
