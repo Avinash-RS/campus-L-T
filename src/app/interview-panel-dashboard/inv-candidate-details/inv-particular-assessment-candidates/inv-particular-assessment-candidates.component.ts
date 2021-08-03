@@ -30,15 +30,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: false,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   rowData: any = [];
   searchBox = false;
   filterValue: string;
@@ -66,6 +58,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   ngOnInit() {
     this.buttonCheck = false;
     this.getSelectedCandidates = [];
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -166,8 +159,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       {
         headerName: "Candidate Name",
         field: "candidate_name",
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 180,
         sortable: true,
         tooltipField: "candidate_name",
@@ -182,9 +174,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       {
         headerName: "CID",
         field: "candidate_id",
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        width: 100,
+        filter: 'agNumberColumnFilter',
+        width: 250,
         sortable: true,
         tooltipField: "candidate_id",
         getQuickFilterText: (params) => {
@@ -194,8 +185,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       {
         headerName: "Date/Time of Interview",
         field: "startTime",
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 310,
         sortable: true,
         tooltipField: "startTime",
@@ -206,8 +196,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       {
         headerName: "Assigned By",
         field: "assigned_by",
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 150,
         sortable: true,
         tooltipField: "assigned_by",
@@ -215,8 +204,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       {
         headerName: "Interview Status",
         field: "evaluation_status_1",
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 100,
         sortable: true,
         tooltipField: "evaluation_status_1",
@@ -292,8 +280,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       {
         headerName: "Status",
         field: "interview_status",
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 110,
         sortable: true,
         getQuickFilterText: (params) => {
