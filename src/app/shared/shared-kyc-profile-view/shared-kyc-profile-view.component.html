@@ -421,7 +421,7 @@
                             mode_edit
                         </span></div>
                 </div>
-                <ng-container *ngIf="documentDetails else noDocuments">
+                <ng-container *ngIf="checkAnyDocuments() else noDocuments">
                     <ng-container *ngIf="documentDetails.Joining_Details && documentDetails.Joining_Details.length > 0">
                         <div class="subDocumentTitle">Joining Details</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
