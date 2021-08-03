@@ -53,15 +53,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   rowData: any = [];
   searchBox = false;
   filterValue: string;
@@ -77,6 +69,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // this.getDiscipline();
     this.tabledef();
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.getShortlistNames();
   }
 
@@ -138,8 +131,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       // },
       {
         headerName: 'Candidate name', field: 'username',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'username',
@@ -149,8 +141,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         maxWidth: 140,
         sortable: true,
         tooltipField: 'candidate_id',
@@ -160,8 +151,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       },
       {
         headerName: 'Gender', field: 'gender',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'gender',
@@ -171,8 +161,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       },
       {
         headerName: 'Insitute', field: 'insitute',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'insitute',

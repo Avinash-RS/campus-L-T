@@ -29,15 +29,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -52,6 +44,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -91,8 +84,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'counter',
@@ -103,8 +95,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Name', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -114,8 +105,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Email id', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -125,8 +115,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Employee id', field: 'employee_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'employee_id',
@@ -136,8 +125,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -147,8 +135,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Date', field: 'date',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'date',
@@ -158,8 +145,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Time', field: 'time',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'time',
@@ -169,8 +155,7 @@ export class InvpanelBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Reason for not uploaded', field: 'reason',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'reason',

@@ -47,15 +47,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   gridApi1: any;
   columnDefs = [];
   columnDefs1 = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: false,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef :any;
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -81,6 +73,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   ngOnInit() {
     this.getInstitute();
     this.getEducation();
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -133,15 +126,13 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
           const i = +params.node.id + 1;
           return i ? i : 'Loading...';
         },
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         minWidth: 100,
         sortable: true
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'candidate_id',
@@ -152,8 +143,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Candidate name', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -167,8 +157,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Email', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -178,8 +167,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Institue name', field: 'institue',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'institue',
@@ -189,8 +177,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -200,8 +187,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Education level', field: 'level',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',
@@ -220,8 +206,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Panel assigned', field: 'panel_assigned',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'panel_assigned',
@@ -234,8 +219,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Assessment', field: 'assement_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'assement_name',

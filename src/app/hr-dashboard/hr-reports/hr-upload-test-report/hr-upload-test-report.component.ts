@@ -28,15 +28,7 @@ export class HrUploadTestReportComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -51,6 +43,7 @@ export class HrUploadTestReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -90,8 +83,7 @@ export class HrUploadTestReportComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'counter',
@@ -102,8 +94,7 @@ export class HrUploadTestReportComponent implements OnInit {
       },
       {
         headerName: 'Shortlist name', field: 'shortlist_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'shortlist_name',
@@ -113,8 +104,7 @@ export class HrUploadTestReportComponent implements OnInit {
       },
       {
         headerName: 'Email id', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -124,8 +114,7 @@ export class HrUploadTestReportComponent implements OnInit {
       },
       {
         headerName: 'Date', field: 'date',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'date',
@@ -135,8 +124,7 @@ export class HrUploadTestReportComponent implements OnInit {
       },
       {
         headerName: 'Reason for not uploaded', field: 'assement_error',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'assement_error',
