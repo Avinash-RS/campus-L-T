@@ -103,6 +103,9 @@ export class JoinInterviewComponent implements OnInit {
     });
   }
   openRTC(view) {
-    window.open(view.userDtl[0].link, "Interview").focus();
+    if (view && view.type && view.type == 'teams') {
+   return window.open(view.password, "Interview").focus();
+    }
+   return window.open(view.userDtl[0].link, "Interview").focus();
   }
 }

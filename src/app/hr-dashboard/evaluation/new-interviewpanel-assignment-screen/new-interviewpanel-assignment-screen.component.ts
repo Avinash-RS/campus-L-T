@@ -99,7 +99,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   selectedInterviewer = [];
   attendeesList = [];
   objList;
+  selectedOption: any = '1';
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
+  toggleVisibility = true;
 
   constructor(
     private appConfig: AppConfigService,
@@ -694,6 +696,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       "userDtl": userDetails,
       "createdByID" : this.appConfig.getLocalData('userEmail'),
       "createdByName": this.appConfig.getLocalData('username'),
+      "type": this.selectedOption == '1' ? 'webrtc' : 'teams'
     }
     this.objList = obj;
     this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{

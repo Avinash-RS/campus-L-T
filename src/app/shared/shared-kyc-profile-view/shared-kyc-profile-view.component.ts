@@ -339,7 +339,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit {
       }
       // Documents mapping
       this.documentDetails = data && data.documents ? data.documents : null;
-      if (this.documentDetails && this.documentDetails.Joining_Details && this.documentDetails.Joining_Details.length > 0) {
+      if (this.documentDetails) {
         let joinCheck = [];
         let Banking_Details = [];
         let Resume = [];
