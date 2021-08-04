@@ -309,8 +309,9 @@
     <div class="input-container">
       <div class="header-label">{{(selectedOption == '2' ? 'Teams Link' : 'Password')}}</div>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput [(ngModel)]="password" [placeholder]="selectedOption == '2' ? 'Teams Link' : 'Enter Here...'" [type]="!toggleVisibility ? 'text' : 'password'">
-        <div mat-icon-button matSuffix style="cursor: pointer;" (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
+        <input *ngIf="selectedOption == '2'" matInput [(ngModel)]="password" [placeholder]="selectedOption == '2' ? 'Teams Link' : 'Enter Here...'" [type]="!toggleVisibility ? 'text' : 'text'">
+        <input *ngIf="selectedOption != '2'" matInput [(ngModel)]="password" [placeholder]="selectedOption == '2' ? 'Teams Link' : 'Enter Here...'" [type]="!toggleVisibility ? 'text' : 'password'">
+        <div *ngIf="selectedOption != '2'" mat-icon-button matSuffix style="cursor: pointer;" (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
         <mat-icon class="icon-color-1">{{toggleVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
         </div>
       </mat-form-field>
