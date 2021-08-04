@@ -113,7 +113,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   // Title Dropdown list
   bloodGroupDropdownList: any;
 
-  // Gender DropDown List 
+  // Gender DropDown List
   genderDropdownList = [
     {
       label: 'Male',
@@ -331,16 +331,53 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
         this.educationDetailsMap = [];
       }
       this.documentDetails = data && data.documents ? data.documents : null;
-      if (this.documentDetails && this.documentDetails.Joining_Details && this.documentDetails.Joining_Details.length > 0) {
+      if (this.documentDetails) {
         let joinCheck = [];
-        this.documentDetails.Joining_Details.forEach(element => {
-          if (element) {
-            joinCheck.push(element);
-          }
-        });
+        let Banking_Details = [];
+        let Resume = [];
+        let Transfer_Certificate = [];
+        let Education_Documents = [];
+        if (this.documentDetails.Joining_Details) {
+          this.documentDetails.Joining_Details.forEach(element => {
+            if (element) {
+              joinCheck.push(element);
+            }
+          });
+        }
+        if (this.documentDetails.Banking_Details) {
+          this.documentDetails.Banking_Details.forEach(element => {
+            if (element) {
+              Banking_Details.push(element);
+            }
+          });
+        }
+        if (this.documentDetails.Resume) {
+          this.documentDetails.Resume.forEach(element => {
+            if (element) {
+              Resume.push(element);
+            }
+          });
+        }
+        if (this.documentDetails.Transfer_Certificate) {
+          this.documentDetails.Transfer_Certificate.forEach(element => {
+            if (element) {
+              Transfer_Certificate.push(element);
+            }
+          });
+        }
+        if (this.documentDetails.Education_Documents) {
+          this.documentDetails.Education_Documents.forEach(element => {
+            if (element && element.sub_documents) {
+              Education_Documents.push(element);
+            }
+          });
+        }
         this.documentDetails.Joining_Details = joinCheck;
+        this.documentDetails.Banking_Details = Banking_Details;
+        this.documentDetails.Resume = Resume;
+        this.documentDetails.Transfer_Certificate = Transfer_Certificate;
+        this.documentDetails.Education_Documents = Education_Documents;
       }
-
       // Work Experience
       this.getWorkApiDetails(data);
 
@@ -745,7 +782,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       });
     }
     const data = {
-      // [this.form_title]: this.personalDetails[this.form_title], 
+      // [this.form_title]: this.personalDetails[this.form_title],
       [this.form_name]: this.personalDetails?.[this.form_name] ? this.personalDetails[this.form_name] : 'NA',
       [this.form_dob]: this.personalDetails?.[this.form_dob] ? this.dateConvertion(this.personalDetails[this.form_dob]) : 'NA',
       [this.form_gender]: this.personalDetails?.[this.form_gender] ? this.personalDetails[this.form_gender] : 'NA',
@@ -937,7 +974,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     //   }
     //   this.glovbal_validators.validateAllFields(this.personalForm);
     //   this.ngAfterViewInit();
-    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');    
+    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
     // }
     // } else {
     //   this.glovbal_validators.validateAllFields(this.personalForm);
