@@ -164,7 +164,7 @@
                     i:hover {
                         color: white;
                         background-color: $primary-red;
-                        border-radius: 50%;                    
+                        border-radius: 50%;
                     }
                 }
             }
@@ -273,7 +273,7 @@
     box-shadow: none !important;
 }
 
-:host ::ng-deep input.ng-invalid.ng-touched,
+:host ::ng-deep input.ng-invalid.ng-touched, .custom-input-error-border,
 :host ::ng-deep nz-select.ng-invalid.ng-touched {
     border: solid $primary-red 1px !important;
     .ant-select-selection {

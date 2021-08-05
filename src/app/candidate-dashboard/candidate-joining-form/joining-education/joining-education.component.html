@@ -92,7 +92,7 @@
                                 <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
                                 <nz-option *ngFor="let discipline of pgDisciplineList" [nzLabel]="discipline.pg_discipline"
                                 [nzValue]="discipline.pg_discipline"></nz-option>
-                                </ng-container>                        
+                                </ng-container>
                                 </nz-select>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_specialization).invalid && getEducationArr.controls[i].get(form_specialization).touched">
@@ -128,7 +128,7 @@
                                             [nzValue]="institute.college_name">
                                           </nz-option>
                                         </ng-container>
-                                      </nz-select> 
+                                      </nz-select>
                                 </ng-container>
                                     <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_collegeName).invalid && getEducationArr.controls[i].get(form_collegeName).touched">
@@ -154,7 +154,7 @@
                                     nzPlaceHolder="Select">
                                     <nz-option *ngFor="let level of boardsList" [nzLabel]="level.name" [nzValue]="level.name">
                                     </nz-option>
-                                  </nz-select>            
+                                  </nz-select>
                                     </ng-container>
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_boardUniversity).invalid && getEducationArr.controls[i].get(form_boardUniversity).touched">
@@ -195,7 +195,7 @@
                                         Invalid Date Format</div>
                                     <div
                                     *ngIf="getEducationArr.controls[i].get(form_startDate)?.errors?.notValid">
-                                    {{'Start date should not go beyond ' + getEducationArr.controls[i].get(form_startDate)?.errors?.notValid}}</div>
+                                    {{'Start Date should be less than or equal to the Year of Passing, (Year of Passing - ' + getEducationArr.controls[i].get(form_startDate)?.errors?.notValid + ').'}}</div>
 
                                 </div>
                             </div>
@@ -223,16 +223,16 @@
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.matDatepickerParse">
                                         Invalid Date Format</div>
-                                        <div
+                                        <!-- <div
                                         *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.notValid">
-                                        {{'End date should not go beyond ' + getEducationArr.controls[i].get(form_endDate)?.errors?.notValid}}</div>
-    
+                                        {{'Year of Passing should be greater than or equal to the selected End date, (Year of Passing - ' + getEducationArr.controls[i].get(form_endDate)?.errors?.notValid + ').'}}</div> -->
+
                                 </div>
                             </div>
                             <div class="overall-input-wrapper width-32">
                                 <label>Year of Passing<span>*</span></label>
                                 <div class="date-relative">
-                                    <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                    <input matInput class="input" [ngClass]="getEducationArr.controls[i].get(form_startDate)?.errors?.notValid || getEducationArr.controls[i].get(form_endDate)?.errors?.notValid ? 'custom-input-error-border' : ''" [min]="minDate" [max]="maxDate"
                                         [matDatepicker]="pickerYearOfPassing" placeholder="DD-MM-YYYY"
                                         [formControlName]="form_yearpassing" appYearMonth>
                                     <mat-datepicker-toggle matSuffix [for]="pickerYearOfPassing"></mat-datepicker-toggle>
@@ -248,7 +248,7 @@
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_yearpassing).invalid && getEducationArr.controls[i].get(form_yearpassing).touched">
                                     <div *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.required">
-                                        Start Date is Required</div>
+                                        Year of Passing is Required</div>
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMax">
                                         {{getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerMax.max) : ''}}
@@ -260,6 +260,11 @@
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_yearpassing)?.errors?.matDatepickerParse">
                                         Format Should be MMM YYYY(Jan 2000)</div>
+                                </div>
+                                <div *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.notValid" class="form-error">
+                                  <div
+                                  *ngIf="getEducationArr.controls[i].get(form_endDate)?.errors?.notValid">
+                                  {{'Year of Passing should be greater than or equal to the selected End date.'}}</div>
                                 </div>
                             </div>
                     </div>

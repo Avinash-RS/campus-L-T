@@ -21,7 +21,7 @@ export class GlobalValidatorService {
         return error;
       } else {
         const valid = regex.test(control.value.trim());
-        return valid ? null : error;  
+        return valid ? null : error;
       }
     };
   }
@@ -33,7 +33,7 @@ export class GlobalValidatorService {
     const confirm = control.get('password2');
     return pass && confirm && pass.value !== confirm.value ? { notMatch: true } : null;
      }
-  }  
+  }
 
     // To validate all fields after submit
     validateAllFormArrays(formArray: FormArray) {
@@ -46,10 +46,10 @@ export class GlobalValidatorService {
             this.validateAllFields(control);
           }
         });
-  
+
       });
     }
-  
+
     // To validate all fields in the form group
     validateAllFields(formGroup: FormGroup) {
      return Object.keys(formGroup.controls).forEach(field => {
@@ -62,12 +62,12 @@ export class GlobalValidatorService {
         }
       });
     }
-  
+
     // To trim the form group
     cleanForm(formGroup: FormGroup) {
       Object.keys(formGroup.controls).forEach((field) => formGroup.get(field).setValue(formGroup.get(field).value ? formGroup.get(field).value.trim() : formGroup.get(field).value));
     }
-  
+
     /* ****************  Define all your regex validators below ************* */
     // Alpha numberic with ',' '.' are allowed, Maximum lenth allowed is 30 characters
     alphaNum50() {
@@ -83,6 +83,11 @@ export class GlobalValidatorService {
     address255() {
       const address255: RegExp = /^([a-zA-Z0-9_ \-,.:;/\r\n|\r|\n/]){0,255}$/;
       return this.regexValidator(address255, {address255: true});
+    }
+
+    offer() {
+      const offer: RegExp = /^([a-zA-Z0-9_ \-,.:;&/\r\n|\r|\n/]){0,255}$/;
+      return this.regexValidator(offer, {offer: true});
     }
 
     address50() {

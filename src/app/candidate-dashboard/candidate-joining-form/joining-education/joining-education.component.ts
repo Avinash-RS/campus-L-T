@@ -143,7 +143,7 @@ maxDateStartField: any;
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
-  ) { 
+  ) {
     this.dateValidation();
   }
 
@@ -177,13 +177,13 @@ maxDateStartField: any;
 
 
   chosenYearHandler(normalizedYear: Moment, i) {
-    const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];    
+    const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];
     if (ctrlValue) {
       ctrlValue.year(normalizedYear.year());
       console.log('ctrlValue', ctrlValue);
       this.getEducationArr.at(i).patchValue({
         [this.form_yearpassing]: ctrlValue,
-      });    
+      });
     }
   }
 
@@ -191,7 +191,7 @@ maxDateStartField: any;
     if (this.dateConvertion(normalizedMonth['_d'])) {
     this.getEducationArr.at(i).patchValue({
       [this.form_yearpassing]: this.dateConvertionMonth(normalizedMonth['_d']),
-    });      
+    });
   }
     datepicker.close();
   }
@@ -202,7 +202,7 @@ maxDateStartField: any;
     this.mastersList?.education_master.forEach(element => {
       if (element.value == this.selectedPost) {
         this.selectedPostLabel = element.label;
-      }  
+      }
     });
   }
 
@@ -233,12 +233,12 @@ maxDateStartField: any;
       this.getEducationArr.push(this.initEducationArray());
       this.getEducationArr.at(0).patchValue({
         [this.form_qualification_type]: 'SSLC',
-      });  
+      });
       this.setValidations();
     }
   }
-  
-  
+
+
     educationLevelChange(i) {
         this.getEducationArr.at(i).patchValue({
           [this.form_qualification]: null,
@@ -266,20 +266,20 @@ maxDateStartField: any;
 momentForm(date) {
 if (date) {
   const split = moment(date).format('DD-MM-YYYY');
- return split;    
+ return split;
 }
 }
 
 momentFormMonth(date) {
   if (date) {
     const split = moment(date).format('MMM YYYY');
-   return split;    
+   return split;
   }
   }
-  
+
 
 dateConvertion(date) {
-  if (date) {      
+  if (date) {
     const split = moment(date).format();
     if (split == 'Invalid date') {
       const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -290,7 +290,7 @@ dateConvertion(date) {
 }
 
 dateConvertionMonth(date) {
-  if (date) {      
+  if (date) {
     const split = moment(date).format();
     if (split == 'Invalid date') {
       const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -385,10 +385,10 @@ validSelectedPost() {
 
   saveRequestRxJs() {
     this.sendPopupResultSubscription =  this.sharedService.sendPopupResult.subscribe((result: any)=> {
-      
+
       if (result.result == 'save') {
       this.formSubmit(result.route);
-      }     
+      }
     });
   }
 
@@ -400,7 +400,7 @@ validSelectedPost() {
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -442,12 +442,12 @@ validSelectedPost() {
       [this.form_boardUniversity]: [{ value: data[this.form_boardUniversity], disabled: true }, [Validators.required]],
       [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), [Validators.required, this.startTrue(false)]],
       [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), [Validators.required, this.startTrue(false)]],
-      [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: true }, [Validators.required, this.startTrue(true)]],
+      [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: false }, [Validators.required, this.startTrue(true)]],
       [this.form_backlog]: [{ value: data[this.form_backlog], disabled: data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, [Validators.required]],
       [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: true }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
       [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
-    })    
+    })
   }
 
   initEducationArray() {
@@ -464,7 +464,7 @@ validSelectedPost() {
       [this.form_mode]: [null, [Validators.required]],
       [this.form_cgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
       [this.form_Finalcgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
-    })      
+    })
   }
 
     // Custom regex validator
@@ -514,11 +514,11 @@ validSelectedPost() {
       }
 
     }
-  
+
     startTrue(param) {
       return this.regexValidator({notValid: true}, param);
     }
-  
+
   formInitialize() {
     this.educationForm = this.fb.group({
       [this.form_educationArray]: this.fb.array([])
