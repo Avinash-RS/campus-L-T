@@ -278,6 +278,7 @@ mat-expansion-panel-header {
   .input-container{
     width: 100%;
     padding: 0.5em;
+    position: relative;
     .header-label{
       font-size: 14px;
       color: #808080;
@@ -325,13 +326,6 @@ mat-expansion-panel-header {
     background: #c02222;
 
   }
-  .mat-form-field-appearance-outline .mat-form-field-wrapper{
-    margin: 0 !important;
-    padding-bottom: 0em !important;
-  }
-  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-    color: #c02222;
-}
   .date-pick{
     cursor: pointer;
   }
@@ -360,21 +354,31 @@ mat-expansion-panel-header {
           cursor: pointer;
       }
   }
-  .mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: 0.5em 0 0.5em 0;
-  }
 
-  .mat-form-field-appearance-outline .mat-form-field-suffix {
-    top: -4px !important;
-    right: -6px;
+  input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
+  {
+      border: solid $primary-red 1px !important;
   }
-
+  .date-padding {
+    padding-right: 28px !important;
+  }
+  .mat-icon {
+    color: #bebebe;
+  }
+  .form-error {
+    color: $primary-red;
+    font-size: 12px;
+  }
+  .asterick {
+    color: $primary-red;
+  }
 }
 .arrowalign {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 2em;
+  max-width: 50px;
 }
 .text-color {
   color: #808080;
@@ -415,4 +419,29 @@ mat-expansion-panel-header {
       border-color: #c02222;
     }
   }
+}
+
+.input {
+  position: relative;
+  border: solid 0.8px #bebebe;
+  border-radius: 2px;
+  color: #6b6b6b;
+  outline: none;
+  box-sizing: border-box;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  line-height: 35px;
+  padding: 4px 8px;
+  background-color: $white;
+  width: 100%;
+}
+.input:focus,
+.input:hover {
+  border: 1px solid $primary-red;
+}
+.password-type {
+  cursor: pointer;
+  position: absolute;
+  top: 36px;
+  right: 10px;
 }

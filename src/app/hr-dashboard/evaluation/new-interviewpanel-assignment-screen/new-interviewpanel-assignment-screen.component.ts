@@ -1,15 +1,17 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import moment from 'moment';
 
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
@@ -89,17 +91,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
 
   //ScheduleForm
+  scheduleForm: FormGroup;
   minDate;
   maxDate;
-  roomName;
-  password;
-  startDate;
-  endDate;
   selectedCandidate = [];
   selectedInterviewer = [];
   attendeesList = [];
   objList;
-  selectedOption: any = '1';
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
   toggleVisibility = true;
 
@@ -107,10 +105,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private candidateService: CandidateMappersService,
+    private fb: FormBuilder,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private glovbal_validators: GlobalValidatorService
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
@@ -613,6 +612,16 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
+  scheduleformInitialize() {
+    this.scheduleForm = this.fb.group({
+      title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
+      startTime: [null, [Validators.required]],
+      endTime: [null, [Validators.required]],
+      type: ['1', [Validators.required]]
+    })
+  }
+
   scheduleInterview(){
     if(this.selectedCandidate.length == 0){
       this.appConfig.warningWithTitle('Please select a candidate','');
@@ -627,7 +636,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       return false;
     }
     this.minDate = new Date();
-    this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer)
+    this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer);
+    this.scheduleformInitialize();
     const dialogRef = this.matDialog.open(this.schedulePopup, {
       // width: '55%',
       // height: '70%',
@@ -640,10 +650,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
   closePopup(){
     this.matDialog.closeAll();
-    this.roomName = '';
-    this.password = '';
-    this.startDate = '';
-    this.endDate = '';
   }
 
     onCandidateSelect(e) {
@@ -668,46 +674,72 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.selectedInterviewer = sData;
     }
 
+  checkIsValidDate() {
+    if (moment(this.scheduleForm.value.endTime).isSameOrBefore(this.scheduleForm.value.startTime)) {
+      this.appConfig.warning('End Date Time should not go beyond State Date Time')
+      return false;
+    }
+    if (moment(this.scheduleForm.value.startTime).isSameOrAfter(this.scheduleForm.value.endTime)) {
+      this.appConfig.warning('Start Date Time should not go beyond End Date Time')
+      return false;
+    }
+    return true;
+  }
+
   scheduleRoom(){
-    if(!this.roomName){
-     return this.appConfig.warningWithTitle('Room name cannot be empty','');
-    }
-    if(!this.password){
-     return this.appConfig.warningWithTitle('Password cannot be empty','');
-    }
-    if(!this.startDate || !this.endDate){
-      return this.appConfig.warningWithTitle('Date cannot be empty','');
-    }
-    let userDetails = [];
-    this.attendeesList.forEach((value)=>{
-      const vl = {
-        'emailId': value.email,
-        'userFullName':value?.name ? value.name : value.employee_name,
-        'type':value.type,
+    if (this.scheduleForm.valid && this.checkIsValidDate()) {
+      let userDetails = [];
+      this.attendeesList.forEach((value)=>{
+        const vl = {
+          'emailId': value.email,
+          'userFullName':value?.name ? value.name : value.employee_name,
+          'type':value.type,
+        }
+        userDetails.push(vl)
+      })
+      var obj = {
+        'roomId':Math.floor(Math.random() * 10000000).toString(),
+        'password': this.scheduleForm.value.password,
+        'roomName':this.scheduleForm.value.title,
+        'startTime': this.scheduleForm.value.startTime,
+        'endTime': this.scheduleForm.value.endTime,
+        "userDtl": userDetails,
+        "createdByID" : this.appConfig.getLocalData('userEmail'),
+        "createdByName": this.appConfig.getLocalData('username'),
+        "type": this.scheduleForm.value.type == '1' ? 'webrtc' : 'teams'
       }
-      userDetails.push(vl)
-    })
-    var obj = {
-      'roomId':Math.floor(Math.random() * 10000000).toString(),
-      'password': this.password,
-      'roomName':this.roomName,
-      'startTime': this.startDate,
-      'endTime': this.endDate,
-      "userDtl": userDetails,
-      "createdByID" : this.appConfig.getLocalData('userEmail'),
-      "createdByName": this.appConfig.getLocalData('username'),
-      "type": this.selectedOption == '1' ? 'webrtc' : 'teams'
+      this.objList = obj;
+      this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
+        if(result.success){
+          this.scheduleHirerachy();
+        } else {
+          this.appConfig.warningWithTitle('Something went wrong','');
+        }
+      })
+    } else {
+      this.scheduleForm.valid ? '' : this.appConfig.warning('Form is Invalid');
+      this.glovbal_validators.validateAllFields(this.scheduleForm);
     }
-    this.objList = obj;
-    this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
-      if(result.success){
-        this.scheduleHirerachy();
-      } else {
-        this.appConfig.warningWithTitle('Something went wrong','');
-      }
-    })
   }
   togglefltr() {
     this.fltractive = !this.fltractive
   }
+
+  // FormControls
+  get title() {
+    return this.scheduleForm.get('title');
+  }
+  get password1() {
+    return this.scheduleForm.get('password');
+  }
+  get startTime() {
+    return this.scheduleForm.get('startTime');
+  }
+  get endTime() {
+    return this.scheduleForm.get('endTime');
+  }
+  get type() {
+    return this.scheduleForm.get('type');
+  }
+
 }
