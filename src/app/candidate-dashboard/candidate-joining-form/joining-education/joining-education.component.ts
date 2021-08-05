@@ -440,7 +440,7 @@ validSelectedPost() {
       [this.form_boardUniversity]: [{ value: data[this.form_boardUniversity], disabled: true }, [Validators.required]],
       [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), [Validators.required, this.startTrue(false)]],
       [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), [Validators.required, this.startTrue(false)]],
-      [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: true }, [Validators.required, this.startTrue(true)]],
+      [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: false }, [Validators.required, this.startTrue(true)]],
       [this.form_backlog]: [{ value: data[this.form_backlog], disabled: data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, [Validators.required]],
       [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: true }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],

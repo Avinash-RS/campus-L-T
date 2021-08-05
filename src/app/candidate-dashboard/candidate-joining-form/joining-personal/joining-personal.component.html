@@ -294,8 +294,7 @@
                         [formControlName]="form_offer_reference">
                     <div class="form-error" *ngIf="offer_reference?.invalid && offer_reference?.touched">
                         <div *ngIf="offer_reference?.errors?.required">Offer Reference is Required</div>
-                        <div *ngIf="offer_reference?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters
-                            only allowed</div>
+                        <div *ngIf="offer_reference?.errors?.offer">Alpha numeric and Special characters (- , . : ; & /) with maximum of 255 characters only allowed</div>
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
