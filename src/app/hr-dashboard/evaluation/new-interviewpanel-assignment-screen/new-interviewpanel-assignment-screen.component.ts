@@ -725,6 +725,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.fltractive = !this.fltractive
   }
 
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+     return split;
+    }
+  }
+
   // FormControls
   get title() {
     return this.scheduleForm.get('title');
