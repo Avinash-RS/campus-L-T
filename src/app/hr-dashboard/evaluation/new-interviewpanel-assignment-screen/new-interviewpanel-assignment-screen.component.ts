@@ -113,17 +113,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-    //   {
-    //     icon: '002-cv.svg',
-    //     name: 'Candidate details',
-    //     router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
-    //   },
-    //   {
-    //     icon: '002-cv.svg',
-    //     name: 'Interview panel',
-    //     router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL,
-    //     active: true
-    //   },
     {
       icon: '002-cv.svg',
       name: 'Panel Assignment',

@@ -1,4 +1,20 @@
 .button-wrapper{
     justify-content: center;
     display: flex;
+    margin-top: 2em;
+}
+
+.noData {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  border: 0;
+  text-align: center;
+  padding-top: 2em;
+  font-size: 20px;
+  padding-bottom: 2em;
+  margin-top: 2em;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+  font-weight: 600;
 }

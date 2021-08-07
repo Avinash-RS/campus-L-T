@@ -7,10 +7,10 @@
           ? ''
           : 'disabled'
       "
-      (click)="scheduleInterview()"
+      (click)="appConfig.isWebrtc() ? scheduleInterview() : submit()"
       mat-raised-button
     >
-      Schedule
+      {{appConfig.isWebrtc() ? 'Schedule' : 'Assign'}}
     </button>
   </div>
   <div>
@@ -279,7 +279,7 @@
     </div>
   </div>
 </div>
-<ng-template #schedulePopup>
+<ng-template *ngIf="appConfig.isWebrtc()" #schedulePopup>
   <div class="schedule-container">
     <div class="pop-up-header">
       <span>Create a New Room</span>

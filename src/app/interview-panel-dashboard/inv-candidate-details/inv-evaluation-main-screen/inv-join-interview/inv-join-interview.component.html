@@ -1,4 +1,7 @@
-<app-join-interview></app-join-interview>
+<app-join-interview *ngIf="appConfig.isWebrtc()"></app-join-interview>
+  <div *ngIf="!appConfig.isWebrtc()" class="noData">
+    Coming Soon...
+  </div>
 <div class="button-wrapper">
   <button class="submit" mat-button (click)="next()">Next</button>
 </div>

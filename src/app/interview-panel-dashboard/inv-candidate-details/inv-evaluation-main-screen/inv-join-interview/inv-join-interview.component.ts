@@ -17,7 +17,7 @@ export class InvJoinInterviewComponent implements OnInit {
   queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
 
   constructor(
-    private appConfig: AppConfigService,
+    public appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
@@ -31,7 +31,7 @@ export class InvJoinInterviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   // Get url param for edit route

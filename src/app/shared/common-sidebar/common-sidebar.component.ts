@@ -29,7 +29,7 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
   showJoiningForm: boolean;
 
    constructor(
-     private appConfig: AppConfigService,
+     public appConfig: AppConfigService,
      private sharedService: SharedServiceService,
      private router: Router,
      private activatedRoute: ActivatedRoute) {

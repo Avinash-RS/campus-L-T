@@ -20,7 +20,7 @@ export class InvUnifiedreportsComponent implements OnInit {
   getAllReportsData: any;
   driveName: any;
   constructor(
-    private appConfig: AppConfigService,
+    public appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
@@ -50,7 +50,9 @@ export class InvUnifiedreportsComponent implements OnInit {
         email: params['email'],
         form: params['form']
       };
-      this.getReports(params['email']);
+     if (this.appConfig.isWebrtc()) {
+        this.getReports(params['email']);
+      }
     });
   }
 

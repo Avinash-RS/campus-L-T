@@ -1,10 +1,6 @@
-<div class="headerbtn" *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'">
-    <button (click)="finalSubmit()" class="submit" mat-raised-button>
-    <em class="icon-checked"></em>Sent to HR for Processing
-  </button>
-</div>
+
 <div class="inv-particular-assessment-candidate" #agheight>
-    <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
+    <div class="user-list-wrapper" [ngClass]="rowData && rowData.length > 0 ? '' : ''">
         <div class="leftinfo">
             <div>
                 <span>{{rowData ? rowData.length : 0}}</span> Assigned Candidates
@@ -18,12 +14,20 @@
             <div>
                 <span>{{rejectedCount.length}}</span> Rejected
             </div>
+            <div>
+              <span>{{sentToHr.length}}</span> Sent to HR
+          </div>
         </div>
         <div class="rightinfo">
             <div *ngIf="false">
                 <button class="filterbtn"><em class="icon-Filter"></em> Filter</button>
             </div>
             <div class="search-bar">
+              <div class="headerbtn" *ngIf="rowData && rowData.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'">
+                <button (click)="finalSubmit()" class="submit" mat-raised-button>
+                <em class="icon-checked"></em>Sent to HR for Processing
+              </button>
+            </div>
                 <div class="search-icon">
                     <img src="assets/images/feather-search.svg" alt="" srcset="">
                     <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">

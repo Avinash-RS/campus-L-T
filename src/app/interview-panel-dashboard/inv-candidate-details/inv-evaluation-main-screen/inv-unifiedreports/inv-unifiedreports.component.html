@@ -9,7 +9,7 @@
 </div>
 <ng-template #noData>
   <div class="noData">
-    No E-Test Results Available
+    {{appConfig.isWebrtc() ? 'No E-Test Results Available' : 'Coming Soon...'}}
   </div>
 </ng-template>
 <div class="button-wrapper">

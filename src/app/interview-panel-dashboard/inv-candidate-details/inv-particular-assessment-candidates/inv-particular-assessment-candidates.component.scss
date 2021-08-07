@@ -7,8 +7,10 @@
     margin-top: 20px;
     /* Structure */
     .search-bar {
-      margin: 0em 1em 0em 1em;
-      text-align: right;
+      flex-direction: row !important;
+      align-items: center !important;
+      display: flex;
+      // text-align: right;
       .search-icon {
         display: inline-flex;
     align-items: center;
@@ -160,7 +162,7 @@ th {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      width: 510px;
+      width: 700px;
       align-items: center;
       div {
         display: flex;
@@ -198,7 +200,7 @@ th {
     .rightinfo {
       display: flex;
       align-items: center;
-      width: 30%;
+      // width: 30%;
       justify-content: flex-end;
 
       div {
@@ -228,8 +230,8 @@ th {
   display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin-bottom: 10px;
-    margin-top: -33px;
+    // margin-bottom: 10px;
+    // margin-top: -33px;
    button {
     border-radius: 4px !important;
     margin-right: 13px;
@@ -319,5 +321,11 @@ th {
     }
     em {
       margin-right: 7px;
+    }
+  }
+
+  ::ng-deep .ag-grid-header-center {
+    .ag-header-cell-label {
+      justify-content: center;
     }
   }

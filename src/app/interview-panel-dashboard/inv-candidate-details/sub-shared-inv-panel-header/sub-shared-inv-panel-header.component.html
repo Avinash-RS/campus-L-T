@@ -21,9 +21,9 @@
           </div>
           <div class="statusinfo">
             Interview Status:
-            <span class="status"
-              [ngClass]="status != '0' ? 'completed' : ''">{{status
-              && status != '0' ? 'Completed' : 'Scheduled'}}</span>
+              <span *ngIf="status != '1' && status != '2'" class="status">{{'Scheduled'}}</span>
+              <span *ngIf="status == '1'" class="status completed">{{'Completed'}}</span>
+              <span *ngIf="status == '2'" class="status inprogress">{{'Submitted'}}</span>
           </div>
         </div>
       </div>
