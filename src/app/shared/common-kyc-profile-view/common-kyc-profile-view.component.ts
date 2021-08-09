@@ -14,7 +14,7 @@ export class CommonKycProfileViewComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data
   ) {
-    this.data.documents = true;
+    this.data.documents = false;
     this.data.isSelected = false;
   }
 

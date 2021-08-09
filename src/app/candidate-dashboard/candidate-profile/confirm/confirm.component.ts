@@ -306,7 +306,7 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
             urls = event.target.result;
             this.url = urls;
 
-
+            try {
             this.loadingService.setLoading(true);
             const data = await (await this.candidateService.profileUpload(fd)).json();
               this.signatureData = {
@@ -321,6 +321,12 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
               this.loadingService.setLoading(false);
+            }
+              catch(e) {
+                this.loadingService.setLoading(false);
+                this.delete();
+                this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+              }
             };
         } else {
           this.showSizeError.image = false;

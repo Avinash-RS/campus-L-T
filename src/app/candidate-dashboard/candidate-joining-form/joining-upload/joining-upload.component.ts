@@ -12,6 +12,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { LoaderService } from 'src/app/services/loader-service.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -140,7 +141,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
+    private loadingService: LoaderService,
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
@@ -906,8 +907,9 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
 async uploadImage(file, i, form) {
   try {
-
+    this.loadingService.setLoading(true);
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    this.loadingService.setLoading(false);
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
       if (form == this.conditionJoining) {
@@ -968,6 +970,7 @@ async uploadImage(file, i, form) {
 
     this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
   } catch (e) {
+    this.loadingService.setLoading(false);
     this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
 
   }
@@ -1160,8 +1163,9 @@ onPhotoUpload(event, i, form) {
 
 async uploadEducationImage(file, mainIndex, subIndex, form) {
   try {
-
+    this.loadingService.setLoading(true);
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    this.loadingService.setLoading(false);
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
         this.getSemesterArr(mainIndex).at(subIndex).patchValue({
@@ -1175,6 +1179,7 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
 
     this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
   } catch (e) {
+    this.loadingService.setLoading(false);
     this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
 
   }

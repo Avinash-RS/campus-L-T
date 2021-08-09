@@ -13,6 +13,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { LoaderService } from 'src/app/services/loader-service.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -294,7 +295,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
+    private loadingService: LoaderService,
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
@@ -1018,7 +1019,9 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   async uploadImage(file) {
     try {
 
+      this.loadingService.setLoading(true);
       const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+      this.loadingService.setLoading(false);
       // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
       if (data && data.file_id) {
         this.signature = {
@@ -1034,6 +1037,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.appConfig.nzNotification('success', 'Uploaded', 'Signature uploaded successfully');
     } catch (e) {
+      this.loadingService.setLoading(false);
       this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
 
     }

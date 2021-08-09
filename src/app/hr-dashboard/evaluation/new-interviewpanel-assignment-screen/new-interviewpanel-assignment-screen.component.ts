@@ -102,7 +102,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   toggleVisibility = true;
 
   constructor(
-    private appConfig: AppConfigService,
+    public appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private fb: FormBuilder,

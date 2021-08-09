@@ -729,28 +729,31 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit {
       });
     }
     const data = {
-      [this.form_present_address_1]: this.contactDetails?.[this.form_present_address_1] ? this.contactDetails[this.form_present_address_1] : 'NA',
-      [this.form_present_address_2]: this.contactDetails?.[this.form_present_address_2] ? this.contactDetails[this.form_present_address_2] : 'NA',
-      [this.form_present_address_3]: this.contactDetails?.[this.form_present_address_3] ? this.contactDetails[this.form_present_address_3] : 'NA',
+      [this.form_present_address_1]: this.contactDetails?.[this.form_present_address_1] ? this.contactDetails[this.form_present_address_1] : '',
+      [this.form_present_address_2]: this.contactDetails?.[this.form_present_address_2] ? this.contactDetails[this.form_present_address_2] : '',
+      [this.form_present_address_3]: this.contactDetails?.[this.form_present_address_3] ? this.contactDetails[this.form_present_address_3] : '',
       [this.form_present_city]: presentCity ? presentCity : 'NA',
       [this.form_present_state]: presentState ? presentState : 'NA',
       [this.form_present_region]: this.contactDetails?.[this.form_present_region] ? 'India' : 'India',
       [this.form_present_zip_code]: this.contactDetails?.[this.form_present_zip_code] ? this.contactDetails[this.form_present_zip_code] : 'NA',
       [this.form_same_as_checkbox]: this.contactDetails?.[this.form_same_as_checkbox] ? this.contactDetails[this.form_same_as_checkbox] : false,
-      [this.form_permanent_address_1]: this.contactDetails?.[this.form_permanent_address_1] ? this.contactDetails[this.form_permanent_address_1] : 'NA',
-      [this.form_permanent_address_2]: this.contactDetails?.[this.form_permanent_address_2] ? this.contactDetails[this.form_permanent_address_2] : 'NA',
-      [this.form_permanent_address_3]: this.contactDetails?.[this.form_permanent_address_3] ? this.contactDetails[this.form_permanent_address_3] : 'NA',
+      [this.form_permanent_address_1]: this.contactDetails?.[this.form_permanent_address_1] ? this.contactDetails[this.form_permanent_address_1] : '',
+      [this.form_permanent_address_2]: this.contactDetails?.[this.form_permanent_address_2] ? this.contactDetails[this.form_permanent_address_2] : '',
+      [this.form_permanent_address_3]: this.contactDetails?.[this.form_permanent_address_3] ? this.contactDetails[this.form_permanent_address_3] : '',
       [this.form_permanent_city]: permanentCity ? permanentCity : 'NA',
       [this.form_permanent_state]: permanentState ? permanentState : 'NA',
       [this.form_permanent_region]: this.contactDetails?.[this.form_permanent_region] ? 'India' : 'India',
       [this.form_permanent_zip_code]: this.contactDetails?.[this.form_permanent_zip_code] ? this.contactDetails[this.form_permanent_zip_code] : 'NA'
     };
     this.contactDetailsMap = data;
-    this.contactDetailsMap.presentAddress = `${this.contactDetails?.[this.form_present_address_1]}, ${this.contactDetails?.[this.form_present_address_2]}${this.contactDetails?.[this.form_present_address_3] ? ', ' + this.contactDetails?.[this.form_present_address_3] : ''}`;
-    this.contactDetailsMap.permanentAddress = `${this.contactDetails?.[this.form_permanent_address_1]}, ${this.contactDetails?.[this.form_permanent_address_2]}${this.contactDetails?.[this.form_permanent_address_3] ? ', ' + this.contactDetails?.[this.form_permanent_address_3] : ''}`;
+    this.contactDetailsMap.presentAddress = `${this.contactDetails?.[this.form_present_address_1] ? (this.contactDetails?.[this.form_present_address_1] + ',') : ''} ${this.contactDetails?.[this.form_present_address_2] ? this.contactDetails?.[this.form_present_address_2] : ''} ${this.contactDetails?.[this.form_present_address_3] ? (', ' + this.contactDetails?.[this.form_present_address_3]) : 'NA'}`;
+    this.contactDetailsMap.permanentAddress = `${this.contactDetails?.[this.form_permanent_address_1] ? (this.contactDetails?.[this.form_permanent_address_1] + ',') : ''} ${this.contactDetails?.[this.form_permanent_address_2] ? this.contactDetails?.[this.form_permanent_address_2] : ''} ${this.contactDetails?.[this.form_permanent_address_3] ? (', ' + this.contactDetails?.[this.form_permanent_address_3]) : 'NA'}`;
 
   }
 
+  isAddressPresent() {
+
+  }
   patchPersonalForm() {
     let stateOfBirth: any;
     let bloodGroup: any;

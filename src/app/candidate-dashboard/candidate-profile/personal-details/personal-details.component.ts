@@ -1356,7 +1356,7 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
           urls = event.target.result;
           this.url = urls;
 
-
+        try {
          this.loadingService.setLoading(true);
           const data = await (await this.candidateService.profileUpload(fd)).json();
             this.profileData = {
@@ -1368,6 +1368,11 @@ export class PersonalDetailsComponent extends FormCanDeactivate implements OnIni
             // this.appConfig.clearLocalDataOne('localProfilePic');
             this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
             this.loadingService.setLoading(false);
+           } catch(e) {
+            this.loadingService.setLoading(false);
+            this.delete();
+            this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+            }
         };
       } else {
         this.showSizeError.size = true;

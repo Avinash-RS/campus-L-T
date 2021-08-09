@@ -828,3 +828,22 @@ background-color: #eaeaea;
     font-size: 14px;
     font-weight: 600;
 }
+.verify-row-wrapper {
+  flex-direction: row !important;
+}
+
+.nowrap {
+  flex-wrap: nowrap !important;
+}
+.verify-btn, .verify-btn:hover {
+  width: 80px !important;
+  background: #149110 !important;
+  font-size: 16px !important;
+  color: white !important;
+}
+.reject-btn, .reject-btn:hover {
+  width: 80px !important;
+  background: $primary-red !important;
+  font-size: 16px !important;
+  color: white !important;
+}

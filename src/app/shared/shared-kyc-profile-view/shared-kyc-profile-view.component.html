@@ -426,7 +426,7 @@
                         <div class="subDocumentTitle">Joining Details</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
                             *ngFor="let document of documentDetails.Joining_Details; let i = index">
-                            <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                            <div class="row-wrapper mt-0 nowrap" style="align-items: flex-end;">
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
                                     <div class="input size-16 bold-700 color-black">
@@ -451,6 +451,21 @@
                                         mat-raised-button type="button">Yet to
                                         Submit</button>
                                 </div>
+                                <div class="overall-input-wrapper mt-0 width-32 verify-row-wrapper">
+                            <div *ngIf="document && document[form_file_path]"
+                                class="overall-input-wrapper">
+                                <button class="add-button verify-btn"
+                                    mat-raised-button type="button">Verify</button>
+                            </div>
+
+                            <div *ngIf="document && document[form_file_path]"
+                            class="overall-input-wrapper">
+                            <button class="add-button reject-btn"
+                                mat-raised-button type="button">Reject</button>
+                            </div>
+                          </div>
+
+
                             </div>
                         </div>
                     </ng-container>

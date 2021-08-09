@@ -4,6 +4,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { MatDialog } from '@angular/material';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { LoaderService } from 'src/app/services/loader-service.service';
 
 @Component({
   selector: 'app-candidate-upload-document',
@@ -58,6 +59,7 @@ export class CandidateUploadDocumentComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private appConfig: AppConfigService,
     private candidateService: CandidateMappersService,
+    private loadingService: LoaderService,
     private matDialog: MatDialog) { }
 
   ngOnInit() {
@@ -262,17 +264,16 @@ export class CandidateUploadDocumentComponent implements OnInit {
 
     try {
 
+      this.loadingService.setLoading(true);
       const data = await (await this.candidateService.uploadCandidateDocument(file)).json();
-
+      this.loadingService.setLoading(false);
       // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
-
-
-
-
       this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
       this.ngOnInit();
     } catch (e) {
-
+      this.appConfig.nzNotification('error', 'Not Uploaded', 'Try again after sometime...');
+      this.loadingService.setLoading(false);
+      this.ngOnInit();
     }
     // }, (err) => {
 
