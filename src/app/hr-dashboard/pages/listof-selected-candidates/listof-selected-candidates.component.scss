@@ -73,3 +73,33 @@
   transition: background-color 580ms linear;
   color: #f5f5f54d;
 }
+
+::ng-deep .verify {
+  width: 80px;
+  height: 30px;
+  outline: none;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  text-align: center;
+  font-size: 14px;
+  position: relative;
+  flex-direction: row !important;
+  .check {
+    margin-right: 4px;
+    font-size: 18px;
+  }
+}
+::ng-deep .verify-clr {
+  background: #fbb03b;
+}
+::ng-deep .verify-clr-grey {
+  background: darkgrey;
+}
+::ng-deep .verified-clr {
+  background: #50c550;
+}
+::ng-deep .disable {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}

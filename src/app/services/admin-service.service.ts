@@ -658,6 +658,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  documentVerification(data) {
+      return this.http.post(`${this.BASE_URL}/profile/document_verification`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
 // Node service urls
 
 getReportsDataAPI(data) {
