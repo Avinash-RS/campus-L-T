@@ -180,8 +180,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       {
         headerName: 'Mail', field: 'mailed',
         filter: 'agTextColumnFilter',
-        minWidth: 85,
-        maxWidth: 85,
+        minWidth: 95,
         sortable: true,
         tooltipField: 'mailed',
         getQuickFilterText: (params) => {
@@ -190,9 +189,8 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Form Status', field: 'is_editable',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 95,
+        filter: 'agTextColumnFilter',
+        minWidth: 110,
         sortable: true,
         tooltipField: 'is_editable',
         getQuickFilterText: (params) => {
@@ -316,6 +314,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       {
         headerName: 'Download Documents', field: 'details',
         cellClass: 'agCellStyle',
+        filter: false,
         // headerTooltip: 'Download documents',
         valueFormatter: this.tooltipFormatter,
         minWidth: 60,
@@ -331,8 +330,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Verification Status', field: 'verified',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         sortable: true,
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
         cellRenderer: (params) => {
@@ -354,8 +352,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Verified/Reverted by', field: 'verifier_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 170,
         sortable: true,
         tooltipField: 'verifier_name',

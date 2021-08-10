@@ -1,4 +1,8 @@
-<div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview">
+<mat-expansion-panel *ngIf="role != 'candidate' || showInterview" [expanded]="true">
+  <mat-expansion-panel-header>
+    Interview Session
+  </mat-expansion-panel-header>
+  <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview else nocard">
     <div *ngIf="role == 'candidate'" class="iconinfo"><em class="icon-Info"></em></div>
     <div>
         <div *ngIf="role == 'candidate'" class="interview">
@@ -25,8 +29,12 @@
     </div>
 
 </div>
-<div class="joinInterviewWrapper" *ngIf="showInterview == false">
-    <div class="joinInterview">
+<ng-template #nocard>
+<div class="joinInterviewWrapper">
+    <div class="joinInterview nocard">
         No interview scheduled at this moment
     </div>
 </div>
+</ng-template>
+</mat-expansion-panel>
+

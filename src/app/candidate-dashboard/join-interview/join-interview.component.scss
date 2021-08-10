@@ -1,11 +1,10 @@
 @import "../../themes/themes.scss";
 
 .joinInterviewWrapper {
-    padding: 15px;
-
+    // padding: 15px;
     &.candidate {
-        padding: 20px 25px 0px 10px;
-    border: 1px solid #cccccc;
+    padding: 20px 25px 0px 10px;
+    // border: 1px solid #cccccc;
     border-radius: 5px;
     margin-bottom: 5px;
     display: flex;
@@ -110,4 +109,26 @@
 .disabled {
   background-color: #bababa !important;
   cursor: not-allowed;
+}
+.mat-expansion-panel {
+  // border: 1px solid #cccccc;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+}
+.mat-expansion-panel-header {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 4px 18px;
+}
+:host ::ng-deep .mat-expansion-panel-header.mat-expanded {
+  font-size: 20px;
+  font-weight: 500;
+  height: 48px !important;
+  border-bottom: 0.1em solid #e8e8e8;
+}
+.nocard {
+align-items: center;
+font-size: 16px;
+font-weight: 600;
 }

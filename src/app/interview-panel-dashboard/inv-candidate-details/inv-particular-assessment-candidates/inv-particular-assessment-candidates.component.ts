@@ -383,10 +383,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           headerName: "Evaluate",
           headerClass: 'ag-grid-header-center',
           field: "evaluation_btn",
-          filter: false,
-          floatingFilterComponentParams: { suppressFilterButton: false },
+          filter: 'agTextColumnFilter',
           minWidth: 110,
-          sortable: false,
+          sortable: true,
           getQuickFilterText: (params) => {
             return params.value;
           },
@@ -539,7 +538,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.rejectedCount = [];
     this.sentToHr = [];
     this.userList.forEach((element) => {
-      console.log('ele', element);
       element.evaluation_status == '2' ? this.sentToHr.push(element) : element.evaluation_status == '1' ? this.buttonCheck = true : '';
       if (
         element.interview_status == "Selected" ||
