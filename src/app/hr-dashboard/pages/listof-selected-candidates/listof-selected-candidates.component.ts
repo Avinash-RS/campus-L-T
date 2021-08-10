@@ -82,8 +82,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       this.downloadExcel(event['data']);
     }
 
+    if (event.colDef.field === 'verified') {
+      if (event['data']['is_editable'] == 'Submitted') {
+        let index = event.rowIndex;
+        let user_id = event['data']['user_id'];
+        let status = event['data']['verified'] == 'Verified' ? '0' : '1';
+        this.documentverify(index, user_id, status);
+      }
+    }
+
     if (event.colDef.field === 'candidate_name') {
-      if (event['data']['mailed'] == '1' && event['data']['is_editable'] == '1') {
+      if (event['data']['mailed'] == 'Sent' && event['data']['is_editable'] == 'Submitted') {
         const data = {
           candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
         };
@@ -93,7 +102,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
           candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
         };
-        this.openDialog5(CommonKycProfileViewComponent, data);  
+        this.openDialog5(CommonKycProfileViewComponent, data);
       }
     }
 
@@ -102,7 +111,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       // Open dailog
       openDialog5(component, data) {
         let dialogDetails: any;
-    
+
         /**
          * Dialog modal window
          */
@@ -113,17 +122,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           autoFocus: false,
           data
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
           }
         });
       }
-  
+
       // Open dailog
       openDialog4(component, data) {
         let dialogDetails: any;
-    
+
         /**
          * Dialog modal window
          */
@@ -134,20 +143,20 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           autoFocus: false,
           closeOnNavigation: true,
           disableClose: true,
-          panelClass: 'common-joining-form',    
+          panelClass: 'common-joining-form',
           data
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
           }
         });
       }
-  
+
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -182,31 +191,18 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         minWidth: 85,
         maxWidth: 85,
         sortable: true,
-        valueGetter: (params) => {
-          if (params.data.mailed == '0') {
-            return 'Not Sent';
-          } else {
-            return 'Sent'
-          }
-        },
+        tooltipField: 'mailed',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Edit', field: 'is_editable',
+        headerName: 'Form Status', field: 'is_editable',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 85,
-        maxWidth: 85,
+        minWidth: 95,
         sortable: true,
-        valueGetter: (params) => {
-          if (params.data.is_editable == '0') {
-            return 'Yes'
-          } else {
-            return 'No';
-          }
-        },
+        tooltipField: 'is_editable',
         getQuickFilterText: (params) => {
           return params.value;
         },
@@ -252,7 +248,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         headerName: 'Profile', field: 'selectedpost',
         filter: true,
         floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 120,
+        minWidth: 90,
         sortable: true,
         tooltipField: 'selectedpost',
         getQuickFilterText: (params) => {
@@ -292,17 +288,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
           return params.value;
         }
       },
-      // {
-      //   headerName: 'Status', field: 'status',
-      //   filter: true,
-      //   floatingFilterComponentParams: { suppressFilterButton: true },
-      //   maxWidth: 100,
-      //   sortable: true,
-      //   tooltipField: 'status',
-      //   getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
       {
         headerName: 'Assigned to', field: 'company',
         filter: true,
@@ -348,11 +333,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         }
       },
       {
-        headerName: '', field: 'details',
+        headerName: 'Download Documents', field: 'details',
         cellClass: 'agCellStyle',
         // headerTooltip: 'Download documents',
         valueFormatter: this.tooltipFormatter,
-        maxWidth: 60,
         minWidth: 60,
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
@@ -360,10 +344,44 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         cellRenderer: (params) => {
             return `<span style="cursor: pointer;" class="material-icons d-flex justify-content-center align-items-center">
             file_download
-            </span>`;            
+            </span>`;
         },
         sortable: false,
-      }
+      },
+      {
+        headerName: 'Verification Status', field: 'verified',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        sortable: true,
+        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
+        cellRenderer: (params) => {
+          if (params.data.is_editable == 'Submitted') {
+            if (params.data.verified && params.data.verified == 'Verified') {
+              return `<button class="verify verified-clr" mat-raised-button><span class="material-icons check">done</span><span> Verified</span></button>`;
+            } else {
+              return `<button class="verify verify-clr" mat-raised-button><span>Verify</span></button>`;
+            }
+          } else {
+            if (params.data.verified && params.data.verified == 'Verified') {
+              return `<button class="verify disable verify-clr-grey" mat-raised-button><span class="material-icons check">done</span><span> Verified</span></button>`;
+            } else {
+              return `<button class="verify disable verify-clr-grey" mat-raised-button><span>Verify</span></button>`;
+            }
+          }
+        },
+        minWidth: 120,
+      },
+      {
+        headerName: 'Verified/Reverted by', field: 'verifier_name',
+        filter: true,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 170,
+        sortable: true,
+        tooltipField: 'verifier_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
     ];
 
     this.isRowSelectable = function (rowNode) {
@@ -380,7 +398,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   excelExport() {
     if (this.gridApi.getSelectedNodes() && this.gridApi.getSelectedNodes().length > 0) {
       const apiData = [];
-      
+
       const selectedUserlist = this.gridApi.rowModel.rowsToDisplay;
       selectedUserlist.forEach(element => {
         if (element && element.selected) {
@@ -390,9 +408,9 @@ export class ListofSelectedCandidatesComponent implements OnInit {
             user_id: element['data']['user_id'],
             // name: element['data']['candidate_name']
           }
-          apiData.push(api);        
+          apiData.push(api);
         }
-      });  
+      });
       this.excelApi(apiData);
     } else {
       let data = [];
@@ -414,7 +432,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       } else {
         this.appConfig.warning('Please try again later');
       }
-      
+
       this.appConfig.hideLoader();
     });
   }
@@ -422,6 +440,23 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     let rowData = [];
     this.gridApi.forEachNode(node => rowData.push(node.data));
     return rowData;
+  }
+
+  documentverify(selectedIndex, uid, status) {
+    const apiData = {
+      user_id: uid,
+      doc_verify: status,
+      verifier: this.appConfig.getLocalData('userId')
+    }
+    this.adminService.documentVerification(apiData).subscribe((data: any)=> {
+      this.appConfig.hideLoader();
+      this.appConfig.success(status == '0' ? 'Verification Reverted' : 'Documents Verified Successfully');
+      this.rowData[selectedIndex].verified = this.rowData[selectedIndex].verified == 'Verified' ? 'Verify' : 'Verified';
+      this.rowData[selectedIndex].verifier_name = this.appConfig.getLocalData('username');
+      this.gridApi.applyTransaction({ update: this.rowData});
+    }, (err)=> {
+
+    });
   }
   openMatDialog(data) {
     if (data) {
@@ -432,7 +467,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     } else {
       this.popUpdata = {
         value: 0,
-        text: `Confirm to give Edit Access to Joining Form for the selected ${this.gridApi.getSelectedNodes().length} ${(this.gridApi.getSelectedNodes().length) == 1 ? 'candidate' : 'candidates'}.` 
+        text: `Confirm to give Edit Access to Joining Form for the selected ${this.gridApi.getSelectedNodes().length} ${(this.gridApi.getSelectedNodes().length) == 1 ? 'candidate' : 'candidates'}.`
       }
     }
     const dialogRef = this.dialog.open(this.matDialogRef, {
@@ -460,7 +495,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         user_id: element['data']['user_id'],
         name: element['data']['candidate_name']
       }
-      apiData.push(api);      
+      apiData.push(api);
     });
     this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
       this.appConfig.hideLoader();
@@ -475,15 +510,17 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       company: role == 'ic' ? this.appConfig.getLocalData('userId') : ''
     }
     this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
         count = count + 1;
+        element['verified'] = element['verified'] == '1' ? 'Verified' : 'Verify';
+        element['is_editable'] = element['mailed'] == 'Not Sent' ? '-' : (element['mailed'] == 'Sent' && element['is_editable'] == 'No') ? 'Submitted' : 'Open';
         element['is_checked'] = element['decline_status'] == '1' ? '' : false;
         element['decline_status'] = element['decline_status'] == '1' ? 'Yes' : 'No';
         element['details'] = count;
       });
+      this.appConfig.hideLoader();
       this.rowData = this.userList;
     }, (err) => {
     });
@@ -499,11 +536,11 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       this.appConfig.hideLoader();
       if (data?.url) {
         const documents = `${this.BASE_URL}/${data?.url}`;
-        window.open(documents, '_blank');  
+        window.open(documents, '_blank');
       } else {
         this.appConfig.warning('No Documents Available');
       }
-            
+
       // const excel = data && data.file ? data.file : '';
       // window.open(excel, '_blank');
 

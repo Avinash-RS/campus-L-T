@@ -336,7 +336,7 @@ export class AdminServiceService {
       return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true });
     }
-  
+
 
   // Hr evaluation particular assessment header
   hrEvaluationSectionMarks(data) {
@@ -655,7 +655,11 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/profile/Joining_export`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
- 
+
+  documentVerification(data) {
+      return this.http.post(`${this.BASE_URL}/profile/document_verification`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 
 
 }
