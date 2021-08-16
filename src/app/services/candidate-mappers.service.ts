@@ -99,7 +99,7 @@ export class CandidateMappersService {
   }
   getToken() {
     // this.csrfToken().subscribe((data: any) => {
-    //   this.appConfig.hideLoader();
+    //
     //   // localStorage.setItem('csrf', data);
     // }, (err) => {
     //   if (err.status === 200) {
@@ -173,7 +173,8 @@ export class CandidateMappersService {
   }
 
   updatedState(Id) {
-    return this.http.post(`${this.BASE_URL}/api/state_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
+    // return this.http.post(`${this.BASE_URL}/api/state_api`, Id, { headers: this.withoutTokens(), withCredentials: true });
+    return this.http.get(`../assets/files/state.json`, { headers: this.withoutTokens(), withCredentials: true });
   }
 
   updatedCity(Id) {
@@ -250,7 +251,7 @@ export class CandidateMappersService {
   }
 
   removeCeritficate(data) {
-    return this.http.post(`${this.BASE_URL}/profile/remove_certiticate`, data, { headers: this.withoutTokens(), withCredentials: true });    
+    return this.http.post(`${this.BASE_URL}/profile/remove_certiticate`, data, { headers: this.withoutTokens(), withCredentials: true });
   }
 
 
@@ -264,7 +265,7 @@ export class CandidateMappersService {
        return this.http.get(`${this.BASE_URL}/profile/saved_details?user_id=${userId}`,
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
- 
+
     joiningFormGetPersonalDetails() {
      let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
       return this.http.get(`${this.BASE_URL}/profile/personal_pageload?user_id=${userId}`,
@@ -273,7 +274,7 @@ export class CandidateMappersService {
 
     joiningFormGetPersonalDetailsSave(data) {
       // let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
-      return this.http.post(`${this.BASE_URL}/profile/personal_page`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });    
+      return this.http.post(`${this.BASE_URL}/profile/personal_page`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
     }
 
     joiningFormGetContactDetails() {
@@ -336,6 +337,12 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
+     joiningFormGetDocumentsinv(uid) {
+      let userId = uid;
+       return this.http.get(`${this.BASE_URL}/profile/uploaddocument_pageload?user_id=${userId}`,
+         { headers: this.getAfterCustomHeaders(), withCredentials: true});
+     }
+
      joiningFormUpload(data) {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
        return this.http.post(`${this.BASE_URL}/profile/uploaddocument_pagesave?user_id=${userId}`, data,
@@ -350,9 +357,9 @@ export class CandidateMappersService {
         body: documentData,
         // headers: this.getAfterCustomHeaders(), withCredentials: true
       });
-  
+
     }
-  
+
 
      joiningFormGetPreviewDetails() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';

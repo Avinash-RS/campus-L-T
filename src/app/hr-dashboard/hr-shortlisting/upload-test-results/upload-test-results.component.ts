@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { environment } from 'src/environments/environment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
@@ -17,7 +17,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   templateUrl: './upload-test-results.component.html',
   styleUrls: ['./upload-test-results.component.scss']
 })
-export class UploadTestResultsComponent implements OnInit {
+export class UploadTestResultsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
   url = null;
@@ -50,6 +50,15 @@ export class UploadTestResultsComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+}
 
   downloadTemplate() {
     const excel = `${this.BASE_URL}/sites/default/files/sample.csv`;
@@ -103,7 +112,7 @@ export class UploadTestResultsComponent implements OnInit {
 
   uploadListToAPI() {
     this.adminService.testResultsUpload(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         test_results: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -115,7 +124,7 @@ export class UploadTestResultsComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -159,11 +168,11 @@ export class UploadTestResultsComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][19] && this.SavedData[0][19].trim() === 'Quantitative Marks') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][20] && this.SavedData[0][20].trim() === 'Quantitative Percentage')
       ) {
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);

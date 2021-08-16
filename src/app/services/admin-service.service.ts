@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class AdminServiceService {
   BASE_URL = environment.API_BASE_URL;
+  NODE_BASE_URL = environment.NODE_API_BASE_URL;
+  WEBRTC_NODE_API = environment.WEBRTC_NODE_API;
   httpOptions: { headers: HttpHeaders };
 
 
@@ -96,7 +98,7 @@ export class AdminServiceService {
   }
   getToken() {
     // this.csrfToken().subscribe((data: any) => {
-    //   this.appConfig.hideLoader();
+    //
     //   // localStorage.setItem('csrf', data);
     // }, (err) => {
     //   if (err.status === 200) {
@@ -661,5 +663,16 @@ export class AdminServiceService {
         { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+// Node service urls
+
+getReportsDataAPI(data) {
+  return this.http.post(`${this.NODE_BASE_URL}/getunifiedReport`, data, {headers: this.withoutTokens(), withCredentials: false});
+}
+scheduleRooms(data) {
+  return this.http.post(`${this.WEBRTC_NODE_API}/scheduleinterview`, data, {headers: this.withoutTokens(), withCredentials: false});
+}
+getScheduledList(data) {
+  return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});
+}
 
 }

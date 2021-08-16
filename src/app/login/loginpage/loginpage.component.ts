@@ -7,6 +7,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Subscription } from 'rxjs';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-loginpage',
@@ -16,6 +17,8 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 export class LoginpageComponent implements OnInit {
 
   loginForm: FormGroup;
+  isProduction = environment.production;
+  isWebrtc;
   toggleVisibility = true;
   toggleVisibilityConfirmPassword = true;
   subscribe1: Subscription;
@@ -62,7 +65,7 @@ export class LoginpageComponent implements OnInit {
     this.candidateService.getEducationList().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
 
-        this.appConfig.hideLoader();
+
         this.prePoulteEmailId = this.verifyArr[0]['name'];
         this.appConfig.success(`${data.message}`, '');
         this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.LOGIN}`);
@@ -118,11 +121,11 @@ export class LoginpageComponent implements OnInit {
     // Login API
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
-        // this.apiService.getAllState().subscribe((datas: any) => {
-        this.candidateService.getEducationList().subscribe((datas: any) => {
+        // this.candidateService.getEducationList().subscribe((datas: any) => {
           this.apiService.login(apiData).subscribe((data: any) => {
-            this.appConfig.hideLoader();
+
             this.appConfig.setLocalData('BIS', 'false');
+            this.isProduction ? this.appConfig.setLocalData('webrtc', 'false') : this.isWebrtc ? this.appConfig.setLocalData('webrtc', 'true') : this.appConfig.setLocalData('webrtc', 'false');
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
@@ -148,7 +151,7 @@ export class LoginpageComponent implements OnInit {
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'interview_panel') {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
-            } 
+            }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
@@ -185,12 +188,12 @@ export class LoginpageComponent implements OnInit {
           }, (error) => {
             this.disableLogin = false;
           });
-        }, (err) => {
-          this.disableLogin = false;
-          // if (err.status === 200) {
-          //   this.appConfig.setSessionData('csrf', err.error.text);
-          // }
-        });
+        // }, (err) => {
+        //   this.disableLogin = false;
+        //   // if (err.status === 200) {
+        //   //   this.appConfig.setSessionData('csrf', err.error.text);
+        //   // }
+        // });
       }
     } else {
       this.disableLogin = false;

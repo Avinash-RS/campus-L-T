@@ -79,7 +79,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     }
     if (e.value == this.thirdForm) {
       this.selectedTemplate = this.thirdForm;
-    }    
+    }
   }
   nextTab(index) {
     this.tabChange.emit(index);
@@ -88,10 +88,10 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   downloadTemplate() {
     if (this.selectedTemplate == this.firstForm) {
       const excel = `${this.BASE_URL}/sites/default/files/Selected_Candidates_Template.csv`;
-      window.open(excel, '_blank');  
+      window.open(excel, '_blank');
     } else if (this.selectedTemplate == this.secondForm) {
       const excel = `${this.BASE_URL}/sites/default/files/Joiners_Template.csv`;
-      window.open(excel, '_blank');  
+      window.open(excel, '_blank');
     } else {
       const excel = `${this.BASE_URL}/sites/default/files/Decliners_Template.csv`;
       window.open(excel, '_blank');
@@ -167,10 +167,10 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     // let data;
-    
+
     if (this.selectedTemplate == this.firstForm) {
       this.adminService.SelectedCandidatesBulkUpload(this.uploadedListArray).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         const datas = {
           bulk_upload_ic: 'ic-bulk',
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -178,12 +178,12 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         };
         this.openDialog1(ShortlistBoxComponent, datas);
       }, (err) => {
-  
-      });  
-    } 
+
+      });
+    }
     else if (this.selectedTemplate == this.secondForm) {
       this.adminService.SelectedCandidatesHRMappingBulkUpload(this.uploadedListArray).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         const datas = {
           bulk_upload_ic: 'ic-bulk',
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -191,12 +191,12 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         };
         this.openDialog1(ShortlistBoxComponent, datas);
       }, (err) => {
-  
-      });  
-    } 
+
+      });
+    }
     else {
       this.adminService.declinedCandidatesUpload(this.uploadedListArray).subscribe((data: any) => {
-        this.appConfig.hideLoader();
+
         const datas = {
           bulk_upload_ic: 'ic-bulk',
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -204,12 +204,12 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         };
         this.openDialog1(ShortlistBoxComponent, datas);
       }, (err) => {
-  
-      });  
+
+      });
     }
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -232,21 +232,21 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      
+
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 5 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Candidate Email Id') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Business Name')) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
-      } else {        
+      } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 
@@ -254,7 +254,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   }
 
   uploadHRDetails() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -277,30 +277,30 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      
+
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Cadre') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Designation') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'DOJ') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][4] && this.SavedData[0][4].trim() === 'Job_Code') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][5] && this.SavedData[0][5].trim() === 'Function') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Sub_Function') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'IS_PS NO.') && 
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][8] && this.SavedData[0][8].trim() === 'DH_PSNO') && 
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Cadre') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Designation') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'DOJ') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][4] && this.SavedData[0][4].trim() === 'Job_Code') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][5] && this.SavedData[0][5].trim() === 'Function') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][6] && this.SavedData[0][6].trim() === 'Sub_Function') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'IS_PS NO.') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][8] && this.SavedData[0][8].trim() === 'DH_PSNO') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][9] && this.SavedData[0][9].trim() === 'HR_PSNO')
         ) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCountHR(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 
@@ -308,7 +308,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   }
 
   uploadDeclinersDetails() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -331,21 +331,21 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      
+
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Remarks') && (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Declined_date')) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCountDeclinersDetails(this.SavedData);
-      } else {        
+      } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 
@@ -463,7 +463,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         }
       }
     });
-    
+
     this.uploadedListArray = listArray;
     this.totalCountofCandidates = count - 1;
   }
@@ -516,7 +516,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         }
       }
     });
-    
+
     this.uploadedListArray = listArray;
     this.totalCountofCandidates = count - 1;
   }
@@ -524,10 +524,10 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   momentForm(date) {
     if (date) {
       const split = moment(date).format('DD-MM-YYYY');
-     return split;    
+     return split;
     }
     }
-    
+
 
   totalCount(data) {
     this.dateFormatExist = false;
@@ -594,7 +594,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         }
       }
     });
-    
+
     this.uploadedListArray = listArray;
     this.totalCountofCandidates = count - 1;
   }

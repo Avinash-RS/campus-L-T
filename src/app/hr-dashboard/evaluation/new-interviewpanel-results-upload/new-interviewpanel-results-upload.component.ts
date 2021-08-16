@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -17,7 +17,7 @@ import moment from 'moment';
   templateUrl: './new-interviewpanel-results-upload.component.html',
   styleUrls: ['./new-interviewpanel-results-upload.component.scss']
 })
-export class NewInterviewpanelResultsUploadComponent implements OnInit {
+export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
   url = null;
@@ -62,7 +62,7 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
     //   },
     {
       icon: '002-cv.svg',
-      name: 'Interview Panel Assign',
+      name: 'Panel Assignment',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
     },
     {
@@ -82,6 +82,15 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+   }
 
   downloadTemplate() {
     const excel = `${this.BASE_URL}/sites/default/files/Results_upload.csv`;
@@ -133,9 +142,9 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
         element['field_user_created_by'] = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
       }
     });
-    
+
     this.adminService.bulkUploadInvAssign(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         inv_assign_bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -147,7 +156,7 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -174,17 +183,17 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'College') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interviewer Email')) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 

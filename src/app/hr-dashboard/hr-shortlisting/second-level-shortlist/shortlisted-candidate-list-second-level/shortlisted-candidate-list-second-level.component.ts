@@ -100,9 +100,9 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
         apiData['id'].push(element['candidate_id']);
       }
     });
-    
+
     this.adminService.secondShortlistAPI(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         success_second: result['type']
       };
@@ -137,7 +137,7 @@ export class ShortlistedCandidateListSecondLevelComponent implements OnInit, Aft
   }
 
   selectedUser(userDetail) {
-    
+
   }
   removeSelectedCandidate(i) {
     this.userListing.splice(i, 1);

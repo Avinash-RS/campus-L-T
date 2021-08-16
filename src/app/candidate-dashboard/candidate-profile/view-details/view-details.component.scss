@@ -6,7 +6,7 @@
 }
 
 .top-main-wrapper {
-  padding: 4em 4em 1.5em 4em;
+  padding: 0em 4em 1.5em 4em;
   .language-grid {
     margin: 0.25em 0 0 0;
     display: grid;
@@ -855,7 +855,7 @@
       opacity: 1;
       word-break: break-all;
       color: $light-black;
-      background: $disable-gray;    
+      background: $disable-gray;
       font-weight: 200 !important;
       align-items: center;
       // max-width: 200px;
@@ -876,7 +876,7 @@
         // overflow: auto;
         opacity: 1;
         color: $light-black;
-        background: $disable-gray;    
+        background: $disable-gray;
         font-weight: 200 !important;
         align-items: center;
         margin-top: .25em;
@@ -885,7 +885,7 @@
         font-size: 15px;
         padding: 0 0em;
         font-weight: 500;
-        color: $light-black-1;  
+        color: $light-black-1;
       }
     }
   }
@@ -911,7 +911,7 @@
         opacity: 1;
         word-break: break-all;
         color: $light-black;
-        background: $disable-gray;    
+        background: $disable-gray;
         font-weight: 200 !important;
         align-items: center;
         max-width: 200px;
@@ -970,4 +970,5 @@
   top: -45px;
   width: 20px;
   left: 94%;
+  display: none;
 }

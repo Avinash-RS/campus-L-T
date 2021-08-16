@@ -1,33 +1,15 @@
 <mat-toolbar class="headerShadow">
-    <ul (click)="goToHome()">
-      <li>
-        <img src="https://assets.lntedutech.com/edutech_logo.svg" alt="">
-      </li>
-      <!-- <li>
-        <div> Unified Digital</div>
-        <div>Assessment Platform </div>
-      </li> -->
-    </ul>
-    <ul>
-      <!-- <li>
-          <span matTooltip="Home">
-              <img src="assets/images/015-home-icon-silhouette.svg" alt="">
-            </span>
-        </li>
-      <li>
-        <span matTooltip="Notifications">
-            <img src="assets/images/Iconionic-ios-notifications.svg" alt="">
-        </span>
-      </li> -->
-      <li style="cursor: auto !important;">
-        <span style="font-size: 16px;">
-           {{username ? 'Welcome ' + username : ''}}
-        </span>
-      </li>
-      <li (click)="logOut()">
-          <span matTooltip="Logout">
-            <img src="assets/images/logout.svg" alt="">
-          </span>
-        </li>
-      </ul>
-  </mat-toolbar>
+  <div class="header-cont">
+    <span (click)="goToHome()">
+      <img src="https://assets.lntedutech.com/edutech_logo.svg" alt="">
+    </span>
+    <span class="rightlog">
+      <span class="title">
+        {{username ? 'Welcome, ' + username : ''}}
+      </span>
+      <span matTooltip="Logout" class="logout" (click)="logOut()">
+        <em class="icon-logout"></em>
+      </span>
+    </span>
+  </div>
+</mat-toolbar>

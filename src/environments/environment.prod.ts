@@ -30,9 +30,10 @@ export const environment = {
   // API_BASE_URL: 'https://campus-prod.lntedutech.com/d8cintana2',
   // API_BASE_URL_city: 'https://campus-prod.lntedutech.com/d8cintana2',
   // Image_Base_Url: 'https://campus-prod.lntedutech.com',
+  NODE_API_BASE_URL: 'https://candidateuat.lntedutech.com',
+  WEBRTC_NODE_API : 'https://uapuatapplicationgateway.lntedutech.com',
   API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
   API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
   Image_Base_Url: 'https://campus.lntedutech.com',
-
 
 };

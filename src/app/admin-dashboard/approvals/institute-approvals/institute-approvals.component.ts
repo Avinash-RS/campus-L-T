@@ -264,7 +264,7 @@ export class InstituteApprovalsComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.instituteListForApprovals().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data ? data : [];
       this.userList.forEach(element => {
@@ -338,7 +338,7 @@ export class InstituteApprovalsComponent implements OnInit {
     }
 
     this.adminService.approveOrReject(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success(data && data['status'] === 'approve' ? 'Approved' : 'Rejected' + ' Successfully', '');
       this.ngOnInit();
     }, (err) => {

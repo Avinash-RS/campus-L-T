@@ -13,6 +13,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { LoaderService } from 'src/app/services/loader-service.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -294,7 +295,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
+    private loadingService: LoaderService,
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
@@ -313,7 +314,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   getPreviewData() {
     this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.personalDetails = data && data.personal ? data.personal : null;
       this.patchPersonalForm();
       this.contactDetails = data && data.contact ? data.contact : null;
@@ -330,6 +331,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       } else {
         this.educationDetailsMap = [];
       }
+      // Documents mapping
       this.documentDetails = data && data.documents ? data.documents : null;
       if (this.documentDetails) {
         let joinCheck = [];
@@ -450,7 +452,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getStateAPI() {
-    this.appConfig.showLoader();
+
     const datas = {
       country_id: '101'
     };
@@ -463,12 +465,18 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getBloodGroup() {
-    this.candidateService.getBloodGroups().subscribe((data: any) => {
-      this.bloodGroupDropdownList = data;
+    if (this.appConfig.getLocalData('bloodgroup')) {
+      this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
       this.getPreviewData();
-    }, (err) => {
+    } else {
+      this.candidateService.getBloodGroups().subscribe((data: any) => {
+        this.bloodGroupDropdownList = data;
+        this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
+        this.getPreviewData();
+      }, (err) => {
 
-    });
+      });
+    }
   }
 
   dateConvertion(date) {
@@ -672,7 +680,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     let city;
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       this.allPresentCityList = datas[0];
       this.allPresentCityList.forEach(element => {
         if (element.id == cityId) {
@@ -692,7 +700,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     let city;
     this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
-      this.appConfig.hideLoader();
+
       this.allPermanentCityList = datas[0];
       this.allPermanentCityList.forEach(element => {
         if (element.id == cityId) {
@@ -935,7 +943,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       signature: [this.signature]
     }
     this.candidateService.joiningFormSubmit(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.nzNotification('success', 'Saved', 'Congrats, Form has been successfully submitted');
       this.sharedService.joiningFormStepperStatus.next();
       return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
@@ -1009,8 +1017,10 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   async uploadImage(file) {
     try {
-      this.appConfig.showLoader();
+
+      this.loadingService.setLoading(true);
       const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+      this.loadingService.setLoading(false);
       // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
       if (data && data.file_id) {
         this.signature = {
@@ -1023,11 +1033,12 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
           filetype: data.type,
         };
       }
-      this.appConfig.hideLoader();
+
       this.appConfig.nzNotification('success', 'Uploaded', 'Signature uploaded successfully');
     } catch (e) {
+      this.loadingService.setLoading(false);
       this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
-      this.appConfig.hideLoader();
+
     }
   }
 

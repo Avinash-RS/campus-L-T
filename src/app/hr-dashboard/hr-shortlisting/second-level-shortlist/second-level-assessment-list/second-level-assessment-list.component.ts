@@ -9,6 +9,12 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import moment from 'moment';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+// import all Enterprise modules
+import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
+ModuleRegistry.registerModules(AllModules);
+
+import { GridChartsModule } from '@ag-grid-enterprise/charts';
+ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
   selector: 'app-second-level-assessment-list',
@@ -28,15 +34,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef :any
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -51,7 +49,9 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
+
     // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, 'assement_name' ? {data: 'assement_name'} : {data: 'none'});
   }
 
@@ -78,7 +78,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -98,9 +98,9 @@ export class SecondLevelAssessmentListComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 140,
+        filter: 'agNumberColumnFilter',
+        // floatingFilterComponentParams: { suppressFilterButton: true },
+        minWidth: 40,
         sortable: true,
         tooltipField: 'counter',
         // comparator: this.customComparator,
@@ -110,8 +110,8 @@ export class SecondLevelAssessmentListComponent implements OnInit {
       },
       {
         headerName: 'Shortlist name', field: 'group_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
         tooltipField: 'group_name',
@@ -122,8 +122,8 @@ export class SecondLevelAssessmentListComponent implements OnInit {
       },
       {
         headerName: 'Status', field: 'status',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
         tooltipField: 'status',
@@ -133,8 +133,8 @@ export class SecondLevelAssessmentListComponent implements OnInit {
       },
       {
         headerName: 'No. of candidates', field: 'no_of_candidate',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
+        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
         tooltipField: 'no_of_candidate',
@@ -148,9 +148,9 @@ export class SecondLevelAssessmentListComponent implements OnInit {
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
           if (params['data']['buttons'] == 'completed') {
-            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;            
+            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;
           } else {
-            return `<button class="table-btn agTable" mat-raised-button>Shortlist</button>`;            
+            return `<button class="table-btn agTable" mat-raised-button>Shortlist</button>`;
           }
         },
         sortable: true,
@@ -163,7 +163,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       if (datas) {
         this.userList = datas ? datas : [];
@@ -188,9 +188,6 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   }
   shortlistedReport(detail) {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
-  }
-  viewReports(selectedCandidate) {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS);
   }
 
 }

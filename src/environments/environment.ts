@@ -7,43 +7,27 @@ export const environment = {
   uat: false,
   qa: false,
   local: true,
-  ASSETS: 'https://assets.lntedutech.com',
-  versionCheckURL: 'http://campus-qa.lntedutech.com/version.json',
-  // // For Dev
-  //  API_BASE_URL: 'http://104.211.226.77/d8cintana2',
-  //  API_BASE_URL_city: 'http://104.211.226.77/d8cintana2',
-  // Image_Base_Url: 'http://104.211.226.77',
-
-  // For QA
-  // API_BASE_URL: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',
-  // API_BASE_URL_city: 'http://udapqa.southindia.cloudapp.azure.com/d8cintana2',
-  // Image_Base_Url: 'http://udapqa.southindia.cloudapp.azure.com',
 
     // Campus QA
+    ASSETS: 'https://assets.lntedutech.com',
+    versionCheckURL: 'http://campus-qa.lntedutech.com/version.json',
+
+    NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
+    WEBRTC_NODE_API : 'https://uapqaapplicationgateway.lntiggnite.com',
     API_BASE_URL: 'http://campus-qa.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'http://campus-qa.lntedutech.com/d8cintana2',
     Image_Base_Url: 'http://campus-qa.lntedutech.com',
 
-  // Local
-  // API_BASE_URL: '',
-  // API_BASE_URL_city: '',
-  // Image_Base_Url: '',
+    // campus Dev
+    // ASSETS: 'https://assets.lntedutech.com',
+    // versionCheckURL: 'https://campus-dev.lntedutech.com/version.json',
 
-  // For UAT
-  // API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',
-  // API_BASE_URL_city: 'https://uat-campus.lntedutech.com/d8cintana2',
-  // Image_Base_Url: 'https://uat-campus.lntedutech.com',
+    // NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
+    // WEBRTC_NODE_API : 'https://uapapplicationgateway.lntiggnite.com',
+    // API_BASE_URL: 'https://campus-dev.lntedutech.com/dcampus',
+    // API_BASE_URL_city: 'https://campus-dev.lntedutech.com/dcampus',
+    // Image_Base_Url: 'https://campus-dev.lntedutech.com'
 
-  // For Prod
-  // API_BASE_URL: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
-  // API_BASE_URL_city: 'http://udapprod.southindia.cloudapp.azure.com/d8cintana2',
-  // Image_Base_Url: 'http://udapprod.southindia.cloudapp.azure.com',
-  // API_BASE_URL: 'https://campus.lntedutech.com/d8cintana2',
-  // API_BASE_URL_city: 'https://campus.lntedutech.com/d8cintana2',
-  // Image_Base_Url: 'https://campus.lntedutech.com',
-  // API_BASE_URL: 'http://40.119.225.78/d8cintana2',
-  // API_BASE_URL_city: 'http://40.119.225.78/d8cintana2',
-  // Image_Base_Url: 'http://40.119.225.78',
 
 };
 

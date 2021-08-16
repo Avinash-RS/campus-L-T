@@ -180,7 +180,6 @@ maxDateStartField: any;
     const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];
     if (ctrlValue) {
       ctrlValue.year(normalizedYear.year());
-      console.log('ctrlValue', ctrlValue);
       this.getEducationArr.at(i).patchValue({
         [this.form_yearpassing]: ctrlValue,
       });
@@ -208,7 +207,7 @@ maxDateStartField: any;
 
   getEducationApiDetails() {
     this.candidateService.joiningFormGetEducationDetails().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       if (data && data.education &&  data.education.length > 0) {
         this.educationDetails = data.education;
         this.getEducationLength(data.education);
@@ -361,13 +360,12 @@ validSelectedPost() {
 
 }
   formSubmit(routeValue?: any) {
-    console.log(this.educationForm.getRawValue());
     if (this.educationForm.valid) {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
         let formArray = this.educationForm.getRawValue()[this.form_educationArray];
         this.candidateService.joiningFormGetEducationDetailsSave(formArray).subscribe((data: any)=> {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Education details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
@@ -634,7 +632,7 @@ validSelectedPost() {
 
   getEducationLevels() {
     this.candidateService.getEducationList().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       list.forEach((element, i) => {
         if (element['id'] === '1') {
@@ -666,7 +664,7 @@ validSelectedPost() {
       specification: 'UG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugSpecializationList = list;
     }, (err) => {
@@ -682,7 +680,7 @@ validSelectedPost() {
       specification: 'PG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgSpecializationList = list;
     }, (err) => {
@@ -697,7 +695,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.diplomaDisciplineList = list;
     }, (err) => {
@@ -712,7 +710,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugDisciplineList = list;
     }, (err) => {
@@ -727,7 +725,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgDisciplineList = list;
     }, (err) => {
@@ -742,7 +740,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.diplomaInstitutesList = list;
     }, (err) => {
@@ -757,7 +755,7 @@ validSelectedPost() {
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugInstitutesList = list;
       const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');

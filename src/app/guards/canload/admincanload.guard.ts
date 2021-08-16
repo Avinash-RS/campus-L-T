@@ -23,12 +23,12 @@ export class AdmincanloadGuard implements CanLoad {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();
-          this.appConfig.hideLoader();
+
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
           return false;
         }, (err) => {
           this.appConfig.clearLocalData();
-          this.appConfig.hideLoader();
+
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
           return false;
         });
@@ -47,12 +47,12 @@ export class AdmincanloadGuard implements CanLoad {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
           this.appConfig.clearLocalData();
-          this.appConfig.hideLoader();
+
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
           return false;
         }, (err) => {
           this.appConfig.clearLocalData();
-          this.appConfig.hideLoader();
+
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
           return false;
         });

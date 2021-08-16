@@ -138,8 +138,10 @@ mat-form-field {
 .remember_me {
   float: left !important;
   font-size: 13px;
-  color: $lxp-text !important;
-  margin-top: -4px;
+  color: #9E9E9E !important;
+  bottom: 196px;
+  position: absolute;
+  left: 56px;
 }
 
 .forgot {
@@ -419,7 +421,6 @@ top: -2px;
 }
 .label-color{
   color: #5c6873;
-  font-family: "Roboto Condensed", sans-serif !important;
 }
 
 // mobile

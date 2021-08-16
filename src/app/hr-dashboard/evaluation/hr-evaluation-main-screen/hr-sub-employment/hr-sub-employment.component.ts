@@ -49,7 +49,7 @@ export class HrSubEmploymentComponent implements OnInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview Panel Assign',
+        name: 'Panel Assignment',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
@@ -88,7 +88,7 @@ export class HrSubEmploymentComponent implements OnInit {
       id: cid
     };
     this.adminService.getCertificates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
     }, (err) => {
 
@@ -133,7 +133,7 @@ export class HrSubEmploymentComponent implements OnInit {
       hr_id: this.appConfig.getLocalData('userId')
     };
     this.adminService.reSubmitRequest(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success('Document Resubmit request has been done', '');
       this.editRouteParamGetter();
     }, (err) => {

@@ -1,0 +1,173 @@
+<section>
+  <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header>
+      <div class="expandheaderArea">
+        <div class="heading6">
+          Uploaded Documents
+      </div>
+      </div>
+    </mat-expansion-panel-header>
+
+  <div class="docInfoarea">
+    <div class="profileplace">
+      <span>Profile Picture Snapshot</span>
+      <ng-container *ngIf="profilePic">
+        <img
+          [src]="profilePic + blobkey"
+          class="imgProp"
+          #profil
+          alt="Profile"
+        />
+        <a
+          (click)="profileDialog(profilePic, viewImg)"
+          [ngStyle]="{
+            width: profil.offsetWidth + 'px',
+            height: profil.offsetHeight + 'px'
+          }"
+          class="viewprofile"
+          ><em class="icon-View"></em
+        ></a>
+      </ng-container>
+      <ng-container *ngIf="!profilePic">
+        <img
+          src="assets/unified/noImg.jpg"
+          class="imgProp"
+          alt="Profile"
+        />
+      </ng-container>
+    </div>
+
+    <div class="profileplace">
+      <span>Identity Card Snapshot</span>
+      <ng-container *ngIf="idCardImg">
+        <img
+          [src]="idCardImg + blobkey"
+          class="imgProp"
+          #identi
+          alt="Identity"
+        />
+        <a
+          (click)="profileDialog(idCardImg, viewImg)"
+          [ngStyle]="{
+            width: identi.offsetWidth + 'px',
+            height: identi.offsetHeight + 'px'
+          }"
+          class="viewprofile"
+          ><em class="icon-View"></em
+        ></a>
+      </ng-container>
+      <ng-container *ngIf="!idCardImg">
+        <img
+          src="assets/unified/noImg.jpg"
+          class="imgProp"
+          alt="Identity"
+        />
+      </ng-container>
+    </div>
+    <ng-container *ngIf="certificationList && certificationList.length > 0">
+      <div class="docUpload">
+        <span>Uploaded Documents</span>
+        <div class="img-container">
+          <ng-container
+            *ngIf="
+              getAllReportsData &&
+              getAllReportsData.selfDefinedCertificates &&
+              getAllReportsData.selfDefinedCertificates.length > 0
+            "
+          >
+            <drag-scroll
+              #nav
+              [scrollbar-hidden]="true"
+              [drag-scroll-y-disabled]="true"
+              (reachesLeftBound)="leftBoundStat($event)"
+              (reachesRightBound)="rightBoundStat($event)"
+            >
+              <div
+                drag-scroll-item
+                *ngFor="let cert of certificationList; let i = index"
+              >
+                <!--  [src]="(cert['url'] + blobkey)" -->
+                <span class="drag">
+                  <img
+                    [src]="
+                      cert['type'] && cert['type'].includes('pdf')
+                        ? 'assets/unified/pdf.jpg'
+                        : cert['type'] && cert['type'].includes('image')
+                        ? cert['url'] + blobkey
+                        : 'assets/unified/noImg.jpg'
+                    "
+                    class="imgProp"
+                    #first
+                    alt="Eligibility"
+                  />
+                  <a
+                    *ngIf="cert['url']"
+                    (click)="openDialog(cert, viewImg)"
+                    [ngStyle]="{
+                      width: first.offsetWidth + 'px',
+                      height: first.offsetHeight + 'px'
+                    }"
+                    class="viewBtn"
+                    ><em class="icon-View"></em
+                  ></a>
+                  <span>{{ cert?.name }}</span>
+                </span>
+              </div>
+            </drag-scroll>
+            <div
+              class="draggable-button-container"
+              *ngIf="getAllReportsData.selfDefinedCertificates.length > 3"
+            >
+              <button
+                [disabled]="leftNavDisabled"
+                class="sliderBtn left doc"
+                (click)="moveLeft()"
+              >
+                <em class="icon-Back"></em>
+              </button>
+              <button
+                [disabled]="rightNavDisabled"
+                class="sliderBtn right doc"
+                (click)="moveRight()"
+              >
+                <em class="icon-right-next"></em>
+              </button>
+            </div>
+          </ng-container>
+          <ng-container
+            *ngIf="
+              getAllReportsData &&
+              getAllReportsData.selfDefinedCertificates &&
+              getAllReportsData.selfDefinedCertificates.length < 1
+            "
+          >
+            <img
+              src="assets/unified/noImg.jpg"
+              class="imgProp"
+              alt="Identity"
+            />
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  </mat-expansion-panel>
+</section>
+<ng-template #viewImg id="viewImg">
+  <div class="progressText">
+    <div class="progressclose">
+      <span class="closebtn" (click)="closeDialog()"
+        ><em class="icon-Close"></em
+      ></span>
+    </div>
+    <img [src]="selectedURL" alt="" />
+  </div>
+</ng-template>
+
+<ng-template #viewPDF id="viewPDF">
+  <pdf-viewer
+    [src]="selectedURL"
+    [render-text]="true"
+    style="display: block"
+  ></pdf-viewer>
+</ng-template>

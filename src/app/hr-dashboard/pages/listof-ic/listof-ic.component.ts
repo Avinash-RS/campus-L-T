@@ -16,15 +16,7 @@ export class ListofICComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   tooltipShowDelay = 0;
   rowData: any;
   searchBox = false;
@@ -42,6 +34,7 @@ export class ListofICComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -61,7 +54,7 @@ export class ListofICComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -81,8 +74,7 @@ export class ListofICComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         maxWidth: 100,
         sortable: true,
         tooltipField: 'counter',
@@ -93,8 +85,7 @@ export class ListofICComponent implements OnInit {
       },
       {
         headerName: 'Email id', field: 'email_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email_id',
@@ -104,8 +95,7 @@ export class ListofICComponent implements OnInit {
       },
       {
         headerName: 'Name', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -115,8 +105,7 @@ export class ListofICComponent implements OnInit {
       },
       {
         headerName: 'Business', field: 'company',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'company',
@@ -126,8 +115,7 @@ export class ListofICComponent implements OnInit {
       },
       {
         headerName: 'Created by', field: 'created_by',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'created_by',
@@ -137,8 +125,7 @@ export class ListofICComponent implements OnInit {
       },
       {
         headerName: 'Created Date & Time', field: 'date_time',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'date_time',
@@ -154,7 +141,7 @@ export class ListofICComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.listIC().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

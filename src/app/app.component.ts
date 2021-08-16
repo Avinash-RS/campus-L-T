@@ -1,27 +1,26 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event, ResolveEnd
 } from '@angular/router';
-import { ApiServiceService } from './services/api-service.service';
 import { AppConfigService } from './config/app-config.service';
 import { Observable, Subscription, fromEvent } from 'rxjs';
-import { ConnectionService } from 'ng-connection-service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
-import { CONSTANT } from './constants/app-constants.service';
-import { SharedServiceService } from './services/shared-service.service';
-import { ToastrService } from 'ngx-toastr';
-import { AdminServiceService } from './services/admin-service.service';
-import { CommonService } from './services/common.service';
 import { environment } from 'src/environments/environment';
+import { LoaderService } from './services/loader-service.service';
+import { delay } from 'rxjs/operators';
+
+import { LicenseManager } from 'ag-grid-enterprise';
+LicenseManager.setLicenseKey('CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=L&T EduTech,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=3,LicensedProductionInstancesCount=3,AssetReference=AG-017299,ExpiryDate=15_July_2022_[v2]_MTY1NzgzOTYwMDAwMA==d6a472ece2e8481f35e75c20066f8e49');
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'udap-registration';
   showLoadingIndicator = true;
   screenHeight;
@@ -37,17 +36,13 @@ export class AppComponent implements OnInit, OnDestroy {
   isIE = false;
   subscriptions: Subscription[] = [];
   maintenanceMessage: any;
-
+  loading: boolean = true;
 
   constructor(
     private router: Router,
-    private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
+    public loadingService: LoaderService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
-    private commonService: CommonService,
-    private connectionService: ConnectionService,
-    private toastr: ToastrService
   ) {
     // this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
@@ -58,7 +53,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
-        // this.connectionStatusMethod();
       }
       // On NavigationEnd or NavigationError or NavigationCancel
       // set showLoadingIndicator to false
@@ -66,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
         routerEvent instanceof NavigationError ||
         routerEvent instanceof NavigationCancel) {
           if (environment.local != true) {
-            this.commonService.initVersionCheck(environment.versionCheckURL);
+            // this.commonService.initVersionCheck(environment.versionCheckURL);
           }
           }
     });
@@ -75,7 +69,18 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getScreenSize();
     this.checkIE();
+    this.listenToLoading();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+}
+
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     if (environment.production) {
@@ -92,7 +97,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.openDialog(ScreenresolutionBoxComponent, data);
           }
     } else {
-      const data = false;
       if (this.screenBoolean) {
         this.matDialog.closeAll();
       }
@@ -114,22 +118,6 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     } else {
     }
-  }
-
-  connectionStatusMethod() {
-    // Get the online/offline status from browser window
-        this.connectionService.monitor().subscribe(isConnected => {
-      this.isConnected = isConnected;
-      // console.log('coming', this.isConnected);
-      if (this.isConnected) {
-        // this.status = 'You are back online';
-      //  return this.appConfig.warning('You are online');
-      } else {
-       return this.appConfig.warning('You are offline');
-        // this.status = 'You are offline';
-      }
-      // alert(this.status);
-    });
   }
 
   openDialog(component, data) {
@@ -155,44 +143,14 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  getMaintenanceStatus() {
-    // if (!this.maintenanceStatus) {
-    //   if (!this.appConfig.getLocalData('maintenance')) {
-    //     this.apiService.getStatus().subscribe((data: any)=> {
-    //       this.appConfig.hideLoader();
-    //       console.log('status', data);
-    //       if (data && data['status'] == '0') {
-    //         this.maintenanceStatus = true;
-    //         this.sharedService.maintenanceSubject.next(data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //         this.appConfig.setLocalData('maintenance', data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
-    //       }
-    //     }, (err)=> {
-    //     });
-    //   } else {
-    //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //   }
-    // } else {
-    //   if (!this.appConfig.getLocalData('maintenance')) {
-    //     this.apiService.getStatus().subscribe((data: any)=> {
-    //       this.appConfig.hideLoader();
-    //       console.log('status', data);
-    //       if (data && data['status'] == '0') {
-    //         this.maintenanceStatus = true;
-    //         this.sharedService.maintenanceSubject.next(data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //         this.appConfig.setLocalData('maintenance', data && data['message'] ? data['message'] : 'Website under maintenance');
-    //         this.maintenanceMessage = data && data['message'] ? data['message'] : 'Website under maintenance';
-    //       }
-    //     }, (err)=> {
-    //     });
-    //   } else {
-    //     this.sharedService.maintenanceSubject.next(this.appConfig.getLocalData('maintenance'));
-    //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.MAINTENANCE);
-    //   }
-    // }
+     /**
+   * Listen and display the loading spinner.
+   */
+  listenToLoading(): void {
+    this.loadingService.isLoadingSub.pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
   }
 
   ngOnDestroy(): void {

@@ -63,9 +63,9 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   folderLists: any;
   tagLists: any;
   shortlistLists: any;
-  folderValue = new FormControl('');
-  tagValue = new FormControl('');
-  shortlistValue = new FormControl('');
+  folderValue = new FormControl(null);
+  tagValue = new FormControl(null);
+  shortlistValue = new FormControl(null);
   // serverSide Things
   length;
   pageSize;
@@ -93,9 +93,9 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     const apiData = {
       get_assement_type: 'rec',
       get_created_by: '',
-      get_folder_name: this.folderValue.value ? this.folderValue.value : '',
-      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : '',
-      get_tag_name: this.tagValue.value ? this.tagValue.value : '',
+      get_folder_name: this.folderValue.value ? this.folderValue.value : null,
+      get_shortlist_name: this.shortlistValue.value ? this.shortlistValue.value : null,
+      get_tag_name: this.tagValue.value ? this.tagValue.value : null,
       date1_get: this.getAPIDateFormat(this.dateFrom.value),
       date2_get: this.getAPIDateFormat(this.dateTo.value),
       // get_assement_type: 'rec',
@@ -134,7 +134,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     if(loggedInUserRole == 'institute'){
       dataObj.current_user_id = this.appConfig.getLocalData('userId');
     }
-  
+
     this.adminService.TPOStatusTagLists(dataObj).subscribe((data: any) => {
       this.tagLists = data && data ? data : [];
 
@@ -227,7 +227,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
   // To get all users
   getUsersList(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data && data['result'] ? data['result'] : [];
       let count = 0;
@@ -254,7 +254,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
 
   onChangeApiHit(apiData) {
     this.adminService.getTPOStatus(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       if (data) {
         // this.userList = data ? data : [];
@@ -424,7 +424,7 @@ export class HrRecruitmentComponent implements OnInit, AfterViewInit {
     };
 
     this.adminService.getStatusExcelDownload(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       const excel = data && data[0].url ? data[0].url : '';
       window.open(excel, '_blank');

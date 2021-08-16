@@ -76,7 +76,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
 
   getURLParam() {
     this.activatedRoute.queryParams.subscribe(params => {
-      
+
       if (params && params['data'] === 'filtered') {
         this.filter = true;
         this.queryObject = JSON.parse(this.appConfig.getLocalData('savedQuery'));
@@ -158,7 +158,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
     this.adminService.firstLevelReject(apiData).subscribe((data: any) => {
       this.rejecting = true;
-      // this.appConfig.hideLoader();
+      //
       this.appConfig.success('Selected candidates rejected successfully', '');
       this.getURLParam();
     });
@@ -201,7 +201,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     };
     this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
 
-      this.appConfig.hideLoader();
+
       const datas = {
         first_level_shortlist_success: 'first_level_shortlist_success'
       };
@@ -353,7 +353,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     //   counts: this.listCount.toString()
     // };
     this.adminService.getCandidateListForShortlist(apiData).subscribe((datas: any) => {
-    
+
       this.filteredBoolean = false;
       const align = [];
       let ApiCummulativeBacklog = 0;
@@ -457,7 +457,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.dataSource = new MatTableDataSource(this.userList);
       // this.dataSource.paginator = this.paginator;
       // this.dataSource.sort = this.sort;
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
@@ -468,9 +468,9 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     //   start: this.apiPageIndex.toString(),
     //   counts: this.listCount.toString()
     // };
-  
+
     this.adminService.getCandidateListForShortlist(this.apiDataTop).subscribe((datas: any) => {
-      
+
       this.filteredBoolean = false;
       const align = [];
       let ApiCummulativeBacklog = 0;
@@ -578,7 +578,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       // this.dataSource.paginator = this.paginator;
       // this.dataSource.sort = this.sort;
       // this.length = datas[1];
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }

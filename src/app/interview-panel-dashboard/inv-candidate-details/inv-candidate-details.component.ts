@@ -15,13 +15,7 @@ export class InvCandidateDetailsComponent implements OnInit {
     private sharedService: SharedServiceService
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: 'work.svg',
-        name: 'Assigned Candidates',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST
-      },
-    ];
+    const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 

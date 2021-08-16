@@ -56,7 +56,7 @@ export class ApiServiceService {
     // this.csrfToken().subscribe((data: any) => {
     //   console.log(data);
 
-    //   this.appConfig.hideLoader();
+    //
     //   // localStorage.setItem('csrf', data);
     // }, (err) => {
     //   if (err.status === 200) {

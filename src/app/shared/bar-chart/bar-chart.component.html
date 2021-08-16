@@ -1,0 +1,24 @@
+<div class="comphtxt">Competencies
+
+    <div class="sort" matTooltip="Sort Competencies" (click)="sorting(indexNum + 1)" name="fieldName" ngDefaultControl [(ngModel)]="indexNum">
+
+        <mat-icon *ngIf="indexNum == 1" [ngClass]="{'bothbtn' : indexNum == 0 }">
+            arrow_downward
+        </mat-icon>
+        <mat-icon *ngIf="indexNum == 2" [ngClass]="{'bothbtn' : indexNum == 0 }">
+            arrow_upward
+        </mat-icon>
+    </div>
+
+</div>
+
+<ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [xAxis]="showXAxis" [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [showDataLabel]="true" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+    [trimYAxisTicks]="true" [barPadding]="barPadding" [showGridLines]="true" [noBarWhenZero]="true" [yScaleMax]="100" [yAxisTicks]="yAxisTicks" [maxXAxisTickLength]="10" [maxYAxisTickLength]="10" [roundEdges]="false" [animations]="true" (select)="onSelect($event)"
+    style="fill:#808080;">
+</ngx-charts-bar-vertical>
+<div class="reset">
+    <span class="ResetBtn " (click)="reset()"> <em class="icon-Refresh"></em>Reset</span>
+</div>
+<div class=" clk">* Click on a competency to view the skill details </div>
+<!-- </div> -->
+<!-- <canvas #myChart></canvas> -->

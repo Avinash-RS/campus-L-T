@@ -1,24 +1,23 @@
 <div class="hr-user-list-main-wrapper">
 
 
-  <div class="user-list-wrapper">
+    <div class="user-list-wrapper">
 
-    <div class="search-bar">
-      <div class="search-icon">
-        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
-      </div>
+        <div class="search-bar">
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
 
+            </div>
+
+        </div>
+
+        <div class="ag-theme-alpine red-theme">
+            <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
+                [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" [enableCharts]="true" [enableRangeSelection]="true" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+                [suppressRowClickSelection]="true" headerHeight="40" [animateRows]="true">
+            </ag-grid-angular>
+        </div>
     </div>
-
-
-    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
-    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
-    [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
-    (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
-    headerHeight="40">
-    </ag-grid-angular>
-
-  </div>
 
 </div>

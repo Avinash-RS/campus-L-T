@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { LoaderService } from 'src/app/services/loader-service.service';
 import { FormBuilder } from '@angular/forms';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
@@ -15,7 +15,7 @@ import { async } from 'rxjs/internal/scheduler/async';
   templateUrl: './confirm.component.html',
   styleUrls: ['./confirm.component.scss']
 })
-export class ConfirmComponent implements OnInit {
+export class ConfirmComponent implements OnInit, AfterViewInit {
   apiForm: any;
   agree = false;
   url = null;
@@ -38,7 +38,7 @@ export class ConfirmComponent implements OnInit {
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
-    private sharedService: SharedServiceService,
+    private loadingService: LoaderService,
     private fb: FormBuilder,
     private matDialog: MatDialog,
   ) {
@@ -46,7 +46,6 @@ export class ConfirmComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appConfig.scrollToTop();
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -55,6 +54,15 @@ export class ConfirmComponent implements OnInit {
 
     this.convertEduArrToSingleVar();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   kycTerms() {
     const data = {
@@ -161,9 +169,9 @@ export class ConfirmComponent implements OnInit {
   getLocalForm() {
     this.apiForm = JSON.parse(this.appConfig.getLocalData('kycForm'));
     this.apiForm['field_profile_image'][0]['url'] = this.apiForm['field_profile_image'][0]['url'].replace(`${this.appConfig.imageBaseUrl()}`, '');
-    
+
     this.apiForm['selectedPost'] = {value: localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : ''};
-        
+
   }
 
   submitKYCData() {
@@ -192,7 +200,7 @@ export class ConfirmComponent implements OnInit {
 
 
     this.candidateService.editUser(this.apiForm).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.clearLocalDataOne('KYCAPI');
       this.appConfig.clearLocalDataOne('kycForm');
       this.appConfig.clearLocalDataOne('confirmClick');
@@ -298,7 +306,8 @@ export class ConfirmComponent implements OnInit {
             urls = event.target.result;
             this.url = urls;
 
-            this.appConfig.showLoader();
+            try {
+            this.loadingService.setLoading(true);
             const data = await (await this.candidateService.profileUpload(fd)).json();
               this.signatureData = {
                 target_id: data[0].id,
@@ -311,29 +320,14 @@ export class ConfirmComponent implements OnInit {
                 status: 'true'
               };
               this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-              this.appConfig.hideLoader();
-
-            // this.candidateService.signatureUpload(this.selectedImage, file).subscribe((data: any) => {
-
-            //   this.signatureData = {
-            //     target_id: data.fid[0].value,
-            //     alt: 'signature',
-            //     title: '',
-            //     width: 480,
-            //     height: 100,
-            //     localShowUrl: `${this.appConfig.imageBaseUrl()}` + data.uri[0].url,
-            //     url: data.uri[0].url,
-            //     status: 'true'
-            //   };
-            //   this.appConfig.setLocalData('signature', JSON.stringify(this.signatureData));
-
-            //   this.appConfig.hideLoader();
-
-            // }, (err) => {
-
-            // });
-
-          };
+              this.loadingService.setLoading(false);
+            }
+              catch(e) {
+                this.loadingService.setLoading(false);
+                this.delete();
+                this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+              }
+            };
         } else {
           this.showSizeError.image = false;
           this.showSizeError.size = true;

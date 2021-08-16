@@ -53,15 +53,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   rowData: any = [];
   searchBox = false;
   filterValue: string;
@@ -77,6 +69,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // this.getDiscipline();
     this.tabledef();
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.getShortlistNames();
   }
 
@@ -138,8 +131,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       // },
       {
         headerName: 'Candidate name', field: 'username',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'username',
@@ -149,8 +141,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         maxWidth: 140,
         sortable: true,
         tooltipField: 'candidate_id',
@@ -160,8 +151,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       },
       {
         headerName: 'Gender', field: 'gender',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'gender',
@@ -171,8 +161,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       },
       {
         headerName: 'Insitute', field: 'insitute',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'insitute',
@@ -206,7 +195,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
   // get discipline dropdown value
   getDiscipline() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.disciplineDropdown = data;
     }, (err) => {
     });
@@ -214,7 +203,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
 
   getShortlistNames() {
     this.adminService.TPOStatusShortlistLists().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.shortlistLists = data && data ? data : [];
 
     }, (err) => {
@@ -227,7 +216,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
       "shortlistname": this.selectedShortlistname
     };
     this.adminService.getShortlistCandidateList(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
 
       this.userList = data ? data : [];
       this.userList.forEach(element => {
@@ -254,7 +243,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
     }
 
     this.adminService.schedulingAssessment(data).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.appConfig.success(`Mail send successfully`, '');
 
     }, (err) => {

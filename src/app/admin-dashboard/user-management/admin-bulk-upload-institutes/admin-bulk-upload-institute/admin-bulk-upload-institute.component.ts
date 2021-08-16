@@ -114,7 +114,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
       // element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     this.adminService.bulkUploadInstitutes(this.uploadedListArray).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = {
         institute_bulk_upload_ok: 'institute-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -126,7 +126,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
     });
   }
   upload() {
-    this.appConfig.showLoader();
+
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -165,17 +165,17 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
         &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][7] && this.SavedData[0][7].trim() === 'Contact Person Mobile Number')) {
         // this.enableList = true;
-        this.appConfig.hideLoader();
+
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-        this.appConfig.hideLoader();
+
       }
     };
     reader.readAsBinaryString(target.files[0]);
     // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
     //   console.log(datas);
-    //   this.appConfig.hideLoader();
+    //
 
     // }, (err) => {
 
@@ -290,7 +290,7 @@ export class AdminBulkUploadInstituteComponent implements OnInit {
     });
     this.uploadedListArray = listArray;
     console.log(this.uploadedListArray);
-    
+
     this.totalCountofCandidates = count - 1;
   }
 

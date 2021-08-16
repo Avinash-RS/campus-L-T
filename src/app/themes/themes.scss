@@ -2,7 +2,7 @@
 $primary-bg: #004072;
 $cancel-btn: #333333;
 $primary-yellow: #FFCC00;
-$primary-gray: #5c6873;
+$primary-gray: #d9d9d9 ;
 $primary-red: #C02222;
 $primary-red-hover: rgba(192, 34, 34, 0.5);
 $non-active-sub-bg: #5c6873;
@@ -79,7 +79,7 @@ $red-1: #DB3137;
 $black:#000000;
 $light-black: #333333;
 $light-black-1: #444444;
-$gray-dark: #707070;
+$gray-dark: #808080;
 $black-1: #5E5E5E;
 $black-2: #4B4B4B;
 $black-3: #D6D6D6;
@@ -134,7 +134,8 @@ $white-5: #e5e5e5;
 $pink-2: #cccccc;
 $green-2: #0ebc65;
 
-
+// kyc form revamp
+$input-border: #bebebe;
 //font
 $font-size-base:1rem;
 $font-size-lg:$font-size-base * 1.25;
@@ -159,7 +160,7 @@ $font-weight-normal:400;
 $font-weight-bold:700;
 $font-weight-bolder:bolder;
 
-// Main Color 
+// Main Color
 $lxp-gray:#898989;
 $lxp-theme-green: #C02222;
 $lxp-theme-yellow-sec:#FFCC00;
@@ -173,3 +174,24 @@ $lxp-button-text:#69727c;
 $label: #5c6873;
 $lxp-light-grey:#b5acac;
 
+
+// Unified reports
+
+//Color Defining
+$primaryColor: #C02222;
+$secondaryColor: #FFCC00;
+$successColor: #0CD684;
+$successColorDark: #43b447;
+$blueColor: #004C86;
+$whiteColor: #ffffff;
+$blackColor: #000000;
+$darkGrey: #333333;
+$mediumGrey: #666666;
+$lightGrey: #999999;
+$greyColor: #cdcdcd;
+$bgColor: #E9E9E9;
+$lightColor: #fafafa;
+$thumbColor : #aaa;
+$thumbHoverColor : #999;
+$sidebar-hover: rgb(170, 151, 75, 0.5);
+$sidebar-black: #1F1A17;

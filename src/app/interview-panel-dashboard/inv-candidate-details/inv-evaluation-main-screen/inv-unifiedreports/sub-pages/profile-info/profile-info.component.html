@@ -1,0 +1,81 @@
+<section class="profilearea">
+    <ng-container *ngIf="false">
+        <div class="heading6">
+            Drive Information
+        </div>
+
+        <mat-select class="matSelect" (selectionChange)="driveChange($event)" placeholder="Select Drive" [(ngModel)]="driveselectedValue" name="list">
+            <mat-option *ngFor="let list of driveList" [value]="list.drivename">
+                {{list.drivename}}
+            </mat-option>
+        </mat-select>
+    </ng-container>
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <div class="expandheaderArea">
+                <div class="heading6">
+                    Candidate Details
+                </div>
+            </div>
+        </mat-expansion-panel-header>
+        <div class="profileInfoarea" *ngIf="personalInfo">
+            <div class="profileInfoSec">
+                <div>
+                    First Name:
+                    <span> {{personalInfo.firstname ? personalInfo.firstname : '-'}} </span>
+                </div>
+                <div>
+                    Last Name:
+                    <span>{{personalInfo.lastname ? personalInfo.lastname : '-'}}</span>
+                </div>
+                <div>
+                    Date of Birth:
+                    <span>{{personalInfo.DOB ? personalInfo.DOB : '-'}}</span>
+                </div>
+                <div>
+                    Father's Name:
+                    <span>{{personalInfo.fathername ? personalInfo.fathername : '-'}}</span>
+                </div>
+                <div>
+                    Gender:
+                    <span>{{personalInfo.gender ? personalInfo.gender : '-'}}</span>
+                </div>
+                <div>
+                    Contact No:
+                    <span> {{personalInfo.mobile ? personalInfo.mobile : '-'}}</span>
+                </div>
+                <div>
+                    Address:
+                    <span>{{personalInfo.address ? personalInfo.address : '-'}}</span>
+                </div>
+            </div>
+            <div class="profileInfoSec">
+                <div>
+                    College/University:
+                    <span> {{personalInfo.institute ? personalInfo.institute : '-'}}</span>
+                </div>
+                <div>
+                    State/City:
+                    <span>{{personalInfo.city ? personalInfo.city : '-'}}</span>
+                </div>
+                <div>
+                    Specialization:
+                    <span> {{personalInfo.specialization ? personalInfo.specialization : '-'}}</span>
+                </div>
+                <div>
+                    Branch:
+                    <span>{{personalInfo.branch ? personalInfo.branch : '-'}}</span>
+                </div>
+                <div>
+                    Passing Year:
+                    <span>{{personalInfo.passedOut ? personalInfo.passedOut : '-'}}</span>
+                </div>
+                <div>
+                    Graduation Aggregate:
+                    <span>{{personalInfo.percentage ? personalInfo.percentage + '%' : '-' }}</span>
+                </div>
+            </div>
+        </div>
+
+    </mat-expansion-panel>
+</section>

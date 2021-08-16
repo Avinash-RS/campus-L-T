@@ -90,7 +90,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
-  ) { 
+  ) {
     this.dateValidation();
   }
 
@@ -113,13 +113,13 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
 
   getDependentApiDetails() {
     this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       if (data && data.dependents && data.dependents.length > 0) {
         this.dependedentDetails = [];
         data.dependents.forEach(element => {
           if (element) {
             this.dependedentDetails.push(element);
-          }          
+          }
         });
         this.patchDependentForm();
       } else {
@@ -153,12 +153,12 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
 momentForm(date) {
 if (date) {
   const split = moment(date).format('DD-MM-YYYY');
- return split;    
+ return split;
 }
 }
 
 dateConvertion(date) {
-  if (date) {      
+  if (date) {
     const split = moment(date).format();
     if (split == 'Invalid date') {
       const ddFormat = moment(date, 'DD-MM-YYYY').format();
@@ -177,7 +177,7 @@ dateConvertion(date) {
         }
       });
       this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Dependent details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
@@ -192,10 +192,10 @@ dateConvertion(date) {
 
   saveRequestRxJs() {
     this.sendPopupResultSubscription =  this.sharedService.sendPopupResult.subscribe((result: any)=> {
-      
+
       if (result.result == 'save') {
       this.formSubmit(result.route);
-      }     
+      }
     });
   }
 
@@ -207,7 +207,7 @@ dateConvertion(date) {
         } else {
           return this.sharedService.openJoiningRoutePopUp.next(data.goto);
         }
-      } 
+      }
     });
   }
 
@@ -256,7 +256,7 @@ dateConvertion(date) {
       [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], [Validators.required]],
       [this.form_dependent_status]: [data[this.form_dependent_status], [Validators.required]],
       [this.form_isDependent]: [data[this.form_isDependent]]
-    })    
+    })
   }
 
   initDependentArray() {
@@ -268,7 +268,7 @@ dateConvertion(date) {
       [this.form_dependent_differently_abled]: [null, [Validators.required]],
       [this.form_dependent_status]: [null, [Validators.required]],
       [this.form_isDependent]: [null]
-    })    
+    })
   }
 
   formInitialize() {
@@ -310,7 +310,7 @@ dateConvertion(date) {
   get isDependent() {
     return this.dependentForm.get(this.form_isDependent);
   }
-  
+
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';

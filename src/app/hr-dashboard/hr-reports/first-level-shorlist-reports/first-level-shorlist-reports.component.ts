@@ -22,15 +22,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef:any
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -51,6 +43,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -73,7 +66,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -94,8 +87,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'counter',
@@ -106,8 +98,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
       },
       {
         headerName: 'Shortlist name', field: 'shortlistname',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'shortlistname',
@@ -117,8 +108,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
       },
       {
         headerName: 'Date', field: 'dates',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'dates',
@@ -128,8 +118,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
       },
       {
         headerName: 'Time', field: 'times',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'times',
@@ -139,8 +128,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
       },
       {
         headerName: 'Shortlisted by', field: 'shortlistby',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'shortlistby',
@@ -150,9 +138,10 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
       },
       {
         headerName: 'Candidate details', field: 'details',
+        filter: false,
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
-            return `<button class="table-btn agTable" mat-raised-button>Download</button>`;            
+            return `<button class="table-btn agTable" mat-raised-button>Download</button>`;
         },
         sortable: true,
       }
@@ -163,7 +152,7 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.firstLevelReports().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -182,8 +171,8 @@ export class FirstLevelShorlistReportsComponent implements OnInit {
       "shortlist_name": element.shortlistname
     }
     this.adminService.firstShortlistExcelDownload(sendReq).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      
+
+
       const excel = data && data.file ? data.file : '';
       window.open(excel, '_blank');
 

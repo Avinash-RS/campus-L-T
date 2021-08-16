@@ -28,15 +28,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any
   gridColumnApi: any;
   rowData: any;
   searchBox = false;
@@ -53,6 +45,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -73,7 +66,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -93,8 +86,8 @@ export class AdminBulkUploadReportComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'counter',
@@ -105,8 +98,8 @@ export class AdminBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Tag name', field: 'tag',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+  
         minWidth: 140,
         sortable: true,
         tooltipField: 'tag',
@@ -116,8 +109,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Name', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -127,8 +119,8 @@ export class AdminBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Email id', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -138,8 +130,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Date', field: 'date',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'date',
@@ -149,8 +140,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Time', field: 'time',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         maxWidth: 120,
         sortable: true,
         tooltipField: 'time',
@@ -160,8 +150,8 @@ export class AdminBulkUploadReportComponent implements OnInit {
       },
       {
         headerName: 'Reason for not uploaded', field: 'reason',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'reason',
@@ -179,7 +169,7 @@ export class AdminBulkUploadReportComponent implements OnInit {
       uploaded_by: ''
     };
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

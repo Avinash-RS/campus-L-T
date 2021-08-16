@@ -22,15 +22,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef: any;
   tooltipShowDelay = 0;
   rowData: any;
   searchBox = false;
@@ -52,6 +44,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.GetRowStyle();
   }
@@ -186,10 +179,8 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Mail', field: 'mailed',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 85,
-        maxWidth: 85,
+        filter: 'agTextColumnFilter',
+        minWidth: 95,
         sortable: true,
         tooltipField: 'mailed',
         getQuickFilterText: (params) => {
@@ -198,9 +189,8 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Form Status', field: 'is_editable',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        minWidth: 95,
+        filter: 'agTextColumnFilter',
+        minWidth: 110,
         sortable: true,
         tooltipField: 'is_editable',
         getQuickFilterText: (params) => {
@@ -209,8 +199,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'candidate_id',
@@ -220,8 +209,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Candidate name', field: 'candidate_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'candidate_name',
@@ -235,8 +223,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Candidate Email id', field: 'selected_candidate',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'selected_candidate',
@@ -246,8 +233,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Profile', field: 'selectedpost',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 90,
         sortable: true,
         tooltipField: 'selectedpost',
@@ -257,8 +243,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Institute', field: 'institute',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'institute',
@@ -268,8 +253,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Specialization', field: 'specialization',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
         tooltipField: 'specialization',
@@ -279,8 +263,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
         tooltipField: 'discipline',
@@ -290,8 +273,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Assigned to', field: 'company',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
         tooltipField: 'company',
@@ -301,8 +283,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Uploaded by', field: 'uploaded_by',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
         tooltipField: 'uploaded_by',
@@ -312,8 +293,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Date & Time of upload', field: 'date_time',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
         tooltipField: 'date_time',
@@ -323,8 +303,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Declined Status', field: 'decline_status',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
         tooltipField: 'decline_status',
@@ -335,6 +314,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       {
         headerName: 'Download Documents', field: 'details',
         cellClass: 'agCellStyle',
+        filter: false,
         // headerTooltip: 'Download documents',
         valueFormatter: this.tooltipFormatter,
         minWidth: 60,
@@ -350,8 +330,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Verification Status', field: 'verified',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         sortable: true,
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
         cellRenderer: (params) => {
@@ -373,8 +352,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Verified/Reverted by', field: 'verifier_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 170,
         sortable: true,
         tooltipField: 'verifier_name',
@@ -432,8 +410,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       } else {
         this.appConfig.warning('Please try again later');
       }
-
-      this.appConfig.hideLoader();
     });
   }
   getAllNodes() {
@@ -449,7 +425,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       verifier: this.appConfig.getLocalData('userId')
     }
     this.adminService.documentVerification(apiData).subscribe((data: any)=> {
-      this.appConfig.hideLoader();
       this.appConfig.success(status == '0' ? 'Verification Reverted' : 'Documents Verified Successfully');
       this.rowData[selectedIndex].verified = this.rowData[selectedIndex].verified == 'Verified' ? 'Verify' : 'Verified';
       this.rowData[selectedIndex].verifier_name = this.appConfig.getLocalData('username');
@@ -498,7 +473,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       apiData.push(api);
     });
     this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.appConfig.success(this.popUpdata.value == 1 ? 'Mail Sent to the Candidates Successfully' : 'Edit Access given to the Candidates Successfully');
       this.ngOnInit();
     });
@@ -533,7 +508,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       email: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
     this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if (data?.url) {
         const documents = `${this.BASE_URL}/${data?.url}`;
         window.open(documents, '_blank');

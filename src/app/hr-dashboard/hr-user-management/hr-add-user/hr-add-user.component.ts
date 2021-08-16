@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -16,7 +16,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
   templateUrl: './hr-add-user.component.html',
   styleUrls: ['./hr-add-user.component.scss']
 })
-export class HrAddUserComponent implements OnInit {
+export class HrAddUserComponent implements OnInit, AfterViewInit {
 
   editDetails: any;
   addUserForm: FormGroup;
@@ -41,6 +41,14 @@ export class HrAddUserComponent implements OnInit {
     this.getDiscipline();
   }
 
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   formInitialize() {
 
@@ -58,7 +66,7 @@ export class HrAddUserComponent implements OnInit {
   // get discipline dropdown value
   getDiscipline() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.disciplineDropdown = data;
     }, (err) => {
     });
@@ -107,7 +115,7 @@ export class HrAddUserComponent implements OnInit {
       }
 
       this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
-        this.appConfig.hideLoader();
+
         this.addUserForm.reset();
         this.appConfig.success(`User has been added Successfully`, '');
       }, (error) => {

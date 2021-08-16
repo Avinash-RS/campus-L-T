@@ -37,6 +37,10 @@ export class AppConfigService {
   ) {
   }
 
+  isWebrtc() {
+    return localStorage.getItem('webrtc') && localStorage.getItem('webrtc') == 'true' ? true : false;
+  }
+
   scrollToTop() {
     let pos = window.pageYOffset;
    return window.scrollTo(0, pos - 20); // how far to scroll on each step
@@ -299,6 +303,34 @@ export class AppConfigService {
   terms(comp, data) {
     this.openDialog(comp, data);
   }
+
+  // AG grid common functions
+  agGridWithAllFunc(){
+  return {
+    flex: 1,
+    minWidth: 40,
+    resizable: true,
+    floatingFilter: true,
+    filter:true,
+    suppressSizeToFit: true,
+    };
+   }
+
+   agGridwithoutfloatingFilter(){
+    return {
+      flex: 1,
+      minWidth: 40,
+      resizable: true,
+      floatingFilter: false,
+      filter:true,
+      suppressSizeToFit: true,
+      };
+     }
+
+
+
+     // Ag-grid commom functions end
+
 
   // Open dailog
   openDialog(component, data) {

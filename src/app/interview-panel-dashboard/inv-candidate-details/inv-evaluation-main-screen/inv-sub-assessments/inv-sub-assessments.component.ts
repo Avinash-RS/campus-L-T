@@ -21,6 +21,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['name', 'percentage', 'question'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel(true, []);
+  queryParams: any;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -39,15 +40,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute
   ) {
     // // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: 'work.svg',
-        name: 'Assigned Candidates',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST,
-        data: `${this.activatedRoute.queryParams['_value']['data']}`,
-        active: true
-      },
-    ];
+    const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
@@ -62,20 +55,16 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.uid = params['uid'];
-      this.assessmentDetails(params['data']);
-    });
-  }
-
-  assessmentDetails(name) {
-    const apidata = {
-      shortlist_name: name
-    };
-    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
-      this.assessmentName = data;
-      this.getUsersList(name, this.uid);
-
-    }, (err) => {
+      this.queryParams = {
+        data: params['data'],
+        id: params['id'],
+        name: params['name'] ? params['name'] : '',
+        status: params['status'],
+        tag: params['tag'],
+        uid: params['uid'],
+        email: params['email'],
+        form: params['form']
+      };
 
     });
   }
@@ -89,7 +78,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
       uid: id
     };
     this.adminService.hrEvaluationSectionMarks(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
 
       let arr = [];
       if (datas && this.BIS != 'true') {
@@ -179,10 +168,7 @@ export class InvSubAssessmentsComponent implements OnInit, AfterViewInit {
   }
 
   next() {
-    const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
-    const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
-    const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid: this.uid });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, this.queryParams);
   }
 
 }

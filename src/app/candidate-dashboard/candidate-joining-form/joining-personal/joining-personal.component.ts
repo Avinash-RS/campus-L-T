@@ -201,9 +201,9 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getPersonalData() {
-    this.appConfig.showLoader();
+
     this.candidateService.joiningFormGetPersonalDetails().subscribe((data: any)=> {
-      this.appConfig.hideLoader();
+
       this.personalDetails = data ? data : null;
       if (this.personalDetails) {
         this.patchPersonalForm();
@@ -223,11 +223,16 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getBloodGroup() {
-    this.candidateService.getBloodGroups().subscribe((data: any) => {
-      this.bloodGroupDropdownList = data;
-    }, (err) => {
+    if (this.appConfig.getLocalData('bloodgroup')) {
+      this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
+    } else {
+      this.candidateService.getBloodGroups().subscribe((data: any) => {
+        this.bloodGroupDropdownList = data;
+        this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
+      }, (err) => {
 
-    });
+      });
+    }
   }
 
   dateValidation() {
@@ -294,7 +299,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       };
 
       this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
-        this.appConfig.hideLoader();
+
         this.appConfig.nzNotification('success', 'Saved', 'Personal details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
@@ -368,7 +373,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
           urls = event.target.result;
           this.url = urls;
 
-          // this.appConfig.showLoader();
+          //
           // const data = await (await this.candidateService.profileUpload(fd)).json();
             // this.profileData = {
             //   fid: data[0].id,
@@ -377,7 +382,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
             //   apiUrl: data[0].backend_url
             // };
             // this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-            //         this.appConfig.hideLoader();
+            //
 
         };
       } else {

@@ -1,84 +1,305 @@
-<div class="hr-evaluation-sub-edu">
-  <div class="edu-wrapper" *ngIf="certificateArr">
-    <ng-container
-      *ngIf="certificateArr && certificateArr['education_documents'] && certificateArr['education_documents'].length > 0">
-      <div class="heading">
-        Education
-      </div>
-      <div class="flex" *ngFor=" let edu of certificateArr['education_documents']">
-        <div class="level">
-          <span *ngIf="edu && edu['education_level'] === 'SSLC'">
-            {{edu['education_level'] ? 'SSLC / 10th' : '-'}}
-          </span>
-          <span *ngIf="edu && edu['education_level'] === 'HSC'">
-            {{edu['education_level'] ? 'HSC / 12th' : '-'}}
-          </span>
-          <span *ngIf="edu && edu['education_level'] === 'Diploma'">
-            {{edu['education_level'] ? edu['education_level'] : '-'}}
-          </span>
-          <span *ngIf="edu && edu['education_level'] === 'UG'">
-            {{edu['education_level'] ? 'Undergraduate' : '-'}}
-          </span>
-          <span *ngIf="edu && edu['education_level'] === 'PG'">
-            {{edu['education_level'] ? 'Postgraduate' : '-'}}
-          </span>
-        </div>
-        <div class="box">
-          {{edu['filename'] ? edu['filename'] : ''}} &#160; ({{edu['file_size'] ? edu['file_size'] : ''}})
-        </div>
-        <div class="view">
-          <span (click)="viewCerificates(edu['certificate_url'])">View</span>
-          <span style="visibility: hidden;">Resubmit</span>
-        </div>
-      </div>
-    </ng-container>
+<div class="joining-personal-wrapper">
+  <div class="grids-wrapper">
+      <div class="dependentForm">
 
-    <ng-container
-      *ngIf="certificateArr && certificateArr['certificate_array'] && certificateArr['certificate_array'].length > 0">
-      <div class="heading">
-        Certificates
-      </div>
-      <div class="flex" *ngFor=" let cer of certificateArr['certificate_array']">
-        <div class="level">
-          {{cer['certificate_name'] ? cer['certificate_name'] : '-'}}
-        </div>
-        <div class="box">
-          {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})
-        </div>
-        <div class="view">
-          <span (click)="viewCerificates(cer['certificate_url'])">View</span>
-          <span style="visibility: hidden;">Resubmit</span>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="certificateArr && certificateArr['other_array'] && certificateArr['other_array'].length > 0">
-      <div class="heading">
-        Others
-      </div>
-      <div class="flex" *ngFor=" let cer of certificateArr['other_array']">
-        <div class="level">
-          {{cer['description'] ? cer['description'] : '-'}}
-        </div>
-        <div class="box">
-          {{cer['filename'] ? cer['filename'] : ''}} &#160; ({{cer['file_size'] ? cer['file_size'] : ''}})
-        </div>
-        <div class="view">
-          <span (click)="viewCerificates(cer['certificate_url'])">View</span>
-          <span style="visibility: hidden;">Resubmit</span>
-        </div>
-      </div>
-    </ng-container>
-    <div class="no-data"
-      *ngIf="certificateArr['education_documents'].length < 1 && certificateArr['certificate_array'].length < 1 && certificateArr['other_array'].length < 1">
-
-    </div>
-    <div class="button-wrapper">
-      <button class="submit" mat-button (click)="next()">Next</button>
-    </div>
+<div class="section pl-0 pt-0 pr-0 pb-0 custom-padding custom-spacing-1">
+  <div class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding">
+      <h6>Documents Details</h6>
+      <div *ngIf="!formSubmitted" class="icon"><span
+              class="material-icons material-icons-outlined">
+              mode_edit
+          </span></div>
   </div>
-  <div class="no-data" *ngIf="!certificateArr">
+  <ng-container *ngIf="checkAnyDocuments() else noDocuments">
+      <ng-container *ngIf="false && documentDetails.Joining_Details && documentDetails.Joining_Details.length > 0">
+          <div class="subDocumentTitle">Joining Details</div>
+          <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+              *ngFor="let document of documentDetails.Joining_Details; let i = index">
+              <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Name</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_label] ? document[form_label] : '-'}}</div>
+                  </div>
 
-  </div>
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Description</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_description] ? document[form_description] : '-'}}</div>
+                  </div>
 
+                  <div *ngIf="document && document[form_file_path]"
+                      class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button"
+                          (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                          mat-raised-button type="button">View</button>
+                  </div>
+                  <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button yet-to-submit"
+                          [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                          mat-raised-button type="button">Yet to
+                          Submit</button>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+
+      <!-- Banking -->
+      <ng-container *ngIf="false && documentDetails.Banking_Details && documentDetails.Banking_Details.length > 0">
+          <div class="subDocumentTitle">Bank Details</div>
+          <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+              *ngFor="let document of documentDetails.Banking_Details; let i = index">
+              <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Bank Name</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_label] ? document[form_label] : '-'}}</div>
+                  </div>
+
+                  <div class="overall-input-wrapper mt-0 width-35" style="padding-left: 4px;">
+                      <label>Bank Account Number</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_acc_no] ? document[form_acc_no] : '-'}}</div>
+                  </div>
+
+                  <div class="overall-input-wrapper mt-0 width-30">
+                      <label>Bank IFSC Code</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_ifsc_code] ? document[form_ifsc_code] : '-'}}</div>
+                  </div>
+
+              </div>
+
+              <div class="row-wrapper mt-2" style="align-items: flex-end;">
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Branch Name</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_branch] ? document[form_branch] : '-'}}</div>
+                  </div>
+
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Description</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_description] ? document[form_description] : '-'}}</div>
+                  </div>
+
+                  <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button"
+                          (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                          mat-raised-button type="button">View</button>
+                  </div>
+                  <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button yet-to-submit"
+                          [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                          mat-raised-button type="button">Yet to
+                          Submit</button>
+                  </div>
+              </div>
+
+          </div>
+      </ng-container>
+
+      <!-- Resume -->
+      <ng-container *ngIf="documentDetails.Resume && documentDetails.Resume.length > 0">
+          <div class="subDocumentTitle">Resume</div>
+          <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+              *ngFor="let document of documentDetails.Resume; let i = index">
+              <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Name</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_label] ? document[form_label] : '-'}}</div>
+                  </div>
+
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Description</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_description] ? document[form_description] : '-'}}</div>
+                  </div>
+
+                  <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button"
+                          (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                          mat-raised-button type="button">View</button>
+                  </div>
+                  <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button yet-to-submit"
+                          [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                          mat-raised-button type="button">Yet to
+                          Submit</button>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+
+      <!-- Transfer -->
+      <ng-container
+          *ngIf="false && documentDetails.Transfer_Certificate && documentDetails.Transfer_Certificate.length > 0">
+          <div class="subDocumentTitle">Transfer/Conduct Certificate</div>
+          <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+              *ngFor="let document of documentDetails.Transfer_Certificate; let i = index">
+              <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Name</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_label] ? document[form_label] : '-'}}</div>
+                  </div>
+
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Description</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_description] ? document[form_description] : '-'}}</div>
+                  </div>
+
+                  <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button"
+                          (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                          mat-raised-button type="button">View</button>
+                  </div>
+                  <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button yet-to-submit"
+                          [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                          mat-raised-button type="button">Yet to
+                          Submit</button>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+
+
+      <!-- Education -->
+      <ng-container
+          *ngIf="documentDetails.Education_Documents && documentDetails.Education_Documents.length > 0">
+          <div class="subDocumentTitle">Education Documents</div>
+          <ng-container *ngFor="let doc of documentDetails.Education_Documents; let j = index">
+              <div class="subDocumentTitle" style="font-size: 16px; padding-bottom: 0 !important;">
+                  {{doc[form_education_level] ? customEducationLabel(doc[form_education_level]) : '-'}}
+              </div>
+              <ng-container *ngIf="doc.sub_documents && doc.sub_documents.length > 0">
+                  <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'custom-pad' : 'custom-pad'"
+                      *ngFor="let document of doc.sub_documents; let i = index">
+                      <div class="row-wrapper mt-0 semester" style="align-items: flex-end;">
+                          <div class="overall-input-wrapper mt-0 width-32">
+                              <label>Document Name</label>
+                              <div class="input size-16 bold-700 color-black">
+                                  {{document[form_label] ? document[form_label] : (doc[form_education_level] == 'SSLC' || doc[form_education_level] == 'HSC') ? doc[form_education_level] : '-' }}</div>
+                          </div>
+
+                          <div class="overall-input-wrapper mt-0 width-32">
+                              <label>Document Description</label>
+                              <div class="input size-16 bold-700 color-black">
+                                  {{document[form_description] ? document[form_description] : '-'}}</div>
+                          </div>
+
+                          <div *ngIf="document && document[form_file_path]"
+                              class="overall-input-wrapper mt-0 width-32">
+                              <button class="add-button"
+                                  (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                                  mat-raised-button type="button">View</button>
+                          </div>
+                          <div *ngIf="!document[form_file_path]"
+                              class="overall-input-wrapper mt-0 width-32">
+                              <button class="add-button yet-to-submit"
+                                  [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                                  mat-raised-button type="button">Yet
+                                  to Submit</button>
+                          </div>
+                      </div>
+                  </div>
+              </ng-container>
+          </ng-container>
+      </ng-container>
+
+      <!-- Certifications -->
+      <ng-container
+      *ngIf="documentDetails.Certifications && documentDetails.Certifications.length > 0">
+      <div class="subDocumentTitle">Certifications</div>
+      <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+          *ngFor="let document of documentDetails.Certifications; let i = index">
+          <div class="row-wrapper mt-0" style="align-items: flex-end;">
+              <div class="overall-input-wrapper mt-0 width-32">
+                  <label>Document Name</label>
+                  <div class="input size-16 bold-700 color-black">
+                      {{document[form_label] ? document[form_label] : '-'}}</div>
+              </div>
+
+              <div class="overall-input-wrapper mt-0 width-32">
+                  <label>Document Description</label>
+                  <div class="input size-16 bold-700 color-black">
+                      {{document[form_description] ? document[form_description] : '-'}}</div>
+              </div>
+
+              <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                  <button class="add-button"
+                      (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                      mat-raised-button type="button">View</button>
+              </div>
+              <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                  <button class="add-button yet-to-submit"
+                      [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                      mat-raised-button type="button">Yet to
+                      Submit</button>
+              </div>
+          </div>
+      </div>
+  </ng-container>
+
+      <!-- Other uploads -->
+      <ng-container
+          *ngIf="documentDetails.Other_Certifications && documentDetails.Other_Certifications.length > 0">
+          <div class="subDocumentTitle">Other Uploads</div>
+          <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+              *ngFor="let document of documentDetails.Other_Certifications; let i = index">
+              <div class="row-wrapper mt-0" style="align-items: flex-end;">
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Name</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_label] ? document[form_label] : '-'}}</div>
+                  </div>
+
+                  <div class="overall-input-wrapper mt-0 width-32">
+                      <label>Document Description</label>
+                      <div class="input size-16 bold-700 color-black">
+                          {{document[form_description] ? document[form_description] : '-'}}</div>
+                  </div>
+
+                  <div *ngIf="document && document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button"
+                          (click)="openMatDialog(document[form_file_path], document[form_file_type])"
+                          mat-raised-button type="button">View</button>
+                  </div>
+                  <div *ngIf="!document[form_file_path]" class="overall-input-wrapper mt-0 width-32">
+                      <button class="add-button yet-to-submit"
+                          [matTooltip]="document[form_expectedDate] ? ('Expected to be submitted within ' + dateConvertion(document[form_expectedDate])) : ''"
+                          mat-raised-button type="button">Yet to
+                          Submit</button>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+
+
+  </ng-container>
 </div>
+</div>
+</div>
+</div>
+
+<ng-template #noDocuments>
+  <div class="nodata"> No Documents Available</div>
+</ng-template>
+
+<ng-template #matDialogDocViewer>
+  <div class="main-wrappers">
+      <div class="position-relative text-right">
+          <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
+              file_download
+              </span> -->
+          <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()"
+              class="material-icons">cancel</i>
+      </div>
+
+      <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
+  </div>
+
+</ng-template>

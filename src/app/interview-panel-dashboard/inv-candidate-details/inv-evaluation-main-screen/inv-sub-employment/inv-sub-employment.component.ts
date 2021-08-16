@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-inv-sub-employment',
@@ -21,25 +17,16 @@ export class InvSubEmploymentComponent implements OnInit {
   certificateArr: any;
   candidateName: any;
   uid:any;
+  queryParams: any;
+  profileViewData: any;
 
   constructor(
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: 'work.svg',
-        name: 'Assigned Candidates',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST,
-        data: `${this.activatedRoute.queryParams['_value']['data']}`,
-        active: true
-      },
-    ];
+    const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
@@ -52,66 +39,31 @@ export class InvSubEmploymentComponent implements OnInit {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
+      this.queryParams = {
+        data: params['data'],
+        id: params['id'],
+        name: params['name'] ? params['name'] : '',
+        status: params['status'],
+        tag: params['tag'],
+        uid: params['uid'],
+        email: params['email'],
+        form: params['form']
+      };
+      this.profileViewData = {
+        candidateId: params['uid'],
+        candidateName: params['name'],
+        isSelected: false,
+        documents: true
+      }
       this.candidateId = params['id'];
       this.candidateName = params['name'];
       this.uid = params['uid']
-      this.userlist(params['uid']);
     });
-  }
-
-  userlist(cid) {
-    const apiData = {
-      id: cid
-    };
-    this.adminService.getCertificates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
-      this.certificateArr = data && data[0] && data[0].length > 0 ? data[0][0] : [];
-    }, (err) => {
-
-    });
-  }
-
-  profileView() {
-    const data = {
-      candidateId: this.uid ? this.uid : '',
-      candidateName: this.candidateName ? this.candidateName : '',
-    };
-    this.openDialog1(CommonKycProfileViewComponent, data);
-  }
-
-
-  viewCerificates(path) {
-    // const excel = element && element.download ? element.download : '';
-    window.open(path, '_blank');
   }
 
 
   next() {
-    const name = this.appConfig.getLocalData('cname') ? this.appConfig.getLocalData('cname') : '';
-    const status = this.appConfig.getLocalData('cstatus') ? this.appConfig.getLocalData('cstatus') : '';
-    const tag = this.appConfig.getLocalData('ctag') ? this.appConfig.getLocalData('ctag') : '';
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION, { data: this.nameOfAssessment, id: this.candidateId, name, status, tag, uid:this.uid });
-  }
-
-  // Open dailog
-  openDialog1(component, data) {
-    let dialogDetails: any;
-
-    /**
-     * Dialog modal window
-     */
-    // tslint:disable-next-line: one-variable-per-declaration
-    const dialogRef = this.matDialog.open(component, {
-      width: 'auto',
-      height: 'auto',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, this.queryParams);
   }
 
 }

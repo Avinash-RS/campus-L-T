@@ -1,26 +1,46 @@
-<div class="inv-particular-assessment-candidate">
-    <!-- <app-shared-inv-panel-header *ngIf="assessmentName"
-    [details]="assessmentName ? assessmentName : ''"></app-shared-inv-panel-header> -->
 
-  <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
-    <!-- <mat-form-field>
-            <mat-label>Filter</mat-label> -->            
-    <div class="search-bar d-flex justify-content-end align-items-center">
-      <div class="search-icon">
-        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
-      </div>
-      <div class="ml-2">
-        <button style="height: 28px !important;" (click)="finalSubmit()" class="submit" *ngIf="userList && userList.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>Submit</button>
-      </div>
+<div class="inv-particular-assessment-candidate" #agheight>
+    <div class="user-list-wrapper" [ngClass]="rowData && rowData.length > 0 ? '' : ''">
+        <div class="leftinfo">
+            <div>
+                <span>{{rowData ? rowData.length : 0}}</span> Assigned Candidates
+            </div>
+            <div>
+                <span>{{selectedCount.length + rejectedCount.length}}</span> Candidates Evaluated
+            </div>
+            <div>
+                <span>{{selectedCount.length}}</span> Shortlisted
+            </div>
+            <div>
+                <span>{{rejectedCount.length}}</span> Rejected
+            </div>
+            <div>
+              <span>{{sentToHr.length}}</span> Sent to HR
+          </div>
+        </div>
+        <div class="rightinfo">
+            <div *ngIf="false">
+                <button class="filterbtn"><em class="icon-Filter"></em> Filter</button>
+            </div>
+            <div class="search-bar">
+              <div class="headerbtn" *ngIf="rowData && rowData.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'">
+                <button (click)="finalSubmit()" class="submit" mat-raised-button>
+                <em class="icon-checked"></em>Sent to HR for Processing
+              </button>
+            </div>
+                <div class="search-icon">
+                    <img src="assets/images/feather-search.svg" alt="" srcset="">
+                    <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+                </div>
+            </div>
+        </div>
 
     </div>
-    <!-- </mat-form-field> -->
+    <div>
 
-    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
-    [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
-    [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize"
-    (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" [rowSelection]="rowSelection" [isRowSelectable]="isRowSelectable" headerHeight="40">
-    </ag-grid-angular>    
-</div>
+        <ag-grid-angular style="width: 100%;" [ngStyle]="{ height: (agheight.offsetHeight - 75) + 'px' }" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
+            [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
+            [rowSelection]="rowSelection" [isRowSelectable]="isRowSelectable" headerHeight="35" [animateRows]="true">
+        </ag-grid-angular>
+    </div>
 </div>

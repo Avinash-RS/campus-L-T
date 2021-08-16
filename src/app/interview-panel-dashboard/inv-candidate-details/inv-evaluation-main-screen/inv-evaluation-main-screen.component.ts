@@ -22,6 +22,9 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   candidateStatus: any;
   tagName: any;
   uid: any;
+  email: any;
+  form: any;
+  queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
 
   constructor(
     private appConfig: AppConfigService,
@@ -32,13 +35,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: 'work.svg',
-        name: 'Assigned Candidates',
-        router: CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION
-      },
-    ];
+    const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
@@ -50,30 +47,24 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
+      this.queryParams = {
+        data: params['data'],
+        id: params['id'],
+        name: params['name'] ? params['name'] : '',
+        status: params['status'],
+        tag: params['tag'],
+        uid: params['uid'],
+        email: params['email'],
+        form: params['form']
+      };
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
       this.candidateStatus = params['status'];
       this.tagName = params['tag'];
       this.uid = params['uid'];
-      this.appConfig.setLocalData('cname', this.candidateName);
-      this.appConfig.setLocalData('cid', this.candidateId);
-      this.appConfig.setLocalData('cstatus', this.candidateStatus);
-      this.appConfig.setLocalData('ctag', this.tagName);
-      this.assessmentDetails(params['data']);
-    });
-  }
-
-  assessmentDetails(name) {
-    const apidata = {
-      shortlist_name: name
-    };
-    this.adminService.hrEvaluationParticularAssessmentDetailsHeader(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
-      this.assessmentName = data;
-
-    }, (err) => {
-
+      this.email = params['email'];
+      this.form = params['form'];
     });
   }
 

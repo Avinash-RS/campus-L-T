@@ -30,6 +30,7 @@ import { JoiningPreviewComponent } from './candidate-joining-form/joining-previe
 import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
 import { CandidateFaqComponent } from './candidate-faq/candidate-faq.component';
+// import { JoinInterviewComponent } from './join-interview/join-interview.component';
 
 
 @NgModule({

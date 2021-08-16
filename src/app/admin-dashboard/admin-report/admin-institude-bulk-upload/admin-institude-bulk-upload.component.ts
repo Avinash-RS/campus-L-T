@@ -23,20 +23,11 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
   radioCheck;
   selectAllCheck;
   displayNoRecords = false;
-
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef :any;
   gridColumnApi: any;
   rowData: any;
   searchBox = false;
@@ -52,6 +43,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
   }
 
@@ -72,7 +64,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
 
   getModel(e) {
     // console.log(e);
-    
+
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warning('No search results found');
@@ -92,8 +84,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'S no', field: 'counter',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agNumberColumnFilter',
         maxWidth: 120,
         minWidth: 85,
         sortable: true,
@@ -105,8 +96,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'Institute name', field: 'field_institute_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'field_institute_name',
@@ -116,8 +107,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'Institute email id', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -127,8 +118,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'State', field: 'state',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'state',
@@ -138,8 +129,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'City', field: 'city',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'city',
@@ -149,8 +140,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: `Contact person`, field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -160,8 +151,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'Mobile number', field: 'field_institute_mobile_number',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'field_institute_mobile_number',
@@ -171,8 +162,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'Date', field: 'date',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         maxWidth: 120,
         minWidth: 110,
         sortable: true,
@@ -183,8 +174,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'Time', field: 'time',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         maxWidth: 120,
         minWidth: 110,
         sortable: true,
@@ -195,8 +186,8 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
       },
       {
         headerName: 'Reason for not uploaded', field: 'reason',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
+
         minWidth: 140,
         sortable: true,
         tooltipField: 'reason',
@@ -211,7 +202,7 @@ export class AdminInstitudeBulkUploadComponent implements OnInit {
   // To get all users
   getUsersList() {
     this.adminService.bulkUploadInstitutesErrorList().subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

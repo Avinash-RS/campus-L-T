@@ -2,73 +2,63 @@
   Note: Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.
 </div>
 <div class="main-wrapper">
-  <div class="heading-grid">
-    <div class="head-1">
-      Name of your family members
-      <span>&#160;</span>
-    </div>
-    <div class="head-2">
-      Date of Birth
-      <span>&#160;</span>
-    </div>
-    <div class="head-3">
-      Relationship
-      <span>&#160;</span>
-    </div>
-    <div class="head-4">
-      Occupation
-    </div>
-
-  </div>
+  <h5>Family Details</h5>
   <form #form="ngForm" [formGroup]="familyForm" class="form">
     <ng-container *ngIf="familyArr && familyArr.controls" formArrayName="familyArr">
-      <div class="text-box-grid" *ngFor="let item of familyArr.controls; let i = index;" [formGroupName]="i">
-        <div class="text-1">
-          <input (focusout)="detectInput(familyForm)" formControlName="names" type="text">
+      <div class="grid-wrapper" *ngFor="let item of familyArr.controls; let i = index;" [formGroupName]="i">
+        <div class="text-box-grid">
+        <div class="flex-column-wrapper">
+          <label class="label">Name of your family members</label>
+          <input matInput (focusout)="detectInput(familyForm)" formControlName="names" type="text" placeholder="Enter here...">
           <div class="error" *ngIf="familyArr.controls[i].get('names').invalid">
             <span *ngIf="familyArr.controls[i].get('names').errors?.Namerequired">Name is Required</span>
             <span *ngIf="familyArr.controls[i].get('names').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
 
         </div>
-        <div class="text-2">
+        <div class="flex-column-wrapper">
+          <label class="label">Date of Birth</label>
           <!-- <input formControlName="dob" type="text"> -->
           <nz-date-picker (ngModelChange)="detectSelectChange()" [nzShowToday]="false" [nzDisabledDate]="disabledYears"
-            formControlName="dob" [nzFormat]="dateFormat"></nz-date-picker>
+            formControlName="dob" [nzFormat]="dateFormat" [nzPlaceHolder]="'Select DOB'"></nz-date-picker>
           <div class="error"
             *ngIf="familyArr.controls[i].get('dob').invalid && familyArr.controls[i].get('dob').touched">
             <span *ngIf="familyArr.controls[i].get('dob').errors?.required">Date of Birth is Required</span>
           </div>
         </div>
-        <div class="text-3">
-          <input (focusout)="detectInput(familyForm)" formControlName="relationship" type="text">
+        <div class="flex-column-wrapper">
+          <label class="label">Relationship</label>
+          <input matInput (focusout)="detectInput(familyForm)" formControlName="relationship" type="text" placeholder="Enter here...">
           <div class="error"
             *ngIf="familyArr.controls[i].get('relationship').invalid && familyArr.controls[i].get('relationship').touched">
             <span *ngIf="familyArr.controls[i].get('relationship').errors?.required">Relationship is Required</span>
             <span *ngIf="familyArr.controls[i].get('relationship').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
-        <div class="text-4">
-          <input (focusout)="detectInput(familyForm)" formControlName="occupation" type="text">
+        <div class="flex-column-wrapper">
+          <label class="label">Occupation</label>
+          <input matInput (focusout)="detectInput(familyForm)" formControlName="occupation" type="text" placeholder="Enter here...">
           <div class="error"
             *ngIf="familyArr.controls[i].get('occupation').invalid && familyArr.controls[i].get('occupation').touched">
             <span *ngIf="familyArr.controls[i].get('occupation').errors?.required">Occupation is Required</span>
             <span *ngIf="familyArr.controls[i].get('occupation').errors?.pattern">Accept only Alphanumeric characters and maximum of 255 characters only allowed</span>
           </div>
         </div>
-        <i *ngIf="i !== 0" (click)="removefamilyForm(i)" style="color: red; height: 25px;"
-          class="material-icons remove">delete</i>
+      </div>
+        <div *ngIf="i !== 0" class="remove-wrapper">
+          <div (click)="removefamilyForm(i)" matTooltip="Remove" class="remove">
+              <i class="material-icons material-icons-outlined">
+                  remove_circle_outline
+                  </i>
+          </div>
+          </div>
+
       </div>
     </ng-container>
   </form>
-  <div *ngIf="!notShow" class="add-form">
-    <div (click)="addfamilyForm()">
-      <img src="assets/images/interface.svg" alt="" srcset="">
-      <div class="text">
-        Add
-      </div>
-    </div>
-  </div>
+  <div *ngIf="!notShow" class="row-wrapper mt-3">
+    <button class="add-button" mat-raised-button type="button" (click)="addfamilyForm()">+ Add</button>
+</div>
 
   <div class="submit-button-wrapper">
     <button class="submit btn-margin-space" (click)="onSubmit(familyForm.value)" mat-raised-button type="submit">Continue</button>

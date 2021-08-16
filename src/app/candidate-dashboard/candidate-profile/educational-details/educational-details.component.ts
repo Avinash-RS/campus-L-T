@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './educational-details.component.html',
   styleUrls: ['./educational-details.component.scss']
 })
-export class EducationalDetailsComponent extends FormCanDeactivate implements OnInit, OnDestroy {
+export class EducationalDetailsComponent extends FormCanDeactivate implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', { static: false })
   form: NgForm;
   form1: NgForm;
@@ -26,7 +26,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
   form3: NgForm;
   form4: NgForm;
   form5: NgForm;
-  selectedPost: any;
+  selectedPost: any = null;
   levelList: any;
   UGList: any;
   DiplamoList: any;
@@ -89,7 +89,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   ngOnInit() {
     this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
-    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : '';
+    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : null;
     if (!this.appConfig.getLocalData('confirmClick')) {
       this.appConfig.setLocalData('confirmClick', 'false');
     }
@@ -114,8 +114,16 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     this.UGSpecification();
     this.PGSpecification();
     // this.defautValue();
-    this.appConfig.scrollToTop();
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   detectSelectQualify() {
     setTimeout(() => {
@@ -126,7 +134,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   educationLevels() {
     this.candidateService.getEducationList().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       list.forEach((element, i) => {
         if (element['id'] === '1') {
@@ -158,7 +166,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.DiplamoList = list;
     }, (err) => {
@@ -173,7 +181,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.diplamoDiscipline = list;
     }, (err) => {
@@ -189,7 +197,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugColleges = list;
       const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
@@ -206,7 +214,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugDisciplines = list;
     }, (err) => {
@@ -222,7 +230,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: ''
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgDisciplines = list;
     }, (err) => {
@@ -237,7 +245,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: 'UG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.ugSpecialization = list;
     }, (err) => {
@@ -253,7 +261,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       specification: 'PG'
     };
     this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const list = data && data[0] ? data[0] : [];
       this.pgSpecialization = list;
     }, (err) => {
@@ -282,7 +290,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
   onSubmit(OptA) {
     let valid;
-    if (this.educationForm.valid) { 
+    if (this.educationForm.valid) {
       let value = {
         hscDiploma: false,
         ug: false,
@@ -371,7 +379,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
         this.addEducationForm(edu);
       });
-    } else {      
+    } else {
       if (this.selectedPost == 'det') {
         for (let i = 0; i <= 1; i++) {
           let edu;
@@ -398,8 +406,8 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
               };
             }
           this.addEducationForm(edu);
-        }  
-      } 
+        }
+      }
       if (this.selectedPost == 'gct' || this.selectedPost == 'get') {
         for (let i = 0; i <= 2; i++) {
           let edu;
@@ -424,10 +432,10 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
                 field_year_of_passing: { value: null },
                 field_backlogs: { value: 0 }, field_percentage: { value: null }
               };
-            }  
+            }
           this.addEducationForm(edu);
-        }  
-      } 
+        }
+      }
       if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
       for (let i = 0; i <= 3; i++) {
         let edu;
@@ -452,7 +460,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
               field_year_of_passing: { value: null },
               field_backlogs: { value: 0 }, field_percentage: { value: null }
             };
-          }    
+          }
         this.addEducationForm(edu);
       }
     }
@@ -553,7 +561,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
 
 
   addEducationForm(data?: any) {
-    
+
     if (true) {
       // if (this.educationForm['status'] !== 'INVALID') {
       this.eduArr.push(this.createItem(data));
@@ -562,8 +570,17 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     }
   }
 
+  addEducationForm1(data?: any) {
+    if (this.educationForm['status'] !== 'INVALID') {
+      this.eduArr.push(this.createItem(data));
+    } else {
+      this.validateAllFormArrays(this.educationForm.get('educationArr') as FormArray);
+    }
+  }
+
+
   detectSelectChanges(i) {
- 
+
     // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == null || this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == '') {
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].disable();
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['institute'].disable();
@@ -603,11 +620,11 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
     //   })
     //   console.log('diplaa', this.eduArr);
     //   console.log('map', this.eduArr.at(Number(`${this.eduArr.length - 1}`)));
-      
+
     // }
     // if (this.eduArr.at(Number(`${this.eduArr.length - 1}`)).value.leveling == 'UG') {
     //   console.log('coming into ug');
-      
+
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].enable();
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].reset();
     //   this.eduArr.at(Number(`${this.eduArr.length - 1}`)).controls['board'].clearValidators();
@@ -674,7 +691,7 @@ export class EducationalDetailsComponent extends FormCanDeactivate implements On
       this.eduArr.at(Number(`${i}`)).controls['board'].updateValueAndValidity();
       // this.eduArr.at(Number(`${i}`)).patchValue({
       //   specification: 'Diploma Engineering'
-      // })      
+      // })
     }
     if (this.eduArr.at(Number(`${i}`)).value.leveling == 'UG') {
       this.eduArr.at(Number(`${i}`)).controls['board'].enable();

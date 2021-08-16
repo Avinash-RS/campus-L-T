@@ -46,7 +46,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       // },
       {
         icon: 'work.svg',
-        name: 'Interview Panel Assign',
+        name: 'Panel Assignment',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
       },
       {
@@ -60,7 +60,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
         name: 'Bulk Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
       }
-  
+
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
@@ -94,7 +94,7 @@ export class HrEvaluationMainScreenComponent implements OnInit {
       name: this.uid
     };
     this.adminService.hrEvaluationParticularAssessmentDetailsHeader_CandidateParamAdded(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
+      //
       this.assessmentName = data;
 
     }, (err) => {

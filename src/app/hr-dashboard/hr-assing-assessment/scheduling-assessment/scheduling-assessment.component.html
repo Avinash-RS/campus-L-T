@@ -1,86 +1,79 @@
-<div id="top" class="assign-assessment-wrapper">
-  <div class="top-wrapper">
-    <div class="flex-wrapper">
-      <div class="left">
-        <div class="grid">
-          <div class="flex-wrap">
-            <div class="label">
-              <div style="margin-left: 1em;" class="flex-wrap">
-                <div class="label">
-                  Shortlist name:
-                </div>
-                <div class="input-box">
-                  <nz-select class="nzSelect-revamp" [(ngModel)]="selectedShortlistname"
-                    (ngModelChange)="selectChange()" nzAllowClear nzShowSearch
-                    nzPlaceHolder="--select shortlist name--">
-                    <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value"
-                      [nzValue]="level.field_shortlistname_value"></nz-option>
-                  </nz-select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="margin-left: 1em;" class="flex-wrap">
-            <div class="label">
-              Disciple
-            </div>
-            <div class="input-box">
-              <!-- <input matInput type="text"> -->
-              <nz-select class="nzSelect-revamp" nzAllowClear nzShowSearch nzPlaceHolder="--select disciple--"
-                [(ngModel)]="selectedDisciple" [ngClass]="disciplineDropdown.length == 0 ? 'disabled': ''">
-                <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue"
-                  [nzValue]="disciplineValue"></nz-option>
-              </nz-select>
-            </div>
-          </div>
-          <div style="margin-left: 1em; max-width: 357px; !important" class="flex-wrap">
-            <div class="label">
-              Assessment name
-            </div>
-            <div class="input-box-revamp">
-              <input matInput type="text" [(ngModel)]="assessmentName">
-            </div>
-          </div>
-          <div style="margin-left: 1em;" class="flex-wrap">
-            <div class="label">
-              Assessment Date & Time
-            </div>
-            <div class="input-box">
-              <!-- <mat-form-field>
+<div class="assign-assessment-wrapper">
+    <div class="top-wrapper">
+        <div class="flex-wrapper">
+            <div class="left">
+                <div class="grid">
+                    <div class="flex-wrap">
+                        <div class="label">
+                            <div style="margin-left: 1em;" class="flex-wrap">
+                                <div class="label">
+                                    Shortlist name:
+                                </div>
+                                <div class="input-box">
+                                    <nz-select class="nzSelect-revamp" [(ngModel)]="selectedShortlistname" (ngModelChange)="selectChange()" nzAllowClear nzShowSearch nzPlaceHolder="--select shortlist name--">
+                                        <nz-option *ngFor="let level of shortlistLists" [nzLabel]="level.field_shortlistname_value" [nzValue]="level.field_shortlistname_value"></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-left: 1em;" class="flex-wrap">
+                        <div class="label">
+                            Disciple
+                        </div>
+                        <div class="input-box">
+                            <!-- <input matInput type="text"> -->
+                            <nz-select class="nzSelect-revamp" nzAllowClear nzShowSearch nzPlaceHolder="--select disciple--" [(ngModel)]="selectedDisciple" [ngClass]="disciplineDropdown.length == 0 ? 'disabled': ''">
+                                <nz-option *ngFor="let disciplineValue of disciplineDropdown" [nzLabel]="disciplineValue" [nzValue]="disciplineValue"></nz-option>
+                            </nz-select>
+                        </div>
+                    </div>
+                    <div style="margin-left: 1em; max-width: 357px;" class="flex-wrap">
+                        <div class="label">
+                            Assessment name
+                        </div>
+                        <div class="input-box-revamp">
+                            <input matInput type="text" [(ngModel)]="assessmentName">
+                        </div>
+                    </div>
+                    <div style="margin-left: 1em;" class="flex-wrap">
+                        <div class="label">
+                            Assessment Date & Time
+                        </div>
+                        <div class="input-box">
+                            <!-- <mat-form-field>
                     <input matInput [matDatepicker]="dp" [(ngModel)]="datetime">
                       <mat-datepicker-toggle [disableRipple]="true" matSuffix [for]="dp"></mat-datepicker-toggle>
                       <mat-datepicker #dp>
                       </mat-datepicker>
                   </mat-form-field> -->
-              <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" nzPlaceHolder="Select date & time" ngModel
-                (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)" class="datetime"></nz-date-picker>
+                            <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" nzPlaceHolder="Select date & time" ngModel (ngModelChange)="onChange($event)" (nzOnOk)="onOk($event)" class="datetime"></nz-date-picker>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
-    <!-- <mat-form-field>
+    <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
+        <!-- <mat-form-field>
                   <mat-label>Filter</mat-label> -->
-    <div class="search-bar">
-      <div class="search-icon">
-        <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
-      </div>
+        <div class="search-bar">
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
 
-      <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
-        <button class="submit" mat-raised-button (click)="submitDialog()">Send email</button>
-      </div>
+            </div>
 
+            <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
+                <button class="submit" mat-raised-button (click)="submitDialog()">Send email</button>
+            </div>
+
+        </div>
+        <!-- </mat-form-field> -->
+
+        <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
+            [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" [animateRows]="true" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40"
+            [animateRows]="true">
+        </ag-grid-angular>
     </div>
-    <!-- </mat-form-field> -->
-
-    <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
-      [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true"
-      [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'"
-      [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)"
-      (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40">
-    </ag-grid-angular>
-  </div>
 </div>

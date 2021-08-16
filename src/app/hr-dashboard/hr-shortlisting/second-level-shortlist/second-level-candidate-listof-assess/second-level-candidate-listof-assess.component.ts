@@ -104,7 +104,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       shortlist_name: name
     };
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
-      // this.appConfig.hideLoader();
+      //
       this.assessmentName = data;
 
     }, (err) => {
@@ -217,14 +217,14 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.appConfig.hideLoader();
+
     }, (err) => {
     });
   }
 
 
   selectedUser(userDetail) {
-    
+
   }
 
   ngAfterViewInit() {

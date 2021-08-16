@@ -14,7 +14,7 @@ import moment from 'moment';
   templateUrl: './tpo-bulk-upload-reports.component.html',
   styleUrls: ['./tpo-bulk-upload-reports.component.scss']
 })
-export class TpoBulkUploadReportsComponent implements OnInit {
+export class TpoBulkUploadReportsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
 
@@ -30,15 +30,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef : any;
   gridColumnApi: any;
   rowData: any;
   searchBox = false;
@@ -54,33 +46,43 @@ export class TpoBulkUploadReportsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+      this.defaultColDef = this.appConfig.agGridWithAllFunc();
       this.tabledef();
     }
-  
+
+    ngAfterViewInit() {
+      // Hack: Scrolls to top of Page after page view initialized
+      let top = document.getElementById('top');
+      if (top !== null) {
+        top.scrollIntoView();
+        top = null;
+      }
+   }
+
     onGridReady(params: any) {
       this.gridApi = params.api;
       this.gridColumnApi = params.columnApi;
     }
-  
+
     sortevent(e) {
     }
-  
+
     customComparator = (valueA, valueB) => {
       return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
     }
-  
+
     onCellClicked(event) {
     }
-  
+
     getModel(e) {
       // console.log(e);
-      
+
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
       if (filteredArray && filteredArray.length === 0) {
         this.appConfig.warning('No search results found');
       }
     }
-  
+
     onQuickFilterChanged() {
       this.gridApi.setQuickFilter(this.quickSearchValue);
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
@@ -90,12 +92,11 @@ export class TpoBulkUploadReportsComponent implements OnInit {
       }
     }
     tabledef() {
-  
+
       this.columnDefs = [
         {
           headerName: 'S no', field: 'counter',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agNumberColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'counter',
@@ -106,8 +107,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
         },
         {
           headerName: 'Tag name', field: 'tag',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'tag',
@@ -117,8 +117,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
         },
         {
           headerName: 'Name', field: 'name',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'name',
@@ -128,8 +127,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
         },
         {
           headerName: 'Email id', field: 'email',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'email',
@@ -139,8 +137,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
         },
         {
           headerName: 'Date', field: 'date',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           maxWidth: 120,
           sortable: true,
           tooltipField: 'date',
@@ -150,8 +147,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
         },
         {
           headerName: 'Time', field: 'time',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           maxWidth: 120,
           sortable: true,
           tooltipField: 'time',
@@ -161,8 +157,7 @@ export class TpoBulkUploadReportsComponent implements OnInit {
         },
         {
           headerName: 'Reason for not uploaded', field: 'reason',
-          filter: true,
-          floatingFilterComponentParams: { suppressFilterButton: true },
+          filter: 'agTextColumnFilter',
           minWidth: 140,
           sortable: true,
           tooltipField: 'reason',
@@ -173,14 +168,14 @@ export class TpoBulkUploadReportsComponent implements OnInit {
       ];
       this.getUsersList();
     }
-  
+
   // To get all users
   getUsersList() {
     const apiData = {
       uploaded_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
     this.adminService.bulkUploadCandidatesErrorList(apiData).subscribe((datas: any) => {
-      this.appConfig.hideLoader();
+
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {

@@ -1,0 +1,134 @@
+@import "../../themes/themes.scss";
+
+.joinInterviewWrapper {
+    // padding: 15px;
+    &.candidate {
+    padding: 20px 25px 0px 10px;
+    // border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    h5 {
+        font-weight: 600;
+    }
+    .joinInterview {
+        padding: 15px 0;
+    }
+    .designation + div {
+        height: 35px;
+    }
+    .meetingID {
+        line-height: 0.3;
+    }
+    .iconinfo {
+        flex-grow: 0.5;
+        display: flex;
+        justify-content: center;
+        em {
+            font-size: 24px
+        }
+
+        &+ div {
+            flex-grow: 15;;
+        }
+    }
+    }
+}
+
+
+
+.interview {
+    h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: normal;
+        color: $secondary;
+    }
+    p {
+        font-size: 15px;
+        font-weight: normal;
+        color: $secondary;
+        margin-bottom: 10px;
+        strong {
+            font-weight: bold;
+        }
+    }
+}
+.joinInterview {
+    border-radius: 3px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    .meetingID {
+        font-size: 12px;
+        font-weight: normal;
+        color: $secondary;
+    }
+    > div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .designation {
+        margin: 10px 0 0;
+    }
+    h2 {
+        font-size: 24px;
+        color: $secondary;
+        margin: 0;
+        line-height: normal;
+    }
+    button {
+        background-color: #c02222;
+        padding: 5px 10px;
+        border-radius: 4px;
+        border: none;
+        font-weight: normal;
+        color: $white;
+        flex-direction: row !important;
+        width: 150px;
+        height: 35px;
+        font-size: 16px;
+        em {
+            margin-right: 7px;
+        }
+    }
+    .timing, .note {
+        font-size: 13px;
+        font-weight: normal;
+        color: $gray-dark;
+        margin: 1em 0;
+        em {
+            margin-right: 10px;
+        }
+    }
+}
+
+.disabled {
+  background-color: #bababa !important;
+  cursor: not-allowed;
+}
+.mat-expansion-panel {
+  // border: 1px solid #cccccc;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+}
+.mat-expansion-panel-header {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 4px 18px;
+}
+:host ::ng-deep .mat-expansion-panel-header.mat-expanded {
+  font-size: 20px;
+  font-weight: 500;
+  height: 48px !important;
+  border-bottom: 0.1em solid #e8e8e8;
+}
+.nocard {
+align-items: center;
+font-size: 16px;
+font-weight: 600;
+}

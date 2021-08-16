@@ -21,12 +21,6 @@ import { ReportsListComponent } from './hr-reports/reports-list/reports-list.com
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
 import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bulk-upload-reports.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
-import { EvaluationCandidateDetailsComponent } from './evaluation/evaluation-candidate-details/evaluation-candidate-details.component';
-import { EvaluationInterviewPanelComponent } from './evaluation/evaluation-interview-panel/evaluation-interview-panel.component';
-import { AssessmentDetailsComponent } from './evaluation/assessment-details/assessment-details.component';
-import { InterviewpanelDetailsComponent } from './evaluation/interviewpanel-details/interviewpanel-details.component';
-import { InterviewpanelSelectComponent } from './evaluation/interviewpanel-select/interviewpanel-select.component';
-import { EvalutionInterviewpanelFormComponent } from './evaluation/evalution-interviewpanel-form/evalution-interviewpanel-form.component';
 import { HrAssingAssessmentComponent } from './hr-assing-assessment/hr-assing-assessment.component';
 import { SchedulingAssessmentComponent } from './hr-assing-assessment/scheduling-assessment/scheduling-assessment.component';
 
@@ -44,7 +38,6 @@ import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-sh
 import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
 import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
 import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
-import { SecondLevelAssessmentReportsComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-reports/second-level-assessment-reports.component';
 import { HrEvaluationMainScreenComponent } from './evaluation/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
 import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
 import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
@@ -122,13 +115,6 @@ const routes: Routes = [
                 component: SecondLevelAssessmentListComponent,
                 data: {
                   breadcrumb: ''
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_REPORTS}`,
-                component: SecondLevelAssessmentReportsComponent,
-                data: {
-                  breadcrumb: 'Reports'
                 }
               },
               {
@@ -252,20 +238,6 @@ const routes: Routes = [
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS}`,
-            component: EvaluationCandidateDetailsComponent,
-            data: {
-              breadcrumb: 'Candidate Details'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSESSMENTDETAILS}`,
-            component: AssessmentDetailsComponent,
-            data: {
-              breadcrumb: 'Assessment Details'
-            }
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
             data: {
               breadcrumb: 'Candidate Details'
@@ -297,38 +269,10 @@ const routes: Routes = [
             ]
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL}`,
-            component: EvaluationInterviewPanelComponent,
-            data: {
-              breadcrumb: 'Interview panel'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS}`,
-            component: InterviewpanelDetailsComponent,
-            data: {
-              breadcrumb: 'Interview panel details'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INTERVIEW_PANEL_DETAILS_SELECT}`,
-            component: InterviewpanelSelectComponent,
-            data: {
-              breadcrumb: 'Interview panel selected'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL_FORM}`,
-            component: EvalutionInterviewpanelFormComponent,
-            data: {
-              breadcrumb: 'Interview panel list'
-            }
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
-              breadcrumb: 'Interview Panel Assign'
+              breadcrumb: 'Panel Assignment'
             }
           },
           {
@@ -488,7 +432,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.DASHBOARD}`,
+        redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`,
         pathMatch: 'full',
 
       }

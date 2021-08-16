@@ -57,8 +57,9 @@
           <mat-label>Filter</mat-label> -->
     <div class="search-bar" style="display: none;">
       <div class="search-icon">
-        <input matInput [(ngModel)]="searchInput" placeholder="Search….">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput [(ngModel)]="searchInput" placeholder="Search….">
+        
       </div>
       <div class="buttons">
         <button mat-raised-button (click)="applySearch()"><span>Search </span></button>

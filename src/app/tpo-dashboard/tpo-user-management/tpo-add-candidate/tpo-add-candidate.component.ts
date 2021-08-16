@@ -90,7 +90,7 @@ export class TpoAddCandidateComponent implements OnInit {
       }
     ];
     this.adminService.bulkUploadCandidates(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if (data && data.length > 0) {
         this.appConfig.error(data && data[0] && data[0]['reason'] ? data[0]['reason'] : 'Candidate not added successfully', '');
       } else {

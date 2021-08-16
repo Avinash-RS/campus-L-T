@@ -9,10 +9,12 @@
 
   .head {
     font-weight: 500;
+    color: #808080;
+    font-size: 13px;
   }
   .ans {
     font-weight: 500;
-    color: $blue-4;
+    color: #282828;
     // display: flex;
   }
 }
@@ -28,11 +30,14 @@ th.mat-header-cell {
 //   color: $white;
 // }
 .bg {
-  background: $primary-gray;
-  color: $white;
-  height: 43px;
-  // padding-top: 9px;
-  font-size: 18px;
+  color: #545454;
+  height: 43px; 
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  .col-12 {
+    padding:0 ;
+  }
 }
 .bg-2 {
   background: $disable-gray !important;
@@ -100,7 +105,7 @@ table {
   padding-right: 7%;
 }
 .in-box {
-  border: 1px solid $borderColor-9;
+  border: 1px solid #d9d9d9;
   height: 31px;
 }
 .box {
@@ -126,10 +131,11 @@ textarea {
   resize: none;
   color: $black !important;
 }
-.place {
-  border: 1px solid $borderColor-9;
+.place { 
+  border: 1px solid rgb(217 217 217);
   height: 30px;
   margin-top: -8px;
+  border-radius: 3px;
 }
 .date {
   width: 193px;
@@ -148,7 +154,6 @@ textarea {
   text-indent: -0.5em;
 }
 .date {
-  width: 168px;
   margin-top: -8px;
 }
 .main-evaluation {
@@ -156,6 +161,7 @@ textarea {
   textarea {
     padding: 4px !important;
     color: $secondary !important;
+    border-radius: 3px;
   }
 }
 
@@ -175,7 +181,7 @@ textarea {
   color: $red;
 }
 textarea {
-  border: 1px solid $borderColor-9;
+  border: 1px solid #d9d9d9;
 }
 textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
   border: solid $red 1px;

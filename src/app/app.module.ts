@@ -32,7 +32,13 @@ import { InvpanelGuard } from './guards/canload/invpanel.guard';
 import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/common-kyc-profile-view.component';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { NgxChartsModule} from '@swimlane/ngx-charts';
 // import { AgGridModule } from 'ag-grid-angular';
+// ag grid enterprise
+import 'ag-grid-enterprise';
+import { AgGridModule } from 'ag-grid-angular';
 
 registerLocaleData(en);
 
@@ -58,6 +64,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    DragScrollModule,
+    NgxChartsModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-top-right',
@@ -65,7 +73,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
       preventDuplicates: true,
       autoDismiss: true
     }),
-    // AgGridModule.withComponents([])
+    AgGridModule.withComponents([])
     ],
   // providers: [],
   entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent, CommonJoiningFormComponent],

@@ -30,6 +30,7 @@ import { CandidateUploadDocumentComponent } from './candidate-document/candidate
 import {  RegistrationCloseComponent } from './registration-close/registration-close.component';
 import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
 import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 
 const routes: Routes = [
@@ -43,49 +44,49 @@ const routes: Routes = [
       //   path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DASHBOARD}`, component: CandidateHallticketComponent, canActivate: [CanloadGuard]
       // },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`, 
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE}`,
         component: CandidateProfileComponent, canActivate: [CanloadGuard],
         data: {
           breadcrumb: 'Profile'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_PERSONAL_DETAILS}`,
             component: PersonalDetailsComponent, canActivate: [KycAccessGuard],
             data: {
               breadcrumb: 'Personal Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_EDUCATIONAL_DETAILS}`,
             component: EducationalDetailsComponent, canActivate: [KycAccessGuard],
             data: {
               breadcrumb: 'Education Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_FAMILY_DETAILS}`,
             component: FamilyDetailsComponent, canActivate: [KycAccessGuard],
             data: {
               breadcrumb: 'Family Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_GENERAL_DETAILS}`,
             component: GeneralDetailsComponent, canActivate: [KycAccessGuard],
             data: {
               breadcrumb: 'General Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_VIEW_DETAILS}`,
             component: ViewDetailsComponent, canActivate: [KycAccessGuard],
             data: {
               breadcrumb: 'View Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.PROFILE_CONFIRM}`,
             component: ConfirmComponent, canActivate: [KycAccessGuard],
             data: {
               breadcrumb: 'Confirm'
@@ -99,63 +100,63 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`, 
-        component: JoiningFormComponent, canActivate: [CanloadGuard], 
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
+        component: JoiningFormComponent, canActivate: [CanloadGuard],
         data: {
           breadcrumb: 'Joining Form'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`, 
-            component: JoiningPersonalComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`,
+            component: JoiningPersonalComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Personal Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_CONTACT}`, 
-            component: JoiningContactComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_CONTACT}`,
+            component: JoiningContactComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Contact Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}`, 
-            component: JoiningDependentComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}`,
+            component: JoiningDependentComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Dependent Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_EDUCATION}`, 
-            component: JoiningEducationComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_EDUCATION}`,
+            component: JoiningEducationComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Education Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_WORK}`, 
-            component: JoiningWorkDetailsComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_WORK}`,
+            component: JoiningWorkDetailsComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Work Experience Details'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_UPLOAD}`, 
-            component: JoiningUploadComponent,
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_UPLOAD}`,
+            component: JoiningUploadComponent, canActivate: [AuthGuard],
             data: {
               breadcrumb: 'Upload Documents'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PREVIEW}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PREVIEW}`,
             component: JoiningPreviewComponent,
             data: {
               breadcrumb: 'Preview'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_SUBMIT}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_SUBMIT}`,
             component: JoiningSubmitComponent,
             data: {
               breadcrumb: 'Submit'
@@ -163,20 +164,20 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
+            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`,
             pathMatch: 'full',
           }
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`, 
-        component: CandidateHallticketComponent, canActivate: [CanloadGuard], 
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`,
+        component: CandidateHallticketComponent, canActivate: [CanloadGuard],
         data: {
           breadcrumb: 'Hallticket'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`,
             component: CandidateAssignedAssessmentListComponent,
             data: {
               breadcrumb: 'List'
@@ -190,14 +191,14 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`, 
-        component: CandidateDocumentComponent, canActivate: [CanloadGuard], 
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`,
+        component: CandidateDocumentComponent, canActivate: [CanloadGuard],
         data: {
           breadcrumb: 'Document'
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`, 
+            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`,
             component: CandidateUploadDocumentComponent,
             data: {
               breadcrumb: 'Document List'
@@ -211,8 +212,8 @@ const routes: Routes = [
         ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_FAQ}`, 
-        component: CandidateFaqComponent, canActivate: [CanloadGuard], 
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_FAQ}`,
+        component: CandidateFaqComponent, canActivate: [CanloadGuard],
         data: {
           breadcrumb: 'FAQ'
         },
@@ -226,14 +227,14 @@ const routes: Routes = [
     ]
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`, 
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`,
     component: KycSubmissionPageComponent, canActivate: [KycthanksGuard],
     data: {
       breadcrumb: 'Kyc Submitted'
     }
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE}`, 
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE}`,
     component: RegistrationCloseComponent, canActivate: [KycthanksGuard],
     data: {
       breadcrumb: 'Registration close'

@@ -1,15 +1,17 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import moment from 'moment';
 
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
@@ -22,6 +24,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
   @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
+  @ViewChild('schedulePopup', {static: false}) schedulePopup: TemplateRef<any>;
+  fltractive= false;
   selectedUserDetail: any;
   userList: any;
   radioCheck;
@@ -64,15 +68,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef:any
   rowData: any = [];
   searchBox = false;
   filterValue: string;
@@ -84,15 +80,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   cacheBlockSizeHR: any = 500;
   gridApiHR: any;
   columnDefsHR = [];
-  defaultColDefHR = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDefHR:any
   rowDataHR: any = [];
   searchBoxHR = false;
   filterValueHR: string;
@@ -101,33 +89,33 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   isCheckedHR: boolean;
   panelOpenState = true;
 
+
+  //ScheduleForm
+  scheduleForm: FormGroup;
+  minDate;
+  maxDate;
+  selectedCandidate = [];
+  selectedInterviewer = [];
+  attendeesList = [];
+  objList;
   routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
+  toggleVisibility = true;
 
   constructor(
-    private appConfig: AppConfigService,
+    public appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private candidateService: CandidateMappersService,
+    private fb: FormBuilder,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private glovbal_validators: GlobalValidatorService
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-    //   {
-    //     icon: '002-cv.svg',
-    //     name: 'Candidate details',
-    //     router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_CANDIDATE_DETAILS
-    //   },
-    //   {
-    //     icon: '002-cv.svg',
-    //     name: 'Interview panel',
-    //     router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL,
-    //     active: true
-    //   },
     {
       icon: '002-cv.svg',
-      name: 'Interview Panel Assign',
+      name: 'Panel Assignment',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
     },
     {
@@ -146,13 +134,14 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
+    this.defaultColDefHR = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.tabledefHR();
     this.getInstitute();
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
-    this.appConfig.scrollToTop();
   }
 
   ngAfterViewInit() {
@@ -211,8 +200,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Candidate name', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'name',
@@ -222,8 +210,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -233,8 +220,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Education level', field: 'level',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',
@@ -293,8 +279,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Employee name', field: 'employee_name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'employee_name',
@@ -304,8 +289,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -315,8 +299,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Email', field: 'email',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'email',
@@ -337,7 +320,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       status: this.selectedStatus ? this.selectedStatus : ''
     }
     this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       if(!this.pannel) { return } else {this.pannel.close()}
       const datas = data ? data : [];
       this.showDefault = false;
@@ -369,7 +352,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getInstitute() {
     this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allInstitutes = data ? data : [];
     }, (err) => {
     });
@@ -377,7 +360,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getHRDisciplines() {
     this.adminService.getDiscipline().subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allHRDisciplines = data ? data : [];
     }, (err) => {
     });
@@ -388,7 +371,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       institute: data ? data : ''
     }
     this.adminService.getParticularInstituteDiscipline(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       this.allAssessments = data && data['assement_name'] ? data['assement_name'] : [];
       this.allDisciplines = data && data['discipline_array'] ? data['discipline_array'] : [];
     }, (err) => {
@@ -406,7 +389,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       discipline: data ? data : ''
     }
     this.adminService.getParticularInterviewpanelist(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
       const datas = data ? data : [];
       this.getUsersList1(datas);
     }, (err) => {
@@ -461,11 +444,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   assigntoPanel(apiData) {
     this.adminService.assignToHR(apiData).subscribe((data: any) => {
-      this.appConfig.hideLoader();
+
        const datas = {
           iconName: '',
           dataToBeShared: {
-            confirmText: `Candidates have been successfully assigned to respective interview panels`,
+            confirmText: `Candidate has been successfully assigned to respective interview panels`,
             type: 'assign-hr',
             identity: 'panel-assign'
           },
@@ -474,9 +457,33 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
           showCancel: '',
           showOk: ''
         };
+        this.matDialog.closeAll();
         this.openDialog1(ShortlistBoxComponent, datas, this.routeAssignedData);
     }, (err) => {
     });
+  }
+  scheduleHirerachy(){
+    const selectedUserlist = this.gridApi.getSelectedNodes();
+    const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
+    const candidateID = [];
+    const HRID = [];
+    selectedUserlist.forEach(element => {
+      if (element['data']) {
+        candidateID.push(element['data']['email'])
+      }
+    });
+
+    selectedUserlistHR.forEach(element => {
+      if (element['data']) {
+        HRID.push(element['data']['email'])
+      }
+    });
+    const apiData = {
+      user_email: candidateID,
+      hr_email: HRID,
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+    };
+    this.assigntoPanel(apiData);
   }
   submit() {
     const selectedUserlist = this.gridApi.getSelectedNodes();
@@ -592,6 +599,143 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       }
       this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED, {data: JSON.stringify(this.routeAssignedData)});
     });
+  }
+
+  scheduleformInitialize() {
+    this.scheduleForm = this.fb.group({
+      title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
+      startTime: [null, [Validators.required]],
+      endTime: [null, [Validators.required]],
+      type: ['1', [Validators.required]]
+    })
+  }
+
+  scheduleInterview(){
+    if(this.selectedCandidate.length == 0){
+      this.appConfig.warningWithTitle('Please select a candidate','');
+      return false;
+    }
+    if(this.selectedCandidate.length > 1){
+      this.appConfig.warningWithTitle('Please select one candidate at a time','');
+      return false;
+    }
+    if(this.selectedInterviewer.length == 0){
+      this.appConfig.warningWithTitle('Please select a interviewer','');
+      return false;
+    }
+    this.minDate = new Date();
+    this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer);
+    this.scheduleformInitialize();
+    const dialogRef = this.matDialog.open(this.schedulePopup, {
+      // width: '55%',
+      // height: '70%',
+      panelClass: 'custom-modalbox'
+    });
+  }
+
+  dateChange(){
+    this.minDate = new Date();
+  }
+  closePopup(){
+    this.matDialog.closeAll();
+  }
+
+    onCandidateSelect(e) {
+      const selectedRows = e.api.getSelectedRows();
+      // tslint:disable-next-line: prefer-const
+      let sData = [];
+      selectedRows.forEach((d) => {
+        d.type = 'candidate'
+        sData.push(d);
+      });
+      this.selectedCandidate = sData;
+    }
+
+    onInterviewerSelect(e) {
+      const selectedRows = e.api.getSelectedRows();
+      // tslint:disable-next-line: prefer-const
+      let sData = [];
+      selectedRows.forEach((d) => {
+        d.type = 'interviewer'
+        sData.push(d);
+      });
+      this.selectedInterviewer = sData;
+    }
+
+  checkIsValidDate() {
+    if (moment(this.scheduleForm.value.endTime).isSameOrBefore(this.scheduleForm.value.startTime)) {
+      this.appConfig.warning('End Date Time should not go beyond State Date Time')
+      return false;
+    }
+    if (moment(this.scheduleForm.value.startTime).isSameOrAfter(this.scheduleForm.value.endTime)) {
+      this.appConfig.warning('Start Date Time should not go beyond End Date Time')
+      return false;
+    }
+    return true;
+  }
+
+  scheduleRoom(){
+    if (this.scheduleForm.valid && this.checkIsValidDate()) {
+      let userDetails = [];
+      this.attendeesList.forEach((value)=>{
+        const vl = {
+          'emailId': value.email,
+          'userFullName':value?.name ? value.name : value.employee_name,
+          'type':value.type,
+        }
+        userDetails.push(vl)
+      })
+      var obj = {
+        'roomId':Math.floor(Math.random() * 10000000).toString(),
+        'password': this.scheduleForm.value.password,
+        'roomName':this.scheduleForm.value.title,
+        'startTime': this.scheduleForm.value.startTime,
+        'endTime': this.scheduleForm.value.endTime,
+        "userDtl": userDetails,
+        "createdByID" : this.appConfig.getLocalData('userEmail'),
+        "createdByName": this.appConfig.getLocalData('username'),
+        "type": this.scheduleForm.value.type == '1' ? 'webrtc' : 'teams'
+      }
+      this.objList = obj;
+      this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
+        if(result.success){
+          this.scheduleHirerachy();
+        } else {
+          this.appConfig.warningWithTitle('Something went wrong','');
+        }
+      })
+    } else {
+      this.scheduleForm.valid ? '' : this.appConfig.warning('Form is Invalid');
+      this.glovbal_validators.validateAllFields(this.scheduleForm);
+    }
+  }
+  togglefltr() {
+    this.fltractive = !this.fltractive
+  }
+
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+     return split;
+    }
+  }
+
+  // FormControls
+  get title() {
+    return this.scheduleForm.get('title');
+  }
+  get password1() {
+    return this.scheduleForm.get('password');
+  }
+  get startTime() {
+    return this.scheduleForm.get('startTime');
+  }
+  get endTime() {
+    return this.scheduleForm.get('endTime');
+  }
+  get type() {
+    return this.scheduleForm.get('type');
   }
 
 }

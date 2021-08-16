@@ -5,8 +5,7 @@
   .add-button,.add-button:focus  {
     color: $primary-red;
     border: 1px solid #BEBEBE;
-    height: 30px;
-    width: 100px;
+    height: 30px; 
     transition: background-color 580ms linear;
 }
 .add-button:hover {
