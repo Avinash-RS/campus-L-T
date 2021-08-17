@@ -675,4 +675,7 @@ getScheduledList(data) {
   return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});
 }
 
+getDummyJson() {
+  return this.http.get('../../assets/files/sample.json');
+}
 }

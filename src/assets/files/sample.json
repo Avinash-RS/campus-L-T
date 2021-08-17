@@ -1,0 +1,75 @@
+[
+  {
+     "email":"Avinash@mailinator.com",
+     "assessments":[
+        {
+          "name":"Aptitude Assessment",
+           "sections":[
+              {
+                 "name":"Verbal",
+                 "score":40,
+                 "maxScore":40,
+                 "percentage":100
+              },
+              {
+                 "name":"Analytical",
+                 "score":40,
+                 "maxScore":40,
+                 "percentage":100
+              },
+              {
+                "name":"Total Score",
+                "score": 80,
+                "maxScore": 80,
+                "percentage": 80
+             }
+           ]
+        },
+        {
+           "name":"Coding Assessment",
+           "sections":[
+              {
+                 "name":"Verbal",
+                 "score":40,
+                 "maxScore":40,
+                 "percentage":100
+              },
+              {
+                 "name":"Analytical",
+                 "score":40,
+                 "maxScore":40,
+                 "percentage":100
+              },
+              {
+                "name":"Total Score",
+                "score": 80,
+                "maxScore": 80,
+                "percentage": 80
+             }
+           ]
+        }
+     ]
+  },
+  {
+     "email":"User1@mailinator.com",
+     "assessments":[
+        {
+           "name":"Aptitude Assessment",
+           "sections":[
+              {
+                 "name":"Verbal",
+                 "score":40,
+                 "maxScore":40,
+                 "percentage":100
+              },
+              {
+                 "name":"Analytical",
+                 "score":40,
+                 "maxScore":40,
+                 "percentage":100
+              }
+           ]
+        }
+     ]
+  }
+]

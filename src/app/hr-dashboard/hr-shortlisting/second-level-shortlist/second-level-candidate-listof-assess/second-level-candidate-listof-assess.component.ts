@@ -8,6 +8,12 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
+ModuleRegistry.registerModules(AllModules);
+
+import { GridChartsModule } from '@ag-grid-enterprise/charts';
+ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
   selector: 'app-second-level-candidate-listof-assess',
@@ -17,62 +23,58 @@ import { ActivatedRoute } from '@angular/router';
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit {
 
   BIS = this.appConfig.getLocalData('BIS');
-  percentageDecimals = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
-  validInput = new FormControl('', Validators.pattern(this.percentageDecimals));
-  validInput1 = new FormControl('', Validators.pattern(this.percentageDecimals));
-  validInput2 = new FormControl('', Validators.pattern(this.percentageDecimals));
-  validInput3 = new FormControl('', Validators.pattern(this.percentageDecimals));
-  validInput4 = new FormControl('', Validators.pattern(this.percentageDecimals));
-  visible = false;
-  enableFilter = false;
-  showApply = false;
-  showShortlisted = false;
-  displayedColumns1: any[] = ['filter'];
-  displayedColumns: any[] = this.BIS == 'true' ? ['uid', 'candidate_new_id', 'user_name',
-    'domain_marks',
-    'domain_percentage',
-    // 'verbal_marks',
-    // 'verbal_percentage',
-    'analytical_mark',
-    'analytical_percentage',
-    // 'quantitive_mark',
-    // 'quantitative_percentage',
-    'marks',
-    'percentage',
-    // 'heading',
-    // 'checked'
-  ] : ['uid', 'candidate_new_id', 'user_name',
-  'domain_marks',
-  'domain_percentage',
-  'verbal_marks',
-  'verbal_percentage',
-  'analytical_mark',
-  'analytical_percentage',
-  'quantitive_mark',
-  'quantitative_percentage',
-  'marks',
-  'percentage',
-  // 'heading',
-  // 'checked'
-];
-  dataSource: MatTableDataSource<any>;
-  selection = new SelectionModel(true, []);
   selectedUserDetail: any;
   userList: any;
-  totalMarks: any;
-  total_domain_marks: any;
-  total_verbal_marks: any;
-  total_analytical_mark: any;
-  total_quantitive_mark: any;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  viewDetails: any;
   assessmentName: any;
   nameOfAssessment: any;
   selectedCandidates: any;
   previewList: any;
   changedList: any;
   displayNoRecords = false;
+
+  // Ag grif
+  gridApi: any;
+  columnDefs = [];
+  defaultColDef = {
+    // editable: true,
+    enableRowGroup: true,
+    enablePivot: true,
+    enableValue: true,
+    sortable: true,
+    resizable: true,
+    filter: true,
+    columnGroupShow: 'closed',
+    flex: 1,
+    minWidth: 200,
+    floatingFilter: true,
+    // minWidth: 150,
+    suppressSizeToFit: true,
+    headerCheckboxSelection: this.isFirstColumn,
+    checkboxSelection: this.isFirstColumn,
+  };
+  tooltipShowDelay = 0;
+  rowData: any;
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
+  feildsValue:any = [];
+  // autoGroupColumnDef = [];
+  subscription: Subscription;
+  value:any;
+  message:any;
+  public frameworkComponents;
+  public statusBar;
+  public sideBar;
+  public paginationNumberFormatter;
+  public rowClassRules;
+  public autoGroupColumnDef;
+  public gridColumnApi;
+  public detailCellRendererParams;
+  // statusBar:any;
+  public components;
+  public getNodeChildDetails;
+  resultsLength:any;
+  fres: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -82,11 +84,24 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
+    this.statusBar = {
+      statusPanels: [
+        // {
+        //   statusPanel: 'agTotalRowCountComponent',
+        //   align: 'left',
+        // },
+        { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
+        { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
+        { statusPanel: 'agAggregationComponent', align: 'right' },
+      ],
+    };
+
     this.editRouteParamGetter();
   }
 
   ngOnInit() {
-    this.onChanges();
+    this.getdummy();
+    this.tableDef();
   }
 
   // Get url param for edit route
@@ -94,8 +109,8 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
-      this.assessmentDetails(params['data']);
-      this.getUsersList(params['data']);
+      // this.assessmentDetails(params['data']);
+      // this.getUsersList(params['data']);
     });
   }
 
@@ -112,145 +127,243 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     });
   }
 
-  customFilterApply() {
-    if (this.validInput.valid && this.validInput1.valid && this.validInput2.valid && this.validInput3.valid && this.validInput4.valid) {
-      this.getUsersList(this.nameOfAssessment);
-    } else {
-      this.validInput.markAsTouched();
-      this.validInput1.markAsTouched();
-      this.validInput2.markAsTouched();
-      this.validInput3.markAsTouched();
-      this.validInput4.markAsTouched();
-    }
-  }
-
-  onChanges(): void {
-    this.validInput.valueChanges.subscribe(val => {
-      if (val) {
-        this.enableFilter = true;
-      } else {
-        this.enableFilter = true;
-      }
-    });
-    this.validInput1.valueChanges.subscribe(val => {
-      if (val) {
-        this.enableFilter = true;
-      } else {
-        this.enableFilter = true;
-      }
-    });
-    this.validInput2.valueChanges.subscribe(val => {
-      if (val) {
-        this.enableFilter = true;
-      } else {
-        this.enableFilter = true;
-      }
-    });
-    this.validInput3.valueChanges.subscribe(val => {
-      if (val) {
-        this.enableFilter = true;
-      } else {
-        this.enableFilter = true;
-      }
-    });
-    this.validInput4.valueChanges.subscribe(val => {
-      if (val) {
-        this.enableFilter = true;
-      } else {
-        this.enableFilter = true;
-      }
-    });
-  }
-  enableFilterMethod() {
-    this.showApply = !this.showApply;
-  }
-
   submit() {
-    this.changedList = this.userList;
-    this.previewList = this.changedList;
+    // this.changedList = this.userList;
+    // this.previewList = this.changedList;
 
-    this.showShortlisted = true;
+    // this.showShortlisted = true;
   }
-  disableListView(event) {
-    this.userList = event;
-    this.dataSource = new MatTableDataSource(this.userList);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.changedList = [];
-    this.previewList = [];
-    this.showShortlisted = false;
-    this.appConfig.clearLocalDataOne('tempSecond');
-  }
+
   // To get all users
   getUsersList(name) {
-
     const apiData = {
       shortlist_name: name,
-      domain_percentage: this.validInput.value ? this.validInput.value : '',
-      verbal_percentage: this.validInput1.value ? this.validInput1.value : '',
-      analytical_percentage: this.validInput2.value ? this.validInput2.value : '',
-      quantitative_percentage: this.validInput3.value ? this.validInput3.value : '',
-      marks_valid: this.validInput4.value ? this.validInput4.value : ''
+      domain_percentage: '',
+      verbal_percentage: '',
+      analytical_percentage: '',
+      quantitative_percentage: '',
+      marks_valid: ''
     };
     this.adminService.filterSecondLevel(apiData).subscribe((datas: any) => {
-      this.appConfig.setLocalData('secondLevelFilter', this.validInput.value ? this.validInput.value : '');
-      this.appConfig.setLocalData('secondLevelFilter1', this.validInput1.value ? this.validInput1.value : '');
-      this.appConfig.setLocalData('secondLevelFilter2', this.validInput2.value ? this.validInput2.value : '');
-      this.appConfig.setLocalData('secondLevelFilter3', this.validInput3.value ? this.validInput3.value : '');
-      this.appConfig.setLocalData('secondLevelFilter4', this.validInput4.value ? this.validInput4.value : '');
-      const align = [];
-
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach((element, i) => {
         count = count + 1;
         element['uid'] = count;
-        if (element && i == 0) {
-          this.totalMarks = element['total_marks'] ? element['total_marks'] : '';
-          this.total_domain_marks = element['total_domain_marks'] ? element['total_domain_marks'] : '';
-          this.total_verbal_marks = element['total_verbal_marks'] ? element['total_verbal_marks'] : '';
-          this.total_analytical_mark = element['total_analytical_mark'] ? element['total_analytical_mark'] : '';
-          this.total_quantitive_mark = element['total_quantitive_mark'] ? element['total_quantitive_mark'] : '';
-        }
       });
+      this.rowData = this.userList;
       this.selectedCandidates = this.userList.length;
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
     }, (err) => {
     });
   }
 
 
   selectedUser(userDetail) {
-
   }
 
   ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+// Ag grid
+  isFirstColumn(params) {
+    var displayedColumns = params.columnApi.getAllDisplayedColumns();
+    var thisIsFirstColumn = displayedColumns[0] === params.column;
+    return thisIsFirstColumn;
+  }
 
-    // check search data is available or not
-    if(this.dataSource.filteredData.length==0){
-      this.displayNoRecords=true;
-    }else{
-      this.displayNoRecords=false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  onFirstDataRendered(params) {
+    params.api.sizeColumnsToFit();
+    // setTimeout(function () {
+    //   params.api.getDisplayedRowAtIndex(1).setExpanded(true);
+    // }, 0);
   }
 
 
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridApi.closeToolPanel();
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.getColumnState();
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.getDisplayedRowCount();
+    var allColumnIds = [];
+    this.gridColumnApi.getAllColumns().forEach(function (column) {
+      allColumnIds.push(column.colId);
+    });
+    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+  }
 
+  sortevent(e) {}
+
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  };
+
+  onCellClicked(event) {}
+
+  getModel(e) {
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+      this.appConfig.warning('No search results found');
+    }
+  }
+
+  onQuickFilterChanged() {
+    this.gridApi.setQuickFilter(this.quickSearchValue);
+    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    if (filteredArray && filteredArray.length === 0) {
+        this.appConfig.warning('No search results found');
+    }
+  }
+
+  onBtnExport() {
+    this.gridApi.exportDataAsCsv();
+  }
+  getdummy() {
+    this.adminService.getDummyJson().subscribe((res: any)=> {
+      console.log('res', res);
+      this.jsonStructureCreation(res);
+    }, (err)=> {
+
+    });
+  }
+
+  jsonStructureCreation(res) {
+    let apiResult = res;
+    let agParamNames: any;
+    let assessmentParamNames: any;
+    let sectionParamNames: any;
+    // let firstElement = res[0].assessments[0];
+    let datatype = [];
+
+    apiResult.forEach((first, firstI) => {
+     firstI == 0 ? agParamNames = Object.getOwnPropertyNames(first) : '';
+      first.assessments.forEach((second, secondI) => {
+        secondI == 0 ? assessmentParamNames = Object.getOwnPropertyNames(second) : '';
+        second.sections.forEach((firstElement, firstElementI) => {
+          firstElementI == 0 ? sectionParamNames = Object.getOwnPropertyNames(firstElement) : '';
+          for (const key in firstElement) {
+      console.log('firstElement', firstElement);
+      if (Object.prototype.hasOwnProperty.call(firstElement, key)) {
+        console.log('firstElement key', key);
+        const element = firstElement[key];
+        console.log('firstkey', firstElement[key]);
+        if (parseInt(firstElement[key]) == firstElement[key] ) {
+          datatype.push(key);
+        }
+      }
+    }
+
+        });
+      });
+    });
+
+    // for (const key in firstElement) {
+    //   console.log('firstElement', firstElement);
+    //   if (Object.prototype.hasOwnProperty.call(firstElement, key)) {
+    //     console.log('firstElement key', firstElement, key);
+    //     const element = firstElement[key];
+    //     console.log('firstkey', firstElement[key]);
+    //     if (parseInt(firstElement[key]) == firstElement[key] ) {
+    //       datatype.push(key);
+    //     }
+    //   }
+    // }
+    let removeDuplicated = new Set(datatype);
+    datatype = [...removeDuplicated];
+    console.log('datatype', datatype);
+    let finalparam = [];
+    apiResult.forEach(first => {
+      first.assessments.forEach(second => {
+        second.sections.forEach(firstElement => {
+          let pushObj = {
+            name: firstElement,
+            type1: 'text'
+          }
+          datatype.forEach(result => {
+            if (firstElement == result) {
+              pushObj.type1 = 'number';
+            }
+          });
+          finalparam.push(pushObj);
+        });
+      });
+    });
+
+    console.log('ad', finalparam);
+
+    console.log('final apiResult', apiResult);
+    console.log('ag paar', agParamNames);
+    console.log('assessmentParamNames', assessmentParamNames);
+    console.log('sectionParamNames', sectionParamNames);
+  }
+
+  tableDef() {
+    this.columnDefs = [
+      {
+      headerName: 'Personal',
+      children: [
+        {
+          headerName: 'Candidate ID',
+          field: 'candidate_id',
+          sortable: true,
+          resizable:true,
+          columnGroupShow: 'closed',
+          tooltipField: 'candidate_id',
+          // minWidth: 150,
+          suppressSizeToFit: true,
+          filter: 'agTextColumnFilter',
+          enableValue: true,
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+          filterParams: {
+            buttons: ['reset'],
+          },
+        },
+        {
+          headerName: 'Mail Id',
+          field: 'mail',
+          sortable: true,
+          resizable:true,
+          columnGroupShow: 'closed',
+          tooltipField: 'mail',
+          // minWidth: 150,
+          suppressSizeToFit: true,
+          filter: 'agTextColumnFilter',
+          enableValue: true,
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+          filterParams: {
+            buttons: ['reset'],
+          },
+        }
+      ]
+    },
+    {
+      headerName: 'Mail ID',
+      children: [
+        {
+          headerName: 'Mail Id',
+          field: 'mail',
+          sortable: true,
+          resizable:true,
+          columnGroupShow: 'closed',
+          tooltipField: 'mail',
+          // minWidth: 150,
+          suppressSizeToFit: true,
+          filter: 'agTextColumnFilter',
+          enableValue: true,
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+          filterParams: {
+            buttons: ['reset'],
+          },
+        }
+      ]
+    },
+  ];
+}
 }

@@ -5,4 +5,96 @@ kycForm
 
 
 localProfilePic
+
+const data =
+[
+   {
+    email: "Avinash@mailinator.com",
+    assessments: [
+      {
+        name: "Aptitude Assessment",
+        score: 60,
+        maxScore: 100
+        sections: [
+          {
+            name: 'Verbal',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          },
+          {
+            name: 'Analytical',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          }
+        ]
+      },
+      {
+        name: "Coding Assessment",
+        score: 60,
+        maxScore: 100
+        sections: [
+          {
+            name: 'Verbal',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          },
+          {
+            name: 'Analytical',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          }
+        ]
+      }
+    ]
+   },
+   {
+    email: "User1@mailinator.com",
+    assessments: [
+      {
+        name: "Aptitude Assessment",
+        score: 60,
+        maxScore: 100
+        sections: [
+          {
+            name: 'Verbal',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          },
+          {
+            name: 'Analytical',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          }
+        ]
+      },
+      {
+        name: "Coding Assessment",
+        score: 60,
+        maxScore: 100
+        sections: [
+          {
+            name: 'Verbal',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          },
+          {
+            name: 'Analytical',
+            score: 40,
+            maxScore: 40,
+            percentage: 100
+          }
+        ]
+      }
+    ]
+   }
+]
+
+
 */

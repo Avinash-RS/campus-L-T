@@ -10,13 +10,13 @@ export const environment = {
 
     // Campus QA
     ASSETS: 'https://assets.lntedutech.com',
-    versionCheckURL: 'http://campus-qa.lntedutech.com/version.json',
+    versionCheckURL: 'https://campus-qa.lntedutech.com/version.json',
 
     NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
     WEBRTC_NODE_API : 'https://uapqaapplicationgateway.lntiggnite.com',
-    API_BASE_URL: 'http://campus-qa.lntedutech.com/d8cintana2',
-    API_BASE_URL_city: 'http://campus-qa.lntedutech.com/d8cintana2',
-    Image_Base_Url: 'http://campus-qa.lntedutech.com',
+    API_BASE_URL: 'https://campus-qa.lntedutech.com/d8cintana2',
+    API_BASE_URL_city: 'https://campus-qa.lntedutech.com/d8cintana2',
+    Image_Base_Url: 'https://campus-qa.lntedutech.com',
 
     // campus Dev
     // ASSETS: 'https://assets.lntedutech.com',
