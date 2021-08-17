@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udapwebuat
+  name: udapweb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: udapwebuat
+      app: udapweb
   template:
     metadata:
       labels:
-        app: udapwebuat
+        app: udapweb
     spec:
       containers:
         - name: udapwebuat
-          image: lxpacrazure.azurecr.io/udapwebuat:$tag
+          image: lxpacrazure.azurecr.io/udapweb:$tag
           imagePullPolicy: Always
           ports:
           - containerPort: 80
