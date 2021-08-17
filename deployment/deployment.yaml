@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: udapwebuat
-          image: lxpacrazure.azurecr.io/udapwebuat:$tag
+          image: lxpacrazure.azurecr.io/udapweb:$tag
           imagePullPolicy: Always
           ports:
           - containerPort: 80
