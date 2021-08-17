@@ -1,75 +1,155 @@
-[
-  {
-     "email":"Avinash@mailinator.com",
-     "assessments":[
+{
+    "shortlist_name": "SHORTLIST_1",
+    "shortlist_status": "waiting",
+    "total_no_of_candidates": 2,
+    "metadata": [
         {
-          "name":"Aptitude Assessment",
-           "sections":[
-              {
-                 "name":"Verbal",
-                 "score":40,
-                 "maxScore":40,
-                 "percentage":100
-              },
-              {
-                 "name":"Analytical",
-                 "score":40,
-                 "maxScore":40,
-                 "percentage":100
-              },
-              {
-                "name":"Total Score",
-                "score": 80,
-                "maxScore": 80,
-                "percentage": 80
-             }
-           ]
+            "headerName": "Personal Information",
+            "children": [
+                {
+                    "headerName": "Candidate ID",
+                    "field": "candidate_id",
+                    "filter": "agNumberColumnFilter"
+                },
+                {
+                    "headerName": "Candidate Name",
+                    "field": "candidate_name",
+                    "filter": "agTextColumnFilter"
+                }
+            ]
         },
         {
-           "name":"Coding Assessment",
-           "sections":[
-              {
-                 "name":"Verbal",
-                 "score":40,
-                 "maxScore":40,
-                 "percentage":100
-              },
-              {
-                 "name":"Analytical",
-                 "score":40,
-                 "maxScore":40,
-                 "percentage":100
-              },
-              {
-                "name":"Total Score",
-                "score": 80,
-                "maxScore": 80,
-                "percentage": 80
-             }
-           ]
-        }
-     ]
-  },
-  {
-     "email":"User1@mailinator.com",
-     "assessments":[
+            "headerName": "ASSESSMENT_1 infomation",
+            "children": [
+                {
+                    "headerName": "SECTION_1",
+                    "children" : [
+                        {
+                            "headerName": "Marks",
+                            "field": "ass_0_sec_0_marks",
+                            "filter": "agNumberColumnFilter"
+                        },
+                        {
+                            "headerName": "Percentage",
+                            "field": "ass_0_sec_0_percentage",
+                            "filter": "agNumberColumnFilter"
+                        }
+                    ]
+                },
+                {
+                    "headerName": "SECTION_2",
+                    "children" : [
+                        {
+                            "headerName": "Marks",
+                            "field": "ass_0_sec_1_marks",
+                            "filter": "agNumberColumnFilter"
+                        },
+                        {
+                            "headerName": "Percentage",
+                            "field": "ass_0_sec_1_percentage",
+                            "filter": "agNumberColumnFilter"
+                        }
+                    ]
+                },
+                {
+                    "headerName": "Total Marks",
+                    "children" : [
+                        {
+                            "headerName": "Marks",
+                            "field": "ass_0_sec_2_marks",
+                            "filter": "agNumberColumnFilter"
+                        },
+                        {
+                            "headerName": "Percentage",
+                            "field": "ass_0_sec_2_percentage",
+                            "filter": "agNumberColumnFilter"
+                        }
+                    ]
+                }
+            ]
+        },
         {
-           "name":"Aptitude Assessment",
-           "sections":[
-              {
-                 "name":"Verbal",
-                 "score":40,
-                 "maxScore":40,
-                 "percentage":100
-              },
-              {
-                 "name":"Analytical",
-                 "score":40,
-                 "maxScore":40,
-                 "percentage":100
-              }
-           ]
+            "headerName": "ASSESSMENT_2 infomation",
+            "children": [
+                {
+                    "headerName": "SECTION_1",
+                    "children" : [
+                        {
+                            "headerName": "Marks",
+                            "field": "ass_1_sec_0_marks",
+                            "filter": "agNumberColumnFilter"
+                        },
+                        {
+                            "headerName": "Percentage",
+                            "field": "ass_1_sec_0_percentage",
+                            "filter": "agNumberColumnFilter"
+                        }
+                    ]
+                },
+                {
+                    "headerName": "SECTION_2",
+                    "children" : [
+                        {
+                            "headerName": "Marks",
+                            "field": "ass_1_sec_1_marks",
+                            "filter": "agNumberColumnFilter"
+                        },
+                        {
+                            "headerName": "Percentage",
+                            "field": "ass_1_sec_1_percentage",
+                            "filter": "agNumberColumnFilter"
+                        }
+                    ]
+                },
+                {
+                    "headerName": "Total Score",
+                    "children" : [
+                        {
+                            "headerName": "Marks",
+                            "field": "ass_1_sec_2_marks",
+                            "filter": "agNumberColumnFilter"
+                        },
+                        {
+                            "headerName": "Percentage",
+                            "field": "ass_1_sec_2_percentage",
+                            "filter": "agNumberColumnFilter"
+                        }
+                    ]
+                }
+            ]
         }
-     ]
-  }
-]
+    ],
+    "result": [
+        {
+            "candidate_id": "12133",
+            "candidate_name": "Avinash",
+            "ass_0_sec_0_marks": "10",
+            "ass_0_sec_0_percentage": "20",
+            "ass_0_sec_1_marks": "20",
+            "ass_0_sec_1_percentage": "30",
+            "ass_0_sec_2_marks": "40",
+            "ass_0_sec_2_percentage": "50",
+            "ass_1_sec_0_marks": "60",
+            "ass_1_sec_0_percentage": "70",
+            "ass_1_sec_1_marks": "05",
+            "ass_1_sec_1_percentage": "08",
+            "ass_1_sec_2_marks": "01",
+            "ass_1_sec_2_percentage": "10"
+        },{
+            "candidate_id": "981333",
+            "candidate_name": "User 1",
+            "ass_0_sec_0_marks": "90",
+            "ass_0_sec_0_percentage": "80",
+            "ass_0_sec_1_marks": "70",
+            "ass_0_sec_1_percentage": "60",
+            "ass_0_sec_2_marks": "50",
+            "ass_0_sec_2_percentage": "40",
+            "ass_1_sec_0_marks": "30",
+            "ass_1_sec_0_percentage": "20",
+            "ass_1_sec_1_marks": "10",
+            "ass_1_sec_1_percentage": "05",
+            "ass_1_sec_2_marks": "15",
+            "ass_1_sec_2_percentage": "25"
+        }
+    ]
+}

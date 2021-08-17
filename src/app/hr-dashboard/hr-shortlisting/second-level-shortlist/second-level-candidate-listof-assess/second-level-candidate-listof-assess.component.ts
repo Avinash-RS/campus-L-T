@@ -101,7 +101,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   ngOnInit() {
     this.getdummy();
-    this.tableDef();
+    // this.tableDef();
   }
 
   // Get url param for edit route
@@ -221,149 +221,50 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
   getdummy() {
     this.adminService.getDummyJson().subscribe((res: any)=> {
-      console.log('res', res);
-      this.jsonStructureCreation(res);
+      this.tableDef(res);
     }, (err)=> {
 
     });
   }
 
-  jsonStructureCreation(res) {
-    let apiResult = res;
-    let agParamNames: any;
-    let assessmentParamNames: any;
-    let sectionParamNames: any;
-    // let firstElement = res[0].assessments[0];
-    let datatype = [];
-
-    apiResult.forEach((first, firstI) => {
-     firstI == 0 ? agParamNames = Object.getOwnPropertyNames(first) : '';
-      first.assessments.forEach((second, secondI) => {
-        secondI == 0 ? assessmentParamNames = Object.getOwnPropertyNames(second) : '';
-        second.sections.forEach((firstElement, firstElementI) => {
-          firstElementI == 0 ? sectionParamNames = Object.getOwnPropertyNames(firstElement) : '';
-          for (const key in firstElement) {
-      console.log('firstElement', firstElement);
-      if (Object.prototype.hasOwnProperty.call(firstElement, key)) {
-        console.log('firstElement key', key);
-        const element = firstElement[key];
-        console.log('firstkey', firstElement[key]);
-        if (parseInt(firstElement[key]) == firstElement[key] ) {
-          datatype.push(key);
-        }
-      }
+  tableDef(res) {
+    let header = {
+      sortable: true,
+      resizable:true,
+      columnGroupShow: 'closed',
+      tooltipField: 'candidate_id',
+      // minWidth: 150,
+      suppressSizeToFit: true,
+      enableValue: true,
+      getQuickFilterText: (params) => {
+        return params.value;
+      },
+      filterParams: {
+        buttons: ['reset'],
+      },
     }
-
-        });
-      });
-    });
-
-    // for (const key in firstElement) {
-    //   console.log('firstElement', firstElement);
-    //   if (Object.prototype.hasOwnProperty.call(firstElement, key)) {
-    //     console.log('firstElement key', firstElement, key);
-    //     const element = firstElement[key];
-    //     console.log('firstkey', firstElement[key]);
-    //     if (parseInt(firstElement[key]) == firstElement[key] ) {
-    //       datatype.push(key);
-    //     }
-    //   }
-    // }
-    let removeDuplicated = new Set(datatype);
-    datatype = [...removeDuplicated];
-    console.log('datatype', datatype);
-    let finalparam = [];
-    apiResult.forEach(first => {
-      first.assessments.forEach(second => {
-        second.sections.forEach(firstElement => {
-          let pushObj = {
-            name: firstElement,
-            type1: 'text'
+    let apiResultSet = res && res.metadata && res.metadata.length > 0 ? res.metadata : [];
+    this.rowData = res && res.result && res.result.length > 0 ? res.result : [];
+    apiResultSet.forEach((first, index) => {
+      if (first && first.children && first.children.length > 0) {
+        first.children.forEach((second, index1) => {
+          if (index == 0) {
+            first.children[index1] = {...second, ...header};
+            first.children[index1].tooltipField = second.field;
           }
-          datatype.forEach(result => {
-            if (firstElement == result) {
-              pushObj.type1 = 'number';
-            }
-          });
-          finalparam.push(pushObj);
+          if (second && second.children && second.children.length > 0) {
+            second.children.forEach((third, index2) => {
+              if (index != 0) {
+                second.children[index2] = {...third, ...header};
+                second.children[index2].tooltipField = third.field;
+                }
+            });
+          }
         });
-      });
+      }
     });
+    console.log('tabledef', apiResultSet);
 
-    console.log('ad', finalparam);
-
-    console.log('final apiResult', apiResult);
-    console.log('ag paar', agParamNames);
-    console.log('assessmentParamNames', assessmentParamNames);
-    console.log('sectionParamNames', sectionParamNames);
+    this.columnDefs = apiResultSet;
   }
-
-  tableDef() {
-    this.columnDefs = [
-      {
-      headerName: 'Personal',
-      children: [
-        {
-          headerName: 'Candidate ID',
-          field: 'candidate_id',
-          sortable: true,
-          resizable:true,
-          columnGroupShow: 'closed',
-          tooltipField: 'candidate_id',
-          // minWidth: 150,
-          suppressSizeToFit: true,
-          filter: 'agTextColumnFilter',
-          enableValue: true,
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          filterParams: {
-            buttons: ['reset'],
-          },
-        },
-        {
-          headerName: 'Mail Id',
-          field: 'mail',
-          sortable: true,
-          resizable:true,
-          columnGroupShow: 'closed',
-          tooltipField: 'mail',
-          // minWidth: 150,
-          suppressSizeToFit: true,
-          filter: 'agTextColumnFilter',
-          enableValue: true,
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          filterParams: {
-            buttons: ['reset'],
-          },
-        }
-      ]
-    },
-    {
-      headerName: 'Mail ID',
-      children: [
-        {
-          headerName: 'Mail Id',
-          field: 'mail',
-          sortable: true,
-          resizable:true,
-          columnGroupShow: 'closed',
-          tooltipField: 'mail',
-          // minWidth: 150,
-          suppressSizeToFit: true,
-          filter: 'agTextColumnFilter',
-          enableValue: true,
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          filterParams: {
-            buttons: ['reset'],
-          },
-        }
-      ]
-    },
-  ];
-}
 }
