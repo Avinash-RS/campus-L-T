@@ -131,6 +131,7 @@
       <div class="content-section">
         <!-- Dont remove the id="top" div, it is for scrolling -->
         <div id="top" style="height: 0">&#160;</div>
+    <div style="position: relative; width: 100%; min-height: 95%; padding: 0 4px; box-sizing: border-box;">
         <div class="sticky-subheaders">
           <div class="toolbar-wrapper">
             <ol class="breadcrumb">
@@ -160,6 +161,10 @@
         </div>
       </div>
         <router-outlet></router-outlet>
+    </div>
+        <div class="footer">
+          <app-dashboard-header></app-dashboard-header>
+      </div>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>

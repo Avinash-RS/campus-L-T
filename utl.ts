@@ -96,5 +96,11 @@ const data =
    }
 ]
 
-
+const apiData = {
+shortlisted_ids: [],
+shortlisted_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+emai_sent: result['type'] === 'yes' ? true : false,
+shortlist_name: this.nameOfAssessment,
+filter_model: ''
+};
 */

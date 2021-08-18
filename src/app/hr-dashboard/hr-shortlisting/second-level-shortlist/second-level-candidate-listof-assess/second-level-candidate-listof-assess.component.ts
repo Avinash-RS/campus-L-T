@@ -13,6 +13,7 @@ import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 ModuleRegistry.registerModules(AllModules);
 
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
+import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -23,14 +24,11 @@ ModuleRegistry.registerModules([GridChartsModule]);
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit {
 
   BIS = this.appConfig.getLocalData('BIS');
-  selectedUserDetail: any;
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
-  selectedCandidates: any;
-  previewList: any;
-  changedList: any;
-  displayNoRecords = false;
+  statusHeaderData: any;
+  selectedCandidatesForShortlist: any;
 
   // Ag grif
   gridApi: any;
@@ -78,18 +76,13 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   constructor(
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private sharedService: SharedServiceService,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
     this.statusBar = {
       statusPanels: [
-        // {
-        //   statusPanel: 'agTotalRowCountComponent',
-        //   align: 'left',
-        // },
+        // { statusPanel: 'agTotalRowCountComponent', align: 'left'},
         { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
         { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
         { statusPanel: 'agAggregationComponent', align: 'right' },
@@ -100,8 +93,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   ngOnInit() {
-    this.getdummy();
-    // this.tableDef();
   }
 
   // Get url param for edit route
@@ -109,56 +100,62 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
-      // this.assessmentDetails(params['data']);
-      // this.getUsersList(params['data']);
+      this.getUsersList(params['data']);
     });
   }
 
-  assessmentDetails(name) {
-    const apidata = {
-      shortlist_name: name
-    };
-    this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
-      //
-      this.assessmentName = data;
-
-    }, (err) => {
-
-    });
-  }
+    // To get all users
+    getUsersList(name) {
+      const apiData = {
+        shortlist_name: name,
+      };
+      this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
+        console.log('response', response);
+        let tableHeaders = response && response.table_headers ? response.table_headers : [];
+        this.userList = response && response.table_data ? response.table_data : [];
+        this.rowData = this.userList;
+        this.tableDef(tableHeaders);
+        this.statusHeaderData = {
+          shortlist_name: response && response.shortlist_name ? response.shortlist_name : '',
+          shortlist_status: response && response.shortlist_status ? response.shortlist_status : '',
+          total_no_of_candidates: response && response.total_no_of_candidates ? response.total_no_of_candidates : 0,
+          selectedCandidates: response && response.table_data && response.table_data.length > 0 ? response.table_data.length : 0,
+        }
+      }, (err) => {
+      });
+    }
 
   submit() {
-    // this.changedList = this.userList;
-    // this.previewList = this.changedList;
-
-    // this.showShortlisted = true;
-  }
-
-  // To get all users
-  getUsersList(name) {
-    const apiData = {
-      shortlist_name: name,
-      domain_percentage: '',
-      verbal_percentage: '',
-      analytical_percentage: '',
-      quantitative_percentage: '',
-      marks_valid: ''
+    this.selectedCandidatesForShortlist = [];
+    this.selectedCandidatesForShortlist = this.gridApi.getSelectedNodes();
+    const data = {
+      shortlist: 'second'
     };
-    this.adminService.filterSecondLevel(apiData).subscribe((datas: any) => {
-      this.userList = datas ? datas : [];
-      let count = 0;
-      this.userList.forEach((element, i) => {
-        count = count + 1;
-        element['uid'] = count;
-      });
-      this.rowData = this.userList;
-      this.selectedCandidates = this.userList.length;
-    }, (err) => {
-    });
+    this.openDialog(ShortlistBoxComponent, data);
   }
 
+  afterSubmit(result) {
+    const apiData = {
+      shortlisted_ids: [],
+      shortlisted_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      emai_sent: result['type'] === 'yes' ? true : false,
+      shortlist_name: this.nameOfAssessment,
+      filter_model: ''
+      };
+      let candidatesArr = [];
+      this.selectedCandidatesForShortlist.forEach(element => {
+        if (element.data && element.data.shortlist_id) {
+          const find = candidatesArr.find(fdata => fdata == element.data.shortlist_id);
+          find ? '' : candidatesArr.push(element.data.shortlist_id);
+        }
+      });
+      apiData.shortlisted_ids = candidatesArr;
+      this.adminService.secondShortlistAPI(apiData).subscribe((data: any) => {
+        this.appConfig.success(apiData.emai_sent ? 'The mail has been sent successfully to shortlisted candidates' : 'Selected Candidates have been shortlisted successfully');
+        this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, { data: this.nameOfAssessment ? this.nameOfAssessment : 'none' });
+      }, (err) => {
 
-  selectedUser(userDetail) {
+      });
   }
 
   ngAfterViewInit() {
@@ -243,8 +240,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         buttons: ['reset'],
       },
     }
-    let apiResultSet = res && res.metadata && res.metadata.length > 0 ? res.metadata : [];
-    this.rowData = res && res.result && res.result.length > 0 ? res.result : [];
+    let apiResultSet = res;
     apiResultSet.forEach((first, index) => {
       if (first && first.children && first.children.length > 0) {
         first.children.forEach((second, index1) => {
@@ -263,8 +259,28 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         });
       }
     });
-    console.log('tabledef', apiResultSet);
-
     this.columnDefs = apiResultSet;
   }
+
+
+  openDialog(component, data) {
+    let dialogDetails: any;
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.afterSubmit(result);
+      }
+    });
+  }
+
 }

@@ -9,8 +9,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
 
-  @Input() details: any;
-  @Input() selectedCandidates: any;
+  @Input() statusHeaderData: any;
   bindDetails: any;
   constructor(
     private appConfig: AppConfigService,
@@ -21,15 +20,11 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
   }
 
   assessmentDetails() {
-
     this.bindDetails = {
-      assement_name: this.details && this.details[0] && this.details[0]['assement_name'] ? this.details[0]['assement_name'] : '-',
-      date: this.details && this.details[0] && this.details[0]['date'] ? this.details[0]['date'] : '-',
-      time: this.details && this.details[0] && this.details[0]['time'] ? this.details[0]['time'] : '-',
-      group_name: this.details && this.details[0] && this.details[0]['group_name'] ? this.details[0]['group_name'] : '-',
-      status: this.details && this.details[0] && this.details[0]['status'] ? this.details[0]['status'] : 'waiting',
-      total: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '-',
-      selected: this.details && this.details[0] && this.details[0]['no_of_candidate'] ? this.details[0]['no_of_candidate'] : '-',
+      assement_name: this.statusHeaderData.shortlist_name,
+      status: this.statusHeaderData.shortlist_status,
+      total: this.statusHeaderData.total_no_of_candidates,
+      selected: this.statusHeaderData.selectedCandidates
     };
   }
 

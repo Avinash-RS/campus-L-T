@@ -2,11 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HrMasterComponent } from './hr-master.component';
 import { CONSTANT } from '../constants/app-constants.service';
-import { DashboardComponent } from '../admin-dashboard/dashboard/dashboard.component';
-import { AdmincanloadGuard } from '../guards/canload/admincanload.guard';
-import { UserManagementComponent } from '../admin-dashboard/user-management/user-management.component';
-import { UsersListComponent } from '../admin-dashboard/user-management/users-list/users-list.component';
-import { AddUserComponent } from '../admin-dashboard/user-management/add-user/add-user.component';
 import { HrMainDashboardComponent } from './hr-main-dashboard/hr-main-dashboard.component';
 import { HrShortlistingComponent } from './hr-shortlisting/hr-shortlisting.component';
 import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shortlist/first-level-shortlist.component';
@@ -33,7 +28,6 @@ import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-
 import { CandidateBulkUploadComponent } from './hr-user-management/candidate-bulk-upload/candidate-bulk-upload.component';
 import { InterviewPanelBulkUploadComponent } from './hr-user-management/interview-panel-bulk-upload/interview-panel-bulk-upload.component';
 import { InvpanelBulkuploadComponent } from './hr-user-management/interview-panel-bulk-upload/invpanel-bulkupload/invpanel-bulkupload.component';
-import { UploadTestResultsComponent } from './hr-shortlisting/upload-test-results/upload-test-results.component';
 import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlist.component';
 import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
 import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
@@ -43,7 +37,6 @@ import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-scree
 import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
 import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
-import { from } from 'rxjs';
 import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/hr-upload-test-report.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
@@ -137,13 +130,6 @@ const routes: Routes = [
                 pathMatch: 'full',
               }
             ]
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.UPLOAD_TEST_RESULTS}`,
-            component: UploadTestResultsComponent,
-            data: {
-              breadcrumb: 'Upload Test Results'
-            }
           },
           {
             path: '',

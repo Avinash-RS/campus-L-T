@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
   BASE_URL = environment.API_BASE_URL;
 
+  statusHeaderData: any;
   selectedUserDetail: any;
   userList: any;
   radioCheck;
@@ -226,9 +227,13 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       shortlist_name: name
     };
     this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
-      //
-      this.assessmentName = data;
-
+      let response = data && data[0] ? data[0] : '';
+      this.statusHeaderData = {
+        shortlist_name: response && response.shortlist_name ? response.shortlist_name : '',
+        shortlist_status: response && response.status ? response.status : '',
+        total_no_of_candidates: response && response.no_of_candidate ? response.no_of_candidate : 0,
+        selectedCandidates: response && response.no_of_candidate ? response.no_of_candidate : 0,
+      }
     }, (err) => {
 
     });

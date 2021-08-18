@@ -1,24 +1,13 @@
 <div class="top-wrapper">
   <div class="flex-wrapper">
     <div class="inner-flex">
-      <!-- <div class="heading">
-        Shortlist - {{bindDetails ? bindDetails['assement_name'] : '-'}}
-      </div> -->
       <div class="grid-wrapper">
-        <!-- <div class="group">
-          <div class="label">
-            Date :&#160;
-          </div>
-          <div class="value">
-              {{bindDetails ? bindDetails['date'] : '-'}}
-          </div>
-        </div> -->
         <div class="group">
           <div class="label">
             Shortlist Name :&#160;
           </div>
           <div class="value">
-              {{bindDetails ? bindDetails['group_name'] : '-'}}
+              {{bindDetails ? bindDetails['assement_name'] : '-'}}
           </div>
         </div>
 
@@ -53,7 +42,7 @@
             Selected number of candidates :&#160;
           </div>
           <div class="value">
-            <span class="labels">{{selectedCandidates ? selectedCandidates : '0'}}</span>
+            <span class="labels">{{bindDetails ? bindDetails['selected'] : '-'}}</span>
           </div>
         </div>
       </div>

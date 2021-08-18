@@ -87,11 +87,11 @@
             </form>
           </div>
 
-          <!-- <div class="row footer20">
-            <div class="col-12">
-              <span class="forgot1">2020 © L&T EduTech All Rights Reserved</span>
+          <div class="row footer20">
+            <div class="col-12 mt-5">
+              <span class="forgot1">2021 © L&T EduTech All Rights Reserved</span>
             </div>
-          </div> -->
+          </div>
           <!-- <div class="col-4">
             <span class="powered">
               <img class="footericon" alt="" src="assets/learner/LT_small.svg">
@@ -103,95 +103,6 @@
 
       </div>
     </div>
-
-    <!-- old -->
-    <!-- <div class="create-wrapper">
-      <div class="head">
-        Welcome
-      </div>
-
-
-      <form [formGroup]="candidateForm" (ngSubmit)="submit()">
-        <div class="forms">
-          <div class="form-field">
-            <label class="label-name">
-              Name<span class="asterick">*</span>
-            </label>
-            <div class="input-box" [ngStyle]="{border: name.invalid && name.touched ? 'solid red 1px': ''}">
-              <input matInput formControlName="name" type="text" required>
-              <div>
-
-              </div>
-            </div>
-            <div class="error" *ngIf="name.invalid && name.touched">
-              <span *ngIf="name.errors?.required">Name is Required</span>
-              <span *ngIf="name.errors?.pattern">Alphabetic characters only allowed</span>
-              <span *ngIf="name.errors?.maxlength && !name.errors?.pattern">Should not exceed 30 characters</span>
-            </div>
-            <div class="note">Note: Name as mentioned in Aadhaar</div>
-          </div>
-          <div class="form-field">
-            <label class="label-name">
-              Email Address<span class="asterick">*</span>
-            </label>
-            <div class="input-box" [ngStyle]="{border: email.invalid && email.touched ? 'solid red 1px': ''}">
-              <input matInput formControlName="email" type="text" required>
-              <div>
-
-              </div>
-            </div>
-            <div class="error" *ngIf="email.invalid && email.touched">
-              <span *ngIf="email.errors?.required">Email is Required</span>
-              <span *ngIf="email.errors?.pattern">Please enter a valid Email id</span>
-            </div>
-          </div>
-          <div class="form-field">
-            <label class="label-name">
-              Password<span class="asterick">*</span>
-            </label>
-            <div class="input-box"
-              [ngStyle]="{border: password.invalid && password.touched ? 'solid red 1px': ''}">
-              <input matInput formControlName="password" [type]="!toggleVisibility ? 'text' : 'password'" required>
-              <div class="icon">
-                <span *ngIf="toggleVisibility" (click)="toggleVisibility = !toggleVisibility;" class="material-icons">
-                  visibility_off
-                </span>
-                <span *ngIf="!toggleVisibility" (click)="toggleVisibility = !toggleVisibility;" class="material-icons">
-                  visibility
-                </span>
-              </div>
-
-            </div>
-            <div class="error" *ngIf="password.invalid && password.touched">
-              <span *ngIf="password.errors?.required">Password is Required</span>
-              <span *ngIf="password.errors?.passwordvalidator">Please enter the valid password</span>
-            </div>
-            <div class="notes" *ngIf="password.dirty && password.invalid">
-              <span *ngIf="password.errors?.passwordvalidator">The password should consist of 1 uppercase, 1 lowercase,1
-                number and 1 special character.</span>
-              <div style="margin: 0.5em 0 0 0;" *ngIf="password.errors?.passwordvalidator">Note: Space ' " , & (Not
-                allowed)</div>
-            </div>
-            <div *ngIf="password.valid" class="tick-mark">
-              <div class="container">
-                <span> <img src="assets/images/tick.svg" alt=""> Uppercase</span>
-                <span><img src="assets/images/tick.svg" alt=""> Special character</span>
-              </div>
-              <div class="container">
-                <span><img src="assets/images/tick.svg" alt=""> Lowercase</span>
-                <span><img src="assets/images/tick.svg" alt=""> Number</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="submit-button">
-            <button type="submit" class="submit" mat-raised-button>Submit</button>
-          </div>
-
-        </div>
-      </form>
-    </div> -->
-
 
   </div>
 </div>

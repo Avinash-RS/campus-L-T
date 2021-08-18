@@ -1,7 +1,6 @@
 <div class="shortlisted-report-second-level">
-  <app-shared-sub-header-second-level-shortlist *ngIf="assessmentName" [selectedCandidates]="selectedCandidates"
-    [details]="assessmentName ? assessmentName : ''"></app-shared-sub-header-second-level-shortlist>
-  <div class="cutOff">
+  <app-shared-sub-header-second-level-shortlist *ngIf="statusHeaderData" [statusHeaderData]="statusHeaderData"></app-shared-sub-header-second-level-shortlist>
+  <div *ngIf="false" class="cutOff">
     <div class="head">Shortlist cutoff marks :&#160;</div>
     <div class="values">
       <span>Domain score :&#160;
@@ -29,7 +28,7 @@
       <div class="search-icon">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
         <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        
+
       </div>
     </div>
     <!-- </mat-form-field> -->

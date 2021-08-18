@@ -5,9 +5,10 @@
   .grids-wrapper {
       display: flex;
       width: 100%;
+      padding: 0 1em;
       .dependentForm {
-          width: 98%;
-          padding-right: 1em;
+          width: 100%;
+          padding-right: 0em;
           font-size: 14px;
           position: relative;
           .section {
