@@ -142,14 +142,15 @@
 
 
 ::ng-deep span.status {
-  background-color: #bababa;
-  color: #666666 ;
   border-radius: 4px;
   display: inline-block;
   line-height: 0.7;
   font-size: 11px;
   padding: 7px 8px;
-
+  &.scheduled {
+    background-color: #bababa;
+    color: #666666 ;
+  }
   &.inprogress {
   background-color: #ffbc00;
   color: #fff;

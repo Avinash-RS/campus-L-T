@@ -41,6 +41,7 @@ export class InvSubEvaluateComponent implements OnInit {
   uid: any;
   BIS = this.appConfig.getLocalData('BIS');
   status: any;
+  shortlist_name: any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -66,6 +67,7 @@ export class InvSubEvaluateComponent implements OnInit {
       this.candidateId = params['uid'];
       this.uid = params['uid'];
       this.status = params['status'];
+      this.shortlist_name = params['shortlist_name'];
     });
   }
 

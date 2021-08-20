@@ -128,7 +128,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         sortable: true
       },
       {
-        headerName: 'Candidate id', field: 'candidate_id',
+        headerName: 'Candidate Id', field: 'candidate_id',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -153,7 +153,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         }
       },
       {
-        headerName: 'Email', field: 'email',
+        headerName: 'Email Id', field: 'email',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,

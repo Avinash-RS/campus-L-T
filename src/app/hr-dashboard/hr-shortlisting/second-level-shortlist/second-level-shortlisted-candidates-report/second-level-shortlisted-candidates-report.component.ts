@@ -297,8 +297,8 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
         shortlist_name: response && response.shortlist_name ? response.shortlist_name : '-',
         shortlist_status: response && response.shortlist_status ? response.shortlist_status : '',
         total_no_of_candidates: response && response.total_no_of_candidates ? response.total_no_of_candidates : 0,
-        available: response && response.table_data && response.table_data.length > 0 ? response.table_data.length : 0,
-        shortlisted: response && response.shortlisted ? response.shortlisted : 0,
+        available: response && response['exams_taken'] ? response['exams_taken'] - response.shortlisted_count : 0,
+        shortlisted: response && response.shortlisted_count ? response.shortlisted_count : 0,
         notTaken: notTaken,
         }
 

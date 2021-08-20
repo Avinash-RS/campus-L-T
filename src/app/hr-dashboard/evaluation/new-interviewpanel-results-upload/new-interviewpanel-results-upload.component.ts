@@ -93,7 +93,7 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterVie
    }
 
   downloadTemplate() {
-    const excel = `${this.BASE_URL}/sites/default/files/Results_upload.csv`;
+    const excel = `${this.BASE_URL}/sites/default/files/HR_Bulk_Assign_Template.csv`;
     window.open(excel, '_blank');
   }
   submit() {
@@ -137,17 +137,15 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterVie
   }
 
   uploadListToAPI() {
-    this.uploadedListArray.forEach(element => {
-      if (element) {
-        element['field_user_created_by'] = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
-      }
-    });
+    const apiData = {
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      entries: this.uploadedListArray
+    }
 
-    this.adminService.bulkUploadInvAssign(this.uploadedListArray).subscribe((data: any) => {
-
+    this.adminService.bulkUploadInvAssign(apiData).subscribe((data: any) => {
       const datas = {
         inv_assign_bulk_upload_ok: 'candidate-bulk',
-        totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
+        totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
         errorLength: data ? data.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
@@ -179,9 +177,9 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterVie
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'College') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interviewer Email')) {
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Shortlist Name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Candidate Email ID') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interview Panel Email ID')) {
         // this.enableList = true;
 
         this.totalCount(this.SavedData);
@@ -206,35 +204,35 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterVie
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
-      let user_email; let college; let hr_email;
+      let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
       if (i > 0 && dup) {
         count += 1;
         dup.forEach((element, index) => {
           if (index < 3) {
             if (index == 0) {
-              user_email = element ? element : '';
+              Shortlist_Name = element ? element : '';
             }
             if (index == 1) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
                 this.enableList = false;
                 this.dateFormatExist = true;
               } else {
-                college = element ? element : '';
+                candidate_email_id = element ? element : '';
               }
             }
             if (index == 2) {
-              hr_email = element ? element : '';
+              inv_panel_email_id = element ? element : '';
             }
           }
         });
         const value = {
-          user_email: user_email ? user_email.toString().trim() : '',
-          college: college ? college.toString().trim() : '',
-          hr_email: hr_email ? hr_email.toString().trim() : ''
+          shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
+          user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
+          hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
         };
 
 
-        if ((user_email && user_email.toString().trim()) || (college && college.toString().trim()) || (hr_email && hr_email.toString().trim())) {
+        if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
           listArray.push(value);
         }
       }

@@ -41,6 +41,7 @@ export class EvaluationFormComponent implements OnInit {
 @Input() nameOfAssessment;
 @Input() uid;
 @Input() status;
+@Input() shortlist_name;
   intervieweeAttendance:any;
   Notattended: any;
   attendedStatusList: any;
@@ -102,7 +103,8 @@ export class EvaluationFormComponent implements OnInit {
   }
   getCandidateDetails() {
     const apiData = {
-      uid: this.candidateId ? this.candidateId : ''
+      uid: this.candidateId ? this.candidateId : '',
+      shortlist_name: this.shortlist_name
     }
     this.adminService.getEvaluationDetails(apiData).subscribe((success: any) => {
 
@@ -455,6 +457,7 @@ export class EvaluationFormComponent implements OnInit {
       attendedStatus: this.evaluationForm.value.attendedStatus,
       attended: this.evaluationForm.value.attended,
       uid: this.uid ? this.uid : '',
+      shortlist_name: this.shortlist_name ? this.shortlist_name : '',
       interview_date: dateInterview,
       interview_place: this.evaluationForm.value.interview_place,
       depth_knowledge: this.evaluationForm.value.depth_knowledge,

@@ -162,7 +162,8 @@ th {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      width: 700px;
+      min-width: 700px;
+      padding-left: 1em;
       align-items: center;
       div {
         display: flex;
@@ -252,26 +253,11 @@ th {
 
 
 ::ng-deep span.status {
-      background-color: #bababa;
-      color: #666666 ;
       border-radius: 4px;
       display: inline-block;
       line-height: 0.7;
       font-size: 11px;
       padding: 7px 8px;
-
-      &.inprogress {
-      background-color: #ffbc00;
-      color: #fff;
-      }
-      &.completed {
-        background-color: #48cc83;
-        color: #fff;
-        }
-      &.rejected {
-        background-color: #c02222;
-      color: #fff;
-      }
   }
   ::ng-deep .join-inter {
     background-color: #c02222;
@@ -329,3 +315,32 @@ th {
       justify-content: center;
     }
   }
+
+  ::ng-deep .inprogress-bg {
+  background-color: #ffbc00 !important;
+  color: #fff;
+  }
+  ::ng-deep .completed-bg {
+  background-color: #48cc83 !important;
+  color: #fff;
+  }
+  ::ng-deep .rejected-bg {
+  background-color: #c02222;
+  color: #fff;
+  }
+  ::ng-deep .scheduled-bg {
+    background-color: #bababa;
+    color: #666666 ;
+  }
+  ::ng-deep .inprogress-clr {
+    // background-color: #ffbc00;
+    color: #ffbc00 !important;
+    }
+    ::ng-deep .completed-clr {
+    // background-color: #48cc83;
+    color: #48cc83;
+    }
+    ::ng-deep .rejected-clr {
+    // background-color: #c02222;
+    color: #c02222;
+    }

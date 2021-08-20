@@ -120,7 +120,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
           shortlist_status: response && response.shortlist_status ? response.shortlist_status : '',
           total_no_of_candidates: response && response.total_no_of_candidates ? response.total_no_of_candidates : 0,
           available: response && response.table_data && response.table_data.length > 0 ? response.table_data.length : 0,
-          shortlisted: response && response.shortlisted ? response.shortlisted : 0,
+          shortlisted: response && response.shortlisted_count ? response.shortlisted_count : 0,
           notTaken: notTaken,
           header: true
         }

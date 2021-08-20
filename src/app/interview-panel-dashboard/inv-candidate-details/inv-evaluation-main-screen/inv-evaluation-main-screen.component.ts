@@ -24,7 +24,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   uid: any;
   email: any;
   form: any;
-  queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
+  queryParams: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -55,7 +55,8 @@ export class InvEvaluationMainScreenComponent implements OnInit {
         tag: params['tag'],
         uid: params['uid'],
         email: params['email'],
-        form: params['form']
+        form: params['form'],
+        shortlist_name: params['shortlist_name']
       };
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];

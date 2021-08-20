@@ -63,7 +63,7 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
     }
 
     if (this.status === 'resultUpload') {
-      this.displayedColumns = ['user_email', 'college', 'hr_email', 'delete'];
+      this.displayedColumns = ['user_email', 'shortlist_name', 'hr_email', 'delete'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -77,7 +77,7 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
-    
+
     if (this.status === 'selectedCandidates') {
       this.displayedColumns = ['email', 'name', 'reference', 'offDate', 'offValidity', 'delete'];
       this.userList = this.previewerArray;
