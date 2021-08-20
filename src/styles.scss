@@ -1158,100 +1158,6 @@ button:focus {
     }
 }
 
-.reports-wrapper {
-    .user-list-wrapper {
-        thead {
-            box-shadow: $shadow-light-black-29 !important;
-            margin-bottom: 2em;
-        }
-        .mat-sort-header-button {
-            outline: none;
-        }
-        mat-paginator {
-            display: inline-flex;
-            flex-flow: row-reverse;
-            opacity: 0.85;
-            width: 100%;
-            align-items: center;
-            height: 40px;
-            color: $black;
-            font-size: 13px;
-            outline: none;
-            border: none;
-            background: $blue-3 0% 0% no-repeat padding-box;
-            box-shadow: $shadow-light-black-29 !important;
-        }
-        .tooltip-red {
-            display: flex;
-            background-color: red;
-            flex-flow: row-reverse;
-        }
-        .mat-sort-header-container {
-            margin-top: -1.5em;
-        }
-        tr.mat-header-row {
-            height: 20px !important;
-            white-space: nowrap;
-            .mat-column-technicial_marks,
-            .mat-column-technical_percentage,
-            .mat-column-english_marks,
-            .mat-column-english_percentage,
-            .mat-column-analytical_mark,
-            .mat-column-analytical_percentage,
-            .mat-column-apptitude_mark,
-            .mat-column-apptitude_percentage,
-            .mat-column-summative_mark,
-            .mat-column-summative_percentage {
-                color: $primary !important;
-                font-size: 11px !important;
-                .mat-sort-header-container {
-                    margin-top: 0px !important;
-                }
-            }
-        }
-        .personal {
-            margin-top: -1.5em;
-        }
-        .view {
-            color: $header-blue;
-            font-size: 13px;
-            display: flex;
-            cursor: pointer;
-            justify-content: center;
-            align-items: center;
-            font-weight: 200;
-            .material-icons {
-                margin: 0 6px 0 0;
-                font-size: 16px;
-            }
-        }
-        .reports-wrapper.user-list-wrapper,
-        tr.mat-header-row.header-group {
-            text-align: center !important;
-            height: 20px !important;
-            white-space: nowrap;
-            th {
-                text-align: center !important;
-            }
-        }
-        td.mat-cell {
-            white-space: nowrap !important;
-        }
-        .mat-paginator {
-            height: 40px !important;
-        }
-        .mat-column-checked {
-            .ant-radio-group {
-                justify-content: center;
-            }
-        }
-    }
-}
-
-.second-candidatelist-wrapper .user-list-wrapper tr.mat-header-row {
-    background: none;
-}
-
 .mat-column-candidate_new_id {
     left: 0 !important;
 }
@@ -1260,219 +1166,12 @@ button:focus {
     left: 0 !important;
 }
 
-.second-candidatelist-wrapper {
-    .user-list-wrapper {
-        thead {
-            box-shadow: $shadow-light-black-29 !important;
-            margin-bottom: 2em;
-        }
-        .mat-sort-header-button {
-            outline: none;
-        }
-        mat-paginator {
-            display: inline-flex;
-            flex-flow: row-reverse;
-            opacity: 0.85;
-            width: 100%;
-            align-items: center;
-            height: 40px;
-            color: $black;
-            font-size: 13px;
-            outline: none;
-            border: none;
-            background: $blue-3 0% 0% no-repeat padding-box;
-            box-shadow: $shadow-light-black-29 !important;
-        }
-        .tooltip-red {
-            display: flex;
-            background-color: red;
-            flex-flow: row-reverse;
-        }
-        .mat-column-marks,
-        .mat-column-percentage,
-        .mat-column-domain_marks,
-        .mat-column-domain_percentage,
-        .mat-column-verbal_marks,
-        .mat-column-verbal_percentage,
-        .mat-column-analytical_mark,
-        .mat-column-analytical_percentage,
-        .mat-column-quantitive_mark,
-        .mat-column-quantitative_percentage {
-            text-align: center;
-            width: 150px !important;
-            .mat-sort-header-container {
-                justify-content: center !important;
-            }
-        }
-        .input-header-group.mat-header-row {
-            padding: 4px 0;
-            height: 50px !important;
-            .box {
-                text-align: center;
-                background: $white-primary 0% 0% no-repeat padding-box;
-                box-shadow: 0px 0px 5px #00000029;
-                border: 0.5px solid #d1d1d1;
-                // width: 50%;
-                max-width: 120px;
-                display: flex;
-                justify-content: center;
-                border-radius: 4px;
-                align-items: center;
-                margin: 0 auto;
-                padding: 4px;
-                height: 35px;
-                img {
-                    width: 14px;
-                    height: 14px;
-                    margin: 0 0.5em 0 0;
-                }
-                input,
-                input:focus {
-                    border-radius: 4px;
-                    outline: none;
-                    background: transparent;
-                    box-shadow: 0px 0px 5px #00000029;
-                    border: 0.5px solid #5555556e;
-                    height: 100%;
-                    font-size: 13px;
-                    // width: 50%;
-                    max-width: 70px;
-                    color: $header-blue;
-                    padding: 4px 4px;
-                    box-sizing: border-box;
-                }
-            }
-        }
-        tr.mat-header-row {
-            height: auto !important;
-            white-space: nowrap;
-            // background: $blue-3 !important;
-            .mat-column-marks,
-            .mat-column-percentage,
-            .mat-column-domain_marks,
-            .mat-column-domain_percentage,
-            .mat-column-verbal_marks,
-            .mat-column-verbal_percentage,
-            .mat-column-analytical_mark,
-            .mat-column-analytical_percentage,
-            .mat-column-quantitive_mark,
-            .mat-column-quantitative_percentage,
-            .mat-column-third-header-row-second-group,
-            .mat-column-third-header-row-third-group,
-            .mat-column-third-header-row-third-group,
-            .mat-column-third-header-row-fourth-group,
-            .mat-column-third-header-row-fifth-group,
-            .mat-column-third-header-row-sixth-group {
-                color: $primary !important;
-                font-size: 12.3px !important;
-                .mat-sort-header-container {
-                    margin-top: 0px !important;
-                }
-            }
-        }
-        .second-candidatelist-wrapper.user-list-wrapper,
-        tr.mat-header-row.header-group {
-            text-align: center !important;
-            height: auto !important;
-            white-space: nowrap;
-            th {
-                text-align: center !important;
-            }
-        }
-        td.mat-cell {
-            white-space: nowrap !important;
-        }
-        .mat-paginator {
-            height: 40px !important;
-        }
-        .mat-column-checked {
-            .ant-radio-group {
-                justify-content: center;
-            }
-        }
-        .no-data-available.mat-header-row {
-            padding: 4px;
-            height: 40px !important;
-            th {
-                padding: 4px !important;
-                height: 40px !important;
-                text-align: center !important;
-                font-size: 20px !important;
-                background: $white-primary 0% 0% no-repeat padding-box !important;
-                color: $header-blue !important;
-                font-weight: 100 !important;
-            }
-        }
-    }
-    // hr/shortlist/2nd/candidateslist
-    .shortlisted-list-second-level {
-        .user-list-wrapper {
-            text-align: center;
-            mat-paginator {
-                display: inline-flex;
-                flex-flow: row-reverse;
-                opacity: 0.85;
-                align-items: center;
-                height: 40px;
-                width: 70% !important;
-                color: $black;
-                font-size: 13px;
-                outline: none;
-                border: none;
-                background: $blue-3 0% 0% no-repeat padding-box;
-                box-shadow: $shadow-light-black-29 !important;
-            }
-            .mat-row {
-                text-align: left !important;
-            }
-            tr.px40 {
-                height: 40px !important;
-            }
-        }
-    }
-}
-
 .sub-assessments {
     .mat-column-question {
         width: 200px;
     }
 }
 
-// http://localhost:4200/#/hr/shortlist/2nd/assessment-list
-.second-level-assessmentList {
-    .user-list-wrapper {
-        .mat-column-report {
-            .mat-sort-header-container {
-                justify-content: center !important;
-            }
-        }
-        th.mat-column-no_of_candidate {
-            .mat-sort-header-container {
-                justify-content: center;
-            }
-        }
-        td.mat-column-no_of_candidate {
-            text-align: center;
-            padding-left: 0 !important;
-        }
-        th.mat-column-buttons {
-            .mat-sort-header-container {
-                justify-content: center;
-            }
-        }
-        td.mat-column-buttons {
-            display: flex;
-            align-items: center;
-            padding-left: 0 !important;
-            height: 20px !important;
-            align-items: center;
-            justify-content: center;
-            .mat-raised-button {
-                margin-left: .75em !important;
-            }
-        }
-    }
-}
 
 .admin-bulk-upload-tpo {
     .mat-column-counter {
@@ -1679,28 +1378,6 @@ th {
 
 th {
     white-space: nowrap !important;
-}
-
-button:hover {
-    // transform: scale(
-    //   1.05
-    // ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    // transition: 0.2s ease-in-out;
-}
-
-.user-list-wrapper {
-    button:focus {
-        border-radius: 4px !important;
-        border: none;
-        outline: none;
-    }
-    th {
-        button:hover {
-            transform: none !important;
-            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-            // transition: 0.2s ease-in-out;
-        }
-    }
 }
 
 .sort {
@@ -2419,7 +2096,7 @@ th {
     justify-content: center !important;
     align-items: center;
     border: none;
-    min-width: 70px !important;
+    min-width: 90px !important;
     width: 100% !important;
     padding: 0 .75em !important;
 }
@@ -3570,4 +3247,10 @@ mat-icon {
 
 .width-168 {
     width: 167px !important;
+}
+
+.ag-grid-header-center {
+  .ag-header-cell-label {
+    justify-content: center;
+  }
 }

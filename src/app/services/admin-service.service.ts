@@ -285,12 +285,6 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  // 2nd level shortlist canidate filter header Details
-  assessmentDetailsOfSecond(data) {
-    return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_report`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
-  }
-
   // 2nd level shortlist api
   secondShortlistAPI(data) {
     return this.http.post(`${this.BASE_URL}/profile/update_assement_shortlist`, data,
@@ -475,6 +469,10 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  getAllShortlistedShortlistNames() {
+    return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list`);
+  }
+
   //hr 1st sortlist report list
   firstSortlistReportslist(data){
     return this.http.post(`${this.BASE_URL}/api/firstshortlist_report`, data,
@@ -544,11 +542,6 @@ export class AdminServiceService {
 
   getInterviewpanelInstitutes() {
     return this.http.get(`${this.BASE_URL}/profile/getall_institue_assement`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
-  }
-
-  getParticularInstituteDiscipline(data) {
-    return this.http.post(`${this.BASE_URL}/profile/getall_dip_and_assement`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

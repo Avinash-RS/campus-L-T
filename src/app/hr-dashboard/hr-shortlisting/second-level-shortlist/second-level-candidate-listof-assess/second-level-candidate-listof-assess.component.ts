@@ -110,16 +110,19 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         shortlist_name: name,
       };
       this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
-        console.log('response', response);
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
         this.rowData = this.userList;
         this.tableDef(tableHeaders);
+        let notTaken = response['total_no_of_candidates'] - response['exams_taken'];
         this.statusHeaderData = {
           shortlist_name: response && response.shortlist_name ? response.shortlist_name : '',
           shortlist_status: response && response.shortlist_status ? response.shortlist_status : '',
           total_no_of_candidates: response && response.total_no_of_candidates ? response.total_no_of_candidates : 0,
-          selectedCandidates: response && response.table_data && response.table_data.length > 0 ? response.table_data.length : 0,
+          available: response && response.table_data && response.table_data.length > 0 ? response.table_data.length : 0,
+          shortlisted: response && response.shortlisted ? response.shortlisted : 0,
+          notTaken: notTaken,
+          header: true
         }
       }, (err) => {
       });

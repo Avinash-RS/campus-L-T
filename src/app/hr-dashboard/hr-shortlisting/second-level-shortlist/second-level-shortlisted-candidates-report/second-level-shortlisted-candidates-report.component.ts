@@ -36,15 +36,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
   cacheBlockSize: any = 500;
   gridApi: any;
   columnDefs = [];
-  defaultColDef = {
-    flex: 1,
-    minWidth: 40,
-    resizable: true,
-    floatingFilter: true,
-    lockPosition: true,
-    suppressMenu: true,
-    unSortIcon: true,
-  };
+  defaultColDef: any;
   rowData: any;
   searchBox = false;
   filterValue: string;
@@ -61,6 +53,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.defaultColDef = this.appConfig.agGridWithAllFunc();
   }
 
   // Get url param for edit route
@@ -68,7 +61,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
       this.nameOfAssessment = params['data'];
-      this.assessmentDetails(params['data']);
       this.tabledef(params['data']);
     });
   }
@@ -105,115 +97,140 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       // this.toast.warning('No reuslts found');
     }
   }
+
   tabledef(apiData) {
 
     this.columnDefs = [
       {
         headerName: 'S no', field: 'sno',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agNumberColumnFilter',
         sortable: true,
         tooltipField: 'sno',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Candidate', field: 'name',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agTextColumnFilter',
         sortable: true,
         tooltipField: 'name',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agNumberColumnFilter',
         sortable: true,
         tooltipField: 'candidate_id',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Gender', field: 'gender',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agSetColumnFilter',
         sortable: true,
         tooltipField: 'gender',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Date of birth', field: 'dob',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 100,
+        filter: 'agDateColumnFilter',
         sortable: true,
+        minWidth: 210,
         tooltipField: 'dob',
+        comparator: dateComparator,
+        filterParams: {
+          buttons: ['apply', 'cancel', 'reset'],
+          closeOnApply: true,
+          // debounceMs: 500,
+          comparator: (filterLocalDateAtMidnight, cellValue) => {
+            return this.datecomparatorForAgGrid(filterLocalDateAtMidnight, cellValue, null);
+        },
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Institute', field: 'institute',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agTextColumnFilter',
         sortable: true,
         tooltipField: 'institute',
+        filterParams: {
+          buttons: ['reset'],
+        },
       getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Education level', field: 'level',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agSetColumnFilter',
         sortable: true,
         tooltipField: 'level',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Percentage', field: 'percentage',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agNumberColumnFilter',
         sortable: true,
         tooltipField: 'percentage',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Backlog', field: 'backlog',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agNumberColumnFilter',
         sortable: true,
         tooltipField: 'backlog',
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Date of passing', field: 'dateofpassing',
-        filter: true,
-        floatingFilterComponentParams: { suppressFilterButton: true },
-        // minWidth: 140,
+        filter: 'agDateColumnFilter',
         sortable: true,
+        comparator: dateComparator,
         tooltipField: 'dateofpassing',
+        minWidth: 210,
+        filterParams: {
+          buttons: ['apply', 'cancel', 'reset'],
+          closeOnApply: true,
+          // debounceMs: 500,
+          comparator: (filterLocalDateAtMidnight, cellValue) => {
+            return this.datecomparatorForAgGrid(filterLocalDateAtMidnight, cellValue, true);
+        },
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -221,24 +238,6 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
     ];
     this.getUsersList(apiData);
   }
-
-  assessmentDetails(name) {
-    const apidata = {
-      shortlist_name: name
-    };
-    this.adminService.assessmentDetailsOfSecond(apidata).subscribe((data: any) => {
-      let response = data && data[0] ? data[0] : '';
-      this.statusHeaderData = {
-        shortlist_name: response && response.shortlist_name ? response.shortlist_name : '',
-        shortlist_status: response && response.status ? response.status : '',
-        total_no_of_candidates: response && response.no_of_candidate ? response.no_of_candidate : 0,
-        selectedCandidates: response && response.no_of_candidate ? response.no_of_candidate : 0,
-      }
-    }, (err) => {
-
-    });
-  }
-
 
   tConvert(time) {
     // Check correct time format and split into components
@@ -290,74 +289,148 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       shortlist_name: names,
       shortlist: '1'
     };
-    this.adminService.shortlistedCandidatesReport(apiData).subscribe((datas: any) => {
+    this.adminService.shortlistedCandidatesReport(apiData).subscribe((response: any) => {
       const align = [];
       let sno = 0;
-      datas.forEach((element, i) => {
-        if (element && i == '0') {
-          this.cutOff = element && element['domain_percentage_shortlist'] ? element['domain_percentage_shortlist'] : '-';
-          this.cutOff1 = element && element['verbal_percentage_shortlist'] ? element['verbal_percentage_shortlist'] : '-';
-          this.cutOff2 = element && element['analytical_percentage_shortlist'] ? element['analytical_percentage_shortlist'] : '-';
-          this.cutOff3 = element && element['quantitative_percentage_shortlist'] ? element['quantitative_percentage_shortlist'] : '-';
-          this.cutOff4 = element && element['marks_valid_shortlist'] ? element['marks_valid_shortlist'] : '-';
+      let notTaken = response['total_no_of_candidates'] - response['exams_taken'];
+      this.statusHeaderData = {
+        shortlist_name: response && response.shortlist_name ? response.shortlist_name : '-',
+        shortlist_status: response && response.shortlist_status ? response.shortlist_status : '',
+        total_no_of_candidates: response && response.total_no_of_candidates ? response.total_no_of_candidates : 0,
+        available: response && response.table_data && response.table_data.length > 0 ? response.table_data.length : 0,
+        shortlisted: response && response.shortlisted ? response.shortlisted : 0,
+        notTaken: notTaken,
         }
-        sno = sno + 1;
-        const candidate_id = element && element['candidate_id'] ? element['candidate_id'] : '-';
-        const name = element && element['name'] ? element['name'] : '-';
-        const gender = element && element['field_gender'] ? element['field_gender'] : '-';
-        const dob = element && element['field_dob'] ? this.getMonthFormat(element['field_dob']) : '-';
-        let institute = '-';
-        let level = '-';
-        let percentage = '-';
-        let backlog = '-';
-        let dateofpassing = '-';
-        const checked = false;
-        if (element && element['education']) {
-          institute = element['education'] && element['education']['field_institute'] ? element['education']['field_institute'] : '-';
-          level = element['education'] && element['education']['field_level'] ? element['education']['field_level'] : '-';
-          if (level === 'SSLC') {
-            level = 'SSLC / 10th';
+
+      if (response && response.table_data && response.table_data.length > 0) {
+        response.table_data.forEach((element, i) => {
+          sno = sno + 1;
+          const candidate_id = element && element['candidate_id'] ? element['candidate_id'] : '-';
+          const name = element && element['name'] ? element['name'] : '-';
+          const gender = element && element['field_gender'] ? element['field_gender'] : '-';
+          const dob = element && element['field_dob'] ? this.getMonthFormat(element['field_dob']) : '-';
+          let institute = '-';
+          let level = '-';
+          let percentage = '-';
+          let backlog = '-';
+          let dateofpassing = '-';
+          const checked = false;
+          if (element && element['education']) {
+            institute = element['education'] && element['education']['field_institute'] ? element['education']['field_institute'] : '-';
+            level = element['education'] && element['education']['field_level'] ? element['education']['field_level'] : '-';
+            if (level === 'SSLC') {
+              level = 'SSLC / 10th';
+            }
+            if (level === 'HSC') {
+              level = 'HSC / 12th';
+            }
+            if (level === 'UG') {
+              level = 'Undergraduate';
+            }
+            if (level === 'PG') {
+              level = 'Postgraduate';
+            }
+            percentage = element['education'] && element['education']['field_percentage'] ? element['education']['field_percentage'] : '-';
+            backlog = element['education'] && element['education']['field_backlogs'] ? element['education']['field_backlogs'] : '-';
+            dateofpassing = element['education'] && element['education']['field_year_of_passing'] ? this.getDateFormat(element['education']['field_year_of_passing']) : '-';
           }
-          if (level === 'HSC') {
-            level = 'HSC / 12th';
-          }
-          if (level === 'UG') {
-            level = 'Undergraduate';
-          }
-          if (level === 'PG') {
-            level = 'Postgraduate';
-          }
-          percentage = element['education'] && element['education']['field_percentage'] ? element['education']['field_percentage'] : '-';
-          backlog = element['education'] && element['education']['field_backlogs'] ? element['education']['field_backlogs'] : '-';
-          dateofpassing = element['education'] && element['education']['field_year_of_passing'] ? this.getDateFormat(element['education']['field_year_of_passing']) : '-';
-        }
-        align.push(
-          {
-            sno,
-            candidate_id,
-            name,
-            gender,
-            dob,
-            institute,
-            level,
-            percentage,
-            backlog,
-            dateofpassing,
-          }
-        );
-      });
+          align.push(
+            {
+              sno,
+              candidate_id,
+              name,
+              gender,
+              dob,
+              institute,
+              level,
+              percentage,
+              backlog,
+              dateofpassing,
+            }
+          );
+        });
+      }
       this.userList = align ? align : [];
       this.selectedCandidates = this.userList.length;
       this.rowData = this.userList;
-
     }, (err) => {
     });
   }
 
   downloadReport() {
-    const excel = `${this.BASE_URL}/sites/default/files/upload_excel_error/secondlevel.csv`;
-    window.open(excel, '_blank');
+    this.gridApi.exportDataAsExcel();
+  }
+
+  datecomparatorForAgGrid (filterLocalDateAtMidnight, cellValue, monthOnly) {
+    const dateAsString = cellValue;
+    if (dateAsString == null || dateAsString == '-') {
+        return 0;
+    }
+
+    // In the example application, dates are stored as dd/mm/yyyy
+    // We create a Date object for comparison against the filter date
+    let convertedDate = this.checkMonth(dateAsString).toString();
+    const dateParts = convertedDate.split('-');
+    const day = monthOnly ? 28 : Number(dateParts[0]);
+    const month = Number(dateParts[1]) - 1;
+    const year = Number(dateParts[2]);
+    const cellDate = new Date(year, month, day);
+
+    // Now that both parameters are Date objects, we can compare
+    if (cellDate < filterLocalDateAtMidnight) {
+        return -1;
+    } else if (cellDate > filterLocalDateAtMidnight) {
+        return 1;
+    }
+    return 0;
+}
+
+  checkMonth(date) {
+    if (date) {
+      const split = moment(date).format('DD-MM-YYYY');
+      const output = split.toUpperCase();
+      return output;
+    } else {
+      return 0;
+    }
+
   }
 
 }
 
+function dateComparator(date1, date2) {
+  date1 = converttoDate(date1).toString();
+  date2 = converttoDate(date2).toString();
+  var date1Number = monthToComparableNumber(date1);
+  var date2Number = monthToComparableNumber(date2);
+  if (date1Number === null && date2Number === null) {
+    return 0;
+  }
+  if (date1Number === null) {
+    return -1;
+  }
+  if (date2Number === null) {
+    return 1;
+  }
+  return date1Number - date2Number;
+}
+function monthToComparableNumber(date) {
+  if (date === undefined || date === null || date.length !== 10) {
+    return null;
+  }
+  var yearNumber = date.substring(6, 10);
+  var monthNumber = date.substring(3, 5);
+  var dayNumber = date.substring(0, 2);
+  var result = yearNumber * 10000 + monthNumber * 100 + dayNumber;
+  return result;
+}
+
+function converttoDate(date) {
+  if (date) {
+    const split = moment(date).format('DD-MM-YYYY');
+    const output = split.toUpperCase();
+    return output;
+  } else {
+    return 0;
+  }
+}

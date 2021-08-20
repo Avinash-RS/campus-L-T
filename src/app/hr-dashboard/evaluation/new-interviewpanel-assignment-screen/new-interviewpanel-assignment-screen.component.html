@@ -14,8 +14,8 @@
     </button>
   </div>
   <div>
-    <mat-accordion>
-      <mat-expansion-panel>
+    <mat-accordion #firstAccordion="matAccordion">
+      <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title> Filter </mat-panel-title>
           <mat-panel-description> </mat-panel-description>
@@ -28,22 +28,40 @@
                 >Candidate</span
               >
               <span [class.active]="fltractive" (click)="togglefltr()"
-                >Interview</span
+                >Interview Panel</span
               >
             </div>
           </div>
           <div class="left" *ngIf="!fltractive">
             <div class="flex-wrap">
               <div class="label">
-                Institute name<span class="asterick">*</span>
+                Shortlist name<span class="asterick">*</span>
+              </div>
+              <div class="input-box">
+                <nz-select
+                  class="nzSelect-revamp"
+                  [(ngModel)]="selectedShortlistname"
+                  nzAllowClear
+                  nzShowSearch
+                  nzPlaceHolder="--Select Shortlist name--"
+                >
+                  <nz-option
+                    *ngFor="let level of allShortlistNames"
+                    [nzLabel]="level.shortlist_name"
+                    [nzValue]="level.shortlist_name"
+                  ></nz-option>
+                </nz-select>
+              </div>
+            </div>
+
+            <div class="flex-wrap">
+              <div class="label">
+                Institute name<span class="asterick"></span>
               </div>
               <div class="input-box">
                 <nz-select
                   class="nzSelect-revamp"
                   [(ngModel)]="selectedInstitute"
-                  (ngModelChange)="
-                    instituteChangeForDiscipline(selectedInstitute)
-                  "
                   nzAllowClear
                   nzShowSearch
                   nzPlaceHolder="--Select Institute name--"
@@ -53,30 +71,6 @@
                     [nzLabel]="level.institute_name"
                     [nzValue]="level.institute_name"
                   ></nz-option>
-                </nz-select>
-              </div>
-            </div>
-            <div class="flex-wrap">
-              <div class="label">Discipline</div>
-              <div
-                [matTooltip]="selectedInstitute ? '' : 'Select Institute name'"
-                class="input-box"
-              >
-                <nz-select
-                  [ngClass]="selectedInstitute ? '' : 'disabled'"
-                  class="nzSelect-revamp"
-                  [(ngModel)]="selectedDiscipline"
-                  (ngModelChange)="instituteChange()"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="All"
-                >
-                  <nz-option
-                    *ngFor="let level of allDisciplines"
-                    [nzLabel]="level.discipline"
-                    [nzValue]="level.discipline"
-                  >
-                  </nz-option>
                 </nz-select>
               </div>
             </div>
@@ -97,29 +91,6 @@
                     [nzValue]="level.name"
                   >
                   </nz-option>
-                </nz-select>
-              </div>
-            </div>
-            <div class="flex-wrap">
-              <div class="label">Assessment</div>
-              <div
-                [matTooltip]="selectedInstitute ? '' : 'Select Institute name'"
-                class="input-box"
-              >
-                <nz-select
-                  class="nzSelect-revamp"
-                  [ngClass]="selectedInstitute ? '' : 'disabled'"
-                  [(ngModel)]="selectedAssessment"
-                  (ngModelChange)="instituteChange()"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="All"
-                >
-                  <nz-option
-                    *ngFor="let level of allAssessments"
-                    [nzLabel]="level.assement_name"
-                    [nzValue]="level.assement_name"
-                  ></nz-option>
                 </nz-select>
               </div>
             </div>
@@ -151,7 +122,7 @@
                       selectedInstitute && selectedStatus ? false : true
                     "
                     class="submit"
-                    (click)="go()"
+                    (click)="candidateFilterApply()"
                     mat-raised-button
                   >
                     Apply
@@ -162,7 +133,7 @@
           </div>
           <div class="right" *ngIf="fltractive">
             <div class="flex-wrap">
-              <div class="label">Interview panel discipline</div>
+              <div class="label" style="width: 200px;">Interview panel discipline</div>
               <div class="input-box">
                 <nz-select
                   class="nzSelect-revamp"
@@ -181,8 +152,8 @@
               </div>
               <div class="input-box">
                 <button
-                  class="submit"
-                  (click)="HRgo(selectedHRDiscipline)"
+                  class="submit ml-4"
+                  (click)="interviewPanelFilterApply(selectedHRDiscipline)"
                   mat-raised-button
                 >
                   Apply

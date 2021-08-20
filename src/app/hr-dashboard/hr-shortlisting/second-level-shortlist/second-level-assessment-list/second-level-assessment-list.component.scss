@@ -136,3 +136,27 @@ padding: 4px 8px;
 .hide {
   display: none;
 }
+
+::ng-deep .selection-disable {
+  cursor: auto !important;
+}
+::ng-deep .opacity {
+  opacity: 0.6 !important;
+}
+::ng-deep .success {
+  font-weight: 500;
+  background-color: #48cc83 !important;
+  color: #fff !important;
+  :focus {
+    border-radius: 0px !important;
+  }
+}
+
+::ng-deep .inprogress {
+  font-weight: 500;
+  background-color: #ffbc00 !important;
+  color: #fff !important;
+  :focus {
+    border-radius: 0px !important;
+  }
+}

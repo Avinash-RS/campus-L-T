@@ -313,6 +313,9 @@ export class AppConfigService {
     floatingFilter: true,
     filter:true,
     suppressSizeToFit: true,
+    filterParams: {
+      buttons: ['reset'],
+    },
     };
    }
 
@@ -324,7 +327,10 @@ export class AppConfigService {
       floatingFilter: false,
       filter:true,
       suppressSizeToFit: true,
-      };
+      filterParams: {
+        buttons: ['reset'],
+      },
+    };
      }
 
 

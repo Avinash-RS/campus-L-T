@@ -1,52 +1,59 @@
-<div class="top-wrapper">
+<div class="second-shortlist-sub-header">
   <div class="flex-wrapper">
-    <div class="inner-flex">
-      <div class="grid-wrapper">
-        <div class="group">
-          <div class="label">
-            Shortlist Name :&#160;
-          </div>
-          <div class="value">
-              {{bindDetails ? bindDetails['assement_name'] : '-'}}
-          </div>
-        </div>
-
-        <div style="white-space: nowrap;" class="group">
-          <div class="label">
-            Total number of candidates :&#160;
-          </div>
-          <div class="value">
-            <span class="labels">{{bindDetails ? bindDetails['total'] : '-'}}</span>
-          </div>
-        </div>
-
-        <!-- <div class="group">
-          <div class="label">
-            Time :&#160;
-          </div>
-          <div class="value">
-              {{bindDetails ? bindDetails['time'] : '-'}}
-          </div>
-        </div> -->
-        <div class="group">
-          <div class="label">
-            Shortlist status :&#160;
-          </div>
-          <div class="value">
-              {{bindDetails && bindDetails['status'] != 'completed' ? 'waiting' : 'completed'}}
-          </div>
-        </div>
-
-        <div style="white-space: nowrap;" class="group">
-          <div class="label">
-            Selected number of candidates :&#160;
-          </div>
-          <div class="value">
-            <span class="labels">{{bindDetails ? bindDetails['selected'] : '-'}}</span>
-          </div>
-        </div>
+    <div class="group">
+      <div class="label">
+        Shortlist Name :&#160;
       </div>
-
+      <div class="value">
+          {{bindDetails ? bindDetails['shortlist_name'] : '-'}}
+      </div>
     </div>
+
+    <div class="group">
+      <div class="label">
+        Shortlist status :&#160;
+      </div>
+      <div class="value">
+          {{bindDetails && bindDetails['status'] != 'completed' ? 'waiting' : 'completed'}}
+      </div>
+    </div>
+
+    <div style="white-space: nowrap;" class="group">
+      <div class="label">
+        Total number of candidates :&#160;
+      </div>
+      <div class="value">
+        <span class="labels">{{bindDetails ? bindDetails['total'] : '-'}}</span>
+      </div>
+    </div>
+
+    <div style="white-space: nowrap;" class="group">
+      <div class="label">
+        Available candidates for shortlist :&#160;
+      </div>
+      <div class="value">
+        <span class="labels">{{bindDetails ? bindDetails['available'] : '-'}}</span>
+      </div>
+    </div>
+
+    <div style="white-space: nowrap;" class="group">
+      <div class="label">
+        Shortlisted candidates :&#160;
+      </div>
+      <div class="value">
+        <span class="labels">{{bindDetails ? bindDetails['shortlisted'] : '-'}}</span>
+      </div>
+    </div>
+
+    <div style="white-space: nowrap;" class="group">
+      <div class="label">
+        Yet to complete candidates :&#160;
+      </div>
+      <div class="value">
+        <span class="labels">{{bindDetails ? bindDetails['notTaken'] : '-'}}</span>
+      </div>
+    </div>
+
+
   </div>
 </div>

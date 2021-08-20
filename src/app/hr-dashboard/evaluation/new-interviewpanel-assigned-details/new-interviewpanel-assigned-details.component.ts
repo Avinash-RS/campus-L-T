@@ -20,12 +20,11 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
 
   selectedInstitute: any;
-  selectedDiscipline: any;
   selectedEdu: any;
-  selectedAssessment: any;
   selectedStatus: any = '1';
-  allInstitutes: any;
-  allDisciplines: any;
+  allInstitutes: any = [];
+  allDisciplines: any = [];
+  allShortlistNames: any = [];
   EduLevel = DropdownListForKYC['level'];
   allEducations: any;
   allAssessments: any;
@@ -57,6 +56,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   quickSearchValue = '';
   quickSearchValue1 = '';
   panelOpenState1 = true;
+  selectedShortlistname: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -71,6 +71,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
    }
 
   ngOnInit() {
+    this.getShortlistNames();
     this.getInstitute();
     this.getEducation();
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
@@ -92,16 +93,12 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       if (params && params['data']) {
         this.routedData = JSON.parse(params['data']);
         this.selectedInstitute = this.routedData.college_name;
-        this.getParticularAssessmentAndDiscipline(this.selectedInstitute);
-        this.selectedDiscipline = this.routedData.discipline;
+        this.selectedShortlistname = this.routedData.shortlist_name;
         this.selectedEdu = this.routedData.education_level;
-        this.selectedAssessment = this.routedData.assement_name;
         this.selectedStatus = '1';
         this.go();
       } else {
       }
-      // this.assessmentDetails(params['data']);
-      // this.getUsersList(params['data']);
     });
   }
 
@@ -166,6 +163,16 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         }
       },
       {
+        headerName: 'Shortlist Name', field: 'shortlist_name',
+        filter: 'agTextColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'assement_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Institue name', field: 'institue',
         filter: 'agTextColumnFilter',
         minWidth: 140,
@@ -177,7 +184,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -187,7 +194,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Education level', field: 'level',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',
@@ -206,23 +213,16 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       },
       {
         headerName: 'Panel assigned', field: 'panel_assigned',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'panel_assigned',
         valueGetter: (params) => {
           return params && params.data &&  params.data.panel_assigned ? params.data.panel_assigned : 'Unassigned'
         },
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Assessment', field: 'assement_name',
-        filter: 'agTextColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'assement_name',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -266,19 +266,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
 
     ];
 
-    // this.service.getNotificationData(this.adminDetails._id)
-    //   .subscribe((result: any) => {
-    //     if (result.data && result.data.getnotificationreports?.message) {
-    //       const reportDetails = result.data.getnotificationreports?.message || [];
-
-    //       const array = reportDetails.filter((item) => {
-    //         item.report_info.created_on = moment(item.report_info.updated_on).format('MM-DD-YYYY HH:mm a');
-    //         return item.request_type === 'bulk_enrolment';
-    //       });
-    //       this.reportDetails = array;
-          this.go();
-    //     }
-    //   });
+    this.go();
 
   }
 
@@ -317,26 +305,8 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   }
 
 
-  getParticularAssessmentAndDiscipline(data) {
-    const apiData = {
-      institute: data ? data : ''
-    }
-    this.adminService.getParticularInstituteDiscipline(apiData).subscribe((data: any) => {
-
-      this.allAssessments = data && data['assement_name'] ? data['assement_name'] : [];
-      this.allDisciplines = data && data['discipline_array'] ? data['discipline_array'] : [];
-    }, (err) => {
-    });
-  }
-
   instituteChange() {
 
-  }
-
-  instituteChangeForDiscipline(data) {
-    this.selectedDiscipline = null;
-    this.selectedAssessment = null;
-    this.getParticularAssessmentAndDiscipline(data);
   }
 
   getEducation() {
@@ -364,12 +334,18 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
     });
   }
 
+  getShortlistNames() {
+    this.adminService.getAllShortlistedShortlistNames().subscribe((data: any) => {
+      this.allShortlistNames = data ? data : [];
+    }, (err) => {
+    });
+  }
+
   go() {
     const apiData = {
+      shortlist_name: this.selectedShortlistname ? this.selectedShortlistname : '',
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
-      discipline: this.selectedDiscipline ? this.selectedDiscipline : '',
       education_level: this.selectedEdu ? this.selectedEdu : '',
-      assement_name: this.selectedAssessment ? this.selectedAssessment : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
 

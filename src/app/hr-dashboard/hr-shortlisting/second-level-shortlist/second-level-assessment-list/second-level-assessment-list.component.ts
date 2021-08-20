@@ -68,12 +68,15 @@ export class SecondLevelAssessmentListComponent implements OnInit {
 
   onCellClicked(event) {
     if (event.colDef.field === 'buttons') {
-      if (event['data']['status'] == 'completed') {
-        this.shortlistedReport(event['data']);
-      } else {
-        this.shortlistRedirect(event['data']);
+      if (event['data']['available'] > 0) {
+        return this.shortlistRedirect(event['data']);
       }
     }
+
+    if (event.colDef.field === 'view') {
+        this.shortlistedReport(event['data']);
+    }
+
   }
 
   getModel(e) {
@@ -99,66 +102,146 @@ export class SecondLevelAssessmentListComponent implements OnInit {
       {
         headerName: 'S no', field: 'counter',
         filter: 'agNumberColumnFilter',
-        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 40,
         sortable: true,
         tooltipField: 'counter',
-        // comparator: this.customComparator,
+        filterParams: {
+          buttons: ['reset'],
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Shortlist name', field: 'group_name',
+        headerName: 'Shortlist name', field: 'shortlist_name',
         filter: 'agTextColumnFilter',
-        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'group_name',
-        // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
+        tooltipField: 'shortlist_name',
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Status', field: 'status',
         filter: 'agTextColumnFilter',
-        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
         tooltipField: 'status',
-        getQuickFilterText: (params) => {
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'No. of candidates', field: 'no_of_candidate',
+        headerName: 'Total No. of candidates', field: 'total_count',
         filter: 'agNumberColumnFilter',
-        // floatingFilterComponentParams: { suppressFilterButton: true },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'no_of_candidate',
-        getQuickFilterText: (params) => {
+        tooltipField: 'total_count',
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Yet to complete a Assessment', field: 'notTaken',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'notTaken',
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Shortlisted candidates', field: 'shortlisted',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'shortlisted',
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Available for shortlist', field: 'available',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'available',
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'Shortlist', field: 'buttons',
-        // cellStyle: { textAlign: 'center', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' },
         cellClass: 'agCellStyle',
+        headerClass: 'ag-grid-header-center',
+        valueFormatter: this.tooltipFormatter,
+        tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
+          return (params.valueFormatted);
+        },
         cellRenderer: (params) => {
           if (params['data']['buttons'] == 'completed') {
-            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;
-          } else {
-            return `<button class="table-btn agTable" mat-raised-button>Shortlist</button>`;
+            return `<button class="table-btn agTable selection-disable success" mat-raised-button>Shortlisted</button>`;
+          }
+          if (params['data']['available'] > 0) {
+            return `<button class="table-btn agTable inprogress" mat-raised-button>Shortlist</button>`;
+          }
+          else {
+            return `<button class="table-btn agTable selection-disable opacity" mat-raised-button>Shortlist</button>`;
           }
         },
-        sortable: true,
+        filterParams: {
+          buttons: ['reset'],
+        },
+          sortable: true,
+      },
+      {
+        headerName: 'View Report', field: 'view',
+        headerClass: 'ag-grid-header-center',
+        cellClass: 'agCellStyle',
+        cellRenderer: (params) => {
+          if (params['data']['shortlisted'] > 0) {
+            return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;
+          }
+        },
+        filterParams: {
+          buttons: ['reset'],
+        },
+          sortable: false,
       }
     ];
     this.getUsersList();
   }
 
+  tooltipFormatter(params) {
+    if (params.value == 'completed') {
+      return "Shortlisted";
+    }
+    if (params.value == 'waiting') {
+      return "Click to shortlist";
+    } else {
+      return "No Candidates available for shortlist";
+    }
+  }
 
   // To get all users
   getUsersList() {
@@ -171,9 +254,12 @@ export class SecondLevelAssessmentListComponent implements OnInit {
         this.userList.forEach(element => {
           count = count + 1;
           element['counter'] = count;
-          element['no_of_candidate'] = Number(element['no_of_candidate']);
+          element['total_count'] = Number(element['total_count']);
+          element['available'] = element['exams_taken'] - element['shortlisted'];
+          element['notTaken'] = element['total_count'] - element['exams_taken'];
           element['status'] = element && element.status != 'completed' ? 'waiting' : 'completed';
-          element['buttons'] = element && element.status != 'completed' ? 'waiting' : 'completed';
+          element['buttons'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
+          element['view'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
         });
       } else {
         this.userList = [];
@@ -184,10 +270,10 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   }
 
   shortlistRedirect(detail) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, {data: detail['shortlist_name'] ? detail['shortlist_name'] :'none'});
   }
   shortlistedReport(detail) {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, detail['group_name'] ? {data: detail['group_name']} : {data: 'none'});
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, {data: detail['shortlist_name'] ? detail['shortlist_name'] :'none'});
   }
 
 }

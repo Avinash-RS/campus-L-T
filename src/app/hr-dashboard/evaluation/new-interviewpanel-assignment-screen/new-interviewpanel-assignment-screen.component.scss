@@ -33,11 +33,10 @@
       display: flex;
     flex-wrap: wrap;
     .flex-wrap {
-      flex-grow: 1;
         display: flex;
         flex-direction: row;
         align-items: center;
-        width: 33%;
+        min-width: 33%;
         margin-bottom: 1em;
 
       .label {
@@ -59,6 +58,8 @@
       &.applybtn {
         display: flex;
         justify-content: flex-start;
+        min-width: 300px;
+        // flex-grow: 1;
         .input-box {
           flex-grow: 0;
         }

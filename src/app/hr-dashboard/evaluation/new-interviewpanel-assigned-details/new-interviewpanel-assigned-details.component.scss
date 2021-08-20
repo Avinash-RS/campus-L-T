@@ -22,37 +22,47 @@
         margin-top: 1em;
       }
       .top-wrapper {
-        display: grid;
-        grid-template-columns: 1fr;
         width: 100%;
-        justify-content: space-between;
         .left,.right {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
           width: 100%;
+          display: flex;
+        flex-wrap: wrap;
         .flex-wrap {
-          display: grid;
-          grid-template-columns: .7fr 1fr;
-          align-items: center;
-          max-width: 400px;
-          margin-top: 1em; 
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-width: 33%;
+            margin-bottom: 1em;
+
           .label {
             color: $light-black;
             font-size: 14px;
+            flex-grow: 0.8;
+            width: 130px;
           }
           .input-box {
+            flex-grow: 1;
             nz-select {
               height: 30px;
-              color: $light-black; 
+              color: $light-black;
               min-width: 235px;
               max-width: 235px;
               border-radius: 4px;
             }
           }
+          &.applybtn {
+            display: flex;
+            justify-content: flex-start;
+            min-width: 300px;
+            // flex-grow: 1;
+            .input-box {
+              flex-grow: 0;
+            }
+          }
         }
       }
     }
-}
+    }
 
 .disabled {
     opacity: 0.5;
@@ -65,7 +75,7 @@
     display: inline-flex;
     align-items: center;
     margin: 8px 0;
-    width: auto; 
+    width: auto;
     color: $header-blue;
     font-size: 14px;
     border: 0.5px solid $borderColor-2;
@@ -101,10 +111,10 @@
     }
   }
 }
-:focus { 
+:focus {
   border: none;
   outline: none;
-} 
+}
 :host ::ng-deep.ag-row-hover {
   background-color: $ag-hover !important;
 }
@@ -118,24 +128,24 @@ mat-expansion-panel {
   padding: 0.1em !important;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; 
+  align-items: flex-end;
 }
 mat-expansion-panel-header {
   background-color: #5c6873  !important;
   height: 30px !important;
   max-width: 100px !important;
-  padding: 0 16px 0px 24px !important; 
-  border-radius: 4px; 
+  padding: 0 16px 0px 24px !important;
+  border-radius: 4px;
   margin: 0 0.5em;
   mat-panel-title {
     color: $white !important;
     font-size: 14px;
   }
- 
+
 }
 .heading4 {
   font-weight: 600;
-  font-size: 16px; 
+  font-size: 16px;
   display: flex;
   align-items: center;
 }

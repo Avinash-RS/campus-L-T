@@ -21,10 +21,13 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
 
   assessmentDetails() {
     this.bindDetails = {
-      assement_name: this.statusHeaderData.shortlist_name,
+      shortlist_name: this.statusHeaderData.shortlist_name,
       status: this.statusHeaderData.shortlist_status,
       total: this.statusHeaderData.total_no_of_candidates,
-      selected: this.statusHeaderData.selectedCandidates
+      available: this.statusHeaderData.available,
+      shortlisted: this.statusHeaderData.shortlisted,
+      notTaken: this.statusHeaderData.notTaken,
+      header: this.statusHeaderData.header ? true : false,
     };
   }
 

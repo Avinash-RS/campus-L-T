@@ -22,7 +22,7 @@ import moment from 'moment';
 export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
-  @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
+  @ViewChild('firstAccordion', {static: false}) firstAccordion: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   @ViewChild('schedulePopup', {static: false}) schedulePopup: TemplateRef<any>;
   fltractive= false;
@@ -39,10 +39,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   displayNoRecords = false;
   urlParsedData: any;
   assessmentName: any;
+  selectedShortlistname: any;
   selectedInstitute: any;
-  selectedDiscipline: any;
   selectedEdu: any;
-  selectedAssessment: any;
   selectedStatus: any = '0';
   selectedHRDiscipline: any;
   allInstitutes: any;
@@ -98,8 +97,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   selectedInterviewer = [];
   attendeesList = [];
   objList;
-  routeAssignedData: { college_name: any; discipline: any; education_level: any; assement_name: any; status: any; };
+  routeAssignedData: any;
   toggleVisibility = true;
+  allShortlistNames: any = [];
 
   constructor(
     public appConfig: AppConfigService,
@@ -138,6 +138,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.defaultColDefHR = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.tabledefHR();
+    this.getShortlistNames();
     this.getInstitute();
     this.getHRDisciplines();
     this.getEducation();
@@ -199,18 +200,21 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         headerName: ''
       },
       {
-        headerName: 'Candidate name', field: 'name',
+        headerName: 'Candidate Email ID', field: 'email',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'name',
+        tooltipField: 'email',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
         headerName: 'discipline', field: 'discipline',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -220,7 +224,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Education level', field: 'level',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',
@@ -289,7 +293,10 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       },
       {
         headerName: 'Discipline', field: 'discipline',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -311,12 +318,11 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
 
-  go() {
+  candidateFilterApply() {
     const apiData = {
+      shortlist_name: this.selectedShortlistname ? this.selectedShortlistname : '',
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
-      discipline: this.selectedDiscipline ? this.selectedDiscipline : '',
       education_level: this.selectedEdu ? this.selectedEdu : '',
-      assement_name: this.selectedAssessment ? this.selectedAssessment : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
     this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
@@ -329,7 +335,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     }, (err) => {
     });
   }
-  HRgo(data) {
+  interviewPanelFilterApply(data) {
     this.particularInvpanelist(data);
   }
 
@@ -358,6 +364,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
+  getShortlistNames() {
+    this.adminService.getAllShortlistedShortlistNames().subscribe((data: any) => {
+      this.allShortlistNames = data ? data : [];
+    }, (err) => {
+    });
+  }
+
   getHRDisciplines() {
     this.adminService.getDiscipline().subscribe((data: any) => {
 
@@ -366,23 +379,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
-  getParticularAssessmentAndDiscipline(data) {
-    const apiData = {
-      institute: data ? data : ''
-    }
-    this.adminService.getParticularInstituteDiscipline(apiData).subscribe((data: any) => {
-
-      this.allAssessments = data && data['assement_name'] ? data['assement_name'] : [];
-      this.allDisciplines = data && data['discipline_array'] ? data['discipline_array'] : [];
-    }, (err) => {
-    });
-  }
-
-  instituteChangeForDiscipline(data) {
-    this.selectedDiscipline = null;
-    this.selectedAssessment = null;
-    this.getParticularAssessmentAndDiscipline(data);
-  }
 
   particularInvpanelist(data) {
     const apiData = {
@@ -481,6 +477,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     const apiData = {
       user_email: candidateID,
       hr_email: HRID,
+      shortlist_name: this.selectedShortlistname,
       field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
     this.assigntoPanel(apiData);
@@ -552,6 +549,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     const apiData = {
       user_email: candidateID,
       hr_email: HRID,
+      shortlist_name: this.selectedShortlistname,
       field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
     };
     this.openDialog(ShortlistBoxComponent, data, apiData);
