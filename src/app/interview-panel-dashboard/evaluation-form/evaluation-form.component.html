@@ -135,7 +135,7 @@
       <ng-container matColumnDef="veryGood">
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Very Good </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
-          <mat-radio-button [checked]="assessment['isChecked'] == 'veryGood' ? true : false"
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'veryGood' ? true : false"
             (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
             <i class="material-icons" matTooltip="{{assessment.veryGood}}">info</i>
           </mat-radio-button>
@@ -147,7 +147,7 @@
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
 
-          <mat-radio-button [checked]="assessment['isChecked'] == 'good' ? true : false"
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'good' ? true : false"
             (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
             <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
           </mat-radio-button>
@@ -158,7 +158,7 @@
         <th class="headerCell" mat-header-cell *matHeaderCellDef> Average
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
-          <mat-radio-button [checked]="assessment['isChecked'] == 'Average' ? true : false"
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'Average' ? true : false"
             (change)="setAssessmentLevel(assessment,'Average')" [name]="assessment.id" value="3">
             <i class="material-icons" matTooltip="{{assessment.average}}">info</i>
           </mat-radio-button>
@@ -169,7 +169,7 @@
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
-          <mat-radio-button [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
             (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
             <i class="material-icons" matTooltip="{{assessment.notSuitable}}">info</i>
           </mat-radio-button>

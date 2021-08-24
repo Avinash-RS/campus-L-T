@@ -173,10 +173,12 @@ export class EvaluationFormComponent implements OnInit {
           }
         });
         this.statusChange({value: data['attended']});
+        this.status != '2' ?  '' : this.evaluationForm.disable();
       } else {
         this.assessments.forEach((element: any) => {
           element.isChecked = 'false';
         });
+        this.status != '2' ?  '' : this.evaluationForm.disable();
       }
     }, (err) => {
 
@@ -231,6 +233,7 @@ export class EvaluationFormComponent implements OnInit {
       curricular_activites: new FormControl(null, [Validators.required]),
       thought_clarity: new FormControl(null, [Validators.required]),
     });
+    this.status != '2' ?  '' : this.evaluationForm.disable();
   }
 
   statusChange(status: any) {

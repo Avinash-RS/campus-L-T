@@ -197,3 +197,13 @@ textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
   justify-content: center;
   text-align: center;
 }
+
+:host ::ng-deep .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  cursor: not-allowed !important;
+}
+:host ::ng-deep .mat-radio-disabled {
+  cursor: not-allowed !important;
+  .mat-radio-label {
+    cursor: not-allowed !important;
+  }
+}
