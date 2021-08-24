@@ -169,6 +169,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     this.columnDefs = [
       {
         headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
         maxWidth: 50,
         checkboxSelection: true,
         filter: false,
@@ -179,7 +180,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Mail', field: 'mailed',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 95,
         sortable: true,
         tooltipField: 'mailed',
@@ -189,7 +193,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Form Status', field: 'is_editable',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 110,
         sortable: true,
         tooltipField: 'is_editable',
@@ -233,7 +240,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Profile', field: 'selectedpost',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 90,
         sortable: true,
         tooltipField: 'selectedpost',
@@ -330,7 +340,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Verification Status', field: 'verified',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         sortable: true,
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
         cellRenderer: (params) => {
@@ -352,7 +365,10 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       },
       {
         headerName: 'Verified/Reverted by', field: 'verifier_name',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 170,
         sortable: true,
         tooltipField: 'verifier_name',

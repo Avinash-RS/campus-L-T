@@ -2166,7 +2166,7 @@ th {
     margin-bottom: 0em !important;
     .list-count {
         position: absolute;
-        top: 30px !important;
+        margin-top: 1em !important;
     }
 }
 
@@ -3253,4 +3253,7 @@ mat-icon {
   .ag-header-cell-label {
     justify-content: center;
   }
+}
+.ag-invisible {
+  display: none !important;
 }

@@ -140,11 +140,11 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       {
         headerName: 'Gender', field: 'gender',
         filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         sortable: true,
         tooltipField: 'gender',
-        filterParams: {
-          buttons: ['reset'],
-        },
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -186,7 +186,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
         sortable: true,
         tooltipField: 'level',
         filterParams: {
-          buttons: ['reset'],
+          applyMiniFilterWhileTyping: true
         },
         getQuickFilterText: (params) => {
           return params.value;
@@ -205,7 +205,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
         }
       },
       {
-        headerName: 'Backlog', field: 'backlog',
+        headerName: 'No. of Backlogs', field: 'backlog',
         filter: 'agNumberColumnFilter',
         sortable: true,
         tooltipField: 'backlog',
@@ -217,7 +217,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
         }
       },
       {
-        headerName: 'Date of passing', field: 'dateofpassing',
+        headerName: 'Year of passing', field: 'dateofpassing',
         filter: 'agDateColumnFilter',
         sortable: true,
         comparator: dateComparator,
@@ -331,7 +331,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
               level = 'Postgraduate';
             }
             percentage = element['education'] && element['education']['field_percentage'] ? element['education']['field_percentage'] : '-';
-            backlog = element['education'] && element['education']['field_backlogs'] ? element['education']['field_backlogs'] : '-';
+            backlog = element['education'] && element['education']['field_backlogs'] ? element['education']['field_backlogs'] : 0;
             dateofpassing = element['education'] && element['education']['field_year_of_passing'] ? this.getDateFormat(element['education']['field_year_of_passing']) : '-';
           }
           align.push(

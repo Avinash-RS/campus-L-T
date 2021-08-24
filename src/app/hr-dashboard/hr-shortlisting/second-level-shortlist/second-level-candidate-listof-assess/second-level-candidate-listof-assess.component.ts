@@ -49,6 +49,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     suppressSizeToFit: true,
     headerCheckboxSelection: this.isFirstColumn,
     checkboxSelection: this.isFirstColumn,
+    // headerCheckboxSelectionFilteredOnly: true,
   };
   tooltipShowDelay = 0;
   rowData: any;
@@ -128,6 +129,11 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       });
     }
 
+  checkFilterAppied() {
+    let savedFilterModel = this.gridApi.getFilterModel();
+    let check = Object.keys(savedFilterModel).length === 0 && savedFilterModel.constructor === Object ? true : false;
+    return !check;
+  }
   submit() {
     this.selectedCandidatesForShortlist = [];
     this.selectedCandidatesForShortlist = this.gridApi.getSelectedNodes();
@@ -138,12 +144,13 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   afterSubmit(result) {
+    let savedFilterModel = this.checkFilterAppied() ? this.gridApi.getFilterModel() : '';
     const apiData = {
       shortlisted_ids: [],
       shortlisted_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
       emai_sent: result['type'] === 'yes' ? true : false,
       shortlist_name: this.nameOfAssessment,
-      filter_model: ''
+      filter_model: savedFilterModel ? JSON.stringify(savedFilterModel) : ''
       };
       let candidatesArr = [];
       this.selectedCandidatesForShortlist.forEach(element => {

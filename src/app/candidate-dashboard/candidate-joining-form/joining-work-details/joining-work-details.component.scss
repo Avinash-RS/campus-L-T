@@ -172,7 +172,7 @@
                 color: $primary-red;
                 border: 1px dashed #BEBEBE;
                 height: 35px;
-                width: 100px;
+                min-width: 100px;
                 margin-left: 1em;
             }
             .add-button:hover {
@@ -212,7 +212,7 @@
                     i:hover {
                         color: white;
                         background-color: $primary-red;
-                        border-radius: 50%;                    
+                        border-radius: 50%;
                     }
                 }
             }
@@ -333,7 +333,7 @@
 :host ::ng-deep .ant-select-search__field__placeholder {
     color: #a5a5a5 !important;
     opacity: 0.6 !important;
-    font-size: 13px !important; 
+    font-size: 13px !important;
 }
 
 :host ::ng-deep .ant-select-selection__rendered {

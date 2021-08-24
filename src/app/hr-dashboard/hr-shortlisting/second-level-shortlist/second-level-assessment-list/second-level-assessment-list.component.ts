@@ -152,7 +152,7 @@ export class SecondLevelAssessmentListComponent implements OnInit {
         }
       },
       {
-        headerName: 'Yet to complete a Assessment', field: 'notTaken',
+        headerName: 'Yet to complete Assessment', field: 'notTaken',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -223,10 +223,8 @@ export class SecondLevelAssessmentListComponent implements OnInit {
             return `<img style="cursor: pointer;" src="assets/images/eye.svg" alt="" srcset="">`;
           }
         },
-        filterParams: {
-          buttons: ['reset'],
-        },
-          sortable: false,
+        filter: false,
+        sortable: false,
       }
     ];
     this.getUsersList();

@@ -125,7 +125,7 @@
                 color: $primary-red;
                 border: 1px dashed #BEBEBE;
                 height: 30px;
-                width: 100px;
+                min-width: 100px;
             }
             .add-button-sub:hover {
                 background-color: $primary-red;
@@ -276,7 +276,7 @@
                     transform: translateY(-25%) !important;
                     height: auto !important;
                 }
-                .readonlyTitle1 { 
+                .readonlyTitle1 {
                     transform: translateY(-15%) !important;
                 }
             }
@@ -480,7 +480,7 @@
 :host ::ng-deep .ant-select-search__field__placeholder {
     color: #a5a5a5 !important;
     opacity: 0.6 !important;
-    font-size: 13px !important; 
+    font-size: 13px !important;
 }
 
 :host ::ng-deep .ant-select-selection__rendered {
@@ -639,12 +639,12 @@ mat-expansion-panel-header {
     margin: 0 !important;
 }
 .sub-header-accordion {
- background: #EAEAEA !important;   
+ background: #EAEAEA !important;
 }
 .sub-header-accordion:hover {
-    background: rgb(0, 0, 0, 0.1) !important;   
+    background: rgb(0, 0, 0, 0.1) !important;
 }
-   
+
 .alignCenter {
     align-items: center !important;
 }
@@ -681,7 +681,7 @@ mat-expansion-panel-header {
         display: block;
         width: 100%;
         height: 500px !important;
-        overflow: auto;        
+        overflow: auto;
         .note {
             color: $primary-red;
             font-size: 14px;
@@ -753,7 +753,7 @@ mat-expansion-panel-header {
 
         .add-button {
             height: 30px;
-            width: 100px;
+            min-width: 100px;
             background-color: $primary-red;
             color: white;
             transition: background-color 580ms linear;

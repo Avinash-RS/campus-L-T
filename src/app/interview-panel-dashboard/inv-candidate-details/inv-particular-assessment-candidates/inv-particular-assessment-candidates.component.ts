@@ -150,6 +150,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
       this.columnDefs = [
         {
           headerCheckboxSelection: true,
+          headerCheckboxSelectionFilteredOnly: true,
           width: 50,
           maxWidth: 50,
           checkboxSelection: true,
@@ -199,6 +200,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           headerName: "Interview Status",
           field: "evaluation_status_1",
           filter: 'agSetColumnFilter',
+          filterParams: {
+            applyMiniFilterWhileTyping: true
+          },
           minWidth: 100,
           sortable: true,
           tooltipField: "evaluation_status_1",
@@ -224,6 +228,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           headerClass: 'ag-grid-header-center',
           field: "evaluation_btn",
           filter: 'agSetColumnFilter',
+          filterParams: {
+            applyMiniFilterWhileTyping: true
+          },
           minWidth: 200,
           sortable: true,
           getQuickFilterText: (params) => {
@@ -254,6 +261,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
           headerClass: 'ag-grid-header-center',
           field: "interview_status",
           filter: 'agSetColumnFilter',
+          filterParams: {
+            applyMiniFilterWhileTyping: true
+          },
           minWidth: 130,
           sortable: true,
           getQuickFilterText: (params) => {
@@ -315,6 +325,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
             headerName: "Interview Sessions",
             field: "join_interview",
             filter: 'agSetColumnFilter',
+            filterParams: {
+              applyMiniFilterWhileTyping: true
+            },
             headerClass: 'ag-grid-header-center',
             minWidth: 340,
             sortable: true,

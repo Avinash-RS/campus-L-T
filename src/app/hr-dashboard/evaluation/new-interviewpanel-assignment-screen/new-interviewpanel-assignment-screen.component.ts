@@ -191,6 +191,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.columnDefs = [
       {
         headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
         maxWidth: 50,
         checkboxSelection: true,
         filter: false,
@@ -225,6 +226,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       {
         headerName: 'Education level', field: 'level',
         filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',

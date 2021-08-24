@@ -100,7 +100,7 @@ nz-date-picker:focus,nz-date-picker:hover {
   color: $primary-red;
   border: 1px dashed #BEBEBE;
   height: 35px;
-  width: 100px;
+  min-width: 100px;
   margin-left: 1em;
 }
 .add-button:hover {

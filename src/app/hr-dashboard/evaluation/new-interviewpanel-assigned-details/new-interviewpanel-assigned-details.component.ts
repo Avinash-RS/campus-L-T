@@ -185,6 +185,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       {
         headerName: 'Discipline', field: 'discipline',
         filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'discipline',
@@ -195,6 +198,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       {
         headerName: 'Education level', field: 'level',
         filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',

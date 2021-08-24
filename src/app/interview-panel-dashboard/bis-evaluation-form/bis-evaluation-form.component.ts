@@ -107,7 +107,7 @@ export class BisEvaluationFormComponent implements OnInit {
       }
       this.adminService.getEvaluationDetails(apiData).subscribe((success: any) => {
 
-        const data = success && success.length > 0 ? success[0] : null;
+        const data = success ? success : null;
         if (data) {
           this.evaluationForm.patchValue({
             attended: data['attended'] ? data['attended'] : '',
