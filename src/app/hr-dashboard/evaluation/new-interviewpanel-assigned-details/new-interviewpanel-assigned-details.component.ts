@@ -173,7 +173,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         }
       },
       {
-        headerName: 'Institue name', field: 'institue',
+        headerName: 'Institute name', field: 'institue',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,

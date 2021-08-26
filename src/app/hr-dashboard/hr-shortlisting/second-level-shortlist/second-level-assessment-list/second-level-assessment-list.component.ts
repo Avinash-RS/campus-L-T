@@ -127,14 +127,14 @@ export class SecondLevelAssessmentListComponent implements OnInit {
       },
       {
         headerName: 'Status', field: 'status',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
         minWidth: 140,
         sortable: true,
         tooltipField: 'status',
-        filterParams: {
-          buttons: ['reset'],
-        },
-          getQuickFilterText: (params) => {
+        getQuickFilterText: (params) => {
           return params.value;
         }
       },
