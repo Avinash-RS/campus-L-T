@@ -13,7 +13,7 @@ export class SharedServiceService {
   // To update Admin userlist page
   updateUserlist = new Subject();
   printSubject = new Subject();
-  maintenanceSubject = new Subject();
+  commonUserListRefresh = new Subject();
 
   openJoiningRoutePopUp = new Subject();
   sendPopupResult = new Subject();

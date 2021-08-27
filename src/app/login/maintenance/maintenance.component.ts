@@ -18,15 +18,6 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  maintenanceSub() {
-this.sharedService.maintenanceSubject.subscribe((data: any) => {
-     
-    this.message = data;
-  }, (err)=> {
-
-    });
-  }
-
   ngOnDestroy() {
     // this.mySub.unsubscribe();
   }

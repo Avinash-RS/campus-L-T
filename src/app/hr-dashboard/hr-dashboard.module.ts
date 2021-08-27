@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HrDashboardRoutingModule } from './hr-dashboard-routing.module';
@@ -69,6 +69,7 @@ ModuleRegistry.registerModules(AllModules);
     AgGridModule.withComponents([]),
     OwlDateTimeModule,
     OwlNativeDateTimeModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class HrDashboardModule { }

@@ -1,0 +1,9 @@
+:host ::ng-deep .mat-radio-button {
+  width: auto !important;
+  height: auto !important;
+  margin-left: 1em;
+  padding-left: 1em;
+}
+:host ::ng-deep .mat-radio-button:first-child {
+  padding-left: 0em;
+}

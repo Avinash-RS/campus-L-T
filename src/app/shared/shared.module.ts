@@ -94,8 +94,14 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CommonSidebarComponent } from './common-sidebar/common-sidebar.component';
 import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/join-interview.component';
 import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-kyc-profile-view.component';
+import { UserListsComponent } from './user-management/user-lists/user-lists.component';
+import { CommonUploadsComponent } from './user-management/common-uploads/common-uploads.component';
+import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
+import { AgGridModule } from 'ag-grid-angular';
+ModuleRegistry.registerModules(AllModules);
+
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent
 ],
   imports: [
     CommonModule,
@@ -105,6 +111,7 @@ import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-
     RouterModule,
     HttpClientModule,
     MaterialModule,
+    AgGridModule.withComponents([]),
     PdfViewerModule,
     NgxChartsModule,
     NgMultiSelectDropDownModule.forRoot(),
@@ -209,6 +216,8 @@ import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-
     CommonSidebarComponent,
     JoinInterviewComponent,
     SharedKycProfileViewComponent,
+    UserListsComponent,
+    CommonUploadsComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
