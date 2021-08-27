@@ -193,6 +193,11 @@ export class AdminServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  getCandidatesList(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_candidates_list`, data,
+      { headers: this.withoutTokens(), withCredentials: true, reportProgress: true });
+  }
+
   uploadCSV(data) {
     return this.http.post(`${this.BASE_URL}/api/bulk-user/registration?_format=json`, data,
       { headers: this.onlyToken(), withCredentials: true });

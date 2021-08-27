@@ -319,6 +319,22 @@ export class AppConfigService {
     };
    }
 
+   agGridWithServerSideAllFunc(){
+    return {
+      flex: 1,
+      minWidth: 40,
+      resizable: true,
+      floatingFilter: true,
+      filter:true,
+      suppressSizeToFit: true,
+      filterParams: {
+      suppressAndOrCondition: true,
+      debounceMs: 1200,
+      buttons: ['reset'],
+      },
+      };
+     }
+
    agGridwithoutfloatingFilter(){
     return {
       flex: 1,

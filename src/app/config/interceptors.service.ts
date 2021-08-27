@@ -28,7 +28,10 @@ export class InterceptorsService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.totalRequests++;
-    this.loadingService.setLoading(true);
+    if (request.reportProgress) {
+    } else {
+      this.loadingService.setLoading(true);
+    }
 
     // created on 28-Nov
     const headers = new HttpHeaders({
@@ -61,7 +64,7 @@ export class InterceptorsService implements HttpInterceptor {
         }
         return event;
       }),
-      retry(3),
+      retry(2),
       // Hidden on 28-Nov
       // return next.handle(request).pipe(
       //   map((event: HttpEvent<any>) => {

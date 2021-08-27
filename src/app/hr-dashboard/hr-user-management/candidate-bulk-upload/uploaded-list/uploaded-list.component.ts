@@ -1,9 +1,15 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, PageEvent } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import * as moment from 'moment'; //in your component
+// import all Enterprise modules
+import { ModuleRegistry, AllModules, IDatasource, IGetRowsParams } from '@ag-grid-enterprise/all-modules';
+ModuleRegistry.registerModules(AllModules);
+
+import { GridChartsModule } from '@ag-grid-enterprise/charts';
+ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
   selector: 'app-uploaded-list',
@@ -11,222 +17,266 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   styleUrls: ['./uploaded-list.component.scss']
 })
 export class UploadedListComponent implements OnInit, AfterViewInit {
-  showPage = true;
-  displayedColumns: any[] = ['counter', 'tag', 'name', 'new_candidate_id', 'email', 'uploaded_by', 'uploader_role', 'date', 'time'];
-  dataSource: MatTableDataSource<any>;
-
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('myDiv', { static: false }) private myDiv: ElementRef;
-
-  selectedUserDetail: any;
-  userList: any;
-  radioCheck;
-  selectAllCheck;
-  displayNoRecords = false;
+  userList: any = [];
   // serverSide Things
-  length;
-  pageSize;
-  apiPageIndex: any = 1;
-  listCount: any = 50;
-  normal = true;
-  asc = false;
-  searchInput: any;
-  desc = false;
-  sortedCol;
-  queryObject: any;
-  // MatPaginator Output
-  pageEvent: PageEvent;
-  overallSelect = false;
+  length = 0;
 
+  // Ag grid
+  paginationPageSize: any = 100;
+  cacheBlockSize: any = 100;
+  gridApi: any;
+  columnDefs = [];
+
+  defaultColDef: any;
+  rowData: any = [];
+  searchBox = false;
+  filterValue: string;
+  quickSearchValue = '';
+  public gridColumnApi;
+  protected rowModelType;
+  protected serverSideStoreType;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService
   ) {
+    this.serverSideStoreType = 'partial';
+    this.rowModelType = 'infinite';
   }
 
   ngOnInit() {
-    this.getUsersList();
+    this.defaultColDef = this.appConfig.agGridWithServerSideAllFunc();
+    this.tabledef();
+    // this.getUsersList();
   }
 
-  pageChanged(event) {
-    if (event.previousPageIndex > event.pageIndex) {
-      // previous button clicked
-      this.apiPageIndex = event.pageIndex + 1;
-      const apiData = {
-        start: this.apiPageIndex.toString(),
-        counts: this.listCount.toString(),
-        order_by: '',
-        order_type: '',
-        search: this.searchInput ? this.searchInput : ''
-      };
-      this.getPageList(apiData);
-    }
-    if (event.previousPageIndex < event.pageIndex) {
-      // next button clicked
-      this.apiPageIndex = event.pageIndex + 1;
-      const apiData = {
-        start: this.apiPageIndex.toString(),
-        counts: this.listCount.toString(),
-        order_by: '',
-        order_type: '',
-        search: this.searchInput ? this.searchInput : ''
-      };
-      this.getPageList(apiData);
-    }
-    if (event.pageSize !== this.listCount) {
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.gridColumnApi;
+    var datasource = {
+      getRows: (params: IGetRowsParams) => {
+      // console.log('fetching', params);
+      // console.log('ad', this.gridApi);
+    // if (params.sortModel.length === 0 && Object.keys(params.filterModel).length == 0) {
 
-      this.listCount = event.pageSize;
-      this.apiPageIndex = 1;
-      this.getUsersList();
-    }
-  }
-
-  applySearch() {
-    const apiData = {
-      start: this.apiPageIndex.toString(),
-      counts: this.listCount.toString(),
-      order_by: '',
-      order_type: '',
-      search: this.searchInput ? this.searchInput : ''
-    };
-    this.getPageList(apiData);
-  }
-
-  sorting(column, columnSelect) {
-    if (this.sortedCol !== columnSelect) {
-      this.normal = true;
-      this.asc = false;
-      this.desc = false;
-    }
-    this.sortedCol = columnSelect;
-    if (this.normal) {
-      this.normal = false;
       const apiData = {
-        start: this.apiPageIndex.toString(),
-        counts: this.listCount.toString(),
-        order_by: column,
-        order_type: 'asc',
-        search: this.searchInput ? this.searchInput : ''
+        startRow: params.startRow,
+        endRow: params.endRow,
+        isTpo: false
       };
-      this.getPageList(apiData);
-      return this.asc = true;
-    }
-    if (this.asc) {
-      this.asc = false;
-      const apiData = {
-        start: this.apiPageIndex.toString(),
-        counts: this.listCount.toString(),
-        order_by: column,
-        order_type: 'desc',
-        search: this.searchInput ? this.searchInput : ''
-      };
-      this.getPageList(apiData);
-      return this.desc = true;
-    }
-    if (this.desc) {
-      this.desc = false;
-      const apiData = {
-        start: this.apiPageIndex.toString(),
-        counts: this.listCount.toString(),
-        order_by: '',
-        order_type: '',
-        search: this.searchInput ? this.searchInput : ''
-      };
-      this.getPageList(apiData);
-      return this.normal = true;
-    }
-  }
 
-  // To get all users
-  getPageList(apiData) {
-    // const apiData = {
-    //   counts: '50',
-    //   start: '1',
-    //   search: '',
-    //   order_by: '',
-    //   order_type: 'asc',
-    //   uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
-    // };
-    this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
+      this.gridApi.showLoadingOverlay();
+      this.adminService.getCandidatesList(apiData).subscribe((data1: any) => {
+        this.gridApi.hideOverlay();
+        // console.log('data', data1);
 
-      this.length = data1 && data1['count'] ? data1['count'] : '0';
-      this.userList = data1 && data1['result'] ? data1['result'] : [];
-      let count = 0;
-      this.userList.forEach((element, i) => {
-        count = count + 1;
-        element['counter'] = count;
-        element['time'] = element && element['time'] ? element['time'] : '';
+        this.userList = data1 && data1['data'] ? data1['data'] : [];
+        let count = params.startRow;
+        this.userList.forEach((element, i) => {
+          count = count + 1;
+          element['counter'] = count;
+          element['created_date'] = element['created_date'] ? element['created_date'] : '';
+        });
+        this.length = data1 && data1['total_count'] ? data1['total_count'] : 0;
+        params.successCallback(
+          this.userList, this.length
+        );
+      }, (err) => {
+        this.gridApi.hideOverlay();
+        params.failCallback();
+        params.successCallback(
+          this.userList, this.length
+        );
+        this.gridApi.showNoRowsOverlay();
       });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.length = data1 && data1['count'] ? data1['count'] : '0';
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+    // } else {
+    //   this.gridApi.setFilterModel(null);
+    //   this.gridApi.setSortModel(null);
+    // }
 
-    }, (err) => {
-    });
-  }
-
-
-
-  tConvert(time) {
-    // Check correct time format and split into components
-    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) { // If time format correct
-      time = time.slice(1);  // Remove full string match value
-      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
     }
-    return time.join(''); // return adjusted time or original string
+    this.gridApi.setDatasource(datasource);
   }
 
-  // To get all users
-  getUsersList() {
-    const apiData = {
-      start: this.apiPageIndex.toString(),
-      counts: this.listCount.toString(),
-      order_by: '',
-      order_type: '',
-      search: this.searchInput ? this.searchInput : '',
-      // uploaded_id: this.appConfig.getLocalData('userId') ? '' : ''
-    };
-    this.adminService.alreadyUploadedDetails(apiData).subscribe((data1: any) => {
+  paginationChanged(e) {
 
-      this.userList = data1 && data1['result'] ? data1['result'] : [];
-      let count = 0;
-      this.userList.forEach((element, i) => {
-        count = count + 1;
-        element['counter'] = count;
-        element['time'] = element && element['time'] ? element['time'] : '';
-      });
-      this.dataSource = new MatTableDataSource(this.userList);
-      this.length = data1 && data1['count'] ? data1['count'] : '0';
-      this.triggerFalseClick();
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-
-    }, (err) => {
-    });
   }
 
-  triggerFalseClick() {
-    if (this.myDiv) {
+  sortevent(e) {
+  }
 
-      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
-      el.focus();
+  customComparator = (valueA, valueB) => {
+    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
+  }
+
+  onCellClicked(event) {
+    // event['data']
+  }
+
+
+  getModel(e) {
+    // const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    // if (filteredArray && filteredArray.length === 0) {
+
+    // }
+  }
+
+  onQuickFilterChanged() {
+    // this.gridApi.setQuickFilter(this.quickSearchValue);
+    // const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+    // if (filteredArray && filteredArray.length === 0) {
+    //   this.appConfig.warning('No search results found');
+    //   // this.toast.warning('No reuslts found');
+    // }
+  }
+
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('LLL');
+      return split;
     }
+  }
+
+  tabledef() {
+
+    this.columnDefs = [
+      {
+        headerName: 'S no',
+        field: 'counter',
+        filter: 'agNumberColumnFilter',
+        filterParams: {
+          filterOptions: ['Less than or equals', 'Greater than or equals', 'In range']
+        },
+        minWidth: 80,
+        sortable: true,
+        resizable:true,
+        tooltipField: 'counter',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Tag', field: 'tag_name',
+        filter: 'agTextColumnFilter',
+        filterParams: {
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
+        },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'tag_name',
+        resizable:true,
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Name', field: 'candidate_name',
+        filter: 'agTextColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_name',
+        filterParams: {
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
+        },
+        resizable:true,
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Candidate id', field: 'candidate_id',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        filterParams: {
+          filterOptions: ['Less than or equals', 'Greater than or equals', 'In range']
+        },
+        sortable: true,
+        resizable:true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Email id', field: 'email',
+        filter: 'agTextColumnFilter',
+        filterParams: {
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
+        },
+        minWidth: 250,
+        sortable: true,
+        resizable:true,
+        tooltipField: 'email',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Uploaded by', field: 'uploader_name',
+        filter: 'agTextColumnFilter',
+        filterParams: {
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
+        },
+        minWidth: 140,
+        sortable: true,
+        resizable:true,
+        tooltipField: 'uploader_name',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Uploader Role', field: 'uploader_role',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          values: params => {
+              // async update simulated using setTimeout()
+              setTimeout(() => {
+                  // fetch values from server
+                  const values = ['Institute', 'HR'];
+                  // supply values to the set filter
+                  params.success(values);
+              }, 1000);
+        },
+      },
+        minWidth: 140,
+        sortable: true,
+        resizable:true,
+        tooltipField: 'uploader_role',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Date of Upload', field: 'created_date',
+        filter: 'agTextColumnFilter',
+        filterParams: {
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
+        },
+        minWidth: 140,
+        sortable: true,
+        resizable:true,
+        tooltipField: 'created_date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+    ];
+
   }
 
 
   ngAfterViewInit() {
-    if (this.dataSource) {
-      this.length = this.length;
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-    }
     // // Hack: Scrolls to top of Page after page view initialized
     // let top = document.getElementById('top');
     // if (top !== null) {
@@ -235,25 +285,5 @@ export class UploadedListComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // check search data is available or not
-    if (this.dataSource.filteredData.length == 0) {
-      this.displayNoRecords = true;
-    } else {
-      this.displayNoRecords = false;
-
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  selectedUser(userDetail) {
-
-  }
 
 }
