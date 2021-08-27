@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -164,27 +163,6 @@ export class AppConfigService {
   //     { nzDuration: 3000 }
   //   );
   // }
-
-
-  // To show success Snack Bar Message
-  successOld(message: any, icon: any) {
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 5000,
-      verticalPosition: 'top',
-      data: { message, icon: 'success' },
-      panelClass: ['success-bg-color']
-    });
-  }
-
-  // To show error Snack Bar Message
-  errorOld(message: any, icon: any) {
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      duration: 5000,
-      verticalPosition: 'top',
-      data: { message, icon: 'error' },
-      panelClass: ['warn-bg-color']
-    });
-  }
 
   // To get a local storage value
   getLocalData(key: string): any {

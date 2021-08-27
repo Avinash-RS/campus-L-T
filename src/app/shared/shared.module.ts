@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SignupHeaderComponent } from './signup-header/signup-header.component';
 import { HomeHeaderComponent } from './home-header/home-header.component';
-import { SnackbarComponent } from './snackbar/snackbar.component';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 import { MaterialModule } from '../material/material.module';
 import { ModalBoxComponent } from './modal-box/modal-box.component';
@@ -78,7 +77,6 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
 import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.component';
-import { ShortlistedCandidateListComponent } from '../hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { CommonHeaderComponent } from './common-header/common-header.component';
 import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
 import { CommonKycProfileViewComponent } from './common-kyc-profile-view/common-kyc-profile-view.component';
@@ -97,7 +95,7 @@ import { CommonSidebarComponent } from './common-sidebar/common-sidebar.componen
 import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/join-interview.component';
 import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-kyc-profile-view.component';
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, SnackbarComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent
 ],
   imports: [
     CommonModule,
@@ -193,7 +191,6 @@ import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-
     NgxChartsModule,
     SignupHeaderComponent,
     HomeHeaderComponent,
-    SnackbarComponent,
     DashboardHeaderComponent,
     ModalBoxComponent,
     KycSnackbarComponent,

@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
-import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
@@ -25,7 +24,6 @@ import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { KycthanksGuard } from './guards/canload/kycthanks.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
-import { ShortlistedCandidateListComponent } from './hr-dashboard/hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
@@ -76,7 +74,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     AgGridModule.withComponents([])
     ],
   // providers: [],
-  entryComponents: [SnackbarComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent, CommonJoiningFormComponent],
+  entryComponents: [ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent, CommonJoiningFormComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
