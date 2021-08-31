@@ -24,12 +24,9 @@ export class userListDefinition {
       {
         headerName: 'S no', colId: 'csno',
         field: 'counter',
-        filter: 'agNumberColumnFilter',
-        filterParams: {
-          filterOptions: ['Less than or equals', 'Greater than or equals', 'In range']
-        },
+        filter: false,
         minWidth: 80,
-        sortable: true,
+        sortable: false,
         resizable:true,
         tooltipField: 'counter',
         // comparator: this.customComparator,
@@ -74,7 +71,7 @@ export class userListDefinition {
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         filterParams: {
-          filterOptions: ['Less than or equals', 'Greater than or equals', 'In range']
+          filterOptions: ['lessThanOrEqual', 'greaterThanOrEqual', 'inRange']
         },
         sortable: true,
         resizable:true,

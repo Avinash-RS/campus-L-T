@@ -9,9 +9,11 @@
       [(ngModel)]="selectedUserlist"
     >
       <mat-radio-button value="candidate">Candidate</mat-radio-button>
+      <ng-container *ngIf="currentRole != 'institute'">
       <mat-radio-button value="institute">Institute</mat-radio-button>
       <mat-radio-button value="invPanel">Interview Panel</mat-radio-button>
       <mat-radio-button value="hr">HR</mat-radio-button>
+    </ng-container>
     </mat-radio-group>
     </div>
       <!-- <div class="search-bar">

@@ -29,7 +29,8 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   cacheBlockSize: any = 100;
   gridApi: any;
   columnDefs: any;
-  defaultColDef: any;
+  defaultColDef: any = this.appConfig.agGridWithServerSideAllFunc();
+
   rowData: any = [];
   quickSearchValue = '';
   public gridColumnApi;
@@ -93,7 +94,9 @@ export class UserListsComponent implements OnInit, AfterViewInit {
       this.gridColumnApi = params.gridColumnApi;
       var datasource = {
         getRows: (params: IGetRowsParams) => {
-        // console.log('fetching', params);
+        console.log('fetching', params);
+        console.log('json', JSON.stringify(params));
+
         // console.log('ad', this.gridApi);
       // if (params.sortModel.length === 0 && Object.keys(params.filterModel).length == 0) {
 
@@ -186,7 +189,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   selectedListChange(e) {
       this.userList = [];
       this.rowData = [];
-      this.AssignTypesBasesOnRole();
+      // this.AssignTypesBasesOnRole();
   }
 
   // Interview panel start
