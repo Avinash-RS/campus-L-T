@@ -2,21 +2,34 @@
 
 
 
-    <div>
-      <mat-radio-group
+  <ng-container *ngIf="currentRole != 'institute'">
+    <div class="d-flex">
+        <mat-radio-group
       class="radio-grp"
       (change)="selectedListChange($event)"
       [(ngModel)]="selectedUserlist"
     >
       <mat-radio-button value="candidate">Candidate</mat-radio-button>
-      <ng-container *ngIf="currentRole != 'institute'">
       <mat-radio-button value="institute">Institute</mat-radio-button>
       <mat-radio-button value="invPanel">Interview Panel</mat-radio-button>
       <mat-radio-button value="hr">HR</mat-radio-button>
-    </ng-container>
     </mat-radio-group>
-    </div>
-      <!-- <div class="search-bar">
+</div>
+</ng-container>
+<ng-container *ngIf="currentRole == 'institute'">
+  <div class="d-flex header-wrapper">
+    <button class="submit" (click)="selectAll(true)" mat-raised-button>
+      <em class="icon-checked"></em> Select All Candidates
+    </button>
+    <button class="submit" (click)="selectAll(false)" mat-raised-button>
+      <em class="icon-checked"></em> Unselect All Candidates
+    </button>
+    <button class="submit" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disable'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
+      <em class="icon-checked"></em> Send Email to Selected Candidates
+    </button>
+  </div>
+</ng-container>
+<!-- <div class="search-bar">
           <div class="search-icon">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
               <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
@@ -36,7 +49,7 @@
            [pagination]="true"
            [suppressRowClickSelection]="true"
            [paginationPageSize]="paginationPageSize"
-           [rowSelection]="'multiple'"
+           [rowSelection]="rowSelection"
            [cacheBlockSize]="cacheBlockSize"
            (gridReady)="onGridReady($event)"
            (sortChanged)="sortevent($event)"

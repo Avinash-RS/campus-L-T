@@ -22,10 +22,25 @@ export class userListDefinition {
   candidateList() {
     return [
       {
-        headerName: 'S no', colId: 'csno',
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        maxWidth: 50,
+        minWidth: 50,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        resizable: false,
+        suppressMenu: true,
+        field: 'candidate_id',
+        headerName: '',
+        // colId: 'cheader'
+      },
+      {
+        headerName: 'S no', //colId: 'csno',
         field: 'counter',
         filter: false,
         minWidth: 80,
+        maxWidth: 80,
         sortable: false,
         resizable:true,
         tooltipField: 'counter',
@@ -35,7 +50,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Tag', field: 'tag_name', colId: 'ctag_name',
+        headerName: 'Tag', field: 'tag_name', //colId: 'ctag_name',
         filter: 'agTextColumnFilter',
         filterParams: {
           suppressAndOrCondition: true,
@@ -51,7 +66,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Name', field: 'candidate_name', colId: 'ccandidate_name',
+        headerName: 'Name', field: 'candidate_name', //colId: 'ccandidate_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -67,7 +82,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Candidate Id', field: 'candidate_id', colId: 'ccandidate_id',
+        headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         filterParams: {
@@ -81,7 +96,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Email Id', field: 'email', colId: 'cemail',
+        headerName: 'Email Id', field: 'email', //colId: 'cemail',
         filter: 'agTextColumnFilter',
         filterParams: {
           suppressAndOrCondition: true,
@@ -96,7 +111,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Uploaded by', field: 'uploader_name', colId: 'cuploader_name',
+        headerName: 'Uploaded by', field: 'uploader_name', //colId: 'cuploader_name',
         filter: 'agTextColumnFilter',
         filterParams: {
           suppressAndOrCondition: true,
@@ -111,7 +126,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Uploader Role', field: 'uploader_role', colId: 'cuploader_role',
+        headerName: 'Uploader Role', field: 'uploader_role', //colId: 'cuploader_role',
         filter: 'agSetColumnFilter',
         filterParams: {
           values: params => {
@@ -133,7 +148,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Date of Upload', field: 'created_date', colId: 'ccreated_date',
+        headerName: 'Date of Upload', field: 'created_date', //colId: 'ccreated_date',
         filter: 'agTextColumnFilter',
         filterParams: {
           suppressAndOrCondition: true,
@@ -143,6 +158,29 @@ export class userListDefinition {
         sortable: true,
         resizable:true,
         tooltipField: 'created_date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Mail Sent', field: 'email_sent', //colId: 'cemail_sent',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          values: params => {
+              // async update simulated using setTimeout()
+              setTimeout(() => {
+                  // fetch values from server
+                  const values = ['Sent', 'Not Sent'];
+                  // supply values to the set filter
+                  params.success(values);
+              }, 1000);
+        },
+        },
+        cellClass: 'mail-sent',
+        minWidth: 140,
+        sortable: true,
+        resizable:true,
+        tooltipField: 'email_sent',
         getQuickFilterText: (params) => {
           return params.value;
         }

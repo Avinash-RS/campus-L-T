@@ -7,3 +7,25 @@
 :host ::ng-deep .mat-radio-button:first-child {
   padding-left: 0em;
 }
+
+.disable {
+  opacity: 0.6;
+  cursor: auto !important;
+}
+.header-wrapper {
+  padding: .5em 1em;
+  .submit {
+    margin-left: 1em !important;
+    em {
+      margin-right: 6px;
+    }
+  }
+  .submit:first-child {
+    margin-left: 0em !important;
+  }
+}
+
+:host ::ng-deep.mail-sent {
+ color: #48cc83 !important;
+ padding-left: 2em;
+}

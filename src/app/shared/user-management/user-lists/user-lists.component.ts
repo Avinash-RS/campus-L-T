@@ -9,6 +9,8 @@ import { ModuleRegistry, AllModules, IDatasource, IGetRowsParams } from '@ag-gri
 ModuleRegistry.registerModules(AllModules);
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
 import { userListDefinition } from './userlist.aggrid-definition';
+import { ShortlistBoxComponent } from '../../modal-box/shortlist-box/shortlist-box.component';
+import { MatDialog } from '@angular/material';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -20,6 +22,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
 export class UserListsComponent implements OnInit, AfterViewInit {
   selectedUserlist: any = 'candidate';
   currentRole: any;
+  rowSelection: any;
   userList: any = [];
   // serverSide Things
   pageRowCount = 0;
@@ -38,13 +41,14 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   protected serverSideStoreType;
   constructor(
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
+    private matDialog: MatDialog,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private agGridDefinition: userListDefinition
   ) {
     this.currentRole = this.appConfig.getLocalData('roles');
-    this.serverSideStoreType = 'partial';
+    this.rowSelection = "multiple";
+    this.serverSideStoreType = 'full';
     this.rowModelType = 'infinite';
   }
 
@@ -81,7 +85,9 @@ export class UserListsComponent implements OnInit, AfterViewInit {
       this.paginationPageSize = 100;
       this.cacheBlockSize = 100;
       this.defaultColDef = this.appConfig.agGridWithServerSideAllFunc();
-      this.gridApi.setColumnDefs(this.agGridDefinition.candidateList());
+      let candidateDefinition = this.agGridDefinition.candidateList();
+      this.currentRole != 'institute' ? candidateDefinition.pop() && candidateDefinition.shift() : '';
+      this.gridApi.setColumnDefs(candidateDefinition);
       // this.columnDefs = this.agGridDefinition.candidateList();
     }
 
@@ -92,26 +98,21 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     this.AssignTypesBasesOnRole();
     if (this.selectedUserlist == 'candidate') {
       this.gridColumnApi = params.gridColumnApi;
+      this.callApiForCandidateList();
+    }
+  }
+
+  callApiForCandidateList() {
       var datasource = {
         getRows: (params: IGetRowsParams) => {
         console.log('fetching', params);
-        console.log('json', JSON.stringify(params));
-
-        // console.log('ad', this.gridApi);
-      // if (params.sortModel.length === 0 && Object.keys(params.filterModel).length == 0) {
-
-        const apiData = {
-          startRow: params.startRow,
-          endRow: params.endRow,
-          isTpo: false
-        };
-
+        let apiData: any = params;
+        apiData.isTpo = this.currentRole == 'institute' ? true : false;
         this.gridApi.showLoadingOverlay();
         this.adminService.getCandidatesList(apiData).subscribe((data1: any) => {
           this.gridApi.hideOverlay();
-          // console.log('data', data1);
-
           this.userList = data1 && data1['data'] ? data1['data'] : [];
+          if (this.userList.length > 0) {
           let count = params.startRow;
           this.userList.forEach((element, i) => {
             count = count + 1;
@@ -122,6 +123,12 @@ export class UserListsComponent implements OnInit, AfterViewInit {
           params.successCallback(
             this.userList, this.pageRowCount
           );
+        } else {
+          params.successCallback(
+            this.userList, 0
+          );
+          this.gridApi.showNoRowsOverlay();
+        }
         }, (err) => {
           this.gridApi.hideOverlay();
           params.failCallback();
@@ -130,15 +137,9 @@ export class UserListsComponent implements OnInit, AfterViewInit {
           );
           this.gridApi.showNoRowsOverlay();
         });
-      // } else {
-      //   this.gridApi.setFilterModel(null);
-      //   this.gridApi.setSortModel(null);
-      // }
-
         }
       }
       this.gridApi.setDatasource(datasource);
-    }
   }
 
   paginationChanged(e) {
@@ -189,7 +190,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   selectedListChange(e) {
       this.userList = [];
       this.rowData = [];
-      // this.AssignTypesBasesOnRole();
+      this.currentRole != 'candidate' ? this.AssignTypesBasesOnRole() : '';
   }
 
   // Interview panel start
@@ -273,6 +274,93 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     // }
   }
 
+  // Select and Unselect all functions for TPO candidate list
+  selectAll(e) {
+    this.selectorUnselectAllCheckbox(e);
+  }
+
+  selectorUnselectAllCheckbox(condition) {
+    let endIndex = this.gridApi.paginationProxy.bottomDisplayedRowIndex;
+    let startIndex = endIndex - 99;
+
+    this.gridApi.forEachNode((row, index) => {
+      if (index >= startIndex && index <= endIndex) {
+        this.gridApi.getRowNode(row.id).selectThisNode(condition);
+      }
+  });
+  }
+
+  emailTriggerSeletedNodes() {
+    const data = {
+      bulk_upload: 'tpo-candidate-bulk'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
+  }
+
+  sendEmail() {
+    let selectedCandidates = this.gridApi.getSelectedNodes();
+    const apiData = {
+      id: []
+    };
+    selectedCandidates.forEach(element => {
+      if (element['data']) {
+        apiData['id'].push(element['data']['user_id']);
+      }
+    });
+
+    this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
+      const data = {
+        tpo_bulk_upload_ok: 'ok'
+      };
+      this.openDialog1(ShortlistBoxComponent, data);
+    }, (err) => {
+
+    });
+  }
+
+
+    // Open dailog
+    openDialog(component, data) {
+      let dialogDetails: any;
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.matDialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.sendEmail();
+        }
+      });
+    }
+
+    // Open dailog
+    openDialog1(component, data) {
+      let dialogDetails: any;
+
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.matDialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.callApiForCandidateList();
+        if (result) {
+        }
+      });
+    }
 
 }
 
