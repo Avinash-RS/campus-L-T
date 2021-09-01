@@ -18,24 +18,14 @@ export class UserManagementComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '002-group-1.svg',
-        name: 'Users',
+        name: 'User Details',
         router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST
       },
       {
         icon: '001-group.svg',
-        name: 'Add User',
-        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER
-      },
-      {
-        icon: 'hr.svg',
-        name: 'Candidates',
-        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
-      },
-      {
-        icon: 'education.svg',
-        name: 'Institutes',
-        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS
-      },
+        name: 'Bulk Uploads',
+        router: CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD
+      }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }

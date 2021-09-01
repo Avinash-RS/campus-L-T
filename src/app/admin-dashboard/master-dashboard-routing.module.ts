@@ -5,20 +5,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CONSTANT } from '../constants/app-constants.service';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UsersListComponent } from './user-management/users-list/users-list.component';
-import { AddUserComponent } from './user-management/add-user/add-user.component';
-import { CanloadGuard } from '../guards/canload/canload.guard';
 import { AdmincanloadGuard } from '../guards/canload/admincanload.guard';
-import { AdminBulkUploadInstitutesComponent } from './user-management/admin-bulk-upload-institutes/admin-bulk-upload-institutes.component';
-import { AdminUploadedInstituteListComponent } from './user-management/admin-bulk-upload-institutes/admin-uploaded-institute-list/admin-uploaded-institute-list.component';
-import { AdminBulkUploadInstituteComponent } from './user-management/admin-bulk-upload-institutes/admin-bulk-upload-institute/admin-bulk-upload-institute.component';
-import { AdminBulkUploadCandidatesComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidates.component';
-import { AdminUploadedCandidateListComponent } from './user-management/admin-bulk-upload-candidates/admin-uploaded-candidate-list/admin-uploaded-candidate-list.component';
-import { AdminBulkUploadCandidateCompComponent } from './user-management/admin-bulk-upload-candidates/admin-bulk-upload-candidate-comp/admin-bulk-upload-candidate-comp.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
 import { AdminReportComponent } from './admin-report/admin-report.component';
 import { AdminBulkUploadReportComponent } from './admin-report/admin-bulk-upload-report/admin-bulk-upload-report.component';
 import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institude-bulk-upload/admin-institude-bulk-upload.component';
+import { BulkUploadsComponent } from './user-management/bulk-uploads/bulk-uploads.component';
 
 
 const routes: Routes = [
@@ -47,67 +40,15 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
             component: UsersListComponent,
             data: {
-              breadcrumb: 'Users'
+              breadcrumb: 'User Groups'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_ADD_USER}`,
-            component: AddUserComponent,
+            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
+            component: BulkUploadsComponent,
             data: {
-              breadcrumb: 'Add User'
+              breadcrumb: 'Bulk Uploads'
             }
-          },
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_EDIT_USER}/:eid`,
-            component: AddUserComponent
-          },
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`, component: AdminBulkUploadCandidatesComponent, data: {
-              breadcrumb: 'Candidates'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`, component: AdminUploadedCandidateListComponent, data: {
-                  breadcrumb: 'Candidate Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_BULK_UPLOAD}`, component: AdminBulkUploadCandidateCompComponent,
-                data: {
-                  breadcrumb: 'Upload Candidate Details'
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADED_LIST}`,
-                pathMatch: 'full',
-              }
-            ]
-          },
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADS}`, component: AdminBulkUploadInstitutesComponent,
-            data: {
-              breadcrumb: 'Institutes'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST}`, component: AdminUploadedInstituteListComponent,
-                data: {
-                  breadcrumb: 'Institute Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_BULK_UPLOAD}`, component: AdminBulkUploadInstituteComponent,
-                data: {
-                  breadcrumb: 'Upload Institute Details'
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.USER_MANAGEMENT_INSTITUTE_UPLOADED_LIST}`,
-                pathMatch: 'full',
-              }
-            ]
           },
           {
             path: '',
