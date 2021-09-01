@@ -22,8 +22,8 @@ export class userListDefinition {
   candidateList() {
     return [
       {
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
+        // headerCheckboxSelection: true,
+        // headerCheckboxSelectionFilteredOnly: true,
         maxWidth: 50,
         minWidth: 50,
         checkboxSelection: true,

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -11,6 +11,10 @@ import { GridChartsModule } from '@ag-grid-enterprise/charts';
 import { userListDefinition } from './userlist.aggrid-definition';
 import { ShortlistBoxComponent } from '../../modal-box/shortlist-box/shortlist-box.component';
 import { MatDialog } from '@angular/material';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { ModalBoxComponent } from '../../modal-box/modal-box.component';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -20,6 +24,9 @@ ModuleRegistry.registerModules([GridChartsModule]);
 })
 
 export class UserListsComponent implements OnInit, AfterViewInit {
+  @ViewChild('addUser', {static: false}) openAddUserForm: TemplateRef<any>;
+  addUserForm: FormGroup;
+  interviewPanelDisciplineDropdown: any = [];
   selectedUserlist: any = 'candidate';
   currentRole: any;
   rowSelection: any;
@@ -39,12 +46,15 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   public gridColumnApi;
   protected rowModelType;
   protected serverSideStoreType;
+  addUserdialogRef: any;
   constructor(
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private agGridDefinition: userListDefinition
+    private agGridDefinition: userListDefinition,
+    private fb: FormBuilder,
+    private glovbal_validators: GlobalValidatorService
   ) {
     this.currentRole = this.appConfig.getLocalData('roles');
     this.rowSelection = "multiple";
@@ -168,7 +178,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   getModel(e) {
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
-
+      this.appConfig.warning("No search results found");
     }
   }
 
@@ -361,6 +371,208 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         }
       });
     }
+
+
+    // Add users Section
+    openUserFormDialog() {
+      this.formInitialize();
+      this.addUserdialogRef = this.matDialog.open(this.openAddUserForm, {
+        width: '400px',
+        height: 'auto',
+        autoFocus: false,
+        closeOnNavigation: true,
+        disableClose: true,
+        panelClass: 'popupModalContainerForaddUser'
+      });
+
+
+    }
+    closeDialog() {
+      this.matDialog.closeAll();
+    }
+
+    formInitialize() {
+      this.addUserForm = this.fb.group({
+        role: [this.currentRole == 'institute' ? 'candidate' : null, [Validators.required]],
+        name: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+        email: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+        tag: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+        employee_id: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+        discipline: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]]
+      });
+      this.currentRole == 'institute' ? this.addValidation() : '';
+  }
+
+  // get discipline dropdown value
+  getDiscipline() {
+    this.adminService.getDiscipline().subscribe((data: any) => {
+      this.interviewPanelDisciplineDropdown = data ? data : [];
+    }, (err) => {
+    });
+  }
+
+
+    addValidation() {
+      if (this.addUserForm && this.addUserForm.value && this.addUserForm.value.role == 'candidate') {
+        this.addUserForm.get('tag').setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+        this.addUserForm.get('employee_id').clearValidators();
+        this.addUserForm.get('discipline').clearValidators();
+        this.addUserForm.controls['tag'].updateValueAndValidity();
+        this.addUserForm.controls['employee_id'].updateValueAndValidity();
+        this.addUserForm.controls['discipline'].updateValueAndValidity();
+      }
+      if (this.addUserForm && this.addUserForm.value && this.addUserForm.value.role == 'interview_panel') {
+        this.addUserForm.get('employee_id').setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+        this.addUserForm.get('discipline').setValidators([Validators.required]);
+        this.addUserForm.get('tag').clearValidators();
+        this.addUserForm.controls['tag'].updateValueAndValidity();
+        this.addUserForm.controls['employee_id'].updateValueAndValidity();
+        this.addUserForm.controls['discipline'].updateValueAndValidity();
+        this.interviewPanelDisciplineDropdown.length > 0 ? '' : this.getDiscipline();
+      }
+      if (this.addUserForm && this.addUserForm.value && this.addUserForm.value.role == 'hr') {
+        this.addUserForm.get('employee_id').clearValidators();
+        this.addUserForm.get('discipline').clearValidators();
+        this.addUserForm.get('tag').clearValidators();
+        this.addUserForm.controls['tag'].updateValueAndValidity();
+        this.addUserForm.controls['employee_id'].updateValueAndValidity();
+        this.addUserForm.controls['discipline'].updateValueAndValidity();
+      }
+    }
+
+    onUserSubmit() {
+      if (this.addUserForm.valid) {
+        let role = this.addUserForm.value.role;
+        const data = {
+          iconName: '',
+          dataToBeShared: {
+            confirmText: `Are you sure you want to add this user as ${role == 'candidate' ? 'Candidate' : role == 'hr' ? 'HR' : 'Interview Panel'}?`,
+            type: 'add-tpo',
+            identity: 'user-add'
+          },
+          showConfirm: 'Confirm',
+          showCancel: 'Cancel',
+          showOk: ''
+        };
+        this.openAddUserDialog(ModalBoxComponent, data);
+      } else {
+        this.glovbal_validators.validateAllFields(this.addUserForm);
+      }
+    }
+
+    tConvert(time) {
+      // Check correct time format and split into components
+      time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+      if (time.length > 1) { // If time format correct
+        time = time.slice(1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
+      return time.join(''); // return adjusted time or original string
+    }
+
+    getDateFormat1(date) {
+      if (date) {
+        const split = moment(date).format('YYYY-MM-DD');
+        const output = split.toUpperCase();
+        return output;
+
+      } else {
+        return '-';
+      }
+    }
+
+    addUserApi() {
+      if (this.addUserForm && this.addUserForm.value && this.addUserForm.value.role != 'candidate') {
+        const addUserDatas = {
+          name: this.addUserForm.value.name,
+          email: this.addUserForm.value.email,
+          role: this.addUserForm.value.role,
+          field_user_created_by: this.appConfig.getLocalData('userId')
+        };
+        if (this.addUserForm.value.role == 'interview_panel') {
+          addUserDatas['panel_discipline'] = this.addUserForm.value.discipline;
+          addUserDatas['employee_id'] = this.addUserForm.value.employee_id;
+        }
+        this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
+          this.addUserForm.reset();
+          this.appConfig.success(`User has been added Successfully`, '');
+        }, (error) => {
+        });
+      } else {
+        const date = new Date();
+        let minutes;
+        if (date.getMinutes().toString().length === 1) {
+          minutes = '0' + date.getMinutes().toString();
+        } else {
+          minutes = date.getMinutes();
+        }
+        const apiData = [
+          {
+            tag: this.addUserForm.value.tag,
+            name: this.addUserForm.value.name,
+            email: this.addUserForm.value.email,
+            date: this.getDateFormat1(date),
+            field_user_created_by: this.appConfig.getLocalData('userId'),
+            time: this.tConvert(`${date.getHours()}:${minutes}`)
+          }
+        ];
+        this.adminService.bulkUploadCandidates(apiData).subscribe((data: any) => {
+          if (data && data.length > 0) {
+            this.appConfig.error(data && data[0] && data[0]['reason'] ? data[0]['reason'] : 'Candidate not added.. Try Again', '');
+          } else {
+            this.addUserForm.reset();
+            this.appConfig.success('Candidate added successfully', '');
+          }
+        }, (err) => {
+
+        });
+
+      }
+    }
+
+    openAddUserDialog(component, data) {
+      let dialogDetails: any;
+
+
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.matDialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.addUserApi();
+        }
+      });
+    }
+
+    get name() {
+      return this.addUserForm.get('name');
+    }
+    get email() {
+      return this.addUserForm.get('email');
+    }
+    get role() {
+      return this.addUserForm.get('role');
+    }
+    get tag() {
+      return this.addUserForm.get('tag');
+    }
+    get employee_id() {
+      return this.addUserForm.get('employee_id');
+    }
+    get discipline() {
+      return this.addUserForm.get('discipline');
+    }
+
 
 }
 

@@ -1,3 +1,4 @@
+@import '../../../themes/themes.scss';
 :host ::ng-deep .mat-radio-button {
   width: auto !important;
   height: auto !important;
@@ -14,7 +15,11 @@
 }
 .header-wrapper {
   padding: .5em 1em;
+  justify-content: space-between;
+  align-items: center;
   .submit {
+    border-radius: 0 !important;
+    height: 35px !important;
     margin-left: 1em !important;
     em {
       margin-right: 6px;
@@ -28,4 +33,216 @@
 :host ::ng-deep.mail-sent {
  color: #48cc83 !important;
  padding-left: 2em;
+}
+
+.search-bar {
+  margin: 0 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  display: flex;
+  // text-align: right;
+  .search-icon {
+    display: inline-flex;
+    align-items: center;
+    color: #333333;
+    font-size: 14px;
+    border: 1px solid #c5c5c5 !important;
+    background: #fff !important;
+    border-radius: 0px !important;
+    box-shadow: 0px 0px 5px #00000029 !important;
+    box-sizing: border-box;
+    padding: 0 0.15em;
+    height: 35px;
+    position: relative;
+    width: 100%;
+    margin: 0 !important;
+    img {
+      width: 20px;
+      height: 13px;
+      filter: invert(98%) sepia(0%) saturate(0%) hue-rotate(134deg) brightness(85%) contrast(82%);
+    }
+    input {
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      color: #333333;
+      font-size: 14px;
+      background: #fffdfd 0% 0% no-repeat padding-box !important;
+      box-sizing: border-box;
+      border: none;
+      padding: 4px;
+      height: 30px;
+      width: 100%;
+    }
+    ::placeholder {
+      color: $black-1;
+      opacity: 0.6;
+      font-size: 12px;
+    }
+  }
+}
+:focus {
+  border-radius: 0px;
+  border: none;
+  outline: none;
+}
+:host ::ng-deep .mat-radio-label {
+  margin: 0;
+}
+
+.add-user-button {
+  background: $primary-red;
+  color: $white;
+  padding: 0px 8px;
+  border-radius: 0;
+  margin-left: 1em;
+  width: 160px;
+}
+
+
+// add-users
+::ng-deep .popupModalContainerForaddUser {
+  min-height: 300px;
+  max-height: 600px;
+  background: $white;
+
+  .add-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: -14px;
+    background: $white;
+    z-index: 999;
+  }
+
+  .mat-dialog-container {
+    padding: 14px !important;
+    overflow: auto !important;
+  }
+
+  .width-100 {
+  width: 100%;
+  }
+
+  form {
+    // padding: 0 10em;
+  }
+
+.overall-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 10px;
+    label {
+        color: #565656;
+        padding: 0 0 2px 0;
+        margin: 0;
+        font-size: 13px;
+    }
+    .input {
+        position: relative;
+        border: solid .8px #BEBEBE;
+        border-radius: 2px;
+        color: #6B6B6B;
+        outline: none;
+        box-sizing: border-box;
+        min-height: 35px !important;
+        max-height: 35px !important;
+        line-height: 35px;
+        padding: 4px 8px;
+        background-color: $white;
+        width: 100%;
+    }
+    .select {
+        display: flex;
+        align-items: center;
+        padding: 0px !important;
+        border: none !important;
+    }
+    .input:focus,.input:hover {
+        border: 1px solid $primary-red;
+    }
+    .form-error {
+        color: $primary-red;
+        font-size: 12px;
+    }
+    ::placeholder {
+        color: #A5A5A5 !important;
+        opacity: 1;
+        font-size: 13px;
+      }
+}
+
+input.ng-invalid.ng-touched {
+  border: solid $primary-red 1px !important;
+  .ant-select-selection {
+      border: solid $primary-red 1px !important;
+  }
+}
+
+nz-select.ng-invalid.ng-touched {
+  .ant-select-selection {
+    border: solid $primary-red 1px !important;
+}
+}
+
+.ant-select-selection__placeholder, .ant-select-search__field__placeholder {
+  color: #A5A5A5 !important;
+  opacity: .6 !important;
+  font-size: 13px !important;
+}
+
+// Ant select drop down css
+.ant-select-selection {
+  border: solid .8px #BEBEBE !important;
+  height: 35px !important;
+  padding: 4px 8px;
+  border-radius: 0px !important;
+}
+
+.ant-select-selection:hover,.ant-select-selection:focus,.ant-select-selection:active{
+  border: solid $primary-red 1px !important;
+  border-radius: 0px !important;
+  z-index: 0 !important;
+  box-shadow: none !important;
+}
+
+.ant-select-selection__rendered {
+  margin-left: 0 !important;
+}
+.mat-radio-button {
+  width: auto !important;
+  height: auto !important;
+  margin-left: 1em;
+  padding-left: 1em;
+}
+.mat-radio-button:first-child {
+  padding-left: 0em;
+}
+
+.row-btn-wrapper {
+  justify-content: center;
+  flex-direction: row;
+  margin: 18px 0 4px 0px;
+}
+.btn-add {
+  background: $primary-red;
+  color: $white;
+  width: 100px;
+  border-radius: 0px;
+  height: 35px;
+}
+.btn-add:hover {
+  transform: perspective(1px) scale(1.02);
+  transition: transform .5s ease;
+}
+
+.cancel {
+  margin-right: 1em;
+  background: $white;
+  color: #666;
+  width: 100px;
+  border: solid 1px $primary-red;
+}
 }
