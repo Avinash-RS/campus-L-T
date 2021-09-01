@@ -21,6 +21,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class CommonUploadsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
+  currentRole: any;
   url = null;
   validFile = false;
   showSizeError = {
@@ -66,7 +67,9 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
-  ) { }
+  ) {
+    this.currentRole = this.appConfig.getLocalData('roles');
+  }
 
   ngOnInit() {
   }

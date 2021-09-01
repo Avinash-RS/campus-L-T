@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TpoAddCandidateComponent } from './tpo-add-candidate.component';
+import { UserListComponent } from './user-list.component';
 
-describe('TpoAddCandidateComponent', () => {
-  let component: TpoAddCandidateComponent;
-  let fixture: ComponentFixture<TpoAddCandidateComponent>;
+describe('UserListComponent', () => {
+  let component: UserListComponent;
+  let fixture: ComponentFixture<UserListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TpoAddCandidateComponent ]
+      declarations: [ UserListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TpoAddCandidateComponent);
+    fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

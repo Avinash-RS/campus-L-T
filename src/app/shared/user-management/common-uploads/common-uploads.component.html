@@ -1,4 +1,5 @@
 <div class="main-wrapper-uploaded-list">
+  <ng-container *ngIf="currentRole != 'institute'">
   <div class="selectedTemp d-flex align-items-center" *ngIf="!enableList">
     <div class="mr-3">
     Selected Template:
@@ -12,8 +13,8 @@
           </mat-select>
         </mat-form-field>
   </div>
-
   </div>
+</ng-container>
   <div class="upload-wrapper" *ngIf="!enableList">
     <div class="top-wrapper">
       <div class="upload">

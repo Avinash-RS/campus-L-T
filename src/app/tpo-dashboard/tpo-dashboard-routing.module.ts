@@ -3,16 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { TpoMasterComponent } from './tpo-master.component';
 import { CONSTANT } from '../constants/app-constants.service';
 import { TpoUserManagementComponent } from './tpo-user-management/tpo-user-management.component';
-import { CandidateUploadsComponent } from './tpo-user-management/candidate-uploads/candidate-uploads.component';
-import { UploadedListComponent } from './tpo-user-management/candidate-uploads/uploaded-list/uploaded-list.component';
-import { BulkUploadComponent } from './tpo-user-management/candidate-uploads/bulk-upload/bulk-upload.component';
-import { TpoAddCandidateComponent } from './tpo-user-management/tpo-add-candidate/tpo-add-candidate.component';
 import { TpoCandidatesStatusComponent } from './tpo-candidates-status/tpo-candidates-status.component';
 import { TpoPreAssessmentComponent } from './tpo-candidates-status/tpo-pre-assessment/tpo-pre-assessment.component';
 import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment/tpo-recruitment.component';
 import { TpocanloadGuard } from '../guards/canload/tpocanload.guard';
 import { TpoReportsComponent } from './tpo-reports/tpo-reports.component';
 import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-reports/tpo-bulk-upload-reports.component';
+import { UserListComponent } from './tpo-user-management/user-list/user-list.component';
+import { BulkUploadsComponent } from './tpo-user-management/bulk-uploads/bulk-uploads.component';
 
 
 const routes: Routes = [
@@ -31,43 +29,22 @@ const routes: Routes = [
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
-            component: CandidateUploadsComponent,
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
+            component: UserListComponent,
             data: {
-              breadcrumb: 'Candidate Details'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
-                component: UploadedListComponent,
-                data: {
-                  breadcrumb: ''
-                },
-              },
-              {
-                path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
-                component: BulkUploadComponent,
-                data: {
-                  breadcrumb: 'Upload Candidate Details'
-                },
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
-                pathMatch: 'full',
-              }
-            ]
+              breadcrumb: 'User Groups'
+            }
           },
           {
-            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE}`,
-            component: TpoAddCandidateComponent,
+            path: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
+            component: BulkUploadsComponent,
             data: {
-              breadcrumb: 'Add Candidate'
-            },
+              breadcrumb: 'Bulk Uploads'
+            }
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
+            redirectTo: `${CONSTANT.ROUTES.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST}`,
             pathMatch: 'full',
           }
         ]

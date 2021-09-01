@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BulkUploadComponent } from './bulk-upload.component';
+import { BulkUploadsComponent } from './bulk-uploads.component';
 
-describe('BulkUploadComponent', () => {
-  let component: BulkUploadComponent;
-  let fixture: ComponentFixture<BulkUploadComponent>;
+describe('BulkUploadsComponent', () => {
+  let component: BulkUploadsComponent;
+  let fixture: ComponentFixture<BulkUploadsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BulkUploadComponent ]
+      declarations: [ BulkUploadsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BulkUploadComponent);
+    fixture = TestBed.createComponent(BulkUploadsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

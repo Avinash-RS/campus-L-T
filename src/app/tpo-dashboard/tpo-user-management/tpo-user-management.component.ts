@@ -19,15 +19,15 @@ export class TpoUserManagementComponent implements OnInit, AfterViewInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
-        icon: '002-cv.svg',
-        name: 'Candidate Details',
-        router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS
+        icon: '002-group-1.svg',
+        name: 'User Details',
+        router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST
       },
       {
-        icon: 'add.svg',
-        name: 'Add Candidate',
-        router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_ADD_CANDIDATE
-      },
+        icon: '001-group.svg',
+        name: 'Bulk Uploads',
+        router: CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD
+      }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
