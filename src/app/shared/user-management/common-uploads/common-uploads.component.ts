@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { FormBuilder } from '@angular/forms';
@@ -18,7 +18,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
   styleUrls: ['./common-uploads.component.scss']
 })
 
-export class CommonUploadsComponent implements OnInit {
+export class CommonUploadsComponent implements OnInit, AfterViewInit {
 
   BASE_URL = environment.API_BASE_URL;
   url = null;
@@ -70,6 +70,15 @@ export class CommonUploadsComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+ }
 
   changeTemplate(e) {
 

@@ -7,10 +7,8 @@ import { HrShortlistingComponent } from './hr-shortlisting/hr-shortlisting.compo
 import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shortlist/first-level-shortlist.component';
 import { HrcanloadGuard } from '../guards/canload/hrcanload.guard';
 import { HrUserManagementComponent } from './hr-user-management/hr-user-management.component';
-import { BulkUploadComponent } from './hr-user-management/candidate-bulk-upload/bulk-upload/bulk-upload.component';
 import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
 import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
-import { UploadedListComponent } from './hr-user-management/candidate-bulk-upload/uploaded-list/uploaded-list.component';
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
@@ -21,13 +19,9 @@ import { SchedulingAssessmentComponent } from './hr-assing-assessment/scheduling
 
 
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
-import { HrAddUserComponent } from './hr-user-management/hr-add-user/hr-add-user.component';
 import { HrCandidateStatusComponent } from './hr-candidate-status/hr-candidate-status.component';
 import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessment/hr-pre-assessment.component';
 import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
-import { CandidateBulkUploadComponent } from './hr-user-management/candidate-bulk-upload/candidate-bulk-upload.component';
-import { InterviewPanelBulkUploadComponent } from './hr-user-management/interview-panel-bulk-upload/interview-panel-bulk-upload.component';
-import { InvpanelBulkuploadComponent } from './hr-user-management/interview-panel-bulk-upload/invpanel-bulkupload/invpanel-bulkupload.component';
 import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlist.component';
 import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
 import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
@@ -45,6 +39,7 @@ import { InvBulkAssignReportsComponent } from './hr-reports/inv-bulk-assign-repo
 import { IcAddorListComponent } from './pages/ic-AddorList/ic-addor-list.component';
 import { OfferedCandidatesListComponent } from './pages/offered-candidates-list/offered-candidates-list.component';
 import { BusinesspanelRouteComponent } from './pages/businesspanel-route/businesspanel-route.component';
+import { BulkUploadsComponent } from './hr-user-management/bulk-uploads/bulk-uploads.component';
 
 const routes: Routes = [
   {
@@ -146,71 +141,22 @@ const routes: Routes = [
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
-            component: CandidateBulkUploadComponent,
-            data: {
-              breadcrumb: 'Candidate Details'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
-                component: UploadedListComponent,
-                data: {
-                  breadcrumb: ''
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_BULK_UPLOAD}`,
-                component: BulkUploadComponent,
-                data: {
-                  breadcrumb: 'Upload Candidate Details'
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_UPLOADED_LIST}`,
-                pathMatch: 'full',
-              }
-            ]
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`,
             component: UserListComponent,
             data: {
-              breadcrumb: 'Panel Details'
+              breadcrumb: 'User Groups'
             }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_ADD_USERS}`,
-            component: HrAddUserComponent,
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_BULK_UPLOAD}`,
+            component: BulkUploadsComponent,
             data: {
-              breadcrumb: 'Add User'
+              breadcrumb: 'Bulk Uploads'
             }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_UPLOADS}`,
-            component: InterviewPanelBulkUploadComponent,
-            data: {
-              breadcrumb: 'Interview Panel Upload'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_BULK_UPLOAD}`,
-                component: InvpanelBulkuploadComponent,
-                data: {
-                  breadcrumb: ''
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_INTERVIEW_PANEL_BULK_UPLOAD}`,
-                pathMatch: 'full',
-              }
-            ]
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT_CANDIDATE_UPLOADS}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST}`,
             pathMatch: 'full',
           }
         ]
