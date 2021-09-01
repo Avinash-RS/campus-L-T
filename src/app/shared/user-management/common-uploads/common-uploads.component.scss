@@ -1,0 +1,106 @@
+@import "../../../themes/themes.scss";
+
+.main-wrapper-uploaded-list {
+  margin-top: 1em;
+  padding: 4px;
+  background: $wrapper-light-gray;
+  height: 100%;
+
+  .ins {
+    display: flex;
+    background: $white;
+    padding: .5em;
+    flex-direction: column;
+    .head {
+      font-size: 15px;
+      color: $light-black;
+      font-weight: 200;
+      margin: .5em;
+    }
+    ul {
+      font-size: 12px;
+      color: $light-black;
+      font-weight: 200;
+      li {
+        padding-bottom: .25em;
+        ul {
+          font-weight: 100;
+        }
+      }
+    }
+  }
+
+  .w-100 {
+    width: 100% !important;
+  }
+  .list-wrapper {
+    width: 68%;
+    margin: 1em auto;
+    .list-count {
+      color: $light-black;
+      font-size: 13px;
+      margin-bottom: 0 0 4px 0;
+      font-weight: 200;
+    }
+    .button-wrapper {
+      text-align: center;
+      margin: 1em 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .cancel {
+        display: flex;
+        align-items: center;
+        height: 24px;
+        border: 1px solid $gray-dark;
+        border-radius: 6px;
+        background: transparent;
+        color: $primary;
+        font-size: 14px;
+        padding: 4px 1.8em;
+      }
+      // .ok {
+      //   margin: 0 0 0 1em;
+      //   display: flex;
+      //   align-items: center;
+      //   height: 25px;
+      //   background: $light-blue 0% 0% no-repeat padding-box;
+      //   box-shadow: $shadow-light-black-1;
+      //   border-radius: 6px;
+      //   color: $white;
+      //   font-size: 14px;
+      //   padding: 4px 2.5em;
+      // }
+    }
+  }
+}
+
+.hide {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.urlSpan{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  width: 260px;
+}
+
+.mat-expansion-panel {
+  // border: 1px solid #cccccc;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 30%) !important;
+}
+.mat-expansion-panel-header {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 4px 18px;
+}
+:host ::ng-deep .mat-expansion-panel-header.mat-expanded {
+  font-size: 20px;
+  font-weight: 500;
+  height: 48px !important;
+  border-bottom: 0.1em solid #e8e8e8;
+}

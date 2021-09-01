@@ -3,7 +3,7 @@
     </div> -->
     <div class="selectedTemp d-flex align-items-center" *ngIf="!enableList">
       <div class="mr-3">
-      Selected Template: 
+      Selected Template:
     </div>
       <div style="width: 280px;" class="input-wrapper">
         <mat-form-field class="new-input-box mat-select-custom" appearance="none">
@@ -23,7 +23,6 @@
 
       <div class="top-wrapper">
         <div class="upload">
-          <div class="outer-wrapper">
             <div class="text-wrapper">
               <label class="inner-wrapper" for="fileInput" *ngIf="!url">
                 <!-- <div class="inner-wrapper"> -->
@@ -45,8 +44,7 @@
             <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
             <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
             <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
-  
-          </div>
+
         </div>
         <div class="buttons">
           <button (click)="delete()" class="cancel-btn btn-margin-space" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
@@ -60,7 +58,7 @@
           </div>
         </div>
       </div>
-  
+
     </div>
     <div class="ins" *ngIf="!enableList">
         <div class="head">
@@ -89,13 +87,13 @@
             </ul>
           </div>
             </div>
-  
+
     <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate == this.secondForm}" *ngIf="enableList">
       <div class="list-count">
         Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
       </div>
       <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
-  
+
 
       <div class="button-wrapper">
         <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
@@ -103,4 +101,3 @@
       </div>
     </div>
   </div>
-  
