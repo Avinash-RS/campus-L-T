@@ -44,8 +44,8 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   rowData: any = [];
   quickSearchValue = '';
   public gridColumnApi;
-  protected rowModelType;
-  protected serverSideStoreType;
+  public rowModelType;
+  public serverSideStoreType;
   addUserdialogRef: any;
   constructor(
     private appConfig: AppConfigService,
