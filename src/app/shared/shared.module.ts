@@ -98,10 +98,11 @@ import { UserListsComponent } from './user-management/user-lists/user-lists.comp
 import { CommonUploadsComponent } from './user-management/common-uploads/common-uploads.component';
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 import { AgGridModule } from 'ag-grid-angular';
+import { SharedReportsSectionComponent } from './user-management/shared-reports-section/shared-reports-section.component';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
 ],
   imports: [
     CommonModule,
@@ -218,6 +219,7 @@ ModuleRegistry.registerModules(AllModules);
     SharedKycProfileViewComponent,
     UserListsComponent,
     CommonUploadsComponent,
+    SharedReportsSectionComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,

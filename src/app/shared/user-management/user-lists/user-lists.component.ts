@@ -166,10 +166,9 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   onCellClicked(event) {
     // event['data']
     if (this.selectedUserlist == 'invPanel' || this.selectedUserlist == 'hr') {
-      if (event.colDef.field === 'user_id') {
+      if (event.colDef.field === 'uid') {
         let selectedUserDetail = event['data'] ? event['data'] : '';
         this.agGridDefinition.removeUser(selectedUserDetail);
-
       }
     }
   }
@@ -212,7 +211,6 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         count = count + 1;
         element['counter'] = count;
         element.uid = element.user_id;
-        element.checked = false;
       });
       this.rowData = this.userList;
     }, (err) => {
@@ -259,8 +257,6 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         this.userList.forEach(element => {
           count = count + 1;
           element['counter'] = count;
-          element.checked = false;
-          element['user_id'] = element['uid'];
         });
         this.rowData = this.userList;
       }, (err) => {

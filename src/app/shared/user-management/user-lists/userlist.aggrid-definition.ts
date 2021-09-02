@@ -230,20 +230,6 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Role', field: 'role', colId: 'prole',
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        minWidth: 140,
-        sortable: true,
-        resizable:true,
-        tooltipField: 'role',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
         headerName: 'Employee Id', field: 'field_employee_id', colId: 'pfield_employee_id',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
@@ -283,14 +269,20 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Delete', field: 'user_id', colId: 'inv',
+        headerName: 'Delete', field: 'uid', colId: 'inv',
         filter: false,
         sortable: false,
+        tooltipValueGetter: (params) => {
+          return 'Remove';
+        },
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
         cellRenderer: (params) => {
-          return `<button class="submit agTable" mat-raised-button><span style="margin-right: .25em;"><img src="assets/images/delete-white-18dp.svg" alt="" srcset=""></span><span> Remove</span></button>`;
+          return `<span style="cursor: pointer; padding: 12px; color: #C02222" class="material-icons">
+          person_remove
+          </span>`;
         },
-        minWidth: 120,
+        minWidth: 100,
+        maxWidth: 100,
       }
     ];
   }
@@ -466,6 +458,17 @@ export class userListDefinition {
         }
       },
       {
+        headerName: 'User Id', field: 'uid', colId: 'huid',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'uid',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Name', field: 'name', colId: 'hname',
         filter: 'agTextColumnFilter',
         minWidth: 140,
@@ -487,27 +490,43 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Role', field: 'roles_target_id', colId: 'hroles_target_id',
+        headerName: 'Created by', field: 'created_by', colId: 'hcreated_by',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
         minWidth: 140,
         sortable: true,
-        tooltipField: 'roles_target_id',
+        tooltipField: 'created_by',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Delete', field: 'user_id', colId: 'hr',
+        headerName: 'Created date', field: 'created_date', colId: 'hcreated_date',
+        filter: 'agTextColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'created_date',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Delete', field: 'uid', colId: 'hr',
         filter: false,
         sortable: false,
+        tooltipValueGetter: (params) => {
+          return 'Remove';
+        },
         cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
         cellRenderer: (params) => {
-          return `<button class="submit agTable" mat-raised-button><span style="margin-right: .25em;"><img src="assets/images/delete-white-18dp.svg" alt="" srcset=""></span><span> Remove</span></button>`;
+          return `<span style="cursor: pointer; padding: 12px; color: #C02222" class="material-icons">
+          person_remove
+          </span>`;
         },
-        minWidth: 140,
+        minWidth: 100,
+        maxWidth: 100,
       }
     ];
   }
@@ -552,7 +571,7 @@ export class userListDefinition {
 
   deleteUser() {
     const removeUser = {
-      'user_id': this.selectedUserDetail.user_id
+      'user_id': this.selectedUserDetail.uid
     };
     this.adminService.hrDeleteUser(removeUser).subscribe((success: any) => {
       this.appConfig.success(`User has been removed Successfully`, '');

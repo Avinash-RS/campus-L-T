@@ -85,13 +85,9 @@ export class ReportsListComponent implements OnInit {
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService
     ) {
-      // this.institutesList.sort((a,b) => 0 - (a.name > b.name ? -1 : 1));
     }
 
   ngOnInit() {
-    //   this.form = new FormGroup({
-    //     title: new FormControl()
-    //  });
     this.getInstitute();
     this.getUsersList();
     this.getTagName();
@@ -114,8 +110,6 @@ export class ReportsListComponent implements OnInit {
 
   // To get all users
   getUsersList() {
-    // this.adminService.userList().subscribe((data: any) => {
-    //
     const today = moment();
 
     const data = [{
@@ -154,34 +148,12 @@ export class ReportsListComponent implements OnInit {
       'tdate': today,
       'action': 'f'
     }
-    // ,
-    // {
-    //   'reportname': 'y',
-    //   'col2': 'a',
-    //   'col3': 'b',
-    //   'col4': 'c',
-    //   'fdate': 'd',
-    //   'tdate': 'e',
-    //   'action': 'f'
-    // }
     ];
     this.userList = data;
-    // this.userList.forEach(element => {
-    //   element.checked = false;
-    // });
     this.dataSource = new MatTableDataSource(this.userList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    // }, (err) => {
-    // });
   }
-
-  // ngAfterViewInit() {
-  //   if (this.dataSource) {
-  //     this.dataSource.paginator = this.paginator;
-  //     this.dataSource.sort = this.sort;
-  //   }
-  // }
 
   // To get all users
   getTagName() {
@@ -518,11 +490,6 @@ export class ReportsListComponent implements OnInit {
       }
     }else if(index == 2){
       if(this.selectedevaluationReportInstitute || (this.userList[index].fdate && this.userList[index].fdate['_d']) && (this.userList[index].tdate && this.userList[index].tdate['_d'])){
-        // let sendData = {
-        //   'assesment': this.selectedAssessmentNameSecond,
-        //   "to": this.userList[index].tdate,
-        //   "from": this.userList[index].fdate
-        // }
         let sendData = {
           'institute_name': this.selectedevaluationReportInstitute ? this.selectedevaluationReportInstitute : '',
           "to": this.userList[index].tdate,
@@ -543,24 +510,6 @@ export class ReportsListComponent implements OnInit {
         this.appConfig.nzNotification("error", "Interview Panel", "Date is required");
       }
     }
-    // else if(index == 3){
-    //   if(this.selectedTagNameSecond || this.selectedCityForSecond || this.selectedInstituteNameForSecond){
-    //     let sendData = {
-    //       'tagName': this.selectedTagNameSecond,
-    //       'city': this.selectedCityForSecond,
-    //       'instituteName': this.selectedInstituteNameForSecond,
-    //       "to": this.userList[index].tdate,
-    //       "from": this.userList[index].fdate
-    //     }
-
-    //     this.getCandidateRepots(sendData);
-    //   }else{
-    //     this.appConfig.error("Please select a filter criteria", '');
-    //   }
-    // }
   }
-  // selectedUser(userDetail) {
-  //   this.selectedUserDetail = userDetail;
-  // }
 
 }

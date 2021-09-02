@@ -31,7 +31,6 @@ import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-scree
 import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
 import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
-import { HrUploadTestReportComponent } from './hr-reports/hr-upload-test-report/hr-upload-test-report.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
 import { NewInterviewpanelResultsUploadComponent } from './evaluation/new-interviewpanel-results-upload/new-interviewpanel-results-upload.component';
@@ -261,13 +260,6 @@ const routes: Routes = [
             component: InvpanelBulkUploadReportComponent,
             data: {
               breadcrumb: 'Interview Panel Bulk Upload Reports'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST}`,
-            component: HrUploadTestReportComponent,
-            data: {
-              breadcrumb: 'Test Upload Reports'
             }
           },
           {

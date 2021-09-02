@@ -38,11 +38,6 @@ export class HrReportsComponent implements OnInit {
       },
       {
         icon: '',
-        name: 'Test Upload Reports',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.TEST_UPLOAD_REPORTS_LIST
-      },
-      {
-        icon: '',
         name: 'Panel Bulk Assign Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST
       }
