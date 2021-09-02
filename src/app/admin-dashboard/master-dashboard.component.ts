@@ -24,12 +24,6 @@ export class MasterDashboardComponent implements OnInit {
         hide: false
       },
       {
-        url: this.appConstant.ADMIN_DASHBOARD.ADMIN_REPORTS,
-        name: 'Reports',
-        icon: 'icon-Statistics',
-        hide: false
-      },
-      {
         url: this.appConstant.ADMIN_DASHBOARD.APPROVALS,
         name: 'Approvals',
         icon: 'icon-track_changes',

@@ -25,21 +25,6 @@ export class HrReportsComponent implements OnInit {
         icon: '',
         name: '1st Level Shortlist Reports',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST
-      },
-      {
-        icon: '',
-        name: 'Candidate Bulk Upload Reports',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST
-      },
-      {
-        icon: '',
-        name: 'Interview Panel Bulk Upload Reports',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST
-      },
-      {
-        icon: '',
-        name: 'Panel Bulk Assign Reports',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST
       }
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);

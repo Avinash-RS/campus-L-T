@@ -45,9 +45,6 @@ export const CONSTANT = {
       APPROVALS: '/admin/approvals',
       APPROVALS_INSTITUTE: '/admin/approvals/institute',
       ADMIN_REPORTS: '/admin/reports',
-      ADMIN_REPORTS_LIST: '/admin/reports/reports-list',
-      ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/admin/reports/candidate_list_reports',
-      ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST: '/admin/reports/institute_list_reports'
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
@@ -102,14 +99,9 @@ export const CONSTANT = {
       REPORTS_LIST: '/hr/reports/second',
       REPORTS_LIST_VIEW: '/hr/reports/list/view',
       FIRST_LEVEL_REPORTS_LIST: '/hr/reports/first',
-      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/hr/reports/candidate_list_reports',
-      BULK_INV_UPLOAD_REPORTS_LIST: '/hr/reports/inv-panel-reports',
-      INV_BULK_ASSIGN_REPORTS_LIST: '/hr/reports/panel-bulk-assign-report',
       HR_STATUS: '/hr/status',
       HR_STATUS_PREASSESSMENT: '/hr/status/pre-assessment',
       HR_STATUS_RECRUITMENT: '/hr/status/recruitment',
-      HR_ASSING_ASSESSMENT: '/hr/assing-assessment',
-      HR_SCHEDULING_ASSESSMENT: '/hr/assing-assessment/scheduling-assessment',
       BUSINESSROUTE: '/hr/ic',
       IC_ADDorLIST: '/hr/ic/list',
       OfferedCandidatesLIST: '/hr/ic/candidates'
@@ -123,8 +115,6 @@ export const CONSTANT = {
       STATUS: '/tpo/status',
       STATUS_PREASSESSMENT: '/tpo/status/pre-assessment',
       STATUS_RECRUITMENT: '/tpo/status/recruitment',
-      TPO_REPORTS: '/tpo/reports',
-      TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: '/tpo/reports/candidate_list_reports'
     },
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: '/interview-panel',
@@ -174,9 +164,6 @@ export const CONSTANT = {
       APPROVALS: 'approvals',
       APPROVALS_INSTITUTE: 'institute',
       ADMIN_REPORTS: 'reports',
-      ADMIN_REPORTS_LIST: 'reports-list',
-      ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports',
-      ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST: 'institute_list_reports',
     },
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
@@ -231,14 +218,9 @@ export const CONSTANT = {
       REPORTS_LIST: 'second',
       REPORTS_LIST_VIEW: 'view',
       FIRST_LEVEL_REPORTS_LIST: 'first',
-      BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports',
-      BULK_INV_UPLOAD_REPORTS_LIST: 'inv-panel-reports',
-      INV_BULK_ASSIGN_REPORTS_LIST: 'panel-bulk-assign-report',
       HR_STATUS: 'status',
       HR_STATUS_PREASSESSMENT: 'pre-assessment',
       HR_STATUS_RECRUITMENT: 'recruitment',
-      HR_ASSING_ASSESSMENT: 'assing-assessment',
-      HR_SCHEDULING_ASSESSMENT: 'scheduling-assessment',
       BUSINESSROUTE: 'ic',
       IC_ADDorLIST: 'list',
       OfferedCandidatesLIST: 'candidates'
@@ -252,8 +234,6 @@ export const CONSTANT = {
       STATUS: 'status',
       STATUS_PREASSESSMENT: 'pre-assessment',
       STATUS_RECRUITMENT: 'recruitment',
-      TPO_REPORTS: 'reports',
-      TPO_BULK_CANDIDATE_UPLOAD_REPORTS_LIST: 'candidate_list_reports'
     },
     INTERVIEW_PANEL_DASHBOARD: {
       HOME: 'interview-panel',

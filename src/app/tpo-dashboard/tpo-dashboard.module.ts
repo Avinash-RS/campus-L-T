@@ -9,15 +9,13 @@ import { MaterialModule } from '../material/material.module';
 import { TpoCandidatesStatusComponent } from './tpo-candidates-status/tpo-candidates-status.component';
 import { TpoPreAssessmentComponent } from './tpo-candidates-status/tpo-pre-assessment/tpo-pre-assessment.component';
 import { TpoRecruitmentComponent } from './tpo-candidates-status/tpo-recruitment/tpo-recruitment.component';
-import { TpoReportsComponent } from './tpo-reports/tpo-reports.component';
-import { TpoBulkUploadReportsComponent } from './tpo-reports/tpo-bulk-upload-reports/tpo-bulk-upload-reports.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { UserListComponent } from './tpo-user-management/user-list/user-list.component';
 import { BulkUploadsComponent } from './tpo-user-management/bulk-uploads/bulk-uploads.component';
 
 
 @NgModule({
-  declarations: [TpoMasterComponent, TpoUserManagementComponent, TpoCandidatesStatusComponent, TpoPreAssessmentComponent, TpoRecruitmentComponent, TpoReportsComponent, TpoBulkUploadReportsComponent, UserListComponent, BulkUploadsComponent],
+  declarations: [TpoMasterComponent, TpoUserManagementComponent, TpoCandidatesStatusComponent, TpoPreAssessmentComponent, TpoRecruitmentComponent, UserListComponent, BulkUploadsComponent],
   imports: [
     CommonModule,
     SharedModule,

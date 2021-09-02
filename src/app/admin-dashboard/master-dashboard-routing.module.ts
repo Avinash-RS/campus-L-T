@@ -8,9 +8,6 @@ import { UsersListComponent } from './user-management/users-list/users-list.comp
 import { AdmincanloadGuard } from '../guards/canload/admincanload.guard';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { InstituteApprovalsComponent } from './approvals/institute-approvals/institute-approvals.component';
-import { AdminReportComponent } from './admin-report/admin-report.component';
-import { AdminBulkUploadReportComponent } from './admin-report/admin-bulk-upload-report/admin-bulk-upload-report.component';
-import { AdminInstitudeBulkUploadComponent } from './admin-report/admin-institude-bulk-upload/admin-institude-bulk-upload.component';
 import { BulkUploadsComponent } from './user-management/bulk-uploads/bulk-uploads.component';
 
 
@@ -74,34 +71,6 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.APPROVALS_INSTITUTE}`,
-            pathMatch: 'full',
-          }
-        ]
-      },
-      {
-        path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_REPORTS}`,
-        component: AdminReportComponent,
-        data: {
-          breadcrumb: 'Reports'
-        },
-        children: [
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
-            component: AdminBulkUploadReportComponent,
-            data: {
-              breadcrumb: 'Candidate Bulk Upload Reports'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_BULK_INSTITUTE_UPLOAD_REPORTS_LIST}`,
-            component: AdminInstitudeBulkUploadComponent,
-            data: {
-              breadcrumb: 'Institute Bulk Upload Reports'
-            }
-          },
-          {
-            path: '',
-            redirectTo: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.ADMIN_BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

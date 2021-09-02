@@ -12,10 +12,7 @@ import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
 import { FirstLevelShorlistReportsComponent } from './hr-reports/first-level-shorlist-reports/first-level-shorlist-reports.component';
-import { BulkUploadReportsComponent } from './hr-reports/bulk-upload-reports/bulk-upload-reports.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
-import { HrAssingAssessmentComponent } from './hr-assing-assessment/hr-assing-assessment.component';
-import { SchedulingAssessmentComponent } from './hr-assing-assessment/scheduling-assessment/scheduling-assessment.component';
 
 
 import { UserListComponent } from './hr-user-management/user-list/user-list.component';
@@ -30,11 +27,9 @@ import { HrEvaluationMainScreenComponent } from './evaluation/hr-evaluation-main
 import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
 import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
 import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
-import { InvpanelBulkUploadReportComponent } from './hr-reports/invpanel-bulk-upload-report/invpanel-bulk-upload-report.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
 import { NewInterviewpanelResultsUploadComponent } from './evaluation/new-interviewpanel-results-upload/new-interviewpanel-results-upload.component';
-import { InvBulkAssignReportsComponent } from './hr-reports/inv-bulk-assign-reports/inv-bulk-assign-reports.component';
 import { IcAddorListComponent } from './pages/ic-AddorList/ic-addor-list.component';
 import { OfferedCandidatesListComponent } from './pages/offered-candidates-list/offered-candidates-list.component';
 import { BusinesspanelRouteComponent } from './pages/businesspanel-route/businesspanel-route.component';
@@ -249,27 +244,6 @@ const routes: Routes = [
             }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_CANDIDATE_UPLOAD_REPORTS_LIST}`,
-            component: BulkUploadReportsComponent,
-            data: {
-              breadcrumb: 'Candidate Bulk Upload Reports'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.BULK_INV_UPLOAD_REPORTS_LIST}`,
-            component: InvpanelBulkUploadReportComponent,
-            data: {
-              breadcrumb: 'Interview Panel Bulk Upload Reports'
-            }
-          },
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.INV_BULK_ASSIGN_REPORTS_LIST}`,
-            component: InvBulkAssignReportsComponent,
-            data: {
-              breadcrumb: 'Panel Bulk Assign Reports'
-            }
-          },
-          {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             pathMatch: 'full',
@@ -300,27 +274,6 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_STATUS_RECRUITMENT}`,
-            pathMatch: 'full',
-          }
-        ]
-      },
-      {
-        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_ASSING_ASSESSMENT}`,
-        component: HrAssingAssessmentComponent,
-        data: {
-          breadcrumb: 'Assigning Assessment'
-        },
-        children: [
-          {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_SCHEDULING_ASSESSMENT}`,
-            component: SchedulingAssessmentComponent,
-            data: {
-              breadcrumb: 'Scheduling Assessment'
-            }
-          },
-          {
-            path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_SCHEDULING_ASSESSMENT}`,
             pathMatch: 'full',
           }
         ]

@@ -29,12 +29,6 @@ export class TpoMasterComponent implements OnInit {
           name: 'Status',
           icon: 'icon-track_changes',
           hide: false
-        },
-        {
-          url: this.appConstant.TPO_DASHBOARD.TPO_REPORTS,
-          name: 'Reports',
-          icon: 'icon-Statistics',
-          hide: false
         }
       ]
   }
