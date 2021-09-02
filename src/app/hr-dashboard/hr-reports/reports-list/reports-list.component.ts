@@ -475,7 +475,7 @@ export class ReportsListComponent implements OnInit {
 
         this.getFirstsortlistRepots(sendData);
       }else{
-        this.appConfig.nzNotification("error", "1st Shortlist", "Tag name or City or Insitute name is required");
+        this.appConfig.nzNotification("error", "1st Shortlist", "Tag name or City or Institute name is required");
       }
     }else if(index == 1){
       if(this.selectedAssessmentName){

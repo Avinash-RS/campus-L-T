@@ -201,7 +201,7 @@
       uploaded.</span> <br> <span
       *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
       {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
-      been uploaded. Please go to reports to see the detailed error details. </span>
+      been uploaded. Click Ok to see the error details. </span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
@@ -233,23 +233,7 @@
       *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
       {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'Interview panel' : 'Interview panels'}} has
       not
-      been uploaded. Please go to reports to see the detailed error details.</span>
-  </div>
-  <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
-  </div>
-</div>
-
-
-<div class="modal-box-wrapper" *ngIf="data && data['excel_bulk_upload_ok']">
-  <div class="bulk-upload-text">
-    <span
-      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
-    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
-      uploaded.</span> <br> <span
-      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
-      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
-      been uploaded. Please go to reports to see the detailed error details.</span>
+      been uploaded. Click Ok to see the error details.</span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
@@ -273,7 +257,7 @@
       uploaded.</span> <br> <span
       *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
       {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'institute' : 'institutes'}} has not
-      been uploaded. Please go to reports to see the detailed error details.</span>
+      been uploaded. Click Ok to see the error details.</span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
@@ -440,7 +424,7 @@
       assigned.</span> <br> <span
       *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
       {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
-      been assigned. Please go to reports to see the detailed error details. </span>
+      been assigned. Click Ok to see the error details.</span>
   </div>
   <div class="buttons">
     <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>

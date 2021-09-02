@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { FormBuilder } from '@angular/forms';
@@ -20,6 +20,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 export class CommonUploadsComponent implements OnInit, AfterViewInit {
 
+  @Input() isAssignCandidateToInterviewPanel;
   BASE_URL = environment.API_BASE_URL;
   currentRole: any;
   url = null;
@@ -32,17 +33,23 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   selectedImage: any;
   fileName: any;
   fileSize: any;
-  enableList: boolean;
   selectedTarget: any;
   SavedData: any;
   eventSaver: any;
   totalCountofCandidates: any;
-  uploadedListArray: any;
+  uploadedListArray: any = [];
   dateFormatExist: boolean;
 
   Upload_Candidates = 'candidate';
-  Upload_Insitutes = 'institute';
+  Upload_Institutes = 'institute';
   Upload_InterviewPanel = 'interview';
+  Upload_CandidateAssigntoInterviewPanel = 'bulkAssign';
+  errorReports: any = [];
+  candidateErrorStatus = 'candidateError';
+  instituteErrorStatus = 'instituteError';
+  invPanelErrorStatus = 'invPanelError';
+  candidateAssigntoInterviewPanelErrorStatus = 'bulkAssignError';
+  errorReportsStatus: any;
   selectedTemplate = this.Upload_Candidates;
   templates = [
     {
@@ -50,8 +57,8 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       name: 'Upload Candidates'
     },
     {
-      value: this.Upload_Insitutes,
-      name: 'Upload Insitutes'
+      value: this.Upload_Institutes,
+      name: 'Upload Institutes'
     },
     {
       value: this.Upload_InterviewPanel,
@@ -72,6 +79,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.isBulkAssign();
   }
 
   ngAfterViewInit() {
@@ -83,8 +91,19 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
     }
  }
 
-  changeTemplate(e) {
+ isBulkAssign() {
+   if (this.isAssignCandidateToInterviewPanel) {
+    this.selectedTemplate = this.Upload_CandidateAssigntoInterviewPanel;
+  //  let bulkAssign = {
+  //   value: this.Upload_CandidateAssigntoInterviewPanel,
+  //   name: 'Assign Candidates to Interview Panel'
+  // };
+}
 
+ }
+
+  changeTemplate(e) {
+    this.delete();
   }
   downloadTemplate() {
     if (this.selectedTemplate == this.Upload_Candidates) {
@@ -97,10 +116,16 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       window.open(excel, '_blank');
     }
 
-    if (this.selectedTemplate == this.Upload_Insitutes) {
+    if (this.selectedTemplate == this.Upload_Institutes) {
       const excel = `assets/files/Institute_template.csv`;
       window.open(excel, '_blank');
     }
+
+    if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
+      const excel = `${this.BASE_URL}/sites/default/files/HR_Bulk_Assign_Template.csv`;
+      window.open(excel, '_blank');
+    }
+
   }
   submit() {
     if (this.selectedTemplate == this.Upload_Candidates) {
@@ -110,7 +135,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       this.openDialog(ShortlistBoxComponent, data);
     }
 
-    if (this.selectedTemplate == this.Upload_Insitutes) {
+    if (this.selectedTemplate == this.Upload_Institutes) {
       const data = {
       bulk_upload: 'institute-bulk'
     };
@@ -122,6 +147,13 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       bulk_upload: 'invPanel-bulk'
     };
     this.openDialog(ShortlistBoxComponent, data);
+    }
+
+    if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
+      const data = {
+        bulk_upload: 'resultsUpload'
+      };
+      this.openDialog(ShortlistBoxComponent, data);
     }
   }
 
@@ -160,6 +192,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
 
   upload() {
     this.uploadedListArray = [];
+    this.errorReports = [];
     this.validFile = false;
     const apiData = {
       source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
@@ -198,7 +231,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
     }
     }
 
-    if (this.selectedTemplate == this.Upload_Insitutes) {
+    if (this.selectedTemplate == this.Upload_Institutes) {
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 8 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Institute Name')
         &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Institute Email Id')
@@ -230,25 +263,72 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       this.validFile = true;
     }
     }
+
+    if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Shortlist Name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Candidate Email ID') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interview Panel Email ID')) {
+      this.assignCandidatetoInvpanelExceltoJsonFormatter(this.SavedData);
+    } else {
+      this.validFile = true;
+    }
+    }
+
+}
+
+assignCandidatetoInvpanelExceltoJsonFormatter(data) {
+  this.dateFormatExist = false;
+  let count = 0;
+  const listArray = [];
+  data.forEach((dup, i) => {
+    let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
+    if (i > 0 && dup) {
+      count += 1;
+      dup.forEach((element, index) => {
+        if (index < 3) {
+          if (index == 0) {
+            Shortlist_Name = element ? element : '';
+          }
+          if (index == 1) {
+            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+              this.dateFormatExist = true;
+            } else {
+              candidate_email_id = element ? element : '';
+            }
+          }
+          if (index == 2) {
+            inv_panel_email_id = element ? element : '';
+          }
+        }
+      });
+      const value = {
+        shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
+        user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
+        hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
+      };
+
+
+      if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
+        listArray.push(value);
+      }
+    }
+  });
+  this.uploadedListArray = listArray;
+  this.totalCountofCandidates = count - 1;
 }
 
 invPanelExceltoJsonFormatter(data) {
   this.dateFormatExist = false;
-  this.enableList = true;
   let count = 0;
   const listArray = [];
   data.forEach((dup, i) => {
-    let name; let employeeId; let email; let discipline;
-    // if (i > 0 && dup && dup.length >= 3) {
+    let name; let employee_id; let email; let discipline;
     if (i > 0 && dup) {
       count += 1;
       dup.forEach((element, index) => {
-        // if (index < 3 && element.length > 2) {
         if (index < 4) {
           if (index == 0) {
             if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              // name = element ? this.getDateFormat(element).toString() : '';
-              this.enableList = false;
               this.dateFormatExist = true;
             } else {
               name = element ? element : '';
@@ -256,11 +336,9 @@ invPanelExceltoJsonFormatter(data) {
           }
           if (index == 1) {
             if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              // employeeId = element ? this.getDateFormat(element).toString() : '';
-              this.enableList = false;
               this.dateFormatExist = true;
             } else {
-              employeeId = element ? element : '';
+              employee_id = element ? element : '';
             }
           }
           if (index == 2) {
@@ -268,8 +346,6 @@ invPanelExceltoJsonFormatter(data) {
           }
           if (index == 3) {
             if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-              // discipline = element ? this.getDateFormat(element).toString() : '';
-              this.enableList = false;
               this.dateFormatExist = true;
             } else {
               discipline = element ? element : '';
@@ -279,12 +355,12 @@ invPanelExceltoJsonFormatter(data) {
       });
       const value = {
         name: name ? name.toString().trim() : '',
-        employeeId: employeeId ? employeeId.toString().trim() : '',
+        employee_id: employee_id ? employee_id.toString().trim() : '',
         email: email ? email.toString().trim() : '',
         discipline: discipline ? discipline.toString().trim() : '',
       };
 
-      if ((name && name.toString().trim()) || (employeeId && employeeId.toString().trim()) || (email && email.toString().trim()) || (discipline && discipline.toString().trim())) {
+      if ((name && name.toString().trim()) || (employee_id && employee_id.toString().trim()) || (email && email.toString().trim()) || (discipline && discipline.toString().trim())) {
         listArray.push(value);
       }
     }
@@ -295,7 +371,6 @@ invPanelExceltoJsonFormatter(data) {
 
 insitituteExceltoJsonFormatter(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -309,8 +384,6 @@ insitituteExceltoJsonFormatter(data) {
           if (index < 8) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // field_institute_name = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 field_institute_name = element ? element : '';
@@ -318,8 +391,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 1) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // email = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
@@ -327,8 +398,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 2) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // field_institute_state = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 field_institute_state = element ? element : '';
@@ -336,8 +405,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 3) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // field_institute_city = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 field_institute_city = element ? element : '';
@@ -345,8 +412,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 4) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // name = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 name = element ? element : '';
@@ -354,8 +419,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 5) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // field_institute_last_name = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 field_institute_last_name = element ? element : '';
@@ -363,8 +426,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 6) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // field_institute_title = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 field_institute_title = element ? element : '';
@@ -372,8 +433,6 @@ insitituteExceltoJsonFormatter(data) {
             }
             if (index == 7) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                // field_institute_mobile_number = element ? this.getDateFormat(element).toString() : '';
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 field_institute_mobile_number = element ? element : '';
@@ -406,7 +465,6 @@ insitituteExceltoJsonFormatter(data) {
 
   candidateExceltoJsonFormatter(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -417,7 +475,6 @@ insitituteExceltoJsonFormatter(data) {
           if (index < 3) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 tag = element ? element : '';
@@ -450,7 +507,7 @@ insitituteExceltoJsonFormatter(data) {
       this.candidateBulkUploadAPI();
     }
 
-    if (this.selectedTemplate == this.Upload_Insitutes) {
+    if (this.selectedTemplate == this.Upload_Institutes) {
       this.instituteBulkUploadAPI();
     }
 
@@ -458,6 +515,28 @@ insitituteExceltoJsonFormatter(data) {
       this.invPanelBulkUploadAPI();
     }
 
+    if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
+      this.assignCandidatetoInvpanelBulkUploadAPI();
+    }
+  }
+
+  assignCandidatetoInvpanelBulkUploadAPI() {
+    const apiData = {
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      entries: this.uploadedListArray
+    }
+
+    this.adminService.bulkUploadInvAssign(apiData).subscribe((data: any) => {
+      const datas = {
+        inv_assign_bulk_upload_ok: 'candidate-bulk',
+        totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
+        errorLength: data ? data.length : 0,
+      };
+      this.openDialog1(ShortlistBoxComponent, datas);
+      this.passNotUploadedListToPreview(data, this.candidateAssigntoInterviewPanelErrorStatus);
+    }, (err) => {
+
+    });
   }
 
   invPanelBulkUploadAPI() {
@@ -473,7 +552,7 @@ insitituteExceltoJsonFormatter(data) {
       const ele = {
         name: element['name'] ? element['name'] : '',
         email: element['email'] ? element['email'] : '',
-        employee_id: element['employeeId'] ? element['employeeId'] : '',
+        employee_id: element['employee_id'] ? element['employee_id'] : '',
         panel_discipline: element['discipline'] ? element['discipline'] : '',
         field_user_created_by: this.appConfig.getLocalData('userId'),
         date: this.getDateFormat1(date),
@@ -489,6 +568,7 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data && data.length > 0 ? data.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
+      this.passNotUploadedListToPreview(data, this.invPanelErrorStatus);
     }, (err) => {
 
     });
@@ -496,9 +576,6 @@ insitituteExceltoJsonFormatter(data) {
 
   instituteBulkUploadAPI() {
     const date = new Date();
-    const currentDate = this.getDateFormat1(date);
-    // const time = this.tConvert(`${date.getHours()}:${minutes}`);
-
     this.uploadedListArray.forEach(element => {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
@@ -519,6 +596,7 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data && data.length ? data.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
+      this.passNotUploadedListToPreview(data, this.instituteErrorStatus);
     }, (err) => {
 
     });
@@ -526,9 +604,6 @@ insitituteExceltoJsonFormatter(data) {
 
   candidateBulkUploadAPI() {
     const date = new Date();
-    const currentDate = this.getDateFormat1(date);
-    // const time = this.tConvert(`${date.getHours()}:${minutes}`);
-
     this.uploadedListArray.forEach(element => {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
@@ -541,35 +616,46 @@ insitituteExceltoJsonFormatter(data) {
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
-
       const datas = {
         bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data.length : 0,
       };
       this.openDialog1(ShortlistBoxComponent, datas);
+      this.passNotUploadedListToPreview(data, this.candidateErrorStatus);
     }, (err) => {
 
     });
   }
 
+  passNotUploadedListToPreview(data, form) {
+    if (data && data.length > 0) {
+      this.uploadedListArray = [];
+      this.errorReportsStatus = form;
+      this.errorReports = data;
+    } else {
+      this.delete();
+    }
+  }
   removeSelectedCandidate(i) {
     this.uploadedListArray.splice(i, 1);
   }
 
   backToUpload() {
-    this.enableList = false;
   }
 
   uploadText() {
     if (this.selectedTemplate == this.Upload_Candidates) {
-      return 'Upload candidate details'
+      return 'Upload Candidate Details'
     }
-    if (this.selectedTemplate == this.Upload_Insitutes) {
-      return 'Upload institute details'
+    if (this.selectedTemplate == this.Upload_Institutes) {
+      return 'Upload Institute Details'
     }
     if (this.selectedTemplate == this.Upload_InterviewPanel) {
-      return 'Upload interview panel details'
+      return 'Upload Interview Panel Details'
+    }
+    if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
+      return 'Upload Candidate Details'
     }
   }
 
@@ -615,6 +701,8 @@ insitituteExceltoJsonFormatter(data) {
     this.validFile = false;
     this.dateFormatExist = false;
     this.url = null;
+    this.errorReports = [];
+    this.uploadedListArray = [];
   }
 
     // Open dailog
@@ -654,8 +742,6 @@ insitituteExceltoJsonFormatter(data) {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.enableList = false;
-      this.delete();
       if (result) {
       }
     });

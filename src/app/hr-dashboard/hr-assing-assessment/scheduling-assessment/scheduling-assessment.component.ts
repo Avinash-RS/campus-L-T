@@ -160,7 +160,7 @@ export class SchedulingAssessmentComponent implements OnInit, AfterViewInit {
         }
       },
       {
-        headerName: 'Insitute', field: 'insitute',
+        headerName: 'Institute', field: 'insitute',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,

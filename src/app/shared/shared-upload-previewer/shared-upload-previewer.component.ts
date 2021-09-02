@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -10,7 +10,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   templateUrl: './shared-upload-previewer.component.html',
   styleUrls: ['./shared-upload-previewer.component.scss']
 })
-export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
+export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterViewInit {
 
   displayedColumns: any[];
   dataSource: MatTableDataSource<any>;
@@ -42,12 +42,24 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getUsersList();
   }
+  ngOnChanges() {
+    this.getUsersList();
+  }
 
   // To get all users
   getUsersList() {
     if (this.status === 'institute') {
       this.displayedColumns = ['field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'name',
         'field_institute_last_name', 'field_institute_title', 'field_institute_mobile_number', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'instituteError') {
+      this.displayedColumns = ['field_institute_name', 'email', 'field_institute_state', 'field_institute_city', 'name',
+        'field_institute_last_name', 'field_institute_title', 'field_institute_mobile_number', 'reason'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
@@ -62,7 +74,15 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }
 
-    if (this.status === 'resultUpload') {
+    if (this.status === 'candidateError') {
+      this.displayedColumns = ['tag', 'name', 'email', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'bulkAssign') {
       this.displayedColumns = ['user_email', 'shortlist_name', 'hr_email', 'delete'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
@@ -70,8 +90,24 @@ export class SharedUploadPreviewerComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }
 
+    if (this.status === 'bulkAssignError') {
+      this.displayedColumns = ['user_email', 'shortlist_name', 'hr_email', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
     if (this.status === 'interview') {
-      this.displayedColumns = ['name', 'employeeId', 'email', 'discipline', 'delete'];
+      this.displayedColumns = ['name', 'employee_id', 'email', 'discipline', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'invPanelError') {
+      this.displayedColumns = ['name', 'employee_id', 'email', 'discipline', 'reason'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

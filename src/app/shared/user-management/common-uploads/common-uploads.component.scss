@@ -31,10 +31,16 @@
   }
 
   .w-100 {
-    width: 100% !important;
+    padding: 4px !important;
+  }
+  .h4heading {
+    text-align: center;
+    margin: 0;
   }
   .list-wrapper {
-    width: 68%;
+    background: $header-bg;
+    padding: 4px 14em;
+    width: 100%;
     margin: 1em auto;
     .list-count {
       color: $light-black;

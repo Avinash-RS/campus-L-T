@@ -1,6 +1,6 @@
 <div class="main-wrapper-uploaded-list">
-  <ng-container *ngIf="currentRole != 'institute'">
-  <div class="selectedTemp d-flex align-items-center" *ngIf="!enableList">
+  <ng-container *ngIf="currentRole != 'institute' && selectedTemplate != Upload_CandidateAssigntoInterviewPanel">
+  <div class="selectedTemp d-flex align-items-center">
     <div class="mr-3">
     Selected Template:
   </div>
@@ -15,7 +15,7 @@
   </div>
   </div>
 </ng-container>
-  <div class="upload-wrapper" *ngIf="!enableList">
+  <div class="upload-wrapper">
     <div class="top-wrapper">
       <div class="upload">
           <div class="text-wrapper">
@@ -52,43 +52,42 @@
     </div>
 
   </div>
-  <mat-accordion *ngIf="!enableList">
+  <mat-accordion *ngIf="uploadedListArray.length < 1 && errorReports.length < 1">
     <!-- #docregion basic-panel -->
     <!-- #docregion hide-toggle -->
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="true">
     <!-- #enddocregion hide-toggle -->
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Read me
+           Upload Instructions
           </mat-panel-title>
           <!-- <mat-panel-description>
             This is a summary of the content
           </mat-panel-description> -->
         </mat-expansion-panel-header>
         <ng-container *ngIf="selectedTemplate == Upload_Candidates" [ngTemplateOutlet]="candidate"></ng-container>
-        <ng-container *ngIf="selectedTemplate == Upload_Insitutes" [ngTemplateOutlet]="institute"></ng-container>
+        <ng-container *ngIf="selectedTemplate == Upload_Institutes" [ngTemplateOutlet]="institute"></ng-container>
         <ng-container *ngIf="selectedTemplate == Upload_InterviewPanel" [ngTemplateOutlet]="invPanel"></ng-container>
+        <ng-container *ngIf="selectedTemplate == Upload_CandidateAssigntoInterviewPanel" [ngTemplateOutlet]="assignCandidateToInvPanel"></ng-container>
 
       </mat-expansion-panel>
       </mat-accordion>
 
-  <div class="list-wrapper" [ngClass]="selectedTemplate == this.Upload_Insitutes ? 'w-100' : ''" *ngIf="enableList">
+  <div class="list-wrapper" [ngClass]="selectedTemplate == Upload_Institutes ? 'w-100' : ''" *ngIf="errorReports.length > 0 || uploadedListArray.length > 0">
+    <h4 class="h4heading">{{uploadedListArray.length > 0 ? 'Preview Screen' : 'Error Report'}}</h4>
     <div class="list-count">
-      Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
+      <ng-container *ngIf="uploadedListArray.length > 0">Total number of users : {{uploadedListArray ? uploadedListArray['length'] : ''}}</ng-container>
+      <ng-container *ngIf="errorReports.length > 0">Total number of not uploaded users : {{errorReports ? errorReports['length'] : ''}}</ng-container>
     </div>
-    <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
-    <div class="button-wrapper">
-      <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
-      <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Ok</button>
+    <app-shared-upload-previewer [status]="errorReports.length > 0 ? errorReportsStatus : selectedTemplate" [previewerArray]="errorReports.length > 0 ? errorReports : uploadedListArray"></app-shared-upload-previewer>
+    <div *ngIf="uploadedListArray.length > 0" class="button-wrapper">
+      <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Submit</button>
     </div>
   </div>
 </div>
 
 <ng-template #candidate>
   <div class="ins">
-    <div class="head">
-      Instructions:
-    </div>
     <div class="ul">
       <ul>
         <li>Click on "Download template" button and open the file in excel program.</li>
@@ -123,9 +122,6 @@
 
 <ng-template #institute>
   <div class="ins">
-    <div class="head">
-      Instructions:
-    </div>
     <div class="ul">
         <ul>
           <li>Click on "Download template" button and open the file in excel program.</li>
@@ -153,9 +149,6 @@
 
 <ng-template #invPanel>
   <div class="ins">
-    <div class="head">
-      Instructions:
-    </div>
     <div class="ul">
         <ul>
           <li>Click on "Download template" button and open the file in excel program.</li>
@@ -178,5 +171,32 @@
         </ul>
       </div>
     </div>
+
+</ng-template>
+
+<ng-template #assignCandidateToInvPanel>
+  <div class="ins">
+    <div class="ul">
+        <ul>
+          <li>Click on "Download template" button and open the file in excel program.</li>
+          <li>All fields are mandatory.</li>
+          <li>From Screen, click Upload candidate details link to select a file.</li>
+          <li>Maximum 500 users can be uploaded at one time.</li>
+          <li>Please do not refresh or go back while upload is processing.</li>
+          <li>Click upload button.</li>
+          <li>Screen will provide a preview.</li>
+          <li>Candidate details can be removed by clicking on "x" on preview screen. These candidate details will not be
+            assigned.
+          </li>
+          <li>Click on confirm button.</li>
+          <li>The successfully uploaded candidate details will be available in “Assigned details” tab.</li>
+          <li>The candidate details which are not uploaded are available in “Bulk assign reports” tab.
+            <ul>
+              <li>For missing details, update the mandatory details and upload.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+        </div>
 
 </ng-template>

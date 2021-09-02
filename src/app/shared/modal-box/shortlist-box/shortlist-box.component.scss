@@ -101,7 +101,7 @@
 
 .modal-box-wrapper {
   min-width: 400px;
-  max-width: 400px;
+  max-width: 700px;
   padding: 1em 2em;
   background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black-4;
@@ -190,8 +190,8 @@
 }
 
 .bulk-upload-text {
-  color: $light-black;
-  font-size: 13px;
+  color: $black;
+  font-size: 14px;
   font-weight: 200;
   text-align: center;
   word-wrap: break-word;
