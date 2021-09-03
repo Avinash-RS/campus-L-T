@@ -475,7 +475,7 @@ export class AdminServiceService {
   }
 
   getAllShortlistedShortlistNames() {
-    return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list`);
+    return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   //hr 1st sortlist report list

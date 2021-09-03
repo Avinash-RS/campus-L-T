@@ -102,6 +102,10 @@
         font-size: 13px;
       }
     }
+    .sub-navs:hover {
+      background: rgb(192, 34, 34, 0.3);
+     }
+
     .active {
       background: $primary-red !important;
       outline: none;

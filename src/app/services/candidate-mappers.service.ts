@@ -92,6 +92,9 @@ export class CandidateMappersService {
     return headers;
   }
 
+  getUserId() {
+    return this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
+  }
 
   // For generating new static token for before login requests
   csrfToken() {
@@ -132,7 +135,7 @@ export class CandidateMappersService {
   forgotPassword(email) {
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/lost-password?_format=json`, email,
-      { withCredentials: true });
+      { headers: this.withoutTokens(), withCredentials: true });
   }
 
   // For Image
@@ -153,6 +156,7 @@ export class CandidateMappersService {
     return fetch(`${this.BASE_URL}/profile/get_certificate_full_name`, {
       method: 'POST',
       body: file,
+      headers: new Headers({'userId': this.getUserId()}),
       // headers: this.getAfterCustomHeaders(), withCredentials: true
     });
   }

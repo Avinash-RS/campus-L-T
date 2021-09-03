@@ -82,19 +82,19 @@ export class ApiServiceService {
 
   // To get all cities
   getAllCity() {
-    return this.http.get(`${this.BASE_URL_CITY}/cities.php`);
+    return this.http.get(`${this.BASE_URL_CITY}/cities.php`, { headers: this.withoutTokens() });
   }
 
   // To get all cities
   getAllState() {
-    return this.http.get(`${this.BASE_URL_CITY}/states.php`);
+    return this.http.get(`${this.BASE_URL_CITY}/states.php`, { headers: this.withoutTokens() });
   }
 
   // Forgot Password
   forgotPassword(email) {
     // this.datas is api body data
     return this.http.post(`${this.BASE_URL}/user/lost-password?_format=json`, email,
-      { withCredentials: true });
+      { headers: this.withoutTokens(), withCredentials: true });
   }
 
   passwordTokenVerification(data) {
