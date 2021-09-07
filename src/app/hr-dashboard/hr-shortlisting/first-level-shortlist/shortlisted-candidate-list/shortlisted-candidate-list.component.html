@@ -1,282 +1,40 @@
 <div class="shortlist-candidates-wrapper">
-
-  <div class="shortlist-header">
-    <div class="buttons">
-      <!--   -->
-      <div *ngIf="filter" class="check">
-        <mat-checkbox style="height: 23px;" [(ngModel)]="overallSelect" [checked]="overallSelect"> All Filtered
-          Candidates
-        </mat-checkbox>
-      </div>
-      <!-- <button [ngClass]="notShowShortlist && !overallSelect ? 'disabled' : ''" (click)="shortlist()" class="shortlist"
-        mat-button><span class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span
-          class="text">
-          Shortlist</span></button> -->
-      <!-- <button [ngClass]="notShowReject ? 'disabled' : ''" (click)="reject()" class="reject" mat-button><span
-          class="icon"><img src="assets/images/001-cancel_1.svg" alt="" srcset=""></span> <span class="text">
-          Reject</span></button> -->
+  <div class="sub-headers-wrapper">
+    <div class="ml-2" *ngIf="userList && userList.length > 0">
+      <button [matTooltip]="checkFilterAppied() ? '' : 'No filter has been applied'" [ngClass]="checkFilterAppied() ? '' : 'disable-selection'" (click)="checkFilterAppied() ? gridApi.setFilterModel(null) : ''" class="submit" mat-raised-button>Clear all Filters</button>
     </div>
-  </div>
 
-  <div class="criteria-header">
-    <div class="left">
-      <div class="text" *ngIf="!filter">
-        <span>Total number of candidates: </span> <span class="count">{{totalCandidates}}</span>
-        <span style="margin: 0 0 0 1em;">Selected number of candidates: </span> <span
-          class="count">{{selectedCandidates}} of {{totalCandidates}}</span>
-      </div>
-      <div class="text" *ngIf="filter">
-        <span>Total Selected number of candidates: </span> <span class="count">{{selectedCandidates}} of
-          {{totalCandidates}}</span>
-      </div>
+    <div class="ml-2" *ngIf="userList && userList.length > 0">
+      <button (click)="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? shortlist() : ''" [matTooltip]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the candidates'" class="submit" [ngClass]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disable-selection'" mat-raised-button>Shortlist</button>
     </div>
-    <div class="right">
-      <div class="buttons">
-        <div class="search-icon">
-            <img matTooltip="Search" (click)="applySearch()" src="assets/images/Search.svg" alt="" srcset="">
-            <input matInput [(ngModel)]="searchInput" placeholder="Search….">
-        </div>
-        <div class="buttons">
-          <!-- <button class="submit btn-margin-space-05" mat-raised-button (click)="applySearch()"><span>Search </span></button> -->
-          <button class="submit btn-margin-space-05" [ngClass]="userList && userList.length === 0 ? 'disabled' : ''"
-            (click)="applyCriteria()" mat-raised-button><span style="font-size: 18px;" class="icon material-icons">filter_alt</span><span> Filter
-            </span></button>
-          <button class="submit btn-margin-space-05" [ngClass]="notShowShortlist && !overallSelect ? 'disabled' : ''" (click)="shortlist()"
-          mat-raised-button><span class="icon"><img src="assets/images/002-tick_1.svg" alt="" srcset=""></span> <span style="padding-top: 2px;"
-              class="text">
-              Shortlist</span></button>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
-    <!-- <mat-form-field>
-          <mat-label>Filter</mat-label> -->
-    <div class="search-bar" style="display: none;">
-      <div class="search-icon">
-        <img src="assets/images/feather-search.svg" alt="" srcset="">
-        <input matInput [(ngModel)]="searchInput" placeholder="Search….">
-        
-      </div>
-      <div class="buttons">
-        <button mat-raised-button (click)="applySearch()"><span>Search </span></button>
-      </div>
-    </div>
-    <!-- </mat-form-field> -->
-    <div #myDiv (click)="true" class="scroll" style="max-height: 350px; overflow: auto;">
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-        <!-- Position Column -->
-        <ng-container matColumnDef="uid">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'uid'" style="cursor: pointer;" (click)="sorting('ID', 'uid')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'uid'" style="cursor: pointer;" (click)="sorting('ID', 'uid')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            ID </th>
-          <td mat-cell *matCellDef="let element"> {{element.uid ? element.uid : '-'}} </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="tag_name">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'tag_name'" style="cursor: pointer;" (click)="sorting('Tag', 'tag_name')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'tag_name'" style="cursor: pointer;" (click)="sorting('Tag', 'tag_name')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Tag </th>
-          <td mat-cell *matCellDef="let element"> {{element.tag_name ? element.tag_name : '-'}} </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'name'" style="cursor: pointer;" (click)="sorting('Candidate', 'name')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'name'" style="cursor: pointer;" (click)="sorting('Candidate', 'name')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Candidate </th>
-          <td mat-cell
-            *matCellDef="let element"> <span (click)="profileView(element.uid, element.name)" class="inline-view"> {{element.name ? element.name : '-'}}</span> </td>
-        </ng-container>
-
-        <!-- id Column -->
-        <ng-container matColumnDef="new_candidate_id">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'new_candidate_id'" style="cursor: pointer;" (click)="sorting('Candidate id', 'new_candidate_id')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'new_candidate_id'" style="cursor: pointer;" (click)="sorting('Candidate id', 'new_candidate_id')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Candidate id </th>
-          <td mat-cell
-            *matCellDef="let element"> {{element.new_candidate_id ? element.new_candidate_id : '-'}} </td>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="gender">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'gender'" style="cursor: pointer;" (click)="sorting('Gender', 'gender')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'gender'" style="cursor: pointer;" (click)="sorting('Gender', 'gender')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Gender </th>
-          <td mat-cell *matCellDef="let element"> {{element.gender ? element.gender : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="dob">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'dob'" style="cursor: pointer;" (click)="sorting('dob', 'dob')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'dob'" style="cursor: pointer;" (click)="sorting('dob', 'dob')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Date of birth </th>
-          <td mat-cell *matCellDef="let element"> {{element.dob ? (element.dob) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="institute">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'institute'" style="cursor: pointer;" (click)="sorting('Institute', 'institute')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'institute'" style="cursor: pointer;" (click)="sorting('Institute', 'institute')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Institute </th>
-          <td mat-cell *matCellDef="let element"> {{element.institute ? (element.institute) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="level">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'level'" style="cursor: pointer;" (click)="sorting('Education', 'level')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'level'" style="cursor: pointer;" (click)="sorting('Education', 'level')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Education level </th>
-          <td mat-cell *matCellDef="let element"> {{element.level ? (element.level) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="percentage">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'percentage'" style="cursor: pointer;"
-              (click)="sorting('Percentage', 'percentage')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'percentage'" style="cursor: pointer;"
-              (click)="sorting('Percentage', 'percentage')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Percentage </th>
-          <td mat-cell *matCellDef="let element"> {{element.percentage ? (element.percentage) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="backlog">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'backlog'" style="cursor: pointer;" (click)="sorting('Backlog', 'backlog')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'backlog'" style="cursor: pointer;" (click)="sorting('Backlog', 'backlog')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Backlog </th>
-          <td mat-cell *matCellDef="let element"> {{element.backlog ? (element.backlog) : '-'}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="dateofpassing">
-          <th mat-header-cell *matHeaderCellDef>
-            <span *ngIf="sortedCol != 'dateofpassing'" style="cursor: pointer;"
-              (click)="sorting('dateOfPassing', 'dateofpassing')">
-              <img class="sort" src="assets/images/sort.svg" alt="" srcset="">
-            </span>
-            <span *ngIf="sortedCol == 'dateofpassing'" style="cursor: pointer;"
-              (click)="sorting('dateOfPassing', 'dateofpassing')">
-              <img class="sort" *ngIf="normal" src="assets/images/sort.svg" alt="" srcset="">
-              <img *ngIf="asc" src="assets/images/awesome-sort-1.svg" alt="" srcset="">
-              <img *ngIf="desc" src="assets/images/awesome-sort.svg" alt="" srcset="">
-            </span>
-            Date of passing </th>
-          <td mat-cell *matCellDef="let element"> {{element.dateofpassing ? (element.dateofpassing) : '-'}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="checked">
-          <th mat-header-cell *matHeaderCellDef>
-            <div>Select All</div>
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="selectAllCheckbox($event)"
-              [checked]="selectAllCheck">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedUser(element)"
-              [checked]="element.checked">
-            </mat-checkbox>
-          </td>
-        </ng-container>
-
-        <!-- fifth Header row first group -->
-        <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
-          <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
-            {{filteredBoolean ? 'No Candidates available in the selected criteria' : 'No Data Available'}}
-          </th>
-        </div>
-
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
-          *matHeaderRowDef="['fifth-header-row-first-group']">
-        </tr>
-
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-          [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
-      </table>
-      <!-- showFirstLastButtons -->
-      <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[50, 100]" (page)="pageChanged($event)"
-        [length]="length"></mat-paginator>
-    </div>
-  </div>
-  <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
-    <div>No Candidate data available to shortlist </div>
-  </div> -->
+</div>
+  <ag-grid-angular style="width: 98%; height: 100vh; margin:auto !important;" class="ag-theme-alpine"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [rowModelType]="rowModelType"
+  [serverSideStoreType]="serverSideStoreType"
+  [maintainColumnOrder]="true"
+  [pagination]="true"
+  [suppressRowClickSelection]="true"
+  [paginationPageSize]="paginationPageSize"
+  [rowSelection]="rowSelection"
+  [cacheBlockSize]="cacheBlockSize"
+  (gridReady)="onGridReady($event)"
+  (sortChanged)="sortevent($event)"
+  [enableCharts]="true"
+  [enableRangeSelection]="true"
+  (cellClicked)="onCellClicked($event)"
+  (paginationChanged)="paginationChanged($event)"
+  [statusBar]="statusBar"
+  [frameworkComponents]="frameworkComponents"
+  headerHeight="30"
+  [rowGroupPanelShow]="'always'" [rowClassRules]="rowClassRules" [sideBar]="true"
+  [masterDetail]="true"
+  [detailCellRendererParams]="detailCellRendererParams"
+  (firstDataRendered)="onFirstDataRendered($event)"
+  [pivotPanelShow]="'always'" [rowDragManaged]="false" [autoGroupColumnDef]="autoGroupColumnDef"
+  [animateRows]="true">
+ </ag-grid-angular>
 
 </div>

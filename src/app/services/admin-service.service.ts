@@ -168,8 +168,13 @@ export class AdminServiceService {
 
 
   // HR APIS
+  // getCandidateListForShortlist(data) {
+  //   return this.http.post(`${this.BASE_URL}/profile/getprofileshortlist_quicker`, data,
+  //     { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  // }
+
   getCandidateListForShortlist(data) {
-    return this.http.post(`${this.BASE_URL}/profile/getprofileshortlist_quicker`, data,
+    return this.http.post(`${this.BASE_URL}/profile/first_level_shortlisting_candidates`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

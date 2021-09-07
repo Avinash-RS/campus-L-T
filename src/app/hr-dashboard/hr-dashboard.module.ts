@@ -45,17 +45,18 @@ import { SscUploadSectionComponent } from './pages/ssc-upload-section/ssc-upload
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 import { BulkUploadsComponent } from './hr-user-management/bulk-uploads/bulk-uploads.component';
+import { ClickableStatusBarComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/custom-get-selected-rows-count';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, EvaluationComponent, UserListComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, SecondLevelShortlistedCandidatesReportComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, NewInterviewpanelAssignmentScreenComponent, NewInterviewpanelAssignedDetailsComponent, NewInterviewpanelResultsUploadComponent, IcAddorListComponent, OfferedCandidatesListComponent, AddICComponent, ListofICComponent, UploadSelectedCandidatesComponent, ListofSelectedCandidatesComponent, UploadSelectedCandidatesErrorReportComponent, BusinesspanelRouteComponent, SscUploadSectionComponent, BulkUploadsComponent],
+  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, EvaluationComponent, UserListComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, SecondLevelShortlistedCandidatesReportComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, NewInterviewpanelAssignmentScreenComponent, NewInterviewpanelAssignedDetailsComponent, NewInterviewpanelResultsUploadComponent, IcAddorListComponent, OfferedCandidatesListComponent, AddICComponent, ListofICComponent, UploadSelectedCandidatesComponent, ListofSelectedCandidatesComponent, UploadSelectedCandidatesErrorReportComponent, BusinesspanelRouteComponent, SscUploadSectionComponent, BulkUploadsComponent, ClickableStatusBarComponent],
 
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
     HrDashboardRoutingModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([ClickableStatusBarComponent]),
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],

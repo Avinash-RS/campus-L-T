@@ -300,7 +300,7 @@ export class AppConfigService {
    agGridWithServerSideAllFunc(){
     return {
       flex: 1,
-      minWidth: 40,
+      minWidth: 100,
       resizable: true,
       floatingFilter: true,
       filter:true,
@@ -312,6 +312,27 @@ export class AppConfigService {
       },
       };
      }
+
+     agGridWithServerSideAllFuncWithRowGrouping(){
+      return {
+        enableRowGroup: true,
+        enablePivot: true,
+        enableValue: true,
+        sortable: true,
+        resizable: true,
+        filter: true,
+        columnGroupShow: 'closed',
+        flex: 1,
+        minWidth: 200,
+        floatingFilter: true,
+        suppressSizeToFit: true,
+        filterParams: {
+        suppressAndOrCondition: true,
+        debounceMs: 1200,
+        buttons: ['reset'],
+        },
+      };
+    }
 
    agGridwithoutfloatingFilter(){
     return {
