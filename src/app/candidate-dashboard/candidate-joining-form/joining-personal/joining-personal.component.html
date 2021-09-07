@@ -66,7 +66,7 @@
 <!-- sf -->
 <div class="row-wrapper">
     <div class="overall-input-wrapper" [ngClass]="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married') || (personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow') ? 'width-22' : 'width-45'">
-        <label>Marital Status<span>*</span></label>
+        <label>Marital Status<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
         <nz-select class="input select" (ngModelChange)="maritalStatusChange()" [formControlName]="form_marital_status" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">
             <nz-option *ngFor="let marital of marital_list" [nzLabel]="marital.name"
@@ -78,7 +78,7 @@
     </div>
 
     <div *ngIf="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married' || personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow')" class="overall-input-wrapper width-22">
-        <label>No. of Children<span>*</span></label>
+        <label>No. of Children<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
         <nz-select class="input select" [formControlName]="form_no_of_children" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">
             <nz-option *ngFor="let children of no_children_list" [nzLabel]="children"
@@ -88,9 +88,9 @@
             <div style="white-space: nowrap;" *ngIf="no_of_children?.errors?.required">No. of Children is Required</div>
         </div>
     </div>
-
+    <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
     <div class="overall-input-wrapper width-45">
-        <label>Domicile State<span>*</span></label>
+        <label>Domicile State<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
         <nz-select class="input select" [formControlName]="form_domicile_state" nzAllowClear nzShowSearch
             nzPlaceHolder="<--Select-->">
             <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name"
@@ -100,14 +100,15 @@
             <div *ngIf="domicile_state?.errors?.required">Domicile State is Required</div>
         </div>
     </div>
+  </ng-container>
 
 
 </div>
 
-<!-- sd -->
-            <div class="row-wrapper">
+<ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Place of Birth<span>*</span></label>
+                    <label>Place of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_place_of_birth">
                     <div class="form-error" *ngIf="place_of_birth?.invalid && place_of_birth?.touched">
@@ -117,7 +118,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>State of Birth<span>*</span></label>
+                    <label>State of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <nz-select class="input select" [formControlName]="form_state_of_birth" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name"
@@ -128,10 +129,11 @@
                     </div>
                 </div>
             </div>
+            </ng-container>
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Nationality<span>*</span></label>
+                    <label>Nationality<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_nationality">
                     <div class="form-error" *ngIf="nationality?.invalid && nationality?.touched">
@@ -140,8 +142,9 @@
                             allowed</div>
                     </div>
                 </div>
-                <div class="overall-input-wrapper width-45">
-                    <label>Mother Tongue<span>*</span></label>
+                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                  <div class="overall-input-wrapper width-45">
+                    <label>Mother Tongue<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_mother_tongue">
                     <div class="form-error" *ngIf="mother_tongue?.invalid && mother_tongue?.touched">
@@ -150,11 +153,13 @@
                             only allowed</div>
                     </div>
                 </div>
+                </ng-container>
             </div>
 
-            <div class="row-wrapper">
+            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Religion<span>*</span></label>
+                    <label>Religion<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_religion">
                     <div class="form-error" *ngIf="religion?.invalid && religion?.touched">
@@ -164,7 +169,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Blood Group<span>*</span></label>
+                    <label>Blood Group<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <nz-select class="input select" [formControlName]="form_blood_group" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let blood of bloodGroupDropdownList" [nzLabel]="blood.bloodgroup_name"
@@ -175,10 +180,10 @@
                     </div>
                 </div>
             </div>
-
+</ng-container>
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Caste Category<span>*</span></label>
+                    <label>Caste Category<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <nz-select class="input select" [formControlName]="form_category" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let category of category" [nzLabel]="category.name"
@@ -190,7 +195,8 @@
                             allowed</div>
                     </div>
                 </div>
-                <div class="overall-input-wrapper width-45">
+                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                  <div class="overall-input-wrapper width-45">
                     <label>Caste Name<span></span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_caste">
                     <div class="form-error" *ngIf="caste?.invalid && caste?.touched">
@@ -199,11 +205,13 @@
                             allowed</div>
                     </div>
                 </div>
+                </ng-container>
             </div>
 
-            <div class="row-wrapper">
+            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Father Name<span>*</span></label>
+                    <label>Father Name<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_father_name">
                     <div class="form-error" *ngIf="father_name?.invalid && father_name?.touched">
@@ -213,7 +221,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Emergency Contact No.<span>*</span></label>
+                    <label>Emergency Contact No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_emergency_contact">
                     <div class="form-error" *ngIf="emergency_contact?.invalid && emergency_contact?.touched">
@@ -226,7 +234,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Emergency Contact Person Name<span>*</span></label>
+                    <label>Emergency Contact Person Name<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_emergency_contact_name">
                     <div class="form-error" *ngIf="emergency_contact_name?.invalid && emergency_contact_name?.touched">
@@ -236,7 +244,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Relation with Emergency Contact<span>*</span></label>
+                    <label>Relation with Emergency Contact<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_emergency_contact_relation">
                     <div class="form-error" *ngIf="emergency_contact_relation?.invalid && emergency_contact_relation?.touched">
@@ -246,7 +254,7 @@
                     </div>
                 </div>
             </div>
-
+</ng-container>
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Mobile No.<span>*</span></label>
@@ -266,9 +274,10 @@
                 </div>
             </div>
 
-            <div class="row-wrapper">
+            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Aadhar No.<span>*</span></label>
+                    <label>Aadhar No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
                     <div class="form-error" *ngIf="aadhar?.invalid && aadhar?.touched">
                         <div *ngIf="aadhar?.errors?.required">Aadhaar No. is Required</div>
@@ -277,7 +286,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>PAN No.<span>*</span></label>
+                    <label>PAN No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
                     <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
                         <div *ngIf="pan?.errors?.required">PAN No. is Required</div>
@@ -289,7 +298,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Offer Reference<span>*</span></label>
+                    <label>Offer Reference<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_offer_reference">
                     <div class="form-error" *ngIf="offer_reference?.invalid && offer_reference?.touched">
@@ -298,7 +307,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Offer Date<span>*</span></label>
+                    <label>Offer Date<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <div class="date-relative">
                         <input matInput class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker_offer"
                             placeholder="DD-MM-YYYY" [formControlName]="form_offer_date">
@@ -317,10 +326,10 @@
                     </div>
                 </div>
             </div>
-
+</ng-container>
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Height (in Cms)<span>*</span></label>
+                    <label>Height (in Cms)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
                     <div class="form-error" *ngIf="height?.invalid && height?.touched">
                         <div *ngIf="height?.errors?.required">Height (in Cms) is Required</div>
@@ -329,7 +338,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Weight (in Kgs)<span>*</span></label>
+                    <label>Weight (in Kgs)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_weight">
                     <div class="form-error" *ngIf="weight?.invalid && weight?.touched">
                         <div *ngIf="weight?.errors?.required">Weight (in Kgs) is Required</div>
@@ -339,9 +348,10 @@
                 </div>
             </div>
 
-            <div class="row-wrapper">
+            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
-                    <label>Alternate Email ID<span>*</span></label>
+                    <label>Alternate Email ID<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
                     <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
                         <div *ngIf="personal_email?.errors?.required">Alternate Email ID is Required</div>
@@ -352,7 +362,7 @@
 
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-100">
-                    <label>Identification Mark<span>*</span></label>
+                    <label>Identification Mark<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <div class="d-flex align-content-start">
                         <span class="mr-1 mt-2">1.</span> <input matInput placeholder="Enter here" class="input"
                             type="text" [formControlName]="form_identification_mark1">
@@ -374,7 +384,7 @@
                     </div>
                 </div>
             </div>
-
+</ng-container>
             <div class="row-wrapper justify-content-between  align-items-center mt-4 mb-3 footer">
                 <div class="d-flex align-content-center align-items-center position-relative" style="visibility: hidden;">
                     <div class="left-arrow position-absolute"></div>

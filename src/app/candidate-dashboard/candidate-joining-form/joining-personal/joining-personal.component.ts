@@ -174,7 +174,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
@@ -469,10 +469,10 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       // [this.form_title]: [null, [Validators.required]],
       [this.form_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dob]: [null, [Validators.required]],
-      [this.form_gender]: [{value: null, disabled: true}, [Validators.required]],
+      [this.form_gender]: [{value: null, disabled: this.candidateService.checkKycOrJoiningForm()}, [Validators.required]],
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null, [Validators.required]],
-      [this.form_nationality]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_nationality]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
@@ -481,13 +481,13 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
       [this.form_mobile]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
-      [this.form_email]: [{value: null, disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
-      [this.form_aadhar]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
+      [this.form_email]: [{value: this.appConfig.getLocalData('userEmail'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+      [this.form_aadhar]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
       [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]],
       [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]],
       [this.form_offer_date]: [null, [Validators.required]],
-      [this.form_height]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
-      [this.form_weight]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
+      [this.form_height]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
+      [this.form_weight]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
       [this.form_identification_mark1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_identification_mark2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
@@ -497,6 +497,23 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_marital_status]: [null, [Validators.required]],
       [this.form_no_of_children]: [null],
     })
+    this.setJoiningAndKYCValidators(this.personalForm);
+  }
+
+  setJoiningAndKYCValidators(form: FormGroup) {
+    for (const key in form.controls) {
+      if (this.keyValue(key)) {
+          form.get(key).clearValidators();
+          form.get(key).updateValueAndValidity();
+      }
+  }
+  }
+  keyValue(key) {
+   return key != this.form_name
+    && key != this.form_email
+    && key != this.form_mobile
+    && key != this.form_gender
+    && key != this.form_dob ? true : false;
   }
 
   // Form getters

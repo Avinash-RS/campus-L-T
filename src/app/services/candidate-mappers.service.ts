@@ -264,6 +264,10 @@ export class CandidateMappersService {
       return this.http.get(`${this.BASE_URL}/profile/bg_list`, { headers: this.withoutTokens(), withCredentials: true });
     }
 
+    checkKycOrJoiningForm() {
+      return false;
+    }
+
     newGetProfileData(data) {
       return this.http.post(`${this.BASE_URL}/profile/get_candidate_form_details`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true});
