@@ -29,9 +29,47 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="overall-input-wrapper width-45">
+                  <label>Email ID<span>*</span></label>
+                  <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_email">
+                  <div class="form-error" *ngIf="email?.invalid && email?.touched">
+                      <div *ngIf="email?.errors?.required">Email ID is Required</div>
+                      <div *ngIf="email?.errors?.email">Not an Valid Email ID</div>
+                  </div>
+              </div>
+
+                <div class="overall-input-wrapper width-45">
+                  <label>Mobile No.<span>*</span></label>
+                  <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_mobile">
+                  <div class="form-error" *ngIf="mobile?.invalid && mobile?.touched">
+                      <div *ngIf="mobile?.errors?.required">Mobile No. is Required</div>
+                      <div *ngIf="mobile?.errors?.mobileRegex">Please enter a valid 10 digit mobile number</div>
+                  </div>
+              </div>
+
+              <div class="overall-input-wrapper width-45">
+                <label>Aadhar No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
+                <div class="form-error" *ngIf="aadhar?.invalid && aadhar?.touched">
+                    <div *ngIf="aadhar?.errors?.required">Aadhaar No. is Required</div>
+                    <div *ngIf="aadhar?.errors?.aadhaar">Aadhaar No. should be numberic only and should be exact 12
+                        digits</div>
+                </div>
             </div>
 
-            <div class="row-wrapper">
+            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+              <div class="overall-input-wrapper width-45">
+                <label>PAN No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
+                <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
+                    <div *ngIf="pan?.errors?.required">PAN No. is Required</div>
+                    <div *ngIf="pan?.errors?.panNo">PAN No. should be alpha numberic and should be 10
+                        characters</div>
+                </div>
+            </div>
+            </ng-container>
+
                 <div class="overall-input-wrapper width-45">
                     <label>Date of Birth (as per Std X certificate)<span>*</span></label>
                     <div class="date-relative">
@@ -62,9 +100,7 @@
                         <div *ngIf="gender?.errors?.required">Gender is Required</div>
                     </div>
                 </div>
-            </div>
-<!-- sf -->
-<div class="row-wrapper">
+
     <div class="overall-input-wrapper" [ngClass]="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married') || (personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow') ? 'width-22' : 'width-45'">
         <label>Marital Status<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
         <nz-select class="input select" (ngModelChange)="maritalStatusChange()" [formControlName]="form_marital_status" nzAllowClear nzShowSearch
@@ -100,14 +136,8 @@
             <div *ngIf="domicile_state?.errors?.required">Domicile State is Required</div>
         </div>
     </div>
-  </ng-container>
 
-
-</div>
-
-<ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
-              <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
+    <div class="overall-input-wrapper width-45">
                     <label>Place of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_place_of_birth">
@@ -128,11 +158,9 @@
                         <div *ngIf="state_of_birth?.errors?.required">State of Birth is Required</div>
                     </div>
                 </div>
-            </div>
             </ng-container>
 
-            <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
+            <div class="overall-input-wrapper width-45">
                     <label>Nationality<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_nationality">
@@ -153,11 +181,7 @@
                             only allowed</div>
                     </div>
                 </div>
-                </ng-container>
-            </div>
 
-            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
-              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Religion<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
@@ -179,10 +203,9 @@
                         <div *ngIf="blood_group?.errors?.required">Blood Group is Required</div>
                     </div>
                 </div>
-            </div>
-</ng-container>
-            <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
+              </ng-container>
+
+              <div class="overall-input-wrapper width-45">
                     <label>Caste Category<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <nz-select class="input select" [formControlName]="form_category" nzAllowClear nzShowSearch
                         nzPlaceHolder="<--Select-->">
@@ -205,11 +228,7 @@
                             allowed</div>
                     </div>
                 </div>
-                </ng-container>
-            </div>
 
-            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
-              <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Father Name<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
@@ -230,9 +249,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Emergency Contact Person Name<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
@@ -253,50 +270,7 @@
                             allowed</div>
                     </div>
                 </div>
-            </div>
-</ng-container>
-            <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
-                    <label>Mobile No.<span>*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_mobile">
-                    <div class="form-error" *ngIf="mobile?.invalid && mobile?.touched">
-                        <div *ngIf="mobile?.errors?.required">Mobile No. is Required</div>
-                        <div *ngIf="mobile?.errors?.mobileRegex">Please enter a valid 10 digit mobile number</div>
-                    </div>
-                </div>
-                <div class="overall-input-wrapper width-45">
-                    <label>Email ID<span>*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_email">
-                    <div class="form-error" *ngIf="email?.invalid && email?.touched">
-                        <div *ngIf="email?.errors?.required">Email ID is Required</div>
-                        <div *ngIf="email?.errors?.email">Not an Valid Email ID</div>
-                    </div>
-                </div>
-            </div>
 
-            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
-              <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
-                    <label>Aadhar No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
-                    <div class="form-error" *ngIf="aadhar?.invalid && aadhar?.touched">
-                        <div *ngIf="aadhar?.errors?.required">Aadhaar No. is Required</div>
-                        <div *ngIf="aadhar?.errors?.aadhaar">Aadhaar No. should be numberic only and should be exact 12
-                            digits</div>
-                    </div>
-                </div>
-                <div class="overall-input-wrapper width-45">
-                    <label>PAN No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
-                    <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
-                        <div *ngIf="pan?.errors?.required">PAN No. is Required</div>
-                        <div *ngIf="pan?.errors?.panNo">PAN No. should be alpha numberic and should be 10
-                            characters</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row-wrapper">
                 <div class="overall-input-wrapper width-45">
                     <label>Offer Reference<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
@@ -325,10 +299,9 @@
                         <div *ngIf="offer_date?.errors?.matDatepickerParse">Invalid Date Format</div>
                     </div>
                 </div>
-            </div>
-</ng-container>
-            <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
+              </ng-container>
+
+              <div class="overall-input-wrapper width-45">
                     <label>Height (in Cms)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
                     <div class="form-error" *ngIf="height?.invalid && height?.touched">
@@ -346,11 +319,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
-              <div class="row-wrapper">
-                <div class="overall-input-wrapper width-45">
+                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                  <div class="overall-input-wrapper width-45">
                     <label>Alternate Email ID<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
                     <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
@@ -358,9 +329,6 @@
                         <div *ngIf="personal_email?.errors?.email">Not an Valid Email ID</div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row-wrapper">
                 <div class="overall-input-wrapper width-100">
                     <label>Identification Mark<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <div class="d-flex align-content-start">
@@ -383,8 +351,8 @@
                             characters only allowed</div>
                     </div>
                 </div>
+              </ng-container>
             </div>
-</ng-container>
             <div class="row-wrapper justify-content-between  align-items-center mt-4 mb-3 footer">
                 <div class="d-flex align-content-center align-items-center position-relative" style="visibility: hidden;">
                     <div class="left-arrow position-absolute"></div>

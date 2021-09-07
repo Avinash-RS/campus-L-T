@@ -52,7 +52,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
@@ -277,7 +277,15 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_permanent_region]: [null, [Validators.required]],
       [this.form_permanent_zip_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.zipOnly()]]
     })
+    this.candidateService.checkKycOrJoiningForm() ? '' : this.setJoiningAndKYCValidators(this.contactForm);
   }
+
+  setJoiningAndKYCValidators(form: FormGroup) {
+    for (const key in form.controls) {
+          form.get(key).clearValidators();
+          form.get(key).updateValueAndValidity();
+  }
+}
 
   // Form getters
   get present_address_1() {

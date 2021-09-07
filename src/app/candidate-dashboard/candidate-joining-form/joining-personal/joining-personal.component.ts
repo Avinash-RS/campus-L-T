@@ -497,7 +497,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_marital_status]: [null, [Validators.required]],
       [this.form_no_of_children]: [null],
     })
-    this.setJoiningAndKYCValidators(this.personalForm);
+    this.candidateService.checkKycOrJoiningForm() ? '' : this.setJoiningAndKYCValidators(this.personalForm);
   }
 
   setJoiningAndKYCValidators(form: FormGroup) {
