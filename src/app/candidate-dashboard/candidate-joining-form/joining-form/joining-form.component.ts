@@ -135,14 +135,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   removeLocalStorage() {
     this.appConfig.clearLocalDataOne('kycForm');
-    // this.appConfig.clearLocalDataOne('educationalFormSubmitted');
-    // this.appConfig.clearLocalDataOne('personalFormSubmitted');
-    // this.appConfig.clearLocalDataOne('confirmClick');
-    // this.appConfig.clearLocalDataOne('field_isformsubmitted');
-    // this.appConfig.clearLocalDataOne('familyFormSubmitted');
-    // this.appConfig.clearLocalDataOne('confirmFormSubmitted');
     this.appConfig.clearLocalDataOne('KYCAPI');
-    // this.appConfig.clearLocalDataOne('generalFormSubmitted');
   }
   activeSelectorRxJs() {
     this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.pipe(delay(0)).subscribe((data: any)=> {
@@ -162,15 +155,8 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
 
   statusOfForms(param?: any) {
-    this.candidateService.FormStatus().subscribe((data: any)=> {
-      data?.personal_details == '1' ? this.appConfig.setLocalData('personal', '1') : this.appConfig.setLocalData('personal', '0');
-      data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
-      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
-      data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
-      data?.bgv_details == '1' ? this.appConfig.setLocalData('work', '1') : this.appConfig.setLocalData('work', '0');
-      data?.joining_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
-      data?.previewed == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
-      data?.submitted == '1' ? this.appConfig.setLocalData('submit', '1') : this.appConfig.setLocalData('submit', '0');
+    if (this.candidateService.getLocalProfileData()) {
+      let data = this.candidateService.getLocalsection_flags();
       this.hideStepper = data?.submitted == '1' ? true : false;
 
       if (data.submitted == '1') {
@@ -185,13 +171,13 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         return this.activeStep = 'submit';//, this.routingSelection = param ? param : 'dependent';
       }
 
-      if (data.joining_details == '1') {
+      if (data.document_details == '1') {
         this.valid.tillupload();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'dependent';
       }
 
-      if (data.bgv_details == '1') {
+      if (data.experience_details == '1') {
         this.valid.tillwork();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
         return this.activeStep = 'upload';//, this.routingSelection = param ? param : 'dependent';
@@ -222,7 +208,16 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
         return this.activeStep = 'personal';//, this.routingSelection = param ? param : 'personal';
       }
-    });
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.statusOfForms();
+      });
+    }
   }
 
   validCheck(clickedStep) {
@@ -283,18 +278,6 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
-
-    // array.forEach(element => {
-
-    // });
-    // for (let index = 0; index < array.length; index++) {
-    //   const element = array[index];
-
-    // }
-    for (const property in this.valid) {
-
-      // console.log(`${property}: ${this.valid[property]}`);
-    }
   }
 
   openMatDialog() {
@@ -306,8 +289,6 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       disableClose: false,
       panelClass: 'popupModalContainerForForms'
     });
-
-
   }
 
   closeDialog(e) {

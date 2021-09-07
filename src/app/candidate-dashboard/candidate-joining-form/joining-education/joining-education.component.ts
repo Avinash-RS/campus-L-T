@@ -166,7 +166,7 @@ maxDateStartField: any;
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('education');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -175,6 +175,9 @@ maxDateStartField: any;
     }
   }
 
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('education');
+  }
 
   chosenYearHandler(normalizedYear: Moment, i) {
     const ctrlValue = this.getEducationArr['value'][i][this.form_yearpassing];
@@ -206,18 +209,30 @@ maxDateStartField: any;
   }
 
   getEducationApiDetails() {
-    this.candidateService.joiningFormGetEducationDetails().subscribe((data: any)=> {
-
-      if (data && data.education &&  data.education.length > 0) {
-        this.educationDetails = data.education;
-        this.getEducationLength(data.education);
-        this.patchEducationForm();
-      } else {
-        this.educationLength = 1;
-        this.educationDetails = [];
-        this.initalPatchWithValidations();
+    if (this.candidateService.getLocalProfileData()) {
+      this.educationDetails = this.candidateService.getLocaleducation_details();
+      this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.educationDetails = this.candidateService.getLocaleducation_details();
+        this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
+      });
+    }
+  }
+
+  ifEducationDetails() {
+    this.getEducationLength(this.educationDetails);
+    this.patchEducationForm();
+  }
+  ifNotEducationDetails() {
+    this.educationLength = 1;
+    this.educationDetails = [];
+    this.initalPatchWithValidations();
   }
 
   getEducationLength(education) {
@@ -407,7 +422,7 @@ validSelectedPost() {
       if (route == 'dependent') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
       } else {
-        if (this.appConfig.getLocalData('education') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().education_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
         } else {
          if (this.educationForm.valid) {

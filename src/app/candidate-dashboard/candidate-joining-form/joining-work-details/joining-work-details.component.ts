@@ -143,7 +143,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('work');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -152,25 +152,41 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('work');
+  }
+
   getWorkApiDetails() {
-    this.candidateService.joiningFormGetWorkDetails().subscribe((data: any) => {
-
-      if (data) {
-        let work = {
-          workDetails: data && data.workDetails ? data.workDetails : null,
-          Employment: data && data.Employment ? data.Employment : [],
-          bgvDetails: data && data.bgvDetails ? data.bgvDetails : null,
-        }
-        this.showWorkExp = data && data['isworkexp'] =='1' ? '1' : '0';
-        this.isWorkExp.setValue(data && data['isworkexp'] && data['isworkexp'] == '1' ? true : false);
-        this.workDetails = work;
-        this.patchWorkForm();
-      } else {
-        this.workDetails = null;
-        this.getEmploymentArr.push(this.initEmploymentArray());
+    if (this.candidateService.getLocalProfileData()) {
+      this.workDetails = this.candidateService.getLocalexperience_details();
+      this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.workDetails = this.candidateService.getLocalexperience_details();
+        this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
+      });
+    }
+  }
 
+  ifworkDetails() {
+    let work = {
+      workDetails: this.workDetails && this.workDetails.workDetails ? this.workDetails.workDetails : null,
+      Employment: this.workDetails && this.workDetails.Employment ? this.workDetails.Employment : [],
+      bgvDetails: this.workDetails && this.workDetails.bgvDetails ? this.workDetails.bgvDetails : null,
+    }
+    this.showWorkExp = this.workDetails && this.workDetails['isworkexp'] =='1' ? '1' : '0';
+    this.isWorkExp.setValue(this.workDetails && this.workDetails['isworkexp'] && this.workDetails['isworkexp'] == '1' ? true : false);
+    this.workDetails = work;
+    this.patchWorkForm();
+  }
+  ifNotworkDetails() {
+    this.workDetails = null;
+    this.getEmploymentArr.push(this.initEmploymentArray());
   }
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -469,7 +485,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       if (route == 'education') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       } else {
-        if (this.appConfig.getLocalData('work') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().experience_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
         } else {
           if (this.workDetailsForm.valid) {

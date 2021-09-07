@@ -264,6 +264,66 @@ export class CandidateMappersService {
       return this.http.get(`${this.BASE_URL}/profile/bg_list`, { headers: this.withoutTokens(), withCredentials: true });
     }
 
+    newGetProfileData(data) {
+      return this.http.post(`${this.BASE_URL}/profile/get_candidate_form_details`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true});
+    }
+
+    saveAllProfileToLocal(profileData) {
+      let saveasJson = JSON.stringify(profileData);
+      this.appConfig.setLocalData('profileData', saveasJson);
+    }
+
+    getLocalProfileData() {
+      let profile = this.appConfig.getLocalData('profileData') ? this.appConfig.getLocalData('profileData') : null;
+      if (profile) {
+        return JSON.parse(profile);
+      }
+      return null;
+    }
+
+    saveFormtoLocalDetails(formName, data) {
+      let profile = this.getLocalProfileData();
+      profile[formName] = data;
+      let saveasJson = JSON.stringify(profile);
+      this.appConfig.setLocalData('profileData', saveasJson);
+    }
+
+    getLocalpersonal_details() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.personal_details : null;
+    }
+    getLocalcontact_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.contact_details : null;
+    }
+    getLocaldependent_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.dependent_details : null;
+    }
+    getLocaleducation_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.education_details : null;
+    }
+    getLocaldocument_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.document_details : null;
+    }
+    getLocalexperience_details() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.experience_details : null;
+    }
+    getLocalsection_flags() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.section_flags : null;
+    }
+    getLocalform_name() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.form_name : null;
+    }
+
+
+
     FormStatus() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
        return this.http.get(`${this.BASE_URL}/profile/saved_details?user_id=${userId}`,

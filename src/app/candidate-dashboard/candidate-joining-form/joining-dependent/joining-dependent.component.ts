@@ -102,7 +102,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('dependent');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -111,38 +111,49 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-  getDependentApiDetails() {
-    this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
-
-      if (data && data.dependents && data.dependents.length > 0) {
-        this.dependedentDetails = [];
-        data.dependents.forEach(element => {
-          if (element) {
-            this.dependedentDetails.push(element);
-          }
-        });
-        this.patchDependentForm();
-      } else {
-        this.dependedentDetails = [];
-        for (let index = 0; index < 2; index++) {
-          this.getDependentArr.push(this.initDependentArray());
-          if (index == 0) {
-            this.getDependentArr.at(0).patchValue({
-              [this.form_dependent_relationship]: 'Father',
-            });
-            this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-          }
-          if (index == 1) {
-            this.getDependentArr.at(1).patchValue({
-              [this.form_dependent_relationship]: 'Mother',
-            });
-            this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-          }
-        }
-      }
-    });
-
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('dependent');
   }
+
+  getDependentApiDetails() {
+    if (this.candidateService.getLocalProfileData()) {
+      this.dependedentDetails = this.candidateService.getLocaldependent_details();
+      this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.dependedentDetails = this.candidateService.getLocaldependent_details();
+        this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
+      });
+    }
+  }
+
+  ifDependentDetails() {
+    this.patchDependentForm();
+  }
+  ifNotDependentDetails() {
+    this.dependedentDetails = [];
+    for (let index = 0; index < 2; index++) {
+      this.getDependentArr.push(this.initDependentArray());
+      if (index == 0) {
+        this.getDependentArr.at(0).patchValue({
+          [this.form_dependent_relationship]: 'Father',
+        });
+        this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+      }
+      if (index == 1) {
+        this.getDependentArr.at(1).patchValue({
+          [this.form_dependent_relationship]: 'Mother',
+        });
+        this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+      }
+    }
+  }
+
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
@@ -216,7 +227,7 @@ dateConvertion(date) {
       if (route == 'contact') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
-        if (this.appConfig.getLocalData('dependent') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().dependent_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
         } else {
          if (this.dependentForm.valid) {

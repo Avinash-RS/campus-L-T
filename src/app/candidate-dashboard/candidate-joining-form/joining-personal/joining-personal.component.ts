@@ -191,7 +191,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('personal');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -200,15 +200,25 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('personal');
+  }
+
   getPersonalData() {
-
-    this.candidateService.joiningFormGetPersonalDetails().subscribe((data: any)=> {
-
-      this.personalDetails = data ? data : null;
-      if (this.personalDetails) {
-        this.patchPersonalForm();
+    if (this.candidateService.getLocalProfileData()) {
+      this.personalDetails = this.candidateService.getLocalpersonal_details();
+      this.personalDetails ? this.patchPersonalForm() : '';
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.personalDetails = this.candidateService.getLocalpersonal_details();
+        this.personalDetails ? this.patchPersonalForm() : '';
+      });
+    }
   }
 
   getStateAPI() {
@@ -334,7 +344,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
 
   routeNext() {
     if (!this.personalForm.dirty) {
-      if(this.appConfig.getLocalData('personal') == '1') {
+      if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().personal_details == '1') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
         if(this.personalForm.valid) {

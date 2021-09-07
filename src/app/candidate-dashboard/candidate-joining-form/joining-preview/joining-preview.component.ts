@@ -312,105 +312,136 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     this.checkFormValidRequestFromRxjs();
   }
 
+  ngAfterViewInit() {
+    this.showStepper();
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+  }
+
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('preview');
+  }
+
+  ifPreviewDetails(data) {
+    this.personalDetails = data && data.personal_details ? data.personal_details : null;
+    this.patchPersonalForm();
+    this.contactDetails = data && data.contact_details ? data.contact_details : null;
+    this.patchContactForm();
+    this.dependentDetails = data && data.dependent_details && data.dependent_details.length > 0 ? data.dependent_details : [];
+    if (this.dependentDetails.length > 0) {
+      this.patchDependent();
+    } else {
+      this.dependentDetailsMap = [];
+    }
+    this.educationDetails = data && data.education_details && data.education_details.length > 0 ? data.education_details : [];
+    if (this.educationDetails.length > 0) {
+      this.patchEducation();
+    } else {
+      this.educationDetailsMap = [];
+    }
+    // Documents mapping
+    this.documentDetails = data && data.document_details ? data.document_details : null;
+    if (this.documentDetails) {
+      let joinCheck = [];
+      let Banking_Details = [];
+      let Resume = [];
+      let Transfer_Certificate = [];
+      let Education_Documents = [];
+      if (this.documentDetails.joining_details) {
+        this.documentDetails.joining_details.forEach(element => {
+          if (element) {
+            joinCheck.push(element);
+          }
+        });
+      }
+      if (this.documentDetails.banking_details) {
+        this.documentDetails.banking_details.forEach(element => {
+          if (element) {
+            Banking_Details.push(element);
+          }
+        });
+      }
+      if (this.documentDetails.resume) {
+        this.documentDetails.resume.forEach(element => {
+          if (element) {
+            Resume.push(element);
+          }
+        });
+      }
+      if (this.documentDetails.transfer_certificate) {
+        this.documentDetails.transfer_certificate.forEach(element => {
+          if (element) {
+            Transfer_Certificate.push(element);
+          }
+        });
+      }
+      if (this.documentDetails.education_documents) {
+        this.documentDetails.education_documents.forEach(element => {
+          if (element && element.sub_documents) {
+            Education_Documents.push(element);
+          }
+        });
+      }
+      this.documentDetails.joining_details = joinCheck;
+      this.documentDetails.banking_details = Banking_Details;
+      this.documentDetails.resume = Resume;
+      this.documentDetails.transfer_certificate = Transfer_Certificate;
+      this.documentDetails.education_documents = Education_Documents;
+    }
+    // Work Experience
+    this.getWorkApiDetails(data);
+
+    // Acknowledgements section show, When form is not submitted
+    this.ifFormNotSubmitted(data);
+
+  }
+  ifFormNotSubmitted(data) {
+    if (data && data.acknowledgment) {
+      let ackData = data.acknowledgment;
+      let ack = {
+        [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? false : false,
+        [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? false : false,
+        [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? false : false,
+        [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? false : false,
+        [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? false : false,
+        [this.form_ack_place]: ackData.ack_place ? ackData.ack_place : null,
+        [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
+      }
+      this.actualDate = ackData.ack_date;
+      this.patchAcknowledgementForm(ack);
+    }
+    if (data && data.signature) {
+      let sign = data.signature;
+      this.signature = {
+        name: 'Signature',
+        label: 'Signature',
+        file_id: sign.file_id,
+        file_path: sign.file_path,
+        file_size: sign.file_size,
+        filename: sign.filename,
+        filetype: sign.filetype,
+      }
+    }
+  }
   getPreviewData() {
-    this.candidateService.joiningFormGetPreviewDetails().subscribe((data: any) => {
-
-      this.personalDetails = data && data.personal ? data.personal : null;
-      this.patchPersonalForm();
-      this.contactDetails = data && data.contact ? data.contact : null;
-      this.patchContactForm();
-      this.dependentDetails = data && data.dependent && data.dependent.length > 0 ? data.dependent : [];
-      if (this.dependentDetails.length > 0) {
-        this.patchDependent();
-      } else {
-        this.dependentDetailsMap = [];
+    if (this.candidateService.getLocalProfileData()) {
+      let apiPreviewDetails = this.candidateService.getLocalProfileData();
+      this.ifPreviewDetails(apiPreviewDetails);
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-      this.educationDetails = data && data.education && data.education.length > 0 ? data.education : [];
-      if (this.educationDetails.length > 0) {
-        this.patchEducation();
-      } else {
-        this.educationDetailsMap = [];
-      }
-      // Documents mapping
-      this.documentDetails = data && data.documents ? data.documents : null;
-      if (this.documentDetails) {
-        let joinCheck = [];
-        let Banking_Details = [];
-        let Resume = [];
-        let Transfer_Certificate = [];
-        let Education_Documents = [];
-        if (this.documentDetails.Joining_Details) {
-          this.documentDetails.Joining_Details.forEach(element => {
-            if (element) {
-              joinCheck.push(element);
-            }
-          });
-        }
-        if (this.documentDetails.Banking_Details) {
-          this.documentDetails.Banking_Details.forEach(element => {
-            if (element) {
-              Banking_Details.push(element);
-            }
-          });
-        }
-        if (this.documentDetails.Resume) {
-          this.documentDetails.Resume.forEach(element => {
-            if (element) {
-              Resume.push(element);
-            }
-          });
-        }
-        if (this.documentDetails.Transfer_Certificate) {
-          this.documentDetails.Transfer_Certificate.forEach(element => {
-            if (element) {
-              Transfer_Certificate.push(element);
-            }
-          });
-        }
-        if (this.documentDetails.Education_Documents) {
-          this.documentDetails.Education_Documents.forEach(element => {
-            if (element && element.sub_documents) {
-              Education_Documents.push(element);
-            }
-          });
-        }
-        this.documentDetails.Joining_Details = joinCheck;
-        this.documentDetails.Banking_Details = Banking_Details;
-        this.documentDetails.Resume = Resume;
-        this.documentDetails.Transfer_Certificate = Transfer_Certificate;
-        this.documentDetails.Education_Documents = Education_Documents;
-      }
-      // Work Experience
-      this.getWorkApiDetails(data);
-
-
-      if (data && data.acknowledgment) {
-        let ackData = data.acknowledgment;
-        let ack = {
-          [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? false : false,
-          [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? false : false,
-          [this.form_coc]: ackData.coc && (ackData.coc == '1' || ackData.coc == true) ? false : false,
-          [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? false : false,
-          [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? false : false,
-          [this.form_ack_place]: ackData.ack_place ? ackData.ack_place : null,
-          [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
-        }
-        this.actualDate = ackData.ack_date;
-        this.patchAcknowledgementForm(ack);
-      }
-      if (data && data.signature) {
-        let sign = data.signature;
-        this.signature = {
-          name: 'Signature',
-          label: 'Signature',
-          file_id: sign.file_id,
-          file_path: sign.file_path,
-          file_size: sign.file_size,
-          filename: sign.filename,
-          filetype: sign.filetype,
-        }
-      }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        let apiPreviewDetails = this.candidateService.getLocalProfileData();
+        this.ifPreviewDetails(apiPreviewDetails);
+      });
+    }
   }
 
   dateValidation() {
@@ -439,16 +470,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   checkFormSubmitted() {
-    this.formSubmitted = this.appConfig.getLocalData('submit') && this.appConfig.getLocalData('submit') == '1' ? true : false;
-  }
-  ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('preview');
-    // Hack: Scrolls to top of Page after page view initialized
-    let top = document.getElementById('top');
-    if (top !== null) {
-      top.scrollIntoView();
-      top = null;
-    }
+    this.formSubmitted = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
   }
 
   getStateAPI() {
@@ -589,8 +611,8 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getWorkApiDetails(datas) {
-    if (datas && datas['work_experience']) {
-      let data = datas['work_experience'];
+    if (datas && datas['experience_details']) {
+      let data = datas['experience_details'];
       let work = {
         workDetails: data && data.workDetails ? data.workDetails : null,
         Employment: data && data.Employment ? data.Employment : [],

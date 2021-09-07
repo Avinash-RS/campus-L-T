@@ -427,10 +427,10 @@
                         </span></div>
                 </div>
                 <ng-container *ngIf="documentDetails else noDocuments">
-                    <ng-container *ngIf="documentDetails.Joining_Details && documentDetails.Joining_Details.length > 0">
+                    <ng-container *ngIf="documentDetails.joining_details && documentDetails.joining_details.length > 0">
                         <div class="subDocumentTitle">Joining Details</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
-                            *ngFor="let document of documentDetails.Joining_Details; let i = index">
+                            *ngFor="let document of documentDetails.joining_details; let i = index">
                             <div class="row-wrapper mt-0" style="align-items: flex-end;">
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
@@ -461,10 +461,10 @@
                     </ng-container>
 
                     <!-- Banking -->
-                    <ng-container *ngIf="documentDetails.Banking_Details && documentDetails.Banking_Details.length > 0">
+                    <ng-container *ngIf="documentDetails.banking_details && documentDetails.banking_details.length > 0">
                         <div class="subDocumentTitle">Bank Details</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
-                            *ngFor="let document of documentDetails.Banking_Details; let i = index">
+                            *ngFor="let document of documentDetails.banking_details; let i = index">
                             <div class="row-wrapper mt-0" style="align-items: flex-end;">
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Bank Name</label>
@@ -516,10 +516,10 @@
                     </ng-container>
 
                     <!-- Resume -->
-                    <ng-container *ngIf="documentDetails.Resume && documentDetails.Resume.length > 0">
+                    <ng-container *ngIf="documentDetails.resume && documentDetails.resume.length > 0">
                         <div class="subDocumentTitle">Resume</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
-                            *ngFor="let document of documentDetails.Resume; let i = index">
+                            *ngFor="let document of documentDetails.resume; let i = index">
                             <div class="row-wrapper mt-0" style="align-items: flex-end;">
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
@@ -550,10 +550,10 @@
 
                     <!-- Transfer -->
                     <ng-container
-                        *ngIf="documentDetails.Transfer_Certificate && documentDetails.Transfer_Certificate.length > 0">
+                        *ngIf="documentDetails.transfer_certificate && documentDetails.transfer_certificate.length > 0">
                         <div class="subDocumentTitle">Transfer/Conduct Certificate</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
-                            *ngFor="let document of documentDetails.Transfer_Certificate; let i = index">
+                            *ngFor="let document of documentDetails.transfer_certificate; let i = index">
                             <div class="row-wrapper mt-0" style="align-items: flex-end;">
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>
@@ -585,9 +585,9 @@
 
                     <!-- Education -->
                     <ng-container
-                        *ngIf="documentDetails.Education_Documents && documentDetails.Education_Documents.length > 0">
+                        *ngIf="documentDetails.education_documents && documentDetails.education_documents.length > 0">
                         <div class="subDocumentTitle">Education Documents</div>
-                        <ng-container *ngFor="let doc of documentDetails.Education_Documents; let j = index">
+                        <ng-container *ngFor="let doc of documentDetails.education_documents; let j = index">
                             <div class="subDocumentTitle" style="font-size: 16px; padding-bottom: 0 !important;">
                                 {{doc[form_education_level] ? customEducationLabel(doc[form_education_level]) : '-'}}
                             </div>
@@ -628,10 +628,10 @@
 
                     <!-- Certifications -->
                     <ng-container
-                    *ngIf="documentDetails.Certifications && documentDetails.Certifications.length > 0">
+                    *ngIf="documentDetails.certifications && documentDetails.certifications.length > 0">
                     <div class="subDocumentTitle">Certifications</div>
                     <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
-                        *ngFor="let document of documentDetails.Certifications; let i = index">
+                        *ngFor="let document of documentDetails.certifications; let i = index">
                         <div class="row-wrapper mt-0" style="align-items: flex-end;">
                             <div class="overall-input-wrapper mt-0 width-32">
                                 <label>Document Name</label>
@@ -662,10 +662,10 @@
 
                     <!-- Other uploads -->
                     <ng-container
-                        *ngIf="documentDetails.Other_Certifications && documentDetails.Other_Certifications.length > 0">
+                        *ngIf="documentDetails.other_certifications && documentDetails.other_certifications.length > 0">
                         <div class="subDocumentTitle">Other Uploads</div>
                         <div class="row-wrapper mt-0" [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
-                            *ngFor="let document of documentDetails.Other_Certifications; let i = index">
+                            *ngFor="let document of documentDetails.other_certifications; let i = index">
                             <div class="row-wrapper mt-0" style="align-items: flex-end;">
                                 <div class="overall-input-wrapper mt-0 width-32">
                                     <label>Document Name</label>

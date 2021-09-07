@@ -160,13 +160,17 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('upload');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
       top.scrollIntoView();
       top = null;
     }
+  }
+
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('upload');
   }
 
   formInitialize() {
@@ -182,19 +186,35 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getDocuments() {
-    this.candidateService.joiningFormGetDocuments().subscribe((data: any)=> {
+    if (this.candidateService.getLocalProfileData()) {
+      let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+      this.ifDocumentDetails(apiDocumentDetails);
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+        this.ifDocumentDetails(apiDocumentDetails);
+      });
+    }
+  }
 
-      this.getJoiningDocuments = data && data['Joining_Details'] ? data['Joining_Details'] : [];
-      this.getEducationDocuments = data && data['Education_Documents'] ? data['Education_Documents'] : [];
-      this.getResumeDocuments = data && data['Resume'] ? data['Resume'] : [];
-      this.getTransferDocuments = data && data['Transfer_Certificate'] ? data['Transfer_Certificate'] : [];
-      this.getbankDocuments = data && data['Banking_Details'] ? data['Banking_Details'] : [];
-      this.getCertificationDocuments = data && data['Certifications'] ? data['Certifications'] : [];
-      this.getOtherCertificationDocuments = data && data['Other_Certifications'] ? data['Other_Certifications'] : [];
-      this.checkJoiningArrayinitalize();
-    }, (err)=> {
+  ifDocumentDetails(data) {
+    this.getJoiningDocuments = data && data['joining_details'] ? data['joining_details'] : [];
+    this.getEducationDocuments = data && data['education_documents'] ? data['education_documents'] : [];
+    this.getResumeDocuments = data && data['resume'] ? data['resume'] : [];
+    this.getTransferDocuments = data && data['transfer_certificate'] ? data['transfer_certificate'] : [];
+    this.getbankDocuments = data && data['banking_details'] ? data['banking_details'] : [];
+    this.getCertificationDocuments = data && data['certifications'] ? data['certifications'] : [];
+    this.getOtherCertificationDocuments = data && data['other_certifications'] ? data['other_certifications'] : [];
+    this.checkJoiningArrayinitalize();
+  }
 
-    });
+  ifNotDocumentDetails() {
+
   }
 
   checkNotSubmittedReasonAndDate(element) {
@@ -1257,7 +1277,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
       if (route == 'work') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
       } else {
-        if (this.appConfig.getLocalData('upload') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().document_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         } else {
          if (this.uploadForm.valid) {

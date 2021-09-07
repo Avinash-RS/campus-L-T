@@ -67,13 +67,17 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('contact');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
       top.scrollIntoView();
       top = null;
     }
+  }
+
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('contact');
   }
 
   getAllStates() {
@@ -130,14 +134,20 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getContactDetails() {
-
-    this.candidateService.joiningFormGetContactDetails().subscribe((data: any) => {
-
-      this.contactDetails = data ? data : null;
-      if (this.contactDetails) {
-        this.patchContactForm();
+    if (this.candidateService.getLocalProfileData()) {
+      this.contactDetails = this.candidateService.getLocalcontact_details();
+      this.contactDetails ? this.patchContactForm() : '';
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.contactDetails = this.candidateService.getLocalcontact_details();
+        this.contactDetails ? this.patchContactForm() : '';
+      });
+    }
   }
 
   formSubmit(routeValue?: any) {
@@ -203,7 +213,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       if (route == 'personal') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
       } else {
-        if (this.appConfig.getLocalData('contact') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().contact_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
         } else {
          if (this.contactForm.valid) {
