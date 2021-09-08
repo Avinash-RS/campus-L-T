@@ -109,11 +109,20 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   form_disciplinary_proceedings = "disciplinary_proceedings";
   form_full_particulars = "full_particulars"
 
-  form_Employment_Array = "Employment"
+  form_Employment_Array = "Employment";
+  form_Skills_Array = "Skills";
+  form_Skill = "skill";
+
+  form_Relatives_Array = "relatives";
+  form_relatives_name = "name";
+  form_relatives_position = "position";
+  form_relatives_relationship = "relationship";
+  form_relatives_company = "company";
 
   workDetails: any;
 
   isWorkExp = new FormControl(null);
+  isRelatives = new FormControl(null);
   showWorkExp: any = '0';
   constructor(
     private appConfig: AppConfigService,
@@ -311,6 +320,22 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     )
   }
 
+  initSkillsArray() {
+    return this.fb.group({
+      [this.form_Skill]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
+    })
+  }
+
+  initRelativesArray() {
+    return this.fb.group({
+      [this.form_relatives_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_relationship]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_position]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_company]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+    })
+  }
+
+
   formInitialize() {
     this.workDetailsForm = this.fb.group({
       [this.form_convicted_by_Court]: [null],
@@ -333,7 +358,9 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_interviewed_by_us]: ['0'],
       [this.form_post]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_when_interview]: [null],
-      [this.form_Employment_Array]: this.fb.array([])
+      [this.form_Employment_Array]: this.fb.array([]),
+      [this.form_Skills_Array]: this.fb.array([this.initSkillsArray()]),
+      [this.form_Relatives_Array]: this.fb.array([this.initRelativesArray()])
     })
   }
 
@@ -352,9 +379,42 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
 }
 
+  addSkills() {
+    let i = this.getSkillsArr['controls'].length - 1;
+    if (this.getSkillsArr.valid && this.getSkillsArr['controls'].length < 10) {
+      if (this.getSkillsArr && this.getSkillsArr['controls'] && this.getSkillsArr['controls'][i] && this.getSkillsArr['controls'][i]['value'] && this.getSkillsArr['controls'][i]['value'][this.form_Skill]) {
+        return this.getSkillsArr.push(this.initSkillsArray());
+      }
+    } else {
+      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+    }
+  }
+
   removeEmploymentArray(i) {
     this.getEmploymentArr.removeAt(i);
   }
+
+  removeSkillsArray(i) {
+    this.getSkillsArr.removeAt(i);
+  }
+
+  addRelatives() {
+    let i = this.getRelativesArr['controls'].length - 1;
+    if (this.getRelativesArr.valid && this.getRelativesArr['controls'].length < 3) {
+      if (this.getRelativesArr && this.getRelativesArr['controls'] && this.getRelativesArr['controls'][i] && this.getRelativesArr['controls'][i]['value'] && this.getRelativesArr['controls'][i]['value'][this.form_relatives_name]) {
+        return this.getRelativesArr.push(this.initRelativesArray());
+      }
+    } else {
+      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+    }
+  }
+
+  removeRelatives(i) {
+    this.getRelativesArr.removeAt(i);
+  }
+
 
   radioChange(e, form) {
     if (form == 1) {
@@ -454,6 +514,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.workDetailsForm);
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
     }
 
   }
@@ -568,6 +629,10 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   // Form getters
   // convenience getters for easy access to form fields
+  get getRelativesArr() { return this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray; }
+
+  get getSkillsArr() { return this.workDetailsForm.get([this.form_Skills_Array]) as FormArray; }
+
   get getEmploymentArr() { return this.workDetailsForm.get([this.form_Employment_Array]) as FormArray; }
 
   get convicted_by_Court() {
