@@ -120,7 +120,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
@@ -481,24 +481,46 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   routeNext(route) {
-    if (!this.workDetailsForm.dirty) {
-      if (route == 'education') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
-      } else {
-        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().experience_details == '1') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+    if (this.candidateService.checkKycOrJoiningForm()) {
+      if (!this.workDetailsForm.dirty) {
+        if (route == 'education') {
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
         } else {
-          if (this.workDetailsForm.valid) {
-            return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+          if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().experience_details == '1') {
+            return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+          } else {
+            if (this.workDetailsForm.valid) {
+              return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+            }
+            this.glovbal_validators.validateAllFields(this.workDetailsForm);
+            this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
+            this.ngAfterViewInit();
+            this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
           }
-          this.glovbal_validators.validateAllFields(this.workDetailsForm);
-          this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
-          this.ngAfterViewInit();
-          this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
         }
+      } else {
+        return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
       }
     } else {
-      return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+      if (!this.workDetailsForm.dirty) {
+        if (route == 'education') {
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+        } else {
+          if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().experience_details == '1') {
+            return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+          } else {
+            if (this.workDetailsForm.valid) {
+              return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+            }
+            this.glovbal_validators.validateAllFields(this.workDetailsForm);
+            this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
+            this.ngAfterViewInit();
+            this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+          }
+        }
+      } else {
+        return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+      }
     }
   }
 

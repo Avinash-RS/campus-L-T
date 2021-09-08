@@ -1149,7 +1149,7 @@
                     <div class="left-arrow position-absolute"></div>
                     <div class="sections left-space">
                         <div class="label">Previous Section</div>
-                        <div class="value">Upload Documents</div>
+                        <div class="value">{{candidateService.checkKycOrJoiningForm() ? 'Upload Documents' : 'Work Experience Details'}}</div>
                     </div>
                 </div>
                 <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button

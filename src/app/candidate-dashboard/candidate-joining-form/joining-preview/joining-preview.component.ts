@@ -297,7 +297,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     private apiService: ApiServiceService,
     private loadingService: LoaderService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private dialog: MatDialog,
     private glovbal_validators: GlobalValidatorService
@@ -994,23 +994,11 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   routeNext(route) {
-    // if (!this.personalForm.dirty) {
-    // if(this.appConfig.getLocalData('preview') == '1') {
-    return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
-    // }
-    // } else {
-    //   if(this.personalForm.valid) {
-    //     return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
-    //   }
-    //   this.glovbal_validators.validateAllFields(this.personalForm);
-    //   this.ngAfterViewInit();
-    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-    // }
-    // } else {
-    //   this.glovbal_validators.validateAllFields(this.personalForm);
-    //   this.ngAfterViewInit();
-    //   this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-    //   }
+    if (this.candidateService.checkKycOrJoiningForm()) {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+    } else {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
+    }
   }
 
   //Form Getter
