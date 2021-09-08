@@ -271,6 +271,17 @@
                     </div>
                 </div>
 
+                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                  <div class="overall-input-wrapper width-45">
+                    <label>Alternate Email ID<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
+                    <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
+                        <div *ngIf="personal_email?.errors?.required">Alternate Email ID is Required</div>
+                        <div *ngIf="personal_email?.errors?.email">Not an Valid Email ID</div>
+                    </div>
+                </div>
+                </ng-container>
+
                 <div class="overall-input-wrapper width-45">
                     <label>Offer Reference<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
@@ -301,34 +312,236 @@
                 </div>
               </ng-container>
 
-              <div class="overall-input-wrapper width-45">
-                    <label>Height (in Cms)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
-                    <div class="form-error" *ngIf="height?.invalid && height?.touched">
-                        <div *ngIf="height?.errors?.required">Height (in Cms) is Required</div>
-                        <div *ngIf="height?.errors?.numberDecimals">Numerics only allowed with 2 succeeding decimals
-                        </div>
-                    </div>
-                </div>
-                <div class="overall-input-wrapper width-45">
-                    <label>Weight (in Kgs)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_weight">
-                    <div class="form-error" *ngIf="weight?.invalid && weight?.touched">
-                        <div *ngIf="weight?.errors?.required">Weight (in Kgs) is Required</div>
-                        <div *ngIf="weight?.errors?.numberDecimals">Numerics only allowed with 2 succeeding decimals
-                        </div>
-                    </div>
+              <h6 class="sub-heading">Languages Known</h6>
+              <div class="overall-input-wrapper width-100">
+                <ng-container *ngIf="getLanguageArr && getLanguageArr.controls" [formArrayName]="form_language_array">
+                  <label>Language Name<span></span></label>
+                  <ng-container *ngFor="let item of getLanguageArr.controls; let i = index;" [formGroupName]="i">
+                <div class="language-wrapper" [ngClass]="i != 0 ? 'mt-2' : ''">
+                  <div class="language-name-wrapper">
+                  <input matInput placeholder="Enter Language name" class="input" type="text" [ngClass]="getLanguageArr.controls[i].get(form_language_is_read).errors?.notSelected ? 'custom-border' : ''" [formControlName]="form_language_name">
+                  <div class="form-error" *ngIf="getLanguageArr.controls[i].invalid">
+                    <div *ngIf="getLanguageArr.controls[i].get(form_language_is_read).errors?.notSelected">Make sure, you have entered Language name and selected any one of the language proficiency</div>
+                    <div *ngIf="getLanguageArr.controls[i].get(form_language_name).touched && getLanguageArr.controls[i].get(form_language_name).errors?.address255">Alpha numeric with maximum of 255
+                        characters only allowed</div>
                 </div>
 
-                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
-                  <div class="overall-input-wrapper width-45">
-                    <label>Alternate Email ID<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
-                    <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
-                        <div *ngIf="personal_email?.errors?.required">Alternate Email ID is Required</div>
-                        <div *ngIf="personal_email?.errors?.email">Not an Valid Email ID</div>
-                    </div>
                 </div>
+                  <div class="flex-box language-knowns">
+                    <div>
+                      <label class="language-label mr-1">Read</label>
+                      <mat-checkbox [formControlName]="form_language_is_read" class="mr-2"></mat-checkbox>
+                    </div>
+                    <div>
+                      <label class="language-label mr-1">Write</label>
+                      <mat-checkbox [formControlName]="form_language_is_write" class="mr-2"></mat-checkbox>
+                    </div>
+                    <div>
+                      <label class="language-label mr-1">Speak</label>
+                      <mat-checkbox [formControlName]="form_language_is_speak" class="mr-2"></mat-checkbox>
+                    </div>
+
+                    <div [ngClass]="i == 0 ? 'hideClose' : ''" matTooltip="Remove" class="close-icon">
+                      <i (click)="i == 0 ? '' : removeLanguage(i)" class="material-icons material-icons-outlined">
+                          remove_circle_outline
+                      </i>
+                  </div>
+
+                    </div>
+
+                </div>
+                </ng-container>
+                <div *ngIf="getLanguageArr && getLanguageArr.controls && getLanguageArr.controls.length < 6" class="add">
+                  <button class="add-button" mat-raised-button type="button" (click)="addlanguage()">+
+                    Add</button>
+                </div>
+                </ng-container>
+            </div>
+
+              <h6 class="sub-heading">Passport Details</h6>
+                <div class="overall-input-wrapper width-45">
+                  <label>Passport Number<span></span></label>
+                  <input matInput placeholder="Enter here" class="input" type="text"
+                      [formControlName]="form_passport_number">
+                  <div class="form-error" *ngIf="passport_number?.invalid && passport_number?.touched">
+                      <div *ngIf="passport_number?.errors?.required">Passport Number is Required</div>
+                      <div *ngIf="passport_number?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                          allowed</div>
+                  </div>
+              </div>
+
+              <div class="overall-input-wrapper width-45">
+                <label>Name as in Passport<span></span></label>
+                <input matInput placeholder="Enter here" class="input" type="text"
+                    [formControlName]="form_name_as_in_passport">
+                <div class="form-error" *ngIf="name_as_in_passport?.invalid && name_as_in_passport?.touched">
+                    <div *ngIf="name_as_in_passport?.errors?.required">Name is Required</div>
+                    <div *ngIf="name_as_in_passport?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                </div>
+            </div>
+
+            <div class="overall-input-wrapper width-45">
+              <label>Profession as in Passport<span></span></label>
+              <input matInput placeholder="Enter here" class="input" type="text"
+                  [formControlName]="form_profession_as_in_passport">
+              <div class="form-error" *ngIf="profession_as_in_passport?.invalid && profession_as_in_passport?.touched">
+                  <div *ngIf="profession_as_in_passport?.errors?.required">Profession as in Passport is Required</div>
+                  <div *ngIf="profession_as_in_passport?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                      allowed</div>
+              </div>
+          </div>
+
+          <div class="overall-input-wrapper width-45">
+            <label>Issued Date<span></span></label>
+            <div class="date-relative">
+                <input matInput class="input" [min]="minDate" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker_dateofIssue"
+                    placeholder="DD-MM-YYYY" [formControlName]="form_date_of_issue">
+                <mat-datepicker-toggle matSuffix [for]="picker_dateofIssue"></mat-datepicker-toggle>
+                <mat-datepicker #picker_dateofIssue></mat-datepicker>
+            </div>
+            <div class="form-error" *ngIf="date_of_issue?.invalid && date_of_issue?.touched">
+                <div *ngIf="date_of_issue?.errors?.required">Issued Date is Required</div>
+                <div *ngIf="date_of_issue?.errors?.matDatepickerMax">
+                    {{date_of_issue?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(date_of_issue?.errors?.matDatepickerMax.max) : ''}}
+                </div>
+                <div *ngIf="date_of_issue?.errors?.matDatepickerMin">
+                    {{date_of_issue?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(date_of_issue?.errors?.matDatepickerMin.min) : ''}}
+                </div>
+                <div *ngIf="date_of_issue?.errors?.matDatepickerParse">Invalid Date Format</div>
+            </div>
+        </div>
+
+        <div class="overall-input-wrapper width-45">
+          <label>Valid Upto<span></span></label>
+          <div class="date-relative">
+              <input matInput class="input" [min]="passportValidminDate" [max]="passportValidmaxDate" [matDatepicker]="picker_dateValidUpto"
+                  placeholder="DD-MM-YYYY" [formControlName]="form_valid_upto">
+              <mat-datepicker-toggle matSuffix [for]="picker_dateValidUpto"></mat-datepicker-toggle>
+              <mat-datepicker #picker_dateValidUpto></mat-datepicker>
+          </div>
+          <div class="form-error" *ngIf="valid_upto?.invalid && valid_upto?.touched">
+              <div *ngIf="valid_upto?.errors?.required">Valid Upto is Required</div>
+              <div *ngIf="valid_upto?.errors?.matDatepickerMax">
+                  {{valid_upto?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(valid_upto?.errors?.matDatepickerMax.max) : ''}}
+              </div>
+              <div *ngIf="valid_upto?.errors?.matDatepickerMin">
+                  {{valid_upto?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(valid_upto?.errors?.matDatepickerMin.min) : ''}}
+              </div>
+              <div *ngIf="valid_upto?.errors?.matDatepickerParse">Invalid Date Format</div>
+          </div>
+      </div>
+
+      <div class="overall-input-wrapper width-45">
+        <label>Place of Issue<span></span></label>
+        <input matInput placeholder="Enter here" class="input" type="text"
+            [formControlName]="form_place_of_issue">
+        <div class="form-error" *ngIf="place_of_issue?.invalid && place_of_issue?.touched">
+            <div *ngIf="place_of_issue?.errors?.required">Place of Issue is Required</div>
+            <div *ngIf="place_of_issue?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                allowed</div>
+        </div>
+    </div>
+
+    <div class="overall-input-wrapper width-45">
+      <label>Countries Valid for<span></span></label>
+      <input matInput placeholder="Enter here" class="input" type="text"
+          [formControlName]="form_country_valid_for">
+      <div class="form-error" *ngIf="country_valid_for?.invalid && country_valid_for?.touched">
+          <div *ngIf="country_valid_for?.errors?.required">Countries Valid for is Required</div>
+          <div *ngIf="country_valid_for?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+              allowed</div>
+      </div>
+  </div>
+
+  <h6 class="sub-heading">Health Related Details</h6>
+
+  <div class="overall-input-wrapper width-45">
+    <label>Most Serious Recent Illness<span></span></label>
+    <input matInput placeholder="Enter here" class="input" type="text"
+        [formControlName]="form_serious_illness">
+    <div class="form-error" *ngIf="serious_illness?.invalid && serious_illness?.touched">
+        <div *ngIf="serious_illness?.errors?.required">Illness is Required</div>
+        <div *ngIf="serious_illness?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+            allowed</div>
+    </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+    <label>No. of Days Ill<span></span></label>
+    <input matInput placeholder="Enter here" class="input" type="text"
+        [formControlName]="form_no_of_days">
+    <div class="form-error" *ngIf="no_of_days?.invalid && no_of_days?.touched">
+        <div *ngIf="no_of_days?.errors?.required">No. of Days is Required</div>
+        <div *ngIf="no_of_days?.errors?.maxlength">Maximum of 5 characters only allowed</div>
+        <div *ngIf="no_of_days?.errors?.numberOnly">Numerics only Allowed</div>
+    </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+    <label>Nature of Illness<span></span></label>
+    <input matInput placeholder="Enter here" class="input" type="text"
+        [formControlName]="form_nature_of_illness">
+    <div class="form-error" *ngIf="nature_of_illness?.invalid && nature_of_illness?.touched">
+        <div *ngIf="nature_of_illness?.errors?.required">Nature of Illness is Required</div>
+        <div *ngIf="nature_of_illness?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+            allowed</div>
+    </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+    <label>Physical Disability (if any)<span></span></label>
+    <input matInput placeholder="Enter here" class="input" type="text"
+        [formControlName]="form_physical_disability">
+    <div class="form-error" *ngIf="physical_disability?.invalid && physical_disability?.touched">
+        <div *ngIf="physical_disability?.errors?.required">Physical Disability is Required</div>
+        <div *ngIf="physical_disability?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+            allowed</div>
+    </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+    <label>Height (in Cms)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
+    <div class="form-error" *ngIf="height?.invalid && height?.touched">
+        <div *ngIf="height?.errors?.required">Height (in Cms) is Required</div>
+        <div *ngIf="height?.errors?.numberDecimals">Numerics only allowed with 2 succeeding decimals
+        </div>
+    </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+      <label>Weight (in Kgs)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+      <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_weight">
+      <div class="form-error" *ngIf="weight?.invalid && weight?.touched">
+          <div *ngIf="weight?.errors?.required">Weight (in Kgs) is Required</div>
+          <div *ngIf="weight?.errors?.numberDecimals">Numerics only allowed with 2 succeeding decimals
+          </div>
+      </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+    <label>Power of Eye glass (Left Eye)<span></span></label>
+    <input matInput placeholder="Left Eye Power" class="input" type="text"
+        [formControlName]="form_left_eyepower_glass">
+    <div class="form-error" *ngIf="left_eyepower_glass?.invalid && left_eyepower_glass?.touched">
+        <div *ngIf="left_eyepower_glass?.errors?.required">Left Eye Power is Required</div>
+        <div *ngIf="left_eyepower_glass?.errors?.eyenumberDecimals">Should allow only Numeric Decimals and ('+' or '-') signs</div>
+    </div>
+  </div>
+
+  <div class="overall-input-wrapper width-45">
+    <label>Power of Eye glass (Right Eye)<span></span></label>
+    <input matInput placeholder="Left Eye Power" class="input" type="text"
+        [formControlName]="form_right_eye_power_glass">
+    <div class="form-error" *ngIf="right_eye_power_glass?.invalid && right_eye_power_glass?.touched">
+        <div *ngIf="right_eye_power_glass?.errors?.required">Right Eye Power is Required</div>
+        <div *ngIf="right_eye_power_glass?.errors?.eyenumberDecimals">Should allow only Numeric Decimals and ('+' or '-') signs</div>
+    </div>
+  </div>
+
+
+                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                 <div class="overall-input-wrapper width-100">
                     <label>Identification Mark<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <div class="d-flex align-content-start">
@@ -352,6 +565,7 @@
                     </div>
                 </div>
               </ng-container>
+
             </div>
             <div class="row-wrapper justify-content-between  align-items-center mt-4 mb-3 footer">
                 <div class="d-flex align-content-center align-items-center position-relative" style="visibility: hidden;">

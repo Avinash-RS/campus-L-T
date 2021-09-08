@@ -265,7 +265,7 @@ export class CandidateMappersService {
     }
 
     checkKycOrJoiningForm() {
-      return false;
+      return true;
     }
 
     newGetProfileData(data) {
