@@ -9,7 +9,7 @@
     <div class="overall-input-wrapper w-75 d-flex align-items-center f_size_14 mt-2 mb-2" style="color: #565656;">
         <div style="width: 170px;">Profile Applied For: </div>
         <nz-select class="input select selectedPost" [(ngModel)]="selectedPost"
-        nzAllowClear nzShowSearch nzPlaceHolder="Select">
+        nzAllowClear [nzDisabled]="candidateService.checkKycOrJoiningForm() ? true : false" nzShowSearch nzPlaceHolder="Select">
         <nz-option *ngFor="let level of mastersList?.education_master" [nzLabel]="level.label"
             [nzValue]="level.value"></nz-option>
     </nz-select>

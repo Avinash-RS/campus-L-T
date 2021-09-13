@@ -121,7 +121,6 @@ export class LoginpageComponent implements OnInit {
     // Login API
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
-        // this.candidateService.getEducationList().subscribe((datas: any) => {
           this.apiService.login(apiData).subscribe((data: any) => {
 
             this.appConfig.setLocalData('BIS', 'false');
@@ -162,6 +161,7 @@ export class LoginpageComponent implements OnInit {
               if (new Date(date) <= new Date(DropdownListForKYC['kycDate'])) {
                 localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
                 this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
+                this.appConfig.setLocalData('firstShortlist', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
                 this.appConfig.setLocalData('field_isformsubmitted', 'true');
                 this.appConfig.setLocalData('personalFormSubmitted', 'true');
                 this.appConfig.setLocalData('educationalFormSubmitted', 'true');
@@ -188,12 +188,6 @@ export class LoginpageComponent implements OnInit {
           }, (error) => {
             this.disableLogin = false;
           });
-        // }, (err) => {
-        //   this.disableLogin = false;
-        //   // if (err.status === 200) {
-        //   //   this.appConfig.setSessionData('csrf', err.error.text);
-        //   // }
-        // });
       }
     } else {
       this.disableLogin = false;

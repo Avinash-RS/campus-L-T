@@ -531,6 +531,38 @@
                       </div>
                   </div>
                 </ng-container>
+
+                <h5 class="mt-3">Faculty References</h5>
+                <div class="d-flex faculty-wrapper row-wrapper">
+                  <div class="overall-input-wrapper">
+                    <textarea [formControlName]="form_faculty_reference" name="" id="" placeholder="Enter Faculty Reference 1"></textarea>
+                    <div class="form-error"
+                    *ngIf="faculty_reference.invalid && faculty_reference.touched">
+                    <div
+                        *ngIf="faculty_reference.errors?.required">
+                        Faculty Reference is Required</div>
+                    <div
+                        *ngIf="faculty_reference.errors?.address255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                    </div>
+                  </div>
+                  <div class="overall-input-wrapper">
+                    <textarea [formControlName]="form_faculty_reference_1" name="" id="" placeholder="Enter Faculty Reference 2"></textarea>
+                    <div class="form-error"
+                    *ngIf="faculty_reference_1.invalid && faculty_reference_1.touched">
+                    <div
+                        *ngIf="faculty_reference_1.errors?.required">
+                        Faculty Reference is Required</div>
+                    <div
+                        *ngIf="faculty_reference_1.errors?.address255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                    </div>
+                  </div>
+
+                </div>
+
             <h5 class="mt-3">Disciplinary Details</h5>
             <div class="row-wrappper mt-2 hanging">
                 <mat-checkbox class="mr-2" (change)="requiredDesc()" [formControlName]="form_convicted_by_Court"></mat-checkbox> Have you ever
@@ -615,13 +647,13 @@
                 <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button
                     type="submit">Save &
                     Continue</button>
-                <div (click)="routeNext(candidateService.checkKycOrJoiningForm() ? 'upload' : 'preview')"
+                <div (click)="routeNext('upload')"
                     class="d-flex align-content-center align-items-center text-right position-relative pointer"
                     style="cursor: pointer;">
                     <div class="right-arrow position-absolute"></div>
                     <div class="sections right-space">
                         <div class="label">Next Section</div>
-                        <div class="value">{{candidateService.checkKycOrJoiningForm() ? 'Upload Documents' : 'Preview Details'}}</div>
+                        <div class="value">Upload Documents</div>
                     </div>
                 </div>
             </div>

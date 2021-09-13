@@ -178,15 +178,9 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
 
       if (data.experience_details == '1') {
-        if (this.candidateService.checkKycOrJoiningForm()) {
           this.valid.tillwork();
           param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
           return this.activeStep = 'upload';
-        } else {
-          this.valid.tillupload();
-          param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-          return this.activeStep = 'preview';
-        }
       }
 
       if (data.education_details == '1') {

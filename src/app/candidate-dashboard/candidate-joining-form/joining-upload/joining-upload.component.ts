@@ -143,7 +143,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     private apiService: ApiServiceService,
     private loadingService: LoaderService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService,
     private dialog: MatDialog,
@@ -224,6 +224,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
   checkJoiningArrayinitalize() {
+    if (this.candidateService.checkKycOrJoiningForm()) {
     // Joining
     let arr = [];
     this.getJoiningDocuments.forEach(element => {
@@ -263,16 +264,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         this.getTransferArr.push(this.initJoiningArray());
       }
 
-    // Resume
-      if (this.getResumeDocuments && this.getResumeDocuments.length > 0 && this.getResumeDocuments[0] && this.getResumeDocuments[0][this.form_name]) {
-        this.getResumeDocuments.forEach(element => {
-          this.checkNotSubmittedReasonAndDate(element);
-          this.getResumeArr.push(this.patchJoiningArray(element));
-        });
-      } else {
-        this.getResumeArr.push(this.initJoiningArray());
-      }
-
       // Banking Details
       if (this.getbankDocuments && this.getbankDocuments.length > 0) {
         this.getbankDocuments.forEach(element => {
@@ -302,6 +293,18 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       }
 
       this.patchNotSubmittedReason();
+
+    }
+    // Resume
+    if (this.getResumeDocuments && this.getResumeDocuments.length > 0 && this.getResumeDocuments[0] && this.getResumeDocuments[0][this.form_name]) {
+      this.getResumeDocuments.forEach(element => {
+        this.checkNotSubmittedReasonAndDate(element);
+        this.getResumeArr.push(this.patchResumeArray(element));
+      });
+    } else {
+      this.getResumeArr.push(this.initResumeArray());
+    }
+
   }
 
   patchNotSubmittedReason() {
@@ -318,6 +321,22 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       // [this.form_id]: [data[this.form_id]],
       [this.form_file_size]: [data[this.form_file_size]],
       [this.form_file_path]: [data[this.form_file_path]],
+      [this.form_file_name]: [data[this.form_file_name]],
+      [this.form_file_type]: [data[this.form_file_type]],
+      [this.form_file_id]: [data[this.form_file_id]],
+      [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [data[this.form_expectedDate]],
+    })
+  }
+
+  patchResumeArray(data, otherCert?) {
+    return this.fb.group({
+      [this.form_name]: [data[this.form_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [data[this.form_label], (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
+      // [this.form_id]: [data[this.form_id]],
+      [this.form_file_size]: [data[this.form_file_size]],
+      [this.form_file_path]: [data[this.form_file_path], [Validators.required]],
       [this.form_file_name]: [data[this.form_file_name]],
       [this.form_file_type]: [data[this.form_file_type]],
       [this.form_file_id]: [data[this.form_file_id]],
@@ -379,6 +398,22 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       // [this.form_id]: [null],
       [this.form_file_size]: [null],
       [this.form_file_path]: [null],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [null]
+    })
+  }
+
+  initResumeArray(otherCert?) {
+    return this.fb.group({
+      [this.form_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [null, (otherCert == 'otherCert' ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
+      // [this.form_id]: [null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null, [Validators.required]],
       [this.form_file_name]: [null],
       [this.form_file_type]: [null],
       [this.form_file_id]: [null],
@@ -683,14 +718,15 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   formSubmit(routeValue?: any) {
     if (this.uploadForm.valid) {
-    if (this.checkJoiningNotUploaded()) {
+    if (this.checkJoiningNotUploaded() && this.candidateService.checkKycOrJoiningForm()) {
       this.openNodocs(routeValue ? routeValue : '');
     } else {
       this.beforeSubmit(routeValue ? routeValue : '');
     }
     } else {
       this.ngAfterViewInit();
-      this.accordion.openAll()
+      this.accordion.openAll();
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_resumeArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
@@ -906,20 +942,26 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     let certArray = this.getCertificationsArr.getRawValue();
     let otherArray = this.getOtherCertArr.getRawValue();
     const apiData = {
-      Joining_Details: joiningArray,
-      Education_Documents: educationArray,
-      Resume: resumeArray,
-      Certifications: certArray,
-      Other_Certifications: otherArray,
-      Transfer_Certificate: transferArray,
-      Banking_Details: bankArray
+      joining_details: joiningArray,
+      education_documents: educationArray,
+      resume: resumeArray,
+      certifications: certArray,
+      other_certifications: otherArray,
+      transfer_certificate: transferArray,
+      banking_details: bankArray
     }
-
+    const UploadApiRequestDetails = {
+      form_name: "joining",
+      section_name: "document_details",
+      saving_data: apiData
+    }
+    console.log('apidata', UploadApiRequestDetails);
 
     // if(this.dependentForm.valid) {
-      this.candidateService.joiningFormUpload(apiData).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Upload details has been updated');
+      this.candidateService.newSaveProfileData(UploadApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Upload details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
       });
@@ -929,6 +971,10 @@ async uploadImage(file, i, form) {
   try {
     this.loadingService.setLoading(true);
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    if (data && data.error_code) {
+      this.loadingService.setLoading(false);
+     return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+    }
     this.loadingService.setLoading(false);
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
@@ -1185,6 +1231,10 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
   try {
     this.loadingService.setLoading(true);
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    if (data && data.error_code) {
+      this.loadingService.setLoading(false);
+     return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+    }
     this.loadingService.setLoading(false);
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {

@@ -199,6 +199,7 @@ export class CandidateMappersService {
     return fetch(`${this.BASE_URL}/profile/upload_certificate_new`, {
       method: 'POST',
       body: documentData,
+      headers: new Headers({'userId': this.getUserId()})
       // headers: this.getAfterCustomHeaders(), withCredentials: true
     });
 
@@ -265,13 +266,22 @@ export class CandidateMappersService {
     }
 
     checkKycOrJoiningForm() {
-      return true;
+      let isJoining = this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') == 'true' ? true : false;
+      return false;
     }
 
     newGetProfileData(data) {
+      data.form_name = this.checkKycOrJoiningForm ? 'joining' : 'kyc';
       return this.http.post(`${this.BASE_URL}/profile/get_candidate_form_details`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true});
     }
+
+    newSaveProfileData(data) {
+      data.form_name = this.checkKycOrJoiningForm ? 'joining' : 'kyc';
+      return this.http.post(`${this.BASE_URL}/profile/save_candidate_form_details`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true});
+    }
+
 
     saveAllProfileToLocal(profileData) {
       let saveasJson = JSON.stringify(profileData);
@@ -423,6 +433,7 @@ export class CandidateMappersService {
       return fetch(`${this.BASE_URL}/profile/upload_joining_docs`, {
         method: 'POST',
         body: documentData,
+        headers: new Headers({'userId': this.getUserId()})
         // headers: this.getAfterCustomHeaders(), withCredentials: true
       });
 

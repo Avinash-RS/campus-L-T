@@ -14,13 +14,13 @@ export class GlobalValidatorService {
       if (!control.value) {
         return null;
       }
-      const isWhitespace = (control.value || '').trim().length === 0;
+      const isWhitespace = (control.value.toString() || '').trim().length === 0;
       // Whitespace detect
       if(isWhitespace) {
         control.setValue(null);
         return error;
       } else {
-        const valid = regex.test(control.value.trim());
+        const valid = regex.test(control.value.toString().trim());
         return valid ? null : error;
       }
     };

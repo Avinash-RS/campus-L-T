@@ -590,11 +590,11 @@
         <div class="photo-wrapper">
             <div class="avatar">
                 <div class="photo">
-                    <!-- <div *ngIf="url" matTooltip="Remove Photo" matTooltipPostion="after" (click)="delete()" class="remove">
+                    <div *ngIf="profilePicture && profilePicture.file_path" matTooltip="Remove Photo" matTooltipPostion="after" (click)="delete()" class="remove">
                           <img src="assets/images/cancel-black-36dp.svg" alt="" srcset="">
-                      </div> -->
-                                  <label [ngClass]="url ? 'hoverable' : 'hoverable1'" for="fileInput">
-                        <ng-container *ngIf="!url">
+                      </div>
+                                  <label [ngClass]="profilePicture && profilePicture.file_path ? 'hoverable' : 'hoverable1'" for="fileInput">
+                        <ng-container *ngIf="!profilePicture.file_path">
                             <div class="icon">
                                 <img [src]="'assets/images/camera.svg'" alt="">
                             </div>
@@ -604,27 +604,26 @@
                                 <span>Click and upload your photo here</span>
                             </div>
                         </ng-container>
-                        <ng-container *ngIf="url">
+                        <ng-container *ngIf="profilePicture && profilePicture.file_path">
                             <div class="urlExist">
-                                <img [src]="url" alt="">
+                                <img [src]="profilePicture.file_path" alt="">
                             </div>
                         </ng-container>
 
                     </label>
-                    <!-- [matTooltip]="url ? 'Click to Change Photo' : 'No File Chosen'" -->
-                    <input style="cursor: pointer !important;" matTooltipPostion="left"
-                        title="" (click)="files.value = null; $event.preventDefault()" id="fileInput" #files type='file' name="profile"
-                        accept="image/*">
-                        <!--  (change)="onSelectFile($event)" -->
+                    <input [matTooltip]="profilePicture && profilePicture.file_path ? 'Click to Change Photo' : 'No File Chosen'" style="cursor: pointer !important;" matTooltipPostion="left"
+                        title="" (click)="files.value = null;" id="fileInput" #files type='file' name="profile"
+                        accept="image/*" (change)="onSelectFile($event)">
                 </div>
 
-                <!-- <div class="error-section">
-                    <div class="notes" *ngIf="!showSizeError.image"> JPEG and PNG only supported</div>
-                    <div class="notes"> Size: 40kb to 2MB</div>
+                <div class="error-section">
+                  <div class="notes mb-1" style="color: red" *ngIf="profilePictureFormControl.touched && profilePictureFormControl.invalid && !profilePicture.file_path"> *Profile Picture is Required</div>
+                  <div class="notes" *ngIf="!showSizeError.image"> JPEG and PNG only supported</div>
+                    <div class="notes"> Size: Maximum 2MB</div>
                     <div class="error" *ngIf="showSizeError.image">JPEG and PNG only supported</div>
                     <div class="error" *ngIf="showSizeError.minsize">Minimum File Size: 40KB!</div>
                     <div class="error" *ngIf="showSizeError.maxsize">Maximum File Size: 2MB!</div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>

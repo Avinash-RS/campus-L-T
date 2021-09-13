@@ -6,24 +6,25 @@ export class RemoveWhitespace {
   static whitespace() {
 
     return (control: AbstractControl): { [key: string]: any } => {
-      if (control && control.value && !control.value.replace(/\s/g, '').length) {
+      // if (control && control.value && typeof control.value != 'number') {
+      if (control && control.value && !control.value.toString().replace(/\s/g, '').length) {
         control.setValue('');
         return null;
       }
-      if (control && control.value && control.value.length > 2) {
-        const split = control.value.split(' ');
+      if (control && control.value && control.value.toString().length > 2) {
+        const split = control.value.toString().split(' ');
         if (split[0] === '') {
-          const lastSpace = control.value.trim();
+          const lastSpace = control.value.toString().trim();
           control.setValue(lastSpace);
         }
         split.reverse();
         if (split[0] === '' && split[1] === '') {
-          const lastSpace = control.value.trim();
+          const lastSpace = control.value.toString().trim();
           control.setValue(lastSpace);
         }
       }
-
       return null;
+    // }
     };
   }
 }

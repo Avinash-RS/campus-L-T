@@ -952,7 +952,14 @@
                                     partner or his relative as detailed
                                     as under section 6 of companies act 1956.
                                 </div>
-                                <div class="content-2 mt-2">
+                                <div *ngIf="!candidateService.checkKycOrJoiningForm()" class="content-2 mt-2">
+                                  I hereby affirm that my answers to the foregoing questions are true and correct and I understand and agree that
+                                  misrepresentation or omission of facts called for in this application or other company records shall automatically
+                                  resigned the contract of employment. I authorize inquiry with regard to my character, ability and habits to any and
+                                  all persons and agree to hold such persons harmless with respect to any information that may give.
+                                </div>
+
+                                <div *ngIf="candidateService.checkKycOrJoiningForm()" class="content-2 mt-2">
                                     I understand that the information provided by me may be used by the organization or
                                     an outside agency to verify and validate the information that I have provided.I
                                     understand that the organization or an outside background verification agency may
@@ -970,6 +977,7 @@
                                 </div>
                             </div>
                             <div class="row-wrapper mt-3">
+                              <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                                 <div class="row-wrapper mt-0 w-100 justify-content-start hanging flex-column">
                                     <h6 class="d-head">Background Verification Declaration</h6>
                                     <div>
@@ -1026,6 +1034,7 @@
                                     </div>
                                 </div>
 
+                              </ng-container>
                                 <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
                                     <h6 class="d-head">Terms and Conditions Declaration</h6>
                                     <div>
@@ -1149,7 +1158,7 @@
                     <div class="left-arrow position-absolute"></div>
                     <div class="sections left-space">
                         <div class="label">Previous Section</div>
-                        <div class="value">{{candidateService.checkKycOrJoiningForm() ? 'Upload Documents' : 'Work Experience Details'}}</div>
+                        <div class="value">Upload Documents</div>
                     </div>
                 </div>
                 <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button

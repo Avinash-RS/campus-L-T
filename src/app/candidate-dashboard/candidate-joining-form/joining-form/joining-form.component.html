@@ -27,7 +27,7 @@
                     <div *ngIf="activeStep != 'work'" class="check"></div>
                     Work Experience Details
                 </li>
-                <li *ngIf="candidateService.checkKycOrJoiningForm()" (click)="validCheck('upload')"
+                <li (click)="validCheck('upload')"
                     [ngClass]="[activeStep == 'upload' ? 'active' : (activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'upload' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'upload'" class="check"></div>
                     Upload Documents

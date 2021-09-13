@@ -13,6 +13,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
+import { LoaderService } from 'src/app/services/loader-service.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -108,17 +109,6 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   url: '';
   // url = 'assets/images/img_avatar2.jpg';
   selectedImage: any;
-  showSizeError = {
-    image: false,
-    size: false,
-    minsize: false,
-    maxsize: false,
-    reset() {
-      this.image = false
-      this.minsize = false
-      this.maxsize = false
-    }
-  };
   personalForm: FormGroup;
   // Title Dropdown list
   bloodGroupDropdownList: any;
@@ -175,28 +165,54 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   form_language_is_write = 'is_write';
   form_language_is_speak = 'is_speak';
 
-  form_passport_number: 'passport_number';
-  form_name_as_in_passport: 'name_as_in_passport';
-  form_profession_as_in_passport: 'profession_as_in_passport';
-  form_date_of_issue: 'date_of_issue';
-  form_valid_upto: 'valid_upto';
-  form_place_of_issue: 'place_of_issue';
-  form_country_valid_for: 'country_valid_for';
+  form_passport_number = 'passport_number';
+  form_name_as_in_passport = 'name_as_in_passport';
+  form_profession_as_in_passport = 'profession_as_in_passport';
+  form_date_of_issue = 'date_of_issue';
+  form_valid_upto = 'valid_upto';
+  form_place_of_issue = 'place_of_issue';
+  form_country_valid_for = 'country_valid_for';
 
   // Health
-  form_serious_illness: 'serious_illness';
-  form_no_of_days: 'no_of_days';
-  form_nature_of_illness: 'nature_of_illness';
-  form_physical_disability: 'physical_disability';
-  form_left_eyepower_glass: 'left_eyepower_glass';
-  form_right_eye_power_glass: 'right_eye_power_glass';
+  form_serious_illness = 'serious_illness';
+  form_no_of_days = 'no_of_days';
+  form_nature_of_illness = 'nature_of_illness';
+  form_physical_disability = 'physical_disability';
+  form_left_eyepower_glass = 'left_eyepower_glass';
+  form_right_eye_power_glass = 'right_eye_power_glass';
 
+// Profile
+form_file_id = 'file_id';
+form_file_label_name = 'name';
+form_file_path = 'file_path';
+form_file_size = 'file_size';
+form_filename = 'filename';
+form_filetype = 'filetype';
+form_id = 'id';
+form_label = 'label';
 
+profilePictureFormControl = new FormControl(null, [Validators.required]);
 // Form control name declaration end
 
   personalDetails: any;
   getAllStates: any;
   nonMergedPersonalDetails: any;
+  showSizeError = {
+    image: false,
+    size: false,
+    maxsize: '',
+    minsize: ''
+  };
+  profilePicture = {
+    name: null,
+    file_id: null,
+    file_path: null,
+    file_size: null,
+    filename: null,
+    filetype: null,
+    label: null
+  };
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -204,7 +220,8 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     private sharedService: SharedServiceService,
     public candidateService: CandidateMappersService,
     private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private loadingService: LoaderService
   ) {
     this.dateValidation();
   }
@@ -302,8 +319,21 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
+  languageArrRequestJsonConversion(lanArr) {
+    let FilteredLanArray = [];
+    lanArr.forEach(element => {
+      if (element && element[this.form_language_name]) {
+        element[this.form_language_is_read] = element[this.form_language_is_read] ? 1 : 0;
+        element[this.form_language_is_write] = element[this.form_language_is_write] ? 1 : 0;
+        element[this.form_language_is_speak] = element[this.form_language_is_speak] ? 1 : 0;
+        FilteredLanArray.push(element);
+      }
+    });
+    return FilteredLanArray;
+  }
+
   formSubmit(routeValue?:any) {
-    if (this.personalForm.valid) {
+    if (this.personalForm.valid && this.profilePictureFormControl.valid) {
       let rawPersonalFormValue = this.personalForm.getRawValue();
       const apiData = {
        [this.form_name]: rawPersonalFormValue[this.form_name],
@@ -335,18 +365,38 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
        [this.form_domicile_state]: rawPersonalFormValue[this.form_domicile_state],
        [this.form_marital_status]: rawPersonalFormValue[this.form_marital_status],
        [this.form_no_of_children]: rawPersonalFormValue[this.form_no_of_children],
-       profile_image: this.personalDetails.profile_image,
+       [this.form_passport_number]: rawPersonalFormValue[this.form_passport_number],
+       [this.form_name_as_in_passport]: rawPersonalFormValue[this.form_name_as_in_passport],
+       [this.form_profession_as_in_passport]: rawPersonalFormValue[this.form_profession_as_in_passport],
+       [this.form_date_of_issue]: this.dateConvertion(rawPersonalFormValue[this.form_date_of_issue]),
+       [this.form_valid_upto]: this.dateConvertion(rawPersonalFormValue[this.form_valid_upto]),
+       [this.form_place_of_issue]: rawPersonalFormValue[this.form_place_of_issue],
+       [this.form_country_valid_for]: rawPersonalFormValue[this.form_country_valid_for],
+       [this.form_serious_illness]: rawPersonalFormValue[this.form_serious_illness],
+       [this.form_no_of_days]: rawPersonalFormValue[this.form_no_of_days],
+       [this.form_nature_of_illness]: rawPersonalFormValue[this.form_nature_of_illness],
+       [this.form_physical_disability]: rawPersonalFormValue[this.form_physical_disability],
+       [this.form_left_eyepower_glass]: rawPersonalFormValue[this.form_left_eyepower_glass],
+       [this.form_right_eye_power_glass]: rawPersonalFormValue[this.form_right_eye_power_glass],
+       [this.form_language_array]: this.languageArrRequestJsonConversion(rawPersonalFormValue[this.form_language_array]),
+       profile_image: this.profilePicture,
        user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
       };
-
-      this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Personal details is updated');
+      const PersonalApiRequestDetails = {
+        form_name: "joining",
+        section_name: "personal_details",
+        saving_data: apiData
+      }
+      this.candidateService.newSaveProfileData(PersonalApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Personal details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       });
     } else {
       this.ngAfterViewInit();
+      this.profilePictureFormControl.markAsTouched();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.personalForm);
     }
@@ -390,60 +440,67 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       }
     }
 
-  async onSelectFile(event) {
-
-    if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
-      this.showSizeError.reset();
-
-      // if (event.target.files[0].size > 500000 && event.target.files[0].size < 2000000) {
-      if (event.target.files[0].size > 40000) {
-        this.showSizeError.reset();
-        if (event.target.files[0].size < 2000000) {
-          this.showSizeError.reset();
-          // this.showSizeError.image = false;
-        this.selectedImage = event.target.files[0];
-
-        const fd = new FormData();
-        fd.append('product_image', this.selectedImage);
-        const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
-        const reader = new FileReader();
-        let urls;
-
-        reader.readAsDataURL(event.target.files[0]); // read file as data url
-        reader.onload = async(event: any) => { // called once readAsDataURL is completed
-          urls = event.target.result;
-          this.url = urls;
-
-          //
-          // const data = await (await this.candidateService.profileUpload(fd)).json();
-            // this.profileData = {
-            //   fid: data[0].id,
-            //   uuid: '',
-            //   localShowUrl: data[0].frontend_url,
-            //   apiUrl: data[0].backend_url
-            // };
-            // this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-            //
-
+  async uploadImage(file) {
+    try {
+      this.loadingService.setLoading(true);
+      const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+      if (data && data.error_code) {
+        this.loadingService.setLoading(false);
+        return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+      }
+      this.loadingService.setLoading(false);
+      if (data && data.file_id) {
+        this.profilePicture = {
+          name: 'profile picture',
+          label: 'profile picture',
+          file_id: data.file_id,
+          file_path: data.file_path,
+          file_size: data.file_size,
+          filename: data.file_name,
+          filetype: data.type,
         };
-      } else {
-        this.showSizeError.reset();
-        this.showSizeError.maxsize = true;
+        this.profilePictureFormControl.setValue(data.file_path);
       }
-      } else {
-        this.showSizeError.reset();
-        this.showSizeError.minsize = true;
-      }
-    } else {
-      this.showSizeError.reset();
-      this.showSizeError.image = true;
+      this.appConfig.nzNotification('success', 'Uploaded', 'Profile Picture uploaded successfully');
+    } catch (e) {
+      this.loadingService.setLoading(false);
+      this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
   }
 
-  public delete() {
-    this.showSizeError.reset();
-    this.url = null;
-  }
+    public delete() {
+      this.profilePicture = {
+        name: null,
+        file_id: null,
+        file_path: null,
+        file_size: null,
+        filename: null,
+        filetype: null,
+        label: null
+      };
+      this.profilePictureFormControl.setValue(null);
+      this.profilePictureFormControl.markAsTouched();
+    }
+    onSelectFile(event) {
+      const fd = new FormData();
+      this.profilePictureFormControl.markAsTouched();
+      if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
+        if (event.target.files[0].size < 2000000) {
+          let image = event.target.files[0];
+
+          fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+          fd.append('description', 'profile picture');
+          fd.append('label', 'profile picture');
+          fd.append('level', 'profile picture');
+          fd.append('product_image', image);
+          this.uploadImage(fd);
+        } else {
+          this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
+        }
+      } else {
+        return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
+      }
+    }
 
 
   patchPersonalForm() {
@@ -486,13 +543,22 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_place_of_issue]: this.personalDetails[this.form_place_of_issue],
       [this.form_country_valid_for]: this.personalDetails[this.form_country_valid_for],
       [this.form_serious_illness]: this.personalDetails[this.form_serious_illness],
-      [this.form_no_of_days]: this.personalDetails[this.form_no_of_days],
+      [this.form_no_of_days]: this.personalDetails[this.form_no_of_days] ? this.personalDetails[this.form_no_of_days].toString() : null,
       [this.form_nature_of_illness]: this.personalDetails[this.form_nature_of_illness],
       [this.form_physical_disability]: this.personalDetails[this.form_physical_disability],
       [this.form_left_eyepower_glass]: this.personalDetails[this.form_left_eyepower_glass],
       [this.form_right_eye_power_glass]: this.personalDetails[this.form_right_eye_power_glass]
     });
-    this.url = this.personalDetails.profile_image.url;
+    this.profilePicture = {
+      name: this.personalDetails.profile_image[this.form_file_label_name],
+      file_id: this.personalDetails.profile_image[this.form_file_id],
+      file_path: this.personalDetails.profile_image[this.form_file_path],
+      file_size: this.personalDetails.profile_image[this.form_file_size],
+      filename: this.personalDetails.profile_image[this.form_filename],
+      filetype: this.personalDetails.profile_image[this.form_filetype],
+      label: this.personalDetails.profile_image[this.form_label],
+    };
+    this.profilePictureFormControl.setValue(this.personalDetails[this.form_file_path]);
     this.patchLanguageForm();
     this.checkIsMarried();
   }
@@ -571,7 +637,6 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_physical_disability]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_left_eyepower_glass]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]],
       [this.form_right_eye_power_glass]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]],
-
       [this.form_language_array]: this.fb.array([this.initLanguageArray()])
     })
     this.candidateService.checkKycOrJoiningForm() ? '' : this.setJoiningAndKYCValidators(this.personalForm);

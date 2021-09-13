@@ -210,7 +210,7 @@ maxDateStartField: any;
 
   getEducationApiDetails() {
     if (this.candidateService.getLocalProfileData()) {
-      this.educationDetails = this.candidateService.getLocaleducation_details();
+      this.educationDetails = this.candidateService.getLocaleducation_details().educations;
       this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
     } else {
       let apiData = {
@@ -219,7 +219,7 @@ maxDateStartField: any;
       }
       this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         this.candidateService.saveAllProfileToLocal(data);
-        this.educationDetails = this.candidateService.getLocaleducation_details();
+        this.educationDetails = this.candidateService.getLocaleducation_details().educations;
         this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
       });
     }
@@ -379,9 +379,18 @@ validSelectedPost() {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
         let formArray = this.educationForm.getRawValue()[this.form_educationArray];
-        this.candidateService.joiningFormGetEducationDetailsSave(formArray).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Education details is updated');
+        const EducationApiRequestDetails = {
+          form_name: "joining",
+          section_name: "education_details",
+          saving_data: {
+            selected_post: this.selectedPost,
+            educations: formArray
+          }
+        };
+        this.candidateService.newSaveProfileData(EducationApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Education details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
       });

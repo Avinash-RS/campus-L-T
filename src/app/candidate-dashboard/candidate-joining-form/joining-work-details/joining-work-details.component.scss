@@ -144,6 +144,17 @@
             background-color: $white;
             width: 100%;
           }
+          textarea {
+            position: relative;
+            border: solid 0.8px #bebebe;
+            border-radius: 2px;
+            color: #6b6b6b;
+            outline: none;
+            box-sizing: border-box;
+            padding: 4px 8px;
+            background-color: $white;
+            width: 100%;
+          }
           .select {
             display: flex;
             align-items: center;
@@ -151,7 +162,7 @@
             border: none !important;
           }
           .input:focus,
-          .input:hover {
+          .input:hover,textarea:focus,textarea:hover {
             border: 1px solid $primary-red;
           }
           .text-area {
@@ -518,4 +529,19 @@
 }
 .hide {
   visibility: hidden;
+}
+.faculty-wrapper {
+  width: 98%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  div {
+    width: 100%;
+    textarea {
+      width: 95% !important;
+      height: 120px;
+    }
+  }
+}
+h5 {
+  font-size: 18px;
 }

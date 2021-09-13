@@ -400,8 +400,8 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   }
   ifFormNotSubmitted(data) {
-    if (data && data.acknowledgment) {
-      let ackData = data.acknowledgment;
+    if (data && data.acknowledgement) {
+      let ackData = data.acknowledgement;
       let ack = {
         [this.form_bgv]: ackData.bgv && (ackData.bgv == '1' || ackData.bgv == true) ? false : false,
         [this.form_caste]: ackData.caste && (ackData.caste == '1' || ackData.caste == true) ? false : false,
@@ -414,8 +414,8 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       this.actualDate = ackData.ack_date;
       this.patchAcknowledgementForm(ack);
     }
-    if (data && data.signature) {
-      let sign = data.signature;
+    if (data && data.acknowledgement && data.acknowledgement.signature_image) {
+      let sign = data.acknowledgement.signature_image;
       this.signature = {
         name: 'Signature',
         label: 'Signature',
@@ -525,10 +525,10 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   formInitialization() {
     this.acknowledgmentForm = this.fb.group({
-      [this.form_bgv]: [null, [Validators.requiredTrue]],
-      [this.form_caste_preview]: [null, [Validators.requiredTrue]],
-      [this.form_coc]: [null, [Validators.requiredTrue]],
-      [this.form_joining]: [null, [Validators.requiredTrue]],
+      [this.form_bgv]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
+      [this.form_caste_preview]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
+      [this.form_coc]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
+      [this.form_joining]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
       [this.form_terms_conditions]: [null, [Validators.requiredTrue]],
       [this.form_ack_place]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
       [this.form_ack_date]: [{ value: this.dateConvertionForm(new Date()), disabled: true }, [Validators.required]]
@@ -843,7 +843,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_identification_mark1]: this.personalDetails?.[this.form_identification_mark1] ? this.personalDetails[this.form_identification_mark1] : 'NA',
       [this.form_identification_mark2]: this.personalDetails?.[this.form_identification_mark2] ? this.personalDetails[this.form_identification_mark2] : 'NA',
     };
-    this.url = this.personalDetails?.profile_image;
+    this.url = this.personalDetails?.profile_image.file_path;
     this.personalDetailsMap = data;
   }
 
@@ -950,9 +950,6 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     this.dialog.closeAll();
   }
 
-
-
-
   formSubmit(routeValue?: any) {
     let ackForm = this.acknowledgmentForm.getRawValue();
     ackForm[this.form_bgv] = ackForm[this.form_bgv] && (ackForm[this.form_bgv] == '1' || ackForm[this.form_bgv] == true) ? '1' : '0';
@@ -961,15 +958,24 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     ackForm[this.form_caste_preview] = ackForm[this.form_caste_preview] && (ackForm[this.form_caste_preview] == '1' || ackForm[this.form_caste_preview] == true) ? '1' : '0';
     ackForm[this.form_terms_conditions] = ackForm[this.form_terms_conditions] && (ackForm[this.form_terms_conditions] == '1' || ackForm[this.form_terms_conditions] == true) ? '1' : '0';
     let apiData = {
-      acknowledgment: [ackForm],
-      signature: [this.signature]
+      selected_post: this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : '',
+      acknowledgement: ackForm,
+      signature: this.signature
     }
-    this.candidateService.joiningFormSubmit(apiData).subscribe((data: any) => {
+    const ProfileSubmitApiRequestDetails = {
+      form_name: "joining",
+      section_name: "acknowledgement",
+      saving_data: apiData
+    }
+    console.log('ProfileSubmitApiRequestDetails', ProfileSubmitApiRequestDetails);
 
-      this.appConfig.nzNotification('success', 'Saved', 'Congrats, Form has been successfully submitted');
-      this.sharedService.joiningFormStepperStatus.next();
-      return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
-    });
+    // this.candidateService.newSaveProfileData(ProfileSubmitApiRequestDetails).subscribe((data: any) => {
+    // this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+    // this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+    // this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Congrats, Form has been successfully submitted');
+    // this.sharedService.joiningFormStepperStatus.next();
+    // return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
+    // });
   }
 
   editRoute(route) {
@@ -994,11 +1000,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   routeNext(route) {
-    if (this.candidateService.checkKycOrJoiningForm()) {
       return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
-    } else {
-      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
-    }
   }
 
   //Form Getter
@@ -1030,8 +1032,11 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.loadingService.setLoading(true);
       const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+      if (data && data.error_code) {
+        this.loadingService.setLoading(false);
+       return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+      }
       this.loadingService.setLoading(false);
-      // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
       if (data && data.file_id) {
         this.signature = {
           name: 'Signature',

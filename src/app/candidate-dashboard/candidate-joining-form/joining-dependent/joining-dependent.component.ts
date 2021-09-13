@@ -54,21 +54,21 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   diffAbledDropdownList = [
     {
       label: 'Yes',
-      value: '1'
+      value: 1
     },
     {
       label: 'No',
-      value: '0'
+      value: 0
     }
   ];
   activeDropdownList = [
     {
       label: 'Active',
-      value: '1'
+      value: 1
     },
     {
       label: 'Inactive',
-      value: '0'
+      value: 0
     }
   ];
   //form Variables
@@ -187,9 +187,15 @@ dateConvertion(date) {
           element[this.form_dependent_dob] = element[this.form_dependent_dob];
         }
       });
-      this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Dependent details is updated');
+      const DependentApiRequestDetails = {
+        form_name: "joining",
+        section_name: "dependent_details",
+        saving_data: formArray
+      }
+      this.candidateService.newSaveProfileData(DependentApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Dependent details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       });

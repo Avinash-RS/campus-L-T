@@ -175,9 +175,15 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
         [this.form_same_as_checkbox]: rawContactFormValue[this.form_same_as_checkbox] ? rawContactFormValue[this.form_same_as_checkbox] : false,
         user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
         }
-        this.candidateService.joiningFormGetContactDetailsSave(apiData).subscribe((data: any)=> {
-
-          this.appConfig.nzNotification('success', 'Saved', 'Contact details is updated');
+        const ContactApiRequestDetails = {
+          form_name: "joining",
+          section_name: "contact_details",
+          saving_data: apiData
+        }
+        this.candidateService.newSaveProfileData(ContactApiRequestDetails).subscribe((data: any)=> {
+          this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+          this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+          this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Contact details is updated');
           this.sharedService.joiningFormStepperStatus.next();
           return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
       });
@@ -234,18 +240,18 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_present_address_1]: this.contactDetails[this.form_present_address_1],
       [this.form_present_address_2]: this.contactDetails[this.form_present_address_2],
       [this.form_present_address_3]: this.contactDetails[this.form_present_address_3],
-      [this.form_present_city]: this.contactDetails[this.form_present_city],
-      [this.form_present_state]: this.contactDetails[this.form_present_state],
-      [this.form_present_region]: this.contactDetails[this.form_present_region],
-      [this.form_present_zip_code]: this.contactDetails[this.form_present_zip_code],
+      [this.form_present_city]: this.contactDetails[this.form_present_city] ? this.contactDetails[this.form_present_city].toString() : null,
+      [this.form_present_state]: this.contactDetails[this.form_present_state] ? this.contactDetails[this.form_present_state].toString() : null,
+      [this.form_present_region]: this.contactDetails[this.form_present_region] ? this.contactDetails[this.form_present_region].toString() : null,
+      [this.form_present_zip_code]: this.contactDetails[this.form_present_zip_code] ? this.contactDetails[this.form_present_zip_code].toString() : null,
       [this.form_same_as_checkbox]: this.contactDetails[this.form_same_as_checkbox],
       [this.form_permanent_address_1]: this.contactDetails[this.form_permanent_address_1],
       [this.form_permanent_address_2]: this.contactDetails[this.form_permanent_address_2],
       [this.form_permanent_address_3]: this.contactDetails[this.form_permanent_address_3],
-      [this.form_permanent_city]: this.contactDetails[this.form_permanent_city],
-      [this.form_permanent_state]: this.contactDetails[this.form_permanent_state],
-      [this.form_permanent_region]: this.contactDetails[this.form_permanent_region],
-      [this.form_permanent_zip_code]: this.contactDetails[this.form_permanent_zip_code]
+      [this.form_permanent_city]: this.contactDetails[this.form_permanent_city] ? this.contactDetails[this.form_permanent_city].toString() : null,
+      [this.form_permanent_state]: this.contactDetails[this.form_permanent_state] ? this.contactDetails[this.form_permanent_state].toString() : null,
+      [this.form_permanent_region]: this.contactDetails[this.form_permanent_region] ? this.contactDetails[this.form_permanent_region].toString() : null,
+      [this.form_permanent_zip_code]: this.contactDetails[this.form_permanent_zip_code] ? this.contactDetails[this.form_permanent_zip_code].toString() : null
     });
     this.disableOrEnableState(this.form_present_state);
     this.disableOrEnableState(this.form_permanent_state);
