@@ -558,7 +558,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       filetype: this.personalDetails.profile_image[this.form_filetype],
       label: this.personalDetails.profile_image[this.form_label],
     };
-    this.profilePictureFormControl.setValue(this.personalDetails[this.form_file_path]);
+    this.profilePictureFormControl.setValue(this.personalDetails.profile_image[this.form_file_path]);
     this.patchLanguageForm();
     this.checkIsMarried();
   }
@@ -583,7 +583,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.checkIsMarried();
   }
   checkIsMarried() {
-    if (this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Married' || this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Widow') {
+    if (this.personalForm.value[this.form_marital_status] && (this.personalForm.value[this.form_marital_status] == 'Married' || this.personalForm.value[this.form_marital_status] == 'Widow')) {
       this.personalForm.controls[this.form_no_of_children].setValidators([Validators.required]);
       this.personalForm['controls'][this.form_no_of_children].updateValueAndValidity({ emitEvent: false });
     } else {
@@ -595,7 +595,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
   formInitialize() {
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
-      [this.form_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_name]: [{value: this.appConfig.getLocalData('username'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dob]: [null, [Validators.required]],
       [this.form_gender]: [{value: null, disabled: this.candidateService.checkKycOrJoiningForm()}, [Validators.required]],
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],

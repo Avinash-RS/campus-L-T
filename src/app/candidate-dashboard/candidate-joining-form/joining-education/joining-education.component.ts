@@ -148,17 +148,10 @@ maxDateStartField: any;
   }
 
   ngOnInit() {
-    this.getSelectedPost();
     this.formInitialize();
     // Getting required datas for dropdowns
     this.getEducationLevels();
-    this.getUGSpecialization();
-    this.getPGSpecialization();
-    this.getDiplomaDiscipline();
-    this.getUGDiscipline();
-    this.getPGDiscipline();
-    this.getDiplomaInstitutes();
-    this.getUGandPGInstitutes();
+    this.educationDropdownValues();
     this.getEducationApiDetails();
     // End of Getting required datas for dropdowns
     this.saveRequestRxJs();
@@ -200,7 +193,6 @@ maxDateStartField: any;
 
   getSelectedPost() {
     this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
-    this.selectedPost = localStorage.getItem('selectedPost') ? localStorage.getItem('selectedPost') : '';
     this.mastersList?.education_master.forEach(element => {
       if (element.value == this.selectedPost) {
         this.selectedPostLabel = element.value;
@@ -211,6 +203,8 @@ maxDateStartField: any;
   getEducationApiDetails() {
     if (this.candidateService.getLocalProfileData()) {
       this.educationDetails = this.candidateService.getLocaleducation_details().educations;
+      this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+      this.getSelectedPost();
       this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
     } else {
       let apiData = {
@@ -220,6 +214,8 @@ maxDateStartField: any;
       this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         this.candidateService.saveAllProfileToLocal(data);
         this.educationDetails = this.candidateService.getLocaleducation_details().educations;
+        this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+        this.getSelectedPost();
         this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
       });
     }
@@ -375,7 +371,7 @@ validSelectedPost() {
 
 }
   formSubmit(routeValue?: any) {
-    if (this.educationForm.valid) {
+    if (this.educationForm.valid && this.selectedPost) {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
         let formArray = this.educationForm.getRawValue()[this.form_educationArray];
@@ -465,7 +461,7 @@ validSelectedPost() {
       [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), this.candidateService.checkKycOrJoiningForm() ? [Validators.required, this.startTrue(false)] : []],
       [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), this.candidateService.checkKycOrJoiningForm() ? [Validators.required, this.startTrue(false)] : []],
       [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: false }, [Validators.required, this.startTrue(true)]],
-      [this.form_backlog]: [{ value: data[this.form_backlog], disabled: data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
+      [this.form_backlog]: [{ value: data[this.form_backlog], disabled: this.candidateService.checkKycOrJoiningForm() ? (data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false) : false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
       [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
       [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), this.candidateService.checkKycOrJoiningForm() ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()] : []],
@@ -681,106 +677,20 @@ validSelectedPost() {
     });
   }
 
-  getUGSpecialization() {
+  educationDropdownValues() {
     const api = {
       level: '',
       discipline: '',
-      specification: 'UG'
-    };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
-      this.ugSpecializationList = list;
-    }, (err) => {
-
-    });
-  }
-
-
-  getPGSpecialization() {
-    const api = {
-      level: '',
-      discipline: '',
-      specification: 'PG'
-    };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
-      this.pgSpecializationList = list;
-    }, (err) => {
-
-    });
-  }
-
-  getDiplomaDiscipline() {
-    const api = {
-      level: '',
-      discipline: 'Diploma',
       specification: ''
     };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
-      this.diplomaDisciplineList = list;
-    }, (err) => {
-
-    });
-  }
-
-  getUGDiscipline() {
-    const api = {
-      level: '',
-      discipline: 'UG',
-      specification: ''
-    };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
-      this.ugDisciplineList = list;
-    }, (err) => {
-
-    });
-  }
-
-  getPGDiscipline() {
-    const api = {
-      level: '',
-      discipline: 'PG',
-      specification: ''
-    };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
-      this.pgDisciplineList = list;
-    }, (err) => {
-
-    });
-  }
-
-  getDiplomaInstitutes() {
-    const api = {
-      level: 'Diploma',
-      discipline: '',
-      specification: ''
-    };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
-      this.diplomaInstitutesList = list;
-    }, (err) => {
-
-    });
-  }
-
-  getUGandPGInstitutes() {
-    const api = {
-      level: 'PG',
-      discipline: '',
-      specification: ''
-    };
-    this.candidateService.getDiplomaList(api).subscribe((data: any) => {
-
-      const list = data && data[0] ? data[0] : [];
+    this.candidateService.getAllEducationFormDropdownList(api).subscribe((data: any) => {
+      this.ugSpecializationList = data && data.ug_specifications ? data.ug_specifications : [];
+      this.pgSpecializationList = data && data.pg_specifications ? data.pg_specifications : [];
+      this.diplomaDisciplineList = data && data.diploma_disciplines ? data.diploma_disciplines : [];
+      this.ugDisciplineList = data && data.ug_disciplines ? data.ug_disciplines : [];
+      this.pgDisciplineList = data && data.pg_disciplines ? data.pg_disciplines : [];
+      this.diplomaInstitutesList = data && data.diploma_colleges ? data.diploma_colleges : [];
+      const list = data && data.ug_pg_colleges ? data.ug_pg_colleges : [];
       this.ugInstitutesList = list;
       const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
       this.pgInstitutesList = exceptOthers;

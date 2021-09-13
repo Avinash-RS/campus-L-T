@@ -369,7 +369,7 @@
                                 <div class="row-wrapper flexEnd" [ngClass]="getResumeArr.controls[j].get(form_file_path).invalid && getResumeArr.controls[j].get(form_file_path).touched ? 'custom-error-border' : ''">
                                     <div class="overall-input-wrapper min200 top22">
                                         <div class="readonlyTitle">
-                                            {{getResumeArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
+                                            {{getResumeArr.controls[j].get(form_label).value ? getResumeArr.controls[j].get(form_label).value : 'Resume'}}<span class="f_size_14" style="color: #C02222;">*</span>
                                         </div>
                                     </div>
 

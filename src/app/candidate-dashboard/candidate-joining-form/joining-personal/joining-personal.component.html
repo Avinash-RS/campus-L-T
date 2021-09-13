@@ -3,7 +3,12 @@
         Personal Details
     </h5>
     <div class="alert">
+      <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
         Note: Information provided here will be used in our records and during the background verification. Please make sure to complete the form and fill the information’s correctly.
+      </ng-container>
+      <ng-container *ngIf="!candidateService.checkKycOrJoiningForm()">
+        Note: Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.
+      </ng-container>
       </div>
     <div class="grids-wrapper">
             <form class="personalForm" [formGroup]="personalForm">

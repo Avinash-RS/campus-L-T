@@ -505,7 +505,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   checkFormSubmitted() {
     this.formSubmitted = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
-    if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('secondShortlist') == 'firstShortlist') {
+    if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
     this.formSubmitted = true;
     }
   }

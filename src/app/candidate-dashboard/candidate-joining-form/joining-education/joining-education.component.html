@@ -2,12 +2,17 @@
     <h5>
         Education Details
     </h5>
+    <div class="alert">
+      <ng-container *ngIf="!candidateService.checkKycOrJoiningForm()">
+        Note: Please fill all the educational qualifications till date (for example: 10th, 12th, B.Tech & M.Tech if relevant).
+      </ng-container>
+      </div>
 
     <div class="grids-wrapper">
         <div class="row-wrapper">
 
     <div class="overall-input-wrapper w-75 d-flex align-items-center f_size_14 mt-2 mb-2" style="color: #565656;">
-        <div style="width: 170px;">Profile Applied For: </div>
+        <div style="width: 170px;">Profile Applied For*: </div>
         <nz-select class="input select selectedPost" [(ngModel)]="selectedPost"
         nzAllowClear [nzDisabled]="candidateService.checkKycOrJoiningForm() ? true : false" nzShowSearch nzPlaceHolder="Select">
         <nz-option *ngFor="let level of mastersList?.education_master" [nzLabel]="level.label"
@@ -16,7 +21,7 @@
 </div>
 </div>
 
-        <form class="educatonForm" [formGroup]="educationForm" (ngSubmit)="formSubmit()">
+        <form *ngIf="selectedPost" class="educatonForm" [formGroup]="educationForm" (ngSubmit)="formSubmit()">
             <ng-container *ngIf="getEducationArr && getEducationArr.controls" [formArrayName]="form_educationArray">
                 <ng-container *ngFor="let item of getEducationArr.controls; let i = index;" [formGroupName]="i">
                     <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
@@ -64,15 +69,15 @@
                             <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'UG')">
                                 <nz-select class="input select" [formControlName]="form_qualification" nzAllowClear
                                 nzShowSearch nzPlaceHolder="Select">
-                                <nz-option *ngFor="let active of ugSpecializationList" [nzLabel]="active.ug_specification"
-                                    [nzValue]="active.ug_specification"></nz-option>
+                                <nz-option *ngFor="let active of ugSpecializationList" [nzLabel]="active.specification_name"
+                                    [nzValue]="active.specification_name"></nz-option>
                             </nz-select>
                             </ng-container>
                             <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
                                 <nz-select class="input select" [formControlName]="form_qualification" nzAllowClear
                                 nzShowSearch nzPlaceHolder="Select">
-                                <nz-option *ngFor="let active of pgSpecializationList" [nzLabel]="active.pg_specification"
-                                    [nzValue]="active.pg_specification"></nz-option>
+                                <nz-option *ngFor="let active of pgSpecializationList" [nzLabel]="active.specification_name"
+                                    [nzValue]="active.specification_name"></nz-option>
                             </nz-select>
                             </ng-container>
                                 <div class="form-error"
@@ -92,16 +97,16 @@
                                 [nzValue]="discipline.value"></nz-option>
                                 </ng-container>
                                 <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma')">
-                                <nz-option *ngFor="let discipline of diplomaDisciplineList" [nzLabel]="discipline.diploma_discipline"
-                                [nzValue]="discipline.diploma_discipline"></nz-option>
+                                <nz-option *ngFor="let discipline of diplomaDisciplineList" [nzLabel]="discipline.discipline_name"
+                                [nzValue]="discipline.discipline_name"></nz-option>
                                 </ng-container>
                                 <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'UG')">
-                                <nz-option *ngFor="let discipline of ugDisciplineList" [nzLabel]="discipline.ug_descipline"
-                                [nzValue]="discipline.ug_descipline"></nz-option>
+                                <nz-option *ngFor="let discipline of ugDisciplineList" [nzLabel]="discipline.discipline_name"
+                                [nzValue]="discipline.discipline_name"></nz-option>
                                 </ng-container>
                                 <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'PG')">
-                                <nz-option *ngFor="let discipline of pgDisciplineList" [nzLabel]="discipline.pg_discipline"
-                                [nzValue]="discipline.pg_discipline"></nz-option>
+                                <nz-option *ngFor="let discipline of pgDisciplineList" [nzLabel]="discipline.discipline_name"
+                                [nzValue]="discipline.discipline_name"></nz-option>
                                 </ng-container>
                                 </nz-select>
                                 <div class="form-error"
@@ -123,8 +128,8 @@
                                         <nz-select class="input select" [formControlName]="form_collegeName" nzAllowClear
                                         nzShowSearch nzPlaceHolder="Select">
                                         <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'Diploma')">
-                                            <nz-option *ngFor="let institute of diplomaInstitutesList" [nzLabel]="institute.diploma_college"
-                                            [nzValue]="institute.diploma_college">
+                                            <nz-option *ngFor="let institute of diplomaInstitutesList" [nzLabel]="institute.college_name"
+                                            [nzValue]="institute.college_name">
                                           </nz-option>
                                         </ng-container>
                                         <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'UG')">

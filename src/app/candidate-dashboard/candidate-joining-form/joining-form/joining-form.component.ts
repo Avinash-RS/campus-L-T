@@ -139,8 +139,13 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
   activeSelectorRxJs() {
     this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.pipe(delay(0)).subscribe((data: any)=> {
-      this.routingSelection = null;
-      this.routingSelection = data ? data : this.routingSelection;
+      let datas = this.candidateService.getLocalsection_flags();
+      // if (datas && datas[data] == '1') {
+        this.routingSelection = null;
+        this.routingSelection = data ? data : this.routingSelection;
+      // } else {
+      //   this.statusOfForms();
+      // }
     });
   }
 
@@ -158,48 +163,52 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     if (this.candidateService.getLocalProfileData()) {
       let data = this.candidateService.getLocalsection_flags();
       this.hideStepper = data?.submitted == '1' ? true : false;
+      if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
+        this.hideStepper = true;
+        }
 
-      if (data.submitted == '1') {
+
+      if ((data && data.submitted == '1') || this.hideStepper) {
         this.valid.tillsbmit();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         return this.activeStep = 'preview';
       }
 
-      if (data.previewed == '1') {
+      if (data && data.previewed == '1') {
         this.valid.tillpreview();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
         return this.activeStep = 'submit';
       }
 
-      if (data.document_details == '1') {
+      if (data && data.document_details == '1') {
         this.valid.tillupload();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         return this.activeStep = 'preview';
       }
 
-      if (data.experience_details == '1') {
+      if (data && data.experience_details == '1') {
           this.valid.tillwork();
           param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
           return this.activeStep = 'upload';
       }
 
-      if (data.education_details == '1') {
+      if (data && data.education_details == '1') {
         this.valid.tilleducation();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
         return this.activeStep = 'work';
       }
 
-      if (data.dependent_details == '1') {
+      if (data && data.dependent_details == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
        return this.activeStep = 'education';//, this.routingSelection = param ? param : 'education';
       }
-      if (data.contact_details == '1') {
+      if (data && data.contact_details == '1') {
         this.valid.tillContact();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
         return this.activeStep = 'dependent';
       }
-      if (data.personal_details == '1') {
+      if (data && data.personal_details == '1') {
         this.valid.tillPersonal();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
         return this.activeStep = 'contact';//, this.routingSelection = param ? param : 'contact';
