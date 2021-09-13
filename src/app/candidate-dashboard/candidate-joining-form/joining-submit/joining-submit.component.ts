@@ -22,7 +22,7 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {

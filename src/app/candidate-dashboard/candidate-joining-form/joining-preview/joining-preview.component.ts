@@ -158,6 +158,28 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   form_domicile_state = 'domicile_state';
   form_no_of_children = 'no_of_children';
 
+  form_language_array = 'languages_known';
+  form_language_name = 'language';
+  form_language_is_read = 'is_read';
+  form_language_is_write = 'is_write';
+  form_language_is_speak = 'is_speak';
+
+  form_passport_number = 'passport_number';
+  form_name_as_in_passport = 'name_as_in_passport';
+  form_profession_as_in_passport = 'profession_as_in_passport';
+  form_date_of_issue = 'date_of_issue';
+  form_valid_upto = 'valid_upto';
+  form_place_of_issue = 'place_of_issue';
+  form_country_valid_for = 'country_valid_for';
+
+  // Health
+  form_serious_illness = 'serious_illness';
+  form_no_of_days = 'no_of_days';
+  form_nature_of_illness = 'nature_of_illness';
+  form_physical_disability = 'physical_disability';
+  form_left_eyepower_glass = 'left_eyepower_glass';
+  form_right_eye_power_glass = 'right_eye_power_glass';
+
   // Form control name declaration end
 
   form_present_address_1 = 'present_line_street_addres';
@@ -271,6 +293,16 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   form_Employment_Array = "Employment"
 
+  form_Skills_Array = "skills";
+  form_Skill = "skill";
+
+  form_Relatives_Array = "relatives_in_company";
+  form_relatives_name = "name";
+  form_relatives_position = "position";
+  form_relatives_relationship = "relationship";
+  form_relatives_company = "company";
+  form_faculty_reference = "faculty_reference";
+  form_faculty_reference_1 = "faculty_reference1";
 
   personalDetails: any;
   personalDetailsMap: any;
@@ -292,6 +324,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   documentDetails: any;
   actualDate: any;
   noShowWork: boolean;
+  selectedPost: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -337,7 +370,8 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     } else {
       this.dependentDetailsMap = [];
     }
-    this.educationDetails = data && data.education_details && data.education_details.length > 0 ? data.education_details : [];
+    this.educationDetails = data && data.education_details && data.education_details.educations && data.education_details.educations.length > 0 ? data.education_details.educations : [];
+    this.selectedPost = data && data.education_details && data.education_details.selected_post ? data.education_details.selected_post : '';
     if (this.educationDetails.length > 0) {
       this.patchEducation();
     } else {
@@ -471,6 +505,9 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   checkFormSubmitted() {
     this.formSubmitted = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+    if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('secondShortlist') == 'firstShortlist') {
+    this.formSubmitted = true;
+    }
   }
 
   getStateAPI() {
@@ -614,14 +651,17 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     if (datas && datas['experience_details']) {
       let data = datas['experience_details'];
       let work = {
-        workDetails: data && data.workDetails ? data.workDetails : null,
-        Employment: data && data.Employment ? data.Employment : [],
-        bgvDetails: data && data.bgvDetails ? data.bgvDetails : null
+        workDetails: data && data.work_details ? data.work_details : null,
+        Employment: data && data.employments ? data.employments : [],
+        bgvDetails: data && data.bgv_details ? data.bgv_details : null,
+        relatives: data && data[this.form_Relatives_Array] && data[this.form_Relatives_Array].length > 0 ? data[this.form_Relatives_Array] : null,
+        skills: data && data[this.form_Skills_Array] && data[this.form_Skills_Array].length > 0 ? data[this.form_Skills_Array] : null,
+        faculty: data && data['faculty_references'] && data['faculty_references'].length > 0 ? data['faculty_references'] : null,
       }
       this.workDetails = work;
       this.patchWorkDetails();
       this.patchingCriminal();
-      if ((work.workDetails && (work.workDetails.break_in_emp || work.workDetails.employed_us == '1' || work.workDetails.interviewed_by_us == '1' || work.workDetails.total_exp_months || work.workDetails.total_exp_years)) || (this.workDetails.bgvDetails && this.workDetails.bgvDetails.show) || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] )) {
+      if ((work.workDetails && (work.workDetails.break_in_emp || work.workDetails.employed_us == '1' || work.workDetails.interviewed_by_us == '1' || work.workDetails.total_exp_months || work.workDetails.total_exp_years)) || (this.workDetails.bgvDetails && this.workDetails.bgvDetails.show) || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] ) || this.workDetails.relatives || this.workDetails.skills || this.workDetails.faculty) {
         this.noShowWork = false;
       } else {
         this.noShowWork = true;
@@ -671,7 +711,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
         element[this.form_specialization] = element?.[this.form_specialization] ? element?.[this.form_specialization] : 'NA';
         element[this.form_cgpa] = element?.[this.form_cgpa] ? element?.[this.form_cgpa] : 'NA';
         element[this.form_finalcgpa] = element?.[this.form_finalcgpa] ? element?.[this.form_finalcgpa] : 'NA';
-        element[this.form_backlog] = element?.[this.form_backlog] ? element?.[this.form_backlog] : 'NA';
+        element[this.form_backlog] = element?.[this.form_backlog] ? element?.[this.form_backlog] : 0;
         element[this.form_startDate] = element[this.form_startDate] ? this.dateConvertion(element[this.form_startDate]) : 'NA';
         element[this.form_endDate] = element[this.form_endDate] ? this.dateConvertion(element[this.form_endDate]) : 'NA';
         element[this.form_yearpassing] = element[this.form_yearpassing] ? this.dateConvertionMonth(element[this.form_yearpassing]) : 'NA';
@@ -762,26 +802,47 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       });
     }
     const data = {
-      [this.form_present_address_1]: this.contactDetails?.[this.form_present_address_1] ? this.contactDetails[this.form_present_address_1] : 'NA',
-      [this.form_present_address_2]: this.contactDetails?.[this.form_present_address_2] ? this.contactDetails[this.form_present_address_2] : 'NA',
-      [this.form_present_address_3]: this.contactDetails?.[this.form_present_address_3] ? this.contactDetails[this.form_present_address_3] : 'NA',
+      [this.form_present_address_1]: this.contactDetails?.[this.form_present_address_1] ? this.contactDetails[this.form_present_address_1] : null,
+      [this.form_present_address_2]: this.contactDetails?.[this.form_present_address_2] ? this.contactDetails[this.form_present_address_2] : null,
+      [this.form_present_address_3]: this.contactDetails?.[this.form_present_address_3] ? this.contactDetails[this.form_present_address_3] : null,
       [this.form_present_city]: presentCity ? presentCity : 'NA',
       [this.form_present_state]: presentState ? presentState : 'NA',
       [this.form_present_region]: this.contactDetails?.[this.form_present_region] ? 'India' : 'NA',
       [this.form_present_zip_code]: this.contactDetails?.[this.form_present_zip_code] ? this.contactDetails[this.form_present_zip_code] : 'NA',
       [this.form_same_as_checkbox]: this.contactDetails?.[this.form_same_as_checkbox] ? this.contactDetails[this.form_same_as_checkbox] : false,
-      [this.form_permanent_address_1]: this.contactDetails?.[this.form_permanent_address_1] ? this.contactDetails[this.form_permanent_address_1] : 'NA',
-      [this.form_permanent_address_2]: this.contactDetails?.[this.form_permanent_address_2] ? this.contactDetails[this.form_permanent_address_2] : 'NA',
-      [this.form_permanent_address_3]: this.contactDetails?.[this.form_permanent_address_3] ? this.contactDetails[this.form_permanent_address_3] : 'NA',
+      [this.form_permanent_address_1]: this.contactDetails?.[this.form_permanent_address_1] ? this.contactDetails[this.form_permanent_address_1] : null,
+      [this.form_permanent_address_2]: this.contactDetails?.[this.form_permanent_address_2] ? this.contactDetails[this.form_permanent_address_2] : null,
+      [this.form_permanent_address_3]: this.contactDetails?.[this.form_permanent_address_3] ? this.contactDetails[this.form_permanent_address_3] : null,
       [this.form_permanent_city]: permanentCity ? permanentCity : 'NA',
       [this.form_permanent_state]: permanentState ? permanentState : 'NA',
       [this.form_permanent_region]: this.contactDetails?.[this.form_permanent_region] ? 'India' : 'NA',
       [this.form_permanent_zip_code]: this.contactDetails?.[this.form_permanent_zip_code] ? this.contactDetails[this.form_permanent_zip_code] : 'NA'
     };
     this.contactDetailsMap = data;
-    this.contactDetailsMap.presentAddress = `${this.contactDetails?.[this.form_present_address_1]}, ${this.contactDetails?.[this.form_present_address_2]}${this.contactDetails?.[this.form_present_address_3] ? ', ' + this.contactDetails?.[this.form_present_address_3] : ''}`;
-    this.contactDetailsMap.permanentAddress = `${this.contactDetails?.[this.form_permanent_address_1]}, ${this.contactDetails?.[this.form_permanent_address_2]}${this.contactDetails?.[this.form_permanent_address_3] ? ', ' + this.contactDetails?.[this.form_permanent_address_3] : ''}`;
+    this.contactDetailsMap.presentAddress =  this.getPresentAddress(this.contactDetails?.[this.form_present_address_1], this.contactDetails?.[this.form_present_address_2], this.contactDetails?.[this.form_present_address_3]);
+    this.contactDetailsMap.permanentAddress = this.getPermanentAddress(this.contactDetails?.[this.form_permanent_address_1], this.contactDetails?.[this.form_permanent_address_2], this.contactDetails?.[this.form_permanent_address_3]);
+  }
 
+  getPresentAddress(p1,p2,p3) {
+    if (p1 || p2 || p3) {
+      let present = '';
+      present = p1 ? p1 : '';
+      present = p2 ? present + ', ' + p2 : present;
+      present = p3 ? present + ', ' + p3 : present;
+      return `${present}`;
+    }
+    return 'NA';
+  }
+
+  getPermanentAddress(p1,p2,p3) {
+    if (p1 || p2 || p3) {
+      let present = '';
+      present = p1 ? p1 : '';
+      present = p2 ? present + ', ' + p2 : present;
+      present = p3 ? present + ', ' + p3 : present;
+      return `${present}`;
+    }
+    return 'NA';
   }
 
   patchPersonalForm() {
@@ -842,6 +903,20 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_domicile_state]: domicile ? domicile : 'NA',
       [this.form_identification_mark1]: this.personalDetails?.[this.form_identification_mark1] ? this.personalDetails[this.form_identification_mark1] : 'NA',
       [this.form_identification_mark2]: this.personalDetails?.[this.form_identification_mark2] ? this.personalDetails[this.form_identification_mark2] : 'NA',
+      [this.form_language_array]: this.personalDetails?.[this.form_language_array] && this.personalDetails?.[this.form_language_array].length > 0 ? this.personalDetails[this.form_language_array] : 'NA',
+      [this.form_passport_number]: this.personalDetails?.[this.form_passport_number] ? this.personalDetails[this.form_passport_number] : 'NA',
+      [this.form_name_as_in_passport]: this.personalDetails?.[this.form_name_as_in_passport] ? this.personalDetails[this.form_name_as_in_passport] : 'NA',
+      [this.form_profession_as_in_passport]: this.personalDetails?.[this.form_profession_as_in_passport] ? this.personalDetails[this.form_profession_as_in_passport] : 'NA',
+      [this.form_date_of_issue]: this.personalDetails?.[this.form_date_of_issue] ? this.dateConvertion(this.personalDetails[this.form_date_of_issue]) : 'NA',
+      [this.form_valid_upto]: this.personalDetails?.[this.form_valid_upto] ? this.dateConvertion(this.personalDetails[this.form_valid_upto]) : 'NA',
+      [this.form_place_of_issue]: this.personalDetails?.[this.form_place_of_issue] ? this.personalDetails[this.form_place_of_issue] : 'NA',
+      [this.form_country_valid_for]: this.personalDetails?.[this.form_country_valid_for] ? this.personalDetails[this.form_country_valid_for] : 'NA',
+      [this.form_serious_illness]: this.personalDetails?.[this.form_serious_illness] ? this.personalDetails[this.form_serious_illness] : 'NA',
+      [this.form_no_of_days]: this.personalDetails?.[this.form_no_of_days] ? this.personalDetails[this.form_no_of_days] : 'NA',
+      [this.form_nature_of_illness]: this.personalDetails?.[this.form_nature_of_illness] ? this.personalDetails[this.form_nature_of_illness] : 'NA',
+      [this.form_physical_disability]: this.personalDetails?.[this.form_physical_disability] ? this.personalDetails[this.form_physical_disability] : 'NA',
+      [this.form_left_eyepower_glass]: this.personalDetails?.[this.form_left_eyepower_glass] ? this.personalDetails[this.form_left_eyepower_glass] : 'NA',
+      [this.form_right_eye_power_glass]: this.personalDetails?.[this.form_right_eye_power_glass] ? this.personalDetails[this.form_right_eye_power_glass] : 'NA'
     };
     this.url = this.personalDetails?.profile_image.file_path;
     this.personalDetailsMap = data;
@@ -958,7 +1033,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     ackForm[this.form_caste_preview] = ackForm[this.form_caste_preview] && (ackForm[this.form_caste_preview] == '1' || ackForm[this.form_caste_preview] == true) ? '1' : '0';
     ackForm[this.form_terms_conditions] = ackForm[this.form_terms_conditions] && (ackForm[this.form_terms_conditions] == '1' || ackForm[this.form_terms_conditions] == true) ? '1' : '0';
     let apiData = {
-      selected_post: this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : '',
+      selected_post: this.selectedPost,
       acknowledgement: ackForm,
       signature: this.signature
     }
@@ -968,14 +1043,13 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       saving_data: apiData
     }
     console.log('ProfileSubmitApiRequestDetails', ProfileSubmitApiRequestDetails);
-
-    // this.candidateService.newSaveProfileData(ProfileSubmitApiRequestDetails).subscribe((data: any) => {
-    // this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
-    // this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
-    // this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Congrats, Form has been successfully submitted');
-    // this.sharedService.joiningFormStepperStatus.next();
-    // return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
-    // });
+    this.candidateService.newSaveProfileData(ProfileSubmitApiRequestDetails).subscribe((data: any) => {
+    this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+    this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+    this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Congrats, Form has been successfully submitted');
+    this.sharedService.joiningFormStepperStatus.next();
+    return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
+    });
   }
 
   editRoute(route) {

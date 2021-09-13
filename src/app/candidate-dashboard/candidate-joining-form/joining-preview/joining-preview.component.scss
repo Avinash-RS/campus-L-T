@@ -39,7 +39,7 @@
                 margin-top: 0.5em;
                 width: 100%;
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 align-items: flex-start;
                 flex-wrap: wrap;
                 .overall-input-wrapper {
@@ -47,6 +47,7 @@
                     flex-direction: column;
                     position: relative;
                     flex-wrap: wrap;
+                    margin-right: 8px;
                     label {
                         color: #808080;
                         padding: 0 0 0px 0;
@@ -233,6 +234,9 @@
 }
 .width-50 {
     width: 48.5%;
+}
+.width-24 {
+  width: 24%;
 }
 
 .nodata {
@@ -827,4 +831,36 @@ background-color: #eaeaea;
 .d-head {
     font-size: 14px;
     font-weight: 600;
+}
+.h6-sub-heading {
+  width: 100%;
+  margin: 1em 0 0 0;
+  font-size: 18px;
+  font-weight: 500;
+  }
+
+.language-label {
+font-size: 14px !important;
+color: $light-black !important;
+}
+
+.min-w-66 {
+  min-width: 32%;
+  max-width: 66%;
+}
+
+.min-w-100 {
+  min-width: 32%;
+  max-width: 100%;
+}
+
+.skills-wrapper {
+  flex-wrap: wrap;
+  padding: 0 16px 8px 16px;
+  box-sizing: border-box;
+}
+.skill-name {
+  background: rgba(0, 255, 255, 0.705);
+  border-radius: 15px;
+  padding: 4px 8px;
 }

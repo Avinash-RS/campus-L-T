@@ -46,8 +46,8 @@
 
                         <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value)">
 
-                        <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'SSLC') && (getEducationArr.controls[i].get(form_qualification_type).value != 'HSC')">
-                            <div class="overall-input-wrapper width-45">
+                        <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'SSLC')">
+                            <div *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'HSC')" class="overall-input-wrapper width-45">
                                 <label>Qualification<!-- Asterick --><span *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value != 'HSC' && getEducationArr.controls[i].get(form_qualification_type).value != 'Diploma')">*</span>
                                 </label>
                             <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">

@@ -283,15 +283,32 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       [this.form_permanent_region]: [null, [Validators.required]],
       [this.form_permanent_zip_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.zipOnly()]]
     })
-    this.candidateService.checkKycOrJoiningForm() ? '' : this.setJoiningAndKYCValidators(this.contactForm);
+    this.setJoiningAndKYCValidators(this.candidateService.checkKycOrJoiningForm());
   }
 
-  setJoiningAndKYCValidators(form: FormGroup) {
+  setJoiningAndKYCValidators(isJoining) {
+    if (isJoining) {
+    } else {
+      this.contactForm.controls[this.form_present_address_1].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]);
+      this.contactForm.controls[this.form_present_address_2].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]);
+      this.contactForm.controls[this.form_present_address_3].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]);
+      this.contactForm.controls[this.form_present_city].setValidators(null);
+      this.contactForm.controls[this.form_present_state].setValidators(null);
+      this.contactForm.controls[this.form_present_region].setValidators(null);
+      this.contactForm.controls[this.form_present_zip_code].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.zipOnly()]);
+      this.contactForm.controls[this.form_permanent_address_1].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]);
+      this.contactForm.controls[this.form_permanent_address_2].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]);
+      this.contactForm.controls[this.form_permanent_address_3].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]);
+      this.contactForm.controls[this.form_permanent_city].setValidators(null);
+      this.contactForm.controls[this.form_permanent_state].setValidators(null);
+      this.contactForm.controls[this.form_permanent_region].setValidators(null);
+      this.contactForm.controls[this.form_permanent_zip_code].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.zipOnly()]);
+    }
+    let form = this.contactForm;
     for (const key in form.controls) {
-          form.get(key).clearValidators();
-          form.get(key).updateValueAndValidity();
+      form.get(key).updateValueAndValidity();
+    }
   }
-}
 
   // Form getters
   get present_address_1() {

@@ -7,7 +7,7 @@
         <form class="contactForm" [formGroup]="contactForm" (ngSubmit)="formSubmit()">
             <div class="row-wrapper">
                 <div class="overall-input-wrapper width-100">
-                    <label>Present Address 1<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <label>Present Address 1<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_present_address_1">
                     <div class="form-error" *ngIf="present_address_1.invalid && present_address_1.touched">

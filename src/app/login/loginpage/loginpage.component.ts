@@ -154,30 +154,17 @@ export class LoginpageComponent implements OnInit {
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
+              this.appConfig.setLocalData('firstShortlist', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
               let todayDate = new Date();
               let month = todayDate.getMonth() + 1;
               let day = todayDate.getDate()
               let date = todayDate.getFullYear() + '-' + (month <= 9 ? '0' + month : month) + '-' + (day <= 9 ? '0' + day : day)
               if (new Date(date) <= new Date(DropdownListForKYC['kycDate'])) {
-                localStorage.setItem('empLogin', JSON.stringify(data['full_array'] ? data['full_array'] : []))
-                this.appConfig.setLocalData('reDirectView', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
-                this.appConfig.setLocalData('firstShortlist', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
-                this.appConfig.setLocalData('field_isformsubmitted', 'true');
-                this.appConfig.setLocalData('personalFormSubmitted', 'true');
-                this.appConfig.setLocalData('educationalFormSubmitted', 'true');
-                this.appConfig.setLocalData('familyFormSubmitted', 'true');
-                this.appConfig.setLocalData('generalFormSubmitted', 'true');
-                this.appConfig.setLocalData('confirmFormSubmitted', 'true');
                 if (data['joiningform'] && data['joiningform'] === '1') {
                   return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
                 }
-                if (data['first_shortlist'] && data['first_shortlist'] === '1') {
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                }
-                if (data['form_submmited'] && data['form_submmited'] === '1') {
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
-                } else {
-                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.PROFILE);
+                else {
+                  return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
                 }
               } else {
                 return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE);
