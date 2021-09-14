@@ -2,11 +2,11 @@
     <h5>
         Education Details
     </h5>
-    <div class="alert">
       <ng-container *ngIf="!candidateService.checkKycOrJoiningForm()">
-        Note: Please fill all the educational qualifications till date (for example: 10th, 12th, B.Tech & M.Tech if relevant).
+        <div class="alert">
+          Note: Please fill all the educational qualifications till date (for example: 10th, 12th, B.Tech & M.Tech if relevant).
+        </div>
       </ng-container>
-      </div>
 
     <div class="grids-wrapper">
         <div class="row-wrapper">

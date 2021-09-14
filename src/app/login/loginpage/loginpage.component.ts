@@ -62,7 +62,7 @@ export class LoginpageComponent implements OnInit {
 
   apiCalling() {
     // this.apiService.getAllState().subscribe((datas: any) => {
-    this.candidateService.getEducationList().subscribe((datas: any) => {
+    // this.candidateService.getEducationList().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
 
 
@@ -76,13 +76,13 @@ export class LoginpageComponent implements OnInit {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.VERIFY.EMAIL_ERROR);
         }
       });
-    }, (err) => {
+    // }, (err) => {
       // if (err.status === 200) {
       //   this.appConfig.setSessionData('csrf', err.error.text);
       // }
 
 
-    });
+    // });
   }
 
 

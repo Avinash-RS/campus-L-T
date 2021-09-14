@@ -88,7 +88,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   conditionCert = 'cert';
   conditionBank = 'bank';
   //Joining Variables
-  form_joiningArray = 'joiningArray';
+  form_joiningArray = 'joining_details';
   form_file_id = 'file_id';
   form_id = 'id';
   form_file_path = 'file_path';
@@ -102,27 +102,27 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   form_expectedDate = 'expected_date';
 
   // Education variables
-  form_educationArray = 'Education_Documents';
+  form_educationArray = 'education_documents';
   form_semesterArray = 'sub_documents';
   form_noofSemester = 'no_of_semester';
-  form_education_level = 'Education_Level';
+  form_education_level = 'education_level';
   form_eourse_Completion = 'course_completion_certificate';
   form_degree_Completion = 'degree_completion_certificate';
 
   // Resume Variables
-  form_resumeArray = 'Resume';
+  form_resumeArray = 'resume';
 
   // Transfer certificate Variables
-  form_transferCertArray = 'transfer';
+  form_transferCertArray = 'transfer_certificate';
 
   // Other certificate Variables
-  form_otherCertArray = 'otherCertificates';
+  form_otherCertArray = 'other_certifications';
 
   // Certifications array
-  form_CertificationArray = 'CertificationArray';
+  form_CertificationArray = 'certifications';
   getCertificationDocuments: any;
   // Banking
-  form_bankArray = 'bank';
+  form_bankArray = 'banking_details';
   form_acc_no = 'account_no';
   form_ifsc_code = 'ifsc_code';
   form_branch = 'branch';

@@ -235,7 +235,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
   form_expectedDate = 'expected_date';
   form_semesterArray = 'sub_documents';
   form_noofSemester = 'no_of_semester';
-  form_education_level = 'Education_Level';
+  form_education_level = 'education_level';
   form_bankArray = 'bank';
   form_acc_no = 'account_no';
   form_ifsc_code = 'ifsc_code';
@@ -1061,7 +1061,6 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
       section_name: "acknowledgement",
       saving_data: apiData
     }
-    console.log('ProfileSubmitApiRequestDetails', ProfileSubmitApiRequestDetails);
     this.candidateService.newSaveProfileData(ProfileSubmitApiRequestDetails).subscribe((data: any) => {
     this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
     this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
