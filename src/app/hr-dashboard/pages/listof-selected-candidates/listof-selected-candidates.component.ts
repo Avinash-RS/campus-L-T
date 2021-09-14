@@ -1,4 +1,3 @@
-import { CommonJoiningFormComponent } from './../../../shared/common-joining-form/common-joining-form.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';

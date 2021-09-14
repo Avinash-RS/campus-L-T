@@ -1,4 +1,3 @@
-import { CommonJoiningFormComponent } from './shared/common-joining-form/common-joining-form.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -16,7 +15,6 @@ import en from '@angular/common/locales/en';
 import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
-import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { KycSnackbarComponent } from './shared/kyc-snackbar/kyc-snackbar.component';
 import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
@@ -74,14 +72,14 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     AgGridModule.withComponents([])
     ],
   // providers: [],
-  entryComponents: [ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent, CommonJoiningFormComponent],
+  entryComponents: [ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
-    CanDeactivateGuard, CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
+     CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
   ],
   bootstrap: [AppComponent]
 })

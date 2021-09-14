@@ -281,11 +281,7 @@ export class CandidateMappersService {
     }
 
     newGetProfileData(data) {
-      if (data && data.candidate_user_id) {
-
-      }
-      if (data && data.form_name == 'documents_upload') {
-
+      if ((data && data.candidate_user_id) || (data && data.form_name == 'documents_upload')) {
       } else {
         data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
       }
@@ -294,11 +290,7 @@ export class CandidateMappersService {
     }
 
     newSaveProfileData(data) {
-      if (data && data.candidate_user_id) {
-
-      }
-      if (data && data.form_name == 'documents_upload') {
-
+      if ((data && data.candidate_user_id) || (data && data.form_name == 'documents_upload')) {
       } else {
         data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
       }
