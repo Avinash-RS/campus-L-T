@@ -15,7 +15,6 @@ export class CommonKycProfileViewComponent implements OnInit {
     public data
   ) {
     this.data.documents = false;
-    this.data.isSelected = false;
   }
 
   ngOnInit() {

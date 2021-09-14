@@ -50,9 +50,8 @@ export class InvSubEmploymentComponent implements OnInit {
         form: params['form']
       };
       this.profileViewData = {
-        candidateId: params['uid'],
+        candidate_user_id: params['uid'],
         candidateName: params['name'],
-        isSelected: false,
         documents: true
       }
       this.candidateId = params['id'];

@@ -160,12 +160,13 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
 
   checkFormSubmitted() {
-    if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
-    this.hideStepper = true;
-    this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+    if (this.appConfig.getLocalData('joiningFormAccess') == 'true') {
+      this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
     } else {
-      this.hideStepper = false;
+      if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
+        this.hideStepper = true;
     }
+  }
   }
 
   statusOfForms(param?: any) {

@@ -273,17 +273,35 @@ export class CandidateMappersService {
 
     checkKycOrJoiningForm() {
       let isJoining = this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') == 'true' ? true : false;
-      return isJoining;
+      if (this.appConfig.getLocalData('roles') == 'candidate') {
+        return isJoining;
+      } else {
+        return true;
+      }
     }
 
     newGetProfileData(data) {
-      data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
+      if (data && data.candidate_user_id) {
+
+      }
+      if (data && data.form_name == 'documents_upload') {
+
+      } else {
+        data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
+      }
       return this.http.post(`${this.BASE_URL}/profile/get_candidate_form_details`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true});
     }
 
     newSaveProfileData(data) {
-      data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
+      if (data && data.candidate_user_id) {
+
+      }
+      if (data && data.form_name == 'documents_upload') {
+
+      } else {
+        data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
+      }
       return this.http.post(`${this.BASE_URL}/profile/save_candidate_form_details`, data,
         { headers: this.getAfterCustomHeaders(), withCredentials: true});
     }

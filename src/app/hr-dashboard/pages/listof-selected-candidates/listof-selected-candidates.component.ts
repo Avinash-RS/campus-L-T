@@ -87,12 +87,12 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     if (event.colDef.field === 'candidate_name') {
       if (event['data']['mailed'] == 'Sent' && event['data']['is_editable'] == 'Submitted') {
         const data = {
-          candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+          candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
         };
-        this.openDialog4(CommonJoiningFormComponent, data);
+        this.openDialog4(CommonKycProfileViewComponent, data);
       } else {
         const data = {
-          candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+          candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
           candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
         };
         this.openDialog5(CommonKycProfileViewComponent, data);
