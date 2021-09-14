@@ -384,5 +384,11 @@ export class AppConfigService {
     });
   }
 
+  logoutWhenAuthorized() {
+    this.clearLocalData();
+    this.clearSessionData();
+    this.routeNavigation('/');
+  }
+
 }
 

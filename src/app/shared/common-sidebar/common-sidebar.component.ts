@@ -4,6 +4,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, distinctUntilChanged} from 'rxjs/operators';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 
 export interface IBreadCrumb {
   label: string;
@@ -32,6 +33,7 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
      public appConfig: AppConfigService,
      private sharedService: SharedServiceService,
      private router: Router,
+     private candidateService: CandidateMappersService,
      private activatedRoute: ActivatedRoute) {
      // Assigning sub menus for the current router
      this.sharedService.subMenuSubject.subscribe((data: any) => {
@@ -174,5 +176,8 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
     this.sharedService.joiningFormStepperStatus.next('dataFromMasterDashboard');
   }
 
+  checkJoining() {
+    return this.candidateService.checkKycOrJoiningForm() ? 'Joining Form' : 'Profile Form';
+  }
 
 }

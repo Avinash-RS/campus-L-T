@@ -935,13 +935,30 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
 
   formSubmitFinal() {
     if (this.acknowledgmentForm.valid) {
-      if (this.signature && this.signature.file_path) {
+      if (this.signature && this.signature.file_path && this.checkAllFormsValid()) {
         return this.matDialogOpen();
       }
-      this.appConfig.nzNotification('error', 'Not Submitted', 'Please upload your Signature to submit the form');
+      this.signature && this.signature.file_path ? '' : this.appConfig.nzNotification('error', 'Not Submitted', 'Please upload your Signature to submit the form');
     } else {
       this.glovbal_validators.validateAllFields(this.acknowledgmentForm);
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields in Acknowledgements and Declarations');
+    }
+  }
+
+  checkAllFormsValid() {
+    let formSections = this.candidateService.getLocalsection_flags();
+    if (
+      formSections['contact_details'] == '1' &&
+      formSections['dependent_details'] == '1' &&
+      formSections['document_details'] == '1' &&
+      formSections['education_details'] == '1' &&
+      formSections['experience_details'] == '1' &&
+      formSections['personal_details'] == '1'
+    ) {
+      return true;
+    } else {
+     formSections['personal_details'] != '1' ? this.appConfig.nzNotification('error', 'Personal Details', 'Go back and submit the personal details form again') : formSections['contact_details'] != '1' ? this.appConfig.nzNotification('error', 'Contact Details', 'Go back and submit the contact details form again') : formSections['dependent_details'] != '1' ? this.appConfig.nzNotification('error', 'Dependent Details', 'Go back and submit the dependent details form again') : formSections['document_details'] != '1' ? this.appConfig.nzNotification('error', 'Upload documents', 'Go back and submit the upload documents form again') : formSections['education_details'] != '1' ? this.appConfig.nzNotification('error', 'Education Details', 'Go back and submit the education details form again') : formSections['experience_details'] != '1' ? this.appConfig.nzNotification('error', 'Work Experience Details', 'Go back and submit the work experience details form again') : '';
+     return false;
     }
   }
   matDialogOpen() {
@@ -1037,7 +1054,7 @@ export class JoiningPreviewComponent implements OnInit, AfterViewInit, OnDestroy
     let apiData = {
       selected_post: this.selectedPost,
       acknowledgement: ackForm,
-      signature: this.signature
+      signature_image: this.signature
     }
     const ProfileSubmitApiRequestDetails = {
       form_name: "joining",
