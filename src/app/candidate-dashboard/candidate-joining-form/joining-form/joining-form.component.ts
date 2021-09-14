@@ -159,14 +159,19 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  checkFormSubmitted() {
+    if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
+    this.hideStepper = true;
+    this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+    } else {
+      this.hideStepper = false;
+    }
+  }
+
   statusOfForms(param?: any) {
     if (this.candidateService.getLocalProfileData()) {
       let data = this.candidateService.getLocalsection_flags();
-      this.hideStepper = data?.submitted == '1' ? true : false;
-      if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
-        this.hideStepper = true;
-        }
-
+      this.checkFormSubmitted();
 
       if ((data && data.submitted == '1') || this.hideStepper) {
         this.valid.tillsbmit();
