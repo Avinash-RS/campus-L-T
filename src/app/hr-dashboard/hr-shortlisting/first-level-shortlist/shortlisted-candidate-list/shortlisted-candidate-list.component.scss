@@ -12,3 +12,97 @@
   margin: 8px 16px 4px 0;
   flex-direction: row-reverse;
 }
+
+::ng-deep .popupModalContainerForcustomFilter {
+  right: 0 !important;
+  pointer-events: auto !important;
+  min-width: 500px !important;
+  height: calc(100% - 64px) !important;
+  position: absolute !important;
+  border-radius: 0 !important;
+  bottom: 0 !important;
+  .mat-dialog-container {
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    .custom-filter-header {
+      padding: 15px 8px;
+      background: #ede9e1;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      .filter-icon-div {
+        color: grey;
+        span:first-child {
+          font-size: 24px;
+          cursor: pointer;
+        }
+        span:last-child {
+          font-size: 17px;
+        }
+      }
+      .clearall {
+        cursor: pointer;
+        color: grey;
+      }
+    }
+
+    .custom-filter-main-wrapper {
+      display: flex;
+      min-height: 100vh;
+      overflow: auto;
+      .filter-list {
+        min-width: 160px;
+        height: 100vh;
+        position: relative;
+        background: #ede9e1;
+        overflow: auto;
+      .navList {
+          line-height: 40px;
+          padding: .5em;
+          background: #ede9e1;
+          border: solid 1px lightgray;
+          border-bottom: 0px;
+          padding: 4px 8px;
+          cursor: pointer;
+          color: $light-black;
+        }
+        .navList:hover {
+          background: rgb(128, 128, 128, 0.3);
+        }
+        .active {
+          background: rgb(128, 128, 128, 0.5) !important;
+        }
+        .navList:last-child {
+          border-bottom: solid 1px lightgray;
+        }
+      }
+    }
+
+    .filtering-content-list {
+      display: flex;
+      width: 100%;
+      padding: 14px;
+      .navContent {
+        width: 100%;
+        .nav-content-render {
+          line-height: 35px;
+          cursor: pointer;
+          padding: 4px 12px;
+          border-top: solid 1px lightgray;
+          border-bottom: solid 1px lightgray;
+        }
+      }
+    }
+    .tick {
+      display: inline-block;
+      transform: rotate(43deg);
+      height: 18px;
+      width: 8px;
+      border-bottom: 2px solid grey;
+      border-right: 2px solid grey;
+      position: relative;
+      margin-right: 14px;
+      top: 2px;
+    }
+  }
+}

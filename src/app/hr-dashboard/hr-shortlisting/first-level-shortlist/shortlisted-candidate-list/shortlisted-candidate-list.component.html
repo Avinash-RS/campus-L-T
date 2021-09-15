@@ -1,40 +1,164 @@
 <div class="shortlist-candidates-wrapper">
   <div class="sub-headers-wrapper">
     <div class="ml-2" *ngIf="userList && userList.length > 0">
-      <button [matTooltip]="checkFilterAppied() ? '' : 'No filter has been applied'" [ngClass]="checkFilterAppied() ? '' : 'disable-selection'" (click)="checkFilterAppied() ? gridApi.setFilterModel(null) : ''" class="submit" mat-raised-button>Clear all Filters</button>
+      <button
+        [matTooltip]="'Custom Filter'"
+        (click)="customFilterOpen()"
+        class="submit"
+        mat-raised-button
+      >
+        Custom Filter
+      </button>
     </div>
 
     <div class="ml-2" *ngIf="userList && userList.length > 0">
-      <button (click)="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? shortlist() : ''" [matTooltip]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the candidates'" class="submit" [ngClass]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disable-selection'" mat-raised-button>Shortlist</button>
+      <button
+        [matTooltip]="checkFilterAppied() ? '' : 'No filter has been applied'"
+        [ngClass]="checkFilterAppied() ? '' : 'disable-selection'"
+        (click)="checkFilterAppied() ? gridApi.setFilterModel(null) : ''"
+        class="submit"
+        mat-raised-button
+      >
+        Clear all Filters
+      </button>
     </div>
-</div>
-  <ag-grid-angular style="width: 98%; height: 100vh; margin:auto !important;" class="ag-theme-alpine"
-  [rowData]="rowData"
-  [columnDefs]="columnDefs"
-  [defaultColDef]="defaultColDef"
-  [rowModelType]="rowModelType"
-  [serverSideStoreType]="serverSideStoreType"
-  [maintainColumnOrder]="true"
-  [pagination]="true"
-  [suppressRowClickSelection]="true"
-  [paginationPageSize]="paginationPageSize"
-  [rowSelection]="rowSelection"
-  [cacheBlockSize]="cacheBlockSize"
-  (gridReady)="onGridReady($event)"
-  (sortChanged)="sortevent($event)"
-  [enableCharts]="true"
-  [enableRangeSelection]="true"
-  (cellClicked)="onCellClicked($event)"
-  (paginationChanged)="paginationChanged($event)"
-  [statusBar]="statusBar"
-  [frameworkComponents]="frameworkComponents"
-  headerHeight="30"
-  [rowGroupPanelShow]="'always'" [rowClassRules]="rowClassRules" [sideBar]="true"
-  [masterDetail]="true"
-  [detailCellRendererParams]="detailCellRendererParams"
-  (firstDataRendered)="onFirstDataRendered($event)"
-  [pivotPanelShow]="'always'" [rowDragManaged]="false" [autoGroupColumnDef]="autoGroupColumnDef"
-  [animateRows]="true">
- </ag-grid-angular>
 
+    <div class="ml-2" *ngIf="userList && userList.length > 0">
+      <button
+        (click)="
+          gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
+            ? shortlist()
+            : ''
+        "
+        [matTooltip]="
+          gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
+            ? ''
+            : 'Please select the candidates'
+        "
+        class="submit"
+        [ngClass]="
+          gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
+            ? ''
+            : 'disable-selection'
+        "
+        mat-raised-button
+      >
+        Shortlist
+      </button>
+    </div>
+  </div>
+  <ag-grid-angular
+    style="width: 98%; height: 100vh; margin: auto !important"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [rowModelType]="rowModelType"
+    [serverSideStoreType]="serverSideStoreType"
+    [maintainColumnOrder]="true"
+    [pagination]="true"
+    [suppressRowClickSelection]="true"
+    [paginationPageSize]="paginationPageSize"
+    [rowSelection]="rowSelection"
+    [cacheBlockSize]="cacheBlockSize"
+    (gridReady)="onGridReady($event)"
+    (sortChanged)="sortevent($event)"
+    [enableCharts]="true"
+    [enableRangeSelection]="true"
+    (cellClicked)="onCellClicked($event)"
+    (paginationChanged)="paginationChanged($event)"
+    [statusBar]="statusBar"
+    [frameworkComponents]="frameworkComponents"
+    headerHeight="30"
+    [rowGroupPanelShow]="'always'"
+    [rowClassRules]="rowClassRules"
+    [sideBar]="true"
+    [masterDetail]="true"
+    [detailCellRendererParams]="detailCellRendererParams"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    [pivotPanelShow]="'always'"
+    [rowDragManaged]="false"
+    [autoGroupColumnDef]="autoGroupColumnDef"
+    [animateRows]="true"
+  >
+  </ag-grid-angular>
 </div>
+
+<ng-template #customFilter>
+  <div class="customFilter-shortlist">
+    <div class="custom-filter-header">
+      <div class="d-flex align-items-center filter-icon-div">
+        <span class="material-icons mr-2"> menu </span>
+        <span>Filters</span>
+      </div>
+      <div class="clearall">CLEAR ALL</div>
+    </div>
+    <!-- Content Start -->
+    <div class="custom-filter-main-wrapper">
+      <div class="filter-list">
+        <div
+          class="navList"
+          (click)="selectedCustomFilterList(filterProfileList)"
+          [ngClass]="
+            selectedCustomFilterListValue == filterProfileList ? 'active' : ''
+          "
+        >
+          {{ filterProfileList }}
+        </div>
+        <div
+          class="navList"
+          (click)="selectedCustomFilterList(filterGenderList)"
+          [ngClass]="
+            selectedCustomFilterListValue == filterGenderList ? 'active' : ''
+          "
+        >
+          {{ filterGenderList }}
+        </div>
+        <div
+          class="navList"
+          (click)="selectedCustomFilterList(filterDOBList)"
+          [ngClass]="
+            selectedCustomFilterListValue == filterDOBList ? 'active' : ''
+          "
+        >
+          {{ filterDOBList }}
+        </div>
+        <div
+          class="navList"
+          (click)="selectedCustomFilterList(filterEducationList)"
+          [ngClass]="
+            selectedCustomFilterListValue == filterEducationList ? 'active' : ''
+          "
+        >
+          {{ filterEducationList }}
+        </div>
+        <div
+          class="navList"
+          (click)="selectedCustomFilterList(filterBacklogsList)"
+          [ngClass]="selectedCustomFilterListValue == filterBacklogsList ? 'active' : ''"
+        >
+          {{ filterBacklogsList }}
+        </div>
+      </div>
+      <div class="filtering-content-list">
+        <div class="navContent">
+          <ng-container *ngIf="selectedCustomFilterListValue == filterProfileList" [ngTemplateOutlet]="profile"></ng-container>
+          <ng-container *ngIf="selectedCustomFilterListValue == filterGenderList" [ngTemplateOutlet]="gender"></ng-container>
+          <ng-container *ngIf="selectedCustomFilterListValue == filterDOBList" [ngTemplateOutlet]="dob"></ng-container>
+          <ng-container *ngIf="selectedCustomFilterListValue == filterEducationList" [ngTemplateOutlet]="education"></ng-container>
+          <ng-container *ngIf="selectedCustomFilterListValue == filterBacklogsList" [ngTemplateOutlet]="backlog"></ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #profile>
+  <div class="nav-content-render"><span class="tick"></span> <span class="label-value">Diploma (DET)</span></div>
+</ng-template>
+
+<ng-template #gender> Gender List content </ng-template>
+<ng-template #dob> Date of Birt List content </ng-template>
+<ng-template #education> Education List content </ng-template>
+<ng-template #backlog> Backlog List content </ng-template>

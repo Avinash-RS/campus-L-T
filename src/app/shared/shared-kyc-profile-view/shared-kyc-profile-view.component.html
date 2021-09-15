@@ -1,7 +1,7 @@
 <div class="joining-personal-wrapper pb-2">
   <div class="grids-wrapper">
     <div class="dependentForm">
-      <div *ngIf="nonCandidate && !nonCandidate.documentsOnly" class="section">
+      <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section">
         <div
           class="header d-flex justify-content-between mb-1 align-items-center"
         >
@@ -464,7 +464,7 @@
         </ng-container>
       </div>
 
-      <div *ngIf="nonCandidate && !nonCandidate.documentsOnly" class="section">
+      <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section">
         <div
           class="header d-flex justify-content-between mb-1 align-items-center"
         >
@@ -560,7 +560,7 @@
         </ng-container>
       </div>
 
-      <div *ngIf="nonCandidate && !nonCandidate.documentsOnly" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+      <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
         <div
           class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding"
         >
@@ -639,7 +639,7 @@
         </ng-container>
       </div>
 
-      <div *ngIf="nonCandidate && !nonCandidate.documentsOnly" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+      <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
         <div
           class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding"
         >
@@ -1351,7 +1351,7 @@
       </div>
 
       <!-- Work Experience -->
-      <div *ngIf="nonCandidate && !nonCandidate.documentsOnly" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
+      <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section pl-0 pt-0 pr-0 pb-0 custom-padding">
         <div
           class="header d-flex justify-content-between mb-1 align-items-center custom-header-padding"
         >
@@ -2219,7 +2219,7 @@
 
       <!-- Signature -->
       <div
-        *ngIf="formSubmitted && !nonCandidate.documentsOnly"
+        *ngIf="formSubmitted && (!nonCandidate || nonCandidate.documentsOnly != true)"
         class="section pl-0 pt-0 pr-0 pb-0 custom-padding"
       >
         <div class="header d-flex mb-1 custom-header-padding flex-column">

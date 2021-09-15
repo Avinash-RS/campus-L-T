@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -13,6 +13,7 @@ import { ModuleRegistry, AllModules, IDatasource, IGetRowsParams } from '@ag-gri
 ModuleRegistry.registerModules(AllModules);
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
 import { ClickableStatusBarComponent } from './custom-get-selected-rows-count';
+import { firstShortlistFilterModel } from './firstShortlist_filtermodel';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -21,8 +22,21 @@ ModuleRegistry.registerModules([GridChartsModule]);
   styleUrls: ['./shortlisted-candidate-list.component.scss']
 })
 export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit {
+  @ViewChild('customFilter', {static: false}) customFilterRef: TemplateRef<any>;
 
-    // serverSide Things
+  filterProfileList = 'Profile List';
+  filterGenderList = 'Gender';
+  filterDOBList = 'Date of Birth';
+  filterEducationList = 'Education Level';
+  filterBacklogsList = 'Backlogs';
+
+  profileDropDownValues = this.firstShortlistFilterModel.getProfileList();
+  genderDropDownValues = this.firstShortlistFilterModel.getGenderList();
+  dateOfBirtValues = this.firstShortlistFilterModel.getDateOfBirthRange();
+  educationDropDownValues = this.firstShortlistFilterModel.getEducationList();
+  backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
+
+  // serverSide Things
     rowSelection: any;
     userList: any = [];
     pageRowCount = 0;
@@ -52,14 +66,15 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     public getNodeChildDetails;
     resultsLength:any;
     fres: any;
+  selectedCustomFilterListValue: any;
 
   constructor(
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
+    private firstShortlistFilterModel: firstShortlistFilterModel,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private dialog: MatDialog
   ) {
   }
 
@@ -637,6 +652,22 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
       this.callApiForGetShortlistingCandidates();
       if (result) {
       }
+    });
+  }
+
+  selectedCustomFilterList(selectedFilterList) {
+    this.selectedCustomFilterListValue = selectedFilterList;
+  }
+
+  customFilterOpen() {
+    this.selectedCustomFilterListValue = this.selectedCustomFilterListValue ? this.selectedCustomFilterListValue : this.filterProfileList;
+    const dialogRef = this.dialog.open(this.customFilterRef, {
+      width: '400px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForcustomFilter'
     });
   }
 
