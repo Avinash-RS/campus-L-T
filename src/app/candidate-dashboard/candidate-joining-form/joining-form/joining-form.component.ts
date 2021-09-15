@@ -168,6 +168,9 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
         this.redirectToPreview = true;
         this.hideStepper = true;
+    } else {
+      this.redirectToPreview = false;
+      this.hideStepper = false;
     }
   }
   }
