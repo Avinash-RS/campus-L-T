@@ -247,7 +247,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
           this.getTransferArr.push(this.patchJoiningArray(element));
         });
       } else {
-        this.getTransferArr.push(this.initJoiningArray());
+        this.getTransferArr.push(this.initTransferArray());
       }
 
       // Banking Details
@@ -393,10 +393,26 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     })
   }
 
-  initResumeArray(otherCert?) {
+  initTransferArray() {
     return this.fb.group({
-      [this.form_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_label]: [null, (otherCert == 'otherCert' ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
+      [this.form_name]: ['Transfer Certificate', [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: ['Transfer Certificate'],
+      // [this.form_id]: [null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [null]
+    })
+  }
+
+  initResumeArray() {
+    return this.fb.group({
+      [this.form_name]: ['Resume', [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: ['Resume'],
       // [this.form_id]: [null],
       [this.form_file_size]: [null],
       [this.form_file_path]: [null, [Validators.required]],
@@ -430,8 +446,8 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
 
   initBankingArray() {
     return this.fb.group({
-      [this.form_name]: [null],
-      [this.form_label]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]], // Bank name
+      [this.form_name]: ['Banking'],
+      [this.form_label]: ['Banking', [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]], // Bank name
       [this.form_acc_no]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50)]],
       [this.form_ifsc_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_branch]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
