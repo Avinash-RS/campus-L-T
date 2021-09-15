@@ -423,6 +423,11 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       this.documentDetails.resume = Resume;
       this.documentDetails.transfer_certificate = Transfer_Certificate;
       this.documentDetails.education_documents = Education_Documents;
+      if ((joinCheck && joinCheck.length > 0) || (Banking_Details && Banking_Details.length > 0) || (Resume && Resume.length > 0) || (Transfer_Certificate && Transfer_Certificate.length > 0) || (Education_Documents && Education_Documents.length > 0) || (this.documentDetails && this.documentDetails.certifications && this.documentDetails.certifications.length > 0) || (this.documentDetails && this.documentDetails.other_certifications && this.documentDetails.other_certifications.length > 0)) {
+
+      } else {
+        this.documentDetails = null;
+      }
     }
     // Work Experience
     this.getWorkApiDetails(data);
@@ -923,7 +928,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_domicile_state]: domicile ? domicile : 'NA',
       [this.form_identification_mark1]: this.personalDetails?.[this.form_identification_mark1] ? this.personalDetails[this.form_identification_mark1] : 'NA',
       [this.form_identification_mark2]: this.personalDetails?.[this.form_identification_mark2] ? this.personalDetails[this.form_identification_mark2] : 'NA',
-      [this.form_language_array]: this.personalDetails?.[this.form_language_array] && this.personalDetails?.[this.form_language_array].length > 0 ? this.personalDetails[this.form_language_array] : 'NA',
+      [this.form_language_array]: this.personalDetails?.[this.form_language_array] && this.personalDetails?.[this.form_language_array].length > 0 ? this.personalDetails[this.form_language_array] : [],
       [this.form_passport_number]: this.personalDetails?.[this.form_passport_number] ? this.personalDetails[this.form_passport_number] : 'NA',
       [this.form_name_as_in_passport]: this.personalDetails?.[this.form_name_as_in_passport] ? this.personalDetails[this.form_name_as_in_passport] : 'NA',
       [this.form_profession_as_in_passport]: this.personalDetails?.[this.form_profession_as_in_passport] ? this.personalDetails[this.form_profession_as_in_passport] : 'NA',

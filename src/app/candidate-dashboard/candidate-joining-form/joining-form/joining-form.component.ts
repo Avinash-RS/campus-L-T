@@ -114,6 +114,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   requestnavigationRoute: any;
   noSave: boolean;
   hideStepper: boolean = true;
+  redirectToPreview: boolean;
   constructor(
     private appConfig: AppConfigService,
     public candidateService: CandidateMappersService,
@@ -162,8 +163,10 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   checkFormSubmitted() {
     if (this.appConfig.getLocalData('joiningFormAccess') == 'true') {
       this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+      this.redirectToPreview = true;
     } else {
       if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
+        this.redirectToPreview = true;
         this.hideStepper = true;
     }
   }
@@ -173,8 +176,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     if (this.candidateService.getLocalProfileData()) {
       let data = this.candidateService.getLocalsection_flags();
       this.checkFormSubmitted();
-
-      if ((data && data.submitted == '1') || this.hideStepper) {
+      if ((data && data.submitted == '1') || this.redirectToPreview) {
         this.valid.tillsbmit();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         return this.activeStep = 'preview';
