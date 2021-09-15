@@ -655,6 +655,14 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
     });
   }
 
+  clearAllFilters() {
+    this.profileDropDownValues = this.firstShortlistFilterModel.getProfileList();
+    this.genderDropDownValues = this.firstShortlistFilterModel.getGenderList();
+    this.dateOfBirtValues = this.firstShortlistFilterModel.getDateOfBirthRange();
+    this.educationDropDownValues = this.firstShortlistFilterModel.getEducationList();
+    this.backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
+  }
+
   selectedCustomFilterList(selectedFilterList) {
     this.selectedCustomFilterListValue = selectedFilterList;
   }

@@ -81,15 +81,24 @@
     .filtering-content-list {
       display: flex;
       width: 100%;
-      padding: 14px;
+      padding: 8px 14px 14px 14px;
       .navContent {
         width: 100%;
         .nav-content-render {
           line-height: 35px;
           cursor: pointer;
           padding: 4px 12px;
-          border-top: solid 1px lightgray;
-          border-bottom: solid 1px lightgray;
+          border-top: solid 1px rgba(211, 211, 211, 0.964);
+        }
+        .nav-content-render:last-child {
+          border-bottom: solid 1px rgba(211, 211, 211, 0.964);
+        }
+        .nav-content-render:hover {
+          background: #eee;
+        }
+        .checked-value {
+          border-top: solid 1px rgba(211, 211, 211, 0.964);
+          background: rgba(211, 211, 211, 0.664);
         }
       }
     }
@@ -103,6 +112,9 @@
       position: relative;
       margin-right: 14px;
       top: 2px;
+    }
+    .visible-hide {
+      visibility: hidden;
     }
   }
 }

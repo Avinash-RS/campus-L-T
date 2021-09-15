@@ -91,7 +91,7 @@
         <span class="material-icons mr-2"> menu </span>
         <span>Filters</span>
       </div>
-      <div class="clearall">CLEAR ALL</div>
+      <div (click)="clearAllFilters()" class="clearall">CLEAR ALL</div>
     </div>
     <!-- Content Start -->
     <div class="custom-filter-main-wrapper">
@@ -155,10 +155,26 @@
 </ng-template>
 
 <ng-template #profile>
-  <div class="nav-content-render"><span class="tick"></span> <span class="label-value">Diploma (DET)</span></div>
+  <div (click)="profile.checked = !profile.checked" [ngClass]="profile.checked ? 'checked-value' : ''" *ngFor="let profile of profileDropDownValues; let i = index" class="nav-content-render">
+    <span class="tick" [ngClass]="profile.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{profile.label}}</span>
+  </div>
 </ng-template>
 
-<ng-template #gender> Gender List content </ng-template>
+<ng-template #gender>
+  <div (click)="gender.checked = !gender.checked" [ngClass]="gender.checked ? 'checked-value' : ''" *ngFor="let gender of genderDropDownValues; let i = index" class="nav-content-render">
+    <span class="tick" [ngClass]="gender.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{gender.label}}</span>
+  </div>
+</ng-template>
 <ng-template #dob> Date of Birt List content </ng-template>
-<ng-template #education> Education List content </ng-template>
-<ng-template #backlog> Backlog List content </ng-template>
+
+<ng-template #education>
+  <div (click)="education.checked = !education.checked" [ngClass]="education.checked ? 'checked-value' : ''" *ngFor="let education of educationDropDownValues; let i = index" class="nav-content-render">
+    <span class="tick" [ngClass]="education.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{education.label}}</span>
+  </div>
+</ng-template>
+
+<ng-template #backlog>
+  <div (click)="backlog.checked = !backlog.checked" [ngClass]="backlog.checked ? 'checked-value' : ''" *ngFor="let backlog of backlogsDropDownValues; let i = index" class="nav-content-render">
+    <span class="tick" [ngClass]="backlog.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{backlog.value}}</span>
+  </div>
+</ng-template>

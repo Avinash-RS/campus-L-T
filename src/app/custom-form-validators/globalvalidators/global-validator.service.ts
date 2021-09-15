@@ -81,17 +81,17 @@ export class GlobalValidatorService {
     }
 
     address255() {
-      const address255: RegExp = /^([a-zA-Z0-9_ \-,.:;/\r\n|\r|\n/]){0,255}$/;
+      const address255: RegExp = /^([a-zA-Z0-9_ \-,.:/\r\n|\r|\n/]){0,255}$/;
       return this.regexValidator(address255, {address255: true});
     }
 
     offer() {
-      const offer: RegExp = /^([a-zA-Z0-9_ \-,.:;&/\r\n|\r|\n/]){0,255}$/;
+      const offer: RegExp = /^([a-zA-Z0-9_ \-,.:&/\r\n|\r|\n/]){0,255}$/;
       return this.regexValidator(offer, {offer: true});
     }
 
     address50() {
-      const address50: RegExp = /^([a-zA-Z0-9_ \-,.:;/\r\n|\r|\n/]){0,49}$/;
+      const address50: RegExp = /^([a-zA-Z0-9_ \-,.:/\r\n|\r|\n/]){0,49}$/;
       return this.regexValidator(address50, {address50: true});
     }
 
