@@ -324,7 +324,7 @@ export class AppConfigService {
         columnGroupShow: 'closed',
         flex: 1,
         minWidth: 200,
-        floatingFilter: true,
+        floatingFilter: false,
         suppressSizeToFit: true,
         filterParams: {
         suppressAndOrCondition: true,

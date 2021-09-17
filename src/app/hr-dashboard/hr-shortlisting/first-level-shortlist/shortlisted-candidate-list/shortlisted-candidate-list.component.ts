@@ -36,6 +36,7 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   educationDropDownValues = this.firstShortlistFilterModel.getEducationList();
   backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
 
+  rootArray = [];
   // serverSide Things
     rowSelection: any;
     userList: any = [];
@@ -79,12 +80,11 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   ngOnInit() {
-    this.rowSelection = "multiple";
-    this.serverSideStoreType = 'full';
-    this.rowModelType = 'infinite';
-
     this.defaultColDef = this.appConfig.agGridWithServerSideAllFuncWithRowGrouping();
-    this.defaultColDef.checkboxSelection = this.isFirstColumn;
+    // this.defaultColDef.checkboxSelection = this.isFirstColumn;
+    this.defaultColDef.enableValue = false;
+    this.defaultColDef.enableRowGroup = false;
+    this.defaultColDef.enablePivot = false;
     this.tableDef();
     this.frameworkComponents = {
       clickableStatusBarComponent: ClickableStatusBarComponent,
@@ -101,6 +101,415 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
   }
 
   tableDef() {
+   let table_headers = [
+    //  {
+    //        headerName: "Candidate ID",
+    //        field: "candidate_id",
+    //        filter: "agNumberColumnFilter",
+    //        tooltipField: 'candidate_id',
+    //        getQuickFilterText: (params) => {
+    //        return params.value;
+    //       },
+    //     },
+    {
+    headerName: 'Candidate Information',
+    children: [
+         {
+           headerName: "Candidate Name",
+           field: "candidate_name",
+           filter: "agTextColumnFilter",
+           columnGroupShow: 'closed',
+           sortable: true,
+           rowGroup: false,
+           tooltipField: 'candidate_name',
+           getQuickFilterText: (params) => {
+           return params.value;
+          },
+         },
+         {
+           headerName: "Email Id",
+           field: "email",
+           filter: "agTextColumnFilter",
+           tooltipField: 'email',
+           columnGroupShow: 'open',
+           rowGroup: true,
+           enableRowGroup: true,
+           getQuickFilterText: (params) => {
+           return params.value;
+          },
+         },
+         {
+           headerName: "Gender",
+           field: "gender",
+           filter: "agSetColumnFilter",
+           columnGroupShow: 'open',
+           tooltipField: 'gender',
+           getQuickFilterText: (params) => {
+           return params.value;
+          },
+         },
+         {
+           headerName: "Date of Birth",
+           field: "dob",
+           filter: "agDateColumnFilter",
+           columnGroupShow: 'open',
+           tooltipField: 'dob',
+           getQuickFilterText: (params) => {
+           return params.value;
+          },
+         },
+         {
+           headerName: "Tag Name",
+           field: "tag_name",
+           filter: "agSetColumnFilter",
+           columnGroupShow: 'open',
+           tooltipField: 'tag_name',
+           getQuickFilterText: (params) => {
+           return params.value;
+          },
+         },
+         {
+          headerName: "Profile List",
+          field: "selected_position_for",
+          columnGroupShow: 'open',
+          filter: "agSetColumnFilter",
+          tooltipField: 'selected_position_for',
+          getQuickFilterText: (params) => {
+          return params.value;
+         },
+         },
+         {
+          headerName: "Total Backlogs",
+          field: "total_backlog",
+          filter: "agNumberColumnFilter",
+          columnGroupShow: 'open',
+          tooltipField: 'total_backlog',
+          getQuickFilterText: (params) => {
+          return params.value;
+         },
+        },
+      ]},
+      {
+      headerName: 'Educational Details',
+      children: [
+      {
+        headerName: "Education Level",
+        field: "education.level",
+        filter: false,
+        sortable: false,
+        tooltipField: 'education.level',
+        getQuickFilterText: (params) => {
+        return params.value;
+        },
+      },
+      {
+        headerName: "Institute",
+        field: "education.institute",
+        filter: false,
+        sortable: false,
+        tooltipField: 'education.institute',
+        getQuickFilterText: (params) => {
+        return params.value;
+        },
+      },
+      {
+        headerName: "Specialization",
+        field: "education.specification",
+        filter: false,
+        sortable: false,
+        tooltipField: 'education.specification',
+        getQuickFilterText: (params) => {
+        return params.value;
+        },
+      },
+      {
+        headerName: "Discipline",
+        field: "education.discipline",
+        filter: false,
+        sortable: false,
+        tooltipField: 'education.discipline',
+        getQuickFilterText: (params) => {
+        return params.value;
+        },
+      },
+      {
+        headerName: "Year of Passing",
+        field: "education.year_of_passing",
+        filter: false,
+        sortable: false,
+        tooltipField: 'education.year_of_passing',
+        getQuickFilterText: (params) => {
+        return params.value;
+        },
+      },
+      {
+        headerName: "Backlogs",
+        field: "education.backlogs",
+        filter: false,
+        sortable: false,
+        tooltipField: 'education.backlogs',
+        getQuickFilterText: (params) => {
+        return params.value;
+        },
+      },
+      ]}
+   ];
+
+    // // this.columnDefs = this.agGridDefinition.candidateList();
+    // let header: any = {
+    //   tooltipField: 'candidate_id',
+    //   getQuickFilterText: (params) => {
+    //     return params.value;
+    //   },
+    // }
+    this.columnDefs = table_headers;
+    this.autoGroupColumnDef = {
+      field: 'candidate_id',
+      filter: false,
+      sortable: false,
+      tooltipField: 'candidate_id',
+      getQuickFilterText: (params) => {
+      return params.value;
+    },
+    cellRendererParams: {
+      innerRenderer: function (params) {
+        return params.data.candidate_id;
+      },
+      checkbox: true
+    }
+    };
+    this.serverSideStoreType = 'partial';
+    this.rowModelType = 'serverSide';
+    this.rowSelection = 'multiple';
+  }
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridApi.closeToolPanel();
+    this.gridColumnApi = params.gridColumnApi;
+    var datasource = this.callApiForGetShortlistingCandidates();
+    params.api.setServerSideDatasource(datasource);
+  }
+
+  isFirstColumn(params) {
+    var displayedColumns = params.columnApi.getAllDisplayedColumns();
+    var thisIsFirstColumn = displayedColumns[0] === params.column;
+    return thisIsFirstColumn;
+  }
+
+  onGroupOpened(event){
+  }
+
+  callApiForGetShortlistingCandidates() {
+    return {
+      getRows: (params) => {
+        console.log('params', params);
+
+      // let apiData: any = params;
+      if (params.request && params.request.groupKeys && params.request.groupKeys.length == 0) {
+        this.adminService.getCandidateListForShortlist(params.request).subscribe((data1: any) => {
+          this.userList = data1 && data1['data'] ? data1['data'] : [];
+          this.userList.forEach(element => {
+            if (element && element.educations) {
+              element.educations.forEach(ele => {
+                element.education = ele;
+              });
+            }
+          });
+          if (this.userList.length > 0) {
+          let count = params.startRow;
+          this.userList.forEach((element, i) => {
+            count = count + 1;
+            element['counter'] = count;
+          });
+          this.pageRowCount = data1 && data1['total_count'] ? data1['total_count'] : 0;
+          params.success({
+            rowData: this.userList,
+            rowCount: this.pageRowCount
+          }
+          );
+        } else {
+          params.fail();
+        }
+        }, (err) => {
+          params.fail();
+        });
+      } else {
+        const subArray = this.userList.find(data => {
+          if (data.email == params.request.groupKeys[0].toString()) {
+            return data.email == params.request.groupKeys[0].toString()
+          }
+        });
+        let customize = [];
+        if (subArray.educations && subArray.educations.length > 0) {
+          subArray.educations.pop();
+          subArray.educations.forEach(element => {
+            let main: any = {
+              candidate_id: subArray.candidate_id ? '' : '',
+              candidate_name: subArray.candidate_name ? '' : '',
+              email: subArray.email ? '' : '',
+              gender: subArray.gender ? '' : '',
+              dob: subArray.dob ? '' : '',
+              selected_position_for: subArray.selected_position_for ? '' : '',
+              tag_name: subArray.tag_name ? '' : '',
+              total_backlog: subArray.total_backlog ? '' : ''
+            };
+            main.education = element;
+            customize.push(main);
+          });
+        }
+        // subArray.educations.pop();
+        let newSubUserList = customize && customize.length > 0 ? customize : [];
+        if (newSubUserList.length > 0) {
+          params.success({
+            rowData: newSubUserList,
+            rowCount: newSubUserList.length
+          });
+        } else {
+          params.fail();
+        }
+      }
+    }
+  }
+}
+
+  paginationChanged(e) {
+
+  }
+
+  sortevent(e) {
+  }
+
+  onCellClicked(event) {
+    // event['data']
+  }
+
+  onFirstDataRendered(params) {
+    // params.api.sizeColumnsToFit();
+    // setTimeout(function () {
+    //   params.api.getDisplayedRowAtIndex(1).setExpanded(true);
+    // }, 0);
+  }
+
+  momentForm(date) {
+    if (date) {
+      const split = moment(date).format('LLL');
+      return split;
+    }
+  }
+
+
+  shortlist() {
+
+    const data = {
+      shortlist: 'first'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
+  }
+  apiShortlistSubmit(apiDatas) {
+    // let apiData;
+    // apiData = {
+    //   user_id: [],
+    //   folder_name: apiDatas && apiDatas['folderName'] ? apiDatas['folderName'] : '',
+    //   shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : '',
+    //   field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
+    //   shortlistby: this.appConfig.getLocalData('username'),
+    //   // select: this.overallSelect ? this.queryObject : ''
+    // };
+    // this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
+
+
+    //   const datas = {
+    //     first_level_shortlist_success: 'first_level_shortlist_success'
+    //   };
+    //   this.openDialog1(ShortlistBoxComponent, datas);
+    // }, (err) => {
+
+    // });
+  }
+
+  ngAfterViewInit() {
+    // // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+  }
+
+
+
+  // Open dailog
+  openDialog(component, data) {
+    let dialogDetails: any;
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiShortlistSubmit(result);
+      }
+    });
+  }
+
+
+  // Open dailog
+  openDialog1(component, data) {
+    let dialogDetails: any;
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.callApiForGetShortlistingCandidates();
+      if (result) {
+      }
+    });
+  }
+
+  clearAllFilters() {
+    this.profileDropDownValues = this.firstShortlistFilterModel.getProfileList();
+    this.genderDropDownValues = this.firstShortlistFilterModel.getGenderList();
+    this.dateOfBirtValues = this.firstShortlistFilterModel.getDateOfBirthRange();
+    this.educationDropDownValues = this.firstShortlistFilterModel.getEducationList();
+    this.backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
+  }
+
+  selectedCustomFilterList(selectedFilterList) {
+    this.selectedCustomFilterListValue = selectedFilterList;
+  }
+
+  customFilterOpen() {
+    this.selectedCustomFilterListValue = this.selectedCustomFilterListValue ? this.selectedCustomFilterListValue : this.filterProfileList;
+    const dialogRef = this.dialog.open(this.customFilterRef, {
+      width: '400px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForcustomFilter'
+    });
+  }
+
+}
+/*
    let table_headers = [
      {
        headerName: "Candidate Information",
@@ -481,202 +890,4 @@ export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit 
      },
    ];
 
-    // // this.columnDefs = this.agGridDefinition.candidateList();
-    // let header: any = {
-    //   tooltipField: 'candidate_id',
-    //   getQuickFilterText: (params) => {
-    //     return params.value;
-    //   },
-    // }
-    this.columnDefs = table_headers;
-
-  }
-
-  onGridReady(params: any) {
-    this.gridApi = params.api;
-    this.gridApi.closeToolPanel();
-    this.gridColumnApi = params.gridColumnApi;
-    this.callApiForGetShortlistingCandidates();
-  }
-
-  isFirstColumn(params) {
-    var displayedColumns = params.columnApi.getAllDisplayedColumns();
-    var thisIsFirstColumn = displayedColumns[0] === params.column;
-    return thisIsFirstColumn;
-  }
-
-
-  callApiForGetShortlistingCandidates() {
-    var datasource = {
-      getRows: (params: IGetRowsParams) => {
-      console.log('fetching', params);
-      let apiData: any = params;
-      this.gridApi.showLoadingOverlay();
-      this.adminService.getCandidateListForShortlist(apiData).subscribe((data1: any) => {
-        this.gridApi.hideOverlay();
-        this.userList = data1 && data1['data'] ? data1['data'] : [];
-        if (this.userList.length > 0) {
-        let count = params.startRow;
-        this.userList.forEach((element, i) => {
-          count = count + 1;
-          element['counter'] = count;
-        });
-        this.pageRowCount = data1 && data1['total_count'] ? data1['total_count'] : 0;
-        params.successCallback(
-          this.userList, this.pageRowCount
-        );
-      } else {
-        params.successCallback(
-          this.userList, 0
-        );
-        this.gridApi.showNoRowsOverlay();
-      }
-      }, (err) => {
-        this.gridApi.hideOverlay();
-        params.failCallback();
-        params.successCallback(
-          this.userList, this.pageRowCount
-        );
-        this.gridApi.showNoRowsOverlay();
-      });
-      }
-    }
-    this.gridApi.setDatasource(datasource);
-}
-
-  paginationChanged(e) {
-
-  }
-
-  sortevent(e) {
-  }
-
-  onCellClicked(event) {
-    // event['data']
-  }
-
-  onFirstDataRendered(params) {
-    params.api.sizeColumnsToFit();
-    // setTimeout(function () {
-    //   params.api.getDisplayedRowAtIndex(1).setExpanded(true);
-    // }, 0);
-  }
-
-  momentForm(date) {
-    if (date) {
-      const split = moment(date).format('LLL');
-      return split;
-    }
-  }
-
-
-  shortlist() {
-
-    const data = {
-      shortlist: 'first'
-    };
-    this.openDialog(ShortlistBoxComponent, data);
-  }
-  apiShortlistSubmit(apiDatas) {
-    // let apiData;
-    // apiData = {
-    //   user_id: [],
-    //   folder_name: apiDatas && apiDatas['folderName'] ? apiDatas['folderName'] : '',
-    //   shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : '',
-    //   field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
-    //   shortlistby: this.appConfig.getLocalData('username'),
-    //   // select: this.overallSelect ? this.queryObject : ''
-    // };
-    // this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
-
-
-    //   const datas = {
-    //     first_level_shortlist_success: 'first_level_shortlist_success'
-    //   };
-    //   this.openDialog1(ShortlistBoxComponent, datas);
-    // }, (err) => {
-
-    // });
-  }
-
-  ngAfterViewInit() {
-    // // Hack: Scrolls to top of Page after page view initialized
-    let top = document.getElementById('top');
-    if (top !== null) {
-      top.scrollIntoView();
-      top = null;
-    }
-  }
-
-
-
-  // Open dailog
-  openDialog(component, data) {
-    let dialogDetails: any;
-
-    /**
-     * Dialog modal window
-     */
-    // tslint:disable-next-line: one-variable-per-declaration
-    const dialogRef = this.matDialog.open(component, {
-      width: 'auto',
-      height: 'auto',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.apiShortlistSubmit(result);
-      }
-    });
-  }
-
-
-  // Open dailog
-  openDialog1(component, data) {
-    let dialogDetails: any;
-
-    /**
-     * Dialog modal window
-     */
-    // tslint:disable-next-line: one-variable-per-declaration
-    const dialogRef = this.matDialog.open(component, {
-      width: 'auto',
-      height: 'auto',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.callApiForGetShortlistingCandidates();
-      if (result) {
-      }
-    });
-  }
-
-  clearAllFilters() {
-    this.profileDropDownValues = this.firstShortlistFilterModel.getProfileList();
-    this.genderDropDownValues = this.firstShortlistFilterModel.getGenderList();
-    this.dateOfBirtValues = this.firstShortlistFilterModel.getDateOfBirthRange();
-    this.educationDropDownValues = this.firstShortlistFilterModel.getEducationList();
-    this.backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
-  }
-
-  selectedCustomFilterList(selectedFilterList) {
-    this.selectedCustomFilterListValue = selectedFilterList;
-  }
-
-  customFilterOpen() {
-    this.selectedCustomFilterListValue = this.selectedCustomFilterListValue ? this.selectedCustomFilterListValue : this.filterProfileList;
-    const dialogRef = this.dialog.open(this.customFilterRef, {
-      width: '400px',
-      height: 'auto',
-      autoFocus: false,
-      closeOnNavigation: true,
-      disableClose: false,
-      panelClass: 'popupModalContainerForcustomFilter'
-    });
-  }
-
-}
+*/

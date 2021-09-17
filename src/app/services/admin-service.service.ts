@@ -175,7 +175,7 @@ export class AdminServiceService {
 
   getCandidateListForShortlist(data) {
     return this.http.post(`${this.BASE_URL}/profile/first_level_shortlisting_candidates`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress:true, withCredentials: true });
   }
 
   submitAllFilters(data) {

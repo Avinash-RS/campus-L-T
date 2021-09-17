@@ -16,11 +16,12 @@
 ::ng-deep .popupModalContainerForcustomFilter {
   right: 0 !important;
   pointer-events: auto !important;
-  min-width: 500px !important;
-  height: calc(100% - 64px) !important;
-  position: absolute !important;
+  min-width: 100%;
+  height: calc(100% - 0px) !important;
+  position: relative;
   border-radius: 0 !important;
-  bottom: 0 !important;
+  margin-top: 50%;
+  top: 0;
   .mat-dialog-container {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
