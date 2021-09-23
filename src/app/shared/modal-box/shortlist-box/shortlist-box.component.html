@@ -104,6 +104,17 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'candidate-bulk-skip-kyc'">
+  <div class="bulk-upload-text">
+    Confirm to upload candidate details{{skipKyc ? '.' : ' and send mails to fill the registration form'}}
+  </div>
+  <mat-checkbox class="skipKyc" [(ngModel)]="skipKyc">Skip KYC</mat-checkbox>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'selected-candidate-bulk'">
   <div class="bulk-upload-text">
     Confirm to upload the selected candidate details

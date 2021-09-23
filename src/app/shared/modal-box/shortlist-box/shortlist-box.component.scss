@@ -21,6 +21,8 @@
         color: $light-black;
         padding-top: 8px;
         padding-bottom: 14px;
+        font-weight: 500;
+        font-size: 14px;
         .validation {
           color: $red;
           font-size: 12px;
@@ -33,6 +35,8 @@
         input {
           color: $secondary;
           height: 30px;
+          font-weight: 200;
+          font-size: 14px;
           padding: 4px 6px;
           background: $white 0% 0% no-repeat padding-box;
           border: 1px solid $borderColor-10;
@@ -52,7 +56,8 @@
     margin: 0 0 1em 0;
   }
   .footer {
-    font-size: 12px;
+    font-weight: 200;
+    font-size: 14px;
     color: $light-black;
     text-align: center;
   }
@@ -84,7 +89,7 @@
       align-items: center;
       height: 25px;
       color: $background;
-      font-size: 13px;
+      font-size: 14px !important;
       font-weight: 200;
       padding: 4px 16px;
       background: transparent;
@@ -151,7 +156,7 @@
       align-items: center;
       height: 25px;
       color: $background;
-      font-size: 13px;
+      font-size: 14px !important;
       font-weight: 200;
       padding: 4px 16px;
       background: transparent;
@@ -185,9 +190,20 @@
 }
 
 .bulk-upload-text {
-  color: $black;
+  color: $light-black;
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 500;
   text-align: center;
   word-wrap: break-word;
+}
+.skipKyc {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 0 0;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-red !important;
 }
