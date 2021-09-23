@@ -76,6 +76,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
 
   onCellClicked(event) {
     if (event.colDef.field === "candidate_name") {
+      this.appConfig.setLocalData(
+        "cProPic",
+        event["data"]["profile_image_url"]
+      );
       this.redirectToProfile(
         event["data"]["candidate_id"],
         event["data"]["candidate_name"],

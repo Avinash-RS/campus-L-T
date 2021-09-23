@@ -114,9 +114,10 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   requestnavigationRoute: any;
   noSave: boolean;
   hideStepper: boolean = true;
+  redirectToPreview: boolean;
   constructor(
     private appConfig: AppConfigService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
     private dialog: MatDialog,
   ) {
@@ -135,19 +136,17 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
 
   removeLocalStorage() {
     this.appConfig.clearLocalDataOne('kycForm');
-    // this.appConfig.clearLocalDataOne('educationalFormSubmitted');
-    // this.appConfig.clearLocalDataOne('personalFormSubmitted');
-    // this.appConfig.clearLocalDataOne('confirmClick');
-    // this.appConfig.clearLocalDataOne('field_isformsubmitted');
-    // this.appConfig.clearLocalDataOne('familyFormSubmitted');
-    // this.appConfig.clearLocalDataOne('confirmFormSubmitted');
     this.appConfig.clearLocalDataOne('KYCAPI');
-    // this.appConfig.clearLocalDataOne('generalFormSubmitted');
   }
   activeSelectorRxJs() {
     this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.pipe(delay(0)).subscribe((data: any)=> {
-      this.routingSelection = null;
-      this.routingSelection = data ? data : this.routingSelection;
+      let datas = this.candidateService.getLocalsection_flags();
+      // if (datas && datas[data] == '1') {
+        this.routingSelection = null;
+        this.routingSelection = data ? data : this.routingSelection;
+      // } else {
+      //   this.statusOfForms();
+      // }
     });
   }
 
@@ -161,59 +160,66 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  statusOfForms(param?: any) {
-    this.candidateService.FormStatus().subscribe((data: any)=> {
-      data?.personal_details == '1' ? this.appConfig.setLocalData('personal', '1') : this.appConfig.setLocalData('personal', '0');
-      data?.contact_details == '1' ? this.appConfig.setLocalData('contact', '1') : this.appConfig.setLocalData('contact', '0');
-      data?.dependent_details == '1' ? this.appConfig.setLocalData('dependent', '1') : this.appConfig.setLocalData('dependent', '0');
-      data?.education_details == '1' ? this.appConfig.setLocalData('education', '1') : this.appConfig.setLocalData('education', '0');
-      data?.bgv_details == '1' ? this.appConfig.setLocalData('work', '1') : this.appConfig.setLocalData('work', '0');
-      data?.joining_details == '1' ? this.appConfig.setLocalData('upload', '1') : this.appConfig.setLocalData('upload', '0');
-      data?.previewed == '1' ? this.appConfig.setLocalData('preview', '1') : this.appConfig.setLocalData('preview', '0');
-      data?.submitted == '1' ? this.appConfig.setLocalData('submit', '1') : this.appConfig.setLocalData('submit', '0');
-      this.hideStepper = data?.submitted == '1' ? true : false;
+  checkFormSubmitted() {
+    if (this.appConfig.getLocalData('joiningFormAccess') == 'true') {
+      this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+      this.redirectToPreview = true;
+    } else {
+      if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
+        this.redirectToPreview = true;
+        this.hideStepper = true;
+    } else {
+      this.redirectToPreview = false;
+      this.hideStepper = false;
+    }
+  }
+  }
 
-      if (data.submitted == '1') {
+  statusOfForms(param?: any) {
+    if (this.candidateService.getLocalProfileData()) {
+      let data = this.candidateService.getLocalsection_flags();
+      this.checkFormSubmitted();
+      if ((data && data.submitted == '1') || this.redirectToPreview) {
         this.valid.tillsbmit();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-        return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'dependent';
+        return this.activeStep = 'preview';
       }
 
-      if (data.previewed == '1') {
+      if (data && data.previewed == '1') {
         this.valid.tillpreview();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
-        return this.activeStep = 'submit';//, this.routingSelection = param ? param : 'dependent';
+        return this.activeStep = 'submit';
       }
 
-      if (data.joining_details == '1') {
+      if (data && data.document_details == '1') {
         this.valid.tillupload();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-        return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'dependent';
+        return this.activeStep = 'preview';
       }
 
-      if (data.bgv_details == '1') {
-        this.valid.tillwork();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
-        return this.activeStep = 'upload';//, this.routingSelection = param ? param : 'dependent';
+      if (data && data.experience_details == '1') {
+          this.valid.tillwork();
+          param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+          return this.activeStep = 'upload';
       }
 
-      if (data.education_details == '1') {
+      if (data && data.education_details == '1') {
         this.valid.tilleducation();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
-        return this.activeStep = 'work';//, this.routingSelection = param ? param : 'dependent';
+        return this.activeStep = 'work';
       }
 
-      if (data.dependent_details == '1') {
+      if (data && data.dependent_details == '1') {
         this.valid.tilldependent();
        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
        return this.activeStep = 'education';//, this.routingSelection = param ? param : 'education';
       }
-      if (data.contact_details == '1') {
+      if (data && data.contact_details == '1') {
         this.valid.tillContact();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
-        return this.activeStep = 'dependent';//, this.routingSelection = param ? param : 'dependent';
+        return this.activeStep = 'dependent';
       }
-      if (data.personal_details == '1') {
+      if (data && data.personal_details == '1') {
         this.valid.tillPersonal();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
         return this.activeStep = 'contact';//, this.routingSelection = param ? param : 'contact';
@@ -222,7 +228,16 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
         return this.activeStep = 'personal';//, this.routingSelection = param ? param : 'personal';
       }
-    });
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.statusOfForms();
+      });
+    }
   }
 
   validCheck(clickedStep) {
@@ -283,18 +298,6 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
-
-    // array.forEach(element => {
-
-    // });
-    // for (let index = 0; index < array.length; index++) {
-    //   const element = array[index];
-
-    // }
-    for (const property in this.valid) {
-
-      // console.log(`${property}: ${this.valid[property]}`);
-    }
   }
 
   openMatDialog() {
@@ -306,8 +309,6 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       disableClose: false,
       panelClass: 'popupModalContainerForForms'
     });
-
-
   }
 
   closeDialog(e) {

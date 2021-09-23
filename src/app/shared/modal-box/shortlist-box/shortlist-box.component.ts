@@ -15,10 +15,10 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 })
 export class ShortlistBoxComponent implements OnInit {
 
-  folder = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
-  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), RemoveWhitespace.whitespace()]);
+  folder = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), RemoveWhitespace.whitespace()]);
+  shortlist = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), RemoveWhitespace.whitespace()]);
   instituteRejection = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100), RemoveWhitespace.whitespace()]);
-  reSubmission = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30), RemoveWhitespace.whitespace()]);
+  reSubmission = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), RemoveWhitespace.whitespace()]);
   radioValue = 'rec';
   SecondShortlistradioValue = 'yes';
   constructor(

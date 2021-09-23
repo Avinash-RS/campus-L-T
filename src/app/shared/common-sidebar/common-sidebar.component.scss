@@ -349,3 +349,10 @@ mat-drawer ul li span img {
     left: 0;
     box-sizing: border-box;
 }
+.scroll-height {
+  min-height: calc(100% - 30px);
+  position: relative;
+  width: 100%;
+  padding: 0 6px;
+  box-sizing: border-box;
+}

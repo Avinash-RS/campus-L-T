@@ -74,7 +74,7 @@ export class EvaluationFormComponent implements OnInit {
   ngOnInit() {
     this.getMasters();
     if (this.candidateId) {
-      this.getWorkExp();
+      // this.getWorkExp();
       this.getEvaluationData(this.uid);
       this.nginitFunc();
       this.getCandidateDetails();

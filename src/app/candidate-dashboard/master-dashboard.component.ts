@@ -17,10 +17,7 @@ export class MasterDashboardComponent implements OnInit {
   constructor(
     private appConfig: AppConfigService,
   ) {
-    if (this.appConfig.getLocalData('reDirectView') && this.appConfig.getLocalData('reDirectView') === 'false') {
-      this.showProfileOnly = true;
-    }
-    if (this.appConfig.getLocalData('secondShortlist') && this.appConfig.getLocalData('secondShortlist') === 'true') {
+    if (this.appConfig.getLocalData('secondShortlist') && this.appConfig.getLocalData('secondShortlist') === 'true' && this.appConfig.getLocalData('joiningFormAccess') !== 'true') {
       this.showDocuments = true;
     }
     if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
@@ -31,14 +28,14 @@ export class MasterDashboardComponent implements OnInit {
   }
 
   sendMenus() {
-    if (!this.showJoiningForm) {
       this.candidateSideMenu = [
         {
-          url: this.appConstant.CANDIDATE_DASHBOARD.PROFILE,
-          name: 'Profile',
-          icon: 'icon-Job',
-          hide: false
-        }
+          url: this.appConstant.CANDIDATE_DASHBOARD.JOINING,
+          name: this.showJoiningForm ? 'Joining Form' : 'Profile Form',
+          icon: 'icon-Assessment',
+          hide: false,
+          click: true
+        },
       ]
       if (this.showDocuments) {
         let add = {
@@ -49,18 +46,6 @@ export class MasterDashboardComponent implements OnInit {
         }
         this.candidateSideMenu.push(add);
       }
-  }
-  if (this.showJoiningForm) {
-    this.candidateSideMenu = [
-      {
-        url: this.appConstant.CANDIDATE_DASHBOARD.JOINING,
-        name: 'Joining Form',
-        icon: 'icon-Assessment',
-        hide: false,
-        click: true
-      },
-    ]
-}
   }
 
   ngOnInit() {

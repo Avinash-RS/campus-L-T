@@ -87,7 +87,6 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { CommonJoiningFormComponent } from './common-joining-form/common-joining-form.component';
 import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -102,7 +101,7 @@ import { SharedReportsSectionComponent } from './user-management/shared-reports-
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonJoiningFormComponent, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
 ],
   imports: [
     CommonModule,
@@ -211,7 +210,6 @@ ModuleRegistry.registerModules(AllModules);
     ScreenresolutionBoxComponent,
     YearMonthDirective,
     DateMonthYearDirective,
-    CommonJoiningFormComponent,
     BarChartComponent,
     HorizontalBarChartComponent,
     CommonSidebarComponent,

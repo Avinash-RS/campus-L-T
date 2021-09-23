@@ -49,7 +49,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     suppressSizeToFit: true,
     headerCheckboxSelection: this.isFirstColumn,
     checkboxSelection: this.isFirstColumn,
-    // headerCheckboxSelectionFilteredOnly: true,
+    headerCheckboxSelectionFilteredOnly: true,
   };
   tooltipShowDelay = 0;
   rowData: any;

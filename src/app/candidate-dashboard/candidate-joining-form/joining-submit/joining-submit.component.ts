@@ -22,10 +22,10 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
-  ) { 
+  ) {
   }
 
   ngOnInit() {
@@ -40,8 +40,9 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
   upperCase(e) {
     return e.replace(e[0], e[0].toUpperCase());
   }
+
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('submit');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -50,11 +51,15 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('submit');
+  }
+
   checkFormValidRequestFromRxjs() {
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any)=> {
       if(data.current == 'submit') {
         return this.appConfig.routeNavigation(data.goto);
-      } 
+      }
     });
   }
 

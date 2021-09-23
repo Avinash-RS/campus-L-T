@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { CONSTANT } from './../../../constants/app-constants.service';
 import { GlobalValidatorService } from './../../../custom-form-validators/globalvalidators/global-validator.service';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -12,6 +12,8 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
+import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
+import { LoaderService } from 'src/app/services/loader-service.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -101,20 +103,12 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   minDate: Date;
   minDateDOB: Date;
   maxDate: Date;
+  passportValidminDate: Date;
+  passportValidmaxDate: Date;
+  passportDateOfIssueMaxDate: Date;
   url: '';
   // url = 'assets/images/img_avatar2.jpg';
   selectedImage: any;
-  showSizeError = {
-    image: false,
-    size: false,
-    minsize: false,
-    maxsize: false,
-    reset() {
-      this.image = false
-      this.minsize = false
-      this.maxsize = false
-    }
-  };
   personalForm: FormGroup;
   // Title Dropdown list
   bloodGroupDropdownList: any;
@@ -164,19 +158,70 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   form_marital_status = 'marital_status';
   form_domicile_state = 'domicile_state';
   form_no_of_children = 'no_of_children';
+
+  form_language_array = 'languages_known';
+  form_language_name = 'language';
+  form_language_is_read = 'is_read';
+  form_language_is_write = 'is_write';
+  form_language_is_speak = 'is_speak';
+
+  form_passport_number = 'passport_number';
+  form_name_as_in_passport = 'name_as_in_passport';
+  form_profession_as_in_passport = 'profession_as_in_passport';
+  form_date_of_issue = 'date_of_issue';
+  form_valid_upto = 'valid_upto';
+  form_place_of_issue = 'place_of_issue';
+  form_country_valid_for = 'country_valid_for';
+
+  // Health
+  form_serious_illness = 'serious_illness';
+  form_no_of_days = 'no_of_days';
+  form_nature_of_illness = 'nature_of_illness';
+  form_physical_disability = 'physical_disability';
+  form_left_eyepower_glass = 'left_eyepower_glass';
+  form_right_eye_power_glass = 'right_eye_power_glass';
+
+// Profile
+form_file_id = 'file_id';
+form_file_label_name = 'name';
+form_file_path = 'file_path';
+form_file_size = 'file_size';
+form_filename = 'filename';
+form_filetype = 'filetype';
+form_id = 'id';
+form_label = 'label';
+
+profilePictureFormControl = new FormControl(null, [Validators.required]);
 // Form control name declaration end
 
   personalDetails: any;
   getAllStates: any;
   nonMergedPersonalDetails: any;
+  showSizeError = {
+    image: false,
+    size: false,
+    maxsize: '',
+    minsize: ''
+  };
+  profilePicture = {
+    name: null,
+    file_id: null,
+    file_path: null,
+    file_size: null,
+    filename: null,
+    filetype: null,
+    label: null
+  };
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private loadingService: LoaderService
   ) {
     this.dateValidation();
   }
@@ -191,7 +236,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('personal');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -200,15 +245,25 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('personal');
+  }
+
   getPersonalData() {
-
-    this.candidateService.joiningFormGetPersonalDetails().subscribe((data: any)=> {
-
-      this.personalDetails = data ? data : null;
-      if (this.personalDetails) {
-        this.patchPersonalForm();
+    if (this.candidateService.getLocalProfileData()) {
+      this.personalDetails = this.candidateService.getLocalpersonal_details();
+      this.personalDetails ? this.patchPersonalForm() : '';
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.personalDetails = this.candidateService.getLocalpersonal_details();
+        this.personalDetails ? this.patchPersonalForm() : '';
+      });
+    }
   }
 
   getStateAPI() {
@@ -241,6 +296,9 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
         this.minDate = new Date(currentYear - 50, 0, 1);
         this.minDateDOB = new Date(currentYear - 90, 0, 1);
         this.maxDate = new Date(currentYear + 20, 11, 31);
+        this.passportDateOfIssueMaxDate = new Date();
+        this.passportValidminDate = new Date(currentYear - 15, 0, 1);
+        this.passportValidmaxDate = new Date(currentYear + 40, 0, 1);
   }
 
   momentForm(date) {
@@ -261,8 +319,21 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
+  languageArrRequestJsonConversion(lanArr) {
+    let FilteredLanArray = [];
+    lanArr.forEach(element => {
+      if (element && element[this.form_language_name]) {
+        element[this.form_language_is_read] = element[this.form_language_is_read] ? 1 : 0;
+        element[this.form_language_is_write] = element[this.form_language_is_write] ? 1 : 0;
+        element[this.form_language_is_speak] = element[this.form_language_is_speak] ? 1 : 0;
+        FilteredLanArray.push(element);
+      }
+    });
+    return FilteredLanArray;
+  }
+
   formSubmit(routeValue?:any) {
-    if (this.personalForm.valid) {
+    if (this.personalForm.valid && this.profilePictureFormControl.valid) {
       let rawPersonalFormValue = this.personalForm.getRawValue();
       const apiData = {
        [this.form_name]: rawPersonalFormValue[this.form_name],
@@ -294,18 +365,38 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
        [this.form_domicile_state]: rawPersonalFormValue[this.form_domicile_state],
        [this.form_marital_status]: rawPersonalFormValue[this.form_marital_status],
        [this.form_no_of_children]: rawPersonalFormValue[this.form_no_of_children],
-       profile_image: this.personalDetails.profile_image,
+       [this.form_passport_number]: rawPersonalFormValue[this.form_passport_number],
+       [this.form_name_as_in_passport]: rawPersonalFormValue[this.form_name_as_in_passport],
+       [this.form_profession_as_in_passport]: rawPersonalFormValue[this.form_profession_as_in_passport],
+       [this.form_date_of_issue]: this.dateConvertion(rawPersonalFormValue[this.form_date_of_issue]),
+       [this.form_valid_upto]: this.dateConvertion(rawPersonalFormValue[this.form_valid_upto]),
+       [this.form_place_of_issue]: rawPersonalFormValue[this.form_place_of_issue],
+       [this.form_country_valid_for]: rawPersonalFormValue[this.form_country_valid_for],
+       [this.form_serious_illness]: rawPersonalFormValue[this.form_serious_illness],
+       [this.form_no_of_days]: rawPersonalFormValue[this.form_no_of_days],
+       [this.form_nature_of_illness]: rawPersonalFormValue[this.form_nature_of_illness],
+       [this.form_physical_disability]: rawPersonalFormValue[this.form_physical_disability],
+       [this.form_left_eyepower_glass]: rawPersonalFormValue[this.form_left_eyepower_glass],
+       [this.form_right_eye_power_glass]: rawPersonalFormValue[this.form_right_eye_power_glass],
+       [this.form_language_array]: this.languageArrRequestJsonConversion(rawPersonalFormValue[this.form_language_array]),
+       profile_image: this.profilePicture,
        user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
       };
-
-      this.candidateService.joiningFormGetPersonalDetailsSave(apiData).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Personal details is updated');
+      const PersonalApiRequestDetails = {
+        form_name: "joining",
+        section_name: "personal_details",
+        saving_data: apiData
+      }
+      this.candidateService.newSaveProfileData(PersonalApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Personal details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       });
     } else {
       this.ngAfterViewInit();
+      this.profilePictureFormControl.markAsTouched();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.personalForm);
     }
@@ -334,7 +425,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
 
   routeNext() {
     if (!this.personalForm.dirty) {
-      if(this.appConfig.getLocalData('personal') == '1') {
+      if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().personal_details == '1') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
         if(this.personalForm.valid) {
@@ -349,60 +440,67 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       }
     }
 
-  async onSelectFile(event) {
-
-    if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
-      this.showSizeError.reset();
-
-      // if (event.target.files[0].size > 500000 && event.target.files[0].size < 2000000) {
-      if (event.target.files[0].size > 40000) {
-        this.showSizeError.reset();
-        if (event.target.files[0].size < 2000000) {
-          this.showSizeError.reset();
-          // this.showSizeError.image = false;
-        this.selectedImage = event.target.files[0];
-
-        const fd = new FormData();
-        fd.append('product_image', this.selectedImage);
-        const file = event.target.files[0].lastModified.toString() + event.target.files[0].name;
-        const reader = new FileReader();
-        let urls;
-
-        reader.readAsDataURL(event.target.files[0]); // read file as data url
-        reader.onload = async(event: any) => { // called once readAsDataURL is completed
-          urls = event.target.result;
-          this.url = urls;
-
-          //
-          // const data = await (await this.candidateService.profileUpload(fd)).json();
-            // this.profileData = {
-            //   fid: data[0].id,
-            //   uuid: '',
-            //   localShowUrl: data[0].frontend_url,
-            //   apiUrl: data[0].backend_url
-            // };
-            // this.appConfig.setLocalData('profileData', JSON.stringify(this.profileData));
-            //
-
+  async uploadImage(file) {
+    try {
+      this.loadingService.setLoading(true);
+      const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+      if (data && data.error_code) {
+        this.loadingService.setLoading(false);
+        return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+      }
+      this.loadingService.setLoading(false);
+      if (data && data.file_id) {
+        this.profilePicture = {
+          name: 'profile picture',
+          label: 'profile picture',
+          file_id: data.file_id,
+          file_path: data.file_path,
+          file_size: data.file_size,
+          filename: data.file_name,
+          filetype: data.type,
         };
-      } else {
-        this.showSizeError.reset();
-        this.showSizeError.maxsize = true;
+        this.profilePictureFormControl.setValue(data.file_path);
       }
-      } else {
-        this.showSizeError.reset();
-        this.showSizeError.minsize = true;
-      }
-    } else {
-      this.showSizeError.reset();
-      this.showSizeError.image = true;
+      this.appConfig.nzNotification('success', 'Uploaded', 'Profile Picture uploaded successfully');
+    } catch (e) {
+      this.loadingService.setLoading(false);
+      this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
   }
 
-  public delete() {
-    this.showSizeError.reset();
-    this.url = null;
-  }
+    public delete() {
+      this.profilePicture = {
+        name: null,
+        file_id: null,
+        file_path: null,
+        file_size: null,
+        filename: null,
+        filetype: null,
+        label: null
+      };
+      this.profilePictureFormControl.setValue(null);
+      this.profilePictureFormControl.markAsTouched();
+    }
+    onSelectFile(event) {
+      const fd = new FormData();
+      this.profilePictureFormControl.markAsTouched();
+      if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
+        if (event.target.files[0].size < 2000000) {
+          let image = event.target.files[0];
+
+          fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
+          fd.append('description', 'profile picture');
+          fd.append('label', 'profile picture');
+          fd.append('level', 'profile picture');
+          fd.append('product_image', image);
+          this.uploadImage(fd);
+        } else {
+          this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
+        }
+      } else {
+        return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
+      }
+    }
 
 
   patchPersonalForm() {
@@ -412,13 +510,13 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_dob]: this.dateConvertion(this.personalDetails[this.form_dob]),
       [this.form_gender]: this.personalDetails[this.form_gender],
       [this.form_place_of_birth]: this.personalDetails[this.form_place_of_birth],
-      [this.form_state_of_birth]: this.personalDetails[this.form_state_of_birth],
+      [this.form_state_of_birth]: this.personalDetails[this.form_state_of_birth] ? this.personalDetails[this.form_state_of_birth].toString() : null,
       [this.form_nationality]: this.personalDetails[this.form_nationality],
       [this.form_mother_tongue]: this.personalDetails[this.form_mother_tongue],
       [this.form_religion]: this.personalDetails[this.form_religion],
       [this.form_caste]: this.personalDetails[this.form_caste],
       [this.form_category]: this.personalDetails[this.form_category],
-      [this.form_blood_group]: this.personalDetails[this.form_blood_group],
+      [this.form_blood_group]: this.personalDetails[this.form_blood_group] ? this.personalDetails[this.form_blood_group].toString() : null,
       [this.form_father_name]: this.personalDetails[this.form_father_name],
       [this.form_emergency_contact]: this.personalDetails[this.form_emergency_contact],
       [this.form_mobile]: this.personalDetails[this.form_mobile],
@@ -427,25 +525,65 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_pan]: this.personalDetails[this.form_pan],
       [this.form_offer_reference]: this.personalDetails[this.form_offer_reference],
       [this.form_offer_date]: this.dateConvertion(this.personalDetails[this.form_offer_date]),
-      [this.form_height]: this.personalDetails[this.form_height],
-      [this.form_weight]: this.personalDetails[this.form_weight],
+      [this.form_height]: this.personalDetails[this.form_height] ? this.personalDetails[this.form_height].toString() : null,
+      [this.form_weight]: this.personalDetails[this.form_weight] ? this.personalDetails[this.form_weight].toString() : null,
       [this.form_identification_mark1]: this.personalDetails[this.form_identification_mark1],
       [this.form_identification_mark2]: this.personalDetails[this.form_identification_mark2],
       [this.form_emergency_contact_name]: this.personalDetails[this.form_emergency_contact_name],
       [this.form_emergency_contact_relation]: this.personalDetails[this.form_emergency_contact_relation],
       [this.form_personal_email]: this.personalDetails[this.form_personal_email],
-      [this.form_domicile_state]: this.personalDetails[this.form_domicile_state],
+      [this.form_domicile_state]: this.personalDetails[this.form_domicile_state] ? this.personalDetails[this.form_domicile_state].toString() : null,
       [this.form_marital_status]: this.personalDetails[this.form_marital_status],
-      [this.form_no_of_children]: this.personalDetails[this.form_no_of_children]
+      [this.form_no_of_children]: this.personalDetails[this.form_no_of_children] ? this.personalDetails[this.form_no_of_children].toString() : null,
+      [this.form_passport_number]: this.personalDetails[this.form_passport_number],
+      [this.form_name_as_in_passport]: this.personalDetails[this.form_name_as_in_passport],
+      [this.form_profession_as_in_passport]: this.personalDetails[this.form_profession_as_in_passport],
+      [this.form_date_of_issue]: this.dateConvertion(this.personalDetails[this.form_date_of_issue]),
+      [this.form_valid_upto]: this.dateConvertion(this.personalDetails[this.form_valid_upto]),
+      [this.form_place_of_issue]: this.personalDetails[this.form_place_of_issue],
+      [this.form_country_valid_for]: this.personalDetails[this.form_country_valid_for],
+      [this.form_serious_illness]: this.personalDetails[this.form_serious_illness],
+      [this.form_no_of_days]: this.personalDetails[this.form_no_of_days] ? this.personalDetails[this.form_no_of_days].toString() : null,
+      [this.form_nature_of_illness]: this.personalDetails[this.form_nature_of_illness],
+      [this.form_physical_disability]: this.personalDetails[this.form_physical_disability],
+      [this.form_left_eyepower_glass]: this.personalDetails[this.form_left_eyepower_glass],
+      [this.form_right_eye_power_glass]: this.personalDetails[this.form_right_eye_power_glass]
     });
-    this.url = this.personalDetails.profile_image;
+    this.profilePicture = {
+      name: this.personalDetails.profile_image[this.form_file_label_name],
+      file_id: this.personalDetails.profile_image[this.form_file_id],
+      file_path: this.personalDetails.profile_image[this.form_file_path],
+      file_size: this.personalDetails.profile_image[this.form_file_size],
+      filename: this.personalDetails.profile_image[this.form_filename],
+      filetype: this.personalDetails.profile_image[this.form_filetype],
+      label: this.personalDetails.profile_image[this.form_label],
+    };
+    this.profilePictureFormControl.setValue(this.personalDetails.profile_image[this.form_file_path]);
+    this.patchLanguageForm();
     this.checkIsMarried();
+  }
+
+  patchLanguageForm() {
+    if (this.personalDetails && this.personalDetails[this.form_language_array] && this.personalDetails[this.form_language_array].length > 0) {
+      this.getLanguageArr.clear();
+      this.personalDetails[this.form_language_array].forEach((element, i) => {
+        this.getLanguageArr.push(this.patchingLanguageForm(element));
+      });
+    }
+  }
+  patchingLanguageForm(data) {
+    return this.fb.group({
+      [this.form_language_name]: [data[this.form_language_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_language_is_read]: [data[this.form_language_is_read]],
+      [this.form_language_is_write]: [data[this.form_language_is_write]],
+      [this.form_language_is_speak]: [data[this.form_language_is_speak]],
+    }, { validator: FormCustomValidators.anyOneSelected })
   }
   maritalStatusChange() {
     this.checkIsMarried();
   }
   checkIsMarried() {
-    if (this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Married' || this.personalForm.value[this.form_marital_status] && this.personalForm.value[this.form_marital_status] == 'Widow') {
+    if (this.personalForm.value[this.form_marital_status] && (this.personalForm.value[this.form_marital_status] == 'Married' || this.personalForm.value[this.form_marital_status] == 'Widow')) {
       this.personalForm.controls[this.form_no_of_children].setValidators([Validators.required]);
       this.personalForm['controls'][this.form_no_of_children].updateValueAndValidity({ emitEvent: false });
     } else {
@@ -457,12 +595,12 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   formInitialize() {
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
-      [this.form_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_name]: [{value: this.appConfig.getLocalData('username'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dob]: [null, [Validators.required]],
-      [this.form_gender]: [{value: null, disabled: true}, [Validators.required]],
+      [this.form_gender]: [{value: null, disabled: this.candidateService.checkKycOrJoiningForm()}, [Validators.required]],
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null, [Validators.required]],
-      [this.form_nationality]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_nationality]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
@@ -471,13 +609,13 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
       [this.form_mobile]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
-      [this.form_email]: [{value: null, disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
-      [this.form_aadhar]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
+      [this.form_email]: [{value: this.appConfig.getLocalData('userEmail'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+      [this.form_aadhar]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
       [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]],
       [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]],
       [this.form_offer_date]: [null, [Validators.required]],
-      [this.form_height]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
-      [this.form_weight]: [{value: null, disabled: false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
+      [this.form_height]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
+      [this.form_weight]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
       [this.form_identification_mark1]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_identification_mark2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
@@ -486,13 +624,144 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       [this.form_domicile_state]: [null, [Validators.required]],
       [this.form_marital_status]: [null, [Validators.required]],
       [this.form_no_of_children]: [null],
+      [this.form_passport_number]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_name_as_in_passport]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_profession_as_in_passport]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_date_of_issue]: [null],
+      [this.form_valid_upto]: [null],
+      [this.form_place_of_issue]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_country_valid_for]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_serious_illness]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_no_of_days]: [null, [RemoveWhitespace.whitespace(), Validators.maxLength(5), this.glovbal_validators.numberOnly()]],
+      [this.form_nature_of_illness]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_physical_disability]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_left_eyepower_glass]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]],
+      [this.form_right_eye_power_glass]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]],
+      [this.form_language_array]: this.fb.array([this.initLanguageArray()])
     })
+     this.setJoiningAndKYCValidators(this.candidateService.checkKycOrJoiningForm());
+  }
+
+  initLanguageArray() {
+    return this.fb.group({
+      [this.form_language_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_language_is_read]: [null],
+      [this.form_language_is_write]: [null],
+      [this.form_language_is_speak]: [null],
+    }, { validator: FormCustomValidators.anyOneSelected })
+  }
+
+  addlanguage() {
+    let i = this.getLanguageArr['controls'].length - 1;
+    if (this.getLanguageArr.valid) {
+      if (this.getLanguageArr['controls'][i]['value'][this.form_language_name]) {
+        this.getLanguageArr['controls'][i]['controls'][this.form_language_is_read].setErrors(null);
+        if (this.getLanguageArr && this.getLanguageArr['controls'] && this.getLanguageArr['controls'][i] && this.getLanguageArr['controls'][i]['value'] && this.getLanguageArr['controls'][i]['value'][this.form_language_name]) {
+          return this.getLanguageArr.push(this.initLanguageArray());
+        }
+      } else {
+        this.getLanguageArr['controls'][i]['controls'][this.form_language_is_read].setErrors({ notSelected: true });
+      }
+    } else {
+      this.glovbal_validators.validateAllFormArrays(this.personalForm.get([this.form_language_array]) as FormArray);
+    }
+  }
+
+  removeLanguage(i) {
+    this.getLanguageArr.removeAt(i);
+  }
+
+  setJoiningAndKYCValidators(isJoining) {
+    if (isJoining) {
+    this.personalForm.controls[this.form_name].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_dob].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_gender].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_place_of_birth].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_state_of_birth].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_nationality].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_mother_tongue].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_religion].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_caste].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_category].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_blood_group].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_father_name].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_emergency_contact].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]);
+    this.personalForm.controls[this.form_mobile].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]);
+    this.personalForm.controls[this.form_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]);
+    this.personalForm.controls[this.form_aadhar].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]);
+    this.personalForm.controls[this.form_pan].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]);
+    this.personalForm.controls[this.form_offer_reference].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]);
+    this.personalForm.controls[this.form_offer_date].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_height].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]);
+    this.personalForm.controls[this.form_weight].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]);
+    this.personalForm.controls[this.form_identification_mark1].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_identification_mark2].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_emergency_contact_name].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_emergency_contact_relation].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_personal_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]);
+    this.personalForm.controls[this.form_domicile_state].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_marital_status].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_passport_number].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_name_as_in_passport].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_profession_as_in_passport].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_place_of_issue].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_country_valid_for].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_serious_illness].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_no_of_days].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(5), this.glovbal_validators.numberOnly()]);
+    this.personalForm.controls[this.form_nature_of_illness].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_physical_disability].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+    this.personalForm.controls[this.form_left_eyepower_glass].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]);
+    this.personalForm.controls[this.form_right_eye_power_glass].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]);
+    } else {
+      this.personalForm.controls[this.form_place_of_birth].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_state_of_birth].setValidators(null);
+      this.personalForm.controls[this.form_nationality].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_mother_tongue].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_religion].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_caste].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_category].setValidators(null);
+      this.personalForm.controls[this.form_blood_group].setValidators(null);
+      this.personalForm.controls[this.form_father_name].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_emergency_contact].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.mobileRegex()]);
+      this.personalForm.controls[this.form_aadhar].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.aadhaar()]);
+      this.personalForm.controls[this.form_pan].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.panNo()]);
+      this.personalForm.controls[this.form_offer_reference].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.offer()]);
+      this.personalForm.controls[this.form_offer_date].setValidators(null);
+      this.personalForm.controls[this.form_height].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.numberDecimals()]);
+      this.personalForm.controls[this.form_weight].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.numberDecimals()]);
+      this.personalForm.controls[this.form_identification_mark1].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_identification_mark2].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_emergency_contact_name].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_emergency_contact_relation].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_personal_email].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.email()]);
+      this.personalForm.controls[this.form_domicile_state].setValidators(null);
+      this.personalForm.controls[this.form_marital_status].setValidators(null);
+      this.personalForm.controls[this.form_passport_number].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_name_as_in_passport].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_profession_as_in_passport].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_place_of_issue].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_country_valid_for].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_serious_illness].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_no_of_days].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(5), this.glovbal_validators.numberOnly()]);
+      this.personalForm.controls[this.form_nature_of_illness].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_physical_disability].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
+      this.personalForm.controls[this.form_left_eyepower_glass].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]);
+      this.personalForm.controls[this.form_right_eye_power_glass].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.eyenumberDecimals()]);
+    }
+    let form = this.personalForm;
+    for (const key in form.controls) {
+      if (key) {
+          form.get(key).updateValueAndValidity();
+      }
+  }
   }
 
   // Form getters
   // get ftitle() {
   //   return this.personalForm.get(this.form_title);
   // }
+  get getLanguageArr() { return this.personalForm.get([this.form_language_array]) as FormArray; }
+
   get fname() {
     return this.personalForm.get(this.form_name);
   }
@@ -586,6 +855,59 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   get no_of_children() {
     return this.personalForm.get(this.form_no_of_children);
   }
+
+  get passport_number() {
+    return this.personalForm.get(this.form_passport_number);
+  }
+
+  get name_as_in_passport() {
+    return this.personalForm.get(this.form_name_as_in_passport);
+  }
+
+  get profession_as_in_passport() {
+    return this.personalForm.get(this.form_profession_as_in_passport);
+  }
+
+  get date_of_issue() {
+    return this.personalForm.get(this.form_date_of_issue);
+  }
+
+  get valid_upto() {
+    return this.personalForm.get(this.form_valid_upto);
+  }
+
+  get place_of_issue() {
+    return this.personalForm.get(this.form_place_of_issue);
+  }
+
+  get country_valid_for() {
+    return this.personalForm.get(this.form_country_valid_for);
+  }
+
+  get serious_illness() {
+    return this.personalForm.get(this.form_serious_illness);
+  }
+
+  get no_of_days() {
+    return this.personalForm.get(this.form_no_of_days);
+  }
+
+  get nature_of_illness() {
+    return this.personalForm.get(this.form_nature_of_illness);
+  }
+
+  get physical_disability() {
+    return this.personalForm.get(this.form_physical_disability);
+  }
+
+  get left_eyepower_glass() {
+    return this.personalForm.get(this.form_left_eyepower_glass);
+  }
+
+  get right_eye_power_glass() {
+    return this.personalForm.get(this.form_right_eye_power_glass);
+  }
+
 
 ngOnDestroy() {
   this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';

@@ -872,3 +872,7 @@ mat-expansion-panel-header {
     color: $primary-red;
     font-size: 12px;
 }
+.custom-error-border {
+  border: solid 1px $primary-red !important;
+  padding-bottom: 1.5em;
+}

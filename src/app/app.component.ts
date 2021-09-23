@@ -9,7 +9,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { environment } from 'src/environments/environment';
 import { LoaderService } from './services/loader-service.service';
-import { delay } from 'rxjs/operators';
+import { delay, filter } from 'rxjs/operators';
 
 import { LicenseManager } from 'ag-grid-enterprise';
 LicenseManager.setLicenseKey('CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=L&T EduTech,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=3,LicensedProductionInstancesCount=3,AssetReference=AG-017299,ExpiryDate=15_July_2022_[v2]_MTY1NzgzOTYwMDAwMA==d6a472ece2e8481f35e75c20066f8e49');
@@ -51,19 +51,30 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.appConfig.clearLocalDataOne('familyFormTouched');
     this.appConfig.clearLocalDataOne('generalFormTouched');
 
-    this.router.events.subscribe((routerEvent: Event) => {
-      if (routerEvent instanceof NavigationStart) {
+    this.router.events
+    .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
+    .subscribe(event => {
+      if (
+        event.id === 1 &&
+        event.url === event.urlAfterRedirects
+      ) {
+      this.appConfig.clearLocalDataOne('profileData');
+      //  ..... // here your code when page is refresh
       }
-      // On NavigationEnd or NavigationError or NavigationCancel
-      // set showLoadingIndicator to false
-      if (routerEvent instanceof NavigationEnd ||
-        routerEvent instanceof NavigationError ||
-        routerEvent instanceof NavigationCancel) {
-          if (environment.local != true) {
-            // this.commonService.initVersionCheck(environment.versionCheckURL);
-          }
-          }
-    });
+    })
+    // this.router.events.subscribe((routerEvent: Event) => {
+    //   if (routerEvent instanceof NavigationStart) {
+    //   }
+    //   // On NavigationEnd or NavigationError or NavigationCancel
+    //   // set showLoadingIndicator to false
+    //   if (routerEvent instanceof NavigationEnd ||
+    //     routerEvent instanceof NavigationError ||
+    //     routerEvent instanceof NavigationCancel) {
+    //       if (environment.local != true) {
+    //         // this.commonService.initVersionCheck(environment.versionCheckURL);
+    //       }
+    //       }
+    // });
   }
 
   ngOnInit() {

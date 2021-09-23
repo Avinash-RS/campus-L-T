@@ -88,7 +88,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   conditionCert = 'cert';
   conditionBank = 'bank';
   //Joining Variables
-  form_joiningArray = 'joiningArray';
+  form_joiningArray = 'joining_details';
   form_file_id = 'file_id';
   form_id = 'id';
   form_file_path = 'file_path';
@@ -102,27 +102,27 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   form_expectedDate = 'expected_date';
 
   // Education variables
-  form_educationArray = 'Education_Documents';
+  form_educationArray = 'education_documents';
   form_semesterArray = 'sub_documents';
   form_noofSemester = 'no_of_semester';
-  form_education_level = 'Education_Level';
+  form_education_level = 'education_level';
   form_eourse_Completion = 'course_completion_certificate';
   form_degree_Completion = 'degree_completion_certificate';
 
   // Resume Variables
-  form_resumeArray = 'Resume';
+  form_resumeArray = 'resume';
 
   // Transfer certificate Variables
-  form_transferCertArray = 'transfer';
+  form_transferCertArray = 'transfer_certificate';
 
   // Other certificate Variables
-  form_otherCertArray = 'otherCertificates';
+  form_otherCertArray = 'other_certifications';
 
   // Certifications array
-  form_CertificationArray = 'CertificationArray';
+  form_CertificationArray = 'certifications';
   getCertificationDocuments: any;
   // Banking
-  form_bankArray = 'bank';
+  form_bankArray = 'banking_details';
   form_acc_no = 'account_no';
   form_ifsc_code = 'ifsc_code';
   form_branch = 'branch';
@@ -143,7 +143,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     private apiService: ApiServiceService,
     private loadingService: LoaderService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService,
     private dialog: MatDialog,
@@ -160,13 +160,17 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('upload');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
       top.scrollIntoView();
       top = null;
     }
+  }
+
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('upload');
   }
 
   formInitialize() {
@@ -182,19 +186,35 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getDocuments() {
-    this.candidateService.joiningFormGetDocuments().subscribe((data: any)=> {
+    if (this.candidateService.getLocalProfileData()) {
+      let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+      this.ifDocumentDetails(apiDocumentDetails);
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+        this.ifDocumentDetails(apiDocumentDetails);
+      });
+    }
+  }
 
-      this.getJoiningDocuments = data && data['Joining_Details'] ? data['Joining_Details'] : [];
-      this.getEducationDocuments = data && data['Education_Documents'] ? data['Education_Documents'] : [];
-      this.getResumeDocuments = data && data['Resume'] ? data['Resume'] : [];
-      this.getTransferDocuments = data && data['Transfer_Certificate'] ? data['Transfer_Certificate'] : [];
-      this.getbankDocuments = data && data['Banking_Details'] ? data['Banking_Details'] : [];
-      this.getCertificationDocuments = data && data['Certifications'] ? data['Certifications'] : [];
-      this.getOtherCertificationDocuments = data && data['Other_Certifications'] ? data['Other_Certifications'] : [];
-      this.checkJoiningArrayinitalize();
-    }, (err)=> {
+  ifDocumentDetails(data) {
+    this.getJoiningDocuments = data && data['joining_details'] ? data['joining_details'] : [];
+    this.getEducationDocuments = data && data['education_documents'] ? data['education_documents'] : [];
+    this.getResumeDocuments = data && data['resume'] ? data['resume'] : [];
+    this.getTransferDocuments = data && data['transfer_certificate'] ? data['transfer_certificate'] : [];
+    this.getbankDocuments = data && data['banking_details'] ? data['banking_details'] : [];
+    this.getCertificationDocuments = data && data['certifications'] ? data['certifications'] : [];
+    this.getOtherCertificationDocuments = data && data['other_certifications'] ? data['other_certifications'] : [];
+    this.checkJoiningArrayinitalize();
+  }
 
-    });
+  ifNotDocumentDetails() {
+
   }
 
   checkNotSubmittedReasonAndDate(element) {
@@ -204,6 +224,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
   checkJoiningArrayinitalize() {
+    if (this.candidateService.checkKycOrJoiningForm()) {
     // Joining
     let arr = [];
     this.getJoiningDocuments.forEach(element => {
@@ -240,17 +261,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
           this.getTransferArr.push(this.patchJoiningArray(element));
         });
       } else {
-        this.getTransferArr.push(this.initJoiningArray());
-      }
-
-    // Resume
-      if (this.getResumeDocuments && this.getResumeDocuments.length > 0 && this.getResumeDocuments[0] && this.getResumeDocuments[0][this.form_name]) {
-        this.getResumeDocuments.forEach(element => {
-          this.checkNotSubmittedReasonAndDate(element);
-          this.getResumeArr.push(this.patchJoiningArray(element));
-        });
-      } else {
-        this.getResumeArr.push(this.initJoiningArray());
+        this.getTransferArr.push(this.initTransferArray());
       }
 
       // Banking Details
@@ -282,6 +293,18 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       }
 
       this.patchNotSubmittedReason();
+
+    }
+    // Resume
+    if (this.getResumeDocuments && this.getResumeDocuments.length > 0 && this.getResumeDocuments[0] && this.getResumeDocuments[0][this.form_name]) {
+      this.getResumeDocuments.forEach(element => {
+        this.checkNotSubmittedReasonAndDate(element);
+        this.getResumeArr.push(this.patchResumeArray(element));
+      });
+    } else {
+      this.getResumeArr.push(this.initResumeArray());
+    }
+
   }
 
   patchNotSubmittedReason() {
@@ -298,6 +321,22 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       // [this.form_id]: [data[this.form_id]],
       [this.form_file_size]: [data[this.form_file_size]],
       [this.form_file_path]: [data[this.form_file_path]],
+      [this.form_file_name]: [data[this.form_file_name]],
+      [this.form_file_type]: [data[this.form_file_type]],
+      [this.form_file_id]: [data[this.form_file_id]],
+      [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [data[this.form_expectedDate]],
+    })
+  }
+
+  patchResumeArray(data, otherCert?) {
+    return this.fb.group({
+      [this.form_name]: [data[this.form_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [data[this.form_label], (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
+      // [this.form_id]: [data[this.form_id]],
+      [this.form_file_size]: [data[this.form_file_size]],
+      [this.form_file_path]: [data[this.form_file_path], [Validators.required]],
       [this.form_file_name]: [data[this.form_file_name]],
       [this.form_file_type]: [data[this.form_file_type]],
       [this.form_file_id]: [data[this.form_file_id]],
@@ -368,6 +407,38 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     })
   }
 
+  initTransferArray() {
+    return this.fb.group({
+      [this.form_name]: ['Transfer Certificate', [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: ['Transfer Certificate'],
+      // [this.form_id]: [null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [null]
+    })
+  }
+
+  initResumeArray() {
+    return this.fb.group({
+      [this.form_name]: ['Resume', [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: ['Resume'],
+      // [this.form_id]: [null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null, [Validators.required]],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [null]
+    })
+  }
+
   patchBankingArray(data) {
     return this.fb.group({
       [this.form_name]: [data[this.form_name]],
@@ -389,8 +460,8 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   initBankingArray() {
     return this.fb.group({
-      [this.form_name]: [null],
-      [this.form_label]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]], // Bank name
+      [this.form_name]: ['Banking'],
+      [this.form_label]: ['Banking', [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]], // Bank name
       [this.form_acc_no]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberOnly(), Validators.maxLength(50)]],
       [this.form_ifsc_code]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_branch]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
@@ -663,14 +734,15 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
 
   formSubmit(routeValue?: any) {
     if (this.uploadForm.valid) {
-    if (this.checkJoiningNotUploaded()) {
+    if (this.checkJoiningNotUploaded() && this.candidateService.checkKycOrJoiningForm()) {
       this.openNodocs(routeValue ? routeValue : '');
     } else {
       this.beforeSubmit(routeValue ? routeValue : '');
     }
     } else {
       this.ngAfterViewInit();
-      this.accordion.openAll()
+      this.accordion.openAll();
+      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_resumeArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
@@ -886,20 +958,26 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     let certArray = this.getCertificationsArr.getRawValue();
     let otherArray = this.getOtherCertArr.getRawValue();
     const apiData = {
-      Joining_Details: joiningArray,
-      Education_Documents: educationArray,
-      Resume: resumeArray,
-      Certifications: certArray,
-      Other_Certifications: otherArray,
-      Transfer_Certificate: transferArray,
-      Banking_Details: bankArray
+      joining_details: joiningArray,
+      education_documents: educationArray,
+      resume: resumeArray,
+      certifications: certArray,
+      other_certifications: otherArray,
+      transfer_certificate: transferArray,
+      banking_details: bankArray
     }
-
+    const UploadApiRequestDetails = {
+      form_name: "joining",
+      section_name: "document_details",
+      saving_data: apiData
+    }
+    console.log('apidata', UploadApiRequestDetails);
 
     // if(this.dependentForm.valid) {
-      this.candidateService.joiningFormUpload(apiData).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Upload details has been updated');
+      this.candidateService.newSaveProfileData(UploadApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Upload details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
       });
@@ -909,6 +987,10 @@ async uploadImage(file, i, form) {
   try {
     this.loadingService.setLoading(true);
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    if (data && data.error_code) {
+      this.loadingService.setLoading(false);
+     return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+    }
     this.loadingService.setLoading(false);
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
@@ -1165,6 +1247,10 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
   try {
     this.loadingService.setLoading(true);
     const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+    if (data && data.error_code) {
+      this.loadingService.setLoading(false);
+     return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+    }
     this.loadingService.setLoading(false);
     // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
@@ -1257,7 +1343,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
       if (route == 'work') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
       } else {
-        if (this.appConfig.getLocalData('upload') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().document_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
         } else {
          if (this.uploadForm.valid) {

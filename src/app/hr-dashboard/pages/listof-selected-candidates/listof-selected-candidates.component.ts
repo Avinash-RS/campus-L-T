@@ -1,4 +1,3 @@
-import { CommonJoiningFormComponent } from './../../../shared/common-joining-form/common-joining-form.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -87,12 +86,12 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     if (event.colDef.field === 'candidate_name') {
       if (event['data']['mailed'] == 'Sent' && event['data']['is_editable'] == 'Submitted') {
         const data = {
-          candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+          candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
         };
-        this.openDialog4(CommonJoiningFormComponent, data);
+        this.openDialog4(CommonKycProfileViewComponent, data);
       } else {
         const data = {
-          candidateId: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+          candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
           candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
         };
         this.openDialog5(CommonKycProfileViewComponent, data);

@@ -32,6 +32,7 @@
                 margin-top: 0.5em;
                 width: 100%;
                 display: flex;
+                flex-wrap: wrap;
                 justify-content: space-between;
                 align-items: flex-start;
                 .width-70 {
@@ -66,6 +67,9 @@
                     display: flex;
                     flex-direction: column;
                     position: relative;
+                    margin-top: .5em;
+                    margin-right: 1em;
+                    flex-grow: .5;
                     label {
                         color: #565656;
                         padding: 0 0 2px 0;
@@ -125,6 +129,7 @@
                 border: 1px dashed #BEBEBE;
                 height: 35px;
                 min-width: 100px;
+                max-width: 100px;
                 margin-left: 1em;
             }
             .add-button:hover {
@@ -384,9 +389,16 @@
 
 :host ::ng-deep .mat-input-element:disabled {
     background: #EEEEEE !important;
+    color: rgba(0, 0, 0, 0.5) !important;
     cursor: not-allowed;
+}
+.ant-select-disabled {
+  color: rgba(0, 0, 0, 0.5) !important;
 }
 .input-1:disabled {
     background: #EEEEEE !important;
     cursor: not-allowed;
+}
+.selectedPost {
+  min-width: 400px;
 }

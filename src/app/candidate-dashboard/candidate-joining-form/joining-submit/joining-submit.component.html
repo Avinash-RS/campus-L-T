@@ -7,8 +7,8 @@
         <div class="text-1">
             Thanks for submitting your details and documents. Further communication will be notified to your registered email id. Wishing you all the best for your journey with Larsen and Toubro!
         </div>
-        <div class="text-1">
-            For any further assistance, please reach out to the HR SPOC mentioned in your offer letter! 
+        <div *ngIf="candidateService.checkKycOrJoiningForm()" class="text-1">
+            For any further assistance, please reach out to the HR SPOC mentioned in your offer letter!
         </div>
 
         <div class="text-last">

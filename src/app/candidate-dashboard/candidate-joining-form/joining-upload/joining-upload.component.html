@@ -37,6 +37,7 @@
 
                 <mat-accordion class="example-headers-align" multi>
                     <!-- Joining Uploads -->
+                    <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -155,7 +156,7 @@
                                         <ng-container *ngIf="getEducationArr.controls[i] && getEducationArr.controls[i].get(form_education_level).value != 'SSLC' && getEducationArr.controls[i].get(form_education_level).value != 'HSC'">
                                             <div class="row-wrapper flexEnd">
                                                 <div class="overall-input-wrapper width-100 align-items-center flex-row">
-                                                    <label class="f_size_14" style="width: 26%;">Please select number of semesters <span>*</span></label>
+                                                    <label class="f_size_14" style="min-width: 28%;">Please select number of semesters <span>*</span></label>
                                                     <nz-select class="input select" (ngModelChange)="changeSemesterCount(education, i)" style="width: 9%;" [formControlName]="form_noofSemester" nzAllowClear nzShowSearch
                                                         nzPlaceHolder="Select">
                                                         <nz-option *ngFor="let sem of semesterList" [nzLabel]="sem" [nzValue]="sem"></nz-option>
@@ -348,10 +349,9 @@
                             </ng-container>
                         </ng-container>
                     </mat-expansion-panel>
-
-
+                  </ng-container>
                     <!-- Resume Uploads -->
-                    <mat-expansion-panel>
+                    <mat-expansion-panel [expanded]="candidateService.checkKycOrJoiningForm() ? false : true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <h6 class="mt-0 mb-0 ml-0 mr-0">Resume Upload</h6>
@@ -366,10 +366,10 @@
                             <ng-container *ngFor="let item of getResumeArr.controls; let j = index;"
                                 [formGroupName]="j">
 
-                                <div class="row-wrapper flexEnd">
+                                <div class="row-wrapper flexEnd" [ngClass]="getResumeArr.controls[j].get(form_file_path).invalid && getResumeArr.controls[j].get(form_file_path).touched ? 'custom-error-border' : ''">
                                     <div class="overall-input-wrapper min200 top22">
                                         <div class="readonlyTitle">
-                                            {{getResumeArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
+                                            {{getResumeArr.controls[j].get(form_label).value ? getResumeArr.controls[j].get(form_label).value : 'Resume'}}<span class="f_size_14" style="color: #C02222;">*</span>
                                         </div>
                                     </div>
 
@@ -410,6 +410,16 @@
                                         </label>
                                         <input [id]="j + getResumeArr.controls[j].get(form_label).value" type="file" accept=".pdf" (click)="files.value = null" #files
                                             (change)="onSelectFile($event, j, conditionResume)" hidden>
+                                        <div class="form-error"
+                                            *ngIf="getResumeArr.controls[j].get(form_file_path).invalid && getResumeArr.controls[j].get(form_file_path).touched">
+                                            <div
+                                                *ngIf="getResumeArr.controls[j].get(form_file_path).errors?.required">
+                                                Resume is Required</div>
+                                            <div
+                                                *ngIf="getResumeArr.controls[j].get(form_file_path).errors?.alphaNum255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
 
                                     </div>
 
@@ -426,7 +436,8 @@
                         </ng-container>
                     </mat-expansion-panel>
 
-                    <!-- Banking Uploads -->
+                    <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                      <!-- Banking Uploads -->
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -678,7 +689,6 @@
 
                     </mat-expansion-panel>
 
-
                     <!-- Other Certificates Upload -->
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
@@ -793,16 +803,8 @@
                     </div>
 
                     </mat-expansion-panel>
-
+                    </ng-container>
                 </mat-accordion>
-
-
-                <!-- input
-              <br>
-              <input id="file-input" type="file" accept=".pdf" (click)="files.value = null" #files
-              (change)="onSelectFile($event)"> -->
-
-                <!-- <button type="button"> Save</button> -->
 
 
                 <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer">

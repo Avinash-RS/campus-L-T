@@ -88,20 +88,26 @@ export class FormCustomValidators {
   }
 
   static anyOneSelected(g: FormGroup) {
-    if (g.get('language').value) {
-      if (g.controls.language.value.length > 0) {
-        if (g.controls.read.value || g.controls.write.value || g.controls.speak.value) {
-          g.controls['read'].setErrors(null);
+    // if (g.get('language').value) {
+      if (g.controls && g.controls.language && g.controls.language.value && g.controls.language.value.length > 0) {
+        if (g.controls.is_read.value || g.controls.is_write.value || g.controls.is_speak.value) {
+          g.controls['is_read'].setErrors(null);
           return null;
         } else {
-          return g.controls['read']['setErrors']({ notSelected: true });
-          // return { notSelected: true };
+          return g.controls['is_read']['setErrors']({ notSelected: true });
+        }
+      } else {
+        if (g.controls.is_read.value || g.controls.is_write.value || g.controls.is_speak.value) {
+          return g.controls['is_read']['setErrors']({ notSelected: true });
+        } else {
+          g.controls['is_read'].setErrors(null);
+          return null;
         }
       }
-    } else {
-      g.controls['read'].setErrors(null);
-      return null;
-    }
+    // } else {
+    //   g.controls['read'].setErrors(null);
+    //   return null;
+    // }
   }
 
   static FamilyanyOneSelected(g: FormGroup) {

@@ -69,6 +69,19 @@ export class AdminServiceService {
     return headers;
   }
 
+  getAfterCustomHeadersDummy(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/json')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('driveId', '2')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
+      .set('Access-Control-Allow-Origin', '*');
+    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
+    return headers;
+  }
+
   withoutTokens(): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -168,9 +181,14 @@ export class AdminServiceService {
 
 
   // HR APIS
+  // getCandidateListForShortlist(data) {
+  //   return this.http.post(`${this.BASE_URL}/profile/getprofileshortlist_quicker`, data,
+  //     { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  // }
+
   getCandidateListForShortlist(data) {
-    return this.http.post(`${this.BASE_URL}/profile/getprofileshortlist_quicker`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+    return this.http.post(`${this.BASE_URL}/profile/first_level_shortlisting_candidates`, data,
+      { headers: this.getAfterCustomHeadersDummy(), reportProgress:true, withCredentials: true });
   }
 
   submitAllFilters(data) {

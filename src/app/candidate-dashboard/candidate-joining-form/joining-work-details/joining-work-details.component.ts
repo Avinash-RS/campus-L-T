@@ -109,18 +109,30 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   form_disciplinary_proceedings = "disciplinary_proceedings";
   form_full_particulars = "full_particulars"
 
-  form_Employment_Array = "Employment"
+  form_Employment_Array = "Employment";
+  form_Skills_Array = "skills";
+  form_Skill = "skill";
+
+  form_Relatives_Array = "relatives_in_company";
+  form_relatives_name = "name";
+  form_relatives_position = "position";
+  form_relatives_relationship = "relationship";
+  form_relatives_company = "company";
+  form_faculty_reference = "faculty_reference";
+  form_faculty_reference_1 = "faculty_reference1";
 
   workDetails: any;
 
   isWorkExp = new FormControl(null);
+  isRelatives = new FormControl(null);
   showWorkExp: any = '0';
+  workDetailsAllData: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
@@ -143,7 +155,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('work');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -152,25 +164,43 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('work');
+  }
+
   getWorkApiDetails() {
-    this.candidateService.joiningFormGetWorkDetails().subscribe((data: any) => {
-
-      if (data) {
-        let work = {
-          workDetails: data && data.workDetails ? data.workDetails : null,
-          Employment: data && data.Employment ? data.Employment : [],
-          bgvDetails: data && data.bgvDetails ? data.bgvDetails : null,
-        }
-        this.showWorkExp = data && data['isworkexp'] =='1' ? '1' : '0';
-        this.isWorkExp.setValue(data && data['isworkexp'] && data['isworkexp'] == '1' ? true : false);
-        this.workDetails = work;
-        this.patchWorkForm();
-      } else {
-        this.workDetails = null;
-        this.getEmploymentArr.push(this.initEmploymentArray());
+    if (this.candidateService.getLocalProfileData()) {
+      this.workDetails = this.candidateService.getLocalexperience_details();
+      this.workDetailsAllData = this.candidateService.getLocalexperience_details();
+      this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
       }
-    });
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.workDetails = this.candidateService.getLocalexperience_details();
+        this.workDetailsAllData = this.candidateService.getLocalexperience_details();
+        this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
+      });
+    }
+  }
 
+  ifworkDetails() {
+    let work = {
+      workDetails: this.workDetails && this.workDetails.work_details ? this.workDetails.work_details : null,
+      Employment: this.workDetails && this.workDetails.employments ? this.workDetails.employments : [],
+      bgvDetails: this.workDetails && this.workDetails.bgv_details ? this.workDetails.bgv_details : null,
+    }
+    this.showWorkExp = this.workDetails && this.workDetails['is_work_exp'] =='1' ? '1' : '0';
+    this.isWorkExp.setValue(this.workDetails && this.workDetails['is_work_exp'] && this.workDetails['is_work_exp'] == '1' ? true : false);
+    this.workDetails = work;
+    this.patchWorkForm();
+  }
+  ifNotworkDetails() {
+    this.workDetails = null;
+    this.getEmploymentArr.push(this.initEmploymentArray());
   }
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -221,6 +251,29 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     } else {
       this.getEmploymentArr.push(this.initEmploymentArray());
     }
+
+    if (this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0) {
+      this.getSkillsArr.clear();
+      this.workDetailsAllData[this.form_Skills_Array].forEach(element => {
+        element ? this.getSkillsArr.push(this.SkillsArrayPatch(element)) : '';
+      });
+    }
+
+    if (this.workDetailsAllData && this.workDetailsAllData.relatives_in_company && this.workDetailsAllData.relatives_in_company.length > 0) {
+      this.getRelativesArr.clear();
+      this.isRelatives.setValue(true);
+      this.workDetailsAllData.relatives_in_company.forEach(element => {
+        element ? this.getRelativesArr.push(this.RelativesArrayPatch(element)) : '';
+      });
+    }
+
+    this.workDetailsForm.patchValue({
+      [this.form_faculty_reference]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][0] ? this.workDetailsAllData['faculty_references'][0] : null,
+      [this.form_faculty_reference_1]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][1] ? this.workDetailsAllData['faculty_references'][1] : null
+    });
+
+    console.log('adad', this.workDetailsForm);
+
   }
 
   OtherConditionsPatch(data) {
@@ -295,6 +348,37 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     )
   }
 
+  initSkillsArray() {
+    return this.fb.group({
+      [this.form_Skill]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
+    })
+  }
+
+  SkillsArrayPatch(data) {
+    return this.fb.group({
+      [this.form_Skill]: [data, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
+    })
+  }
+
+  initRelativesArray() {
+    return this.fb.group({
+      [this.form_relatives_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_relationship]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_position]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_company]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+    })
+  }
+
+  RelativesArrayPatch(data) {
+    return this.fb.group({
+      [this.form_relatives_name]: [data[this.form_relatives_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_relationship]: [data[this.form_relatives_relationship], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_position]: [data[this.form_relatives_position], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_relatives_company]: [data[this.form_relatives_company], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+    })
+  }
+
+
   formInitialize() {
     this.workDetailsForm = this.fb.group({
       [this.form_convicted_by_Court]: [null],
@@ -317,7 +401,11 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_interviewed_by_us]: ['0'],
       [this.form_post]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_when_interview]: [null],
-      [this.form_Employment_Array]: this.fb.array([])
+      [this.form_faculty_reference]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_faculty_reference_1]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_Employment_Array]: this.fb.array([]),
+      [this.form_Skills_Array]: this.fb.array([this.initSkillsArray()]),
+      [this.form_Relatives_Array]: this.fb.array([this.initRelativesArray()])
     })
   }
 
@@ -336,9 +424,42 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
 }
 
+  addSkills() {
+    let i = this.getSkillsArr['controls'].length - 1;
+    if (this.getSkillsArr.valid && this.getSkillsArr['controls'].length < 10) {
+      if (this.getSkillsArr && this.getSkillsArr['controls'] && this.getSkillsArr['controls'][i] && this.getSkillsArr['controls'][i]['value'] && this.getSkillsArr['controls'][i]['value'][this.form_Skill]) {
+        return this.getSkillsArr.push(this.initSkillsArray());
+      }
+    } else {
+      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+    }
+  }
+
   removeEmploymentArray(i) {
     this.getEmploymentArr.removeAt(i);
   }
+
+  removeSkillsArray(i) {
+    this.getSkillsArr.removeAt(i);
+  }
+
+  addRelatives() {
+    let i = this.getRelativesArr['controls'].length - 1;
+    if (this.getRelativesArr.valid && this.getRelativesArr['controls'].length < 3) {
+      if (this.getRelativesArr && this.getRelativesArr['controls'] && this.getRelativesArr['controls'][i] && this.getRelativesArr['controls'][i]['value'] && this.getRelativesArr['controls'][i]['value'][this.form_relatives_name]) {
+        return this.getRelativesArr.push(this.initRelativesArray());
+      }
+    } else {
+      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+    }
+  }
+
+  removeRelatives(i) {
+    this.getRelativesArr.removeAt(i);
+  }
+
 
   radioChange(e, form) {
     if (form == 1) {
@@ -396,7 +517,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     let some = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : this.getEmploymentArr.clear();
     let formValues = this.workDetailsForm.getRawValue();
     if (this.workDetailsForm.valid) {
-      const workDetails = {
+      const work_details = {
         [this.form_total_exp_years]: this.showWorkExp == '1' ? formValues[this.form_total_exp_years] : null,
         [this.form_total_exp_months]: this.showWorkExp == '1' ? formValues[this.form_total_exp_months] : null,
         [this.form_break_in_emp]: this.showWorkExp == '1' ? formValues[this.form_break_in_emp] : null,
@@ -407,7 +528,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
         [this.form_post]: formValues[this.form_post],
         [this.form_when_interview]: formValues[this.form_when_interview]
       };
-      const bgvDetails = {
+      const bgv_details = {
         [this.form_convicted_by_Court]: formValues[this.form_convicted_by_Court] && (formValues[this.form_convicted_by_Court] == '1' || formValues[this.form_convicted_by_Court] == true) ? '1' : '0',
         [this.form_arrested]: formValues[this.form_arrested] && (formValues[this.form_arrested] == '1' || formValues[this.form_arrested] == true) ? '1' : '0',
         [this.form_prosecuted]: formValues[this.form_prosecuted] && (formValues[this.form_prosecuted] == '1' || formValues[this.form_prosecuted] == true) ? '1' : '0',
@@ -420,16 +541,38 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
         [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings] && (formValues[this.form_disciplinary_proceedings] == '1' || formValues[this.form_disciplinary_proceedings] == true) ? '1' : '0',
         [this.form_full_particulars]: formValues[this.form_full_particulars]
       }
-      const Employment = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : [];
-      let apiData = {
-        workDetails,
-        bgvDetails,
-        Employment,
-        isworkexp: this.showWorkExp == '1' ? '1' : '0'
-      }
-      this.candidateService.joiningFormGetWorkDetailsSave(apiData).subscribe((data: any) => {
+      const employments = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : [];
 
-        this.appConfig.nzNotification('success', 'Saved', 'Work Experience details has been updated');
+      let skills = [];
+      this.workDetailsForm.getRawValue()[this.form_Skills_Array].forEach(element => {
+        if (element && element[this.form_Skill]) {
+          skills.push(element[this.form_Skill]);
+        }
+      });
+      let faculty_reference1 = this.workDetailsForm.getRawValue()[this.form_faculty_reference];
+      let faculty_references2 = this.workDetailsForm.getRawValue()[this.form_faculty_reference_1];
+      let faculty_references = [];
+      faculty_reference1 ? faculty_references.push(faculty_reference1) : '';
+      faculty_references2 ? faculty_references.push(faculty_references2) : '';
+      let apiData = {
+        work_details,
+        bgv_details,
+        employments,
+        is_work_exp: this.showWorkExp == '1' ? '1' : '0',
+        skills,
+        relatives_in_company: this.workDetailsForm.getRawValue()[this.form_Relatives_Array],
+        faculty_references
+      };
+      const WorkExperienceApiRequestDetails = {
+        form_name: "joining",
+        section_name: "experience_details",
+        saving_data: apiData
+      }
+
+      this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails).subscribe((data: any) => {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
       });
@@ -438,6 +581,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.workDetailsForm);
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
     }
 
   }
@@ -465,25 +609,25 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   routeNext(route) {
-    if (!this.workDetailsForm.dirty) {
-      if (route == 'education') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
-      } else {
-        if (this.appConfig.getLocalData('work') == '1') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+      if (!this.workDetailsForm.dirty) {
+        if (route == 'education') {
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
         } else {
-          if (this.workDetailsForm.valid) {
-            return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+          if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().experience_details == '1') {
+            return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+          } else {
+            if (this.workDetailsForm.valid) {
+              return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+            }
+            this.glovbal_validators.validateAllFields(this.workDetailsForm);
+            this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
+            this.ngAfterViewInit();
+            this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
           }
-          this.glovbal_validators.validateAllFields(this.workDetailsForm);
-          this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
-          this.ngAfterViewInit();
-          this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
         }
+      } else {
+        return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
       }
-    } else {
-      return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
-    }
   }
 
 
@@ -530,7 +674,19 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   // Form getters
   // convenience getters for easy access to form fields
+  get getRelativesArr() { return this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray; }
+
+  get getSkillsArr() { return this.workDetailsForm.get([this.form_Skills_Array]) as FormArray; }
+
   get getEmploymentArr() { return this.workDetailsForm.get([this.form_Employment_Array]) as FormArray; }
+
+  get faculty_reference_1() {
+    return this.workDetailsForm.get(this.form_faculty_reference_1);
+  }
+
+  get faculty_reference() {
+    return this.workDetailsForm.get(this.form_faculty_reference);
+  }
 
   get convicted_by_Court() {
     return this.workDetailsForm.get(this.form_convicted_by_Court);

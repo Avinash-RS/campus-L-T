@@ -3,13 +3,47 @@
         Work Experience Details
     </h5>
 
-    <div class="row-wrappper mt-3 hanging">
-        <mat-checkbox [formControl]="isWorkExp" (change)="changeWorkExp($event)" class="mr-2"></mat-checkbox> Do you have any Work Experience?</div>
 
     <div class="grids-wrapper">
         <form class="workDetailsForm" [formGroup]="workDetailsForm" (ngSubmit)="formSubmit()">
+          <h5 class="mt-3">Add your Skills</h5>
+          <div class="skills-wrapper" *ngIf="getSkillsArr && getSkillsArr.controls" [formArrayName]="form_Skills_Array">
+            <div class="skill-name-wrapper" *ngFor="let item of getSkillsArr.controls; let i = index;" [formGroupName]="i">
+              <div class="input" [ngClass]="getSkillsArr.controls[i].get(form_Skill).invalid ? 'input-error' : ''">
+              <input [formControlName]="form_Skill" class="input-1" matInput placeholder="Enter here..." type="text" id="">
+              <div class="remove-wrapper">
+                <div (click)="removeSkillsArray(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
+                    <i class="material-icons material-icons-outlined">
+                        remove_circle_outline
+                    </i>
+                </div>
+              </div>
+            </div>
+            <div class="form-error"
+            *ngIf="getSkillsArr.controls[i].get(form_Skill).invalid && getSkillsArr.controls[i].get(form_Skill).touched">
+            <div
+                *ngIf="getSkillsArr.controls[i].get(form_Skill).errors?.required">
+                Skill Name is Required</div>
+            <div
+                *ngIf="getSkillsArr.controls[i].get(form_Skill).errors?.address255">
+                Alpha numeric with maximum of 255 characters only
+                allowed</div>
+            </div>
+        </div>
+        <div class="skills-add" *ngIf="getSkillsArr && getSkillsArr.controls && getSkillsArr.controls.length < 10">
+        <div class="overall-input-wrapper">
+            <button class="add-button" mat-raised-button type="button" (click)="addSkills()">+
+                Add</button>
+        </div>
+    </div>
+      </div>
+
+      <h5 class="mt-3">Employment Details</h5>
+      <div class="row-wrappper mt-1 hanging">
+        <mat-checkbox [formControl]="isWorkExp" (change)="changeWorkExp($event)" class="mr-2"></mat-checkbox> Do you have any Work Experience?
+        </div>
+
             <ng-container *ngIf="showWorkExp == '1'">
-            <h6 class="mt-3">Employment Details</h6>
             <ng-container *ngIf="getEmploymentArr && getEmploymentArr.controls" [formArrayName]="form_Employment_Array">
                 <ng-container *ngFor="let item of getEmploymentArr.controls; let i = index;" [formGroupName]="i">
                     <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
@@ -399,7 +433,137 @@
 
             </div>
 
-            <h6 class="mt-3">Disciplinary Details</h6>
+            <!-- Relatives and Aquantices -->
+            <div class="row-wrappper mt-3 hanging">
+              <mat-checkbox [formControl]="isRelatives" class="mr-2"></mat-checkbox> Is any of your Relatives / Acquaintances in L&T group of companies?
+              </div>
+              <ng-container *ngIf="isRelatives.value">
+                  <ng-container *ngIf="getRelativesArr && getRelativesArr.controls" [formArrayName]="form_Relatives_Array">
+                      <ng-container *ngFor="let item of getRelativesArr.controls; let i = index;" [formGroupName]="i">
+                          <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
+                              <div class="form-grouping">
+                                  <div class="row-wrapper">
+                                      <div class="overall-input-wrapper width-24">
+                                          <label>Name<span></span></label>
+                                          <input matInput placeholder="Enter here" class="input" type="text"
+                                          [formControlName]="form_relatives_name">
+                                          <div class="form-error"
+                                              *ngIf="getRelativesArr.controls[i].get(form_relatives_name).invalid && getRelativesArr.controls[i].get(form_relatives_name).touched">
+                                              <div
+                                                  *ngIf="getRelativesArr.controls[i].get(form_relatives_name).errors?.required">
+                                                  Name is Required</div>
+                                              <div
+                                                  *ngIf="getRelativesArr.controls[i].get(form_relatives_name).errors?.address255">
+                                                  Alpha numeric with maximum of 255 characters only
+                                                  allowed</div>
+                                          </div>
+                                      </div>
+
+                                      <div class="overall-input-wrapper width-24">
+                                        <label>Relationship<span></span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                            [formControlName]="form_relatives_relationship">
+                                        <div class="form-error"
+                                            *ngIf="getRelativesArr.controls[i].get(form_relatives_relationship).invalid && getRelativesArr.controls[i].get(form_relatives_relationship).touched">
+                                            <div
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_relationship).errors?.required">
+                                                Relationship is Required</div>
+                                            <div
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_relationship).errors?.address255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-input-wrapper width-24">
+                                        <label>Position<span></span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                            [formControlName]="form_relatives_position">
+                                        <div class="form-error"
+                                            *ngIf="getRelativesArr.controls[i].get(form_relatives_position).invalid && getRelativesArr.controls[i].get(form_relatives_position).touched">
+                                            <div
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_position)?.errors?.required">
+                                                Position is Required</div>
+                                            <div
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_position).errors?.address255">
+                                                Alpha numeric with maximum of 255 characters only
+                                                allowed</div>
+
+                                        </div>
+                                    </div>
+                                    <div class="overall-input-wrapper width-24">
+                                        <label>Company<span></span></label>
+                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                            [formControlName]="form_relatives_company">
+                                        <div class="form-error"
+                                            *ngIf="getRelativesArr.controls[i].get(form_relatives_company).invalid && getRelativesArr.controls[i].get(form_relatives_company).touched">
+                                            <div
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_company)?.errors?.required">
+                                                Company is Required</div>
+                                            <div
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_company).errors?.address50">
+                                                Alpha numeric with maximum of 50 characters only
+                                                allowed</div>
+
+                                        </div>
+                                    </div>
+
+
+                                  </div>
+
+                              </div>
+                              <div class="remove-wrapper">
+                                  <div (click)="removeRelatives(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
+                                      <i class="material-icons material-icons-outlined">
+                                          remove_circle_outline
+                                      </i>
+                                  </div>
+                              </div>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+
+                  <div *ngIf="getRelativesArr && getRelativesArr.controls && getRelativesArr.controls.length < 2"
+                      class="row-wrapper mt-3">
+                      <div class="overall-input-wrapper">
+                          <button class="add-button" mat-raised-button type="button" (click)="addRelatives()">+
+                              Add</button>
+                      </div>
+                  </div>
+                </ng-container>
+
+                <h5 class="mt-3">Faculty References</h5>
+                <div class="d-flex faculty-wrapper row-wrapper">
+                  <div class="overall-input-wrapper">
+                    <textarea [formControlName]="form_faculty_reference" name="" id="" placeholder="Enter Faculty Reference 1"></textarea>
+                    <div class="form-error"
+                    *ngIf="faculty_reference.invalid && faculty_reference.touched">
+                    <div
+                        *ngIf="faculty_reference.errors?.required">
+                        Faculty Reference is Required</div>
+                    <div
+                        *ngIf="faculty_reference.errors?.address255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                    </div>
+                  </div>
+                  <div class="overall-input-wrapper">
+                    <textarea [formControlName]="form_faculty_reference_1" name="" id="" placeholder="Enter Faculty Reference 2"></textarea>
+                    <div class="form-error"
+                    *ngIf="faculty_reference_1.invalid && faculty_reference_1.touched">
+                    <div
+                        *ngIf="faculty_reference_1.errors?.required">
+                        Faculty Reference is Required</div>
+                    <div
+                        *ngIf="faculty_reference_1.errors?.address255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                    </div>
+                  </div>
+
+                </div>
+
+            <h5 class="mt-3">Disciplinary Details</h5>
             <div class="row-wrappper mt-2 hanging">
                 <mat-checkbox class="mr-2" (change)="requiredDesc()" [formControlName]="form_convicted_by_Court"></mat-checkbox> Have you ever
                 been convicted by a Court of Law?

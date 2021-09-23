@@ -199,6 +199,7 @@ export class CandidateMappersService {
     return fetch(`${this.BASE_URL}/profile/upload_certificate_new`, {
       method: 'POST',
       body: documentData,
+      headers: new Headers({'userId': this.getUserId()})
       // headers: this.getAfterCustomHeaders(), withCredentials: true
     });
 
@@ -233,6 +234,12 @@ export class CandidateMappersService {
     return this.http.get(`${this.BASE_URL}/api/education?_format=json`, { headers: this.withoutTokens(), withCredentials: true });
   }
 
+
+  // education
+  getAllEducationFormDropdownList(param) {
+    return this.http.post(`${this.BASE_URL}/api/diploma_colleges?_format=json`, param, { headers: this.withoutTokens(), withCredentials: true });
+  }
+
   // education
   getDiplomaList(param) {
     return this.http.post(`${this.BASE_URL}/api/diploma_colleges?_format=json`, param, { headers: this.withoutTokens(), withCredentials: true });
@@ -263,6 +270,89 @@ export class CandidateMappersService {
     getBloodGroups() {
       return this.http.get(`${this.BASE_URL}/profile/bg_list`, { headers: this.withoutTokens(), withCredentials: true });
     }
+
+    checkKycOrJoiningForm() {
+      let isJoining = this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') == 'true' ? true : false;
+      if (this.appConfig.getLocalData('roles') == 'candidate') {
+        return isJoining;
+      } else {
+        return true;
+      }
+    }
+
+    newGetProfileData(data) {
+      if ((data && data.candidate_user_id) || (data && data.form_name == 'documents_upload')) {
+      } else {
+        data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
+      }
+      return this.http.post(`${this.BASE_URL}/profile/get_candidate_form_details`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true});
+    }
+
+    newSaveProfileData(data) {
+      if ((data && data.candidate_user_id) || (data && data.form_name == 'documents_upload')) {
+      } else {
+        data.form_name = this.checkKycOrJoiningForm() ? 'joining' : 'kyc';
+      }
+      return this.http.post(`${this.BASE_URL}/profile/save_candidate_form_details`, data,
+        { headers: this.getAfterCustomHeaders(), withCredentials: true});
+    }
+
+
+    saveAllProfileToLocal(profileData) {
+      let saveasJson = JSON.stringify(profileData);
+      this.appConfig.setLocalData('profileData', saveasJson);
+    }
+
+    getLocalProfileData() {
+      let profile = this.appConfig.getLocalData('profileData') ? this.appConfig.getLocalData('profileData') : null;
+      if (profile) {
+        return JSON.parse(profile);
+      }
+      return null;
+    }
+
+    saveFormtoLocalDetails(formName, data) {
+      let profile = this.getLocalProfileData();
+      profile[formName] = data;
+      let saveasJson = JSON.stringify(profile);
+      this.appConfig.setLocalData('profileData', saveasJson);
+    }
+
+    getLocalpersonal_details() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.personal_details : null;
+    }
+    getLocalcontact_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.contact_details : null;
+    }
+    getLocaldependent_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.dependent_details : null;
+    }
+    getLocaleducation_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.education_details : null;
+    }
+    getLocaldocument_details() {
+    let profile = this.getLocalProfileData();
+    return profile ? profile.document_details : null;
+    }
+    getLocalexperience_details() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.experience_details : null;
+    }
+    getLocalsection_flags() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.section_flags : null;
+    }
+    getLocalform_name() {
+      let profile = this.getLocalProfileData();
+      return profile ? profile.form_name : null;
+    }
+
+
 
     FormStatus() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
@@ -359,6 +449,7 @@ export class CandidateMappersService {
       return fetch(`${this.BASE_URL}/profile/upload_joining_docs`, {
         method: 'POST',
         body: documentData,
+        headers: new Headers({'userId': this.getUserId()})
         // headers: this.getAfterCustomHeaders(), withCredentials: true
       });
 

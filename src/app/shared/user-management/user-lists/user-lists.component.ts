@@ -29,9 +29,9 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   interviewPanelDisciplineDropdown: any = [];
   selectedUserlist: any = 'candidate';
   currentRole: any;
+  // serverSide Things
   rowSelection: any;
   userList: any = [];
-  // serverSide Things
   pageRowCount = 0;
 
   // Ag grid

@@ -16,7 +16,7 @@
         <div class="validation" *ngIf="folder.invalid && folder.touched">
           <span *ngIf="folder.errors?.required">Folder name is Required</span>
           <span *ngIf="folder.errors?.minlength">Minimum of 3 characters required</span>
-          <span *ngIf="folder.errors?.maxlength">Maximum of 20 characters only allowed</span>
+          <span *ngIf="folder.errors?.maxlength">Maximum of 255 characters only allowed</span>
         </div>
       </div>
       <div class="text-input">
@@ -24,7 +24,7 @@
         <div class="validation" *ngIf="shortlist.invalid && shortlist.touched">
           <span *ngIf="shortlist.errors?.required">Shortlist name is Required</span>
           <span *ngIf="shortlist.errors?.minlength">Minimum of 3 characters required</span>
-          <span *ngIf="shortlist.errors?.maxlength">Maximum of 20 characters only allowed</span>
+          <span *ngIf="shortlist.errors?.maxlength">Maximum of 255 characters only allowed</span>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
     </nz-radio-group> -->
 
   </div>
-  <div class="footer">
+  <div class="footer pt-2">
     Confirm to move the candidate details to assign assessment
   </div>
   <div class="buttons">

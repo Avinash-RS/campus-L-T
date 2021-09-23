@@ -84,7 +84,7 @@
                                         allowed</div>
                                 </div>
                             </div>
-
+                            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                             <div class="overall-input-wrapper width-32">
                                 <label>Differently Abled<span>*</span></label>
                                 <nz-select class="input select" [formControlName]="form_dependent_differently_abled"
@@ -113,9 +113,10 @@
                                         Status is Required</div>
                                 </div>
                             </div>
+                            </ng-container>
                         </div>
 
-                        <div class="row-wrapper">
+                        <div *ngIf="candidateService.checkKycOrJoiningForm()" class="row-wrapper">
                             <div class="overall-input-wrapper width-32">
                                 <label>Is Dependent<span></span></label>
                                 <nz-select class="input select" [formControlName]="form_isDependent" nzAllowClear

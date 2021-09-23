@@ -54,21 +54,21 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   diffAbledDropdownList = [
     {
       label: 'Yes',
-      value: '1'
+      value: 1
     },
     {
       label: 'No',
-      value: '0'
+      value: 0
     }
   ];
   activeDropdownList = [
     {
       label: 'Active',
-      value: '1'
+      value: 1
     },
     {
       label: 'Inactive',
-      value: '0'
+      value: 0
     }
   ];
   //form Variables
@@ -87,7 +87,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private candidateService: CandidateMappersService,
+    public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private glovbal_validators: GlobalValidatorService
   ) {
@@ -102,7 +102,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit() {
-    this.sharedService.joiningFormActiveSelector.next('dependent');
+    this.showStepper();
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
     if (top !== null) {
@@ -111,38 +111,49 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-  getDependentApiDetails() {
-    this.candidateService.joiningFormGetDependentDetails().subscribe((data: any)=> {
-
-      if (data && data.dependents && data.dependents.length > 0) {
-        this.dependedentDetails = [];
-        data.dependents.forEach(element => {
-          if (element) {
-            this.dependedentDetails.push(element);
-          }
-        });
-        this.patchDependentForm();
-      } else {
-        this.dependedentDetails = [];
-        for (let index = 0; index < 2; index++) {
-          this.getDependentArr.push(this.initDependentArray());
-          if (index == 0) {
-            this.getDependentArr.at(0).patchValue({
-              [this.form_dependent_relationship]: 'Father',
-            });
-            this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-          }
-          if (index == 1) {
-            this.getDependentArr.at(1).patchValue({
-              [this.form_dependent_relationship]: 'Mother',
-            });
-            this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
-          }
-        }
-      }
-    });
-
+  showStepper() {
+    this.sharedService.joiningFormActiveSelector.next('dependent');
   }
+
+  getDependentApiDetails() {
+    if (this.candidateService.getLocalProfileData()) {
+      this.dependedentDetails = this.candidateService.getLocaldependent_details();
+      this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
+    } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        this.dependedentDetails = this.candidateService.getLocaldependent_details();
+        this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
+      });
+    }
+  }
+
+  ifDependentDetails() {
+    this.patchDependentForm();
+  }
+  ifNotDependentDetails() {
+    this.dependedentDetails = [];
+    for (let index = 0; index < 2; index++) {
+      this.getDependentArr.push(this.initDependentArray());
+      if (index == 0) {
+        this.getDependentArr.at(0).patchValue({
+          [this.form_dependent_relationship]: 'Father',
+        });
+        this.getDependentArr.controls[0]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+      }
+      if (index == 1) {
+        this.getDependentArr.at(1).patchValue({
+          [this.form_dependent_relationship]: 'Mother',
+        });
+        this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
+      }
+    }
+  }
+
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
@@ -176,9 +187,15 @@ dateConvertion(date) {
           element[this.form_dependent_dob] = element[this.form_dependent_dob];
         }
       });
-      this.candidateService.joiningFormGetDependentDetailsSave(formArray).subscribe((data: any)=> {
-
-        this.appConfig.nzNotification('success', 'Saved', 'Dependent details is updated');
+      const DependentApiRequestDetails = {
+        form_name: "joining",
+        section_name: "dependent_details",
+        saving_data: formArray
+      }
+      this.candidateService.newSaveProfileData(DependentApiRequestDetails).subscribe((data: any)=> {
+        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Dependent details is updated');
         this.sharedService.joiningFormStepperStatus.next();
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
       });
@@ -216,7 +233,7 @@ dateConvertion(date) {
       if (route == 'contact') {
         return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
       } else {
-        if (this.appConfig.getLocalData('dependent') == '1') {
+        if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().dependent_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
         } else {
          if (this.dependentForm.valid) {
@@ -253,8 +270,8 @@ dateConvertion(date) {
       [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob]), [Validators.required]],
       [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], [Validators.required]],
-      [this.form_dependent_status]: [data[this.form_dependent_status], [Validators.required]],
+      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
+      [this.form_dependent_status]: [data[this.form_dependent_status], this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
       [this.form_isDependent]: [data[this.form_isDependent]]
     })
   }
@@ -265,8 +282,8 @@ dateConvertion(date) {
       [this.form_dependent_dob]: [null, [Validators.required]],
       [this.form_dependent_occupation]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_relationship]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [null, [Validators.required]],
-      [this.form_dependent_status]: [null, [Validators.required]],
+      [this.form_dependent_differently_abled]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
+      [this.form_dependent_status]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
       [this.form_isDependent]: [null]
     })
   }
