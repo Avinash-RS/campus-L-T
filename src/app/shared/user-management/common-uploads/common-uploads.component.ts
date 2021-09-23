@@ -65,6 +65,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       name: 'Upload Interview Panel'
     }
   ]
+  skipKyc: any;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -130,7 +131,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   submit() {
     if (this.selectedTemplate == this.Upload_Candidates) {
       const data = {
-        bulk_upload: 'candidate-bulk'
+        bulk_upload: 'candidate-bulk-skip-kyc'
       };
       this.openDialog(ShortlistBoxComponent, data);
     }
@@ -532,8 +533,15 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
         errorLength: data ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.candidateAssigntoInterviewPanelErrorStatus);
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully assigned.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.candidateAssigntoInterviewPanelErrorStatus);
+      }
     }, (err) => {
 
     });
@@ -567,8 +575,19 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData ? apiData.length : 0,
         errorLength: data && data.length > 0 ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.invPanelErrorStatus);
+
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Interview panel has been successfully uploaded.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 3});
+        }
+        if(this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 3});
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.invPanelErrorStatus);
+      }
     }, (err) => {
 
     });
@@ -595,8 +614,19 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data && data.length ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.instituteErrorStatus);
+
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Institute details have been successfully uploaded.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 2});
+        }
+        if(this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 2});
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.instituteErrorStatus);
+      }
     }, (err) => {
 
     });
@@ -612,17 +642,35 @@ insitituteExceltoJsonFormatter(data) {
         minutes = date.getMinutes();
       }
       element['date'] = this.getDateFormat1(date);
+      element['is_skip_kyc'] = this.skipKyc && this.skipKyc.value && this.skipKyc.skipKyc ? true : false;
       element['field_user_created_by'] = this.appConfig.getLocalData('userId');
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
+      /* if (result && result.value) {
+        this.uploadListToAPI(result && result.skipKyc ? true : false);
+      }*/
       const datas = {
         bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.candidateErrorStatus);
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 1});
+        }
+        if(this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 1});
+        }
+        if(this.appConfig.getLocalData('roles') == 'institute') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 1});
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.candidateErrorStatus);
+      }
+
     }, (err) => {
 
     });
@@ -721,6 +769,7 @@ insitituteExceltoJsonFormatter(data) {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.skipKyc = result;
           this.callRespectiveBulkUploadAPI();
         }
       });

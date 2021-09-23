@@ -129,7 +129,7 @@ export class AdminServiceService {
   // Users List
   userList() {
     return this.http.get(`${this.BASE_URL}/profile/get_hrs_list`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   // Add User
@@ -177,7 +177,7 @@ export class AdminServiceService {
   }
   instituteListAfterBulkUpload() {
     return this.http.get(`${this.BASE_URL}/api/institute_list`,
-      { headers: this.withoutTokens(), withCredentials: true });
+      { headers: this.withoutTokens(), reportProgress: true, withCredentials: true });
   }
 
   approveOrReject(data) {
@@ -282,7 +282,7 @@ export class AdminServiceService {
   //hr user list
   hruserList() {
     return this.http.get(`${this.BASE_URL}/profile/interview_panel_users`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   getDiscipline() {

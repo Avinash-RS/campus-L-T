@@ -21,6 +21,7 @@ export class ShortlistBoxComponent implements OnInit {
   reSubmission = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), RemoveWhitespace.whitespace()]);
   radioValue = 'rec';
   SecondShortlistradioValue = 'yes';
+  skipKyc: any;
   constructor(
     private sharedService: SharedServiceService,
     private apiService: ApiServiceService,
@@ -55,7 +56,8 @@ export class ShortlistBoxComponent implements OnInit {
     this.dialogRef.close(apiFolders);
   }
   bulkConfirm() {
-    this.dialogRef.close(true);
+    let result = {value: true, skipKyc: this.skipKyc}
+    this.dialogRef.close(result);
   }
   updateAvailable() {
     this.dialogRef.close('update');

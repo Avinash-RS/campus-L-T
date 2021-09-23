@@ -75,7 +75,7 @@
           </ag-grid-angular>
       </div>
 
-      <div *ngIf="selectedUserlist != 'candidate'" class="ag-theme-alpine red-theme">
+      <div *ngIf="selectedUserlist == 'hr'" class="ag-theme-alpine red-theme">
         <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
          [rowData]="rowData"
          [columnDefs]="columnDefs"
@@ -97,6 +97,52 @@
          [animateRows]="true">
         </ag-grid-angular>
     </div>
+
+    <div *ngIf="selectedUserlist =='invPanel'" class="ag-theme-alpine red-theme">
+      <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+       [rowData]="rowData"
+       [columnDefs]="columnDefs"
+       [defaultColDef]="defaultColDef"
+       [maintainColumnOrder]="true"
+       [pagination]="true"
+       [suppressRowClickSelection]="true"
+       [paginationPageSize]="paginationPageSize"
+       [rowSelection]="'multiple'"
+       [cacheBlockSize]="cacheBlockSize"
+       (gridReady)="onGridReady($event)"
+       (sortChanged)="sortevent($event)"
+       [enableCharts]="true"
+       [enableRangeSelection]="true"
+       (filterModified)="getModel($event)"
+       (cellClicked)="onCellClicked($event)"
+       (paginationChanged)="paginationChanged($event)"
+       headerHeight="40"
+       [animateRows]="true">
+      </ag-grid-angular>
+  </div>
+
+    <div *ngIf="selectedUserlist == 'institute'" class="ag-theme-alpine red-theme">
+      <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
+       [rowData]="rowData"
+       [columnDefs]="columnDefs"
+       [defaultColDef]="defaultColDef"
+       [maintainColumnOrder]="true"
+       [pagination]="true"
+       [suppressRowClickSelection]="true"
+       [paginationPageSize]="paginationPageSize"
+       [rowSelection]="'multiple'"
+       [cacheBlockSize]="cacheBlockSize"
+       (gridReady)="onGridReady($event)"
+       (sortChanged)="sortevent($event)"
+       [enableCharts]="true"
+       [enableRangeSelection]="true"
+       (filterModified)="getModel($event)"
+       (cellClicked)="onCellClicked($event)"
+       (paginationChanged)="paginationChanged($event)"
+       headerHeight="40"
+       [animateRows]="true">
+      </ag-grid-angular>
+  </div>
 
 </div>
 
