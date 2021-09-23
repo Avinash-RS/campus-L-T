@@ -196,9 +196,9 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     }
   }
   selectedListChange(e) {
-      this.userList = [];
-      this.rowData = [];
-      this.currentRole != 'candidate' ? this.AssignTypesBasesOnRole() : '';
+      this.userList = null;
+      this.rowData = null;
+      // this.currentRole != 'candidate' ? this.AssignTypesBasesOnRole() : '';
   }
 
   // Interview panel start
@@ -265,9 +265,19 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
 
   commonRefresh() {
-    this.sharedService.commonUserListRefresh.subscribe((res)=> {
-      this.AssignTypesBasesOnRole();
+    this.sharedService.commonUserListRefresh.subscribe((uid)=> {
+      this.deleteRemovedUserFromGrid(uid);
     });
+  }
+
+  deleteRemovedUserFromGrid(uid) {
+    const rowData = [];
+    this.gridApi.forEachNode(function (node) {
+      if (node.data.uid !=uid) {
+        rowData.push(node.data);
+      }
+    });
+    this.gridApi.setRowData(rowData);
   }
 
   ngAfterViewInit() {
@@ -314,6 +324,8 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     });
 
     this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
+      this.gridApi.deselectAll();
+      this.gridApi.purgeInfiniteCache();
       const data = {
         tpo_bulk_upload_ok: 'ok'
       };
@@ -361,7 +373,6 @@ export class UserListsComponent implements OnInit, AfterViewInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.callApiForCandidateList();
         if (result) {
         }
       });
@@ -479,6 +490,46 @@ export class UserListsComponent implements OnInit, AfterViewInit {
       }
     }
 
+    AddNewRowData(apiData, response) {
+      if (this.selectedUserlist == 'invPanel' && apiData.role == 'interview_panel') {
+        this.getInterviewPanelUsersList();
+        // let element = {
+        //   email: apiData.email,
+        //   field_employee_id: apiData.employee_id,
+        //   field_form_name: response.field_form_name ? response.field_form_name : null,
+        //   field_panel_discipline: apiData.panel_discipline,
+        //   field_uploaded_by: apiData.field_user_created_by,
+        //   name: apiData.name,
+        //   role: apiData.role,
+        //   status: response.status ? response.status : null,
+        //   uid: response.user_id ? response.user_id : null,
+        //   user_id: response.user_id ? response.user_id : null
+        // };
+        // const rowData = [];
+        // rowData.push(element);
+        // this.gridApi.forEachNode(function (node) {
+        //   rowData.push(node.data);
+        // });
+        // this.gridApi.setRowData(rowData);
+      }
+      if (this.selectedUserlist == 'hr' && apiData.role == 'hr') {
+        this.getAdminHrAndInvUsersList();
+        // let element = {
+        //   email: apiData.email,
+        //   name: apiData.name,
+        //   created_by: response.created_by ? response.created_by : null,
+        //   created_date: response.created_date ? response.created_date : null,
+        //   uid: response.uid ? response.uid : null,
+        // };
+        // const rowData = [];
+        // rowData.push(element);
+        // this.gridApi.forEachNode(function (node) {
+        //   rowData.push(node.data);
+        // });
+        // this.gridApi.setRowData(rowData);
+      }
+
+    }
     addUserApi() {
       if (this.addUserForm && this.addUserForm.value && this.addUserForm.value.role != 'candidate') {
         const addUserDatas = {
@@ -494,8 +545,8 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
           this.addUserForm.reset();
           this.appConfig.success(`User has been added Successfully`, '');
-          this.gridApi.refreshInfiniteCache();
           this.closeDialog();
+          this.AddNewRowData(addUserDatas, success);
         }, (error) => {
         });
       } else {
@@ -522,6 +573,8 @@ export class UserListsComponent implements OnInit, AfterViewInit {
           } else {
             this.addUserForm.reset();
             this.appConfig.success('Candidate added successfully', '');
+            this.closeDialog();
+            this.gridApi.purgeInfiniteCache();
           }
         }, (err) => {
 

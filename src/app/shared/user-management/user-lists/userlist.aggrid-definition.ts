@@ -192,19 +192,14 @@ export class userListDefinition {
     return [
       {
         headerName: 'S no', colId: 'psno',
-        field: 'counter',
-        filter: 'agNumberColumnFilter',
         minWidth: 80,
         sortable: true,
         resizable:true,
-        tooltipField: 'counter',
-        filterParams: {
-          buttons: ['reset'],
+        filter: 'agNumberColumnFilter',
+        valueGetter: (params) => {
+          const i = +params.node.id + 1;
+          return i ? i : 'Loading...';
         },
-        // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
       },
       {
         headerName: 'Name', field: 'name', colId: 'pname',
@@ -290,15 +285,15 @@ export class userListDefinition {
   instituteList() {
     return [
       {
-        headerName: 'S no', field: 'counter', colId: 'icounter',
-        filter: 'agNumberColumnFilter',
-        minWidth: 85,
-        sortable: true,
-        tooltipField: 'counter',
-        // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
+          headerName: 'S no', colId: 'icounter',
+          minWidth: 80,
+          sortable: true,
+          resizable:true,
+          filter: 'agNumberColumnFilter',
+            valueGetter: (params) => {
+            const i = +params.node.id + 1;
+            return i ? i : 'Loading...';
+          },
       },
       {
         headerName: 'Institute name', field: 'field_institute_name', colId: 'ifield_institute_name',
@@ -447,17 +442,17 @@ export class userListDefinition {
   hrList() {
     return [
       {
-        headerName: 'S no', field: 'counter', colId: 'hcounter',
-        filter: 'agNumberColumnFilter',
-        minWidth: 140,
+        headerName: 'S no', colId: 'hcounter',
+        minWidth: 80,
         sortable: true,
-        tooltipField: 'counter',
-        // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
+        resizable:true,
+        filter: 'agNumberColumnFilter',
+        valueGetter: (params) => {
+          const i = +params.node.id + 1;
+          return i ? i : 'Loading...';
+        },
+    },
+    {
         headerName: 'User Id', field: 'uid', colId: 'huid',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
@@ -576,7 +571,7 @@ export class userListDefinition {
     this.adminService.hrDeleteUser(removeUser).subscribe((success: any) => {
       this.appConfig.success(`User has been removed Successfully`, '');
       setTimeout(() => {
-        this.sharedService.commonUserListRefresh.next();
+        this.sharedService.commonUserListRefresh.next(this.selectedUserDetail.uid);
       }, 1000);
     }, (error) => {
       return false;
