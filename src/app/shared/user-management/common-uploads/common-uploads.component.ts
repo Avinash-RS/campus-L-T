@@ -65,6 +65,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       name: 'Upload Interview Panel'
     }
   ]
+  skipKyc: any;
 
   constructor(
     private candidateService: CandidateMappersService,
@@ -130,7 +131,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   submit() {
     if (this.selectedTemplate == this.Upload_Candidates) {
       const data = {
-        bulk_upload: 'candidate-bulk'
+        bulk_upload: 'candidate-bulk-skip-kyc'
       };
       this.openDialog(ShortlistBoxComponent, data);
     }
@@ -641,10 +642,14 @@ insitituteExceltoJsonFormatter(data) {
         minutes = date.getMinutes();
       }
       element['date'] = this.getDateFormat1(date);
+      element['is_skip_kyc'] = this.skipKyc && this.skipKyc.value && this.skipKyc.skipKyc ? true : false;
       element['field_user_created_by'] = this.appConfig.getLocalData('userId');
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
     this.adminService.bulkUploadCandidates(this.uploadedListArray).subscribe((data: any) => {
+      /* if (result && result.value) {
+        this.uploadListToAPI(result && result.skipKyc ? true : false);
+      }*/
       const datas = {
         bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
@@ -764,6 +769,7 @@ insitituteExceltoJsonFormatter(data) {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.skipKyc = result;
           this.callRespectiveBulkUploadAPI();
         }
       });
