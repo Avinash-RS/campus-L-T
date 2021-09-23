@@ -69,6 +69,19 @@ export class AdminServiceService {
     return headers;
   }
 
+  getAfterCustomHeadersDummy(): HttpHeaders {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+      .set('Content-Type', 'application/json')
+      .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('driveId', '1')
+      .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
+      .set('Access-Control-Allow-Origin', '*');
+    // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
+    return headers;
+  }
+
   withoutTokens(): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -175,7 +188,7 @@ export class AdminServiceService {
 
   getCandidateListForShortlist(data) {
     return this.http.post(`${this.BASE_URL}/profile/first_level_shortlisting_candidates`, data,
-      { headers: this.getAfterCustomHeaders(), reportProgress:true, withCredentials: true });
+      { headers: this.getAfterCustomHeadersDummy(), reportProgress:true, withCredentials: true });
   }
 
   submitAllFilters(data) {

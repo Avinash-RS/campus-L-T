@@ -1,25 +1,56 @@
 <div class="shortlist-candidates-wrapper">
   <div class="sub-headers-wrapper">
+    <div class="d-flex justify-content-start align-items-center">
+    <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3 ml-3">
+      <span class="label mr-2">Filtered Candidates Count: </span>
+      <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading ? gridApi.paginationProxy.masterRowCount : 0}}</span>
+    </div>
+
+    <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="submit ml-2" (click)="selectAll(true)" mat-raised-button>
+      <em class="icon-checked mr-1"></em> Select All Candidates
+    </button>
+
+    <button *ngIf="(userList && userList.length > 0)" matTooltip="Unselect All candidates on this page" class="submit ml-2" (click)="selectAll(false)" mat-raised-button>
+      <em class="icon-checked mr-1"></em> Unselect All Candidates
+    </button>
+
+
+  </div>
+
+  <div class="d-flex justify-content-end align-items-center">
+
     <div class="ml-2" *ngIf="userList && userList.length > 0">
       <button
-        [matTooltip]="'Custom Filter'"
+        [matTooltip]="checkFilterAppied() || lastAppliedFilter ? '' : 'No filter has been applied'"
+        [ngClass]="(checkFilterAppied() || lastAppliedFilter) && !buttonLoading ? '' : 'disable-selection'"
+        (click)="checkFilterAppied() || lastAppliedFilter ? clearAllFilters() : ''"
+        class="submit"
+        mat-raised-button
+      >
+        {{'Clear all Filters'}}
+      </button>
+    </div>
+
+    <div class="ml-2" *ngIf="(userList && userList.length > 0)">
+      <button
+        (click)="lastAppliedFilter ? viewLastAppliedFilter() : ''"
+        [matTooltip]="lastAppliedFilter ? '' : 'No Filter has been Applied'"
+        class="submit"
+        [ngClass]="lastAppliedFilter ? '' : 'disable-selection'"
+        mat-raised-button
+      >
+        Currently Applied Filter
+      </button>
+    </div>
+
+    <div class="ml-2" *ngIf="(userList && userList.length > 0)">
+      <button
+        [matTooltip]="'Advanced Filter'"
         (click)="customFilterOpen()"
         class="submit"
         mat-raised-button
       >
-        Custom Filter
-      </button>
-    </div>
-
-    <div class="ml-2" *ngIf="userList && userList.length > 0">
-      <button
-        [matTooltip]="checkFilterAppied() ? '' : 'No filter has been applied'"
-        [ngClass]="checkFilterAppied() ? '' : 'disable-selection'"
-        (click)="checkFilterAppied() ? gridApi.setFilterModel(null) : ''"
-        class="submit"
-        mat-raised-button
-      >
-        Clear all Filters
+        Advanced Filter
       </button>
     </div>
 
@@ -46,10 +77,13 @@
         Shortlist
       </button>
     </div>
+
+    </div>
   </div>
   <ag-grid-angular
-    style="width: 98%; height: 100vh; margin: auto !important"
+    style="width: 98%; height: calc(100vh - 235px); margin: auto !important"
     class="ag-theme-alpine"
+    [ngClass]="buttonLoading ? 'disable-aggrid' : ''"
     [rowData]="rowData"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
@@ -64,6 +98,7 @@
     [cacheBlockSize]="cacheBlockSize"
     (gridReady)="onGridReady($event)"
     (sortChanged)="sortevent($event)"
+    (filterChanged)="onFilterChanged($event)"
     [enableCharts]="true"
     [enableRangeSelection]="true"
     (cellClicked)="onCellClicked($event)"
@@ -84,14 +119,48 @@
   </ag-grid-angular>
 </div>
 
+<ng-template #lastAppliedFilterViewPopUp>
+  <div class="customFilter-shortlist">
+    <ng-container
+    *ngIf="lastAppliedFilter"
+    [ngTemplateOutlet]="lastAppliedFiltersTemplate"
+  ></ng-container>
+  <ng-container *ngIf="!lastAppliedFilter">'No Filter List Available'</ng-container>
+</div>
+</ng-template>
 <ng-template #customFilter>
   <div class="customFilter-shortlist">
     <div class="custom-filter-header">
       <div class="d-flex align-items-center filter-icon-div">
-        <span class="material-icons mr-2"> menu </span>
+        <span (click)="closeDialog()" class="material-icons mr-2"> menu </span>
         <span>Filters</span>
       </div>
-      <div (click)="clearAllFilters()" class="clearall">CLEAR ALL</div>
+      <div class="d-flex justify-content-center align-items-center pr-3 pl-3">
+        <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3 ml-3">
+          <span class="label mr-2">Filtered Candidates Count: </span>
+          <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading ? gridApi.paginationProxy.masterRowCount : 0}}</span>
+        </div>
+        <ng-container *ngIf="buttonLoading else showButton">
+          <button
+          mat-raised-button
+          class="clearall applyFilter mr-2 loading-button"
+        >
+        <span class="material-icons load-icon">
+          loop
+          </span> Applying...
+        </button>
+        </ng-container>
+        <ng-template #showButton>
+          <button
+          mat-raised-button
+          (click)="ApplyFilter()"
+          class="clearall applyFilter mr-2"
+        >
+          Apply Filter
+        </button>
+        </ng-template>
+        <div (click)="UnsavedclearAllFilters()" class="clearall">CLEAR ALL</div>
+      </div>
     </div>
     <!-- Content Start -->
     <div class="custom-filter-main-wrapper">
@@ -135,46 +204,914 @@
         <div
           class="navList"
           (click)="selectedCustomFilterList(filterBacklogsList)"
-          [ngClass]="selectedCustomFilterListValue == filterBacklogsList ? 'active' : ''"
+          [ngClass]="
+            selectedCustomFilterListValue == filterBacklogsList ? 'active' : ''
+          "
         >
           {{ filterBacklogsList }}
         </div>
       </div>
       <div class="filtering-content-list">
         <div class="navContent">
-          <ng-container *ngIf="selectedCustomFilterListValue == filterProfileList" [ngTemplateOutlet]="profile"></ng-container>
-          <ng-container *ngIf="selectedCustomFilterListValue == filterGenderList" [ngTemplateOutlet]="gender"></ng-container>
-          <ng-container *ngIf="selectedCustomFilterListValue == filterDOBList" [ngTemplateOutlet]="dob"></ng-container>
-          <ng-container *ngIf="selectedCustomFilterListValue == filterEducationList" [ngTemplateOutlet]="education"></ng-container>
-          <ng-container *ngIf="selectedCustomFilterListValue == filterBacklogsList" [ngTemplateOutlet]="backlog"></ng-container>
-
+          <ng-container
+            *ngIf="selectedCustomFilterListValue == filterProfileList"
+            [ngTemplateOutlet]="profile"
+          ></ng-container>
+          <ng-container
+            *ngIf="selectedCustomFilterListValue == filterGenderList"
+            [ngTemplateOutlet]="gender"
+          ></ng-container>
+          <ng-container
+            *ngIf="selectedCustomFilterListValue == filterDOBList"
+            [ngTemplateOutlet]="dob"
+          ></ng-container>
+          <ng-container
+            *ngIf="selectedCustomFilterListValue == filterEducationList"
+            [ngTemplateOutlet]="education"
+          ></ng-container>
+          <ng-container
+            *ngIf="selectedCustomFilterListValue == filterBacklogsList"
+            [ngTemplateOutlet]="backlog"
+          ></ng-container>
+          <ng-container [ngTemplateOutlet]="appliedFilters"></ng-container>
         </div>
       </div>
     </div>
   </div>
 </ng-template>
 
+<!-- Profile -->
 <ng-template #profile>
-  <div (click)="profile.checked = !profile.checked" [ngClass]="profile.checked ? 'checked-value' : ''" *ngFor="let profile of profileDropDownValues; let i = index" class="nav-content-render">
-    <span class="tick" [ngClass]="profile.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{profile.label}}</span>
+  <div
+    (click)="profile.checked = !profile.checked"
+    [ngClass]="profile.checked ? 'checked-value' : ''"
+    *ngFor="let profile of profileDropDownValues; let i = index"
+    class="nav-content-render"
+  >
+    <span class="tick" [ngClass]="profile.checked ? '' : 'visible-hide'"></span>
+    <span class="label-value">{{ profile.label }}</span>
   </div>
 </ng-template>
 
+<!-- Gender -->
 <ng-template #gender>
-  <div (click)="gender.checked = !gender.checked" [ngClass]="gender.checked ? 'checked-value' : ''" *ngFor="let gender of genderDropDownValues; let i = index" class="nav-content-render">
-    <span class="tick" [ngClass]="gender.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{gender.label}}</span>
+  <div
+    (click)="gender.checked = !gender.checked"
+    [ngClass]="gender.checked ? 'checked-value' : ''"
+    *ngFor="let gender of genderDropDownValues; let i = index"
+    class="nav-content-render"
+  >
+    <span class="tick" [ngClass]="gender.checked ? '' : 'visible-hide'"></span>
+    <span class="label-value">{{ gender.label }}</span>
   </div>
 </ng-template>
-<ng-template #dob> Date of Birt List content </ng-template>
 
+<!-- DOB -->
+<ng-template #dob>
+  <div class="dob-filter-wrapper">
+    <div class="overall-input-wrapper">
+      <label>Date From</label>
+      <div class="date-relative">
+        <input
+          matInput
+          class="input"
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="picker_offer"
+          placeholder="DD-MM-YYYY"
+          [formControl]="dateFrom"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker_offer"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker_offer></mat-datepicker>
+      </div>
+      <div class="form-error" *ngIf="dateFrom?.invalid && dateFrom?.touched">
+        <div *ngIf="dateFrom?.errors?.required">Date From is Required</div>
+        <div *ngIf="dateFrom?.errors?.matDatepickerMax">
+          {{
+            dateFrom?.errors?.matDatepickerMax?.max
+              ? "Maximum date should be " +
+                momentForm(dateFrom?.errors?.matDatepickerMax.max)
+              : ""
+          }}
+        </div>
+        <div *ngIf="dateFrom?.errors?.matDatepickerMin">
+          {{
+            dateFrom?.errors?.matDatepickerMin?.min
+              ? "Minimum date should be " +
+                momentForm(dateFrom?.errors?.matDatepickerMin.min)
+              : ""
+          }}
+        </div>
+        <div *ngIf="dateFrom?.errors?.matDatepickerParse">
+          Invalid Date Format
+        </div>
+      </div>
+    </div>
+    <div class="overall-input-wrapper ml-3">
+      <label>Date To</label>
+      <div class="date-relative">
+        <input
+          matInput
+          class="input"
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="picker_dateDOB"
+          placeholder="DD-MM-YYYY"
+          [formControl]="dateTo"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker_dateDOB"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker_dateDOB></mat-datepicker>
+      </div>
+      <div class="form-error" *ngIf="dateTo?.invalid && dateTo?.touched">
+        <div *ngIf="dateTo?.errors?.required">Date To is Required</div>
+        <div *ngIf="dateTo?.errors?.notValid">End Date cannot be lesser than Start Date</div>
+        <div *ngIf="dateTo?.errors?.matDatepickerMax">
+          {{
+            dateTo?.errors?.matDatepickerMax?.max
+              ? "Maximum date should be " +
+                momentForm(dateTo?.errors?.matDatepickerMax.max)
+              : ""
+          }}
+        </div>
+        <div *ngIf="dateTo?.errors?.matDatepickerMin">
+          {{
+            dateTo?.errors?.matDatepickerMin?.min
+              ? "Minimum date should be " +
+                momentForm(dateTo?.errors?.matDatepickerMin.min)
+              : ""
+          }}
+        </div>
+        <div *ngIf="dateTo?.errors?.matDatepickerParse">
+          Invalid Date Format
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Education -->
 <ng-template #education>
-  <div (click)="education.checked = !education.checked" [ngClass]="education.checked ? 'checked-value' : ''" *ngFor="let education of educationDropDownValues; let i = index" class="nav-content-render">
-    <span class="tick" [ngClass]="education.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{education.label}}</span>
+  <div class="d-flex education-filter-wrapper">
+    <div class="education-info">
+      <span class="material-icons">info</span> Checked education levels only will be applicable for filtering. For Ex: If you have checked PG alone, then filter will work only for PG candidates.
+    </div>
+    <div class="education-table">
+      <div class="header">
+        <div class="header-labels border-color label-size">
+          Educational Level
+        </div>
+        <div class="header-labels border-color label-size minwidth-300">
+          Percentange
+        </div>
+        <div class="header-labels border-color label-size minwidth-300">
+          Year of Passing
+        </div>
+        <div class="header-labels border-color label-size minwidth-301">
+          Other Filters
+        </div>
+      </div>
+
+      <form [formGroup]="educationForm">
+        <ng-container
+          *ngIf="getEducationArr && getEducationArr.controls"
+          [formArrayName]="form_education_array"
+        >
+          <div
+            class="header filter-content-education"
+            *ngFor="let education of getEducationArr.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="header-labels border-color educational-level justify-content-start" style="flex-direction: row !important;">
+              <mat-checkbox [formControlName]="form_education_checked" class="mr-2"></mat-checkbox>
+              {{
+                getEducationArr.controls[i].get(form_education_level).value
+                  .label
+              }}
+            </div>
+            <div class="header-labels border-color minwidth-300" [ngClass]="getEducationArr.controls[i].get(form_education_checked).value ? '' : 'enable-input-selection'">
+              <div class="percentage-wrapper">
+                <div class="overall-input-wrapper">
+                  <label>From</label>
+                  <input
+                    placeholder="Enter here..."
+                    [formControlName]="form_education_percentage_from"
+                    class="input"
+                    type="text"
+                    matInput
+                  />
+                  <div
+                    class="form-error"
+                    *ngIf="
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_from
+                      ).invalid &&
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_from
+                      ).touched
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_percentage_from
+                        ).errors?.required
+                      "
+                    >
+                      Percentage is Required
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_percentage_from
+                        ).errors?.percentage
+                      "
+                    >
+                      Percentage should be in the range of 10 to 100
+                    </div>
+                  </div>
+                </div>
+                <div class="overall-input-wrapper">
+                  <label>To</label>
+                  <input
+                    placeholder="Enter here..."
+                    [formControlName]="form_education_percentage_to"
+                    class="input"
+                    type="text"
+                    matInput
+                  />
+                  <div
+                    class="form-error"
+                    *ngIf="
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_to
+                      ).invalid &&
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_to
+                      ).touched
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_percentage_to
+                        ).errors?.required
+                      "
+                    >
+                      Percentage is Required
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_percentage_to
+                        ).errors?.percentage
+                      "
+                    >
+                      Percentage should be in the range of 10 to 100
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="header-labels border-color minwidth-300" [ngClass]="getEducationArr.controls[i].get(form_education_checked).value ? '' : 'enable-input-selection'">
+              <div class="percentage-wrapper">
+                <div class="overall-input-wrapper">
+                  <label>From</label>
+                  <div class="date-relative">
+                    <input
+                      matInput
+                      class="input"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [matDatepicker]="picker_dateYearOfpassingFrom"
+                      placeholder="MM-YYYY"
+                      [formControlName]="form_education_yearOfPassing_from"
+                      appYearMonth
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker_dateYearOfpassingFrom"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                      #picker_dateYearOfpassingFrom
+                      startView="multi-year"
+                      (monthSelected)="
+                        chosenMonthHandler(
+                          $event,
+                          picker_dateYearOfpassingFrom,
+                          i,
+                          '1'
+                        )
+                      "
+                      panelClass="example-month-picker"
+                    >
+                    </mat-datepicker>
+                  </div>
+                  <div
+                    class="form-error"
+                    *ngIf="
+                      getEducationArr.controls[i].get(
+                        form_education_yearOfPassing_from
+                      ).invalid &&
+                      getEducationArr.controls[i].get(
+                        form_education_yearOfPassing_from
+                      ).touched
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_from
+                        )?.errors?.required
+                      "
+                    >
+                      Date From is Required
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_from
+                        )?.errors?.matDatepickerMax
+                      "
+                    >
+                      {{
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_from
+                        )?.errors?.matDatepickerMax?.max
+                          ? "Maximum date should be " +
+                            momentForm(
+                              getEducationArr.controls[i].get(
+                                form_education_yearOfPassing_from
+                              )?.errors?.matDatepickerMax.max
+                            )
+                          : ""
+                      }}
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_from
+                        )?.errors?.matDatepickerMin
+                      "
+                    >
+                      {{
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_from
+                        )?.errors?.matDatepickerMin?.min
+                          ? "Minimum date should be " +
+                            momentForm(
+                              getEducationArr.controls[i].get(
+                                form_education_yearOfPassing_from
+                              )?.errors?.matDatepickerMin.min
+                            )
+                          : ""
+                      }}
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_from
+                        )?.errors?.matDatepickerParse
+                      "
+                    >
+                      Invalid Date Format
+                    </div>
+                  </div>
+                </div>
+                <div class="overall-input-wrapper">
+                  <label>To</label>
+                  <div class="date-relative" [ngClass]="getEducationArr.controls[i].get(form_education_yearOfPassing_to).invalid ? 'border-red' : ''">
+                    <input
+                      matInput
+                      class="input"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [matDatepicker]="picker_dateYearOfpassingTo"
+                      placeholder="MM-YYYY"
+                      [formControlName]="form_education_yearOfPassing_to"
+                      appYearMonth
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker_dateYearOfpassingTo"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                      #picker_dateYearOfpassingTo
+                      startView="multi-year"
+                      (monthSelected)="
+                        chosenMonthHandler(
+                          $event,
+                          picker_dateYearOfpassingTo,
+                          i,
+                          '2'
+                        )
+                      "
+                      panelClass="example-month-picker"
+                    >
+                    </mat-datepicker>
+                  </div>
+                  <div
+                    class="form-error"
+                    *ngIf="
+                      getEducationArr.controls[i].get(
+                        form_education_yearOfPassing_to
+                      ).invalid"
+                  >
+                  <div
+                  *ngIf="
+                    getEducationArr.controls[i].get(
+                      form_education_yearOfPassing_to
+                    )?.errors?.notValid
+                  "
+                >
+                  End month cannot be lesser than Start month
+                </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_to
+                        )?.errors?.required
+                      "
+                    >
+                      Date To is Required
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_to
+                        )?.errors?.matDatepickerMax
+                      "
+                    >
+                      {{
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_to
+                        )?.errors?.matDatepickerMax?.max
+                          ? "Maximum date should be " +
+                            momentForm(
+                              getEducationArr.controls[i].get(
+                                form_education_yearOfPassing_to
+                              )?.errors?.matDatepickerMax.max
+                            )
+                          : ""
+                      }}
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_to
+                        )?.errors?.matDatepickerMin
+                      "
+                    >
+                      {{
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_to
+                        )?.errors?.matDatepickerMin?.min
+                          ? "Minimum date should be " +
+                            momentForm(
+                              getEducationArr.controls[i].get(
+                                form_education_yearOfPassing_to
+                              )?.errors?.matDatepickerMin.min
+                            )
+                          : ""
+                      }}
+                    </div>
+                    <div
+                      *ngIf="
+                        getEducationArr.controls[i].get(
+                          form_education_yearOfPassing_to
+                        )?.errors?.matDatepickerParse
+                      "
+                    >
+                      Invalid Date Format
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="header-labels border-color minwidth-301" [ngClass]="getEducationArr.controls[i].get(form_education_checked).value ? '' : 'enable-input-selection'">
+              <!-- Institute -->
+              <div *ngIf="i != 0 && i != 1" class="overall-input-wrapper" style="min-width: 100%;">
+                <label>Institute List<span></span></label>
+                <nz-select
+                  class="input select institute"
+                  [nzMaxTagCount]="0"
+                  [formControlName]="form_education_institute"
+                  [nzMaxTagPlaceholder]="Tag"
+                  nzAllowClear
+                  nzMode="multiple"
+                  nzShowSearch
+                  nzPlaceHolder="Select"
+                >
+                  <ng-container *ngIf="i == 2">
+                    <nz-option class="insitute-dropdown"
+                      *ngFor="let institute of diplomaInstitutesList"
+                      [nzLabel]="institute.college_name"
+                      [nzValue]="institute.college_name"
+                    >
+                    </nz-option>
+                  </ng-container>
+                  <ng-container *ngIf="i == 3">
+                    <nz-option
+                      *ngFor="let institute of ugInstitutesList"
+                      [nzLabel]="institute.college_name"
+                      [nzValue]="institute.college_name"
+                    >
+                    </nz-option>
+                  </ng-container>
+                  <ng-container *ngIf="i == 4">
+                    <nz-option
+                      *ngFor="let institute of pgInstitutesList"
+                      [nzLabel]="institute.college_name"
+                      [nzValue]="institute.college_name"
+                    >
+                    </nz-option>
+                  </ng-container>
+                </nz-select>
+                <ng-template #Tag let-selectedList
+                  >{{ selectedList.length }} items selected
+                </ng-template>
+              </div>
+
+              <!-- Specialization -->
+              <div *ngIf="i != 0" class="overall-input-wrapper" style="min-width: 100%;">
+                <label>Specialization List<span></span></label>
+                <nz-select
+                  class="input select"
+                  [nzMaxTagCount]="0"
+                  [formControlName]="form_education_specialization"
+                  [nzMaxTagPlaceholder]="Tag"
+                  nzAllowClear
+                  nzMode="multiple"
+                  nzShowSearch
+                  nzPlaceHolder="Select"
+                >
+                  <ng-container *ngIf="i == 1">
+                    <nz-option
+                      *ngFor="let discipline of HSCDiscipline"
+                      [nzLabel]="discipline.name"
+                      [nzValue]="discipline.value"
+                    ></nz-option>
+                  </ng-container>
+                  <ng-container *ngIf="i == 2">
+                    <nz-option
+                      *ngFor="let discipline of diplomaDisciplineList"
+                      [nzLabel]="discipline.discipline_name"
+                      [nzValue]="discipline.discipline_name"
+                    ></nz-option>
+                  </ng-container>
+
+                  <ng-container *ngIf="i == 3">
+                    <nz-option
+                      *ngFor="let discipline of ugDisciplineList"
+                      [nzLabel]="discipline.discipline_name"
+                      [nzValue]="discipline.discipline_name"
+                    ></nz-option>
+                  </ng-container>
+                  <ng-container *ngIf="i == 4">
+                    <nz-option
+                      *ngFor="let discipline of pgDisciplineList"
+                      [nzLabel]="discipline.discipline_name"
+                      [nzValue]="discipline.discipline_name"
+                    ></nz-option>
+                  </ng-container>
+                </nz-select>
+                <ng-template #Tag let-selectedList
+                  >{{ selectedList.length }} items selected
+                </ng-template>
+              </div>
+
+              <!-- Discipline -->
+              <div *ngIf="i != 0 && i != 1" class="overall-input-wrapper" style="min-width: 100%;">
+                <label>Discipline List<span></span></label>
+                <nz-select
+                  class="input select"
+                  [nzMaxTagCount]="0"
+                  [formControlName]="form_education_discipline"
+                  [nzMaxTagPlaceholder]="Tag"
+                  nzAllowClear
+                  nzMode="multiple"
+                  nzShowSearch
+                  nzPlaceHolder="Select"
+                >
+                  <ng-container *ngIf="i == 2">
+                    <nz-option
+                      *ngFor="let active of diplamoSpecialization"
+                      [nzLabel]="active.value"
+                      [nzValue]="active.value"
+                    ></nz-option>
+                  </ng-container>
+                  <ng-container *ngIf="i == 3">
+                    <nz-option
+                      *ngFor="let active of ugSpecializationList"
+                      [nzLabel]="active.specification_name"
+                      [nzValue]="active.specification_name"
+                    ></nz-option>
+                  </ng-container>
+                  <ng-container *ngIf="i == 4">
+                    <nz-option
+                      *ngFor="let active of pgSpecializationList"
+                      [nzLabel]="active.specification_name"
+                      [nzValue]="active.specification_name"
+                    ></nz-option>
+                  </ng-container>
+                </nz-select>
+                <ng-template #Tag let-selectedList
+                  >{{ selectedList.length }} items selected
+                </ng-template>
+                <!-- <div class="form-error"
+            *ngIf="getEducationArr.controls[i].get(form_mode).invalid && getEducationArr.controls[i].get(form_mode).touched">
+            <div
+                *ngIf="getEducationArr.controls[i].get(form_mode)?.errors?.required">
+                Mode is Required</div>
+        </div> -->
+              </div>
+
+              <!-- Backlogs -->
+              <div class="overall-input-wrapper" style="min-width: 100%;">
+                <label>Backlogs<span></span></label>
+                <nz-select
+                  class="input select"
+                  [formControlName]="form_education_backlogs"
+                  [nzMaxTagCount]="2"
+                  [nzMaxTagPlaceholder]="Tag"
+                  nzAllowClear
+                  nzMode="multiple"
+                  nzShowSearch
+                  nzPlaceHolder="Select"
+                >
+                  <nz-option
+                    *ngFor="let backlogs of getSpecificBacklogsList"
+                    [nzLabel]="backlogs.label"
+                    [nzValue]="backlogs.value"
+                  ></nz-option>
+                </nz-select>
+                <ng-template #Tag let-selectedList
+                  >and {{ selectedList.length }} selected
+                </ng-template>
+                <!-- <div class="form-error"
+            *ngIf="getEducationArr.controls[i].get(form_mode).invalid && getEducationArr.controls[i].get(form_mode).touched">
+            <div
+                *ngIf="getEducationArr.controls[i].get(form_mode)?.errors?.required">
+                Mode is Required</div>
+        </div> -->
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+    </div>
   </div>
 </ng-template>
 
+<!-- Backlogs -->
 <ng-template #backlog>
-  <div (click)="backlog.checked = !backlog.checked" [ngClass]="backlog.checked ? 'checked-value' : ''" *ngFor="let backlog of backlogsDropDownValues; let i = index" class="nav-content-render">
-    <span class="tick" [ngClass]="backlog.checked ? '' : 'visible-hide'"></span> <span class="label-value">{{backlog.value}}</span>
+  <div
+    (click)="backlog.checked = !backlog.checked"
+    [ngClass]="backlog.checked ? 'checked-value' : ''"
+    *ngFor="let backlog of backlogsDropDownValues; let i = index"
+    class="nav-content-render"
+  >
+    <span class="tick" [ngClass]="backlog.checked ? '' : 'visible-hide'"></span>
+    <span class="label-value">{{ backlog.label }}</span>
+  </div>
+</ng-template>
+
+<!-- Applied Filters -->
+<ng-template #appliedFilters>
+  <h6 class="main-filter-heading">Applied Filters</h6>
+  <div class="applied-filters-wrapper">
+    <div *ngIf="showNotSelectedLabel(profileDropDownValues)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterProfileList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper" *ngFor="let profile of profileDropDownValues; let i = index">
+          <div class="chip" *ngIf="profile.checked">
+          <span>{{profile.label}}</span> <span (click)="profile.checked = !profile.checked" class="material-icons close-icon">close</span>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showNotSelectedLabel(genderDropDownValues)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterGenderList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper" *ngFor="let gender of genderDropDownValues; let i = index">
+          <div class="chip" *ngIf="gender.checked">
+          <span>{{gender.label}}</span> <span (click)="gender.checked = !gender.checked" class="material-icons close-icon">close</span>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(dateFrom.value && dateFrom.valid || dateTo.value && dateTo.valid)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterDOBList }}:
+      </div>
+        <div class="filter-applied-list">
+          <div class="filter-chip-wrapper">
+            <div class="chip" *ngIf="dateFrom.value && dateFrom.valid">
+            <span>From: {{dateShowFormat(dateFrom.value)}}</span> <span (click)="clear('dateFrom')" class="material-icons close-icon">close</span>
+          </div>
+          </div>
+          <div class="filter-chip-wrapper">
+          <div class="chip" *ngIf="dateTo.value && dateTo.valid">
+            <span>To: {{dateShowFormat(dateTo.value)}}</span> <span (click)="clear('dateTo')" class="material-icons close-icon">close</span>
+          </div>
+          </div>
+        </div>
+    </div>
+    <div class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterEducationList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper">
+          <div class="chip">
+          <span style="cursor: pointer;" (click)="selectedCustomFilterList(filterEducationList)">{{'Go to Educational Filters'}}</span>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showNotSelectedLabel(backlogsDropDownValues)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterBacklogsList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper" *ngFor="let backlog of backlogsDropDownValues; let i = index">
+          <div class="chip" *ngIf="backlog.checked">
+          <span>{{backlog.label}}</span> <span (click)="backlog.checked = !backlog.checked" class="material-icons close-icon">close</span>
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noFilterApplied>
+  <span class="chip"><span>{{' No Filter Applied'}}</span></span>
+</ng-template>
+
+
+<!-- Applied Filters -->
+<ng-template #lastAppliedFiltersTemplate>
+  <h6 class="main-filter-heading">Applied Filters</h6>
+  <div class="applied-filters-wrapper">
+    <ng-container *ngIf="showNotSelectedLabel(lastAppliedFilter.profileDropDownValues) || showNotSelectedLabel(lastAppliedFilter.genderDropDownValues) || showNotSelectedLabel(lastAppliedFilter.educationArray) || showNotSelectedLabel(lastAppliedFilter.backlogsDropDownValues) || (lastAppliedFilter.dateFrom || lastAppliedFilter.dateTo) else noFilterToShow">
+    <div *ngIf="showNotSelectedLabel(lastAppliedFilter.profileDropDownValues)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterProfileList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper" *ngFor="let profile of lastAppliedFilter.profileDropDownValues; let i = index">
+          <div class="chip" *ngIf="profile.checked">
+          <span>{{profile.label}}</span>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showNotSelectedLabel(lastAppliedFilter.genderDropDownValues)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterGenderList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper" *ngFor="let gender of lastAppliedFilter.genderDropDownValues; let i = index">
+          <div class="chip" *ngIf="gender.checked">
+          <span>{{gender.label}}</span>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(lastAppliedFilter.dateFrom || lastAppliedFilter.dateTo)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterDOBList }}:
+      </div>
+        <div class="filter-applied-list">
+          <div class="filter-chip-wrapper">
+            <div class="chip" *ngIf="lastAppliedFilter.dateFrom">
+            <span>From: {{dateShowFormat(lastAppliedFilter.dateFrom)}}</span>
+          </div>
+          </div>
+          <div class="filter-chip-wrapper">
+          <div class="chip" *ngIf="lastAppliedFilter.dateTo">
+            <span>Upto: {{dateShowFormat(lastAppliedFilter.dateTo)}}</span>
+          </div>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="showNotSelectedLabel(lastAppliedFilter.educationArray)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterEducationList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="educational-wrapper-view">
+          <ng-container *ngFor="let education of lastAppliedFilter.educationArray; let i = index">
+            <ng-container *ngIf="education.checked">
+          <h6 class="mt-2 mb-1" style="font-weight: 600; font-size: 15px">{{education.level.label}}</h6>
+          <div class="d-flex" *ngIf="(education.percentage_from || education.percentage_to) || (education.yearOfPassingFrom || education.yearOfPassingTo) || (education.specialization && education.specialization.length > 0) || (education.discipline && education.discipline.length > 0) || (education.institute && education.institute.length > 0) || (education.backlogs && education.backlogs.length > 0) else noEducationFilterToView">
+          <div *ngIf="education.percentage_from || education.percentage_to" class="filter-chip-wrapper">
+          <div class="chip">
+            <!-- Both percentages -->
+        <ng-container *ngIf="education.percentage_from && education.percentage_to">
+          <span>{{'Percentage Range: ' + education.percentage_from + ' - ' + education.percentage_to}}</span>
+        </ng-container>
+        <!-- Only Percentage from -->
+        <ng-container *ngIf="education.percentage_from && !education.percentage_to">
+          <span>{{'Percentage From: ' + education.percentage_from}}</span>
+        </ng-container>
+        <!-- Only Percentage To -->
+        <ng-container *ngIf="!education.percentage_from && education.percentage_to">
+          <span>{{'Percentage Upto: ' + education.percentage_to}}</span>
+        </ng-container>
+        </div>
+          </div>
+
+          <div *ngIf="education.yearOfPassingFrom || education.yearOfPassingTo" class="filter-chip-wrapper">
+          <div class="chip">
+            <!-- Both Year of Passings -->
+        <ng-container *ngIf="education.yearOfPassingFrom && education.yearOfPassingTo">
+          <span>{{'Year of Passing Range: ' + dateShowFormat(education.yearOfPassingFrom) + ' - ' + dateShowFormat(education.yearOfPassingTo)}}</span>
+        </ng-container>
+        <!-- Only Year of Passing from -->
+        <ng-container *ngIf="education.yearOfPassingFrom && !education.yearOfPassingTo">
+          <span>{{'Year of Passing From: ' + dateShowFormat(education.yearOfPassingFrom)}}</span>
+        </ng-container>
+        <!-- Only Year of Passing To -->
+        <ng-container *ngIf="!education.yearOfPassingFrom && education.yearOfPassingTo">
+          <span>{{'Year of Passing Upto: ' + dateShowFormat(education.yearOfPassingTo)}}</span>
+        </ng-container>
+        </div>
+          </div>
+
+          <div *ngIf="(education.specialization && education.specialization.length > 0) || (education.discipline && education.discipline.length > 0) || (education.institute && education.institute.length > 0) || (education.backlogs && education.backlogs.length > 0)" class="filter-chip-wrapper education-view-menu">
+            <div class="chip">
+              <!-- Both Year of Passings -->
+              <button class="custom-mat-menu" mat-button [matMenuTriggerFor]="seeOther">Click to See Other Filters</button>
+
+              <mat-menu #seeOther="matMenu">
+                <button *ngIf="education.institute && education.institute.length > 0" mat-menu-item [matMenuTriggerFor]="institute">Institute Filter</button>
+                <button *ngIf="education.discipline && education.discipline.length > 0" mat-menu-item [matMenuTriggerFor]="discipline">Discipline Filter</button>
+                <button *ngIf="education.specialization && education.specialization.length > 0" mat-menu-item [matMenuTriggerFor]="specialization">Specialization Filter</button>
+                <button *ngIf="education.backlogs && education.backlogs.length > 0" mat-menu-item [matMenuTriggerFor]="backlogs">Backlogs Filter</button>
+              </mat-menu>
+
+              <mat-menu #institute="matMenu">
+                <button [matTooltip]="instituteList && instituteList.length > 55 ? instituteList : ''" *ngFor="let instituteList of education.institute; let i = index" mat-menu-item>{{showInstitute(instituteList)}}</button>
+              </mat-menu>
+
+              <mat-menu #discipline="matMenu">
+                <button *ngFor="let disciplineList of education.discipline; let i = index" mat-menu-item>{{disciplineList}}</button>
+              </mat-menu>
+
+              <mat-menu #specialization="matMenu">
+                <button *ngFor="let specializationList of education.specialization; let i = index" mat-menu-item>{{specializationList}}</button>
+              </mat-menu>
+
+              <mat-menu #backlogs="matMenu">
+                <button *ngFor="let backlogsList of education.backlogs; let i = index" mat-menu-item>{{backlogsList}}</button>
+              </mat-menu>
+
+          </div>
+            </div>
+      </div>
+        <ng-template #noEducationFilterToView>
+          <div class="d-flex">
+          <div class="filter-chip-wrapper">
+        <div class="chip">
+          <span>{{'All ' + education.level.label + ' Candidates' }}</span>
+        </div>
+      </div>
+    </div>
+        </ng-template>
+      </ng-container>
+      </ng-container>
+      </div>
+      </div>
+    </div>
+    <div *ngIf="showNotSelectedLabel(lastAppliedFilter.backlogsDropDownValues)" class="filter-specific-wrapper">
+      <div class="filter-heading">
+        {{ filterBacklogsList }}:
+      </div>
+      <div class="filter-applied-list">
+        <div class="filter-chip-wrapper" *ngFor="let backlog of lastAppliedFilter.backlogsDropDownValues; let i = index">
+          <div class="chip" *ngIf="backlog.checked">
+          <span>{{backlog.label}}</span> <span (click)="backlog.checked = !backlog.checked" class="material-icons close-icon">close</span>
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+  <ng-template #noFilterToShow>
+    <h6 style="font-weight: 600; padding: 1em 1em .5em 1em; text-align: cente">No Filter has been applied</h6>
+  </ng-template>
   </div>
 </ng-template>

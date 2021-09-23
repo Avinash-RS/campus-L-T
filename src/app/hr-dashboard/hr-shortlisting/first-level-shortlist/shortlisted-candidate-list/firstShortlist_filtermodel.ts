@@ -41,18 +41,18 @@ export class firstShortlistFilterModel {
     ]
   }
 
-  getDateOfBirthRange() {
-    return {
-      dateFrom: null,
-      dateTo: null
-    }
-  }
-
   getBacklogsList() {
     return [
-      {value: '0', checked: false}, {value: '1', checked: false}, {value: '2', checked: false}, {value: '3', checked: false}, {value: '4', checked: false}, {value: '5 or More', checked: false}
+      {label: '0', value: 0, checked: false}, {label: '1', value: 1, checked: false}, {label: '2', value: 2, checked: false}, {label: '3', value: 3, checked: false}, {label: '4 & More', value: '4 & more', checked: false}
     ]
   }
+
+  getSpecificBacklogsList() {
+    return [
+      {label: '0', value: 0, checked: false}, {label: '1', value: 1, checked: false}, {label: '2', value: 2, checked: false}, {label: '3', value: 3, checked: false}, {label: '4 & More', value: '4 & more', checked: false}
+    ]
+  }
+
 
   getEducationList() {
     let education = [
