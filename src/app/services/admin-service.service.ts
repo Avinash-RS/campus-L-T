@@ -25,6 +25,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -37,6 +38,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
@@ -49,6 +51,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/hal+json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', 'Basic ' + btoa(`${CONSTANT.DRUPAL_ADMIN_USERNAME}:${CONSTANT.DRUPAL_ADMIN_PASSWORD}`));
@@ -63,6 +66,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -75,7 +79,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
-      .set('driveId', '2')
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -87,6 +91,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
     // .set('Authorization', 'Basic ' + btoa('admin' + ':' + 'Cint@na@321'));
@@ -98,6 +103,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');

@@ -115,7 +115,6 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   callApiForCandidateList() {
       var datasource = {
         getRows: (params: IGetRowsParams) => {
-        console.log('fetching', params);
         let apiData: any = params;
         apiData.isTpo = this.currentRole == 'institute' ? true : false;
         this.gridApi.showLoadingOverlay();
@@ -383,6 +382,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
 
     }
+
     closeDialog() {
       this.matDialog.closeAll();
     }
@@ -494,6 +494,8 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
           this.addUserForm.reset();
           this.appConfig.success(`User has been added Successfully`, '');
+          this.gridApi.refreshInfiniteCache();
+          this.closeDialog();
         }, (error) => {
         });
       } else {
