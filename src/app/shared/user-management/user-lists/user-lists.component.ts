@@ -15,6 +15,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { ModalBoxComponent } from '../../modal-box/modal-box.component';
+import { ActivatedRoute } from '@angular/router';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -54,8 +55,10 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     private sharedService: SharedServiceService,
     private agGridDefinition: userListDefinition,
     private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private activatedRoute: ActivatedRoute
   ) {
+    this.getSelectedUserlistParam();
     this.currentRole = this.appConfig.getLocalData('roles');
     this.rowSelection = "multiple";
     this.serverSideStoreType = 'full';
@@ -64,6 +67,21 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.commonRefresh();
+  }
+
+  getSelectedUserlistParam() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['id'] == '2') {
+        this.rowData = null;
+        this.userList = null;
+        this.selectedUserlist = 'institute';
+      }
+      if (params['id'] == '3') {
+        this.rowData = null;
+        this.userList = null;
+        this.selectedUserlist = 'invPanel';
+      }
+    });
   }
 
   AssignTypesBasesOnRole() {

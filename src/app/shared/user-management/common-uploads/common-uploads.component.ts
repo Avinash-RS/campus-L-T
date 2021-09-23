@@ -532,8 +532,15 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
         errorLength: data ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.candidateAssigntoInterviewPanelErrorStatus);
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully assigned.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.candidateAssigntoInterviewPanelErrorStatus);
+      }
     }, (err) => {
 
     });
@@ -567,8 +574,19 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData ? apiData.length : 0,
         errorLength: data && data.length > 0 ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.invPanelErrorStatus);
+
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Interview panel has been successfully uploaded.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 3});
+        }
+        if(this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 3});
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.invPanelErrorStatus);
+      }
     }, (err) => {
 
     });
@@ -595,8 +613,19 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data && data.length ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.instituteErrorStatus);
+
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Institute details have been successfully uploaded.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 2});
+        }
+        if(this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 2});
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.instituteErrorStatus);
+      }
     }, (err) => {
 
     });
@@ -621,8 +650,22 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data.length : 0,
       };
-      this.openDialog1(ShortlistBoxComponent, datas);
-      this.passNotUploadedListToPreview(data, this.candidateErrorStatus);
+      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 1});
+        }
+        if(this.appConfig.getLocalData('roles') == 'administrator') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 1});
+        }
+        if(this.appConfig.getLocalData('roles') == 'institute') {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.TPO_DASHBOARD.USER_MANAGEMENT_USERS_LIST, {id: 1});
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.candidateErrorStatus);
+      }
+
     }, (err) => {
 
     });
