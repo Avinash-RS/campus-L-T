@@ -281,7 +281,7 @@ dateConvertionMonth(date) {
   }
 
   checkFilterAppied() {
-    let savedFilterModel = this.gridApi.getFilterModel();
+    let savedFilterModel = this.gridApi && this.gridApi.getFilterModel();
     let check = Object.keys(savedFilterModel).length === 0 && savedFilterModel.constructor === Object ? true : false;
     return !check;
   }
@@ -522,6 +522,7 @@ dateConvertionMonth(date) {
   }
 
   onFilterChanged(e) {
+    this.gridApi.deselectAll();
     this.gridApi.paginationGoToFirstPage();
     this.gridApi.refreshServerSideStore({ purge: true });
   }
@@ -529,37 +530,23 @@ dateConvertionMonth(date) {
   callApiForGetShortlistingCandidates() {
     return {
       getRows: (params) => {
-    console.log('add', this.gridApi.getFilterModel());
     if (this.lastAppliedFilter) {
           let filterModel = {
             ...params.request.filterModel,
             ...this.lastAPICalledFilter
           }
-          if (this.buttonLoading) {
-            params.request.startRow = 0;
-            params.request.endRow = 100;
-          }
           params.request.filterModel = filterModel;
         }
 
-          if ((params.request.filterModel && Object.keys(params.request.filterModel).length === 0 && params.request.filterModel.constructor === Object)) {
-          } else {
-            if (this.buttonLoading) {
-              params.request.startRow = 0;
-              params.request.endRow = 100;
-              this.gridApi.paginationGoToFirstPage();
-            }
-            params.api.deselectAll();
-          }
         if (this.refreshTrue) {
           params.request.filterModel = {};
           params.request.sortModel = {};
           this.refreshTrue = false;
         }
-        console.log('params', params);
         let apiData: any = params;
           if (params.request && params.request.groupKeys && params.request.groupKeys.length == 0) {
             this.gridApi.hideOverlay();
+            this.buttonLoading = true;
             this.adminService.getCandidateListForShortlist(params.request).subscribe((data1: any) => {
               this.buttonLoading = false;
               this.userList = data1 && data1['data'] ? data1['data'] : [];
@@ -571,6 +558,7 @@ dateConvertionMonth(date) {
                 }
               });
               if (this.userList.length > 0) {
+                this.gridApi.hideOverlay();
                 let count = params.startRow;
                 this.userList.forEach((element, i) => {
                   element.emailId = element.educations && element.educations.length > 0 ? element.email : null;
@@ -591,6 +579,7 @@ dateConvertionMonth(date) {
                 this.gridApi.showNoRowsOverlay();
               }
             }, (err) => {
+              this.gridApi.retryServerSideLoads();
               this.buttonLoading = false;
               params.fail();
             });
@@ -660,12 +649,6 @@ dateConvertionMonth(date) {
     this.gridApi.getRowNode(row.id).selectThisNode(false);
     });
     return true;
-    // let getSelectedCandidates = this.gridApi.getSelectedNodes();
-    // getSelectedCandidates.forEach(element => {
-    //   element['selected'] = false;
-    // });
-
-    // console.log('add', this.gridApi.getSelectedNodes());
   }
 
   onCellClicked(event) {
@@ -796,6 +779,8 @@ dateConvertionMonth(date) {
     this.dateFrom.setValue(null);
     this.dateTo.setValue(null);
     this.gridApi.paginationGoToFirstPage();
+    this.gridApi.setFilterModel(null);
+    this.gridApi.setSortModel(null);
     this.gridApi.refreshServerSideStore({ purge: true });
     }
   }
@@ -1207,7 +1192,10 @@ let filterModel = {
   educations
 }
 this.lastAPICalledFilter = filterModel;
-this.buttonLoading = true;
+
+this.cacheBlockSize = 0;
+this.gridApi.deselectAll();
+this.gridApi.paginationGoToFirstPage();
 this.gridApi.refreshServerSideStore({ purge: true });
 }
 
@@ -1249,5 +1237,6 @@ showInstitute(institute: string) {
   // Form getters
   // convenience getters for easy access to form fields
   get getEducationArr() { return this.educationForm.get([this.form_education_array]) as FormArray; }
+
 
 }

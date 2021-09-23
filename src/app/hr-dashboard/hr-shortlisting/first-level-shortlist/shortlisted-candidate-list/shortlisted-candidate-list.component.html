@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-start align-items-center">
     <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3 ml-3">
       <span class="label mr-2">Filtered Candidates Count: </span>
-      <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading ? gridApi.paginationProxy.masterRowCount : 0}}</span>
+      <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
     </div>
 
     <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="submit ml-2" (click)="selectAll(true)" mat-raised-button>
@@ -17,9 +17,9 @@
 
   </div>
 
-  <div class="d-flex justify-content-end align-items-center">
+  <div *ngIf="gridApi" class="d-flex justify-content-end align-items-center">
 
-    <div class="ml-2" *ngIf="userList && userList.length > 0">
+    <div class="ml-2">
       <button
         [matTooltip]="checkFilterAppied() || lastAppliedFilter ? '' : 'No filter has been applied'"
         [ngClass]="(checkFilterAppied() || lastAppliedFilter) && !buttonLoading ? '' : 'disable-selection'"
@@ -31,7 +31,7 @@
       </button>
     </div>
 
-    <div class="ml-2" *ngIf="(userList && userList.length > 0)">
+    <div class="ml-2">
       <button
         (click)="lastAppliedFilter ? viewLastAppliedFilter() : ''"
         [matTooltip]="lastAppliedFilter ? '' : 'No Filter has been Applied'"
@@ -43,7 +43,7 @@
       </button>
     </div>
 
-    <div class="ml-2" *ngIf="(userList && userList.length > 0)">
+    <div class="ml-2">
       <button
         [matTooltip]="'Advanced Filter'"
         (click)="customFilterOpen()"
@@ -138,7 +138,7 @@
       <div class="d-flex justify-content-center align-items-center pr-3 pl-3">
         <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3 ml-3">
           <span class="label mr-2">Filtered Candidates Count: </span>
-          <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading ? gridApi.paginationProxy.masterRowCount : 0}}</span>
+          <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
         </div>
         <ng-container *ngIf="buttonLoading else showButton">
           <button
@@ -843,9 +843,13 @@
                   [nzMaxTagPlaceholder]="Tag"
                   nzAllowClear
                   nzMode="multiple"
+                  (ngModelChange)="selectAllBacklogs(i, getSpecificBacklogsList);"
                   nzShowSearch
                   nzPlaceHolder="Select"
                 >
+                <nz-option
+                [nzLabel]="'Select All'"
+              ></nz-option>
                   <nz-option
                     *ngFor="let backlogs of getSpecificBacklogsList"
                     [nzLabel]="backlogs.label"
