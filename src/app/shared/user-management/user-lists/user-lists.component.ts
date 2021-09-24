@@ -419,6 +419,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     formInitialize() {
       this.addUserForm = this.fb.group({
         role: [this.currentRole == 'institute' ? 'candidate' : null, [Validators.required]],
+        is_skip_kyc: [false],
         name: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
         email: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
         tag: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
@@ -509,8 +510,12 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     }
 
     AddNewRowData(apiData, response) {
-      if (this.selectedUserlist == 'invPanel' && apiData.role == 'interview_panel') {
-        this.getInterviewPanelUsersList();
+      if (apiData.role == 'interview_panel') {
+        if (this.selectedUserlist == 'invPanel') {
+          this.getInterviewPanelUsersList();
+        } else {
+          this.selectedUserlist = 'invPanel';
+        }
         // let element = {
         //   email: apiData.email,
         //   field_employee_id: apiData.employee_id,
@@ -530,8 +535,12 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         // });
         // this.gridApi.setRowData(rowData);
       }
-      if (this.selectedUserlist == 'hr' && apiData.role == 'hr') {
-        this.getAdminHrAndInvUsersList();
+      if (apiData.role == 'hr') {
+        if (this.selectedUserlist == 'hr') {
+          this.getAdminHrAndInvUsersList();
+        } else {
+          this.selectedUserlist = 'hr';
+        }
         // let element = {
         //   email: apiData.email,
         //   name: apiData.name,
@@ -579,6 +588,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
           {
             tag: this.addUserForm.value.tag,
             name: this.addUserForm.value.name,
+            is_skip_kyc: this.addUserForm.value.is_skip_kyc ? true : false,
             email: this.addUserForm.value.email,
             date: this.getDateFormat1(date),
             field_user_created_by: this.appConfig.getLocalData('userId'),
@@ -592,7 +602,11 @@ export class UserListsComponent implements OnInit, AfterViewInit {
             this.addUserForm.reset();
             this.appConfig.success('Candidate added successfully', '');
             this.closeDialog();
-            this.gridApi.purgeInfiniteCache();
+            if (this.selectedUserlist == 'candidate') {
+              this.gridApi.purgeInfiniteCache();
+            } else {
+              this.selectedUserlist = 'candidate';
+            }
           }
         }, (err) => {
 
