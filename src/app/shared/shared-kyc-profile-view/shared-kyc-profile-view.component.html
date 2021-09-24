@@ -65,7 +65,7 @@
           </div>
 
           <div class="row-wrapper mt-0">
-            <div class="overall-input-wrapper mt-2 width-32">
+            <div class="overall-input-wrapper mt-3 width-32">
               <label>Marital Status<span></span></label>
               <div class="input size-16 bold-700 color-black">
                 {{ personalDetailsMap[form_marital_status] }}
@@ -77,7 +77,7 @@
                 personalDetailsMap[form_marital_status] == 'Married' ||
                 personalDetailsMap[form_marital_status] == 'Widow'
               "
-              class="overall-input-wrapper mt-2 width-32"
+              class="overall-input-wrapper mt-3 width-32"
             >
               <label>No. of Children<span></span></label>
               <div class="input size-16 bold-700 color-black">
@@ -94,7 +94,7 @@
 
             <div
               *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm"
-              class="overall-input-wrapper mt-2 width-32"
+              class="overall-input-wrapper mt-3 width-32"
             >
               <label>Domicile State<span></span></label>
               <div class="input size-16 bold-700 color-black">
@@ -104,7 +104,7 @@
 
             <div
               *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm"
-              class="overall-input-wrapper mt-2 width-32"
+              class="overall-input-wrapper mt-3 width-32"
             >
               <label>Place of Birth<span></span></label>
               <div class="input size-16 bold-700 color-black">
@@ -113,14 +113,14 @@
             </div>
             <div
               *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm"
-              class="overall-input-wrapper mt-2 width-32"
+              class="overall-input-wrapper mt-3 width-32"
             >
               <label>State of Birth<span></span></label>
               <div class="input size-16 bold-700 color-black">
                 {{ personalDetailsMap[form_state_of_birth] }}
               </div>
             </div>
-            <div class="overall-input-wrapper mt-2 width-32">
+            <div class="overall-input-wrapper mt-3 width-32">
               <label>Nationality<span></span></label>
               <div class="input size-16 bold-700 color-black">
                 {{ personalDetailsMap[form_nationality] }}
