@@ -102,6 +102,17 @@ export class CandidateMappersService {
     return this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
   }
 
+  getDriveId() {
+    return this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '';
+  }
+
+  forFetchCustomHeaders() {
+    return {
+      userId: this.getUserId(),
+      driveId: this.getDriveId()
+    }
+  }
+
   // For generating new static token for before login requests
   csrfToken() {
     return this.http.get(`${this.BASE_URL}/rest/session/token`, { headers: this.withoutTokens() });
@@ -162,7 +173,7 @@ export class CandidateMappersService {
     return fetch(`${this.BASE_URL}/profile/get_certificate_full_name`, {
       method: 'POST',
       body: file,
-      headers: new Headers({'userId': this.getUserId()}),
+      headers: new Headers(this.forFetchCustomHeaders()),
       // headers: this.getAfterCustomHeaders(), withCredentials: true
     });
   }
@@ -205,7 +216,7 @@ export class CandidateMappersService {
     return fetch(`${this.BASE_URL}/profile/upload_certificate_new`, {
       method: 'POST',
       body: documentData,
-      headers: new Headers({'userId': this.getUserId()})
+      headers: new Headers(this.forFetchCustomHeaders())
       // headers: this.getAfterCustomHeaders(), withCredentials: true
     });
 
@@ -455,7 +466,7 @@ export class CandidateMappersService {
       return fetch(`${this.BASE_URL}/profile/upload_joining_docs`, {
         method: 'POST',
         body: documentData,
-        headers: new Headers({'userId': this.getUserId()})
+        headers: new Headers(this.forFetchCustomHeaders())
         // headers: this.getAfterCustomHeaders(), withCredentials: true
       });
 

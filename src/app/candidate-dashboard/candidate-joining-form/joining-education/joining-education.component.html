@@ -3,7 +3,7 @@
         Education Details
     </h5>
       <ng-container *ngIf="!candidateService.checkKycOrJoiningForm()">
-        <div class="alert">
+        <div class="alert mb-0 pl-0 pt-1 pb-1">
           Note: Please fill all the educational qualifications till date (for example: 10th, 12th, B.Tech & M.Tech if relevant).
         </div>
       </ng-container>
@@ -13,9 +13,8 @@
 
     <div class="overall-input-wrapper w-75 d-flex align-items-center f_size_14 mt-2 mb-2" style="color: #565656;">
         <div style="width: 170px;">Profile Applied For*: </div>
-        <nz-select class="input select selectedPost" [(ngModel)]="selectedPost"
-        nzAllowClear [nzDisabled]="candidateService.checkKycOrJoiningForm() ? true : false" nzShowSearch nzPlaceHolder="Select">
-        <nz-option *ngFor="let level of mastersList?.education_master" [nzLabel]="level.label"
+        <nz-select class="input select selectedPost" [(ngModel)]="selectedPost" (ngModelChange)="profileChanged()" [nzDisabled]="candidateService.checkKycOrJoiningForm() ? true : false" nzShowSearch nzPlaceHolder="Select">
+        <nz-option *ngFor="let level of mastersList" [nzLabel]="level.label"
             [nzValue]="level.value"></nz-option>
     </nz-select>
 </div>
@@ -250,7 +249,7 @@
                                 <label>Year of Passing<span>*</span></label>
                                 <div class="date-relative">
                                     <input matInput class="input" [ngClass]="getEducationArr.controls[i].get(form_startDate)?.errors?.notValid || getEducationArr.controls[i].get(form_endDate)?.errors?.notValid ? 'custom-input-error-border' : ''" [min]="minDate" [max]="maxDate"
-                                        [matDatepicker]="pickerYearOfPassing" placeholder="DD-MM-YYYY"
+                                        [matDatepicker]="pickerYearOfPassing" placeholder="Ex: Jan 2001"
                                         [formControlName]="form_yearpassing" appYearMonth>
                                     <mat-datepicker-toggle matSuffix [for]="pickerYearOfPassing"></mat-datepicker-toggle>
                                     <!-- <mat-datepicker #pickerYearOfPassing></mat-datepicker> -->

@@ -145,6 +145,8 @@ maxDateStartField: any;
     private glovbal_validators: GlobalValidatorService
   ) {
     this.dateValidation();
+    let mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : [];
+    this.mastersList = mastersList ? mastersList.education_master : [];
   }
 
   ngOnInit() {
@@ -192,12 +194,23 @@ maxDateStartField: any;
   }
 
   getSelectedPost() {
-    this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
-    this.mastersList?.education_master.forEach(element => {
+    this.mastersList.forEach(element => {
       if (element.value == this.selectedPost) {
         this.selectedPostLabel = element.value;
       }
     });
+  }
+
+  profileChanged() {
+    if (this.selectedPost == 'det') {
+      this.initalPatchWithValidations(2);
+    }
+    if (this.selectedPost == 'get' || this.selectedPost == 'gct') {
+      this.initalPatchWithValidations(3);
+    }
+    if (this.selectedPost == 'pget' || this.selectedPost == 'pgct' || this.selectedPost == 'pgt') {
+      this.initalPatchWithValidations(4);
+    }
   }
 
   getEducationApiDetails() {
@@ -228,7 +241,7 @@ maxDateStartField: any;
   ifNotEducationDetails() {
     this.educationLength = 1;
     this.educationDetails = [];
-    this.initalPatchWithValidations();
+    this.initalPatchWithValidations(1);
   }
 
   getEducationLength(education) {
@@ -238,15 +251,24 @@ maxDateStartField: any;
     this.educationLength = findIndex != -1 ? findIndex + 1 : 1;
   }
 
-  initalPatchWithValidations() {
-    for (let index = 0; index < 1; index++) {
+  initalPatchWithValidations(loopCount) {
+   let currentCount = this.getEducationArr.length && this.getEducationArr.length > 0 ? this.getEducationArr.length : 0;
+   if (currentCount > loopCount) {
+    for (let index = currentCount; index >= loopCount; index--) {
+      this.getEducationArr.removeAt(index);
+      }
+   } else {
+    for (let index = currentCount; index < loopCount; index++) {
       this.getEducationArr.push(this.initEducationArray());
-      this.getEducationArr.at(0).patchValue({
-        [this.form_qualification_type]: 'SSLC',
-      });
+      if (index == 0) {
+        this.getEducationArr.at(0).patchValue({
+          [this.form_qualification_type]: 'SSLC',
+        });
+      }
       this.setValidations();
     }
   }
+}
 
 
     educationLevelChange(i) {

@@ -245,4 +245,22 @@ nz-select.ng-invalid.ng-touched {
   width: 100px;
   border: solid 1px $primary-red;
 }
+
+.skipKyc {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-red !important;
+}
+.mat-checkbox-inner-container {
+  width: 16px !important;
+  height: 16px !important;
+}
+.mat-checkbox-label {
+  font-size: 14px !important;
+  padding-top: 2px;
+}
 }
