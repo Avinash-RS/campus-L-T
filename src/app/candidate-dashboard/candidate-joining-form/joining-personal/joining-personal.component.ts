@@ -442,6 +442,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
 
   async uploadImage(file) {
     try {
+      this.profilePictureFormControl.markAsUntouched();
       this.loadingService.setLoading(true);
       const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
       if (data && data.error_code) {
@@ -463,6 +464,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       }
       this.appConfig.nzNotification('success', 'Uploaded', 'Profile Picture uploaded successfully');
     } catch (e) {
+      this.profilePicture.file_path ? this.profilePictureFormControl.markAsTouched() : this.profilePictureFormControl.markAsUntouched();
       this.loadingService.setLoading(false);
       this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
