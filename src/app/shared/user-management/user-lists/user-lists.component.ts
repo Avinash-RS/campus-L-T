@@ -15,7 +15,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { ModalBoxComponent } from '../../modal-box/modal-box.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterEvent, Router } from '@angular/router';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -55,6 +55,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     private sharedService: SharedServiceService,
     private agGridDefinition: userListDefinition,
     private fb: FormBuilder,
+    private router: Router,
     private glovbal_validators: GlobalValidatorService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -67,6 +68,20 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.commonRefresh();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.sharedService.screenRefreshOnDriveChange.subscribe((data: any)=> {
+      if (this.router.url.includes(data)) {
+        console.log('candidate', this.selectedUserlist);
+        if (this.selectedUserlist == 'candidate') {
+          this.gridApi.purgeInfiniteCache();
+        } else {
+          this.AssignTypesBasesOnRole();
+        }
+      }
+    });
   }
 
   getSelectedUserlistParam() {

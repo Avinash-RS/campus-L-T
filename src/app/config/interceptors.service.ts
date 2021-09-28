@@ -112,7 +112,7 @@ export class InterceptorsService implements HttpInterceptor {
           if (error?.error && error?.error?.FailureReason?.message.includes('URL query argument is invalid')) {
             this.appConfig.clearLocalData();
             this.appConfig.error('Session expired. Please log in again', '');
-            this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+            this.appConfig.logoutWhenAuthorized();
           } else {
             this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
               ? error.error.message : '403 Forbidden', '');

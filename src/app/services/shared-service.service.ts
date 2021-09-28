@@ -20,4 +20,6 @@ export class SharedServiceService {
   joiningFormActiveSelector = new Subject();
   joiningFormStepperStatus = new Subject();
   StepperNavigationCheck = new Subject();
+
+  screenRefreshOnDriveChange = new Subject();
 }
