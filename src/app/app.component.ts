@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   subscriptions: Subscription[] = [];
   maintenanceMessage: any;
   loading: boolean = true;
+  selectedDriveId: number;
 
   constructor(
     private router: Router,
@@ -81,8 +82,31 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getScreenSize();
     this.checkIE();
     this.listenToLoading();
+    this.selectedDriveId = this.appConfig.getLocalData('driveId') ? Number(this.appConfig.getLocalData('driveId')) : null;
   }
 
+  checkNavigation() {
+        this.router.events.subscribe((routerEvent: Event) => {
+          if (this.appConfig.getLocalData('driveId') == this.selectedDriveId) {
+            console.log('coming');
+            this.router.routeReuseStrategy.shouldReuseRoute = () => true;
+            this.router.onSameUrlNavigation = 'ignore';
+          } else {
+            this.selectedDriveId = this.appConfig.getLocalData('driveId') ? Number(this.appConfig.getLocalData('driveId')) : null;
+          }
+      if (routerEvent instanceof NavigationStart) {
+      }
+      // On NavigationEnd or NavigationError or NavigationCancel
+      // set showLoadingIndicator to false
+      if (routerEvent instanceof NavigationEnd ||
+        routerEvent instanceof NavigationError ||
+        routerEvent instanceof NavigationCancel) {
+          if (environment.local != true) {
+            // this.commonService.initVersionCheck(environment.versionCheckURL);
+          }
+          }
+    });
+  }
   ngAfterViewInit() {
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');

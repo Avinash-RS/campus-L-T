@@ -21,20 +21,12 @@
             align-items: center;
             margin: 0 0 0.5em 0;
             .label {
+              margin-right: 8px;
               color: $light-black;
               font-size: 13px;
             }
             .input-box {
-              // nz-select {
-              //   height: 25px;
-              //   color: $header-blue;
-              //   background: $white 0% 0% no-repeat padding-box;
-              //   box-shadow: $shadow-light-black;
-              //   border-radius: 5px;
-              //   font-size: 13px;
-              //   min-width: 165px;
-              //   max-width: 165px;
-              // }
+              min-width: 250px;
             }
           }
         }

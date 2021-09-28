@@ -143,7 +143,30 @@
               </li>
             </ol>
           </div>
-          <div class="heading3 pl-1">{{breadcrumbs && breadcrumbs[1] && breadcrumbs[1].label ? (breadcrumbs[1].label == 'Joining Form' ? checkJoining() : breadcrumbs[1].label) : ''}}</div>
+          <div class="d-flex pl-1 justify-content-between align-content-center drive-wrapper">
+          <div class="heading3">
+            {{breadcrumbs && breadcrumbs[1] && breadcrumbs[1].label ? (breadcrumbs[1].label == 'Joining Form' ? checkJoining() : breadcrumbs[1].label) : ''}}
+          </div>
+          <div class="d-flex align-content-center">
+            <div class="drive">
+              <label>Selected Drive: </label>
+              <nz-select
+              class="input select"
+              (ngModelChange)="driveChanged($event)" [nzDisabled]="driveList && driveList.length > 1 ? false : true"
+              [(ngModel)]="activeDriveId"
+              nzShowSearch
+              nzPlaceHolder="Select Drive"
+            >
+                <nz-option
+                  *ngFor="let drive of driveList"
+                  [nzLabel]="drive.drive_name"
+                  [nzValue]="drive.drive_id"
+                >
+                </nz-option>
+            </nz-select>
+              </div>
+          </div>
+        </div>
           <!-- Interview Component for Candidate Login -->
         <app-join-interview *ngIf="role == 'candidate' && !showJoiningForm && appConfig.isWebrtc()"></app-join-interview>
         <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">

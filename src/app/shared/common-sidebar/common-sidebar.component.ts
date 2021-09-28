@@ -28,6 +28,8 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
    subMenus: any;
    activeSubmenu;
   showJoiningForm: boolean;
+  driveList: any;
+  activeDriveId: any;
 
    constructor(
      public appConfig: AppConfigService,
@@ -52,6 +54,21 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
       top = null;
     }
 }
+
+getDriveList() {
+  let drive = this.appConfig.getLocalData('driveList');
+  this.driveList = drive ? JSON.parse(drive) : [];
+  this.activeDriveId = this.appConfig.getLocalData('driveId') ? Number(this.appConfig.getLocalData('driveId')) : null;
+ }
+
+ driveChanged(e) {
+  this.activeDriveId = e;
+  this.appConfig.setLocalData('driveId', this.activeDriveId);
+  let currentUrl = this.router.url;
+  this.sharedService.screenRefreshOnDriveChange.next(currentUrl);
+  this.appConfig.routeNavigation('/');
+  // this.appConfig.routeNavigationWithQueryParam(currentUrl, {data: this.activeDriveId});
+ }
 
    ngOnInit() {
      this.sidebarOpen = true;
@@ -104,6 +121,7 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
        });
        this.rxjsSubjectForPrint();
        this.checkJoiningComponentNeeded();
+       this.getDriveList();
       }
 
    buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): any[] {
