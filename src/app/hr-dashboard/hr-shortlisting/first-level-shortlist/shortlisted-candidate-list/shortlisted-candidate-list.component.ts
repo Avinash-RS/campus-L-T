@@ -196,8 +196,10 @@ pgInstitutesList: any;
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 0, 1);
-    this.maxDate = new Date(currentYear + 20, 11, 31);
-}
+    // this.maxDate = new Date(currentYear + 20, 11, 31);
+    // this.maxDate = new Date(currentYear - 16, 0, 1);
+    this.maxDate = new Date();
+  }
 
 chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>, i, formname) {
   if (this.dateConvertion(normalizedMonth['_d'])) {
@@ -270,6 +272,7 @@ dateConvertionMonth(date) {
   }
 
   selectorUnselectAllCheckbox(condition) {
+    this.gridApi.collapseAll();
     let endIndex = this.gridApi.paginationProxy.bottomDisplayedRowIndex;
     let startIndex = endIndex - 99;
 
@@ -1044,11 +1047,11 @@ filterApiBindingCustomizationData(appliedFilter) {
 const hsc = hscValues[this.form_education_checked] ? {
   level: hscValues[this.form_education_checked] ? 'hsc' : null,
   board_university: null,
-  specification: hscValues.specialization && hscValues.specialization.length > 0 ? {
+  discipline: hscValues.specialization && hscValues.specialization.length > 0 ? {
     filterType: "set",
     values: hscValues.specialization ? hscValues.specialization : null
   } : null,
-  discipline: null,
+  specification: null,
   institute: null,
   year_of_passing: this.checkYearOfPassingForEducation(hscValues.yearOfPassingFrom, hscValues.yearOfPassingTo),
   backlogs: hscValues.backlogs ? {
@@ -1066,11 +1069,11 @@ const hsc = hscValues[this.form_education_checked] ? {
 const diploma = diplomaValues[this.form_education_checked] ? {
   level: diplomaValues[this.form_education_checked] ? 'diploma' : null,
   board_university: null,
-  specification: diplomaValues.specialization && diplomaValues.specialization.length > 0 ? {
+  discipline: diplomaValues.specialization && diplomaValues.specialization.length > 0 ? {
     filterType: "set",
     values: diplomaValues.specialization ? diplomaValues.specialization : null
   } : null,
-  discipline: diplomaValues.discipline && diplomaValues.discipline.length > 0 ? {
+  specification: diplomaValues.discipline && diplomaValues.discipline.length > 0 ? {
     filterType: "set",
     values: diplomaValues.discipline ? diplomaValues.discipline : null
   } : null,
@@ -1094,11 +1097,11 @@ const diploma = diplomaValues[this.form_education_checked] ? {
 const ug = ugValues[this.form_education_checked] ? {
   level: ugValues[this.form_education_checked] ? 'ug' : null,
   board_university: null,
-  specification: ugValues.specialization && ugValues.specialization.length > 0 ? {
+  discipline: ugValues.specialization && ugValues.specialization.length > 0 ? {
     filterType: "set",
     values: ugValues.specialization ? ugValues.specialization : null
   } : null,
-  discipline: ugValues.discipline && ugValues.discipline.length > 0 ? {
+  specification: ugValues.discipline && ugValues.discipline.length > 0 ? {
     filterType: "set",
     values: ugValues.discipline ? ugValues.discipline : null
   } : null,
@@ -1122,11 +1125,11 @@ const ug = ugValues[this.form_education_checked] ? {
 const pg = pgValues[this.form_education_checked] ? {
   level: pgValues[this.form_education_checked] ? 'pg' : null,
   board_university: null,
-  specification: pgValues.specialization && pgValues.specialization.length > 0 ? {
+  discipline: pgValues.specialization && pgValues.specialization.length > 0 ? {
     filterType: "set",
     values: pgValues.specialization ? pgValues.specialization : null
   } : null,
-  discipline: pgValues.discipline && pgValues.discipline.length > 0 ? {
+  specification: pgValues.discipline && pgValues.discipline.length > 0 ? {
     filterType: "set",
     values: pgValues.discipline ? pgValues.discipline : null
   } : null,
