@@ -741,7 +741,7 @@
 
               <!-- Specialization -->
               <div *ngIf="i != 0" class="overall-input-wrapper" style="min-width: 100%;">
-                <label>Specialization List<span></span></label>
+                <label>Discipline List<span></span></label>
                 <nz-select
                   class="input select"
                   [nzMaxTagCount]="0"
@@ -789,7 +789,7 @@
 
               <!-- Discipline -->
               <div *ngIf="i != 0 && i != 1" class="overall-input-wrapper" style="min-width: 100%;">
-                <label>Discipline List<span></span></label>
+                <label>Specialization List<span></span></label>
                 <nz-select
                   class="input select"
                   [nzMaxTagCount]="0"
@@ -1061,8 +1061,8 @@
 
               <mat-menu #seeOther="matMenu">
                 <button *ngIf="education.institute && education.institute.length > 0" mat-menu-item [matMenuTriggerFor]="institute">Institute Filter</button>
-                <button *ngIf="education.discipline && education.discipline.length > 0" mat-menu-item [matMenuTriggerFor]="discipline">Discipline Filter</button>
-                <button *ngIf="education.specialization && education.specialization.length > 0" mat-menu-item [matMenuTriggerFor]="specialization">Specialization Filter</button>
+                <button *ngIf="education.discipline && education.discipline.length > 0" mat-menu-item [matMenuTriggerFor]="discipline">Specialization Filter</button>
+                <button *ngIf="education.specialization && education.specialization.length > 0" mat-menu-item [matMenuTriggerFor]="specialization">Discipline Filter</button>
                 <button *ngIf="education.backlogs && education.backlogs.length > 0" mat-menu-item [matMenuTriggerFor]="backlogs">Backlogs Filter</button>
               </mat-menu>
 
