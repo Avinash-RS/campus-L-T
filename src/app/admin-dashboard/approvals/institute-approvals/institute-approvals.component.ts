@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -7,6 +7,9 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/m
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import moment from 'moment';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-institute-approvals',
@@ -20,7 +23,7 @@ import moment from 'moment';
     ]),
   ],
 })
-export class InstituteApprovalsComponent implements OnInit {
+export class InstituteApprovalsComponent implements OnInit, OnDestroy {
 
   showPage = true;
 
@@ -59,6 +62,9 @@ export class InstituteApprovalsComponent implements OnInit {
 
   status: string;
 
+  refreshSubscription: Subscription;
+  instituteListForApprovalsSubscription: Subscription;
+  approveOrRejectSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -70,10 +76,31 @@ export class InstituteApprovalsComponent implements OnInit {
 
   ngOnInit() {
     this.tabledef();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.instituteListForApprovalsSubscription ? this.instituteListForApprovalsSubscription.unsubscribe() : '';
+    this.approveOrRejectSubscription ? this.approveOrRejectSubscription.unsubscribe() : '';
+    }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.APPROVALS_INSTITUTE)) {
+        this.quickSearchValue = '';
+        this.getUsersList();
+      }
+    });
   }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
+    this.getUsersList();
   }
 
   sortevent(e) {
@@ -258,12 +285,12 @@ export class InstituteApprovalsComponent implements OnInit {
         },
       },
     ];
-    this.getUsersList();
   }
 
   // To get all users
   getUsersList() {
-    this.adminService.instituteListForApprovals().subscribe((data: any) => {
+    this.gridApi.showLoadingOverlay();
+   this.instituteListForApprovalsSubscription = this.adminService.instituteListForApprovals().subscribe((data: any) => {
 
 
       this.userList = data ? data : [];
@@ -337,7 +364,7 @@ export class InstituteApprovalsComponent implements OnInit {
       ];
     }
 
-    this.adminService.approveOrReject(apiData).subscribe((datas: any) => {
+   this.approveOrRejectSubscription = this.adminService.approveOrReject(apiData).subscribe((datas: any) => {
 
       this.appConfig.success(data && data['status'] === 'approve' ? 'Approved' : 'Rejected' + ' Successfully', '');
       this.ngOnInit();

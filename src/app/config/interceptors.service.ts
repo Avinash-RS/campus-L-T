@@ -6,10 +6,11 @@ import {
   HttpHandler,
   HttpEvent,
   HttpErrorResponse,
-  HttpHeaders
+  HttpHeaders,
+  HttpEventType
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, retry } from 'rxjs/operators';
+import { map, catchError, retry, finalize } from 'rxjs/operators';
 import { AppConfigService } from './app-config.service';
 import { environment } from 'src/environments/environment';
 import { CONSTANT } from '../constants/app-constants.service';
@@ -27,12 +28,13 @@ export class InterceptorsService implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let lastResponse: HttpEvent<any>;
+    let errResponse: HttpErrorResponse;
     this.totalRequests++;
     if (request.reportProgress) {
     } else {
       this.loadingService.setLoading(true);
     }
-
     // created on 28-Nov
     const headers = new HttpHeaders({
       'Accept': 'application/json'
@@ -55,6 +57,7 @@ export class InterceptorsService implements HttpInterceptor {
     // Request Handling
     return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
+        lastResponse = event;
       if (event instanceof HttpResponse) {
         // Loader set to True
         this.totalRequests--;
@@ -82,6 +85,7 @@ export class InterceptorsService implements HttpInterceptor {
       //   }),
       //   retry(3),
       catchError((error: HttpErrorResponse) => {
+        errResponse = error;
         // Loader set to False
         this.totalRequests--;
         if (this.totalRequests === 0) {
@@ -170,6 +174,12 @@ export class InterceptorsService implements HttpInterceptor {
         }
         return throwError(error);
 
+      }),
+      finalize(() => {
+        if (lastResponse.type === HttpEventType.Sent && !errResponse) {
+          // last response type was 0, and we haven't received an error
+          this.totalRequests--;
+        }
       })
     );
   }

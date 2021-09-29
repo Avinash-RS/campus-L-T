@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -14,6 +14,9 @@ import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 ModuleRegistry.registerModules(AllModules);
 
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -21,7 +24,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
   templateUrl: './second-level-assessment-list.component.html',
   styleUrls: ['./second-level-assessment-list.component.scss']
 })
-export class SecondLevelAssessmentListComponent implements OnInit {
+export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
 
   BASE_URL = environment.API_BASE_URL;
 
@@ -39,10 +42,11 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   searchBox = false;
   filterValue: string;
   quickSearchValue = '';
-
+  refreshSubscription: Subscription;
+  assessmentListForSecondLevelShortlistSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
+    private router: Router,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
@@ -51,12 +55,31 @@ export class SecondLevelAssessmentListComponent implements OnInit {
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
-
     // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, 'assement_name' ? {data: 'assement_name'} : {data: 'none'});
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.assessmentListForSecondLevelShortlistSubscription ? this.assessmentListForSecondLevelShortlistSubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST)) {
+        this.quickSearchValue = '';
+        this.getUsersList();
+      }
+    });
   }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
+    this.getUsersList();
   }
 
   sortevent(e) {
@@ -227,7 +250,6 @@ export class SecondLevelAssessmentListComponent implements OnInit {
         sortable: false,
       }
     ];
-    this.getUsersList();
   }
 
   tooltipFormatter(params) {
@@ -243,9 +265,8 @@ export class SecondLevelAssessmentListComponent implements OnInit {
 
   // To get all users
   getUsersList() {
-    this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
-
-
+    this.gridApi.showLoadingOverlay();
+    this.assessmentListForSecondLevelShortlistSubscription = this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
       if (datas) {
         this.userList = datas ? datas : [];
         let count = 0;

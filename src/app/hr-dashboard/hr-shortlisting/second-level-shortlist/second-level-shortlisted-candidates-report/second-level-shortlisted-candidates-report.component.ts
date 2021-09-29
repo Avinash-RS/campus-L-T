@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -6,15 +6,18 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-second-level-shortlisted-candidates-report',
   templateUrl: './second-level-shortlisted-candidates-report.component.html',
   styleUrls: ['./second-level-shortlisted-candidates-report.component.scss']
 })
-export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
+export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, OnDestroy {
   BASE_URL = environment.API_BASE_URL;
 
   statusHeaderData: any;
@@ -42,18 +45,39 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
   filterValue: string;
   quickSearchValue = '';
 
+  refreshSubscription: Subscription;
+  shortlistedCandidatesReportSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.editRouteParamGetter();
   }
 
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.shortlistedCandidatesReportSubscription ? this.shortlistedCandidatesReportSubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT)) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST);
+      }
+    });
   }
 
   // Get url param for edit route
@@ -289,7 +313,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit {
       shortlist_name: names,
       shortlist: '1'
     };
-    this.adminService.shortlistedCandidatesReport(apiData).subscribe((response: any) => {
+   this.shortlistedCandidatesReportSubscription = this.adminService.shortlistedCandidatesReport(apiData).subscribe((response: any) => {
       const align = [];
       let sno = 0;
       let notTaken = response['total_no_of_candidates'] - response['exams_taken'];

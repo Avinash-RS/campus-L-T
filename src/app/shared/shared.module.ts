@@ -75,7 +75,7 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
-import { KycSnackbarComponent } from './kyc-snackbar/kyc-snackbar.component';
+import { CandidateStatusComponent } from './candidate-status/candidate-status.component';
 import { ShortlistBoxComponent } from './modal-box/shortlist-box/shortlist-box.component';
 import { CommonHeaderComponent } from './common-header/common-header.component';
 import { CdkDetailRowDirective } from './helper/cdk-detail-row.directive';
@@ -101,7 +101,7 @@ import { SharedReportsSectionComponent } from './user-management/shared-reports-
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, KycSnackbarComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
 ],
   imports: [
     CommonModule,
@@ -200,7 +200,7 @@ ModuleRegistry.registerModules(AllModules);
     HomeHeaderComponent,
     DashboardHeaderComponent,
     ModalBoxComponent,
-    KycSnackbarComponent,
+    CandidateStatusComponent,
     NgMultiSelectDropDownModule,
     ShortlistBoxComponent,
     CommonHeaderComponent,

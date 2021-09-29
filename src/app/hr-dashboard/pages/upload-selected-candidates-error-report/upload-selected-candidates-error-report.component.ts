@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-selected-candidates-error-report',
   templateUrl: './upload-selected-candidates-error-report.component.html',
   styleUrls: ['./upload-selected-candidates-error-report.component.scss']
 })
-export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
+export class UploadSelectedCandidatesErrorReportComponent implements OnInit, OnDestroy {
   userList: any;
 
   paginationPageSize = 500;
@@ -23,7 +26,8 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
   searchBox = false;
   filterValue: string;
   quickSearchValue = '';
-
+  refreshSubscription: Subscription;
+  SelectedCandidatesBulkUploadErrorListSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -35,11 +39,31 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.SelectedCandidatesBulkUploadErrorListSubscription ? this.SelectedCandidatesBulkUploadErrorListSubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST)) {
+        this.quickSearchValue = '';
+        this.getUsersList();
+        }
+    });
   }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.getUsersList();
   }
 
   sortevent(e) {
@@ -134,7 +158,6 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
         }
       },
     ];
-    this.getUsersList();
   }
 
   // To get all users
@@ -142,7 +165,8 @@ export class UploadSelectedCandidatesErrorReportComponent implements OnInit {
     const apiData = {
       uploaded_by: ''
     };
-    this.adminService.SelectedCandidatesBulkUploadErrorList().subscribe((datas: any) => {
+    this.gridApi.showLoadingOverlay();
+   this.SelectedCandidatesBulkUploadErrorListSubscription = this.adminService.SelectedCandidatesBulkUploadErrorList().subscribe((datas: any) => {
 
       this.userList = datas ? datas : [];
       let count = 0;
