@@ -1,5 +1,5 @@
 import { MatDialog } from '@angular/material';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -7,13 +7,16 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { environment } from 'src/environments/environment';
 import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listof-selected-candidates',
   templateUrl: './listof-selected-candidates.component.html',
   styleUrls: ['./listof-selected-candidates.component.scss']
 })
-export class ListofSelectedCandidatesComponent implements OnInit {
+export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
   BASE_URL = environment.API_BASE_URL;
 
@@ -33,6 +36,12 @@ export class ListofSelectedCandidatesComponent implements OnInit {
   userList: any;
   popUpdata: any;
 
+  refreshSubscription: Subscription;
+  excelExportSelectedCandidatesSubscription: Subscription;
+  documentVerificationSubscription: Subscription;
+  sendMailOrEditAccessSubscription: Subscription;
+  SelectedCandidatesListSubscription: Subscription;
+  documentsDownloadSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -46,6 +55,30 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.GetRowStyle();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.excelExportSelectedCandidatesSubscription ? this.excelExportSelectedCandidatesSubscription.unsubscribe() : '';
+    this.documentVerificationSubscription ? this.documentVerificationSubscription.unsubscribe() : '';
+    this.sendMailOrEditAccessSubscription ? this.sendMailOrEditAccessSubscription.unsubscribe() : '';
+    this.SelectedCandidatesListSubscription ? this.SelectedCandidatesListSubscription.unsubscribe() : '';
+    this.documentsDownloadSubscription ? this.documentsDownloadSubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST)) {
+        this.quickSearchValue = '';
+        this.getUsersList();
+        this.GetRowStyle();
+        }
+    });
   }
 
   GetRowStyle() {
@@ -60,6 +93,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
 
   onGridReady(params: any) {
     this.gridApi = params.api;
+    this.getUsersList();
   }
 
   sortevent(e) {
@@ -380,8 +414,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     this.isRowSelectable = function (rowNode) {
       return rowNode.data && rowNode.data.decline_status == 'Yes' ? false : true;
     };
-
-    this.getUsersList();
   }
 
   tooltipFormatter(params) {
@@ -417,7 +449,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       uid: role == 'ic' ? this.appConfig.getLocalData('userId') : '',
       users: data
     };
-    this.adminService.excelExportSelectedCandidates(apiData).subscribe((datas: any)=> {
+    this.excelExportSelectedCandidatesSubscription = this.adminService.excelExportSelectedCandidates(apiData).subscribe((datas: any)=> {
       if (datas && datas.url) {
         this.gridApi.deselectAll();
         this.appConfig.success('Excel Report downloaded successfully');
@@ -439,7 +471,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       doc_verify: status,
       verifier: this.appConfig.getLocalData('userId')
     }
-    this.adminService.documentVerification(apiData).subscribe((data: any)=> {
+   this.documentVerificationSubscription = this.adminService.documentVerification(apiData).subscribe((data: any)=> {
       this.appConfig.success(status == '0' ? 'Verification Reverted' : 'Documents Verified Successfully');
       this.rowData[selectedIndex].verified = this.rowData[selectedIndex].verified == 'Verified' ? 'Verify' : 'Verified';
       this.rowData[selectedIndex].verifier_name = this.appConfig.getLocalData('username');
@@ -487,7 +519,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       }
       apiData.push(api);
     });
-    this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
+    this.sendMailOrEditAccessSubscription = this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
 
       this.appConfig.success(this.popUpdata.value == 1 ? 'Mail Sent to the Candidates Successfully' : 'Edit Access given to the Candidates Successfully');
       this.ngOnInit();
@@ -499,7 +531,8 @@ export class ListofSelectedCandidatesComponent implements OnInit {
     const apiData = {
       company: role == 'ic' ? this.appConfig.getLocalData('userId') : ''
     }
-    this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
+   this.gridApi.showLoadingOverlay();
+   this.SelectedCandidatesListSubscription = this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
       this.userList = datas ? datas : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -510,7 +543,6 @@ export class ListofSelectedCandidatesComponent implements OnInit {
         element['decline_status'] = element['decline_status'] == '1' ? 'Yes' : 'No';
         element['details'] = count;
       });
-      this.appConfig.hideLoader();
       this.rowData = this.userList;
     }, (err) => {
     });
@@ -522,7 +554,7 @@ export class ListofSelectedCandidatesComponent implements OnInit {
       uname: this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : '',
       email: this.appConfig.getLocalData('userEmail') ? this.appConfig.getLocalData('userEmail') : ''
     }
-    this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
+    this.documentsDownloadSubscription = this.adminService.documentsDownload(sendReq).subscribe((data: any) => {
 
       if (data?.url) {
         const documents = `${this.BASE_URL}/${data?.url}`;

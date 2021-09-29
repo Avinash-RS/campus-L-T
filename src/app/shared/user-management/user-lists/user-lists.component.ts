@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -16,6 +16,8 @@ import { GlobalValidatorService } from 'src/app/custom-form-validators/globalval
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { ModalBoxComponent } from '../../modal-box/modal-box.component';
 import { ActivatedRoute, RouterEvent, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -24,7 +26,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
   styleUrls: ['./user-lists.component.scss']
 })
 
-export class UserListsComponent implements OnInit, AfterViewInit {
+export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('addUser', {static: false}) openAddUserForm: TemplateRef<any>;
   addUserForm: FormGroup;
   interviewPanelDisciplineDropdown: any = [];
@@ -48,6 +50,16 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   public rowModelType;
   public serverSideStoreType;
   addUserdialogRef: any;
+  refreshSubscription: Subscription;
+  candidateListSubscription: Subscription;
+  hruserListSubscription: Subscription;
+  instituteListAfterBulkUploadSubscription: Subscription;
+  userListSubscription: Subscription;
+  commonUserListRefreshSubscription: Subscription;
+  tpoBulkMailSentSubscription: Subscription;
+  getDisciplineSubscription: Subscription;
+  hrAddUserSubscription: Subscription;
+  bulkUploadCandidatesSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
@@ -71,13 +83,31 @@ export class UserListsComponent implements OnInit, AfterViewInit {
     this.refreshOndriveChangeRXJS();
   }
 
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.candidateListSubscription ? this.candidateListSubscription.unsubscribe() : '';
+    this.hruserListSubscription ? this.hruserListSubscription.unsubscribe() : '';
+    this.instituteListAfterBulkUploadSubscription ? this.instituteListAfterBulkUploadSubscription.unsubscribe() : '';
+    this.userListSubscription ? this.userListSubscription.unsubscribe() : '';
+    this.commonUserListRefreshSubscription ? this.commonUserListRefreshSubscription.unsubscribe() : '';
+    this.tpoBulkMailSentSubscription ? this.tpoBulkMailSentSubscription.unsubscribe() : '';
+    this.getDisciplineSubscription ? this.getDisciplineSubscription.unsubscribe() : '';
+    this.hrAddUserSubscription ? this.hrAddUserSubscription.unsubscribe() : '';
+    this.bulkUploadCandidatesSubscription ? this.bulkUploadCandidatesSubscription.unsubscribe() : '';
+    }
+
   refreshOndriveChangeRXJS() {
-    this.sharedService.screenRefreshOnDriveChange.subscribe((data: any)=> {
-      if (this.router.url.includes(data)) {
-        console.log('candidate', this.selectedUserlist);
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes('user-management/user-list')) {
         if (this.selectedUserlist == 'candidate') {
+          this.quickSearchValue = '';
           this.gridApi.purgeInfiniteCache();
         } else {
+          this.quickSearchValue = '';
           this.AssignTypesBasesOnRole();
         }
       }
@@ -151,7 +181,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
         let apiData: any = params;
         apiData.isTpo = this.currentRole == 'institute' ? true : false;
         this.gridApi.showLoadingOverlay();
-        this.adminService.getCandidatesList(apiData).subscribe((data1: any) => {
+       this.candidateListSubscription = this.adminService.getCandidatesList(apiData).subscribe((data1: any) => {
           this.gridApi.hideOverlay();
           this.userList = data1 && data1['data'] ? data1['data'] : [];
           if (this.userList.length > 0) {
@@ -236,7 +266,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
   // Interview panel start
   getInterviewPanelUsersList() {
-    this.adminService.hruserList().subscribe((data: any) => {
+    this.hruserListSubscription = this.adminService.hruserList().subscribe((data: any) => {
       this.userList = data ? data : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -262,7 +292,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   }
   // To get all users
   getInstituteList() {
-    this.adminService.instituteListAfterBulkUpload().subscribe((data1: any) => {
+   this.instituteListAfterBulkUploadSubscription = this.adminService.instituteListAfterBulkUpload().subscribe((data1: any) => {
       this.userList = data1 ? data1 : [];
       let count = 0;
       this.userList.forEach(element => {
@@ -282,7 +312,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
   // Admin Hr list view
     // To get all users
     getAdminHrAndInvUsersList() {
-      this.adminService.userList().subscribe((data: any) => {
+     this.userListSubscription = this.adminService.userList().subscribe((data: any) => {
 
         this.userList = data ? data : [];
         let count = 0;
@@ -298,7 +328,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
 
   commonRefresh() {
-    this.sharedService.commonUserListRefresh.subscribe((uid)=> {
+    this.commonUserListRefreshSubscription = this.sharedService.commonUserListRefresh.subscribe((uid)=> {
       this.deleteRemovedUserFromGrid(uid);
     });
   }
@@ -356,7 +386,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
+    this.tpoBulkMailSentSubscription = this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
       this.gridApi.deselectAll();
       this.gridApi.purgeInfiniteCache();
       const data = {
@@ -446,7 +476,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
 
   // get discipline dropdown value
   getDiscipline() {
-    this.adminService.getDiscipline().subscribe((data: any) => {
+    this.getDisciplineSubscription = this.adminService.getDiscipline().subscribe((data: any) => {
       this.interviewPanelDisciplineDropdown = data ? data : [];
     }, (err) => {
     });
@@ -584,7 +614,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
           addUserDatas['panel_discipline'] = this.addUserForm.value.discipline;
           addUserDatas['employee_id'] = this.addUserForm.value.employee_id;
         }
-        this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
+        this.hrAddUserSubscription = this.adminService.hrAddUser(addUserDatas).subscribe((success: any) => {
           this.addUserForm.reset();
           this.appConfig.success(`User has been added Successfully`, '');
           this.closeDialog();
@@ -610,7 +640,7 @@ export class UserListsComponent implements OnInit, AfterViewInit {
             time: this.tConvert(`${date.getHours()}:${minutes}`)
           }
         ];
-        this.adminService.bulkUploadCandidates(apiData).subscribe((data: any) => {
+        this.bulkUploadCandidatesSubscription = this.adminService.bulkUploadCandidates(apiData).subscribe((data: any) => {
           if (data && data.length > 0) {
             this.appConfig.error(data && data[0] && data[0]['reason'] ? data[0]['reason'] : 'Candidate not added.. Try Again', '');
           } else {

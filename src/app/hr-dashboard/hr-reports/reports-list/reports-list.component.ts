@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -12,6 +12,8 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import { FormGroup } from '@angular/forms';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 const moment = _moment;
 
@@ -46,7 +48,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class ReportsListComponent implements OnInit {
+export class ReportsListComponent implements OnInit, OnDestroy {
 
   displayedColumns: any[] = ['reportname', 'col2', 'col3', 'col4', 'action'];
   dataSource: MatTableDataSource<any>;
@@ -78,6 +80,21 @@ export class ReportsListComponent implements OnInit {
   yesexist = {
     width: 'auto !important'
   }
+  refreshSubscription: Subscription;
+  getoverallInstituteSubscription: Subscription;
+  getTagNameSubscription: Subscription;
+  getAllCandidateCitySubscription: Subscription;
+  shortlist2ReportAPISubscription: Subscription;
+  evalationReportAPISubscription: Subscription;
+  firstSortlistReportslistSubscription: Subscription;
+  firstSortlistReportslistSubscription1: Subscription;
+  interviewPanelReportslistSubscription: Subscription;
+  secondShortlistReportSubscription: Subscription;
+  secondShortlistReportSubscription1: Subscription;
+  assessmentFeedbackReportSubscription: Subscription;
+  assessmentFeedbackReportSubscription1: Subscription;
+  candidateReportslistSubscription: Subscription;
+  candidateReportslistSubscription1: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -94,11 +111,47 @@ export class ReportsListComponent implements OnInit {
     this.getAllCitys();
     this.getAllAssessmentName();
     this.evaluationInstitute();
+    this.refreshOndriveChangeRXJS();
 
   }
 
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.getoverallInstituteSubscription ? this.getoverallInstituteSubscription.unsubscribe() : '';
+    this.getTagNameSubscription ? this.getTagNameSubscription.unsubscribe() : '';
+    this.getAllCandidateCitySubscription ? this.getAllCandidateCitySubscription.unsubscribe() : '';
+    this.shortlist2ReportAPISubscription ? this.shortlist2ReportAPISubscription.unsubscribe() : '';
+    this.evalationReportAPISubscription ? this.evalationReportAPISubscription.unsubscribe() : '';
+    this.firstSortlistReportslistSubscription ? this.firstSortlistReportslistSubscription.unsubscribe() : '';
+    this.firstSortlistReportslistSubscription1 ? this.firstSortlistReportslistSubscription1.unsubscribe() : '';
+    this.interviewPanelReportslistSubscription ? this.interviewPanelReportslistSubscription.unsubscribe() : '';
+    this.secondShortlistReportSubscription ? this.secondShortlistReportSubscription.unsubscribe() : '';
+    this.secondShortlistReportSubscription1 ? this.secondShortlistReportSubscription1.unsubscribe() : '';
+    this.assessmentFeedbackReportSubscription ? this.assessmentFeedbackReportSubscription.unsubscribe() : '';
+    this.assessmentFeedbackReportSubscription1 ? this.assessmentFeedbackReportSubscription1.unsubscribe() : '';
+    this.candidateReportslistSubscription ? this.candidateReportslistSubscription.unsubscribe() : '';
+    this.candidateReportslistSubscription1 ? this.candidateReportslistSubscription1.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST)) {
+        this.getInstitute();
+        this.getUsersList();
+        this.getTagName();
+        this.getAllCitys();
+        this.getAllAssessmentName();
+        this.evaluationInstitute();
+      }
+    });
+  }
+
   getInstitute() {
-    this.candidateService.getoverallInstitute().subscribe((data: any) => {
+   this.getoverallInstituteSubscription = this.candidateService.getoverallInstitute().subscribe((data: any) => {
 
       const list = data ? data : [];
       this.institutesList = list;
@@ -157,7 +210,7 @@ export class ReportsListComponent implements OnInit {
 
   // To get all users
   getTagName() {
-    this.adminService.getTagName().subscribe((data: any) => {
+   this.getTagNameSubscription = this.adminService.getTagName().subscribe((data: any) => {
 
 
       this.tagNameDropdown = data;
@@ -168,7 +221,7 @@ export class ReportsListComponent implements OnInit {
 
   // To get all city
   getAllCitys() {
-    this.adminService.getAllCandidateCity().subscribe((data: any) => {
+    this.getAllCandidateCitySubscription = this.adminService.getAllCandidateCity().subscribe((data: any) => {
 
 
       this.cityListDropdown = data;
@@ -179,7 +232,7 @@ export class ReportsListComponent implements OnInit {
 
   // To get assessment name
   getAllAssessmentName() {
-    this.adminService.shortlist2ReportAPI().subscribe((data: any) => {
+    this.shortlist2ReportAPISubscription = this.adminService.shortlist2ReportAPI().subscribe((data: any) => {
 
 
       this.assessmentNameDropdown = data ? data : [];
@@ -190,7 +243,7 @@ export class ReportsListComponent implements OnInit {
   }
 
   evaluationInstitute() {
-    this.adminService.evalationReportAPI().subscribe((data: any) => {
+    this.evalationReportAPISubscription = this.adminService.evalationReportAPI().subscribe((data: any) => {
 
       this.evaluationReportInstitutes = data ? data : [];
 
@@ -223,7 +276,7 @@ export class ReportsListComponent implements OnInit {
       }
       if(sendReq.to >= sendReq.from){
 
-        this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
+       this.firstSortlistReportslistSubscription = this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
 
 
           if(data && data[0] && data[0].url == 'No Data Found'){
@@ -247,7 +300,7 @@ export class ReportsListComponent implements OnInit {
         'institute': data.instituteName
       }
 
-        this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
+       this.firstSortlistReportslistSubscription1 = this.adminService.firstSortlistReportslist(sendReq).subscribe((data: any) => {
 
 
           if(data && data[0] && data[0].url == 'No Data Found'){
@@ -279,7 +332,7 @@ export class ReportsListComponent implements OnInit {
         'from_date': dateF.toString()
       }
       if(sendReq.to_date >= sendReq.from_date){
-        this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
+       this.interviewPanelReportslistSubscription = this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
 
 
           const excel = data && data.url ? data.url : '';
@@ -313,7 +366,7 @@ export class ReportsListComponent implements OnInit {
         'institute_name': data.institute_name
       }
       if(sendReq.to >= sendReq.from){
-        this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
+       this.secondShortlistReportSubscription = this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
 
 
           if(data[0].url == 'No Data Found'){
@@ -334,7 +387,7 @@ export class ReportsListComponent implements OnInit {
         'from': '',
         'institute_name': data.institute_name
       }
-        this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
+       this.secondShortlistReportSubscription1 = this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
 
 
           if(data[0].url == 'No Data Found'){
@@ -367,7 +420,7 @@ export class ReportsListComponent implements OnInit {
         'institute_name': data.institute_name
       }
       if(sendReq.to_date >= sendReq.from_date){
-        this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
+      this.assessmentFeedbackReportSubscription =  this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
 
 
           const excel = data && data.url ? data.url : '';
@@ -384,7 +437,7 @@ export class ReportsListComponent implements OnInit {
         'from_date': '',
         'institute_name': data.institute_name
       }
-        this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
+      this.assessmentFeedbackReportSubscription1 = this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
 
 
           const excel = data && data.url ? data.url : '';
@@ -419,7 +472,7 @@ export class ReportsListComponent implements OnInit {
       }
       if(sendReq.to >= sendReq.from){
 
-        this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
+      this.candidateReportslistSubscription = this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
 
 
           const excel = data && data.url ? data.url : '';
@@ -439,7 +492,7 @@ export class ReportsListComponent implements OnInit {
         'institute': data.instituteName
       }
 
-        this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
+       this.candidateReportslistSubscription1 = this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
 
 
           const excel = data && data.url ? data.url : '';

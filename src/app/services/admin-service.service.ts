@@ -173,7 +173,7 @@ export class AdminServiceService {
 
   instituteListForApprovals() {
     return this.http.get(`${this.BASE_URL}/api/institute_adminstatus?_format=json`,
-      { headers: this.withoutTokens(), withCredentials: true });
+      { headers: this.withoutTokens(), reportProgress: true, withCredentials: true });
   }
   instituteListAfterBulkUpload() {
     return this.http.get(`${this.BASE_URL}/api/institute_list`,
@@ -234,7 +234,7 @@ export class AdminServiceService {
 
   firstLevelReports() {
     return this.http.get(`${this.BASE_URL}/profile/admin_report`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   bulkUploadCandidates(data) {
@@ -311,7 +311,7 @@ export class AdminServiceService {
   // 2nd level shortlist
   assessmentListForSecondLevelShortlist() {
     return this.http.get(`${this.BASE_URL}/profile/first_shortlist_report`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   // 2nd level shortlist api
@@ -323,13 +323,13 @@ export class AdminServiceService {
   // 2nd level shortlisted candidates report api
   shortlistedCandidatesReport(data) {
     return this.http.post(`${this.BASE_URL}/profile/getassement_candidate_shortlist`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   // 2nd level shortlist canidate filter page
   filterSecondLevel(data) {
     return this.http.post(`${this.BASE_URL}/profile/assement_secondshortlit_candidate_report`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   // Hr Evaluation landing screen
@@ -458,7 +458,7 @@ export class AdminServiceService {
   // Submitted Candidates List
   invSubmittedCandidatesList(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned_evaluation`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   // get assessment details
@@ -500,6 +500,10 @@ export class AdminServiceService {
 
   getAllShortlistedShortlistNames() {
     return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  getAllShortlistedShortlistNames_ALL() {
+    return this.http.get(`${this.BASE_URL}/profile/shortlisted_names_list?list=all`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   //hr 1st sortlist report list
@@ -591,7 +595,7 @@ export class AdminServiceService {
 
   getAlreadyAssigned(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   bulkUploadInvAssign(data) {
@@ -640,12 +644,12 @@ export class AdminServiceService {
 
   SelectedCandidatesList(data) {
     return this.http.get(`${this.BASE_URL}/profile/selected_user_list?company=${data.company}`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   SelectedCandidatesBulkUploadErrorList() {
     return this.http.get(`${this.BASE_URL}/profile/selected_user_error_list`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   documentsDownload(data) {
@@ -665,7 +669,7 @@ export class AdminServiceService {
 
   listIC() {
     return this.http.get(`${this.BASE_URL}/profile/ic_panel_list`,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   // Send email to selected candidates and edit access for joining form

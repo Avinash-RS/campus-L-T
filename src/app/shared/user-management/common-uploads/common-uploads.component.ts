@@ -11,6 +11,7 @@ import { ShortlistBoxComponent } from '../../modal-box/shortlist-box/shortlist-b
 import moment from 'moment';
 import * as XLSX from 'xlsx';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-common-uploads',
@@ -71,7 +72,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
     private candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
+    private router: Router,
     private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
     private matDialog: MatDialog,

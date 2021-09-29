@@ -148,7 +148,7 @@
             {{breadcrumbs && breadcrumbs[1] && breadcrumbs[1].label ? (breadcrumbs[1].label == 'Joining Form' ? checkJoining() : breadcrumbs[1].label) : ''}}
           </div>
           <div class="d-flex align-content-center">
-            <div class="drive">
+            <div *ngIf="role != 'candidate'" class="drive">
               <label>Selected Drive: </label>
               <nz-select
               class="input select"

@@ -75,7 +75,7 @@ if (this.role == 'ic') {
     {
       url: this.appConstant.HR_DASHBOARD.OfferedCandidatesLIST,
       name: 'Business Panel',
-      icon: 'assets/images/status-bar.svg',
+      icon: 'icon-portrait',
       hide: false
     }
   ]
@@ -85,7 +85,7 @@ if (this.role == 'ssc_hr') {
     {
       url: this.appConstant.HR_DASHBOARD.OfferedCandidatesLIST,
       name: 'SSC Panel',
-      icon: 'assets/images/status-bar.svg',
+      icon: 'icon-portrait',
       hide: false
     }
   ]

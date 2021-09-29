@@ -1,22 +1,22 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
-import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 import * as moment from 'moment'; //in your component
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: "app-inv-particular-assessment-candidates",
   templateUrl: "./inv-particular-assessment-candidates.component.html",
   styleUrls: ["./inv-particular-assessment-candidates.component.scss"],
 })
-export class InvParticularAssessmentCandidatesComponent implements OnInit {
+export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDestroy {
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
   selectedUserDetail: any;
   userList: any;
@@ -43,6 +43,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
   rejectedCount: any = [];
   scheduleListDetails: any;
   sentToHr: any = [];
+
+  refreshSubscription: Subscription;
+  getScheduledListSubscription: Subscription;
+  invSubmittedCandidatesListSubscription: Subscription;
+  invSubmittingCandidatesSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -61,11 +66,35 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.getSelectedCandidates = [];
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.getScheduledListSubscription ? this.getScheduledListSubscription.unsubscribe() : '';
+    this.invSubmittedCandidatesListSubscription ? this.invSubmittedCandidatesListSubscription.unsubscribe() : '';
+    this.invSubmittingCandidatesSubscription ? this.invSubmittingCandidatesSubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST)) {
+        this.quickSearchValue = '';
+        this.buttonCheck = false;
+        this.getSelectedCandidates = [];
+        this.getUsersList();
+      }
+    });
   }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.getUsersList();
   }
 
   sortevent(e) {}
@@ -367,7 +396,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
     this.isRowSelectable = function (rowNode) {
       return rowNode.data ? rowNode.data.evaluation_status == "1" : false;
     };
-    this.getUsersList();
   }
 
   getInterview() {
@@ -376,7 +404,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         ? this.appConfig.getLocalData("userEmail")
         : "",
     };
-    this.adminService.getScheduledList(obj).subscribe(
+   this.getScheduledListSubscription = this.adminService.getScheduledList(obj).subscribe(
       (result: any) => {
         if (result.success) {
           this.scheduleListDetails = result.data;
@@ -478,8 +506,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         ? this.appConfig.getLocalData("userId")
         : "",
     };
-
-    this.adminService.invSubmittedCandidatesList(apiData).subscribe(
+   this.gridApi.showLoadingOverlay();
+   this.invSubmittedCandidatesListSubscription = this.adminService.invSubmittedCandidatesList(apiData).subscribe(
       (datas: any) => {
         const align = datas ? datas : [];
         let counting = 0;
@@ -589,7 +617,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit {
         );
       }
     });
-    this.adminService.invSubmittingCandidates(apiData).subscribe(
+   this.invSubmittingCandidatesSubscription = this.adminService.invSubmittingCandidates(apiData).subscribe(
       (data: any) => {
         const datas = {
           iconName: "",

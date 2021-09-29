@@ -1,10 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import moment from 'moment';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
@@ -19,7 +21,7 @@ import moment from 'moment';
   styleUrls: ['./new-interviewpanel-assignment-screen.component.scss']
 })
 
-export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit {
+export class NewInterviewpanelAssignmentScreenComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
   @ViewChild('firstAccordion', {static: false}) firstAccordion: MatAccordion;
@@ -100,10 +102,17 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   routeAssignedData: any;
   toggleVisibility = true;
   allShortlistNames: any = [];
-
+  refreshSubscription: Subscription;
+  getParticularCandidatelistSubscription: Subscription;
+  getInterviewpanelInstitutesSubscription: Subscription;
+  getShortlistNamesSubscription: Subscription;
+  getDisciplineSubscription: Subscription;
+  getParticularInterviewpanelistSubscription: Subscription;
+  assignToHRSubscription: Subscription;
+  scheduleRoomsSubscription: Subscription;
   constructor(
     public appConfig: AppConfigService,
-    private apiService: ApiServiceService,
+    private router: Router,
     private adminService: AdminServiceService,
     private fb: FormBuilder,
     private sharedService: SharedServiceService,
@@ -143,8 +152,46 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.getHRDisciplines();
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
+    this.refreshOndriveChangeRXJS();
   }
 
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.getParticularCandidatelistSubscription ? this.getParticularCandidatelistSubscription.unsubscribe() : '';
+    this.getInterviewpanelInstitutesSubscription ? this.getInterviewpanelInstitutesSubscription.unsubscribe() : '';
+    this.getShortlistNamesSubscription ? this.getShortlistNamesSubscription.unsubscribe() : '';
+    this.getDisciplineSubscription ? this.getDisciplineSubscription.unsubscribe() : '';
+    this.getParticularInterviewpanelistSubscription ? this.getParticularInterviewpanelistSubscription.unsubscribe() : '';
+    this.assignToHRSubscription ? this.assignToHRSubscription.unsubscribe() : '';
+    this.scheduleRoomsSubscription ? this.scheduleRoomsSubscription.unsubscribe() : '';
+    }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT)) {
+        this.clearAllDatas();
+        this.getShortlistNames();
+        this.getInstitute();
+        }
+    });
+  }
+
+  clearAllDatas() {
+    this.quickSearchValue = '';
+    this.selectedShortlistname = null;
+    this.selectedInstitute = null;
+    this.selectedEdu = null;
+    this.selectedStatus = '0';
+    this.userList = null;
+    this.rowData = null;
+    this.fltractive = false;
+    this.selectedCandidate = [];
+    this.pannel.open();
+  }
   ngAfterViewInit() {
      // Hack: Scrolls to top of Page after page view initialized
      let top = document.getElementById('top');
@@ -329,10 +376,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       education_level: this.selectedEdu ? this.selectedEdu : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
-    this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
-
-      if(!this.pannel) { return } else {this.pannel.close()}
+    this.getParticularCandidatelistSubscription = this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
       const datas = data ? data : [];
+      if(!this.pannel) {
+        return
+     } else {
+       datas.length > 0 ? this.pannel.close() : '';
+     }
       this.showDefault = false;
       this.routeAssignedData = apiData;
       this.getUsersList(datas);
@@ -361,7 +411,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   getInstitute() {
-    this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
+   this.getInterviewpanelInstitutesSubscription = this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
 
       this.allInstitutes = data ? data : [];
     }, (err) => {
@@ -369,14 +419,14 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   getShortlistNames() {
-    this.adminService.getAllShortlistedShortlistNames().subscribe((data: any) => {
+    this.getShortlistNamesSubscription = this.adminService.getAllShortlistedShortlistNames().subscribe((data: any) => {
       this.allShortlistNames = data ? data : [];
     }, (err) => {
     });
   }
 
   getHRDisciplines() {
-    this.adminService.getDiscipline().subscribe((data: any) => {
+   this.getDisciplineSubscription = this.adminService.getDiscipline().subscribe((data: any) => {
 
       this.allHRDisciplines = data ? data : [];
     }, (err) => {
@@ -388,7 +438,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     const apiData = {
       discipline: data ? data : ''
     }
-    this.adminService.getParticularInterviewpanelist(apiData).subscribe((data: any) => {
+   this.getParticularInterviewpanelistSubscription = this.adminService.getParticularInterviewpanelist(apiData).subscribe((data: any) => {
 
       const datas = data ? data : [];
       this.getUsersList1(datas);
@@ -443,7 +493,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
 
   assigntoPanel(apiData) {
-    this.adminService.assignToHR(apiData).subscribe((data: any) => {
+   this.assignToHRSubscription = this.adminService.assignToHR(apiData).subscribe((data: any) => {
 
        const datas = {
           iconName: '',
@@ -700,7 +750,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         "type": this.scheduleForm.value.type == '1' ? 'webrtc' : 'teams'
       }
       this.objList = obj;
-      this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
+     this.scheduleRoomsSubscription =  this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
         if(result.success){
           this.scheduleHirerachy();
         } else {

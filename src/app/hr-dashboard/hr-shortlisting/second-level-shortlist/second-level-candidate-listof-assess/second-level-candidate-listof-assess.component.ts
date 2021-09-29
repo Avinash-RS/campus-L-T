@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -7,13 +7,14 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 ModuleRegistry.registerModules(AllModules);
 
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { finalize } from 'rxjs/operators';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -21,7 +22,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
   templateUrl: './second-level-candidate-listof-assess.component.html',
   styleUrls: ['./second-level-candidate-listof-assess.component.scss']
 })
-export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit {
+export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   BIS = this.appConfig.getLocalData('BIS');
   userList: any;
@@ -74,12 +75,16 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   public getNodeChildDetails;
   resultsLength:any;
   fres: any;
-
+  refreshSubscription: Subscription;
+  filterSecondLevelSubscription: Subscription;
+  secondShortlistAPISubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
     private matDialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sharedService: SharedServiceService,
+    private router: Router
   ) {
     this.statusBar = {
       statusPanels: [
@@ -94,6 +99,25 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   ngOnInit() {
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.filterSecondLevelSubscription ? this.filterSecondLevelSubscription.unsubscribe() : '';
+    this.secondShortlistAPISubscription ? this.secondShortlistAPISubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST)) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST);
+      }
+    });
   }
 
   // Get url param for edit route
@@ -110,7 +134,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       const apiData = {
         shortlist_name: name,
       };
-      this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
+      this.filterSecondLevelSubscription = this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
         this.rowData = this.userList;
@@ -160,7 +184,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         }
       });
       apiData.shortlisted_ids = candidatesArr;
-      this.adminService.secondShortlistAPI(apiData).subscribe((data: any) => {
+     this.secondShortlistAPISubscription = this.adminService.secondShortlistAPI(apiData).subscribe((data: any) => {
         this.appConfig.success(apiData.emai_sent ? 'The mail has been sent successfully to shortlisted candidates' : 'Selected Candidates have been shortlisted successfully');
         this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, { data: this.nameOfAssessment ? this.nameOfAssessment : 'none' });
       }, (err) => {

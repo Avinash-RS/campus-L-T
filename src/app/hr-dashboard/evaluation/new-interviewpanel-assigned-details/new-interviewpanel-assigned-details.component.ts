@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -6,15 +6,17 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-interviewpanel-assigned-details',
   templateUrl: './new-interviewpanel-assigned-details.component.html',
   styleUrls: ['./new-interviewpanel-assigned-details.component.scss']
 })
-export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterViewInit {
+export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
   @ViewChild(MatAccordion, {static: false}) accordion?: MatAccordion;
@@ -57,14 +59,17 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   quickSearchValue1 = '';
   panelOpenState1 = true;
   selectedShortlistname: any;
-
+  refreshSubscription: Subscription;
+  getInsituteSubscription: Subscription;
+  getShortlistNameSubscription: Subscription;
+  getAlreadyAssignedSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService,
-    private matDialog: MatDialog,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     this.editRouteParamGetter();
@@ -76,6 +81,38 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
     this.getEducation();
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED)) {
+        this.clearAllDatas();
+        this.getShortlistNames();
+        this.getInstitute();
+        this.go();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.getInsituteSubscription ? this.getInsituteSubscription.unsubscribe() : '';
+    this.getShortlistNameSubscription ? this.getShortlistNameSubscription.unsubscribe() : '';
+    this.getAlreadyAssignedSubscription ? this.getAlreadyAssignedSubscription.unsubscribe() : '';
+  }
+
+  clearAllDatas() {
+    this.quickSearchValue = '';
+    this.quickSearchValue1 = '';
+    this.selectedShortlistname = null;
+    this.selectedInstitute = null;
+    this.selectedEdu = null;
+    this.selectedStatus = '1';
   }
 
   ngAfterViewInit() {
@@ -96,7 +133,6 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
         this.selectedShortlistname = this.routedData.shortlist_name;
         this.selectedEdu = this.routedData.education_level;
         this.selectedStatus = '1';
-        this.go();
       } else {
       }
     });
@@ -104,6 +140,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
 
   onGridReady(params: any) {
     this.gridApi = params.api;
+    this.go();
     // this.gridApi.sizeColumnsToFit();
     // this.gridApi.setDatasource(this.dataSources);
   }
@@ -271,9 +308,6 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       // }
 
     ];
-
-    this.go();
-
   }
 
   onCellClicked(event) {
@@ -333,7 +367,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   }
 
   getInstitute() {
-    this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
+    this.getInsituteSubscription = this.adminService.getInterviewpanelInstitutes().subscribe((data: any) => {
 
       this.allInstitutes = data ? data : [];
     }, (err) => {
@@ -341,7 +375,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   }
 
   getShortlistNames() {
-    this.adminService.getAllShortlistedShortlistNames().subscribe((data: any) => {
+    this.getShortlistNameSubscription = this.adminService.getAllShortlistedShortlistNames().subscribe((data: any) => {
       this.allShortlistNames = data ? data : [];
     }, (err) => {
     });
@@ -354,8 +388,8 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       education_level: this.selectedEdu ? this.selectedEdu : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
-
-    this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
+    this.gridApi.showLoadingOverlay();
+    this.getAlreadyAssignedSubscription = this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {
 
       if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];

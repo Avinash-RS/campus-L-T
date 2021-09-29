@@ -65,8 +65,22 @@ getDriveList() {
   this.activeDriveId = e;
   this.appConfig.setLocalData('driveId', this.activeDriveId);
   let currentUrl = this.router.url;
-  this.sharedService.screenRefreshOnDriveChange.next(currentUrl);
-  this.appConfig.routeNavigation('/');
+  console.log('coming', this.router.url);
+  if (this.role != 'candidate' && this.role != 'interview_panel') {
+    if (currentUrl.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION)) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
+    } else {
+      this.sharedService.screenRefreshOnDriveChange.next(currentUrl);
+    }
+  }
+  if (this.role == 'interview_panel') {
+    if (currentUrl.includes(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION)) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
+    } else {
+      this.sharedService.screenRefreshOnDriveChange.next(currentUrl);
+    }
+  }
+  // this.appConfig.routeNavigation('/');
   // this.appConfig.routeNavigationWithQueryParam(currentUrl, {data: this.activeDriveId});
  }
 

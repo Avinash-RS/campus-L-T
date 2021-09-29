@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -20,6 +20,9 @@ import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 export const MY_FORMATS = {
@@ -65,7 +68,7 @@ export const MY_FORMATS_Month = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS || MY_FORMATS_Month },
   ],
 })
-export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit {
+export class ShortlistedCandidateListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('customFilter', { static: false }) customFilterRef: TemplateRef<any>;
   @ViewChild('lastAppliedFilterViewPopUp', { static: false }) lastAppliedFilterViewPopUp: TemplateRef<any>;
 
@@ -153,6 +156,10 @@ pgInstitutesList: any;
   lastAPICalledFilter: any;
   buttonLoading = false;
   refreshTrue: boolean;
+  refreshSubscription: Subscription;
+  getCandidateListForShortlistSubscription: Subscription;
+  submitShortlistedCandidatesSubscription: Subscription;
+  getAllEducationFormDropdownListSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private firstShortlistFilterModel: firstShortlistFilterModel,
@@ -161,9 +168,23 @@ pgInstitutesList: any;
     private matDialog: MatDialog,
     private dialog: MatDialog,
     public globalValidator: GlobalValidatorService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sharedService: SharedServiceService,
+    private router: Router
   ) {
     this.dateValidation();
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_LIST)) {
+        this.clearAllFilters();
+      }
+    });
   }
 
   dateValidCustomCheck() {
@@ -265,6 +286,14 @@ dateConvertionMonth(date) {
     };
     this.educationDropdownValuesAPI();
     this.dateValidCustomCheck();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.getCandidateListForShortlistSubscription ? this.getCandidateListForShortlistSubscription.unsubscribe() : '';
+    this.submitShortlistedCandidatesSubscription ? this.submitShortlistedCandidatesSubscription.unsubscribe() : '';
+    this.getAllEducationFormDropdownListSubscription ? this.getAllEducationFormDropdownListSubscription.unsubscribe() : '';
   }
 
   selectAll(e) {
@@ -550,7 +579,7 @@ dateConvertionMonth(date) {
           if (params.request && params.request.groupKeys && params.request.groupKeys.length == 0) {
             this.gridApi.hideOverlay();
             this.buttonLoading = true;
-            this.adminService.getCandidateListForShortlist(params.request).subscribe((data1: any) => {
+           this.getCandidateListForShortlistSubscription = this.adminService.getCandidateListForShortlist(params.request).subscribe((data1: any) => {
               this.buttonLoading = false;
               this.userList = data1 && data1['data'] ? data1['data'] : [];
               this.userList.forEach(element => {
@@ -696,7 +725,7 @@ dateConvertionMonth(date) {
       field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
       shortlistby: this.appConfig.getLocalData('username'),
     };
-    this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
+    this.submitShortlistedCandidatesSubscription = this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
       const datas = {
         first_level_shortlist_success: 'first_level_shortlist_success'
       };
@@ -921,7 +950,7 @@ educationDropdownValuesAPI() {
   };
   let educationValues = this.appConfig.getLocalData('educationMasterDropdown') ? JSON.parse(this.appConfig.getLocalData('educationMasterDropdown')) : null;
   if (!educationValues) {
-  this.candidateService.getAllEducationFormDropdownList(api).subscribe((data: any) => {
+ this.getAllEducationFormDropdownListSubscription = this.candidateService.getAllEducationFormDropdownList(api).subscribe((data: any) => {
     this.ugSpecializationList = data && data.ug_specifications ? data.ug_specifications : [];
     this.pgSpecializationList = data && data.pg_specifications ? data.pg_specifications : [];
     this.diplomaDisciplineList = data && data.diploma_disciplines ? data.diploma_disciplines : [];
