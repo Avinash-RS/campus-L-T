@@ -148,6 +148,7 @@ pgInstitutesList: any;
   // statusBar:any;
   public components;
   public getNodeChildDetails;
+  isRowSelectable: any;
   resultsLength: any;
   fres: any;
   selectedCustomFilterListValue: any;
@@ -196,7 +197,7 @@ pgInstitutesList: any;
         let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
         isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
       } else {
-        this.dateTo.setErrors(null);
+        // this.dateTo.setErrors(null);
       }
     });
 
@@ -208,7 +209,7 @@ pgInstitutesList: any;
       let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
       isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
     } else {
-      this.dateTo.setErrors(null);
+      // this.dateTo.setErrors(null);
     }
   });
   }
@@ -304,9 +305,8 @@ dateConvertionMonth(date) {
     this.gridApi.collapseAll();
     let endIndex = this.gridApi.paginationProxy.bottomDisplayedRowIndex;
     let startIndex = endIndex - 99;
-
     this.gridApi.forEachNode((row, index) => {
-      if (index >= startIndex && index <= endIndex) {
+      if (row['rowIndex'] >= startIndex && row['rowIndex'] <= endIndex) {
         this.gridApi.getRowNode(row.id).selectThisNode(condition);
       }
     });
@@ -324,6 +324,22 @@ dateConvertionMonth(date) {
         headerName: 'Candidate Information',
         children: [
           {
+            headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
+            minWidth: 140,
+            filter: "agTextColumnFilter",
+            filterParams: {
+              suppressAndOrCondition: true,
+              filterOptions: ['contains']
+            },
+            sortable: true,
+            resizable:true,
+            columnGroupShow: null,
+            tooltipField: 'candidate_id',
+            getQuickFilterText: (params) => {
+              return params.value;
+            }
+          },
+          {
             headerName: "Candidate Name",
             field: "candidate_name",
             filter: "agTextColumnFilter",
@@ -333,6 +349,7 @@ dateConvertionMonth(date) {
             },
             sortable: true,
             rowGroup: false,
+            columnGroupShow: null,
             tooltipField: 'candidate_name',
             getQuickFilterText: (params) => {
               return params.value;
@@ -346,39 +363,18 @@ dateConvertionMonth(date) {
               suppressAndOrCondition: true,
               filterOptions: ['contains']
             },
-            columnGroupShow: 'closed',
+            // rowGroup: true,
+            // enableRowGroup: true,
+            columnGroupShow: null,
             tooltipField: 'email',
             getQuickFilterText: (params) => {
               return params.value;
             },
           },
           {
-            headerName: "Candidate Name",
-            field: "candidate_name",
-            filter: false,
-            sortable: false,
-            columnGroupShow: 'open',
-            rowGroup: false,
-            tooltipField: 'candidate_name',
-            getQuickFilterText: (params) => {
-              return params.value;
-            },
-          },
-          {
-            headerName: "Email Id",
-            field: "email",
-            filter: false,
-            sortable: false,
-            tooltipField: 'email',
-            columnGroupShow: 'open',
-            getQuickFilterText: (params) => {
-              return params.value;
-            },
-          },
-          {
-            headerName: "Email ID",
+            headerName: "For Grouping",
             field: "emailId",
-            filter: "agTextColumnFilter",
+            filter: false,
             filterParams: {
               suppressAndOrCondition: true,
               filterOptions: ['contains']
@@ -386,6 +382,7 @@ dateConvertionMonth(date) {
             tooltipField: 'emailId',
             rowGroup: true,
             hide: true,
+            sortable: false,
             enableRowGroup: true,
             getQuickFilterText: (params) => {
               return params.value;
@@ -501,6 +498,16 @@ dateConvertionMonth(date) {
             },
           },
           {
+            headerName: "Percentage",
+            field: "education.percentage",
+            filter: false,
+            sortable: false,
+            tooltipField: 'education.percentage',
+            getQuickFilterText: (params) => {
+              return params.value;
+            },
+          },
+          {
             headerName: "Backlogs",
             field: "education.backlogs",
             filter: false,
@@ -516,9 +523,12 @@ dateConvertionMonth(date) {
 
     this.columnDefs = table_headers;
     this.autoGroupColumnDef = {
+      headerName: "",
       field: 'candidate_id',
       filter: false,
       sortable: false,
+      maxWidth: 80,
+      resizable:false,
       tooltipField: 'candidate_id',
       getQuickFilterText: (params) => {
         return params.value;
@@ -532,6 +542,9 @@ dateConvertionMonth(date) {
     this.serverSideStoreType = 'partial';
     this.rowModelType = 'serverSide';
     this.rowSelection = 'multiple';
+    this.isRowSelectable = function (rowNode) {
+      return rowNode.level == 0;
+    };
   }
 
   onGridReady(params: any) {
@@ -647,21 +660,6 @@ dateConvertionMonth(date) {
               });
             } else {
               params.fail();
-              // let main: any = {
-              //   candidate_id: subArray.candidate_id ? 'No Data Available' : '',
-              //   candidate_name: subArray.candidate_name ? '' : '',
-              //   email: subArray.email ? '' : '',
-              //   gender: subArray.gender ? '' : '',
-              //   dob: subArray.dob ? '' : '',
-              //   position_applied_for: subArray.position_applied_for ? '' : '',
-              //   tag_name: subArray.tag_name ? '' : '',
-              //   total_backlog: subArray.total_backlog ? '' : ''
-              // };
-              // params.success({
-              //   rowData: [main],
-              //   rowCount: 1
-              // });
-
             }
           }
       }
@@ -845,6 +843,7 @@ dateConvertionMonth(date) {
 
   closeDialog() {
     this.FilterdialogRef.close();
+    this.lastAppliedFilterdialogRef ? this.lastAppliedFilterdialogRef.close() : '';
   }
 formArrayInitialize() {
   this.educationForm = this.fb.group({
@@ -855,7 +854,7 @@ formArrayInitialize() {
 
 initEducationArray() {
   return this.fb.group({
-    [this.form_education_checked]: [true],
+    [this.form_education_checked]: [false],
     [this.form_education_level]: [null],
     [this.form_education_percentage_from]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
     [this.form_education_percentage_to]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
@@ -872,7 +871,7 @@ patchCheck() {
   this.getEducationArr.clear();
   this.educationDropDownValues.forEach(element => {
     let data = {
-      [this.form_education_checked]: true,
+      [this.form_education_checked]: false,
       [this.form_education_level]: element,
       [this.form_education_percentage_from]: null,
       [this.form_education_percentage_to]: null,
@@ -889,6 +888,10 @@ patchCheck() {
 
 startTrue(param) {
   return this.regexValidator({notValid: true}, param);
+}
+
+PercentageValidator(param) {
+  return this.PercentageregexValidator({notValid: true}, param);
 }
 
     // Custom regex validator
@@ -925,13 +928,53 @@ startTrue(param) {
     }
   }
 
+      // Custom regex validator
+      PercentageregexValidator(error: ValidationErrors, param): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} => {
+          if (!control.value) {
+            return null;
+          }
+          if (param) {
+            let percentageFrom = control['_parent']['controls'][this.form_education_percentage_from].value;
+            let percentageTo = control.value;
+            let controls = control['_parent']['controls'][this.form_education_percentage_to];
+            if (percentageFrom && percentageTo) {
+              let dateFrom = Number(percentageFrom);
+              let dateTo = Number(percentageTo)
+              let isPercentageToLesser = dateTo < dateFrom;
+              return isPercentageToLesser ? {notValid: true} : null;
+            } else {
+              return null;
+            }
+          } else {
+            let percentageFrom = control.value;
+            let percentageTo = control['_parent']['controls'][this.form_education_percentage_to].value;
+            let controls = control['_parent']['controls'][this.form_education_percentage_to];
+            if (percentageFrom && percentageTo) {
+              let dateFrom = Number(percentageFrom);
+              let dateTo = Number(percentageTo)
+              let isPercentageToLesser = dateTo < dateFrom;
+              if (isPercentageToLesser) {
+                control['_parent']['controls'][this.form_education_percentage_to].setErrors({notValid: true})
+              } else {
+                control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]);
+                control['_parent']['controls'][this.form_education_percentage_to].updateValueAndValidity({emitEvent: false});
+              }
+            } else {
+              control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]);
+              control['_parent']['controls'][this.form_education_percentage_to].updateValueAndValidity({emitEvent: false});
+          }
+          }
+      }
+    }
+
 
 patchEducationArray(data) {
   return this.fb.group({
     [this.form_education_checked]: [data[this.form_education_checked]],
     [this.form_education_level]: [data[this.form_education_level]],
-    [this.form_education_percentage_from]: [data[this.form_education_percentage_from], [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
-    [this.form_education_percentage_to]: [data[this.form_education_percentage_to], [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
+    [this.form_education_percentage_from]: [data[this.form_education_percentage_from], [RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(false)]],
+    [this.form_education_percentage_to]: [data[this.form_education_percentage_to], [RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]],
     [this.form_education_yearOfPassing_from]: [data[this.form_education_yearOfPassing_from], [this.startTrue(false)]],
     [this.form_education_yearOfPassing_to]: [data[this.form_education_yearOfPassing_to], [this.startTrue(true)]],
     [this.form_education_institute]: [data[this.form_education_institute]],

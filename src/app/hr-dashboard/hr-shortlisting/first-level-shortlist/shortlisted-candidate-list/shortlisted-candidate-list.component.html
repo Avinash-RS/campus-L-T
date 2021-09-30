@@ -95,6 +95,7 @@
     [suppressRowClickSelection]="true"
     [paginationPageSize]="paginationPageSize"
     [rowSelection]="rowSelection"
+    [isRowSelectable]="isRowSelectable"
     [cacheBlockSize]="cacheBlockSize"
     (gridReady)="onGridReady($event)"
     (sortChanged)="sortevent($event)"
@@ -160,6 +161,7 @@
         </button>
         </ng-template>
         <div (click)="UnsavedclearAllFilters()" class="clearall">CLEAR ALL</div>
+        <div class="close-popup-icon1"><span (click)="closeDialog()" class="material-icons">close</span></div>
       </div>
     </div>
     <!-- Content Start -->
@@ -367,7 +369,7 @@
           Educational Level
         </div>
         <div class="header-labels border-color label-size minwidth-300">
-          Percentange
+          Percentage
         </div>
         <div class="header-labels border-color label-size minwidth-300">
           Year of Passing
@@ -474,6 +476,19 @@
                     >
                       Percentage should be in the range of 10 to 100
                     </div>
+                    <div
+                    *ngIf="
+                    !getEducationArr.controls[i].get(
+                          form_education_percentage_to
+                        ).errors?.percentage &&
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_to
+                      ).errors?.notValid
+                    "
+                  >
+                    Percentage To cannot be lesser than Percentage From
+                  </div>
+
                   </div>
                 </div>
               </div>
@@ -966,7 +981,8 @@
 
 <!-- Applied Filters -->
 <ng-template #lastAppliedFiltersTemplate>
-  <h6 class="main-filter-heading">Applied Filters</h6>
+  <div class="close-popup-icon"><span (click)="closeDialog()" class="material-icons">close</span></div>
+  <h6 class="main-filter-heading mt-0">Applied Filters</h6>
   <div class="applied-filters-wrapper">
     <ng-container *ngIf="showNotSelectedLabel(lastAppliedFilter.profileDropDownValues) || showNotSelectedLabel(lastAppliedFilter.genderDropDownValues) || showNotSelectedLabel(lastAppliedFilter.educationArray) || showNotSelectedLabel(lastAppliedFilter.backlogsDropDownValues) || (lastAppliedFilter.dateFrom || lastAppliedFilter.dateTo) else noFilterToShow">
     <div *ngIf="showNotSelectedLabel(lastAppliedFilter.profileDropDownValues)" class="filter-specific-wrapper">
@@ -1106,7 +1122,7 @@
       <div class="filter-applied-list">
         <div class="filter-chip-wrapper" *ngFor="let backlog of lastAppliedFilter.backlogsDropDownValues; let i = index">
           <div class="chip" *ngIf="backlog.checked">
-          <span>{{backlog.label}}</span> <span (click)="backlog.checked = !backlog.checked" class="material-icons close-icon">close</span>
+          <span>{{backlog.label}}</span>
         </div>
         </div>
       </div>

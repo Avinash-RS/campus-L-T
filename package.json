@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build": "node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng build --prod --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "build-dev": "ng build --configuration dev --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "build-qa": "ng build --configuration qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "build-uat": "ng build --configuration uat --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
