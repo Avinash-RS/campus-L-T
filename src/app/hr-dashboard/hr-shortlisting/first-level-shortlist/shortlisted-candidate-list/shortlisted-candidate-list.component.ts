@@ -324,6 +324,21 @@ dateConvertionMonth(date) {
         headerName: 'Candidate Information',
         children: [
           {
+            headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
+            filter: 'agNumberColumnFilter',
+            minWidth: 140,
+            filterParams: {
+              filterOptions: ['lessThanOrEqual', 'greaterThanOrEqual', 'inRange']
+            },
+            sortable: true,
+            resizable:true,
+            columnGroupShow: null,
+            tooltipField: 'candidate_id',
+            getQuickFilterText: (params) => {
+              return params.value;
+            }
+          },
+          {
             headerName: "Candidate Name",
             field: "candidate_name",
             filter: "agTextColumnFilter",
@@ -333,6 +348,7 @@ dateConvertionMonth(date) {
             },
             sortable: true,
             rowGroup: false,
+            columnGroupShow: null,
             tooltipField: 'candidate_name',
             getQuickFilterText: (params) => {
               return params.value;
@@ -346,39 +362,18 @@ dateConvertionMonth(date) {
               suppressAndOrCondition: true,
               filterOptions: ['contains']
             },
-            columnGroupShow: 'closed',
+            // rowGroup: true,
+            // enableRowGroup: true,
+            columnGroupShow: null,
             tooltipField: 'email',
             getQuickFilterText: (params) => {
               return params.value;
             },
           },
           {
-            headerName: "Candidate Name",
-            field: "candidate_name",
-            filter: false,
-            sortable: false,
-            columnGroupShow: 'open',
-            rowGroup: false,
-            tooltipField: 'candidate_name',
-            getQuickFilterText: (params) => {
-              return params.value;
-            },
-          },
-          {
-            headerName: "Email Id",
-            field: "email",
-            filter: false,
-            sortable: false,
-            tooltipField: 'email',
-            columnGroupShow: 'open',
-            getQuickFilterText: (params) => {
-              return params.value;
-            },
-          },
-          {
-            headerName: "Email ID",
+            headerName: "For Grouping",
             field: "emailId",
-            filter: "agTextColumnFilter",
+            filter: false,
             filterParams: {
               suppressAndOrCondition: true,
               filterOptions: ['contains']
@@ -386,6 +381,7 @@ dateConvertionMonth(date) {
             tooltipField: 'emailId',
             rowGroup: true,
             hide: true,
+            sortable: false,
             enableRowGroup: true,
             getQuickFilterText: (params) => {
               return params.value;
@@ -501,6 +497,16 @@ dateConvertionMonth(date) {
             },
           },
           {
+            headerName: "Percentage",
+            field: "education.percentage",
+            filter: false,
+            sortable: false,
+            tooltipField: 'education.percentage',
+            getQuickFilterText: (params) => {
+              return params.value;
+            },
+          },
+          {
             headerName: "Backlogs",
             field: "education.backlogs",
             filter: false,
@@ -516,9 +522,12 @@ dateConvertionMonth(date) {
 
     this.columnDefs = table_headers;
     this.autoGroupColumnDef = {
+      headerName: "",
       field: 'candidate_id',
       filter: false,
       sortable: false,
+      maxWidth: 80,
+      resizable:false,
       tooltipField: 'candidate_id',
       getQuickFilterText: (params) => {
         return params.value;
@@ -647,21 +656,6 @@ dateConvertionMonth(date) {
               });
             } else {
               params.fail();
-              // let main: any = {
-              //   candidate_id: subArray.candidate_id ? 'No Data Available' : '',
-              //   candidate_name: subArray.candidate_name ? '' : '',
-              //   email: subArray.email ? '' : '',
-              //   gender: subArray.gender ? '' : '',
-              //   dob: subArray.dob ? '' : '',
-              //   position_applied_for: subArray.position_applied_for ? '' : '',
-              //   tag_name: subArray.tag_name ? '' : '',
-              //   total_backlog: subArray.total_backlog ? '' : ''
-              // };
-              // params.success({
-              //   rowData: [main],
-              //   rowCount: 1
-              // });
-
             }
           }
       }
@@ -845,6 +839,7 @@ dateConvertionMonth(date) {
 
   closeDialog() {
     this.FilterdialogRef.close();
+    this.lastAppliedFilterdialogRef ? this.lastAppliedFilterdialogRef.close() : '';
   }
 formArrayInitialize() {
   this.educationForm = this.fb.group({
@@ -855,7 +850,7 @@ formArrayInitialize() {
 
 initEducationArray() {
   return this.fb.group({
-    [this.form_education_checked]: [true],
+    [this.form_education_checked]: [false],
     [this.form_education_level]: [null],
     [this.form_education_percentage_from]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
     [this.form_education_percentage_to]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
@@ -872,7 +867,7 @@ patchCheck() {
   this.getEducationArr.clear();
   this.educationDropDownValues.forEach(element => {
     let data = {
-      [this.form_education_checked]: true,
+      [this.form_education_checked]: false,
       [this.form_education_level]: element,
       [this.form_education_percentage_from]: null,
       [this.form_education_percentage_to]: null,

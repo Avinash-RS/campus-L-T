@@ -316,6 +316,30 @@
     font-weight: 600;
     margin-top: 1em;
   }
+  .close-popup-icon {
+    position: relative;
+    span {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    cursor: pointer;
+    }
+  }
+  .close-popup-icon1 {
+    width: 16px;
+    position: relative;
+    margin: auto;
+    height: 22px;
+    span {
+    position: absolute;
+    right: 0;
+    top: -16px;
+    font-size: 28px;
+    left: 7px;
+    cursor: pointer;
+    bottom: 0;
+    }
+  }
   .applied-filters-wrapper {
     padding: 8px;
     max-height: 200px;
@@ -346,7 +370,7 @@
     .filter-chip-wrapper {
       display: flex;
       align-items: center;
-      padding: 2px;
+      padding: 2px 0px;
     }
     .chip {
       display: flex;

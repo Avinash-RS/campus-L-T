@@ -67,7 +67,7 @@ export class InterceptorsService implements HttpInterceptor {
         }
         return event;
       }),
-      retry(2),
+      retry(1),
       // Hidden on 28-Nov
       // return next.handle(request).pipe(
       //   map((event: HttpEvent<any>) => {
