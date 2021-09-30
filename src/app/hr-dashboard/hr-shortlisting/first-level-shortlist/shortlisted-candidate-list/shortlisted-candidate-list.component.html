@@ -475,6 +475,19 @@
                     >
                       Percentage should be in the range of 10 to 100
                     </div>
+                    <div
+                    *ngIf="
+                    !getEducationArr.controls[i].get(
+                          form_education_percentage_to
+                        ).errors?.percentage &&
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_to
+                      ).errors?.notValid
+                    "
+                  >
+                    Percentage To cannot be lesser than Percentage From
+                  </div>
+
                   </div>
                 </div>
               </div>

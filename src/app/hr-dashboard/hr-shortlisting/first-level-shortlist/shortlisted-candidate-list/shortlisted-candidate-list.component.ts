@@ -887,6 +887,10 @@ startTrue(param) {
   return this.regexValidator({notValid: true}, param);
 }
 
+PercentageValidator(param) {
+  return this.PercentageregexValidator({notValid: true}, param);
+}
+
     // Custom regex validator
     regexValidator(error: ValidationErrors, param): ValidatorFn {
       return (control: AbstractControl): {[key: string]: any} => {
@@ -921,13 +925,53 @@ startTrue(param) {
     }
   }
 
+      // Custom regex validator
+      PercentageregexValidator(error: ValidationErrors, param): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} => {
+          if (!control.value) {
+            return null;
+          }
+          if (param) {
+            let percentageFrom = control['_parent']['controls'][this.form_education_percentage_from].value;
+            let percentageTo = control.value;
+            let controls = control['_parent']['controls'][this.form_education_percentage_to];
+            if (percentageFrom && percentageTo) {
+              let dateFrom = Number(percentageFrom);
+              let dateTo = Number(percentageTo)
+              let isPercentageToLesser = dateTo < dateFrom;
+              return isPercentageToLesser ? {notValid: true} : null;
+            } else {
+              return null;
+            }
+          } else {
+            let percentageFrom = control.value;
+            let percentageTo = control['_parent']['controls'][this.form_education_percentage_to].value;
+            let controls = control['_parent']['controls'][this.form_education_percentage_to];
+            if (percentageFrom && percentageTo) {
+              let dateFrom = Number(percentageFrom);
+              let dateTo = Number(percentageTo)
+              let isPercentageToLesser = dateTo < dateFrom;
+              if (isPercentageToLesser) {
+                control['_parent']['controls'][this.form_education_percentage_to].setErrors({notValid: true})
+              } else {
+                control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]);
+                control['_parent']['controls'][this.form_education_percentage_to].updateValueAndValidity({emitEvent: false});
+              }
+            } else {
+              control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]);
+              control['_parent']['controls'][this.form_education_percentage_to].updateValueAndValidity({emitEvent: false});
+          }
+          }
+      }
+    }
+
 
 patchEducationArray(data) {
   return this.fb.group({
     [this.form_education_checked]: [data[this.form_education_checked]],
     [this.form_education_level]: [data[this.form_education_level]],
-    [this.form_education_percentage_from]: [data[this.form_education_percentage_from], [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
-    [this.form_education_percentage_to]: [data[this.form_education_percentage_to], [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
+    [this.form_education_percentage_from]: [data[this.form_education_percentage_from], [RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(false)]],
+    [this.form_education_percentage_to]: [data[this.form_education_percentage_to], [RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]],
     [this.form_education_yearOfPassing_from]: [data[this.form_education_yearOfPassing_from], [this.startTrue(false)]],
     [this.form_education_yearOfPassing_to]: [data[this.form_education_yearOfPassing_to], [this.startTrue(true)]],
     [this.form_education_institute]: [data[this.form_education_institute]],
