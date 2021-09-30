@@ -196,7 +196,7 @@ pgInstitutesList: any;
         let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
         isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
       } else {
-        this.dateTo.setErrors(null);
+        // this.dateTo.setErrors(null);
       }
     });
 
@@ -208,7 +208,7 @@ pgInstitutesList: any;
       let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
       isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
     } else {
-      this.dateTo.setErrors(null);
+      // this.dateTo.setErrors(null);
     }
   });
   }
