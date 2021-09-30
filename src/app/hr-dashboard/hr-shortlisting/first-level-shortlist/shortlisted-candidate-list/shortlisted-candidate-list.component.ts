@@ -148,6 +148,7 @@ pgInstitutesList: any;
   // statusBar:any;
   public components;
   public getNodeChildDetails;
+  isRowSelectable: any;
   resultsLength: any;
   fres: any;
   selectedCustomFilterListValue: any;
@@ -304,9 +305,8 @@ dateConvertionMonth(date) {
     this.gridApi.collapseAll();
     let endIndex = this.gridApi.paginationProxy.bottomDisplayedRowIndex;
     let startIndex = endIndex - 99;
-
     this.gridApi.forEachNode((row, index) => {
-      if (index >= startIndex && index <= endIndex) {
+      if (row['rowIndex'] >= startIndex && row['rowIndex'] <= endIndex) {
         this.gridApi.getRowNode(row.id).selectThisNode(condition);
       }
     });
@@ -542,6 +542,9 @@ dateConvertionMonth(date) {
     this.serverSideStoreType = 'partial';
     this.rowModelType = 'serverSide';
     this.rowSelection = 'multiple';
+    this.isRowSelectable = function (rowNode) {
+      return rowNode.level == 0;
+    };
   }
 
   onGridReady(params: any) {
