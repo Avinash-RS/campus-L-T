@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,17 +8,23 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-ic',
   templateUrl: './add-ic.component.html',
   styleUrls: ['./add-ic.component.scss']
 })
-export class AddICComponent implements OnInit {
+export class AddICComponent implements OnInit, OnDestroy {
 
   @Output() tabChange: EventEmitter<any> = new EventEmitter<any>();
   addIcForm: FormGroup;
   icLists: any;
+  refreshSubscription: Subscription;
+  listOfICsSubscription: Subscription;
+  addICSubscription: Subscription;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -26,38 +32,43 @@ export class AddICComponent implements OnInit {
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute,
-    private subjectService: SharedServiceService,
+    private sharedService: SharedServiceService,
     private matDialog: MatDialog
   ) { }
 
   ngOnInit() {
     this.formInitialize();
     this.listOfIcs();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.listOfICsSubscription ? this.listOfICsSubscription.unsubscribe() : '';
+    this.addICSubscription ? this.addICSubscription.unsubscribe() : '';
+    }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST)) {
+        this.formInitialize();
+        this.listOfIcs();
+      }
+    });
   }
 
   listOfIcs() {
-    this.adminService.listOfICs().subscribe((datas: any)=> {
+    this.listOfICsSubscription = this.adminService.listOfICs().subscribe((datas: any)=> {
 
       this.icLists = datas ? datas : [];
     });
   }
   apiData() {
-    // let dummy =
-    // {
-    //   company: 'idpl',
-    //   users: [
-    //   ]
-    // }
-    // this.addIcForm.patchValue({
-    //   icName: !dummy?.company ? dummy?.company : ''
-    // });
-    // if (dummy?.users?.length > 0) {
-    //   dummy?.users.forEach(element => {
-    //     this.addUsers(element);
-    //   });
-    // } else {
       this.addUsers();
-    // }
   }
   formInitialize() {
     this.addIcForm = this.fb.group({
@@ -103,7 +114,7 @@ export class AddICComponent implements OnInit {
   }
 
   submitUsers(data) {
-    this.adminService.addIC(data).subscribe((datas: any)=> {
+   this.addICSubscription = this.adminService.addIC(data).subscribe((datas: any)=> {
 
       this.appConfig.success('Users added successfully');
       this.addIcForm.reset();

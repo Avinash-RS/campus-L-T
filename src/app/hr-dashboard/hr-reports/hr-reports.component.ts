@@ -16,11 +16,11 @@ export class HrReportsComponent implements OnInit {
   ) {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
-      {
-        icon: '',
-        name: 'All Reports',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST
-      },
+      // {
+      //   icon: '',
+      //   name: 'All Reports',
+      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST
+      // },
       {
         icon: '',
         name: '1st Level Shortlist Reports',
