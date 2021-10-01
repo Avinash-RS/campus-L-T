@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-listof-ic',
   templateUrl: './listof-ic.component.html',
   styleUrls: ['./listof-ic.component.scss']
 })
-export class ListofICComponent implements OnInit {
+export class ListofICComponent implements OnInit, OnDestroy {
 
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
@@ -24,7 +27,8 @@ export class ListofICComponent implements OnInit {
   quickSearchValue = '';
 
   userList: any;
-
+  refreshSubscription: Subscription;
+  listICSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -36,10 +40,29 @@ export class ListofICComponent implements OnInit {
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.listICSubscription ? this.listICSubscription.unsubscribe() : '';
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST)) {
+        this.getUsersList();
+      }
+    });
   }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
+    this.getUsersList();
   }
 
   sortevent(e) {
@@ -134,13 +157,13 @@ export class ListofICComponent implements OnInit {
         }
       },
     ];
-    this.getUsersList();
   }
 
 
   // To get all users
   getUsersList() {
-    this.adminService.listIC().subscribe((datas: any) => {
+    this.gridApi.showLoadingOverlay();
+    this.listICSubscription = this.adminService.listIC().subscribe((datas: any) => {
 
       this.userList = datas ? datas : [];
       let count = 0;

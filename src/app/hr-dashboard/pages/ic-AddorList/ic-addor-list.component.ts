@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ic-addor-list',
@@ -13,7 +15,6 @@ export class IcAddorListComponent implements OnInit, OnDestroy {
   appConstant = CONSTANT.ENDPOINTS;
   role = this.appConfig.getLocalData('roles');
   TabIndex: any = this.appConfig.getLocalData('tabIndex') ? this.appConfig.getLocalData('tabIndex') : '0';
-
   constructor(
     private appConfig: AppConfigService,
     private sharedService: SharedServiceService
@@ -28,11 +29,11 @@ export class IcAddorListComponent implements OnInit, OnDestroy {
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
   }
 
-  tabChanged(event) {    
+  tabChanged(event) {
     this.TabIndex = event.index;
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
-  } 
-  
+  }
+
   activeTab($event) {
 
   }

@@ -83,10 +83,11 @@ export class userListDefinition {
       },
       {
         headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
-        filter: 'agNumberColumnFilter',
         minWidth: 140,
+        filter: "agTextColumnFilter",
         filterParams: {
-          filterOptions: ['lessThanOrEqual', 'greaterThanOrEqual', 'inRange']
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
         },
         sortable: true,
         resizable:true,
