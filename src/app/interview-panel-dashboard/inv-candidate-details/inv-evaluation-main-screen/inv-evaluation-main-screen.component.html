@@ -4,26 +4,40 @@
     [details]="nameOfAssessment ? nameOfAssessment : ''" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-inv-panel-header>
 
   <div class="router-wrapper">
-    <div class="main-toolbar">
-      <div [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT" [queryParams]="queryParams" routerLinkActive="active" class="tabs">
-        Profile
+    <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event);"
+    [(selectedIndex)]="TabIndex">
+
+  <mat-tab label="Profile & Documents">
+      <div *ngIf="TabIndex == 0 || true" class="selected-div">
+          <app-inv-sub-employment></app-inv-sub-employment>
       </div>
-      <div [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION" [queryParams]="queryParams" routerLinkActive="active" class="tabs">
-        Documents
-      </div>
-      <div [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS" [queryParams]="queryParams" routerLinkActive="active" class="tabs">
-        E-Test Results
-      </div>
-      <div [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW" [queryParams]="queryParams" routerLinkActive="active" class="tabs">
-        Interview Sessions
-      </div>
-      <div [routerLink]="appConstant.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION" [queryParams]="queryParams" routerLinkActive="active" class="tabs">
-        Interview Evaluation form
-      </div>
+  </mat-tab>
+
+  <!-- <mat-tab label="Documents">
+    <div *ngIf="TabIndex == 1 || true" class="selected-div">
+        <app-inv-sub-education></app-inv-sub-education>
     </div>
+</mat-tab> -->
+
+<mat-tab label="E-Test Results">
+  <div *ngIf="TabIndex == 1" class="selected-div">
+      <app-inv-unifiedreports></app-inv-unifiedreports>
+  </div>
+</mat-tab>
+
+<mat-tab label="Interview Sessions">
+  <div *ngIf="TabIndex == 2 || true" class="selected-div">
+      <app-inv-join-interview></app-inv-join-interview>
+  </div>
+</mat-tab>
+
+<mat-tab label="Interview Evaluation form">
+  <div *ngIf="TabIndex == 3 || true" class="selected-div">
+      <app-inv-sub-evaluate></app-inv-sub-evaluate>
+  </div>
+</mat-tab>
+
+</mat-tab-group>
   </div>
 </div>
-  <div class="routing">
-    <router-outlet></router-outlet>
-  </div>
 </div>

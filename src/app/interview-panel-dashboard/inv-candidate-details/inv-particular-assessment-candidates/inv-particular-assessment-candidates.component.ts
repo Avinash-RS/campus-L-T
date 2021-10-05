@@ -198,7 +198,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           filter: 'agTextColumnFilter',
           minWidth: 180,
           sortable: true,
-          tooltipField: "candidate_name",
+          tooltipField: "email",
           getQuickFilterText: (params) => {
             return params.value;
           },
@@ -518,6 +518,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             element["counter"] = counting;
             element["evaluation_btn"] = element.evaluation_status == '1' ? 'Evaluated' : element.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
             element["interview_status"] = element["interview_status"] == "Not Selected" ? 'Rejected' : element["interview_status"];
+            element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             element["evaluation_status_1"] =
               element.evaluation_status && element.evaluation_status == "2"
                 ? "Submitted"
@@ -539,8 +540,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   submit(cid, name, status, tag, uid, email, form, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",
@@ -556,8 +558,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   redirectToEvaluationForm(cid, name, status, tag, uid, email, form, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 2);
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",
@@ -573,8 +576,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   redirectToProfile(cid, name, status, tag, uid, email, form, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 0);
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",

@@ -19,13 +19,15 @@ export class HrShortlistingComponent implements OnInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [
       {
-        icon: '',
-        name: '1st Level Shortlist',
+        icon: 'icon-person_search',
+        icons: true,
+        name: 'Applicants',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING
       },
       {
-        icon: '',
-        name: '2nd Level Shortlist',
+        icon: 'icon-reg',
+        icons: true,
+        name: 'Shortlists',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING
       }
     ];

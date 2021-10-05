@@ -42,55 +42,55 @@ const routes: Routes = [
             data: {
               breadcrumb: 'Evaluation'
             },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`,
-                component: InvSubAssessmentsComponent,
-                data: {
-                  breadcrumb: 'Assessment Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`,
-                component: InvSubEducationComponent,
-                data: {
-                  breadcrumb: 'Education Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
-                component: InvSubEmploymentComponent,
-                data: {
-                  breadcrumb: 'Candidate Profile'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`,
-                component: InvSubEvaluateComponent,
-                data: {
-                  breadcrumb: 'Evaluation Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS}`,
-                component: InvUnifiedreportsComponent,
-                data: {
-                  breadcrumb: 'Test Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW}`,
-                component: InvJoinInterviewComponent,
-                data: {
-                  breadcrumb: 'Join Sessions'
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
-                pathMatch: 'full',
-              }
-            ]
+            // children: [
+            //   {
+            //     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_ASSESSMENTS}`,
+            //     component: InvSubAssessmentsComponent,
+            //     data: {
+            //       breadcrumb: 'Assessment Details'
+            //     }
+            //   },
+            //   {
+            //     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION}`,
+            //     component: InvSubEducationComponent,
+            //     data: {
+            //       breadcrumb: 'Document Details'
+            //     }
+            //   },
+            //   {
+            //     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
+            //     component: InvSubEmploymentComponent,
+            //     data: {
+            //       breadcrumb: 'Candidate Profile'
+            //     }
+            //   },
+            //   {
+            //     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION}`,
+            //     component: InvSubEvaluateComponent,
+            //     data: {
+            //       breadcrumb: 'Evaluation Details'
+            //     }
+            //   },
+            //   {
+            //     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.UNIFIEDREPORTS}`,
+            //     component: InvUnifiedreportsComponent,
+            //     data: {
+            //       breadcrumb: 'Test Details'
+            //     }
+            //   },
+            //   {
+            //     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW}`,
+            //     component: InvJoinInterviewComponent,
+            //     data: {
+            //       breadcrumb: 'Join Sessions'
+            //     }
+            //   },
+            //   {
+            //     path: '',
+            //     redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT}`,
+            //     pathMatch: 'full',
+            //   }
+            // ]
           },
           {
             path: '',

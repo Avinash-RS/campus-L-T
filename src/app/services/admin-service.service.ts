@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class AdminServiceService {
   BASE_URL = environment.API_BASE_URL;
-  NODE_BASE_URL = environment.NODE_API_BASE_URL;
   WEBRTC_NODE_API = environment.WEBRTC_NODE_API;
   httpOptions: { headers: HttpHeaders };
 
@@ -585,7 +584,7 @@ export class AdminServiceService {
 
   getParticularCandidatelist(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_for_assement`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   assignToHR(data) {
@@ -691,11 +690,8 @@ export class AdminServiceService {
 
 // Node service urls
 
-getReportsDataAPI(data) {
-  return this.http.post(`${this.NODE_BASE_URL}/getunifiedReport`, data, {headers: this.withoutTokens(), withCredentials: false});
-}
 scheduleRooms(data) {
-  return this.http.post(`${this.WEBRTC_NODE_API}/scheduleinterview`, data, {headers: this.withoutTokens(), withCredentials: false});
+  return this.http.post(`${this.WEBRTC_NODE_API}/scheduleinterview`, data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
 }
 getScheduledList(data) {
   return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});

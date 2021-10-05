@@ -60,7 +60,7 @@ export class InterceptorsService implements HttpInterceptor {
         lastResponse = event;
       if (event instanceof HttpResponse) {
         // Loader set to True
-        this.totalRequests--;
+        // this.totalRequests--;
         if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
         }
@@ -68,26 +68,10 @@ export class InterceptorsService implements HttpInterceptor {
         return event;
       }),
       retry(1),
-      // Hidden on 28-Nov
-      // return next.handle(request).pipe(
-      //   map((event: HttpEvent<any>) => {
-      //     if (!request.headers.has('Content-Type')) {
-      //       // request = request.clone({ headers: request.headers.set('Content-Type', 'multipart/form-data') });
-      //       request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
-      //     }
-
-      //     if (event instanceof HttpResponse) {
-      //       // this.appConfig.hideLoader();
-      //       return event;
-      //     }
-      //     // this.appConfig.hideLoader();
-      //     return event;
-      //   }),
-      //   retry(3),
       catchError((error: HttpErrorResponse) => {
+        // this.totalRequests--;
         errResponse = error;
         // Loader set to False
-        this.totalRequests--;
         if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
         }
@@ -176,10 +160,13 @@ export class InterceptorsService implements HttpInterceptor {
 
       }),
       finalize(() => {
-        if (lastResponse.type === HttpEventType.Sent && !errResponse) {
+        // if (lastResponse.type === HttpEventType.Sent && !errResponse) {
           // last response type was 0, and we haven't received an error
           this.totalRequests--;
-        }
+          if (this.totalRequests === 0) {
+            this.loadingService.setLoading(false);
+          }
+        // }
       })
     );
   }

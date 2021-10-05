@@ -54,14 +54,14 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.SHORTLISTING}`,
         component: HrShortlistingComponent, canActivate: [HrcanloadGuard],
         data: {
-          breadcrumb: 'Shortlist'
+          breadcrumb: 'Shortlisting Process'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING}`,
             component: FirstLevelShortlistComponent,
             data: {
-              breadcrumb: '1st Level Shortlist'
+              breadcrumb: 'Applicants'
             },
             children: [
               {
@@ -89,7 +89,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`,
             component: SecondLevelShortlistComponent,
             data: {
-              breadcrumb: '2nd Level Shortlist'
+              breadcrumb: 'Shortlists'
             },
             children: [
               {

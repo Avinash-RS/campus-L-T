@@ -124,7 +124,7 @@ export class LoginpageComponent implements OnInit {
           this.apiService.login(apiData).subscribe((data: any) => {
 
             this.appConfig.setLocalData('BIS', 'false');
-            this.isProduction ? this.appConfig.setLocalData('webrtc', 'false') : this.isWebrtc ? this.appConfig.setLocalData('webrtc', 'true') : this.appConfig.setLocalData('webrtc', 'false');
+            this.isProduction ? this.appConfig.setLocalData('webrtc', 'true') : this.isWebrtc ? this.appConfig.setLocalData('webrtc', 'true') : this.appConfig.setLocalData('webrtc', 'true');
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
