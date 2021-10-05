@@ -161,6 +161,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.activatedRoute.queryParams.subscribe(params => {
       if (params && params['shortlist_name']) {
         this.selectedShortlistname = params['shortlist_name'];
+        this.selectedStatus = null;
         this.candidateFilterApply();
       } else {
       }
@@ -291,6 +292,16 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         minWidth: 140,
         sortable: true,
         tooltipField: 'level',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Status', field: 'status',
+        filter: 'agSetColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'status',
         getQuickFilterText: (params) => {
           return params.value;
         }
