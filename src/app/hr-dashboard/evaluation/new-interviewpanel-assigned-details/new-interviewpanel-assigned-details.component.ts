@@ -154,16 +154,16 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
 
   tabledef() {
     this.columnDefs = [
-      {
-        headerName: 'S no',
-        valueGetter: (params) => {
-          const i = +params.node.id + 1;
-          return i ? i : 'Loading...';
-        },
-        filter: 'agNumberColumnFilter',
-        minWidth: 100,
-        sortable: true
-      },
+      // {
+      //   headerName: 'S no',
+      //   valueGetter: (params) => {
+      //     const i = +params.node.id + 1;
+      //     return i ? i : 'Loading...';
+      //   },
+      //   filter: 'agNumberColumnFilter',
+      //   minWidth: 100,
+      //   sortable: true
+      // },
       {
         headerName: 'Candidate Id', field: 'candidate_id',
         filter: 'agNumberColumnFilter',

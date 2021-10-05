@@ -160,3 +160,15 @@ padding: 4px 8px;
     border-radius: 0px !important;
   }
 }
+
+::ng-deep .shortlist {
+  color: $primary-red;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  .material-icons {
+    font-size: 18px;
+    margin-top: 2px;
+    padding-right: 2px;
+  }
+}

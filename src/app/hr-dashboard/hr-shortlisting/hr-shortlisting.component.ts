@@ -20,12 +20,12 @@ export class HrShortlistingComponent implements OnInit {
     const subWrapperMenus = [
       {
         icon: '',
-        name: '1st Level Shortlist',
+        name: 'Applicants',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING
       },
       {
         icon: '',
-        name: '2nd Level Shortlist',
+        name: 'Shortlists',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING
       }
     ];

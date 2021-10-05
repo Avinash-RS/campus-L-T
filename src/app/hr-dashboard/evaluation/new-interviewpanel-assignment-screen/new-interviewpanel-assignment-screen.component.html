@@ -1,38 +1,14 @@
 <div class="new-inv-particular-assessment-candidate">
-  <div class="button-wrapper">
-    <button
-      class="submit"
-      [ngClass]="
-        userList && userList.length > 0 && userListHR && userListHR.length > 0
-          ? ''
-          : 'disabled'
-      "
-      (click)="appConfig.isWebrtc() ? scheduleInterview() : submit()"
-      mat-raised-button
-    >
-      {{appConfig.isWebrtc() ? 'Schedule' : 'Assign'}}
-    </button>
-  </div>
   <div>
     <mat-accordion #firstAccordion="matAccordion">
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title> Filter </mat-panel-title>
-          <mat-panel-description> </mat-panel-description>
+          <mat-panel-description>
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="top-wrapper">
-          <div class="heading4">
-            Filters
-            <div class="btngroup">
-              <span [class.active]="!fltractive" (click)="togglefltr()"
-                >Candidate</span
-              >
-              <span [class.active]="fltractive" (click)="togglefltr()"
-                >Interview Panel</span
-              >
-            </div>
-          </div>
-          <div class="left" *ngIf="!fltractive">
+          <div class="left">
             <div class="flex-wrap">
               <div class="label">
                 Shortlist name<span class="asterick">*</span>
@@ -131,39 +107,23 @@
               </div>
             </div>
           </div>
-          <div class="right" *ngIf="fltractive">
-            <div class="flex-wrap">
-              <div class="label" style="width: 200px;">Interview panel discipline</div>
-              <div class="input-box">
-                <nz-select
-                  class="input select"
-                  [(ngModel)]="selectedHRDiscipline"
-                  (ngModelChange)="hrDiciplineChange(selectedHRDiscipline)"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="All"
-                >
-                  <nz-option
-                    *ngFor="let level of allHRDisciplines"
-                    [nzLabel]="level.discipline_name"
-                    [nzValue]="level.discipline_name"
-                  ></nz-option>
-                </nz-select>
-              </div>
-              <div class="input-box">
-                <button
-                  class="submit ml-4"
-                  (click)="interviewPanelFilterApply(selectedHRDiscipline)"
-                  mat-raised-button
-                >
-                  Apply
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
+  </div>
+  <div class="button-wrapper mt-2 mr-1">
+    <button
+      class="submit"
+      [ngClass]="
+        userList && userList.length > 0 && userListHR && userListHR.length > 0
+          ? ''
+          : 'disabled'
+      "
+      (click)="appConfig.isWebrtc() ? scheduleInterview() : submit()"
+      mat-raised-button
+    >
+      {{appConfig.isWebrtc() ? 'Schedule' : 'Assign'}}
+    </button>
   </div>
   <div class="user-list-wrapper">
     <div class="total-wrap" #scrollbox>

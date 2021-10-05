@@ -140,6 +140,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
     ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
+    this.editRouteParamGetter();
   }
 
   ngOnInit() {
@@ -153,6 +154,17 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.getEducation();
     this.particularInvpanelist(this.selectedHRDiscipline);
     this.refreshOndriveChangeRXJS();
+  }
+
+  editRouteParamGetter() {
+    // Get url Param to view Edit user page
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params && params['shortlist_name']) {
+        this.selectedShortlistname = params['shortlist_name'];
+        this.candidateFilterApply();
+      } else {
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -258,7 +270,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         }
       },
       {
-        headerName: 'discipline', field: 'discipline',
+        headerName: 'Discipline', field: 'discipline',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
@@ -451,14 +463,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   hrDiciplineChange(data) {
-  }
-  // Get url param for edit route
-  editRouteParamGetter() {
-    // Get url Param to view Edit user page
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.urlParsedData = params['data'] ? JSON.parse(params['data']) : '';
-      this.getUsersList(this.urlParsedData);
-    });
   }
 
   // To get all users

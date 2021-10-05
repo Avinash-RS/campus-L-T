@@ -372,6 +372,20 @@ dateConvertionMonth(date) {
             },
           },
           {
+            headerName: "Is Kyc Skipped",
+            field: "kyc_exempted",
+            filter: false,
+            sortable: true,
+            columnGroupShow: null,
+            tooltipField: 'kyc_exempted',
+            getQuickFilterText: (params) => {
+              return params.value;
+            },
+            cellRenderer: (params) => {
+              return params['data']['kyc_exempted'] ? 'Yes' : 'No';
+            }
+          },
+          {
             headerName: "For Grouping",
             field: "emailId",
             filter: false,

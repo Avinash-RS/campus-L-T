@@ -31,6 +31,7 @@ export class InterceptorsService implements HttpInterceptor {
     let lastResponse: HttpEvent<any>;
     let errResponse: HttpErrorResponse;
     this.totalRequests++;
+    console.log('1', this.totalRequests);
     if (request.reportProgress) {
     } else {
       this.loadingService.setLoading(true);
@@ -61,6 +62,7 @@ export class InterceptorsService implements HttpInterceptor {
       if (event instanceof HttpResponse) {
         // Loader set to True
         this.totalRequests--;
+        console.log('2', this.totalRequests);
         if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
         }
@@ -88,6 +90,7 @@ export class InterceptorsService implements HttpInterceptor {
         errResponse = error;
         // Loader set to False
         this.totalRequests--;
+        console.log('3', this.totalRequests);
         if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
         }
@@ -178,6 +181,7 @@ export class InterceptorsService implements HttpInterceptor {
       finalize(() => {
         if (lastResponse.type === HttpEventType.Sent && !errResponse) {
           // last response type was 0, and we haven't received an error
+          console.log('4', this.totalRequests);
           this.totalRequests--;
         }
       })

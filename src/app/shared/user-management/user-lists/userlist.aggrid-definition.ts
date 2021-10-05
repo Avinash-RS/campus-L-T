@@ -35,16 +35,32 @@ export class userListDefinition {
         headerName: '',
         // colId: 'cheader'
       },
+      // {
+      //   headerName: 'S no', //colId: 'csno',
+      //   field: 'counter',
+      //   filter: false,
+      //   minWidth: 90,
+      //   maxWidth: 90,
+      //   sortable: false,
+      //   resizable:false,
+      //   suppressMenu: true,
+      //   tooltipField: 'counter',
+      //   // comparator: this.customComparator,
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
       {
-        headerName: 'S no', //colId: 'csno',
-        field: 'counter',
-        filter: false,
-        minWidth: 80,
-        maxWidth: 80,
-        sortable: false,
+        headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
+        minWidth: 140,
+        filter: "agTextColumnFilter",
+        filterParams: {
+          suppressAndOrCondition: true,
+          filterOptions: ['contains']
+        },
+        sortable: true,
         resizable:true,
-        tooltipField: 'counter',
-        // comparator: this.customComparator,
+        tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -77,21 +93,6 @@ export class userListDefinition {
         },
         resizable:true,
         // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
-        minWidth: 140,
-        filter: "agTextColumnFilter",
-        filterParams: {
-          suppressAndOrCondition: true,
-          filterOptions: ['contains']
-        },
-        sortable: true,
-        resizable:true,
-        tooltipField: 'candidate_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -191,16 +192,27 @@ export class userListDefinition {
   }
   panelList() {
     return [
+      // {
+      //   headerName: 'S no', colId: 'psno',
+      //   minWidth: 80,
+      //   sortable: true,
+      //   resizable:true,
+      //   filter: 'agNumberColumnFilter',
+      //   valueGetter: (params) => {
+      //     const i = +params.node.id + 1;
+      //     return i ? i : 'Loading...';
+      //   },
+      // },
       {
-        headerName: 'S no', colId: 'psno',
-        minWidth: 80,
+        headerName: 'Employee Id', field: 'field_employee_id', colId: 'pfield_employee_id',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
         sortable: true,
         resizable:true,
-        filter: 'agNumberColumnFilter',
-        valueGetter: (params) => {
-          const i = +params.node.id + 1;
-          return i ? i : 'Loading...';
-        },
+        tooltipField: 'field_employee_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
       },
       {
         headerName: 'Name', field: 'name', colId: 'pname',
@@ -221,17 +233,6 @@ export class userListDefinition {
         sortable: true,
         resizable:true,
         tooltipField: 'email',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Employee Id', field: 'field_employee_id', colId: 'pfield_employee_id',
-        filter: 'agNumberColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        resizable:true,
-        tooltipField: 'field_employee_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -285,16 +286,27 @@ export class userListDefinition {
 
   instituteList() {
     return [
+      // {
+      //     headerName: 'S no', colId: 'icounter',
+      //     minWidth: 80,
+      //     sortable: true,
+      //     resizable:true,
+      //     filter: 'agNumberColumnFilter',
+      //       valueGetter: (params) => {
+      //       const i = +params.node.id + 1;
+      //       return i ? i : 'Loading...';
+      //     },
+      // },
       {
-          headerName: 'S no', colId: 'icounter',
-          minWidth: 80,
-          sortable: true,
-          resizable:true,
-          filter: 'agNumberColumnFilter',
-            valueGetter: (params) => {
-            const i = +params.node.id + 1;
-            return i ? i : 'Loading...';
-          },
+        headerName: 'Institute Id', field: 'id', colId: 'iid',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'id',
+        // comparator: this.customComparator,
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
       },
       {
         headerName: 'Institute name', field: 'field_institute_name', colId: 'ifield_institute_name',
@@ -302,17 +314,6 @@ export class userListDefinition {
         minWidth: 140,
         sortable: true,
         tooltipField: 'field_institute_name',
-        // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Institute Id', field: 'id', colId: 'iid',
-        filter: 'agNumberColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'id',
         // comparator: this.customComparator,
         getQuickFilterText: (params) => {
           return params.value;
@@ -442,17 +443,17 @@ export class userListDefinition {
 
   hrList() {
     return [
-      {
-        headerName: 'S no', colId: 'hcounter',
-        minWidth: 80,
-        sortable: true,
-        resizable:true,
-        filter: 'agNumberColumnFilter',
-        valueGetter: (params) => {
-          const i = +params.node.id + 1;
-          return i ? i : 'Loading...';
-        },
-    },
+    //   {
+    //     headerName: 'S no', colId: 'hcounter',
+    //     minWidth: 80,
+    //     sortable: true,
+    //     resizable:true,
+    //     filter: 'agNumberColumnFilter',
+    //     valueGetter: (params) => {
+    //       const i = +params.node.id + 1;
+    //       return i ? i : 'Loading...';
+    //     },
+    // },
     {
         headerName: 'User Id', field: 'uid', colId: 'huid',
         filter: 'agNumberColumnFilter',

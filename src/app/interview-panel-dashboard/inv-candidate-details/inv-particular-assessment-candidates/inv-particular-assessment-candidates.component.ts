@@ -518,6 +518,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             element["counter"] = counting;
             element["evaluation_btn"] = element.evaluation_status == '1' ? 'Evaluated' : element.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
             element["interview_status"] = element["interview_status"] == "Not Selected" ? 'Rejected' : element["interview_status"];
+            element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             element["evaluation_status_1"] =
               element.evaluation_status && element.evaluation_status == "2"
                 ? "Submitted"
