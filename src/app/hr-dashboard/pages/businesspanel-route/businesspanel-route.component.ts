@@ -20,12 +20,12 @@ export class BusinesspanelRouteComponent implements OnInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     let subWrapperMenus = [
       {
-        icon: '',
+        icon: '002-group-1.svg',
         name: 'Selected Candidates Upload/Assign',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.OfferedCandidatesLIST
       },
       {
-        icon: '',
+        icon: '001-group.svg',
         name: 'Business Users List/Add',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.IC_ADDorLIST
       },

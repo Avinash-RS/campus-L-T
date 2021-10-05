@@ -176,7 +176,8 @@
                 [queryParams]="subMenus.data ? {data: subMenus.data ? subMenus.data : ''} : ''"
                 *ngFor="let subMenus of subMenus; let i = index" class="sub-navs" routerLinkActive="active"
                 [ngClass]="subMenus.active ? 'active' : ''" [ngClass]="subMenus.router === null ? 'non-active' : ''">
-                <div *ngIf="subMenus.icon"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
+                <div *ngIf="subMenus.icon && !subMenus.icons"><img src="assets/images/{{subMenus.icon}}" alt=""></div>
+                <div *ngIf="subMenus.icon && subMenus.icons"><span class="d-flex"><em style="font-size: 22px;" class="{{subMenus.icon}}"></em></span></div>
                 <div *ngIf="subMenus.name">{{subMenus.name}}</div>
               </div>
             </ng-container>
