@@ -198,7 +198,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           filter: 'agTextColumnFilter',
           minWidth: 180,
           sortable: true,
-          tooltipField: "candidate_name",
+          tooltipField: "email",
           getQuickFilterText: (params) => {
             return params.value;
           },

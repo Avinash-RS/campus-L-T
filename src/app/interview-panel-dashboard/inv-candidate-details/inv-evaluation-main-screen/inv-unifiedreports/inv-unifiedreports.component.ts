@@ -15,7 +15,6 @@ import { environment } from 'src/environments/environment';
 })
 export class InvUnifiedreportsComponent implements OnInit {
 
-  isLocal = environment.local;
   queryParams: any;
   getAllReportsData: any;
   driveName: any;
@@ -51,39 +50,14 @@ export class InvUnifiedreportsComponent implements OnInit {
         form: params['form']
       };
      if (this.appConfig.isWebrtc()) {
-        this.getReports(params['email']);
+        // this.next(params['email']);
       }
     });
   }
 
-  getReports(data) {
-    const apiData = {
-      email: this.isLocal ? 'sr-venkadesh@lntecc.com' : data
-      // email: data
-    };
-    this.adminService.getReportsDataAPI(apiData).subscribe((response: any)=> {
-
-      if (response && response.success) {
-        if (response.data[0] && response.data[0].firstname) {
-          this.getAllReportsData = response.data && response.data[0] ? response.data[0] : null;
-        } else {
-          this.getAllReportsData = null;
-        }
-      } else {
-        this.appConfig.warning('No Reports Available');
-        this.getAllReportsData = null;
-      }
-    });
-  }
-
-  getSelectedDriveName(e) {
-    if (this.getAllReportsData) {
-      this.getAllReportsData.selectedDriveName = e;
-      this.driveName = e;
-    }
-  }
-  next() {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW, this.queryParams);
+  eTest() {
+    window.open(environment.UNIFIEDREPORTS, '_blank');
+    // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW, this.queryParams);
   }
 
 }

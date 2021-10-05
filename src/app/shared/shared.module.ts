@@ -87,8 +87,6 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CommonSidebarComponent } from './common-sidebar/common-sidebar.component';
 import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/join-interview.component';
@@ -101,7 +99,7 @@ import { SharedReportsSectionComponent } from './user-management/shared-reports-
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, BarChartComponent, HorizontalBarChartComponent, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent
 ],
   imports: [
     CommonModule,
@@ -210,8 +208,6 @@ ModuleRegistry.registerModules(AllModules);
     ScreenresolutionBoxComponent,
     YearMonthDirective,
     DateMonthYearDirective,
-    BarChartComponent,
-    HorizontalBarChartComponent,
     CommonSidebarComponent,
     JoinInterviewComponent,
     SharedKycProfileViewComponent,

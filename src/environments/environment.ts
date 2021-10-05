@@ -12,7 +12,6 @@ export const environment = {
     // ASSETS: 'https://assets.lntedutech.com',
     // versionCheckURL: 'https://campus-qa.lntedutech.com/version.json',
 
-    // NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
     // WEBRTC_NODE_API : 'https://uapqaapplicationgateway.lntiggnite.com',
     // API_BASE_URL: 'https://campus-qa.lntedutech.com/d8cintana2',
     // API_BASE_URL_city: 'https://campus-qa.lntedutech.com/d8cintana2',
@@ -22,7 +21,7 @@ export const environment = {
     ASSETS: 'https://assets.lntedutech.com',
     versionCheckURL: 'https://campus-dev.lntedutech.com/version.json',
 
-    NODE_API_BASE_URL: 'https://candidate.lntiggnite.com',
+    UNIFIEDREPORTS: 'https://unifiedreport-dev.lntedutech.com/',
     WEBRTC_NODE_API : 'https://uapapplicationgateway.lntiggnite.com',
     API_BASE_URL: 'https://campus-dev.lntedutech.com/dcampus',
     API_BASE_URL_city: 'https://campus-dev.lntedutech.com/dcampus',
