@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './inv-evaluation-main-screen.component.html',
   styleUrls: ['./inv-evaluation-main-screen.component.scss']
 })
-export class InvEvaluationMainScreenComponent implements OnInit {
+export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
 
   appConstant = CONSTANT.ENDPOINTS;
   nameOfAssessment: any;
@@ -25,7 +25,7 @@ export class InvEvaluationMainScreenComponent implements OnInit {
   email: any;
   form: any;
   queryParams: any;
-
+  TabIndex = 0;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -37,10 +37,21 @@ export class InvEvaluationMainScreenComponent implements OnInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
+    if (this.appConfig.getLocalData('tabIndex')) {
+      this.TabIndex = Number(this.appConfig.getLocalData('tabIndex'));
+    }
     this.editRouteParamGetter();
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.appConfig.clearLocalDataOne('tabIndex');
+  }
+  tabChanged(e) {
+    this.TabIndex = e.index;
+    this.appConfig.setLocalData('tabIndex', this.TabIndex);
   }
 
   // Get url param for edit route

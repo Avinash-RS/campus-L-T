@@ -540,8 +540,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   submit(cid, name, status, tag, uid, email, form, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EVALUATION,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",
@@ -557,8 +558,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   redirectToEvaluationForm(cid, name, status, tag, uid, email, form, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 2);
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",
@@ -574,8 +576,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   redirectToProfile(cid, name, status, tag, uid, email, form, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 0);
     this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EMPLOYMENT,
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
         data: this.nameOfAssessment ? this.nameOfAssessment : "",
         id: cid ? cid : "",
