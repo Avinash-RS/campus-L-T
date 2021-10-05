@@ -1,0 +1,172 @@
+@import '../../../themes/themes.scss';
+.schedule-container {
+  padding:1.5em 2em;
+  max-height: 620px;
+  .text-overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .input-container{
+    width: 100%;
+    padding: 0.5em;
+    position: relative;
+    .header-label{
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 3px;
+    }
+    .tex-input{
+      width: 100%;
+      height: 3em;
+      border: 1px solid #b3b2b2;
+    }
+  }
+  .card-container {
+    flex-wrap: wrap;
+    margin-top: 1em;
+    padding: 0 7px;
+    .header-label{
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 5px;
+    }
+    .card-details {
+      display: inline-block;
+      width: 49%;
+      // margin-right: 1em;
+      margin-bottom: 1em;
+      background: #f5f5f5;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #dadada;
+    }
+  }
+  .button-conatiner{
+    display: flex;
+    justify-content: center;
+    padding: 1em 0;
+    button {
+      width:22%;
+      border: 1px solid #c02222;
+      margin-right: 1em;
+    }
+  }
+  .schedule{
+    color: white;
+    background: #c02222;
+  }
+  .date-pick{
+    cursor: pointer;
+  }
+  .th{
+    background: white !important;
+  }
+}
+
+::ng-deep.custom-modalbox {
+  max-width: 45% !important;
+  .mat-dialog-container{
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+  .pop-up-header {
+      padding: 5px 5px 8px 7px;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > div {
+          font-size: 20px;
+      }
+      span:nth-of-type(2) {
+          cursor: pointer;
+      }
+  }
+
+  input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
+  {
+      border: solid $primary-red 1px !important;
+  }
+  .date-padding {
+    padding-right: 28px !important;
+  }
+  .mat-icon {
+    color: #bebebe;
+  }
+  .form-error {
+    color: $primary-red;
+    font-size: 12px;
+  }
+  .asterick {
+    color: $primary-red;
+  }
+}
+
+.arrowalign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2em !important;
+  max-width: 50px;
+}
+.text-color {
+  color: #808080;
+  font-size: 14px;
+}
+.radiogroup {
+  color: #808080;
+  font-size:14px !important ;
+  margin-top: 3px;
+  .mat-radio-button {
+    min-width:200px;
+  }
+}
+
+.input {
+  position: relative;
+  border: solid 0.8px #bebebe;
+  border-radius: 2px;
+  color: #6b6b6b;
+  outline: none;
+  box-sizing: border-box;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  line-height: 35px;
+  padding: 4px 8px;
+  background-color: $white;
+  width: 100%;
+}
+.input:focus,
+.input:hover {
+  border: 1px solid $primary-red;
+}
+.password-type {
+  cursor: pointer;
+  position: absolute;
+  top: 36px;
+  right: 10px;
+}
+.attendees-list {
+  max-height: 190px;
+  overflow: auto;
+}
+
+.loading-button {
+  cursor: auto !important;
+  .load-icon {
+    margin-right: 4px;
+    animation: button-loading-spinner 1s ease infinite;
+  }
+}
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}

@@ -584,7 +584,7 @@ export class AdminServiceService {
 
   getParticularCandidatelist(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_for_assement`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
   assignToHR(data) {
@@ -691,7 +691,7 @@ export class AdminServiceService {
 // Node service urls
 
 scheduleRooms(data) {
-  return this.http.post(`${this.WEBRTC_NODE_API}/scheduleinterview`, data, {headers: this.withoutTokens(), withCredentials: false});
+  return this.http.post(`${this.WEBRTC_NODE_API}/scheduleinterview`, data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
 }
 getScheduledList(data) {
   return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});

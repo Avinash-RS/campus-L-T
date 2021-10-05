@@ -93,7 +93,19 @@
             <div class="flex-wrap applybtn">
               <div class="input-box">
                 <div style="display: flex; justify-content: center">
-                  <button
+                  <ng-container *ngIf="buttonLoading else showButton">
+                    <button
+                    mat-raised-button
+                    class="submit pl-2 pr-2 mr-2 loading-button"
+                  >
+                  <span class="material-icons load-icon">
+                    loop
+                    </span> Applying...
+                  </button>
+                  </ng-container>
+
+                  <ng-template #showButton>
+                    <button
                     [disabled]="
                       selectedShortlistname && selectedStatus ? false : true
                     "
@@ -103,6 +115,7 @@
                   >
                     Apply
                   </button>
+                  </ng-template>
                 </div>
               </div>
             </div>
@@ -210,168 +223,3 @@
     </div>
   </div>
 </div>
-<ng-template *ngIf="appConfig.isWebrtc()" #schedulePopup>
-  <div class="schedule-container">
-    <div class="pop-up-header">
-      <span>Create a New Room</span>
-      <span
-        (click)="closePopup()"
-        class="material-icons"
-        style="float: right; cursor: pointer"
-        >close</span
-      >
-    </div>
-    <form [formGroup]="scheduleForm">
-    <div class="input-container">
-      <div class="radiogroup">
-        <mat-radio-group [formControlName]="'type'" aria-label="Select an option">
-          <mat-radio-button value="1"
-            >Native Tool</mat-radio-button
-          >
-          <mat-radio-button value="2">Microsoft Teams</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-    <div class="input-container">
-      <div class="header-label">Room Title<span class="asterick">*</span></div>
-      <div class="w-100">
-        <input class="input" matInput placeholder="Enter here..." [formControlName]="'title'" />
-        <div class="form-error"
-        *ngIf="title?.invalid && title?.touched">
-        <div
-            *ngIf="title.errors?.required">
-            Room Title is Required</div>
-        <div
-            *ngIf="title.errors?.address255">
-            Alpha numeric with maximum of 255 characters only
-            allowed</div>
-    </div>
-
-      </div>
-    </div>
-    <div class="input-container">
-      <div class="header-label">{{(scheduleForm && scheduleForm.value && scheduleForm.value.type == '2' ? 'Teams Link' : 'Password')}}<span class="asterick">*</span></div>
-      <div class="w-100">
-        <input class="input" *ngIf="scheduleForm && scheduleForm.value && scheduleForm.value.type == '2'" matInput [formControlName]="'password'" [placeholder]="scheduleForm && scheduleForm.value && scheduleForm.value.type == '2' ? 'Teams Link' : 'Enter Here...'" [type]="!toggleVisibility ? 'text' : 'text'">
-        <input class="input date-padding" *ngIf="scheduleForm && scheduleForm.value && scheduleForm.value.type != '2'" matInput [formControlName]="'password'" [placeholder]="scheduleForm && scheduleForm.value && scheduleForm.value.type == '2' ? 'Teams Link' : 'Enter Here...'" [type]="!toggleVisibility ? 'text' : 'password'">
-        <div class="form-error"
-        *ngIf="password1?.invalid && password1?.touched">
-        <div
-            *ngIf="password1.errors?.required">
-            {{scheduleForm && scheduleForm.value && scheduleForm.value.type == '1' ? 'Password' : 'Teams Link'}} is Required</div>
-        <div
-            *ngIf="password1.errors?.maxlength">
-            Maximum of 1000 characters only allowed</div>
-    </div>
-        <div class="password-type" *ngIf="scheduleForm && scheduleForm.value && scheduleForm.value.type != '2'" mat-icon-button matSuffix style="cursor: pointer;" (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
-        <mat-icon class="icon-color-1">{{toggleVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="input-container">
-        <div class="header-label">Start Date Time<span class="asterick">*</span></div>
-        <div class="w-100">
-          <input class="input date-padding"
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            onDrop="return false"
-            onPaste="return false"
-            onkeydown="return false"
-            onkeypress="return false"
-            [owlDateTime]="sdt"
-            [formControlName]="'startTime'"
-            placeholder="Select Start Time"
-          />
-          <mat-icon
-            class="date-pick password-type"
-            matSuffix
-            (click)="dateChange()"
-            [owlDateTimeTrigger]="sdt"
-            >calendar_today
-          </mat-icon>
-          <owl-date-time [startAt]="minDate" #sdt></owl-date-time>
-          <div class="form-error" *ngIf="startTime?.invalid && startTime?.touched">
-            <div *ngIf="startTime?.errors?.required">Start Time is Required</div>
-            <div *ngIf="startTime?.errors?.owlDateTimeMax">
-                {{startTime?.errors?.owlDateTimeMax?.max ? 'Maximum date should be ' + momentForm(startTime?.errors?.matDatepickerMax.max) : ''}}
-            </div>
-            <div *ngIf="startTime?.errors?.owlDateTimeMin">
-                {{startTime?.errors?.owlDateTimeMin?.min ? 'Start Time should be greater than current Date Time' : ''}}
-            </div>
-            <div *ngIf="startTime?.errors?.owlDateTimeParse">Invalid Date Format</div>
-        </div>
-
-        </div>
-      </div>
-      <div class="input-container arrowalign">
-        <em class="icon-right-next"></em>
-      </div>
-      <div class="input-container">
-        <div class="header-label">End Date Time<span class="asterick">*</span></div>
-        <div class="w-100">
-          <input class="input date-padding"
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            onDrop="return false"
-            onPaste="return false"
-            onkeydown="return false"
-            onkeypress="return false"
-            [owlDateTime]="edt"
-            [formControlName]="'endTime'"
-            placeholder="Select End Time"
-          />
-          <mat-icon
-            class="date-pick password-type"
-            matSuffix
-            (click)="dateChange()"
-            [owlDateTimeTrigger]="edt"
-            >calendar_today
-          </mat-icon>
-          <owl-date-time [startAt]="minDate" #edt></owl-date-time>
-          <div class="form-error" *ngIf="endTime?.invalid && endTime?.touched">
-            <div *ngIf="endTime?.errors?.required">End Time is Required</div>
-            <div *ngIf="endTime?.errors?.owlDateTimeMax">
-                {{endTime?.errors?.owlDateTimeMax?.max ? 'Maximum date should be ' + momentForm(endTime?.errors?.matDatepickerMax.max) : ''}}
-            </div>
-            <div *ngIf="endTime?.errors?.owlDateTimeMin">
-                {{endTime?.errors?.owlDateTimeMin?.min ? 'End Time should be greater than current Date Time' : ''}}
-            </div>
-            <div *ngIf="endTime?.errors?.owlDateTimeParse">Invalid Date Format</div>
-        </div>
-        </div>
-      </div>
-    </div>
-  </form>
-    <div class="card-container">
-      <div class="header-label">Attendees</div>
-      <div class="d-flex justify-content-between flex-wrap">
-        <ng-container *ngFor="let attendees of attendeesList">
-          <div class="card-details">
-            <div class="font-weight-bold text-overflow" *ngIf="attendees.name">
-              {{ attendees.name }}
-            </div>
-            <div
-              class="font-weight-bold text-overflow"
-              *ngIf="attendees.employee_name"
-            >
-              {{ attendees.employee_name }}
-            </div>
-            <div class="text-overflow text-color">{{ attendees.email }}</div>
-            <div class="text-overflow text-color">
-              Type : {{ attendees.type }}
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="button-conatiner">
-      <button mat-raised-button (click)="closePopup()">Cancel</button>
-      <button mat-raised-button class="schedule" (click)="scheduleRoom()">
-        Schedule
-      </button>
-    </div>
-  </div>
-</ng-template>

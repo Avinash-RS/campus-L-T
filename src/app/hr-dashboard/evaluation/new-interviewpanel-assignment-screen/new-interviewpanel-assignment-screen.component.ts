@@ -14,6 +14,7 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { ScheduleInterviewPopupComponent } from '../../pages/schedule-interview-popup/schedule-interview-popup.component';
 
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
@@ -91,17 +92,12 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   panelOpenState = true;
 
 
-  //ScheduleForm
-  scheduleForm: FormGroup;
-  minDate;
-  maxDate;
   selectedCandidate = [];
   selectedInterviewer = [];
   attendeesList = [];
-  objList;
   routeAssignedData: any;
-  toggleVisibility = true;
   allShortlistNames: any = [];
+  buttonLoading = false;
   refreshSubscription: Subscription;
   getParticularCandidatelistSubscription: Subscription;
   getInterviewpanelInstitutesSubscription: Subscription;
@@ -399,7 +395,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       education_level: this.selectedEdu ? this.selectedEdu : '',
       status: this.selectedStatus ? this.selectedStatus : ''
     }
+    this.buttonLoading = true;
     this.getParticularCandidatelistSubscription = this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
+      this.buttonLoading = false;
       const datas = data ? data : [];
       if(!this.pannel) {
         return
@@ -410,6 +408,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.routeAssignedData = apiData;
       this.getUsersList(datas);
     }, (err) => {
+      this.buttonLoading = false;
     });
   }
   interviewPanelFilterApply(data) {
@@ -648,8 +647,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   openDialog1(component, data, apiData) {
     let dialogDetails: any;
-
-
     /**
      * Dialog modal window
      */
@@ -668,16 +665,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     });
   }
 
-  scheduleformInitialize() {
-    this.scheduleForm = this.fb.group({
-      title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
-      password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
-      startTime: [null, [Validators.required]],
-      endTime: [null, [Validators.required]],
-      type: ['1', [Validators.required]]
-    })
-  }
-
   scheduleInterview(){
     if(this.selectedCandidate.length == 0){
       this.appConfig.warningWithTitle('Please select a candidate','');
@@ -691,21 +678,21 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.appConfig.warningWithTitle('Please select a interviewer','');
       return false;
     }
-    this.minDate = new Date();
     this.attendeesList = this.selectedCandidate.concat(this.selectedInterviewer);
-    this.scheduleformInitialize();
-    const dialogRef = this.matDialog.open(this.schedulePopup, {
-      // width: '55%',
-      // height: '70%',
+    const dialogRef = this.matDialog.open(ScheduleInterviewPopupComponent, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data: this.attendeesList,
+      disableClose: true,
       panelClass: 'custom-modalbox'
     });
-  }
 
-  dateChange(){
-    this.minDate = new Date();
-  }
-  closePopup(){
-    this.matDialog.closeAll();
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.processAssign) {
+        this.scheduleHirerachy();
+      }
+    });
   }
 
     onCandidateSelect(e) {
@@ -730,53 +717,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.selectedInterviewer = sData;
     }
 
-  checkIsValidDate() {
-    if (moment(this.scheduleForm.value.endTime).isSameOrBefore(this.scheduleForm.value.startTime)) {
-      this.appConfig.warning('End Date Time should not go beyond State Date Time')
-      return false;
-    }
-    if (moment(this.scheduleForm.value.startTime).isSameOrAfter(this.scheduleForm.value.endTime)) {
-      this.appConfig.warning('Start Date Time should not go beyond End Date Time')
-      return false;
-    }
-    return true;
-  }
-
-  scheduleRoom(){
-    if (this.scheduleForm.valid && this.checkIsValidDate()) {
-      let userDetails = [];
-      this.attendeesList.forEach((value)=>{
-        const vl = {
-          'emailId': value.email,
-          'userFullName':value?.name ? value.name : value.employee_name,
-          'type':value.type,
-        }
-        userDetails.push(vl)
-      })
-      var obj = {
-        'roomId':Math.floor(Math.random() * 10000000).toString(),
-        'password': this.scheduleForm.value.password,
-        'roomName':this.scheduleForm.value.title,
-        'startTime': this.scheduleForm.value.startTime,
-        'endTime': this.scheduleForm.value.endTime,
-        "userDtl": userDetails,
-        "createdByID" : this.appConfig.getLocalData('userEmail'),
-        "createdByName": this.appConfig.getLocalData('username'),
-        "type": this.scheduleForm.value.type == '1' ? 'webrtc' : 'teams'
-      }
-      this.objList = obj;
-     this.scheduleRoomsSubscription =  this.adminService.scheduleRooms(this.objList).subscribe((result:any)=>{
-        if(result.success){
-          this.scheduleHirerachy();
-        } else {
-          this.appConfig.warningWithTitle('Something went wrong','');
-        }
-      })
-    } else {
-      this.scheduleForm.valid ? '' : this.appConfig.warning('Form is Invalid');
-      this.glovbal_validators.validateAllFields(this.scheduleForm);
-    }
-  }
   togglefltr() {
     this.fltractive = !this.fltractive
   }
@@ -786,23 +726,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       const split = moment(date).format('DD-MM-YYYY');
      return split;
     }
-  }
-
-  // FormControls
-  get title() {
-    return this.scheduleForm.get('title');
-  }
-  get password1() {
-    return this.scheduleForm.get('password');
-  }
-  get startTime() {
-    return this.scheduleForm.get('startTime');
-  }
-  get endTime() {
-    return this.scheduleForm.get('endTime');
-  }
-  get type() {
-    return this.scheduleForm.get('type');
   }
 
 }
