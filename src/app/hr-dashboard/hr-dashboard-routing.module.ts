@@ -164,37 +164,6 @@ const routes: Routes = [
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
-            data: {
-              breadcrumb: 'Candidate Details'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`, component: HrSubAssessmentsComponent,
-                data: {
-                  breadcrumb: 'Assessment Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EDUCATION}`, component: HrSubEducationComponent,
-                data: {
-                  breadcrumb: 'Education Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EMPLOYMENT}`, component: HrSubEmploymentComponent,
-                data: {
-                  breadcrumb: 'Employment Documents'
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`,
-                pathMatch: 'full',
-              }
-            ]
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
@@ -207,6 +176,12 @@ const routes: Routes = [
             data: {
               breadcrumb: 'Assigned Details'
             }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
+            data: {
+              breadcrumb: 'Candidate Details'
+            },
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD}`,

@@ -2,14 +2,14 @@
 
 .inv-evaluation {
   background: $white;
-  height: 100%;
+  // height: 100%;
   position: relative;
   .sticky {
     position: sticky;
-    top: 0;
+    top: -4px;
     position: -webkit-sticky; /* Safari */
     background: $white;
-    z-index: 3;
+    z-index: 999;
 
   .router-wrapper {
     margin: 1em 0 0 0;
@@ -31,31 +31,74 @@
       outline: none;
       flex-wrap: wrap;
       .tabs {
-        background: $non-active-sub-bg 0% 0% no-repeat padding-box;
+        background: transparent;
         outline: none !important;
-        color: $white;
-        font-size: 13px;
+        font-size: 16px;
         min-width: 200px;
         display: flex;
         height: 100%;
         position: relative;
         align-items: center;
         justify-content: center;
-        max-width: 200px;
         padding: 0px 1em;
-        border-left: solid $white-primary 1px;
+        border-bottom: 3px solid transparent;
+        color: #545454;
+        font-weight: 600;
       }
       :hover {
-        background: $active-sub-bg-hover;
+        border-bottom: 3px solid #C02222;
       }
       .active {
-        background: $primary-red !important;
-        outline: none;
+        border-bottom: 3px solid #C02222;
         font-weight: 200;
-        color: $white;
+        color: #000;
         opacity: 1;
+        background-color: transparent;
+        font-weight: 600;
       }
     }
   }
 }
+}
+.routing {
+  padding-bottom: 4px;
+}
+:host ::ng-deep .mat-tab-header {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+:host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: none !important;
+  border-bottom: 3px solid #c02222;
+}
+
+:host ::ng-deep .mat-tab-label{
+  opacity: 1 !important;
+  height: 35px !important;
+}
+:host ::ng-deep .mat-tab-label:hover {
+  border-bottom: 3px solid #c02222;
+}
+:host ::ng-deep .mat-tab-label-content {
+  background: 0 0 !important;
+    outline: 0 !important;
+    font-size: 16px !important;
+    min-width: 200px !important;
+    display: flex !important;
+    height: 100% !important;
+    position: relative !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 1em !important;
+    border-bottom: 3px solid transparent !important;
+    color: #545454 !important;
+    font-weight: 600 !important;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  .mat-tab-label-content {
+  color: #000 !important;
+  opacity: 1 !important;
+  background-color: transparent !important;
+  font-weight: 600 !important;
+  }
 }

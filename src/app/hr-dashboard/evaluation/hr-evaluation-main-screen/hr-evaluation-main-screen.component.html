@@ -1,23 +1,26 @@
-<div class="inv-evaluation">
-    <div class="sticky">
-        <app-sub-shared-evaluation-header *ngIf="assessmentName"
-        [details]="assessmentName ? assessmentName : ''" [assess]="assess" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-evaluation-header>
 
-      <div class="router-wrapper">
-        <div class="main-toolbar">
-          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_ASSESSMENTS" [queryParams]="{'data': nameOfAssessment, 'name': candidateName, 'id': candidateId, 'status': candidateStatus, 'tag': tagName, 'uid': uid, 'assess': assess}" routerLinkActive="active" class="tabs">
-            Assessment Details
-          </div>
-          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EDUCATION" [queryParams]="{'data': nameOfAssessment, 'name': candidateName, 'id': candidateId, 'status': candidateStatus, 'tag': tagName, 'uid': uid, 'assess': assess}" routerLinkActive="active" class="tabs">
-            Education Details
-          </div>
-          <div [routerLink]="appConstant.HR_DASHBOARD.SUB_EMPLOYMENT" [queryParams]="{'data': nameOfAssessment, 'name': candidateName, 'id': candidateId, 'status': candidateStatus, 'tag': tagName, 'uid': uid, 'assess': assess}" routerLinkActive="active" class="tabs">
-            Employment Documents
-          </div>
+<div class="inv-evaluation">
+  <div class="sticky">
+      <app-sub-shared-evaluation-header
+      [details]="nameOfAssessment ? nameOfAssessment : ''" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-evaluation-header>
+
+    <div class="router-wrapper">
+      <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event);"
+      [(selectedIndex)]="TabIndex">
+
+    <mat-tab label="Profile & Documents">
+        <div *ngIf="TabIndex == 0 || true" class="selected-div">
+            <app-hr-sub-employment></app-hr-sub-employment>
         </div>
-      </div>
+    </mat-tab>
+
+  <mat-tab label="E-Test Results">
+    <div *ngIf="TabIndex == 1" class="selected-div">
+        <app-hr-sub-education></app-hr-sub-education>
     </div>
-      <div class="routing">
-        <router-outlet></router-outlet>
-      </div>
+  </mat-tab>
+
+  </mat-tab-group>
     </div>
+  </div>
+  </div>

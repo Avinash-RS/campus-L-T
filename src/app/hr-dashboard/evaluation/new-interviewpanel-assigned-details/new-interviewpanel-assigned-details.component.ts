@@ -33,6 +33,10 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   routedData: any;
   statusList = [
     {
+      name: 'All',
+      value: 'all'
+    },
+    {
       name: 'Unassigned',
       value: '0'
     },
@@ -129,9 +133,9 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
     this.activatedRoute.queryParams.subscribe(params => {
       if (params && params['data']) {
         this.routedData = JSON.parse(params['data']);
-        this.selectedInstitute = this.routedData.college_name;
-        this.selectedShortlistname = this.routedData.shortlist_name;
-        this.selectedEdu = this.routedData.education_level;
+        // this.selectedInstitute = this.routedData.college_name;
+        // this.selectedShortlistname = this.routedData.shortlist_name;
+        // this.selectedEdu = this.routedData.education_level;
         this.selectedStatus = '1';
       } else {
       }
@@ -313,16 +317,16 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
   onCellClicked(event) {
     if (event.colDef.field === 'name') {
       const param = {
-        assessment: event['data'] && event['data']['shortlist_name'] ? event['data']['shortlist_name'] : '',
+        shortlist_name: event['data'] && event['data']['shortlist_name'] ? event['data']['shortlist_name'] : '',
         cid: event['data'] && event['data']['candidate_id'] ? event['data']['candidate_id'] : '',
         name: event['data'] && event['data']['name'] ? event['data']['name'] : '',
         status: event['data'] && event['data']['evaluation_status'] ? event['data']['evaluation_status'] : '',
         tag: event['data'] && event['data']['tag'] ? event['data']['tag'] : '',
         uid: event['data'] && event['data']['uid'] ? event['data']['uid'] : '',
+        email: event['data'] && event['data']['email'] ? event['data']['email'] : '',
         assess: event['data'] && event['data']['assement_name'] ? event['data']['assement_name'] : ''
       }
-      // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SUB_ASSESSMENTS,  {data: this.nameOfAssessment, id: cid ? cid : '', name: name ? name : '', status: status ? status : '', tag: tag ? tag: '', uid: uid ? uid : ''});
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION, { data: param['assessment'], id: param['cid'], name: param['name'], status: param['status'], tag: param['tag'], uid: param['uid'], assess: param['assess'] });
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION, { data: param['assess'], id: param['cid'], name: param['name'], status: param['status'], tag: param['tag'], uid: param['uid'], email: param['email'], shortlist_name: param['shortlist_name'] });
     }
   }
 
@@ -386,7 +390,7 @@ export class NewInterviewpanelAssignedDetailsComponent implements OnInit, AfterV
       shortlist_name: this.selectedShortlistname ? this.selectedShortlistname : '',
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
       education_level: this.selectedEdu ? this.selectedEdu : '',
-      status: this.selectedStatus ? this.selectedStatus : ''
+      status: this.selectedStatus ? (this.selectedStatus == 'all' ? '' : this.selectedStatus) : ''
     }
     this.gridApi.showLoadingOverlay();
     this.getAlreadyAssignedSubscription = this.adminService.getAlreadyAssigned(apiData).subscribe((data: any) => {

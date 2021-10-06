@@ -5,7 +5,6 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
