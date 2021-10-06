@@ -165,7 +165,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
-              breadcrumb: 'Panel Assignment'
+              breadcrumb: ''
             }
           },
           {

@@ -25,9 +25,9 @@ export class HrSubEmploymentComponent implements OnInit {
     private sharedService: SharedServiceService,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [];
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
+    // // Sub-Navigation menus. This will be retrieved in Admin master component
+    // const subWrapperMenus = [];
+    // this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
 

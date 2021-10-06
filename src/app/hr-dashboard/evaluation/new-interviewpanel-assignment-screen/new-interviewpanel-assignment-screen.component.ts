@@ -137,8 +137,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       name: 'Bulk Assign',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
     }
-
-    ];
+   ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }

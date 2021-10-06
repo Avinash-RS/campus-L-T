@@ -25,9 +25,6 @@ export class HrSubEducationComponent implements OnInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [];
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
 

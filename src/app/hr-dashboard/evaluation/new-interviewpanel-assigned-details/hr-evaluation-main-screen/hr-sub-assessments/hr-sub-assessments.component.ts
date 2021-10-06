@@ -40,38 +40,6 @@ export class HrSubAssessmentsComponent implements OnInit, AfterViewInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      // {
-      //   icon: 'work.svg',
-      //   name: 'Candidate details',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSESSMENTDETAILS,
-      //   data: `${this.activatedRoute.queryParams['_value']['data']}`,
-      //   active: true
-      // },
-      // {
-      //   icon: '002-cv.svg',
-      //   name: 'Interview panel',
-      //   router: CONSTANT.ENDPOINTS.HR_DASHBOARD.EVALUATION_INTERVIEW_PANEL
-      // },
-      {
-        icon: 'work.svg',
-        name: 'Panel Assignment',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
-      },
-      {
-        icon: '002-cv.svg',
-        name: 'Assigned Details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED,
-        active: true
-      },
-      {
-        icon: '002-group-1.svg',
-        name: 'Bulk Assign',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
-      }
-      ];
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
 
