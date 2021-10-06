@@ -8,11 +8,11 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-inv-unifiedreports',
-  templateUrl: './inv-unifiedreports.component.html',
-  styleUrls: ['./inv-unifiedreports.component.scss']
+  selector: 'app-hr-sub-education',
+  templateUrl: './hr-sub-education.component.html',
+  styleUrls: ['./hr-sub-education.component.scss']
 })
-export class InvUnifiedreportsComponent implements OnInit {
+export class HrSubEducationComponent implements OnInit {
 
   queryParams: any;
   getAllReportsData: any;
@@ -25,9 +25,6 @@ export class InvUnifiedreportsComponent implements OnInit {
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [];
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
 

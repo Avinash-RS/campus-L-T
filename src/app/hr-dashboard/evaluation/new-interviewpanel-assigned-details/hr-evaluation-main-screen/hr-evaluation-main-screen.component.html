@@ -1,0 +1,26 @@
+
+<div class="inv-evaluation">
+  <div class="sticky">
+      <app-sub-shared-evaluation-header
+      [details]="nameOfAssessment ? nameOfAssessment : ''" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-evaluation-header>
+
+    <div class="router-wrapper">
+      <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event);"
+      [(selectedIndex)]="TabIndex">
+
+    <mat-tab label="Profile & Documents">
+        <div *ngIf="TabIndex == 0 || true" class="selected-div">
+            <app-hr-sub-employment></app-hr-sub-employment>
+        </div>
+    </mat-tab>
+
+  <mat-tab label="E-Test Results">
+    <div *ngIf="TabIndex == 1" class="selected-div">
+        <app-hr-sub-education></app-hr-sub-education>
+    </div>
+  </mat-tab>
+
+  </mat-tab-group>
+    </div>
+  </div>
+  </div>

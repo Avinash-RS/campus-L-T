@@ -128,14 +128,14 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`,
         component: CandidateDocumentComponent, canActivate: [CanloadGuard],
         data: {
-          breadcrumb: 'Document'
+          breadcrumb: 'Upload Documents'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT_LIST}`,
             component: CandidateUploadDocumentComponent,
             data: {
-              breadcrumb: 'Document List'
+              breadcrumb: ''
             }
           },
           {

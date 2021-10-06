@@ -23,10 +23,7 @@ import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-sh
 import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
 import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
 import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
-import { HrEvaluationMainScreenComponent } from './evaluation/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
-import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
-import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
-import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
+import { HrEvaluationMainScreenComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
 import { NewInterviewpanelResultsUploadComponent } from './evaluation/new-interviewpanel-results-upload/new-interviewpanel-results-upload.component';
@@ -34,6 +31,7 @@ import { IcAddorListComponent } from './pages/ic-AddorList/ic-addor-list.compone
 import { OfferedCandidatesListComponent } from './pages/offered-candidates-list/offered-candidates-list.component';
 import { BusinesspanelRouteComponent } from './pages/businesspanel-route/businesspanel-route.component';
 import { BulkUploadsComponent } from './hr-user-management/bulk-uploads/bulk-uploads.component';
+import { AssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/assigned-details/assigned-details.component';
 
 const routes: Routes = [
   {
@@ -164,49 +162,37 @@ const routes: Routes = [
         },
         children: [
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
-            data: {
-              breadcrumb: 'Candidate Details'
-            },
-            children: [
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`, component: HrSubAssessmentsComponent,
-                data: {
-                  breadcrumb: 'Assessment Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EDUCATION}`, component: HrSubEducationComponent,
-                data: {
-                  breadcrumb: 'Education Details'
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_EMPLOYMENT}`, component: HrSubEmploymentComponent,
-                data: {
-                  breadcrumb: 'Employment Documents'
-                }
-              },
-              {
-                path: '',
-                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.SUB_ASSESSMENTS}`,
-                pathMatch: 'full',
-              }
-            ]
-          },
-          {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT}`,
             component: NewInterviewpanelAssignmentScreenComponent,
             data: {
-              breadcrumb: 'Panel Assignment'
+              breadcrumb: ''
             }
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED}`,
             component: NewInterviewpanelAssignedDetailsComponent,
             data: {
-              breadcrumb: 'Assigned Details'
-            }
+              breadcrumb: 'Assigned'
+            },
+            children: [
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSIGNED_DETAILS}`, component: AssignedDetailsComponent,
+                data: {
+                  breadcrumb: 'Details'
+                },
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_PANEL_EVALUATION}`, component: HrEvaluationMainScreenComponent,
+                data: {
+                  breadcrumb: 'Candidate Details'
+                },
+              },
+              {
+                path: '',
+                redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.ASSIGNED_DETAILS}`,
+                pathMatch: 'full',
+              }
+            ]
           },
           {
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD}`,
@@ -245,7 +231,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRST_LEVEL_REPORTS_LIST}`,
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.REPORTS_LIST}`,
             pathMatch: 'full',
           }
         ]

@@ -45,7 +45,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   selectedShortlistname: any;
   selectedInstitute: any;
   selectedEdu: any;
-  selectedStatus: any = '0';
+  selectedStatus: any = 'all';
   selectedHRDiscipline: any;
   allInstitutes: any;
   allDisciplines: any;
@@ -53,6 +53,10 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   allEducations: any;
   allAssessments: any;
   statusList = [
+    {
+      name: 'All',
+      value: 'all'
+    },
     {
       name: 'Unassigned',
       value: '0'
@@ -133,8 +137,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       name: 'Bulk Assign',
       router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
     }
-
-    ];
+   ];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
     this.editRouteParamGetter();
   }
@@ -157,7 +160,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.activatedRoute.queryParams.subscribe(params => {
       if (params && params['shortlist_name']) {
         this.selectedShortlistname = params['shortlist_name'];
-        this.selectedStatus = null;
+        this.selectedStatus = 'all';
         this.candidateFilterApply();
       } else {
       }
@@ -194,7 +197,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.selectedShortlistname = null;
     this.selectedInstitute = null;
     this.selectedEdu = null;
-    this.selectedStatus = '0';
+    this.selectedStatus = 'all';
     this.userList = null;
     this.rowData = null;
     this.fltractive = false;
@@ -227,12 +230,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getModel(e) {
     // console.log(e);
-
+    setTimeout(() => {
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
       // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
     }
+  }, 500);
   }
 
   onQuickFilterChanged() {
@@ -267,6 +271,26 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         }
       },
       {
+        headerName: 'Status', field: 'hr_assign_status',
+        filter: 'agSetColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'hr_assign_status',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Is KYC Skipped', field: 'kyc_exempted',
+        filter: 'agSetColumnFilter',
+        minWidth: 120,
+        sortable: true,
+        tooltipField: 'kyc_exempted',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Discipline', field: 'discipline',
         filter: 'agSetColumnFilter',
         filterParams: {
@@ -291,17 +315,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         getQuickFilterText: (params) => {
           return params.value;
         }
-      },
-      {
-        headerName: 'Status', field: 'status',
-        filter: 'agSetColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'status',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
+      }
     ];
   }
 
@@ -323,12 +337,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getModelHR(e) {
     // console.log(e);
-
+    setTimeout(() => {
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
       // this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
     }
+  }, 500);
   }
 
   onQuickFilterChangedHR() {
@@ -393,7 +408,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       shortlist_name: this.selectedShortlistname ? this.selectedShortlistname : '',
       college_name: this.selectedInstitute ? this.selectedInstitute : '',
       education_level: this.selectedEdu ? this.selectedEdu : '',
-      status: this.selectedStatus ? this.selectedStatus : ''
+      status: this.selectedStatus ? (this.selectedStatus == 'all' ? '' : this.selectedStatus) : ''
     }
     this.buttonLoading = true;
     this.getParticularCandidatelistSubscription = this.adminService.getParticularCandidatelist(apiData).subscribe((data: any) => {
@@ -481,6 +496,8 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       let count = 0;
       this.userList.forEach(element => {
         element['checked'] = false;
+        element['hr_assign_status'] = element['hr_assign_status'] == 1 ? 'Assigned' : 'Unassigned';
+        element['kyc_exempted'] = element['kyc_exempted'] == 1 ? 'Yes' : 'No';
         count = count + 1;
         element['sid'] = count;
         if (element && element['level'] == 'UG') {

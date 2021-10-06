@@ -1,40 +1,44 @@
-<mat-expansion-panel *ngIf="role != 'candidate' || showInterview" [expanded]="true">
-  <mat-expansion-panel-header>
-    Interview Session
-  </mat-expansion-panel-header>
-  <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview else nocard">
-    <div *ngIf="role == 'candidate'" class="iconinfo"><em class="icon-Info"></em></div>
-    <div>
-        <div *ngIf="role == 'candidate'" class="interview">
-            <h5>Dear Candidate</h5>
-            <p>You have been invited for an interview by <strong>'LnT EduTech'</strong> on below date and time for
-                Technical/HR interview.</p>
-        </div>
-        <div class="joinInterview">
-            <span class="meetingID">Meeting Room ID: {{interview.roomId}}</span>
-            <!-- Candidate Join interview button -->
-            <div class="designation">
-                <h2>{{interview.roomName}}</h2>
-                <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : 'disabled'" *ngIf="role == 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
-            </div>
-            <div>
-                <span class="timing"><em class="icon-Calendar"></em> {{interview.startTime | date:'dd MMM yyyy - HH:mm a'}}
-                    - {{interview.endTime | date:'dd MMM yyyy - HH:mm a'}}</span>
-                <span *ngIf="role == 'candidate'" class="note"><b>Note:</b> The link will be active 1 hour prior to the
-                    interview time as mentioned above.</span>
-            </div>
-            <!-- Interviewer Join interview button -->
-            <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : 'disabled'" *ngIf="role != 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
-        </div>
-    </div>
+<ng-container *ngIf="role == 'candidate' && !expiredoneDayago" [ngTemplateOutlet]="showInterview"></ng-container>
+<ng-container *ngIf="role == 'interview_panel'" [ngTemplateOutlet]="showInterview"></ng-container>
 
-</div>
-<ng-template #nocard>
-<div class="joinInterviewWrapper">
-    <div class="joinInterview nocard">
-        No interview scheduled at this moment
-    </div>
-</div>
+<ng-template #showInterview>
+  <mat-expansion-panel *ngIf="role != 'candidate' || showInterview" [expanded]="true">
+    <mat-expansion-panel-header>
+      Interview Session
+    </mat-expansion-panel-header>
+    <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview else nocard">
+      <div *ngIf="role == 'candidate'" class="iconinfo"><em class="icon-Info"></em></div>
+      <div>
+          <div *ngIf="role == 'candidate'" class="interview">
+              <h5>Dear Candidate</h5>
+              <p>You have been invited for an interview by <strong>'LnT EduTech'</strong> on below date and time for
+                  Technical/HR interview.</p>
+          </div>
+          <div class="joinInterview">
+              <span class="meetingID">Meeting Room ID: {{interview?.roomId}}</span>
+              <!-- Candidate Join interview button -->
+              <div class="designation">
+                  <h2>{{interview?.roomName}}</h2>
+                  <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : 'disabled'" *ngIf="role == 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
+              </div>
+              <div>
+                  <span class="timing"><em class="icon-Calendar"></em> {{interview?.startTime | date:'dd MMM yyyy - HH:mm a'}}
+                      - {{interview?.endTime | date:'dd MMM yyyy - HH:mm a'}}</span>
+                  <span *ngIf="role == 'candidate'" class="note"><b>Note:</b> The link will be active 1 hour prior to the
+                      interview time as mentioned above.</span>
+              </div>
+              <!-- Interviewer Join interview button -->
+              <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : 'disabled'" *ngIf="role != 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
+          </div>
+      </div>
+
+  </div>
+  <ng-template #nocard>
+  <div class="joinInterviewWrapper">
+      <div class="joinInterview nocard">
+          No interview scheduled at this moment
+      </div>
+  </div>
+  </ng-template>
+  </mat-expansion-panel>
 </ng-template>
-</mat-expansion-panel>
-

@@ -529,7 +529,10 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       return this.formSubmitted = true;
     }
     if (this.appConfig.getLocalData('joiningFormAccess') == 'true') {
-      this.formSubmitted = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+     return this.formSubmitted = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
+    }
+    if (this.appConfig.getLocalData('form_submmited') == 'false') {
+     return this.formSubmitted = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
     } else {
       if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
         this.formSubmitted = true;
@@ -592,7 +595,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_coc]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
       [this.form_joining]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
       [this.form_terms_conditions]: [null, [Validators.requiredTrue]],
-      [this.form_ack_place]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+      [this.form_ack_place]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_ack_date]: [{ value: this.dateConvertionForm(new Date()), disabled: true }, [Validators.required]]
     });
   }

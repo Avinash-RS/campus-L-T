@@ -181,12 +181,12 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
 
 
   getModel(e) {
-    // console.log(e);
-
-    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
-    if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.warning('No search results found');
-    }
+    setTimeout(() => {
+      const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+      if (filteredArray && filteredArray.length === 0) {
+        this.appConfig.warning('No search results found');
+      }
+    }, 500);
   }
 
   onQuickFilterChanged() {
@@ -238,7 +238,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         },
       },
       {
-        headerName: 'Candidate id', field: 'candidate_id',
+        headerName: 'Candidate Id', field: 'candidate_id',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -248,7 +248,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Candidate name', field: 'candidate_name',
+        headerName: 'Candidate Name', field: 'candidate_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -262,7 +262,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Candidate Email id', field: 'selected_candidate',
+        headerName: 'Candidate Email Id', field: 'selected_candidate',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -335,7 +335,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Date & Time of upload', field: 'date_time',
+        headerName: 'Date & Time of Upload', field: 'date_time',
         filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,

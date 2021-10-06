@@ -309,7 +309,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Institute name', field: 'field_institute_name', colId: 'ifield_institute_name',
+        headerName: 'Institute Name', field: 'field_institute_name', colId: 'ifield_institute_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -320,7 +320,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Institute email Id', field: 'email', colId: 'iemail',
+        headerName: 'Institute Email Id', field: 'email', colId: 'iemail',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -367,7 +367,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: `Contact person`, field: 'field_first_name', colId: 'ifield_first_name',
+        headerName: `Contact Person`, field: 'field_first_name', colId: 'ifield_first_name',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
@@ -380,7 +380,7 @@ export class userListDefinition {
         },
       },
       {
-        headerName: 'Job title', field: 'field_institute_title', colId: 'ifield_institute_title',
+        headerName: 'Job Title', field: 'field_institute_title', colId: 'ifield_institute_title',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
@@ -393,7 +393,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Mobile number', field: 'field_institute_mobile_number', colId: 'ifield_institute_mobile_number',
+        headerName: 'Mobile Number', field: 'field_institute_mobile_number', colId: 'ifield_institute_mobile_number',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,

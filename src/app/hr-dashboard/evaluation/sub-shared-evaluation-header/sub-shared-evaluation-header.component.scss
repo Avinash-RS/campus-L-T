@@ -21,7 +21,7 @@
       .grid-wrapper {
         display: grid;
         // grid-template-columns: 0.7fr 1.3fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         .group {
           margin: 0.5em;
           display: grid;
@@ -88,5 +88,79 @@
         }
       }
     }
+  }
+}
+
+.details-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .nameinfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .img {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #d0d0d0;
+      border-radius: 50px;
+      overflow: hidden;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 100%;
+      }
+    }
+    div:nth-child(2) {
+      font-size: 24px;
+      line-height: 1.1;
+      margin-right: 50px;
+      white-space: nowrap;
+      span {
+        font-size: 13px;
+        color: #808080;
+        display: block;
+      }
+    }
+
+  }
+  .iconinfo {
+    color: #808080;
+  }
+  .statusinfo {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    color: #808080;
+    min-width: 200px;
+    justify-content: space-around;
+  }
+
+}
+
+
+::ng-deep span.status {
+  border-radius: 4px;
+  display: inline-block;
+  line-height: 0.7;
+  font-size: 11px;
+  padding: 7px 8px;
+  &.scheduled {
+    background-color: #bababa;
+    color: #666666 ;
+  }
+  &.inprogress {
+  background-color: #ffbc00;
+  color: #fff;
+  }
+  &.completed {
+    background-color: #48cc83;
+    color: #fff;
+    }
+  &.rejected {
+    background-color: #c02222;
+    color: #fff;
   }
 }

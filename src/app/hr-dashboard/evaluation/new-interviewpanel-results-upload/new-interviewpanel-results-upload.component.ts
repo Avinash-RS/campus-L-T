@@ -16,26 +16,6 @@ export class NewInterviewpanelResultsUploadComponent implements OnInit, AfterVie
   constructor(
     private sharedService: SharedServiceService,
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-    {
-      icon: '002-cv.svg',
-      name: 'Panel Assignment',
-      router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
-    },
-    {
-      icon: '002-cv.svg',
-      name: 'Assigned Details',
-      router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED
-    },
-    {
-      icon: '002-group-1.svg',
-      name: 'Bulk Assign',
-      router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
-    }
-
-    ];
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
   ngOnInit() {

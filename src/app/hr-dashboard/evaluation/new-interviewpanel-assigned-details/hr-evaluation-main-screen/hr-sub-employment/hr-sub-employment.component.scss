@@ -1,0 +1,15 @@
+@import '../../../../../themes/themes.scss';
+
+.hr-evaluation-sub-edu {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  background: $wrapper-light-gray;
+  height: 100%;
+    .button-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2em 0;
+    }
+}

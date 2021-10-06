@@ -159,7 +159,8 @@ export class LoginpageComponent implements OnInit {
               this.appConfig.setLocalData('driveId', data && data['active_drive_id'] && data['active_drive_id'] ? data['active_drive_id'] : null);
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
-              this.appConfig.setLocalData('firstShortlist', data && ['first_shortlist'] && data['first_shortlist'] === '1' ? 'true' : 'false');
+              this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
+              this.appConfig.setLocalData('form_submmited', data && data['form_submmited'] && data['form_submmited'] == '1' ? 'true' : 'false');
               let todayDate = new Date();
               let month = todayDate.getMonth() + 1;
               let day = todayDate.getDate()

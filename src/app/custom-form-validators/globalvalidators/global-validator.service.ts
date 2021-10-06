@@ -76,7 +76,7 @@ export class GlobalValidatorService {
     }
 
     alphaNum255() {
-      const alphaNumericwithCommonSpecialCharactersMaxLength30: RegExp = /^([a-zA-Z0-9_ \-,.\r\n]){0,244}$/;
+      const alphaNumericwithCommonSpecialCharactersMaxLength30: RegExp = /^([a-zA-Z0-9_ \-,.\r\n]){0,255}$/;
       return this.regexValidator(alphaNumericwithCommonSpecialCharactersMaxLength30, {alphaNum255: true});
     }
 

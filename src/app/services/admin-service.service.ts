@@ -507,7 +507,7 @@ export class AdminServiceService {
 
   //hr 1st sortlist report list
   firstSortlistReportslist(data){
-    return this.http.post(`${this.BASE_URL}/api/firstshortlist_report`, data,
+    return this.http.post(`${this.BASE_URL}/reports/applicants_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
@@ -519,7 +519,7 @@ export class AdminServiceService {
 
    //hr interview panel report list
    interviewPanelReportslist(data){
-    return this.http.post(`${this.BASE_URL}/profile/interv_panel_users_reprt`, data,
+    return this.http.post(`${this.BASE_URL}/reports/interview_panel_users_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
@@ -537,13 +537,13 @@ export class AdminServiceService {
 
   //hr 2nd shortlist report list
   secondShortlistReport(data){
-    return this.http.post(`${this.BASE_URL}/api/secondshortlist_report`, data,
+    return this.http.post(`${this.BASE_URL}/reports/shortlists_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   //hr 3rd shortlist report list
   assessmentFeedbackReport(data){
-    return this.http.post(`${this.BASE_URL}/profile/assement_feedback_report`, data,
+    return this.http.post(`${this.BASE_URL}/reports/evaluation_feedback_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
