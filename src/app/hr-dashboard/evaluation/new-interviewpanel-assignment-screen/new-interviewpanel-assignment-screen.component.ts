@@ -230,12 +230,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getModel(e) {
     // console.log(e);
-
+    setTimeout(() => {
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warningWithTitle('No search results found', 'Candidate Not Found');
       // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No search results found');
     }
+  }, 500);
   }
 
   onQuickFilterChanged() {
@@ -336,12 +337,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
 
   getModelHR(e) {
     // console.log(e);
-
+    setTimeout(() => {
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
     if (filteredArray && filteredArray.length === 0) {
       this.appConfig.warningWithTitle('No search results found', 'Interview Panel Not Found');
       // this.appConfig.nzNotification('error', 'Interview Panel Not Found', 'No search results found');
     }
+  }, 500);
   }
 
   onQuickFilterChangedHR() {

@@ -96,18 +96,7 @@ export class ListofICComponent implements OnInit, OnDestroy {
 
     this.columnDefs = [
       {
-        headerName: 'S no', field: 'counter',
-        filter: 'agNumberColumnFilter',
-        maxWidth: 100,
-        sortable: true,
-        tooltipField: 'counter',
-        // comparator: this.customComparator,
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Email id', field: 'email_id',
+        headerName: 'Email Id', field: 'email_id',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
