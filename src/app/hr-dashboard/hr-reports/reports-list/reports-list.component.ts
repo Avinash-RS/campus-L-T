@@ -1,16 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import * as _moment from 'moment';
-import { Moment } from 'moment';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { FormGroup } from '@angular/forms';
-import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -354,7 +351,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     let sendReq = {
       'to': '',
       'from': '',
-      'institute_name': ''
+      'institute': ''
     };
 
     if(data.to && data.to._d){
@@ -363,7 +360,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       sendReq = {
         'to': dateT.toString(),
         'from': dateF.toString(),
-        'institute_name': data.institute_name
+        'institute': data.institute_name
       }
       if(sendReq.to >= sendReq.from){
        this.secondShortlistReportSubscription = this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
@@ -385,7 +382,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       sendReq = {
         'to': '',
         'from': '',
-        'institute_name': data.institute_name
+        'institute': data.institute_name
       }
        this.secondShortlistReportSubscription1 = this.adminService.secondShortlistReport(sendReq).subscribe((data: any) => {
 
@@ -409,7 +406,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     let sendReq = {
       'to_date': '',
       'from_date': '',
-      'institute_name': ''
+      'institute': ''
     };
     if(data.to && data.to._d){
       const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
@@ -417,7 +414,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       sendReq = {
         'to_date': dateT.toString(),
         'from_date': dateF.toString(),
-        'institute_name': data.institute_name
+        'institute': data.institute_name
       }
       if(sendReq.to_date >= sendReq.from_date){
       this.assessmentFeedbackReportSubscription =  this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
@@ -435,7 +432,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       sendReq = {
         'to_date': '',
         'from_date': '',
-        'institute_name': data.institute_name
+        'institute': data.institute_name
       }
       this.assessmentFeedbackReportSubscription1 = this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
 
