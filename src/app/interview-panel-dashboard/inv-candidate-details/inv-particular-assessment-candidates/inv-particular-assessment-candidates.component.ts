@@ -380,6 +380,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
               if (params["data"] && params["data"]["join_interview"] == "Interview Completed") {
                 return `<button class="join-inter completed-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
               }
+              // if (params["data"] && params["data"]["join_interview"] == "-") {
+              //   return `Not Scheduled`;
+              // }
               else {
                 return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
               }
@@ -448,7 +451,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       });
     });
 
-    this.userList = this.userList.filter((element) => element.startTime);
+    // this.userList = this.userList.filter((element) => element.startTime);
     this.rowData = this.userList;
 
     this.getSummaryCount();
@@ -525,6 +528,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
                 : element.evaluation_status == "1"
                 ? "Completed"
                 : "Scheduled";
+            element.assigned_by = "-";
+            element.startTime = '';
+            element.endTime = '';
+            element.join_interview = "Not Scheduled";
             this.userList.push(element);
           }
         });

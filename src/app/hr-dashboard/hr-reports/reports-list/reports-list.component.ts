@@ -332,8 +332,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
        this.interviewPanelReportslistSubscription = this.adminService.interviewPanelReportslist(sendReq).subscribe((data: any) => {
 
 
-          const excel = data && data.url ? data.url : '';
-          window.open(excel, '_blank');
+        const excel = data && data[0].url ? data[0].url : '';
+        window.open(excel, '_blank');
 
         }, (err) => {
         });
@@ -420,8 +420,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       this.assessmentFeedbackReportSubscription =  this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
 
 
-          const excel = data && data.url ? data.url : '';
-          window.open(excel, '_blank');
+        const excel = data && data[0].url ? data[0].url : '';
+        window.open(excel, '_blank');
 
         }, (err) => {
         });
@@ -437,8 +437,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       this.assessmentFeedbackReportSubscription1 = this.adminService.assessmentFeedbackReport(sendReq).subscribe((data: any) => {
 
 
-          const excel = data && data.url ? data.url : '';
-          window.open(excel, '_blank');
+        const excel = data && data[0].url ? data[0].url : '';
+        window.open(excel, '_blank');
 
         }, (err) => {
         });
@@ -472,8 +472,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       this.candidateReportslistSubscription = this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
 
 
-          const excel = data && data.url ? data.url : '';
-          window.open(excel, '_blank');
+        const excel = data && data[0].url ? data[0].url : '';
+        window.open(excel, '_blank');
 
         }, (err) => {
         });
@@ -492,8 +492,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
        this.candidateReportslistSubscription1 = this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
 
 
-          const excel = data && data.url ? data.url : '';
-          window.open(excel, '_blank');
+        const excel = data && data[0].url ? data[0].url : '';
+        window.open(excel, '_blank');
 
         }, (err) => {
         });
