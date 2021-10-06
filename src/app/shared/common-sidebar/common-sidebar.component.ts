@@ -65,7 +65,6 @@ getDriveList() {
   this.activeDriveId = e;
   this.appConfig.setLocalData('driveId', this.activeDriveId);
   let currentUrl = this.router.url;
-  console.log('coming', this.router.url);
   if (this.role != 'candidate' && this.role != 'interview_panel') {
     if (currentUrl.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION)) {
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);

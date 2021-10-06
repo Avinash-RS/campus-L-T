@@ -15,15 +15,6 @@ export class CandidateDocumentComponent implements OnInit, AfterViewInit {
     private appConfig: AppConfigService,
     private candidateService: CandidateMappersService,
     private sharedService: SharedServiceService) {
-    const subWrapperMenus = [
-      {
-        icon: '',
-        name: 'Document Upload',
-        router: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT_LIST
-      }
-
-    ];
-    this.sharedService.subMenuSubject.next(subWrapperMenus);
   }
 
   ngOnInit() {

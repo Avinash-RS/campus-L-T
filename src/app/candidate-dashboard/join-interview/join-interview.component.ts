@@ -18,6 +18,7 @@ export class JoinInterviewComponent implements OnInit {
   userId;
   findIndex;
   enableButton: any;
+  expiredoneDayago: boolean;
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
@@ -56,6 +57,7 @@ export class JoinInterviewComponent implements OnInit {
       if (custom > 0) {
         this.enableButton = "Yet to Start";
       } else {
+        this.expiredoneDayago = custom < -1500 ? true : false;
         this.enableButton = "Time Expired";
       }
     }
