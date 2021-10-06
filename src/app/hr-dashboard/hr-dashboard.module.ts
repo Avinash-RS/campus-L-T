@@ -24,10 +24,10 @@ import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-lev
 import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
 import { SharedSubHeaderSecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/shared-sub-header-second-level-shortlist/shared-sub-header-second-level-shortlist.component';
 import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
-import { HrEvaluationMainScreenComponent } from './evaluation/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
-import { HrSubAssessmentsComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
-import { HrSubEducationComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
-import { HrSubEmploymentComponent } from './evaluation/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
+import { HrEvaluationMainScreenComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
+import { HrSubAssessmentsComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
+import { HrSubEducationComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
+import { HrSubEmploymentComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-sub-employment/hr-sub-employment.component';
 import { SubSharedEvaluationHeaderComponent } from './evaluation/sub-shared-evaluation-header/sub-shared-evaluation-header.component';
 import { NewInterviewpanelAssignmentScreenComponent } from './evaluation/new-interviewpanel-assignment-screen/new-interviewpanel-assignment-screen.component';
 import { NewInterviewpanelAssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/new-interviewpanel-assigned-details.component';
@@ -47,10 +47,11 @@ import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 import { BulkUploadsComponent } from './hr-user-management/bulk-uploads/bulk-uploads.component';
 import { ClickableStatusBarComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/custom-get-selected-rows-count';
 import { ScheduleInterviewPopupComponent } from './pages/schedule-interview-popup/schedule-interview-popup.component';
+import { AssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/assigned-details/assigned-details.component';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, EvaluationComponent, UserListComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, SecondLevelShortlistedCandidatesReportComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, NewInterviewpanelAssignmentScreenComponent, NewInterviewpanelAssignedDetailsComponent, NewInterviewpanelResultsUploadComponent, IcAddorListComponent, OfferedCandidatesListComponent, AddICComponent, ListofICComponent, UploadSelectedCandidatesComponent, ListofSelectedCandidatesComponent, UploadSelectedCandidatesErrorReportComponent, BusinesspanelRouteComponent, SscUploadSectionComponent, BulkUploadsComponent, ClickableStatusBarComponent, ScheduleInterviewPopupComponent],
+  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, ApplyCriteriaComponent, ShortlistedCandidateListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, EvaluationComponent, UserListComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, SecondLevelShortlistedCandidatesReportComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, NewInterviewpanelAssignmentScreenComponent, NewInterviewpanelAssignedDetailsComponent, NewInterviewpanelResultsUploadComponent, IcAddorListComponent, OfferedCandidatesListComponent, AddICComponent, ListofICComponent, UploadSelectedCandidatesComponent, ListofSelectedCandidatesComponent, UploadSelectedCandidatesErrorReportComponent, BusinesspanelRouteComponent, SscUploadSectionComponent, BulkUploadsComponent, ClickableStatusBarComponent, ScheduleInterviewPopupComponent, AssignedDetailsComponent],
 
   imports: [
     CommonModule,

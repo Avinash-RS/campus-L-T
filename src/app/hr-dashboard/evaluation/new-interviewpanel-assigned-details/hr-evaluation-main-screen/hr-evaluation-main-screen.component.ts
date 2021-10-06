@@ -6,6 +6,8 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hr-evaluation-main-screen',
@@ -26,6 +28,9 @@ export class HrEvaluationMainScreenComponent implements OnInit, OnDestroy {
   form: any;
   queryParams: any;
   TabIndex = 0;
+
+  refreshSubscription: Subscription;
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -43,11 +48,25 @@ export class HrEvaluationMainScreenComponent implements OnInit, OnDestroy {
     this.editRouteParamGetter();
   }
 
-  ngOnInit() {
-  }
+ngOnInit() {
+  this.refreshOndriveChangeRXJS();
+}
+
+refreshOndriveChangeRXJS() {
+  this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+  .pipe(
+  finalize(()=> {
+    }))
+    .subscribe((data: any)=> {
+    if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_PANEL_EVALUATION)) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.ASSIGNED_DETAILS);
+    }
+  });
+}
 
   ngOnDestroy() {
     this.appConfig.clearLocalDataOne('tabIndex');
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
   }
   tabChanged(e) {
     this.TabIndex = e.index;
