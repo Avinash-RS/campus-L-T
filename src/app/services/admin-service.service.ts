@@ -694,8 +694,8 @@ scheduleRooms(data) {
   return this.http.post(`${this.WEBRTC_NODE_API}/scheduleinterview`, data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
 }
 getScheduledList(data) {
-  // return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});
-  return of(null);
+  return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});
+  // return of(null);
 }
 
 getDummyJson() {

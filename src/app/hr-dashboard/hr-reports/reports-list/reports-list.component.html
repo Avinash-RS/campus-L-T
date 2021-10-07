@@ -6,7 +6,7 @@
 
           <!-- Position Column -->
           <ng-container matColumnDef="reportname">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reports name </th>
+            <th mat-header-cell *matHeaderCellDef> Reports name </th>
             <td style="white-space: nowrap !important;" class="haderWidth" mat-cell *matCellDef="let element; let i = index;">
               <label *ngIf="i == 0">1st shortlist<span class="asterick">*</span></label>
               <label *ngIf="i == 1">2nd shortlist<span class="asterick">*</span></label>
@@ -84,7 +84,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="col3">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>&#160;Date from  </th>
+              <th mat-header-cell *matHeaderCellDef>&#160;Date from  </th>
               <td mat-cell *matCellDef="let element; let i = index;">
                   <!-- <div *ngIf="i == 0">
                       <nz-select nzShowSearch nzAllowClear class="nzSelect"
@@ -116,7 +116,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="col4">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> &#160;Date to </th>
+              <th mat-header-cell *matHeaderCellDef> &#160;Date to </th>
               <td mat-cell *matCellDef="let element; let i = index;">
                   <!-- <div *ngIf="i == 0">
                       <nz-select nzShowSearch nzAllowClear class="nzSelect"
@@ -173,7 +173,7 @@
 
           <!-- Symbol Column -->
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+            <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element; let i = index;">
                 <div>
                     <button (click)="downloadReports(i)" class="table-btn" mat-raised-button>
