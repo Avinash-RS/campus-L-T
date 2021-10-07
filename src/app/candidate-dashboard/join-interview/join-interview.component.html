@@ -1,4 +1,4 @@
-<ng-container *ngIf="role == 'candidate' && !expiredoneDayago" [ngTemplateOutlet]="showInterview"></ng-container>
+<ng-container *ngIf="role == 'candidate' && interview?.roomId && !expiredoneDayago" [ngTemplateOutlet]="showInterview"></ng-container>
 <ng-container *ngIf="role == 'interview_panel'" [ngTemplateOutlet]="showInterview"></ng-container>
 
 <ng-template #showInterview>
@@ -6,7 +6,7 @@
     <mat-expansion-panel-header>
       Interview Session
     </mat-expansion-panel-header>
-    <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview else nocard">
+    <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview && interview?.roomId else nocard">
       <div *ngIf="role == 'candidate'" class="iconinfo"><em class="icon-Info"></em></div>
       <div>
           <div *ngIf="role == 'candidate'" class="interview">

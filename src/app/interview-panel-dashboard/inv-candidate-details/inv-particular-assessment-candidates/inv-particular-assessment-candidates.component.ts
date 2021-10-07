@@ -193,21 +193,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           headerName: "",
         },
         {
-          headerName: "Candidate Name",
-          field: "candidate_name",
-          filter: 'agTextColumnFilter',
-          minWidth: 180,
-          sortable: true,
-          tooltipField: "email",
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          cellStyle: { color: "#C02222" },
-          cellRenderer: (params) => {
-            return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image_url"]}"></span> <span>${params["data"]["candidate_name"]}</span> </span>`;
-          },
-        },
-        {
           headerName: "Candidate Id",
           field: "candidate_id",
           filter: 'agNumberColumnFilter',
@@ -219,7 +204,33 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           },
         },
         {
-          headerName: "Shortlist name",
+          headerName: "Candidate Name",
+          field: "candidate_name",
+          filter: 'agTextColumnFilter',
+          minWidth: 180,
+          sortable: true,
+          tooltipField: "candidate_name",
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+          cellStyle: { color: "#C02222" },
+          cellRenderer: (params) => {
+            return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image_url"]}"></span> <span>${params["data"]["candidate_name"]}</span> </span>`;
+          },
+        },
+        {
+          headerName: "Email Id",
+          field: "email",
+          filter: 'agTextColumnFilter',
+          minWidth: 180,
+          sortable: true,
+          tooltipField: "email",
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+        },
+        {
+          headerName: "Shortlist Name",
           field: "shortlist_name",
           filter: 'agTextColumnFilter',
           minWidth: 140,
@@ -344,7 +355,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             },
           },
           {
-            headerName: "Assigned By",
+            headerName: "Assigned by",
             field: "assigned_by",
             filter: 'agSetColumnFilter',
             filterParams: {
@@ -390,9 +401,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           },
         ];
         // this.columnDefs.concat(webRtcColumns);
-        this.columnDefs.splice(4, 0, webRtcColumns[0]);
-        this.columnDefs.splice(5, 0, webRtcColumns[1]);
-        this.columnDefs.splice(7, 0, webRtcColumns[2]);
+        this.columnDefs.splice(5, 0, webRtcColumns[0]);
+        this.columnDefs.splice(6, 0, webRtcColumns[1]);
+        this.columnDefs.splice(8, 0, webRtcColumns[2]);
       }
 
     this.rowSelection = "multiple";
