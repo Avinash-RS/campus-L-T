@@ -27,7 +27,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   @ViewChild(MatExpansionPanel, {static: false}) pannel?: MatExpansionPanel;
   @ViewChild('firstAccordion', {static: false}) firstAccordion: MatAccordion;
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
-  @ViewChild('schedulePopup', {static: false}) schedulePopup: TemplateRef<any>;
+  @ViewChild('withSchedulingConfirmationBox', {static: false}) withSchedulingConfirmationBox: TemplateRef<any>;
   fltractive= false;
   selectedUserDetail: any;
   userList: any;
@@ -52,6 +52,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   EduLevel = DropdownListForKYC['level'];
   allEducations: any;
   allAssessments: any;
+  confirmationValue: any = '1';
   statusList = [
     {
       name: 'All',
@@ -101,6 +102,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   attendeesList = [];
   routeAssignedData: any;
   allShortlistNames: any = [];
+  scheduleConfirmationPopUp: any;
   buttonLoading = false;
   refreshSubscription: Subscription;
   getParticularCandidatelistSubscription: Subscription;
@@ -745,4 +747,24 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     }
   }
 
+  openConfirmationPopUp() {
+    this.scheduleConfirmationPopUp = this.matDialog.open(this.withSchedulingConfirmationBox, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      disableClose: true,
+      panelClass: 'confirmation-popup'
+    });
+  }
+  confirmConfirmation() {
+    this.scheduleConfirmationPopUp.close();
+    if (this.confirmationValue == '1') {
+      this.scheduleInterview();
+    } else {
+      this.submit();
+    }
+  }
+  cancelConfirmation() {
+    this.scheduleConfirmationPopUp.close();
+  }
 }

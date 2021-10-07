@@ -132,7 +132,7 @@
           ? ''
           : 'disabled'
       "
-      (click)="appConfig.isWebrtc() ? scheduleInterview() : submit()"
+      (click)="openConfirmationPopUp()"
       mat-raised-button
     >
       {{appConfig.isWebrtc() ? 'Schedule' : 'Assign'}}
@@ -223,3 +223,23 @@
     </div>
   </div>
 </div>
+
+<ng-template #withSchedulingConfirmationBox>
+  <div class="confirmation-box">
+    <div class="confirmText">
+      Please click any one of the below option to proceed.
+    </div>
+    <div class="radio-group">
+      <mat-radio-group [(ngModel)]="confirmationValue">
+        <mat-radio-button value="1">Schedule with Video Interview
+        </mat-radio-button>
+        <mat-radio-button value="2">Schedule without Video Interview</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="confirmation-button">
+      <button class="cancel-btn btn-margin-space" (click)="cancelConfirmation()" mat-raised-button>Cancel</button>
+      <button class="submit" (click)="confirmConfirmation()" mat-raised-button>Confirm</button>
+    </div>
+
+  </div>
+</ng-template>

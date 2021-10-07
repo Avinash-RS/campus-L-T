@@ -284,3 +284,67 @@ th {
     transform: rotate(1turn);
   }
 }
+
+::ng-deep .confirmation-popup {
+  .confirmation-box {
+    display: flex;
+    min-width: 550px;
+    min-height: 140px;
+    padding: 1em;
+    font-weight: 500;
+    max-width: 100%;
+    margin: auto;
+    flex-direction: column;
+  }
+  .confirmText {
+    text-align: center;
+  }
+  .radio-group {
+    display: flex;
+    margin: 1em 0 0 0;
+    justify-content: center;
+  }
+  .mat-radio-group {
+    display: flex;
+    justify-content: center;
+  }
+  .mat-radio-button {
+    width: 230px;
+  }
+  .confirmation-button {
+    display: flex;
+    justify-content: center;
+    margin: 2em 0 0 0;
+  }
+  .confirm {
+    background: $background 0% 0% no-repeat padding-box;
+    box-shadow: $shadow-light-black-1;
+    border-radius: 10px;
+    height: 25px;
+    color: $white;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cancel {
+    margin: 0 1em 0 0;
+    box-shadow: $shadow-light-black-1;
+    border: 1px solid $gray-dark;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    color: $background;
+    font-size: 14px !important;
+    font-weight: 500;
+    padding: 4px 16px;
+    background: transparent;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+}

@@ -29,6 +29,11 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnInit() {
+    if (this.appConfig.getLocalData('joiningFormAccess') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
+      this.appConfig.setLocalData('form_submmited', 'true');
+      this.appConfig.setLocalData('secondShortlist', 'true');
+      this.appConfig.setLocalData('firstShortlist', 'true');
+    }
     this.checkFormValidRequestFromRxjs();
     this.getUserName();
   }

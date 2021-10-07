@@ -272,8 +272,6 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_faculty_reference_1]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][1] ? this.workDetailsAllData['faculty_references'][1] : null
     });
 
-    console.log('adad', this.workDetailsForm);
-
   }
 
   OtherConditionsPatch(data) {

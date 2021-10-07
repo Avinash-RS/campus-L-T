@@ -135,7 +135,8 @@ selectedPost: any;
 selectedPostLabel: any;
 educationLength: any;
 maxDateStartField: any;
-  constructor(
+isKYCNotExempted = this.appConfig.getLocalData('isKYCNotExempted') == 'false' ? false : true;
+constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
     private adminService: AdminServiceService,
@@ -393,6 +394,20 @@ validSelectedPost() {
 
 }
   formSubmit(routeValue?: any) {
+    if (this.candidateService.checkKycOrJoiningForm()) {
+    this.getEducationArr.controls.forEach((element: any, j) => {
+      if (element['controls'][this.form_qualification_type]['value'] == 'SSLC') {
+        this.getEducationArr.at(j).patchValue({
+          [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
+        })
+      }
+      if (element['controls'][this.form_qualification_type]['value'] == 'HSC') {
+        this.getEducationArr.at(j).patchValue({
+          [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
+        })
+      }
+    });
+  }
     if (this.educationForm.valid && this.selectedPost) {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
@@ -475,17 +490,17 @@ validSelectedPost() {
 
   patching(data, i) {
     return this.fb.group({
-      [this.form_qualification_type]: [{ value: data[this.form_qualification_type], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [Validators.required]],
-      [this.form_qualification]: [{ value: data[this.form_qualification], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [Validators.required]],
-      [this.form_specialization]: [{ value: data[this.form_specialization], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [Validators.required]],
-      [this.form_collegeName]: [{ value: data[this.form_collegeName], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [Validators.required]],
-      [this.form_boardUniversity]: [{ value: data[this.form_boardUniversity], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [Validators.required]],
+      [this.form_qualification_type]: [{ value: data[this.form_qualification_type], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [Validators.required]],
+      [this.form_qualification]: [{ value: data[this.form_qualification], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [Validators.required]],
+      [this.form_specialization]: [{ value: data[this.form_specialization], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [Validators.required]],
+      [this.form_collegeName]: [{ value: data[this.form_collegeName], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [Validators.required]],
+      [this.form_boardUniversity]: [{ value: data[this.form_boardUniversity], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [Validators.required]],
       [this.form_startDate]: [this.dateConvertion(data[this.form_startDate]), this.candidateService.checkKycOrJoiningForm() ? [Validators.required, this.startTrue(false)] : []],
       [this.form_endDate]: [this.dateConvertion(data[this.form_endDate]), this.candidateService.checkKycOrJoiningForm() ? [Validators.required, this.startTrue(false)] : []],
       [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: false }, [Validators.required, this.startTrue(true)]],
-      [this.form_backlog]: [{ value: data[this.form_backlog], disabled: this.candidateService.checkKycOrJoiningForm() ? (data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false) : false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
+      [this.form_backlog]: [{ value: data[this.form_backlog], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? (data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false) : false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: this.candidateService.checkKycOrJoiningForm() ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
+      [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()]],
       [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), this.candidateService.checkKycOrJoiningForm() ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentage()] : []],
     })
   }

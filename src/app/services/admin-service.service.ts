@@ -4,7 +4,7 @@ import { AppConfigService } from '../config/app-config.service';
 import { CONSTANT } from '../constants/app-constants.service';
 import { environment } from 'src/environments/environment';
 import { retry } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -695,6 +695,7 @@ scheduleRooms(data) {
 }
 getScheduledList(data) {
   return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});
+  // return of(null);
 }
 
 getDummyJson() {

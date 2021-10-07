@@ -372,7 +372,7 @@ dateConvertionMonth(date) {
             },
           },
           {
-            headerName: "Is Kyc Skipped",
+            headerName: "Is KYC Skipped",
             field: "kyc_exempted",
             filter: 'agSetColumnFilter',
             filterParams: {

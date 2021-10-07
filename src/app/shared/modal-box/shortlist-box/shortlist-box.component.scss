@@ -36,7 +36,7 @@
         input {
           color: $secondary;
           height: 30px;
-          font-weight: 200;
+          font-weight: 500;
           font-size: 14px;
           padding: 4px 6px;
           background: $white 0% 0% no-repeat padding-box;
@@ -58,7 +58,6 @@
     margin: 0 0 1em 0;
   }
   .footer {
-    font-weight: 200;
     font-size: 14px;
     color: $light-black;
     text-align: center;
@@ -76,7 +75,7 @@
       height: 25px;
       color: $white;
       font-size: 13px;
-      font-weight: 200;
+      font-weight: 500;
       padding: 4px 16px;
       display: flex;
       justify-content: center;
@@ -93,7 +92,7 @@
       height: 25px;
       color: $background;
       font-size: 14px !important;
-      font-weight: 200;
+      font-weight: 500;
       padding: 4px 16px;
       background: transparent;
       justify-content: center;
@@ -129,7 +128,7 @@
       height: 25px;
       color: $white;
       font-size: 13px;
-      font-weight: 200;
+      font-weight: 500;
       padding: 4px 16px;
       display: flex;
       align-items: center;
@@ -160,7 +159,7 @@
       height: 25px;
       color: $background;
       font-size: 14px !important;
-      font-weight: 200;
+      font-weight: 500;
       padding: 4px 16px;
       background: transparent;
       justify-content: center;
@@ -177,7 +176,7 @@
       color: $secondary;
       height: 25px;
       border-radius: 5px;
-      font-weight: 200;
+      font-weight: 500;
       font-size: 13px;
       padding: 4px 6px;
       background: $white 0% 0% no-repeat padding-box;
@@ -188,7 +187,7 @@
       color: $red;
       font-size: 11px;
       max-width: 250px;
-      font-weight: 200;
+      font-weight: 500;
     }
   }
 }

@@ -11,6 +11,7 @@
     "build-dev": "ng build --configuration dev --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "build-qa": "ng build --configuration qa --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "build-uat": "ng build --configuration uat --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
+    "build-c2e": "ng build --configuration c2e --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "build-production": "ng build --configuration production --aot=true --output-hashing=all --extract-css=true --build-optimizer=false --base-href l",
     "post-build": "node ./build/post-build.js"
   },

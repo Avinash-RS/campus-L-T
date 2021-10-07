@@ -213,6 +213,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     label: null
   };
 
+  isKYCNotExempted = this.appConfig.getLocalData('isKYCNotExempted') == 'false' ? false : true;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -599,7 +600,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       // [this.form_title]: [null, [Validators.required]],
       [this.form_name]: [{value: this.appConfig.getLocalData('username'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_dob]: [null, [Validators.required]],
-      [this.form_gender]: [{value: null, disabled: this.candidateService.checkKycOrJoiningForm()}, [Validators.required]],
+      [this.form_gender]: [{value: null, disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted)}, [Validators.required]],
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null, [Validators.required]],
       [this.form_nationality]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],

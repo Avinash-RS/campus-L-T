@@ -165,7 +165,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
      return this.redirectToPreview = false;
     }
-    if (this.appConfig.getLocalData('form_submmited') == 'false') {
+    if (this.appConfig.getLocalData('form_submmited') == 'false' && this.appConfig.getLocalData('isKYCNotExempted') == 'false') {
       this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
      return this.redirectToPreview = false;
     } else {

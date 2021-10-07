@@ -522,7 +522,9 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
     this.sendMailOrEditAccessSubscription = this.adminService.sendMailOrEditAccess(apiData, this.popUpdata.value).subscribe((data: any)=> {
 
       this.appConfig.success(this.popUpdata.value == 1 ? 'Mail Sent to the Candidates Successfully' : 'Edit Access given to the Candidates Successfully');
-      this.ngOnInit();
+      this.gridApi.deselectAll();
+      this.getUsersList();
+      this.GetRowStyle();
     });
   }
   // To get all users
