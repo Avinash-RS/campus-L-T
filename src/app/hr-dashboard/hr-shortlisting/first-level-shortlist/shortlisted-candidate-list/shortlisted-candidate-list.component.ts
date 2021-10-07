@@ -183,6 +183,7 @@ pgInstitutesList: any;
       }))
       .subscribe((data: any)=> {
       if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.FIRSTSHORTLISTING_LIST)) {
+        this.gridApi.deselectAll();
         this.clearAllFilters();
       }
     });
@@ -752,6 +753,8 @@ dateConvertionMonth(date) {
       const datas = {
         first_level_shortlist_success: 'first_level_shortlist_success'
       };
+      this.gridApi.deselectAll();
+      this.clearAllFilters();
       this.openDialog1(ShortlistBoxComponent, datas);
     }, (err) => {
 
@@ -808,7 +811,6 @@ dateConvertionMonth(date) {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.clearAllFilters();
       if (result) {
       }
     });
