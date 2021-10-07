@@ -73,7 +73,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   prevStep() {
     this.step--;
   }
-  semesterList = [1,2,3,4,5,6,7,8,9,10];
+  semesterList = ['1','2','3','4','5','6','7','8','9','10'];
   checkFormValidRequest: Subscription;
   sendPopupResultSubscription: Subscription;
   uploadForm: FormGroup;
