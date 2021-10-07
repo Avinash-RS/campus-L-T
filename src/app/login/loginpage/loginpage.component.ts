@@ -161,6 +161,7 @@ export class LoginpageComponent implements OnInit {
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('form_submmited', data && data['form_submmited'] && data['form_submmited'] == '1' ? 'true' : 'false');
+              this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == 1 ? 'false' : 'true');
               let todayDate = new Date();
               let month = todayDate.getMonth() + 1;
               let day = todayDate.getDate()

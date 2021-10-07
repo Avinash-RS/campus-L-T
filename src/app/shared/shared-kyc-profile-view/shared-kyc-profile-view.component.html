@@ -98,7 +98,7 @@
             >
               <label>Domicile State<span></span></label>
               <div class="inpu-preview size-16 bold-700 color-black">
-                {{ personalDetailsMap[form_domicile_state] }}
+                {{ personalDetailsMap[form_domicile_state] ? personalDetailsMap[form_domicile_state] : 'NA' }}
               </div>
             </div>
 
@@ -117,7 +117,7 @@
             >
               <label>State of Birth<span></span></label>
               <div class="inpu-preview size-16 bold-700 color-black">
-                {{ personalDetailsMap[form_state_of_birth] }}
+                {{ personalDetailsMap[form_state_of_birth] ? personalDetailsMap[form_state_of_birth] : 'NA' }}
               </div>
             </div>
             <div class="overall-input-wrapper mt-3 width-32">
@@ -179,7 +179,7 @@
             >
               <label>Blood Group<span></span></label>
               <div class="inpu-preview size-16 bold-700 color-black">
-                {{ personalDetailsMap[form_blood_group] }}
+                {{ personalDetailsMap[form_blood_group] ? personalDetailsMap[form_blood_group] : 'NA' }}
               </div>
             </div>
 
@@ -497,13 +497,13 @@
             <div class="overall-input-wrapper mt-3 width-32">
               <label>City<span></span></label>
               <div class="inpu-preview size-16 bold-700 color-black">
-                {{ contactDetailsMap[form_present_city] }}
+                {{ contactDetailsMap[form_present_city] ? contactDetailsMap[form_present_city] : 'NA' }}
               </div>
             </div>
             <div class="overall-input-wrapper mt-3 width-32">
               <label>State/Province<span></span></label>
               <div class="inpu-preview size-16 bold-700 color-black">
-                {{ contactDetailsMap[form_present_state] }}
+                {{ contactDetailsMap[form_present_state] ? contactDetailsMap[form_present_state] : 'NA' }}
               </div>
             </div>
             <div class="overall-input-wrapper mt-3 width-32">
@@ -534,13 +534,13 @@
               <div class="overall-input-wrapper mt-3 width-32">
                 <label>City<span></span></label>
                 <div class="inpu-preview size-16 bold-700 color-black">
-                  {{ contactDetailsMap[form_permanent_city] }}
+                  {{ contactDetailsMap[form_permanent_city] ? contactDetailsMap[form_permanent_city] : 'NA' }}
                 </div>
               </div>
               <div class="overall-input-wrapper mt-3 width-32">
                 <label>State/Province<span></span></label>
                 <div class="inpu-preview size-16 bold-700 color-black">
-                  {{ contactDetailsMap[form_permanent_state] }}
+                  {{ contactDetailsMap[form_permanent_state] ? contactDetailsMap[form_permanent_state] : 'NA' }}
                 </div>
               </div>
               <div class="overall-input-wrapper mt-3 width-32">

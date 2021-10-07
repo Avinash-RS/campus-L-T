@@ -344,7 +344,6 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   ngOnInit() {
     this.formInitialization();
     this.getPreviewData();
-    this.getStateAPI();
     this.checkFormValidRequestFromRxjs();
   }
 
@@ -434,7 +433,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
 
     // Acknowledgements section show, When form is not submitted
     this.ifFormNotSubmitted(data);
-
+    this.getStateAPI();
   }
   ifFormNotSubmitted(data) {
     if (data && data.acknowledgement) {
@@ -547,19 +546,49 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     };
     this.candidateService.updatedState(datas).subscribe((data: any) => {
       this.getAllStates = data[0];
+      this.getAllStates.forEach(element => {
+        if (element.id == this.personalDetails[this.form_state_of_birth]) {
+          this.personalDetailsMap[this.form_state_of_birth] = element.name;
+        }
+        if (element.id == this.personalDetails[this.form_domicile_state]) {
+          this.personalDetailsMap[this.form_domicile_state] = element.name;
+        }
+        if (element.id == this.contactDetails[this.form_present_state]) {
+          this.contactDetailsMap[this.form_present_state] = element.name;
+          this.getAllPresentCities(element.id, this.contactDetails[this.form_present_city], (callback) => {
+            this.contactDetailsMap[this.form_present_city] = callback ? callback : 'NA';
+        });
+        }
+        if (element.id == this.contactDetails[this.form_permanent_state]) {
+          this.contactDetailsMap[this.form_permanent_state] = element.name;
+          this.getAllPermanentCities(element.id, this.contactDetails[this.form_permanent_city], (callback) => {
+            this.contactDetailsMap[this.form_permanent_city] = callback ? callback : 'NA';
+          });
+        }
+      });
       this.getBloodGroup();
     }, (err) => {
 
     });
   }
 
+  patchBloodGroup() {
+      this.bloodGroupDropdownList.forEach(element => {
+        if (element.bloodgroup_id == this.personalDetails[this.form_blood_group]) {
+          this.personalDetailsMap[this.form_blood_group] = element.bloodgroup_name;
+        }
+      });
+  }
+
   getBloodGroup() {
     if (this.appConfig.getLocalData('bloodgroup')) {
       this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
+      this.patchBloodGroup();
     } else {
       this.candidateService.getBloodGroups().subscribe((data: any) => {
         this.bloodGroupDropdownList = data;
         this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
+        this.patchBloodGroup();
       }, (err) => {
 
       });
@@ -809,40 +838,20 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     let permanentState: any;
     let presentCity: any;
     let permanentCity: any;
-    if (this.getAllStates) {
-      this.getAllStates.forEach(element => {
-        if (element.id == this.contactDetails[this.form_present_state]) {
-          presentState = element.name;
-          this.getAllPresentCities(element.id, this.contactDetails[this.form_present_city], (callback) => {
-            presentCity = callback ? callback : 'NA';
-            this.contactDetailsMap[this.form_present_city] = callback ? callback : 'NA';
-          });
-        }
-      });
-      this.getAllStates.forEach(element => {
-        if (element.id == this.contactDetails[this.form_permanent_state]) {
-          permanentState = element.name;
-          this.getAllPermanentCities(element.id, this.contactDetails[this.form_permanent_city], (callback) => {
-            permanentCity = callback ? callback : 'NA';
-            this.contactDetailsMap[this.form_permanent_city] = callback ? callback : 'NA';
-          });
-        }
-      });
-    }
     const data = {
       [this.form_present_address_1]: this.contactDetails?.[this.form_present_address_1] ? this.contactDetails[this.form_present_address_1] : null,
       [this.form_present_address_2]: this.contactDetails?.[this.form_present_address_2] ? this.contactDetails[this.form_present_address_2] : null,
       [this.form_present_address_3]: this.contactDetails?.[this.form_present_address_3] ? this.contactDetails[this.form_present_address_3] : null,
-      [this.form_present_city]: presentCity ? presentCity : 'NA',
-      [this.form_present_state]: presentState ? presentState : 'NA',
+      // [this.form_present_city]: presentCity ? presentCity : 'NA',
+      // [this.form_present_state]: presentState ? presentState : 'NA',
       [this.form_present_region]: this.contactDetails?.[this.form_present_region] ? 'India' : 'NA',
       [this.form_present_zip_code]: this.contactDetails?.[this.form_present_zip_code] ? this.contactDetails[this.form_present_zip_code] : 'NA',
       [this.form_same_as_checkbox]: this.contactDetails?.[this.form_same_as_checkbox] ? this.contactDetails[this.form_same_as_checkbox] : false,
       [this.form_permanent_address_1]: this.contactDetails?.[this.form_permanent_address_1] ? this.contactDetails[this.form_permanent_address_1] : null,
       [this.form_permanent_address_2]: this.contactDetails?.[this.form_permanent_address_2] ? this.contactDetails[this.form_permanent_address_2] : null,
       [this.form_permanent_address_3]: this.contactDetails?.[this.form_permanent_address_3] ? this.contactDetails[this.form_permanent_address_3] : null,
-      [this.form_permanent_city]: permanentCity ? permanentCity : 'NA',
-      [this.form_permanent_state]: permanentState ? permanentState : 'NA',
+      // [this.form_permanent_city]: permanentCity ? permanentCity : 'NA',
+      // [this.form_permanent_state]: permanentState ? permanentState : 'NA',
       [this.form_permanent_region]: this.contactDetails?.[this.form_permanent_region] ? 'India' : 'NA',
       [this.form_permanent_zip_code]: this.contactDetails?.[this.form_permanent_zip_code] ? this.contactDetails[this.form_permanent_zip_code] : 'NA'
     };
@@ -878,21 +887,6 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     let bloodGroup: any;
     let category: any;
     let domicile: any;
-    if (this.getAllStates && this.bloodGroupDropdownList) {
-      this.getAllStates.forEach(element => {
-        if (element.id == this.personalDetails[this.form_state_of_birth]) {
-          stateOfBirth = element.name;
-        }
-        if (element.id == this.personalDetails[this.form_domicile_state]) {
-          domicile = element.name;
-        }
-      });
-      this.bloodGroupDropdownList.forEach(element => {
-        if (element.bloodgroup_id == this.personalDetails[this.form_blood_group]) {
-          bloodGroup = element.bloodgroup_name;
-        }
-      });
-    }
     if (this.category && this.personalDetails[this.form_category]) {
       this.category.forEach(element => {
         if (element.caste == this.personalDetails[this.form_category]) {
@@ -906,13 +900,13 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_dob]: this.personalDetails?.[this.form_dob] ? this.dateConvertion(this.personalDetails[this.form_dob]) : 'NA',
       [this.form_gender]: this.personalDetails?.[this.form_gender] ? this.personalDetails[this.form_gender] : 'NA',
       [this.form_place_of_birth]: this.personalDetails?.[this.form_place_of_birth] ? this.personalDetails[this.form_place_of_birth] : 'NA',
-      [this.form_state_of_birth]: stateOfBirth ? stateOfBirth : 'NA',
+      // [this.form_state_of_birth]: stateOfBirth ? stateOfBirth : 'NA',
       [this.form_nationality]: this.personalDetails?.[this.form_nationality] ? this.personalDetails[this.form_nationality] : 'NA',
       [this.form_mother_tongue]: this.personalDetails?.[this.form_mother_tongue] ? this.personalDetails[this.form_mother_tongue] : 'NA',
       [this.form_religion]: this.personalDetails?.[this.form_religion] ? this.personalDetails[this.form_religion] : 'NA',
       [this.form_caste]: this.personalDetails?.[this.form_caste] ? this.personalDetails[this.form_caste] : 'NA',
       [this.form_category]: category ? category : 'NA',
-      [this.form_blood_group]: bloodGroup ? bloodGroup : 'NA',
+      // [this.form_blood_group]: bloodGroup ? bloodGroup : 'NA',
       [this.form_father_name]: this.personalDetails?.[this.form_father_name] ? this.personalDetails[this.form_father_name] : 'NA',
       [this.form_emergency_contact]: this.personalDetails?.[this.form_emergency_contact] ? this.personalDetails[this.form_emergency_contact] : 'NA',
       [this.form_mobile]: this.personalDetails?.[this.form_mobile] ? this.personalDetails[this.form_mobile] : 'NA',
@@ -928,7 +922,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_personal_email]: this.personalDetails?.[this.form_personal_email] ? this.personalDetails[this.form_personal_email] : 'NA',
       [this.form_marital_status]: this.personalDetails?.[this.form_marital_status] ? this.personalDetails[this.form_marital_status] : 'NA',
       [this.form_no_of_children]: this.personalDetails?.[this.form_no_of_children] ? this.personalDetails[this.form_no_of_children] : 'NA',
-      [this.form_domicile_state]: domicile ? domicile : 'NA',
+      // [this.form_domicile_state]: domicile ? domicile : 'NA',
       [this.form_identification_mark1]: this.personalDetails?.[this.form_identification_mark1] ? this.personalDetails[this.form_identification_mark1] : 'NA',
       [this.form_identification_mark2]: this.personalDetails?.[this.form_identification_mark2] ? this.personalDetails[this.form_identification_mark2] : 'NA',
       [this.form_language_array]: this.personalDetails?.[this.form_language_array] && this.personalDetails?.[this.form_language_array].length > 0 ? this.personalDetails[this.form_language_array] : [],
