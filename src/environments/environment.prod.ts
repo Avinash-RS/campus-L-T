@@ -8,7 +8,7 @@ export const environment = {
 
   versionCheckURL: 'https://campus-dev.lntedutech.com/version.json',
   // For Dev
-  UNIFIEDREPORTS: 'https://unifiedreport.lntedutech.com/',
+  UNIFIEDREPORTS: 'https://unifiedreport-dev.lntedutech.com/',
   WEBRTC_NODE_API : 'https://uapapplicationgateway.lntiggnite.com',
   API_BASE_URL: 'https://campus-dev.lntedutech.com/dcampus',
   API_BASE_URL_city: 'https://campus-dev.lntedutech.com/dcampus',
