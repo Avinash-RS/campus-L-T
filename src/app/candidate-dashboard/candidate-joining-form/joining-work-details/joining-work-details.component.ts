@@ -179,6 +179,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   getWorkApiDetails() {
     if (this.candidateService.getLocalProfileData()) {
+      this.formInitialize();
       this.workDetails = this.candidateService.getLocalexperience_details();
       this.workDetailsAllData = this.candidateService.getLocalexperience_details();
       this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();

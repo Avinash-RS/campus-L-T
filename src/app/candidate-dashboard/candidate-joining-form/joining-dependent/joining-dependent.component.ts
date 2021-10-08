@@ -127,6 +127,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
 
   getDependentApiDetails() {
     if (this.candidateService.getLocalProfileData()) {
+      this.formInitialize();
       this.dependedentDetails = this.candidateService.getLocaldependent_details();
       this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
     } else {
