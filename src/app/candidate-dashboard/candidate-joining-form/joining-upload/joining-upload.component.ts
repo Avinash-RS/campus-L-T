@@ -199,6 +199,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   getDocuments() {
     if (this.candidateService.getLocalProfileData()) {
       let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+      this.formInitialize();
       this.ifDocumentDetails(apiDocumentDetails);
     } else {
       // let apiData = {

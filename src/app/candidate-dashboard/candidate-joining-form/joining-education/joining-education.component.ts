@@ -227,6 +227,7 @@ constructor(
 
   getEducationApiDetails() {
     if (this.candidateService.getLocalProfileData()) {
+      this.formInitialize();
       this.educationDetails = this.candidateService.getLocaleducation_details().educations;
       this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
       this.getSelectedPost();
