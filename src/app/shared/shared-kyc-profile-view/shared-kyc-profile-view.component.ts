@@ -328,6 +328,12 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   noShowWork: boolean;
   selectedPost: any;
   currentForm: boolean;
+  joiningFormDataPassingSubscription: Subscription;
+  newGetProfileDataSubscription: Subscription;
+  getBloodGroupsSubscription: Subscription;
+  updatedCitySubscription: Subscription;
+  updatedCitySubscription1: Subscription;
+  newSaveProfileDataSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -345,8 +351,14 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     this.formInitialization();
     this.getPreviewData();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
+  joiningFormDataFromJoiningFormComponentRxjs() {
+   this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+      this.getPreviewData();
+    });
+  }
   ngAfterViewInit() {
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
@@ -468,7 +480,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       let apiData = {
         candidate_user_id: this.nonCandidate.candidate_user_id
       }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+     this.newGetProfileDataSubscription = this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         this.checkFormSubmitted();
         let apiPreviewDetails = data;
         this.currentForm = data && data.form_name == 'joining' ? false : true;
@@ -482,18 +494,18 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
         let apiPreviewDetails = this.candidateService.getLocalProfileData();
         this.ifPreviewDetails(apiPreviewDetails);
       } else {
-        let apiData = {
-          form_name: 'joining',
-          section_name: ''
-        }
-        this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-          this.candidateService.saveAllProfileToLocal(data);
-          this.checkFormSubmitted();
-          let apiPreviewDetails = this.candidateService.getLocalProfileData();
-          this.ifPreviewDetails(apiPreviewDetails);
-        }, (e)=> {
-          this.formSubmitted = true;
-        });
+        // let apiData = {
+        //   form_name: 'joining',
+        //   section_name: ''
+        // }
+        // this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        //   this.candidateService.saveAllProfileToLocal(data);
+        //   this.checkFormSubmitted();
+        //   let apiPreviewDetails = this.candidateService.getLocalProfileData();
+        //   this.ifPreviewDetails(apiPreviewDetails);
+        // }, (e)=> {
+        //   this.formSubmitted = true;
+        // });
       }
     }
   }
@@ -585,7 +597,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
       this.patchBloodGroup();
     } else {
-      this.candidateService.getBloodGroups().subscribe((data: any) => {
+     this.getBloodGroupsSubscription = this.candidateService.getBloodGroups().subscribe((data: any) => {
         this.bloodGroupDropdownList = data;
         this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
         this.patchBloodGroup();
@@ -797,7 +809,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       state_id: id
     };
     let city;
-    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+   this.updatedCitySubscription = this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
 
       this.allPresentCityList = datas[0];
@@ -817,7 +829,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       state_id: id
     };
     let city;
-    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+   this.updatedCitySubscription1 = this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
 
       this.allPermanentCityList = datas[0];
@@ -1081,7 +1093,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       section_name: "acknowledgement",
       saving_data: apiData
     }
-    this.candidateService.newSaveProfileData(ProfileSubmitApiRequestDetails).subscribe((data: any) => {
+   this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(ProfileSubmitApiRequestDetails).subscribe((data: any) => {
     this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
     this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
     this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Congrats, Form has been successfully submitted');
@@ -1202,5 +1214,11 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
 
   ngOnDestroy() {
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
+    this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+    this.newGetProfileDataSubscription ? this.newGetProfileDataSubscription.unsubscribe() : '';
+    this.getBloodGroupsSubscription ? this.getBloodGroupsSubscription.unsubscribe() : '';
+    this.updatedCitySubscription ? this.updatedCitySubscription.unsubscribe() : '';
+    this.updatedCitySubscription1 ? this.updatedCitySubscription1.unsubscribe() : '';
+    this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
   }
 }

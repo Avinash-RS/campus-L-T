@@ -46,8 +46,6 @@ export const MY_FORMATS = {
 })
 export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  checkFormValidRequest: Subscription;
-  sendPopupResultSubscription: Subscription;
   workDetailsForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -127,6 +125,10 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   isRelatives = new FormControl(null);
   showWorkExp: any = '0';
   workDetailsAllData: any;
+  checkFormValidRequest: Subscription;
+  sendPopupResultSubscription: Subscription;
+  joiningFormDataPassingSubscription: Subscription;
+  newSaveProfileDataSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -144,6 +146,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     this.getWorkApiDetails();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   changeWorkExp(e) {
@@ -164,6 +167,12 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+       this.getWorkApiDetails();
+     });
+   }
+
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('work');
   }
@@ -174,16 +183,16 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       this.workDetailsAllData = this.candidateService.getLocalexperience_details();
       this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
     } else {
-      let apiData = {
-        form_name: 'joining',
-        section_name: ''
-      }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        this.workDetails = this.candidateService.getLocalexperience_details();
-        this.workDetailsAllData = this.candidateService.getLocalexperience_details();
-        this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
-      });
+      // let apiData = {
+      //   form_name: 'joining',
+      //   section_name: ''
+      // }
+      // this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+      //   this.candidateService.saveAllProfileToLocal(data);
+      //   this.workDetails = this.candidateService.getLocalexperience_details();
+      //   this.workDetailsAllData = this.candidateService.getLocalexperience_details();
+      //   this.workDetails ? this.ifworkDetails() : this.ifNotworkDetails();
+      // });
     }
   }
 
@@ -567,7 +576,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
         saving_data: apiData
       }
 
-      this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails).subscribe((data: any) => {
+     this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails).subscribe((data: any) => {
         this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
@@ -750,6 +759,8 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
-  }
+    this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+    this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
+    }
 
 }

@@ -74,8 +74,6 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     this.step--;
   }
   semesterList = ['1','2','3','4','5','6','7','8','9','10'];
-  checkFormValidRequest: Subscription;
-  sendPopupResultSubscription: Subscription;
   uploadForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -138,6 +136,11 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
   joiningNotUploadedDocs: any[];
   isRoute: any;
 
+  checkFormValidRequest: Subscription;
+  sendPopupResultSubscription: Subscription;
+  joiningFormDataPassingSubscription: Subscription;
+  newSaveProfileDataSubscription: Subscription;
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -149,6 +152,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     private dialog: MatDialog,
   ) {
     this.dateValidation();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   ngOnInit() {
@@ -157,6 +161,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     this.getDownloadableDocs();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   ngAfterViewInit() {
@@ -168,6 +173,12 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       top = null;
     }
   }
+
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+       this.getDocuments();
+     });
+   }
 
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('upload');
@@ -190,15 +201,15 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
       let apiDocumentDetails = this.candidateService.getLocaldocument_details();
       this.ifDocumentDetails(apiDocumentDetails);
     } else {
-      let apiData = {
-        form_name: 'joining',
-        section_name: ''
-      }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        let apiDocumentDetails = this.candidateService.getLocaldocument_details();
-        this.ifDocumentDetails(apiDocumentDetails);
-      });
+      // let apiData = {
+      //   form_name: 'joining',
+      //   section_name: ''
+      // }
+      // this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+      //   this.candidateService.saveAllProfileToLocal(data);
+      //   let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+      //   this.ifDocumentDetails(apiDocumentDetails);
+      // });
     }
   }
 
@@ -974,7 +985,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
     console.log('apidata', UploadApiRequestDetails);
 
     // if(this.dependentForm.valid) {
-      this.candidateService.newSaveProfileData(UploadApiRequestDetails).subscribe((data: any)=> {
+     this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(UploadApiRequestDetails).subscribe((data: any)=> {
         this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Upload details is updated');
@@ -992,7 +1003,6 @@ async uploadImage(file, i, form) {
      return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
     this.loadingService.setLoading(false);
-    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
       if (form == this.conditionJoining) {
       this.getJoiningArr.at(i).patchValue({
@@ -1252,7 +1262,6 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
      return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
     this.loadingService.setLoading(false);
-    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
         this.getSemesterArr(mainIndex).at(subIndex).patchValue({
           [this.form_file_name]: data.file_name,
@@ -1445,6 +1454,8 @@ dateConvertion(date) {
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
+    this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+    this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
   }
 
 }

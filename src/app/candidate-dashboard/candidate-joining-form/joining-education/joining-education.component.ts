@@ -59,8 +59,6 @@ export const MY_FORMATS_Month = {
 })
 export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  checkFormValidRequest: Subscription;
-  sendPopupResultSubscription: Subscription;
   educationForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -136,6 +134,12 @@ selectedPostLabel: any;
 educationLength: any;
 maxDateStartField: any;
 isKYCNotExempted = this.appConfig.getLocalData('isKYCNotExempted') == 'false' ? false : true;
+checkFormValidRequest: Subscription;
+sendPopupResultSubscription: Subscription;
+joiningFormDataPassingSubscription: Subscription;
+  newSaveProfileDataSubscription: Subscription;
+  getEducationListSubscription: Subscription;
+  getAllEducationFormDropdownListSubscription: Subscription;
 constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -159,6 +163,7 @@ constructor(
     // End of Getting required datas for dropdowns
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   ngAfterViewInit() {
@@ -170,6 +175,12 @@ constructor(
       top = null;
     }
   }
+
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+       this.getEducationApiDetails();
+     });
+   }
 
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('education');
@@ -221,17 +232,17 @@ constructor(
       this.getSelectedPost();
       this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
     } else {
-      let apiData = {
-        form_name: 'joining',
-        section_name: ''
-      }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        this.educationDetails = this.candidateService.getLocaleducation_details().educations;
-        this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
-        this.getSelectedPost();
-        this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
-      });
+    //   let apiData = {
+    //     form_name: 'joining',
+    //     section_name: ''
+    //   }
+    //   this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+    //     this.candidateService.saveAllProfileToLocal(data);
+    //     this.educationDetails = this.candidateService.getLocaleducation_details().educations;
+    //     this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+    //     this.getSelectedPost();
+    //     this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
+    //   });
     }
   }
 
@@ -420,7 +431,7 @@ validSelectedPost() {
             educations: formArray
           }
         };
-        this.candidateService.newSaveProfileData(EducationApiRequestDetails).subscribe((data: any)=> {
+       this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(EducationApiRequestDetails).subscribe((data: any)=> {
         this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Education details is updated');
@@ -688,7 +699,7 @@ validSelectedPost() {
 
 
   getEducationLevels() {
-    this.candidateService.getEducationList().subscribe((data: any) => {
+   this.getEducationListSubscription = this.candidateService.getEducationList().subscribe((data: any) => {
 
       const list = data && data[0] ? data[0] : [];
       list.forEach((element, i) => {
@@ -720,7 +731,7 @@ validSelectedPost() {
       discipline: '',
       specification: ''
     };
-    this.candidateService.getAllEducationFormDropdownList(api).subscribe((data: any) => {
+   this.getAllEducationFormDropdownListSubscription = this.candidateService.getAllEducationFormDropdownList(api).subscribe((data: any) => {
       this.ugSpecializationList = data && data.ug_specifications ? data.ug_specifications : [];
       this.pgSpecializationList = data && data.pg_specifications ? data.pg_specifications : [];
       this.diplomaDisciplineList = data && data.diploma_disciplines ? data.diploma_disciplines : [];
@@ -739,6 +750,11 @@ validSelectedPost() {
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
+    this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+    this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
+    this.getEducationListSubscription ? this.getEducationListSubscription.unsubscribe() : '';
+    this.getAllEducationFormDropdownListSubscription ? this.getAllEducationFormDropdownListSubscription.unsubscribe() : '';
+
   }
 
 }

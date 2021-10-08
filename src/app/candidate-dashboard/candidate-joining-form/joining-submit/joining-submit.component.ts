@@ -17,6 +17,7 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
 
   checkFormValidRequest: Subscription;
   userName: any;
+  joiningFormDataPassingSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -36,6 +37,7 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
     }
     this.checkFormValidRequestFromRxjs();
     this.getUserName();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   getUserName() {
@@ -56,6 +58,11 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+     });
+   }
+
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('submit');
   }
@@ -70,5 +77,6 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
 
 ngOnDestroy() {
   this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
+  this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
 }
 }
