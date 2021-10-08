@@ -521,7 +521,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  downloadReports(index, form){
+  downloadReports(index){
 
     if(index == 0){
       if(this.selectedTagNameFirst || this.selectedCityForFirst || this.selectedInstituteNameForFirst){
