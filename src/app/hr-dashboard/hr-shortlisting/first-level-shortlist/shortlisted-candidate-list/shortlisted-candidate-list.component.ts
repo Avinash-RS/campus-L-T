@@ -883,8 +883,8 @@ initEducationArray() {
   return this.fb.group({
     [this.form_education_checked]: [false],
     [this.form_education_level]: [null],
-    [this.form_education_percentage_from]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
-    [this.form_education_percentage_to]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentage()]],
+    [this.form_education_percentage_from]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentageNew(), Validators.maxLength(5)]],
+    [this.form_education_percentage_to]: [null, [RemoveWhitespace.whitespace(), this.globalValidator.percentageNew(), Validators.maxLength(5)]],
     [this.form_education_yearOfPassing_from]: [null],
     [this.form_education_yearOfPassing_to]: [null],
     [this.form_education_institute]: [null],
@@ -984,11 +984,11 @@ PercentageValidator(param) {
               if (isPercentageToLesser) {
                 control['_parent']['controls'][this.form_education_percentage_to].setErrors({notValid: true})
               } else {
-                control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]);
+                control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentageNew(), this.PercentageValidator(true), Validators.maxLength(5)]);
                 control['_parent']['controls'][this.form_education_percentage_to].updateValueAndValidity({emitEvent: false});
               }
             } else {
-              control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]);
+              control['_parent']['controls'][this.form_education_percentage_to].setValidators([RemoveWhitespace.whitespace(), this.globalValidator.percentageNew(), this.PercentageValidator(true), Validators.maxLength(5)]);
               control['_parent']['controls'][this.form_education_percentage_to].updateValueAndValidity({emitEvent: false});
           }
           }
@@ -1000,8 +1000,8 @@ patchEducationArray(data) {
   return this.fb.group({
     [this.form_education_checked]: [data[this.form_education_checked]],
     [this.form_education_level]: [data[this.form_education_level]],
-    [this.form_education_percentage_from]: [data[this.form_education_percentage_from], [RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(false)]],
-    [this.form_education_percentage_to]: [data[this.form_education_percentage_to], [RemoveWhitespace.whitespace(), this.globalValidator.percentage(), this.PercentageValidator(true)]],
+    [this.form_education_percentage_from]: [data[this.form_education_percentage_from], [RemoveWhitespace.whitespace(), this.globalValidator.percentageNew(), this.PercentageValidator(false), Validators.maxLength(5)]],
+    [this.form_education_percentage_to]: [data[this.form_education_percentage_to], [RemoveWhitespace.whitespace(), this.globalValidator.percentageNew(), this.PercentageValidator(true), Validators.maxLength(5)]],
     [this.form_education_yearOfPassing_from]: [data[this.form_education_yearOfPassing_from], [this.startTrue(false)]],
     [this.form_education_yearOfPassing_to]: [data[this.form_education_yearOfPassing_to], [this.startTrue(true)]],
     [this.form_education_institute]: [data[this.form_education_institute]],
