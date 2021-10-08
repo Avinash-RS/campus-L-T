@@ -17,8 +17,6 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 })
 export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  checkFormValidRequest: Subscription;
-  sendPopupResultSubscription: Subscription;
   contactForm: FormGroup;
   allStatesList: any;
   allPresentCityList: any;
@@ -47,6 +45,12 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
   form_permanent_region = 'permanent_country';
 
   contactDetails: any;
+  checkFormValidRequest: Subscription;
+  sendPopupResultSubscription: Subscription;
+  joiningFormDataPassingSubscription: Subscription;
+  updatedCitySubscription: Subscription;
+  updatedCitySubscription1: Subscription;
+  newSaveProfileDataSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -64,6 +68,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     this.getContactDetails();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   ngAfterViewInit() {
@@ -75,6 +80,12 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       top = null;
     }
   }
+
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+       this.getContactDetails();
+     });
+   }
 
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('contact');
@@ -95,7 +106,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     const ApiData = {
       state_id: id
     };
-    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+   this.updatedCitySubscription = this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
 
       if(datas && datas[0] && datas[0].error) {
@@ -111,7 +122,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     const ApiData = {
       state_id: id
     };
-    this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
+   this.updatedCitySubscription1 = this.candidateService.updatedCity(ApiData).subscribe((datas: any) => {
       // this.hideCityDropDown = false;
 
       if(datas && datas[0] && datas[0].error) {
@@ -138,15 +149,15 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
       this.contactDetails = this.candidateService.getLocalcontact_details();
       this.contactDetails ? this.patchContactForm() : '';
     } else {
-      let apiData = {
-        form_name: 'joining',
-        section_name: ''
-      }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        this.contactDetails = this.candidateService.getLocalcontact_details();
-        this.contactDetails ? this.patchContactForm() : '';
-      });
+      // let apiData = {
+      //   form_name: 'joining',
+      //   section_name: ''
+      // }
+      // this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+      //   this.candidateService.saveAllProfileToLocal(data);
+      //   this.contactDetails = this.candidateService.getLocalcontact_details();
+      //   this.contactDetails ? this.patchContactForm() : '';
+      // });
     }
   }
 
@@ -180,7 +191,7 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
           section_name: "contact_details",
           saving_data: apiData
         }
-        this.candidateService.newSaveProfileData(ContactApiRequestDetails).subscribe((data: any)=> {
+      this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(ContactApiRequestDetails).subscribe((data: any)=> {
           this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
           this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
           this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Contact details is updated');
@@ -438,20 +449,12 @@ export class JoiningContactComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-  // Value changes to check present and permanent are same
-  valueChanges() {
-    this.contactForm.valueChanges.subscribe((data: any) => {
-      // Below is for automatic update of permanent address
-      // if (data[this.form_same_as_checkbox]) {
-      //   return this.updatePermanentAsPerPresent();
-      // } else {
-      //   return this.releaseDisabledValue();
-      // }
-    });
-  }
-
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
+    this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+    this.updatedCitySubscription ? this.updatedCitySubscription.unsubscribe() : '';
+    this.updatedCitySubscription1 ? this.updatedCitySubscription1.unsubscribe() : '';
+    this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
   }
 }

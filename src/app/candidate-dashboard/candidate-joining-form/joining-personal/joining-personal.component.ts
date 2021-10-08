@@ -48,8 +48,6 @@ export const MY_FORMATS = {
 
 
 export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestroy {
-  checkFormValidRequest: Subscription;
-  sendPopupResultSubscription: Subscription;
 
   marital_list = [
     {
@@ -214,6 +212,13 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
   };
 
   isKYCNotExempted = this.appConfig.getLocalData('isKYCNotExempted') == 'false' ? false : true;
+
+  checkFormValidRequest: Subscription;
+  sendPopupResultSubscription: Subscription;
+  joiningFormDataPassingSubscription: Subscription;
+  newGetProfileDataSubscription: Subscription;
+  getBloodGroupsSubscription: Subscription;
+  newSaveProfileDataSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -234,6 +239,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.getPersonalData();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   ngAfterViewInit() {
@@ -246,6 +252,12 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     }
   }
 
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+       this.getPersonalData();
+     });
+   }
+
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('personal');
   }
@@ -255,15 +267,15 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       this.personalDetails = this.candidateService.getLocalpersonal_details();
       this.personalDetails ? this.patchPersonalForm() : '';
     } else {
-      let apiData = {
-        form_name: 'joining',
-        section_name: ''
-      }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        this.personalDetails = this.candidateService.getLocalpersonal_details();
-        this.personalDetails ? this.patchPersonalForm() : '';
-      });
+    //   let apiData = {
+    //     form_name: 'joining',
+    //     section_name: ''
+    //   }
+    //  this.newGetProfileDataSubscription = this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+    //     this.candidateService.saveAllProfileToLocal(data);
+    //     this.personalDetails = this.candidateService.getLocalpersonal_details();
+    //     this.personalDetails ? this.patchPersonalForm() : '';
+    //   });
     }
   }
 
@@ -282,7 +294,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     if (this.appConfig.getLocalData('bloodgroup')) {
       this.bloodGroupDropdownList = JSON.parse(this.appConfig.getLocalData('bloodgroup'));
     } else {
-      this.candidateService.getBloodGroups().subscribe((data: any) => {
+     this.getBloodGroupsSubscription = this.candidateService.getBloodGroups().subscribe((data: any) => {
         this.bloodGroupDropdownList = data;
         this.bloodGroupDropdownList && this.bloodGroupDropdownList.length > 0 ? this.appConfig.setLocalData('bloodgroup', JSON.stringify(this.bloodGroupDropdownList)) : '';
       }, (err) => {
@@ -388,7 +400,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
         section_name: "personal_details",
         saving_data: apiData
       }
-      this.candidateService.newSaveProfileData(PersonalApiRequestDetails).subscribe((data: any)=> {
+    this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(PersonalApiRequestDetails).subscribe((data: any)=> {
         this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Personal details is updated');
@@ -915,5 +927,9 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
 ngOnDestroy() {
   this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
   this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
+  this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+  this.newGetProfileDataSubscription ? this.newGetProfileDataSubscription.unsubscribe() : '';
+  this.getBloodGroupsSubscription ? this.getBloodGroupsSubscription.unsubscribe() : '';
+  this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
 }
 }

@@ -45,8 +45,6 @@ export const MY_FORMATS = {
 })
 export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  checkFormValidRequest: Subscription;
-  sendPopupResultSubscription: Subscription;
   dependentForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -82,6 +80,11 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   form_isDependent = 'dependent'
 
   dependedentDetails: any;
+  checkFormValidRequest: Subscription;
+  sendPopupResultSubscription: Subscription;
+  joiningFormDataPassingSubscription: Subscription;
+  newSaveProfileDataSubscription: Subscription;
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -99,6 +102,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     this.getDependentApiDetails();
     this.saveRequestRxJs();
     this.checkFormValidRequestFromRxjs();
+    this.joiningFormDataFromJoiningFormComponentRxjs();
   }
 
   ngAfterViewInit() {
@@ -111,6 +115,12 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
+  joiningFormDataFromJoiningFormComponentRxjs() {
+    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
+       this.getDependentApiDetails();
+     });
+   }
+
   showStepper() {
     this.sharedService.joiningFormActiveSelector.next('dependent');
   }
@@ -120,15 +130,15 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
       this.dependedentDetails = this.candidateService.getLocaldependent_details();
       this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
     } else {
-      let apiData = {
-        form_name: 'joining',
-        section_name: ''
-      }
-      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        this.dependedentDetails = this.candidateService.getLocaldependent_details();
-        this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
-      });
+      // let apiData = {
+      //   form_name: 'joining',
+      //   section_name: ''
+      // }
+      // this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+      //   this.candidateService.saveAllProfileToLocal(data);
+      //   this.dependedentDetails = this.candidateService.getLocaldependent_details();
+      //   this.dependedentDetails && this.dependedentDetails.length > 0 ? this.ifDependentDetails() : this.ifNotDependentDetails();
+      // });
     }
   }
 
@@ -192,7 +202,7 @@ dateConvertion(date) {
         section_name: "dependent_details",
         saving_data: formArray
       }
-      this.candidateService.newSaveProfileData(DependentApiRequestDetails).subscribe((data: any)=> {
+     this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(DependentApiRequestDetails).subscribe((data: any)=> {
         this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Dependent details is updated');
@@ -331,6 +341,8 @@ dateConvertion(date) {
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
-  }
+    this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
+    this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
+    }
 
 }

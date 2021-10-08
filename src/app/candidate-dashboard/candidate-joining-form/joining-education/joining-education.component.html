@@ -324,6 +324,10 @@
                                 <div
                                     *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.percentage">
                                     Percentage should be in the range of 10 to 100</div>
+                                    <div
+                                    *ngIf="getEducationArr.controls[i].get(form_cgpa).errors?.maxlength">
+                                    Number with 2 Decimal points only allowed</div>
+
                             </div>
                         </div>
 
@@ -339,6 +343,9 @@
                                 <div
                                     *ngIf="getEducationArr.controls[i].get(form_Finalcgpa).errors?.percentage">
                                     Final Percentage should be in the range of 10 to 100</div>
+                                    <div
+                                    *ngIf="getEducationArr.controls[i].get(form_Finalcgpa).errors?.maxlength">
+                                    Number with 2 Decimal points only allowed</div>
                             </div>
                         </div>
                         </ng-container>

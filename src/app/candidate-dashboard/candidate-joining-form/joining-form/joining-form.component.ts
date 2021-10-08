@@ -239,6 +239,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
       this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         this.candidateService.saveAllProfileToLocal(data);
+        this.sharedService.joiningFormDataPassing.next();
         this.statusOfForms();
       });
     }

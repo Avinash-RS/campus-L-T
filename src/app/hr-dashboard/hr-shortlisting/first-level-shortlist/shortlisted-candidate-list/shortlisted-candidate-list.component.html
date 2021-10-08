@@ -436,6 +436,15 @@
                     >
                       Percentage should be in the range of 10 to 100
                     </div>
+                    <div
+                    *ngIf="
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_from
+                      ).errors?.maxlength
+                    "
+                  >
+                  Number with 2 Decimal points only allowed
+                  </div>
                   </div>
                 </div>
                 <div class="overall-input-wrapper">
@@ -476,6 +485,15 @@
                     >
                       Percentage should be in the range of 10 to 100
                     </div>
+                    <div
+                    *ngIf="
+                      getEducationArr.controls[i].get(
+                        form_education_percentage_to
+                      ).errors?.maxlength
+                    "
+                  >
+                  Number with 2 Decimal points only allowed
+                  </div>
                     <div
                     *ngIf="
                     !getEducationArr.controls[i].get(

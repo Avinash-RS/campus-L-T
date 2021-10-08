@@ -106,7 +106,7 @@ export class GlobalValidatorService {
     }
 
     mobileRegex() {
-      const mobileRegex: RegExp = /^[0-9]{10}$/;
+      const mobileRegex: RegExp = /^[6-9][0-9]{9}$/;
       return this.regexValidator(mobileRegex, {mobileRegex: true});
     }
 
@@ -126,7 +126,7 @@ export class GlobalValidatorService {
     }
 
     panNo() {
-      const panNo: RegExp = /^([a-zA-Z0-9_ ]){10}$/;
+      const panNo: RegExp = /^([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
       return this.regexValidator(panNo, {panNo: true});
     }
 
@@ -146,7 +146,7 @@ export class GlobalValidatorService {
     }
 
     aadhaar() {
-      const aadhaar: RegExp = /^[0-9]{12}$/;
+      const aadhaar: RegExp = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
       return this.regexValidator(aadhaar, {aadhaar: true});
     }
 
@@ -158,6 +158,28 @@ export class GlobalValidatorService {
     percentage() {
       const percentage = /(^100(\.0{1,2})?$)|(^(?:[2-9]\d|\d{2}?)(\.[0-9]{1,2})?$)/;
       return this.regexValidator(percentage, {percentage: true});
+    }
+
+    percentageNew() : ValidatorFn {
+      return (control: AbstractControl): {[key: string]: any} => {
+        if (!control.value) {
+          return null;
+        }
+        const isWhitespace = (control.value.toString() || '').trim().length === 0;
+        // Whitespace detect
+        if(isWhitespace) {
+          control.setValue(null);
+          return {percentage: true};
+        } else {
+          var x = parseFloat(control.value);
+          if (isNaN(x) || x < 10 || x > 100) {
+          // value is out of range
+            return {percentage: true};
+          } else {
+            return null;
+          }
+        }
+      };
     }
 
 }
