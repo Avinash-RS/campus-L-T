@@ -58,8 +58,8 @@
                 <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
                 <div class="form-error" *ngIf="aadhar?.invalid && aadhar?.touched">
                     <div *ngIf="aadhar?.errors?.required">Aadhaar No. is Required</div>
-                    <div *ngIf="aadhar?.errors?.aadhaar">Aadhaar No. should be numberic only and should be exact 12
-                        digits</div>
+                    <div *ngIf="aadhar?.errors?.aadhaar">Aadhaar No. should be exact 12
+                        digits and should match spacing as per Aadhaar card</div>
                 </div>
             </div>
 
@@ -69,8 +69,7 @@
                 <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
                 <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
                     <div *ngIf="pan?.errors?.required">PAN No. is Required</div>
-                    <div *ngIf="pan?.errors?.panNo">PAN No. should be alpha numberic and should be 10
-                        characters</div>
+                    <div *ngIf="pan?.errors?.panNo">Invalid PAN Card Number. (Note: This Field is Case Sensitive)</div>
                 </div>
             </div>
             </ng-container>
