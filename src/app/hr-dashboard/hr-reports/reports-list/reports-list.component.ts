@@ -18,10 +18,10 @@ const moment = _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'DD-MM-YYYY',
   },
   display: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'DD-MM-YYYY',
     monthYearLabel: 'MM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MM YYYY',
@@ -53,6 +53,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
+  minDate: Date;
+  maxDate: Date;
   form: FormGroup;
   userList;
   tagNameDropdown: any = [];
@@ -99,6 +101,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     private sharedService: SharedServiceService,
     private candidateService: CandidateMappersService
     ) {
+      this.dateValidation();
     }
 
   ngOnInit() {
@@ -111,6 +114,13 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     this.refreshOndriveChangeRXJS();
 
   }
+
+  dateValidation() {
+    // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 15, 0, 1);
+    this.maxDate = new Date();
+}
 
   ngOnDestroy() {
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
@@ -511,7 +521,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  downloadReports(index){
+  downloadReports(index, form){
 
     if(index == 0){
       if(this.selectedTagNameFirst || this.selectedCityForFirst || this.selectedInstituteNameForFirst){
