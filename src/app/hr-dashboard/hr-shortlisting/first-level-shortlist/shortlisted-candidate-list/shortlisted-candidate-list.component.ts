@@ -192,11 +192,12 @@ pgInstitutesList: any;
   dateValidCustomCheck() {
     this.dateFrom.valueChanges.subscribe((data: any)=> {
       let startDate = data;
-      if (this.dateTo && this.dateTo.value && startDate) {
+      if (this.dateTo && this.dateTo.value && startDate && this.dateTo.valid) {
         let dateFrom = moment(startDate).format();
         let dateTo = moment(this.dateTo.value).format();
         let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
         isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
+        this.dateTo.updateValueAndValidity();
       } else {
         // this.dateTo.setErrors(null);
       }
@@ -209,6 +210,7 @@ pgInstitutesList: any;
       let dateTo = moment(endDate).format();
       let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
       isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
+      this.dateTo.updateValueAndValidity();
     } else {
       // this.dateTo.setErrors(null);
     }
