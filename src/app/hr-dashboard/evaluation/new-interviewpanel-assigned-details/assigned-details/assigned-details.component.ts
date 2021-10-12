@@ -32,14 +32,14 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
   allAssessments: any;
   routedData: any;
   statusList = [
-    {
-      name: 'All',
-      value: 'all'
-    },
-    {
-      name: 'Unassigned',
-      value: '0'
-    },
+    // {
+    //   name: 'All',
+    //   value: 'all'
+    // },
+    // {
+    //   name: 'Unassigned',
+    //   value: '0'
+    // },
     {
       name: 'Assigned',
       value: '1'

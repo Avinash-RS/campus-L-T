@@ -45,7 +45,7 @@
                           Status<span class="asterick">*</span>
                       </div>
                       <div class="input-box">
-                          <nz-select class="nzSelect-revamp" [(ngModel)]="selectedStatus" (ngModelChange)="instituteChange()" nzAllowClear nzShowSearch nzPlaceHolder="--Select Status--">
+                          <nz-select class="nzSelect-revamp" [(ngModel)]="selectedStatus" (ngModelChange)="instituteChange()" nzShowSearch nzPlaceHolder="--Select Status--">
                               <nz-option *ngFor="let level of statusList" [nzLabel]="level.name" [nzValue]="level.value"></nz-option>
                           </nz-select>
                       </div>
