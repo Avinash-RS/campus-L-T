@@ -189,30 +189,30 @@ pgInstitutesList: any;
     });
   }
 
-  dateValidCustomCheck() {
-    this.dateFrom.valueChanges.subscribe((data: any)=> {
-      let startDate = data;
-      if (this.dateTo && this.dateTo.value && startDate) {
+  dateValidCustomCheck(isDateFrom) {
+      if (isDateFrom) {
+        let startDate = this.dateFrom.value;
+        if (this.dateTo && this.dateTo.value && startDate && this.dateTo.valid) {
         let dateFrom = moment(startDate).format();
         let dateTo = moment(this.dateTo.value).format();
         let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
         isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
-      } else {
-        // this.dateTo.setErrors(null);
+        if (!isEndDateBeforeStartDate) {
+          this.dateTo.updateValueAndValidity();
+        }
       }
-    });
-
-    this.dateTo.valueChanges.subscribe((data: any)=> {
-    let endDate = data;
-    if (this.dateFrom && this.dateFrom.value && endDate) {
-      let dateFrom = moment(this.dateFrom.value).format();
-      let dateTo = moment(endDate).format();
-      let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
-      isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
-    } else {
-      // this.dateTo.setErrors(null);
-    }
-  });
+     } else {
+        let endDate = this.dateTo.value;
+        if (this.dateFrom && this.dateFrom.value && endDate) {
+          let dateFrom = moment(this.dateFrom.value).format();
+          let dateTo = moment(endDate).format();
+          let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
+          isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
+          if (!isEndDateBeforeStartDate) {
+            this.dateTo.updateValueAndValidity();
+          }
+        }
+     }
   }
 
   dateValidation() {
@@ -287,7 +287,6 @@ dateConvertionMonth(date) {
       statusPanels: [{ statusPanel: 'clickableStatusBarComponent' }],
     };
     this.educationDropdownValuesAPI();
-    this.dateValidCustomCheck();
     this.refreshOndriveChangeRXJS();
   }
 
@@ -858,6 +857,8 @@ dateConvertionMonth(date) {
   }
   customFilterOpen() {
     this.selectedCustomFilterListValue = this.selectedCustomFilterListValue ? this.selectedCustomFilterListValue : this.filterProfileList;
+    this.dateValidCustomCheck(true);
+    this.dateValidCustomCheck(false);
     this.FilterdialogRef = this.dialog.open(this.customFilterRef, {
       width: '400px',
       height: 'auto',
@@ -1336,6 +1337,10 @@ showInstitute(institute: string) {
   return count <= 55 ? institute : (replace + '...');
 }
 
+checkEducationalFilterAppliedOrNot() {
+  let eduValue = this.getEducationArr.getRawValue();
+  return eduValue.find(x => x.checked);
+}
   // Form getters
   // convenience getters for easy access to form fields
   get getEducationArr() { return this.educationForm.get([this.form_education_array]) as FormArray; }
