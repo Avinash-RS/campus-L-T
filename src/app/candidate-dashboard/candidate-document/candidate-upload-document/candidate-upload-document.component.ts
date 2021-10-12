@@ -152,10 +152,18 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   }
 
   ngOnInit() {
+    this.isFormSubmitted = this.appConfig.getLocalData('form_submmited') == 'true' ? true : false;
+    if (this.appConfig.getLocalData('form_submmited') == 'true') {
     this.formInitialize();
     this.getDocuments();
     this.getDownloadableDocs();
-    this.isFormSubmitted = this.appConfig.getLocalData('form_submmited') == 'true' ? true : false;
+    } else {
+
+    }
+  }
+
+  goToProfile() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
   }
 
   ngAfterViewInit() {

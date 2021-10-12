@@ -1,4 +1,4 @@
-<div class="joining-personal-wrapper">
+<div class="joining-personal-wrapper" *ngIf="isFormSubmitted else formNotSubmitted">
   <!-- <h5>
       Upload Documents
   </h5> -->
@@ -932,4 +932,11 @@
 
   </div>
 
+</ng-template>
+
+<ng-template #formNotSubmitted>
+    <div class="nodata">Please Complete the Profile Form to Upload the Documents
+      <br/><br/>
+      <div style="color: #333333;">Click here to fill the <span class="redirect" (click)="goToProfile()">Profile Form</span></div>
+    </div>
 </ng-template>

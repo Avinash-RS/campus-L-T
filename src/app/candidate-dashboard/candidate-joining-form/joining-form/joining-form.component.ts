@@ -194,43 +194,39 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
         return this.activeStep = 'submit';
       }
-
-      if (data && data.document_details == '1') {
-        this.valid.tillupload();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
-        return this.activeStep = 'preview';
-      }
-
-      if (data && data.experience_details == '1') {
-          this.valid.tillwork();
-          param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
-          return this.activeStep = 'upload';
-      }
-
-      if (data && data.education_details == '1') {
-        this.valid.tilleducation();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
-        return this.activeStep = 'work';
-      }
-
-      if (data && data.dependent_details == '1') {
-        this.valid.tilldependent();
-       param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
-       return this.activeStep = 'education';//, this.routingSelection = param ? param : 'education';
-      }
-      if (data && data.contact_details == '1') {
-        this.valid.tillContact();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
-        return this.activeStep = 'dependent';
-      }
-      if (data && data.personal_details == '1') {
+      if (data && data.personal_details == '0') {
         this.valid.tillPersonal();
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+        return this.activeStep = 'personal';//, this.routingSelection = param ? param : 'contact';
+      }
+      if (data && data.contact_details == '0') {
+        this.valid.tillContact();
         param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
-        return this.activeStep = 'contact';//, this.routingSelection = param ? param : 'contact';
+        return this.activeStep = 'contact';
+      }
+      if (data && data.dependent_details == '0') {
+        this.valid.tilldependent();
+       param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+       return this.activeStep = 'dependent';//, this.routingSelection = param ? param : 'education';
+      }
+      if (data && data.education_details == '0') {
+        this.valid.tilleducation();
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+        return this.activeStep = 'education';
+      }
+      if (data && data.experience_details == '0') {
+          this.valid.tillwork();
+          param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
+          return this.activeStep = 'work';
+      }
+      if (data && data.document_details == '0') {
+        this.valid.tillupload();
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+        return this.activeStep = 'upload';
       }
       else {
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
-        return this.activeStep = 'personal';//, this.routingSelection = param ? param : 'personal';
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'personal';
       }
     } else {
       let apiData = {
