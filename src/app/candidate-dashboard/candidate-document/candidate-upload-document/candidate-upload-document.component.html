@@ -1,4 +1,4 @@
-<div class="joining-personal-wrapper">
+<div class="joining-personal-wrapper" *ngIf="isFormSubmitted else formNotSubmitted">
   <!-- <h5>
       Upload Documents
   </h5> -->
@@ -38,7 +38,7 @@
               <mat-accordion class="example-headers-align" multi>
                   <!-- Joining Uploads -->
                   <ng-container>
-                  <mat-expansion-panel>
+                  <mat-expansion-panel *ngIf="false">
                       <mat-expansion-panel-header>
                           <mat-panel-title>
                               <h6 class="mt-0 mb-0 ml-0 mr-0">Joining Documents Upload</h6>
@@ -122,7 +122,7 @@
                   </mat-expansion-panel>
 
                   <!-- Education Uploads -->
-                  <mat-expansion-panel>
+                  <mat-expansion-panel *ngIf="isFormSubmitted">
                       <mat-expansion-panel-header>
                           <mat-panel-title>
                               <h6 class="mt-0 mb-0 ml-0 mr-0">Education Documents Upload</h6>
@@ -275,7 +275,7 @@
                   </mat-expansion-panel>
 
                   <!-- Transfer Certificate -->
-                  <mat-expansion-panel>
+                  <mat-expansion-panel *ngIf="false">
                       <mat-expansion-panel-header>
                           <mat-panel-title>
                               <h6 class="mt-0 mb-0 ml-0 mr-0">Transfer/Conduct Certificate Upload</h6>
@@ -438,7 +438,7 @@
 
                   <ng-container>
                     <!-- Banking Uploads -->
-                  <mat-expansion-panel>
+                  <mat-expansion-panel *ngIf="false">
                       <mat-expansion-panel-header>
                           <mat-panel-title>
                               <h6 class="mt-0 mb-0 ml-0 mr-0">Bank Details</h6>
@@ -932,4 +932,11 @@
 
   </div>
 
+</ng-template>
+
+<ng-template #formNotSubmitted>
+    <div class="nodata">Please Complete the Profile Form to Upload the Documents
+      <br/><br/>
+      <div style="color: #333333;">Click here to fill the <span class="redirect" (click)="goToProfile()">Profile Form</span></div>
+    </div>
 </ng-template>

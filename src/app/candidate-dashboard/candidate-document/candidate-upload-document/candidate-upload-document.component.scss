@@ -876,3 +876,23 @@ mat-expansion-panel-header {
   border: solid 1px $primary-red !important;
   padding-bottom: 1.5em;
 }
+.nodata {
+  font-size: 16px;
+    width: 100%;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1em;
+    color: red;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 2px 2px 5px #0000001a;
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    border-radius: 8px;
+    position: relative;
+    margin-top: 1em;
+    background: rgb(255,0,0, 0.1);
+    padding: 1em;
+}
+.redirect {
+  color: #0645AD;
+  cursor: pointer;
+}

@@ -136,6 +136,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   reason = new FormControl(null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
   joiningNotUploadedDocs: any[];
   isRoute: any;
+  isFormSubmitted: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -151,9 +152,18 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   }
 
   ngOnInit() {
+    this.isFormSubmitted = this.appConfig.getLocalData('form_submmited') == 'true' ? true : false;
+    if (this.appConfig.getLocalData('form_submmited') == 'true') {
     this.formInitialize();
     this.getDocuments();
     this.getDownloadableDocs();
+    } else {
+
+    }
+  }
+
+  goToProfile() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
   }
 
   ngAfterViewInit() {
@@ -167,11 +177,11 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
 
   formInitialize() {
     this.uploadForm = this.fb.group({
-      [this.form_joiningArray]: this.fb.array([]),
+      // [this.form_joiningArray]: this.fb.array([]),
       [this.form_educationArray]: this.fb.array([]),
-      [this.form_transferCertArray]: this.fb.array([]),
+      // [this.form_transferCertArray]: this.fb.array([]),
       [this.form_resumeArray]: this.fb.array([]),
-      [this.form_bankArray]: this.fb.array([]),
+      // [this.form_bankArray]: this.fb.array([]),
       [this.form_CertificationArray]: this.fb.array([]),
       [this.form_otherCertArray]: this.fb.array([]),
     })
@@ -189,11 +199,11 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   }
 
   ifDocumentDetails(data) {
-    this.getJoiningDocuments = data && data['joining_details'] ? data['joining_details'] : [];
+    // this.getJoiningDocuments = data && data['joining_details'] ? data['joining_details'] : [];
     this.getEducationDocuments = data && data['education_documents'] ? data['education_documents'] : [];
     this.getResumeDocuments = data && data['resume'] ? data['resume'] : [];
-    this.getTransferDocuments = data && data['transfer_certificate'] ? data['transfer_certificate'] : [];
-    this.getbankDocuments = data && data['banking_details'] ? data['banking_details'] : [];
+    // this.getTransferDocuments = data && data['transfer_certificate'] ? data['transfer_certificate'] : [];
+    // this.getbankDocuments = data && data['banking_details'] ? data['banking_details'] : [];
     this.getCertificationDocuments = data && data['certifications'] ? data['certifications'] : [];
     this.getOtherCertificationDocuments = data && data['other_certifications'] ? data['other_certifications'] : [];
     this.checkJoiningArrayinitalize();
@@ -212,21 +222,21 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   checkJoiningArrayinitalize() {
     if (this.candidateService.checkKycOrJoiningForm() || true) {
     // Joining
-    let arr = [];
-    this.getJoiningDocuments.forEach(element => {
-      if (element) {
-        arr.push(element);
-      }
-    });
-    this.getJoiningDocuments = arr;
-    if (this.getJoiningDocuments && this.getJoiningDocuments.length > 0) {
-      this.getJoiningDocuments.forEach(element => {
-        this.checkNotSubmittedReasonAndDate(element);
-        this.getJoiningArr.push(this.patchJoiningArray(element));
-      });
-    } else {
-      this.getJoiningArr.push(this.initJoiningArray());
-    }
+    // let arr = [];
+    // this.getJoiningDocuments.forEach(element => {
+    //   if (element) {
+    //     arr.push(element);
+    //   }
+    // });
+    // this.getJoiningDocuments = arr;
+    // if (this.getJoiningDocuments && this.getJoiningDocuments.length > 0) {
+    //   this.getJoiningDocuments.forEach(element => {
+    //     this.checkNotSubmittedReasonAndDate(element);
+    //     this.getJoiningArr.push(this.patchJoiningArray(element));
+    //   });
+    // } else {
+    //   this.getJoiningArr.push(this.initJoiningArray());
+    // }
 
   // Education
     if (this.getEducationDocuments && this.getEducationDocuments.length > 0) {
@@ -240,25 +250,25 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       this.getEducationArr.push(this.initEducationArray());
     }
 
-      // Trans
-      if (this.getTransferDocuments && this.getTransferDocuments.length > 0) {
-        this.getTransferDocuments.forEach(element => {
-          this.checkNotSubmittedReasonAndDate(element);
-          this.getTransferArr.push(this.patchJoiningArray(element));
-        });
-      } else {
-        this.getTransferArr.push(this.initTransferArray());
-      }
+      // // Trans
+      // if (this.getTransferDocuments && this.getTransferDocuments.length > 0) {
+      //   this.getTransferDocuments.forEach(element => {
+      //     this.checkNotSubmittedReasonAndDate(element);
+      //     this.getTransferArr.push(this.patchJoiningArray(element));
+      //   });
+      // } else {
+      //   this.getTransferArr.push(this.initTransferArray());
+      // }
 
-      // Banking Details
-      if (this.getbankDocuments && this.getbankDocuments.length > 0) {
-        this.getbankDocuments.forEach(element => {
-          this.checkNotSubmittedReasonAndDate(element);
-          this.getBankArr.push(this.patchBankingArray(element));
-        });
-      } else {
-        this.getBankArr.push(this.initBankingArray());
-      }
+      // // Banking Details
+      // if (this.getbankDocuments && this.getbankDocuments.length > 0) {
+      //   this.getbankDocuments.forEach(element => {
+      //     this.checkNotSubmittedReasonAndDate(element);
+      //     this.getBankArr.push(this.patchBankingArray(element));
+      //   });
+      // } else {
+      //   this.getBankArr.push(this.initBankingArray());
+      // }
 
       // Other Certifications
       if (this.getOtherCertificationDocuments && this.getOtherCertificationDocuments.length > 0) {
@@ -480,7 +490,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   initEducationArray() {
     return this.fb.group({
       [this.form_education_level]: [null],
-      [this.form_noofSemester]: [null, [Validators.required]],
+      [this.form_noofSemester]: [null],
       [this.form_semesterArray]: this.fb.array([this.initSemesterArray()]),
     });
   }
@@ -730,15 +740,15 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       this.accordion.openAll();
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_resumeArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_educationArray]) as FormArray);
-      this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
+      // this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_bankArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
       this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_otherCertArray]) as FormArray);
       if (this.getEducationArr.invalid) {
         return this.appConfig.nzNotification('error', 'Education Uploads', 'Please fill all the red highlighted fields in Education Uploads to proceed further');
       }
-      if (this.getBankArr.invalid) {
-        return this.appConfig.nzNotification('error', 'Banking Details', 'Please fill all the red highlighted fields in Banking Details to proceed further');
-      }
+      // if (this.getBankArr.invalid) {
+      //   return this.appConfig.nzNotification('error', 'Banking Details', 'Please fill all the red highlighted fields in Banking Details to proceed further');
+      // }
       if (this.getCertificationsArr.invalid) {
         return this.appConfig.nzNotification('error', 'Certification Uploads', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
       }
@@ -760,37 +770,37 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       bank: true,
       other: true,
     }
-    // Joining
-    let joiningArray = this.uploadForm.getRawValue()[this.form_joiningArray];
-    this.joiningNotUploadedDocs = [];
-    joiningArray.forEach(element => {
-      if (!element[this.form_file_path]) {
-        let ele = {
-          label: element[this.form_label],
-        }
-        this.joiningNotUploadedDocs.push(ele);
-      }
-    });
+    // // Joining
+    // let joiningArray = this.uploadForm.getRawValue()[this.form_joiningArray];
+    // this.joiningNotUploadedDocs = [];
+    // joiningArray.forEach(element => {
+    //   if (!element[this.form_file_path]) {
+    //     let ele = {
+    //       label: element[this.form_label],
+    //     }
+    //     this.joiningNotUploadedDocs.push(ele);
+    //   }
+    // });
 
-    if (this.joiningNotUploadedDocs && this.joiningNotUploadedDocs.length > 0) {
-      isValid.joining = false;
-    }
+    // if (this.joiningNotUploadedDocs && this.joiningNotUploadedDocs.length > 0) {
+    //   isValid.joining = false;
+    // }
 
-    // Transfer
-    let transferArray = this.uploadForm.getRawValue()[this.form_transferCertArray];
-    this.transferNotUploadedDocs = [];
-    transferArray.forEach(element => {
-      if (!element[this.form_file_path]) {
-        let ele = {
-          label: element[this.form_label],
-        }
-        this.transferNotUploadedDocs.push(ele);
-      }
-    });
+    // // Transfer
+    // let transferArray = this.uploadForm.getRawValue()[this.form_transferCertArray];
+    // this.transferNotUploadedDocs = [];
+    // transferArray.forEach(element => {
+    //   if (!element[this.form_file_path]) {
+    //     let ele = {
+    //       label: element[this.form_label],
+    //     }
+    //     this.transferNotUploadedDocs.push(ele);
+    //   }
+    // });
 
-    if (this.transferNotUploadedDocs && this.transferNotUploadedDocs.length > 0) {
-      isValid.transfer = false;
-    }
+    // if (this.transferNotUploadedDocs && this.transferNotUploadedDocs.length > 0) {
+    //   isValid.transfer = false;
+    // }
 
     // Resume
     let resumeArray = this.uploadForm.getRawValue()[this.form_resumeArray];
@@ -809,23 +819,24 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     }
 
     // Banking
-    let bankArray = this.uploadForm.getRawValue()[this.form_bankArray];
-    this.bankNotUploadedDocs = [];
-    bankArray.forEach(element => {
-      if (!element[this.form_file_path]) {
-        let ele = {
-          label: 'Bank Passbook Front Page or Bank Cheque Leaf',
-        }
-        this.bankNotUploadedDocs.push(ele);
-      }
-    });
+    // let bankArray = this.uploadForm.getRawValue()[this.form_bankArray];
+    // this.bankNotUploadedDocs = [];
+    // bankArray.forEach(element => {
+    //   if (!element[this.form_file_path]) {
+    //     let ele = {
+    //       label: 'Bank Passbook Front Page or Bank Cheque Leaf',
+    //     }
+    //     this.bankNotUploadedDocs.push(ele);
+    //   }
+    // });
 
-    if (this.bankNotUploadedDocs && this.bankNotUploadedDocs.length > 0) {
-      isValid.bank = false;
-    }
+    // if (this.bankNotUploadedDocs && this.bankNotUploadedDocs.length > 0) {
+    //   isValid.bank = false;
+    // }
 
 
     // Education
+    if (this.appConfig.getLocalData('form_submmited') == 'true') {
     let educationArray = this.uploadForm.getRawValue()[this.form_educationArray];
     this.educationNotUploadedDocs = [];
     educationArray.forEach(element => {
@@ -843,33 +854,33 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     if (this.educationNotUploadedDocs && this.educationNotUploadedDocs.length > 0) {
       isValid.education = false;
     }
-
+  }
     let finalValidCheck = JSON.stringify(isValid);
     return finalValidCheck.includes('false') ? true : false;
   }
 
   beforeSubmit(routeValue?: any) {
     // Joining Nulling the not sub desc and exp date.
-    let joiningArray = this.getJoiningArr.getRawValue();
-    joiningArray.forEach((element, i) => {
-      if (element[this.form_file_path]) {
-      this.getJoiningArr.at(i).patchValue({
-      [this.form_Not_Submitted_Description]: null,
-      [this.form_expectedDate]: null
-    });
-      }
-    });
+    // let joiningArray = this.getJoiningArr.getRawValue();
+    // joiningArray.forEach((element, i) => {
+    //   if (element[this.form_file_path]) {
+    //   this.getJoiningArr.at(i).patchValue({
+    //   [this.form_Not_Submitted_Description]: null,
+    //   [this.form_expectedDate]: null
+    // });
+    //   }
+    // });
 
     // Transfer Nulling the not sub desc and exp date.
-    let transferArray = this.getTransferArr.getRawValue();
-    transferArray.forEach((element, i) => {
-      if (element[this.form_file_path]) {
-      this.getTransferArr.at(i).patchValue({
-      [this.form_Not_Submitted_Description]: null,
-      [this.form_expectedDate]: null
-    });
-      }
-    });
+    // let transferArray = this.getTransferArr.getRawValue();
+    // transferArray.forEach((element, i) => {
+    //   if (element[this.form_file_path]) {
+    //   this.getTransferArr.at(i).patchValue({
+    //   [this.form_Not_Submitted_Description]: null,
+    //   [this.form_expectedDate]: null
+    // });
+    //   }
+    // });
 
       // Resume Nulling the not sub desc and exp date.
       let resumeArray = this.getResumeArr.getRawValue();
@@ -883,17 +894,18 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       });
 
     // Banking Nulling the not sub desc and exp date.
-    let bankingArray = this.getBankArr.getRawValue();
-    bankingArray.forEach((element, i) => {
-      if (element[this.form_file_path]) {
-      this.getBankArr.at(i).patchValue({
-      [this.form_Not_Submitted_Description]: null,
-      [this.form_expectedDate]: null
-    });
-      }
-    });
+    // let bankingArray = this.getBankArr.getRawValue();
+    // bankingArray.forEach((element, i) => {
+    //   if (element[this.form_file_path]) {
+    //   this.getBankArr.at(i).patchValue({
+    //   [this.form_Not_Submitted_Description]: null,
+    //   [this.form_expectedDate]: null
+    // });
+    //   }
+    // });
 
     // Education Nulling the not sub desc and exp date.
+    if (this.appConfig.getLocalData('form_submmited') == 'true') {
     let educationArray = this.getEducationArr.getRawValue();
     educationArray.forEach((ele, i) => {
       ele[this.form_semesterArray].forEach((element, subIndex) => {
@@ -905,7 +917,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
         }
       });
     });
-
+  }
     // Other
     let otherCertArray = this.getOtherCertArr.getRawValue();
     otherCertArray.forEach((element, i) => {
@@ -936,21 +948,21 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   }
 
   finalSubmit(routeValue?: any) {
-    let joiningArray = this.getJoiningArr.getRawValue();
-    let educationArray = this.getEducationArr.getRawValue();
-    let transferArray = this.getTransferArr.getRawValue();
+    // let joiningArray = this.getJoiningArr.getRawValue();
+    let educationArray = this.appConfig.getLocalData('form_submmited') == 'true' ? this.getEducationArr.getRawValue() : [];
+    // let transferArray = this.getTransferArr.getRawValue();
     let resumeArray = this.getResumeArr.getRawValue();
-    let bankArray = this.getBankArr.getRawValue();
+    // let bankArray = this.getBankArr.getRawValue();
     let certArray = this.getCertificationsArr.getRawValue();
     let otherArray = this.getOtherCertArr.getRawValue();
     const apiData = {
-      joining_details: joiningArray,
+      joining_details: [],
       education_documents: educationArray,
       resume: resumeArray,
       certifications: certArray,
       other_certifications: otherArray,
-      transfer_certificate: transferArray,
-      banking_details: bankArray
+      transfer_certificate: [],
+      banking_details: []
     }
     const UploadApiRequestDetails = {
       form_name: "documents_upload",
