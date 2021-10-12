@@ -189,32 +189,30 @@ pgInstitutesList: any;
     });
   }
 
-  dateValidCustomCheck() {
-    this.dateFrom.valueChanges.subscribe((data: any)=> {
-      let startDate = data;
-      if (this.dateTo && this.dateTo.value && startDate && this.dateTo.valid) {
+  dateValidCustomCheck(isDateFrom) {
+      if (isDateFrom) {
+        let startDate = this.dateFrom.value;
+        if (this.dateTo && this.dateTo.value && startDate && this.dateTo.valid) {
         let dateFrom = moment(startDate).format();
         let dateTo = moment(this.dateTo.value).format();
         let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
         isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
-        this.dateTo.updateValueAndValidity();
-      } else {
-        // this.dateTo.setErrors(null);
+        if (!isEndDateBeforeStartDate) {
+          this.dateTo.updateValueAndValidity();
+        }
       }
-    });
-
-    this.dateTo.valueChanges.subscribe((data: any)=> {
-    let endDate = data;
-    if (this.dateFrom && this.dateFrom.value && endDate) {
-      let dateFrom = moment(this.dateFrom.value).format();
-      let dateTo = moment(endDate).format();
-      let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
-      isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
-      this.dateTo.updateValueAndValidity();
-    } else {
-      // this.dateTo.setErrors(null);
-    }
-  });
+     } else {
+        let endDate = this.dateTo.value;
+        if (this.dateFrom && this.dateFrom.value && endDate) {
+          let dateFrom = moment(this.dateFrom.value).format();
+          let dateTo = moment(endDate).format();
+          let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
+          isEndDateBeforeStartDate ? this.dateTo.setErrors({notValid: true}) : this.dateTo.setErrors(null);
+          if (!isEndDateBeforeStartDate) {
+            this.dateTo.updateValueAndValidity();
+          }
+        }
+     }
   }
 
   dateValidation() {
@@ -289,7 +287,6 @@ dateConvertionMonth(date) {
       statusPanels: [{ statusPanel: 'clickableStatusBarComponent' }],
     };
     this.educationDropdownValuesAPI();
-    this.dateValidCustomCheck();
     this.refreshOndriveChangeRXJS();
   }
 

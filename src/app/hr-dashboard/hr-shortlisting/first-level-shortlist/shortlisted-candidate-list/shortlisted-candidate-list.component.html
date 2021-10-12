@@ -280,6 +280,8 @@
           [min]="minDate"
           [max]="maxDate"
           [matDatepicker]="picker_offer"
+          (dateChange)="dateValidCustomCheck(true)"
+          (dateInput)="dateValidCustomCheck(true)"
           placeholder="DD-MM-YYYY"
           [formControl]="dateFrom"
         />
@@ -321,6 +323,8 @@
           [min]="minDate"
           [max]="maxDate"
           [matDatepicker]="picker_dateDOB"
+          (dateChange)="dateValidCustomCheck(false)"
+          (dateInput)="dateValidCustomCheck(false)"
           placeholder="DD-MM-YYYY"
           [formControl]="dateTo"
         />
