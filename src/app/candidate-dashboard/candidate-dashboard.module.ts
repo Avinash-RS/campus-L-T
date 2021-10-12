@@ -5,13 +5,11 @@ import { CandidateDashboardRoutingModule } from './candidate-dashboard-routing.m
 import { MasterDashboardComponent } from './master-dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
-import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
 import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
 import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
 import { CandidateMainDashboardComponent } from './candidate-main-dashboard/candidate-main-dashboard.component';
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
-import { RegistrationCloseComponent } from './registration-close/registration-close.component';
 import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
 import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
 import { JoiningContactComponent } from './candidate-joining-form/joining-contact/joining-contact.component';
@@ -26,7 +24,7 @@ import { CandidateFaqComponent } from './candidate-faq/candidate-faq.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, KycSubmissionPageComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, RegistrationCloseComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent],
+  declarations: [MasterDashboardComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent],
   imports: [
     CommonModule,
     MaterialModule,

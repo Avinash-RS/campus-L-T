@@ -10,14 +10,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MasterDashboardComponent } from './master-dashboard.component';
 import { CONSTANT } from '../constants/app-constants.service';
-import { KycSubmissionPageComponent } from './kyc-submission-page/kyc-submission-page.component';
 import { CanloadGuard } from '../guards/canload/canload.guard';
-import { KycthanksGuard } from '../guards/canload/kycthanks.guard';
 import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
 import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
-import {  RegistrationCloseComponent } from './registration-close/registration-close.component';
 import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
 import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
 import { AuthGuard } from '../guards/auth.guard';
@@ -159,20 +156,6 @@ const routes: Routes = [
 
       }
     ]
-  },
-  {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.KYC_THANKS}`,
-    component: KycSubmissionPageComponent, canActivate: [KycthanksGuard],
-    data: {
-      breadcrumb: 'Kyc Submitted'
-    }
-  },
-  {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.REGISTRATION_CLOSE}`,
-    component: RegistrationCloseComponent, canActivate: [KycthanksGuard],
-    data: {
-      breadcrumb: 'Registration close'
-    }
   },
 ];
 

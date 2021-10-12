@@ -19,7 +19,6 @@ import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { KycthanksGuard } from './guards/canload/kycthanks.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
@@ -78,7 +77,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
-     CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, KycthanksGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
+     CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
   ],
   bootstrap: [AppComponent]
 })
