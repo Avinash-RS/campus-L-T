@@ -925,6 +925,7 @@
 
 <!-- Applied Filters -->
 <ng-template #appliedFilters>
+  <ng-container *ngIf="showNotSelectedLabel(profileDropDownValues) || showNotSelectedLabel(genderDropDownValues) || (dateFrom.value && dateFrom.valid || dateTo.value && dateTo.valid) || showNotSelectedLabel(backlogsDropDownValues) || checkEducationalFilterAppliedOrNot()">
   <h6 class="main-filter-heading">Applied Filters</h6>
   <div class="applied-filters-wrapper">
     <div *ngIf="showNotSelectedLabel(profileDropDownValues)" class="filter-specific-wrapper">
@@ -968,7 +969,7 @@
           </div>
         </div>
     </div>
-    <div class="filter-specific-wrapper">
+    <div *ngIf="checkEducationalFilterAppliedOrNot()" class="filter-specific-wrapper">
       <div class="filter-heading">
         {{ filterEducationList }}:
       </div>
@@ -994,6 +995,7 @@
 
     </div>
   </div>
+</ng-container>
 </ng-template>
 
 <ng-template #noFilterApplied>

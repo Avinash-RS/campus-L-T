@@ -857,6 +857,8 @@ dateConvertionMonth(date) {
   }
   customFilterOpen() {
     this.selectedCustomFilterListValue = this.selectedCustomFilterListValue ? this.selectedCustomFilterListValue : this.filterProfileList;
+    this.dateValidCustomCheck(true);
+    this.dateValidCustomCheck(false);
     this.FilterdialogRef = this.dialog.open(this.customFilterRef, {
       width: '400px',
       height: 'auto',
@@ -1335,6 +1337,10 @@ showInstitute(institute: string) {
   return count <= 55 ? institute : (replace + '...');
 }
 
+checkEducationalFilterAppliedOrNot() {
+  let eduValue = this.getEducationArr.getRawValue();
+  return eduValue.find(x => x.checked);
+}
   // Form getters
   // convenience getters for easy access to form fields
   get getEducationArr() { return this.educationForm.get([this.form_education_array]) as FormArray; }
