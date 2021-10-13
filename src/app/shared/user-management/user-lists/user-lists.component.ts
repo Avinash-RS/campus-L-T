@@ -246,10 +246,12 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }, 1500);
   } else {
-    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
-    if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.warning('No search results found');
-    }
+    setTimeout(() => {
+      const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+      if (filteredArray && filteredArray.length === 0) {
+        this.appConfig.warning('No search results found');
+      }
+    }, 500);
   }
   }
 

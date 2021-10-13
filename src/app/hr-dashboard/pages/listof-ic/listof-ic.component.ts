@@ -77,11 +77,12 @@ export class ListofICComponent implements OnInit, OnDestroy {
 
   getModel(e) {
     // console.log(e);
-
-    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
-    if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.warning('No search results found');
-    }
+    setTimeout(() => {
+      const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
+      if (filteredArray && filteredArray.length === 0) {
+        this.appConfig.warning('No search results found');
+      }
+    }, 500);
   }
 
   onQuickFilterChanged() {

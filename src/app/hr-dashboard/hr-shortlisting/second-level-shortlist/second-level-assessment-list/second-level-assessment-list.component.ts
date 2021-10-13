@@ -116,11 +116,15 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
 
 
     if (event.colDef.field === 'view') {
+      if (event['data']['shortlisted'] > 0) {
         this.shortlistedReport(event['data']);
+      }
     }
 
     if (event.colDef.field === 'view1') {
-      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT, {shortlist_name: event['data']['shortlist_name']});
+      if (event['data']['shortlisted'] > 0) {
+        this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT, {shortlist_name: event['data']['shortlist_name']});
+      }
     }
 
   }
