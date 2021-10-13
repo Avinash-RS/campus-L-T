@@ -65,6 +65,38 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
 
   boardsList = DropdownListForKYC['boards'];
   HSCDiscipline = DropdownListForKYC['HSCDiscipline'];
+
+  CAQualificationList = [
+    {
+      label: 'Inter CA',
+      value: 'Inter CA'
+    },
+    {
+      label: 'Final CA',
+      value: 'Final CA'
+    }
+  ];
+  ICWAQualificationList = [
+    {
+      label: 'Inter ICWA',
+      value: 'Inter ICWA'
+    },
+    {
+      label: 'Final ICWA',
+      value: 'Final ICWA'
+    }
+  ];
+  CSQualificationList = [
+    {
+      label: 'Inter CS',
+      value: 'Inter CS'
+    },
+    {
+      label: 'Final CS',
+      value: 'Final CS'
+    }
+  ];
+
   diplamoSpecialization = [
     {
       label: 'Diploma Engineering',
@@ -140,6 +172,8 @@ joiningFormDataPassingSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
   getEducationListSubscription: Subscription;
   getAllEducationFormDropdownListSubscription: Subscription;
+  withoutCAeducationLevels: any;
+  withCAeducationLevels: any;
 constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -152,6 +186,8 @@ constructor(
     this.dateValidation();
     let mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : [];
     this.mastersList = mastersList ? mastersList.education_master : [];
+    let ca = {label: "Chartered Accountant (CA)", value: "ca"};
+    this.mastersList.push(ca);
   }
 
   ngOnInit() {
@@ -214,6 +250,7 @@ constructor(
   }
 
   profileChanged() {
+    this.educationLevels = this.withoutCAeducationLevels;
     if (this.selectedPost == 'det') {
       this.initalPatchWithValidations(2);
     }
@@ -222,6 +259,10 @@ constructor(
     }
     if (this.selectedPost == 'pget' || this.selectedPost == 'pgct' || this.selectedPost == 'pgt') {
       this.initalPatchWithValidations(4);
+    }
+    if (this.selectedPost == 'ca') {
+      this.educationLevels = this.withCAeducationLevels;
+      this.initalPatchWithValidations(2);
     }
   }
 
@@ -406,8 +447,13 @@ validSelectedPost() {
 
 }
   formSubmit(routeValue?: any) {
-    if (this.candidateService.checkKycOrJoiningForm()) {
+    // if (this.candidateService.checkKycOrJoiningForm()) {
     this.getEducationArr.controls.forEach((element: any, j) => {
+      if (element['controls'][this.form_qualification_type]['value'] == 'CA' || element['controls'][this.form_qualification_type]['value'] == 'ICWA' || element['controls'][this.form_qualification_type]['value'] == 'CS') {
+        this.getEducationArr.at(j).patchValue({
+          [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
+        })
+      }
       if (element['controls'][this.form_qualification_type]['value'] == 'SSLC') {
         this.getEducationArr.at(j).patchValue({
           [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
@@ -419,7 +465,7 @@ validSelectedPost() {
         })
       }
     });
-  }
+  // }
     if (this.educationForm.valid && this.selectedPost) {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
@@ -695,15 +741,50 @@ validSelectedPost() {
         element['controls'][this.form_boardUniversity].updateValueAndValidity({ emitEvent: false });
       }
 
+      if (element['controls'][this.form_qualification_type]['value'] == 'CA' || element['controls'][this.form_qualification_type]['value'] == 'ICWA' || element['controls'][this.form_qualification_type]['value'] == 'CS') {
+        // Below are dynamically changing data based on education
+        element['controls'][this.form_qualification].clearValidators({ emitEvent: false });
+        element['controls'][this.form_specialization].clearValidators({ emitEvent: false });
+        element['controls'][this.form_collegeName].clearValidators({ emitEvent: false });
+        element['controls'][this.form_boardUniversity].clearValidators({ emitEvent: false });
+
+        element['controls'][this.form_qualification].setValidators([Validators.required],{ emitEvent: false });
+        element['controls'][this.form_specialization].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()],{ emitEvent: false });
+        element['controls'][this.form_collegeName].setValidators([Validators.required],{ emitEvent: false });
+        element['controls'][this.form_boardUniversity].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()],{ emitEvent: false });
+
+        element['controls'][this.form_qualification].updateValueAndValidity({ emitEvent: false });
+        element['controls'][this.form_specialization].updateValueAndValidity({ emitEvent: false });
+        element['controls'][this.form_collegeName].updateValueAndValidity({ emitEvent: false });
+        element['controls'][this.form_boardUniversity].updateValueAndValidity({ emitEvent: false });
+      }
+
       });
     }
 
 
   getEducationLevels() {
    this.getEducationListSubscription = this.candidateService.getEducationList().subscribe((data: any) => {
-
+      const mergeArr = [
+        {
+          education: 'CA',
+          id: '6',
+          label: 'CA'
+        },
+        {
+          education: 'ICWA',
+          id: '7',
+          label: 'ICWA'
+        },
+        {
+          education: 'CS',
+          id: '8',
+          label: 'CS'
+        }
+      ]
       const list = data && data[0] ? data[0] : [];
       list.forEach((element, i) => {
+        console.log('ele', element);
         if (element['id'] === '1') {
           element['label'] = 'SSLC / 10th'
         }
@@ -720,7 +801,9 @@ validSelectedPost() {
           element['label'] = 'Postgraduate'
         }
       });
-      this.educationLevels = list;
+      this.withCAeducationLevels = list.concat(mergeArr);
+      this.withoutCAeducationLevels = list;
+      this.educationLevels = this.withoutCAeducationLevels;
     }, (err) => {
 
     });
