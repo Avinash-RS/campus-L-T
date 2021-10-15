@@ -105,6 +105,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
       }))
       .subscribe((data: any)=> {
       if (data.includes('user-management/user-list')) {
+        this.selectedDrive = this.appConfig.getDriveName();
         if (this.selectedUserlist == 'candidate') {
           this.quickSearchValue = '';
           this.gridApi.purgeInfiniteCache();
