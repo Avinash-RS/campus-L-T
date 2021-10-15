@@ -233,8 +233,11 @@
 </div>
 </ng-container>
 
-<div *ngIf="(addUserForm && addUserForm.value && addUserForm.value.role == 'candidate') || addUserForm && addUserForm.value && addUserForm.value.role == 'institute'" class="overall-input-wrapper width-100">
+<div *ngIf="((addUserForm && addUserForm.value && addUserForm.value.role == 'candidate') || (addUserForm && addUserForm.value && addUserForm.value.role == 'institute')) && currentRole != 'institute'" class="overall-input-wrapper width-100">
   <mat-checkbox class="skipKyc" [formControlName]="'is_skip_kyc'">Skip KYC</mat-checkbox>
+</div>
+<div style="color: red;" *ngIf="addUserForm && addUserForm.value && addUserForm.value.role == 'candidate'" class="overall-input-wrapper width-100">
+  *You are adding this candidate under the drive -> "{{selectedDrive}}"
 </div>
 
 </ng-container>

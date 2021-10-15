@@ -108,7 +108,11 @@
   <div class="bulk-upload-text">
     Confirm to upload candidate details{{skipKyc ? '.' : ' and send mails to fill the registration form'}}
   </div>
-  <mat-checkbox class="skipKyc" [(ngModel)]="skipKyc">Skip KYC</mat-checkbox>
+  <mat-checkbox *ngIf="data['role'] != 'institute'" class="skipKyc" [(ngModel)]="skipKyc">Skip KYC</mat-checkbox>
+  <div style="color: red;" class="bulk-upload-text mt-1 mb-1">
+    *Make sure you have selected the correct drive, currently selected drive is "{{data['drive']}}"
+  </div>
+
   <div class="buttons">
     <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
     <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>

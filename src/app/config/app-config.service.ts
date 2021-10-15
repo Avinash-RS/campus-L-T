@@ -390,5 +390,12 @@ export class AppConfigService {
     this.routeNavigation('/login');
   }
 
+  getDriveName() {
+    let driveList = this.getLocalData('driveList') ? JSON.parse(this.getLocalData('driveList')) : [];
+    let driveId = this.getLocalData('driveId');
+    let selectedDrive = driveList.find(drive => drive.drive_id == driveId);
+    return selectedDrive ? selectedDrive.drive_name : '';
+  }
+
 }
 
