@@ -60,6 +60,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   getDisciplineSubscription: Subscription;
   hrAddUserSubscription: Subscription;
   bulkUploadCandidatesSubscription: Subscription;
+  selectedDrive: any;
   constructor(
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
@@ -79,6 +80,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.selectedDrive = this.appConfig.getDriveName();
     this.commonRefresh();
     this.refreshOndriveChangeRXJS();
   }

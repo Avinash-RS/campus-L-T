@@ -132,7 +132,9 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   submit() {
     if (this.selectedTemplate == this.Upload_Candidates) {
       const data = {
-        bulk_upload: 'candidate-bulk-skip-kyc'
+        bulk_upload: 'candidate-bulk-skip-kyc',
+        role: this.currentRole,
+        drive: this.appConfig.getDriveName()
       };
       this.openDialog(ShortlistBoxComponent, data);
     }
