@@ -118,7 +118,7 @@
                           </ng-container>
 
                             <div class="overall-input-wrapper width-45">
-                                <label>School/Collage Name<span>*</span></label>
+                                <label>School/College Name<span>*</span></label>
                                 <ng-container *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'SSLC') || (getEducationArr.controls[i].get(form_qualification_type).value == 'HSC')">
                                 <input matInput placeholder="Enter here" class="input" type="text"
                                     [formControlName]="form_collegeName">
@@ -146,7 +146,7 @@
                                     <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_collegeName).invalid && getEducationArr.controls[i].get(form_collegeName).touched">
                                     <div *ngIf="getEducationArr.controls[i].get(form_collegeName).errors?.required">
-                                        School/Collage Name is Required</div>
+                                        School/College Name is Required</div>
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_collegeName).errors?.alphaNum255">
                                         Alpha numeric with maximum of 255 characters only
