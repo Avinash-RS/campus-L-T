@@ -21,9 +21,9 @@ import { HrPreAssessmentComponent } from './hr-candidate-status/hr-pre-assessmen
 import { HrRecruitmentComponent } from './hr-candidate-status/hr-recruitment/hr-recruitment.component';
 import { SecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlist.component';
 import { SecondLevelAssessmentListComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-assessment-list.component';
-import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
-import { SharedSubHeaderSecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/shared-sub-header-second-level-shortlist/shared-sub-header-second-level-shortlist.component';
-import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
+import { SecondLevelCandidateListofAssessComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-candidate-listof-assess/second-level-candidate-listof-assess.component';
+import { SharedSubHeaderSecondLevelShortlistComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/shared-sub-header-second-level-shortlist/shared-sub-header-second-level-shortlist.component';
+import { SecondLevelShortlistedCandidatesReportComponent } from './hr-shortlisting/second-level-shortlist/second-level-assessment-list/second-level-shortlisted-candidates-report/second-level-shortlisted-candidates-report.component';
 import { HrEvaluationMainScreenComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-evaluation-main-screen.component';
 import { HrSubAssessmentsComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-sub-assessments/hr-sub-assessments.component';
 import { HrSubEducationComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-sub-education/hr-sub-education.component';
