@@ -32,6 +32,7 @@ import { OfferedCandidatesListComponent } from './pages/offered-candidates-list/
 import { BusinesspanelRouteComponent } from './pages/businesspanel-route/businesspanel-route.component';
 import { BulkUploadsComponent } from './hr-user-management/bulk-uploads/bulk-uploads.component';
 import { AssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/assigned-details/assigned-details.component';
+import { ScheduleVideoAssessComponent } from './hr-shortlisting/second-level-shortlist/hr-video-assess/schedule-video-assess/schedule-video-assess.component';
 
 const routes: Routes = [
   {
@@ -109,6 +110,14 @@ const routes: Routes = [
                 component: SecondLevelShortlistedCandidatesReportComponent,
                 data: {
                   breadcrumb: 'Shortlisted Report'
+                }
+              },
+              // Video Schedule
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.VIDEO_ASSESSMENT_SCHEDULE}`,
+                component: ScheduleVideoAssessComponent,
+                data: {
+                  breadcrumb: 'Video Assessment Schedule'
                 }
               },
               {

@@ -340,4 +340,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, {data: detail['shortlist_name'] ? detail['shortlist_name'] :'none'});
   }
 
+  routeToVideoSchedule() {
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.VIDEO_ASSESSMENT_SCHEDULE);
+  }
 }
