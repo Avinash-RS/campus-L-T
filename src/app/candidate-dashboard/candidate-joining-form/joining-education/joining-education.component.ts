@@ -2,7 +2,7 @@ import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl, ValidationErrors, ValidatorFn, FormControl } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
@@ -78,32 +78,44 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
   ]
   CAQualificationList = [
     {
-      label: 'Inter CA',
-      value: 'Inter CA'
+      label: 'Foundation',
+      value: 'Foundation'
     },
     {
-      label: 'Final CA',
-      value: 'Final CA'
+      label: 'Inter',
+      value: 'Inter'
+    },
+    {
+      label: 'Final',
+      value: 'Final'
     }
   ];
   ICWAQualificationList = [
     {
-      label: 'Inter ICWA',
-      value: 'Inter ICWA'
+      label: 'Foundation',
+      value: 'Foundation'
     },
     {
-      label: 'Final ICWA',
-      value: 'Final ICWA'
+      label: 'Inter',
+      value: 'Inter'
+    },
+    {
+      label: 'Final',
+      value: 'Final'
     }
   ];
   CSQualificationList = [
     {
-      label: 'Inter CS',
-      value: 'Inter CS'
+      label: 'Foundation',
+      value: 'Foundation'
     },
     {
-      label: 'Final CS',
-      value: 'Final CS'
+      label: 'Inter',
+      value: 'Inter'
+    },
+    {
+      label: 'Final',
+      value: 'Final'
     }
   ];
 
@@ -158,8 +170,8 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
   form_mode = 'mode';
   form_cgpa = 'percentage';
   form_Finalcgpa = 'final_percentage';
-  form_CARanks = 'ranks';
-
+  form_CARanks = 'rank';
+  ca_bothgroup_status = new FormControl(null);
   educationLevels: any;
   pgSpecializationList: any;
   ugSpecializationList: any;
@@ -197,8 +209,6 @@ constructor(
     this.dateValidation();
     let mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : [];
     this.mastersList = mastersList ? mastersList.education_master : [];
-    let ca = {label: "Chartered Accountant (CA)", value: "ca"};
-    this.mastersList.push(ca);
   }
 
   ngOnInit() {
@@ -282,6 +292,7 @@ constructor(
       this.formInitialize();
       this.educationDetails = this.candidateService.getLocaleducation_details().educations;
       this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+      this.candidateService.getLocaleducation_details().ca_bothgroup_status ? this.ca_bothgroup_status.setValue(true) : this.ca_bothgroup_status.setValue(false);
       this.getSelectedPost();
       this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();
     } else {
@@ -405,6 +416,7 @@ validSelectedPost() {
       hscDiploma: false,
       ug: false,
       pg: false,
+      ca: false,
       label: ''
     };
     if (this.selectedPost == 'det') {
@@ -415,6 +427,20 @@ validSelectedPost() {
       });
       valid = value.hscDiploma ? true : false;
       value.label = 'det';
+      return {
+        valid,
+        value
+      }
+    }
+
+    if (this.selectedPost == 'ca') {
+      this.getEducationArr.controls.forEach((element: any, j) => {
+        if (element['controls'][this.form_qualification_type]['value'] == 'CA' || element['controls'][this.form_qualification_type]['value'] == 'ICWA' || element['controls'][this.form_qualification_type]['value'] == 'CS') {
+          value.ca = true;
+        }
+      });
+      valid = value.ca ? true : false;
+      value.label = 'ca';
       return {
         valid,
         value
@@ -478,7 +504,6 @@ validSelectedPost() {
       }
     });
   // }
-  console.log('educa', this.educationForm);
     if (this.educationForm.valid && this.selectedPost) {
       let entryValid = this.validSelectedPost();
       if (entryValid.valid) {
@@ -488,6 +513,7 @@ validSelectedPost() {
           section_name: "education_details",
           saving_data: {
             selected_post: this.selectedPost,
+            ca_bothgroup_status: this.checkLastIndexOfCA() ? (this.ca_bothgroup_status.value ? 1 : 0) : null,
             educations: formArray
           }
         };
@@ -499,7 +525,7 @@ validSelectedPost() {
         return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
       });
       } else {
-        this.appConfig.nzNotification('error', 'Not Submitted', entryValid?.value?.label == 'gct' ? '12th or Diploma and Undergraduate are mandatory' : entryValid?.value?.label == 'pgct' ? '12th or Diploma, Undergraduate and Postgraduate are mandatory' : entryValid?.value?.label == 'det' ? 'Diploma is mandatory' : '');
+        this.appConfig.nzNotification('error', 'Not Submitted', entryValid?.value?.label == 'gct' ? '12th or Diploma and Undergraduate are mandatory' : entryValid?.value?.label == 'pgct' ? '12th or Diploma, Undergraduate and Postgraduate are mandatory' : entryValid?.value?.label == 'det' ? 'Diploma is mandatory' : 'CA or IGWA or CS is mandatory');
       }
     } else {
       this.ngAfterViewInit();
@@ -811,8 +837,8 @@ validSelectedPost() {
       const withoutCA = list.filter(data => (data['id'] != '6' && data['id'] != '7' && data['id'] != '8') );
       this.withCAeducationLevels = list;
       this.withoutCAeducationLevels = withoutCA;
-      console.log('with', this.withoutCAeducationLevels);
-      this.educationLevels = this.withoutCAeducationLevels;
+      this.educationLevels = this.selectedPost && this.selectedPost == 'ca' ? this.withCAeducationLevels : this.withoutCAeducationLevels;
+      // this.educationLevels = this.withoutCAeducationLevels;
     }, (err) => {
 
     });
@@ -840,6 +866,16 @@ validSelectedPost() {
     });
   }
 
+  checkLastIndexOfCA() {
+    let ca = null;
+    let array = this.getEducationArr.getRawValue();
+    array.forEach((element, i) => {
+      if (element && element[this.form_qualification_type] == 'CA') {
+        ca = i;
+      }
+    });
+    return ca;
+  }
   ngOnDestroy() {
     this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';

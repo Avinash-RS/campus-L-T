@@ -213,7 +213,7 @@
                                 <div class="form-error"
                                     *ngIf="getEducationArr.controls[i].get(form_boardUniversity).invalid && getEducationArr.controls[i].get(form_boardUniversity).touched">
                                     <div *ngIf="getEducationArr.controls[i].get(form_boardUniversity).errors?.required">
-                                        Board/university is Required</div>
+                                      {{getEducationArr.controls[i].get(form_qualification_type).value == 'CA' ? 'Group' : 'Board/university'}} is Required</div>
                                     <div
                                         *ngIf="getEducationArr.controls[i].get(form_boardUniversity).errors?.alphaNum255">
                                         Alpha numeric with maximum of 255 characters only
@@ -419,6 +419,9 @@
                         </ng-container>
 
                       </ng-container>
+                      <div *ngIf="(getEducationArr.controls[i].get(form_qualification_type).value == 'CA' && i == checkLastIndexOfCA())" class="ca-checkbox mt-2 width-100">
+                        <mat-checkbox [formControl]="ca_bothgroup_status" class="mr-2"></mat-checkbox>
+                        <span>Click, if you have cleared both the groups together in one sitting</span></div>
                     </div>
 
                     </div>
@@ -433,7 +436,7 @@
                 </ng-container>
             </ng-container>
 
-            <div *ngIf="getEducationArr && getEducationArr.controls && getEducationArr.controls.length < 7 " class="row-wrapper mt-3">
+            <div *ngIf="getEducationArr && getEducationArr.controls && getEducationArr.controls.length < 14 " class="row-wrapper mt-3">
                 <div class="overall-input-wrapper">
                     <button class="add-button" mat-raised-button type="button" (click)="addToEducationArray()">+ Add</button>
                 </div>
