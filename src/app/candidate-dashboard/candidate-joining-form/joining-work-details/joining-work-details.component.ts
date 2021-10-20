@@ -119,6 +119,18 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   form_faculty_reference = "faculty_reference";
   form_faculty_reference_1 = "faculty_reference1";
 
+  form_is_training_status = "is_intern_status";
+  form_training_Array = "intern";
+  form_training_employer_name = "employer_name";
+  form_training_from_date = "from_date";
+  form_training_to_date = "to_date";
+  form_training_work_responsiability = "work_responsiability";
+
+  form_training_is_articleship_status = "is_articleship_status";
+  form_ca_dateofcompletion = "ca_dateofcompletion";
+  form_ca_achivement = "ca_achivement";
+  form_is_ca_resaon_suitable = "ca_resaon_suitable";
+
   workDetails: any;
 
   isWorkExp = new FormControl(null);
@@ -154,6 +166,17 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       this.showWorkExp = '1';
     } else {
       this.showWorkExp = '0';
+    }
+  }
+
+  changeInTrainingExp(e) {
+    if (e.value == '1') {
+      this.workDetailsForm['controls'][this.form_ca_dateofcompletion].clearValidators();
+      this.workDetailsForm['controls'][this.form_ca_dateofcompletion].updateValueAndValidity();
+    }
+    if (e.value == '0') {
+      this.workDetailsForm['controls'][this.form_ca_dateofcompletion].setValidators([Validators.required]);
+      this.workDetailsForm['controls'][this.form_ca_dateofcompletion].updateValueAndValidity();
     }
   }
 
@@ -216,12 +239,13 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 50, 0, 1);
-    this.maxDate = new Date(currentYear + 20, 11, 31);
+    this.maxDate = new Date();
+    this.maxDate.setDate(this.maxDate.getDate() + 1);
   }
 
   momentForm(date) {
     if (date) {
-      const split = moment(date).format('DD-MM-YYYY');
+      const split = moment(date).format('YYYY-MM-DD');
       return split;
     }
   }
@@ -277,11 +301,23 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       });
     }
 
+    let internArray = this.workDetailsAllData[this.form_training_Array] ? this.workDetailsAllData[this.form_training_Array] : [];
+    if (this.workDetailsAllData[this.form_is_training_status] && this.workDetailsAllData[this.form_is_training_status] == 1) {
+      this.getTrainingArr.clear();
+      internArray.forEach(element => {
+        element ? this.getTrainingArr.push(this.TrainingArrayPatch(element)) : '';
+      });
+    }
     this.workDetailsForm.patchValue({
       [this.form_faculty_reference]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][0] ? this.workDetailsAllData['faculty_references'][0] : null,
-      [this.form_faculty_reference_1]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][1] ? this.workDetailsAllData['faculty_references'][1] : null
+      [this.form_faculty_reference_1]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][1] ? this.workDetailsAllData['faculty_references'][1] : null,
+      [this.form_is_training_status]: this.workDetailsAllData[this.form_is_training_status] && this.workDetailsAllData[this.form_is_training_status] == 1 ? this.workDetailsAllData[this.form_is_training_status] : null,
+      [this.form_training_is_articleship_status]: this.workDetailsAllData[this.form_training_is_articleship_status] ? '1' : '0',
+      [this.form_ca_dateofcompletion]: this.workDetailsAllData[this.form_ca_dateofcompletion] ? this.dateConvertion(this.workDetailsAllData[this.form_ca_dateofcompletion]) : null,
+      [this.form_ca_achivement]: this.workDetailsAllData[this.form_ca_achivement],
+      [this.form_is_ca_resaon_suitable]: this.workDetailsAllData[this.form_is_ca_resaon_suitable]
     });
-
+    this.changeInTrainingExp({value: this.workDetailsForm.value[this.form_training_is_articleship_status]});
   }
 
   OtherConditionsPatch(data) {
@@ -368,6 +404,15 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     })
   }
 
+  initTrainingArray() {
+    return this.fb.group({
+      [this.form_training_employer_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_training_from_date]: [null],
+      [this.form_training_to_date]: [null],
+      [this.form_training_work_responsiability]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
+    })
+  }
+
   initRelativesArray() {
     return this.fb.group({
       [this.form_relatives_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
@@ -383,6 +428,15 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_relatives_relationship]: [data[this.form_relatives_relationship], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_relatives_position]: [data[this.form_relatives_position], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_relatives_company]: [data[this.form_relatives_company], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+    })
+  }
+
+  TrainingArrayPatch(data) {
+    return this.fb.group({
+      [this.form_training_employer_name]: [data[this.form_training_employer_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_training_from_date]: [data[this.form_training_from_date]],
+      [this.form_training_to_date]: [data[this.form_training_to_date]],
+      [this.form_training_work_responsiability]: [data[this.form_training_work_responsiability], [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
     })
   }
 
@@ -413,7 +467,13 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_faculty_reference_1]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_Employment_Array]: this.fb.array([]),
       [this.form_Skills_Array]: this.fb.array([this.initSkillsArray()]),
-      [this.form_Relatives_Array]: this.fb.array([this.initRelativesArray()])
+      [this.form_Relatives_Array]: this.fb.array([this.initRelativesArray()]),
+      [this.form_training_Array]: this.fb.array([this.initTrainingArray()]),
+      [this.form_is_training_status]: [null],
+      [this.form_training_is_articleship_status]: ['1'],
+      [this.form_ca_dateofcompletion]: [null],
+      [this.form_ca_achivement]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
+      [this.form_is_ca_resaon_suitable]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
     })
   }
 
@@ -432,6 +492,21 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
 }
 
+addToTrainingArray() {
+  let i = this.getTrainingArr['controls'].length - 1;
+  if (this.getTrainingArr.valid) {
+    if (this.getTrainingArr && this.getTrainingArr['controls'] && this.getTrainingArr['controls'][i] && this.getTrainingArr['controls'][i]['value'] && (this.getTrainingArr['controls'][i]['value'][this.form_training_employer_name] || this.getTrainingArr['controls'][i]['value'][this.form_training_from_date] || this.getTrainingArr['controls'][i]['value'][this.form_training_to_date] || this.getTrainingArr['controls'][i]['value'][this.form_training_work_responsiability])) {
+      return this.getTrainingArr.push(this.initTrainingArray());
+    } else {
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill any one of the fields in the Training Details');
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_training_Array]) as FormArray);
+    }
+  } else {
+    this.appConfig.nzNotification('error', 'Not Saved', 'Please evaluate the red highlighted fields in the Training Details');
+    this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_training_Array]) as FormArray);
+  }
+}
+
   addSkills() {
     let i = this.getSkillsArr['controls'].length - 1;
     if (this.getSkillsArr.valid && this.getSkillsArr['controls'].length < 10) {
@@ -442,6 +517,10 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
     }
+  }
+
+  removeTrainingArray(i) {
+    this.getTrainingArr.removeAt(i);
   }
 
   removeEmploymentArray(i) {
@@ -557,6 +636,17 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
           skills.push(element[this.form_Skill]);
         }
       });
+      let intern = [];
+      if (this.workDetailsForm.getRawValue()[this.form_is_training_status] || this.workDetailsForm.getRawValue()[this.form_is_training_status] == 1) {
+      this.workDetailsForm.getRawValue()[this.form_training_Array].forEach(element => {
+        if (element && (element[this.form_training_employer_name] || element[this.form_training_from_date] || element[this.form_training_to_date] || element[this.form_training_work_responsiability])) {
+          element[this.form_training_from_date] = element[this.form_training_from_date] ? this.momentForm(element[this.form_training_from_date]) : null;
+          element[this.form_training_to_date] = element[this.form_training_to_date] ? this.momentForm(element[this.form_training_to_date]) : null;
+          intern.push(element);
+        }
+      });
+    }
+
       let faculty_reference1 = this.workDetailsForm.getRawValue()[this.form_faculty_reference];
       let faculty_references2 = this.workDetailsForm.getRawValue()[this.form_faculty_reference_1];
       let faculty_references = [];
@@ -567,6 +657,12 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
         bgv_details,
         employments,
         is_work_exp: this.showWorkExp == '1' ? '1' : '0',
+        [this.form_training_Array]: intern,
+        [this.form_is_training_status]: this.workDetailsForm.getRawValue()[this.form_is_training_status] ? 1 : 0,
+        [this.form_training_is_articleship_status]: this.workDetailsForm.getRawValue()[this.form_training_is_articleship_status] && this.workDetailsForm.getRawValue()[this.form_training_is_articleship_status] == '1' ? 1 : 0,
+        [this.form_ca_dateofcompletion]: (this.workDetailsForm.getRawValue()[this.form_ca_dateofcompletion] && this.workDetailsForm.getRawValue()[this.form_training_is_articleship_status] && this.workDetailsForm.getRawValue()[this.form_training_is_articleship_status] == '0') ? this.momentForm(this.workDetailsForm.getRawValue()[this.form_ca_dateofcompletion]) : null,
+        [this.form_ca_achivement]: this.workDetailsForm.getRawValue()[this.form_ca_achivement],
+        [this.form_is_ca_resaon_suitable]: this.workDetailsForm.getRawValue()[this.form_is_ca_resaon_suitable],
         skills,
         relatives_in_company: this.workDetailsForm.getRawValue()[this.form_Relatives_Array],
         faculty_references
@@ -688,6 +784,8 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   get getEmploymentArr() { return this.workDetailsForm.get([this.form_Employment_Array]) as FormArray; }
 
+  get getTrainingArr() { return this.workDetailsForm.get([this.form_training_Array]) as FormArray; }
+
   get faculty_reference_1() {
     return this.workDetailsForm.get(this.form_faculty_reference_1);
   }
@@ -755,6 +853,22 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
   get when_interview() {
     return this.workDetailsForm.get(this.form_when_interview);
+  }
+
+  get is_training_status() {
+    return this.workDetailsForm.get(this.form_is_training_status);
+  }
+  get training_is_articleship_status() {
+    return this.workDetailsForm.get(this.form_training_is_articleship_status);
+  }
+  get ca_dateofcompletion() {
+    return this.workDetailsForm.get(this.form_ca_dateofcompletion);
+  }
+  get ca_achivement() {
+    return this.workDetailsForm.get(this.form_ca_achivement);
+  }
+  get ca_resaon_suitable() {
+    return this.workDetailsForm.get(this.form_is_ca_resaon_suitable);
   }
 
   ngOnDestroy() {

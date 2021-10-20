@@ -511,21 +511,9 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
-  //hr candidate report list
-  candidateReportslist(data){
-    return this.http.post(`${this.BASE_URL}/profile/candidate_report_download`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
-  }
-
    //hr interview panel report list
    interviewPanelReportslist(data){
     return this.http.post(`${this.BASE_URL}/reports/interview_panel_users_report`, data,
-      { headers: this.getAfterCustomHeaders(), withCredentials: true });
-  }
-
-  //get candidate city
-  getAllCandidateCity(){
-    return this.http.get(`${this.BASE_URL}/api/allcity`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 

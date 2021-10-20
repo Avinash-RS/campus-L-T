@@ -6,6 +6,7 @@
             <div class="search-icon">
                 <img src="assets/images/feather-search.svg" alt="" srcset="">
                 <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+                <button mat-mat-raised-button class="submit" (click)="routeToVideoSchedule()">Video Schedule</button>
 
             </div>
         </div>

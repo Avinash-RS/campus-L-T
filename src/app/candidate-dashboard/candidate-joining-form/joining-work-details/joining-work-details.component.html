@@ -38,6 +38,179 @@
     </div>
       </div>
 
+      <h5 class="mt-3">Industrial Training Details</h5>
+      <div class="row-wrappper mt-1 hanging">
+        <mat-checkbox [formControlName]="form_is_training_status" class="mr-2"></mat-checkbox> Do you have any Articleship or Industrial training Experience?
+        </div>
+
+        <ng-container *ngIf="workDetailsForm['value'][form_is_training_status]">
+          <ng-container *ngIf="getTrainingArr && getTrainingArr.controls" [formArrayName]="form_training_Array">
+              <ng-container *ngFor="let item of getTrainingArr.controls; let i = index;" [formGroupName]="i">
+                  <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
+                      <div class="form-grouping">
+                          <div class="row-wrapper">
+                              <div class="overall-input-wrapper width-32">
+                                  <label>Name of Employer<span></span></label>
+                                  <textarea matInput placeholder="Enter here" class="input text-area" type="text"
+                                      [formControlName]="form_training_employer_name"></textarea>
+                                  <div class="form-error"
+                                      *ngIf="getTrainingArr.controls[i].get(form_training_employer_name).invalid && getTrainingArr.controls[i].get(form_training_employer_name).touched">
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_employer_name).errors?.required">
+                                          Name of Employer is Required</div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_employer_name).errors?.alphaNum255">
+                                          Alpha numeric with maximum of 255 characters only
+                                          allowed</div>
+                                  </div>
+                              </div>
+                              <div class="overall-input-wrapper width-32">
+                                  <label>Duration From<span></span></label>
+                                  <div class="date-relative">
+                                      <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                          [matDatepicker]="pickerTraining" placeholder="DD-MM-YYYY"
+                                          [formControlName]="form_training_from_date">
+                                      <mat-datepicker-toggle matSuffix [for]="pickerTraining"></mat-datepicker-toggle>
+                                      <mat-datepicker #pickerTraining></mat-datepicker>
+                                  </div>
+                                  <div class="form-error"
+                                      *ngIf="getTrainingArr.controls[i].get(form_training_from_date).invalid && getTrainingArr.controls[i].get(form_training_from_date).touched">
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_from_date)?.errors?.required">
+                                          Duration From is Required</div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerMax">
+                                          {{getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerMax.max) : ''}}
+                                      </div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerMin">
+                                          {{getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerMin.min) : ''}}
+                                      </div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_from_date)?.errors?.matDatepickerParse">
+                                          Invalid Date Format</div>
+                                  </div>
+
+                              </div>
+
+                              <div class="overall-input-wrapper width-32">
+                                  <label>Duration To<span></span></label>
+                                  <div class="date-relative">
+                                      <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                          [matDatepicker]="picker1Training" placeholder="DD-MM-YYYY"
+                                          [formControlName]="form_training_to_date">
+                                      <mat-datepicker-toggle matSuffix [for]="picker1Training"></mat-datepicker-toggle>
+                                      <mat-datepicker #picker1Training></mat-datepicker>
+                                  </div>
+                                  <div class="form-error"
+                                      *ngIf="getTrainingArr.controls[i].get(form_training_to_date).invalid && getTrainingArr.controls[i].get(form_training_to_date).touched">
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_to_date)?.errors?.required">
+                                          Duration To is Required</div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerMax">
+                                          {{getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerMax.max) : ''}}
+                                      </div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerMin">
+                                          {{getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerMin.min) : ''}}
+                                      </div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_to_date)?.errors?.matDatepickerParse">
+                                          Invalid Date Format</div>
+                                  </div>
+                              </div>
+
+                          </div>
+
+                          <div class="row-wrapper">
+                              <div class="overall-input-wrapper width-45">
+                                  <label>Details of Work Responsibility<span></span></label>
+                                  <textarea matInput placeholder="Enter here" class="input text-area" type="text"
+                                      [formControlName]="form_training_work_responsiability"></textarea>
+                                  <div class="form-error"
+                                      *ngIf="getTrainingArr.controls[i].get(form_training_work_responsiability).invalid && getTrainingArr.controls[i].get(form_training_work_responsiability).touched">
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_work_responsiability)?.errors?.required">
+                                          Details of Work Responsibility is Required</div>
+                                      <div
+                                          *ngIf="getTrainingArr.controls[i].get(form_training_work_responsiability).errors?.address255">
+                                          Alpha numeric with maximum of 255 characters only
+                                          allowed</div>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="remove-wrapper">
+                          <div (click)="removeTrainingArray(i)" *ngIf="i == getTrainingArr.controls.length - 1" matTooltip="Remove" class="remove">
+                              <i class="material-icons material-icons-outlined">
+                                  remove_circle_outline
+                              </i>
+                          </div>
+                      </div>
+                  </div>
+              </ng-container>
+          </ng-container>
+
+          <div *ngIf="getTrainingArr && getTrainingArr.controls && getTrainingArr.controls.length < 4 "
+              class="row-wrapper mt-3">
+              <div class="overall-input-wrapper">
+                  <button class="add-button" mat-raised-button type="button" (click)="addToTrainingArray()">+
+                      Add</button>
+              </div>
+          </div>
+
+          <div class="row-wrapper mt-3">
+            <div class="overall-input-wrapper width-50">
+                <!-- <label>Total Experience<span></span></label> -->
+                <div class="input" style="line-height: 1.7em !important; border: none;">
+                    Whether Articleship completed as per the requirement of Institute?
+                </div>
+            </div>
+
+            <div class="overall-input-wrapper" style="width: 10%;">
+                <mat-radio-group class="radio-grp" (change)="changeInTrainingExp($event)" [formControlName]="form_training_is_articleship_status">
+                    <mat-radio-button value="1">Yes
+                    </mat-radio-button>
+                    <mat-radio-button value="0">No</mat-radio-button>
+                </mat-radio-group>
+
+            </div>
+
+            <div [ngClass]="training_is_articleship_status && training_is_articleship_status['value'] == 0 ? '' : 'hide'" class="overall-input-wrapper" style="width: 35%;">
+                <label>If, no, Please give the details<span></span></label>
+                <div class="sub-grid">
+                    <label>Expected date of completion:<span *ngIf="training_is_articleship_status && training_is_articleship_status['value'] == 0">*</span></label>
+                    <div class="overall-input-wrapper">
+                        <div class="date-relative">
+                            <input matInput class="input sub-inputs" [formControlName]="form_ca_dateofcompletion"
+                                [min]="minDate" [max]="maxDate" [matDatepicker]="pickerform_ca_dateofcompletion"
+                                placeholder="DD-MM-YYYY">
+                            <mat-datepicker-toggle matSuffix [for]="pickerform_ca_dateofcompletion"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerform_ca_dateofcompletion></mat-datepicker>
+                        </div>
+                        <div class="form-error" *ngIf="ca_dateofcompletion?.invalid && ca_dateofcompletion?.touched">
+                            <div *ngIf="ca_dateofcompletion?.errors?.required">
+                                *Required</div>
+                            <div *ngIf="ca_dateofcompletion?.errors?.matDatepickerMax">
+                                {{ca_dateofcompletion?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(ca_dateofcompletion?.errors?.matDatepickerMax.max) : ''}}
+                            </div>
+                            <div *ngIf="ca_dateofcompletion?.errors?.matDatepickerMin">
+                                {{ca_dateofcompletion?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(ca_dateofcompletion?.errors?.matDatepickerMin.min) : ''}}
+                            </div>
+                            <div *ngIf="ca_dateofcompletion?.errors?.matDatepickerParse">
+                                Invalid Date Format</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+      </ng-container>
+
       <h5 class="mt-3">Employment Details</h5>
       <div class="row-wrappper mt-1 hanging">
         <mat-checkbox [formControl]="isWorkExp" (change)="changeWorkExp($event)" class="mr-2"></mat-checkbox> Do you have any Work Experience?
@@ -416,7 +589,7 @@
                             </div>
                             <div class="form-error" *ngIf="when_interview?.invalid && when_interview?.touched">
                                 <div *ngIf="when_interview?.errors?.required">
-                                    Duration From is Required</div>
+                                    *Required</div>
                                 <div *ngIf="when_interview?.errors?.matDatepickerMax">
                                     {{when_interview?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(when_interview?.errors?.matDatepickerMax.max) : ''}}
                                 </div>
@@ -556,6 +729,38 @@
                         Faculty Reference is Required</div>
                     <div
                         *ngIf="faculty_reference_1.errors?.address255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="d-flex faculty-wrapper row-wrapper">
+                  <div class="overall-input-wrapper">
+                    <label>Significant Achievements<span></span></label>
+                    <textarea [formControlName]="form_ca_achivement" name="" id="" placeholder="Significant Achievements"></textarea>
+                    <div class="form-error"
+                    *ngIf="ca_achivement.invalid && ca_achivement.touched">
+                    <div
+                        *ngIf="ca_achivement.errors?.required">
+                        Significant Achievement is Required</div>
+                    <div
+                        *ngIf="ca_achivement.errors?.address255">
+                        Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                    </div>
+                  </div>
+                  <div class="overall-input-wrapper">
+                    <label>Explain why you consider yourself suitable for L&T<span></span></label>
+                    <textarea [formControlName]="form_is_ca_resaon_suitable" name="" id="" placeholder="Explain here..."></textarea>
+                    <div class="form-error"
+                    *ngIf="ca_resaon_suitable.invalid && ca_resaon_suitable.touched">
+                    <div
+                        *ngIf="ca_resaon_suitable.errors?.required">
+                        Explanation is Required</div>
+                    <div
+                        *ngIf="ca_resaon_suitable.errors?.address255">
                         Alpha numeric with maximum of 255 characters only
                         allowed</div>
                     </div>
