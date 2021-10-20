@@ -57,19 +57,17 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   maxDate: Date;
   form: FormGroup;
   userList;
-  tagNameDropdown: any = [];
+  shortlistLists: any = [];
   // institutesList = DropdownListForKYC['institutes'];
   institutesList: any;
   firstSortlistReport: any;
   interviewPanelReport: any;
   fromDate:any;
   toDate:any;
-  cityListDropdown:any;
   assessmentNameDropdown:any;
   selectedAssessmentName:any;
   selectedAssessmentNameSecond:any;
-  selectedTagNameFirst:any;
-  selectedCityForFirst:any;
+  selectedShortlistNameFirst:any;
   selectedInstituteNameForFirst:any;
   selectedTagNameSecond:any;
   selectedCityForSecond:any;
@@ -81,8 +79,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   }
   refreshSubscription: Subscription;
   getoverallInstituteSubscription: Subscription;
-  getTagNameSubscription: Subscription;
-  getAllCandidateCitySubscription: Subscription;
+  getAllShortlistedShortlistNames_ALLSubscription: Subscription;
   shortlist2ReportAPISubscription: Subscription;
   evalationReportAPISubscription: Subscription;
   firstSortlistReportslistSubscription: Subscription;
@@ -92,8 +89,6 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   secondShortlistReportSubscription1: Subscription;
   assessmentFeedbackReportSubscription: Subscription;
   assessmentFeedbackReportSubscription1: Subscription;
-  candidateReportslistSubscription: Subscription;
-  candidateReportslistSubscription1: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -107,8 +102,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getInstitute();
     this.getUsersList();
-    this.getTagName();
-    this.getAllCitys();
+    this.getShortlistsName();
     this.getAllAssessmentName();
     this.evaluationInstitute();
     this.refreshOndriveChangeRXJS();
@@ -125,8 +119,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
     this.getoverallInstituteSubscription ? this.getoverallInstituteSubscription.unsubscribe() : '';
-    this.getTagNameSubscription ? this.getTagNameSubscription.unsubscribe() : '';
-    this.getAllCandidateCitySubscription ? this.getAllCandidateCitySubscription.unsubscribe() : '';
+    this.getAllShortlistedShortlistNames_ALLSubscription ? this.getAllShortlistedShortlistNames_ALLSubscription.unsubscribe() : '';
     this.shortlist2ReportAPISubscription ? this.shortlist2ReportAPISubscription.unsubscribe() : '';
     this.evalationReportAPISubscription ? this.evalationReportAPISubscription.unsubscribe() : '';
     this.firstSortlistReportslistSubscription ? this.firstSortlistReportslistSubscription.unsubscribe() : '';
@@ -136,8 +129,6 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     this.secondShortlistReportSubscription1 ? this.secondShortlistReportSubscription1.unsubscribe() : '';
     this.assessmentFeedbackReportSubscription ? this.assessmentFeedbackReportSubscription.unsubscribe() : '';
     this.assessmentFeedbackReportSubscription1 ? this.assessmentFeedbackReportSubscription1.unsubscribe() : '';
-    this.candidateReportslistSubscription ? this.candidateReportslistSubscription.unsubscribe() : '';
-    this.candidateReportslistSubscription1 ? this.candidateReportslistSubscription1.unsubscribe() : '';
   }
 
   refreshOndriveChangeRXJS() {
@@ -149,8 +140,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.REPORTS_LIST)) {
         this.getInstitute();
         this.getUsersList();
-        this.getTagName();
-        this.getAllCitys();
+        this.getShortlistsName();
         this.getAllAssessmentName();
         this.evaluationInstitute();
       }
@@ -216,24 +206,11 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   }
 
   // To get all users
-  getTagName() {
-   this.getTagNameSubscription = this.adminService.getTagName().subscribe((data: any) => {
-
-
-      this.tagNameDropdown = data;
-
+  getShortlistsName() {
+    this.getAllShortlistedShortlistNames_ALLSubscription = this.adminService.getAllShortlistedShortlistNames_ALL().subscribe((data: any) => {
+      this.shortlistLists = data ? data : [];
     }, (err) => {
-    });
-  }
 
-  // To get all city
-  getAllCitys() {
-    this.getAllCandidateCitySubscription = this.adminService.getAllCandidateCity().subscribe((data: any) => {
-
-
-      this.cityListDropdown = data;
-
-    }, (err) => {
     });
   }
 
@@ -266,8 +243,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     let sendReq = {
       'to': '',
       'from': '',
-      'tag': '',
-      'city': '',
+      'shortlist_name': '',
       'institute': ''
     };
 
@@ -277,8 +253,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       sendReq = {
         'to': dateT.toString(),
         'from': dateF.toString(),
-        'tag': data.tagName,
-        'city': data.city,
+        'shortlist_name': data.shortlist_name,
         'institute': data.instituteName
       }
       if(sendReq.to >= sendReq.from){
@@ -302,8 +277,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       sendReq = {
         'to': '',
         'from': '',
-        'tag': data.tagName,
-        'city': data.city,
+        'shortlist_name': data.shortlist_name,
         'institute': data.instituteName
       }
 
@@ -457,61 +431,6 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  // To get candidate report
-  getCandidateRepots(data) {
-    let sendReq = {
-      'to': '',
-      'from': '',
-      'tag': '',
-      'city': '',
-      'institute': ''
-    };
-
-    if(data.to && data.to._d){
-      const dateT = data.to && data.to._d ? moment(data.to._d).format('YYYY-MM-DD') : '';
-      const dateF = data.from && data.from._d ? moment(data.from._d).format('YYYY-MM-DD') : '';
-      sendReq = {
-        'to': dateT.toString(),
-        'from': dateF.toString(),
-        'tag': data.tagName,
-        'city': data.city,
-        'institute': data.instituteName
-      }
-      if(sendReq.to >= sendReq.from){
-
-      this.candidateReportslistSubscription = this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
-
-
-        const excel = data && data[0].url ? data[0].url : '';
-        window.open(excel, '_blank');
-
-        }, (err) => {
-        });
-      }else{
-        this.appConfig.nzNotification("error", "Invalid date", "Candidate report 'Date to' should be greater than 'Date from'");
-      }
-    }else{
-      sendReq = {
-        'to': '',
-        'from': '',
-        'tag': data.tagName,
-        'city': data.city,
-        'institute': data.instituteName
-      }
-
-       this.candidateReportslistSubscription1 = this.adminService.candidateReportslist(sendReq).subscribe((data: any) => {
-
-
-        const excel = data && data[0].url ? data[0].url : '';
-        window.open(excel, '_blank');
-
-        }, (err) => {
-        });
-
-      // this.appConfig.error("Date should be selected", '');
-    }
-  }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -524,10 +443,9 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   downloadReports(index){
 
     if(index == 0){
-      if(this.selectedTagNameFirst || this.selectedCityForFirst || this.selectedInstituteNameForFirst){
+      if(this.selectedShortlistNameFirst || this.selectedInstituteNameForFirst){
         let sendData = {
-          'tagName': this.selectedTagNameFirst,
-          'city': this.selectedCityForFirst,
+          'shortlist_name': this.selectedShortlistNameFirst,
           'instituteName': this.selectedInstituteNameForFirst,
           "to": this.userList[index].tdate,
           "from": this.userList[index].fdate
@@ -535,7 +453,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 
         this.getFirstsortlistRepots(sendData);
       }else{
-        this.appConfig.nzNotification("error", "1st Shortlist", "Tag name or City or Institute name is required");
+        this.appConfig.nzNotification("error", "1st Shortlist", "Shortlist name or Institute name is required");
       }
     }else if(index == 1){
       if(this.selectedAssessmentName){

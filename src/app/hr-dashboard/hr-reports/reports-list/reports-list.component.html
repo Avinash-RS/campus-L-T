@@ -22,17 +22,11 @@
                 <!-- <div></div> -->
                 <div class="inline-table-flex" *ngIf="i == 0">
                     <nz-select class="input select nzSelect"
-                    nzPlaceHolder="Tag name" [(ngModel)]="selectedTagNameFirst" nzAllowClear nzShowSearch>
-                      <nz-option nzCustomContent *ngFor="let tag of tagNameDropdown" [nzLabel]="tag.tag_name" [nzValue]="tag.tag_name">
-                        <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="tag.tag_name">{{tag.tag_name}}</span>
+                    nzPlaceHolder="Shortlist name" [(ngModel)]="selectedShortlistNameFirst" nzAllowClear nzShowSearch>
+                      <nz-option nzCustomContent *ngFor="let shortlist of shortlistLists" [nzLabel]="shortlist.shortlist_name" [nzValue]="shortlist.shortlist_name">
+                        <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="shortlist.shortlist_name">{{shortlist.shortlist_name}}</span>
                       </nz-option>
                   </nz-select>
-                  <nz-select nzShowSearch nzAllowClear class="input select nzSelect"
-                  nzPlaceHolder="City" [(ngModel)]="selectedCityForFirst">
-                    <nz-option nzCustomContent *ngFor="let city of cityListDropdown" [nzLabel]="city.cities" [nzValue]="city.cities">
-                      <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="city.cities">{{city.cities}}</span>
-                    </nz-option>
-                </nz-select>
                 <nz-select nzShowSearch nzAllowClear class="input select nzSelect"
                 nzPlaceHolder="Institute name" [(ngModel)]="selectedInstituteNameForFirst">
                   <nz-option class="dummy" nzCustomContent *ngFor="let institute of institutesList" [nzLabel]="institute.name" [nzValue]="institute.value">
@@ -96,30 +90,6 @@
 
               </td>
           </ng-container>
-
-          <!-- <ng-container matColumnDef="fdate">
-            <th mat-header-cell *matHeaderCellDef> Date from </th>
-            <td mat-cell *matCellDef="let element; let i = index;">
-                <div class="input-box">
-                    <input matInput #input="ngModel" [matDatepicker]="dp_i" [min]="minDate" [max]="maxDate" placeholder="DD-MM-YYYY" [(ngModel)]="element.fdate">
-                    <mat-datepicker-toggle class="mat-icon-button" matSuffix [for]="dp_i"></mat-datepicker-toggle>
-                    <mat-datepicker #dp_i>
-                    </mat-datepicker>
-                </div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tdate">
-            <th mat-header-cell *matHeaderCellDef> Date to </th>
-            <td mat-cell *matCellDef="let element; let i = index;">
-                <div class="input-box">
-                    <input matInput [matDatepicker]="dp_i" [min]="minDate" [max]="maxDate" placeholder="DD-MM-YYYY" [(ngModel)]="element.tdate">
-                    <mat-datepicker-toggle class="mat-icon-button" matSuffix [for]="dp_i"></mat-datepicker-toggle>
-                    <mat-datepicker #dp_i>
-                    </mat-datepicker>
-                </div>
-            </td>
-          </ng-container> -->
 
           <!-- Symbol Column -->
           <ng-container matColumnDef="action">
