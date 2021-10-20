@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // import { MatSelectModule } from '@angular/material/select';
 // import { MatTableModule } from '@angular/material/table';
 // import { MatDialogModule } from '@angular/material/dialog';
@@ -73,7 +74,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatNativeDateModule,
     MatExpansionModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSlideToggleModule
   ],
   exports: [
     CommonModule,
@@ -100,7 +102,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatNativeDateModule,
     MatExpansionModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }
