@@ -597,8 +597,8 @@ validSelectedPost() {
       [this.form_yearpassing]: [{ value: this.dateConvertionMonth(data[this.form_yearpassing]), disabled: false }, [Validators.required, this.startTrue(true)]],
       [this.form_backlog]: [{ value: data[this.form_backlog], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? (data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? true : false) : false}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [{ value: data[this.form_mode], disabled: false }, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), Validators.maxLength(5)]],
-      [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), this.candidateService.checkKycOrJoiningForm() ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), Validators.maxLength(5)] : []],
+      [this.form_cgpa]: [{ value: data[this.form_cgpa], disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted) ? true : false }, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), this.glovbal_validators.percentage(), Validators.maxLength(5)]],
+      [this.form_Finalcgpa]: [(data[this.form_qualification_type] == 'SSLC' || data[this.form_qualification_type] == 'HSC' ? data[this.form_cgpa] : data[this.form_Finalcgpa]), this.candidateService.checkKycOrJoiningForm() ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), this.glovbal_validators.percentage(), Validators.maxLength(5)] : []],
       [this.form_CARanks] : [data[this.form_CARanks], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]]
     })
   }
@@ -615,8 +615,8 @@ validSelectedPost() {
       [this.form_yearpassing]: [null, [Validators.required, this.startTrue(true)]],
       [this.form_backlog]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.backlog()]],
       [this.form_mode]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_cgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), Validators.maxLength(5)]],
-      [this.form_Finalcgpa]: [null, this.candidateService.checkKycOrJoiningForm() ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), Validators.maxLength(5)] : []],
+      [this.form_cgpa]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), this.glovbal_validators.percentage(), Validators.maxLength(5)]],
+      [this.form_Finalcgpa]: [null, this.candidateService.checkKycOrJoiningForm() ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.percentageNew(), this.glovbal_validators.percentage(), Validators.maxLength(5)] : []],
       [this.form_CARanks] : [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]]
     })
   }
