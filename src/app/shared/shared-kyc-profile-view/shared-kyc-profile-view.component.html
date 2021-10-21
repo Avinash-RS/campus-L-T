@@ -670,8 +670,8 @@
                 </div>
               </div>
 
-              <div class="overall-input-wrapper mt-2 min-w-66">
-                <label>Board/University</label>
+              <div *ngIf="education[form_qualification_type] && education[form_qualification_type] != 'ICWA' && education[form_qualification_type] != 'CS'" class="overall-input-wrapper mt-2 min-w-66">
+                <label>{{ education[form_qualification_type] && (education[form_qualification_type] == 'CA' || education[form_qualification_type] == 'ICWA' || education[form_qualification_type] == 'CS') ? 'Group' : 'Board/University' }}</label>
                 <div class="inpu-preview size-16 bold-700 color-black">
                   {{ education[form_boardUniversity] }}
                 </div>
@@ -685,18 +685,26 @@
               </div>
 
               <div *ngIf="education[form_qualification_type] != 'SSLC/10th'" class="overall-input-wrapper mt-2 min-w-66">
-                <label>Specialization</label>
+                <label>{{ (education[form_qualification_type] && education[form_qualification_type] == 'CA' || education[form_qualification_type] && education[form_qualification_type] == 'ICWA' || education[form_qualification_type] && education[form_qualification_type] == 'CS') ? 'Main Subject' : 'Specialization' }}</label>
                 <div class="inpu-preview size-16 bold-700 color-black">
                   {{ education[form_specialization] }}
                 </div>
               </div>
 
               <div class="overall-input-wrapper mt-2 min-w-100">
-                <label>School/College Name</label>
+                <label>{{ education[form_qualification_type] && (education[form_qualification_type] == 'CA' || education[form_qualification_type] == 'ICWA' || education[form_qualification_type] == 'CS') ? 'Institute Name' : 'School/College Name' }}</label>
                 <div class="inpu-preview size-16 bold-700 color-black">
                   {{ education[form_collegeName] }}
                 </div>
               </div>
+              <ng-container *ngIf="education[form_qualification_type] && (education[form_qualification_type] == 'CA' || education[form_qualification_type] == 'ICWA' || education[form_qualification_type] == 'CS')">
+                <div class="overall-input-wrapper mt-2 min-w-100">
+                  <label>{{ 'Rank' }}</label>
+                  <div class="inpu-preview size-16 bold-700 color-black">
+                    {{ education[form_CARanks] }}
+                  </div>
+                </div>
+              </ng-container>
               <ng-container *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm">
               <div class="overall-input-wrapper mt-2 width-32">
                 <label>Start Date</label>
@@ -730,7 +738,7 @@
               </ng-container>
               <div
                 class="overall-input-wrapper mt-2 width-32">
-                <label>Backlogs</label>
+                <label>{{ education[form_qualification_type] && (education[form_qualification_type] == 'CA' || education[form_qualification_type] == 'ICWA' || education[form_qualification_type] == 'CS') ? 'No. of Attempts' : 'Backlogs' }}</label>
                 <div class="inpu-preview size-16 bold-700 color-black">
                   {{ education[form_backlog] }}
                 </div>
@@ -749,7 +757,7 @@
                   education[form_qualification_type] != 'HSC/12th'
                 "
               >
-                <div class="overall-input-wrapper mt-2 width-32">
+                <div *ngIf="education[form_qualification_type] && (education[form_qualification_type] != 'CA' && education[form_qualification_type] != 'ICWA' && education[form_qualification_type] != 'CS')" class="overall-input-wrapper mt-2 width-32">
                   <label>Final Percentage(%)</label>
                   <div class="inpu-preview size-16 bold-700 color-black">
                     {{ education[form_finalcgpa] }}
@@ -757,6 +765,10 @@
                 </div>
               </ng-container>
               </ng-container>
+              <div *ngIf="education[form_qualification_type] && education[form_qualification_type] == 'CA' && (educationDetailsAllData && educationDetailsAllData.ca_bothgroup_status) && i == checkLastIndexOfCA()" class="overall-input-wrapper mt-2 width-100">
+                <label>Note: I have cleared both the groups together in one sitting.</label>
+              </div>
+
             </div>
           </div>
         </ng-container>
@@ -1363,7 +1375,7 @@
             </span>
           </div>
         </div>
-        <ng-container *ngIf="workDetails && !noShowWork; else noWork">
+        <ng-container *ngIf="workDetailsAlldata && !noShowWork; else noWork">
           <ng-container *ngIf="workDetails.skills && workDetails.skills.length > 0">
             <div class="subDocumentTitle">Skills</div>
               <div class="d-flex skills-wrapper">
@@ -1472,132 +1484,231 @@
           </ng-container>
 
           <ng-container
+          *ngIf="
+            (workDetails.workDetails &&
+              workDetails.workDetails[form_total_exp_months] &&
+              workDetails.workDetails[form_total_exp_months] > 0) ||
+            (workDetails.workDetails &&
+              workDetails.workDetails[form_total_exp_years] &&
+              workDetails.workDetails[form_total_exp_years] > 0)
+          "
+        >
+          <div class="row-wrapper mt-0" class="border-wrapper">
+            <span class="mr-3 custom-label">Total Experience:</span>
+            <span class="inpu-preview f_size_16 bold-700 color-black"
+              >{{ workDetails.workDetails[form_total_exp_years] }} Years
+            </span>
+            <span class="ml-2 inpu-preview f_size_16 bold-700 color-black"
+              >{{
+                workDetails.workDetails[form_total_exp_months]
+              }}
+              Months</span
+            >
+          </div>
+        </ng-container>
+        <!-- Contant Work details -->
+        <ng-container *ngIf="workDetails.workDetails">
+          <div
             *ngIf="
-              (workDetails.workDetails &&
-                workDetails.workDetails[form_total_exp_months] &&
-                workDetails.workDetails[form_total_exp_months] > 0) ||
-              (workDetails.workDetails &&
-                workDetails.workDetails[form_total_exp_years] &&
-                workDetails.workDetails[form_total_exp_years] > 0)
+              workDetails.workDetails &&
+              workDetails.workDetails[form_break_in_emp]
+            "
+            class="row-wrapper mt-0"
+            class="border-wrapper"
+          >
+            <div class="overall-input-wrapper mt-0">
+              <label class="custom-label"
+                >Break in Employment, If any, Should be indicated with
+                reasons</label
+              >
+              <div class="inpu-preview f_size_16 bold-700 color-black box-border">
+                {{ workDetails.workDetails[form_break_in_emp] }}
+              </div>
+            </div>
+          </div>
+
+          <ng-container
+            *ngIf="
+              workDetails.workDetails &&
+              workDetails.workDetails[form_employed_us]
             "
           >
             <div class="row-wrapper mt-0" class="border-wrapper">
-              <span class="mr-3 custom-label">Total Experience:</span>
-              <span class="inpu-preview f_size_16 bold-700 color-black"
-                >{{ workDetails.workDetails[form_total_exp_years] }} Years
-              </span>
-              <span class="ml-2 inpu-preview f_size_16 bold-700 color-black"
-                >{{
-                  workDetails.workDetails[form_total_exp_months]
-                }}
-                Months</span
-              >
-            </div>
-          </ng-container>
-          <!-- Contant Work details -->
-          <ng-container *ngIf="workDetails.workDetails">
-            <div
-              *ngIf="
-                workDetails.workDetails &&
-                workDetails.workDetails[form_break_in_emp]
-              "
-              class="row-wrapper mt-0"
-              class="border-wrapper"
-            >
               <div class="overall-input-wrapper mt-0">
                 <label class="custom-label"
-                  >Break in Employment, If any, Should be indicated with
-                  reasons</label
+                  >Have you ever been employed by us or by any of our
+                  subsidiary / associate companies?
+                  <span
+                    style="font-weight: 600"
+                    class="ml-2 f_size_17 bold-700 color-black"
+                    style="color: #000 !important"
+                    >Yes</span
+                  ></label
                 >
-                <div class="inpu-preview f_size_16 bold-700 color-black box-border">
-                  {{ workDetails.workDetails[form_break_in_emp] }}
+                <div class="inpu-preview custom-flex">
+                  <div>
+                    <span class="custom-label mr-2">OC:</span>
+                    <span
+                      class="inpu-preview f_size_16 bold-700 color-black box-border"
+                      >{{ workDetails.workDetails[form_oc] }}</span
+                    >
+                  </div>
+                  <div class="ml-4">
+                    <span class="custom-label mr-2">Payslip Number:</span>
+                    <span
+                      class="inpu-preview f_size_16 bold-700 color-black box-border"
+                      style="color: #000 !important"
+                      >{{ workDetails.workDetails[form_payslip] }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container
+            *ngIf="
+              workDetails.workDetails &&
+              workDetails.workDetails[form_interviewed_by_us]
+            "
+          >
+            <div class="row-wrapper mt-0" class="border-wrapper">
+              <div class="overall-input-wrapper mt-0">
+                <label class="custom-label"
+                  >Have you ever been interviewed by us?
+                  <span
+                    style="font-weight: 600"
+                    class="ml-2 f_size_17 bold-700 color-black"
+                    style="color: #000 !important"
+                    >Yes</span
+                  ></label
+                >
+                <div class="inpu-preview custom-flex">
+                  <div>
+                    <span class="custom-label mr-2">Post Applied for:</span>
+                    <span
+                      class="inpu-preview f_size_16 bold-700 color-black box-border"
+                      >{{ workDetails.workDetails[form_post] }}</span
+                    >
+                  </div>
+                  <div class="ml-4">
+                    <span class="custom-label mr-2">When:</span>
+                    <span
+                      class="inpu-preview f_size_16 bold-700 color-black box-border"
+                      style="color: #000 !important"
+                      >{{
+                        workDetails.workDetails[form_when_interview]
+                          ? dateConvertion(
+                              workDetails.workDetails[form_when_interview]
+                            )
+                          : "NA"
+                      }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+
+          <ng-container
+          *ngIf="workDetailsAlldata && workDetailsAlldata[this.form_training_Array] && workDetailsAlldata[this.form_training_Array].length > 0"
+        >
+          <div class="subDocumentTitle">Articleship/Training Details</div>
+
+          <div
+            class="row-wrapper mt-0"
+            [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
+            *ngFor="let training of workDetailsAlldata[this.form_training_Array]; let i = index"
+          >
+            <div class="row-wrapper mt-0">
+              <div class="overall-input-wrapper mt-0 width-56">
+                <label>Name of Employer</label>
+                <div class="inpu-preview f_size_16 bold-700 color-black">
+                  {{ training[form_training_employer_name] }}
+                </div>
+              </div>
+
+              <div class="overall-input-wrapper mt-0 width-20">
+                <label>Duration From</label>
+                <div class="inpu-preview f_size_16 bold-700 color-black">
+                  {{ dateConvertion(training[form_training_from_date]) }}
+                </div>
+              </div>
+
+              <div class="overall-input-wrapper mt-0 width-20">
+                <label>Duration To</label>
+                <div class="inpu-preview f_size_16 bold-700 color-black">
+                  {{ dateConvertion(training[form_training_to_date]) }}
                 </div>
               </div>
             </div>
 
-            <ng-container
-              *ngIf="
-                workDetails.workDetails &&
-                workDetails.workDetails[form_employed_us]
-              "
-            >
-              <div class="row-wrapper mt-0" class="border-wrapper">
-                <div class="overall-input-wrapper mt-0">
-                  <label class="custom-label"
-                    >Have you ever been employed by us or by any of our
-                    subsidiary / associate companies?
-                    <span
-                      style="font-weight: 600"
-                      class="ml-2 f_size_17 bold-700 color-black"
-                      style="color: #000 !important"
-                      >Yes</span
-                    ></label
-                  >
-                  <div class="inpu-preview custom-flex">
-                    <div>
-                      <span class="custom-label mr-2">OC:</span>
-                      <span
-                        class="inpu-preview f_size_16 bold-700 color-black box-border"
-                        >{{ workDetails.workDetails[form_oc] }}</span
-                      >
-                    </div>
-                    <div class="ml-4">
-                      <span class="custom-label mr-2">Payslip Number:</span>
-                      <span
-                        class="inpu-preview f_size_16 bold-700 color-black box-border"
-                        style="color: #000 !important"
-                        >{{ workDetails.workDetails[form_payslip] }}</span
-                      >
-                    </div>
-                  </div>
+            <div class="row-wrapper mt-0">
+              <div class="overall-input-wrapper mt-3 width-40">
+                <label>Details of Work Responsibility</label>
+                <div class="inpu-preview f_size_16 bold-700 color-black">
+                  {{ training[form_training_work_responsiability] }}
                 </div>
               </div>
-            </ng-container>
+            </div>
+          </div>
+        </ng-container>
 
-            <ng-container
-              *ngIf="
-                workDetails.workDetails &&
-                workDetails.workDetails[form_interviewed_by_us]
-              "
+        <ng-container
+        *ngIf="workDetailsAlldata[this.form_training_Array] && workDetailsAlldata[this.form_training_Array].length > 0"
+      >
+        <div class="row-wrapper mt-0" class="border-wrapper">
+          <div class="overall-input-wrapper mt-0">
+            <label class="custom-label"
+              >Whether Articleship completed as per the requirement of Institute?
+              <span
+                style="font-weight: 600"
+                class="ml-2 f_size_17 bold-700 color-black"
+                style="color: #000 !important"
+                >{{workDetailsAlldata[this.form_training_is_articleship_status] ? 'Yes' : 'No'}}</span
+              ></label
             >
-              <div class="row-wrapper mt-0" class="border-wrapper">
-                <div class="overall-input-wrapper mt-0">
-                  <label class="custom-label"
-                    >Have you ever been interviewed by us?
-                    <span
-                      style="font-weight: 600"
-                      class="ml-2 f_size_17 bold-700 color-black"
-                      style="color: #000 !important"
-                      >Yes</span
-                    ></label
-                  >
-                  <div class="inpu-preview custom-flex">
-                    <div>
-                      <span class="custom-label mr-2">Post Applied for:</span>
-                      <span
-                        class="inpu-preview f_size_16 bold-700 color-black box-border"
-                        >{{ workDetails.workDetails[form_post] }}</span
-                      >
-                    </div>
-                    <div class="ml-4">
-                      <span class="custom-label mr-2">When:</span>
-                      <span
-                        class="inpu-preview f_size_16 bold-700 color-black box-border"
-                        style="color: #000 !important"
-                        >{{
-                          workDetails.workDetails[form_when_interview]
-                            ? dateConvertion(
-                                workDetails.workDetails[form_when_interview]
-                              )
-                            : "NA"
-                        }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
+            <div *ngIf="!workDetailsAlldata[this.form_training_is_articleship_status]" class="inpu-preview custom-flex">
+              <div>
+                <span class="custom-label mr-2">Expected date of completion:</span>
+                <span
+                  class="inpu-preview f_size_16 bold-700 color-black box-border"
+                  style="color: #000 !important"
+                  >{{
+                    workDetailsAlldata[this.form_ca_dateofcompletion]
+                      ? dateConvertion(
+                        workDetailsAlldata[this.form_ca_dateofcompletion]
+                        )
+                      : "NA"
+                  }}</span
+                >
               </div>
-            </ng-container>
-          </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="workDetailsAlldata[this.form_ca_achivement] || workDetailsAlldata[this.form_is_ca_resaon_suitable]">
+        <div
+        class="row-wrapper mt-0">
+        <div *ngIf="workDetailsAlldata[this.form_ca_achivement]" class="overall-input-wrapper width-50 padding-1">
+          <label>Significant Achievements</label>
+          <div class="inpu-preview size-16 bold-700 color-black">
+            {{ workDetailsAlldata[this.form_ca_achivement] }}
+          </div>
+        </div>
+        <div *ngIf="workDetailsAlldata[this.form_is_ca_resaon_suitable]" class="overall-input-wrapper width-50 padding-1">
+          <label>Explain why you consider yourself suitable for L&T</label>
+          <div class="inpu-preview size-16 bold-700 color-black">
+            {{ workDetailsAlldata[this.form_is_ca_resaon_suitable] }}
+          </div>
+        </div>
+
+      </div>
+
+      </ng-container>
+
 
           <ng-container *ngIf="workDetails.relatives && workDetails.relatives.length > 0">
             <div class="subDocumentTitle">Relatives / Acquaintances in L&T group of companies</div>

@@ -222,6 +222,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   form_mode = 'mode';
   form_cgpa = 'percentage';
   form_finalcgpa = 'final_percentage';
+  form_CARanks = 'rank';
+  ca_bothgroup_status = 'ca_bothgroup_status';
 
   // Upload
   form_file_id = 'file_id';
@@ -306,6 +308,19 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   form_faculty_reference = "faculty_reference";
   form_faculty_reference_1 = "faculty_reference1";
 
+  form_is_training_status = "is_intern_status";
+  form_training_Array = "intern";
+  form_training_employer_name = "employer_name";
+  form_training_from_date = "from_date";
+  form_training_to_date = "to_date";
+  form_training_work_responsiability = "work_responsiability";
+
+  form_training_is_articleship_status = "is_articleship_status";
+  form_ca_dateofcompletion = "ca_dateofcompletion";
+  form_ca_achivement = "ca_achivement";
+  form_is_ca_resaon_suitable = "ca_resaon_suitable";
+
+
   personalDetails: any;
   personalDetailsMap: any;
   contactDetails: any;
@@ -334,6 +349,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   updatedCitySubscription: Subscription;
   updatedCitySubscription1: Subscription;
   newSaveProfileDataSubscription: Subscription;
+  workDetailsAlldata: any;
+  educationDetailsAllData: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -367,7 +384,6 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       top = null;
     }
   }
-
   ifPreviewDetails(data) {
     this.personalDetails = data && data.personal_details ? data.personal_details : null;
     this.patchPersonalForm();
@@ -380,6 +396,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       this.dependentDetailsMap = [];
     }
     this.educationDetails = data && data.education_details && data.education_details.educations && data.education_details.educations.length > 0 ? data.education_details.educations : [];
+    this.educationDetailsAllData = data.education_details ? data.education_details : null;
     this.selectedPost = data && data.education_details && data.education_details.selected_post ? data.education_details.selected_post : '';
     if (this.educationDetails.length > 0) {
       this.patchEducation();
@@ -719,6 +736,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   getWorkApiDetails(datas) {
     if (datas && datas['experience_details']) {
       let data = datas['experience_details'];
+      this.workDetailsAlldata = data ? data : null;
       let work = {
         workDetails: data && data.work_details ? data.work_details : null,
         Employment: data && data.employments ? data.employments : [],
@@ -730,7 +748,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       this.workDetails = work;
       this.patchWorkDetails();
       this.patchingCriminal();
-      if ((work.workDetails && (work.workDetails.break_in_emp || work.workDetails.employed_us == '1' || work.workDetails.interviewed_by_us == '1' || work.workDetails.total_exp_months || work.workDetails.total_exp_years)) || (this.workDetails.bgvDetails && this.workDetails.bgvDetails.show) || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] ) || this.workDetails.relatives || this.workDetails.skills || this.workDetails.faculty) {
+      if ((work.workDetails && (work.workDetails.break_in_emp || work.workDetails.employed_us == '1' || work.workDetails.interviewed_by_us == '1' || work.workDetails.total_exp_months || work.workDetails.total_exp_years)) || (this.workDetails.bgvDetails && this.workDetails.bgvDetails.show) || (work.Employment && work.Employment.length > 0 && work.Employment[0] && work.Employment[0][this.form_employment_name_address] ) || this.workDetails.relatives || this.workDetails.skills || this.workDetails.faculty || (this.workDetailsAlldata && (this.workDetailsAlldata[this.form_training_is_articleship_status] || this.workDetailsAlldata[this.form_ca_achivement] || this.workDetailsAlldata[this.form_is_ca_resaon_suitable]))) {
         this.noShowWork = false;
       } else {
         this.noShowWork = true;
@@ -1210,6 +1228,19 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     } else {
       return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
     }
+  }
+
+  checkLastIndexOfCA() {
+    let ca = null;
+    if (this.educationDetailsMap && this.educationDetailsMap.length > 0) {
+    let array = this.educationDetailsMap && this.educationDetailsMap.length > 0 ? this.educationDetailsMap : [];
+    array.forEach((element, i) => {
+      if (element && element[this.form_qualification_type] == 'CA') {
+        ca = i;
+      }
+    });
+    }
+    return ca;
   }
 
   ngOnDestroy() {
