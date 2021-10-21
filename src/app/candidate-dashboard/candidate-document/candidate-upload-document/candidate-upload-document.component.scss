@@ -896,3 +896,13 @@ mat-expansion-panel-header {
   color: #0645AD;
   cursor: pointer;
 }
+.caProfileNote {
+  color: $primary-red;
+  box-shadow: 0px 0px 5px #00000029;
+  padding: 4px;
+}
+.caError {
+  border-top: 1px solid red;
+  margin-top: 4px;
+  padding: 0 2em;
+}
