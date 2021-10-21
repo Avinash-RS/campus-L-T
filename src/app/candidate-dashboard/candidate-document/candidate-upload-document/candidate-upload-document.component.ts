@@ -61,6 +61,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   IsreasonAvailable: any;
   isReasonDate: any;
 
+  selectedPost: any;
   setStep(index: number) {
     this.step = index;
   }
@@ -194,6 +195,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       }
       this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         let apiDocumentDetails = data && data.document_details ? data.document_details : null;
+        this.selectedPost = data && data.selected_post ? data.selected_post : null;//this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
         this.ifDocumentDetails(apiDocumentDetails);
       });
   }
@@ -282,10 +284,10 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       // Certifications
       if (this.getCertificationDocuments && this.getCertificationDocuments.length > 0) {
         this.getCertificationDocuments.forEach(element => {
-          this.getCertificationsArr.push(this.patchJoiningArray(element, 'otherCert'));
+         this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.patchCAArray(element, 'otherCert')) : this.getCertificationsArr.push(this.patchJoiningArray(element, 'otherCert'));
         });
       } else {
-        // this.getOtherCertArr.push(this.initJoiningArray());
+        this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.CAinitArray('otherCert')) : this.getCertificationsArr.push(this.initJoiningArray('otherCert'));
       }
 
       this.patchNotSubmittedReason();
@@ -403,6 +405,38 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     })
   }
 
+  CAinitArray(otherCert?) {
+    return this.fb.group({
+      [this.form_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [null, (otherCert == 'otherCert' ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
+      // [this.form_id]: [null],
+      [this.form_file_size]: [null],
+      [this.form_file_path]: [null, [Validators.required]],
+      [this.form_file_name]: [null],
+      [this.form_file_type]: [null],
+      [this.form_file_id]: [null],
+      [this.form_description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [null]
+    })
+  }
+  patchCAArray(data, otherCert?) {
+    return this.fb.group({
+      [this.form_name]: [data[this.form_name], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_label]: [data[this.form_label], (otherCert == 'otherCert' ? [Validators.required, this.glovbal_validators.alphaNum255()] : [Validators.nullValidator])],
+      // [this.form_id]: [data[this.form_id]],
+      [this.form_file_size]: [data[this.form_file_size]],
+      [this.form_file_path]: [data[this.form_file_path], [Validators.required]],
+      [this.form_file_name]: [data[this.form_file_name]],
+      [this.form_file_type]: [data[this.form_file_type]],
+      [this.form_file_id]: [data[this.form_file_id]],
+      [this.form_description]: [data[this.form_description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_Not_Submitted_Description]: [data[this.form_Not_Submitted_Description], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_expectedDate]: [data[this.form_expectedDate]],
+    })
+  }
+
+
   initTransferArray() {
     return this.fb.group({
       [this.form_name]: ['Transfer Certificate', [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
@@ -510,8 +544,8 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   }
   addToCertificationsArray(i?: any) {
    if (this.getCertificationsArr.valid) {
-    return this.getCertificationsArr.push(this.initJoiningArray('otherCert'));
-    }
+    return this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.CAinitArray('otherCert')) : this.getCertificationsArr.push(this.initJoiningArray('otherCert'));
+  }
     this.glovbal_validators.validateAllFormArrays(this.uploadForm.get([this.form_CertificationArray]) as FormArray);
   }
 
@@ -750,7 +784,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       //   return this.appConfig.nzNotification('error', 'Banking Details', 'Please fill all the red highlighted fields in Banking Details to proceed further');
       // }
       if (this.getCertificationsArr.invalid) {
-        return this.appConfig.nzNotification('error', 'Certification Uploads', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
+        return this.selectedPost == 'ca' ? this.appConfig.nzNotification('error', 'CA Certification Uploads', 'Please fill all the red highlighted fields in CA Certifications Uploads to proceed further') : this.appConfig.nzNotification('error', 'Certification Uploads', 'Please fill all the red highlighted fields in Certifications Uploads to proceed further');
       }
       if (this.getOtherCertArr.invalid) {
         return this.appConfig.nzNotification('error', 'Other Certifications', 'Please fill all the red highlighted fields in Other Certifications to proceed further');
