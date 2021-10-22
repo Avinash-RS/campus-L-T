@@ -195,7 +195,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       }
       this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         let apiDocumentDetails = data && data.document_details ? data.document_details : null;
-        this.selectedPost = data && data.selected_post ? data.selected_post : null;//this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+        this.selectedPost = data && data.document_details && data.document_details.selected_post ? data.document_details.selected_post : null;
         this.ifDocumentDetails(apiDocumentDetails);
       });
   }
