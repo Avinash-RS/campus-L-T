@@ -1205,16 +1205,19 @@
                 </div>
               </ng-container>
             </ng-container>
+            <ng-container *ngIf="selectedPost == 'ca'" [ngTemplateOutlet]="caCertificationsPreview"></ng-container>
           </ng-container>
 
+          <ng-container *ngIf="selectedPost != 'ca'" [ngTemplateOutlet]="caCertificationsPreview"></ng-container>
           <!-- Certifications -->
+          <ng-template #caCertificationsPreview>
           <ng-container
             *ngIf="
               documentDetails.certifications &&
               documentDetails.certifications.length > 0
             "
           >
-            <div class="subDocumentTitle">Certifications</div>
+            <div class="subDocumentTitle">{{ selectedPost == 'ca' ? 'CA Certifications' : 'Certifications'}}</div>
             <div
               class="row-wrapper mt-0"
               [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
@@ -1281,6 +1284,7 @@
               </div>
             </div>
           </ng-container>
+        </ng-template>
 
           <!-- Other uploads -->
           <ng-container
