@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import SampleJson from '../../../../../assets/files/evaluationData.json';
-import * as myGlobals from '../../../../custom-form-validators/validation';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ActivatedRoute } from '@angular/router';
-import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
-import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-import { CONSTANT } from 'src/app/constants/app-constants.service.js';
 import * as _moment from 'moment';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 

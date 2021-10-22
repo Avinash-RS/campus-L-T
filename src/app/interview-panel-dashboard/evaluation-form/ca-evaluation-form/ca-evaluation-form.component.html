@@ -1,0 +1,462 @@
+<form class="main-evaluation" [formGroup]="evaluationForm" (ngSubmit)="submitEvaluationForm()">
+  <div class="contant">
+
+    <div class="row bg">
+      <div class="col-12">
+        <div>CA Interview Evaluation Form
+        </div>
+      </div>
+    </div><br>
+
+    <div class="row no-center-align">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-5">
+            <span class="head"> Candidate name </span>
+          </div>
+          <div style="white-space: nowrap;" class="col-7 indent">
+            <span class="ans">: {{getCandidateData?.name}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-4">
+            <span class="head">Discipline </span>
+          </div>
+          <div class="col-8 indent">
+            <span class="ans">: {{getCandidateData?.field_discipline}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-5">
+            <span class="head"> Date of interview<span class="asterick">*</span> </span>
+          </div>
+          <div class="col-7">
+            <mat-form-field class="date" appearance="none">
+              <input style="padding-left: 12px;" [formControlName]="caform_interview_date" matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+          <ng-container *ngIf="interview_date.invalid && interview_date.touched">
+            <div class="col-5">
+              <span>&#160;</span>
+            </div>
+            <div style="margin-top: .25em;" class="col-7 validation">
+              <span *ngIf="interview_date.errors?.required">Interview Date is required</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+
+    <div class="row no-center-align">
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-5">
+            <span class="head">Date of birth </span>
+          </div>
+          <div style="white-space: nowrap;" class="col-7 indent">
+            <span class="ans">: {{getCandidateData?.field_dob}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-4">
+            <span class="head">Institute name </span>
+          </div>
+          <div class="col-8 indent">
+
+            <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0]
+              && getCandidateData['education'][0]['field_institute'] ?
+              getCandidateData['education'][0]['field_institute'] : ''}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div style="white-space: nowrap;" class="col-5">
+            <span class="head">Place of interview<span class="asterick">*</span> </span>
+          </div>
+          <div class="col-7">
+            <input class="place" [formControlName]="caform_interview_place" matInput>
+          </div>
+          <ng-container *ngIf="interview_place.invalid && interview_place.touched">
+            <div class="col-5">
+              <span>&#160;</span>
+            </div>
+            <div style="margin-top: .25em;" class="col-7 validation">
+              <span *ngIf="interview_place.errors?.required">Interview place is required</span>
+              <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="space"></div>
+  <div class="d-flex align-items-center justify-content-center mt-4 w-100">
+    <mat-radio-group style="margin-right: 5em;" aria-labelledby="example-radio-group-label"
+      class="d-flex w-50 justify-content-around" [formControlName]="caform_isattendedorNot">
+      <mat-radio-button (change)="statusChange(isattendedorNot)" class="f_size_18"
+        *ngFor="let attendance of intervieweeAttendance" [value]="attendance.value">
+        {{attendance.label}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <ng-container *ngIf="isattendedorNot.invalid && isattendedorNot.touched">
+    <div class="d-flex justify-content-center w-100 mt-3 validation">
+      <span *ngIf="isattendedorNot.errors?.required">Interview status required</span>
+    </div>
+  </ng-container>
+
+  <!-- <h5 class="head-h5 margin">   Assessment of the  candidate</h5>
+    <div class="vertical"></div> -->
+  <ng-container *ngIf="evaluationForm?.value[caform_isattendedorNot] == '1'">
+    <hr>
+    <table id="assessmentsTable" mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="name">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
+        <td style="width: 390px;" mat-cell *matCellDef="let assessment">{{assessment.name}}<span
+            class="asterick">*</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="veryGood">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Outstanding </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'veryGood' ? true : false"
+            (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
+            <i class="material-icons" matTooltip="{{assessment.veryGood}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="good">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Good
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'good' ? true : false"
+            (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
+            <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="average">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> Acceptable
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'Average' ? true : false"
+            (change)="setAssessmentLevel(assessment,'Average')" [name]="assessment.id" value="3">
+            <i class="material-icons" matTooltip="{{assessment.average}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="notSuitable">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
+            (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
+            <i class="material-icons" matTooltip="{{assessment.notSuitable}}">info</i>
+          </mat-radio-button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="(appearance.touched && appearance.errors) || (knowledgeExperience.touched && knowledgeExperience.errors) ||
+  (communicationskillOrExpression.touched && communicationskillOrExpression.errors) || (taskEffectiveness.touched && taskEffectiveness.errors) ||
+  (applicationOfKnowledge.touched && applicationOfKnowledge.errors) ||
+  (valuesIntegrity.touched && valuesIntegrity.errors)" class="mand validation1">
+      <span *ngIf="(appearance.errors?.required) || (knowledgeExperience.errors?.required) ||
+      (communicationskillOrExpression.errors?.required) || (taskEffectiveness.errors?.required) ||
+      (applicationOfKnowledge.errors?.required) ||
+      (valuesIntegrity.errors?.required)">Make sure you have selected the radio buttons for all the above rows</span>
+    </div>
+    <div class="space"></div>
+    <div class="row bg">
+      <div class="col-12">
+        <div>Panel’s overall Assessment of the Candidate</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="box">
+        <mat-radio-group class="radioDisp" [formControlName]="caform_overallAssessmentStatus">
+          <div class="col-3 border-right">
+            <mat-radio-button value="Verygood">Very Good
+            </mat-radio-button>
+          </div>
+          <div class="col-3 border-right">
+            <mat-radio-button value="Good"> Good
+            </mat-radio-button>
+          </div>
+          <div class="col-3 border-right">
+            <mat-radio-button value="Average"> Average
+            </mat-radio-button>
+          </div>
+          <div class="col-3 border-right">
+            <mat-radio-button value="Notsuitabl"> Not Suitable
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+      <div *ngIf="overallAssessmentStatus.touched && overallAssessmentStatus.errors" class="mand validation1">
+        <span *ngIf="overallAssessmentStatus.errors?.required">Anyone of the above criteria needs to be selected</span>
+      </div>
+
+    </div>
+    <div class="space"></div>
+    <div style="margin-left: 10px;">
+      <div class="row pad-bootom mt-2 mb-2">
+        <div class="col-4">
+          <span class="text">STATUS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8 d-flex w-50">
+          <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option"
+            [formControlName]="caform_selectedStatus">
+            <mat-radio-button *ngFor="let attended of attendedStatusList" [value]="attended.value">
+              {{attended.label}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="selectedStatus?.touched && selectedStatus?.errors">
+          <div class="col-4">
+            <span class="text">&#160;</span>
+          </div>
+          <div class="col-8 mand validation1">
+            <span *ngIf="selectedStatus?.errors?.required">Anyone of the above criteria needs to be selected</span>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">WILLING TO WORK AT SITE<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8">
+          <mat-radio-group aria-label="Select an option" [formControlName]="caform_willing_work">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button style="margin-left: 67px" value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="willing_work.touched && willing_work.errors">
+          <div class="col-4">
+            <span class="text">&#160;</span>
+          </div>
+          <div class="col-8 mand validation1">
+            <span *ngIf="willing_work.errors?.required">Anyone of the above criteria needs to be selected</span>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">PHYSICAL DISABILITY, IF ANY PLEASE SPECIFY <br> (e.g., Limping,Deformity, Stammering,
+            etc.)</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput [formControlName]="caform_physical_disability"></textarea>
+          <div *ngIf="physical_disability.touched && physical_disability.errors" class="mand validation1">
+            <span *ngIf="physical_disability.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="physical_disability.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text"> CANDIDATES STRENGTHS</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width" style="border: solid #000 1px !important" appearance="none"> -->
+          <textarea matInput [formControlName]="caform_candidates_strenght"
+            [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
+          <!-- </mat-form-field> -->
+          <div *ngIf="candidates_strenght.touched && candidates_strenght.errors" class="mand validation1">
+            <span *ngIf="candidates_strenght.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+            <span *ngIf="candidates_strenght.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text"> CANDIDATES WEAKNESSES</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput [formControlName]="caform_candidates_weakness"></textarea>
+          <div *ngIf="candidates_weakness.touched && candidates_weakness.errors" class="mand validation1">
+            <span *ngIf="candidates_weakness.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+            <span *ngIf="candidates_weakness.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row pad-bootom no-center-align">
+        <div class="col-4">
+          <span class="text"> NAME OF THE PANEL MEMBERS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_panel_member1" matInput>
+          <div *ngIf="panel_member1.touched && panel_member1.errors" class="mand validation1">
+            <span *ngIf="panel_member1.errors?.required">Panel member 1 is required</span>
+            <span *ngIf="panel_member1.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="panel_member1.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_panel_member2" matInput>
+          <div *ngIf="panel_member2.touched && panel_member2.errors" class="mand validation1">
+            <span *ngIf="panel_member2.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="panel_member2.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_panel_member3" matInput>
+          <div *ngIf="panel_member3.touched && panel_member3.errors" class="mand validation1">
+            <span *ngIf="panel_member3.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="panel_member3.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_panel_member4" matInput>
+          <div *ngIf="panel_member4.touched && panel_member4.errors" class="mand validation1">
+            <span *ngIf="panel_member4.errors?.maxlength">Maxlength of 50 characters only allowed</span>
+            <span *ngIf="panel_member4.errors?.pattern">Alphabetics and dot only allowed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pad-bootom no-center-align">
+        <div class="col-4">
+          <span class="text">P.S.NO. OF PANEL MEMBERS<span class="asterick">*</span></span>
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_ps_no1" matInput>
+          <div *ngIf="ps_no1.touched && ps_no1.errors" class="mand validation1">
+            <span *ngIf="ps_no1.errors?.required">PS number is required</span>
+            <span *ngIf="ps_no1.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="ps_no1.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_ps_no2" matInput>
+          <div *ngIf="ps_no2.touched && ps_no2.errors" class="mand validation1">
+            <span *ngIf="ps_no2.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="ps_no2.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_ps_no3" matInput>
+          <div *ngIf="ps_no3.touched && ps_no3.errors" class="mand validation1">
+            <span *ngIf="ps_no3.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="ps_no3.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+        <div class="col-2">
+          <input class="in-box" [formControlName]="caform_ps_no4" matInput>
+          <div *ngIf="ps_no4.touched && ps_no4.errors" class="mand validation1">
+            <span *ngIf="ps_no4.errors?.maxlength">Maxlength of 30 characters only allowed</span>
+            <span *ngIf="ps_no4.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="false">
+    <div class="space"></div>
+    <div class="row bg">
+      <div class="col-12">
+        <div>Extempore Evaluation</div>
+      </div>
+    </div><br>
+    <!-- <h5 class="head-h5 margin"> Extempore evaluation</h5>
+<div class="vertical"></div> -->
+    <h5 class="head-h5 margin"> Guidelines</h5>
+    <ul>
+      <li> The evaluation needs to be done while the candidate appears for interview.</li>
+      <li>Candidate needs to be provided with a topic of general interest.</li>
+      <li> 1 Min of time should be provided to the candidate to prepare and 2 min to deliver.</li>
+      <li>Clarity of thought, ability to communicate and self confidence & personality attributes to be evaluated
+        Considering this exercise.
+      </li>
+    </ul>
+  </ng-container>
+    <div class="space"></div>
+    <br>
+    <div style="margin-left: 10px;">
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Overall Remarks<span class="asterick">*</span>
+          </span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput [formControlName]="caform_remarks"></textarea>
+          <div *ngIf="remarks.touched && remarks.errors" class="mand validation1">
+            <span *ngIf="remarks.errors?.required">Overall remarks is required</span>
+            <span *ngIf="remarks.errors?.maxlength">Maxlength of 100 characters only allowed</span>
+            <span *ngIf="remarks.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+
+
+  <ng-container *ngIf="evaluationForm?.value[caform_isattendedorNot] == '0'">
+    <div style="margin-left: 1em !important;" class="row pad-bootom mt-5 d-flex align-items-center">
+      <div style="height: 10px; width: 10%;" class="mt-1 d-flex pl-4">
+        <span class="text">Status<span class="asterick">*</span>:</span>
+      </div>
+      <div class="d-flex w-50">
+        <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option"
+          [formControlName]="caform_NotattendedReason">
+          <mat-radio-button *ngFor="let Notattended of Notattended" [value]="Notattended.value">
+            {{Notattended.label}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <ng-container *ngIf="NotattendedReason?.touched && NotattendedReason?.invalid">
+        <div class="col-4">
+          <span class="text">&#160;</span>
+        </div>
+        <div style="margin-top: 1em; margin-left: 2em;" class="mand validation1">
+          <span *ngIf="NotattendedReason?.errors?.required">Anyone of the above criteria needs to be selected</span>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <div class="space"></div>
+  <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
+    <button class="submit" mat-raised-button>Save</button>
+  </div>
+</form>
+<div class="space"></div>
