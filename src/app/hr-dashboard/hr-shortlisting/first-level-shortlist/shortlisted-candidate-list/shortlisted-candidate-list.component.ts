@@ -1137,7 +1137,7 @@ filterApiBindingCustomizationData(appliedFilter) {
       values: sslcValues.backlogs ? sslcValues.backlogs : null
     } : null,
     percentage: (sslcValues.percentage_from || sslcValues.percentage_to) ? {
-      filterType: "date",
+      filterType: "number",
       type: "In range",
       filter: sslcValues.percentage_from ? sslcValues.percentage_from : null,
       filterTo: sslcValues.percentage_to ? sslcValues.percentage_to : null,
@@ -1159,7 +1159,7 @@ const hsc = hscValues[this.form_education_checked] ? {
     values: hscValues.backlogs ? hscValues.backlogs : null
   } : null,
   percentage: (hscValues.percentage_from || hscValues.percentage_to) ? {
-    filterType: "date",
+    filterType: "number",
     type: "In range",
     filter: hscValues.percentage_from ? hscValues.percentage_from : null,
     filterTo: hscValues.percentage_to ? hscValues.percentage_to : null,
@@ -1187,7 +1187,7 @@ const diploma = diplomaValues[this.form_education_checked] ? {
     values: diplomaValues.backlogs ? diplomaValues.backlogs : null
   } : null,
   percentage: (diplomaValues.percentage_from || diplomaValues.percentage_to) ? {
-    filterType: "date",
+    filterType: "number",
     type: "In range",
     filter: diplomaValues.percentage_from ? diplomaValues.percentage_from : null,
     filterTo: diplomaValues.percentage_to ? diplomaValues.percentage_to : null,
@@ -1215,7 +1215,7 @@ const ug = ugValues[this.form_education_checked] ? {
     values: ugValues.backlogs ? ugValues.backlogs : null
   } : null,
   percentage: (ugValues.percentage_from || ugValues.percentage_to) ? {
-    filterType: "date",
+    filterType: "number",
     type: "In range",
     filter: ugValues.percentage_from ? ugValues.percentage_from : null,
     filterTo: ugValues.percentage_to ? ugValues.percentage_to : null,
@@ -1243,7 +1243,7 @@ const pg = pgValues[this.form_education_checked] ? {
     values: pgValues.backlogs ? pgValues.backlogs : null
   } : null,
   percentage: (pgValues.percentage_from || pgValues.percentage_to) ? {
-    filterType: "date",
+    filterType: "number",
     type: "In range",
     filter: pgValues.percentage_from ? pgValues.percentage_from : null,
     filterTo: pgValues.percentage_to ? pgValues.percentage_to : null,
