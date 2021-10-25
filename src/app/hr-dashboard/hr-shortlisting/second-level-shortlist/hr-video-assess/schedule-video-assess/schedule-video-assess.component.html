@@ -1,1 +1,304 @@
-<p>schedule-video-assess works!</p>
+<div class="scheduleVideoWrapper">
+    <h2>Schedule Video Interview</h2>
+    <div class="scheduleVideoTabs">
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="material-icons-outlined">layers</span>
+                    <span>Question</span>
+                </ng-template>
+                <div class="tabContent questionTab">
+                    <div class="questionWrapper d-flex align-items-center justify-content-between">
+                        <div class="questions">
+                            <h5>Tell me something that's not in your resume</h5>
+                            <div class="d-flex justify-content-between">
+                                <span><span>Created by: </span>Manju M</span>
+                                <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                                <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                                <span><span>Question Type: </span>MRS</span>
+                            </div>
+                        </div>
+                        <span class="delete">
+                            <span class="material-icons-outlined">delete</span>
+                        </span>
+                    </div>
+                    <div class="questionWrapper d-flex align-items-center justify-content-between">
+                        <div class="questions">
+                            <h5>Tell me something that's not in your resume</h5>
+                            <div class="d-flex justify-content-between">
+                                <span><span>Created by: </span>Manju M</span>
+                                <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                                <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                                <span><span>Question Type: </span>MRS</span>
+                            </div>
+                        </div>
+                        <span class="delete">
+                            <span class="material-icons-outlined">delete</span>
+                        </span>
+                    </div>
+                    <div class="questionWrapper d-flex align-items-center justify-content-between">
+                        <div class="questions">
+                            <h5>Tell me something that's not in your resume</h5>
+                            <div class="d-flex justify-content-between">
+                                <span><span>Created by: </span>Manju M</span>
+                                <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                                <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                                <span><span>Question Type: </span>MRS</span>
+                            </div>
+                        </div>
+                        <span class="delete">
+                            <span class="material-icons-outlined">delete</span>
+                        </span>
+                    </div>
+                    <div class="addQuestion" (click)="openDialog(schedulePopup)">
+                        <p><span class="material-icons-outlined">add</span> Add Questions</p>
+                    </div>
+                    <div class="nextBtn d-flex justify-content-center">
+                        <button>Next</button>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="material-icons-outlined">insert_invitation</span>
+                    <span>Schedule</span>
+                </ng-template>
+                <div class="tabContent scheduleTab">
+                    <form [formGroup]="">
+                        <div class="title">
+                            <label>Title</label>
+                            <input matInput placeholder="Title" />
+                        </div>
+                        <div class="description">
+                            <label>Description</label>
+                            <textarea matInput placeholder="Description"></textarea>
+                        </div>
+                        <div class="startEnd d-flex justify-content-between align-items-center">
+                            <div class="startTime d-flex justify-content-between align-items-center">
+                                <div class="date">
+                                    <label>Start Date</label>
+                                    <div>
+                                        <input matInput placeholder="Start Date" />
+                                        <span class="material-icons-outlined">calendar_today</span>
+                                    </div>
+                                </div>
+                                <div class="time">
+                                    <label>Time</label>
+                                    <div>
+                                        <input matInput placeholder="Time" />
+                                        <span class="material-icons-outlined">schedule</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="Arrow">
+                                <span class="material-icons-outlined">east</span>
+                            </div>
+
+                            <div class="endTime d-flex justify-content-between align-items-center">
+                                <div class="date">
+                                    <label>End Date</label>
+                                    <div>
+                                        <input matInput placeholder="End Date" />
+                                        <span class="material-icons-outlined">calendar_today</span>
+                                    </div>
+                                </div>
+                                <div class="time">
+                                    <label>Time</label>
+                                    <div>
+                                        <input matInput placeholder="Time" />
+                                        <span class="material-icons-outlined">schedule</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tagInterviewer">
+                            <label>Tag Interviewer</label>
+                            <nz-select class="selectInterviewer" [nzDisabled]="" nzShowSearch nzPlaceHolder="Select Drive">
+                                <nz-option nzValue="lucy" nzLabel="Option 1"></nz-option>
+                                <nz-option nzValue="lucy" nzLabel="Option 2"></nz-option>
+                                <nz-option nzValue="lucy" nzLabel="Option 3"></nz-option>
+                            </nz-select>
+                        </div>
+                        <div class="sendNotification">
+                            <span>Send Notification to Candidates and Evaluator?</span>
+                            <mat-slide-toggle class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled"></mat-slide-toggle>
+                        </div>
+                        <div class="prevNext">
+                            <button class="prev">Previous</button>
+                            <button class="next">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="material-icons-outlined">visibility</span>
+                    <span>Review</span>
+                </ng-template>
+                <div class="tabContent reviewTab">
+                    <div class="candidates">
+                        <h4>Candidates</h4>
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>Johnson</td>
+                                    <td>xzy@gmail.com</td>
+                                    <td>2nd Level Shortlist</td>
+                                </tr>
+                                <tr>
+                                    <td>Johnson</td>
+                                    <td>xzy@gmail.com</td>
+                                    <td>2nd Level Shortlist</td>
+                                </tr>
+                                <tr>
+                                    <td>Johnson</td>
+                                    <td>xzy@gmail.com</td>
+                                    <td>2nd Level Shortlist</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="secondSection">
+                        <h4>Question</h4>
+                        <div class="questionWrapper d-flex align-items-center justify-content-between">
+                            <div class="questions">
+                                <h5>Tell me something that's not in your resume</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span><span>Created by: </span>Manju M</span>
+                                    <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                                    <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                                    <span><span>Question Type: </span>MRS</span>
+                                </div>
+                            </div>
+                            <span class="delete">
+                                <span class="material-icons-outlined">delete</span>
+                            </span>
+                        </div>
+                        <div class="questionWrapper d-flex align-items-center justify-content-between">
+                            <div class="questions">
+                                <h5>Tell me something that's not in your resume</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span><span>Created by: </span>Manju M</span>
+                                    <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                                    <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                                    <span><span>Question Type: </span>MRS</span>
+                                </div>
+                            </div>
+                            <span class="delete">
+                                <span class="material-icons-outlined">delete</span>
+                            </span>
+                        </div>
+                        <div class="questionWrapper d-flex align-items-center justify-content-between">
+                            <div class="questions">
+                                <h5>Tell me something that's not in your resume</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span><span>Created by: </span>Manju M</span>
+                                    <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                                    <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                                    <span><span>Question Type: </span>MRS</span>
+                                </div>
+                            </div>
+                            <span class="delete">
+                                <span class="material-icons-outlined">delete</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="scheduleSection">
+                        <h4>Schedule</h4>
+                        <div>
+                            <label>Title:</label>
+                            <p>Video Interview</p>
+                        </div>
+                        <div>
+                            <label>Description: </label>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam augue nibh</p>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-center">
+                            <div>
+                                <label>Start Date - Time</label>
+                                <p>06/10/2021 -10:00 PM</p>
+                            </div>
+                            <div>
+                                <label>End Date - Time</label>
+                                <p>06/10/2021 -10:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prevNext">
+                        <button class="prev">Previous</button>
+                        <button class="next">Confirm</button>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+
+<ng-template #schedulePopup>
+    <div class="videoInterviewFlowPopup">
+        <div (click)="closedialogbox()" class="closeSection">
+            <div>
+                <span class="material-icons-outlined">close</span>
+            </div>
+            <p>Close</p>
+        </div>
+        <div class="videoInterviewFlow">
+            <div class="heading d-flex justify-content-between align-items-center">
+                <h3>Add Questions</h3>
+                <button class="add"><span class="material-icons-outlined">add</span> <span>Add</span></button>
+            </div>
+            <div class="descriptionContent">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>Questions</h4>
+                    <mat-checkbox> Select All</mat-checkbox>
+                </div>
+                <div class="questions">
+                    <div class="checkBox">
+                        <mat-checkbox></mat-checkbox>
+                    </div>
+                    <div class="rightContent">
+                        <h5>Tell me something that's not in your resume</h5>
+                        <div class="d-flex justify-content-between">
+                            <span><span>Created by: </span>Manju M</span>
+                            <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                            <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                            <span><span>Question Type: </span>MRS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <div class="checkBox">
+                        <mat-checkbox></mat-checkbox>
+                    </div>
+                    <div class="rightContent">
+                        <h5>Tell me something that's not in your resume</h5>
+                        <div class="d-flex justify-content-between">
+                            <span><span>Created by: </span>Manju M</span>
+                            <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                            <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                            <span><span>Question Type: </span>MRS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <div class="checkBox">
+                        <mat-checkbox></mat-checkbox>
+                    </div>
+                    <div class="rightContent">
+                        <h5>Tell me something that's not in your resume</h5>
+                        <div class="d-flex justify-content-between">
+                            <span><span>Created by: </span>Manju M</span>
+                            <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
+                            <span><span>Question Code: </span>467890444ASDFGHJ</span>
+                            <span><span>Question Type: </span>MRS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

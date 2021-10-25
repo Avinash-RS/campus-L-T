@@ -1,0 +1,394 @@
+.scheduleVideoWrapper {
+    padding: 15px;
+    h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: #000000;
+        line-height: normal;
+        margin: 0;
+    }
+}
+.scheduleVideoTabs {
+    .tabContent {
+        max-width: 720px;
+        width: 98%;
+        margin: 30px auto;
+    }
+    .questionTab {
+        .addQuestion {
+            max-width: 590px;
+            width: 94%;
+            margin: 30px auto;
+            border: 1px dashed rgba(188,188,188,0.5);
+            border-radius: 4px;
+            padding: 10px;
+            cursor: pointer;
+            p {
+                margin: 0;
+                font-size: 13px;
+                font-weight: 400;
+                color: rgba(179, 179, 179, 1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                span {
+                    font-size: 17px;
+                    margin-right: 5px;
+                }
+            }
+        }
+        .nextBtn {
+            margin-top: 30px;
+            button {
+                padding: 6px 30px;
+                font-size: 16px;
+                font-weight: 400;
+                color: #ffffff;
+                line-height: normal;
+                background-color: #BE2423;
+                border-radius: 4px;
+                border: 0;
+            }
+        }
+    }
+    .scheduleTab {
+        form {
+            > div {
+                margin-top: 15px;
+            }
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #2D2D2D;
+            line-height: normal;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            border-radius: 4px;
+            width: 100%;
+            padding: 6px 12px;
+            border: 1px solid rgba(142,142,142,0.5);
+        }
+        .startTime, .endTime {
+            width: 44%;
+            .date {
+                width: 54%;
+            }
+            .time {
+                width: 43%;
+            }
+            .date, .time {
+                > div {
+                    position: relative;
+                    span {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        right: 10px;
+                        font-size: 15px;
+                        color: #999999;
+                    }
+                }
+            }
+        }
+        .Arrow {
+            width: 8%;
+            text-align: center;
+        }
+        .sendNotification {
+            display: flex;
+            align-items: center;
+            span {
+                color: #2D2D2D;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: normal;
+                margin-right: 7px;
+            }
+        }
+    }
+    .reviewTab {
+        h4 {
+            color: #333333;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: normal;
+        }
+        table {
+            border-collapse: collapse;
+            border: 1px solid rgba(170,170,170,0.4);
+            tr {
+                border-bottom: 1px solid rgba(170,170,170,0.4);
+                &:last-child {
+                    border-bottom: 0;
+                }
+                td {
+                    color: #4D4D4D;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+            }
+        }
+        .secondSection, .scheduleSection {
+            margin-top: 20px;
+        }
+        .scheduleSection {
+            > div {
+                margin-top: 15px;
+                label, p {
+                    color: #2D2D2D;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: normal;
+                    margin: 0;
+                }
+                label {
+                    display: block;
+                    font-weight: 700;
+                }
+                > div {
+                    &:last-child {
+                        margin-left: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::ng-deep.selectInterviewer .ant-select-selection {
+    border-radius: 4px !important;
+    width: 100% !important;
+    padding: 6px 12px !important;
+    border: 1px solid rgba(142,142,142,0.5) !important;
+}
+
+//Common CSS
+.questionWrapper {
+    margin-top: 10px;
+}
+.questions {
+    background-color: #F8F9F8;
+    border-radius: 4px;
+    padding: 10px 15px;
+    border: 1px solid #E5E5E5;
+    width: 93%;
+    h5 {
+        font-size: 14px;
+        font-weight: 700;
+        color: #333333;
+        line-height: normal;
+    }
+    > div {
+        span {
+            color: #999999;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: normal;
+            span {
+                color: #666666;
+            }
+        }
+    }
+}
+.delete {
+    width: 5%;
+    text-align: right;
+    span {
+        cursor: pointer;
+        background-color: #F2F2F2;
+        font-size: 12px;
+        color: #999999;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+}
+.prevNext {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px !important;
+    button {
+        border: 0;
+        padding: 6px 25px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
+        margin: 0 10px;
+        &.prev {
+            background-color: #ffffff;
+            color: #666666;
+            border: 1px solid #666666;
+        }
+        &.next {
+            background-color: #BE2423;
+            color: #ffffff;
+        }
+    }
+}
+//Ends
+
+.videoInterviewFlow {
+    height: 100%;
+    .heading {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+        h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+            line-height: normal;
+            margin: 0 !important;
+        }
+        .add {
+            background-color: #BE2423;
+            border-radius: 4px;
+            padding: 6px 12px;
+            border: 0;
+            color: #F2F3F5;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: normal;
+            text-transform: uppercase;
+            flex-direction: row !important;
+            margin-right: 5px;
+            .material-icons-outlined {
+                color: #ffffff;
+                font-size: 17px;
+            }
+        }
+    }
+    .descriptionContent {
+        padding: 15px 20px;
+        h4 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #000000;
+            line-height: normal;
+        }
+        .questions {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 10px;
+            .checkBox {
+                width: 5%;
+            }
+            .rightContent {
+                width: 93%;
+            }
+        }
+    }
+}
+
+::ng-deep.scheduleVideoTabs {
+    .mat-tab-labels {
+        justify-content: center;
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #8E8E8E;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+    .mat-tab-label {
+        opacity: 1;
+        min-width: auto;
+        padding: 0;
+        padding: 0 40px;
+        margin: 0 40px;
+        height: 88px;
+        .mat-tab-label-content {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #EAEAEA;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            span {
+                color: #000000;
+                font-size: 23px;
+                &:last-child {
+                    position: absolute;
+                    bottom: -25px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #808080;
+                }
+            }
+        }
+        &.mat-tab-label-active {
+            .mat-tab-label-content {
+                background-color: #BE2423;
+                span {
+                    color: #ffffff;
+                    &:last-child {
+                        color: #000000;
+                    }
+                }
+
+            }
+        }
+    }
+    .mat-tab-group.mat-primary {
+        .mat-ink-bar {
+            background-color: transparent;
+        }
+    }
+}
+
+// Popup
+::ng-deep.scheduleVideoPopup {
+    position: absolute !important;
+    right: 0;
+    top: 0;
+    .mat-dialog-container {
+        position: relative;
+        overflow: initial !important;
+        border-radius: 0;
+        .closeSection {
+            position: absolute;
+            top: 15px;
+            left: -50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            > div {
+                background-color: #ffffff;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                span {
+                    font-size: 21px;
+                    color: #666666;
+                }
+            }
+            p {
+                font-size: 9px;
+                font-weight: 400;
+                color: #ffffff;
+                line-height: normal;
+                text-transform: uppercase;
+                margin: 5px 0 0 0;
+            }
+        }
+    }
+}
