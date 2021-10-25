@@ -112,7 +112,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       this.redirectToProfile(
         event["data"]["candidate_id"],
         event["data"]["candidate_name"],
-        event["data"]["evaluation_status"],
+        event["data"]["normal_assessment"]["evaluation_status"],
         event["data"]["tag"],
         event["data"]["uid"],
         event["data"]["email"],
@@ -129,7 +129,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         this.submit(
           event["data"]["candidate_id"],
           event["data"]["candidate_name"],
-          event["data"]["evaluation_status"],
+          event["data"]["normal_assessment"]["evaluation_status"],
           event["data"]["tag"],
           event["data"]["uid"],
           event["data"]["email"],
@@ -143,7 +143,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"] &&
         event["data"]["join_interview"] == "Join Interview" &&
         event["data"] &&
-        event["data"]["evaluation_status"] != "2"
+        event["data"]["normal_assessment"]["evaluation_status"] != "2"
       ) {
         this.appConfig.setLocalData(
           "cProPic",
@@ -152,7 +152,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         this.redirectToEvaluationForm(
           event["data"]["candidate_id"],
           event["data"]["candidate_name"],
-          event["data"]["evaluation_status"],
+          event["data"]["normal_assessment"]["evaluation_status"],
           event["data"]["tag"],
           event["data"]["uid"],
           event["data"]["email"],
@@ -303,7 +303,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         {
           headerName: "Status",
           headerClass: 'ag-grid-header-center',
-          field: "interview_status",
+          field: "normal_assessment.interview_status",
           filter: 'agSetColumnFilter',
           filterParams: {
             applyMiniFilterWhileTyping: true
@@ -322,18 +322,18 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           cellRenderer: (params) => {
             if (
               params["data"] &&
-              params["data"]["interview_status"] == "Selected"
+              params["data"]["normal_assessment"]["interview_status"] == "Selected"
             ) {
               return `<span class="status completed-bg">Selected</span>`;
             }
             if (
               params["data"] &&
-              params["data"]["interview_status"] == "Rejected"
+              params["data"]["normal_assessment"]["interview_status"] == "Rejected"
             ) {
               return `<span class="status rejected-bg">Rejected</span>`;
             } else {
-              if (params["data"] && params["data"]["interview_status"]) {
-                return `<span class="status inprogress-bg">${params["data"]["interview_status"]}</span>`;
+              if (params["data"] && params["data"]["normal_assessment"]["interview_status"]) {
+                return `<span class="status inprogress-bg">${params["data"]["normal_assessment"]["interview_status"]}</span>`;
               } else {
                 return "";
               }
@@ -408,7 +408,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
 
     this.rowSelection = "multiple";
     this.isRowSelectable = function (rowNode) {
-      return rowNode.data ? rowNode.data.evaluation_status == "1" : false;
+      return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
     };
   }
 
@@ -456,7 +456,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           element.join_interview = this.isTimeExpired(
             edgeData.startTime,
             edgeData.endTime,
-            element.evaluation_status
+            element.normal_assessment.evaluation_status
           );
         }
       });
@@ -499,12 +499,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     this.rejectedCount = [];
     this.sentToHr = [];
     this.userList.forEach((element) => {
-      element.evaluation_status == '2' ? this.sentToHr.push(element) : element.evaluation_status == '1' ? this.buttonCheck = true : '';
+      element.normal_assessment.evaluation_status == '2' ? this.sentToHr.push(element) : element.normal_assessment.evaluation_status == '1' ? this.buttonCheck = true : '';
       if (
-        element.interview_status == "Selected" ||
-        element.interview_status == "Rejected"
+        element.normal_assessment.interview_status == "Selected" ||
+        element.normal_assessment.interview_status == "Rejected"
       ) {
-        element.interview_status == "Selected"
+        element.normal_assessment.interview_status == "Selected"
           ? this.selectedCount.push(element)
           : this.rejectedCount.push(element);
       }
@@ -530,13 +530,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           if (element) {
             counting = counting + 1;
             element["counter"] = counting;
-            element["evaluation_btn"] = element.evaluation_status == '1' ? 'Evaluated' : element.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
-            element["interview_status"] = element["interview_status"] == "Not Selected" ? 'Rejected' : element["interview_status"];
+            element["evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
+            element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             element["evaluation_status_1"] =
-              element.evaluation_status && element.evaluation_status == "2"
+              element.normal_assessment.evaluation_status && element.normal_assessment.evaluation_status == "2"
                 ? "Submitted"
-                : element.evaluation_status == "1"
+                : element.normal_assessment.evaluation_status == "1"
                 ? "Completed"
                 : "Scheduled";
             element.assigned_by = "-";
