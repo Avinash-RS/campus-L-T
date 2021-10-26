@@ -40,6 +40,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   getQuestionsForVideoSchedulingSubscription: Subscription;
   refreshSubscription: Subscription;
   hideForm: boolean;
+  VideoSchedulingSubmitSubscription: Subscription;
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -89,6 +90,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
     this.getCandidatesBasedOnShortlistNameSubscription ? this.getCandidatesBasedOnShortlistNameSubscription.unsubscribe() : '';
     this.getInterviewersBasedOnShortlistNameSubscription ? this.getInterviewersBasedOnShortlistNameSubscription.unsubscribe() : '';
     this.getQuestionsForVideoSchedulingSubscription ? this.getQuestionsForVideoSchedulingSubscription.unsubscribe() : '';
+    this.VideoSchedulingSubmitSubscription ? this.VideoSchedulingSubmitSubscription.unsubscribe() : ''
   }
 
   tabChanged(event) {
@@ -297,7 +299,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   }
 
   apiVideoScheduling(apiData) {
-    this.adminService.VideoSchedulingSubmit(apiData).subscribe((response: any)=> {
+   this.VideoSchedulingSubmitSubscription = this.adminService.VideoSchedulingSubmit(apiData).subscribe((response: any)=> {
       if (response && response.success) {
         this.appConfig.success('Schedule Created Successfully');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING);

@@ -428,6 +428,7 @@ export class AdminServiceService {
 
   // getting evaluation details
   getEvaluationDetails(data) {
+    data.form = this.appConfig.getSelectedDriveFormDetails().id;
     return this.http.post(`${this.BASE_URL}/api/evaluation_form_result`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }

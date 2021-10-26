@@ -495,6 +495,7 @@ export class BisEvaluationFormComponent implements OnInit {
       const dateInterview = this.evaluationForm.value.interview_date ? moment(this.evaluationForm.value.interview_date).format('YYYY-MM-DD') : '';
       const apiData =
       {
+        form: '2',
         notAttendedStatus: this.evaluationForm.value.notAttendedStatus,
         attendedStatus: this.evaluationForm.value.attendedStatus,
         attended: this.evaluationForm.value.attended,

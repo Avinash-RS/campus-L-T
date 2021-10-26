@@ -37,6 +37,8 @@ export class InvSubEvaluateComponent implements OnInit {
   BIS = this.appConfig.getLocalData('BIS');
   status: any;
   shortlist_name: any;
+  formDetails: any;
+  formId: any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -63,6 +65,8 @@ export class InvSubEvaluateComponent implements OnInit {
       this.uid = params['uid'];
       this.status = params['status'];
       this.shortlist_name = params['shortlist_name'];
+      this.formDetails = this.appConfig.getSelectedDriveFormDetails();
+      this.formId = this.formDetails.id ? this.formDetails.id : ''
     });
   }
 

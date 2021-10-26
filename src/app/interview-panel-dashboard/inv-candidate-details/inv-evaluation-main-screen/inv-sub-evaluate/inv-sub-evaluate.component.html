@@ -1,10 +1,11 @@
-<ng-container *ngIf="candidateId && uid && BIS != 'true'">
+<ng-container *ngIf="candidateId && uid && formId == '1'">
 <app-evaluation-form [candidateId]="candidateId" [uid]="uid" [shortlist_name]="shortlist_name" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-evaluation-form>
 </ng-container>
-<!--
-<ng-container *ngIf="candidateId && uid && BIS == 'true'">
+
+<ng-container *ngIf="candidateId && uid && formId == '2'">
     <app-bis-evaluation-form [candidateId]="candidateId" [uid]="uid" [shortlist_name]="shortlist_name" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-bis-evaluation-form>
-</ng-container> -->
-<ng-container *ngIf="candidateId && uid && BIS == 'true'">
+</ng-container>
+
+<ng-container *ngIf="candidateId && uid && formId == '3'">
   <app-ca-evaluation-form [candidateId]="candidateId" [uid]="uid" [shortlist_name]="shortlist_name" [status]="status" [nameOfAssessment]="nameOfAssessment"></app-ca-evaluation-form>
 </ng-container>

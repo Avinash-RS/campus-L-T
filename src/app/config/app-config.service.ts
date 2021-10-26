@@ -397,5 +397,21 @@ export class AppConfigService {
     return selectedDrive ? selectedDrive.drive_name : '';
   }
 
+  getSelectedDriveFormDetails() {
+    let driveList = this.getLocalData('driveList') ? JSON.parse(this.getLocalData('driveList')) : [];
+    let driveId = this.getLocalData('driveId');
+    let selectedDrive = driveList.find(drive => drive.drive_id == driveId);
+    let evaluationFormDetails = selectedDrive.config && selectedDrive.config.evaluation_form ? selectedDrive.config.evaluation_form : '';
+    return evaluationFormDetails ? evaluationFormDetails : '';
+  }
+
+  getSelectedDrivePermissions() {
+    let driveList = this.getLocalData('driveList') ? JSON.parse(this.getLocalData('driveList')) : [];
+    let driveId = this.getLocalData('driveId');
+    let selectedDrive = driveList.find(drive => drive.drive_id == driveId);
+    let selectedDrivePermissions = selectedDrive.config && selectedDrive.config.drive_permissions ? selectedDrive.config.drive_permissions : '';
+    return selectedDrivePermissions ? selectedDrivePermissions : '';
+  }
+
 }
 
