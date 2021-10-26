@@ -127,6 +127,17 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       }
     }
 
+    if (event.colDef.field === 'videoassess') {
+      // if (event['data']['shortlisted'] > 0) {
+        let params = {
+          status: event['data']['va_scheduled_status'] ? event['data']['va_scheduled_status'] : 0,
+          shortlist_name: event['data']['shortlist_name'] ? event['data']['shortlist_name'] : null
+        }
+        console.log('params', params);
+        this.routeToVideoSchedule(params);
+      // }
+    }
+
   }
 
   getModel(e) {
@@ -289,8 +300,21 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
           if (params['data']['shortlisted'] > 0) {
-            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons">group</span>`;
+            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">group</span>`;
           }
+        },
+        filter: false,
+        sortable: false,
+      },
+      {
+        headerName: 'Video Assessment Schedule', field: 'videoassess',
+        minWidth: 140,
+        headerClass: 'ag-grid-header-center',
+        cellClass: 'agCellStyle',
+        cellRenderer: (params) => {
+          // if (params['data']['shortlisted'] > 0) {
+            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">videocam</span>`;
+          // }
         },
         filter: false,
         sortable: false,
@@ -340,7 +364,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, {data: detail['shortlist_name'] ? detail['shortlist_name'] :'none'});
   }
 
-  routeToVideoSchedule() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.VIDEO_ASSESSMENT_SCHEDULE);
+  routeToVideoSchedule(params) {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.VIDEO_ASSESSMENT_SCHEDULE, params);
   }
 }

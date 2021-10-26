@@ -1,3 +1,4 @@
+@import '../../../../../themes/themes.scss';
 .scheduleVideoWrapper {
     padding: 15px;
     h2 {
@@ -27,7 +28,7 @@
                 margin: 0;
                 font-size: 13px;
                 font-weight: 400;
-                color: rgba(179, 179, 179, 1);
+                color: grey;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -36,6 +37,10 @@
                     margin-right: 5px;
                 }
             }
+        }
+        .addQuestion:hover {
+          background: lightgrey;
+          transition: background ease-in-out 300ms;
         }
         .nextBtn {
             margin-top: 30px;
@@ -65,12 +70,44 @@
             line-height: normal;
             margin-bottom: 5px;
         }
-        input, textarea {
+        input {
             border-radius: 4px;
             width: 100%;
             padding: 6px 12px;
             border: 1px solid rgba(142,142,142,0.5);
         }
+        textarea {
+          position: relative;
+          border: solid 0.8px #bebebe;
+          border-radius: 2px;
+          color: #6b6b6b;
+          outline: none;
+          min-height: 80px;
+          max-height: 80px;
+          box-sizing: border-box;
+          padding: 4px 8px;
+          background-color: $white;
+          width: 100%;
+        }
+        .text-area {
+          min-height: 80px !important;
+          line-height: 1.3em !important;
+          max-height: 80px !important;
+        }
+
+        .input:focus,.input:hover {
+          border: 1px solid $primary-red;
+      }
+      .form-error {
+          color: $primary-red;
+          font-size: 12px;
+      }
+      ::placeholder {
+          color: #A5A5A5 !important;
+          opacity: 1;
+          font-size: 13px;
+        }
+
         .startTime, .endTime {
             width: 44%;
             .date {
@@ -118,6 +155,7 @@
         }
         table {
             border-collapse: collapse;
+            height: 100%;
             border: 1px solid rgba(170,170,170,0.4);
             tr {
                 border-bottom: 1px solid rgba(170,170,170,0.4);
@@ -125,6 +163,8 @@
                     border-bottom: 0;
                 }
                 td {
+                    width: 33%;
+                    padding: 4px !important;
                     color: #4D4D4D;
                     font-size: 14px;
                     font-weight: 400;
@@ -158,8 +198,10 @@
         }
     }
 }
-
-::ng-deep.selectInterviewer .ant-select-selection {
+.selectInterviewer {
+  border: none !important;
+}
+:host ::ng-deep .ant-select-selection {
     border-radius: 4px !important;
     width: 100% !important;
     padding: 6px 12px !important;
@@ -175,7 +217,7 @@
     border-radius: 4px;
     padding: 10px 15px;
     border: 1px solid #E5E5E5;
-    width: 93%;
+    width: 95%;
     h5 {
         font-size: 14px;
         font-weight: 700;
@@ -185,6 +227,7 @@
     > div {
         span {
             color: #999999;
+            padding-right: 4px;
             font-size: 11px;
             font-weight: 400;
             line-height: normal;
@@ -200,13 +243,13 @@
     span {
         cursor: pointer;
         background-color: #F2F2F2;
-        font-size: 12px;
+        font-size: 22px;
         color: #999999;
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
     }
 }
@@ -391,4 +434,166 @@
             }
         }
     }
+}
+.date-pick{
+  cursor: pointer;
+  position: absolute;
+  top: 26px;
+  right: 0px;
+}
+.arrowalign {
+  width: 20% !important;
+  position: relative;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  top: 32px;
+}
+
+.input-container{
+  width: 100%;
+  position: relative;
+  .header-label{
+    font-size: 14px;
+    color: #808080;
+    margin-bottom: 3px;
+  }
+  .tex-input{
+    width: 100%;
+    height: 3em;
+    border: 1px solid #b3b2b2;
+  }
+}
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
+{
+    border: solid $primary-red 1px !important;
+}
+.date-padding {
+  padding-right: 28px !important;
+}
+.mat-icon {
+  color: #bebebe;
+}
+.asterick {
+  color: $primary-red;
+}
+// Ant select drop down css
+// :host ::ng-deep .ant-select-selection {
+  // border: solid 0.8px #bebebe !important;
+  // height: 35px !important;
+  // padding: 4px 8px;
+  // border-radius: 0px !important;
+// }
+
+:host ::ng-deep .ant-select-selection:hover,
+:host ::ng-deep .ant-select-selection:focus,
+:host ::ng-deep .ant-select-selection:active {
+  border: solid $primary-red 1px !important;
+  border-radius: 4px !important;
+  z-index: 0 !important;
+  box-shadow: none !important;
+}
+
+
+:host ::ng-deep input.ng-invalid.ng-touched,
+:host ::ng-deep textarea.ng-invalid.ng-touched {
+  border: solid $primary-red 1px !important;
+}
+:host ::ng-deep nz-select.ng-invalid.ng-touched {
+  .ant-select-selection {
+    border: solid $primary-red 1px !important;
+    border-radius: 4px !important;
+  }
+}
+
+:host ::ng-deep .ant-select-selection__placeholder,
+:host ::ng-deep .ant-select-search__field__placeholder {
+  color: #a5a5a5 !important;
+  opacity: 0.6 !important;
+  font-size: 13px !important;
+}
+
+:host ::ng-deep .ant-select-selection__rendered {
+  position: relative;
+  display: block;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  line-height: 35px !important;
+}
+
+:host ::ng-deep .ant-select-arrow {
+  right: 0 !important;
+  padding: 0 8px !important;
+}
+
+:host ::ng-deep .ant-select-selection__clear {
+  right: 18px !important;
+  margin-top: -7px !important;
+}
+:host ::ng-deep .anticon.ant-select-arrow-icon::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  margin-top: 0.25em;
+  border-top: 0.5em solid;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0;
+  border-left: 0.4em solid transparent;
+  color: #666666;
+  opacity: 0.9;
+  border: solid #a5a5a5 !important;
+  border-width: 0 1px 1px 0 !important;
+  display: inline-block !important;
+  padding: 3px !important;
+  transform: rotate(45deg) !important;
+  -webkit-transform: rotate(45deg) !important;
+  margin-top: 1px !important;
+}
+
+::ng-deep .ant-select-dropdown-menu-item:first-child,
+::ng-deep .ant-select-dropdown-menu-item:last-child {
+  border: none !important;
+  border-radius: 0px !important;
+}
+
+::ng-deep
+  .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+  background-color: #eaeaea !important;
+}
+
+::ng-deep
+  .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+  background-color: rgb(211, 211, 211, 0.7) !important;
+}
+
+:host ::ng-deep .ant-select-dropdown {
+  border: 1px solid #bebebe !important;
+}
+
+:host ::ng-deep .ant-select-selection-selected-value {
+  padding-right: 16px !important;
+}
+
+// Ant Select dropdown css close
+.scroll-wrapper {
+  overflow: auto;
+  max-height: 250px;
+}
+.fetch {
+  font-size: 14px;
+  text-align: right;
+  width: 100%;
+  position: relative;
+  margin: auto;
+  right: 0;
+  bottom: 0;
+  color: $primary-red;
+  cursor: pointer;
+}
+.load-icon {
+  font-size: 20px;
+  vertical-align: middle;
+  top: -1.5px !important;
+  position: relative;
 }

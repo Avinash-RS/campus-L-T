@@ -456,3 +456,12 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['videoschedule'] === 'videoschedule'">
+  <div class="bulk-upload-text">
+    Please Confirm to Schedule the Video Assessments
+  </div>
+  <div class="buttons">
+    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="submit" (click)="confirmWithData()" mat-raised-button>Confirm</button>
+  </div>
+</div>
