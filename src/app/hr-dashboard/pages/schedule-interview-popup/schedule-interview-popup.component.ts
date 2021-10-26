@@ -36,7 +36,6 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log('add', this.attendeesList);
     this.scheduleformInitialize();
   }
 

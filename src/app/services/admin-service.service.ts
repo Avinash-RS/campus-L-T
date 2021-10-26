@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 export class AdminServiceService {
   BASE_URL = environment.API_BASE_URL;
   WEBRTC_NODE_API = environment.WEBRTC_NODE_API;
+  NODE_API = environment.NODE_API_BASE_URL;
   httpOptions: { headers: HttpHeaders };
 
 
@@ -683,10 +684,28 @@ scheduleRooms(data) {
 }
 getScheduledList(data) {
   return this.http.post(`${this.WEBRTC_NODE_API}/getscheduleList`, data, {headers: this.withoutTokens(), withCredentials: false});
-  // return of(null);
 }
 
 getDummyJson() {
   return this.http.get('../../assets/files/sample.json');
 }
+
+// Video Scheduling apis
+getInterviewersBasedOnShortlistName(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/interviewers-list`, {shortlist_name: data}, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+// Video Scheduling apis
+getCandidatesBasedOnShortlistName(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/candidates-list`, {shortlist_name: data}, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+getQuestionsForVideoScheduling() {
+  return this.http.get(`${this.NODE_API}/videoAssessmentQuestionmaster`, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
+}
+
+VideoSchedulingSubmit(data) {
+  return this.http.post(`${this.NODE_API}/videoAssessmentSchedule`, data, {headers: this.withoutTokens(), withCredentials: false});
+}
+
 }

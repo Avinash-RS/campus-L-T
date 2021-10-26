@@ -12,5 +12,6 @@ export const environment = {
   WEBRTC_NODE_API : 'https://uapapplicationgateway.lntiggnite.com',
   API_BASE_URL: 'https://campus-dev.lntedutech.com/dcampus',
   API_BASE_URL_city: 'https://campus-dev.lntedutech.com/dcampus',
-  Image_Base_Url: 'https://campus-dev.lntedutech.com'
+  Image_Base_Url: 'https://campus-dev.lntedutech.com',
+  NODE_API_BASE_URL: 'https://edgeservice.lntiggnite.com'
 };

@@ -1,80 +1,151 @@
 <div class="scheduleVideoWrapper">
     <h2>Schedule Video Interview</h2>
     <div class="scheduleVideoTabs">
-        <mat-tab-group>
-            <mat-tab>
+        <mat-tab-group (selectedTabChange)="tabChanged($event)" [(selectedIndex)]="TabIndex">
+            <mat-tab *ngIf="!hideForm">
                 <ng-template mat-tab-label>
                     <span class="material-icons-outlined">layers</span>
                     <span>Question</span>
                 </ng-template>
                 <div class="tabContent questionTab">
-                    <div class="questionWrapper d-flex align-items-center justify-content-between">
+                  <ng-container *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsMsg">
+                    <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                         <div class="questions">
-                            <h5>Tell me something that's not in your resume</h5>
+                            <h5>{{question.questionDes}}</h5>
                             <div class="d-flex justify-content-between">
-                                <span><span>Created by: </span>Manju M</span>
-                                <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                                <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                                <span><span>Question Type: </span>MRS</span>
+                                <span><span>Updated by: </span>{{question.updatedBy ? question.updatedBy : question.createdBy ? question.createdBy : ''}}</span>
+                                <span><span>Updated Date: </span>{{question.updatedAt ? momentFormDateTime(question.updatedAt) : question.createdAt ? momentFormDateTime(question.createdAt) : ''}}</span>
+                                <span><span>Question Code: </span>{{question.quesCode}}</span>
+                                <span><span>Question Type: </span>{{question.quesType}}</span>
                             </div>
                         </div>
                         <span class="delete">
-                            <span class="material-icons-outlined">delete</span>
+                            <span (click)="remove(i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
                         </span>
                     </div>
-                    <div class="questionWrapper d-flex align-items-center justify-content-between">
-                        <div class="questions">
-                            <h5>Tell me something that's not in your resume</h5>
-                            <div class="d-flex justify-content-between">
-                                <span><span>Created by: </span>Manju M</span>
-                                <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                                <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                                <span><span>Question Type: </span>MRS</span>
-                            </div>
-                        </div>
-                        <span class="delete">
-                            <span class="material-icons-outlined">delete</span>
-                        </span>
-                    </div>
-                    <div class="questionWrapper d-flex align-items-center justify-content-between">
-                        <div class="questions">
-                            <h5>Tell me something that's not in your resume</h5>
-                            <div class="d-flex justify-content-between">
-                                <span><span>Created by: </span>Manju M</span>
-                                <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                                <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                                <span><span>Question Type: </span>MRS</span>
-                            </div>
-                        </div>
-                        <span class="delete">
-                            <span class="material-icons-outlined">delete</span>
-                        </span>
-                    </div>
-                    <div class="addQuestion" (click)="openDialog(schedulePopup)">
+                  </ng-container>
+                  <div class="addQuestion" (click)="openDialog(schedulePopup)">
                         <p><span class="material-icons-outlined">add</span> Add Questions</p>
                     </div>
                     <div class="nextBtn d-flex justify-content-center">
-                        <button>Next</button>
+                        <button (click)="tabChange('1')">Next</button>
                     </div>
                 </div>
             </mat-tab>
 
-            <mat-tab>
+            <mat-tab *ngIf="!hideForm">
                 <ng-template mat-tab-label>
                     <span class="material-icons-outlined">insert_invitation</span>
                     <span>Schedule</span>
                 </ng-template>
                 <div class="tabContent scheduleTab">
-                    <form [formGroup]="">
+                    <form [formGroup]="scheduleForm">
                         <div class="title">
-                            <label>Title</label>
-                            <input matInput placeholder="Title" />
+                            <label>Title<span class="asterick">*</span></label>
+                            <input class="input" [formControlName]="'title'" matInput placeholder="Title" />
+                            <div class="form-error"
+                            *ngIf="title?.invalid && title?.touched">
+                            <div
+                                *ngIf="title.errors?.required">
+                                Title is Required</div>
+                            <div
+                                *ngIf="title.errors?.address255">
+                                Alpha numeric with maximum of 255 characters only
+                                allowed</div>
+                        </div>
                         </div>
                         <div class="description">
-                            <label>Description</label>
-                            <textarea matInput placeholder="Description"></textarea>
+                            <label>Description<span class="asterick">*</span></label>
+                            <textarea class="input text-area" matInput [formControlName]="'description'" placeholder="Description"></textarea>
+                            <div class="form-error"
+                            *ngIf="description?.invalid && description?.touched">
+                            <div
+                                *ngIf="description.errors?.required">
+                                Description is Required</div>
+                            <div
+                                *ngIf="description.errors?.address255">
+                                Alpha numeric with maximum of 255 characters only
+                                allowed</div>
                         </div>
-                        <div class="startEnd d-flex justify-content-between align-items-center">
+                        </div>
+                        <div class="d-flex">
+                          <div class="input-container">
+                            <label>Start Date Time<span class="asterick">*</span></label>
+                            <div class="w-100">
+                              <input class="input date-padding"
+                                matInput
+                                [min]="minDate"
+                                [max]="maxDate"
+                                onDrop="return false"
+                                onPaste="return false"
+                                onkeydown="return false"
+                                onkeypress="return false"
+                                [owlDateTime]="sdt"
+                                [formControlName]="'startTime'"
+                                placeholder="Select Start Time"
+                              />
+                              <mat-icon
+                                class="date-pick password-type"
+                                matSuffix
+                                (click)="dateChange()"
+                                [owlDateTimeTrigger]="sdt"
+                                >calendar_today
+                              </mat-icon>
+                              <owl-date-time [startAt]="minDate" #sdt></owl-date-time>
+                              <div class="form-error" *ngIf="startTime?.invalid && startTime?.touched">
+                                <div *ngIf="startTime?.errors?.required">Start Time is Required</div>
+                                <div *ngIf="startTime?.errors?.owlDateTimeMax">
+                                    {{startTime?.errors?.owlDateTimeMax?.max ? 'Maximum date should be ' + momentForm(startTime?.errors?.matDatepickerMax.max) : ''}}
+                                </div>
+                                <div *ngIf="startTime?.errors?.owlDateTimeMin">
+                                    {{startTime?.errors?.owlDateTimeMin?.min ? 'Start Time should be greater than current Date Time' : ''}}
+                                </div>
+                                <div *ngIf="startTime?.errors?.owlDateTimeParse">Invalid Date Format</div>
+                            </div>
+
+                            </div>
+                          </div>
+                          <div class="input-container arrowalign">
+                            <em class="icon-right-next"></em>
+                          </div>
+                          <div class="input-container">
+                            <label>End Date Time<span class="asterick">*</span></label>
+                            <div class="w-100">
+                              <input class="input date-padding"
+                                matInput
+                                [min]="minDate"
+                                [max]="maxDate"
+                                onDrop="return false"
+                                onPaste="return false"
+                                onkeydown="return false"
+                                onkeypress="return false"
+                                [owlDateTime]="edt"
+                                [formControlName]="'endTime'"
+                                placeholder="Select End Time"
+                              />
+                              <mat-icon
+                                class="date-pick password-type"
+                                matSuffix
+                                (click)="dateChange()"
+                                [owlDateTimeTrigger]="edt"
+                                >calendar_today
+                              </mat-icon>
+                              <owl-date-time [startAt]="minDate" #edt></owl-date-time>
+                              <div class="form-error" *ngIf="endTime?.invalid && endTime?.touched">
+                                <div *ngIf="endTime?.errors?.required">End Time is Required</div>
+                                <div *ngIf="endTime?.errors?.owlDateTimeMax">
+                                    {{endTime?.errors?.owlDateTimeMax?.max ? 'Maximum date should be ' + momentForm(endTime?.errors?.matDatepickerMax.max) : ''}}
+                                </div>
+                                <div *ngIf="endTime?.errors?.owlDateTimeMin">
+                                    {{endTime?.errors?.owlDateTimeMin?.min ? 'End Time should be greater than current Date Time' : ''}}
+                                </div>
+                                <div *ngIf="endTime?.errors?.owlDateTimeParse">Invalid Date Format</div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div class="startEnd d-flex justify-content-between align-items-center">
                             <div class="startTime d-flex justify-content-between align-items-center">
                                 <div class="date">
                                     <label>Start Date</label>
@@ -112,22 +183,31 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="tagInterviewer">
-                            <label>Tag Interviewer</label>
-                            <nz-select class="selectInterviewer" [nzDisabled]="" nzShowSearch nzPlaceHolder="Select Drive">
-                                <nz-option nzValue="lucy" nzLabel="Option 1"></nz-option>
-                                <nz-option nzValue="lucy" nzLabel="Option 2"></nz-option>
-                                <nz-option nzValue="lucy" nzLabel="Option 3"></nz-option>
+                            <label>Tag Interviewer<span class="asterick">*</span></label>
+                            <nz-select style="border: none !important;" [nzMaxTagCount]="1" nzMode="multiple" class="selectInterviewer" [formControlName]="'interviewerDetails'" nzAllowClear nzShowSearch nzPlaceHolder="Select Interviewer">
+                                <nz-option *ngFor="let inv of interviewerDetailsList" [nzLabel]="labelForInterviewerDropdown(inv)"
+                                [nzValue]="inv.user_id"></nz-option>
                             </nz-select>
+                            <div class="form-error"
+                            *ngIf="interviewerDetails?.invalid && interviewerDetails?.touched">
+                            <div
+                                *ngIf="interviewerDetails.errors?.required">
+                                Atleast One Interviewer needs to be selected</div>
+                            <div
+                                *ngIf="interviewerDetails.errors?.address255">
+                                Alpha numeric with maximum of 255 characters only
+                                allowed</div>
+                        </div>
                         </div>
                         <div class="sendNotification">
                             <span>Send Notification to Candidates and Evaluator?</span>
-                            <mat-slide-toggle class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled"></mat-slide-toggle>
+                            <mat-slide-toggle class="example-margin" [color]="color" [formControlName]="'type'"></mat-slide-toggle>
                         </div>
                         <div class="prevNext">
-                            <button class="prev">Previous</button>
-                            <button class="next">Next</button>
+                            <button class="prev" (click)="tabChange('0')">Previous</button>
+                            <button class="next" (click)="tabChange('2')">Next</button>
                         </div>
                     </form>
                 </div>
@@ -140,96 +220,86 @@
                 </ng-template>
                 <div class="tabContent reviewTab">
                     <div class="candidates">
-                        <h4>Candidates</h4>
+                        <h4 style="width: 100%; display: flex;">Candidates <span class="fetch" (click)="fetchAllCandidates()">Fetch All Candidates <span class="material-icons load-icon">loop</span></span></h4>
+                        <ng-container *ngIf="!candidateListLoading else CandidatesFetching">
+                        <div *ngIf="candidateDetailsList && candidateDetailsList.length > 0 else noCandidatesPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
                         <table cellpadding="0" cellspacing="0">
                             <tbody>
-                                <tr>
-                                    <td>Johnson</td>
-                                    <td>xzy@gmail.com</td>
-                                    <td>2nd Level Shortlist</td>
-                                </tr>
-                                <tr>
-                                    <td>Johnson</td>
-                                    <td>xzy@gmail.com</td>
-                                    <td>2nd Level Shortlist</td>
-                                </tr>
-                                <tr>
-                                    <td>Johnson</td>
-                                    <td>xzy@gmail.com</td>
-                                    <td>2nd Level Shortlist</td>
+                                <tr *ngFor="let candidate of candidateDetailsList; let i = index;">
+                                    <td style="width: 31%;">{{candidate.candidate_id}}</td>
+                                    <td style="width: 31%;">{{candidate.full_name}}</td>
+                                    <td style="width: 31%;">{{candidate.email}}</td>
+                                    <td style="width: 5%;" (click)="removeCandidate(i)"><span class="delete"><span class="material-icons-outlined">delete</span></span></td>
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
+                      </ng-container>
                     </div>
+                    <div class="candidates mt-3">
+                      <h4>Interviewers</h4>
+                      <div *ngIf="scheduleForm.value.interviewerDetails && scheduleForm.value.interviewerDetails.length > 0 else noInterviewerPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
+                      <table cellpadding="0" cellspacing="0">
+                          <tbody>
+                              <tr *ngFor="let interviewer of interviewersListArray(); let i = index">
+                                  <td style="width: 31%;">{{interviewer.full_name}}</td>
+                                  <td style="width: 31%;">{{interviewer.email}}</td>
+                                  <td style="width: 31%;">{{interviewer.discipline}}</td>
+                                  <td style="width: 5%;"><span (click)="removeInterviewer(i, interviewer.user_id)" class="delete"><span class="material-icons-outlined">delete</span></span></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
                     <div class="secondSection">
-                        <h4>Question</h4>
-                        <div class="questionWrapper d-flex align-items-center justify-content-between">
+                        <h4>Questions</h4>
+                        <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
+                          <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                             <div class="questions">
-                                <h5>Tell me something that's not in your resume</h5>
+                                <h5>{{question.questionDes}}</h5>
                                 <div class="d-flex justify-content-between">
-                                    <span><span>Created by: </span>Manju M</span>
-                                    <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                                    <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                                    <span><span>Question Type: </span>MRS</span>
+                                    <span><span>Updated by: </span>{{question.updatedBy ? question.updatedBy : question.createdBy ? question.createdBy : ''}}</span>
+                                    <span><span>Updated Date: </span>{{question.updatedAt ? momentFormDateTime(question.updatedAt) : question.createdAt ? momentFormDateTime(question.createdAt) : ''}}</span>
+                                    <span><span>Question Code: </span>{{question.quesCode}}</span>
+                                    <span><span>Question Type: </span>{{question.quesType}}</span>
                                 </div>
                             </div>
                             <span class="delete">
-                                <span class="material-icons-outlined">delete</span>
+                                <span (click)="remove(i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
                             </span>
                         </div>
-                        <div class="questionWrapper d-flex align-items-center justify-content-between">
-                            <div class="questions">
-                                <h5>Tell me something that's not in your resume</h5>
-                                <div class="d-flex justify-content-between">
-                                    <span><span>Created by: </span>Manju M</span>
-                                    <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                                    <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                                    <span><span>Question Type: </span>MRS</span>
-                                </div>
-                            </div>
-                            <span class="delete">
-                                <span class="material-icons-outlined">delete</span>
-                            </span>
-                        </div>
-                        <div class="questionWrapper d-flex align-items-center justify-content-between">
-                            <div class="questions">
-                                <h5>Tell me something that's not in your resume</h5>
-                                <div class="d-flex justify-content-between">
-                                    <span><span>Created by: </span>Manju M</span>
-                                    <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                                    <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                                    <span><span>Question Type: </span>MRS</span>
-                                </div>
-                            </div>
-                            <span class="delete">
-                                <span class="material-icons-outlined">delete</span>
-                            </span>
-                        </div>
+
+                      </div>
                     </div>
                     <div class="scheduleSection">
                         <h4>Schedule</h4>
                         <div>
                             <label>Title:</label>
-                            <p>Video Interview</p>
+                            <p>{{scheduleForm.value.title ? scheduleForm.value.title : 'NA'}}</p>
                         </div>
                         <div>
                             <label>Description: </label>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam augue nibh</p>
+                            <p>{{scheduleForm.value.description ? scheduleForm.value.description : 'NA'}}</p>
                         </div>
                         <div class="d-flex justify-content-start align-items-center">
                             <div>
                                 <label>Start Date - Time</label>
-                                <p>06/10/2021 -10:00 PM</p>
-                            </div>
+                                <p>{{scheduleForm.value.startTime ? momentFormDateTime(scheduleForm.value.startTime) : 'NA' }}</p>
+                              </div>
                             <div>
                                 <label>End Date - Time</label>
-                                <p>06/10/2021 -10:00 PM</p>
+                                <p>{{scheduleForm.value.endTime ? momentFormDateTime(scheduleForm.value.endTime) : 'NA' }}</p>
                             </div>
                         </div>
+                        <div>
+                          <label>Notifications</label>
+                          <p>{{scheduleForm.value.type ? 'Mail will be sent to both Candidates and Evaluator.' : 'Mail notification is not enabled'}}</p>
+                      </div>
+
                     </div>
                     <div class="prevNext">
-                        <button class="prev">Previous</button>
-                        <button class="next">Confirm</button>
+                        <button (click)="tabChange('1')" class="prev">Previous</button>
+                        <button class="next" (click)="scheduleSubmit()">Confirm</button>
                     </div>
                 </div>
             </mat-tab>
@@ -249,56 +319,78 @@
         <div class="videoInterviewFlow">
             <div class="heading d-flex justify-content-between align-items-center">
                 <h3>Add Questions</h3>
-                <button class="add"><span class="material-icons-outlined">add</span> <span>Add</span></button>
+                <button *ngIf="questionList && questionList.length > 0" (click)="addQuestionstoArray()" class="add"><span class="material-icons-outlined">add</span> <span>Add</span></button>
             </div>
             <div class="descriptionContent">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4>Questions</h4>
-                    <mat-checkbox> Select All</mat-checkbox>
+                    <mat-checkbox *ngIf="questionList && questionList.length > 0" (change)="selectAllCheckbox()" [(ngModel)]="selectAll" [checked]="selectAll"> Select All</mat-checkbox>
                 </div>
-                <div class="questions">
+                <ng-container *ngIf="!questionLoading else questionLoadingTemp">
+                  <ng-container *ngIf="questionList && questionList.length > 0 else nodatafound">
+                    <div class="questions" *ngFor="let question of questionList; let i = index">
                     <div class="checkBox">
-                        <mat-checkbox></mat-checkbox>
+                        <mat-checkbox (change)="selectAll ? (question.checked ? '' : (selectAll = false)) : ''" [(ngModel)]="question.checked" [checked]="question.checked"></mat-checkbox>
                     </div>
                     <div class="rightContent">
-                        <h5>Tell me something that's not in your resume</h5>
+                        <h5>{{question.questionDes}}</h5>
                         <div class="d-flex justify-content-between">
-                            <span><span>Created by: </span>Manju M</span>
-                            <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                            <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                            <span><span>Question Type: </span>MRS</span>
+                            <span><span>Updated by: </span>{{question.updatedBy ? question.updatedBy : question.createdBy ? question.createdBy : ''}}</span>
+                            <span><span>Updated Date: </span>{{question.updatedAt ? momentFormDateTime(question.updatedAt) : question.createdAt ? momentFormDateTime(question.createdAt) : ''}}</span>
+                            <span><span>Question Code: </span>{{question.quesCode}}</span>
+                            <span><span>Question Type: </span>{{question.quesType}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="questions">
-                    <div class="checkBox">
-                        <mat-checkbox></mat-checkbox>
-                    </div>
-                    <div class="rightContent">
-                        <h5>Tell me something that's not in your resume</h5>
-                        <div class="d-flex justify-content-between">
-                            <span><span>Created by: </span>Manju M</span>
-                            <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                            <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                            <span><span>Question Type: </span>MRS</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="questions">
-                    <div class="checkBox">
-                        <mat-checkbox></mat-checkbox>
-                    </div>
-                    <div class="rightContent">
-                        <h5>Tell me something that's not in your resume</h5>
-                        <div class="d-flex justify-content-between">
-                            <span><span>Created by: </span>Manju M</span>
-                            <span><span>Created Date: </span>01/10/2021 12:19:23 PM</span>
-                            <span><span>Question Code: </span>467890444ASDFGHJ</span>
-                            <span><span>Question Type: </span>MRS</span>
-                        </div>
-                    </div>
-                </div>
+                </ng-container>
+              </ng-container>
             </div>
         </div>
     </div>
+</ng-template>
+<ng-template #questionLoadingTemp>
+  <div class="questions">
+    <h5 style="font-size: 18px;" class="loading03">Loading . . .</h5>
+    </div>
+</ng-template>
+<ng-template #nodatafound>
+  <div class="questions justify-content-center">
+    <h5 style="font-size: 18px;">No Data Found</h5>
+  </div>
+</ng-template>
+<ng-template #noQuestionsMsg>
+  <div class="questionWrapper d-flex align-items-center justify-content-between">
+    <div class="questions justify-content-center" style="text-align:center; width: 100%;">
+    <h5 style="font-size: 14px; margin: 0">No questions were selected. <br><br> Please click on the below add button to add the questions</h5>
+  </div>
+  </div>
+</ng-template>
+<ng-template #noQuestionsPreview>
+  <div class="questionWrapper d-flex align-items-center justify-content-between">
+    <div class="questions justify-content-center" style="text-align:center; width: 100%;">
+    <h5 style="font-size: 14px; margin: 0">No questions were selected.</h5>
+  </div>
+  </div>
+</ng-template>
+<ng-template #noCandidatesPreview>
+  <div class="questionWrapper d-flex align-items-center justify-content-between">
+    <div class="questions justify-content-center" style="text-align:center; width: 100%;">
+    <h5 style="font-size: 14px; margin: 0">No candidates available.</h5>
+  </div>
+  </div>
+</ng-template>
+<ng-template #noInterviewerPreview>
+  <div class="questionWrapper d-flex align-items-center justify-content-between">
+    <div class="questions justify-content-center" style="text-align:center; width: 100%;">
+    <h5 style="font-size: 14px; margin: 0">No interviewers were selected.</h5>
+  </div>
+  </div>
+</ng-template>
+
+<ng-template #CandidatesFetching>
+  <div class="questionWrapper d-flex align-items-center justify-content-between">
+    <div class="questions justify-content-center" style="text-align:center; width: 100%;">
+    <h5 style="font-size: 18px;" class="loading03 mt-2 mb-2">Fetching. . .</h5>
+  </div>
+  </div>
 </ng-template>

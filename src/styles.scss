@@ -3351,3 +3351,22 @@ nz-select.ng-invalid.ng-touched {
 }
 
 // Ant Select dropdown css close
+.loading03 {
+  // span {
+	margin: 0 -.075em;
+    animation: loading03 .7s infinite alternate;
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i+1}) {
+        animation-delay: #{$i*.1}s;
+      }
+    }
+  // }
+}
+@keyframes loading03 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(.8);
+  }
+}
