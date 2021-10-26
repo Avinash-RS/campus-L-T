@@ -688,7 +688,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         this.finalSubmitAPI();
       }
       if (data && data["interViwePanelAssign"]) {
-        this.ngOnInit();
+        this.quickSearchValue = '';
+        this.buttonCheck = false;
+        this.getSelectedCandidates = [];
+        this.getUsersList();
       }
     });
   }

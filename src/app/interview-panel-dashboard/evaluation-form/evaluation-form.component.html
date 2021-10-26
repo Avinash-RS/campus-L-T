@@ -38,7 +38,7 @@
           </div>
           <div class="col-7">
             <mat-form-field class="date" appearance="none">
-              <input style="padding-left: 12px;" formControlName="interview_date" matInput [matDatepicker]="picker">
+              <input placeholder="Enter here" style="padding-left: 12px;" formControlName="interview_date" matInput [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -89,7 +89,7 @@
             <span class="head">Place of interview<span class="asterick">*</span> </span>
           </div>
           <div class="col-7">
-            <input class="place" formControlName="interview_place" matInput>
+            <input placeholder="Enter here" class="place" formControlName="interview_place" matInput>
           </div>
           <ng-container *ngIf="interview_place.invalid && interview_place.touched">
             <div class="col-5">
@@ -272,7 +272,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="physical_disability"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="physical_disability"></textarea>
           <div *ngIf="f.physical_disability.touched && f.physical_disability.errors" class="mand validation1">
             <span *ngIf="f.physical_disability.errors?.maxlength">Maxlength of 50 characters only allowed</span>
             <span *ngIf="f.physical_disability.errors?.pattern">Alpha numerics only allowed</span>
@@ -288,7 +288,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width" style="border: solid #000 1px !important" appearance="none"> -->
-          <textarea matInput formControlName="candidates_strenght"
+          <textarea placeholder="Enter here" matInput formControlName="candidates_strenght"
             [ngClass]="{ 'is-invalid': f.candidates_strenght.touched && f.candidates_strenght.errors }"></textarea>
           <!-- </mat-form-field> -->
           <div *ngIf="f.candidates_strenght.touched && f.candidates_strenght.errors" class="mand validation1">
@@ -304,7 +304,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="candidates_weakness"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="candidates_weakness"></textarea>
           <div *ngIf="f.candidates_weakness.touched && f.candidates_weakness.errors" class="mand validation1">
             <span *ngIf="f.candidates_weakness.errors?.maxlength">Maxlength of 100 characters only allowed</span>
             <span *ngIf="f.candidates_weakness.errors?.pattern">Alpha numerics only allowed</span>
@@ -318,7 +318,7 @@
           <span class="text"> NAME OF THE PANEL MEMBERS<span class="asterick">*</span></span>
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="panel_member1" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="panel_member1" matInput>
           <div *ngIf="f.panel_member1.touched && f.panel_member1.errors" class="mand validation1">
             <span *ngIf="f.panel_member1.errors?.required">Panel member 1 is required</span>
             <span *ngIf="f.panel_member1.errors?.maxlength">Maxlength of 50 characters only allowed</span>
@@ -326,21 +326,21 @@
           </div>
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="panel_member2" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="panel_member2" matInput>
           <div *ngIf="f.panel_member2.touched && f.panel_member2.errors" class="mand validation1">
             <span *ngIf="f.panel_member2.errors?.maxlength">Maxlength of 50 characters only allowed</span>
             <span *ngIf="f.panel_member2.errors?.pattern">Alphabetics and dot only allowed</span>
           </div>
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="panel_member3" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="panel_member3" matInput>
           <div *ngIf="f.panel_member3.touched && f.panel_member3.errors" class="mand validation1">
             <span *ngIf="f.panel_member3.errors?.maxlength">Maxlength of 50 characters only allowed</span>
             <span *ngIf="f.panel_member3.errors?.pattern">Alphabetics and dot only allowed</span>
           </div>
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="panel_member4" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="panel_member4" matInput>
           <div *ngIf="f.panel_member4.touched && f.panel_member4.errors" class="mand validation1">
             <span *ngIf="f.panel_member4.errors?.maxlength">Maxlength of 50 characters only allowed</span>
             <span *ngIf="f.panel_member4.errors?.pattern">Alphabetics and dot only allowed</span>
@@ -353,7 +353,7 @@
           <span class="text">P.S.NO. OF PANEL MEMBERS<span class="asterick">*</span></span>
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="ps_no1" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="ps_no1" matInput>
           <div *ngIf="f.ps_no1.touched && f.ps_no1.errors" class="mand validation1">
             <span *ngIf="f.ps_no1.errors?.required">PS number is required</span>
             <span *ngIf="f.ps_no1.errors?.maxlength">Maxlength of 30 characters only allowed</span>
@@ -361,7 +361,7 @@
           </div>
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="ps_no2" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="ps_no2" matInput>
           <div *ngIf="f.ps_no2.touched && f.ps_no2.errors" class="mand validation1">
             <span *ngIf="f.ps_no2.errors?.maxlength">Maxlength of 30 characters only allowed</span>
             <span *ngIf="f.ps_no2.errors?.pattern">Alpha numerics only allowed</span>
@@ -369,7 +369,7 @@
 
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="ps_no3" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="ps_no3" matInput>
           <div *ngIf="f.ps_no3.touched && f.ps_no3.errors" class="mand validation1">
             <span *ngIf="f.ps_no3.errors?.maxlength">Maxlength of 30 characters only allowed</span>
             <span *ngIf="f.ps_no3.errors?.pattern">Alpha numerics only allowed</span>
@@ -377,7 +377,7 @@
 
         </div>
         <div class="col-2">
-          <input class="in-box" formControlName="ps_no4" matInput>
+          <input placeholder="Enter here" class="in-box" formControlName="ps_no4" matInput>
           <div *ngIf="f.ps_no4.touched && f.ps_no4.errors" class="mand validation1">
             <span *ngIf="f.ps_no4.errors?.maxlength">Maxlength of 30 characters only allowed</span>
             <span *ngIf="f.ps_no4.errors?.pattern">Alpha numerics only allowed</span>
@@ -414,7 +414,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="topic_given"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="topic_given"></textarea>
           <div *ngIf="f.topic_given.touched && f.topic_given.errors" class="mand validation1">
             <span *ngIf="f.topic_given.errors?.required">Topic given is required</span>
             <span *ngIf="f.topic_given.errors?.maxlength">Maxlength of 100 characters only allowed</span>
@@ -441,7 +441,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="thought"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="thought"></textarea>
           <div *ngIf="f.thought.touched && f.thought.errors" class="mand validation1">
             <span *ngIf="f.thought.errors?.maxlength">Maxlength of 100 characters only allowed</span>
             <span *ngIf="f.thought.errors?.pattern">Alpha numerics only allowed</span>
@@ -458,7 +458,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="content"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="content"></textarea>
           <div *ngIf="f.content.touched && f.content.errors" class="mand validation1">
             <span *ngIf="f.content.errors?.maxlength">Maxlength of 100 characters only allowed</span>
             <span *ngIf="f.content.errors?.pattern">Alpha numerics only allowed</span>
@@ -475,7 +475,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="language"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="language"></textarea>
           <div *ngIf="f.language.touched && f.language.errors" class="mand validation1">
             <span *ngIf="f.language.errors?.maxlength">Maxlength of 100 characters only allowed</span>
             <span *ngIf="f.language.errors?.pattern">Alpha numerics only allowed</span>
@@ -494,7 +494,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="idea"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="idea"></textarea>
           <div *ngIf="f.idea.touched && f.idea.errors" class="mand validation1">
             <span *ngIf="f.idea.errors?.maxlength">Maxlength of 100 characters only allowed</span>
             <span *ngIf="f.idea.errors?.pattern">Alpha numerics only allowed</span>
@@ -513,7 +513,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="clues"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="clues"></textarea>
           <div *ngIf="f.clues.touched && f.clues.errors" class="mand validation1">
             <span *ngIf="f.clues.errors?.maxlength">Maxlength of 100 characters only allowed</span>
             <span *ngIf="f.clues.errors?.pattern">Alpha numerics only allowed</span>
@@ -532,7 +532,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="time_taken"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="time_taken"></textarea>
           <div *ngIf="f.time_taken.touched && f.time_taken.errors" class="mand validation1">
             <span *ngIf="f.time_taken.errors?.maxlength">Maxlength of 30 characters only allowed</span>
             <span *ngIf="f.time_taken.errors?.pattern">Alpha numerics only allowed</span>
@@ -550,7 +550,7 @@
         </div>
         <div class="col-8">
           <!-- <mat-form-field class="example-full-width"> -->
-          <textarea matInput formControlName="remarks"></textarea>
+          <textarea placeholder="Enter here" matInput formControlName="remarks"></textarea>
           <div *ngIf="f.remarks.touched && f.remarks.errors" class="mand validation1">
             <span *ngIf="f.remarks.errors?.required">Overall remarks is required</span>
             <span *ngIf="f.remarks.errors?.maxlength">Maxlength of 100 characters only allowed</span>

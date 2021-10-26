@@ -74,12 +74,13 @@ export class CaEvaluationFormComponent implements OnInit {
   caform_ps_no4 = 'ps_no4';
   caform_remarks = 'remarks';
   caform_overallAssessmentStatus = 'candidate_assesment';
-  caform_appearance = 'appearance';
-  caform_knowledgeExperience = 'knowledgeExperience';
-  caform_communicationskillOrExpression = 'communicationskillOrExpression';
-  caform_taskEffectiveness = 'taskEffectiveness';
-  caform_applicationOfKnowledge = 'applicationOfKnowledge';
-  caform_valuesIntegrity = 'valuesIntegrity';
+  caform_appearance = 'ca_appearance';
+  caform_knowledgeExperience = 'ca_knowledge_experience';
+  caform_communicationskillOrExpression = 'ca_communication_skills';
+  caform_taskEffectiveness = 'ca_task_effectiveness';
+  caform_applicationOfKnowledge = 'ca_application_knowledge';
+  caform_valuesIntegrity = 'ca_values';
+  caform_suitability_other_position = 'ca_suitability_other_position';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -154,6 +155,7 @@ export class CaEvaluationFormComponent implements OnInit {
           [this.caform_ps_no3]: data && data[this.caform_ps_no3] ? data[this.caform_ps_no3] : null,
           [this.caform_ps_no4]: data && data[this.caform_ps_no4] ? data[this.caform_ps_no4] : null,
           [this.caform_remarks]: data && data[this.caform_remarks] ? data[this.caform_remarks] : null,
+          [this.caform_suitability_other_position]: data && data[this.caform_suitability_other_position] ? data[this.caform_suitability_other_position] : null,
           [this.caform_overallAssessmentStatus]: data && data[this.caform_overallAssessmentStatus] ? data[this.caform_overallAssessmentStatus] : null,
           [this.caform_appearance]: data && data[this.caform_appearance] ? data[this.caform_appearance] : null,
           [this.caform_knowledgeExperience]: data && data[this.caform_knowledgeExperience] ? data[this.caform_knowledgeExperience] : null,
@@ -226,6 +228,7 @@ export class CaEvaluationFormComponent implements OnInit {
       [this.caform_ps_no3]: new FormControl('', [Validators.maxLength(30), myGlobals.alphaNum]),
       [this.caform_ps_no4]: new FormControl('', [Validators.maxLength(30), myGlobals.alphaNum]),
       [this.caform_remarks]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]),
+      [this.caform_suitability_other_position]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]),
       [this.caform_overallAssessmentStatus]: new FormControl('', [Validators.required]),
       [this.caform_appearance]: new FormControl(null, [Validators.required]),
       [this.caform_knowledgeExperience]: new FormControl(null, [Validators.required]),
@@ -403,6 +406,9 @@ export class CaEvaluationFormComponent implements OnInit {
   get valuesIntegrity() {
     return this.evaluationForm.get(this.caform_valuesIntegrity);
   }
+  get suitability_other_position() {
+    return this.evaluationForm.get(this.caform_suitability_other_position);
+  }
 
 
   setAssessmentLevel(assessment, value) {
@@ -460,54 +466,15 @@ export class CaEvaluationFormComponent implements OnInit {
     formData[this.caform_interview_date] = dateInterview;
     formData.uid = this.uid ? this.uid : '';
     formData.shortlist_name = this.shortlist_name ? this.shortlist_name : '';
+    formData.form = '3';
     const apiData = formData;
-    console.log('apiDataRequest', apiData);
-    // {
-    //   uid: this.uid ? this.uid : '',
-    //   shortlist_name: this.shortlist_name ? this.shortlist_name : '',
-    //   interview_date: dateInterview,
-    //   notAttendedStatus: this.evaluationForm.value.notAttendedStatus,
-    //   attendedStatus: this.evaluationForm.value.attendedStatus,
-    //   attended: this.evaluationForm.value.attended,
-    //   interview_place: this.evaluationForm.value.interview_place,
-    //   depth_knowledge: this.evaluationForm.value.depth_knowledge,
-    //   breadth_knowledge: this.evaluationForm.value.breadth_knowledge,
-    //   thought_clarity: this.evaluationForm.value.thought_clarity,
-    //   communicate_ability: this.evaluationForm.value.communicate_ability,
-    //   personal_skill: this.evaluationForm.value.personal_skill,
-    //   personality: this.evaluationForm.value.personality,
-    //   personality_1: this.evaluationForm.value.personality_1,
-    //   curricular_activites: this.evaluationForm.value.curricular_activites,
-    //   candidate_assesment: this.evaluationForm.value.ASSESSMENT,
-    //   physical_disability: this.evaluationForm.value.physical_disability,
-    //   willing_work: this.evaluationForm.value.willing_work,
-    //   candidates_strenght: this.evaluationForm.value.candidates_strenght,
-    //   candidates_weakness: this.evaluationForm.value.candidates_weakness,
-    //   panel_member1: this.evaluationForm.value.panel_member1,
-    //   panel_member2: this.evaluationForm.value.panel_member2,
-    //   panel_member3: this.evaluationForm.value.panel_member3,
-    //   panel_member4: this.evaluationForm.value.panel_member4,
-    //   ps_no1: this.evaluationForm.value.ps_no1,
-    //   ps_no2: this.evaluationForm.value.ps_no2,
-    //   ps_no3: this.evaluationForm.value.ps_no3,
-    //   ps_no4: this.evaluationForm.value.ps_no4,
-    //   topic_given: this.evaluationForm.value.topic_given,
-    //   thought: this.evaluationForm.value.thought,
-    //   content: this.evaluationForm.value.content,
-    //   language: this.evaluationForm.value.language,
-    //   idea: this.evaluationForm.value.idea,
-    //   clues: this.evaluationForm.value.clues,
-    //   time_taken: this.evaluationForm.value.time_taken,
-    //   remarks: this.evaluationForm.value.remarks
-    // };
+    this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
 
-    // this.adminService.postEvaluationCandidateData(apiData).subscribe((res: any) => {
+      this.appConfig.success('Evaluation completed successfully', '');
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
+    }, (err) => {
 
-    //   this.appConfig.success('Evaluation completed successfully', '');
-    //   this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
-    // }, (err) => {
-
-    // });
+    });
 
   }
 
