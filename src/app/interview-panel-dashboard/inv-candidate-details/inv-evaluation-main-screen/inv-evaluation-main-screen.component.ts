@@ -26,9 +26,10 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
   form: any;
   queryParams: any;
   TabIndex = 0;
-  passT0Tab0: any;
-  passT0Tab2: any;
+  passT0TabProfile: any;
+  passT0TabVideoInterview: any;
   passT0Tabevaluate: any;
+  passT0TabVideoScheduling: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -48,12 +49,15 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.TabIndex == 0) {
-      this.passT0Tab0 = Math.random();
+      this.passT0TabProfile = Math.random();
     }
     if (this.TabIndex == 2) {
-      this.passT0Tab2 = Math.random();
+      this.passT0TabVideoScheduling = Math.random();
     }
     if (this.TabIndex == 3) {
+      this.passT0TabVideoInterview = Math.random();
+    }
+    if (this.TabIndex == 4) {
       this.passT0Tabevaluate = Math.random();
     }
   }
@@ -65,12 +69,15 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
     this.TabIndex = e.index;
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
     if (this.TabIndex == 0) {
-      this.passT0Tab0 = Math.random();
+      this.passT0TabProfile = Math.random();
     }
     if (this.TabIndex == 2) {
-      this.passT0Tab2 = Math.random();
+      this.passT0TabVideoScheduling = Math.random();
     }
     if (this.TabIndex == 3) {
+      this.passT0TabVideoInterview = Math.random();
+    }
+    if (this.TabIndex == 4) {
       this.passT0Tabevaluate = Math.random();
     }
   }

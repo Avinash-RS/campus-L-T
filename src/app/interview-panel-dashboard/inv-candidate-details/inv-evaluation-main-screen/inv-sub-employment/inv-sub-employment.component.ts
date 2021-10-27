@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class InvSubEmploymentComponent implements OnInit, OnChanges {
 
-  @Input() passT0Tab0;
+  @Input() passT0TabProfile;
   appConstant = CONSTANT.ENDPOINTS;
   nameOfAssessment: any;
   candidateId: any;
@@ -20,7 +20,6 @@ export class InvSubEmploymentComponent implements OnInit, OnChanges {
   uid:any;
   queryParams: any;
   profileViewData: any;
-  TabIndex: number;
 
   constructor(
     private appConfig: AppConfigService,
@@ -30,7 +29,6 @@ export class InvSubEmploymentComponent implements OnInit, OnChanges {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
-    this.TabIndex = Number(this.appConfig.getLocalData('tabIndex'));
     this.editRouteParamGetter();
   }
 
@@ -38,7 +36,7 @@ export class InvSubEmploymentComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.passT0Tab0) {
+    if (this.passT0TabProfile) {
       this.editRouteParamGetter();
     }
   }
