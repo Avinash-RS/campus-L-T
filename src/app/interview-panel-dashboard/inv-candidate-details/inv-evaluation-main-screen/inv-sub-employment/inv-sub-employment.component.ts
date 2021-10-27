@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -9,8 +9,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './inv-sub-employment.component.html',
   styleUrls: ['./inv-sub-employment.component.scss']
 })
-export class InvSubEmploymentComponent implements OnInit {
+export class InvSubEmploymentComponent implements OnInit, OnChanges {
 
+  @Input() passT0Tab0;
   appConstant = CONSTANT.ENDPOINTS;
   nameOfAssessment: any;
   candidateId: any;
@@ -19,6 +20,7 @@ export class InvSubEmploymentComponent implements OnInit {
   uid:any;
   queryParams: any;
   profileViewData: any;
+  TabIndex: number;
 
   constructor(
     private appConfig: AppConfigService,
@@ -28,10 +30,17 @@ export class InvSubEmploymentComponent implements OnInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [];
     this.sharedService.subMenuSubject.next(subWrapperMenus);
+    this.TabIndex = Number(this.appConfig.getLocalData('tabIndex'));
     this.editRouteParamGetter();
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    if (this.passT0Tab0) {
+      this.editRouteParamGetter();
+    }
   }
 
   // Get url param for edit route

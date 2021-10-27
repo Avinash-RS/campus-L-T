@@ -26,6 +26,7 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
   form: any;
   queryParams: any;
   TabIndex = 0;
+  passT0Tab0: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -44,6 +45,9 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.TabIndex == 0) {
+      this.passT0Tab0 = Math.random();
+    }
   }
 
   ngOnDestroy() {
@@ -52,6 +56,9 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
   tabChanged(e) {
     this.TabIndex = e.index;
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
+    if (this.TabIndex == 0) {
+      this.passT0Tab0 = Math.random();
+    }
   }
 
   // Get url param for edit route

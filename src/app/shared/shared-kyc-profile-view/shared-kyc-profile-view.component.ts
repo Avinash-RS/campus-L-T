@@ -497,6 +497,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       let apiData = {
         candidate_user_id: this.nonCandidate.candidate_user_id
       }
+    if (!this.personalDetails) {
      this.newGetProfileDataSubscription = this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
         this.checkFormSubmitted();
         let apiPreviewDetails = data;
@@ -505,6 +506,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       }, (e)=> {
         this.formSubmitted = true;
       });
+    }
     } else {
       if (this.candidateService.getLocalProfileData()) {
         this.checkFormSubmitted();
