@@ -22,6 +22,7 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges {
   shortlist_name: any;
   formDetails: any;
   formId: any;
+  showFeedback: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,

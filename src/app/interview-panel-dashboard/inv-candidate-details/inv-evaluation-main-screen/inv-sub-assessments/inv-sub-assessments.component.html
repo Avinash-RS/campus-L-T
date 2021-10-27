@@ -1,3 +1,37 @@
-<div class="sub-assessments">
-  Works
+<div class="video-assessments">
+  <div class="video-wrapper">
+    <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
+    <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
+    <ng-container *ngIf="true" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+  </div>
 </div>
+
+
+<ng-template #showFeedbackTemplate>
+  <div [ngClass]="showFeedback ? 'showFeedback' : 'hideFeedback'" class="feedbackwrapper">
+    <div class="feedback-header">
+      <span class="header-text">Candidate Feedback</span> <span (click)="showFeedback = false" class="material-icons">close</span>
+    </div>
+    <div class="feedback-body">
+        <textarea class="text-area text-area-div" placeholder="Enter here..."></textarea>
+        <div class="button-wrapper">
+          <button class="cancel" (click)="showFeedback = false" mat-raised-button>Cancel</button>
+          <button class="submitt ml-3" (click)="showFeedback = false" mat-raised-button>Send</button>
+        </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #showVideo>
+  <div class="video-container">
+    video
+  </div>
+</ng-template>
+
+<ng-template #selectionbuttons>
+  <div class="selectionbuttons">
+    <div (click)="showFeedback = true" class="select"><span class="selection-border"><span>Select</span></span></div>
+    <div (click)="showFeedback = true" class="hold"><span class="selection-border"><span>Hold</span></span></div>
+    <div (click)="showFeedback = true" class="reject"><span class="selection-border"><span>Reject</span></span></div>
+  </div>
+</ng-template>
