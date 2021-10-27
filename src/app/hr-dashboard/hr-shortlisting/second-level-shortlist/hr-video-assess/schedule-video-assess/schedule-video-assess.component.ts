@@ -280,6 +280,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
         is_proctor:"1",
         shortListName: this.shortlist_name,
         orgId: 1,
+        createdBy: this.appConfig.getLocalData('userId'),
         title: this.scheduleForm.value.title,
         description: this.scheduleForm.value.description,
         startDateTime: this.scheduleForm.value.startTime,

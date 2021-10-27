@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -9,8 +9,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './inv-sub-employment.component.html',
   styleUrls: ['./inv-sub-employment.component.scss']
 })
-export class InvSubEmploymentComponent implements OnInit {
+export class InvSubEmploymentComponent implements OnInit, OnChanges {
 
+  @Input() passT0TabProfile;
   appConstant = CONSTANT.ENDPOINTS;
   nameOfAssessment: any;
   candidateId: any;
@@ -32,6 +33,12 @@ export class InvSubEmploymentComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    if (this.passT0TabProfile) {
+      this.editRouteParamGetter();
+    }
   }
 
   // Get url param for edit route

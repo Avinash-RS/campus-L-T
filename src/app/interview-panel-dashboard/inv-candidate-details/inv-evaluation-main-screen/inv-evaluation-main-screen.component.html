@@ -9,7 +9,7 @@
 
   <mat-tab label="Profile & Documents">
       <div *ngIf="TabIndex == 0 || true" class="selected-div">
-          <app-inv-sub-employment></app-inv-sub-employment>
+          <app-inv-sub-employment [passT0TabProfile]="passT0TabProfile"></app-inv-sub-employment>
       </div>
   </mat-tab>
 
@@ -25,15 +25,21 @@
   </div>
 </mat-tab>
 
-<mat-tab label="Interview Sessions">
+<mat-tab label="Video Assessment">
   <div *ngIf="TabIndex == 2 || true" class="selected-div">
-      <app-inv-join-interview></app-inv-join-interview>
+      <app-inv-sub-assessments [passT0TabVideoScheduling]="passT0TabVideoScheduling"></app-inv-sub-assessments>
+  </div>
+</mat-tab>
+
+<mat-tab label="Interview Sessions">
+  <div *ngIf="TabIndex == 3 || true" class="selected-div">
+      <app-inv-join-interview [passT0TabVideoInterview]="passT0TabVideoInterview"></app-inv-join-interview>
   </div>
 </mat-tab>
 
 <mat-tab label="Interview Evaluation form">
-  <div *ngIf="TabIndex == 3 || true" class="selected-div">
-      <app-inv-sub-evaluate></app-inv-sub-evaluate>
+  <div *ngIf="TabIndex == 4 || true" class="selected-div">
+      <app-inv-sub-evaluate [passT0Tabevaluate]="passT0Tabevaluate"></app-inv-sub-evaluate>
   </div>
 </mat-tab>
 

@@ -1,4 +1,4 @@
-<app-join-interview *ngIf="appConfig.isWebrtc()"></app-join-interview>
+<app-join-interview *ngIf="appConfig.isWebrtc() && passT0TabVideoInterview"></app-join-interview>
   <div *ngIf="!appConfig.isWebrtc()" class="noData">
     Coming Soon...
   </div>

@@ -24,7 +24,6 @@ ModuleRegistry.registerModules([GridChartsModule]);
 })
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  BIS = this.appConfig.getLocalData('BIS');
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
