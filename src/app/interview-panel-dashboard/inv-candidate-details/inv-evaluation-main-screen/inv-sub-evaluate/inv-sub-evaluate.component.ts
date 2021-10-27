@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -30,7 +30,8 @@ export interface PeriodicElement {
     },
   ],
 })
-export class InvSubEvaluateComponent implements OnInit {
+export class InvSubEvaluateComponent implements OnInit, OnChanges {
+  @Input() passT0Tabevaluate;
   candidateId: any;
   nameOfAssessment: any;
   uid: any;
@@ -54,6 +55,12 @@ export class InvSubEvaluateComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    if (this.passT0Tabevaluate) {
+      this.editRouteParamGetter();
+    }
   }
 
   // Get url param for edit route
