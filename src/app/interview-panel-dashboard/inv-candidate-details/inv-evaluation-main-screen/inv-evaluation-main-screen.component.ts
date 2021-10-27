@@ -27,6 +27,7 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
   queryParams: any;
   TabIndex = 0;
   passT0Tab0: any;
+  passT0Tab2: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -48,6 +49,9 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
     if (this.TabIndex == 0) {
       this.passT0Tab0 = Math.random();
     }
+    if (this.TabIndex == 2) {
+      this.passT0Tab2 = Math.random();
+    }
   }
 
   ngOnDestroy() {
@@ -58,6 +62,9 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
     if (this.TabIndex == 0) {
       this.passT0Tab0 = Math.random();
+    }
+    if (this.TabIndex == 2) {
+      this.passT0Tab2 = Math.random();
     }
   }
 

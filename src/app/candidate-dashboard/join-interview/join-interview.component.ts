@@ -35,7 +35,9 @@ export class JoinInterviewComponent implements OnInit {
       this.roleType = "candidate";
     }
 
-    this.getInterview();
+    if (!this.interview) {
+      this.getInterview();
+    }
   }
 
   ngOnInit() {}

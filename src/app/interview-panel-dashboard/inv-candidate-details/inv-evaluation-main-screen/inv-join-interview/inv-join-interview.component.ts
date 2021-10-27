@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
@@ -12,8 +12,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './inv-join-interview.component.html',
   styleUrls: ['./inv-join-interview.component.scss']
 })
-export class InvJoinInterviewComponent implements OnInit {
+export class InvJoinInterviewComponent implements OnInit, OnChanges {
 
+  @Input() passT0Tab2;
   queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
 
   constructor(
@@ -32,6 +33,12 @@ export class InvJoinInterviewComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  ngOnChanges() {
+    if (this.passT0Tab2) {
+      this.editRouteParamGetter();
+    }
   }
 
   // Get url param for edit route
