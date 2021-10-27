@@ -35,7 +35,6 @@ export class InvSubEvaluateComponent implements OnInit, OnChanges {
   candidateId: any;
   nameOfAssessment: any;
   uid: any;
-  BIS = this.appConfig.getLocalData('BIS');
   status: any;
   shortlist_name: any;
   formDetails: any;
