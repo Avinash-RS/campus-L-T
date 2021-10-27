@@ -130,10 +130,9 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
     if (event.colDef.field === 'videoassess') {
       // if (event['data']['shortlisted'] > 0) {
         let params = {
-          status: event['data']['va_scheduled_status'] ? event['data']['va_scheduled_status'] : 0,
+          status: event['data']['va_scheduled_status'] == 'scheduled' ? 1 : 0,
           shortlist_name: event['data']['shortlist_name'] ? event['data']['shortlist_name'] : null
         }
-        console.log('params', params);
         this.routeToVideoSchedule(params);
       // }
     }
@@ -294,6 +293,24 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         sortable: false,
       },
       {
+        headerName: 'Video Assessment Schedule', field: 'va_scheduled_status',
+        minWidth: 140,
+        headerClass: 'ag-grid-header-center',
+        cellClass: 'agCellStyle',
+        cellRenderer: (params) => {
+          if (params['data']['va_scheduled_status'] == 'scheduled') {
+            return `<span style="cursor: pointer; display: flex; color: #C02222; font-size: 20px;" class="material-icons-outlined">info</span>`;
+          } else {
+            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">video_call</span>`;
+          }
+        },
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        sortable: true,
+      },
+      {
         headerName: 'Assign to Panel', field: 'view1',
         minWidth: 140,
         headerClass: 'ag-grid-header-center',
@@ -302,19 +319,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           if (params['data']['shortlisted'] > 0) {
             return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">group</span>`;
           }
-        },
-        filter: false,
-        sortable: false,
-      },
-      {
-        headerName: 'Video Assessment Schedule', field: 'videoassess',
-        minWidth: 140,
-        headerClass: 'ag-grid-header-center',
-        cellClass: 'agCellStyle',
-        cellRenderer: (params) => {
-          // if (params['data']['shortlisted'] > 0) {
-            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">videocam</span>`;
-          // }
         },
         filter: false,
         sortable: false,
@@ -348,6 +352,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           element['buttons'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
           element['view'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
           element['view1'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
+          element['va_scheduled_status'] = element['va_scheduled_status'] ? 'scheduled' : 'Not scheduled'
         });
       } else {
         this.userList = [];

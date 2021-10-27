@@ -533,6 +533,7 @@ export class AdminServiceService {
 
   //hr 3rd shortlist report list
   assessmentFeedbackReport(data){
+    data.form_id = this.appConfig.getSelectedDriveFormDetails().id;
     return this.http.post(`${this.BASE_URL}/reports/evaluation_feedback_report`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
