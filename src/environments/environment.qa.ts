@@ -13,6 +13,7 @@ export const environment = {
     API_BASE_URL: 'https://campus-qa.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'https://campus-qa.lntedutech.com/d8cintana2',
     Image_Base_Url: 'https://campus-qa.lntedutech.com',
-    NODE_API_BASE_URL: 'https://edgeserviceqa.lntiggnite.com'
+    NODE_API_BASE_URL: 'https://edgeserviceqa.lntiggnite.com',
+    PROCTOR_URL: 'https://lntproctor.lntedutech.com'
 
 };
