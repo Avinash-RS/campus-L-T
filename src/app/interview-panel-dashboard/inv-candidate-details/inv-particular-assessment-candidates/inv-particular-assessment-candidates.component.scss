@@ -328,6 +328,10 @@ th {
   background-color: #c02222;
   color: #fff;
   }
+  ::ng-deep .inprogress-blue-bg {
+    background-color: #1B4E9B;
+    color: #fff;
+  }
   ::ng-deep .scheduled-bg {
     background-color: #bababa;
     color: #666666 ;

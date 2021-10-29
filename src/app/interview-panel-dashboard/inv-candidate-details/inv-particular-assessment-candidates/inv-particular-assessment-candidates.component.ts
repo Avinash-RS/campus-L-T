@@ -48,6 +48,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   getScheduledListSubscription: Subscription;
   invSubmittedCandidatesListSubscription: Subscription;
   invSubmittingCandidatesSubscription: Subscription;
+  drivePermissions: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -62,10 +63,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   ngOnInit() {
+    this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
     this.buttonCheck = false;
     this.getSelectedCandidates = [];
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
-    this.tabledef();
     this.refreshOndriveChangeRXJS();
   }
 
@@ -86,7 +87,15 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         this.quickSearchValue = '';
         this.buttonCheck = false;
         this.getSelectedCandidates = [];
-        this.getUsersList();
+        this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
+        if (this.drivePermissions && this.drivePermissions.video_assessment) {
+          this.gridApi.setColumnDefs(null);
+          this.gridApi.setColumnDefs(this.videoAssessmentColumns());
+          this.getUsersList();
+        } else {
+          this.gridApi.setColumnDefs(this.columnDefSetting());
+          this.getUsersList();
+        }
       }
     });
   }
@@ -94,6 +103,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.tabledef();
     this.getUsersList();
   }
 
@@ -180,237 +190,300 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     }
   }
   tabledef() {
-      this.columnDefs = [
-        {
-          headerCheckboxSelection: true,
-          headerCheckboxSelectionFilteredOnly: true,
-          width: 50,
-          maxWidth: 50,
-          checkboxSelection: true,
-          filter: false,
-          sortable: false,
-          field: "is_checked",
-          headerName: "",
-        },
-        {
-          headerName: "Candidate Id",
-          field: "candidate_id",
-          filter: 'agNumberColumnFilter',
-          minWidth: 180,
-          sortable: true,
-          tooltipField: "candidate_id",
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-        },
-        {
-          headerName: "Candidate Name",
-          field: "candidate_name",
-          filter: 'agTextColumnFilter',
-          minWidth: 180,
-          sortable: true,
-          tooltipField: "candidate_name",
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          cellStyle: { color: "#C02222" },
-          cellRenderer: (params) => {
-            return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image_url"]}"></span> <span>${params["data"]["candidate_name"]}</span> </span>`;
-          },
-        },
-        {
-          headerName: "Email Id",
-          field: "email",
-          filter: 'agTextColumnFilter',
-          minWidth: 180,
-          sortable: true,
-          tooltipField: "email",
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-        },
-        {
-          headerName: "Shortlist Name",
-          field: "shortlist_name",
-          filter: 'agTextColumnFilter',
-          minWidth: 140,
-          sortable: true,
-          tooltipField: "shortlist_name",
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-        },
-        {
-          headerName: "Interview Status",
-          field: "evaluation_status_1",
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            applyMiniFilterWhileTyping: true
-          },
-          minWidth: 100,
-          sortable: true,
-          tooltipField: "evaluation_status_1",
-          cellRenderer: (params) => {
-            if (
-              params["data"] &&
-              params["data"]["evaluation_status_1"] == "Completed"
-            ) {
-              return `<span class="status inprogress-bg">Completed</button>`;
-            }
-            if (
-              params["data"] &&
-              params["data"]["evaluation_status_1"] == "Submitted"
-            ) {
-              return `<span class=" status completed-bg">Submitted</button>`;
-            } else {
-              return `<span class="status scheduled-bg">Scheduled</button>`;
-            }
-          },
-        },
-        {
-          headerName: "Evaluate",
-          headerClass: 'ag-grid-header-center',
-          field: "evaluation_btn",
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            applyMiniFilterWhileTyping: true
-          },
-          minWidth: 200,
-          sortable: true,
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          cellStyle: {
-            textAlign: "center",
-            display: "flex",
-            "align-items": "center",
-            "justify-content": "center",
-          },
-          cellRenderer: (params) => {
-            if (
-              params["data"] &&
-              (params["data"]["evaluation_btn"] == "Evaluated")
-            ) {
-                return `<button class=" btn-outline checked inprogress-bg"><em class="icon-checked"></em>${params["data"]["evaluation_btn"]}</button>`;
-            }
-            if (params["data"] && params["data"]["evaluation_btn"] == "Submitted") {
-              return `<button class=" btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["evaluation_btn"]}</button>`;
-            } else {
-              return `<button class=" btn-outline">${params["data"]["evaluation_btn"]}</button>`;
-            }
-          },
-        },
-        {
-          headerName: "Status",
-          headerClass: 'ag-grid-header-center',
-          field: "normal_assessment.interview_status",
-          filter: 'agSetColumnFilter',
-          filterParams: {
-            applyMiniFilterWhileTyping: true
-          },
-          minWidth: 130,
-          sortable: true,
-          getQuickFilterText: (params) => {
-            return params.value;
-          },
-          cellStyle: {
-            textAlign: "center",
-            display: "flex",
-            "align-items": "center",
-            "justify-content": "center",
-          },
-          cellRenderer: (params) => {
-            if (
-              params["data"] &&
-              params["data"]["normal_assessment"]["interview_status"] == "Selected"
-            ) {
-              return `<span class="status completed-bg">Selected</span>`;
-            }
-            if (
-              params["data"] &&
-              params["data"]["normal_assessment"]["interview_status"] == "Rejected"
-            ) {
-              return `<span class="status rejected-bg">Rejected</span>`;
-            } else {
-              if (params["data"] && params["data"]["normal_assessment"]["interview_status"]) {
-                return `<span class="status inprogress-bg">${params["data"]["normal_assessment"]["interview_status"]}</span>`;
-              } else {
-                return "";
-              }
-            }
-          },
-        },
-      ];
-      if (this.appConfig.isWebrtc()) {
-        let webRtcColumns = [
-          {
-            headerName: "Date/Time of Interview",
-            field: "startTime",
-            filter: 'agTextColumnFilter',
-            minWidth: 310,
-            sortable: true,
-            tooltipField: "startTime",
-            cellRenderer: (params) => {
-                return `${params["data"]["startTime"]} - ${params["data"]["endTime"]}`;
-            },
-          },
-          {
-            headerName: "Assigned by",
-            field: "assigned_by",
-            filter: 'agSetColumnFilter',
-            filterParams: {
-              applyMiniFilterWhileTyping: true
-            },
-            minWidth: 150,
-            sortable: true,
-            tooltipField: "assigned_by",
-          },
-          {
-            headerName: "Interview Sessions",
-            field: "join_interview",
-            filter: 'agSetColumnFilter',
-            filterParams: {
-              applyMiniFilterWhileTyping: true
-            },
-            headerClass: 'ag-grid-header-center',
-            minWidth: 340,
-            sortable: true,
-            getQuickFilterText: (params) => {
-              return params.value;
-            },
-            cellStyle: {
-              textAlign: "center",
-              display: "flex",
-              "align-items": "center",
-              "justify-content": "center",
-            },
-            cellRenderer: (params) => {
-              if (params["data"] && params["data"]["join_interview"] == "Join Interview") {
-                return `<button class="join-inter"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
-              }
-              if (params["data"] && params["data"]["join_interview"] == "Interview Completed") {
-                return `<button class="join-inter completed-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
-              }
-              // if (params["data"] && params["data"]["join_interview"] == "-") {
-              //   return `Not Scheduled`;
-              // }
-              else {
-                return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
-              }
-            },
-          },
-        ];
-        // this.columnDefs.concat(webRtcColumns);
-        this.columnDefs.splice(5, 0, webRtcColumns[0]);
-        this.columnDefs.splice(6, 0, webRtcColumns[1]);
-        this.columnDefs.splice(8, 0, webRtcColumns[2]);
-      }
-
+    if (this.drivePermissions && this.drivePermissions.video_assessment) {
+      this.gridApi.setColumnDefs(this.videoAssessmentColumns());
+    } else {
+      this.gridApi.setColumnDefs(this.columnDefSetting());
+    }
     this.rowSelection = "multiple";
     this.isRowSelectable = function (rowNode) {
       return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
     };
   }
+
+  columnDefSetting() {
+    this.columnDefs = [
+      {
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        width: 50,
+        maxWidth: 50,
+        checkboxSelection: true,
+        filter: false,
+        sortable: false,
+        field: "is_checked",
+        headerName: "",
+      },
+      {
+        headerName: "Candidate Id",
+        field: "candidate_id",
+        filter: 'agNumberColumnFilter',
+        minWidth: 180,
+        sortable: true,
+        tooltipField: "candidate_id",
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+      },
+      {
+        headerName: "Candidate Name",
+        field: "candidate_name",
+        filter: 'agTextColumnFilter',
+        minWidth: 180,
+        sortable: true,
+        tooltipField: "candidate_name",
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: { color: "#C02222" },
+        cellRenderer: (params) => {
+          return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image_url"]}"></span> <span>${params["data"]["candidate_name"]}</span> </span>`;
+        },
+      },
+      {
+        headerName: "Email Id",
+        field: "email",
+        filter: 'agTextColumnFilter',
+        minWidth: 180,
+        sortable: true,
+        tooltipField: "email",
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+      },
+      {
+        headerName: "Shortlist Name",
+        field: "shortlist_name",
+        filter: 'agTextColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: "shortlist_name",
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+      },
+      {
+        headerName: "Date/Time of Interview",
+        field: "startTime",
+        filter: 'agTextColumnFilter',
+        minWidth: 310,
+        sortable: true,
+        tooltipField: "startTime",
+        cellRenderer: (params) => {
+            return `${params["data"]["startTime"]} - ${params["data"]["endTime"]}`;
+        },
+      },
+      {
+        headerName: "Assigned by",
+        field: "assigned_by",
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 150,
+        sortable: true,
+        tooltipField: "assigned_by",
+      },
+      {
+        headerName: "Interview Status",
+        field: "evaluation_status_1",
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 100,
+        sortable: true,
+        tooltipField: "evaluation_status_1",
+        cellRenderer: (params) => {
+          if (
+            params["data"] &&
+            params["data"]["evaluation_status_1"] == "Completed"
+          ) {
+            return `<span class="status inprogress-bg">Completed</button>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["evaluation_status_1"] == "Submitted"
+          ) {
+            return `<span class=" status completed-bg">Submitted</button>`;
+          } else {
+            return `<span class="status scheduled-bg">Scheduled</button>`;
+          }
+        },
+      },
+      {
+        headerName: "Interview Sessions",
+        field: "join_interview",
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        headerClass: 'ag-grid-header-center',
+        minWidth: 340,
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: {
+          textAlign: "center",
+          display: "flex",
+          "align-items": "center",
+          "justify-content": "center",
+        },
+        cellRenderer: (params) => {
+          if (params["data"] && params["data"]["join_interview"] == "Join Interview") {
+            return `<button class="join-inter"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
+          }
+          if (params["data"] && params["data"]["join_interview"] == "Interview Completed") {
+            return `<button class="join-inter completed-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
+          }
+          // if (params["data"] && params["data"]["join_interview"] == "-") {
+          //   return `Not Scheduled`;
+          // }
+          else {
+            return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> ${params["data"]["join_interview"]}</button>`;
+          }
+        },
+      },
+      {
+        headerName: "Evaluate",
+        headerClass: 'ag-grid-header-center',
+        field: "evaluation_btn",
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 200,
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: {
+          textAlign: "center",
+          display: "flex",
+          "align-items": "center",
+          "justify-content": "center",
+        },
+        cellRenderer: (params) => {
+          if (
+            params["data"] &&
+            (params["data"]["evaluation_btn"] == "Evaluated")
+          ) {
+              return `<button class=" btn-outline checked inprogress-bg"><em class="icon-checked"></em>${params["data"]["evaluation_btn"]}</button>`;
+          }
+          if (params["data"] && params["data"]["evaluation_btn"] == "Submitted") {
+            return `<button class=" btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["evaluation_btn"]}</button>`;
+          } else {
+            return `<button class=" btn-outline">${params["data"]["evaluation_btn"]}</button>`;
+          }
+        },
+      },
+      {
+        headerName: "Status",
+        headerClass: 'ag-grid-header-center',
+        field: "normal_assessment.interview_status",
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 130,
+        sortable: true,
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellStyle: {
+          textAlign: "center",
+          display: "flex",
+          "align-items": "center",
+          "justify-content": "center",
+        },
+        cellRenderer: (params) => {
+          if (
+            params["data"] &&
+            params["data"]["normal_assessment"]["interview_status"] == "Selected"
+          ) {
+            return `<span class="status completed-bg">Selected</span>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["normal_assessment"]["interview_status"] == "Rejected"
+          ) {
+            return `<span class="status rejected-bg">Rejected</span>`;
+          } else {
+            if (params["data"] && params["data"]["normal_assessment"]["interview_status"]) {
+              return `<span class="status inprogress-bg">${params["data"]["normal_assessment"]["interview_status"]}</span>`;
+            } else {
+              return "";
+            }
+          }
+        },
+      },
+    ];
+    return this.columnDefs;
+  }
+
+  videoAssessmentColumns() {
+    let videoColumns = this.columnDefSetting();
+    let videoObj = {
+      headerName: "Video Assessment Status",
+      headerClass: 'ag-grid-header-center',
+      field: "video_assessment.evaluation_status",
+      filter: 'agSetColumnFilter',
+      filterParams: {
+        applyMiniFilterWhileTyping: true
+      },
+      minWidth: 130,
+      sortable: true,
+      hide: this.drivePermissions && this.drivePermissions.video_assessment ? false : true,
+      getQuickFilterText: (params) => {
+        return params.value;
+      },
+      cellStyle: {
+        textAlign: "center",
+        display: "flex",
+        "align-items": "center",
+        "justify-content": "center",
+      },
+      cellRenderer: (params) => {
+        if (
+          params["data"] &&
+          params["data"]["video_assessment"] && params["data"]["video_assessment"]["scheduled_status"] != 1
+        ) {
+          return `<span class="status scheduled-bg">Not Scheduled</span>`;
+        } else {
+
+          if (
+            params["data"] &&
+            params["data"]["video_assessment"]["evaluation_status"] == "Selected"
+          ) {
+            return `<span class="status completed-bg">Selected</span>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["video_assessment"]["evaluation_status"] == "Rejected"
+          ) {
+            return `<span class="status rejected-bg">Rejected</span>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["video_assessment"]["evaluation_status"] == "Hold"
+          ) {
+            return `<span class="status inprogress-bg">Hold</span>`;
+          } else {
+            if (params["data"] && params["data"]["video_assessment"]["evaluation_status"]) {
+              return `<span class="status inprogress-blue-bg">${params["data"]["video_assessment"]["evaluation_status"]}</span>`;
+            } else {
+              return "";
+            }
+          }
+        }
+      },
+    }
+    let findLastIndex = videoColumns.length - 1;
+    videoColumns.splice(findLastIndex, 0, videoObj);
+    return videoColumns;
+  }
+
 
   getInterview() {
     var obj = {
@@ -520,7 +593,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         ? this.appConfig.getLocalData("userId")
         : "",
     };
-   this.gridApi.showLoadingOverlay();
+    setTimeout(() => {
+      this.gridApi.showLoadingOverlay();
+    }, 500);
    this.invSubmittedCandidatesListSubscription = this.adminService.invSubmittedCandidatesList(apiData).subscribe(
       (datas: any) => {
         const align = datas ? datas : [];
@@ -531,6 +606,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             counting = counting + 1;
             element["counter"] = counting;
             element["evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
+            element["video_assessment"]["evaluation_status"] = element["video_assessment"]["evaluation_status"] == "3" ? 'Rejected' : (element["video_assessment"]["evaluation_status"] == '2' ? 'Hold' : element["video_assessment"]["evaluation_status"] == '1' ? 'Selected' : 'Yet to Evaluate');
             element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             element["evaluation_status_1"] =
@@ -558,7 +634,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   submit(cid, name, status, tag, uid, email, form, shortlist) {
-    this.appConfig.setLocalData('tabIndex', 3);
+    this.appConfig.setLocalData('tabIndex', 4);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
@@ -576,7 +652,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   redirectToEvaluationForm(cid, name, status, tag, uid, email, form, shortlist) {
-    this.appConfig.setLocalData('tabIndex', 2);
+    this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
       {
