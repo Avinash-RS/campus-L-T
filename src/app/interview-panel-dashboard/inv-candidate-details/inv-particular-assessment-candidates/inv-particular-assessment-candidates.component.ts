@@ -127,6 +127,25 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["uid"],
         event["data"]["email"],
         event["data"]["form_id"],
+        event["data"]["video_assessment"],
+        event["data"]["shortlist_name"]
+        );
+    }
+
+    if (event.colDef.field === "video_assessment.test_status") {
+      this.appConfig.setLocalData(
+        "cProPic",
+        event["data"]["profile_image_url"]
+      );
+      this.redirectToVideoSchedule(
+        event["data"]["candidate_id"],
+        event["data"]["candidate_name"],
+        event["data"]["normal_assessment"]["evaluation_status"],
+        event["data"]["tag"],
+        event["data"]["uid"],
+        event["data"]["email"],
+        event["data"]["form_id"],
+        event["data"]["video_assessment"],
         event["data"]["shortlist_name"]
         );
     }
@@ -144,6 +163,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["uid"],
           event["data"]["email"],
           event["data"]["form_id"],
+          event["data"]["video_assessment"],
           event["data"]["shortlist_name"]
         );
     }
@@ -167,6 +187,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["uid"],
           event["data"]["email"],
           event["data"]["form_id"],
+          event["data"]["video_assessment"],
           event["data"]["shortlist_name"]
         );
       }
@@ -427,7 +448,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     let videoObj = {
       headerName: "Video Assessment Status",
       headerClass: 'ag-grid-header-center',
-      field: "video_assessment.evaluation_status",
+      field: "video_assessment.test_status",
       filter: 'agSetColumnFilter',
       filterParams: {
         applyMiniFilterWhileTyping: true
@@ -454,24 +475,24 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
 
           if (
             params["data"] &&
-            params["data"]["video_assessment"]["evaluation_status"] == "Selected"
+            params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Completed"
           ) {
-            return `<span class="status completed-bg">Selected</span>`;
+            return `<span style="cursor: pointer;" class="status completed-bg">Completed</span>`;
           }
           if (
             params["data"] &&
-            params["data"]["video_assessment"]["evaluation_status"] == "Rejected"
+            params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "In Progress"
           ) {
-            return `<span class="status rejected-bg">Rejected</span>`;
+            return `<span style="cursor: pointer;" class="status inprogress-bg">In Progress</span>`;
           }
           if (
             params["data"] &&
-            params["data"]["video_assessment"]["evaluation_status"] == "Hold"
+            params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Yet to Start"
           ) {
-            return `<span class="status inprogress-bg">Hold</span>`;
+            return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Start</span>`;
           } else {
-            if (params["data"] && params["data"]["video_assessment"]["evaluation_status"]) {
-              return `<span class="status inprogress-blue-bg">${params["data"]["video_assessment"]["evaluation_status"]}</span>`;
+            if (params["data"] && params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"]) {
+              return `<span class="status scheduled-bg">Not Scheduled</span>`;
             } else {
               return "";
             }
@@ -606,7 +627,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             counting = counting + 1;
             element["counter"] = counting;
             element["evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
-            element["video_assessment"]["evaluation_status"] = element["video_assessment"]["evaluation_status"] == "3" ? 'Rejected' : (element["video_assessment"]["evaluation_status"] == '2' ? 'Hold' : element["video_assessment"]["evaluation_status"] == '1' ? 'Selected' : 'Yet to Evaluate');
+            element.video_assessment = element.video_assessment ? element.video_assessment : {};
+            element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "pending" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'inprogress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] == 'completed' ? 'Completed' : '');
             element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             element["evaluation_status_1"] =
@@ -633,7 +655,26 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     );
   }
 
-  submit(cid, name, status, tag, uid, email, form, shortlist) {
+  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
+    this.appConfig.setLocalData('tabIndex', 2);
+    this.appConfig.routeNavigationWithQueryParam(
+      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
+      {
+        data: this.nameOfAssessment ? this.nameOfAssessment : "",
+        id: cid ? cid : "",
+        name: name ? name : "",
+        status: status ? status : "",
+        tag: tag ? tag : "",
+        uid: uid ? uid : "",
+        email: email ? email : "",
+        form: form ? form : "",
+        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
+        shortlist_name: shortlist ? shortlist : "",
+      }
+    );
+  }
+
+  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
     this.appConfig.setLocalData('tabIndex', 4);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -646,12 +687,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         uid: uid ? uid : "",
         email: email ? email : "",
         form: form ? form : "",
-        shortlist_name: shortlist ? shortlist : ""
+        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
+        shortlist_name: shortlist ? shortlist : "",
       }
     );
   }
 
-  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, shortlist) {
+  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
     this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -664,12 +706,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         uid: uid ? uid : "",
         email: email ? email : "",
         form: form ? form : "",
-        shortlist_name: shortlist ? shortlist : ""
+        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
+        shortlist_name: shortlist ? shortlist : "",
       }
     );
   }
 
-  redirectToProfile(cid, name, status, tag, uid, email, form, shortlist) {
+  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
     this.appConfig.setLocalData('tabIndex', 0);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -682,6 +725,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         uid: uid ? uid : "",
         email: email ? email : "",
         form: form ? form : "",
+        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : ""
       }
     );

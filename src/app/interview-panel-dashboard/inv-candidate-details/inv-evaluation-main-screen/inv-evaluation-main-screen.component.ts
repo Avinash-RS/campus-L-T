@@ -64,6 +64,7 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.appConfig.clearLocalDataOne('tabIndex');
+    this.appConfig.clearLocalDataOne('Proctor_token');
   }
   tabChanged(e) {
     this.TabIndex = e.index;

@@ -92,7 +92,7 @@ export class InterceptorsService implements HttpInterceptor {
         if (error.status === 401) {
           this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
             ? error.error.message : '401 UnAuthorized', '');
-          this.appConfig.logoutWhenAuthorized();
+          // this.appConfig.logoutWhenAuthorized();
           return throwError(error);
         }
 

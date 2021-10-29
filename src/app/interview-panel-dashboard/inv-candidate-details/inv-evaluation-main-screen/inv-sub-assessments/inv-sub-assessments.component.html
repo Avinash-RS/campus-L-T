@@ -1,22 +1,54 @@
+<div class="scheduleDetails-wrapper">
+  <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0" [ngTemplateOutlet]="scheduleDetails"></ng-container>
+</div>
+
 <div class="video-assessments">
   <div class="video-wrapper">
-    <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
-    <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
-    <ng-container *ngIf="true" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+    <ng-container *ngIf="currentItem && currentItem.src else noVideoRef">
+      <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
+      <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
+      <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
+      <ng-container *ngIf="true" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+    </ng-container>
   </div>
 </div>
 
+<ng-template #showQuestionsArray>
+
+  <div class="question-wrapper">
+      <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
+        <div class="d-flex align-items-center question-count-wrapper">
+          <ng-container *ngFor="let question of questionDetailsArray; let i = index">
+        <div *ngIf="i == 0">Questions: </div>
+      <div class="question-count" (click)="active = i" [ngClass]="active == i ? 'active' : ''">
+        <span>{{i + 1}}</span>
+      </div>
+  </ng-container>
+        </div>
+  <div class="questiondesc"> <span class="qSNo">{{'Q'+ (active + 1) +'. '}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.questionDes ? questionDetailsArray[active].questionDetails.questionDes : ''}}</span></div>
+  </ng-container>
+  </div>
+</ng-template>
 
 <ng-template #showFeedbackTemplate>
   <div [ngClass]="showFeedback ? 'showFeedback' : 'hideFeedback'" class="feedbackwrapper">
     <div class="feedback-header">
-      <span class="header-text">Candidate Feedback</span> <span (click)="showFeedback = false" class="material-icons">close</span>
+      <span class="header-text">Interviewer Feedback</span> <span (click)="showFeedback = false" class="material-icons">close</span>
     </div>
     <div class="feedback-body">
-        <textarea class="text-area text-area-div" placeholder="Enter here..."></textarea>
+        <textarea [formControl]="feedbackformControl" class="text-area text-area-div" placeholder="Enter here..."></textarea>
+        <div class="form-error" *ngIf="feedbackformControl?.invalid && feedbackformControl?.touched">
+          <div *ngIf="feedbackformControl?.errors?.required">Feedback is Required</div>
+          <div *ngIf="feedbackformControl.errors?.address255">Alpha numeric with maximum of 255 characters only allowed
+          </div>
+      </div>
         <div class="button-wrapper">
           <button class="cancel" (click)="showFeedback = false" mat-raised-button>Cancel</button>
-          <button class="submitt ml-3" (click)="showFeedback = false" mat-raised-button>Send</button>
+          <button *ngIf="!feedbackApiLoading" class="submitt ml-3" (click)="sendFeedback()" mat-raised-button>Send</button>
+          <button *ngIf="feedbackApiLoading" class="submitt ml-3 loading-button" (click)="sendFeedback()" mat-raised-button>
+            <span class="material-icons load-icon">
+              loop
+              </span>Sending...</button>
         </div>
     </div>
   </div>
@@ -24,14 +56,91 @@
 
 <ng-template #showVideo>
   <div class="video-container">
-    video
+    <ng-container *ngIf="(videoEndedFalse || true) else novideoOverlayref">
+            <div *ngIf="currentItem && currentItem.src" class="video">
+                <video controls id="myVideo" name="media" class="video-player" (ended)="nextVideo()">
+                <source id="sourceVideo" [src]="currentItem.src" type="video/mp4">
+            </video>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!videoEndedFalse" [ngTemplateOutlet]="novideoOverlayref"></ng-container>
+          <ng-template #novideoOverlayref>
+            <div class="overlay-ended">
+              <h3>Video has been ended</h3>
+              <button mat-raised-button (click)="playVideo()">Play Again</button>
+            </div>
+          </ng-template>
   </div>
 </ng-template>
 
 <ng-template #selectionbuttons>
   <div class="selectionbuttons">
-    <div (click)="showFeedback = true" class="select"><span class="selection-border"><span>Select</span></span></div>
-    <div (click)="showFeedback = true" class="hold"><span class="selection-border"><span>Hold</span></span></div>
-    <div (click)="showFeedback = true" class="reject"><span class="selection-border"><span>Reject</span></span></div>
+    <div (click)="showFeedback = true; selectedStatus = 'Selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
+    <div (click)="showFeedback = true; selectedStatus = 'On Hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div>
+    <div (click)="showFeedback = true; selectedStatus = 'Rejected'" class="reject"><span class="selection-border"><span>Reject</span></span></div>
   </div>
+</ng-template>
+
+<ng-template #scheduleDetails>
+  <!-- <div class="schedule-wrapper"> -->
+    <h6 style="font-weight: 600;" class="mt-2">Schedule Details:</h6>
+    <div class="scheduleDetails">
+      <div *ngIf="false" class="field-wrapper">
+        <label>Schedule Name:</label>
+        <div class="field">Angular Assessment</div>
+      </div>
+
+      <div class="field-wrapper">
+        <label>Schedule Created by:</label>
+        <div class="field">{{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : ''}}</div>
+      </div>
+
+      <div class="field-wrapper">
+        <label>Assessment Time:</label>
+        <div class="field">{{videoAssessment && videoAssessment.start_datetime ? videoAssessment.start_datetime : ''}}
+          to
+          {{videoAssessment && videoAssessment.end_datetime ? videoAssessment.end_datetime : ''}}
+        </div>
+      </div>
+
+      <div class="field-wrapper">
+        <label>Duration:</label>
+        <div class="field">{{testDetailsArray?.totalDuration}} mins</div>
+      </div>
+
+      <div class="field-wrapper">
+        <label>Total Marks:</label>
+        <div class="field">{{testDetailsArray?.totalMarks}}</div>
+      </div>
+
+      <div class="field-wrapper">
+        <label>Test Status:</label>
+        <div class="field">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : ''}}</div>
+      </div>
+
+      <div *ngIf="videoAssessment && videoAssessment.evaluation_status" class="field-wrapper">
+        <label>Evaluation Status:</label>
+        <div class="field">{{videoAssessment && videoAssessment.evaluation_status ? videoAssessment.evaluation_status : 'Yet to Evaluate'}}</div>
+      </div>
+
+      <div *ngIf="videoAssessment && videoAssessment.evaluated_by" class="field-wrapper">
+        <label>Evaluated By:</label>
+        <div class="field">{{videoAssessment && videoAssessment.evaluated_by ? videoAssessment.evaluated_by : 'Not Evaluated'}}</div>
+      </div>
+
+      <div *ngIf="videoAssessment && videoAssessment.remarks" class="field-wrapper">
+        <label>Remarks:</label>
+        <div class="field">{{videoAssessment && videoAssessment.remarks ? videoAssessment.remarks : ''}}</div>
+      </div>
+
+    </div>
+  <!-- </div> -->
+</ng-template>
+<ng-template #noVideoRef>
+  <div class="no-video">
+    <ng-container>
+    <h5> Candidate is yet to start/complete his Assessment...</h5>
+  </ng-container>
+
+</div>
 </ng-template>
