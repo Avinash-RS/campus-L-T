@@ -127,7 +127,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (event.colDef.field === 'videoassess') {
+    if (event.colDef.field === 'va_scheduled_status') {
       // if (event['data']['shortlisted'] > 0) {
         let params = {
           status: event['data']['va_scheduled_status'] == 'scheduled' ? 1 : 0,

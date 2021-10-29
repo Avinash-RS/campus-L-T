@@ -12,6 +12,7 @@ export class AdminServiceService {
   BASE_URL = environment.API_BASE_URL;
   WEBRTC_NODE_API = environment.WEBRTC_NODE_API;
   NODE_API = environment.NODE_API_BASE_URL;
+  PROCTOR_URL = environment.PROCTOR_URL;
   httpOptions: { headers: HttpHeaders };
 
 
@@ -20,6 +21,15 @@ export class AdminServiceService {
     private appConfig: AppConfigService
   ) { }
 
+  proctorToken(): HttpHeaders {
+      const headers = new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+        .set('Content-Type', 'application/json')
+        .set('Access-Control-Allow-Origin', '*')
+        .set('Authorization', ('Bearer ' + (this.appConfig.getLocalData('Proctor_token') ? this.appConfig.getLocalData('Proctor_token') : '')));
+      return headers;
+    }
   getCustomHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
@@ -708,6 +718,23 @@ getQuestionsForVideoScheduling() {
 
 VideoSchedulingSubmit(data) {
   return this.http.post(`${this.NODE_API}/videoAssessmentSchedule`, data, {headers: this.withoutTokens(), withCredentials: false});
+}
+
+// Proctor
+getProctorVideo(id,type){
+  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=50&count=1&filter[type]=`+type, {headers: this.proctorToken()});
+}
+
+getproctorToken(data) {
+  return this.http.post(`${this.PROCTOR_URL}/api/auth/login`, data, {headers: this.withoutTokens()});
+}
+
+ViewSchedulingDetails(data) {
+  return this.http.post(`${this.NODE_API}/scheduledQuestionDetails`, data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
+}
+
+saveVideoSchedulingFeedBack(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/save-feedback`, data, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
 }
 
 }
