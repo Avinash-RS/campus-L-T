@@ -348,3 +348,46 @@ th {
     // background-color: #c02222;
     color: #c02222;
     }
+
+::ng-deep .errorTemplateRefPopUp {
+  .mat-dialog-container {
+    padding: 1em !important;
+  }
+  .table-wrapper {
+    max-height: 300px;
+    overflow: auto;
+  }
+  h6 {
+    text-align: center;
+    font-weight: 600;
+  }
+  button {
+    margin: 1em auto !important;
+  }
+    table {
+      border-collapse: collapse;
+      height: 100%;
+      border: 1px solid rgba(170,170,170,0.4);
+      tr {
+          border-bottom: 1px solid rgba(170,170,170,0.4);
+          &:last-child {
+              border-bottom: 0;
+          }
+          th {
+            padding: 16px 8px !important;
+            font-weight: 600;
+          }
+          td {
+              width: 33%;
+              padding: 4px !important;
+              color: #4D4D4D;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: normal;
+          }
+          .red {
+            color: $primary-red !important;
+          }
+      }
+  }
+}
