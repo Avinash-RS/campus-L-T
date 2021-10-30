@@ -48,6 +48,7 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
   getProctorVideoSubscription: Subscription;
   saveVideoSchedulingFeedBackSubscription: Subscription;
   activatedRouteSubscription: Subscription;
+  queryParams: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -75,11 +76,11 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   getScheduleDetails(data) {
-    data = {
-      "scheduleId":"3203"
+    let apiData = {
+      "scheduleId": data
       }
       if (!this.testDetailsArray && this.passT0TabVideoScheduling) {
-   this.ViewSchedulingDetailsSubscription = this.adminService.ViewSchedulingDetails(data).subscribe((response: any)=> {
+   this.ViewSchedulingDetailsSubscription = this.adminService.ViewSchedulingDetails(apiData).subscribe((response: any)=> {
       if (response && response.success) {
       this.questionDetailsArray = response && response.data && response.data[0] && response.data[0].questionDetailsArray ? response.data[0].questionDetailsArray : [];
       this.testDetailsArray = response && response.data && response.data[0] && response.data[0].testDetailsArray && response.data[0].testDetailsArray[0] ? response.data[0].testDetailsArray[0] : null;
@@ -94,7 +95,7 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
 }
 
   getProctorToken(){
-      if (!this.testDetailsArray && this.passT0TabVideoScheduling) {
+      if ((!this.testDetailsArray || this.playVideoList.length < 1) && this.passT0TabVideoScheduling) {
         let data = {
         password: "aep7feuY",
         provider: "login",
@@ -229,10 +230,22 @@ sendFeedback() {
       this.status = params['status'];
       this.shortlist_name = params['shortlist_name'];
       this.formDetails = this.appConfig.getSelectedDriveFormDetails();
-      this.formId = this.formDetails.id ? this.formDetails.id : ''
+      this.formId = this.formDetails.id ? this.formDetails.id : '',
+      this.queryParams = params;
+      console.log('as', this.queryParams);
+      if ((this.queryParams && this.queryParams.videoShow && this.queryParams.videoShow == 'true') && (this.videoAssessment && this.videoAssessment.scheduled_status && this.videoAssessment.scheduled_status == 1)) {
       this.getScheduleDetails(this.videoAssessment && this.videoAssessment.schedule_id ? this.videoAssessment.schedule_id : '');
       this.getProctorToken();
+      }
     });
+  }
+
+  isAccessGranted() {
+    if(this.queryParams && this.queryParams.videoShow && this.queryParams.videoShow == 'true' && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnDestroy() {

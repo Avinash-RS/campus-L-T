@@ -39,6 +39,7 @@ export class InvSubEvaluateComponent implements OnInit, OnChanges {
   shortlist_name: any;
   formDetails: any;
   formId: any;
+  queryParams: any;
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
@@ -73,7 +74,16 @@ export class InvSubEvaluateComponent implements OnInit, OnChanges {
       this.shortlist_name = params['shortlist_name'];
       this.formDetails = this.appConfig.getSelectedDriveFormDetails();
       this.formId = this.formDetails.id ? this.formDetails.id : ''
+      this.queryParams = params;
     });
+  }
+
+  isAccessGranted() {
+    if(this.queryParams && this.queryParams.evaluationShow && this.queryParams.evaluationShow == 'true' && this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

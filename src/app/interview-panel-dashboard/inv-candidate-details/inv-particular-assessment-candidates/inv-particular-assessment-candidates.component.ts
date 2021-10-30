@@ -92,9 +92,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           this.gridApi.setColumnDefs(null);
           this.gridApi.setColumnDefs(this.videoAssessmentColumns());
           this.getUsersList();
+          this.isRowSelectableMethod();
         } else {
           this.gridApi.setColumnDefs(this.columnDefSetting());
           this.getUsersList();
+          this.isRowSelectableMethod();
         }
       }
     });
@@ -128,12 +130,14 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["email"],
         event["data"]["form_id"],
         event["data"]["video_assessment"],
-        event["data"]["shortlist_name"]
+        event["data"]["shortlist_name"],
+        event["data"]["is_video_scheduled"],
+        event["data"]["is_normal_scheduled"]
         );
     }
 
     if (event.colDef.field === "video_assessment.test_status") {
-      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == '1') {
+      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1) {
       this.appConfig.setLocalData(
         "cProPic",
         event["data"]["profile_image_url"]
@@ -147,7 +151,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["email"],
         event["data"]["form_id"],
         event["data"]["video_assessment"],
-        event["data"]["shortlist_name"]
+        event["data"]["shortlist_name"],
+        event["data"]["is_video_scheduled"],
+        event["data"]["is_normal_scheduled"]
         );
       }
     }
@@ -166,8 +172,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["email"],
           event["data"]["form_id"],
           event["data"]["video_assessment"],
-          event["data"]["shortlist_name"]
-        );
+          event["data"]["shortlist_name"],
+          event["data"]["is_video_scheduled"],
+          event["data"]["is_normal_scheduled"]
+            );
     }
 
     if (event.colDef.field === "join_interview") {
@@ -190,8 +198,10 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["email"],
           event["data"]["form_id"],
           event["data"]["video_assessment"],
-          event["data"]["shortlist_name"]
-        );
+          event["data"]["shortlist_name"],
+          event["data"]["is_video_scheduled"],
+          event["data"]["is_normal_scheduled"]
+            );
       }
     }
   }
@@ -218,18 +228,26 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     } else {
       this.gridApi.setColumnDefs(this.columnDefSetting());
     }
+    this.isRowSelectableMethod();
+  }
+
+  isRowSelectableMethod() {
     this.rowSelection = "multiple";
-    this.isRowSelectable = function (rowNode) {
-      // if (this.drivePermissions && this.drivePermissions.normal_assessment) {
-        return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
-      // }
-      // if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
-      //   return rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'selected' ? true : false;
-      // }
-      // else {
-      //   return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
-      // }
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
+      this.isRowSelectable = function (rowNode) {
+      return (rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'selected') && (rowNode.data && rowNode.data.normal_assessment.evaluation_status == "1") ? true : false;
+    }
     };
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
+        this.isRowSelectable = function (rowNode) {
+        return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
+      }
+    };
+    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+      this.isRowSelectable = function (rowNode) {
+      return rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'selected' ? true : false;
+    }
+  };
   }
 
   columnDefSetting() {
@@ -665,7 +683,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     );
   }
 
-  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
+  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 2);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -680,11 +698,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
+        videoShow, evaluationShow
       }
     );
   }
 
-  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
+  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 4);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -699,11 +718,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
+        videoShow, evaluationShow
       }
     );
   }
 
-  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
+  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -718,11 +738,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
+        videoShow, evaluationShow
       }
     );
   }
 
-  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist) {
+  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 0);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -736,7 +757,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         email: email ? email : "",
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
-        shortlist_name: shortlist ? shortlist : ""
+        shortlist_name: shortlist ? shortlist : "",
+        videoShow, evaluationShow
       }
     );
   }

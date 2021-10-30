@@ -1,3 +1,5 @@
+<ng-container *ngIf="isAccessGranted() else permissionDenied">
+  <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1 else scheduleNotCreatedRef">
 <div class="scheduleDetails-wrapper">
   <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0" [ngTemplateOutlet]="scheduleDetails"></ng-container>
 </div>
@@ -12,6 +14,8 @@
     </ng-container>
   </div>
 </div>
+</ng-container>
+</ng-container>
 
 <ng-template #showQuestionsArray>
 
@@ -75,9 +79,9 @@
 
 <ng-template #selectionbuttons>
   <div class="selectionbuttons">
-    <div (click)="showFeedback = true; selectedStatus = 'Selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
-    <div (click)="showFeedback = true; selectedStatus = 'On Hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div>
-    <div (click)="showFeedback = true; selectedStatus = 'Rejected'" class="reject"><span class="selection-border"><span>Reject</span></span></div>
+    <div (click)="showFeedback = true; selectedStatus = 'selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
+    <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div>
+    <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject"><span class="selection-border"><span>Reject</span></span></div>
   </div>
 </ng-template>
 
@@ -140,6 +144,23 @@
   <div class="no-video">
     <ng-container>
     <h5> Candidate is yet to start/complete his Assessment...</h5>
+  </ng-container>
+
+</div>
+</ng-template>
+<ng-template #permissionDenied>
+  <div class="no-video">
+    <ng-container>
+    <h5>You are not granted access to view this screen</h5>
+  </ng-container>
+
+</div>
+</ng-template>
+
+<ng-template #scheduleNotCreatedRef>
+  <div class="no-video">
+    <ng-container>
+    <h5>No Schedule Details Available</h5>
   </ng-container>
 
 </div>
