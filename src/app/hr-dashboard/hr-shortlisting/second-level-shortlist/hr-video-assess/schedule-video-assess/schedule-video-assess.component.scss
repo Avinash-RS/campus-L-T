@@ -162,6 +162,10 @@
                 &:last-child {
                     border-bottom: 0;
                 }
+                th {
+                  padding: 16px 8px !important;
+                  font-weight: 600;
+                }
                 td {
                     width: 33%;
                     padding: 4px !important;

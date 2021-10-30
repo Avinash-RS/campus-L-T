@@ -41,6 +41,8 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   refreshSubscription: Subscription;
   hideForm: boolean;
   VideoSchedulingSubmitSubscription: Subscription;
+  viewAssignedInterviewerList: any;
+  viewScheduleApiResponse: any;
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -119,10 +121,24 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
       if (params && params['status'] == '1') {
         this.hideForm = true;
         this.tabChange('2');
+        this.getScheduleDetails();
       }
       else {
       }
     });
+ }
+
+ getScheduleDetails() {
+   const apiData = {
+    "shortlist_name": this.shortlist_name
+  };
+  this.adminService.viewScheduleDetails(apiData).subscribe((response: any)=> {
+    this.candidateDetailsList = response && response.candidates ? response.candidates : [];
+    this.viewAssignedInterviewerList = response && response.interviewers ? response.interviewers : [];
+    this.viewScheduleApiResponse = response;
+  }, (err)=> {
+
+  });
  }
 
  getCandidatesListBasedOnShortlistName() {

@@ -55,7 +55,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
-    this.tabledef();
     // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, 'assement_name' ? {data: 'assement_name'} : {data: 'none'});
     this.refreshOndriveChangeRXJS();
   }
@@ -75,6 +74,8 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST)) {
         this.quickSearchValue = '';
         this.getUsersList();
+        this.gridApi.setColumnDefs(null);
+        this.gridApi.setColumnDefs(this.driveBasedColumndefs());
       }
     });
   }
@@ -82,6 +83,34 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.getUsersList();
+    this.gridApi.setColumnDefs(this.driveBasedColumndefs());
+  }
+
+  driveBasedColumndefs() {
+    if (this.appConfig.getSelectedDrivePermissions().normal_assessment && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      let initColumn: any = this.tabledefInit();
+      let normalColumn: any = this.normalAssessmentColumns();
+      let videoColumn: any = this.videoAssessmentColumns();
+      let normalAssessColumnMerge = initColumn.concat(normalColumn);
+      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 1, 0, videoColumn[0]);
+      this.columnDefs = normalAssessColumnMerge;
+      return this.columnDefs;
+    } else {
+    if (this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+      let initColumn: any = this.tabledefInit();
+      let normalColumn: any = this.normalAssessmentColumns();
+      let normalAssessColumnMerge = initColumn.concat(normalColumn);
+      this.columnDefs = normalAssessColumnMerge;
+      return this.columnDefs;
+    }
+    if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      let initColumn: any = this.tabledefInit();
+      let videoColumn: any = this.videoAssessmentColumns();
+      let videoAssessColumnMerge = initColumn.concat(videoColumn);
+      this.columnDefs = videoAssessColumnMerge;
+      return this.columnDefs;
+    }
+  }
   }
 
   sortevent(e) {
@@ -156,26 +185,31 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       // this.toast.warning('No reuslts found');
     }
   }
-  tabledef() {
 
-    this.columnDefs = [
+  videoAssessmentColumns() {
+    return [
       {
-        headerName: 'Shortlist name', field: 'shortlist_name',
-        filter: 'agTextColumnFilter',
-        minWidth: 170,
-        sortable: true,
-        tooltipField: 'shortlist_name',
-        filterParams: {
-          buttons: ['reset'],
-        },
-          getQuickFilterText: (params) => {
-          return params.value;
-        },
-        cellClass: 'shorlistName',
+        headerName: 'Video Assessment Schedule', field: 'va_scheduled_status',
+        minWidth: 140,
+        headerClass: 'ag-grid-header-center',
+        cellClass: 'agCellStyle',
         cellRenderer: (params) => {
-            return `<span class="shortlist"><span class="material-icons">download</span> ${params['data']['shortlist_name']}</span>`;
-        }
-      },
+          if (params['data']['va_scheduled_status'] == 'scheduled') {
+            return `<span style="cursor: pointer; display: flex; color: #C02222; font-size: 20px;" class="material-icons-outlined">info</span>`;
+          } else {
+            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">video_call</span>`;
+          }
+        },
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        sortable: true,
+      }
+    ]
+  }
+  normalAssessmentColumns() {
+    return [
       {
         headerName: 'Total No. of candidates', field: 'total_count',
         filter: 'agNumberColumnFilter',
@@ -293,24 +327,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         sortable: false,
       },
       {
-        headerName: 'Video Assessment Schedule', field: 'va_scheduled_status',
-        minWidth: 140,
-        headerClass: 'ag-grid-header-center',
-        cellClass: 'agCellStyle',
-        cellRenderer: (params) => {
-          if (params['data']['va_scheduled_status'] == 'scheduled') {
-            return `<span style="cursor: pointer; display: flex; color: #C02222; font-size: 20px;" class="material-icons-outlined">info</span>`;
-          } else {
-            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">video_call</span>`;
-          }
-        },
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        sortable: true,
-      },
-      {
         headerName: 'Assign to Panel', field: 'view1',
         minWidth: 140,
         headerClass: 'ag-grid-header-center',
@@ -322,6 +338,28 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         },
         filter: false,
         sortable: false,
+      }
+    ]
+  }
+
+  tabledefInit() {
+    return [
+      {
+        headerName: 'Shortlist name', field: 'shortlist_name',
+        filter: 'agTextColumnFilter',
+        minWidth: 170,
+        sortable: true,
+        tooltipField: 'shortlist_name',
+        filterParams: {
+          buttons: ['reset'],
+        },
+          getQuickFilterText: (params) => {
+          return params.value;
+        },
+        cellClass: 'shorlistName',
+        cellRenderer: (params) => {
+            return `<span class="shortlist"><span class="material-icons">download</span> ${params['data']['shortlist_name']}</span>`;
+        }
       }
     ];
   }
@@ -339,7 +377,9 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
 
   // To get all users
   getUsersList() {
-    this.gridApi.showLoadingOverlay();
+    setTimeout(() => {
+      this.gridApi.showLoadingOverlay();
+    }, 200);
     this.assessmentListForSecondLevelShortlistSubscription = this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
       if (datas) {
         this.userList = datas ? datas : [];

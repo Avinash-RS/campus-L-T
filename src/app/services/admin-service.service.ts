@@ -722,11 +722,11 @@ VideoSchedulingSubmit(data) {
 
 // Proctor
 getProctorVideo(id,type){
-  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=50&count=1&filter[type]=`+type, {headers: this.proctorToken()});
+  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=50&count=1&filter[type]=`+type, {headers: this.proctorToken(), withCredentials: false});
 }
 
 getproctorToken(data) {
-  return this.http.post(`${this.PROCTOR_URL}/api/auth/login`, data, {headers: this.withoutTokens()});
+  return this.http.post(`${this.PROCTOR_URL}/api/auth/login`, data, {headers: this.withoutTokens(), withCredentials: false});
 }
 
 ViewSchedulingDetails(data) {
@@ -735,6 +735,10 @@ ViewSchedulingDetails(data) {
 
 saveVideoSchedulingFeedBack(data) {
   return this.http.post(`${this.BASE_URL}/video-assessment/save-feedback`, data, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+viewScheduleDetails(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/scheduled-list`, data, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
 }
 
 }
