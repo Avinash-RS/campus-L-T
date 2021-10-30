@@ -44,3 +44,35 @@
         </ag-grid-angular>
     </div>
 </div>
+
+<ng-template #errorTemplateRef>
+  <div class="error-wrapper">
+    <ng-container *ngIf="errorReportDetailsArray && errorReportDetailsArray.length > 0 else commonError">
+    <h6>Not Uploaded Candidates</h6>
+    <div class="text mb-2">Following candidates are not uploaded</div>
+    <div class="table-wrapper">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th style="width: 31%;">Name</th>
+          <th style="width: 31%;">Email</th>
+          <th style="width: 31%;">Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let candidate of errorReportDetailsArray; let i = index;">
+              <td style="width: 31%;">{{candidate.name}}</td>
+              <td style="width: 31%;">{{candidate.email}}</td>
+              <td class="red" style="width: 31%;">{{candidate.reason}}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+  <button class="submit" style="margin-bottom: 0 !important;" (click)="closeDialog()" mat-raised-button>Ok</button>
+</ng-container>
+<ng-template #commonError>
+  <h6>Few candidates has been not uploaded.</h6>
+  <button class="submit" style="margin-bottom: 0 !important;" (click)="closeDialog()" mat-raised-button>Ok</button>
+</ng-template>
+  </div>
+</ng-template>

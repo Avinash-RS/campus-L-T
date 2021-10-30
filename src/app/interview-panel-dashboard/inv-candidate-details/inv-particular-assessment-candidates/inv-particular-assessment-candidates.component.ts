@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
@@ -18,6 +18,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDestroy {
   @Output() enableCriteriaComponent = new EventEmitter<boolean>();
+  @ViewChild('errorTemplateRef', {static: false}) errorTemplateRef: TemplateRef<any>;
   selectedUserDetail: any;
   userList: any;
   buttonCheck;
@@ -49,6 +50,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   invSubmittedCandidatesListSubscription: Subscription;
   invSubmittingCandidatesSubscription: Subscription;
   drivePermissions: any;
+  errorTemplateRefVar: any;
+  errorReportDetailsArray: any = [];
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -779,20 +782,23 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     }
   }
   finalSubmitAPI() {
-    const apiData = {
-      userid: [],
-    };
+    const user_details = [];
     this.getSelectedCandidates.forEach((element) => {
-      if (element) {
-        apiData["userid"].push(
-          element["data"] && element["data"]["uid"]
-            ? element["data"]["uid"]
-            : ""
-        );
+      if (element && element["data"]["uid"] && element["data"]["shortlist_name"]) {
+        let user = {
+          user_id: element["data"]["uid"],
+          shortlist_name: element["data"]["shortlist_name"]
+        };
+        user_details.push(user);
       }
     });
-   this.invSubmittingCandidatesSubscription = this.adminService.invSubmittingCandidates(apiData).subscribe(
+   this.invSubmittingCandidatesSubscription = this.adminService.invSubmittingCandidates(user_details).subscribe(
       (data: any) => {
+      this.errorReportDetailsArray = [];
+      if (data && data.length > 0) {
+        this.errorReportDetailsArray = data;
+        this.openMatDialog();
+      } else {
         const datas = {
           iconName: "",
           dataToBeShared: {
@@ -806,11 +812,29 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           showOk: "",
         };
         this.openDialog(ShortlistBoxComponent, datas);
-
-        // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_SUBMITTED, { data: this.nameOfAssessment });
-      },
+      }
+    },
       (err) => {}
     );
+  }
+
+  openMatDialog() {
+    this.errorTemplateRefVar = this.matDialog.open(this.errorTemplateRef, {
+      width: '700px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: true,
+      panelClass: 'errorTemplateRefPopUp'
+    });
+  }
+
+  closeDialog() {
+    this.quickSearchValue = '';
+    this.buttonCheck = false;
+    this.getSelectedCandidates = [];
+    this.getUsersList();
+    this.errorTemplateRefVar.close();
   }
 
   momentForm(date) {
