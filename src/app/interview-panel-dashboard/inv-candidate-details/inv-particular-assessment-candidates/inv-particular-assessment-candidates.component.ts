@@ -133,6 +133,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     }
 
     if (event.colDef.field === "video_assessment.test_status") {
+      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == '1') {
       this.appConfig.setLocalData(
         "cProPic",
         event["data"]["profile_image_url"]
@@ -148,6 +149,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["video_assessment"],
         event["data"]["shortlist_name"]
         );
+      }
     }
 
     if (event.colDef.field === "evaluation_btn") {
@@ -218,7 +220,15 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     }
     this.rowSelection = "multiple";
     this.isRowSelectable = function (rowNode) {
-      return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
+      // if (this.drivePermissions && this.drivePermissions.normal_assessment) {
+        return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
+      // }
+      // if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+      //   return rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'selected' ? true : false;
+      // }
+      // else {
+      //   return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
+      // }
     };
   }
 
@@ -628,7 +638,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             element["counter"] = counting;
             element["evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
             element.video_assessment = element.video_assessment ? element.video_assessment : {};
-            element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "pending" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'inprogress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] == 'completed' ? 'Completed' : '');
+            element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "YetToStart" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'InProgress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] == 'Completed' ? 'Completed' : '');
             element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             element["evaluation_status_1"] =
