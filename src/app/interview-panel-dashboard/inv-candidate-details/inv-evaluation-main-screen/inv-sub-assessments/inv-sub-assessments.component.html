@@ -1,7 +1,7 @@
 <ng-container *ngIf="isAccessGranted() else permissionDenied">
   <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1 else scheduleNotCreatedRef">
 <div class="scheduleDetails-wrapper">
-  <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0" [ngTemplateOutlet]="scheduleDetails"></ng-container>
+  <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1" [ngTemplateOutlet]="scheduleDetails"></ng-container>
 </div>
 
 <div class="video-assessments">

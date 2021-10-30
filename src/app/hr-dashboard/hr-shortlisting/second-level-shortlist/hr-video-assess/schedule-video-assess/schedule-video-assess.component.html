@@ -218,7 +218,8 @@
                     <span class="material-icons-outlined">visibility</span>
                     <span>Review</span>
                 </ng-template>
-                <div class="tabContent reviewTab">
+                <ng-container *ngIf="!hideForm else viewScheduling">
+                  <div class="tabContent reviewTab">
                     <div class="candidates">
                         <h4 style="width: 100%; display: flex;">Candidates <span class="fetch" (click)="fetchAllCandidates()">Fetch All Candidates <span class="material-icons load-icon">loop</span></span></h4>
                         <ng-container *ngIf="!candidateListLoading else CandidatesFetching">
@@ -297,11 +298,12 @@
                       </div>
 
                     </div>
-                    <div class="prevNext">
+                    <div *ngIf="!hideForm" class="prevNext">
                         <button (click)="tabChange('1')" class="prev">Previous</button>
                         <button class="next" (click)="scheduleSubmit()">Confirm</button>
                     </div>
                 </div>
+                </ng-container>
             </mat-tab>
         </mat-tab-group>
     </div>
@@ -393,4 +395,105 @@
     <h5 style="font-size: 18px;" class="loading03 mt-2 mb-2">Fetching. . .</h5>
   </div>
   </div>
+</ng-template>
+<ng-template #viewScheduling>
+  <div class="tabContent reviewTab">
+    <div class="scheduleSection mb-3">
+      <h4>Schedule Details</h4>
+      <div>
+          <label>Title:</label>
+          <p>{{scheduleForm.value.title ? scheduleForm.value.title : 'NA'}}</p>
+      </div>
+      <div>
+          <label>Description: </label>
+          <p>{{scheduleForm.value.description ? scheduleForm.value.description : 'NA'}}</p>
+      </div>
+      <div class="d-flex justify-content-start align-items-center">
+          <div>
+              <label>Start Date - Time</label>
+              <p>{{scheduleForm.value.startTime ? momentFormDateTime(scheduleForm.value.startTime) : 'NA' }}</p>
+            </div>
+          <div>
+              <label>End Date - Time</label>
+              <p>{{scheduleForm.value.endTime ? momentFormDateTime(scheduleForm.value.endTime) : 'NA' }}</p>
+          </div>
+      </div>
+      <div>
+        <label>Notifications</label>
+        <p>{{scheduleForm.value.type ? 'Mail will be sent to both Candidates and Evaluator.' : 'Mail notification is not enabled'}}</p>
+    </div>
+    <div>
+      <label>Scheduled by</label>
+      <p>{{viewScheduleApiResponse && viewScheduleApiResponse.scheduled_by ? viewScheduleApiResponse.scheduled_by : '' }}</p>
+  </div>
+
+  </div>
+
+    <div class="candidates">
+        <h4 style="width: 100%; display: flex;">Candidates Details</h4>
+        <ng-container *ngIf="!candidateListLoading else CandidatesFetching">
+        <div *ngIf="candidateDetailsList && candidateDetailsList.length > 0 else noCandidatesPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
+        <table cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th style="width: 30%;">{{'Candidate Id'}}</th>
+              <th style="width: 30%;">{{'Name'}}</th>
+              <th style="width: 30%;">{{'Email'}}</th>
+              <th style="width: 8%;">{{'Video Assessment Status'}}</th>
+      </tr>
+          </thead>
+            <tbody>
+                <tr *ngFor="let candidate of candidateDetailsList; let i = index;">
+                    <td style="width: 30%;">{{candidate.candidate_id}}</td>
+                    <td style="width: 30%;">{{candidate.full_name}}</td>
+                    <td style="width: 30%;">{{candidate.email}}</td>
+                    <td style="width: 8%;">{{candidate.test_status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+      </ng-container>
+    </div>
+    <div class="candidates mt-3">
+      <h4>Interviewers Details</h4>
+      <div *ngIf="viewAssignedInterviewerList && viewAssignedInterviewerList.length > 0 else noInterviewerPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
+      <table cellpadding="0" cellspacing="0">
+        <thead>
+          <tr>
+            <th style="width: 31%;">{{'Name'}}</th>
+            <th style="width: 31%;">{{'Email'}}</th>
+            <th style="width: 31%;">{{'Discipline'}}</th>
+        </tr>
+        </thead>
+          <tbody>
+              <tr *ngFor="let interviewer of viewAssignedInterviewerList; let i = index">
+                  <td style="width: 31%;">{{interviewer.full_name}}</td>
+                  <td style="width: 31%;">{{interviewer.email}}</td>
+                  <td style="width: 31%;">{{interviewer.discipline}}</td>
+              </tr>
+          </tbody>
+      </table>
+      </div>
+  </div>
+    <div class="secondSection">
+        <h4>Questions</h4>
+        <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
+          <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
+            <div class="questions">
+                <h5>{{question.questionDes}}</h5>
+                <div class="d-flex justify-content-between">
+                    <span><span>Updated by: </span>{{question.updatedBy ? question.updatedBy : question.createdBy ? question.createdBy : ''}}</span>
+                    <span><span>Updated Date: </span>{{question.updatedAt ? momentFormDateTime(question.updatedAt) : question.createdAt ? momentFormDateTime(question.createdAt) : ''}}</span>
+                    <span><span>Question Code: </span>{{question.quesCode}}</span>
+                    <span><span>Question Type: </span>{{question.quesType}}</span>
+                </div>
+            </div>
+            <span class="delete">
+                <span (click)="remove(i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
+            </span>
+        </div>
+
+      </div>
+    </div>
+</div>
 </ng-template>
