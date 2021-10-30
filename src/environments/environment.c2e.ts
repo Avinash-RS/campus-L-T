@@ -14,6 +14,7 @@ export const environment = {
   API_BASE_URL_city: 'https://c2e.lntedutech.com/d8cintana2',
   Image_Base_Url: 'https://c2e.lntedutech.com',
   NODE_API_BASE_URL: 'https://edgeservice.lntedutech.com',
-  PROCTOR_URL: 'https://lntproctor.lntedutech.com'
+  PROCTOR_URL: 'https://lntproctor.lntedutech.com',
+  PROCTOR_VIDEO_URL : 'http://lntproctor.lntedutech.com/api/storage/'
 
 };

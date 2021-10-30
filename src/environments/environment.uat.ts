@@ -12,7 +12,9 @@ export const environment = {
     API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'https://uat-campus.lntedutech.com/d8cintana2',
     Image_Base_Url: 'https://uat-campus.lntedutech.com',
-    NODE_API_BASE_URL: 'https://edgeservice.lntedutech.com'
+    NODE_API_BASE_URL: 'https://edgeservice.lntedutech.com',
+    PROCTOR_URL: 'https://lntproctordev.lntedutech.com',
+    PROCTOR_VIDEO_URL : 'http://lntproctordev.lntedutech.com/api/storage/'
 
     // New C2e Instance
     // versionCheckURL: 'https://c2e.lntedutech.com/version.json',
