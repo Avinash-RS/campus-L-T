@@ -35,6 +35,9 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
       this.appConfig.setLocalData('secondShortlist', 'true');
       this.appConfig.setLocalData('firstShortlist', 'true');
     }
+    if (this.appConfig.getLocalData('first_shortlist') == '0' && this.appConfig.getLocalData('first_shortlist') == 'false' && this.appConfig.getLocalData('isKYCNotExempted') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
+      this.appConfig.setLocalData('form_submmited', 'true');
+    }
     this.checkFormValidRequestFromRxjs();
     this.getUserName();
     this.joiningFormDataFromJoiningFormComponentRxjs();
