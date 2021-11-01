@@ -77,6 +77,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   yesexist = {
     width: 'auto !important'
   }
+  videoScheduleShortlistName: any;
+  videoEvaluateShortlistName: any;
   refreshSubscription: Subscription;
   getoverallInstituteSubscription: Subscription;
   getAllShortlistedShortlistNames_ALLSubscription: Subscription;
@@ -162,7 +164,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   getUsersList() {
     const today = moment();
 
-    const data = [{
+    let data = [{
       'reportname': 'abc',
       'col2': 'a',
       'col3': 'b',
@@ -199,6 +201,27 @@ export class ReportsListComponent implements OnInit, OnDestroy {
       'action': 'f'
     }
     ];
+    let videoSchedule = [
+      {
+        'reportname': 'y',
+        'col2': 'a',
+        'col3': 'b',
+        'col4': 'c',
+        'fdate': today,
+        'tdate': today,
+        'action': 'f'
+      },
+      {
+        'reportname': 'y',
+        'col2': 'a',
+        'col3': 'b',
+        'col4': 'c',
+        'fdate': today,
+        'tdate': today,
+        'action': 'f'
+      }
+    ];
+    data = this.appConfig.getSelectedDrivePermissions().video_assessment ? data.concat(videoSchedule) : data;
     this.userList = data;
     this.dataSource = new MatTableDataSource(this.userList);
     this.dataSource.paginator = this.paginator;
@@ -431,6 +454,46 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     }
   }
 
+    // To get video Schedule Reports
+    getScheduledVideoReports(data) {
+      let sendReq = {
+        'shortlist_name': data
+      };
+      if(data){
+         this.secondShortlistReportSubscription = this.adminService.scheduledVideoReports(sendReq).subscribe((data: any) => {
+            if(data && data[0] && data[0].url && data[0].url != 'No Data Found') {
+              const excel = data && data[0].url ? data[0].url : '';
+              window.open(excel, '_blank');
+            }else{
+              this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 2nd shortlist");
+            }
+          }, (err) => {
+          });
+      } else {
+        this.appConfig.nzNotification("error", "Invalid Request", "Shortlist Name is Required");
+      }
+    }
+
+    // To get video Schedule Reports
+    getEvaluatedVideoReports(data) {
+      let sendReq = {
+        'shortlist_name': data
+      };
+      if(data){
+          this.secondShortlistReportSubscription = this.adminService.evaluatedVideoReports(sendReq).subscribe((data: any) => {
+            if(data && data[0] && data[0].url && data[0].url != 'No Data Found') {
+              const excel = data && data[0].url ? data[0].url : '';
+              window.open(excel, '_blank');
+            }else{
+              this.appConfig.nzNotification("error", "No Data Found", "No data found for the selected 2nd shortlist");
+            }
+          }, (err) => {
+          });
+      } else {
+        this.appConfig.nzNotification("error", "Invalid Request", "Shortlist Name is Required");
+      }
+    }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -486,6 +549,18 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         this.interviewPanelRepots(dateFilter);
       }else{
         this.appConfig.nzNotification("error", "Interview Panel", "Date is required");
+      }
+    }else if(index == 4){
+      if (this.videoScheduleShortlistName) {
+        this.getScheduledVideoReports(this.videoScheduleShortlistName);
+      } else {
+        this.appConfig.nzNotification("error", "Scheduled Video Assessments Report", "Shortlist Name is required");
+      }
+    }else if(index == 5){
+      if (this.videoEvaluateShortlistName) {
+        this.getEvaluatedVideoReports(this.videoEvaluateShortlistName);
+      } else {
+        this.appConfig.nzNotification("error", "Evaluated Video Assessments Report", "Shortlist Name is required");
       }
     }
   }
