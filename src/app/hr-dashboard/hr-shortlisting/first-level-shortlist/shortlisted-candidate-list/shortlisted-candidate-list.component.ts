@@ -23,6 +23,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 export const MY_FORMATS = {
@@ -354,6 +355,13 @@ dateConvertionMonth(date) {
             getQuickFilterText: (params) => {
               return params.value;
             },
+            cellRenderer: (params) => {
+              if (params['data']['kyc_exempted'] && params['data']['kyc_exempted'] == 'no') {
+                return `<span style="border-bottom: solid #C02222 1px; cursor: pointer; color: #C02222;">${params['data']['candidate_name']} </span>`;
+              } else {
+                return `${params['data']['candidate_name']}`
+              }
+            }
           },
           {
             headerName: "Email Id",
@@ -707,7 +715,13 @@ dateConvertionMonth(date) {
   }
 
   onCellClicked(event) {
-    // event['data']
+    if (event.colDef.field === 'candidate_name' && event['data'] && (event['data']['kyc_exempted'] && event['data']['kyc_exempted'] == 'no')) {
+      const data = {
+        candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+        candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
+      };
+      this.openDialog1(CommonKycProfileViewComponent, data);
+  }
   }
 
   onFirstDataRendered(params) {

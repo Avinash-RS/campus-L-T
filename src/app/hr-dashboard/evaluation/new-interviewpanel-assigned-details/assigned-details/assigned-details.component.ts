@@ -105,7 +105,6 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
     this.getInstitute();
     this.getEducation();
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
-    this.tabledef();
     this.refreshOndriveChangeRXJS();
   }
 
@@ -120,6 +119,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         this.getShortlistNames();
         this.getInstitute();
         this.go();
+        this.tabledef();
       }
     });
   }
@@ -166,6 +166,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.go();
+    this.tabledef();
     // this.gridApi.sizeColumnsToFit();
     // this.gridApi.setDatasource(this.dataSources);
   }
@@ -178,17 +179,18 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   tabledef() {
-    this.columnDefs = [
-      // {
-      //   headerName: 'S no',
-      //   valueGetter: (params) => {
-      //     const i = +params.node.id + 1;
-      //     return i ? i : 'Loading...';
-      //   },
-      //   filter: 'agNumberColumnFilter',
-      //   minWidth: 100,
-      //   sortable: true
-      // },
+    if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      let defaultCol: any = this.withoutVideoSchedule();
+      let mergeCol = defaultCol.concat(this.WithVideoSchedulingColumns());
+      this.gridApi.setColumnDefs(mergeCol);
+    } else {
+      this.gridApi.setColumnDefs(null);
+      this.gridApi.setColumnDefs(this.withoutVideoSchedule());
+    }
+  }
+
+  withoutVideoSchedule() {
+    return [
       {
         headerName: 'Candidate Id', field: 'candidate_id',
         filter: 'agNumberColumnFilter',
@@ -335,6 +337,31 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
     ];
   }
 
+  WithVideoSchedulingColumns() {
+    return [
+      {
+        headerName: 'Video Assessment Status', field: 'va_test_status',
+        filter: 'agSetColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'va_test_status',
+        getQuickFilterText: (params) => {
+          return params.value;
+          }
+      },
+      {
+        headerName: 'Video Evaluation Status', field: 'va_evaluation_status',
+        filter: 'agSetColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'va_evaluation_status',
+        getQuickFilterText: (params) => {
+          return params.value;
+          }
+      }
+    ]
+    }
+
   onCellClicked(event) {
     if (event.colDef.field === 'name') {
       const param = {
@@ -418,7 +445,19 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
 
       if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];
-          }, (err) => {
+      if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      this.rowData.forEach(element => {
+        if (element) {
+        element.va_evaluation_status = element.va_scheduled_status != 1 ? '-' : element.va_evaluation_status;
+        element.va_test_status = element.va_scheduled_status != 1 ? '-' : element.va_test_status;
+        if (element.va_scheduled_status) {
+          element.va_evaluation_status = element.va_evaluation_status ? element.va_evaluation_status : 'Yet to Evaluate';
+          element.va_test_status = element.va_test_status == 'InProgress' ? 'In Progress' : element.va_test_status == 'Completed' ? 'Completed' : 'Yet to Start';
+        }
+      }
+      });
+      }
+      }, (err) => {
     });
   }
 

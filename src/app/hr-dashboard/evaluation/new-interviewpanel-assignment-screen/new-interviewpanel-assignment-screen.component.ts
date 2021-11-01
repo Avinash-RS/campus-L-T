@@ -15,6 +15,7 @@ import moment from 'moment';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { ScheduleInterviewPopupComponent } from '../../pages/schedule-interview-popup/schedule-interview-popup.component';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-new-interviewpanel-assignment-screen',
@@ -147,7 +148,6 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.defaultColDefHR = this.appConfig.agGridWithAllFunc();
-    this.tabledef();
     this.tabledefHR();
     this.getShortlistNames();
     this.getInstitute();
@@ -190,6 +190,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         this.clearAllDatas();
         this.getShortlistNames();
         this.getInstitute();
+        this.tabledef();
         }
     });
   }
@@ -218,6 +219,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.tabledef();
   }
 
   sortevent(e) {
@@ -228,6 +230,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   onCellClicked(event) {
+    if (event.colDef.field === 'email' && event['data'] && (event['data']['level'] && event['data']['level'] != ' ')) {
+        const data = {
+          candidate_user_id: event['data'] && event['data']['uid'] ? event['data']['uid'] : '',
+          candidateName: event['data'] && event['data']['name'] ? event['data']['name'] : '',
+        };
+        this.openDialog5(CommonKycProfileViewComponent, data);
+    }
   }
 
   getModel(e) {
@@ -249,8 +258,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       // this.appConfig.nzNotification('error', 'Candidate Not Found', 'No global search results found');
     }
   }
-  tabledef() {
-    this.columnDefs = [
+
+  WithoutVideoSchedulingColumns() {
+    return [
       {
         headerCheckboxSelection: true,
         headerCheckboxSelectionFilteredOnly: true,
@@ -270,6 +280,13 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         tooltipField: 'email',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          if (params['data']['level'] && params['data']['level'] != ' ') {
+            return `<span style="border-bottom: solid #C02222 1px; cursor: pointer; color: #C02222;">${params['data']['email']} </span>`;
+          } else {
+            return `${params['data']['email']}`
+          }
         }
       },
       {
@@ -319,6 +336,41 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         }
       }
     ];
+  }
+  WithVideoSchedulingColumns() {
+  return [
+    {
+      headerName: 'Video Assessment Status', field: 'va_test_status',
+      filter: 'agSetColumnFilter',
+      minWidth: 140,
+      sortable: true,
+      tooltipField: 'va_test_status',
+      getQuickFilterText: (params) => {
+        return params.value;
+        }
+    },
+    {
+      headerName: 'Video Evaluation Status', field: 'va_evaluation_status',
+      filter: 'agSetColumnFilter',
+      minWidth: 140,
+      sortable: true,
+      tooltipField: 'va_evaluation_status',
+      getQuickFilterText: (params) => {
+        return params.value;
+        }
+    }
+  ]
+  }
+
+  tabledef() {
+    if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      let defaultCol: any = this.WithoutVideoSchedulingColumns();
+      let mergeCol = defaultCol.concat(this.WithVideoSchedulingColumns());
+      this.gridApi.setColumnDefs(mergeCol);
+    } else {
+      this.gridApi.setColumnDefs(null);
+      this.gridApi.setColumnDefs(this.WithoutVideoSchedulingColumns());
+    }
   }
 
   //  HR
@@ -510,6 +562,18 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         }
       });
       this.rowData = this.userList;
+      if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
+        this.rowData.forEach(element => {
+          if (element) {
+          element.va_evaluation_status = element.va_scheduled_status != 1 ? '-' : element.va_evaluation_status;
+          element.va_test_status = element.va_scheduled_status != 1 ? '-' : element.va_test_status;
+          if (element.va_scheduled_status) {
+            element.va_evaluation_status = element.va_evaluation_status ? element.va_evaluation_status : 'Yet to Evaluate';
+            element.va_test_status = element.va_test_status == 'InProgress' ? 'In Progress' : element.va_test_status == 'Completed' ? 'Completed' : 'Yet to Start';
+          }
+        }
+        });
+      }
   }
 
     // To get all users
@@ -767,4 +831,26 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   cancelConfirmation() {
     this.scheduleConfirmationPopUp.close();
   }
+
+        // Open dailog
+        openDialog5(component, data) {
+          let dialogDetails: any;
+
+          /**
+           * Dialog modal window
+           */
+          // tslint:disable-next-line: one-variable-per-declaration
+          const dialogRef = this.matDialog.open(component, {
+            width: 'auto',
+            height: 'auto',
+            autoFocus: false,
+            data
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+          });
+        }
+
 }
