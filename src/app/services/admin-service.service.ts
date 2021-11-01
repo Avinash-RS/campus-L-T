@@ -741,4 +741,12 @@ viewScheduleDetails(data) {
   return this.http.post(`${this.BASE_URL}/video-assessment/scheduled-list`, data, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
 }
 
+scheduledVideoReports(data) {
+  return this.http.post(`${this.BASE_URL}/reports/va-scheduled-report`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+evaluatedVideoReports(data) {
+  return this.http.post(`${this.BASE_URL}/reports/va-feedback-report`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
 }

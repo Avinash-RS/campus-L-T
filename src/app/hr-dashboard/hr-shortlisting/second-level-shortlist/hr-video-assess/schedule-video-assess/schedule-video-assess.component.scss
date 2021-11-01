@@ -14,6 +14,7 @@
         max-width: 720px;
         width: 98%;
         margin: 30px auto;
+        margin-top: 0;
     }
     .questionTab {
         .addQuestion {
@@ -168,16 +169,39 @@
                 }
                 td {
                     width: 33%;
-                    padding: 4px !important;
                     color: #4D4D4D;
                     font-size: 14px;
                     font-weight: 400;
                     line-height: normal;
-                }
+                    span {
+                      padding: 4px !important;
+                      background-color: #bababa;
+                      color: #666666;
+                      border-radius: 4px;
+                    }
+                    .InProgress,.Hold {
+                      padding: 4px !important;
+                      background-color: #ffbc00 !important;
+                      color: #fff;
+                      border-radius: 4px;
+                    }
+                    .Completed,.Selected {
+                      padding: 4px !important;
+                      background-color: #48cc83 !important;
+                      color: #fff;
+                      border-radius: 4px;
+                    }
+                    .Rejected {
+                      padding: 4px !important;
+                      background-color: #c02222 !important;
+                      color: #fff;
+                      border-radius: 4px;
+                    }
+              }
             }
         }
         .secondSection, .scheduleSection {
-            margin-top: 20px;
+            margin-top: 8px;
         }
         .scheduleSection {
             > div {
@@ -244,17 +268,18 @@
 .delete {
     width: 5%;
     text-align: right;
+    background: none !important;
     span {
         cursor: pointer;
-        background-color: #F2F2F2;
+        background-color: #F2F2F2 !important;
         font-size: 22px;
-        color: #999999;
+        color: #999999 !important;
         display: inline-flex;
         justify-content: center;
         align-items: center;
         width: 30px;
         height: 30px;
-        border-radius: 50%;
+        border-radius: 50% !important;
     }
 }
 .prevNext {
@@ -314,6 +339,8 @@
     }
     .descriptionContent {
         padding: 15px 20px;
+        overflow: auto;
+        max-height: 600px;
         h4 {
             font-size: 22px;
             font-weight: 700;
@@ -600,4 +627,22 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
   vertical-align: middle;
   top: -1.5px !important;
   position: relative;
+}
+.view-schedule-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  div {
+    margin-bottom: 8px;
+    min-width: 200px;
+    margin-left: 0 !important;
+    margin-right: 1em;
+  }
+}
+.reschedule {
+  font-weight: 600;
+  color: white;
+  border: none;
+  width: 20%;
+  height: 40px !important;
+  font-size: 16px;
 }

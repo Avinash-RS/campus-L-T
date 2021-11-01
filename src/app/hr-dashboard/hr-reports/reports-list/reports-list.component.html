@@ -13,6 +13,8 @@
               <label *ngIf="i == 2">Evaluation feedback</label>
               <!-- <label *ngIf="i == 3">Candidate details</label> -->
               <label *ngIf="i == 3">Interview panel</label>
+              <label *ngIf="i == 4">Scheduled Video Assessments Report<span class="asterick">*</span></label>
+              <label *ngIf="i == 5">Evaluated Video Assessments Report<span class="asterick">*</span></label>
             </td>
           </ng-container>
 
@@ -52,14 +54,30 @@
                       <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="institute.institute">{{institute.institute}}</span>
                     </nz-option>
                 </nz-select>
-
                 </div>
+                <div *ngIf="i == 4">
+                  <nz-select class="input select nzSelect"
+                  nzPlaceHolder="Shortlist name" [(ngModel)]="videoScheduleShortlistName" nzAllowClear nzShowSearch>
+                    <nz-option nzCustomContent *ngFor="let shortlist of shortlistLists" [nzLabel]="shortlist.shortlist_name" [nzValue]="shortlist.shortlist_name">
+                      <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="shortlist.shortlist_name">{{shortlist.shortlist_name}}</span>
+                    </nz-option>
+                </nz-select>
+                </div>
+                <div *ngIf="i == 5">
+                  <nz-select class="input select nzSelect"
+                  nzPlaceHolder="Shortlist name" [(ngModel)]="videoEvaluateShortlistName" nzAllowClear nzShowSearch>
+                    <nz-option nzCustomContent *ngFor="let shortlist of shortlistLists" [nzLabel]="shortlist.shortlist_name" [nzValue]="shortlist.shortlist_name">
+                      <span style="padding: 1em 0 !important;"  nz-tooltip [nzTitle]="shortlist.shortlist_name">{{shortlist.shortlist_name}}</span>
+                    </nz-option>
+                </nz-select>
+                </div>
+
               </td>
           </ng-container>
           <ng-container matColumnDef="col3">
               <th mat-header-cell *matHeaderCellDef>&#160;Date from  </th>
               <td mat-cell *matCellDef="let element; let i = index;">
-                  <div>
+                  <div *ngIf="i !=4 && i!=5">
                         <div class="input-box">
                             <input matInput #input="ngModel" [matDatepicker]="dp_i" [min]="minDate" [max]="maxDate" placeholder="DD-MM-YYYY" [(ngModel)]="element.fdate">
                             <mat-datepicker-toggle class="mat-icon-button" matSuffix [for]="dp_i"></mat-datepicker-toggle>
@@ -76,8 +94,8 @@
               <th mat-header-cell *matHeaderCellDef> &#160;Date to </th>
               <td mat-cell *matCellDef="let element; let i = index;">
 
-                  <div>
-                    <div class="input-box">
+                <div *ngIf="i !=4 && i!=5">
+                  <div class="input-box">
                       <input  matInput #input1="ngModel" [matDatepicker]="dp_i" [min]="minDate" [max]="maxDate" placeholder="DD-MM-YYYY" [(ngModel)]="element.tdate">
                       <mat-datepicker-toggle class="mat-icon-button" matSuffix [for]="dp_i"></mat-datepicker-toggle>
                       <mat-datepicker #dp_i>

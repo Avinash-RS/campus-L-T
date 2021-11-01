@@ -145,45 +145,6 @@
                           </div>
                         </div>
 
-                        <!-- <div class="startEnd d-flex justify-content-between align-items-center">
-                            <div class="startTime d-flex justify-content-between align-items-center">
-                                <div class="date">
-                                    <label>Start Date</label>
-                                    <div>
-                                        <input matInput placeholder="Start Date" />
-                                        <span class="material-icons-outlined">calendar_today</span>
-                                    </div>
-                                </div>
-                                <div class="time">
-                                    <label>Time</label>
-                                    <div>
-                                        <input matInput placeholder="Time" />
-                                        <span class="material-icons-outlined">schedule</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="Arrow">
-                                <span class="material-icons-outlined">east</span>
-                            </div>
-
-                            <div class="endTime d-flex justify-content-between align-items-center">
-                                <div class="date">
-                                    <label>End Date</label>
-                                    <div>
-                                        <input matInput placeholder="End Date" />
-                                        <span class="material-icons-outlined">calendar_today</span>
-                                    </div>
-                                </div>
-                                <div class="time">
-                                    <label>Time</label>
-                                    <div>
-                                        <input matInput placeholder="Time" />
-                                        <span class="material-icons-outlined">schedule</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="tagInterviewer">
                             <label>Tag Interviewer<span class="asterick">*</span></label>
                             <nz-select style="border: none !important;" [nzMaxTagCount]="1" nzMode="multiple" class="selectInterviewer" [formControlName]="'interviewerDetails'" nzAllowClear nzShowSearch nzPlaceHolder="Select Interviewer">
@@ -219,7 +180,7 @@
                     <span>Review</span>
                 </ng-template>
                 <ng-container *ngIf="!hideForm else viewScheduling">
-                  <div class="tabContent reviewTab">
+                  <div class="tabContent reviewTab mt-3">
                     <div class="candidates">
                         <h4 style="width: 100%; display: flex;">Candidates <span class="fetch" (click)="fetchAllCandidates()">Fetch All Candidates <span class="material-icons load-icon">loop</span></span></h4>
                         <ng-container *ngIf="!candidateListLoading else CandidatesFetching">
@@ -253,7 +214,7 @@
                       </div>
                   </div>
                     <div class="secondSection">
-                        <h4>Questions</h4>
+                        <h4 class="mb-0">Questions</h4>
                         <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
                           <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                             <div class="questions">
@@ -272,7 +233,7 @@
 
                       </div>
                     </div>
-                    <div class="scheduleSection">
+                    <div class="scheduleSection mt-3">
                         <h4>Schedule</h4>
                         <div>
                             <label>Title:</label>
@@ -361,7 +322,7 @@
   </div>
 </ng-template>
 <ng-template #noQuestionsMsg>
-  <div class="questionWrapper d-flex align-items-center justify-content-between">
+  <div class="questionWrapper d-flex align-items-center justify-content-between mt-3">
     <div class="questions justify-content-center" style="text-align:center; width: 100%;">
     <h5 style="font-size: 14px; margin: 0">No questions were selected. <br><br> Please click on the below add button to add the questions</h5>
   </div>
@@ -400,6 +361,7 @@
   <div class="tabContent reviewTab">
     <div class="scheduleSection mb-3">
       <h4>Schedule Details</h4>
+      <div *ngIf="ScheduleDetailsObj" class="view-schedule-wrapper">
       <div>
           <label>Title:</label>
           <p>{{scheduleForm.value.title ? scheduleForm.value.title : 'NA'}}</p>
@@ -426,7 +388,7 @@
       <label>Scheduled by</label>
       <p>{{viewScheduleApiResponse && viewScheduleApiResponse.scheduled_by ? viewScheduleApiResponse.scheduled_by : '' }}</p>
   </div>
-
+</div>
   </div>
 
     <div class="candidates">
@@ -436,18 +398,20 @@
         <table cellpadding="0" cellspacing="0">
           <thead>
             <tr>
-              <th style="width: 30%;">{{'Candidate Id'}}</th>
-              <th style="width: 30%;">{{'Name'}}</th>
-              <th style="width: 30%;">{{'Email'}}</th>
-              <th style="width: 8%;">{{'Video Assessment Status'}}</th>
+              <th style="width: 20%;">{{'Candidate Id'}}</th>
+              <th style="width: 25%;">{{'Name'}}</th>
+              <th style="width: 25%;">{{'Email'}}</th>
+              <th style="width: 14%;">{{'Test Status'}}</th>
+              <th style="width: 14%;">{{'Evaluation Status'}}</th>
       </tr>
           </thead>
             <tbody>
                 <tr *ngFor="let candidate of candidateDetailsList; let i = index;">
-                    <td style="width: 30%;">{{candidate.candidate_id}}</td>
-                    <td style="width: 30%;">{{candidate.full_name}}</td>
-                    <td style="width: 30%;">{{candidate.email}}</td>
-                    <td style="width: 8%;">{{candidate.test_status}}</td>
+                    <td style="width: 20%;">{{candidate.candidate_id}}</td>
+                    <td style="width: 25%;">{{candidate.full_name}}</td>
+                    <td style="width: 25%;">{{candidate.email}}</td>
+                    <td style="width: 14%;"><span [class]="candidate.test_status ? candidate.test_status : ''">{{candidate.test_status && candidate.test_status == 'InProgress' ? 'In Progress' : candidate.test_status == 'Completed' ? 'Completed' : 'Yet to Start'}}</span></td>
+                    <td style="width: 14%;"><span [matTooltip]="candidate.evaluated_by ? candidate.evaluated_by : ''" [class]="candidate.evaluation_status ? candidate.evaluation_status : ''">{{candidate.evaluation_status ? candidate.evaluation_status : 'Yet to Evaluate'}}</span></td>
                 </tr>
             </tbody>
         </table>
@@ -475,25 +439,25 @@
       </table>
       </div>
   </div>
-    <div class="secondSection">
-        <h4>Questions</h4>
-        <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
-          <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
+    <div class="secondSection mt-3">
+        <h4 class="mb-0">Questions</h4>
+        <div *ngIf="scheduledQuestionsArray && scheduledQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
+          <div *ngFor="let question of scheduledQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
             <div class="questions">
-                <h5>{{question.questionDes}}</h5>
+                <h5>{{question.questionDetails ? question.questionDetails.questionDes : ''}}</h5>
                 <div class="d-flex justify-content-between">
-                    <span><span>Updated by: </span>{{question.updatedBy ? question.updatedBy : question.createdBy ? question.createdBy : ''}}</span>
-                    <span><span>Updated Date: </span>{{question.updatedAt ? momentFormDateTime(question.updatedAt) : question.createdAt ? momentFormDateTime(question.createdAt) : ''}}</span>
-                    <span><span>Question Code: </span>{{question.quesCode}}</span>
-                    <span><span>Question Type: </span>{{question.quesType}}</span>
+                    <span><span>Updated by: </span>{{question.questionDetails.updatedBy ? question.questionDetails.updatedBy : question.questionDetails.createdBy ? question.questionDetails.createdBy : ''}}</span>
+                    <span><span>Updated Date: </span>{{question.questionDetails.updatedAt ? momentFormDateTime(question.questionDetails.updatedAt) : question.questionDetails.createdAt ? momentFormDateTime(question.questionDetails.createdAt) : ''}}</span>
+                    <span><span>Question Code: </span>{{question.questionDetails.quesCode}}</span>
+                    <span><span>Question Type: </span>{{question.questionDetails.quesType}}</span>
                 </div>
             </div>
-            <span class="delete">
-                <span (click)="remove(i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
-            </span>
         </div>
 
       </div>
     </div>
+    <div class="secondSection d-flex align-items-center justify-content-center mt-2">
+      <button (click)="reschedule()" class="submit reschedule">Reschedule</button>
+      </div>
 </div>
 </ng-template>

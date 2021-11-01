@@ -6,7 +6,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -39,14 +39,20 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   getInterviewersBasedOnShortlistNameSubscription: Subscription;
   getQuestionsForVideoSchedulingSubscription: Subscription;
   refreshSubscription: Subscription;
-  hideForm: boolean;
   VideoSchedulingSubmitSubscription: Subscription;
+  ViewSchedulingDetailsSubscription: Subscription;
+  viewScheduleDetailsSubscription: Subscription;
+  hideForm: boolean;
   viewAssignedInterviewerList: any;
   viewScheduleApiResponse: any;
+  scheduledquestionDetailsArray: any;
+  ScheduleDetailsObj: any;
+  scheduledQuestionsArray: any;
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private matDialog: MatDialog,
     private glovbal_validators: GlobalValidatorService,
     private adminService: AdminServiceService,
@@ -58,10 +64,6 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
 
   ngOnInit() {
     this.scheduleformInitialize();
-    this.getQuestionsForVideoScheduling();
-    if (this.TabIndex == '2') {
-      this.getCandidatesListBasedOnShortlistName();
-    }
     this.refreshOndriveChangeRXJS();
   }
 
@@ -93,12 +95,15 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
     this.getInterviewersBasedOnShortlistNameSubscription ? this.getInterviewersBasedOnShortlistNameSubscription.unsubscribe() : '';
     this.getQuestionsForVideoSchedulingSubscription ? this.getQuestionsForVideoSchedulingSubscription.unsubscribe() : '';
     this.VideoSchedulingSubmitSubscription ? this.VideoSchedulingSubmitSubscription.unsubscribe() : ''
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
+    this.ViewSchedulingDetailsSubscription ? this.ViewSchedulingDetailsSubscription.unsubscribe() : '';
+    this.viewScheduleDetailsSubscription ? this.viewScheduleDetailsSubscription.unsubscribe() : '';
   }
 
   tabChanged(event) {
     this.TabIndex = event.index;
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
-    if (this.TabIndex == '2') {
+    if (this.TabIndex == '2' && !this.hideForm) {
       this.getCandidatesListBasedOnShortlistName();
     }
   }
@@ -106,7 +111,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   tabChange(i) {
     this.TabIndex = i;
     this.appConfig.setLocalData('tabIndex', this.TabIndex);
-    if (this.TabIndex == '2') {
+    if (this.TabIndex == '2' && !this.hideForm) {
       this.getCandidatesListBasedOnShortlistName();
     }
   }
@@ -114,30 +119,85 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   editRouteParam() {
     // Get url Param to view Edit user page
    this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe(params => {
-      if (params && params['shortlist_name']) {
+      if (params && params['shortlist_name'] && params['status'] != '1') {
         this.shortlist_name = params['shortlist_name'];
         this.getInterviewerDetails();
+        this.getQuestionsForVideoScheduling();
       }
       if (params && params['status'] == '1') {
         this.hideForm = true;
+        this.shortlist_name = params['shortlist_name'];
         this.tabChange('2');
         this.getScheduleDetails();
+        this.getScheduledQuestionDetails(params['schedule_id']);
       }
       else {
       }
     });
  }
 
+ reschedule() {
+  this.hideForm = false;
+  this.getInterviewerDetails();
+  this.getQuestionsForVideoScheduling();
+  setTimeout(() => {
+    this.tabChange('0');
+  }, 500);
+}
+ getScheduledQuestionDetails(data) {
+  let apiData = {
+    "scheduleId": data
+    }
+ this.ViewSchedulingDetailsSubscription = this.adminService.ViewSchedulingDetails(apiData).subscribe((response: any)=> {
+    if (response && response.success) {
+    this.scheduledQuestionsArray = response && response.data && response.data[0] && response.data[0].questionDetailsArray ? response.data[0].questionDetailsArray : [];
+    this.ScheduleDetailsObj = response && response.data && response.data[0] && response.data[0].scheduleDetailsArray && response.data[0].scheduleDetailsArray[0] ? response.data[0].scheduleDetailsArray[0] : null;
+    this.patchScheduleForm();
+    } else {
+    this.scheduledQuestionsArray = [];
+    this.ScheduleDetailsObj = null;
+    }
+  }, (err)=> {
+
+  });
+}
+
+patchScheduleForm() {
+  this.scheduleForm.patchValue({
+    title: this.ScheduleDetailsObj && this.ScheduleDetailsObj.title ? this.ScheduleDetailsObj.title : 'NA',
+    description: this.ScheduleDetailsObj && this.ScheduleDetailsObj.description ? this.ScheduleDetailsObj.description : 'NA',
+    startTime: this.ScheduleDetailsObj && this.ScheduleDetailsObj.startDateTime ? this.ScheduleDetailsObj.startDateTime : 'NA',
+    endTime: this.ScheduleDetailsObj && this.ScheduleDetailsObj.EndDateTime ? this.ScheduleDetailsObj.EndDateTime : 'NA',
+    type: this.ScheduleDetailsObj && this.ScheduleDetailsObj.sendNotification ? this.ScheduleDetailsObj.sendNotification : 'NA',
+    interviewerDetails: null
+  })
+}
+
+patchInterviewIds() {
+  if (this.viewAssignedInterviewerList && this.viewAssignedInterviewerList.length > 0) {
+    let userIds = this.viewAssignedInterviewerList.map((element) => {
+       return element.user_id;
+    });
+    this.scheduleForm.patchValue({
+      interviewerDetails: userIds
+    });
+   } else {
+     return null;
+   }
+}
  getScheduleDetails() {
    const apiData = {
     "shortlist_name": this.shortlist_name
   };
-  this.adminService.viewScheduleDetails(apiData).subscribe((response: any)=> {
+  this.candidateListLoading = true;
+ this.viewScheduleDetailsSubscription = this.adminService.viewScheduleDetails(apiData).subscribe((response: any)=> {
+    this.candidateListLoading = false;
     this.candidateDetailsList = response && response.candidates ? response.candidates : [];
     this.viewAssignedInterviewerList = response && response.interviewers ? response.interviewers : [];
     this.viewScheduleApiResponse = response;
+    this.patchInterviewIds();
   }, (err)=> {
-
+    this.candidateListLoading = false;
   });
  }
 
@@ -181,6 +241,13 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
       this.questionLoading = false;
       if (response && response.success) {
         this.questionList = response && response.data ? response.data : [];
+        if (this.scheduledQuestionsArray && this.scheduledQuestionsArray.length > 0) {
+          this.scheduledQuestionsArray.forEach((element, i) => {
+            let findIndex = this.questionList.findIndex(ele => ele._id == element.questionDetails._id);
+            this.questionList && this.questionList.length > 0 ? this.questionList[findIndex].checked = true : '';
+          });
+          this.addQuestionstoArray();
+        }
       } else {
         this.questionList = [];
       }

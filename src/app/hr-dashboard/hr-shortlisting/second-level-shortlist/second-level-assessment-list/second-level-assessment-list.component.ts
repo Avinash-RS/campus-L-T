@@ -160,7 +160,8 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       // if (event['data']['shortlisted'] > 0) {
         let params = {
           status: event['data']['va_scheduled_status'] == 'scheduled' ? 1 : 0,
-          shortlist_name: event['data']['shortlist_name'] ? event['data']['shortlist_name'] : null
+          shortlist_name: event['data']['shortlist_name'] ? event['data']['shortlist_name'] : null,
+          schedule_id: event['data']['schedule_id'] ? event['data']['schedule_id'] : null
         }
         this.routeToVideoSchedule(params);
       // }
