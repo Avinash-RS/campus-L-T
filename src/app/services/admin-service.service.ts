@@ -713,24 +713,24 @@ getCandidatesBasedOnShortlistName(data) {
 }
 
 getQuestionsForVideoScheduling() {
-  return this.http.get(`${this.NODE_API}/videoAssessmentQuestionmaster`, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
+  return this.http.get(`${this.NODE_API}/videoAssessmentQuestionmaster`, {headers: this.withoutTokens(), reportProgress: true, withCredentials: true});
 }
 
 VideoSchedulingSubmit(data) {
-  return this.http.post(`${this.NODE_API}/videoAssessmentSchedule`, data, {headers: this.withoutTokens(), withCredentials: false});
+  return this.http.post(`${this.NODE_API}/videoAssessmentSchedule`, data, {headers: this.withoutTokens(), withCredentials: true});
 }
 
 // Proctor
 getProctorVideo(id,type){
-  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=50&count=1&filter[type]=`+type, {headers: this.proctorToken(), withCredentials: false});
+  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=50&count=1&filter[type]=`+type, {headers: this.proctorToken(), withCredentials: true});
 }
 
 getproctorToken(data) {
-  return this.http.post(`${this.PROCTOR_URL}/api/auth/login`, data, {headers: this.withoutTokens(), withCredentials: false});
+  return this.http.post(`${this.PROCTOR_URL}/api/auth/login`, data, {headers: this.withoutTokens(), withCredentials: true});
 }
 
 ViewSchedulingDetails(data) {
-  return this.http.post(`${this.NODE_API}/scheduledQuestionDetails`, data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
+  return this.http.post(`${this.NODE_API}/scheduledQuestionDetails`, data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: true});
 }
 
 saveVideoSchedulingFeedBack(data) {
