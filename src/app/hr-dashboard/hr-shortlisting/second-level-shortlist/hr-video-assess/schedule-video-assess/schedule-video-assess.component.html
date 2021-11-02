@@ -181,7 +181,7 @@
                 </ng-template>
                 <ng-container *ngIf="!hideForm else viewScheduling">
                   <div class="tabContent reviewTab mt-3">
-                    <div class="candidates">
+                    <div class="candidates heading-shadow">
                         <h4 style="width: 100%; display: flex;">Candidates <span class="fetch" (click)="fetchAllCandidates()">Fetch All Candidates <span class="material-icons load-icon">loop</span></span></h4>
                         <ng-container *ngIf="!candidateListLoading else CandidatesFetching">
                         <div *ngIf="candidateDetailsList && candidateDetailsList.length > 0 else noCandidatesPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
@@ -198,7 +198,7 @@
                         </div>
                       </ng-container>
                     </div>
-                    <div class="candidates mt-3">
+                    <div class="candidates mt-3 heading-shadow">
                       <h4>Interviewers</h4>
                       <div *ngIf="scheduleForm.value.interviewerDetails && scheduleForm.value.interviewerDetails.length > 0 else noInterviewerPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
                       <table cellpadding="0" cellspacing="0">
@@ -213,9 +213,9 @@
                       </table>
                       </div>
                   </div>
-                    <div class="secondSection">
+                    <div class="secondSection heading-shadow">
                         <h4 class="mb-0">Questions</h4>
-                        <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
+                        <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper" style="box-shadow: none !important;">
                           <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                             <div class="questions">
                                 <h5>{{question.questionDes}}</h5>
@@ -233,7 +233,7 @@
 
                       </div>
                     </div>
-                    <div class="scheduleSection mt-3">
+                    <div class="scheduleSection mt-3 heading-shadow">
                         <h4>Schedule</h4>
                         <div>
                             <label>Title:</label>
@@ -359,7 +359,7 @@
 </ng-template>
 <ng-template #viewScheduling>
   <div class="tabContent reviewTab">
-    <div class="scheduleSection mb-3">
+    <div class="scheduleSection mb-3 heading-shadow">
       <h4>Schedule Details</h4>
       <div *ngIf="ScheduleDetailsObj" class="view-schedule-wrapper">
       <div>
@@ -371,7 +371,7 @@
           <p>{{scheduleForm.value.description ? scheduleForm.value.description : 'NA'}}</p>
       </div>
       <div class="d-flex justify-content-start align-items-center">
-          <div>
+          <div style="width: 50%;">
               <label>Start Date - Time</label>
               <p>{{scheduleForm.value.startTime ? momentFormDateTime(scheduleForm.value.startTime) : 'NA' }}</p>
             </div>
@@ -391,7 +391,7 @@
 </div>
   </div>
 
-    <div class="candidates">
+    <div class="candidates heading-shadow">
         <h4 style="width: 100%; display: flex;">Candidates Details</h4>
         <ng-container *ngIf="!candidateListLoading else CandidatesFetching">
         <div *ngIf="candidateDetailsList && candidateDetailsList.length > 0 else noCandidatesPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
@@ -418,7 +418,7 @@
         </div>
       </ng-container>
     </div>
-    <div class="candidates mt-3">
+    <div class="candidates mt-3 heading-shadow">
       <h4>Interviewers Details</h4>
       <div *ngIf="viewAssignedInterviewerList && viewAssignedInterviewerList.length > 0 else noInterviewerPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
       <table cellpadding="0" cellspacing="0">
@@ -439,9 +439,9 @@
       </table>
       </div>
   </div>
-    <div class="secondSection mt-3">
+    <div class="secondSection mt-3 heading-shadow">
         <h4 class="mb-0">Questions</h4>
-        <div *ngIf="scheduledQuestionsArray && scheduledQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper">
+        <div *ngIf="scheduledQuestionsArray && scheduledQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper" style="box-shadow: none !important;">
           <div *ngFor="let question of scheduledQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
             <div class="questions">
                 <h5>{{question.questionDetails ? question.questionDetails.questionDes : ''}}</h5>
