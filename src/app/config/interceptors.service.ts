@@ -21,6 +21,10 @@ export class InterceptorsService implements HttpInterceptor {
 
   BASE_URL = environment.API_BASE_URL;
   isLocal = environment.local;
+  WEBRTC_NODE_API = environment.WEBRTC_NODE_API;
+  NODE_API = environment.NODE_API_BASE_URL;
+  PROCTOR_URL = environment.PROCTOR_URL;
+
   private totalRequests = 0;
   constructor(
     private appConfig: AppConfigService,
@@ -42,7 +46,7 @@ export class InterceptorsService implements HttpInterceptor {
 
     let clone: any;
     // For node service, we are setting false to withCredentials
-    if (request.url.includes('/getunifiedReport') || request.url.includes('/scheduleinterview') || request.url.includes('/getscheduleList')) {
+    if (request.url.includes(this.WEBRTC_NODE_API) || request.url.includes(this.PROCTOR_URL) || request.url.includes(this.NODE_API)) {
       clone = request.clone({
         headers: request.headers.set('Accept', 'application/json'),
         withCredentials: this.isLocal ? false : false
