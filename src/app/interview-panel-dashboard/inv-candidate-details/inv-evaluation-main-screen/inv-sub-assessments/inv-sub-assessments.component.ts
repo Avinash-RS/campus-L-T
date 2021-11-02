@@ -77,7 +77,7 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
 
   getScheduleDetails(data) {
     let apiData = {
-      "scheduleId": data
+      "scheduleId": data ? data.toString() : ''
       }
       if (!this.testDetailsArray && this.passT0TabVideoScheduling) {
    this.ViewSchedulingDetailsSubscription = this.adminService.ViewSchedulingDetails(apiData).subscribe((response: any)=> {

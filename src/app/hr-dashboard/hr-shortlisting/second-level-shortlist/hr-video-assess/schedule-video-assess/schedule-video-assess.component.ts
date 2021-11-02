@@ -146,8 +146,8 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
 }
  getScheduledQuestionDetails(data) {
   let apiData = {
-    "scheduleId": data
-    }
+    "scheduleId": data ? data.toString() : ''
+  }
  this.ViewSchedulingDetailsSubscription = this.adminService.ViewSchedulingDetails(apiData).subscribe((response: any)=> {
     if (response && response.success) {
     this.scheduledQuestionsArray = response && response.data && response.data[0] && response.data[0].questionDetailsArray ? response.data[0].questionDetailsArray : [];
