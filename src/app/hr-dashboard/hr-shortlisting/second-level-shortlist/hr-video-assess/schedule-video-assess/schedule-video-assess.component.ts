@@ -48,6 +48,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   scheduledquestionDetailsArray: any;
   ScheduleDetailsObj: any;
   scheduledQuestionsArray: any;
+  viewStatus: boolean;
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -126,6 +127,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
       }
       if (params && params['status'] == '1') {
         this.hideForm = true;
+        this.viewStatus = true;
         this.shortlist_name = params['shortlist_name'];
         this.tabChange('2');
         this.getScheduleDetails();
@@ -195,7 +197,6 @@ patchInterviewIds() {
     this.candidateDetailsList = response && response.candidates ? response.candidates : [];
     this.viewAssignedInterviewerList = response && response.interviewers ? response.interviewers : [];
     this.viewScheduleApiResponse = response;
-    this.patchInterviewIds();
   }, (err)=> {
     this.candidateListLoading = false;
   });
@@ -226,6 +227,9 @@ patchInterviewIds() {
  getInterviewerDetails() {
    this.getInterviewersBasedOnShortlistNameSubscription = this.adminService.getInterviewersBasedOnShortlistName(this.shortlist_name).subscribe((data:any)=> {
       this.interviewerDetailsList = data ? data : [];
+      if (this.viewStatus) {
+        this.patchInterviewIds();
+      }
     }, (err)=> {
 
     });
