@@ -92,7 +92,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       let normalColumn: any = this.normalAssessmentColumns();
       let videoColumn: any = this.videoAssessmentColumns();
       let normalAssessColumnMerge = initColumn.concat(normalColumn);
-      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 1, 0, videoColumn[0]);
+      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 4, 0, videoColumn[0]);
       this.columnDefs = normalAssessColumnMerge;
       return this.columnDefs;
     } else {
