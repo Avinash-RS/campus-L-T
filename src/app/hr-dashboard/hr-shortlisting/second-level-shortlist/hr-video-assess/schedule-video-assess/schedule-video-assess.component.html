@@ -145,23 +145,6 @@
                           </div>
                         </div>
 
-                        <div class="tagInterviewer">
-                            <label>Tag Interviewer<span class="asterick">*</span></label>
-                            <nz-select style="border: none !important;" [nzMaxTagCount]="1" nzMode="multiple" class="selectInterviewer" [formControlName]="'interviewerDetails'" nzAllowClear nzShowSearch nzPlaceHolder="Select Interviewer">
-                                <nz-option *ngFor="let inv of interviewerDetailsList" [nzLabel]="labelForInterviewerDropdown(inv)"
-                                [nzValue]="inv.user_id"></nz-option>
-                            </nz-select>
-                            <div class="form-error"
-                            *ngIf="interviewerDetails?.invalid && interviewerDetails?.touched">
-                            <div
-                                *ngIf="interviewerDetails.errors?.required">
-                                Atleast One Interviewer needs to be selected</div>
-                            <div
-                                *ngIf="interviewerDetails.errors?.address255">
-                                Alpha numeric with maximum of 255 characters only
-                                allowed</div>
-                        </div>
-                        </div>
                         <div class="sendNotification">
                             <span>Send Notification to Candidates and Evaluator?</span>
                             <mat-slide-toggle class="example-margin" [color]="color" [formControlName]="'type'"></mat-slide-toggle>
@@ -198,21 +181,6 @@
                         </div>
                       </ng-container>
                     </div>
-                    <div class="candidates mt-3 heading-shadow">
-                      <h4>Interviewers</h4>
-                      <div *ngIf="scheduleForm.value.interviewerDetails && scheduleForm.value.interviewerDetails.length > 0 else noInterviewerPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
-                      <table cellpadding="0" cellspacing="0">
-                          <tbody>
-                              <tr *ngFor="let interviewer of interviewersListArray(); let i = index">
-                                  <td style="width: 31%;">{{interviewer.full_name}}</td>
-                                  <td style="width: 31%;">{{interviewer.email}}</td>
-                                  <td style="width: 31%;">{{interviewer.discipline}}</td>
-                                  <td style="width: 5%;"><span (click)="removeInterviewer(i, interviewer.user_id)" class="delete"><span class="material-icons-outlined">delete</span></span></td>
-                              </tr>
-                          </tbody>
-                      </table>
-                      </div>
-                  </div>
                     <div class="secondSection heading-shadow">
                         <h4 class="mb-0">Questions</h4>
                         <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper" style="box-shadow: none !important;">
@@ -342,13 +310,6 @@
   </div>
   </div>
 </ng-template>
-<ng-template #noInterviewerPreview>
-  <div class="questionWrapper d-flex align-items-center justify-content-between">
-    <div class="questions justify-content-center" style="text-align:center; width: 100%;">
-    <h5 style="font-size: 14px; margin: 0">No interviewers were selected.</h5>
-  </div>
-  </div>
-</ng-template>
 
 <ng-template #CandidatesFetching>
   <div class="questionWrapper d-flex align-items-center justify-content-between">
@@ -418,27 +379,6 @@
         </div>
       </ng-container>
     </div>
-    <div class="candidates mt-3 heading-shadow">
-      <h4>Interviewers Details</h4>
-      <div *ngIf="viewAssignedInterviewerList && viewAssignedInterviewerList.length > 0 else noInterviewerPreview" class="questionWrapper d-flex justify-content-between scroll-wrapper">
-      <table cellpadding="0" cellspacing="0">
-        <thead>
-          <tr>
-            <th style="width: 31%;">{{'Name'}}</th>
-            <th style="width: 31%;">{{'Email'}}</th>
-            <th style="width: 31%;">{{'Discipline'}}</th>
-        </tr>
-        </thead>
-          <tbody>
-              <tr *ngFor="let interviewer of viewAssignedInterviewerList; let i = index">
-                  <td style="width: 31%;">{{interviewer.full_name}}</td>
-                  <td style="width: 31%;">{{interviewer.email}}</td>
-                  <td style="width: 31%;">{{interviewer.discipline}}</td>
-              </tr>
-          </tbody>
-      </table>
-      </div>
-  </div>
     <div class="secondSection mt-3 heading-shadow">
         <h4 class="mb-0">Questions</h4>
         <div *ngIf="scheduledQuestionsArray && scheduledQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper" style="box-shadow: none !important;">
@@ -456,7 +396,7 @@
 
       </div>
     </div>
-    <div class="secondSection d-flex align-items-center justify-content-center mt-2">
+    <div *ngIf="false" class="secondSection d-flex align-items-center justify-content-center mt-2">
       <button (click)="reschedule()" class="submit reschedule">Reschedule</button>
       </div>
 </div>
