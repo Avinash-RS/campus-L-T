@@ -25,7 +25,6 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   minDate;
   maxDate;
   shortlist_name: any;
-  interviewerDetailsList: any = [];
   questionList: any = [];
   questionLoading: boolean;
   selectAll: boolean;
@@ -36,14 +35,12 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   candidateFetchAllList: any = [];
   activatedRouteSubscription: Subscription;
   getCandidatesBasedOnShortlistNameSubscription: Subscription;
-  getInterviewersBasedOnShortlistNameSubscription: Subscription;
   getQuestionsForVideoSchedulingSubscription: Subscription;
   refreshSubscription: Subscription;
   VideoSchedulingSubmitSubscription: Subscription;
   ViewSchedulingDetailsSubscription: Subscription;
   viewScheduleDetailsSubscription: Subscription;
   hideForm: boolean;
-  viewAssignedInterviewerList: any;
   viewScheduleApiResponse: any;
   scheduledquestionDetailsArray: any;
   ScheduleDetailsObj: any;
@@ -53,7 +50,6 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
     public dialog: MatDialog,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private matDialog: MatDialog,
     private glovbal_validators: GlobalValidatorService,
     private adminService: AdminServiceService,
@@ -93,7 +89,6 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
     this.appConfig.clearLocalDataOne('tabIndex');
     this.activatedRouteSubscription ? this.activatedRouteSubscription.unsubscribe() : '';
     this.getCandidatesBasedOnShortlistNameSubscription ? this.getCandidatesBasedOnShortlistNameSubscription.unsubscribe() : '';
-    this.getInterviewersBasedOnShortlistNameSubscription ? this.getInterviewersBasedOnShortlistNameSubscription.unsubscribe() : '';
     this.getQuestionsForVideoSchedulingSubscription ? this.getQuestionsForVideoSchedulingSubscription.unsubscribe() : '';
     this.VideoSchedulingSubmitSubscription ? this.VideoSchedulingSubmitSubscription.unsubscribe() : ''
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
@@ -122,7 +117,6 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
    this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe(params => {
       if (params && params['shortlist_name'] && params['status'] != '1') {
         this.shortlist_name = params['shortlist_name'];
-        this.getInterviewerDetails();
         this.getQuestionsForVideoScheduling();
       }
       if (params && params['status'] == '1') {
@@ -140,7 +134,6 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
 
  reschedule() {
   this.hideForm = false;
-  this.getInterviewerDetails();
   this.getQuestionsForVideoScheduling();
   setTimeout(() => {
     this.tabChange('0');
@@ -171,22 +164,9 @@ patchScheduleForm() {
     startTime: this.ScheduleDetailsObj && this.ScheduleDetailsObj.startDateTime ? this.ScheduleDetailsObj.startDateTime : 'NA',
     endTime: this.ScheduleDetailsObj && this.ScheduleDetailsObj.EndDateTime ? this.ScheduleDetailsObj.EndDateTime : 'NA',
     type: this.ScheduleDetailsObj && this.ScheduleDetailsObj.sendNotification ? this.ScheduleDetailsObj.sendNotification : 'NA',
-    interviewerDetails: null
   })
 }
 
-patchInterviewIds() {
-  if (this.viewAssignedInterviewerList && this.viewAssignedInterviewerList.length > 0) {
-    let userIds = this.viewAssignedInterviewerList.map((element) => {
-       return element.user_id;
-    });
-    this.scheduleForm.patchValue({
-      interviewerDetails: userIds
-    });
-   } else {
-     return null;
-   }
-}
  getScheduleDetails() {
    const apiData = {
     "shortlist_name": this.shortlist_name
@@ -195,7 +175,6 @@ patchInterviewIds() {
  this.viewScheduleDetailsSubscription = this.adminService.viewScheduleDetails(apiData).subscribe((response: any)=> {
     this.candidateListLoading = false;
     this.candidateDetailsList = response && response.candidates ? response.candidates : [];
-    this.viewAssignedInterviewerList = response && response.interviewers ? response.interviewers : [];
     this.viewScheduleApiResponse = response;
   }, (err)=> {
     this.candidateListLoading = false;
@@ -223,21 +202,6 @@ patchInterviewIds() {
  removeCandidate(i) {
    this.candidateDetailsList.splice(i, 1);
  }
-
- getInterviewerDetails() {
-   this.getInterviewersBasedOnShortlistNameSubscription = this.adminService.getInterviewersBasedOnShortlistName(this.shortlist_name).subscribe((data:any)=> {
-      this.interviewerDetailsList = data ? data : [];
-      if (this.viewStatus) {
-        this.patchInterviewIds();
-      }
-    }, (err)=> {
-
-    });
-  }
-
-  labelForInterviewerDropdown(inv) {
-    return `${inv.email} (${inv.discipline})`;
-  }
 
   getQuestionsForVideoScheduling() {
     this.questionLoading = true;
@@ -267,17 +231,7 @@ patchInterviewIds() {
       startTime: [null, [Validators.required]],
       endTime: [null, [Validators.required]],
       type: [null],
-      interviewerDetails: [null, [Validators.required]]
     });
-  }
-
-  interviewerFormGroup() {
-    return this.fb.group({
-      user_id: [null],
-      full_name: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
-      email: [null],
-      discipline: [null],
-      })
   }
 
   selectAllCheckbox() {
@@ -325,23 +279,6 @@ patchInterviewIds() {
       return this.appConfig.warning('No Candidates were Selected...')
     }
     if (this.checkIsValidDate()) {
-      let apiInterviewArray = [];
-      let selectedInterviewers = this.scheduleForm.value.interviewerDetails ? this.scheduleForm.value.interviewerDetails : [];
-      let InterviewArray = this.interviewerDetailsList.filter((array1: any)=> {
-        return selectedInterviewers.some((array2: any)=> {
-          return array1.user_id == array2;
-        });
-      });
-      apiInterviewArray = InterviewArray.map(element => {
-        let api = {
-        id: element.user_id,
-        name: element.full_name,
-        email: element.email,
-        descipline: element.discipline
-      };
-      return api;
-      });
-
     let apiQuestionIds = this.selectedQuestionsArray.map((data) => data._id);
     let duration = 0;
     let candidateQuestionIds = this.selectedQuestionsArray.map((data) => {
@@ -373,7 +310,6 @@ patchInterviewIds() {
         startDateTime: this.scheduleForm.value.startTime,
         EndDateTime: this.scheduleForm.value.endTime,
         duration : duration,
-        interviewer: apiInterviewArray ? apiInterviewArray : [],
         sendNotification: this.scheduleForm.value.type ? true : false,
         questionIds: apiQuestionIds ? apiQuestionIds : [],
         candidates: candidateDetails
@@ -439,23 +375,6 @@ patchInterviewIds() {
     }
   }
 
-  interviewersListArray() {
-    let selectedInterviewers = this.scheduleForm.value.interviewerDetails;
-    let InterviewArray = this.interviewerDetailsList.filter((array1: any)=> {
-      return selectedInterviewers.some((array2: any)=> {
-        return array1.user_id == array2;
-      });
-    });
-    return InterviewArray ? InterviewArray : [];
-  }
-
-  removeInterviewer(i, uid) {
-    let selectedInterviewers = this.scheduleForm.value.interviewerDetails.filter((data => data != uid));
-      this.scheduleForm.patchValue({
-        interviewerDetails: selectedInterviewers
-    });
-  }
-
   // FormControls
   get title() {
     return this.scheduleForm.get('title');
@@ -471,9 +390,6 @@ patchInterviewIds() {
   }
   get type() {
     return this.scheduleForm.get('type');
-  }
-  get interviewerDetails() {
-    return this.scheduleForm.get('interviewerDetails');
   }
 
     // Open dailog
