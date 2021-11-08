@@ -9,7 +9,10 @@
                 </ng-template>
                 <div class="tabContent questionTab">
                   <ng-container *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsMsg">
-                    <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
+                    <div class="scroll-wrapper mt-3" style="padding: 8px;">
+                    <ng-container *ngFor="let category of selectedQuestionsArray; let j = index">
+                    <h6 style="font-weight: 600;" [class]="j == 0 ? '' : 'mt-3'">{{category.categoryName}}</h6>
+                    <div *ngFor="let question of category.questionDetails; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                         <div class="questions">
                             <h5>{{question.questionDes}}</h5>
                             <div class="d-flex justify-content-between">
@@ -20,10 +23,12 @@
                             </div>
                         </div>
                         <span class="delete">
-                            <span (click)="remove(i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
+                            <span (click)="remove(j, i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
                         </span>
                     </div>
                   </ng-container>
+                </div>
+                </ng-container>
                   <div class="addQuestion" (click)="openDialog(schedulePopup)">
                         <p><span class="material-icons-outlined">add</span> Add Questions</p>
                     </div>
@@ -146,7 +151,7 @@
                         </div>
 
                         <div class="sendNotification">
-                            <span>Send Notification to Candidates and Evaluator?</span>
+                            <span>Send Notification to Candidates?</span>
                             <mat-slide-toggle class="example-margin" [color]="color" [formControlName]="'type'"></mat-slide-toggle>
                         </div>
                         <div class="prevNext">
@@ -182,9 +187,11 @@
                       </ng-container>
                     </div>
                     <div class="secondSection heading-shadow">
-                        <h4 class="mb-0">Questions</h4>
+                        <h4 style="border-bottom: solid #0002 1px; padding-bottom: 2px;" class="mb-0">Questions</h4>
                         <div *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsPreview" class="scroll-wrapper" style="box-shadow: none !important;">
-                          <div *ngFor="let question of selectedQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
+                          <ng-container *ngFor="let category of selectedQuestionsArray; let j = index">
+                            <h6 style="font-weight: 600;" class="mt-3">{{category.categoryName}}</h6>
+                          <div *ngFor="let question of category.questionDetails; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                             <div class="questions">
                                 <h5>{{question.questionDes}}</h5>
                                 <div class="d-flex justify-content-between">
@@ -195,10 +202,10 @@
                                 </div>
                             </div>
                             <span class="delete">
-                                <span (click)="remove(i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
+                                <span (click)="remove(j, i, selectedQuestionsArray, questionList)" class="material-icons-outlined">delete</span>
                             </span>
                         </div>
-
+                      </ng-container>
                       </div>
                     </div>
                     <div class="scheduleSection mt-3 heading-shadow">
@@ -254,9 +261,20 @@
             </div>
             <div class="descriptionContent">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4>Questions</h4>
-                    <mat-checkbox *ngIf="questionList && questionList.length > 0" (change)="selectAllCheckbox()" [(ngModel)]="selectAll" [checked]="selectAll"> Select All</mat-checkbox>
+                    <h4 class="mb-0">Questions</h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <ng-container *ngIf="categoryList && categoryList.length > 0">
+                        <div>Category: </div>
+                      <nz-select style="max-width: 300px; min-width: 300px; margin: 0 16px 0 6px;" class="input select" (ngModelChange)="CategoryChanged($event)" [(ngModel)]="selectedCategory"
+                    nzAllowClear nzShowSearch nzPlaceHolder="Select Category">
+                    <nz-option *ngFor="let category of categoryList" [nzLabel]="category.categoryName"
+                        [nzValue]="category.categoryId"></nz-option>
+                  </nz-select>
+                </ng-container>
+                <mat-checkbox *ngIf="questionList && questionList.length > 0" (change)="selectAllCheckbox()" [(ngModel)]="selectAll" [checked]="selectAll"> Select All</mat-checkbox>
                 </div>
+                </div>
+                  <h6 class="mt-2">Category: <span style="font-weight: 600;">{{selectedCategoryItem ? selectedCategoryItem.categoryName : ''}}</span></h6>
                 <ng-container *ngIf="!questionLoading else questionLoadingTemp">
                   <ng-container *ngIf="questionList && questionList.length > 0 else nodatafound">
                     <div class="questions" *ngFor="let question of questionList; let i = index">
@@ -385,11 +403,12 @@
           <div *ngFor="let question of scheduledQuestionsArray; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
             <div class="questions">
                 <h5>{{question.questionDetails ? question.questionDetails.questionDes : ''}}</h5>
-                <div class="d-flex justify-content-between">
+                <div style="flex-wrap: wrap;" class="d-flex justify-content-between">
                     <span><span>Updated by: </span>{{question.questionDetails.updatedBy ? question.questionDetails.updatedBy : question.questionDetails.createdBy ? question.questionDetails.createdBy : ''}}</span>
                     <span><span>Updated Date: </span>{{question.questionDetails.updatedAt ? momentFormDateTime(question.questionDetails.updatedAt) : question.questionDetails.createdAt ? momentFormDateTime(question.questionDetails.createdAt) : ''}}</span>
                     <span><span>Question Code: </span>{{question.questionDetails.quesCode}}</span>
                     <span><span>Question Type: </span>{{question.questionDetails.quesType}}</span>
+                    <span style="padding-top: 4px;"><span>Category: </span>{{question.questionDetails.categoryName}}</span>
                 </div>
             </div>
         </div>
