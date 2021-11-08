@@ -46,6 +46,10 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
   ScheduleDetailsObj: any;
   scheduledQuestionsArray: any;
   viewStatus: boolean;
+  categoryList: any;
+  selectedCategory: any;
+  selectedCategoryItem: any;
+  questionListApiResponse: any;
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -203,12 +207,27 @@ patchScheduleForm() {
    this.candidateDetailsList.splice(i, 1);
  }
 
+ firstLetterUpperCase(text) {
+  return text ? text.replace(text[0], text[0].toUpperCase()) : '';
+ }
+
+ CategoryChanged(e) {
+  this.selectAll = false;
+  this.selectedCategory = e;
+  let cat = this.questionListApiResponse.find(data=> data.categoryId == this.selectedCategory);
+  this.questionList = cat ? cat.questionDetails : [];
+ }
+
   getQuestionsForVideoScheduling() {
     this.questionLoading = true;
    this.getQuestionsForVideoSchedulingSubscription = this.adminService.getQuestionsForVideoScheduling().subscribe((response: any)=> {
       this.questionLoading = false;
       if (response && response.success) {
-        this.questionList = response && response.data ? response.data : [];
+        this.questionListApiResponse = response && response.data ? response.data : [];
+       this.selectedCategory = response && response.data && response.data[0] ? response.data[0].categoryId : '';
+       this.selectedCategoryItem = response && response.data && response.data[0] ? response.data[0] : '';
+       this.questionList = response && response.data && response.data[0] && response.data[0].questionDetails ? response.data[0].questionDetails : [];
+       this.categoryList = response && response.data ? response.data : [];
         if (this.scheduledQuestionsArray && this.scheduledQuestionsArray.length > 0) {
           this.scheduledQuestionsArray.forEach((element, i) => {
             let findIndex = this.questionList.findIndex(ele => ele._id == element.questionDetails._id);
@@ -279,7 +298,12 @@ patchScheduleForm() {
       return this.appConfig.warning('No Candidates were Selected...')
     }
     if (this.checkIsValidDate()) {
-    let apiQuestionIds = this.selectedQuestionsArray.map((data) => data._id);
+      let apiQuestionIds = [];
+      this.selectedQuestionsArray.map((data) => {
+        data.questionDetails.map((ele)=> {
+          apiQuestionIds.push(ele._id);
+        });
+      });
     let duration = 0;
     let candidateQuestionIds = this.selectedQuestionsArray.map((data) => {
       duration = duration + (data && data.duration ? data.duration : 0);
@@ -336,7 +360,18 @@ patchScheduleForm() {
   }
 
   addQuestionstoArray() {
-    this.selectedQuestionsArray = this.questionList.filter(element => element.checked);
+    this.selectedQuestionsArray = [];
+    this.questionListApiResponse.forEach(element => {
+      if (element && element.questionDetails && element.questionDetails.length > 0) {
+        let cate = element.questionDetails.filter(elem => elem.checked);
+        let category = {
+          categoryName: element.categoryName,
+          categoryId: element.categoryId,
+          questionDetails: cate && cate.length > 0 ? cate : null
+        }
+        category.questionDetails ? this.selectedQuestionsArray.push(category) : '';
+      }
+    });
   }
 
   openDialog(templateRef) {
@@ -353,11 +388,10 @@ patchScheduleForm() {
     this.dialog.closeAll();
   }
 
-  remove(index, currentarray, parentArray) {
+  remove(parentIndex, index, currentarray, parentArray) {
     if (parentArray) {
-      currentarray[index].checked = false;
-      parentArray[index].checked = false;
-      currentarray.splice(index, 1);
+      currentarray[parentIndex]['questionDetails'][index].checked = false;
+      currentarray[parentIndex]['questionDetails'].splice(index, 1);
     }
 
   }
