@@ -372,7 +372,7 @@
                     <td style="width: 25%;">{{candidate.full_name}}</td>
                     <td style="width: 25%;">{{candidate.email}}</td>
                     <td style="width: 14%;"><span [class]="candidate.test_status ? candidate.test_status : ''">{{candidate.test_status && candidate.test_status == 'InProgress' ? 'In Progress' : candidate.test_status == 'Completed' ? 'Completed' : 'Yet to Start'}}</span></td>
-                    <td style="width: 14%;"><span [matTooltip]="candidate.evaluated_by ? candidate.evaluated_by : ''" [class]="candidate.evaluation_status && candidate.evaluation_status == 'On Hold' ? 'Hold' : candidate.evaluation_status ? candidate.evaluation_status : ''">{{candidate.evaluation_status ? candidate.evaluation_status : 'Yet to Evaluate'}}</span></td>
+                    <td style="width: 14%;"><span [matTooltip]="candidate.evaluated_by ? candidate.evaluated_by : ''" [class]="candidate.evaluation_status && candidate.evaluation_status == 'on hold' ? 'Hold' : candidate.evaluation_status ? candidate.evaluation_status : ''">{{candidate.evaluation_status ? firstLetterUpperCase(candidate.evaluation_status) : 'Yet to Evaluate'}}</span></td>
                 </tr>
             </tbody>
         </table>

@@ -574,19 +574,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           } else {
             if (
               params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Selected"
+              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "selected"
             ) {
               return `<span style="cursor: pointer;" class="status completed-bg">Selected</span>`;
             }
             if (
               params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "On Hold"
+              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "on hold"
             ) {
               return `<span style="cursor: pointer;" class="status inprogress-bg">On Hold</span>`;
             }
             if (
               params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Rejected"
+              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "rejected"
             ) {
               return `<span style="cursor: pointer;" class="status rejected-bg">Rejected</span>`;
             } else {

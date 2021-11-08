@@ -203,6 +203,10 @@ patchScheduleForm() {
    this.candidateDetailsList.splice(i, 1);
  }
 
+ firstLetterUpperCase(text) {
+  return text ? text.replace(text[0], text[0].toUpperCase()) : '';
+ }
+
   getQuestionsForVideoScheduling() {
     this.questionLoading = true;
    this.getQuestionsForVideoSchedulingSubscription = this.adminService.getQuestionsForVideoScheduling().subscribe((response: any)=> {
