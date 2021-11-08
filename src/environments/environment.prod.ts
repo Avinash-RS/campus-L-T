@@ -14,6 +14,8 @@ export const environment = {
   API_BASE_URL_city: 'https://campus-dev.lntedutech.com/dcampus',
   Image_Base_Url: 'https://campus-dev.lntedutech.com',
   NODE_API_BASE_URL: 'https://edgeservice.lntiggnite.com',
-  PROCTOR_URL: 'https://lntproctordev.lntedutech.com',
-  PROCTOR_VIDEO_URL : 'http://lntproctordev.lntedutech.com/api/storage/'
+  // PROCTOR_URL: 'https://lntproctordev.lntedutech.com',
+  // PROCTOR_VIDEO_URL : 'http://lntproctordev.lntedutech.com/api/storage/'
+  PROCTOR_URL: 'https://lntproctor.lntedutech.com',
+  PROCTOR_VIDEO_URL : 'http://lntproctor.lntedutech.com/api/storage/'
 };
