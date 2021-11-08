@@ -536,6 +536,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Yet to Start"
           ) {
             return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Start</span>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Time Expired"
+          ) {
+            return `<span class="status scheduled-bg">Time Expired</span>`;
           } else {
             if (params["data"] && params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"]) {
               return `<span class="status scheduled-bg">Not Scheduled</span>`;
@@ -574,19 +580,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           } else {
             if (
               params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "selected"
+              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Selected"
             ) {
               return `<span style="cursor: pointer;" class="status completed-bg">Selected</span>`;
             }
             if (
               params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "on hold"
+              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "On Hold"
             ) {
               return `<span style="cursor: pointer;" class="status inprogress-bg">On Hold</span>`;
             }
             if (
               params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "rejected"
+              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Rejected"
             ) {
               return `<span style="cursor: pointer;" class="status rejected-bg">Rejected</span>`;
             } else {
@@ -723,8 +729,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           if (element) {
             element["normal_evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
             element.video_assessment = element.video_assessment ? element.video_assessment : {};
-            element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "YetToStart" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'InProgress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] == 'Completed' ? 'Completed' : '');
-            element.video_assessment.evaluation_status = element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] ? element["video_assessment"]["evaluation_status"] : '');
+            element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "YetToStart" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'InProgress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] ? element["video_assessment"]["test_status"] : '');
+            element.video_assessment.evaluation_status = element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'on hold') ? 'On Hold' : '';
             element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
             // element["evaluation_status_1"] =

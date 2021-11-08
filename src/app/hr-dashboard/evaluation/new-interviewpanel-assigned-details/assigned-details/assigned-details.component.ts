@@ -452,7 +452,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         element.va_test_status = element.va_scheduled_status != 1 ? '-' : element.va_test_status;
         if (element.va_scheduled_status) {
           element.va_evaluation_status = element.va_evaluation_status ? element.va_evaluation_status : 'Yet to Evaluate';
-          element.va_test_status = element.va_test_status == 'InProgress' ? 'In Progress' : element.va_test_status == 'Completed' ? 'Completed' : 'Yet to Start';
+          element.va_test_status = element.va_test_status == 'InProgress' ? 'In Progress' : element.va_test_status == 'YetToStart' ? 'Yet to Start' : element.va_test_status;
         }
       }
       });
