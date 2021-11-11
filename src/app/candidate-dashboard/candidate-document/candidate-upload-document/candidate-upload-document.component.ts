@@ -1404,7 +1404,7 @@ link.remove();
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
-    this.maxDate = new Date(currentYear + 1, 2, 0);
+    this.maxDate = new Date(currentYear + 2, 1, 0);
 }
 
 momentForm(date) {
