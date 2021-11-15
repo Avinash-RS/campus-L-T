@@ -20,10 +20,18 @@
             </span>
           </div>
           <div class="statusinfo">
-            Interview Status:
-              <span *ngIf="status != '1' && status != '2'" class="status scheduled">{{'Scheduled'}}</span>
-              <span *ngIf="status == '1'" class="status inprogress">{{'Completed'}}</span>
-              <span *ngIf="status == '2'" class="status completed">{{'Submitted'}}</span>
+            Video Assessment Status:
+            <span *ngIf="videoEvaluationStatus == 'Not Scheduled'" class="ml-2 status scheduled">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Time Expired'" class="ml-2 status scheduled">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Yet to complete the assessment'" class="ml-2 status scheduled">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Submitted'" class="ml-2 status completed">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus != 'Not Scheduled' && videoEvaluationStatus != 'Time Expired' && videoEvaluationStatus != 'Submitted' && videoEvaluationStatus != 'Yet to complete the assessment'" class="ml-2 status inprogress">{{videoEvaluationStatus}}</span>
+          </div>
+          <div class="statusinfo">
+            Evaluation Status:
+            <span *ngIf="status != '1' && status != '2'" class="status scheduled">{{'Scheduled'}}</span>
+            <span *ngIf="status == '1'" class="status inprogress">{{'Completed'}}</span>
+            <span *ngIf="status == '2'" class="status completed">{{'Submitted'}}</span>
           </div>
         </div>
       </div>

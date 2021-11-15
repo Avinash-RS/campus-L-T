@@ -18,6 +18,7 @@ export class SubSharedInvPanelHeaderComponent implements OnInit {
   @Input() cid: any;
   @Input() status: any;
   @Input() tag: any;
+  @Input() videoEvaluationStatus: any;
   bindDetails: any;
   nameOfAssessment: any;
   profilePic: any;

@@ -1,7 +1,7 @@
 <div class="inv-evaluation">
 <div class="sticky">
     <app-sub-shared-inv-panel-header
-    [details]="nameOfAssessment ? nameOfAssessment : ''" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-inv-panel-header>
+    [details]="nameOfAssessment ? nameOfAssessment : ''" [videoEvaluationStatus]="videoEvaluationStatus" [name]="candidateName ? candidateName : ''" [cid]="candidateId ? candidateId : ''" [status]="candidateStatus ? candidateStatus : ''" [tag]="tagName ? tagName : ''"></app-sub-shared-inv-panel-header>
 
   <div class="router-wrapper">
     <mat-tab-group  animationDuration="500ms" (selectedTabChange)="tabChanged($event);"

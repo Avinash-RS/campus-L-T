@@ -30,6 +30,7 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
   passT0TabVideoInterview: any;
   passT0Tabevaluate: any;
   passT0TabVideoScheduling: any;
+  videoEvaluationStatus: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -96,8 +97,26 @@ export class InvEvaluationMainScreenComponent implements OnInit, OnDestroy {
         uid: params['uid'],
         email: params['email'],
         form: params['form'],
-        shortlist_name: params['shortlist_name']
+        shortlist_name: params['shortlist_name'],
+        videoAssessSubmitted: params['videoAssessSubmitted']
       };
+      let videoParam = JSON.parse(params['videoSchedule']);
+      if (videoParam['scheduled_status']) {
+        if (params['videoAssessSubmitted'] == '1') {
+          this.videoEvaluationStatus = 'Submitted'
+        } else {
+          if (videoParam['test_status'] == 'Time Expired') {
+            this.videoEvaluationStatus = 'Time Expired';
+          }
+          else if (videoParam['test_status'] != 'Time Expired' && videoParam['test_status'] != 'Completed') {
+            this.videoEvaluationStatus = 'Yet to complete the assessment';
+          } else {
+            this.videoEvaluationStatus = videoParam['evaluation_status'] ? videoParam['evaluation_status'] : 'Yet to Evaluate';
+          }
+        }
+      } else {
+        this.videoEvaluationStatus = 'Not Scheduled'
+      }
       this.nameOfAssessment = params['data'];
       this.candidateId = params['id'];
       this.candidateName = params['name'];
