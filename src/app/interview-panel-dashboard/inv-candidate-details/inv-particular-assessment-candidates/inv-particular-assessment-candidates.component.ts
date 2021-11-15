@@ -139,7 +139,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         );
     }
 
-    if (event.colDef.field === "video_assessment.test_status") {
+    if (event.colDef.field === "video_assessment.evaluation_status") {
       if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1) {
       this.appConfig.setLocalData(
         "cProPic",
@@ -269,9 +269,24 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
 
   isRowSelectableMethod() {
     this.rowSelection = "multiple";
-    this.isRowSelectable = function (rowNode) {
-      return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
+    // this.isRowSelectable = function (rowNode) {
+    //   return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
+    // }
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
+      this.isRowSelectable = function (rowNode) {
+      return (rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'Selected') && (rowNode.data && rowNode.data.normal_assessment.evaluation_status == "1" && rowNode.data.normal_assessment.interview_status == "Selected") ? true : false;
     }
+    };
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
+        this.isRowSelectable = function (rowNode) {
+        return rowNode.data ? (rowNode.data.normal_assessment.evaluation_status == "1" && rowNode.data.normal_assessment.interview_status == "Selected") : false;
+      }
+    };
+    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+      this.isRowSelectable = function (rowNode) {
+      return rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'Selected' ? true : false;
+    }
+  };
   }
 
   defaultColumns() {
@@ -523,19 +538,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Completed"
           ) {
-            return `<span style="cursor: pointer;" class="status completed-bg">Completed</span>`;
+            return `<span class="status completed-bg">Completed</span>`;
           }
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "In Progress"
           ) {
-            return `<span style="cursor: pointer;" class="status inprogress-bg">In Progress</span>`;
+            return `<span class="status inprogress-bg">In Progress</span>`;
           }
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Yet to Start"
           ) {
-            return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Start</span>`;
+            return `<span class="status inprogress-blue-bg">Yet to Start</span>`;
           }
           if (
             params["data"] &&
@@ -597,7 +612,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
               return `<span style="cursor: pointer;" class="status rejected-bg">Rejected</span>`;
             } else {
               // if (params["data"] && params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"]) {
-                return `<span class="status inprogress-blue-bg">Yet to Evaluate</span>`;
+                return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Evaluate</span>`;
               // } else {
                 // return "";
               // }
