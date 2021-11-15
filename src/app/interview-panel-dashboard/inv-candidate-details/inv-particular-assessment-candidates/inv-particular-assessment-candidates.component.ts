@@ -52,6 +52,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   drivePermissions: any;
   errorTemplateRefVar: any;
   errorReportDetailsArray: any = [];
+  candidatesEvaluated: any = [];
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -135,12 +136,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["video_assessment"],
         event["data"]["shortlist_name"],
         event["data"]["is_video_scheduled"],
-        event["data"]["is_normal_scheduled"]
+        event["data"]["is_normal_scheduled"],
+        event["data"]["video_assessment"]["sent_to_hr"]
         );
     }
 
     if (event.colDef.field === "video_assessment.evaluation_status") {
-      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1) {
+      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1 && event["data"]["video_assessment"]["test_status"] != 'Time Expired') {
       this.appConfig.setLocalData(
         "cProPic",
         event["data"]["profile_image_url"]
@@ -156,7 +158,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["video_assessment"],
         event["data"]["shortlist_name"],
         event["data"]["is_video_scheduled"],
-        event["data"]["is_normal_scheduled"]
+        event["data"]["is_normal_scheduled"],
+        event["data"]["video_assessment"]["sent_to_hr"]
         );
       }
     }
@@ -177,8 +180,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["video_assessment"],
           event["data"]["shortlist_name"],
           event["data"]["is_video_scheduled"],
-          event["data"]["is_normal_scheduled"]
-            );
+          event["data"]["is_normal_scheduled"],
+          event["data"]["video_assessment"]["sent_to_hr"]
+          );
     }
 
     if (event.colDef.field === "Video_Interview_join_interview") {
@@ -203,8 +207,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["video_assessment"],
           event["data"]["shortlist_name"],
           event["data"]["is_video_scheduled"],
-          event["data"]["is_normal_scheduled"]
-            );
+          event["data"]["is_normal_scheduled"],
+          event["data"]["video_assessment"]["sent_to_hr"]
+        );
       }
     }
   }
@@ -231,40 +236,21 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   drivePermissionBasedColumnDefinitions() {
-    if (this.appConfig.getSelectedDrivePermissions().normal_assessment && this.appConfig.getSelectedDrivePermissions().video_assessment) {
       let savedefaultColumns: any = this.defaultColumns();
       let saveVideoAssessColumns: any = this.videoAssessmentColumns();
       let saveVideoInterviewColumns: any = this.videoInterviewColumns();
       let saveEvaluationFormColumns: any = this.EvaluationFormColumns();
-
-      let mergeVideoAssesswithDefault: any = savedefaultColumns.concat(saveVideoAssessColumns);
-      let mergeVideoAssesswithDefaultWithVideoAssess: any = mergeVideoAssesswithDefault.concat(saveVideoInterviewColumns);
-      let mergeVideoAssesswithDefaultWithVideoAssesswithEvaluate: any = mergeVideoAssesswithDefaultWithVideoAssess.concat(saveEvaluationFormColumns);
-      this.gridApi.setColumnDefs(mergeVideoAssesswithDefaultWithVideoAssesswithEvaluate);
-    } else {
-      if (this.appConfig.getSelectedDrivePermissions().normal_assessment) {
-        let savedefaultColumns: any = this.defaultColumns();
-        let saveVideoAssessColumns: any = this.videoAssessmentColumns();
-        let saveVideoInterviewColumns: any = this.videoInterviewColumns();
-        let saveEvaluationFormColumns: any = this.EvaluationFormColumns();
-
-        let mergeVideoAssesswithDefault: any = savedefaultColumns.concat(saveVideoAssessColumns);
-        let mergeVideoAssesswithDefaultWithVideoAssess: any = mergeVideoAssesswithDefault.concat(saveVideoInterviewColumns);
-        let mergeVideoAssesswithDefaultWithVideoAssesswithEvaluate: any = mergeVideoAssesswithDefaultWithVideoAssess.concat(saveEvaluationFormColumns);
-        this.gridApi.setColumnDefs(mergeVideoAssesswithDefaultWithVideoAssesswithEvaluate);
-      }
+      let merging = savedefaultColumns;
       if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
-        let savedefaultColumns: any = this.defaultColumns();
-        let saveVideoAssessColumns: any = this.videoAssessmentColumns();
-        let saveVideoInterviewColumns: any = this.videoInterviewColumns();
-        let saveEvaluationFormColumns: any = this.EvaluationFormColumns();
-
-        let mergeVideoAssesswithDefault: any = savedefaultColumns.concat(saveVideoAssessColumns);
-        let mergeVideoAssesswithDefaultWithVideoAssess: any = mergeVideoAssesswithDefault.concat(saveVideoInterviewColumns);
-        let mergeVideoAssesswithDefaultWithVideoAssesswithEvaluate: any = mergeVideoAssesswithDefaultWithVideoAssess.concat(saveEvaluationFormColumns);
-        this.gridApi.setColumnDefs(mergeVideoAssesswithDefaultWithVideoAssesswithEvaluate);
+       merging = merging.concat(saveVideoAssessColumns);
       }
-    }
+      if (this.appConfig.getSelectedDrivePermissions().interview_assignment) {
+       merging = merging.concat(saveVideoInterviewColumns);
+      }
+      if (this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+       merging = merging.concat(saveEvaluationFormColumns);
+      }
+      this.gridApi.setColumnDefs(merging);
   }
 
   isRowSelectableMethod() {
@@ -404,17 +390,17 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             return `${params["data"]["Video_Interview_startTime"]} - ${params["data"]["Video_Interview_endTime"]}`;
         },
       },
-      {
-        headerName: "Assigned by",
-        field: "Video_Interview_assigned_by",
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        minWidth: 150,
-        sortable: true,
-        tooltipField: "Video_Interview_assigned_by",
-      }
+      // {
+      //   headerName: "Assigned by",
+      //   field: "Video_Interview_assigned_by",
+      //   filter: 'agSetColumnFilter',
+      //   filterParams: {
+      //     applyMiniFilterWhileTyping: true
+      //   },
+      //   minWidth: 150,
+      //   sortable: true,
+      //   tooltipField: "Video_Interview_assigned_by",
+      // }
     ]
    }
  ]
@@ -459,7 +445,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         },
       },
       {
-        headerName: "Overall Status",
+        headerName: "Evaluation Status",
         headerClass: 'ag-grid-header-center',
         field: "normal_assessment.interview_status",
         filter: 'agSetColumnFilter',
@@ -592,6 +578,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["scheduled_status"] != 1
           ) {
             return `<span class="status scheduled-bg">Not Scheduled</span>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Time Expired"
+          ) {
+            return `<span class="status scheduled-bg">Time Expired</span>`;
           } else {
             if (
               params["data"] &&
@@ -710,9 +702,45 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   getSummaryCount() {
     this.selectedCount = [];
     this.rejectedCount = [];
+    this.candidatesEvaluated = [];
     this.sentToHr = [];
+    if (this.appConfig.getSelectedDrivePermissions().video_assessment && this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+      this.userList.forEach((element) => {
+        if (element.normal_assessment.evaluation_status == '2' && element.video_assessment.sent_to_hr == 1) {
+          this.sentToHr.push(element);
+        }
+        if (element.normal_assessment.evaluation_status == '1' && (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1)) {
+          this.candidatesEvaluated.push(element);
+        }
+        if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Selected' && element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected' && element.video_assessment.sent_to_hr != 1) {
+          this.buttonCheck = true;
+          this.selectedCount.push(element);
+        }
+        if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Rejected' || (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected')) {
+          this.rejectedCount.push(element);
+        }
+    });
+  } else {
+    if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
     this.userList.forEach((element) => {
-      element.normal_assessment.evaluation_status == '2' ? this.sentToHr.push(element) : element.normal_assessment.evaluation_status == '1' ? this.buttonCheck = true : '';
+      if (element.video_assessment.sent_to_hr == 1) {
+        this.sentToHr.push(element);
+      }
+      if (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1) {
+        this.candidatesEvaluated.push(element);
+      }
+      if ((element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected') && element.video_assessment.sent_to_hr != 1) {
+        this.buttonCheck = true;
+        this.selectedCount.push(element);
+      }
+      if (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected') {
+        this.rejectedCount.push(element);
+      }
+    });
+  }
+  if (this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+    this.userList.forEach((element) => {
+      element.normal_assessment.evaluation_status == '2' ? this.sentToHr.push(element) : element.normal_assessment.evaluation_status == '1' ? (this.buttonCheck = true && this.candidatesEvaluated.push(element)) : '';
       if (
         element.normal_assessment.interview_status == "Selected" ||
         element.normal_assessment.interview_status == "Rejected"
@@ -722,6 +750,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           : this.rejectedCount.push(element);
       }
     });
+  }
+  }
   }
   // To get all users
   getUsersList() {
@@ -772,7 +802,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     );
   }
 
-  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
+  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
     this.appConfig.setLocalData('tabIndex', 2);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -787,12 +817,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
+        videoShow, evaluationShow, videoAssessSubmitted
       }
     );
   }
 
-  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
+  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
     this.appConfig.setLocalData('tabIndex', 4);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -807,12 +837,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
+        videoShow, evaluationShow, videoAssessSubmitted
       }
     );
   }
 
-  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
+  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
     this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -827,12 +857,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
+        videoShow, evaluationShow, videoAssessSubmitted
       }
     );
   }
 
-  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
+  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
     this.appConfig.setLocalData('tabIndex', 0);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -847,7 +877,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
+        videoShow, evaluationShow, videoAssessSubmitted
       }
     );
   }

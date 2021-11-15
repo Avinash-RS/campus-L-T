@@ -49,6 +49,7 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
   saveVideoSchedulingFeedBackSubscription: Subscription;
   activatedRouteSubscription: Subscription;
   queryParams: any;
+  VideoAssessShow: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -232,7 +233,7 @@ sendFeedback() {
       this.formDetails = this.appConfig.getSelectedDriveFormDetails();
       this.formId = this.formDetails.id ? this.formDetails.id : '',
       this.queryParams = params;
-      console.log('as', this.queryParams);
+      this.VideoAssessShow = params['videoAssessSubmitted'] && params['videoAssessSubmitted'] == '1' ? false : true;
       if ((this.queryParams && this.queryParams.videoShow && this.queryParams.videoShow == 'true') && (this.videoAssessment && this.videoAssessment.scheduled_status && this.videoAssessment.scheduled_status == 1)) {
       this.getScheduleDetails(this.videoAssessment && this.videoAssessment.schedule_id ? this.videoAssessment.schedule_id : '');
       this.getProctorToken();

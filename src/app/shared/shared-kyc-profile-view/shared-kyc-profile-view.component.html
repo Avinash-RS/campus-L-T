@@ -857,7 +857,7 @@
                       </div>
                     </div>
                   </ng-container>
-        <ng-container *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm">
+          <ng-container *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm">
           <!-- Joining -->
           <ng-container
             *ngIf="
@@ -1110,7 +1110,8 @@
               </div>
             </div>
           </ng-container>
-
+        </ng-container>
+        <ng-container *ngIf="(candidateService.checkKycOrJoiningForm() && !currentForm) || (documentDetails.education_documents && documentDetails.education_documents.length > 0)">
           <!-- Education -->
           <ng-container
             *ngIf="
@@ -1207,6 +1208,7 @@
             </ng-container>
             <ng-container *ngIf="selectedPost == 'ca'" [ngTemplateOutlet]="caCertificationsPreview"></ng-container>
           </ng-container>
+        </ng-container>
 
           <ng-container *ngIf="selectedPost != 'ca'" [ngTemplateOutlet]="caCertificationsPreview"></ng-container>
           <!-- Certifications -->
@@ -1360,7 +1362,6 @@
               </div>
             </div>
           </ng-container>
-        </ng-container>
         </ng-container>
       </div>
 
