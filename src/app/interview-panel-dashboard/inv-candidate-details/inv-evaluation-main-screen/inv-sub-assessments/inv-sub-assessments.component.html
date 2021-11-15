@@ -10,7 +10,7 @@
       <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
       <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
       <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
-      <ng-container *ngIf="true" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+      <ng-container *ngIf="videoAssessment && videoAssessment.evaluation_status !='Selected' || true" [ngTemplateOutlet]="selectionbuttons"></ng-container>
     </ng-container>
   </div>
 </div>
@@ -29,7 +29,7 @@
       </div>
   </ng-container>
         </div>
-  <div class="questiondesc"> <span class="qSNo">{{'Q'+ (active + 1) +'. '}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.questionDes ? questionDetailsArray[active].questionDetails.questionDes : ''}}</span></div>
+  <div class="questiondesc"> <span class="qSNo">{{'Q'+ (active + 1) +'. '}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.categoryName ? (questionDetailsArray[active].questionDetails.categoryName + ': ') : ''}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.questionDes ? questionDetailsArray[active].questionDetails.questionDes : ''}}</span></div>
   </ng-container>
   </div>
 </ng-template>

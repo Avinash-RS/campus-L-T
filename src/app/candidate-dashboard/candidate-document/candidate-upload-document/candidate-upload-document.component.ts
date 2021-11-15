@@ -287,7 +287,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
          this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.patchCAArray(element, 'otherCert')) : this.getCertificationsArr.push(this.patchJoiningArray(element, 'otherCert'));
         });
       } else {
-        this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.CAinitArray('otherCert')) : this.getCertificationsArr.push(this.initJoiningArray('otherCert'));
+        this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.CAinitArray('otherCert')) : '';
       }
 
       this.patchNotSubmittedReason();
@@ -617,7 +617,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
   if (this.reason.valid && this.expectedDate.valid) {
     this.dialog.closeAll();
     // Joining Mapping of reason and expected value
-    let joiningArray = this.getJoiningArr.getRawValue();
+    let joiningArray = this.getJoiningArr ? this.getJoiningArr.getRawValue() : [];
     joiningArray.forEach((element, i) => {
         // Nulling the not sub and exp date
         this.getJoiningArr.at(i).patchValue({
@@ -639,8 +639,8 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     });
 
       // Transfer Mapping of reason and expected value
-      let transferArray = this.getTransferArr.getRawValue();
-      transferArray.forEach((element, i) => {
+      let transferArray = this.getTransferArr ? this.getTransferArr.getRawValue() : [];
+        transferArray.forEach((element, i) => {
           // Nulling the not sub and exp date
           this.getTransferArr.at(i).patchValue({
           [this.form_Not_Submitted_Description]: null,
@@ -659,10 +659,8 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       });
       }
       });
-
-
       // Resume Mapping of reason and expected value
-      let resumeArray = this.getResumeArr.getRawValue();
+      let resumeArray = this.getResumeArr ? this.getResumeArr.getRawValue() : [];
       resumeArray.forEach((element, i) => {
           // Nulling the not sub and exp date
           this.getResumeArr.at(i).patchValue({
@@ -684,7 +682,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
       });
 
         // Bank Mapping of reason and expected value
-        let bankArray = this.getBankArr.getRawValue();
+        let bankArray = this.getBankArr ? this.getBankArr.getRawValue() : [];
         bankArray.forEach((element, i) => {
             // Nulling the not sub and exp date
             this.getBankArr.at(i).patchValue({
@@ -706,7 +704,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
         });
 
     // Education Mapping of reason and expected value
-    let educationArray = this.getEducationArr.getRawValue();
+    let educationArray = this.getEducationArr ? this.getEducationArr.getRawValue() : [];
     educationArray.forEach((ele, i) => {
       ele[this.form_semesterArray].forEach((element, subIndex) => {
         // Nulling the not sub and exp date
@@ -730,7 +728,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     });
 
     // other
-    let otherCertArray = this.getOtherCertArr.getRawValue();
+    let otherCertArray = this.getOtherCertArr ? this.getOtherCertArr.getRawValue() : [];
     otherCertArray.forEach((element, i) => {
       if (!element[this.form_file_path]) {
         this.getOtherCertArr.removeAt(i);
@@ -743,7 +741,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     });
 
     // Certifications
-    let certificationsArray = this.getCertificationsArr.getRawValue();
+    let certificationsArray = this.getCertificationsArr ? this.getCertificationsArr.getRawValue() : [];
     certificationsArray.forEach((element, i) => {
       if (!element[this.form_file_path]) {
         this.getCertificationsArr.removeAt(i);
@@ -837,7 +835,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     // }
 
     // Resume
-    let resumeArray = this.uploadForm.getRawValue()[this.form_resumeArray];
+    let resumeArray = this.uploadForm ? this.uploadForm.getRawValue()[this.form_resumeArray] : [];
     this.resumeNotUploadedDocs = [];
     resumeArray.forEach(element => {
       if (!element[this.form_file_path]) {
@@ -871,7 +869,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
 
     // Education
     if (this.appConfig.getLocalData('form_submmited') == 'true') {
-    let educationArray = this.uploadForm.getRawValue()[this.form_educationArray];
+    let educationArray = this.uploadForm ? this.uploadForm.getRawValue()[this.form_educationArray] : [];
     this.educationNotUploadedDocs = [];
     educationArray.forEach(element => {
       let subData = {
@@ -917,7 +915,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     // });
 
       // Resume Nulling the not sub desc and exp date.
-      let resumeArray = this.getResumeArr.getRawValue();
+      let resumeArray = this.getResumeArr ? this.getResumeArr.getRawValue() : [];
       resumeArray.forEach((element, i) => {
         if (element[this.form_file_path]) {
         this.getResumeArr.at(i).patchValue({
@@ -940,7 +938,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
 
     // Education Nulling the not sub desc and exp date.
     if (this.appConfig.getLocalData('form_submmited') == 'true') {
-    let educationArray = this.getEducationArr.getRawValue();
+    let educationArray = this.getEducationArr ? this.getEducationArr.getRawValue() : [];
     educationArray.forEach((ele, i) => {
       ele[this.form_semesterArray].forEach((element, subIndex) => {
        if (element[this.form_file_path]) {
@@ -953,7 +951,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     });
   }
     // Other
-    let otherCertArray = this.getOtherCertArr.getRawValue();
+    let otherCertArray = this.getOtherCertArr ? this.getOtherCertArr.getRawValue() : [];
     otherCertArray.forEach((element, i) => {
       if (!element[this.form_file_path]) {
         this.getOtherCertArr.removeAt(i);
@@ -966,7 +964,7 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     });
 
       // Certificatopms
-      let certificationsArray = this.getCertificationsArr.getRawValue();
+      let certificationsArray = this.getCertificationsArr ? this.getCertificationsArr.getRawValue() : [];
       certificationsArray.forEach((element, i) => {
         if (!element[this.form_file_path]) {
           this.getCertificationsArr.removeAt(i);
@@ -985,10 +983,10 @@ export class CandidateUploadDocumentComponent implements OnInit, AfterViewInit, 
     // let joiningArray = this.getJoiningArr.getRawValue();
     let educationArray = this.appConfig.getLocalData('form_submmited') == 'true' ? this.getEducationArr.getRawValue() : [];
     // let transferArray = this.getTransferArr.getRawValue();
-    let resumeArray = this.getResumeArr.getRawValue();
+    let resumeArray = this.getResumeArr ? this.getResumeArr.getRawValue() : [];
     // let bankArray = this.getBankArr.getRawValue();
-    let certArray = this.getCertificationsArr.getRawValue();
-    let otherArray = this.getOtherCertArr.getRawValue();
+    let certArray = this.getCertificationsArr ? this.getCertificationsArr.getRawValue() : [];
+    let otherArray = this.getOtherCertArr ? this.getOtherCertArr.getRawValue() : [];
     const apiData = {
       joining_details: [],
       education_documents: educationArray,
@@ -1406,7 +1404,7 @@ link.remove();
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
-    this.maxDate = new Date(currentYear + 1, 0, 0);
+    this.maxDate = new Date(currentYear + 2, 1, 0);
 }
 
 momentForm(date) {
