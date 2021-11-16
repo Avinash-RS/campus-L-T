@@ -812,6 +812,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   openConfirmationPopUp() {
+    if (this.appConfig.getSelectedDrivePermissions().interview_assignment) {
     this.scheduleConfirmationPopUp = this.matDialog.open(this.withSchedulingConfirmationBox, {
       width: 'auto',
       height: 'auto',
@@ -819,6 +820,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       disableClose: true,
       panelClass: 'confirmation-popup'
     });
+  } else {
+    this.submit();
+  }
   }
   confirmConfirmation() {
     this.scheduleConfirmationPopUp.close();
