@@ -141,7 +141,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         );
     }
 
-    if (event.colDef.field === "video_assessment.evaluation_status") {
+    if (event.colDef.field === "video_assessment.evaluation_statusForDisplay") {
       if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1 && event["data"]["video_assessment"]["test_status"] != 'Time Expired') {
       this.appConfig.setLocalData(
         "cProPic",
@@ -338,6 +338,20 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         getQuickFilterText: (params) => {
           return params.value;
         },
+      },
+      {
+        headerName: "Assigned by",
+        field: "normal_assessment.scheduled_by",
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 150,
+        sortable: true,
+        tooltipField: "normal_assessment.scheduled_by",
+        valueGetter: (params) => {
+          return params.data.normal_assessment.scheduled_by ? params.data.normal_assessment.scheduled_by : '-';
+        }
       }
     ]
   }
@@ -390,17 +404,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             return `${params["data"]["Video_Interview_startTime"]} - ${params["data"]["Video_Interview_endTime"]}`;
         },
       },
-      // {
-      //   headerName: "Assigned by",
-      //   field: "Video_Interview_assigned_by",
-      //   filter: 'agSetColumnFilter',
-      //   filterParams: {
-      //     applyMiniFilterWhileTyping: true
-      //   },
-      //   minWidth: 150,
-      //   sortable: true,
-      //   tooltipField: "Video_Interview_assigned_by",
-      // }
     ]
    }
  ]
@@ -556,7 +559,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       {
         headerName: "Video Evaluation Status",
         headerClass: 'ag-grid-header-center',
-        field: "video_assessment.evaluation_status",
+        field: "video_assessment.evaluation_statusForDisplay",
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
@@ -578,6 +581,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["scheduled_status"] != 1
           ) {
             return `<span class="status scheduled-bg">Not Scheduled</span>`;
+          }
+          if (
+            params["data"] &&
+            params["data"]["video_assessment"] && params["data"]["video_assessment"]["sent_to_hr"] == 1
+          ) {
+            return `<span style="cursor: pointer;" class="status completed-bg">Submitted</span>`;
           }
           if (
             params["data"] &&
@@ -778,12 +787,46 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             element.video_assessment.evaluation_status = element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'on hold') ? 'On Hold' : '';
             element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
-            // element["evaluation_status_1"] =
-            //   element.normal_assessment.evaluation_status && element.normal_assessment.evaluation_status == "2"
-            //     ? "Submitted"
-            //     : element.normal_assessment.evaluation_status == "1"
-            //     ? "Completed"
-            //     : "Scheduled";
+            // Video Assessment evaluation status updation for display in ag grid
+            if (
+              element &&
+              element["video_assessment"] && element["video_assessment"]["scheduled_status"] != 1
+            ) {
+              element["video_assessment"]['evaluation_statusForDisplay'] = "Not Scheduled";
+            }
+            else if (
+              element &&
+              element["video_assessment"] && element["video_assessment"]["sent_to_hr"] == 1
+            ) {
+              element["video_assessment"]['evaluation_statusForDisplay'] = "Submitted";
+            }
+            else if (
+              element &&
+              element["video_assessment"] && element["video_assessment"]["test_status"] == "Time Expired"
+            ) {
+              element["video_assessment"]['evaluation_statusForDisplay'] = "Time Expired";
+            } else {
+              if (
+                element &&
+                element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "Selected"
+              ) {
+                element["video_assessment"]['evaluation_statusForDisplay'] = "Selected";
+              }
+              else if (
+                element &&
+                element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "On Hold"
+              ) {
+                element["video_assessment"]['evaluation_statusForDisplay'] = "On Hold";
+              }
+              else if (
+                element &&
+                element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "Rejected"
+              ) {
+                element["video_assessment"]['evaluation_statusForDisplay'] = "Rejected";
+              } else {
+                element["video_assessment"]['evaluation_statusForDisplay'] = "Yet to Evaluate";
+              }
+            }
             element.Video_Interview_assigned_by = "-";
             element.Video_Interview_startTime = '';
             element.Video_Interview_endTime = '';
