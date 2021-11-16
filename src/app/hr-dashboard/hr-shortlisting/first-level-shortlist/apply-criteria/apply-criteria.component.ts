@@ -106,7 +106,7 @@ export class ApplyCriteriaComponent implements OnInit {
   percentageRegexError: boolean;
   percentageRegexErrorIndex: any;
   percentageToRegexError: boolean;
-  percentageToRegexErrorIndex: string;
+  percentageToRegexErrorIndex: any;
   totalCandidates: any;
   filteredCandidates: number;
   mastersList: any;

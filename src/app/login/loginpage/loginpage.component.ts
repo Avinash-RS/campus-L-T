@@ -5,7 +5,6 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Subscription } from 'rxjs';
-import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { environment } from 'src/environments/environment';
 
