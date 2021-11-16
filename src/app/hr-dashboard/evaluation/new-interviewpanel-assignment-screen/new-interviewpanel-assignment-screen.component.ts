@@ -487,6 +487,16 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   getEducation() {
     let Temp = this.EduLevel ? this.EduLevel : [];
     const final = [];
+    let ca = {
+      name: 'CA',
+      label: 'CA',
+      checkbox: false,
+      percentageFrom: '',
+      percentageTo: '',
+      yearFrom: '',
+      yearTo: '',
+      radio: false
+    };
     Temp.forEach(element => {
       if (element && element['name'] == 'UG') {
         final.push(element);
@@ -498,6 +508,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         final.push(element);
       }
     });
+    final.push(ca);
     this.allEducations = final ? final : [];
   }
 

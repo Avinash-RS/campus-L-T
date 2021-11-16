@@ -42,7 +42,7 @@
                   </div>
                 </div>
                 <!-- Profile close -->
-        
+
         <!-- Gender start -->
         <div *ngIf="genderFilterShow" class="filter-wrapper-main">
           <div class="filter-heading">
@@ -172,7 +172,7 @@
             <!-- Gender Tab -->
             <nz-tab [nzTitle]="titleProfile">
               <ng-template #titleProfile>Profile List <span class="tab-span"></span></ng-template>
-      
+
               <!-- Gender Content -->
               <div class="content-wrapper-gender">
                 <div class="dropdown-wrapper">
@@ -195,7 +195,7 @@
                 </div>
               </div>
             </nz-tab>
-      
+
       <!-- Gender Tab -->
       <nz-tab [nzTitle]="titleTemplate">
         <ng-template #titleTemplate>Gender <span class="tab-span"></span></ng-template>
@@ -253,7 +253,7 @@
               <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
               <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
               <div class="button validation1">
-                Note: Both Startdate and Enddate needs to be provided.               
+                Note: Both Startdate and Enddate needs to be provided.
                 <!-- <button class="submit" mat-raised-button (click)="applyDateFilter()"><span>Apply</span></button> -->
               </div>
             </div>
@@ -294,7 +294,7 @@
                         <span class="percent">
                           %</span></span></div>
                     <div class="item no-space input"><span><input [value]="dup['checkbox'] ? dup['percentageTo'] : null"
-                          [ngClass]="dup['checkbox'] ? '' : 'disable-input'" [ngStyle]="{border: (percentageToRegexError && i == percentageToRegexErrorIndex) ? 'solid red 1px' : '' }" type="text" name="" [id]="'perTo' + i">
+                          [ngClass]="dup['checkbox'] ? '' : 'disable-input'" [ngStyle]="{border: (percentageToRegexError && (i == percentageToRegexErrorIndex)) ? 'solid red 1px' : '' }" type="text" name="" [id]="'perTo' + i">
                         <span class="percent">
                           %</span></span></div>
                   </div>

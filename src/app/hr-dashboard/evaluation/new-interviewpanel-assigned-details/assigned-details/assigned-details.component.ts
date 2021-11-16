@@ -275,7 +275,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
             return 'Postgraduate';
           } else if (params.data.level == 'Diploma') {
             return 'Diploma';
-          } else { return '-'; }
+          } else { return params.data.level; }
         },
       getQuickFilterText: (params) => {
           return params.value;
@@ -404,6 +404,16 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
   getEducation() {
     let Temp = this.EduLevel ? this.EduLevel : [];
     const final = [];
+    let ca = {
+      name: 'CA',
+      label: 'CA',
+      checkbox: false,
+      percentageFrom: '',
+      percentageTo: '',
+      yearFrom: '',
+      yearTo: '',
+      radio: false
+    };
     Temp.forEach(element => {
       if (element && element['name'] == 'UG') {
         final.push(element);
@@ -415,6 +425,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         final.push(element);
       }
     });
+    final.push(ca);
     this.allEducations = final ? final : [];
   }
 
