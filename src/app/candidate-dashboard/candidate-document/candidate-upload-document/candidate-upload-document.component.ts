@@ -1017,7 +1017,6 @@ async uploadImage(file, i, form) {
      return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
     this.loadingService.setLoading(false);
-    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
       if (form == this.conditionJoining) {
       this.getJoiningArr.at(i).patchValue({
@@ -1159,6 +1158,7 @@ onSelectFile(event, i, form) {
   const fd = new FormData();
     if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
       if (event.target.files[0].size < 2000000) {
+       if (this.appConfig.minImageSizeValidation(event.target.files[0].size)) {
         this.selectedImage = event.target.files[0];
 
         if (form == this.conditionJoining) {
@@ -1209,6 +1209,7 @@ onSelectFile(event, i, form) {
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);
         }
+       }
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
@@ -1227,6 +1228,7 @@ onPhotoUpload(event, i, form) {
   const fd = new FormData();
   if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       if (event.target.files[0].size < 2000000) {
+        if (this.appConfig.minImageSizeValidation(event.target.files[0].size)) {
         this.selectedImage = event.target.files[0];
 
         if (form == this.conditionJoining) {
@@ -1253,6 +1255,7 @@ onPhotoUpload(event, i, form) {
           fd.append('product_image', this.selectedImage);
           this.uploadImage(fd, i, form);
         }
+       }
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
@@ -1277,7 +1280,6 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
      return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
     this.loadingService.setLoading(false);
-    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
         this.getSemesterArr(mainIndex).at(subIndex).patchValue({
           [this.form_file_name]: data.file_name,
@@ -1315,6 +1317,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
   const fd = new FormData();
     if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
       if (event.target.files[0].size < 2000000) {
+        if (this.appConfig.minImageSizeValidation(event.target.files[0].size)) {
         this.selectedImage = event.target.files[0];
 
         fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -1323,6 +1326,7 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
         fd.append('level', this.getSemesterArr(mainIndex).at(subIndex).value[this.form_name]);
         fd.append('product_image', this.selectedImage);
         this.uploadEducationImage(fd, mainIndex, subIndex, form);
+        }
       } else {
         // this.showResumeImgSizeError = true;
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');

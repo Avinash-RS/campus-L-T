@@ -413,5 +413,13 @@ export class AppConfigService {
     return selectedDrivePermissions ? selectedDrivePermissions : '';
   }
 
+  minImageSizeValidation(fileSize) {
+    if(fileSize >= 10000) {
+      return true;
+    } else {
+      this.nzNotification('error', 'Not Uploaded', 'Minimum file size is 10 KB');
+      return false;
+    }
+  }
 }
 
