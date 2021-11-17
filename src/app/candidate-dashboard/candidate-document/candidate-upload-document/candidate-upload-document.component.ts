@@ -1017,7 +1017,6 @@ async uploadImage(file, i, form) {
      return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
     this.loadingService.setLoading(false);
-    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
       if (form == this.conditionJoining) {
       this.getJoiningArr.at(i).patchValue({
@@ -1277,7 +1276,6 @@ async uploadEducationImage(file, mainIndex, subIndex, form) {
      return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
     this.loadingService.setLoading(false);
-    // this.candidateService.uploadCandidateDocument(fd).subscribe((data: any) => {
     if (data && data.file_id) {
         this.getSemesterArr(mainIndex).at(subIndex).patchValue({
           [this.form_file_name]: data.file_name,
