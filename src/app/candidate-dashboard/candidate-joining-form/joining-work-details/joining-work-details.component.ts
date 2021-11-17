@@ -312,7 +312,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_faculty_reference]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][0] ? this.workDetailsAllData['faculty_references'][0] : null,
       [this.form_faculty_reference_1]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][1] ? this.workDetailsAllData['faculty_references'][1] : null,
       [this.form_is_training_status]: this.workDetailsAllData[this.form_is_training_status] && this.workDetailsAllData[this.form_is_training_status] == 1 ? this.workDetailsAllData[this.form_is_training_status] : null,
-      [this.form_training_is_articleship_status]: this.workDetailsAllData[this.form_training_is_articleship_status] ? '0' : '1',
+      [this.form_training_is_articleship_status]: this.workDetailsAllData[this.form_training_is_articleship_status] == 0 ? '0' : '1',
       [this.form_ca_dateofcompletion]: this.workDetailsAllData[this.form_ca_dateofcompletion] ? this.dateConvertion(this.workDetailsAllData[this.form_ca_dateofcompletion]) : null,
       [this.form_ca_achivement]: this.workDetailsAllData[this.form_ca_achivement],
       [this.form_is_ca_resaon_suitable]: this.workDetailsAllData[this.form_is_ca_resaon_suitable]
