@@ -109,7 +109,14 @@ export class JoinInterviewComponent implements OnInit {
   openRTC(view) {
     if (view && view.type && view.type == 'teams') {
    return window.open(view.password, "Interview").focus();
+    } else {
+      // if (this.roleType == "interviewer") {
+        let currentMail = this.appConfig.getLocalData('userEmail');
+        let link = view.userDtl.find(ele => ele.emailId == currentMail);
+        link ? window.open(link.link, "Interview").focus() : this.appConfig.warning('You have not assigned to evaluate this');
+      // } else {
+      //   return window.open(view.userDtl[0].link, "Interview").focus();
+      // }
     }
-   return window.open(view.userDtl[0].link, "Interview").focus();
   }
 }
