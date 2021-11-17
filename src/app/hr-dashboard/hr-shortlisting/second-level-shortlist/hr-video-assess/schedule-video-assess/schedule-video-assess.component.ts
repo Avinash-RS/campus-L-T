@@ -214,7 +214,7 @@ patchScheduleForm() {
  CategoryChanged(e) {
   this.selectAll = false;
   this.selectedCategory = e;
-  let cat = this.questionListApiResponse.find(data=> data.categoryId == this.selectedCategory);
+  let cat = this.questionListApiResponse.find(data=> data.categoryName == this.selectedCategory);
   this.questionList = cat ? cat.questionDetails : [];
  }
 
@@ -224,7 +224,7 @@ patchScheduleForm() {
       this.questionLoading = false;
       if (response && response.success) {
         this.questionListApiResponse = response && response.data ? response.data : [];
-       this.selectedCategory = response && response.data && response.data[0] ? response.data[0].categoryId : '';
+       this.selectedCategory = response && response.data && response.data[0] ? response.data[0].categoryName : '';
        this.selectedCategoryItem = response && response.data && response.data[0] ? response.data[0] : '';
        this.questionList = response && response.data && response.data[0] && response.data[0].questionDetails ? response.data[0].questionDetails : [];
        this.categoryList = response && response.data ? response.data : [];
@@ -298,15 +298,15 @@ patchScheduleForm() {
       return this.appConfig.warning('No Candidates were Selected...')
     }
     if (this.checkIsValidDate()) {
+      let duration = 0;
       let apiQuestionIds = [];
       this.selectedQuestionsArray.map((data) => {
         data.questionDetails.map((ele)=> {
+          duration = duration + (ele && ele.duration ? ele.duration : 0);
           apiQuestionIds.push(ele._id);
         });
       });
-    let duration = 0;
     let candidateQuestionIds = this.selectedQuestionsArray.map((data) => {
-      duration = duration + (data && data.duration ? data.duration : 0);
       return {questionId: data._id, startAt: '', EndAt: ''};
     });
     let candidateDetails = this.candidateDetailsList.map((data)=> {
@@ -366,12 +366,13 @@ patchScheduleForm() {
         let cate = element.questionDetails.filter(elem => elem.checked);
         let category = {
           categoryName: element.categoryName,
-          categoryId: element.categoryId,
+          categoryId: element.categoryId ? element.categoryId : null,
           questionDetails: cate && cate.length > 0 ? cate : null
         }
         category.questionDetails ? this.selectedQuestionsArray.push(category) : '';
       }
     });
+    this.matDialog.closeAll();
   }
 
   openDialog(templateRef) {
@@ -380,7 +381,7 @@ patchScheduleForm() {
       width: "60%",
       height: "100%",
       closeOnNavigation: true,
-      disableClose: true,
+      disableClose: false,
     });
   }
 
