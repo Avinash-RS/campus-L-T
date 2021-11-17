@@ -501,6 +501,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       this.profilePictureFormControl.markAsTouched();
       if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
         if (event.target.files[0].size < 2000000) {
+          if (this.appConfig.minImageSizeValidation(event.target.files[0].size)) {
           let image = event.target.files[0];
 
           fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
@@ -509,9 +510,10 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
           fd.append('level', 'profile picture');
           fd.append('product_image', image);
           this.uploadImage(fd);
-        } else {
-          this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
         }
+       } else {
+        this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
+       }
       } else {
         return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload PNG/JPEG files only');
       }

@@ -1216,7 +1216,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     const fd = new FormData();
     if (event.target.files && (event.target.files[0].type.includes('image/png') || event.target.files[0].type.includes('image/jp')) && !event.target.files[0].type.includes('svg')) {
       if (event.target.files[0].size < 2000000) {
-        let image = event.target.files[0];
+      if (this.appConfig.minImageSizeValidation(event.target.files[0].size)) {
+          let image = event.target.files[0];
 
         fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
         fd.append('description', 'signature');
@@ -1224,6 +1225,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
         fd.append('level', 'signature');
         fd.append('product_image', image);
         this.uploadImage(fd);
+       }
       } else {
         this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
       }
