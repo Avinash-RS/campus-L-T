@@ -138,12 +138,6 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
                   poster:iterator.id,
                   src: this.proctor_url+iterator.id+'?token='+this.appConfig.getLocalData('Proctor_token'),
                 });
-              // this.playlist.push({
-              //   id:iterator.id,
-              //   filename:iterator.filename,
-              //   poster:iterator.id,
-              //   src: this.proctor_url+iterator.id+'?token='+this.appConfig.getLocalData('Proctor_token'),
-              // })
               i++;
             }
           });
@@ -184,18 +178,6 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
 playEnd() {
   var vid = <HTMLVideoElement> document.getElementById("myVideo");
   vid.pause();
-// if (playPromise !== undefined) {
-//     playPromise.then(_ => {
-//     // vid.load();
-//     vid.pause();
-//   })
-//   .catch(error => {
-//     vid.pause();
-//     console.log(error);
-//   });
-// } else {
-//   vid.pause();
-// }
 }
 
 sendFeedback() {
