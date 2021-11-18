@@ -255,12 +255,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
 
   isRowSelectableMethod() {
     this.rowSelection = "multiple";
-    // this.isRowSelectable = function (rowNode) {
-    //   return rowNode.data ? rowNode.data.normal_assessment.evaluation_status == "1" : false;
-    // }
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
       this.isRowSelectable = function (rowNode) {
-      return (rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'Selected') && (rowNode.data && rowNode.data.normal_assessment.evaluation_status == "1" && rowNode.data.normal_assessment.interview_status == "Selected") ? true : false;
+      return (rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && (rowNode.data.video_assessment.evaluation_status == 'Selected' || rowNode.data.video_assessment.evaluation_status == 'Rejected')) && (rowNode.data && rowNode.data.normal_assessment.evaluation_status == "1" && rowNode.data.normal_assessment.interview_status == "Selected") ? true : false;
     }
     };
     if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
@@ -270,9 +267,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     };
     if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
       this.isRowSelectable = function (rowNode) {
-      return rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && rowNode.data.video_assessment.evaluation_status == 'Selected' ? true : false;
+      return rowNode.data && rowNode.data.video_assessment && rowNode.data.video_assessment.evaluation_status && (rowNode.data.video_assessment.evaluation_status == 'Selected' || rowNode.data.video_assessment.evaluation_status == 'Rejected') ? true : false;
     }
-  };
+   };
   }
 
   defaultColumns() {
