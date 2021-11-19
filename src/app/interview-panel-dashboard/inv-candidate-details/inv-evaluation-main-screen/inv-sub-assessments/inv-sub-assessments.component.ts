@@ -23,6 +23,7 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
   activatedRouteSubscription: Subscription;
   queryParams: any;
   VideoAssessShow: boolean;
+  showSubmitButton = false;
 
   constructor(
     private appConfig: AppConfigService,

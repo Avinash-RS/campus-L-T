@@ -21,6 +21,8 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
   @ViewChild('sourceVideo',{static: false}) video: TemplateRef<any>;
   @Input() uid: any;
   @Input() shortlist_name: any;
+  @Input() videoAssessment: any;
+  @Input() showSubmitButton: any;
   showFeedback: boolean;
   playVideoList = [];
   proctor_url = environment.PROCTOR_VIDEO_URL;
@@ -33,7 +35,6 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
   questionDetailsArray: any = [];
   testDetailsArray: any;
   active: any = 0;
-  @Input() videoAssessment: any;
   selectedStatus = '';
   feedbackformControl = new FormControl(null, [Validators.required, this.globalValidators.address255()])
   feedbackApiLoading: boolean;
@@ -42,7 +43,6 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
   getProctorVideoSubscription: Subscription;
   saveVideoSchedulingFeedBackSubscription: Subscription;
   activatedRouteSubscription: Subscription;
-  VideoAssessShow: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
