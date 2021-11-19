@@ -10,7 +10,7 @@
       <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
       <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
       <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
-      <ng-container *ngIf="showSubmitButton" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+      <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton" [ngTemplateOutlet]="selectionbuttons"></ng-container>
     </ng-container>
   </div>
 </div>
@@ -80,8 +80,8 @@
 <ng-template #selectionbuttons>
   <div class="selectionbuttons">
     <div (click)="showFeedback = true; selectedStatus = 'selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
-    <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div>
-    <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject"><span class="selection-border"><span>Reject</span></span></div>
+    <!-- <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div> -->
+    <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject ml-5"><span class="selection-border"><span>Reject</span></span></div>
   </div>
 </ng-template>
 
@@ -143,7 +143,7 @@
 <ng-template #noVideoRef>
   <div class="no-video">
     <ng-container>
-    <h5> Candidate is yet to start/complete his Assessment...</h5>
+    <h5> No Video Available...</h5>
   </ng-container>
 
 </div>

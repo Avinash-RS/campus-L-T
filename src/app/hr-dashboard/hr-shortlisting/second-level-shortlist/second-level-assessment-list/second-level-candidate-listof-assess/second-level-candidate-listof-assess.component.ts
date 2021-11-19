@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -24,6 +24,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
 })
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild('videoAssessDialog', {static: false}) videoAssessDialog: TemplateRef<any>;
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
@@ -80,13 +81,16 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   filterSecondLevelSubscription: Subscription;
   secondShortlistAPISubscription: Subscription;
   drivePermissions: any;
+  VideoAssessdialogRef: any;
+  userListApiResponse: any;
+  videoAssessment: any;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedServiceService,
-    private router: Router
+    private dialog: Router
   ) {
     this.statusBar = {
       statusPanels: [
@@ -142,6 +146,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         shortlist_name: name,
       };
       this.filterSecondLevelSubscription = this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
+        this.userListApiResponse = response ? response : null;
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
         this.userList.forEach(element => {
@@ -240,7 +245,51 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
   };
 
-  onCellClicked(event) {}
+  onCellClicked(event) {
+    if (event.colDef.field == 'va_test_status') {
+    if (event["data"] && event["data"]["va_scheduled_status"] && event["data"]["va_scheduled_status"] == '1') {
+      this.openMatDialog(event["data"]);
+    }
+    }
+  }
+
+  openMatDialog(data: any) {
+    this.videoAssessment = {
+      schedule_id: data && data.va_schedule_id ? data.va_schedule_id : '',
+      scheduled_status: data && data.va_scheduled_status ? data.va_scheduled_status : 0,
+      room_id: data && data.va_room_id ? data.va_room_id : '',
+      test_status: data && data.va_test_status ? data.va_test_status : '',
+      remarks: data && data.va_remarks ? data.va_remarks : '',
+      evaluation_status: data && data.va_evaluation_status ? data.va_evaluation_status : '',
+      scheduled_by: data && data.va_scheduled_by ? data.va_scheduled_by : '',
+      evaluated_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
+      submitted_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
+      start_datetime: data && data.va_start_datetime ? data.va_start_datetime : '',
+      end_datetime: data && data.va_end_datetime ? data.va_end_datetime : '',
+      uid: data && data.uid ? data.uid : '',
+      shortlist_name: this.userListApiResponse ? this.userListApiResponse.shortlist_name : '',
+      showSubmitButton: data && data.shortlisted_status == 'Shortlisted' ? false : true,
+      redirectedFrom: 'hr'
+  };
+
+    this.VideoAssessdialogRef = this.matDialog.open(this.videoAssessDialog, {
+      width: '900px',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForVideoAssess'
+    });
+  }
+
+  closeDialog(e) {
+    this.VideoAssessdialogRef.close();
+  }
+
+  refresh() {
+    this.gridApi.showLoadingOverlay();
+    this.getUsersList(this.nameOfAssessment);
+  }
 
   getModel(e) {
     setTimeout(() => {
@@ -287,6 +336,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       },
     }
     let apiResultSet = res;
+    this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
     apiResultSet.forEach((first, index) => {
       if (first && first.children && first.children.length > 0) {
         first.children.forEach((second, index1) => {
@@ -302,10 +352,20 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
                 }
             });
           }
+            if (this.drivePermissions.video_assessment && first && first.headerName && first.headerName == 'Video Assessment') {
+            if (second && second.field && second.field == 'va_test_status') {
+              second.cellRenderer = (params) => {
+                if (params["data"] && params["data"]["va_scheduled_status"] && params["data"]["va_scheduled_status"] == '1') {
+                  return `<span style="cursor: pointer; color:#C02222;">${params["data"]["va_test_status"]} </span>`;
+                } else {
+                  return `${params["data"]["va_test_status"]}`;
+                }
+              }
+            }
+          }
         });
       }
     });
-    this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
     // setTimeout(() => {
     if (apiResultSet && apiResultSet[0] && apiResultSet[0].children && apiResultSet[0].children[0] && apiResultSet[0].children[0].field && apiResultSet[0].children[0].field == 'candidate_id') {
     apiResultSet[0].children[0].headerCheckboxSelection = true;
@@ -315,7 +375,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check first
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        console.log('comin', params);
         if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
           params.node.selectable = true;
           return true;
@@ -329,7 +388,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check second
     if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-      console.log('comin', params);
         if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status) {
           params.node.selectable = true;
           return true;
@@ -343,7 +401,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check third
     if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        console.log('comin', params);
         if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
           params.node.selectable = true;
           return true;
@@ -361,7 +418,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   checkboxEnablingCondition(params: any) {
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
-      console.log('comin', params);
       if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
         params.node.selectable = true;
         return true;

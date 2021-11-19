@@ -51,6 +51,11 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
     // Get url Param to view Edit user page
    this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.videoAssessment = params['videoSchedule'] ? JSON.parse(params['videoSchedule']) : '';
+      if (this.videoAssessment) {
+        this.videoAssessment.uid = params['uid'];
+        this.videoAssessment.shortlist_name = params['shortlist_name'];
+        this.videoAssessment.showSubmitButton = this.showSubmitButton;
+      }
       this.uid = params['uid'];
       this.shortlist_name = params['shortlist_name'];
       this.VideoAssessShow = params['videoAssessSubmitted'] && params['videoAssessSubmitted'] == '1' ? false : true;

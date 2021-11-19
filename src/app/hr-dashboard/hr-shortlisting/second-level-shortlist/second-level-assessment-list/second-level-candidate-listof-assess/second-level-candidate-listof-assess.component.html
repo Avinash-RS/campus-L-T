@@ -21,3 +21,14 @@
       </ag-grid-angular>
     </div>
 </div>
+
+<ng-template #videoAssessDialog>
+  <div class="main-wrapper">
+    <div style="margin: 0; float: right;" class="remove">
+      <mat-icon style="font-size: 20px !important; cursor: pointer;" (click)="closeDialog($event)" class="close-icon">close</mat-icon>
+    </div>
+
+    <app-shared-video-assess-view (refreshGrid)="refresh()" [videoAssessment]="videoAssessment"></app-shared-video-assess-view>
+  </div>
+
+</ng-template>
