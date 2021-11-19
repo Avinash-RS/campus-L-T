@@ -134,9 +134,9 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
 
   onCellClicked(event) {
     if (event.colDef.field === 'buttons') {
-      if (event['data']['available'] > 0) {
+      // if (event['data']['available'] > 0) {
         return this.shortlistRedirect(event['data']);
-      }
+      // }
     }
 
     if (event.colDef.field === 'shortlist_name') {
@@ -286,15 +286,16 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           return (params.valueFormatted);
         },
         cellRenderer: (params) => {
-          if (params['data']['buttons'] == 'completed') {
-            return `<button class="table-btn agTable selection-disable success" mat-raised-button>Shortlisted</button>`;
-          }
-          if (params['data']['available'] > 0) {
-            return `<button class="table-btn agTable inprogress" mat-raised-button>Shortlist...</button>`;
-          }
-          else {
-            return ``;
-          }
+            return `<button class="table-btn agTable inprogress" mat-raised-button>Shortlist</button>`;
+          // if (params['data']['buttons'] == 'completed') {
+          //   return `<button class="table-btn agTable selection-disable success" mat-raised-button>Shortlisted</button>`;
+          // }
+          // if (params['data']['available'] > 0) {
+          //   return `<button class="table-btn agTable inprogress" mat-raised-button>Shortlist...</button>`;
+          // }
+          // else {
+          //   return ``;
+          // }
         },
         filterParams: {
           buttons: ['reset'],
@@ -366,14 +367,14 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   }
 
   tooltipFormatter(params) {
-    if (params.value == 'completed') {
-      return "Shortlisted";
-    }
-    if (params.value == 'waiting') {
+    // if (params.value == 'completed') {
+    //   return "Shortlisted";
+    // }
+    // if (params.value == 'waiting') {
       return "Click to shortlist";
-    } else {
-      return "No Candidates available for shortlist";
-    }
+    // } else {
+    //   return "No Candidates available for shortlist";
+    // }
   }
 
   // To get all users
