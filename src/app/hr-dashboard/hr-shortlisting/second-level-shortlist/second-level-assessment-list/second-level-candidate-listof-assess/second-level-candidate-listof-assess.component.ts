@@ -47,9 +47,9 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     floatingFilter: true,
     // minWidth: 150,
     suppressSizeToFit: true,
-    headerCheckboxSelection: this.isFirstColumn,
-    checkboxSelection: this.isFirstColumn,
-    headerCheckboxSelectionFilteredOnly: true,
+    // headerCheckboxSelection: this.isFirstColumn,
+    // checkboxSelection: this.isFirstColumn,
+    // headerCheckboxSelectionFilteredOnly: true,
   };
   tooltipShowDelay = 0;
   rowData: any;
@@ -72,11 +72,14 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   // statusBar:any;
   public components;
   public getNodeChildDetails;
+  public rowSelection;
+  public isRowSelectable;
   resultsLength:any;
   fres: any;
   refreshSubscription: Subscription;
   filterSecondLevelSubscription: Subscription;
   secondShortlistAPISubscription: Subscription;
+  drivePermissions: any;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
@@ -98,7 +101,12 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   ngOnInit() {
+    this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
     this.refreshOndriveChangeRXJS();
+  }
+
+  isRowSelectableMethod() {
+    this.rowSelection = "multiple";
   }
 
   ngOnDestroy() {
@@ -136,6 +144,9 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       this.filterSecondLevelSubscription = this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
+        this.userList.forEach(element => {
+          element.shortlisted_status = element.shortlisted_status == 1 ? 'Shortlisted' : 'Not Shortlisted';
+        });
         this.rowData = this.userList;
         this.tableDef(tableHeaders);
         let notTaken = response['total_no_of_candidates'] - response['exams_taken'];
@@ -294,7 +305,92 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         });
       }
     });
+    this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
+    // setTimeout(() => {
+    if (apiResultSet && apiResultSet[0] && apiResultSet[0].children && apiResultSet[0].children[0] && apiResultSet[0].children[0].field && apiResultSet[0].children[0].field == 'candidate_id') {
+    apiResultSet[0].children[0].headerCheckboxSelection = true;
+    apiResultSet[0].children[0].headerCheckboxSelectionFilteredOnly = true;
+    apiResultSet[0].children[0].checkboxSelection = true;
+
+    // Drive condition check first
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
+      apiResultSet[0].children[0].checkboxSelection = function (params) {
+        console.log('comin', params);
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+          params.node.selectable = true;
+          return true;
+        } else {
+          params.node.selectable = false;
+          return false;
+        }
+      }
+    }
+
+    // Drive condition check second
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
+      apiResultSet[0].children[0].checkboxSelection = function (params) {
+      console.log('comin', params);
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status) {
+          params.node.selectable = true;
+          return true;
+        } else {
+          params.node.selectable = false;
+          return false;
+        }
+    }
+    }
+
+    // Drive condition check third
+    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+      apiResultSet[0].children[0].checkboxSelection = function (params) {
+        console.log('comin', params);
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+          params.node.selectable = true;
+          return true;
+        } else {
+          params.node.selectable = false;
+          return false;
+        }
+      }
+    }
+
+  }
+
     this.columnDefs = apiResultSet;
+  }
+
+  checkboxEnablingCondition(params: any) {
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
+      console.log('comin', params);
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+        params.node.selectable = true;
+        return true;
+      } else {
+        params.node.selectable = false;
+        return false;
+      }
+    }
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status) {
+        params.node.selectable = true;
+        return true;
+      } else {
+        params.node.selectable = false;
+        return false;
+      }
+    }
+
+    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+        params.node.selectable = true;
+        return true;
+      } else {
+        params.node.selectable = false;
+        return false;
+      }
+    }
+
+
   }
 
 
