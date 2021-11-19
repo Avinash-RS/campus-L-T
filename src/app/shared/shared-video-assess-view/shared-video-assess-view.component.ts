@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, OnDestroy, ViewChild, TemplateRef, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, ViewChild, TemplateRef, Input, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,6 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-shared-video-assess-view',
@@ -18,11 +17,9 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 
 export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDestroy {
+  @Output() refreshGrid: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('sourceVideo',{static: false}) video: TemplateRef<any>;
-  @Input() uid: any;
-  @Input() shortlist_name: any;
   @Input() videoAssessment: any;
-  @Input() showSubmitButton: any;
   showFeedback: boolean;
   playVideoList = [];
   proctor_url = environment.PROCTOR_VIDEO_URL;
@@ -135,7 +132,6 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
           });
         });
        this.currentItem =  this.playVideoList[this.currentIndex];
-       console.log('curr',this.currentItem);
         }else {
           this.showErrormsg = true;
         }
@@ -176,17 +172,22 @@ playEnd() {
 sendFeedback() {
   if (this.feedbackformControl.valid) {
     const apiData = {
-      shortlist_name: this.shortlist_name,
+      shortlist_name: this.videoAssessment && this.videoAssessment.shortlist_name ? this.videoAssessment.shortlist_name : '',
       evaluation_status: this.selectedStatus,
       remarks: this.feedbackformControl.value,
-      candidate_user_id: this.uid
+      candidate_user_id: this.videoAssessment && this.videoAssessment.uid ? this.videoAssessment.uid : ''
   }
   this.feedbackApiLoading = true;
  this.saveVideoSchedulingFeedBackSubscription = this.adminService.saveVideoSchedulingFeedBack(apiData).subscribe((response: any)=> {
     this.feedbackApiLoading = false;
     this.showFeedback = false;
     this.appConfig.success('Feedback has been updated successfully...');
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST);
+    this.videoAssessment.evaluated_by = this.appConfig.getLocalData('username');
+    this.videoAssessment.evaluation_status = this.selectedStatus.includes('selected') ? 'Selected' : 'Rejected';
+    this.videoAssessment.remarks = apiData.remarks;
+    if (this.videoAssessment.redirectedFrom && this.videoAssessment.redirectedFrom == 'hr') {
+      this.refreshGrid.emit();
+    }
   }, (err)=> {
     this.feedbackApiLoading = false;
   });

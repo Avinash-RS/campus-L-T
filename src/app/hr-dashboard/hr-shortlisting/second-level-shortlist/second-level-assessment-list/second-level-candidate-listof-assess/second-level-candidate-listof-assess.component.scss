@@ -123,3 +123,16 @@ th {
   opacity: 0.5;
   cursor: not-allowed;
 }
+::ng-deep .popupModalContainerForVideoAssess {
+  .main-wrapper {
+      padding: 1em;
+      background-color: white;
+      display: block;
+      width: 100%;
+      .text {
+          margin-top: .5em;
+          font-size: 15px;
+          text-align: center;
+      }
+  }
+}
