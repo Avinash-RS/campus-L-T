@@ -136,13 +136,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["video_assessment"],
         event["data"]["shortlist_name"],
         event["data"]["is_video_scheduled"],
-        event["data"]["is_normal_scheduled"],
-        event["data"]["video_assessment"]["sent_to_hr"]
+        event["data"]["is_normal_scheduled"]
         );
     }
 
     if (event.colDef.field === "video_assessment.evaluation_statusForDisplay") {
-      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1 && event["data"]["video_assessment"]["test_status"] != 'Time Expired') {
+      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1) {
       this.appConfig.setLocalData(
         "cProPic",
         event["data"]["profile_image_url"]
@@ -158,8 +157,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         event["data"]["video_assessment"],
         event["data"]["shortlist_name"],
         event["data"]["is_video_scheduled"],
-        event["data"]["is_normal_scheduled"],
-        event["data"]["video_assessment"]["sent_to_hr"]
+        event["data"]["is_normal_scheduled"]
         );
       }
     }
@@ -180,8 +178,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["video_assessment"],
           event["data"]["shortlist_name"],
           event["data"]["is_video_scheduled"],
-          event["data"]["is_normal_scheduled"],
-          event["data"]["video_assessment"]["sent_to_hr"]
+          event["data"]["is_normal_scheduled"]
           );
     }
 
@@ -207,8 +204,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           event["data"]["video_assessment"],
           event["data"]["shortlist_name"],
           event["data"]["is_video_scheduled"],
-          event["data"]["is_normal_scheduled"],
-          event["data"]["video_assessment"]["sent_to_hr"]
+          event["data"]["is_normal_scheduled"]
         );
       }
     }
@@ -581,27 +577,15 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           }
           if (
             params["data"] &&
-            params["data"]["video_assessment"] && params["data"]["video_assessment"]["sent_to_hr"] == 1
-          ) {
-            return `<span style="cursor: pointer;" class="status completed-bg">Submitted</span>`;
-          }
-          if (
-            params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Time Expired"
           ) {
-            return `<span class="status scheduled-bg">Time Expired</span>`;
+            return `<span style="cursor: pointer;" class="status scheduled-bg">Time Expired</span>`;
           } else {
             if (
               params["data"] &&
               params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Selected"
             ) {
               return `<span style="cursor: pointer;" class="status completed-bg">Selected</span>`;
-            }
-            if (
-              params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "On Hold"
-            ) {
-              return `<span style="cursor: pointer;" class="status inprogress-bg">On Hold</span>`;
             }
             if (
               params["data"] &&
@@ -710,41 +694,41 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     this.rejectedCount = [];
     this.candidatesEvaluated = [];
     this.sentToHr = [];
-    if (this.appConfig.getSelectedDrivePermissions().video_assessment && this.appConfig.getSelectedDrivePermissions().normal_assessment) {
-      this.userList.forEach((element) => {
-        if (element.normal_assessment.evaluation_status == '2' && element.video_assessment.sent_to_hr == 1) {
-          this.sentToHr.push(element);
-        }
-        if (element.normal_assessment.evaluation_status == '1' && (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1)) {
-          this.candidatesEvaluated.push(element);
-        }
-        if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Selected' && element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected' && element.video_assessment.sent_to_hr != 1) {
-          this.buttonCheck = true;
-          this.selectedCount.push(element);
-        }
-        if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Rejected' || (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected')) {
-          this.rejectedCount.push(element);
-        }
-    });
-  } else {
-    if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
-    this.userList.forEach((element) => {
-      if (element.video_assessment.sent_to_hr == 1) {
-        this.sentToHr.push(element);
-      }
-      if (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1) {
-        this.candidatesEvaluated.push(element);
-      }
-      if ((element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected') && element.video_assessment.sent_to_hr != 1) {
-        this.buttonCheck = true;
-        this.selectedCount.push(element);
-      }
-      if (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected') {
-        this.rejectedCount.push(element);
-      }
-    });
-  }
-  if (this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+  //   if (this.appConfig.getSelectedDrivePermissions().video_assessment && this.appConfig.getSelectedDrivePermissions().normal_assessment) {
+  //     this.userList.forEach((element) => {
+  //       if (element.normal_assessment.evaluation_status == '2' && element.video_assessment.sent_to_hr == 1) {
+  //         this.sentToHr.push(element);
+  //       }
+  //       if (element.normal_assessment.evaluation_status == '1' && (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1)) {
+  //         this.candidatesEvaluated.push(element);
+  //       }
+  //       if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Selected' && element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected' && element.video_assessment.sent_to_hr != 1) {
+  //         this.buttonCheck = true;
+  //         this.selectedCount.push(element);
+  //       }
+  //       if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Rejected' || (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected')) {
+  //         this.rejectedCount.push(element);
+  //       }
+  //   });
+  // } else {
+  //   if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
+  //   this.userList.forEach((element) => {
+  //     if (element.video_assessment.sent_to_hr == 1) {
+  //       this.sentToHr.push(element);
+  //     }
+  //     if (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1) {
+  //       this.candidatesEvaluated.push(element);
+  //     }
+  //     if ((element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected') && element.video_assessment.sent_to_hr != 1) {
+  //       this.buttonCheck = true;
+  //       this.selectedCount.push(element);
+  //     }
+  //     if (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected') {
+  //       this.rejectedCount.push(element);
+  //     }
+  //   });
+  // }
+  if (this.appConfig.getSelectedDrivePermissions().normal_assessment || true) {
     this.userList.forEach((element) => {
       element.normal_assessment.evaluation_status == '2' ? this.sentToHr.push(element) : element.normal_assessment.evaluation_status == '1' ? (this.buttonCheck = true && this.candidatesEvaluated.push(element)) : '';
       if (
@@ -756,9 +740,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           : this.rejectedCount.push(element);
       }
     });
+   }
   }
-  }
-  }
+// }
   // To get all users
   getUsersList() {
     // const apiData = {
@@ -793,12 +777,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             }
             else if (
               element &&
-              element["video_assessment"] && element["video_assessment"]["sent_to_hr"] == 1
-            ) {
-              element["video_assessment"]['evaluation_statusForDisplay'] = "Submitted";
-            }
-            else if (
-              element &&
               element["video_assessment"] && element["video_assessment"]["test_status"] == "Time Expired"
             ) {
               element["video_assessment"]['evaluation_statusForDisplay'] = "Time Expired";
@@ -808,12 +786,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
                 element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "Selected"
               ) {
                 element["video_assessment"]['evaluation_statusForDisplay'] = "Selected";
-              }
-              else if (
-                element &&
-                element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "On Hold"
-              ) {
-                element["video_assessment"]['evaluation_statusForDisplay'] = "On Hold";
               }
               else if (
                 element &&
@@ -842,7 +814,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     );
   }
 
-  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
+  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 2);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -857,12 +829,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow, videoAssessSubmitted
+        videoShow, evaluationShow
       }
     );
   }
 
-  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
+  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 4);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -877,12 +849,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow, videoAssessSubmitted
+        videoShow, evaluationShow
       }
     );
   }
 
-  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
+  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 3);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -897,12 +869,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow, videoAssessSubmitted
+        videoShow, evaluationShow
       }
     );
   }
 
-  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow, videoAssessSubmitted) {
+  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
     this.appConfig.setLocalData('tabIndex', 0);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
@@ -917,7 +889,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         form: form ? form : "",
         videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
         shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow, videoAssessSubmitted
+        videoShow, evaluationShow
       }
     );
   }
