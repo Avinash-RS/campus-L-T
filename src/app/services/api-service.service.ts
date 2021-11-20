@@ -164,9 +164,17 @@ export class ApiServiceService {
   base64Decryption(value: string){
     value = value.replace(environment.base64EncryptionKey, '');
     if (value) {
-      value = window.atob(value);
-      let decryptedValue =  value ? JSON.parse(value) : null;
-      return decryptedValue;
+      try {
+        value = window.atob(value);
+        let stringifiedValue = value ? JSON.stringify(value) : null;
+        if (stringifiedValue.includes('schedule_id')) {
+          let decryptedValue =  value ? JSON.parse(value) : null;
+          return decryptedValue;
+        }
+        return null;
+      } catch(e) {
+        return null;
+      }
     }
     return null;
   }
