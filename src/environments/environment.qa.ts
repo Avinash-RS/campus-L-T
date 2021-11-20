@@ -1,4 +1,6 @@
 export const environment = {
+  cryptoEncryptionKey: 'VA-SCHEDULE-BY-LNTEDU-DEV',
+  base64EncryptionKey: 'NTF5ePznMhWyxDspEZUwhpYRsJJqCHX5Nb6',
   production: false,
   qa: true,
   uat: false,

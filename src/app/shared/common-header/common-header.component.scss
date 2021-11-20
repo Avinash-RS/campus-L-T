@@ -34,6 +34,7 @@ mat-toolbar {
   }
   &:before {
     content: ' ';
+    visibility: hidden;
     position: absolute;
     width: 64px;
     height: 4px;
