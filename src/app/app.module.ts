@@ -27,7 +27,6 @@ import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
-import { DragScrollModule } from 'ngx-drag-scroll';
 import { NgxChartsModule} from '@swimlane/ngx-charts';
 // import { AgGridModule } from 'ag-grid-angular';
 // ag grid enterprise
@@ -47,7 +46,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +57,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-    DragScrollModule,
     NgxChartsModule,
     ToastrModule.forRoot({
       timeOut: 4000,

@@ -7,6 +7,7 @@ import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
+import { PageNotFoundComponent } from './unauthenticated-routes/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,14 @@ const routes: Routes = [
   },
   {
     path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.HOME}`, loadChildren: './interview-panel-dashboard/interview-panel-dashboard.module#InterviewPanelDashboardModule', canLoad: [ InvpanelGuard ]
+  },
+  {
+    path: `${CONSTANT.ROUTES.UNAUTHENTICATED.HOME}`, loadChildren: './unauthenticated-routes/unauthenticated.module#UnauthenticatedModule'
+  },
+  {
+    path: `**`,
+    pathMatch: 'full',
+    component: PageNotFoundComponent
   }
 ];
 

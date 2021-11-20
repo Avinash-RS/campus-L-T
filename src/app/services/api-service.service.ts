@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppConfigService } from '../config/app-config.service';
 import { environment } from 'src/environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class ApiServiceService {
   BASE_URL = environment.API_BASE_URL;
   BASE_URL_CITY = environment.API_BASE_URL_city;
   httpOptions: { headers: HttpHeaders; };
+  EncryptKEY = environment.cryptoEncryptionKey;
 
 
   //  --proxy-config proxy.conf.json
@@ -136,5 +138,45 @@ export class ApiServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  encrypt(data) {
+    try {
+      return CryptoJS.AES.encrypt(JSON.stringify(data), this.EncryptKEY).toString();
+    } catch (e) {
+      console.log(e);
+      return data;
+    }
+  }
+
+  decrypt(data) {
+    try {
+      const bytes = CryptoJS.AES.decrypt(data, this.EncryptKEY);
+      if (bytes.toString()) {
+        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      }
+      return data;
+    } catch (e) {
+      console.log(e);
+      return data;
+    }
+  }
+
+
+  base64Decryption(value: string){
+    value = value.replace(environment.base64EncryptionKey, '');
+    if (value) {
+      try {
+        value = window.atob(value);
+        let stringifiedValue = value ? JSON.stringify(value) : null;
+        if (stringifiedValue.includes('schedule_id')) {
+          let decryptedValue =  value ? JSON.parse(value) : null;
+          return decryptedValue;
+        }
+        return null;
+      } catch(e) {
+        return null;
+      }
+    }
+    return null;
+  }
 }
 

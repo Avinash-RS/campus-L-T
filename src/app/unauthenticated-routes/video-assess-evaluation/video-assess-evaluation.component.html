@@ -1,0 +1,44 @@
+<app-common-header></app-common-header>
+<div class="top-wrapper">
+  <div class="flex-wrapper">
+    <div class="inner-flex">
+      <div class="grid-wrapper">
+        <div class="details-section">
+          <div class="nameinfo">
+            <div>
+              <div class="img">
+                <img [src]="videoAssessment && videoAssessment.profile_image_url ? videoAssessment.profile_image_url : ''" alt="name" />
+              </div>
+            </div>
+            <div>
+              <span>CID: {{videoAssessment && videoAssessment.candidate_id ? videoAssessment.candidate_id : '-'}}</span>
+              {{videoAssessment && videoAssessment.candidate_name ? videoAssessment.candidate_name : '-'}}
+            </div>
+          </div>
+          <div class="iconinfo">
+            <span>
+              <em class="icon"></em>
+            </span>
+          </div>
+          <div class="statusinfo ml-2">
+            Video Assessment Status:
+            <!-- <span *ngIf="videoAssessment && videoAssessment.test_status == 'Yet to Start'" class="ml-2 status scheduled">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : ''}}</span>
+            <span *ngIf="videoAssessment && videoAssessment.test_status == 'Time Expired'" class="ml-2 status scheduled">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : ''}}</span>
+            <span *ngIf="videoAssessment && videoAssessment.test_status == 'In Progress'" class="ml-2 status scheduled">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : ''}}</span> -->
+            <span *ngIf="videoAssessment && videoAssessment.test_status" class="ml-2 status completed">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : '-'}}</span>
+          </div>
+          <div class="statusinfo ml-2">
+            Evaluation Status:
+            <span *ngIf="videoAssessment && videoAssessment.submitted_by else nosubmitted" class="ml-2 status completed">{{videoAssessment && videoAssessment.submitted_by ? 'Submitted' : 'Yet to Submit'}}</span>
+            <ng-template #nosubmitted>
+              <span class="status scheduled">{{videoAssessment && videoAssessment.submitted_by ? 'Submitted' : 'Yet to Submit'}}</span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="video-wrapper">
+<app-shared-video-assess-view [videoAssessment]="videoAssessment"></app-shared-video-assess-view>
+</div>

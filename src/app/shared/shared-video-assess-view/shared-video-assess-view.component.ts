@@ -42,7 +42,6 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
   activatedRouteSubscription: Subscription;
 
   constructor(
-    private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
     private globalValidators: GlobalValidatorService,
     private apiService: ApiServiceService,
@@ -197,10 +196,14 @@ sendFeedback() {
 }
 
   isAccessGranted() {
-    if(this.videoAssessment && this.videoAssessment.scheduled_status && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+    if (this.videoAssessment && this.videoAssessment.redirectedFrom && this.videoAssessment.redirectedFrom == 'external evaluator') {
       return true;
     } else {
-      return false;
+      if(this.videoAssessment && this.videoAssessment.scheduled_status && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 

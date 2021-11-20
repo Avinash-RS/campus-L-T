@@ -263,10 +263,10 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       evaluation_status: data && data.va_evaluation_status ? data.va_evaluation_status : '',
       scheduled_by: data && data.va_scheduled_by ? data.va_scheduled_by : '',
       evaluated_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
-      submitted_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
+      submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
       start_datetime: data && data.va_start_datetime ? data.va_start_datetime : '',
       end_datetime: data && data.va_end_datetime ? data.va_end_datetime : '',
-      uid: data && data.uid ? data.uid : '',
+      uid: data && data.candidate_user_id ? data.candidate_user_id : '',
       shortlist_name: this.userListApiResponse ? this.userListApiResponse.shortlist_name : '',
       showSubmitButton: data && data.shortlisted_status == 'Shortlisted' ? false : true,
       redirectedFrom: 'hr'
