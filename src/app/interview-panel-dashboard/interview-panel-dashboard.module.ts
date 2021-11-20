@@ -18,7 +18,6 @@ import { SubSharedInvPanelHeaderComponent } from './inv-candidate-details/sub-sh
 import { AgGridModule } from 'ag-grid-angular';
 import { BisEvaluationFormComponent } from './bis-evaluation-form/bis-evaluation-form.component';
 import { InvUnifiedreportsComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-unifiedreports/inv-unifiedreports.component';
-import { DragScrollModule } from 'ngx-drag-scroll';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { InvJoinInterviewComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-join-interview/inv-join-interview.component';
 import { CaEvaluationFormComponent } from './evaluation-form/ca-evaluation-form/ca-evaluation-form.component';
@@ -31,7 +30,6 @@ import { CaEvaluationFormComponent } from './evaluation-form/ca-evaluation-form/
     SharedModule,
     MaterialModule,
     InterviewPanelDashboardRoutingModule,
-    DragScrollModule,
     PdfViewerModule,
     AgGridModule.withComponents([])
   ],
