@@ -36,6 +36,10 @@ export const CONSTANT = {
     },
     LOGIN: '/login',
     LOGOUT: '/logout',
+    UNAUTHENTICATED: {
+      HOME: '/Unauthenticated',
+      VIDEO_ASSESS: '/Unauthenticated/video-assessment-evaluation'
+    },
     ADMIN_DASHBOARD: {
       HOME: '/admin',
       DASHBOARD: '/admin/dashboard',
@@ -150,6 +154,10 @@ export const CONSTANT = {
     },
     LOGIN: 'login',
     LOGOUT: 'logout',
+    UNAUTHENTICATED: {
+      HOME: 'Unauthenticated',
+      VIDEO_ASSESS: 'video-assessment-evaluation'
+    },
     ADMIN_DASHBOARD: {
       HOME: 'admin',
       DASHBOARD: 'dashboard',

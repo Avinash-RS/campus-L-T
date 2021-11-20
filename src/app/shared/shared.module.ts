@@ -97,10 +97,11 @@ import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 import { AgGridModule } from 'ag-grid-angular';
 import { SharedReportsSectionComponent } from './user-management/shared-reports-section/shared-reports-section.component';
 import { SharedVideoAssessViewComponent } from './shared-video-assess-view/shared-video-assess-view.component';
+import { PageNotFoundComponent } from '../unauthenticated-routes/page-not-found/page-not-found.component';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent
 ],
   imports: [
     CommonModule,
@@ -216,6 +217,7 @@ ModuleRegistry.registerModules(AllModules);
     CommonUploadsComponent,
     SharedReportsSectionComponent,
     SharedVideoAssessViewComponent,
+    PageNotFoundComponent,
     // Ant design modules
     NzAffixModule,
     NzAlertModule,
