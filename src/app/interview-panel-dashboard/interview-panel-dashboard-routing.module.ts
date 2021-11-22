@@ -48,14 +48,6 @@ const routes: Routes = [
         path: '',
         redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`,
         pathMatch: 'full',
-      },
-
-      {
-        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.EVALUATION_FORM}`,
-        component: EvaluationFormComponent,
-        data: {
-          breadcrumb: 'Evaluation Form'
-        }
       }
     ]
   }
