@@ -10,7 +10,7 @@
       <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
       <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
       <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
-      <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+      <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton && (videoAssessment.test_status && videoAssessment.test_status == 'Completed')" [ngTemplateOutlet]="selectionbuttons"></ng-container>
     </ng-container>
   </div>
 </div>
