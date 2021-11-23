@@ -21,10 +21,13 @@ import { InvUnifiedreportsComponent } from './inv-candidate-details/inv-evaluati
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { InvJoinInterviewComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-join-interview/inv-join-interview.component';
 import { CaEvaluationFormComponent } from './evaluation-form/ca-evaluation-form/ca-evaluation-form.component';
+import { VideoAssessMainRouteComponent } from './pages/video-assess-main-route/video-assess-main-route.component';
+import { VideoAssessAssignedCandidatesComponent } from './pages/video-assess-assigned-candidates/video-assess-assigned-candidates.component';
+import { VideoAssessEvaluationScreenComponent } from './pages/video-assess-evaluation-screen/video-assess-evaluation-screen.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, InvJoinInterviewComponent, CaEvaluationFormComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, InvJoinInterviewComponent, CaEvaluationFormComponent, VideoAssessMainRouteComponent, VideoAssessAssignedCandidatesComponent, VideoAssessEvaluationScreenComponent],
   imports: [
     CommonModule,
     SharedModule,

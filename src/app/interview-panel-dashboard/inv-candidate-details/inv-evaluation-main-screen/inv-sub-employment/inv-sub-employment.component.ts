@@ -67,9 +67,4 @@ export class InvSubEmploymentComponent implements OnInit, OnChanges {
     });
   }
 
-
-  next() {
-    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.SUB_EDUCATION, this.queryParams);
-  }
-
 }

@@ -7,6 +7,9 @@ import { InvParticularAssessmentCandidatesComponent } from './inv-candidate-deta
 import { InvEvaluationMainScreenComponent } from './inv-candidate-details/inv-evaluation-main-screen/inv-evaluation-main-screen.component';
 import { EvaluationFormComponent } from './evaluation-form/evaluation-form.component';
 import { InvpanelGuard } from '../guards/canload/invpanel.guard';
+import { VideoAssessMainRouteComponent } from './pages/video-assess-main-route/video-assess-main-route.component';
+import { VideoAssessAssignedCandidatesComponent } from './pages/video-assess-assigned-candidates/video-assess-assigned-candidates.component';
+import { VideoAssessEvaluationScreenComponent } from './pages/video-assess-evaluation-screen/video-assess-evaluation-screen.component';
 
 
 const routes: Routes = [
@@ -40,6 +43,34 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_TAB_HOME}`,
+        component: VideoAssessMainRouteComponent, canActivate: [InvpanelGuard],
+        data: {
+          breadcrumb: 'Video Assessments'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_ASSIGNED_DETAILS}`,
+            component: VideoAssessAssignedCandidatesComponent,
+            data: {
+            breadcrumb: 'Assigned Candidates'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_EVALUATION_DETAILS}`,
+            component: VideoAssessEvaluationScreenComponent,
+            data: {
+            breadcrumb: 'Evaluation'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_ASSIGNED_DETAILS}`,
             pathMatch: 'full',
           }
         ]

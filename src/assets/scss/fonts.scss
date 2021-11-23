@@ -64,6 +64,9 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .icon-video_camera:before {
+    content: "\e984";
+  }
   .icon-dashboard:before {
     content: "\e97c";
   }
@@ -469,4 +472,3 @@
   .icon-Youtube:before {
     content: "\e96b";
   }
-  

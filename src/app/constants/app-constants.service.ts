@@ -122,13 +122,9 @@ export const CONSTANT = {
       CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments',
       CANDIDATE_DETAILS_SUBMITTED: '/interview-panel/candidates/submitted',
       INTERVIEW_PANEL_EVALUATION: '/interview-panel/candidates/evaluation',
-      SUB_ASSESSMENTS: '/interview-panel/candidates/evaluation/assessment',
-      SUB_EDUCATION: '/interview-panel/candidates/evaluation/education',
-      SUB_EMPLOYMENT: '/interview-panel/candidates/evaluation/employment',
-      SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate',
-      UNIFIEDREPORTS: '/interview-panel/candidates/evaluation/unifiedreports',
-      JOIN_INTERVIEW: '/interview-panel/candidates/evaluation/join',
-      EVALUATION_FORM: '/interview-panel/evaluation-form'
+      VIDEO_ASSESS_TAB_HOME: '/interview-panel/video-assess',
+      VIDEO_ASSESS_ASSIGNED_DETAILS: '/interview-panel/video-assess/candidates',
+      VIDEO_ASSESS_EVALUATION_DETAILS: '/interview-panel/video-assess/candidates/evaluation'
     }
 
   },
@@ -240,13 +236,9 @@ export const CONSTANT = {
       CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments',
       CANDIDATE_DETAILS_SUBMITTED: 'submitted',
       INTERVIEW_PANEL_EVALUATION: 'evaluation',
-      SUB_ASSESSMENTS: 'assessment',
-      SUB_EDUCATION: 'education',
-      SUB_EMPLOYMENT: 'employment',
-      UNIFIEDREPORTS: 'unifiedreports',
-      JOIN_INTERVIEW: 'join',
-      SUB_EVALUATION: 'evaluate',
-      EVALUATION_FORM: 'evaluation-form'
+      VIDEO_ASSESS_TAB_HOME: 'video-assess',
+      VIDEO_ASSESS_ASSIGNED_DETAILS: 'candidates',
+      VIDEO_ASSESS_EVALUATION_DETAILS: 'evaluation'
     }
   }
 };
