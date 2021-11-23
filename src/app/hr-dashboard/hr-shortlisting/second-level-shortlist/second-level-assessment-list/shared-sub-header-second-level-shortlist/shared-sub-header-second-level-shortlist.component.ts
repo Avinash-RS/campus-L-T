@@ -11,6 +11,7 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
 
   @Input() statusHeaderData: any;
   @Input() showSendEvaluationButton;
+  @Input() showSendEmailButton;
   @Output() redirectToVideoAssessAssign: EventEmitter<any> = new EventEmitter<any>();
   bindDetails: any;
   constructor(

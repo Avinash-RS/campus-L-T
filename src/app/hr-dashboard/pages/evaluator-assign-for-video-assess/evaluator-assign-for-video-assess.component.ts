@@ -6,9 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-import { ScheduleInterviewPopupComponent } from '../schedule-interview-popup/schedule-interview-popup.component';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -31,7 +29,7 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
   defaultColDef: any;
   searchBox = false;
   filterValue: string;
-  rowData: any = [];
+  rowData: any = null;
   quickSearchValue = '';
   gridColumnApi: any;
   isChecked: boolean;
@@ -41,15 +39,17 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
   gridApiHR: any;
   columnDefsHR = [];
   defaultColDefHR:any
-  rowDataHR: any = [];
+  rowDataHR: any = null;
   searchBoxHR = false;
   filterValueHR: string;
   quickSearchValueHR = '';
   gridColumnApiHR: any;
   isCheckedHR: boolean;
   userListHR: any;
-  selectedCandidates: any[];
-  selectedInterviewers: any[];
+  selectedCandidates: any[] = [];
+  selectedInterviewers: any[] = [];
+  candidatesList: any;
+  assignToEvaluatorSubscription: any;
 
   constructor(
     public appConfig: AppConfigService,
@@ -64,12 +64,19 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
    ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.defaultColDefHR = this.appConfig.agGridWithAllFunc();
-    this.particularInvpanelist('');
     this.refreshOndriveChangeRXJS();
   }
 
-  sendMail() {
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.tabledef();
+  }
 
+  onGridReadyHR(params: any) {
+    this.gridApiHR = params.api;
+    this.gridColumnApiHR = params.columnApi;
+    this.tabledefHR();
   }
 
   editRouteParamGetter() {
@@ -77,14 +84,25 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     this.activatedRoute.queryParams.subscribe(params => {
       if (params && params['shortlist_name']) {
         this.selectedShortlistname = params['shortlist_name'];
+        let evaluationCandidates = this.appConfig.getLocalData('sendEvaluationCandidates');
+        this.candidatesList = evaluationCandidates ? JSON.parse(evaluationCandidates) : null;
+        if (this.candidatesList && this.candidatesList.length > 0) {
+          this.particularInvpanelist('');
+          this.getCandidatesList(this.candidatesList);
+        } else {
+          this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, {data: this.selectedShortlistname});
+        }
       } else {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST);
       }
     });
   }
 
   ngOnDestroy() {
+    this.appConfig.clearLocalDataOne('sendEvaluationCandidates');
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
     this.getParticularInterviewpanelistSubscription ? this.getParticularInterviewpanelistSubscription.unsubscribe() : '';
+    this.assignToEvaluatorSubscription ? this.assignToEvaluatorSubscription.unsubscribe() : '';
     }
 
   refreshOndriveChangeRXJS() {
@@ -104,6 +122,9 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     this.quickSearchValue = '';
     this.userList = null;
     this.rowData = null;
+    this.quickSearchValueHR = '';
+    this.userListHR = null;
+    this.rowDataHR = null;
   }
   ngAfterViewInit() {
      // Hack: Scrolls to top of Page after page view initialized
@@ -113,12 +134,6 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
        top = null;
      }
     }
-
-  onGridReady(params: any) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    this.tabledef();
-  }
 
   sortevent(e) {
   }
@@ -130,23 +145,13 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
   onCandidateSelect(e) {
     const selectedRows = e.api.getSelectedRows();
     // tslint:disable-next-line: prefer-const
-    let sData = [];
-    selectedRows.forEach((d) => {
-      d.type = 'candidate'
-      sData.push(d);
-    });
-    this.selectedCandidates = sData;
+    this.selectedCandidates = selectedRows;
   }
 
   onInterviewerSelect(e) {
     const selectedRows = e.api.getSelectedRows();
     // tslint:disable-next-line: prefer-const
-    let sData = [];
-    selectedRows.forEach((d) => {
-      d.type = 'interviewer'
-      sData.push(d);
-    });
-    this.selectedInterviewers = sData;
+    this.selectedInterviewers = selectedRows;
   }
 
   onCellClicked(event) {
@@ -182,74 +187,56 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     return [
       {
         headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        maxWidth: 50,
         checkboxSelection: true,
-        filter: false,
-        sortable: false,
-        suppressMenu: true,
-        field: 'is_checked',
-        headerName: ''
+        headerCheckboxSelectionFilteredOnly: true,
+        headerName: 'Candidate Id', field: 'candidate_id',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'candidate_id',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
       },
       {
-        headerName: 'Candidate Email ID', field: 'email',
+        headerName: 'Candidate Email Id', field: 'email_id',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'email',
+        tooltipField: 'email_id',
         getQuickFilterText: (params) => {
           return params.value;
         },
         cellRenderer: (params) => {
-          if (params['data']['level'] && params['data']['level'] != ' ') {
-            return `<span style="border-bottom: solid #C02222 1px; cursor: pointer; color: #C02222;">${params['data']['email']} </span>`;
-          } else {
-            return `${params['data']['email']}`
-          }
+          return `${params['data']['email_id']}`
         }
       },
       {
-        headerName: 'Candidate Name', field: 'hr_assign_status',
-        filter: 'agSetColumnFilter',
+        headerName: 'Candidate Name', field: 'candidate_name',
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'hr_assign_status',
+        tooltipField: 'candidate_name',
         getQuickFilterText: (params) => {
           return params.value;
         }
-      },
-      {
-        headerName: 'Test Status', field: 'discipline',
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'discipline',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
+      }
     ];
   }
 
   tabledef() {
     if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
       let defaultCol: any = this.WithoutVideoSchedulingColumns();
-      this.gridApi.setColumnDefs(defaultCol);
+      this.columnDefs = defaultCol;
+      // this.gridApi.setColumnDefs(defaultCol);
     } else {
-      this.gridApi.setColumnDefs(null);
-      this.gridApi.setColumnDefs(this.WithoutVideoSchedulingColumns());
+      this.columnDefs = this.WithoutVideoSchedulingColumns();
+      // this.gridApi.setColumnDefs(null);
+      // this.gridApi.setColumnDefs(this.WithoutVideoSchedulingColumns());
     }
   }
 
   //  HR
-  onGridReadyHR(params: any) {
-    this.gridApiHR = params.api;
-    this.gridColumnApiHR = params.columnApi;
-    this.tabledefHR();
-  }
 
   sorteventHR(e) {
   }
@@ -284,15 +271,8 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     this.columnDefsHR = [
       {
         headerCheckboxSelection: true,
-        maxWidth: 50,
         checkboxSelection: true,
-        filter: false,
-        sortable: false,
-        suppressMenu: true,
-        field: 'is_checkedHR',
-        headerName: ''
-      },
-      {
+        headerCheckboxSelectionFilteredOnly: true,
         headerName: 'Employee name', field: 'employee_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
@@ -328,12 +308,16 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     ];
   }
 
+  getCandidatesList(data: any) {
+      this.userList = data;
+      this.rowData = data;
+  }
 
   particularInvpanelist(data) {
     const apiData = {
       discipline: data ? data : ''
     }
-   this.getParticularInterviewpanelistSubscription = this.adminService.getParticularInterviewpanelist(apiData).subscribe((data: any) => {
+   this.getParticularInterviewpanelistSubscription = this.adminService.getParticularInterviewpanelistWithoutLoader(apiData).subscribe((data: any) => {
 
       const datas = data ? data : [];
       this.getUsersList1(datas);
@@ -354,43 +338,20 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     }
 
 
-  scheduleHirerachy(){
+  sendMail() {
     const selectedUserlist = this.gridApi.getSelectedNodes();
     const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
     const candidateID = [];
     const HRID = [];
     selectedUserlist.forEach(element => {
       if (element['data']) {
-        candidateID.push(element['data']['email'])
+        candidateID.push(element['data']['candidate_user_id'])
       }
     });
 
     selectedUserlistHR.forEach(element => {
       if (element['data']) {
-        HRID.push(element['data']['email'])
-      }
-    });
-    const apiData = {
-      user_email: candidateID,
-      hr_email: HRID,
-      shortlist_name: this.selectedShortlistname,
-      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
-    };
-  }
-  submit() {
-    const selectedUserlist = this.gridApi.getSelectedNodes();
-    const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
-    const candidateID = [];
-    const HRID = [];
-    selectedUserlist.forEach(element => {
-      if (element['data']) {
-        candidateID.push(element['data']['email'])
-      }
-    });
-
-    selectedUserlistHR.forEach(element => {
-      if (element['data']) {
-        HRID.push(element['data']['email'])
+        HRID.push(element['data']['uid'])
       }
     });
     let data;
@@ -442,13 +403,21 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     }
   }
     const apiData = {
-      user_email: candidateID,
-      hr_email: HRID,
       shortlist_name: this.selectedShortlistname,
-      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
+      candidate_user_ids: candidateID,
+      interviewer_ids: HRID,
     };
     this.openDialog(ShortlistBoxComponent, data, apiData);
   }
+
+  assigntoPanel(apiData) {
+    this.assignToEvaluatorSubscription = this.adminService.VideoAssessmentAssignToEvaluator(apiData).subscribe((data: any) => {
+    this.matDialog.closeAll();
+    this.appConfig.success('Candidates have been successfully assigned to respective Evaluators');
+     }, (err) => {
+      this.matDialog.closeAll();
+    });
+   }
 
   openDialog(component, data, apiData) {
     let dialogDetails: any;
@@ -467,25 +436,7 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      }
-    });
-  }
-
-  openDialog1(component, data, apiData) {
-    let dialogDetails: any;
-    /**
-     * Dialog modal window
-     */
-    // tslint:disable-next-line: one-variable-per-declaration
-    const dialogRef = this.matDialog.open(component, {
-      width: 'auto',
-      height: 'auto',
-      autoFocus: false,
-      data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+        this.assigntoPanel(apiData);
       }
     });
   }

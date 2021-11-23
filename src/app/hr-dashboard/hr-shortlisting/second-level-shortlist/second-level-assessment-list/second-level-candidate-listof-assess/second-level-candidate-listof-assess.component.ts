@@ -1,12 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, Input } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
@@ -85,6 +82,8 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   VideoAssessdialogRef: any;
   userListApiResponse: any;
   videoAssessment: any;
+  videoAssessmentCompletedCandidates: any = [];
+  showSendEmailButton: any;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
@@ -136,8 +135,12 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      this.nameOfAssessment = params['data'];
-      this.getUsersList(params['data']);
+      if (params['data']) {
+        this.nameOfAssessment = params['data'];
+        this.getUsersList(params['data']);
+      } else {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST);
+      }
     });
   }
 
@@ -146,13 +149,16 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       const apiData = {
         shortlist_name: name,
       };
+      this.videoAssessmentCompletedCandidates = [];
       this.filterSecondLevelSubscription = this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
         this.userListApiResponse = response ? response : null;
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
         this.userList.forEach(element => {
           element.shortlisted_status = element.shortlisted_status == 1 ? 'Shortlisted' : 'Not Shortlisted';
+          ((element.va_test_status && element.va_test_status == 'Completed') && element.shortlisted_status == 'Not Shortlisted') ? this.videoAssessmentCompletedCandidates.push(element) : '';
         });
+        this.showSendEmailButton = this.videoAssessmentCompletedCandidates.length > 0 ? true : false;
         this.rowData = this.userList;
         this.tableDef(tableHeaders);
         let notTaken = response['total_no_of_candidates'] - response['exams_taken'];
@@ -451,7 +457,8 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   redirectVideo() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN);
+    this.appConfig.setLocalData('sendEvaluationCandidates', JSON.stringify(this.videoAssessmentCompletedCandidates));
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN, {shortlist_name: this.nameOfAssessment});
   }
 
   openDialog(component, data) {
