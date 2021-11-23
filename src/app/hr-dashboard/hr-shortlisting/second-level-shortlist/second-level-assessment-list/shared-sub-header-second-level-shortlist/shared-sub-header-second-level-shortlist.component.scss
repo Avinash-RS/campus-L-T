@@ -4,14 +4,17 @@
   background: $white;
   width: 100%;
   padding: 0.25em;
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
   .flex-wrapper {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
     .group {
-      margin: 0.5em;
+      margin: 8px;
       display: flex;
-      width: 400px;
+      min-width: 200px;
       .label {
         color: $light-black;
         font-size: 13px;
@@ -28,6 +31,19 @@
           text-align: center;
         }
       }
+    }
+  }
+  .right-wrapper {
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .button-submit {
+      border: none;
+      background: $primary-red 0% 0% no-repeat padding-box;
+      border-radius: 4px;
+      color: $white;
+      height: 30px;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 
@@ -10,6 +10,8 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
 
   @Input() statusHeaderData: any;
+  @Input() showSendEvaluationButton;
+  @Output() redirectToVideoAssessAssign: EventEmitter<any> = new EventEmitter<any>();
   bindDetails: any;
   constructor(
     private appConfig: AppConfigService,
@@ -29,6 +31,10 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
       notTaken: this.statusHeaderData.notTaken,
       header: this.statusHeaderData.header ? true : false,
     };
+  }
+
+  sendToEvaluate() {
+    this.redirectToVideoAssessAssign.emit();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, Input } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -25,6 +25,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('videoAssessDialog', {static: false}) videoAssessDialog: TemplateRef<any>;
+  showSendEvaluationButton = true;
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
@@ -449,6 +450,9 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   }
 
+  redirectVideo() {
+    console.log('coming');
+  }
 
   openDialog(component, data) {
     let dialogDetails: any;

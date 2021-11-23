@@ -1,5 +1,5 @@
 <div class="second-candidatelist-wrapper">
-  <app-shared-sub-header-second-level-shortlist *ngIf="statusHeaderData" [statusHeaderData]="statusHeaderData"></app-shared-sub-header-second-level-shortlist>
+  <app-shared-sub-header-second-level-shortlist *ngIf="statusHeaderData" (redirectToVideoAssessAssign)="redirectVideo()" [showSendEvaluationButton]="showSendEvaluationButton" [statusHeaderData]="statusHeaderData"></app-shared-sub-header-second-level-shortlist>
     <div class="search-bar">
       <div class="search-icon">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
