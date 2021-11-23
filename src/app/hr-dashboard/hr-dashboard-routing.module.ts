@@ -33,6 +33,8 @@ import { BusinesspanelRouteComponent } from './pages/businesspanel-route/busines
 import { BulkUploadsComponent } from './hr-user-management/bulk-uploads/bulk-uploads.component';
 import { AssignedDetailsComponent } from './evaluation/new-interviewpanel-assigned-details/assigned-details/assigned-details.component';
 import { ScheduleVideoAssessComponent } from './hr-shortlisting/second-level-shortlist/hr-video-assess/schedule-video-assess/schedule-video-assess.component';
+import { RouteEvaluatorAssignForVideoAssessComponent } from './pages/route-evaluator-assign-for-video-assess/route-evaluator-assign-for-video-assess.component';
+import { EvaluatorAssignForVideoAssessComponent } from './pages/evaluator-assign-for-video-assess/evaluator-assign-for-video-assess.component';
 
 const routes: Routes = [
   {
@@ -103,7 +105,28 @@ const routes: Routes = [
                 component: SecondLevelCandidateListofAssessComponent,
                 data: {
                   breadcrumb: 'Candidates List'
-                }
+                },
+              },
+              {
+                path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_HOME}`,
+                component: RouteEvaluatorAssignForVideoAssessComponent,
+                data: {
+                  breadcrumb: 'Video Assessment'
+                },
+                children: [
+                  {
+                    path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN}`,
+                    component: EvaluatorAssignForVideoAssessComponent,
+                    data: {
+                      breadcrumb: 'Evaluator Assign'
+                    }
+                  },
+                  {
+                    path: '',
+                    redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN}`,
+                    pathMatch: 'full',
+                  }
+                ]
               },
               {
                 path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT}`,

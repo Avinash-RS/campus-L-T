@@ -451,7 +451,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   redirectVideo() {
-    console.log('coming');
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN);
   }
 
   openDialog(component, data) {
