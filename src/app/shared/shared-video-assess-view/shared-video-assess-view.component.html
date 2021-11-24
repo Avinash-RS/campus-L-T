@@ -49,7 +49,7 @@
         <span class="label-group">
           <span class="label">Assessment Status</span><span class="colon">:</span>
         </span>
-        <span class="value">
+        <span class="value" [ngClass]="videoAssessment.test_status ? videoAssessment.test_status : ''">
           {{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : '-'}}
         </span>
       </div>
@@ -58,7 +58,7 @@
         <span class="label-group">
           <span class="label">Evaluation Status</span><span class="colon">:</span>
         </span>
-        <span class="value">
+        <span class="value" [ngClass]="videoAssessment.evaluation_status ? videoAssessment.evaluation_status : ''">
           {{videoAssessment && videoAssessment.evaluation_status ? videoAssessment.evaluation_status : '-'}}
         </span>
       </div>
@@ -131,10 +131,16 @@
 <div class="video-assessments">
   <div class="video-wrapper">
     <ng-container *ngIf="currentItem && currentItem.src else noVideoRef">
-      <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
+      <section class="container1">
+        <div class="leftHalf">
+          <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
+        </div>
+      <div class="rightHalf">
       <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
       <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
       <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton && (videoAssessment.test_status && videoAssessment.test_status == 'Completed')" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+      </div>
+      </section>
     </ng-container>
   </div>
 </div>
@@ -142,20 +148,14 @@
 </ng-container>
 
 <ng-template #showQuestionsArray>
-
-  <div class="question-wrapper">
-      <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
-        <div class="d-flex align-items-center question-count-wrapper">
-          <ng-container *ngFor="let question of questionDetailsArray; let i = index">
-        <div *ngIf="i == 0">Questions: </div>
-      <div class="question-count" (click)="active = i" [ngClass]="active == i ? 'active' : ''">
-        <span>{{i + 1}}</span>
-      </div>
-  </ng-container>
-        </div>
-  <div class="questiondesc"> <span class="qSNo">{{'Q'+ (active + 1) +'. '}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.categoryName ? (questionDetailsArray[active].questionDetails.categoryName + ': ') : ''}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.question ? questionDetailsArray[active].questionDetails.question : ''}}</span></div>
-  </ng-container>
-  </div>
+  <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
+    <h5>Questions</h5>
+            <div class="qusCard">
+                <div (click)="active = i" class="qusAlign" [ngClass]="{active: active == i}" *ngFor="let qus of questionDetailsArray; let i = index">
+                    <span style="white-space: nowrap;">Q{{i + 1}}. {{qus?.questionDetails?.categoryName}}: </span> <span>{{qus?.questionDetails?.question}}</span>
+                </div>
+            </div>
+</ng-container>
 </ng-template>
 
 <ng-template #showFeedbackTemplate>
@@ -183,6 +183,10 @@
 </ng-template>
 
 <ng-template #showVideo>
+  <div *ngIf="!videoAssessment.showSubmitButton" class="info mb-2">
+    <p><span class="material-icons-outlined">info</span> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
+  </div>
+
   <div class="video-container">
     <ng-container *ngIf="(videoEndedFalse || true) else novideoOverlayref">
             <div *ngIf="currentItem && currentItem.src" class="video">
@@ -202,7 +206,7 @@
 </ng-template>
 
 <ng-template #selectionbuttons>
-  <div class="selectionbuttons">
+  <div class="selectionbuttons mb-1">
     <div (click)="showFeedback = true; selectedStatus = 'selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
     <!-- <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div> -->
     <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject ml-5"><span class="selection-border"><span>Reject</span></span></div>

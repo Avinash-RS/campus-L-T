@@ -252,7 +252,8 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
         element.evaluation_status == "Selected" ||
         element.evaluation_status == "Rejected"
       ) {
-        element.normal_assessment.interview_status == "Selected"
+        this.candidatesEvaluated.push(element);
+        element.evaluation_status == "Selected"
           ? this.selectedCount.push(element)
           : this.rejectedCount.push(element);
       }
@@ -269,7 +270,7 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
         this.userList = align;
         this.userList.forEach((element) => {
           if (element) {
-            element.evaluation_status = element["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : 'Yet to Evaluate';
+            element.evaluation_status = element["evaluation_status"] == "selected" ? 'Selected' : (element["evaluation_status"] == 'rejected') ? 'Rejected' : 'Yet to Evaluate';
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
           }
         });

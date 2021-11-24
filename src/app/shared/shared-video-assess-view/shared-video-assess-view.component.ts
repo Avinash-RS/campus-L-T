@@ -174,6 +174,7 @@ sendFeedback() {
       shortlist_name: this.videoAssessment && this.videoAssessment.shortlist_name ? this.videoAssessment.shortlist_name : '',
       evaluation_status: this.selectedStatus,
       remarks: this.feedbackformControl.value,
+      schedule_id: this.videoAssessment.schedule_id,
       candidate_user_id: this.videoAssessment && this.videoAssessment.uid ? this.videoAssessment.uid : ''
   }
   this.feedbackApiLoading = true;

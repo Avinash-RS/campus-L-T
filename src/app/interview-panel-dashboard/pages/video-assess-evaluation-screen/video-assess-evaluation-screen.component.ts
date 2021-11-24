@@ -102,7 +102,7 @@ export class VideoAssessEvaluationScreenComponent implements OnInit, OnDestroy {
   videoAssessEvaluationStatus(data: any) {
     if (data && data.schedule_id) {
       if (data && data.va_test_status && data.va_test_status == 'Time Expired') {
-        return 'Time Exprired';
+        return 'Time Expired';
       }
        return (data && data.evaluation_status && data.evaluation_status == 'selected') ? 'Selected' : (data && data.evaluation_status && data.evaluation_status == 'rejected') ? 'Rejected' : data.evaluation_status ? data.evaluation_status : 'Yet to Evaluate';
     } else {
