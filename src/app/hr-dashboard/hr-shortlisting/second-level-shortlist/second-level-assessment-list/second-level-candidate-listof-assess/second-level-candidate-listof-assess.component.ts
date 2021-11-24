@@ -84,6 +84,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   videoAssessment: any;
   videoAssessmentCompletedCandidates: any = [];
   showSendEmailButton: any;
+  videoScheduleDetailsSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
@@ -117,6 +118,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
     this.filterSecondLevelSubscription ? this.filterSecondLevelSubscription.unsubscribe() : '';
     this.secondShortlistAPISubscription ? this.secondShortlistAPISubscription.unsubscribe() : '';
+    this.videoScheduleDetailsSubscription ? this.videoScheduleDetailsSubscription.unsubscribe() : '';
   }
 
   refreshOndriveChangeRXJS() {
@@ -260,33 +262,104 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     }
   }
 
-  openMatDialog(data: any) {
-    this.videoAssessment = {
-      schedule_id: data && data.va_schedule_id ? data.va_schedule_id : '',
-      scheduled_status: data && data.va_scheduled_status ? data.va_scheduled_status : 0,
-      room_id: data && data.va_room_id ? data.va_room_id : '',
-      test_status: data && data.va_test_status ? data.va_test_status : '',
-      remarks: data && data.va_remarks ? data.va_remarks : '',
-      evaluation_status: data && data.va_evaluation_status ? data.va_evaluation_status : '',
-      scheduled_by: data && data.va_scheduled_by ? data.va_scheduled_by : '',
-      evaluated_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
-      submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
-      start_datetime: data && data.va_start_datetime ? data.va_start_datetime : '',
-      end_datetime: data && data.va_end_datetime ? data.va_end_datetime : '',
-      uid: data && data.candidate_user_id ? data.candidate_user_id : '',
-      shortlist_name: this.userListApiResponse ? this.userListApiResponse.shortlist_name : '',
-      showSubmitButton: data && data.shortlisted_status == 'Shortlisted' ? false : true,
-      redirectedFrom: 'hr'
-  };
+  getScheduleDetailsPHP(apiDatas) {
+    const apiData = {
+      shortlist_name: this.userListApiResponse.shortlist_name, candidate_user_id: Number(apiDatas.candidate_user_id), schedule_id: apiDatas.schedule_id, is_va_evaluation: 0
+   }
+   this.videoScheduleDetailsSubscription = this.adminService.videoAssessmentEvaluationDetails(apiData).subscribe(
+      (datas: any) => {
+        let data = datas ? datas : null;
+        this.videoAssessment = {
+          schedule_id: data && data.schedule_id ? data.schedule_id : '',
+          scheduled_status: 1,
+          room_id: data && data.room_id ? data.room_id : '',
+          test_status: /* data && data.va_test_status ?*/ this.videoAssessTestStatus(data),
+          remarks: data && data.remarks ? data.remarks : '',
+          evaluation_status: /*data && data.evaluation_status ?*/ this.videoAssessEvaluationStatus(data),
+          scheduled_by: data && data.scheduled_by ? data.scheduled_by : '',
+          evaluated_by: data && data.evaluated_by ? data.evaluated_by : '',
+          submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
+          start_datetime: data && data.start_datetime ? data.start_datetime : '',
+          end_datetime: data && data.end_datetime ? data.end_datetime : '',
+          uid: data && data.candidate_user_id ? data.candidate_user_id : '',
+          candidate_id: data && data.candidate_id ? data.candidate_id : '',
+          candidate_name: data && data.candidate_name ? data.candidate_name : '',
+          shortlist_name: data && data.shortlist_name ? data.shortlist_name : '',
+          showSubmitButton: data && data.shortlist_status == 1 ? false : true,
+          profile_image_url: data && data.profile_image_url ? '' : 'assets/images/img_avatar2.jpg',
+          redirectedFrom: 'hr',
+          showTopBar: true,
+      };
+      this.openVideoAssessDialog();
+      },
+      (err) => {
+        this.videoAssessment = {};
+        this.openVideoAssessDialog();
+      }
+    );
+  }
 
+  videoAssessEvaluationStatus(data: any) {
+    if (data && data.schedule_id) {
+      if (data && data.va_test_status && data.va_test_status == 'Time Expired') {
+        return 'Time Expired';
+      }
+       return (data && data.evaluation_status && data.evaluation_status == 'selected') ? 'Selected' : (data && data.evaluation_status && data.evaluation_status == 'rejected') ? 'Rejected' : data.evaluation_status ? data.evaluation_status : 'Yet to Evaluate';
+    } else {
+      return 'Not Scheduled';
+    }
+  }
+
+  videoAssessTestStatus(data: any) {
+    if (data && data.schedule_id) {
+      if (data && data.va_test_status && data.va_test_status == 'YetToStart') {
+        return 'Yet to Start';
+      }
+      if (data && data.va_test_status && data.va_test_status == 'InProgress') {
+        return 'In Progress';
+      }
+      if (data && data.va_test_status && data.va_test_status) {
+        return data.va_test_status;
+      } else {
+        return 'Not Scheduled';
+      }
+    } else {
+      return 'Not Scheduled';
+    }
+  }
+
+  openVideoAssessDialog() {
     this.VideoAssessdialogRef = this.matDialog.open(this.videoAssessDialog, {
-      width: '900px',
+      width: '1200px',
       height: 'auto',
       autoFocus: false,
       closeOnNavigation: true,
       disableClose: false,
       panelClass: 'popupModalContainerForVideoAssess'
     });
+  }
+  openMatDialog(data: any) {
+    let apiData = {
+      shortlist_name: data.shortlist_name, candidate_user_id: data.candidate_user_id, schedule_id: data.va_schedule_id}
+    this.getScheduleDetailsPHP(apiData);
+  //   this.videoAssessment = {
+  //     schedule_id: data && data.va_schedule_id ? data.va_schedule_id : '',
+  //     scheduled_status: data && data.va_scheduled_status ? data.va_scheduled_status : 0,
+  //     room_id: data && data.va_room_id ? data.va_room_id : '',
+  //     test_status: data && data.va_test_status ? data.va_test_status : '',
+  //     remarks: data && data.va_remarks ? data.va_remarks : '',
+  //     evaluation_status: data && data.va_evaluation_status ? data.va_evaluation_status : '',
+  //     scheduled_by: data && data.va_scheduled_by ? data.va_scheduled_by : '',
+  //     evaluated_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
+  //     submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
+  //     start_datetime: data && data.va_start_datetime ? data.va_start_datetime : '',
+  //     end_datetime: data && data.va_end_datetime ? data.va_end_datetime : '',
+  //     uid: data && data.candidate_user_id ? data.candidate_user_id : '',
+  //     shortlist_name: this.userListApiResponse ? this.userListApiResponse.shortlist_name : '',
+  //     showSubmitButton: data && data.shortlisted_status == 'Shortlisted' ? false : true,
+  //     redirectedFrom: 'hr'
+  // };
+
   }
 
   closeDialog(e) {

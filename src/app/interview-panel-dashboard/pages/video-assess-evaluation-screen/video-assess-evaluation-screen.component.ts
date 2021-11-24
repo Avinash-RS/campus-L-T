@@ -64,11 +64,10 @@ export class VideoAssessEvaluationScreenComponent implements OnInit, OnDestroy {
 
   getScheduleDetailsPHP(apiDatas) {
     const apiData = {
-      shortlist_name: apiDatas.shortlist_name, candidate_user_id: Number(apiDatas.candidate_user_id), schedule_id: apiDatas.schedule_id
-    }
+      shortlist_name: apiDatas.shortlist_name, candidate_user_id: Number(apiDatas.candidate_user_id), schedule_id: apiDatas.schedule_id, is_va_evaluation: 1
+   }
    this.videoScheduleDetailsSubscription = this.adminService.videoAssessmentEvaluationDetails(apiData).subscribe(
       (datas: any) => {
-        const align = datas ? datas : [];
         this.videoAssessmentDetails = datas ? datas : null;
         let data = this.videoAssessmentDetails;
         this.videoAssessment = {
@@ -89,11 +88,9 @@ export class VideoAssessEvaluationScreenComponent implements OnInit, OnDestroy {
           shortlist_name: data && data.shortlist_name ? data.shortlist_name : '',
           showSubmitButton: data && data.shortlist_status == 1 ? false : true,
           profile_image_url: data && data.profile_image_url ? '' : 'assets/images/img_avatar2.jpg',
-          redirectedFrom: 'inv',
+          redirectedFrom: 'evaluator',
           showTopBar: true,
       };
-        console.log('this.user', this.videoAssessmentDetails);
-        console.log('d', this.videoAssessment);
        },
       (err) => {}
     );

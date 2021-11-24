@@ -111,10 +111,9 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     finalize(()=> {
       }))
       .subscribe((data: any)=> {
-      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT)) {
-        this.tabledefHR();
-        this.tabledef();
-        }
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN)) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST);
+      }
     });
   }
 
@@ -414,7 +413,8 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     this.assignToEvaluatorSubscription = this.adminService.VideoAssessmentAssignToEvaluator(apiData).subscribe((data: any) => {
     this.matDialog.closeAll();
     this.appConfig.success('Candidates have been successfully assigned to respective Evaluators');
-     }, (err) => {
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, {data: this.selectedShortlistname});
+   }, (err) => {
       this.matDialog.closeAll();
     });
    }

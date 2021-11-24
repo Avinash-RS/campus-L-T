@@ -124,8 +124,10 @@ th {
   cursor: not-allowed;
 }
 ::ng-deep .popupModalContainerForVideoAssess {
+  width: 100% !important;
+  max-width: 90vw !important;
   .main-wrapper {
-      padding: 1em;
+      padding: 2em;
       background-color: white;
       display: block;
       width: 100%;
