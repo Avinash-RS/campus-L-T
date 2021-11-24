@@ -10,6 +10,7 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 import * as moment from 'moment'; //in your component
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 
 @Component({
   selector: 'app-video-assess-assigned-candidates',
@@ -24,7 +25,7 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
   gridApi: any;
   columnDefs = [];
   defaultColDef : any;
-  rowData: any = [];
+  rowData: any = null;
   searchBox = false;
   filterValue: string;
   quickSearchValue = "";
@@ -67,7 +68,7 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
     finalize(()=> {
       }))
       .subscribe((data: any)=> {
-      if (data.includes(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST)) {
+      if (data.includes(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_ASSIGNED_DETAILS)) {
         this.quickSearchValue = '';
         this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
         if (this.drivePermissions && this.drivePermissions.video_assessment) {
@@ -97,93 +98,22 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
 
   onCellClicked(event) {
     if (event.colDef.field === "candidate_name") {
-      this.appConfig.setLocalData(
-        "cProPic",
-        event["data"]["profile_image_url"]
-      );
-      this.redirectToProfile(
-        event["data"]["candidate_id"],
-        event["data"]["candidate_name"],
-        event["data"]["normal_assessment"]["evaluation_status"],
-        event["data"]["tag"],
-        event["data"]["uid"],
-        event["data"]["email"],
-        event["data"]["form_id"],
-        event["data"]["video_assessment"],
-        event["data"]["shortlist_name"],
-        event["data"]["is_video_scheduled"],
-        event["data"]["is_normal_scheduled"]
-        );
+      const data = {
+        candidate_user_id: event['data'] && event['data']['candidate_user_id'] ? event['data']['candidate_user_id'] : '',
+        candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : ''
+      };
+      this.openDialog(CommonKycProfileViewComponent, data);
     }
 
-    if (event.colDef.field === "video_assessment.evaluation_statusForDisplay") {
-      if (event["data"]["video_assessment"] && event["data"]["video_assessment"]["scheduled_status"] == 1) {
-      this.appConfig.setLocalData(
-        "cProPic",
-        event["data"]["profile_image_url"]
-      );
-      this.redirectToVideoSchedule(
-        event["data"]["candidate_id"],
-        event["data"]["candidate_name"],
-        event["data"]["normal_assessment"]["evaluation_status"],
-        event["data"]["tag"],
-        event["data"]["uid"],
-        event["data"]["email"],
-        event["data"]["form_id"],
-        event["data"]["video_assessment"],
-        event["data"]["shortlist_name"],
-        event["data"]["is_video_scheduled"],
-        event["data"]["is_normal_scheduled"]
-        );
+    if (event.colDef.field === "evaluation_status") {
+      let details = {
+        candidate_user_id: event['data'] && event['data']['candidate_user_id'] ? event['data']['candidate_user_id'] : '',
+        shortlist_name: event['data'] && event['data']['shortlist_name'] ? event['data']['shortlist_name'] : '',
+        schedule_id: event['data'] && event['data']['schedule_id'] ? event['data']['schedule_id'] : ''
       }
+      this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_EVALUATION_DETAILS, details);
     }
 
-    if (event.colDef.field === "normal_evaluation_btn") {
-        this.appConfig.setLocalData(
-          "cProPic",
-          event["data"]["profile_image_url"]
-        );
-        this.submit(
-          event["data"]["candidate_id"],
-          event["data"]["candidate_name"],
-          event["data"]["normal_assessment"]["evaluation_status"],
-          event["data"]["tag"],
-          event["data"]["uid"],
-          event["data"]["email"],
-          event["data"]["form_id"],
-          event["data"]["video_assessment"],
-          event["data"]["shortlist_name"],
-          event["data"]["is_video_scheduled"],
-          event["data"]["is_normal_scheduled"]
-          );
-    }
-
-    if (event.colDef.field === "Video_Interview_join_interview") {
-      if (
-        event["data"] &&
-        event["data"]["Video_Interview_join_interview"] == "Join Interview" &&
-        event["data"] &&
-        event["data"]["normal_assessment"]["evaluation_status"] != "2"
-      ) {
-        this.appConfig.setLocalData(
-          "cProPic",
-          event["data"]["profile_image_url"]
-        );
-        this.redirectToEvaluationForm(
-          event["data"]["candidate_id"],
-          event["data"]["candidate_name"],
-          event["data"]["normal_assessment"]["evaluation_status"],
-          event["data"]["tag"],
-          event["data"]["uid"],
-          event["data"]["email"],
-          event["data"]["form_id"],
-          event["data"]["video_assessment"],
-          event["data"]["shortlist_name"],
-          event["data"]["is_video_scheduled"],
-          event["data"]["is_normal_scheduled"]
-        );
-      }
-    }
   }
 
   getModel(e) {
@@ -242,11 +172,11 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
       },
       {
         headerName: "Email Id",
-        field: "email",
+        field: "email_id",
         filter: 'agTextColumnFilter',
         minWidth: 180,
         sortable: true,
-        tooltipField: "email",
+        tooltipField: "email_id",
         getQuickFilterText: (params) => {
           return params.value;
         },
@@ -264,22 +194,22 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
       },
       {
         headerName: "Assigned by",
-        field: "normal_assessment.scheduled_by",
+        field: "scheduled_by",
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
         minWidth: 150,
         sortable: true,
-        tooltipField: "normal_assessment.scheduled_by",
+        tooltipField: "scheduled_by",
         valueGetter: (params) => {
-          return params.data.normal_assessment.scheduled_by ? params.data.normal_assessment.scheduled_by : '-';
+          return params.data.scheduled_by ? params.data.scheduled_by : '-';
         }
       },
       {
           headerName: "Video Evaluation Status",
           headerClass: 'ag-grid-header-center',
-          field: "video_assessment.evaluation_statusForDisplay",
+          field: "evaluation_status",
           filter: 'agSetColumnFilter',
           filterParams: {
             applyMiniFilterWhileTyping: true
@@ -296,37 +226,18 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
             "justify-content": "center",
           },
           cellRenderer: (params) => {
-            if (
-              params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["scheduled_status"] != 1
-            ) {
-              return `<span class="status scheduled-bg">Not Scheduled</span>`;
-            }
-            if (
-              params["data"] &&
-              params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Time Expired"
-            ) {
-              return `<span style="cursor: pointer;" class="status scheduled-bg">Time Expired</span>`;
-            } else {
               if (
-                params["data"] &&
-                params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Selected"
+                params["data"] && params["data"]["evaluation_status"] == "Selected"
               ) {
                 return `<span style="cursor: pointer;" class="status completed-bg">Selected</span>`;
               }
               if (
-                params["data"] &&
-                params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Rejected"
+                params["data"] && params["data"]["evaluation_status"] == "Rejected"
               ) {
                 return `<span style="cursor: pointer;" class="status rejected-bg">Rejected</span>`;
               } else {
-                // if (params["data"] && params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"]) {
                   return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Evaluate</span>`;
-                // } else {
-                  // return "";
-                // }
               }
-            }
           },
         }
     ]
@@ -338,8 +249,8 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
     this.candidatesEvaluated = [];
     this.userList.forEach((element) => {
       if (
-        element.normal_assessment.interview_status == "Selected" ||
-        element.normal_assessment.interview_status == "Rejected"
+        element.evaluation_status == "Selected" ||
+        element.evaluation_status == "Rejected"
       ) {
         element.normal_assessment.interview_status == "Selected"
           ? this.selectedCount.push(element)
@@ -349,144 +260,24 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
   }
   // To get all users
   getUsersList() {
-    const apiData = {
-      inv_id: this.appConfig.getLocalData("userId")
-        ? this.appConfig.getLocalData("userId")
-        : "",
-    };
     setTimeout(() => {
       this.gridApi.showLoadingOverlay();
     }, 500);
-   this.invSubmittedCandidatesListSubscription = this.adminService.invSubmittedCandidatesList(apiData).subscribe(
+   this.invSubmittedCandidatesListSubscription = this.adminService.assignedVAEvaluationListForEvaluators().subscribe(
       (datas: any) => {
         const align = datas ? datas : [];
-        this.userList = [];
-        align.forEach((element) => {
+        this.userList = align;
+        this.userList.forEach((element) => {
           if (element) {
-            element["normal_evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
-            element.video_assessment = element.video_assessment ? element.video_assessment : {};
-            element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "YetToStart" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'InProgress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] ? element["video_assessment"]["test_status"] : '');
-            element.video_assessment.evaluation_status = element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'on hold') ? 'On Hold' : '';
-            element["normal_assessment"]["interview_status"] = element["normal_assessment"]["interview_status"] == "Not Selected" ? 'Rejected' : element["normal_assessment"]["interview_status"];
+            element.evaluation_status = element["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : 'Yet to Evaluate';
             element["profile_image_url"] = element["profile_image_url"] ? element["profile_image_url"] : 'assets/images/img_avatar2.jpg';
-            // Video Assessment evaluation status updation for display in ag grid
-            if (
-              element &&
-              element["video_assessment"] && element["video_assessment"]["scheduled_status"] != 1
-            ) {
-              element["video_assessment"]['evaluation_statusForDisplay'] = "Not Scheduled";
-            }
-            else if (
-              element &&
-              element["video_assessment"] && element["video_assessment"]["test_status"] == "Time Expired"
-            ) {
-              element["video_assessment"]['evaluation_statusForDisplay'] = "Time Expired";
-            } else {
-              if (
-                element &&
-                element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "Selected"
-              ) {
-                element["video_assessment"]['evaluation_statusForDisplay'] = "Selected";
-              }
-              else if (
-                element &&
-                element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "Rejected"
-              ) {
-                element["video_assessment"]['evaluation_statusForDisplay'] = "Rejected";
-              } else {
-                element["video_assessment"]['evaluation_statusForDisplay'] = "Yet to Evaluate";
-              }
-            }
-            element.Video_Interview_assigned_by = "-";
-            element.Video_Interview_startTime = '';
-            element.Video_Interview_endTime = '';
-            element.Video_Interview_join_interview = "Not Scheduled";
-            this.userList.push(element);
           }
         });
-          this.rowData = this.userList;
-          this.getSummaryCount();
+        this.rowData = this.userList;
+        this.getSummaryCount();
       },
-      (err) => {}
-    );
-  }
-
-  redirectToVideoSchedule(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
-    this.appConfig.setLocalData('tabIndex', 2);
-    this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
-      {
-        data: this.nameOfAssessment ? this.nameOfAssessment : "",
-        id: cid ? cid : "",
-        name: name ? name : "",
-        status: status ? status : "",
-        tag: tag ? tag : "",
-        uid: uid ? uid : "",
-        email: email ? email : "",
-        form: form ? form : "",
-        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
-        shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
-      }
-    );
-  }
-
-  submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
-    this.appConfig.setLocalData('tabIndex', 4);
-    this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
-      {
-        data: this.nameOfAssessment ? this.nameOfAssessment : "",
-        id: cid ? cid : "",
-        name: name ? name : "",
-        status: status ? status : "",
-        tag: tag ? tag : "",
-        uid: uid ? uid : "",
-        email: email ? email : "",
-        form: form ? form : "",
-        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
-        shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
-      }
-    );
-  }
-
-  redirectToEvaluationForm(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
-    this.appConfig.setLocalData('tabIndex', 3);
-    this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
-      {
-        data: this.nameOfAssessment ? this.nameOfAssessment : "",
-        id: cid ? cid : "",
-        name: name ? name : "",
-        status: status ? status : "",
-        tag: tag ? tag : "",
-        uid: uid ? uid : "",
-        email: email ? email : "",
-        form: form ? form : "",
-        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
-        shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
-      }
-    );
-  }
-
-  redirectToProfile(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
-    this.appConfig.setLocalData('tabIndex', 0);
-    this.appConfig.routeNavigationWithQueryParam(
-      CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,
-      {
-        data: this.nameOfAssessment ? this.nameOfAssessment : "",
-        id: cid ? cid : "",
-        name: name ? name : "",
-        status: status ? status : "",
-        tag: tag ? tag : "",
-        uid: uid ? uid : "",
-        email: email ? email : "",
-        form: form ? form : "",
-        videoSchedule: videoSchedule ? JSON.stringify(videoSchedule): '',
-        shortlist_name: shortlist ? shortlist : "",
-        videoShow, evaluationShow
+      (err) => {
+        this.rowData = [];
       }
     );
   }
@@ -496,6 +287,27 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
       const split = moment(date).format("LLL");
       return split;
     }
+  }
+
+        // Open dailog
+  openDialog(component, data) {
+    let dialogDetails: any;
+
+    /**
+     * Dialog modal window
+     */
+    // tslint:disable-next-line: one-variable-per-declaration
+    const dialogRef = this.matDialog.open(component, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
   }
 
 }

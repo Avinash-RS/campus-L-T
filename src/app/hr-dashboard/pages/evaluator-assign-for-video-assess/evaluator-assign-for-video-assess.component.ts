@@ -328,11 +328,8 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     // To get all users
     getUsersList1(data) {
       this.userListHR = data ? data : [];
-        let count = 0;
         this.userListHR.forEach(element => {
           element['checked'] = false;
-          count = count + 1;
-          element['uid'] = count;
         });
         this.rowDataHR = this.userListHR;
     }
@@ -343,8 +340,10 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
     const selectedUserlistHR = this.gridApiHR.getSelectedNodes();
     const candidateID = [];
     const HRID = [];
-    selectedUserlist.forEach(element => {
+    let ScheduleId: any;
+    selectedUserlist.forEach((element, i) => {
       if (element['data']) {
+        i == 0 ? ScheduleId = element['data']['va_schedule_id'] : '';
         candidateID.push(element['data']['candidate_user_id'])
       }
     });
@@ -406,6 +405,7 @@ export class EvaluatorAssignForVideoAssessComponent implements OnInit, OnDestroy
       shortlist_name: this.selectedShortlistname,
       candidate_user_ids: candidateID,
       interviewer_ids: HRID,
+      schedule_id: ScheduleId
     };
     this.openDialog(ShortlistBoxComponent, data, apiData);
   }

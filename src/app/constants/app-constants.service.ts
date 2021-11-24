@@ -126,7 +126,7 @@ export const CONSTANT = {
       INTERVIEW_PANEL_EVALUATION: '/interview-panel/candidates/evaluation',
       VIDEO_ASSESS_TAB_HOME: '/interview-panel/video-assess',
       VIDEO_ASSESS_ASSIGNED_DETAILS: '/interview-panel/video-assess/candidates',
-      VIDEO_ASSESS_EVALUATION_DETAILS: '/interview-panel/video-assess/candidates/evaluation'
+      VIDEO_ASSESS_EVALUATION_DETAILS: '/interview-panel/video-assess/evaluation'
     }
 
   },

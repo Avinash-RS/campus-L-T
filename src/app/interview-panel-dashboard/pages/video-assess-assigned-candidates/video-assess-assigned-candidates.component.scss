@@ -145,6 +145,7 @@ th {
       display: inline-block;
       line-height: 0.7;
       font-size: 11px;
+      width: 120px !important;
       padding: 7px 8px;
   }
 
@@ -199,7 +200,7 @@ th {
   color: #fff;
   }
   ::ng-deep .inprogress-blue-bg {
-    background-color: #1B4E9B;
+    background-color: #1A4D9A;
     color: #fff;
   }
   ::ng-deep .scheduled-bg {

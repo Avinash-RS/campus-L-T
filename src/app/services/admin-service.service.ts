@@ -758,4 +758,12 @@ VideoAssessmentAssignToEvaluator(data) {
   return this.http.post(`${this.BASE_URL}/video-assessment/assign-va-evaluation`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
+assignedVAEvaluationListForEvaluators() {
+  return this.http.get(`${this.BASE_URL}/video-assessment/assigned-va-evaluation-list`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+videoAssessmentEvaluationDetails(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/va-evaluation-detail`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
 }
