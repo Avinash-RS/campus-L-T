@@ -9,45 +9,27 @@
       </div>
     </div>
 
-    <!-- <div class="group">
+    <div class="group">
       <div class="label">
-        Shortlist status :&#160;
-      </div>
-      <div class="value">
-          {{bindDetails && bindDetails['status'] != 'completed' ? 'waiting' : 'completed'}}
-      </div>
-    </div> -->
-
-    <div style="white-space: nowrap;" class="group">
-      <div class="label">
-        Total number of candidates :&#160;
+        Total Number of Candidates :&#160;
       </div>
       <div class="value">
         <span class="labels">{{bindDetails ? bindDetails['total'] : '-'}}</span>
       </div>
     </div>
 
-    <!-- <div style="white-space: nowrap;" class="group">
+    <div class="group">
       <div class="label">
-        Available candidates for shortlist :&#160;
-      </div>
-      <div class="value">
-        <span class="labels">{{bindDetails ? bindDetails['available'] : '-'}}</span>
-      </div>
-    </div> -->
-
-    <div style="white-space: nowrap;" class="group">
-      <div class="label">
-        Shortlisted candidates :&#160;
+        Shortlisted Candidates :&#160;
       </div>
       <div class="value">
         <span class="labels">{{bindDetails ? bindDetails['shortlisted'] : '-'}}</span>
       </div>
     </div>
 
-    <div style="white-space: nowrap;" class="group">
+    <div class="group">
       <div class="label">
-        Yet to shortlist candidates :&#160;
+        Yet to Shortlist Candidates :&#160;
       </div>
       <div class="value">
         <span class="labels">{{bindDetails ? bindDetails['notTaken'] : '-'}}</span>
@@ -55,5 +37,8 @@
     </div>
 
 
+  </div>
+  <div *ngIf="showSendEvaluationButton" class="right-wrapper">
+    <button (click)="sendToEvaluate()" [disabled]="!showSendEmailButton" class="button-submit" mat-raised-button><span [matTooltip]="showSendEmailButton ? '' : 'Criteria not matched'">Send to Evaluate</span></button>
   </div>
 </div>

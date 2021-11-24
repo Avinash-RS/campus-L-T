@@ -141,12 +141,13 @@
 }
 
 
-::ng-deep span.status {
+span.status {
   border-radius: 4px;
   display: inline-block;
   line-height: 0.7;
   font-size: 11px;
   padding: 7px 8px;
+  text-align: center;
   &.scheduled {
     background-color: #bababa;
     color: #666666 ;

@@ -1,37 +1,165 @@
-<ng-container *ngIf="isAccessGranted() else permissionDenied">
+<div class="overall-video-assess-preview-wrapper">
+  <ng-container *ngIf="isAccessGranted() else permissionDenied">
+  <div *ngIf="videoAssessment && videoAssessment.showTopBar && videoAssessment.scheduled_status == 1" class="header-wrapper">
+    <div class="profileinfo">
+      <div>
+        <div class="img">
+          <img [src]="videoAssessment && videoAssessment.profile_image_url ? videoAssessment.profile_image_url : ''" alt="name" />
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-wrapper">
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Candidate Name</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{videoAssessment && videoAssessment.candidate_name ? videoAssessment.candidate_name : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Candidate Id</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{videoAssessment && videoAssessment.candidate_id ? videoAssessment.candidate_id : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Shortlist Name</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{videoAssessment && videoAssessment.shortlist_name ? videoAssessment.shortlist_name : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">{{videoAssessment && videoAssessment.redirectedFrom == 'evaluator' ? 'Assigned by' : 'Created by'}}</span><span class="colon">:</span>
+        </span>
+        <span *ngIf="videoAssessment && videoAssessment.redirectedFrom == 'evaluator' else nonevaluator" class="value">
+          {{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : '-'}}
+        </span>
+        <ng-template #nonevaluator>
+          <span class="value">
+            {{videoAssessment && videoAssessment.assigned_by ? videoAssessment.assigned_by : '-'}}
+          </span>
+
+        </ng-template>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Assessment Status</span><span class="colon">:</span>
+        </span>
+        <span class="value" [ngClass]="videoAssessment.test_status ? videoAssessment.test_status : ''">
+          {{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Evaluation Status</span><span class="colon">:</span>
+        </span>
+        <span class="value" [ngClass]="videoAssessment.evaluation_status ? videoAssessment.evaluation_status : ''">
+          {{videoAssessment && videoAssessment.evaluation_status ? videoAssessment.evaluation_status : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Evaluated by</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{videoAssessment && videoAssessment.evaluated_by ? videoAssessment.evaluated_by : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Total Marks</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{testDetailsArray && testDetailsArray.totalMarks  ? testDetailsArray.totalMarks : '-'}}
+        </span>
+      </div>
+
+      <div class="group group-assess">
+        <span class="label-group">
+          <span class="label">Assessment Time</span><span class="colon">:</span>
+        </span>
+        <span class="value" style="max-width: 300px;">
+          {{videoAssessment && videoAssessment.start_datetime ? videoAssessment.start_datetime : '-'}}
+          to
+          {{videoAssessment && videoAssessment.end_datetime ? videoAssessment.end_datetime : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Duration</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{testDetailsArray && testDetailsArray.totalDuration  ? testDetailsArray.totalDuration : '-'}}
+        </span>
+      </div>
+
+      <div class="group">
+        <span class="label-group">
+          <span class="label">Shortlist Status</span><span class="colon">:</span>
+        </span>
+        <span class="value">
+          {{videoAssessment && videoAssessment.showSubmitButton ? 'Yet to Shortlist' : 'Shortlisted'}}
+        </span>
+      </div>
+
+      <div class="group" style="max-width: 100%;">
+        <span class="label-group">
+          <span class="label">Remarks</span><span class="colon">:</span>
+        </span>
+        <span class="value" style="max-width: 100%;">
+          {{videoAssessment && videoAssessment.remarks ? videoAssessment.remarks : '-'}}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
   <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1 else scheduleNotCreatedRef">
 <div class="scheduleDetails-wrapper">
-  <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1" [ngTemplateOutlet]="scheduleDetails"></ng-container>
+  <ng-container *ngIf="videoAssessment && !videoAssessment.showTopBar && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1" [ngTemplateOutlet]="scheduleDetails"></ng-container>
 </div>
 
 <div class="video-assessments">
-  <div class="video-wrapper">
     <ng-container *ngIf="currentItem && currentItem.src else noVideoRef">
-      <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
+      <div class="leftHalf">
+          <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
+      </div>
+      <div class="rightHalf">
       <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
       <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
-      <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+      <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton && (videoAssessment.test_status && videoAssessment.test_status == 'Completed')" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+      </div>
     </ng-container>
-  </div>
 </div>
 </ng-container>
 </ng-container>
+</div>
 
 <ng-template #showQuestionsArray>
-
-  <div class="question-wrapper">
-      <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
-        <div class="d-flex align-items-center question-count-wrapper">
-          <ng-container *ngFor="let question of questionDetailsArray; let i = index">
-        <div *ngIf="i == 0">Questions: </div>
-      <div class="question-count" (click)="active = i" [ngClass]="active == i ? 'active' : ''">
-        <span>{{i + 1}}</span>
-      </div>
-  </ng-container>
-        </div>
-  <div class="questiondesc"> <span class="qSNo">{{'Q'+ (active + 1) +'. '}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.categoryName ? (questionDetailsArray[active].questionDetails.categoryName + ': ') : ''}}</span> <span class="desc">{{questionDetailsArray[active] && questionDetailsArray[active].questionDetails && questionDetailsArray[active].questionDetails.question ? questionDetailsArray[active].questionDetails.question : ''}}</span></div>
-  </ng-container>
-  </div>
+  <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
+    <h5>Questions</h5>
+            <div class="qusCard">
+                <div (click)="active = i" class="qusAlign" [ngClass]="{active: active == i}" *ngFor="let qus of questionDetailsArray; let i = index">
+                    <span style="white-space: nowrap;">Q{{i + 1}}. {{qus?.questionDetails?.categoryName}}: </span> <span>{{qus?.questionDetails?.question}}</span>
+                </div>
+            </div>
+</ng-container>
 </ng-template>
 
 <ng-template #showFeedbackTemplate>
@@ -59,6 +187,10 @@
 </ng-template>
 
 <ng-template #showVideo>
+  <div *ngIf="!videoAssessment.showSubmitButton" class="info mb-2">
+    <p><span class="material-icons-outlined">info</span> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
+  </div>
+
   <div class="video-container">
     <ng-container *ngIf="(videoEndedFalse || true) else novideoOverlayref">
             <div *ngIf="currentItem && currentItem.src" class="video">
@@ -78,7 +210,7 @@
 </ng-template>
 
 <ng-template #selectionbuttons>
-  <div class="selectionbuttons">
+  <div class="selectionbuttons mb-1">
     <div (click)="showFeedback = true; selectedStatus = 'selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
     <!-- <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div> -->
     <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject ml-5"><span class="selection-border"><span>Reject</span></span></div>

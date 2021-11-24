@@ -29,9 +29,9 @@
           </div>
           <div class="statusinfo">
             Evaluation Status:
-            <span *ngIf="status != '1' && status != '2'" class="status scheduled">{{'Scheduled'}}</span>
-            <span *ngIf="status == '1'" class="status inprogress">{{'Completed'}}</span>
-            <span *ngIf="status == '2'" class="status completed">{{'Submitted'}}</span>
+            <span *ngIf="status != '1' && status != '2'" class="status ml-2 scheduled">{{'Scheduled'}}</span>
+            <span *ngIf="status == '1'" class="status ml-2 inprogress">{{'Completed'}}</span>
+            <span *ngIf="status == '2'" class="status ml-2 completed">{{'Submitted'}}</span>
           </div>
         </div>
       </div>

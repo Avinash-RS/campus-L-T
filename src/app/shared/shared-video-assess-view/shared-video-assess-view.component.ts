@@ -109,7 +109,7 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
       count: 1,
       filterType:"event",
       roomId: this.videoAssessment && this.videoAssessment.room_id ? this.videoAssessment.room_id : '',
-  //     roomId: '1662d5ec-ed7a-4f3e-91c9-cb66361f05e2'
+  //     roomId: '45647bb7-0d47-412c-a3f5-700f40f699b5'
       };
       let filter = [];
      this.getProctorVideoSubscription = this.adminService.getProctorVideo(data.roomId, data.filterType).subscribe((response: any)=> {
@@ -174,6 +174,7 @@ sendFeedback() {
       shortlist_name: this.videoAssessment && this.videoAssessment.shortlist_name ? this.videoAssessment.shortlist_name : '',
       evaluation_status: this.selectedStatus,
       remarks: this.feedbackformControl.value,
+      schedule_id: this.videoAssessment.schedule_id,
       candidate_user_id: this.videoAssessment && this.videoAssessment.uid ? this.videoAssessment.uid : ''
   }
   this.feedbackApiLoading = true;

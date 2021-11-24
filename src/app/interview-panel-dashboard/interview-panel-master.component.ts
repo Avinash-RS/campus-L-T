@@ -22,6 +22,12 @@ export class InterviewPanelMasterComponent implements OnInit {
         name: 'Dashboard',
         icon: 'icon-dashboard',
         hide: false
+      },
+      {
+        url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_TAB_HOME,
+        name: 'Video Assessments',
+        icon: 'icon-video_camera',
+        hide: false
       }
   ]
 }

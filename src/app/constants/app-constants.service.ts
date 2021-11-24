@@ -80,6 +80,8 @@ export const CONSTANT = {
       SECONDSHORTLISTING: '/hr/shortlist/2nd',
       SECONDSHORTLISTING_ASSESSMENT_LIST: '/hr/shortlist/2nd/assessment-list',
       SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST: '/hr/shortlist/2nd/candidateslist',
+      SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_HOME: '/hr/shortlist/2nd/video-assessment',
+      SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN: '/hr/shortlist/2nd/video-assessment/evaluator-assign',
       SECONDSHORTLISTED_CANDIDATE_REPORT: '/hr/shortlist/2nd/shortlisted-report',
       VIDEO_ASSESSMENT_SCHEDULE: '/hr/shortlist/2nd/video-schedule',
       USER_MANAGEMENT: '/hr/user-management',
@@ -122,13 +124,9 @@ export const CONSTANT = {
       CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: '/interview-panel/candidates/assessments',
       CANDIDATE_DETAILS_SUBMITTED: '/interview-panel/candidates/submitted',
       INTERVIEW_PANEL_EVALUATION: '/interview-panel/candidates/evaluation',
-      SUB_ASSESSMENTS: '/interview-panel/candidates/evaluation/assessment',
-      SUB_EDUCATION: '/interview-panel/candidates/evaluation/education',
-      SUB_EMPLOYMENT: '/interview-panel/candidates/evaluation/employment',
-      SUB_EVALUATION: '/interview-panel/candidates/evaluation/evaluate',
-      UNIFIEDREPORTS: '/interview-panel/candidates/evaluation/unifiedreports',
-      JOIN_INTERVIEW: '/interview-panel/candidates/evaluation/join',
-      EVALUATION_FORM: '/interview-panel/evaluation-form'
+      VIDEO_ASSESS_TAB_HOME: '/interview-panel/video-assess',
+      VIDEO_ASSESS_ASSIGNED_DETAILS: '/interview-panel/video-assess/candidates',
+      VIDEO_ASSESS_EVALUATION_DETAILS: '/interview-panel/video-assess/evaluation'
     }
 
   },
@@ -198,6 +196,8 @@ export const CONSTANT = {
       SECONDSHORTLISTING: '2nd',
       SECONDSHORTLISTING_ASSESSMENT_LIST: 'assessment-list',
       SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST: 'candidateslist',
+      SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_HOME: 'video-assessment',
+      SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN: 'evaluator-assign',
       SECONDSHORTLISTED_CANDIDATE_REPORT: 'shortlisted-report',
       VIDEO_ASSESSMENT_SCHEDULE: 'video-schedule',
       USER_MANAGEMENT: 'user-management',
@@ -240,13 +240,9 @@ export const CONSTANT = {
       CANDIDATE_DETAILS_PARTICULAR_ASSESSMENT_LIST: 'assessments',
       CANDIDATE_DETAILS_SUBMITTED: 'submitted',
       INTERVIEW_PANEL_EVALUATION: 'evaluation',
-      SUB_ASSESSMENTS: 'assessment',
-      SUB_EDUCATION: 'education',
-      SUB_EMPLOYMENT: 'employment',
-      UNIFIEDREPORTS: 'unifiedreports',
-      JOIN_INTERVIEW: 'join',
-      SUB_EVALUATION: 'evaluate',
-      EVALUATION_FORM: 'evaluation-form'
+      VIDEO_ASSESS_TAB_HOME: 'video-assess',
+      VIDEO_ASSESS_ASSIGNED_DETAILS: 'candidates',
+      VIDEO_ASSESS_EVALUATION_DETAILS: 'evaluation'
     }
   }
 };

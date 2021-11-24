@@ -1,0 +1,92 @@
+<div class="user-list-wrapper">
+  <div class="heading-wrapper">
+    <div class="heading-text">
+      Video Assessment Evaluation Assign
+    </div>
+    <div class="right-wrapper">
+      <button (click)="sendMail()" class="button-submit" [disabled]="selectedCandidates.length > 0 && selectedInterviewers.length > 0 ? false : true" mat-raised-button>Send Email</button>
+    </div>
+  </div>
+  <div class="total-wrap" #scrollbox>
+    <div class="lefttable">
+      <div class="head-flex">
+        <div class="text">Candidates List</div>
+        <div class="search-bar">
+          <div class="search-icon">
+            <img src="assets/images/feather-search.svg" alt="" srcset="" />
+            <input
+              matInput
+              (keyup)="onQuickFilterChanged()"
+              [(ngModel)]="quickSearchValue"
+              placeholder="Search…."
+            />
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
+        <ag-grid-angular
+          style="width: 99%; height: 450px; margin: auto !important"
+          class="ag-theme-alpine"
+          [rowData]="rowData"
+          [columnDefs]="columnDefs"
+          [defaultColDef]="defaultColDef"
+          [pagination]="true"
+          [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSize"
+          [rowSelection]="'multiple'"
+          [cacheBlockSize]="cacheBlockSize"
+          (gridReady)="onGridReady($event)"
+          (sortChanged)="sortevent($event)"
+          (cellClicked)="onCellClicked($event)"
+          (filterModified)="getModel($event)"
+          headerHeight="40"
+          (selectionChanged)="onCandidateSelect($event)"
+          [animateRows]="true"
+        >
+        </ag-grid-angular>
+      </div>
+    </div>
+
+    <!-- second table -->
+    <div class="righttable">
+      <div class="head-flex">
+        <div class="text">Interview Panel List</div>
+        <div class="search-bar">
+          <div class="search-icon">
+            <img src="assets/images/feather-search.svg" alt="" srcset="" />
+            <input
+              matInput
+              (keyup)="onQuickFilterChangedHR()"
+              [(ngModel)]="quickSearchValueHR"
+              placeholder="Search…."
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'"
+      >
+        <ag-grid-angular
+          style="width: 99%; height: 450px; margin: auto !important"
+          class="ag-theme-alpine"
+          [rowData]="rowDataHR"
+          [columnDefs]="columnDefsHR"
+          [defaultColDef]="defaultColDefHR"
+          [pagination]="true"
+          [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSizeHR"
+          [rowSelection]="'multiple'"
+          [cacheBlockSize]="cacheBlockSizeHR"
+          (gridReady)="onGridReadyHR($event)"
+          (sortChanged)="sorteventHR($event)"
+          (cellClicked)="onCellClickedHR($event)"
+          (filterModified)="getModelHR($event)"
+          headerHeight="40"
+          (selectionChanged)="onInterviewerSelect($event)"
+          [animateRows]="true"
+        >
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>

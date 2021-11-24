@@ -583,6 +583,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  getParticularInterviewpanelistWithoutLoader(data) {
+    return this.http.post(`${this.BASE_URL}/profile/get_interview_pan_by_discipline`, data,
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+  }
+
   getParticularCandidatelist(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_for_assement`, data,
       { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
@@ -747,6 +752,18 @@ scheduledVideoReports(data) {
 
 evaluatedVideoReports(data) {
   return this.http.post(`${this.BASE_URL}/reports/va-feedback-report`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+VideoAssessmentAssignToEvaluator(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/assign-va-evaluation`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+assignedVAEvaluationListForEvaluators() {
+  return this.http.get(`${this.BASE_URL}/video-assessment/assigned-va-evaluation-list`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+videoAssessmentEvaluationDetails(data) {
+  return this.http.post(`${this.BASE_URL}/video-assessment/va-evaluation-detail`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
 }

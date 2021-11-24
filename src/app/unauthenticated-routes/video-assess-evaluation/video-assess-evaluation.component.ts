@@ -63,7 +63,7 @@ export class VideoAssessEvaluationComponent implements OnInit, OnDestroy {
             candidate_name: data && data.candidate_name ? data.candidate_name : '',
             interviewer_name: data && data.interviewer_name ? data.interviewer_name : '',
             interviewer_uid: data && data.interviewer_id ? data.interviewer_id : '',
-            profile_pic: data && data.profile_image_url ? data.profile_image_url: '',
+            profile_image_url: data && data.profile_image_url ? data.profile_image_url: '',
             drive_id: data && data.drive_id ? data.drive_id: ''
           };
           this.appConfig.setLocalData('driveId', data && data.drive_id ? data.drive_id : null);

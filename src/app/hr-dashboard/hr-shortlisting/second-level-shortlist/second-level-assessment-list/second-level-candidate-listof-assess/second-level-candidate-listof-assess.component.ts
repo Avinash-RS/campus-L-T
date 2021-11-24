@@ -1,12 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, TemplateRef, Input } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
@@ -25,6 +22,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('videoAssessDialog', {static: false}) videoAssessDialog: TemplateRef<any>;
+  showSendEvaluationButton = true;
   userList: any;
   assessmentName: any;
   nameOfAssessment: any;
@@ -84,6 +82,9 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   VideoAssessdialogRef: any;
   userListApiResponse: any;
   videoAssessment: any;
+  videoAssessmentCompletedCandidates: any = [];
+  showSendEmailButton: any;
+  videoScheduleDetailsSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
@@ -117,6 +118,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
     this.filterSecondLevelSubscription ? this.filterSecondLevelSubscription.unsubscribe() : '';
     this.secondShortlistAPISubscription ? this.secondShortlistAPISubscription.unsubscribe() : '';
+    this.videoScheduleDetailsSubscription ? this.videoScheduleDetailsSubscription.unsubscribe() : '';
   }
 
   refreshOndriveChangeRXJS() {
@@ -135,8 +137,12 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   editRouteParamGetter() {
     // Get url Param to view Edit user page
     this.activatedRoute.queryParams.subscribe(params => {
-      this.nameOfAssessment = params['data'];
-      this.getUsersList(params['data']);
+      if (params['data']) {
+        this.nameOfAssessment = params['data'];
+        this.getUsersList(params['data']);
+      } else {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENT_LIST);
+      }
     });
   }
 
@@ -145,13 +151,16 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       const apiData = {
         shortlist_name: name,
       };
+      this.videoAssessmentCompletedCandidates = [];
       this.filterSecondLevelSubscription = this.adminService.filterSecondLevel(apiData).subscribe((response: any) => {
         this.userListApiResponse = response ? response : null;
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
         this.userList.forEach(element => {
           element.shortlisted_status = element.shortlisted_status == 1 ? 'Shortlisted' : 'Not Shortlisted';
+          ((element.va_test_status && element.va_test_status == 'Completed') && element.shortlisted_status == 'Not Shortlisted') ? this.videoAssessmentCompletedCandidates.push(element) : '';
         });
+        this.showSendEmailButton = this.videoAssessmentCompletedCandidates.length > 0 ? true : false;
         this.rowData = this.userList;
         this.tableDef(tableHeaders);
         let notTaken = response['total_no_of_candidates'] - response['exams_taken'];
@@ -253,33 +262,104 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     }
   }
 
-  openMatDialog(data: any) {
-    this.videoAssessment = {
-      schedule_id: data && data.va_schedule_id ? data.va_schedule_id : '',
-      scheduled_status: data && data.va_scheduled_status ? data.va_scheduled_status : 0,
-      room_id: data && data.va_room_id ? data.va_room_id : '',
-      test_status: data && data.va_test_status ? data.va_test_status : '',
-      remarks: data && data.va_remarks ? data.va_remarks : '',
-      evaluation_status: data && data.va_evaluation_status ? data.va_evaluation_status : '',
-      scheduled_by: data && data.va_scheduled_by ? data.va_scheduled_by : '',
-      evaluated_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
-      submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
-      start_datetime: data && data.va_start_datetime ? data.va_start_datetime : '',
-      end_datetime: data && data.va_end_datetime ? data.va_end_datetime : '',
-      uid: data && data.candidate_user_id ? data.candidate_user_id : '',
-      shortlist_name: this.userListApiResponse ? this.userListApiResponse.shortlist_name : '',
-      showSubmitButton: data && data.shortlisted_status == 'Shortlisted' ? false : true,
-      redirectedFrom: 'hr'
-  };
+  getScheduleDetailsPHP(apiDatas) {
+    const apiData = {
+      shortlist_name: this.userListApiResponse.shortlist_name, candidate_user_id: Number(apiDatas.candidate_user_id), schedule_id: apiDatas.schedule_id, is_va_evaluation: 0
+   }
+   this.videoScheduleDetailsSubscription = this.adminService.videoAssessmentEvaluationDetails(apiData).subscribe(
+      (datas: any) => {
+        let data = datas ? datas : null;
+        this.videoAssessment = {
+          schedule_id: data && data.schedule_id ? data.schedule_id : '',
+          scheduled_status: 1,
+          room_id: data && data.room_id ? data.room_id : '',
+          test_status: /* data && data.va_test_status ?*/ this.videoAssessTestStatus(data),
+          remarks: data && data.remarks ? data.remarks : '',
+          evaluation_status: /*data && data.evaluation_status ?*/ this.videoAssessEvaluationStatus(data),
+          scheduled_by: data && data.scheduled_by ? data.scheduled_by : '',
+          evaluated_by: data && data.evaluated_by ? data.evaluated_by : '',
+          submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
+          start_datetime: data && data.start_datetime ? data.start_datetime : '',
+          end_datetime: data && data.end_datetime ? data.end_datetime : '',
+          uid: data && data.candidate_user_id ? data.candidate_user_id : '',
+          candidate_id: data && data.candidate_id ? data.candidate_id : '',
+          candidate_name: data && data.candidate_name ? data.candidate_name : '',
+          shortlist_name: data && data.shortlist_name ? data.shortlist_name : '',
+          showSubmitButton: data && data.shortlist_status == 1 ? false : true,
+          profile_image_url: data && data.profile_image_url ? '' : 'assets/images/img_avatar2.jpg',
+          redirectedFrom: 'hr',
+          showTopBar: true,
+      };
+      this.openVideoAssessDialog();
+      },
+      (err) => {
+        this.videoAssessment = {};
+        this.openVideoAssessDialog();
+      }
+    );
+  }
 
+  videoAssessEvaluationStatus(data: any) {
+    if (data && data.schedule_id) {
+      if (data && data.va_test_status && data.va_test_status == 'Time Expired') {
+        return 'Time Expired';
+      }
+       return (data && data.evaluation_status && data.evaluation_status == 'selected') ? 'Selected' : (data && data.evaluation_status && data.evaluation_status == 'rejected') ? 'Rejected' : data.evaluation_status ? data.evaluation_status : 'Yet to Evaluate';
+    } else {
+      return 'Not Scheduled';
+    }
+  }
+
+  videoAssessTestStatus(data: any) {
+    if (data && data.schedule_id) {
+      if (data && data.va_test_status && data.va_test_status == 'YetToStart') {
+        return 'Yet to Start';
+      }
+      if (data && data.va_test_status && data.va_test_status == 'InProgress') {
+        return 'In Progress';
+      }
+      if (data && data.va_test_status && data.va_test_status) {
+        return data.va_test_status;
+      } else {
+        return 'Not Scheduled';
+      }
+    } else {
+      return 'Not Scheduled';
+    }
+  }
+
+  openVideoAssessDialog() {
     this.VideoAssessdialogRef = this.matDialog.open(this.videoAssessDialog, {
-      width: '900px',
+      width: '1200px',
       height: 'auto',
       autoFocus: false,
       closeOnNavigation: true,
       disableClose: false,
       panelClass: 'popupModalContainerForVideoAssess'
     });
+  }
+  openMatDialog(data: any) {
+    let apiData = {
+      shortlist_name: data.shortlist_name, candidate_user_id: data.candidate_user_id, schedule_id: data.va_schedule_id}
+    this.getScheduleDetailsPHP(apiData);
+  //   this.videoAssessment = {
+  //     schedule_id: data && data.va_schedule_id ? data.va_schedule_id : '',
+  //     scheduled_status: data && data.va_scheduled_status ? data.va_scheduled_status : 0,
+  //     room_id: data && data.va_room_id ? data.va_room_id : '',
+  //     test_status: data && data.va_test_status ? data.va_test_status : '',
+  //     remarks: data && data.va_remarks ? data.va_remarks : '',
+  //     evaluation_status: data && data.va_evaluation_status ? data.va_evaluation_status : '',
+  //     scheduled_by: data && data.va_scheduled_by ? data.va_scheduled_by : '',
+  //     evaluated_by: data && data.va_evaluated_by ? data.va_evaluated_by : '',
+  //     submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
+  //     start_datetime: data && data.va_start_datetime ? data.va_start_datetime : '',
+  //     end_datetime: data && data.va_end_datetime ? data.va_end_datetime : '',
+  //     uid: data && data.candidate_user_id ? data.candidate_user_id : '',
+  //     shortlist_name: this.userListApiResponse ? this.userListApiResponse.shortlist_name : '',
+  //     showSubmitButton: data && data.shortlisted_status == 'Shortlisted' ? false : true,
+  //     redirectedFrom: 'hr'
+  // };
+
   }
 
   closeDialog(e) {
@@ -449,6 +529,10 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   }
 
+  redirectVideo() {
+    this.appConfig.setLocalData('sendEvaluationCandidates', JSON.stringify(this.videoAssessmentCompletedCandidates));
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_VIDEO_ASSESSMENT_EVALUATION_SCREEN, {shortlist_name: this.nameOfAssessment});
+  }
 
   openDialog(component, data) {
     let dialogDetails: any;
