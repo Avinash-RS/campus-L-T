@@ -355,7 +355,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     return [
     {
         headerName: 'Interview Sessions',
-        children: [      {
+        children: [
+          {
+            headerName: "Date/Time of Interview",
+            field: "Video_Interview_startTime",
+            filter: 'agTextColumnFilter',
+            minWidth: 310,
+            sortable: true,
+            tooltipField: "Video_Interview_startTime",
+            cellRenderer: (params) => {
+                return `${params["data"]["Video_Interview_startTime"]} - ${params["data"]["Video_Interview_endTime"]}`;
+            },
+          },
+          {
           headerName: "Interview Sessions",
           field: "Video_Interview_join_interview",
           filter: 'agSetColumnFilter',
@@ -378,8 +390,11 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Join Interview") {
               return `<button class="join-inter"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
-            if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Interview Completed") {
+            if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Completed") {
               return `<button class="join-inter completed-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+            }
+            if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Yet to Start") {
+              return `<button class="join-inter inprogress-blue-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             else {
               return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
@@ -387,16 +402,16 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           },
         },
         {
-        headerName: "Date/Time of Interview",
-        field: "Video_Interview_startTime",
-        filter: 'agTextColumnFilter',
-        minWidth: 310,
-        sortable: true,
-        tooltipField: "Video_Interview_startTime",
-        cellRenderer: (params) => {
-            return `${params["data"]["Video_Interview_startTime"]} - ${params["data"]["Video_Interview_endTime"]}`;
-        },
-      },
+          headerName: "Feedback",
+          field: "feedback",
+          filter: 'agTextColumnFilter',
+          minWidth: 120,
+          sortable: true,
+          tooltipField: "feedback",
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+        }
     ]
    }
  ]
@@ -644,6 +659,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     this.userList.forEach((element) => {
       edgeSeviceData.forEach((edgeData) => {
         if (element.email == edgeData.emailId) {
+          element.feedback = edgeData.feedback ? edgeData.feedback : '-';
+          element.videoInvStatus = edgeData.status ? edgeData.status : 'Time Expired';
           element.Video_Interview_assigned_by = edgeData.createdByName
             ? edgeData.createdByName
             : "-";
@@ -652,7 +669,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           element.Video_Interview_join_interview = this.isTimeExpired(
             edgeData.startTime,
             edgeData.endTime,
-            element.normal_assessment.evaluation_status
+            element.videoInvStatus
           );
         }
       });
@@ -674,13 +691,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       );
     }
     if (isValidTime) {
-      return  status == '0' ? "Join Interview" : status == '1' ? 'Join Interview' : 'Interview Completed';
+      return  status == 'Yet to Start' ? "Join Interview" : status == 'Completed' ? 'Completed' : 'Time Expired';
     } else {
       let custom = moment(returned_endate).diff(moment.now(), 'minutes');
       if (custom > 0) {
-        return status == '0' ? "Yet to Start" : status == '1' ? 'Yet to Start' : 'Interview Completed';
+        return status == 'Yet to Start' ? "Yet to Start" : status == 'Completed' ? 'Completed' : 'Time Expired';
       } else {
-        return status == '0' ? "Time Expired" : status == '1' ? 'Time Expired' : 'Interview Completed';
+        return status == 'Yet to Start' ? "Time Expired" : status == 'Completed' ? 'Completed' : 'Time Expired';
       }
     }
   }
@@ -800,6 +817,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             element.Video_Interview_startTime = '';
             element.Video_Interview_endTime = '';
             element.Video_Interview_join_interview = "Not Scheduled";
+            element.feedback = '-';
             this.userList.push(element);
           }
         });

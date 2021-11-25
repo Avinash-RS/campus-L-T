@@ -1,6 +1,11 @@
 @import "../../themes/themes.scss";
 
 .joinInterviewWrapper {
+  .interview-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 4px 30px 0 0;
+  }
     // padding: 15px;
     &.candidate {
     padding: 20px 25px 0px 10px;
@@ -55,6 +60,9 @@
         }
     }
 }
+.interviewers-joinInterview {
+  width: 50%;
+}
 .joinInterview {
     border-radius: 3px;
     padding: 15px;
@@ -106,6 +114,33 @@
     }
 }
 
+.join-button-wrapper {
+  width: 20%;
+}
+.join-button {
+  background-color: #c02222;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  font-weight: normal;
+  color: $white;
+  flex-direction: row !important;
+  width: 150px;
+  height: 35px;
+  font-size: 16px;
+  em {
+      margin-right: 7px;
+  }
+}
+
+.YettoStart {
+  background-color: #1B4E9B !important;
+  cursor: not-allowed;
+}
+.Completed {
+  background-color: #48cc83 !important;
+  cursor: not-allowed;
+}
 .disabled {
   background-color: #bababa !important;
   cursor: not-allowed;
@@ -131,4 +166,20 @@
 align-items: center;
 font-size: 18px;
 font-weight: 600;
+}
+
+.feedback {
+  width: 30%;
+  label {
+    color: #444444;
+    font-size: 14px;
+    margin: 0;
+  }
+  .text-area {
+    background: #FCFCFC 0% 0% no-repeat padding-box;
+    border: 0.5px solid #bababa;
+    border-radius: 5px;
+    min-height: 35px;
+    padding: 4px;
+  }
 }

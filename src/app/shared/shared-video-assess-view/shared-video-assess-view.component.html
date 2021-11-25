@@ -42,11 +42,11 @@
           <span class="label">{{videoAssessment && videoAssessment.redirectedFrom == 'evaluator' ? 'Assigned by' : 'Created by'}}</span><span class="colon">:</span>
         </span>
         <span *ngIf="videoAssessment && videoAssessment.redirectedFrom == 'evaluator' else nonevaluator" class="value">
-          {{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : '-'}}
+          {{videoAssessment && videoAssessment.assigned_by ? videoAssessment.assigned_by : '-'}}
         </span>
         <ng-template #nonevaluator>
           <span class="value">
-            {{videoAssessment && videoAssessment.assigned_by ? videoAssessment.assigned_by : '-'}}
+            {{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : '-'}}
           </span>
 
         </ng-template>
