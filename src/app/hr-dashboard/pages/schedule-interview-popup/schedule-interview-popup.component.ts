@@ -93,7 +93,8 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
         "userDtl": userDetails,
         "createdByID" : this.appConfig.getLocalData('userEmail'),
         "createdByName": this.appConfig.getLocalData('username'),
-        "type": this.scheduleForm.value.type == '1' ? 'webrtc' : 'teams'
+        "type": this.scheduleForm.value.type == '1' ? 'webrtc' : 'teams',
+        "status": 'Yet to Start'
       };
     this.objList = obj;
     this.buttonLoading = true;

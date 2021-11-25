@@ -42,7 +42,7 @@ export class JoinInterviewComponent implements OnInit {
 
   ngOnInit() {}
 
-  isTimeExpired(startTime, endTime) {
+  isTimeExpired(startTime, endTime, status) {
     var returned_startdate = moment(startTime).subtract(1, "hours");
     var returned_endate = moment(endTime).add(1, "hours");
     let isValidTime;
@@ -53,14 +53,14 @@ export class JoinInterviewComponent implements OnInit {
       );
     }
     if (isValidTime) {
-      this.enableButton = "Join Interview";
+      this.enableButton = status == 'Yet to Start' ? "Join Interview" : status == 'Completed' ? 'Completed' : 'Time Expired';
     } else {
       let custom = moment(returned_endate).diff(moment.now(), "minutes");
       if (custom > 0) {
-        this.enableButton = "Yet to Start";
+        this.enableButton = status == 'Yet to Start' ? "Yet to Start" : status == 'Completed' ? 'Completed' : 'Time Expired';
       } else {
         this.expiredoneDayago = custom < -1500 ? true : false;
-        this.enableButton = "Time Expired";
+        this.enableButton = status == 'Yet to Start' ? "Time Expired" : status == 'Completed' ? 'Completed' : 'Time Expired';
       }
     }
   }
@@ -99,7 +99,7 @@ export class JoinInterviewComponent implements OnInit {
 
         if (this.interview?.userDtl?.length > 0) {
           this.showInterview = true;
-          this.isTimeExpired(this.interview.startTime, this.interview.endTime);
+          this.isTimeExpired(this.interview.startTime, this.interview.endTime, (this.interview.status ? this.interview.status : ''));
         } else {
           this.showInterview = false;
         }
