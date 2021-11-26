@@ -159,7 +159,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
     if (event.colDef.field === 'va_scheduled_status') {
       // if (event['data']['shortlisted'] > 0) {
         let params = {
-          status: event['data']['va_scheduled_status'] == 'scheduled' ? 1 : 0,
+          status: event['data']['va_scheduled_status'] == 'Scheduled' ? 1 : 0,
           shortlist_name: event['data']['shortlist_name'] ? event['data']['shortlist_name'] : null,
           schedule_id: event['data']['schedule_id'] ? event['data']['schedule_id'] : null
         }
@@ -190,15 +190,15 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   videoAssessmentColumns() {
     return [
       {
-        headerName: 'Video Assessment Schedule', field: 'va_scheduled_status',
+        headerName: 'Video Assessment', field: 'va_scheduled_status',
         minWidth: 140,
         headerClass: 'ag-grid-header-center',
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
-          if (params['data']['va_scheduled_status'] == 'scheduled') {
-            return `<span style="cursor: pointer; display: flex; color: #C02222; font-size: 20px;" class="material-icons-outlined">info</span>`;
+          if (params['data']['va_scheduled_status'] == 'Scheduled') {
+            return `<span style="cursor: pointer; display: flex; color: #373331; font-size: 20px;" class="material-icons-outlined">info</span>`;
           } else {
-            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">video_call</span>`;
+            return `<span style="cursor: pointer; display: flex; color: #373331" class="material-icons-outlined">video_call</span>`;
           }
         },
         filter: 'agSetColumnFilter',
@@ -217,6 +217,9 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         minWidth: 140,
         sortable: true,
         tooltipField: 'total_count',
+        cellStyle: params => {
+          return {'text-align': 'center'}
+        },
         filterParams: {
           buttons: ['reset'],
         },
@@ -224,78 +227,70 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           return params.value;
         }
       },
-      {
-        headerName: 'Assessment Results', field: 'status1',
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'status1',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Assessments Taken', field: 'exams_taken',
-        filter: 'agNumberColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'exams_taken',
-        filterParams: {
-          buttons: ['reset'],
-        },
-          getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Yet to complete Assessments', field: 'notTaken',
-        filter: 'agNumberColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'notTaken',
-        filterParams: {
-          buttons: ['reset'],
-        },
-          getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Available for shortlist', field: 'available',
-        filter: 'agNumberColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'available',
-        filterParams: {
-          buttons: ['reset'],
-        },
-          getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
+      // {
+      //   headerName: 'Assessment Results', field: 'status1',
+      //   filter: 'agSetColumnFilter',
+      //   filterParams: {
+      //     applyMiniFilterWhileTyping: true
+      //   },
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'status1',
+      //   getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
+      // {
+      //   headerName: 'Assessments Taken', field: 'exams_taken',
+      //   filter: 'agNumberColumnFilter',
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'exams_taken',
+      //   filterParams: {
+      //     buttons: ['reset'],
+      //   },
+      //     getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
+      // {
+      //   headerName: 'Yet to complete Assessments', field: 'notTaken',
+      //   filter: 'agNumberColumnFilter',
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'notTaken',
+      //   filterParams: {
+      //     buttons: ['reset'],
+      //   },
+      //     getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
+      // {
+      //   headerName: 'Available for shortlist', field: 'available',
+      //   filter: 'agNumberColumnFilter',
+      //   minWidth: 140,
+      //   sortable: true,
+      //   tooltipField: 'available',
+      //   filterParams: {
+      //     buttons: ['reset'],
+      //   },
+      //     getQuickFilterText: (params) => {
+      //     return params.value;
+      //   }
+      // },
       {
         headerName: 'Action', field: 'buttons',
         cellClass: 'agCellStyle',
-        minWidth: 140,
+        minWidth: 120,
         headerClass: 'ag-grid-header-center',
         valueFormatter: this.tooltipFormatter,
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
         },
         cellRenderer: (params) => {
-            return `<button class="table-btn agTable inprogress" mat-raised-button>Shortlist</button>`;
-          // if (params['data']['buttons'] == 'completed') {
-          //   return `<button class="table-btn agTable selection-disable success" mat-raised-button>Shortlisted</button>`;
-          // }
-          // if (params['data']['available'] > 0) {
-          //   return `<button class="table-btn agTable inprogress" mat-raised-button>Shortlist...</button>`;
-          // }
-          // else {
-          //   return ``;
-          // }
+          // return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">group</span>`;
+          return `<button class="table-btn agTable inprogress-red" mat-raised-button>Shortlist</button>`;
         },
         filterParams: {
           buttons: ['reset'],
@@ -308,6 +303,12 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         minWidth: 140,
         sortable: true,
         tooltipField: 'shortlisted',
+        cellStyle: params => {
+          // if (params.value) {
+              return {'text-align': 'center'}
+          // }
+        // return null;
+        },
         filterParams: {
           buttons: ['reset'],
         },
@@ -316,13 +317,14 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'View Shortlisted', field: 'view',
-        minWidth: 140,
+        headerName: 'Report', field: 'view',
+        minWidth: 100,
+        maxWidth: 100,
         headerClass: 'ag-grid-header-center',
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
           if (params['data']['shortlisted'] > 0) {
-            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons">visibility</span>`;
+            return `<span style="cursor: pointer; display: flex; color: #373331" class="material-icons">visibility</span>`;
           }
         },
         filter: false,
@@ -330,12 +332,12 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       },
       {
         headerName: 'Assign to Panel', field: 'view1',
-        minWidth: 140,
+        minWidth: 120,
         headerClass: 'ag-grid-header-center',
         cellClass: 'agCellStyle',
         cellRenderer: (params) => {
           if (params['data']['shortlisted'] > 0) {
-            return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">group</span>`;
+            return `<span style="cursor: pointer; display: flex; color: #373331" class="material-icons-outlined">group</span>`;
           }
         },
         filter: false,
@@ -358,9 +360,8 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           getQuickFilterText: (params) => {
           return params.value;
         },
-        cellClass: 'shorlistName',
         cellRenderer: (params) => {
-            return `<span class="shortlist"><span class="material-icons">download</span> ${params['data']['shortlist_name']}</span>`;
+            return `<span class="shortlist"><span style="color: #373331" class="material-icons">download</span> ${params['data']['shortlist_name']}</span>`;
         }
       }
     ];
@@ -387,14 +388,14 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         this.userList = datas ? datas : [];
         this.userList.forEach(element => {
           element['total_count'] = Number(element['total_count']);
-          element['available'] = element['exams_taken'] - element['shortlisted'];
-          element['notTaken'] = element['total_count'] - element['exams_taken'];
+          // element['available'] = element['exams_taken'] - element['shortlisted'];
+          // element['notTaken'] = element['total_count'] - element['exams_taken'];
           element['status'] = element && element.status != 'completed' ? 'waiting' : 'completed';
-          element['status1'] = element['exams_taken'] && element['exams_taken'] > 0 ? 'Updated' : 'Awaiting';
+          // element['status1'] = element['exams_taken'] && element['exams_taken'] > 0 ? 'Updated' : 'Awaiting';
           element['buttons'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
           element['view'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
           element['view1'] = element && element.status == 'completed' ? 'completed' : element['available'] > 0 ? 'waiting' : 'Yet to complete assessment';
-          element['va_scheduled_status'] = element['va_scheduled_status'] ? 'scheduled' : 'Not scheduled'
+          element['va_scheduled_status'] = element['va_total_count'] && element['va_total_count'] > 0 ? 'Scheduled' : 'Not scheduled'
         });
       } else {
         this.userList = [];

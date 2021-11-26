@@ -536,7 +536,7 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
         errorLength: data ? data.length : 0,
       };
-      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+      if(datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully assigned.' : '', 'Bulk Upload Success');
         if(this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
@@ -579,7 +579,7 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data && data.length > 0 ? data.length : 0,
       };
 
-      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+      if(datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Interview panel has been successfully uploaded.' : '', 'Bulk Upload Success');
         if(this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 3});
@@ -618,7 +618,7 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data && data.length ? data.length : 0,
       };
 
-      if(datas['totalLength'] - datas['errorLength'] !== 0) {
+      if(datas['errorLength'] == 0) {
         this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Institute details have been successfully uploaded.' : '', 'Bulk Upload Success');
         if(this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 2});
@@ -658,8 +658,9 @@ insitituteExceltoJsonFormatter(data) {
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data.length : 0,
       };
-      if(datas['totalLength'] - datas['errorLength'] !== 0) {
-        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : '', 'Bulk Upload Success');
+      // if(datas['totalLength'] - datas['errorLength'] !== 0) {
+      if(datas['errorLength'] == 0) {
+          this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : '', 'Bulk Upload Success');
         if(this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 1});
         }

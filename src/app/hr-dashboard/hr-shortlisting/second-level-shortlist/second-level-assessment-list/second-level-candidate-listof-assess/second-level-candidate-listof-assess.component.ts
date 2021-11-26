@@ -256,7 +256,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   onCellClicked(event) {
     if (event.colDef.field == 'va_test_status') {
-    if (event["data"] && event["data"]["va_scheduled_status"] && event["data"]["va_scheduled_status"] == '1') {
+    if (event["data"] && event["data"]["va_scheduled_status"] && event["data"]["va_scheduled_status"] == '1' && event['data']['va_test_status'] !="Yet to Start") {
       this.openMatDialog(event["data"]);
     }
     }
@@ -286,7 +286,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
           candidate_name: data && data.candidate_name ? data.candidate_name : '',
           shortlist_name: data && data.shortlist_name ? data.shortlist_name : '',
           showSubmitButton: data && data.shortlist_status == 1 ? false : true,
-          profile_image_url: data && data.profile_image_url ? '' : 'assets/images/img_avatar2.jpg',
+          profile_image_url: data && data.profile_image_url ? data.profile_image_url : 'assets/images/img_avatar2.jpg',
           redirectedFrom: 'hr',
           showTopBar: true,
       };
@@ -435,7 +435,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
             if (this.drivePermissions.video_assessment && first && first.headerName && first.headerName == 'Video Assessment') {
             if (second && second.field && second.field == 'va_test_status') {
               second.cellRenderer = (params) => {
-                if (params["data"] && params["data"]["va_scheduled_status"] && params["data"]["va_scheduled_status"] == '1') {
+                if (params["data"] && params["data"]["va_scheduled_status"] && params["data"]["va_scheduled_status"] == '1' && params["data"]["va_test_status"] !="Yet to Start") {
                   return `<span style="cursor: pointer; color:#C02222;">${params["data"]["va_test_status"]} </span>`;
                 } else {
                   return `${params["data"]["va_test_status"]}`;
@@ -455,7 +455,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check first
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'selected' || params.data.va_evaluation_status == 'rejected'))) {
           params.node.selectable = true;
           return true;
         } else {
@@ -481,7 +481,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check third
     if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'selected' || params.data.va_evaluation_status == 'rejected'))) {
           params.node.selectable = true;
           return true;
         } else {
@@ -498,7 +498,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   checkboxEnablingCondition(params: any) {
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'selected' || params.data.va_evaluation_status == 'rejected'))) {
         params.node.selectable = true;
         return true;
       } else {
@@ -517,7 +517,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     }
 
     if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluated_by && (params.data.va_evaluated_by == 'selected' || params.data.va_evaluated_by == 'rejected'))) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'selected' || params.data.va_evaluation_status == 'rejected'))) {
         params.node.selectable = true;
         return true;
       } else {

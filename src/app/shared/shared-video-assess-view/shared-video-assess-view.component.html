@@ -104,7 +104,7 @@
           <span class="label">Duration</span><span class="colon">:</span>
         </span>
         <span class="value">
-          {{testDetailsArray && testDetailsArray.totalDuration  ? testDetailsArray.totalDuration : '-'}}
+          {{testDetailsArray && testDetailsArray.totalDuration  ? (testDetailsArray.totalDuration + checkDurationMins(testDetailsArray.totalDuration)) : '-'}}
         </span>
       </div>
 
@@ -187,7 +187,7 @@
 </ng-template>
 
 <ng-template #showVideo>
-  <div *ngIf="!videoAssessment.showSubmitButton" class="info mb-2">
+  <div *ngIf="!videoAssessment.showSubmitButton && videoAssessment.redirectedFrom != 'previewOnly'" class="info mb-2">
     <p><span class="material-icons-outlined">info</span> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
   </div>
 
@@ -241,7 +241,7 @@
 
       <div class="field-wrapper">
         <label>Duration:</label>
-        <div class="field">{{testDetailsArray?.totalDuration}} mins</div>
+        <div class="field">{{testDetailsArray && testDetailsArray.totalDuration ? (testDetailsArray.totalDuration + checkDurationMins(testDetailsArray.totalDuration)) : ''}}</div>
       </div>
 
       <div class="field-wrapper">

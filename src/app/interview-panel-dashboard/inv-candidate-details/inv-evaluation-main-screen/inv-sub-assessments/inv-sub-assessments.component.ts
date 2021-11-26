@@ -104,34 +104,14 @@ export class InvSubAssessmentsComponent implements OnInit, OnChanges, OnDestroy 
           candidate_name: data && data.candidate_name ? data.candidate_name : '',
           shortlist_name: data && data.shortlist_name ? data.shortlist_name : '',
           showSubmitButton: false,
-          profile_image_url: data && data.profile_image_url ? '' : 'assets/images/img_avatar2.jpg',
-          redirectedFrom: 'inv-first-tab',
+          profile_image_url: data && data.profile_image_url ? data.profile_image_url : 'assets/images/img_avatar2.jpg',
+          redirectedFrom: 'previewOnly',
           showTopBar: false,
       };
        },
       (err) => {
         let data = null;
-        this.videoAssessment = {
-          schedule_id: data && data.schedule_id ? data.schedule_id : '',
-          scheduled_status: data && data.schedule_id ? 1 : 0,
-          room_id: data && data.room_id ? data.room_id : '',
-          test_status: /* data && data.va_test_status ?*/ this.videoAssessTestStatus(data),
-          remarks: data && data.remarks ? data.remarks : '',
-          evaluation_status: /*data && data.evaluation_status ?*/ this.videoAssessEvaluationStatus(data),
-          scheduled_by: data && data.scheduled_by ? data.scheduled_by : '',
-          evaluated_by: data && data.evaluated_by ? data.evaluated_by : '',
-          submitted_by: data && data.shortlisted_by ? data.shortlisted_by : '',
-          start_datetime: data && data.start_datetime ? data.start_datetime : '',
-          end_datetime: data && data.end_datetime ? data.end_datetime : '',
-          uid: data && data.candidate_user_id ? data.candidate_user_id : '',
-          candidate_id: data && data.candidate_id ? data.candidate_id : '',
-          candidate_name: data && data.candidate_name ? data.candidate_name : '',
-          shortlist_name: data && data.shortlist_name ? data.shortlist_name : '',
-          showSubmitButton: false,
-          profile_image_url: data && data.profile_image_url ? '' : 'assets/images/img_avatar2.jpg',
-          redirectedFrom: 'inv-first-tab',
-          showTopBar: false,
-      }
+        this.videoAssessment = {};
      }
     );
   }
