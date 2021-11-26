@@ -153,6 +153,7 @@ export class ScheduleVideoAssessComponent implements OnInit, AfterViewInit, OnDe
     this.ScheduleDetailsObj = response && response.data && response.data[0] && response.data[0].scheduleDetailsArray && response.data[0].scheduleDetailsArray[0] ? response.data[0].scheduleDetailsArray[0] : null;
     this.patchScheduleForm();
     } else {
+    response && response.message ? this.appConfig.warning(response.message) : '';
     this.scheduledQuestionsArray = [];
     this.ScheduleDetailsObj = null;
     }
@@ -236,6 +237,7 @@ patchScheduleForm() {
           this.addQuestionstoArray();
         }
       } else {
+        response && response.message ? this.appConfig.warning(response.message) : '';
         this.questionList = [];
       }
     }, (err)=> {
@@ -352,7 +354,7 @@ patchScheduleForm() {
         this.appConfig.success('Schedule Created Successfully');
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING);
       } else {
-        this.appConfig.warningWithTitle('Something went wrong...', 'Please try again later');
+        response && response.message ? this.appConfig.warning(response.message) : this.appConfig.warningWithTitle('Something went wrong...', 'Please try again later');
       }
     }, (err)=> {
 
@@ -393,6 +395,7 @@ patchScheduleForm() {
     if (parentArray) {
       currentarray[parentIndex]['questionDetails'][index].checked = false;
       currentarray[parentIndex]['questionDetails'].splice(index, 1);
+      currentarray[parentIndex]['questionDetails'].length > 0 ? '' : currentarray.splice(parentIndex, 1);
     }
 
   }
@@ -405,7 +408,7 @@ patchScheduleForm() {
 
   momentFormDateTime(date) {
     if (date) {
-      const split = moment(date).format('DD/MM/YYYY hh:mm:ss a');
+      const split = moment(date).format('DD/MM/YYYY hh:mm A');
      return split;
     }
   }

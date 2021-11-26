@@ -152,17 +152,17 @@ padding: 4px 8px;
   }
 }
 
-::ng-deep .inprogress {
+::ng-deep .inprogress-red {
   font-weight: 500;
-  background-color: #e2ad1c !important;
+  background-color: #607D8B !important;
   color: #fff !important;
   :focus {
     border-radius: 0px !important;
   }
 }
-
+// 1b4e9b
 ::ng-deep .shortlist {
-  color: $primary-red;
+  // color: $primary-red;
   display: flex;
   align-items: center;
   cursor: pointer;

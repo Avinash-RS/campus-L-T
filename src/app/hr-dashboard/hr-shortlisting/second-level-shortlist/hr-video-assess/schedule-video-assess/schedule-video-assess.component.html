@@ -11,7 +11,7 @@
                   <ng-container *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsMsg">
                     <div class="scroll-wrapper mt-3" style="padding: 8px;">
                     <ng-container *ngFor="let category of selectedQuestionsArray; let j = index">
-                    <h6 style="font-weight: 600;" [class]="j == 0 ? '' : 'mt-3'">{{category.categoryName}}</h6>
+                    <h6 *ngIf="category.questionDetails && category.questionDetails.length > 0" style="font-weight: 600;" [class]="j == 0 ? '' : 'mt-3'">{{category.categoryName}}</h6>
                     <div *ngFor="let question of category.questionDetails; let i = index" class="questionWrapper d-flex align-items-center justify-content-between">
                         <div class="questions">
                             <h5>{{question.question}}</h5>
@@ -230,7 +230,7 @@
                         </div>
                         <div>
                           <label>Notifications</label>
-                          <p>{{scheduleForm.value.type ? 'Mail will be sent to both Candidates and Evaluator.' : 'Mail notification is not enabled'}}</p>
+                          <p>{{scheduleForm.value.type ? 'Mail will be sent to Candidates.' : 'Mail notification is not enabled'}}</p>
                       </div>
 
                     </div>
@@ -274,7 +274,7 @@
                 <mat-checkbox *ngIf="questionList && questionList.length > 0" (change)="selectAllCheckbox()" [(ngModel)]="selectAll" [checked]="selectAll"> Select All</mat-checkbox>
                 </div>
                 </div>
-                  <h6 class="mt-2">Category: <span style="font-weight: 600;">{{selectedCategoryItem ? selectedCategoryItem.categoryName : ''}}</span></h6>
+                  <h6 class="mt-2">Category: <span style="font-weight: 600;">{{selectedCategory ? selectedCategory : ''}}</span></h6>
                 <ng-container *ngIf="!questionLoading else questionLoadingTemp">
                   <ng-container *ngIf="questionList && questionList.length > 0 else nodatafound">
                     <div class="questions" *ngFor="let question of questionList; let i = index">
@@ -361,7 +361,7 @@
       </div>
       <div>
         <label>Notifications</label>
-        <p>{{scheduleForm.value.type ? 'Mail will be sent to both Candidates and Evaluator.' : 'Mail notification is not enabled'}}</p>
+        <p>{{scheduleForm.value.type ? 'Mail will be sent to Candidates.' : 'Mail notification is not enabled'}}</p>
     </div>
     <div>
       <label>Scheduled by</label>

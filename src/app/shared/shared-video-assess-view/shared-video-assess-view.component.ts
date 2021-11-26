@@ -64,6 +64,14 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
     }
   }
 
+  checkDurationMins(duration) {
+    if (duration > 1) {
+      return ' Mins';
+    } else {
+      return ' Min';
+    }
+  }
+
   getScheduleDetails(data) {
     let apiData = {
       "scheduleId": data ? data.toString() : ''
