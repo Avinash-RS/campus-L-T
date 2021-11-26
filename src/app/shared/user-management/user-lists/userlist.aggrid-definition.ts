@@ -272,10 +272,9 @@ export class userListDefinition {
         tooltipValueGetter: (params) => {
           return 'Remove';
         },
-        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
-          return `<span style="cursor: pointer; padding: 12px; color: #C02222" class="material-icons">
-          person_remove
+          return `<span class="icon-person_remove1 ag-icon-color pointer ag-icon-font-size">
           </span>`;
         },
         minWidth: 100,
@@ -516,10 +515,9 @@ export class userListDefinition {
         tooltipValueGetter: (params) => {
           return 'Remove';
         },
-        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
-          return `<span style="cursor: pointer; padding: 12px; color: #C02222" class="material-icons">
-          person_remove
+          return `<span class="icon-person_remove1 ag-icon-color pointer ag-icon-font-size">
           </span>`;
         },
         minWidth: 100,

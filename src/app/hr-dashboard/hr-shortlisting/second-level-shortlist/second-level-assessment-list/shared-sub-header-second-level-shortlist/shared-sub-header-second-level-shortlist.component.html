@@ -39,6 +39,6 @@
 
   </div>
   <div *ngIf="showSendEvaluationButton" class="right-wrapper">
-    <button (click)="sendToEvaluate()" [disabled]="!showSendEmailButton" class="button-submit" mat-raised-button><span [matTooltip]="showSendEmailButton ? '' : 'Criteria not matched'">Send to Evaluate</span></button>
+    <button (click)="sendToEvaluate()" [disabled]="!showSendEmailButton" class="common-button common-button-height-30" mat-raised-button><span [matTooltip]="showSendEmailButton ? '' : 'Criteria not matched'">Send to Evaluate</span></button>
   </div>
 </div>

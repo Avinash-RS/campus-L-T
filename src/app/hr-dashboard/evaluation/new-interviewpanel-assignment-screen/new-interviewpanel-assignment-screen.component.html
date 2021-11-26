@@ -96,11 +96,9 @@
                   <ng-container *ngIf="buttonLoading else showButton">
                     <button
                     mat-raised-button
-                    class="submit pl-2 pr-2 mr-2 loading-button"
+                    class="common-button-with-icon common-button-height-30 pl-2 pr-2 mr-2 loading-button"
                   >
-                  <span class="material-icons load-icon">
-                    loop
-                    </span> Applying...
+                  <span class="icon-Refresh load-icon"></span> <span>Applying...</span>
                   </button>
                   </ng-container>
 
@@ -109,7 +107,7 @@
                     [disabled]="
                       selectedShortlistname && selectedStatus ? false : true
                     "
-                    class="submit"
+                    class="common-button common-button-height-30"
                     (click)="candidateFilterApply()"
                     mat-raised-button
                   >
@@ -126,12 +124,12 @@
   </div>
   <div class="button-wrapper mt-2 mr-1">
     <button
-      class="submit"
-      [ngClass]="
-        userList && userList.length > 0 && userListHR && userListHR.length > 0
-          ? ''
-          : 'disabled'
-      "
+      class="common-button common-button-height-30"
+      [disabled]="
+      userList && userList.length > 0 && userListHR && userListHR.length > 0
+        ? false
+        : true
+    "
       (click)="openConfirmationPopUp()"
       mat-raised-button
     >

@@ -1,16 +1,16 @@
 <div class="second-candidatelist-wrapper">
   <app-shared-sub-header-second-level-shortlist *ngIf="statusHeaderData" (redirectToVideoAssessAssign)="redirectVideo()" [showSendEvaluationButton]="showSendEvaluationButton" [showSendEmailButton]="showSendEmailButton" [statusHeaderData]="statusHeaderData"></app-shared-sub-header-second-level-shortlist>
     <div class="search-bar">
-      <div class="search-icon">
+      <div class="search-icon mr-2">
           <img src="assets/images/feather-search.svg" alt="" srcset="">
           <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
       </div>
       <div class="ml-2" *ngIf="userList && userList.length > 0">
-        <button [matTooltip]="checkFilterAppied() ? '' : 'No filter has been applied'" [ngClass]="checkFilterAppied() ? '' : 'disable-selection'" (click)="checkFilterAppied() ? gridApi.setFilterModel(null) : ''" class="submit" mat-raised-button>Clear all Filters</button>
+        <button [matTooltip]="checkFilterAppied() ? '' : 'No filter has been applied'" [ngClass]="checkFilterAppied() ? '' : 'disabled'" (click)="checkFilterAppied() ? gridApi.setFilterModel(null) : ''" class="common-button common-button-height-30" mat-raised-button>Clear all Filters</button>
       </div>
 
       <div class="ml-2" *ngIf="userList && userList.length > 0">
-        <button (click)="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? submit() : ''" [matTooltip]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the candidates'" class="submit" [ngClass]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disable-selection'" mat-raised-button>Shortlist</button>
+        <button (click)="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? submit() : ''" [matTooltip]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the candidates'" class="common-button common-button-height-30" [ngClass]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" mat-raised-button>Shortlist</button>
       </div>
   </div>
 

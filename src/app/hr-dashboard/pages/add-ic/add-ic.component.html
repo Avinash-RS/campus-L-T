@@ -37,8 +37,8 @@
                 </div>
             </div>
             <div class="add-field">
-                <span *ngIf="(addUser?.controls?.length - 1 == i || addUser?.controls?.length == 1) && addUser?.controls?.length <= 10" (click)="addUsers()" style="cursor: pointer;" class="material-icons mr-2">person_add_alt</span>
-                <span *ngIf="addUser?.controls?.length != 1" (click)="removeUser(i)" style="cursor: pointer;" class="material-icons">close</span>
+                <span *ngIf="(addUser?.controls?.length - 1 == i || addUser?.controls?.length == 1) && addUser?.controls?.length <= 10" (click)="addUsers()" style="cursor: pointer;" class="icon-AddUser icon-20 mr-2"></span>
+                <span *ngIf="addUser?.controls?.length != 1" (click)="removeUser(i)" style="cursor: pointer;" class="icon-close_black icon-24"></span>
             </div>
         </div>
         <div class="form-field d-flex mb-3">
@@ -57,10 +57,10 @@
     </div>
     </ng-container>
         <div style="margin-left: 6em;" class="button-wrapper d-flex mt-4">
-            <button style="margin-left: 0px !important;" class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button
+            <button class="common-cancel-button common-button-height-30" (click)="cancel()" mat-raised-button
                 type="button">Cancel</button>
-            <button class="submit" mat-raised-button type="submit">Save</button>
-        </div>        
+            <button class="common-button common-button-height-30 ml-3" mat-raised-button type="submit">Save</button>
+        </div>
 
 
     </form>

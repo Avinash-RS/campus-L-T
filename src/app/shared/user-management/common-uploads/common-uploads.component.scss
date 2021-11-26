@@ -54,37 +54,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      .cancel {
-        display: flex;
-        align-items: center;
-        height: 24px;
-        border: 1px solid $gray-dark;
-        border-radius: 6px;
-        background: transparent;
-        color: $primary;
-        font-size: 14px;
-        padding: 4px 1.8em;
-      }
-      // .ok {
-      //   margin: 0 0 0 1em;
-      //   display: flex;
-      //   align-items: center;
-      //   height: 25px;
-      //   background: $light-blue 0% 0% no-repeat padding-box;
-      //   box-shadow: $shadow-light-black-1;
-      //   border-radius: 6px;
-      //   color: $white;
-      //   font-size: 14px;
-      //   padding: 4px 2.5em;
-      // }
     }
   }
 }
 
-.hide {
-  pointer-events: none;
-  opacity: 0.5;
-}
 .urlSpan{
   overflow: hidden;
   text-overflow: ellipsis;

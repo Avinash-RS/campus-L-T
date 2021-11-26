@@ -37,7 +37,7 @@
 
 <ng-template #searchFilter>
 <div class="search-bar">
-          <div class="search-icon">
+          <div class="search-icon mr-2">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
               <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
           </div>
@@ -46,9 +46,9 @@
 </ng-template>
 
 <ng-template #addButton>
-<button class="add-user-button" (click)="openUserFormDialog()" mat-raised-button matTooltip="Add User"><span class="material-icons pr-2">
-  group_add
-  </span> Add User</button>
+<button class="common-button-with-icon" (click)="openUserFormDialog()" mat-raised-button matTooltip="Add User">
+  <span class="icon-user_add icon-24"></span> <span>Add User</span>
+</button>
 </ng-template>
 
       <div *ngIf="selectedUserlist == 'candidate'" class="ag-theme-alpine red-theme">
