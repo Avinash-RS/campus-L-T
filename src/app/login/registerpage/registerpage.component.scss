@@ -15,7 +15,7 @@
   display: flex;
   color: $primary;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   .layer-only {
     background-color: $overlay-layer-bg;
     position: fixed;
@@ -45,7 +45,7 @@
         text-align: center;
         color: $white;
         font-weight: 600;
-        font-size: 24px; 
+        font-size: 24px;
         margin-left: 220px;
       }
     }
@@ -89,7 +89,7 @@
           height: 40px;
           color: $white;
         }
-        h5 { 
+        h5 {
           color: $white;
           font-size: 18px;
           font-weight: 700;
@@ -234,13 +234,6 @@
 // Common css for this component
 .asterick {
   color: $red;
-}
-.material-icons {
-  position: absolute;
-  color: $light-black;
-  margin-left: -1em;
-  font-size: 30px;
-  cursor: pointer;
 }
 mat-option {
   height: 40px;

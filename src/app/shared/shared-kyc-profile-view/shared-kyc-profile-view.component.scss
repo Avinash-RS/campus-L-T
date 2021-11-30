@@ -118,7 +118,7 @@
               margin-left: 1em;
           }
           .add-button:hover {
-              background-color: $primary-red;
+              background-color: $common-button-bg;
               color: white;
               transition: background-color 580ms linear;
           }
@@ -867,4 +867,17 @@ box-sizing: border-box;
 background: rgba(0, 255, 255, 0.705);
 border-radius: 15px;
 padding: 4px 8px;
+}
+.edit-icon {
+  background: #eee;
+  padding: 6px;
+  border-radius: 50%;
+}
+.pdf-viewer-close {
+  position: relative;
+  right: 4px;
+  padding-top: 4px;
+  text-align: right;
+  margin: 0;
+  padding-bottom: 0;
 }

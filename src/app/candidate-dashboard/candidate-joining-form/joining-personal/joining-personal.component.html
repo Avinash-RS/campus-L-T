@@ -346,9 +346,7 @@
                     </div>
 
                     <div [ngClass]="i == 0 ? 'hideClose' : ''" matTooltip="Remove" class="close-icon">
-                      <i (click)="i == 0 ? '' : removeLanguage(i)" class="material-icons material-icons-outlined">
-                          remove_circle_outline
-                      </i>
+                      <i (click)="i == 0 ? '' : removeLanguage(i)" class="icon-remove_circle pointer ag-icon-font-size"></i>
                   </div>
 
                     </div>
@@ -356,7 +354,7 @@
                 </div>
                 </ng-container>
                 <div *ngIf="getLanguageArr && getLanguageArr.controls && getLanguageArr.controls.length < 6" class="add">
-                  <button class="add-button" mat-raised-button type="button" (click)="addlanguage()">+
+                  <button class="onFocusButton common-button-height-35 mt-2" mat-raised-button type="button" (click)="addlanguage()">+
                     Add</button>
                 </div>
                 </ng-container>
@@ -579,7 +577,7 @@
                         <div class="value">Personal Details</div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button (click)="formSubmit()">Save &
+                <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button (click)="formSubmit()">Save &
                     Continue</button>
                 <div (click)="routeNext()" class="d-flex align-content-center align-items-center text-right position-relative pointer" style="cursor: pointer;">
                     <div class="right-arrow position-absolute"></div>

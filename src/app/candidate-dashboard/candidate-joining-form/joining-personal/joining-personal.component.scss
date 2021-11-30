@@ -243,18 +243,6 @@
         border: 1px solid $primary-red !important;
       }
     }
-    .add-button {
-      color: $primary-red;
-      border: 1px dashed #bebebe;
-      height: 35px;
-      margin-top: .5em;
-      min-width: 100px;
-    }
-    .add-button:hover {
-      background-color: $primary-red;
-      color: white;
-      transition: background-color 580ms linear;
-    }
     .footer {
 
         .left-arrow {
@@ -306,18 +294,6 @@
         display: flex !important;
      }
     }
-}
-.animation {
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    -o-transform: translateZ(0);
-    transform: translateZ(0);
-}
-.animation-zoom:hover {
-    transform: perspective(1px) scale(1.04);
-    // font-size: 15px;
-    transition: transform .5s ease;
 }
 
 // Common nz-select wrapper

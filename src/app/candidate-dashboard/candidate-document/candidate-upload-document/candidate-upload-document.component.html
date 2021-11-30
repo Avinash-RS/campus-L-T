@@ -19,9 +19,9 @@
                           {{doc.label}}
                       </div>
                       <div class="onHover overlay">
-                          <button class="add-button" type="button" (click)="openMatDialog(doc.filepath)"
+                          <button class="onFocusButton common-button-height-30" type="button" (click)="openMatDialog(doc.filepath)"
                               mat-raised-button>Preview</button>
-                          <button class="add-button" type="button" (click)="downloadPDF(doc.filepath, doc.filename)"
+                          <button class="onFocusButton common-button-height-30" type="button" (click)="downloadPDF(doc.filepath, doc.filename)"
                               mat-raised-button>Download</button>
                       </div>
 
@@ -242,9 +242,7 @@
                                                       <div class="remove-wrapper">
                                                           <div *ngIf="false" (click)="removeInSemesterArray(i, j)"
                                                               matTooltip="Remove" class="remove">
-                                                              <i class="material-icons material-icons-outlined">
-                                                                  remove_circle_outline
-                                                              </i>
+                                                              <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                                           </div>
                                                       </div>
 
@@ -260,7 +258,7 @@
                                           (click)="addToSemesterArray(i)"
                                           class="row-wrapper mt-3 justify-content-center">
                                           <div class="overall-input-wrapper">
-                                              <button class="add-button-sub" mat-raised-button type="button">+
+                                              <button class="onFocusButton common-button-height-30" mat-raised-button type="button">+
                                                   Add</button>
                                           </div>
                                       </div>
@@ -671,9 +669,7 @@
                                   <div class="remove-wrapper">
                                       <div (click)="removeInOtherArray(k)"
                                           matTooltip="Remove" class="remove">
-                                          <i class="material-icons material-icons-outlined">
-                                              remove_circle_outline
-                                          </i>
+                                          <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                       </div>
                                   </div>
 
@@ -686,7 +682,7 @@
                   </ng-container>
                   <div *ngIf="getOtherCertArr && getOtherCertArr.controls && getOtherCertArr.controls.length < 4" class="row-wrapper mt-3 justify-content-center">
                       <div class="overall-input-wrapper">
-                          <button class="add-button-sub" mat-raised-button type="button" (click)="addToOtherArray()">+
+                          <button class="onFocusButton common-button-height-30" mat-raised-button type="button" (click)="addToOtherArray()">+
                               Add Document</button>
                       </div>
                   </div>
@@ -797,17 +793,13 @@
                                       <ng-container *ngIf="selectedPost == 'ca' else notCAProfileRemove">
                                         <div *ngIf="k!=0 && (k == getCertificationsArr.controls.length - 1)" (click)="removeInCertificationsArray(k)"
                                             matTooltip="Remove" class="remove">
-                                            <i class="material-icons material-icons-outlined">
-                                                remove_circle_outline
-                                            </i>
+                                            <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                         </div>
                                       </ng-container>
                                       <ng-template #notCAProfileRemove>
                                         <div (click)="removeInCertificationsArray(k)"
                                             matTooltip="Remove" class="remove">
-                                            <i class="material-icons material-icons-outlined">
-                                                remove_circle_outline
-                                            </i>
+                                            <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                         </div>
                                       </ng-template>
                                     </div>
@@ -821,7 +813,7 @@
                     </ng-container>
                     <div *ngIf="getCertificationsArr && getCertificationsArr.controls && getCertificationsArr.controls.length < 15" class="row-wrapper mt-3 justify-content-center">
                         <div class="overall-input-wrapper">
-                            <button class="add-button-sub" mat-raised-button type="button" (click)="addToCertificationsArray()">+
+                            <button class="onFocusButton common-button-height-30" mat-raised-button type="button" (click)="addToCertificationsArray()">+
                                 Add Certificate</button>
                         </div>
                     </div>
@@ -833,7 +825,7 @@
 
 
               <div class="row-wrapper justify-content-center align-items-center mt-5 mb-3 footer">
-                  <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button
+                  <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button
                       type="submit">Submit</button>
               </div>
           </form>
@@ -845,12 +837,9 @@
 </div>
 <ng-template #matDialog>
   <div class="main-wrappers">
-      <div class="position-relative text-right">
-          <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
-              file_download
-              </span> -->
-          <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()"
-              class="material-icons">cancel</i>
+      <div class="pdf-viewer-close">
+          <i style="color: #C02222;" (click)="closeBox()"
+              class="icon-cancel_black ag-icon-font-size pointer"></i>
       </div>
 
       <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
@@ -948,10 +937,9 @@
           </div>
       </div>
       <div class="row-wrapper justify-content-center align-items-center mt-4">
-          <button class="add-button"
-              style="color: #C02222; background-color: white; border: 1px solid #C02222; height: 28px;" type="button"
+          <button class="common-cancel-button common-button-height-30 animation-zoom"
               (click)="closeBox()" mat-raised-button>Cancel</button>
-          <button class="add-button ml-3" (click)="validateNotUploaded()" type="button"
+          <button class="common-button common-button-height-30 animation-zoom ml-3" (click)="validateNotUploaded()" type="button"
               mat-raised-button>Submit</button>
       </div>
 
