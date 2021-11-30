@@ -13,43 +13,5 @@
     outline: none;
 }
 
-
-  .mat-form-field {
-    font-size: 13px;
-    width: 100%;
-  }
 }
 
-.mat-row,
-.element-row,
-.detail-row {
-  .grid-4 {
-    background: $wrapper-light-gray 0% 0% no-repeat padding-box;
-    box-shadow: $shadow-light-black-29;
-    border: 0.25px solid $borderColor-3;
-    padding: 1em;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    align-items: center;
-    color: $light-black;
-    font-size: 13px;
-    width: 80%;
-    margin: 0.5em auto;
-    span {
-      color: $header-blue;
-    }
-  }
-}
-
-
-.no-data {
-  margin: 2em auto;
-  div {
-    color: $header-blue;
-    font-size: 20px;
-    text-align: center;
-  }
-}
-.hide {
-  display: none;
-}

@@ -4,7 +4,7 @@
       <div class="search-icon">
         <img src="assets/images/feather-search.svg" alt="" srcset="">
         <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
-        
+
       </div>
     </div>
 
@@ -15,8 +15,5 @@
       (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40">
     </ag-grid-angular>
   </div>
-  <!-- <div class="no-data" [ngClass]="userList && userList.length === 0 ? '' : 'hide'">
-    <div>No data available </div>
-  </div> -->
 
 </div>

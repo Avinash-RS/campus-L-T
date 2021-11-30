@@ -1,12 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-import { ModuleRegistry, AllModules, IDatasource, IGetRowsParams } from '@ag-grid-enterprise/all-modules';
+import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 ModuleRegistry.registerModules(AllModules);
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
 import { ClickableStatusBarComponent } from './custom-get-selected-rows-count';
@@ -20,10 +19,10 @@ import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
-import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 export const MY_FORMATS = {
@@ -172,7 +171,7 @@ pgInstitutesList: any;
     public globalValidator: GlobalValidatorService,
     private fb: FormBuilder,
     private sharedService: SharedServiceService,
-    private router: Router
+    private apiService: ApiServiceService
   ) {
     this.dateValidation();
   }
@@ -747,20 +746,25 @@ dateConvertionMonth(date) {
     this.openDialog(ShortlistBoxComponent, data);
   }
   apiShortlistSubmit(apiDatas) {
+    let secretKey = 'ghasvcabvcahdvag';
     let apiData;
     let user_ids = [];
     let getSelectedCandidates = this.gridApi.getSelectedNodes();
     getSelectedCandidates.forEach(element => {
       if (element['data']) {
-        user_ids.push(element['data']['user_id']);
+        let data = {
+          user_id: element['data']['user_id'],
+          token: this.apiService.encrypt(Math.random().toString(36).slice(2), secretKey)
+        }
+        user_ids.push(data);
       }
     });
     apiData = {
-      user_id: user_ids,
+      candidates: user_ids,
       folder_name: apiDatas && apiDatas['folderName'] ? apiDatas['folderName'] : '',
       shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : '',
       field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
-      shortlistby: this.appConfig.getLocalData('username'),
+      shortlistby: this.appConfig.getLocalData('username')
     };
     this.submitShortlistedCandidatesSubscription = this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
       const datas = {
