@@ -3,10 +3,9 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-import moment from 'moment';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
@@ -26,15 +25,6 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class InstituteApprovalsComponent implements OnInit, OnDestroy {
 
   showPage = true;
-
-  /* Below code will be used when mat table is inside conditional statement */
-  // @ViewChild(MatPaginator, { static: false }) set contents(paginator: MatPaginator) {
-  //   this.dataSource.paginator = paginator;
-  // }
-  // @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
-  //   this.dataSource.sort = sort;
-  // }
-  // <i class="material-icons">done</i>
 
   selectedUserDetail: any;
   userList: any;
@@ -157,9 +147,9 @@ export class InstituteApprovalsComponent implements OnInit, OnDestroy {
       },
       {
         headerName: 'Approve', field: 'approve',
-        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
-          return `<i style="color: green; cursor: pointer" class="material-icons agCellStyle">done</i>`;
+          return `<i style="color: green;" class="icon-Tick ag-icon-color pointer ag-icon-font-size"></i>`;
         },
         minWidth: 88,
         maxWidth: 105,
@@ -167,9 +157,9 @@ export class InstituteApprovalsComponent implements OnInit, OnDestroy {
       },
       {
         headerName: 'Reject', field: 'reject',
-        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' },
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
-          return `<i style="color: #C02222; cursor: pointer;" class="material-icons agCellStyle">close</i>`;
+          return `<i style="color: #C02222;" class="icon-close_black ag-icon-color pointer ag-icon-font-size"></i>`;
         },
         minWidth: 88,
         maxWidth: 105,

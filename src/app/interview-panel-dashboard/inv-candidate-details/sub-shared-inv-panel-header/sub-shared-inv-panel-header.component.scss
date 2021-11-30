@@ -139,29 +139,3 @@
   }
 
 }
-
-
-span.status {
-  border-radius: 4px;
-  display: inline-block;
-  line-height: 0.7;
-  font-size: 11px;
-  padding: 7px 8px;
-  text-align: center;
-  &.scheduled {
-    background-color: #bababa;
-    color: #666666 ;
-  }
-  &.inprogress {
-  background-color: #ffbc00;
-  color: #fff;
-  }
-  &.completed {
-    background-color: #48cc83;
-    color: #fff;
-    }
-  &.rejected {
-    background-color: #c02222;
-    color: #fff;
-  }
-}

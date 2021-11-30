@@ -138,9 +138,11 @@ export class ApiServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
-  encrypt(data) {
+  encrypt(data, customSecretKey) {
     try {
-      return CryptoJS.AES.encrypt(JSON.stringify(data), this.EncryptKEY).toString();
+      this.EncryptKEY = customSecretKey ? customSecretKey : this.EncryptKEY;
+      return CryptoJS.AES.encrypt(data, this.EncryptKEY).toString();
+      // return CryptoJS.AES.encrypt(JSON.stringify(data), this.EncryptKEY).toString();
     } catch (e) {
       console.log(e);
       return data;

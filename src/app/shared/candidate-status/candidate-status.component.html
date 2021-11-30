@@ -69,8 +69,8 @@
           <div class="validation" *ngIf="dateValidation">Please select a valid start date and end date</div>
           <div class="validation" *ngIf="endDateValidation">End date cannot be lower than start date</div>
           <div class="button-wrapper">
-            <button class="cancel-btn btn-margin-space" (click)="cancelDate()" mat-raised-button>Cancel</button>
-            <button class="submit" (click)="confirmDate()" mat-raised-button>Apply</button>
+            <button class="common-outline-button-not-hover common-button-height-30" (click)="cancelDate()" mat-raised-button>Cancel</button>
+            <button class="common-button common-button-height-30 ml-3" (click)="confirmDate()" mat-raised-button>Apply</button>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
       </div>
 
       <div class="button-wrappers btn-margin-space-1" *ngIf="userList && userList.length > 0">
-        <button class="submit" (click)="download()" mat-raised-button>Download</button>
+        <button class="common-button common-button-height-30 ml-1" (click)="download()" mat-raised-button>Download</button>
       </div>
 
     </div>

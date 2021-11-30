@@ -23,21 +23,21 @@
 
 <ng-template #isInstitute>
   <div class="d-flex">
-  <button class="submit" (click)="selectAll(true)" mat-raised-button>
-    <em class="icon-checked"></em> Select All Candidates
+  <button class="common-button-with-icon" (click)="selectAll(true)" mat-raised-button>
+    <em class="icon-checked mr-2"></em> <span>Select All Candidates</span>
   </button>
-  <button class="submit" (click)="selectAll(false)" mat-raised-button>
-    <em class="icon-checked"></em> Unselect All Candidates
+  <button class="common-button-with-icon ml-2" (click)="selectAll(false)" mat-raised-button>
+    <em class="icon-checked mr-2"></em> <span>Unselect All Candidates</span>
   </button>
-  <button class="submit" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disable'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
-    <em class="icon-checked"></em> Send Email to Selected Candidates
+  <button class="common-button-with-icon ml-2" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
+    <em class="icon-checked mr-2"></em> <span>Send Email to Selected Candidates</span>
   </button>
 </div>
 </ng-template>
 
 <ng-template #searchFilter>
 <div class="search-bar">
-          <div class="search-icon">
+          <div class="search-icon mr-2">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
               <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
           </div>
@@ -46,9 +46,9 @@
 </ng-template>
 
 <ng-template #addButton>
-<button class="add-user-button" (click)="openUserFormDialog()" mat-raised-button matTooltip="Add User"><span class="material-icons pr-2">
-  group_add
-  </span> Add User</button>
+<button class="common-button-with-icon" (click)="openUserFormDialog()" mat-raised-button matTooltip="Add User">
+  <span class="icon-user_add icon-24"></span> <span>Add User</span>
+</button>
 </ng-template>
 
       <div *ngIf="selectedUserlist == 'candidate'" class="ag-theme-alpine red-theme">
@@ -149,7 +149,7 @@
 <ng-template #addUser>
   <div class="add-user-header">
     <h5>Add User</h5>
-    <div (click)="closeDialog()" style="cursor: pointer;"><span class="material-icons">close</span></div>
+    <div (click)="closeDialog()"><span class="icon-close_black ag-icon-font-size pointer"></span></div>
   </div>
   <form (ngSubmit)="onUserSubmit()" [formGroup]="addUserForm">
 

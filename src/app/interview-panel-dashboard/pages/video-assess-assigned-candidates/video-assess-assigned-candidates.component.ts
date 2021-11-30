@@ -219,24 +219,19 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
           getQuickFilterText: (params) => {
             return params.value;
           },
-          cellStyle: {
-            textAlign: "center",
-            display: "flex",
-            "align-items": "center",
-            "justify-content": "center",
-          },
+          cellClass: 'ag-grid-status',
           cellRenderer: (params) => {
               if (
                 params["data"] && params["data"]["evaluation_status"] == "Selected"
               ) {
-                return `<span style="cursor: pointer;" class="status completed-bg">Selected</span>`;
+                return `<span class="status-field completed-color pointer">Selected</span>`;
               }
               if (
                 params["data"] && params["data"]["evaluation_status"] == "Rejected"
               ) {
-                return `<span style="cursor: pointer;" class="status rejected-bg">Rejected</span>`;
+                return `<span class="status-field rejected-color pointer">Rejected</span>`;
               } else {
-                  return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Evaluate</span>`;
+                  return `<span class="status-field inprogress-color pointer">Yet to Evaluate</span>`;
               }
           },
         }

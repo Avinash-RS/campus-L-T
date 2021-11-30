@@ -53,7 +53,7 @@
                   <div class="flex-wrap">
                       <div class="input-box">
                           <div style="display: flex;">
-                              <button [disabled]="selectedStatus ? false : true" class="submit" (click)="go()" mat-raised-button>Apply</button>
+                              <button [disabled]="selectedStatus ? false : true" class="common-button common-button-height-30" (click)="go()" mat-raised-button>Apply</button>
                           </div>
                       </div>
                   </div>
@@ -64,7 +64,7 @@
   </mat-accordion>
 
   <div class="ag-wrapper">
-      <div class="search-bar">
+      <div class="search-bar mt-2">
           <div class="search-icon">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
               <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">

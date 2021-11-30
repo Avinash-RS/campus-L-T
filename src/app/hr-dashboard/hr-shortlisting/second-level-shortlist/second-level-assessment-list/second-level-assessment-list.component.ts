@@ -193,12 +193,12 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         headerName: 'Video Assessment', field: 'va_scheduled_status',
         minWidth: 140,
         headerClass: 'ag-grid-header-center',
-        cellClass: 'agCellStyle',
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
           if (params['data']['va_scheduled_status'] == 'Scheduled') {
-            return `<span style="cursor: pointer; display: flex; color: #373331; font-size: 20px;" class="material-icons-outlined">info</span>`;
+            return `<span class="icon-Info ag-icon-color pointer ag-icon-font-size-20"></span>`;
           } else {
-            return `<span style="cursor: pointer; display: flex; color: #373331" class="material-icons-outlined">video_call</span>`;
+            return `<span class="icon-video_camera ag-icon-color pointer ag-icon-font-size"></span>`;
           }
         },
         filter: 'agSetColumnFilter',
@@ -281,16 +281,15 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       // },
       {
         headerName: 'Action', field: 'buttons',
-        cellClass: 'agCellStyle',
         minWidth: 120,
         headerClass: 'ag-grid-header-center',
         valueFormatter: this.tooltipFormatter,
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
         },
+        cellClass: 'ag-button-cellClass',
         cellRenderer: (params) => {
-          // return `<span style="cursor: pointer; display: flex; color: #C02222" class="material-icons-outlined">group</span>`;
-          return `<button class="table-btn agTable inprogress-red" mat-raised-button>Shortlist</button>`;
+          return `<button class="ag-button-custom ag-button-color common-button-height-28 pointer" mat-raised-button>Shortlist</button>`;
         },
         filterParams: {
           buttons: ['reset'],
@@ -321,10 +320,10 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         minWidth: 100,
         maxWidth: 100,
         headerClass: 'ag-grid-header-center',
-        cellClass: 'agCellStyle',
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
           if (params['data']['shortlisted'] > 0) {
-            return `<span style="cursor: pointer; display: flex; color: #373331" class="material-icons">visibility</span>`;
+            return `<span class="icon-View ag-icon-color pointer ag-icon-font-size"></span>`;
           }
         },
         filter: false,
@@ -334,10 +333,10 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         headerName: 'Assign to Panel', field: 'view1',
         minWidth: 120,
         headerClass: 'ag-grid-header-center',
-        cellClass: 'agCellStyle',
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
           if (params['data']['shortlisted'] > 0) {
-            return `<span style="cursor: pointer; display: flex; color: #373331" class="material-icons-outlined">group</span>`;
+            return `<span class="icon-portrait ag-icon-color pointer ag-icon-font-size"></span>`;
           }
         },
         filter: false,

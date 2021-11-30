@@ -38,15 +38,5 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .button-submit {
-      border: none;
-      background: $primary-red 0% 0% no-repeat padding-box;
-      border-radius: 4px;
-      color: $white;
-      height: 30px;
-    }
   }
-}
-button:disabled {
-  cursor: not-allowed !important;
 }

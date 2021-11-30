@@ -8,9 +8,9 @@
                 <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
 
             </div>
-            <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(true)" type="button" mat-raised-button>Send Mail</button>
-            <button class="add-button ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(false)" type="button" mat-raised-button>Edit Access</button>
-            <button class="add-button ml-2" (click)="excelExport()" type="button" mat-raised-button>Export as Excel</button>
+            <button class="common-outline-button common-button-height-30 ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(true)" type="button" mat-raised-button>Send Mail</button>
+            <button class="common-outline-button common-button-height-30 ml-2" [disabled]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? false : true" (click)="openMatDialog(false)" type="button" mat-raised-button>Edit Access</button>
+            <button class="common-outline-button common-button-height-30 ml-2" (click)="excelExport()" type="button" mat-raised-button>Export as Excel</button>
         </div>
         <!-- </mat-form-field> -->
         <!-- <div (click)="sendEmail()">Send email</div>

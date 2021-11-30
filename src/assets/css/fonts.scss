@@ -1,11 +1,11 @@
 // @import "variables";
 $fontPath: "/assets/fonts";
 
- 
+
 @font-face {
     font-family: 'icomoon';
-    src:  url('#{$fontPath}/icomoon.woff?bkp143') format('woff'),
-      url('#{$fontPath}/icomoon.svg?bkp143#icomoon') format('svg');
+    src:  url('#{$fontPath}/icomoon/icomoon.woff?bkp143') format('woff'),
+      url('#{$fontPath}/icomoon/icomoon.svg?bkp143#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;

@@ -2,7 +2,7 @@
     <div class="user-list-wrapper" [ngClass]="userList && userList.length > 0 ? '' : ''">
         <!-- <mat-form-field>
             <mat-label>Filter</mat-label> -->
-        <div class="search-bar">
+        <div class="search-bar mt-1">
             <div class="search-icon">
                 <img src="assets/images/feather-search.svg" alt="" srcset="">
                 <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">

@@ -197,11 +197,6 @@
           font-size: 16px;
           color: #fffffe;
         }
-        .material-icons {
-          color: #999999;
-          cursor: pointer;
-          font-size: 22px;
-        }
       }
       .feedback-body {
         .text-area-div,
@@ -539,5 +534,12 @@ span.Progress {
   padding: 0 4px;
   border-radius: 3px;
   background: #ffbc00;
+  color: white !important;
+}
+.shortlisted-icon {
+  margin-right: 6px;
+  background: green;
+  border-radius: 50%;
+  border: green 2px solid;
   color: white !important;
 }

@@ -6,12 +6,12 @@
       <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
     </div>
 
-    <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="submit ml-2" (click)="selectAll(true)" mat-raised-button>
-      <em class="icon-checked mr-1"></em> Select All Candidates
+    <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="common-button-with-icon common-button-height-32" (click)="selectAll(true)" mat-raised-button>
+      <em class="icon-checked"></em> <span class="ml-2">Select All Candidates</span>
     </button>
 
-    <button *ngIf="(userList && userList.length > 0)" matTooltip="Unselect All candidates on this page" class="submit ml-2" (click)="selectAll(false)" mat-raised-button>
-      <em class="icon-checked mr-1"></em> Unselect All Candidates
+    <button *ngIf="(userList && userList.length > 0)" matTooltip="Unselect All candidates on this page" class="common-button-with-icon common-button-height-32 ml-2" (click)="selectAll(false)" mat-raised-button>
+      <em class="icon-checked"></em> <span class="ml-2">Unselect All Candidates</span>
     </button>
 
 
@@ -22,9 +22,9 @@
     <div class="ml-2">
       <button
         [matTooltip]="checkFilterAppied() || lastAppliedFilter ? '' : 'No filter has been applied'"
-        [ngClass]="(checkFilterAppied() || lastAppliedFilter) && !buttonLoading ? '' : 'disable-selection'"
+        [ngClass]="(checkFilterAppied() || lastAppliedFilter) && !buttonLoading ? '' : 'disabled'"
         (click)="checkFilterAppied() || lastAppliedFilter ? clearAllFilters() : ''"
-        class="submit"
+        class="common-button common-button-height-32"
         mat-raised-button
       >
         {{'Clear all Filters'}}
@@ -35,8 +35,8 @@
       <button
         (click)="lastAppliedFilter ? viewLastAppliedFilter() : ''"
         [matTooltip]="lastAppliedFilter ? '' : 'No Filter has been Applied'"
-        class="submit"
-        [ngClass]="lastAppliedFilter ? '' : 'disable-selection'"
+        class="common-button common-button-height-32"
+        [ngClass]="lastAppliedFilter ? '' : 'disabled'"
         mat-raised-button
       >
         Currently Applied Filter
@@ -47,7 +47,7 @@
       <button
         [matTooltip]="'Advanced Filter'"
         (click)="customFilterOpen()"
-        class="submit"
+        class="common-button common-button-height-32"
         mat-raised-button
       >
         Advanced Filter
@@ -66,11 +66,11 @@
             ? ''
             : 'Please select the candidates'
         "
-        class="submit"
+        class="common-button common-button-height-32"
         [ngClass]="
           gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
             ? ''
-            : 'disable-selection'
+            : 'disabled'
         "
         mat-raised-button
       >
@@ -133,7 +133,7 @@
   <div class="customFilter-shortlist">
     <div class="custom-filter-header">
       <div class="d-flex align-items-center filter-icon-div">
-        <span (click)="closeDialog()" class="material-icons mr-2"> menu </span>
+        <span (click)="closeDialog()" class="icon-menu mr-2"></span>
         <span>Filters</span>
       </div>
       <div class="d-flex justify-content-center align-items-center pr-3 pl-3">
@@ -144,24 +144,22 @@
         <ng-container *ngIf="buttonLoading else showButton">
           <button
           mat-raised-button
-          class="clearall applyFilter mr-2 loading-button"
+          class="clearall common-button-with-icon common-button-height-32 mr-2 loading-button"
         >
-        <span class="material-icons load-icon">
-          loop
-          </span> Applying...
+        <span class="icon-Refresh load-icon"></span> <span>Applying...</span>
         </button>
         </ng-container>
         <ng-template #showButton>
           <button
           mat-raised-button
           (click)="ApplyFilter()"
-          class="clearall applyFilter mr-2"
+          class="clearall common-button common-button-height-32 mr-2"
         >
           Apply Filter
         </button>
         </ng-template>
         <div (click)="UnsavedclearAllFilters()" class="clearall">CLEAR ALL</div>
-        <div class="close-popup-icon1"><span (click)="closeDialog()" class="material-icons">close</span></div>
+        <div class="close-popup-icon1"><span (click)="closeDialog()" class="icon-close_black"></span></div>
       </div>
     </div>
     <!-- Content Start -->
@@ -365,7 +363,7 @@
 <ng-template #education>
   <div class="d-flex education-filter-wrapper">
     <div class="education-info">
-      <span class="material-icons">info</span> Checked education levels only will be applicable for filtering. For Ex: If you have checked PG alone, then filter will work only for PG candidates.
+      <span class="icon-Info"></span> Checked education levels only will be applicable for filtering. For Ex: If you have checked PG alone, then filter will work only for PG candidates.
     </div>
     <div class="education-table">
       <div class="header">
@@ -935,7 +933,7 @@
       <div class="filter-applied-list">
         <div class="filter-chip-wrapper" *ngFor="let profile of profileDropDownValues; let i = index">
           <div class="chip" *ngIf="profile.checked">
-          <span>{{profile.label}}</span> <span (click)="profile.checked = !profile.checked" class="material-icons close-icon">close</span>
+          <span>{{profile.label}}</span> <span (click)="profile.checked = !profile.checked" class="icon-close_black close-icon"></span>
         </div>
         </div>
       </div>
@@ -947,7 +945,7 @@
       <div class="filter-applied-list">
         <div class="filter-chip-wrapper" *ngFor="let gender of genderDropDownValues; let i = index">
           <div class="chip" *ngIf="gender.checked">
-          <span>{{gender.label}}</span> <span (click)="gender.checked = !gender.checked" class="material-icons close-icon">close</span>
+          <span>{{gender.label}}</span> <span (click)="gender.checked = !gender.checked" class="icon-close_black close-icon"></span>
         </div>
         </div>
       </div>
@@ -959,12 +957,12 @@
         <div class="filter-applied-list">
           <div class="filter-chip-wrapper">
             <div class="chip" *ngIf="dateFrom.value && dateFrom.valid">
-            <span>From: {{dateShowFormat(dateFrom.value)}}</span> <span (click)="clear('dateFrom')" class="material-icons close-icon">close</span>
+            <span>From: {{dateShowFormat(dateFrom.value)}}</span> <span (click)="clear('dateFrom')" class="icon-close_black close-icon"></span>
           </div>
           </div>
           <div class="filter-chip-wrapper">
           <div class="chip" *ngIf="dateTo.value && dateTo.valid">
-            <span>To: {{dateShowFormat(dateTo.value)}}</span> <span (click)="clear('dateTo')" class="material-icons close-icon">close</span>
+            <span>To: {{dateShowFormat(dateTo.value)}}</span> <span (click)="clear('dateTo')" class="icon-close_black close-icon"></span>
           </div>
           </div>
         </div>
@@ -988,7 +986,7 @@
       <div class="filter-applied-list">
         <div class="filter-chip-wrapper" *ngFor="let backlog of backlogsDropDownValues; let i = index">
           <div class="chip" *ngIf="backlog.checked">
-          <span>{{backlog.label}}</span> <span (click)="backlog.checked = !backlog.checked" class="material-icons close-icon">close</span>
+          <span>{{backlog.label}}</span> <span (click)="backlog.checked = !backlog.checked" class="icon-close_black close-icon"></span>
         </div>
         </div>
       </div>
@@ -1005,7 +1003,7 @@
 
 <!-- Applied Filters -->
 <ng-template #lastAppliedFiltersTemplate>
-  <div class="close-popup-icon"><span (click)="closeDialog()" class="material-icons">close</span></div>
+  <div class="close-popup-icon"><span (click)="closeDialog()" class="icon-close_black ag-icon-font-size"></span></div>
   <h6 class="main-filter-heading mt-0">Applied Filters</h6>
   <div class="applied-filters-wrapper">
     <ng-container *ngIf="showNotSelectedLabel(lastAppliedFilter.profileDropDownValues) || showNotSelectedLabel(lastAppliedFilter.genderDropDownValues) || showNotSelectedLabel(lastAppliedFilter.educationArray) || showNotSelectedLabel(lastAppliedFilter.backlogsDropDownValues) || (lastAppliedFilter.dateFrom || lastAppliedFilter.dateTo) else noFilterToShow">

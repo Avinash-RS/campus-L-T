@@ -3,10 +3,6 @@
 .shortlist-candidates-wrapper {
   padding: 0px 4px 4px 4px;
 }
-.disable-selection {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 .sub-headers-wrapper {
   display: flex;
   margin: 8px 16px 4px 0;
@@ -44,7 +40,6 @@
       }
       .clearall {
         cursor: pointer;
-        color: grey;
       }
     }
 
@@ -193,7 +188,7 @@
   display: flex;
   align-items: center;
   span {
-    font-size: 24px;
+    font-size: 20px;
     color: #00bcef;
     margin-right: 6px;
   }

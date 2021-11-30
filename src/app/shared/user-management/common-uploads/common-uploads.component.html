@@ -39,8 +39,8 @@
           <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
       </div>
       <div class="buttons">
-        <button (click)="delete()" class="cancel-btn btn-margin-space" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
-        <button (click)="upload()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+        <button (click)="delete()" class="common-cancel-button common-button-height-30" [disabled]="url ? false : true" mat-raised-button>Cancel</button>
+        <button (click)="upload()" class="common-button common-button-height-30 ml-3" [disabled]="url ? false : true" mat-raised-button>Upload</button>
       </div>
     </div>
     <div class="download">
@@ -81,7 +81,7 @@
     </div>
     <app-shared-upload-previewer [status]="errorReports.length > 0 ? errorReportsStatus : selectedTemplate" [previewerArray]="errorReports.length > 0 ? errorReports : uploadedListArray"></app-shared-upload-previewer>
     <div *ngIf="uploadedListArray.length > 0" class="button-wrapper">
-      <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Submit</button>
+      <button class="common-button common-button-height-30" [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" (click)="submit()" mat-raised-button>Submit</button>
     </div>
   </div>
 </div>

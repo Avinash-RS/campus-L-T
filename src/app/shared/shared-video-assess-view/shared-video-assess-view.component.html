@@ -165,7 +165,7 @@
 <ng-template #showFeedbackTemplate>
   <div [ngClass]="showFeedback ? 'showFeedback' : 'hideFeedback'" class="feedbackwrapper">
     <div class="feedback-header">
-      <span class="header-text">Interviewer Feedback</span> <span (click)="showFeedback = false" class="material-icons">close</span>
+      <span class="header-text">Interviewer Feedback</span> <span (click)="showFeedback = false" style="color: white;" class="icon-close_black ag-icon-font-size pointer"></span>
     </div>
     <div class="feedback-body">
         <textarea [formControl]="feedbackformControl" class="text-area text-area-div" placeholder="Enter here..."></textarea>
@@ -176,11 +176,9 @@
       </div>
         <div class="button-wrapper">
           <button class="cancel" (click)="showFeedback = false" mat-raised-button>Cancel</button>
-          <button *ngIf="!feedbackApiLoading" class="submitt ml-3" (click)="sendFeedback()" mat-raised-button>Send</button>
-          <button *ngIf="feedbackApiLoading" class="submitt ml-3 loading-button" (click)="sendFeedback()" mat-raised-button>
-            <span class="material-icons load-icon">
-              loop
-              </span>Sending...</button>
+          <button *ngIf="!feedbackApiLoading" class="common-button-with-icon ml-2 pl-2 pr-2 mr-2" (click)="sendFeedback()" mat-raised-button>Send</button>
+          <button *ngIf="feedbackApiLoading" class="common-button-with-icon ml-2 pl-2 pr-2 mr-2 loading-button" (click)="sendFeedback()" mat-raised-button>
+            <span class="icon-Refresh load-icon"></span> <span>Sending...</span></button>
         </div>
     </div>
   </div>
@@ -188,7 +186,7 @@
 
 <ng-template #showVideo>
   <div *ngIf="!videoAssessment.showSubmitButton && videoAssessment.redirectedFrom != 'previewOnly'" class="info mb-2">
-    <p><span class="material-icons-outlined">info</span> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
+    <p><i class="icon-checked shortlisted-icon"></i> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
   </div>
 
   <div class="video-container">
