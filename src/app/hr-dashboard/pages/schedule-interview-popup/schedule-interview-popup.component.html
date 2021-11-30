@@ -4,9 +4,9 @@
       <span>Create a New Room</span>
       <span
         (click)="buttonLoading ? '' : closePopup()"
-        class="material-icons"
-        style="float: right; cursor: pointer"
-        >close</span
+        class="icon-close_black ag-icon-font-size pointer"
+        style="float: right;"
+        ></span
       >
     </div>
     <form [formGroup]="scheduleForm">
@@ -156,19 +156,17 @@
       </div>
     </div>
     <div class="button-conatiner">
-      <button mat-raised-button (click)="closePopup()">Cancel</button>
+      <button mat-raised-button class="common-outline-button-not-hover common-button-height-30" (click)="closePopup()">Cancel</button>
       <ng-container *ngIf="buttonLoading else showButton">
         <button
         mat-raised-button
-        class="schedule mr-2 pl-2 pr-2 loading-button"
+        class="common-button-with-icon common-button-height-30 pl-2 pr-2 ml-2 loading-button"
       >
-      <span class="material-icons load-icon">
-        loop
-        </span> Scheduling...
+      <span class="icon-Refresh load-icon mr-2"></span> <span>Scheduling...</span>
       </button>
       </ng-container>
       <ng-template #showButton>
-        <button mat-raised-button class="schedule" (click)="scheduleRoom()">
+        <button mat-raised-button class="common-button common-button-height-30 ml-2" (click)="scheduleRoom()">
           Schedule
         </button>
       </ng-template>

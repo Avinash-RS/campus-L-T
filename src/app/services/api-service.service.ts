@@ -141,7 +141,8 @@ export class ApiServiceService {
   encrypt(data, customSecretKey) {
     try {
       this.EncryptKEY = customSecretKey ? customSecretKey : this.EncryptKEY;
-      return CryptoJS.AES.encrypt(JSON.stringify(data), this.EncryptKEY).toString();
+      return CryptoJS.AES.encrypt(data, this.EncryptKEY).toString();
+      // return CryptoJS.AES.encrypt(JSON.stringify(data), this.EncryptKEY).toString();
     } catch (e) {
       console.log(e);
       return data;

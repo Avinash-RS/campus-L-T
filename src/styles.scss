@@ -2281,6 +2281,9 @@ padding: 2.5em 1em 2.5em 1em;
 .ag-icon-font-size-18 {
   font-size: 18px;
 }
+.ag-icon-font-size-14 {
+  font-size: 14px;
+}
 .pointer {
   cursor: pointer;
 }
@@ -2326,6 +2329,11 @@ padding: 2.5em 1em 2.5em 1em;
   background-color: #ffbc00;
   color: $white;
 }
+.inprogress1-color {
+  background-color: #fbb03b;
+  color: $white;
+}
+
 .completed-color {
   background-color: #48cc83;
   color: $white;

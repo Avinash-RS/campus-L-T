@@ -366,7 +366,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
       cellStyle: {'justify-content': 'flex-start !important'},
       cellClass: 'ag-icon-custom',
       cellRenderer: (params) => {
-            return `<span class="icon-Download ag-icon-color pointer ag-icon-font-size"></span>`;
+            return `<span class="icon-Download ag-icon-color pointer ag-icon-font-size-20"></span>`;
         },
         sortable: false,
       },
@@ -377,19 +377,19 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
           applyMiniFilterWhileTyping: true
         },
         sortable: true,
-        cellStyle: { textAlign: 'center', 'display': 'flex', 'align-items': 'center' },
+        cellClass: 'ag-button-cellClass',
         cellRenderer: (params) => {
           if (params.data.is_editable == 'Submitted') {
             if (params.data.verified && params.data.verified == 'Verified') {
-              return `<button class="verify verified-clr" mat-raised-button><span class="icon-Tick ag-icon-font-size mr-1"></span><span> Verified</span></button>`;
+              return `<button class="ag-grid-buttons-icon completed-color" mat-raised-button><span class="icon-Tick ag-icon-font-size-14 mr-2"></span><span> Verified</span></button>`;
             } else {
-              return `<button class="verify verify-clr" mat-raised-button><span>Verify</span></button>`;
+              return `<button class="ag-grid-buttons-icon inprogress1-color" mat-raised-button><span>Verify</span></button>`;
             }
           } else {
             if (params.data.verified && params.data.verified == 'Verified') {
-              return `<button class="verify disable verify-clr-grey" mat-raised-button><span class="material-icons check">done</span><span> Verified</span></button>`;
+              return `<button class="ag-grid-buttons-icon disabled completed-color" mat-raised-button><span class="icon-Tick mr-2"></span><span> Verified</span></button>`;
             } else {
-              return `<button class="verify disable verify-clr-grey" mat-raised-button><span>Verify</span></button>`;
+              return `<button class="ag-grid-buttons-icon disabled not-scheduled-white-color" mat-raised-button><span>Verify</span></button>`;
             }
           }
         },
