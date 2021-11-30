@@ -20,7 +20,7 @@
               <!-- Candidate Join interview button -->
               <div class="designation">
                   <h2>{{interview?.roomName}}</h2>
-                  <button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : enableButton == 'Yet to Start' ? 'YettoStart' : enableButton == 'Completed' ? 'Completed' : 'disabled'" *ngIf="role == 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
+                  <button class="statusButtons" mat-raised-button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : enableButton == 'Yet to Start' ? 'yet-to-start-color not-allowed' : enableButton == 'Completed' ? 'completed-color not-allowed' : 'not-scheduled-white-color not-allowed'" *ngIf="role == 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video mr-2"></em> <span>{{enableButton}}</span></button>
               </div>
               <div>
                   <span class="timing"><em class="icon-Calendar"></em> {{interview?.startTime | date:'dd MMM yyyy - HH:mm a'}}
@@ -31,7 +31,7 @@
           </div>
           <!-- Interviewer Join interview button -->
           <div *ngIf="role != 'candidate'" class="join-button-wrapper">
-            <button class="join-button" [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : enableButton == 'Yet to Start' ? 'YettoStart' : enableButton == 'Completed' ? 'Completed' : 'disabled'" *ngIf="role != 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video"></em>{{enableButton}}</button>
+            <button class="statusButtons" mat-raised-button [disabled]="enableButton == 'Join Interview' ? false : true" [ngClass]="enableButton == 'Join Interview' ? '' : enableButton == 'Yet to Start' ? 'yet-to-start-color not-allowed' : enableButton == 'Completed' ? 'completed-color not-allowed' : 'not-scheduled-white-color not-allowed'" *ngIf="role != 'candidate'" (click)="openRTC(interview)"><em class="icon-Join_Video mr-2"></em> <span>{{enableButton}}</span></button>
           </div>
 
             <div *ngIf="interview && interview.feedback && role != 'candidate'" class="feedback">

@@ -326,14 +326,6 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
       //     return params.value;
       //   }
       // },
-      // {
-      //   headerName: 'Link to download', field: 'report_url',
-      //   cellStyle: { textAlign: 'center' },
-      //   cellRenderer: (params) => {
-      //     return '<span><i class="material-icons">get_app</i> </span>';
-      //   }
-      // }
-
     ];
   }
 

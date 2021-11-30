@@ -356,7 +356,6 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
       },
       {
         headerName: 'Download Documents', field: 'details',
-        cellClass: 'agCellStyle',
         filter: false,
         // headerTooltip: 'Download documents',
         valueFormatter: this.tooltipFormatter,
@@ -364,10 +363,10 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
       },
-        cellRenderer: (params) => {
-            return `<span style="cursor: pointer;" class="material-icons d-flex justify-content-center align-items-center">
-            file_download
-            </span>`;
+      cellStyle: {'justify-content': 'flex-start !important'},
+      cellClass: 'ag-icon-custom',
+      cellRenderer: (params) => {
+            return `<span class="icon-Download ag-icon-color pointer ag-icon-font-size"></span>`;
         },
         sortable: false,
       },
@@ -382,7 +381,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         cellRenderer: (params) => {
           if (params.data.is_editable == 'Submitted') {
             if (params.data.verified && params.data.verified == 'Verified') {
-              return `<button class="verify verified-clr" mat-raised-button><span class="material-icons check">done</span><span> Verified</span></button>`;
+              return `<button class="verify verified-clr" mat-raised-button><span class="icon-Tick ag-icon-font-size mr-1"></span><span> Verified</span></button>`;
             } else {
               return `<button class="verify verify-clr" mat-raised-button><span>Verify</span></button>`;
             }

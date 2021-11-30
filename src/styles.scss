@@ -2186,7 +2186,7 @@ padding: 2.5em 1em 2.5em 1em;
   transition: background-color 580ms linear;
 }
 
-.common-button-with-icon {
+.common-button-with-icon,.statusButtons {
   background: $common-button-bg;
   color: $white;
   padding: 0 !important;
@@ -2285,6 +2285,70 @@ padding: 2.5em 1em 2.5em 1em;
   cursor: pointer;
 }
 
+//Status colors
+.ag-grid-buttons-icon {
+  height: 27px;
+  border: none;
+  border-radius: 3px !important;
+  padding: 6px 12px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 100px;
+  &.disabled {
+    background-color: #bababa;
+    cursor: not-allowed;
+  }
+  em {
+    margin-right: 7px;
+  }
+}
+
+.status-field {
+  min-width: 100px !important;
+  font-size: 12px;
+  border-radius: 3px;
+  padding: 3px 8px;
+  display: flex;
+  height: 23px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.ag-grid-status {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inprogress-color {
+  background-color: #ffbc00;
+  color: $white;
+}
+.completed-color {
+  background-color: #48cc83;
+  color: $white;
+}
+.yet-to-start-color {
+  background-color: #1B4E9B;
+  color: $white;
+}
+.not-scheduled-white-color {
+  background-color: #bababa !important;
+  color: $white !important;
+}
+.not-scheduled-color {
+  background-color: #bababa;
+  color: #666666;
+}
+.rejected-color {
+  background-color: #c02222;
+  color: $white;
+}
+.not-allowed {
+  cursor: not-allowed !important;
+}
 .main-reports {
     .mat-icon-button.mat-button-base {
         height: 35px !important;

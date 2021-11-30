@@ -24,11 +24,11 @@
             </div>
             <div class="search-bar">
               <div class="headerbtn" *ngIf="rowData && rowData.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'">
-                <button (click)="finalSubmit()" class="submit" mat-raised-button>
-                <em class="icon-checked"></em>Send to HR for Processing
+                <button (click)="finalSubmit()" class="common-button-with-icon" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>
+                <span class="icon-checked mr-2"></span> <span>Send to HR for Processing</span>
               </button>
             </div>
-                <div class="search-icon">
+                <div class="search-icon align-items-center">
                     <img src="assets/images/feather-search.svg" alt="" srcset="">
                     <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
                 </div>

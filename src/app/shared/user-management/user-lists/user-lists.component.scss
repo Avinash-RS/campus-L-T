@@ -9,25 +9,10 @@
   padding-left: 0em;
 }
 
-.disable {
-  opacity: 0.6;
-  cursor: auto !important;
-}
 .header-wrapper {
-  padding: .5em 1em;
+  padding: 6px 18px;
   justify-content: space-between;
   align-items: center;
-  .submit {
-    border-radius: 0 !important;
-    height: 35px !important;
-    margin-left: 1em !important;
-    em {
-      margin-right: 6px;
-    }
-  }
-  .submit:first-child {
-    margin-left: 0em !important;
-  }
 }
 
 :host ::ng-deep.mail-sent {

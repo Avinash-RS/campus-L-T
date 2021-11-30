@@ -21,17 +21,17 @@
           </div>
           <div class="statusinfo">
             Video Assessment Status:
-            <span *ngIf="videoEvaluationStatus == 'Not Scheduled'" class="ml-2 status scheduled">{{videoEvaluationStatus}}</span>
-            <span *ngIf="videoEvaluationStatus == 'Time Expired'" class="ml-2 status scheduled">{{videoEvaluationStatus}}</span>
-            <span *ngIf="videoEvaluationStatus == 'Yet to complete the assessment'" class="ml-2 status scheduled">{{videoEvaluationStatus}}</span>
-            <span *ngIf="videoEvaluationStatus == 'Submitted'" class="ml-2 status completed">{{videoEvaluationStatus}}</span>
-            <span *ngIf="videoEvaluationStatus != 'Not Scheduled' && videoEvaluationStatus != 'Time Expired' && videoEvaluationStatus != 'Submitted' && videoEvaluationStatus != 'Yet to complete the assessment'" class="ml-2 status inprogress">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Not Scheduled'" class="ml-2 status-field not-scheduled-color">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Time Expired'" class="ml-2 status-field not-scheduled-color">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Yet to complete the assessment'" class="ml-2 status-field not-scheduled-color">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus == 'Submitted'" class="ml-2 status-field completed-color">{{videoEvaluationStatus}}</span>
+            <span *ngIf="videoEvaluationStatus != 'Not Scheduled' && videoEvaluationStatus != 'Time Expired' && videoEvaluationStatus != 'Submitted' && videoEvaluationStatus != 'Yet to complete the assessment'" class="ml-2 status-field inprogress-color">{{videoEvaluationStatus}}</span>
           </div>
-          <div class="statusinfo">
+          <div class="statusinfo ml-3">
             Evaluation Status:
-            <span *ngIf="status != '1' && status != '2'" class="status ml-2 scheduled">{{'Scheduled'}}</span>
-            <span *ngIf="status == '1'" class="status ml-2 inprogress">{{'Completed'}}</span>
-            <span *ngIf="status == '2'" class="status ml-2 completed">{{'Submitted'}}</span>
+            <span *ngIf="status != '1' && status != '2'" class="ml-2 status-field not-scheduled-color">{{'Scheduled'}}</span>
+            <span *ngIf="status == '1'" class=" ml-2 status-field inprogress-color">{{'Completed'}}</span>
+            <span *ngIf="status == '2'" class=" ml-2 status-field completed-color">{{'Submitted'}}</span>
           </div>
         </div>
       </div>

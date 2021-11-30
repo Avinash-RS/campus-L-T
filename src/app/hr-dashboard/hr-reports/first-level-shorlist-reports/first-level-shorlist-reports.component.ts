@@ -165,10 +165,11 @@ export class FirstLevelShorlistReportsComponent implements OnInit, OnDestroy {
       {
         headerName: 'Candidate details', field: 'details',
         filter: false,
-        cellClass: 'agCellStyle',
+        minWidth: 120,
+        cellClass: 'ag-icon-custom',
         cellRenderer: (params) => {
-            return `<button class="table-btn agTable" mat-raised-button>Download</button>`;
-        },
+              return `<span class="icon-Download ag-icon-color pointer ag-icon-font-size-20"></span>`;
+          },
         sortable: true,
       }
     ];

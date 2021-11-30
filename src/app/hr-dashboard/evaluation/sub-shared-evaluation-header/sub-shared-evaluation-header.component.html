@@ -21,9 +21,9 @@
           </div>
           <div class="statusinfo">
             Interview Status:
-              <span *ngIf="status != '1' && status != '2'" class="status scheduled">{{'Scheduled'}}</span>
-              <span *ngIf="status == '1'" class="status inprogress">{{'Completed'}}</span>
-              <span *ngIf="status == '2'" class="status completed">{{'Submitted'}}</span>
+              <span *ngIf="status != '1' && status != '2'" class="status-field not-scheduled-color">{{'Scheduled'}}</span>
+              <span *ngIf="status == '1'" class="status-field inprogress-color">{{'Completed'}}</span>
+              <span *ngIf="status == '2'" class="status-field completed-color">{{'Submitted'}}</span>
           </div>
         </div>
       </div>

@@ -136,7 +136,7 @@
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'veryGood' ? true : false"
             (change)="setAssessmentLevel(assessment, 'veryGood')" [name]="assessment.id" value="1">
-            <i class="material-icons" matTooltip="{{assessment.veryGood}}">info</i>
+            <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;" matTooltip="{{assessment.veryGood}}"></i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -148,7 +148,7 @@
 
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'good' ? true : false"
             (change)="setAssessmentLevel(assessment, 'good')" [name]="assessment.id" value="2">
-            <i class="material-icons" matTooltip="{{assessment.good}}">info</i>
+            <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;" matTooltip="{{assessment.good}}"></i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -159,7 +159,7 @@
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'Average' ? true : false"
             (change)="setAssessmentLevel(assessment,'Average')" [name]="assessment.id" value="3">
-            <i class="material-icons" matTooltip="{{assessment.average}}">info</i>
+            <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;" matTooltip="{{assessment.average}}"></i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -170,7 +170,7 @@
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
             (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
-            <i class="material-icons" matTooltip="{{assessment.notSuitable}}">info</i>
+            <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;" matTooltip="{{assessment.notSuitable}}"></i>
           </mat-radio-button>
         </td>
       </ng-container>
@@ -614,7 +614,7 @@
   </ng-container>
   <div class="space"></div>
   <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
-    <button class="submit" mat-raised-button>Save</button>
+    <button class="common-button common-button-height-30" mat-raised-button>Save</button>
   </div>
 </form>
 <div class="space"></div>

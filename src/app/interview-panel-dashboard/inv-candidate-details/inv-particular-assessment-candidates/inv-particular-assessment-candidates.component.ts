@@ -388,16 +388,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           },
           cellRenderer: (params) => {
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Join Interview") {
-              return `<button class="join-inter"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="ag-grid-buttons-icon yet-to-start-color"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Completed") {
-              return `<button class="join-inter completed-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="ag-grid-buttons-icon completed-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Yet to Start") {
-              return `<button class="join-inter inprogress-blue-bg" style="cursor: not-allowed !important"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="ag-grid-buttons-icon inprogress-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+            }
+            if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Time Expired") {
+              return `<button class="ag-grid-buttons-icon rejected-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             else {
-              return `<button class="join-inter disabled"><em class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="ag-grid-buttons-icon not-scheduled-white-color disabled"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
           },
         },
@@ -468,27 +471,22 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         getQuickFilterText: (params) => {
           return params.value;
         },
-        cellStyle: {
-          textAlign: "center",
-          display: "flex",
-          "align-items": "center",
-          "justify-content": "center",
-        },
+        cellClass: 'ag-grid-status',
         cellRenderer: (params) => {
           if (
             params["data"] &&
             params["data"]["normal_assessment"]["interview_status"] == "Selected"
           ) {
-            return `<span class="status completed-bg">Selected</span>`;
+            return `<span class="status-field completed-color">Selected</span>`;
           }
           if (
             params["data"] &&
             params["data"]["normal_assessment"]["interview_status"] == "Rejected"
           ) {
-            return `<span class="status rejected-bg">Rejected</span>`;
+            return `<span class="status-field rejected-color">Rejected</span>`;
           } else {
             if (params["data"] && params["data"]["normal_assessment"]["interview_status"]) {
-              return `<span class="status inprogress-bg">${params["data"]["normal_assessment"]["interview_status"]}</span>`;
+              return `<span class="status-field inprogress-color">${params["data"]["normal_assessment"]["interview_status"]}</span>`;
             } else {
               return "";
             }
@@ -518,45 +516,40 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       getQuickFilterText: (params) => {
         return params.value;
       },
-      cellStyle: {
-        textAlign: "center",
-        display: "flex",
-        "align-items": "center",
-        "justify-content": "center",
-      },
+      cellClass: 'ag-grid-status',
       cellRenderer: (params) => {
         if (
           params["data"] &&
           params["data"]["video_assessment"] && params["data"]["video_assessment"]["scheduled_status"] != 1
         ) {
-          return `<span class="status scheduled-bg">Not Scheduled</span>`;
+          return `<span class="status-field not-scheduled-color">Not Scheduled</span>`;
         } else {
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Completed"
           ) {
-            return `<span class="status completed-bg">Completed</span>`;
+            return `<span class="status-field completed-color">Completed</span>`;
           }
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "In Progress"
           ) {
-            return `<span class="status inprogress-bg">In Progress</span>`;
+            return `<span class="status-field inprogress-color">In Progress</span>`;
           }
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Yet to Start"
           ) {
-            return `<span class="status inprogress-blue-bg">Yet to Start</span>`;
+            return `<span class="status-field yet-to-start-color">Yet to Start</span>`;
           }
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Time Expired"
           ) {
-            return `<span class="status scheduled-bg">Time Expired</span>`;
+            return `<span class="status-field rejected-color">Time Expired</span>`;
           } else {
             if (params["data"] && params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"]) {
-              return `<span class="status scheduled-bg">Not Scheduled</span>`;
+              return `<span class="status-field not-scheduled-color">Not Scheduled</span>`;
             } else {
               return "";
             }
@@ -577,39 +570,34 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         getQuickFilterText: (params) => {
           return params.value;
         },
-        cellStyle: {
-          textAlign: "center",
-          display: "flex",
-          "align-items": "center",
-          "justify-content": "center",
-        },
+        cellClass: 'ag-grid-status',
         cellRenderer: (params) => {
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["scheduled_status"] != 1
           ) {
-            return `<span class="status scheduled-bg">Not Scheduled</span>`;
+            return `<span class="status-field not-scheduled-color">Not Scheduled</span>`;
           }
           if (
             params["data"] &&
             params["data"]["video_assessment"] && params["data"]["video_assessment"]["test_status"] == "Time Expired"
           ) {
-            return `<span style="cursor: pointer;" class="status scheduled-bg">Time Expired</span>`;
+            return `<span class="status-field rejected-color pointer">Time Expired</span>`;
           } else {
             if (
               params["data"] &&
               params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Selected"
             ) {
-              return `<span style="cursor: pointer;" class="status completed-bg">Selected</span>`;
+              return `<span class="status-field completed-color pointer">Selected</span>`;
             }
             if (
               params["data"] &&
               params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"] == "Rejected"
             ) {
-              return `<span style="cursor: pointer;" class="status rejected-bg">Rejected</span>`;
+              return `<span class="status-field rejected-color pointer">Rejected</span>`;
             } else {
               // if (params["data"] && params["data"]["video_assessment"] && params["data"]["video_assessment"]["evaluation_status"]) {
-                return `<span style="cursor: pointer;" class="status inprogress-blue-bg">Yet to Evaluate</span>`;
+                return `<span class="status-field yet-to-start-color pointer">Yet to Evaluate</span>`;
               // } else {
                 // return "";
               // }
