@@ -360,7 +360,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           return params.value;
         },
         cellRenderer: (params) => {
-            return `<span class="shortlist"><span style="color: #373331" class="material-icons">download</span> ${params['data']['shortlist_name']}</span>`;
+            return `<span class="shortlist"><span style="color: #373331" class="icon-get_app_black_24dp ag-icon-font-size-18"></span> ${params['data']['shortlist_name']}</span>`;
         }
       }
     ];

@@ -366,7 +366,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
       cellStyle: {'justify-content': 'flex-start !important'},
       cellClass: 'ag-icon-custom',
       cellRenderer: (params) => {
-            return `<span class="icon-Download ag-icon-color pointer ag-icon-font-size-20"></span>`;
+            return `<span class="icon-download ag-icon-color pointer ag-icon-font-size-20"></span>`;
         },
         sortable: false,
       },
