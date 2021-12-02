@@ -380,8 +380,8 @@
               <th style="width: 20%;">{{'Candidate Id'}}</th>
               <th style="width: 20%;">{{'Name'}}</th>
               <th style="width: 20%;">{{'Email'}}</th>
-              <th style="width: 20%;">{{'Test Status'}}</th>
-              <th style="width: 20%;">{{'Evaluation Status'}}</th>
+              <th style="width: 20%; white-space: nowrap;">{{'Test Status'}}</th>
+              <th style="width: 20%; white-space: nowrap;">{{'Evaluation Status'}}</th>
       </tr>
           </thead>
             <tbody>
@@ -389,8 +389,8 @@
                     <td style="width: 20%;">{{candidate.candidate_id}}</td>
                     <td style="width: 20%;">{{candidate.full_name}}</td>
                     <td style="width: 20%;">{{candidate.email}}</td>
-                    <td style="width: 20%;"><span [class]="candidate.test_status ? candidate.test_status : ''">{{candidate.test_status && candidate.test_status == 'InProgress' ? 'In Progress' : candidate.test_status == 'YetToStart' ? 'Yet to Start' : candidate.test_status}}</span></td>
-                    <td style="width: 20%;"><span [matTooltip]="candidate.evaluated_by ? candidate.evaluated_by : ''" [class]="candidate.evaluation_status && candidate.evaluation_status == 'on hold' ? 'Hold' : candidate.evaluation_status ? candidate.evaluation_status : ''">{{candidate.evaluation_status ? firstLetterUpperCase(candidate.evaluation_status) : 'Yet to Evaluate'}}</span></td>
+                    <td style="width: 20%; white-space: nowrap;"><span [class]="candidate.test_status ? candidate.test_status : ''">{{candidate.test_status && candidate.test_status == 'InProgress' ? 'In Progress' : candidate.test_status == 'YetToStart' ? 'Yet to Start' : candidate.test_status}}</span></td>
+                    <td style="width: 20%; white-space: nowrap;"><span [matTooltip]="candidate.evaluated_by ? candidate.evaluated_by : ''" [class]="candidate.evaluation_status && candidate.evaluation_status == 'on hold' ? 'Hold' : candidate.evaluation_status ? candidate.evaluation_status : ''">{{candidate.evaluation_status ? firstLetterUpperCase(candidate.evaluation_status) : 'Yet to Evaluate'}}</span></td>
                 </tr>
             </tbody>
         </table>

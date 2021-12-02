@@ -388,19 +388,19 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           },
           cellRenderer: (params) => {
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Join Interview") {
-              return `<button class="ag-grid-buttons-icon yet-to-start-color"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="interview-button ag-grid-buttons-icon rejected-color"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Completed") {
-              return `<button class="ag-grid-buttons-icon completed-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="interview-button ag-grid-buttons-icon completed-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Yet to Start") {
-              return `<button class="ag-grid-buttons-icon inprogress-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="interview-button ag-grid-buttons-icon yet-to-start-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             if (params["data"] && params["data"]["Video_Interview_join_interview"] == "Time Expired") {
-              return `<button class="ag-grid-buttons-icon rejected-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="interview-button ag-grid-buttons-icon not-scheduled-white-color" style="cursor: not-allowed !important"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
             else {
-              return `<button class="ag-grid-buttons-icon not-scheduled-white-color disabled"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
+              return `<button class="interview-button ag-grid-buttons-icon not-scheduled-white-color disabled"><em style="margin-top: 3px;" class="icon-Join_Video"></em> ${params["data"]["Video_Interview_join_interview"]}</button>`;
             }
           },
         },
@@ -449,12 +449,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             params["data"] &&
             (params["data"]["normal_evaluation_btn"] == "Evaluated")
           ) {
-              return `<button class=" btn-outline checked inprogress-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
+              return `<button class="btn-outline checked inprogress-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
           }
           if (params["data"] && params["data"]["normal_evaluation_btn"] == "Submitted") {
-            return `<button class=" btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
+            return `<button class="btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
           } else {
-            return `<button class=" btn-outline">${params["data"]["normal_evaluation_btn"]}</button>`;
+            return `<button class="btn-outline">${params["data"]["normal_evaluation_btn"]}</button>`;
           }
         },
       },
@@ -816,7 +816,13 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           this.getSummaryCount();
         }
       },
-      (err) => {}
+      (err) => {
+        this.rowData = [];
+        this.candidatesEvaluated = [];
+        this.selectedCount = [];
+        this.rejectedCount = [];
+        this.sentToHr = [];
+      }
     );
   }
 

@@ -160,27 +160,6 @@ th {
     }
   }
 
-  ::ng-deep .btn-outline {
-    height: 27px;
-    border: 1px solid #c02222;
-    background-color: #fff;
-    border-radius: 4px;
-    min-width: 95px;
-    color: #666;
-    cursor: none;
-
-    &.checked {
-      border: none;
-      background-color: #48cc83;
-      color: #fff;
-      flex-direction: row !important;
-      justify-content: center !important;
-      cursor: pointer;
-    }
-    em {
-      margin-right: 7px;
-    }
-  }
 
   ::ng-deep .ag-grid-header-center {
     .ag-header-cell-label {
