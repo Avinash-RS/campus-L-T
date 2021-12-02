@@ -1,16 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter,TemplateRef, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
+import { MatDialog, MatExpansionPanel, MatAccordion } from '@angular/material';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { DropdownListForKYC } from 'src/app/constants/kyc-dropdownlist-details';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
-import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -579,12 +577,23 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
           element.va_evaluation_status = element.va_scheduled_status != 1 ? '-' : element.va_evaluation_status;
           element.va_test_status = element.va_scheduled_status != 1 ? '-' : element.va_test_status;
           if (element.va_scheduled_status) {
-            element.va_evaluation_status = element.va_evaluation_status ? element.va_evaluation_status : 'Yet to Evaluate';
+            element.va_evaluation_status = element.va_evaluation_status ? this.getVideoEvaluationStatus(element.va_evaluation_status) : 'Yet to Evaluate';
             element.va_test_status = element.va_test_status == 'InProgress' ? 'In Progress' : element.va_test_status == 'YetToStart' ? 'Yet to Start' : element.va_test_status;
           }
         }
         });
       }
+  }
+
+  getVideoEvaluationStatus(status: any) {
+    if (status == 'selected') {
+      return 'Selected';
+    }
+    if (status == 'rejected') {
+      return 'Rejected';
+    } else {
+      return status;
+    }
   }
 
     // To get all users

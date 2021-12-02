@@ -6,7 +6,6 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import * as moment from 'moment'; //in your component
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -57,6 +56,13 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
     this.refreshOndriveChangeRXJS();
   }
 
+  checkPermission() {
+    if (this.appConfig.getSelectedDrivePermissions() && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   ngOnDestroy() {
     this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
     this.invSubmittedCandidatesListSubscription ? this.invSubmittedCandidatesListSubscription.unsubscribe() : '';
@@ -76,8 +82,9 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
           this.drivePermissionBasedColumnDefinitions();
           this.getUsersList();
         } else {
-          this.drivePermissionBasedColumnDefinitions();
-          this.getUsersList();
+          this.appConfig.routeNavigation('/');
+          // this.drivePermissionBasedColumnDefinitions();
+          // this.getUsersList();
         }
       }
     });
@@ -86,8 +93,12 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.tabledef();
-    this.getUsersList();
+    if (this.checkPermission()) {
+      this.tabledef();
+      this.getUsersList();
+    } else {
+      this.appConfig.routeNavigation('/');
+    }
   }
 
   sortevent(e) {}
@@ -274,6 +285,9 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
       },
       (err) => {
         this.rowData = [];
+        this.candidatesEvaluated = [];
+        this.selectedCount = [];
+        this.rejectedCount = [];
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
@@ -6,17 +6,22 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hr-sub-education',
   templateUrl: './hr-sub-education.component.html',
   styleUrls: ['./hr-sub-education.component.scss']
 })
-export class HrSubEducationComponent implements OnInit {
+export class HrSubEducationComponent implements OnInit, OnDestroy {
 
   queryParams: any;
   getAllReportsData: any;
   driveName: any;
+  getCandidateAssessmentsAPISubscription: Subscription;
+  assessmentMarks: any;
+  assessmentMarksArray: any;
+
   constructor(
     public appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -45,15 +50,30 @@ export class HrSubEducationComponent implements OnInit {
         email: params['email'],
         form: params['form']
       };
-     if (this.appConfig.isWebrtc()) {
-        // this.next(params['email']);
-      }
+      this.getCandidateAssessments(params['shortlist_name'], params['uid']);
     });
   }
 
   eTest() {
     window.open(environment.UNIFIEDREPORTS, '_blank');
     // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW, this.queryParams);
+  }
+
+  getCandidateAssessments(shortlist_name, uid) {
+    const req = {
+      "shortlist_name": shortlist_name,
+      "user_id": uid
+    };
+    this.getCandidateAssessmentsAPISubscription = this.adminService.getCandidateAssessmentResults(req).subscribe((res: any)=> {
+    this.assessmentMarksArray = res && res.assessment_marks ? res.assessment_marks : null;
+    this.assessmentMarks = res ? res : null;
+    }, (err)=> {
+
+    });
+  }
+
+  ngOnDestroy() {
+    this.getCandidateAssessmentsAPISubscription ? this.getCandidateAssessmentsAPISubscription.unsubscribe() : '';
   }
 
 }

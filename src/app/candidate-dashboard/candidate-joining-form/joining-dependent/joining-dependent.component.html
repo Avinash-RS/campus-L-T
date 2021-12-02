@@ -135,9 +135,7 @@
                     </div>
                     <div class="remove-wrapper">
                         <div (click)="removeDependentArray(i)" *ngIf="i !==0  && i !==1 " matTooltip="Remove" class="remove">
-                            <i class="material-icons material-icons-outlined">
-                                remove_circle_outline
-                                </i>
+                            <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                         </div>
                         </div>
                     </div>
@@ -146,7 +144,7 @@
 
             <div *ngIf="getDependentArr && getDependentArr.controls && getDependentArr.controls.length < 5 " class="row-wrapper mt-3">
                 <div class="overall-input-wrapper">
-                    <button class="add-button" mat-raised-button type="button" (click)="addToDependentArray()">+ Add</button>
+                    <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addToDependentArray()">+ Add</button>
                 </div>
             </div>
 
@@ -159,7 +157,7 @@
                         <div class="value">Contact Details</div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button type="submit">Save &
+                <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button type="submit">Save &
                     Continue</button>
                 <div (click)="routeNext('education')"
                     class="d-flex align-content-center align-items-center text-right position-relative pointer"

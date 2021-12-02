@@ -22,6 +22,14 @@ export class SharedSubHeaderSecondLevelShortlistComponent implements OnInit {
     this.assessmentDetails();
   }
 
+  checkPermission() {
+    if (this.appConfig.getSelectedDrivePermissions() && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   assessmentDetails() {
     this.bindDetails = {
       shortlist_name: this.statusHeaderData.shortlist_name,

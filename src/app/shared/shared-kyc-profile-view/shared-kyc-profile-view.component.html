@@ -9,10 +9,8 @@
           <div *ngIf="!formSubmitted" class="icon">
             <span
               (click)="editRoute('personal')"
-              class="material-icons material-icons-outlined"
-            >
-              mode_edit
-            </span>
+              class="icon-Edit ag-icon-font-size edit-icon"
+            ></span>
           </div>
         </div>
         <ng-container *ngIf="personalDetailsMap; else noPersonal">
@@ -470,10 +468,8 @@
           <div *ngIf="!formSubmitted" class="icon">
             <span
               (click)="editRoute('contact')"
-              class="material-icons material-icons-outlined"
-            >
-              mode_edit
-            </span>
+              class="icon-Edit ag-icon-font-size edit-icon"
+            ></span>
           </div>
         </div>
         <ng-container *ngIf="contactDetailsMap; else noContact">
@@ -566,10 +562,8 @@
           <div *ngIf="!formSubmitted" class="icon">
             <span
               (click)="editRoute('dependent')"
-              class="material-icons material-icons-outlined"
-            >
-              mode_edit
-            </span>
+              class="icon-Edit ag-icon-font-size edit-icon"
+            ></span>
           </div>
         </div>
         <ng-container
@@ -645,10 +639,8 @@
           <div *ngIf="!formSubmitted" class="icon">
             <span
               (click)="editRoute('education')"
-              class="material-icons material-icons-outlined"
-            >
-              mode_edit
-            </span>
+              class="icon-Edit ag-icon-font-size edit-icon"
+            ></span>
           </div>
         </div>
         <ng-container
@@ -782,10 +774,8 @@
           <div *ngIf="!formSubmitted" class="icon">
             <span
               (click)="editRoute('upload')"
-              class="material-icons material-icons-outlined"
-            >
-              mode_edit
-            </span>
+              class="icon-Edit ag-icon-font-size edit-icon"
+            ></span>
           </div>
         </div>
         <ng-container *ngIf="documentDetails; else noDocuments">
@@ -1374,10 +1364,8 @@
           <div *ngIf="!formSubmitted" class="icon">
             <span
               (click)="editRoute('work')"
-              class="material-icons material-icons-outlined"
-            >
-              mode_edit
-            </span>
+              class="icon-Edit ag-icon-font-size edit-icon"
+            ></span>
           </div>
         </div>
         <ng-container *ngIf="workDetailsAlldata && !noShowWork; else noWork">
@@ -2258,7 +2246,7 @@
                   (click)="delete()"
                   class="remove"
                 >
-                  <i style="font-size: 25px" class="material-icons"> cancel </i>
+                  <i class="icon-cancel_black ag-icon-font-size pointer"></i>
                 </div>
                 <div class="label-input-holder">
                   <label class="hoverable m-0" for="fileInput">
@@ -2370,7 +2358,7 @@
           </div>
         </div>
         <button
-          class="submit joining-form-submit mt-1 animation-zoom no-flickr"
+          class="common-button joining-form-submit mt-1 animation-zoom"
           mat-raised-button
           (click)="formSubmitFinal()"
           type="button"
@@ -2445,17 +2433,10 @@
 
 <ng-template #matDialogDocViewer>
   <div class="main-wrappers">
-    <div class="position-relative text-right">
-      <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
-                file_download
-                </span> -->
-      <i
-        style="cursor: pointer; padding: 0.25em; color: #c02222"
-        (click)="closeBox()"
-        class="material-icons"
-        >cancel</i
-      >
-    </div>
+    <div class="pdf-viewer-close">
+      <i style="color: #C02222;" (click)="closeBox()"
+          class="icon-cancel_black ag-icon-font-size pointer"></i>
+  </div>
 
     <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
   </div>
@@ -2468,10 +2449,7 @@
         <span> &#160; </span>
         <span> Terms and Conditions </span>
         <span class="icons">
-          <i style="cursor: pointer" (click)="closeBox()" class="material-icons"
-            >cancel</i
-          >
-          <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
+          <i (click)="closeBox()" class="icon-cancel_black ag-icon-font-size pointer"></i>
         </span>
       </div>
     </div>
@@ -2719,9 +2697,7 @@
         <span> &#160; </span>
         <span> Terms and Conditions </span>
         <span class="icons">
-          <i style="cursor: pointer" (click)="closeBox()" class="material-icons"
-            >cancel</i
-          >
+          <i (click)="closeBox()" class="icon-cancel_black ag-icon-font-size pointer"></i>
           <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
         </span>
       </div>
@@ -2785,9 +2761,7 @@
         <span> &#160; </span>
         <span> Terms and Conditions </span>
         <span class="icons">
-          <i style="cursor: pointer" (click)="closeBox()" class="material-icons"
-            >cancel</i
-          >
+          <i (click)="closeBox()" class="icon-cancel_black ag-icon-font-size pointer"></i>
           <!-- <img src="assets/images/cancel-black-36dp.svg" alt="" srcset=""> -->
         </span>
       </div>

@@ -427,9 +427,7 @@
                     </div>
                     <div class="remove-wrapper">
                         <div (click)="removeEducationArray(i)" *ngIf="(!candidateService.checkKycOrJoiningForm() && (getEducationArr.controls.length !== 1 && i !== 0) && ((i != 1 && getEducationArr.controls.length > 2) || (i == 1 && getEducationArr.controls.length == 2))) || (candidateService.checkKycOrJoiningForm() && i !==0 && (i > educationLength - 1))" matTooltip="Remove" class="remove">
-                            <i class="material-icons material-icons-outlined">
-                                remove_circle_outline
-                                </i>
+                            <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                         </div>
                         </div>
                     </div>
@@ -437,9 +435,7 @@
             </ng-container>
 
             <div *ngIf="getEducationArr && getEducationArr.controls && getEducationArr.controls.length < 12" class="row-wrapper mt-3">
-                <div class="overall-input-wrapper">
-                    <button class="add-button" mat-raised-button type="button" (click)="addToEducationArray()">+ Add</button>
-                </div>
+                    <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addToEducationArray()">+ Add</button>
             </div>
 
             <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer" style="width: 80%;">
@@ -451,7 +447,7 @@
                         <div class="value">Dependent Details</div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button type="submit">Save &
+                <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button type="submit">Save &
                     Continue</button>
                 <div (click)="routeNext('work')"
                     class="d-flex align-content-center align-items-center text-right position-relative pointer"

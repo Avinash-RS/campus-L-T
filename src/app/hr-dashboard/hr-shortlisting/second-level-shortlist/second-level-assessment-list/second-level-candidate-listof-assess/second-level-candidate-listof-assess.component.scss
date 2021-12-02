@@ -3,7 +3,7 @@
   width: 100%;
 }
 .search-bar {
-  margin: 6px 16px 6px 16px;
+  margin: 6px 18px 6px 16px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -12,15 +12,6 @@
   border-radius: 0px;
   border: none;
   outline: none;
-}
-
-td {
-  // text-align: center !important;
-  padding-left: 1em !important;
-}
-th {
-  // text-align: center !important;
-  padding-left: 1em !important;
 }
 
 .no-data {

@@ -2,38 +2,11 @@
     <h5>
         Upload Documents
     </h5>
-    <!-- <div class="alert">
-        Note: Maximum size of file upload should be less than 2 MB.
-      </div> -->
 
     <div class="grids-wrapper">
         <div class="uploadForm">
-            <mat-card style="display: none;" class="downloadable-wrapper">
-                <div>
-                    <h6 class="mt-0 mb-0 ml-0 mr-0 pl-2">Downloadable Docs</h6>
-                </div>
-                <div class="d-flex flex-wrap justify-content-start">
-                    <mat-card class="sub-card-wrapper" *ngFor="let doc of downloadabledocs">
-                        <i class="far fa-file-pdf"></i>
-                        <div class="filename">
-                            {{doc.label}}
-                        </div>
-                        <div class="onHover overlay">
-                            <button class="add-button" type="button" (click)="openMatDialog(doc.filepath)"
-                                mat-raised-button>Preview</button>
-                            <button class="add-button" type="button" (click)="downloadPDF(doc.filepath, doc.filename)"
-                                mat-raised-button>Download</button>
-                        </div>
 
-                    </mat-card>
-                </div>
-            </mat-card>
-
-            <!-- <div class="example-action-buttons">
-                <button mat-button (click)="accordion.openAll()">Expand All</button>
-                <button mat-button (click)="accordion.closeAll()">Collapse All</button>
-              </div> -->
-            <form class="uploadF" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
+          <form class="uploadF" [formGroup]="uploadForm" (ngSubmit)="formSubmit()">
 
                 <mat-accordion class="example-headers-align" multi>
                     <!-- Joining Uploads -->
@@ -88,7 +61,7 @@
                                             [ngClass]="!getJoiningArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
                                             [for]="j + getJoiningArr.controls[j].get(form_name).value">
                                             <ng-container *ngIf="!getJoiningArr.controls[j].get(form_file_name).value">
-                                                <i class="fas fa-upload"></i>
+                                                <i class="icon-upload ag-icon-font-size-14"></i>
                                                 <div class="choose">Choose a file</div>
                                             </ng-container>
                                             <ng-container *ngIf="getJoiningArr.controls[j].get(form_file_name).value">
@@ -98,7 +71,7 @@
                                                     </div>
                                                     <i [matTooltip]="'Remove'"
                                                         (click)="removeFile(j, conditionJoining); $event.preventDefault()"
-                                                        class="far fa-times-circle"></i>
+                                                        class="icon-cancel_black ag-icon-font-size-20 pointer"></i>
                                                 </div>
                                             </ng-container>
                                         </label>
@@ -208,7 +181,7 @@
                                                             [for]="j + getEducationArr.controls[i].get(form_education_level).value">
                                                             <ng-container
                                                                 *ngIf="!getSemesterArr(i).controls[j].get(form_file_name).value">
-                                                                <i class="fas fa-upload"></i>
+                                                                <i class="icon-upload ag-icon-font-size-14"></i>
                                                                 <div class="choose">Choose a file</div>
                                                             </ng-container>
                                                             <ng-container
@@ -220,7 +193,7 @@
                                                                     </div>
                                                                     <i [matTooltip]="'Remove'"
                                                                         (click)="removeEducationFile(i, j, conditionEducation); $event.preventDefault()"
-                                                                        class="far fa-times-circle"></i>
+                                                                        class="icon-cancel_black ag-icon-font-size-20 pointer"></i>
                                                                 </div>
                                                             </ng-container>
                                                         </label>
@@ -242,9 +215,7 @@
                                                         <div class="remove-wrapper">
                                                             <div *ngIf="false" (click)="removeInSemesterArray(i, j)"
                                                                 matTooltip="Remove" class="remove">
-                                                                <i class="material-icons material-icons-outlined">
-                                                                    remove_circle_outline
-                                                                </i>
+                                                                <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                                             </div>
                                                         </div>
 
@@ -260,7 +231,7 @@
                                             (click)="addToSemesterArray(i)"
                                             class="row-wrapper mt-3 justify-content-center">
                                             <div class="overall-input-wrapper">
-                                                <button class="add-button-sub" mat-raised-button type="button">+
+                                                <button class="onFocusButton common-button-height-30" mat-raised-button type="button">+
                                                     Add</button>
                                             </div>
                                         </div>
@@ -320,7 +291,7 @@
                                             [ngClass]="!getTransferArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
                                             [for]="j + getTransferArr.controls[j].get(form_label).value">
                                             <ng-container *ngIf="!getTransferArr.controls[j].get(form_file_name).value">
-                                                <i class="fas fa-upload"></i>
+                                                <i class="icon-upload ag-icon-font-size-14"></i>
                                                 <div class="choose">Choose a file</div>
                                             </ng-container>
                                             <ng-container *ngIf="getTransferArr.controls[j].get(form_file_name).value">
@@ -330,7 +301,7 @@
                                                     </div>
                                                     <i [matTooltip]="'Remove'"
                                                         (click)="removeFile(j, conditionTransfer); $event.preventDefault()"
-                                                        class="far fa-times-circle"></i>
+                                                        class="icon-cancel_black ag-icon-font-size-20 pointer"></i>
                                                 </div>
                                             </ng-container>
                                         </label>
@@ -396,7 +367,7 @@
                                             [ngClass]="!getResumeArr.controls[j].get(form_file_name).value ? 'choose-button' : 'preview'"
                                             [for]="j + getResumeArr.controls[j].get(form_label).value">
                                             <ng-container *ngIf="!getResumeArr.controls[j].get(form_file_name).value">
-                                                <i class="fas fa-upload"></i>
+                                                <i class="icon-upload ag-icon-font-size-14"></i>
                                                 <div class="choose">Choose a file</div>
                                             </ng-container>
                                             <ng-container *ngIf="getResumeArr.controls[j].get(form_file_name).value">
@@ -406,7 +377,7 @@
                                                     </div>
                                                     <i [matTooltip]="'Remove'"
                                                         (click)="removeFile(j, conditionResume); $event.preventDefault()"
-                                                        class="far fa-times-circle"></i>
+                                                        class="icon-cancel_black ag-icon-font-size pointer"></i>
                                                 </div>
                                             </ng-container>
                                         </label>
@@ -544,7 +515,7 @@
                                                 <i style="height: 19px;
                                                 font-size: 19px;
                                                 margin-left: 8px;
-                                                margin-right: 4px;" class="fas fa-upload"></i>
+                                                margin-right: 4px;" class="icon-upload ag-icon-font-size-14"></i>
                                                 <div class="choose" style="padding: 3px; padding-left:10px; line-height: 20px;">Upload Passbook First Page or Cancelled Cheque Leaf</div>
                                             </ng-container>
                                             <ng-container *ngIf="getBankArr.controls[j].get(form_file_name).value">
@@ -554,7 +525,7 @@
                                                     </div>
                                                     <i [matTooltip]="'Remove'"
                                                         (click)="removeFile(j, conditionBank); $event.preventDefault()"
-                                                        class="far fa-times-circle"></i>
+                                                        class="icon-cancel_black ag-icon-font-size-20 pointer"></i>
                                                 </div>
                                             </ng-container>
                                         </label>
@@ -634,7 +605,7 @@
                                         [for]="k + 100">
                                         <ng-container
                                             *ngIf="!getOtherCertArr.controls[k].get(form_file_name).value">
-                                            <i class="fas fa-upload"></i>
+                                            <i class="icon-upload ag-icon-font-size-14"></i>
                                             <div class="choose">Choose a file</div>
                                         </ng-container>
                                         <ng-container
@@ -646,7 +617,7 @@
                                                 </div>
                                                 <i [matTooltip]="'Remove'"
                                                     (click)="removeFile(k, conditionOther); $event.preventDefault()"
-                                                    class="far fa-times-circle"></i>
+                                                    class="icon-cancel_black ag-icon-font-size-20 pointer"></i>
                                             </div>
                                         </ng-container>
                                     </label>
@@ -669,9 +640,7 @@
                                     <div class="remove-wrapper">
                                         <div (click)="removeInOtherArray(k)"
                                             matTooltip="Remove" class="remove">
-                                            <i class="material-icons material-icons-outlined">
-                                                remove_circle_outline
-                                            </i>
+                                            <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                         </div>
                                     </div>
 
@@ -684,7 +653,7 @@
                     </ng-container>
                     <div *ngIf="getOtherCertArr && getOtherCertArr.controls && getOtherCertArr.controls.length < 4" class="row-wrapper mt-3 justify-content-center">
                         <div class="overall-input-wrapper">
-                            <button class="add-button-sub" mat-raised-button type="button" (click)="addToOtherArray()">+
+                            <button class="onFocusButton common-button-height-30" mat-raised-button type="button" (click)="addToOtherArray()">+
                                 Add Document</button>
                         </div>
                     </div>
@@ -753,7 +722,7 @@
                                           [for]="k + 700">
                                           <ng-container
                                               *ngIf="!getCertificationsArr.controls[k].get(form_file_name).value">
-                                              <i class="fas fa-upload"></i>
+                                              <i class="icon-upload ag-icon-font-size-14"></i>
                                               <div class="choose">Choose a file</div>
                                           </ng-container>
                                           <ng-container
@@ -765,7 +734,7 @@
                                                   </div>
                                                   <i [matTooltip]="'Remove'"
                                                       (click)="removeFile(k, conditionCert); $event.preventDefault()"
-                                                      class="far fa-times-circle"></i>
+                                                      class="icon-cancel_black ag-icon-font-size-20 pointer"></i>
                                               </div>
                                           </ng-container>
                                       </label>
@@ -795,17 +764,13 @@
                                         <ng-container *ngIf="selectedPost == 'ca' else notCAProfileRemove">
                                           <div *ngIf="k!=0 && (k == getCertificationsArr.controls.length - 1)" (click)="removeInCertificationsArray(k)"
                                               matTooltip="Remove" class="remove">
-                                              <i class="material-icons material-icons-outlined">
-                                                  remove_circle_outline
-                                              </i>
+                                              <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                           </div>
                                         </ng-container>
                                         <ng-template #notCAProfileRemove>
                                           <div (click)="removeInCertificationsArray(k)"
                                               matTooltip="Remove" class="remove">
-                                              <i class="material-icons material-icons-outlined">
-                                                  remove_circle_outline
-                                              </i>
+                                              <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                           </div>
                                         </ng-template>
                                       </div>
@@ -819,7 +784,7 @@
                       </ng-container>
                       <div *ngIf="getCertificationsArr && getCertificationsArr.controls && getCertificationsArr.controls.length < 15" class="row-wrapper mt-3 justify-content-center">
                           <div class="overall-input-wrapper">
-                              <button class="add-button-sub" mat-raised-button type="button" (click)="addToCertificationsArray()">+
+                              <button class="onFocusButton common-button-height-30" mat-raised-button type="button" (click)="addToCertificationsArray()">+
                                   Add Certificate</button>
                           </div>
                       </div>
@@ -840,7 +805,7 @@
                             <div class="value">Work Experience Details</div>
                         </div>
                     </div>
-                    <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button
+                    <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button
                         type="submit">Save &
                         Continue</button>
                     <div (click)="routeNext('preview')"
@@ -862,13 +827,10 @@
 </div>
 <ng-template #matDialog>
     <div class="main-wrappers">
-        <div class="position-relative text-right">
-            <!-- <span style="cursor: pointer; padding: .25em; font-size: 22px; color: #C02222;" class="material-icons material-icons-outlined">
-                file_download
-                </span> -->
-            <i style="cursor: pointer; padding: .25em; color: #C02222;" (click)="closeBox()"
-                class="material-icons">cancel</i>
-        </div>
+      <div class="pdf-viewer-close">
+        <i style="color: #C02222;" (click)="closeBox()"
+            class="icon-cancel_black ag-icon-font-size pointer"></i>
+    </div>
 
         <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
     </div>
@@ -965,10 +927,9 @@
             </div>
         </div>
         <div class="row-wrapper justify-content-center align-items-center mt-4">
-            <button class="add-button"
-                style="color: #C02222; background-color: white; border: 1px solid #C02222; height: 28px;" type="button"
+            <button class="common-cancel-button common-button-height-30 animation-zoom" type="button"
                 (click)="closeBox()" mat-raised-button>Cancel</button>
-            <button class="add-button ml-3" (click)="validateNotUploaded()" type="button"
+            <button class="common-button common-button-height-30 animation-zoom ml-3" (click)="validateNotUploaded()" type="button"
                 mat-raised-button>Submit</button>
         </div>
 

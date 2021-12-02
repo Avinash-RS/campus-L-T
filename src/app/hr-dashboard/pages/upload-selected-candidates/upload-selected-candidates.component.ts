@@ -3,7 +3,6 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import moment from 'moment';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';

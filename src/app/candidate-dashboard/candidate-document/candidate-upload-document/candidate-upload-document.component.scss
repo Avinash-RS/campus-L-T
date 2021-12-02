@@ -121,17 +121,6 @@
             .form-grouping {
                 width: 80%;
             }
-            .add-button-sub {
-                color: $primary-red;
-                border: 1px dashed #BEBEBE;
-                height: 30px;
-                min-width: 100px;
-            }
-            .add-button-sub:hover {
-                background-color: $primary-red;
-                color: white;
-                transition: background-color 580ms linear;
-            }
 
             .remove-wrapper {
                 // width: 20%;
@@ -212,20 +201,6 @@
                     top: 0;
                     display: none;
                     align-items: center;
-                    .add-button {
-                        background-color: $white;
-                        line-height: 1.8em;
-                        width: 70px;
-                        border: none;
-                        border-radius: 0;
-                        color: $primary-red;
-                    }
-                    .add-button:hover {
-                        color: $white;
-                        // border: none;
-                        background-color: $primary-red;
-                        transition: 380ms ease-in;
-                    }
                 }
 
                 .sub-card-wrapper:hover {
@@ -310,7 +285,7 @@
             .choose-button:hover {
                 color: $white !important;
                 // border: none;
-                background-color: $primary-red !important;
+                background-color: $common-button-bg !important;
                 transition: 380ms ease-in !important;
             }
             .uploaded-view {
@@ -411,14 +386,6 @@
             margin-right: 16px;
         }
 
-        .joining-form-submit {
-            min-width: 150px !important;
-            border-radius: 18px !important;
-            min-height: 34px !important;
-            font-size: 14px !important;
-            align-items: center !important;
-            display: flex !important;
-        }
     }
 }
 
@@ -751,16 +718,6 @@ mat-expansion-panel-header {
             }
         }
 
-        .add-button {
-            height: 30px;
-            min-width: 100px;
-            background-color: $primary-red;
-            color: white;
-            transition: background-color 580ms linear;
-        }
-        .add-button:hover {
-            transform: scale(1.05);
-        }
         .text-area {
             min-height: 80px !important;
             line-height: 1.3em !important;
@@ -905,4 +862,13 @@ mat-expansion-panel-header {
   border-top: 1px solid red;
   margin-top: 4px;
   padding: 0 2em;
+}
+
+.pdf-viewer-close {
+  position: relative;
+  right: 4px;
+  padding-top: 4px;
+  text-align: right;
+  margin: 0;
+  padding-bottom: 0;
 }

@@ -13,9 +13,7 @@
               <input [formControlName]="form_Skill" class="input-1" matInput placeholder="Enter here..." type="text" id="">
               <div class="remove-wrapper">
                 <div (click)="removeSkillsArray(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
-                    <i class="material-icons material-icons-outlined">
-                        remove_circle_outline
-                    </i>
+                    <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                 </div>
               </div>
             </div>
@@ -32,7 +30,7 @@
         </div>
         <div class="skills-add" *ngIf="getSkillsArr && getSkillsArr.controls && getSkillsArr.controls.length < 10">
         <div class="overall-input-wrapper">
-            <button class="add-button" mat-raised-button type="button" (click)="addSkills()">+
+            <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addSkills()">+
                 Add</button>
         </div>
     </div>
@@ -144,9 +142,7 @@
                       </div>
                       <div class="remove-wrapper">
                           <div (click)="removeTrainingArray(i)" *ngIf="i == getTrainingArr.controls.length - 1" matTooltip="Remove" class="remove">
-                              <i class="material-icons material-icons-outlined">
-                                  remove_circle_outline
-                              </i>
+                              <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                           </div>
                       </div>
                   </div>
@@ -156,7 +152,7 @@
           <div *ngIf="getTrainingArr && getTrainingArr.controls && getTrainingArr.controls.length < 4 "
               class="row-wrapper mt-3">
               <div class="overall-input-wrapper">
-                  <button class="add-button" mat-raised-button type="button" (click)="addToTrainingArray()">+
+                  <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addToTrainingArray()">+
                       Add</button>
               </div>
           </div>
@@ -444,9 +440,7 @@
                         </div>
                         <div class="remove-wrapper">
                             <div (click)="removeEmploymentArray(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
-                                <i class="material-icons material-icons-outlined">
-                                    remove_circle_outline
-                                </i>
+                                <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                             </div>
                         </div>
                     </div>
@@ -456,7 +450,7 @@
             <div *ngIf="getEmploymentArr && getEmploymentArr.controls && getEmploymentArr.controls.length < 5 "
                 class="row-wrapper mt-3">
                 <div class="overall-input-wrapper">
-                    <button class="add-button" mat-raised-button type="button" (click)="addToEmploymentArray()">+
+                    <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addToEmploymentArray()">+
                         Add</button>
                 </div>
             </div>
@@ -687,9 +681,7 @@
                               </div>
                               <div class="remove-wrapper">
                                   <div (click)="removeRelatives(i)" *ngIf="i !==0" matTooltip="Remove" class="remove">
-                                      <i class="material-icons material-icons-outlined">
-                                          remove_circle_outline
-                                      </i>
+                                      <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                                   </div>
                               </div>
                           </div>
@@ -699,7 +691,7 @@
                   <div *ngIf="getRelativesArr && getRelativesArr.controls && getRelativesArr.controls.length < 2"
                       class="row-wrapper mt-3">
                       <div class="overall-input-wrapper">
-                          <button class="add-button" mat-raised-button type="button" (click)="addRelatives()">+
+                          <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addRelatives()">+
                               Add</button>
                       </div>
                   </div>
@@ -849,7 +841,7 @@
                         <div class="value">Education Details</div>
                     </div>
                 </div>
-                <button class="submit joining-form-submit mt-1 animation-zoom no-flickr" mat-raised-button
+                <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button
                     type="submit">Save &
                     Continue</button>
                 <div (click)="routeNext('upload')"

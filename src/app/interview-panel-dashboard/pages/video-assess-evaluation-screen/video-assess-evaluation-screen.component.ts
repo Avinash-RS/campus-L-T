@@ -32,6 +32,7 @@ export class VideoAssessEvaluationScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.refreshOndriveChangeRXJS();
   }
 
   ngOnDestroy() {
@@ -45,8 +46,12 @@ export class VideoAssessEvaluationScreenComponent implements OnInit, OnDestroy {
     finalize(()=> {
       }))
       .subscribe((data: any)=> {
-      if (data.includes(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_EVALUATION_DETAILS)) {
+        if (data.includes(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_EVALUATION_DETAILS)) {
+        if (this.appConfig.getSelectedDrivePermissions() && this.appConfig.getSelectedDrivePermissions().video_assessment) {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_ASSIGNED_DETAILS);
+        } else {
+          this.appConfig.routeNavigation('/');
+        }
       }
     });
   }

@@ -261,6 +261,17 @@ dateShowFormat(date) {
   }
 }
 
+monthShowFormat(date) {
+  if (date) {
+    const split = moment(date).format('MMM YYYY');
+    if (split == 'Invalid date') {
+      const ddFormat = moment(date, 'DD-MM-YYYY').format('MMM YYYY');
+      return ddFormat == 'Invalid date' ? null : ddFormat;
+    }
+    return split == 'Invalid date' ? null : split;
+  }
+}
+
 dateConvertionMonth(date) {
   if (date) {
     const split = moment(date).format();
@@ -630,6 +641,7 @@ dateConvertionMonth(date) {
               this.userList.forEach(element => {
                 if (element && element.educations) {
                   element.educations.forEach(ele => {
+                    ele.year_of_passing = ele.year_of_passing ? this.monthShowFormat(ele.year_of_passing) : '';
                     element.education = ele;
                   });
                 }

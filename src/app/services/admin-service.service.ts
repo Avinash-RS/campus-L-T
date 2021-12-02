@@ -707,6 +707,11 @@ getDummyJson() {
   return this.http.get('../../assets/files/sample.json');
 }
 
+getCandidateAssessmentResults(data) {
+  return this.http.post(`${this.BASE_URL}/profile/marks_by_user`, data,
+  { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
 // Video Scheduling apis
 getInterviewersBasedOnShortlistName(data) {
   return this.http.post(`${this.BASE_URL}/video-assessment/interviewers-list`, {shortlist_name: data}, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });

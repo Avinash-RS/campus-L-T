@@ -1,9 +1,43 @@
 <div class="reportContainer">
-  <div class="noData">
+  <!-- <div class="noData">
     Click here to see <span class="eTest" (click)="eTest()">E-Test Results</span>
-    <!-- Coming Soon! -->
+  </div> -->
+
+  <ng-container *ngIf="assessmentMarksArray && assessmentMarksArray.length > 0 else noResults">
+    <div class="container">
+
+      <div class="table">
+        <div class="table-header">
+          <div class="header__item alignLeft"><a id="name" class="filter__link">Assessment Name</a></div>
+          <div class="header__item"><a class="filter__link">Section Name</a></div>
+          <div class="header__item"><a class="filter__link">Scored Marks</a></div>
+          <div class="header__item"><a class="filter__link">Total Marks</a></div>
+          <div class="header__item"><a class="filter__link">Percentage</a></div>
+        </div>
+        <div class="table-content">
+          <ng-container *ngIf="assessmentMarksArray && assessmentMarksArray.length > 0">
+          <div *ngFor="let assess of assessmentMarksArray; let i = index" class="table-row">
+            <div class="table-data left-align">{{assess.assessment_name}}</div>
+            <div class="table-data left-align-td2">{{assess.section_name}}</div>
+            <div class="table-data">{{assess.scored_marks}}</div>
+            <div class="table-data">{{assess.total_marks}}</div>
+            <div class="table-data">{{assess.percentage}}</div>
+          </div>
+          <div class="table-row overall">
+            <div class="table-data left-align firsttd">{{'Overall Marks and Percentage'}}</div>
+            <div class="table-data">{{assessmentMarks.overall_scored_marks}}</div>
+            <div class="table-data">{{assessmentMarks.overall_total_marks}}</div>
+            <div class="table-data">{{assessmentMarks.overall_percentage}}</div>
+          </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
   </div>
-</div>
-<!-- <div class="button-wrapper">
-  <button class="submit" mat-button (click)="next()">Next</button>
-</div> -->
+  <ng-template #noResults>
+    <div class="noData">
+      No Assessment Results Found
+    </div>
+  </ng-template>
+
