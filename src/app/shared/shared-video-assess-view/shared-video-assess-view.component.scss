@@ -383,7 +383,7 @@ align-items: center;
   .group {
     min-width: 280px;
     max-width: 280px;
-    margin: 4px 4px 4px 16px;
+    margin: 4px 4px 4px 4px;
     display: flex;
     height: 100%;
     .label-group {
@@ -407,8 +407,8 @@ align-items: center;
     }
   }
   .group-assess {
-    max-width: 580px !important;
-    min-width: 580px !important;
+    max-width: 568px !important;
+    min-width: 568px !important;
   }
 }
 
