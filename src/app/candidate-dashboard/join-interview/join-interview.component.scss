@@ -18,7 +18,7 @@
         font-weight: 600;
     }
     .joinInterview {
-        padding: 15px 0;
+        padding: 15px 0 0 0;
     }
     .designation + div {
         height: 35px;
@@ -62,10 +62,11 @@
 }
 .interviewers-joinInterview {
   width: 50%;
+  padding: 6px 16px 0 16px !important;
 }
 .joinInterview {
     border-radius: 3px;
-    padding: 15px;
+    padding: 15px 0 0 0;
     display: flex;
     flex-direction: column;
     .meetingID {
@@ -132,9 +133,10 @@
 }
 .mat-expansion-panel {
   // border: 1px solid #cccccc;
-  margin-top: 1em;
-  margin-bottom: 1em;
   box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+}
+.interviewer-only-mat-expansion-panel {
+  margin: 1em;
 }
 .mat-expansion-panel-header {
   font-size: 20px;
@@ -167,4 +169,35 @@ font-weight: 600;
     min-height: 35px;
     padding: 4px;
   }
+}
+.ins {
+  display: flex;
+  background: $white;
+  padding: .5em;
+  flex-direction: column;
+  .head {
+    font-size: 15px;
+    color: $light-black;
+    font-weight: 200;
+    margin: .5em;
+  }
+  ul {
+    font-size: 12px;
+    color: $light-black;
+    font-weight: 200;
+    li {
+      padding-bottom: .25em;
+      ul {
+        font-weight: 100;
+      }
+    }
+  }
+}
+:host ::ng-deep .mat-expansion-panel-body {
+  max-height: 300px;
+  overflow: auto;
+}
+.box-wrapper {
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+  margin: 4px 14px 8px 14px;
 }

@@ -2,7 +2,7 @@
 <ng-container *ngIf="role == 'interview_panel'" [ngTemplateOutlet]="showInterview"></ng-container>
 
 <ng-template #showInterview>
-  <mat-expansion-panel *ngIf="role != 'candidate' || showInterview" [expanded]="true">
+  <mat-expansion-panel [ngClass]="role !='candidate' ? 'interviewer-only-mat-expansion-panel' : ''" *ngIf="role != 'candidate' || showInterview" [expanded]="true">
     <mat-expansion-panel-header>
       Interview Session
     </mat-expansion-panel-header>
@@ -43,8 +43,29 @@
 
         </div>
       </div>
-
   </div>
+  <div>
+    <ng-container [ngTemplateOutlet]="instructions"></ng-container>
+  </div>
+
+  <ng-template #instructions>
+    <div class="ins box-wrapper">
+      <h6 class="ml-2">Instructions:</h6>
+      <div class="ul">
+        <ul class="m-0">
+          <li>Make sure you have a stable network with minimum 2 Mbps bandwidth.</li>
+          <li>If you are facing slowness / distortion of video (or) call dropping (or) voice sound like robots, it may be due to,
+            <ul>
+              <li>Insufficient bandwidth or instable network</li>
+              <li>Due to firewall or proxy blockers</li>
+            </ul>
+          </li>
+          <li>Just in case, call gets disconnected during the meeting, close the browser and login again.</li>
+        </ul>
+      </div>
+    </div>
+  </ng-template>
+
   <ng-template #nocard>
   <div class="joinInterviewWrapper">
       <div class="joinInterview nocard">
