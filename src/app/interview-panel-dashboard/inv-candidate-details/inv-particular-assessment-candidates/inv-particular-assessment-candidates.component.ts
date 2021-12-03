@@ -185,9 +185,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     if (event.colDef.field === "Video_Interview_join_interview") {
       if (
         event["data"] &&
-        event["data"]["Video_Interview_join_interview"] == "Join Interview" &&
-        event["data"] &&
-        event["data"]["normal_assessment"]["evaluation_status"] != "2"
+        event["data"]["Video_Interview_join_interview"] == "Join Interview"
+        // && event["data"] &&
+        // event["data"]["normal_assessment"]["evaluation_status"] != "2"
       ) {
         this.appConfig.setLocalData(
           "cProPic",
