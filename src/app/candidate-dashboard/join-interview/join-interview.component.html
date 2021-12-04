@@ -44,7 +44,7 @@
         </div>
       </div>
   </div>
-  <div>
+  <div *ngIf="showInterview && interview?.roomId">
     <ng-container [ngTemplateOutlet]="instructions"></ng-container>
   </div>
 
@@ -67,7 +67,7 @@
   </ng-template>
 
   <ng-template #nocard>
-  <div class="joinInterviewWrapper">
+  <div class="joinInterviewWrapper mb-3">
       <div class="joinInterview nocard">
           No interview scheduled at this moment
       </div>
