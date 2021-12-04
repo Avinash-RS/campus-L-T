@@ -38,7 +38,7 @@
 
       <h5 class="mt-3">Articleship/Training Details</h5>
       <div class="row-wrappper mt-1 hanging">
-        <mat-checkbox [formControlName]="form_is_training_status" class="mr-2"></mat-checkbox> Do you have any Articleship or Industrial training Experience?
+        <mat-checkbox (change)="changeInIsArticleship($event)" [formControlName]="form_is_training_status" class="mr-2"></mat-checkbox> Do you have any Articleship or Industrial training Experience?
         </div>
 
         <ng-container *ngIf="workDetailsForm['value'][form_is_training_status]">
@@ -141,7 +141,7 @@
                           </div>
                       </div>
                       <div class="remove-wrapper">
-                          <div (click)="removeTrainingArray(i)" *ngIf="i == getTrainingArr.controls.length - 1" matTooltip="Remove" class="remove">
+                          <div (click)="removeTrainingArray(i)" *ngIf="i == getTrainingArr.controls.length - 1 && i != 0" matTooltip="Remove" class="remove">
                               <i class="icon-remove_circle pointer ag-icon-font-size"></i>
                           </div>
                       </div>

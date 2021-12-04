@@ -267,9 +267,7 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
   }
   // To get all users
   getUsersList() {
-    setTimeout(() => {
-      this.gridApi.showLoadingOverlay();
-    }, 500);
+  this.gridApi.showLoadingOverlay();
    this.invSubmittedCandidatesListSubscription = this.adminService.assignedVAEvaluationListForEvaluators().subscribe(
       (datas: any) => {
         const align = datas ? datas : [];

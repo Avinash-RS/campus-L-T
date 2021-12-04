@@ -381,7 +381,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   getUsersList() {
     setTimeout(() => {
       this.gridApi.showLoadingOverlay();
-    }, 200);
+    }, 0);
     this.assessmentListForSecondLevelShortlistSubscription = this.adminService.assessmentListForSecondLevelShortlist().subscribe((datas: any) => {
       if (datas) {
         this.userList = datas ? datas : [];
@@ -401,6 +401,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       }
       this.rowData = this.userList;
     }, (err) => {
+      this.rowData = [];
     });
   }
 

@@ -760,7 +760,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     };
     setTimeout(() => {
       this.gridApi.showLoadingOverlay();
-    }, 500);
+    }, 0);
    this.invSubmittedCandidatesListSubscription = this.adminService.invSubmittedCandidatesList(apiData).subscribe(
       (datas: any) => {
         const align = datas ? datas : [];

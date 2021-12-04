@@ -351,6 +351,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   newSaveProfileDataSubscription: Subscription;
   workDetailsAlldata: any;
   educationDetailsAllData: any;
+  matDialogRefDocViewerPopUpRef: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -1083,7 +1084,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     }
     this.pdfsrc = src;
     // this.pdfsrc = 'http://campus-qa.lntedutech.com/d8cintana2/sites/default/files/Templates/BGV_Declaration.pdf';
-    const dialogRef = this.dialog.open(this.matDialogRefDocViewer, {
+    this.matDialogRefDocViewerPopUpRef = this.dialog.open(this.matDialogRefDocViewer, {
       width: '600px',
       height: 'auto',
       autoFocus: false,
@@ -1093,7 +1094,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     });
   }
   closeBox() {
-    this.dialog.closeAll();
+    this.matDialogRefDocViewerPopUpRef.close();
   }
 
   formSubmit(routeValue?: any) {

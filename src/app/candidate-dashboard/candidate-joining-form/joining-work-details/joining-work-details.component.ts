@@ -169,6 +169,14 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  changeInIsArticleship(e) {
+    if (e.checked) {
+    } else {
+      this.workDetailsForm['controls'][this.form_ca_dateofcompletion].clearValidators();
+      this.workDetailsForm['controls'][this.form_ca_dateofcompletion].updateValueAndValidity();
+      this.workDetailsForm['controls'][this.form_training_is_articleship_status].setValue('1');
+    }
+  }
   changeInTrainingExp(e) {
     if (e.value == '1') {
       this.workDetailsForm['controls'][this.form_ca_dateofcompletion].clearValidators();
@@ -304,9 +312,13 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     let internArray = this.workDetailsAllData[this.form_training_Array] ? this.workDetailsAllData[this.form_training_Array] : [];
     if (this.workDetailsAllData[this.form_is_training_status] && this.workDetailsAllData[this.form_is_training_status] == 1) {
       this.getTrainingArr.clear();
+      if (internArray > 0) {
       internArray.forEach(element => {
         element ? this.getTrainingArr.push(this.TrainingArrayPatch(element)) : '';
       });
+      } else {
+        this.getTrainingArr.push(this.initTrainingArray());
+      }
     }
     this.workDetailsForm.patchValue({
       [this.form_faculty_reference]: this.workDetailsAllData['faculty_references'] && this.workDetailsAllData['faculty_references'][0] ? this.workDetailsAllData['faculty_references'][0] : null,
