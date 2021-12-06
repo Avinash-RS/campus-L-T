@@ -10,7 +10,7 @@ export const environment = {
     versionCheckURL: 'https://uat-campus.lntedutech.com/version.json',
 
     UNIFIEDREPORTS: 'https://unifiedreport.lntedutech.com/',
-    WEBRTC_NODE_API : 'https://uapapplicationgateway.lntedutech.com',
+    WEBRTC_NODE_API : 'https://interviewservice.lntedutech.com',
     API_BASE_URL: 'https://uat-campus.lntedutech.com/d8cintana2',
     API_BASE_URL_city: 'https://uat-campus.lntedutech.com/d8cintana2',
     Image_Base_Url: 'https://uat-campus.lntedutech.com',
