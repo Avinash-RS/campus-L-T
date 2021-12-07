@@ -424,14 +424,15 @@ export class AppConfigService {
 
   downloadFile(path: any) {
     if (path) {
-    let link = document.createElement('a');
-    link.setAttribute('type', 'hidden');
-    link.href = path;
-    link.download = path;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+      window.open(path, '_blank');
+    // let link = document.createElement('a');
+    // link.setAttribute('type', 'hidden');
+    // link.href = path;
+    // link.download = path;
+    // link.target = '_blank';
+    // document.body.appendChild(link);
+    // link.click();
+    // link.remove();
   } else {
     this.warning('URL not Found');
   }
