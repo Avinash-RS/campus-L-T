@@ -1429,6 +1429,9 @@ dateConvertion(date) {
   }
 }
 
+downloadFile(path: any, type?: any) {
+  this.appConfig.downloadFile(path);
+}
 
   ngOnDestroy() {
   }

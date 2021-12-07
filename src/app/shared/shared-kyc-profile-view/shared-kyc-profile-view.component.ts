@@ -352,6 +352,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   workDetailsAlldata: any;
   educationDetailsAllData: any;
   matDialogRefDocViewerPopUpRef: any;
+  termsAndCondtionsPopRef: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -1052,7 +1053,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       name = this.matDialogRefJoin;
     }
 
-    const dialogRef = this.dialog.open(name, {
+    this.termsAndCondtionsPopRef = this.dialog.open(name, {
       width: '890px',
       height: 'auto',
       autoFocus: false,
@@ -1094,7 +1095,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     });
   }
   closeBox() {
-    this.matDialogRefDocViewerPopUpRef.close();
+    this.matDialogRefDocViewerPopUpRef ? this.matDialogRefDocViewerPopUpRef.close() : '';
+    this.termsAndCondtionsPopRef ? this.termsAndCondtionsPopRef.close() : '';
   }
 
   formSubmit(routeValue?: any) {
@@ -1246,6 +1248,10 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     });
     }
     return ca;
+  }
+
+  downloadFile(path: any, type?: any) {
+    this.appConfig.downloadFile(path);
   }
 
   ngOnDestroy() {
