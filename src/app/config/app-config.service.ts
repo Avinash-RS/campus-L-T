@@ -421,5 +421,21 @@ export class AppConfigService {
       return false;
     }
   }
+
+  downloadFile(path: any) {
+    if (path) {
+    let link = document.createElement('a');
+    link.setAttribute('type', 'hidden');
+    link.href = path;
+    link.download = path;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } else {
+    this.warning('URL not Found');
+  }
+
+  }
 }
 

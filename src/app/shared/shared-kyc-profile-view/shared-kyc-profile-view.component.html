@@ -789,7 +789,7 @@
                       [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
                       *ngFor="let document of documentDetails.resume; let i = index"
                     >
-                      <div class="row-wrapper mt-0" style="align-items: flex-end">
+                      <div class="row-wrapper mt-0" style="align-items: flex-end;">
                         <div class="overall-input-wrapper mt-0 width-32">
                           <label>Document Name</label>
                           <div class="inpu-preview size-16 bold-700 color-black">
@@ -810,7 +810,7 @@
 
                         <div
                           *ngIf="document && document[form_file_path]"
-                          class="overall-input-wrapper mt-0 width-32"
+                          class="overall-input-wrapper mt-0 width-19"
                         >
                           <button
                             class="add-button"
@@ -827,8 +827,27 @@
                           </button>
                         </div>
                         <div
+                        *ngIf="document && document[form_file_path]"
+                        class="overall-input-wrapper mt-0 width-19"
+                      >
+                        <button
+                          class="add-button" matTooltip="Download" style="width: 50px"
+                          (click)="
+                            downloadFile(
+                              document[form_file_path],
+                              document[form_file_type]
+                            )
+                          "
+                          mat-raised-button
+                          type="button"
+                        >
+                          <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                        </button>
+                      </div>
+
+                        <div
                           *ngIf="!document[form_file_path]"
-                          class="overall-input-wrapper mt-0 width-32"
+                          class="overall-input-wrapper mt-0 width-19"
                         >
                           <button
                             class="add-button yet-to-submit"
@@ -864,7 +883,7 @@
                 let i = index
               "
             >
-              <div class="row-wrapper mt-0" style="align-items: flex-end">
+              <div class="row-wrapper mt-0" style="align-items: flex-end;">
                 <div class="overall-input-wrapper mt-0 width-32">
                   <label>Document Name</label>
                   <div class="inpu-preview size-16 bold-700 color-black">
@@ -885,7 +904,7 @@
 
                 <div
                   *ngIf="document && document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button"
@@ -902,8 +921,27 @@
                   </button>
                 </div>
                 <div
+                *ngIf="document && document[form_file_path]"
+                class="overall-input-wrapper mt-0 width-19"
+              >
+                <button
+                  class="add-button" matTooltip="Download" style="width: 50px"
+                  (click)="
+                    downloadFile(
+                      document[form_file_path],
+                      document[form_file_type]
+                    )
+                  "
+                  mat-raised-button
+                  type="button"
+                >
+                  <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                </button>
+              </div>
+
+                <div
                   *ngIf="!document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button yet-to-submit"
@@ -988,7 +1026,7 @@
 
                 <div
                   *ngIf="document && document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button"
@@ -1005,8 +1043,27 @@
                   </button>
                 </div>
                 <div
+                *ngIf="document && document[form_file_path]"
+                class="overall-input-wrapper mt-0 width-19"
+              >
+                <button
+                  class="add-button" matTooltip="Download" style="width: 50px"
+                  (click)="
+                    downloadFile(
+                      document[form_file_path],
+                      document[form_file_type]
+                    )
+                  "
+                  mat-raised-button
+                  type="button"
+                >
+                  <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                </button>
+              </div>
+
+                <div
                   *ngIf="!document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button yet-to-submit"
@@ -1063,7 +1120,7 @@
 
                 <div
                   *ngIf="document && document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button"
@@ -1080,8 +1137,27 @@
                   </button>
                 </div>
                 <div
+                *ngIf="document && document[form_file_path]"
+                class="overall-input-wrapper mt-0 width-19"
+              >
+                <button
+                  class="add-button" matTooltip="Download" style="width: 50px"
+                  (click)="
+                    downloadFile(
+                      document[form_file_path],
+                      document[form_file_type]
+                    )
+                  "
+                  mat-raised-button
+                  type="button"
+                >
+                  <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                </button>
+              </div>
+
+                <div
                   *ngIf="!document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button yet-to-submit"
@@ -1158,7 +1234,7 @@
 
                     <div
                       *ngIf="document && document[form_file_path]"
-                      class="overall-input-wrapper mt-0 width-32"
+                      class="overall-input-wrapper mt-0 width-19"
                     >
                       <button
                         class="add-button"
@@ -1175,8 +1251,27 @@
                       </button>
                     </div>
                     <div
+                    *ngIf="document && document[form_file_path]"
+                    class="overall-input-wrapper mt-0 width-19"
+                  >
+                    <button
+                      class="add-button" matTooltip="Download" style="width: 50px"
+                      (click)="
+                        downloadFile(
+                          document[form_file_path],
+                          document[form_file_type]
+                        )
+                      "
+                      mat-raised-button
+                      type="button"
+                    >
+                      <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                    </button>
+                  </div>
+
+                    <div
                       *ngIf="!document[form_file_path]"
-                      class="overall-input-wrapper mt-0 width-32"
+                      class="overall-input-wrapper mt-0 width-19"
                     >
                       <button
                         class="add-button yet-to-submit"
@@ -1239,7 +1334,7 @@
 
                 <div
                   *ngIf="document && document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button"
@@ -1256,8 +1351,27 @@
                   </button>
                 </div>
                 <div
+                *ngIf="document && document[form_file_path]"
+                class="overall-input-wrapper mt-0 width-19"
+              >
+                <button
+                  class="add-button" matTooltip="Download" style="width: 50px"
+                  (click)="
+                    downloadFile(
+                      document[form_file_path],
+                      document[form_file_type]
+                    )
+                  "
+                  mat-raised-button
+                  type="button"
+                >
+                  <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                </button>
+              </div>
+
+                <div
                   *ngIf="!document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button yet-to-submit"
@@ -1315,7 +1429,7 @@
 
                 <div
                   *ngIf="document && document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button"
@@ -1332,8 +1446,27 @@
                   </button>
                 </div>
                 <div
+                *ngIf="document && document[form_file_path]"
+                class="overall-input-wrapper mt-0 width-19"
+              >
+                <button
+                  class="add-button" matTooltip="Download" style="width: 50px"
+                  (click)="
+                    downloadFile(
+                      document[form_file_path],
+                      document[form_file_type]
+                    )
+                  "
+                  mat-raised-button
+                  type="button"
+                >
+                  <span class="icon-get_app_black_24dp ag-icon-font-size"></span>
+                </button>
+              </div>
+
+                <div
                   *ngIf="!document[form_file_path]"
-                  class="overall-input-wrapper mt-0 width-32"
+                  class="overall-input-wrapper mt-0 width-19"
                 >
                   <button
                     class="add-button yet-to-submit"
@@ -2434,6 +2567,9 @@
 <ng-template #matDialogDocViewer>
   <div class="main-wrappers">
     <div class="pdf-viewer-close">
+      <i matTooltip="Download" style="font-size: 26px; position: absolute; right: 30px;" (click)="downloadFile(pdfsrc)"
+      class="icon-get_app_black_24dp ag-icon-font-size pointer"></i>
+
       <i style="color: #C02222;" (click)="closeBox()"
           class="icon-cancel_black ag-icon-font-size pointer"></i>
   </div>

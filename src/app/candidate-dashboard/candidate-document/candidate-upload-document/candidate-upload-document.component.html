@@ -808,6 +808,9 @@
 <ng-template #matDialog>
   <div class="main-wrappers">
       <div class="pdf-viewer-close">
+        <i matTooltip="Download" style="font-size: 26px; position: absolute; right: 30px;" (click)="downloadFile(pdfsrc)"
+        class="icon-get_app_black_24dp ag-icon-font-size pointer"></i>
+
           <i style="color: #C02222;" (click)="closeBox()"
               class="icon-cancel_black ag-icon-font-size pointer"></i>
       </div>
