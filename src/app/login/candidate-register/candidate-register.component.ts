@@ -16,7 +16,8 @@ export class CandidateRegisterComponent implements OnInit {
 
   candidateForm: FormGroup;
   toggleVisibility = true;
-  capsOn; any;
+  capsOn: any;
+  getCurrentYear = this.appConfig.getCurrentYear();
 
   constructor(
     private fb: FormBuilder,

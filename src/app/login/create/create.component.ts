@@ -21,7 +21,8 @@ export class CreateComponent implements OnInit {
   passwordTempToken: any;
   prePoulteEmailId: any;
   type: string;
-  capsOn; any;
+  capsOn: any;
+  getCurrentYear = this.appConfig.getCurrentYear();
 
   constructor(
     private fb: FormBuilder,

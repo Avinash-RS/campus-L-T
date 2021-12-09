@@ -436,7 +436,10 @@ export class AppConfigService {
   } else {
     this.warning('URL not Found');
   }
+  }
 
+  getCurrentYear() {
+    return new Date().getFullYear();
   }
 }
 

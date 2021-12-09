@@ -10,6 +10,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 })
 export class DashboardHeaderComponent implements OnInit {
   username: any;
+  getCurrentYear = this.appConfig.getCurrentYear();
 
   constructor(
     private appConfig: AppConfigService,
