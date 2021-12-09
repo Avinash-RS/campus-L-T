@@ -1,6 +1,6 @@
 <div class="profile-popup-wrapper">
-<div style="margin: 8px 8px 0 0;float: right;" class="remove">
-  <mat-icon style="font-size: 32px; cursor: pointer;" (click)="close()" class="close-icon">close</mat-icon>
+<div class="remove">
+  <em (click)="close()" class="icon-close_black ag-icon-font-size pointer"></em>
 </div>
 <app-shared-kyc-profile-view *ngIf="data" [nonCandidate]="data"></app-shared-kyc-profile-view>
 </div>

@@ -14,6 +14,7 @@ export class ForgoPasswordComponent implements OnInit {
 
   forgotPasswordForm: FormGroup;
   notTrue = false;
+  getCurrentYear = this.appConfig.getCurrentYear();
   constructor(
     private fb: FormBuilder,
     private router: Router,

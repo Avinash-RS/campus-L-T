@@ -1,77 +1,192 @@
-<ng-container *ngIf="role == 'candidate' && interview?.roomId && !expiredoneDayago" [ngTemplateOutlet]="showInterview"></ng-container>
-<ng-container *ngIf="role == 'interview_panel'" [ngTemplateOutlet]="showInterview"></ng-container>
+<ng-container
+  *ngIf="role == 'candidate' && interview?.roomId && !expiredoneDayago"
+  [ngTemplateOutlet]="showInterviewForCandidate"
+></ng-container>
+<ng-container
+  *ngIf="role == 'interview_panel'"
+  [ngTemplateOutlet]="showInterview"
+></ng-container>
 
 <ng-template #showInterview>
-  <mat-expansion-panel [ngClass]="role !='candidate' ? 'interviewer-only-mat-expansion-panel' : ''" *ngIf="role != 'candidate' || showInterview" [expanded]="true">
+  <mat-expansion-panel class="mt-3 hideExpansion" [hideToggle]="true" style="border: solid 1px #7070709e;" (click)="$event.prevenDefault()" [expanded]="true">
     <mat-expansion-panel-header>
-      Interview Session
+      <div class="cardTitle">
+        <span class="icon-portrait ag-icon-font-size mr-2"></span>
+        <span>Interview Session</span>
+      </div>
     </mat-expansion-panel-header>
-    <div class="joinInterviewWrapper" [ngClass]="{'candidate': role == 'candidate' }" *ngIf="showInterview && interview?.roomId else nocard">
-      <div *ngIf="role == 'candidate'" class="iconinfo"><em class="icon-Info"></em></div>
-      <div>
-          <div *ngIf="role == 'candidate'" class="interview">
-              <h5>Dear Candidate</h5>
-              <p>You have been invited for an interview by <strong>'LnT EduTech'</strong> on below date and time for
-                  Technical/HR interview.</p>
-          </div>
-          <div [ngClass]="role == 'candidate' ? '' : 'interview-wrapper'">
-          <div class="joinInterview" [ngClass]="role != 'candidate' ? 'interviewers-joinInterview' : ''">
-              <span class="meetingID">Meeting Room ID: {{interview?.roomId}}</span>
-              <!-- Candidate Join interview button -->
-              <div class="designation">
-                  <h2>{{interview?.roomName}}</h2>
-                  <button class="statusButtons" mat-raised-button [ngClass]="enableButton == 'Join Interview' ? '' : enableButton == 'Yet to Start' ? 'yet-to-start-color not-allowed' : enableButton == 'Completed' ? 'completed-color not-allowed' : 'not-scheduled-white-color not-allowed'" *ngIf="role == 'candidate'" (click)="enableButton == 'Join Interview' ? openRTC(interview) : ''"><em class="icon-Join_Video mr-2"></em> <span>{{enableButton}}</span></button>
-              </div>
-              <div>
-                  <span class="timing"><em class="icon-Calendar"></em> {{interview?.startTime | date:'dd MMM yyyy - HH:mm a'}}
-                      - {{interview?.endTime | date:'dd MMM yyyy - HH:mm a'}}</span>
-                  <span *ngIf="role == 'candidate'" class="note"><b>Note:</b> The link will be active 1 hour prior to the
-                      interview time as mentioned above.</span>
-              </div>
-          </div>
-          <!-- Interviewer Join interview button -->
-          <div *ngIf="role != 'candidate'" class="join-button-wrapper">
-            <button class="statusButtons" mat-raised-button [ngClass]="enableButton == 'Join Interview' ? '' : enableButton == 'Yet to Start' ? 'yet-to-start-color not-allowed' : enableButton == 'Completed' ? 'completed-color not-allowed' : 'not-scheduled-white-color not-allowed'" *ngIf="role != 'candidate'" (click)="enableButton == 'Join Interview' ? openRTC(interview) : ''"><em class="icon-Join_Video mr-2"></em> <span>{{enableButton}}</span></button>
-          </div>
-
-            <div *ngIf="interview && interview.feedback && role != 'candidate'" class="feedback">
-              <label>Feedback</label>
-              <div class="text-area">
-                {{interview?.feedback}}
+    <div
+      class="joinInterviewWrapper"
+      *ngIf="showInterview && interview?.roomId; else nocard"
+    >
+      <div class="interview-wrapper">
+        <div class="interviewers-joinInterview">
+          <div class="interview-only" [ngClass]="{'interview-only-width': interview && interview.feedback}">
+            <div class="inner-left-interviewer">
+              <h2>{{ interview?.roomName }}</h2>
+              <div class="join-button-wrapper-candidate">
+                <button
+                  class="statusButtons"
+                  mat-raised-button
+                  [ngClass]="
+                    enableButton == 'Join Interview'
+                      ? ''
+                      : enableButton == 'Yet to Start'
+                      ? 'yet-to-start-color not-allowed'
+                      : enableButton == 'Completed'
+                      ? 'completed-color not-allowed'
+                      : 'not-scheduled-white-color not-allowed'
+                  "
+                  *ngIf="role != 'candidate'"
+                  (click)="
+                    enableButton == 'Join Interview' ? openRTC(interview) : ''
+                  "
+                >
+                  <em class="icon-Join_Video mr-2"></em>
+                  <span>{{ enableButton }}</span>
+                </button>
+                <span
+                  *ngIf="showInterview && interview?.roomId"
+                  (click)="openMatDialog()"
+                  class="icon-Info ag-icon-font-size-20 pointer"
+                  matTooltip="Instructions"
+                ></span>
               </div>
             </div>
-
+            <div style="margin-top: 4px; margin-bottom: 2px">
+              <div class="d-flex align-items-center">
+                <span class="meetingID"
+                  >Meeting Room ID: {{ interview?.roomId }}</span
+                >
+                <span class="meetingID ml-2 mr-2">|</span>
+                <span class="timing"
+                  ><em class="icon-Calendar"></em>
+                  {{ interview?.startTime | date: "dd MMM yyyy - HH:mm a" }} -
+                  {{ interview?.endTime | date: "dd MMM yyyy - HH:mm a" }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div *ngIf="interview && interview.feedback" class="feedback">
+            <label>Feedback</label>
+            <div class="text-area">
+              {{ interview?.feedback }}
+            </div>
+          </div>
         </div>
       </div>
-  </div>
-  <div *ngIf="showInterview && interview?.roomId">
-    <ng-container [ngTemplateOutlet]="instructions"></ng-container>
-  </div>
+    </div>
+  </mat-expansion-panel>
+</ng-template>
 
-  <ng-template #instructions>
-    <div class="ins box-wrapper">
-      <h6 class="ml-2">Instructions:</h6>
-      <div class="ul">
-        <ul class="m-0">
-          <li>Make sure you have a stable network with minimum 2 Mbps bandwidth.</li>
-          <li>If you are facing slowness / distortion of video (or) call dropping (or) voice sound like robots, it may be due to,
-            <ul>
-              <li>Insufficient bandwidth or instable network</li>
-              <li>Due to firewall or proxy blockers</li>
-            </ul>
-          </li>
-          <li>Just in case, call gets disconnected during the meeting, close the browser and login again.</li>
-        </ul>
+<ng-template #showInterviewForCandidate>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <div class="cardTitle">
+        <span class="icon-portrait ag-icon-font-size mr-2"></span>
+        <span>Interview Session</span>
+      </div>
+    </mat-expansion-panel-header>
+    <div
+      class="joinInterviewWrapper"
+      [ngClass]="{ candidate: role == 'candidate' }"
+      *ngIf="showInterview && interview?.roomId; else nocard"
+    >
+      <div class="candidate-interview-wrapper">
+        <div class="interview">
+          <h5>Dear Candidate,</h5>
+          <p>
+            You have been invited for an interview by
+            <strong>'L&T EduTech'</strong> on below date and time for
+            Technical/HR interview.
+          </p>
+        </div>
+        <div class="joinInterview">
+          <!-- Candidate Join interview button -->
+          <div>
+            <h2>{{ interview?.roomName }}</h2>
+            <div class="join-button-wrapper-candidate">
+              <button
+                class="statusButtons"
+                mat-raised-button
+                [ngClass]="
+                  enableButton == 'Join Interview'
+                    ? ''
+                    : enableButton == 'Yet to Start'
+                    ? 'yet-to-start-color not-allowed'
+                    : enableButton == 'Completed'
+                    ? 'completed-color not-allowed'
+                    : 'not-scheduled-white-color not-allowed'
+                "
+                *ngIf="role == 'candidate'"
+                (click)="
+                  enableButton == 'Join Interview' ? openRTC(interview) : ''
+                "
+              >
+                <em class="icon-Join_Video mr-2"></em>
+                <span>{{ enableButton }}</span>
+              </button>
+              <span
+                *ngIf="showInterview && interview?.roomId"
+                (click)="openMatDialog()"
+                class="icon-Info ag-icon-font-size-20 pointer"
+                matTooltip="Instructions"
+              ></span>
+            </div>
+          </div>
+          <div style="margin-top: 12px; margin-bottom: 2px">
+            <div class="d-flex align-items-center">
+              <span class="meetingID"
+                >Meeting Room ID: {{ interview?.roomId }}</span
+              >
+              <span class="meetingID ml-2 mr-2">|</span>
+              <span class="timing"
+                ><em class="icon-Calendar"></em>
+                {{ interview?.startTime | date: "dd MMM yyyy - HH:mm a" }} -
+                {{ interview?.endTime | date: "dd MMM yyyy - HH:mm a" }}</span
+              >
+            </div>
+            <span class="note"
+              ><span style="color: #000">Note:</span> The link will be active 1
+              hour prior to the interview time as mentioned above.</span
+            >
+          </div>
+        </div>
       </div>
     </div>
-  </ng-template>
-
-  <ng-template #nocard>
-  <div class="joinInterviewWrapper mb-3">
-      <div class="joinInterview nocard">
-          No interview scheduled at this moment
-      </div>
-  </div>
-  </ng-template>
   </mat-expansion-panel>
+</ng-template>
+
+<ng-template #instructionsNew>
+  <div class="instructions-wrapper">
+    <em
+      (click)="closeDialog()"
+      class="icon-close_black ag-icon-font-size pointer"
+    ></em>
+    <h5>Instructions</h5>
+    <ul class="m-0">
+      <li>
+        Make sure you have a stable network with minimum 2 Mbps bandwidth.
+      </li>
+      <li>
+        If you are facing slowness / distortion of video (or) call dropping (or)
+        voice sound like robots, it may be due to,
+        <ul>
+          <li>Insufficient bandwidth or instable network</li>
+          <li>Due to firewall or proxy blockers</li>
+        </ul>
+      </li>
+      <li>
+        Just in case, call gets disconnected during the meeting, close the
+        browser and login again.
+      </li>
+    </ul>
+  </div>
+</ng-template>
+<ng-template #nocard>
+  <div class="joinInterviewWrapper mb-3">
+    <div class="joinInterview nocard">
+      No interview scheduled at this moment
+    </div>
+  </div>
 </ng-template>
