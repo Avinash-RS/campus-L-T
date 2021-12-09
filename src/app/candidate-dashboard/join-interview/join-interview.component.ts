@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { ActivatedRoute } from '@angular/router';
 import moment from 'moment';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: "app-join-interview",
@@ -10,6 +11,7 @@ import moment from 'moment';
   styleUrls: ["./join-interview.component.scss"],
 })
 export class JoinInterviewComponent implements OnInit {
+  @ViewChild('instructionsNew', {static: false}) instructionsNew: TemplateRef<any>;
   interview;
   userEmail;
   showInterview;
@@ -19,10 +21,12 @@ export class JoinInterviewComponent implements OnInit {
   findIndex;
   enableButton: any;
   expiredoneDayago: boolean;
+  instructionTemplateRef: any;
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private matDialog: MatDialog
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.userId = params.email;
@@ -119,4 +123,19 @@ export class JoinInterviewComponent implements OnInit {
       // }
     }
   }
+
+  openMatDialog() {
+    this.instructionTemplateRef = this.matDialog.open(this.instructionsNew, {
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'popupModalContainerForInstructions'
+    });
+  }
+
+  closeDialog() {
+    this.instructionTemplateRef.close();
+  }
+
 }

@@ -1,8 +1,15 @@
 .profile-popup-wrapper {
+  position: relative;
   min-width: 900px;
   max-height: 600px;
   min-height: 500px;
   padding-left: 1em;
+  padding-right: 1em;
   padding-bottom: 1em;
   overflow: auto;
+}
+.remove {
+  margin: 2px 2px 0 0;
+  position: absolute;
+  right: 0;
 }

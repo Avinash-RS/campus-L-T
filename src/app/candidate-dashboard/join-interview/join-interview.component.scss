@@ -4,28 +4,13 @@
   .interview-wrapper {
     display: flex;
     align-items: center;
-    padding: 4px 30px 0 0;
+    padding: 0px 30px 0 0;
   }
     // padding: 15px;
     &.candidate {
-    padding: 20px 25px 0px 10px;
-    // border: 1px solid #cccccc;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    padding: 10px 24px 10px 22px;
     display: flex;
     flex-direction: row;
-    h5 {
-        font-weight: 600;
-    }
-    .joinInterview {
-        padding: 15px 0 0 0;
-    }
-    .designation + div {
-        height: 35px;
-    }
-    .meetingID {
-        line-height: 0.3;
-    }
     .iconinfo {
         flex-grow: 0.5;
         display: flex;
@@ -45,48 +30,72 @@
 
 .interview {
     h5 {
-        margin: 0;
+        margin: 8px 0 2px 0;
         font-size: 16px;
-        font-weight: normal;
-        color: $secondary;
+        color: $black;
+        font-weight: 500 !important;
     }
     p {
         font-size: 15px;
-        font-weight: normal;
+        font-weight: 400;
         color: $secondary;
-        margin-bottom: 10px;
+        margin: 0;
         strong {
             font-weight: bold;
         }
     }
 }
 .interviewers-joinInterview {
-  width: 50%;
-  padding: 6px 16px 0 16px !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 24px 16px 0 16px !important;
+  min-height: 140px;
 }
+.inner-left-interviewer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-size: 22px;
+    color: #1b4e9b;
+    margin: 0;
+    font-weight: 550;
+    line-height: normal;
+  }
+}
+
+.meetingID {
+  font-size: 12px;
+  font-weight: normal;
+  color: $primary;
+}
+.timing, .note {
+  font-size: 12px;
+  font-weight: normal;
+  color: $primary;
+  margin: 0;
+  em {
+      margin-right: 4px;
+  }
+}
+
 .joinInterview {
-    border-radius: 3px;
-    padding: 15px 0 0 0;
+    padding: 20px 0 0 0;
     display: flex;
     flex-direction: column;
-    .meetingID {
-        font-size: 12px;
-        font-weight: normal;
-        color: $secondary;
-    }
     > div {
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .designation {
-        margin: 10px 0 0;
-    }
     h2 {
-        font-size: 24px;
-        color: $secondary;
+        font-size: 22px;
+        color: #1b4e9b;
         margin: 0;
+        font-weight: 550;
         line-height: normal;
     }
     button {
@@ -102,15 +111,6 @@
         font-size: 16px;
         em {
             margin-right: 7px;
-        }
-    }
-    .timing, .note {
-        font-size: 13px;
-        font-weight: normal;
-        color: $gray-dark;
-        margin: 1em 0;
-        em {
-            margin-right: 10px;
         }
     }
 }
@@ -132,22 +132,46 @@
   cursor: not-allowed;
 }
 .mat-expansion-panel {
-  // border: 1px solid #cccccc;
-  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
-}
-.interviewer-only-mat-expansion-panel {
-  margin: 1em;
+  background: #F0F0F0 0% 0% no-repeat padding-box !important;
+  box-shadow: 0px 3px 6px #00000029;
 }
 .mat-expansion-panel-header {
-  font-size: 20px;
-  font-weight: 500;
-  padding: 4px 18px;
+  border-radius: 0px;
+  border-bottom: none;
+  margin: 0 12px 0 12px;
+  padding: 0px 16px 0 8px;
+  background: #F0F0F0 0% 0% no-repeat padding-box !important;
 }
-:host ::ng-deep .mat-expansion-panel-header.mat-expanded {
-  font-size: 20px;
-  font-weight: 500;
-  height: 48px !important;
-  border-bottom: 0.1em solid #e8e8e8;
+.mat-expansion-panel-header.mat-expanded {
+  background: #F0F0F0 0% 0% no-repeat padding-box !important;
+  border-bottom: solid 1px #7070709e;
+  height: 56px !important;
+}
+.hideExpansion {
+  .mat-expansion-panel-header.mat-expanded {
+    pointer-events: none !important;
+  }
+}
+.mat-expansion-panel-header:hover {
+  background: #F0F0F0 0% 0% no-repeat padding-box !important;
+}
+// :host ::ng-deep .mat-expansion-panel-header.mat-expanded {
+//   font-size: 20px;
+//   font-weight: 500;
+//   height: 48px !important;
+//   border-bottom: 0.1em solid #e8e8e8;
+// }
+.cardTitle {
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  color: $black;
+}
+:host ::ng-deep.mat-expansion-indicator::after {
+  color: $black;
+}
+.candidate-interview-wrapper {
+  width: 100%;
 }
 .nocard {
 align-items: center;
@@ -156,7 +180,8 @@ font-weight: 600;
 }
 
 .feedback {
-  width: 30%;
+  width: 29%;
+  margin-left: 2em;
   label {
     color: #444444;
     font-size: 14px;
@@ -170,34 +195,59 @@ font-weight: 600;
     padding: 4px;
   }
 }
-.ins {
-  display: flex;
-  background: $white;
-  padding: .5em;
-  flex-direction: column;
-  .head {
-    font-size: 15px;
-    color: $light-black;
-    font-weight: 200;
-    margin: .5em;
-  }
-  ul {
-    font-size: 12px;
-    color: $light-black;
-    font-weight: 200;
-    li {
-      padding-bottom: .25em;
-      ul {
-        font-weight: 100;
-      }
-    }
-  }
-}
-:host ::ng-deep .mat-expansion-panel-body {
-  max-height: 300px;
-  overflow: auto;
-}
+// :host ::ng-deep .mat-expansion-panel-body {
+//   max-height: 300px;
+//   overflow: auto;
+// }
 .box-wrapper {
   box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
   margin: 4px 14px 8px 14px;
+}
+.join-button-wrapper-candidate {
+  display: flex;
+  align-items: center;
+  .icon-Info {
+    margin-left: 10px;
+  }
+}
+
+.interview-only {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 75%;
+}
+.interview-only-width {
+  width: 70% !important;
+}
+::ng-deep.popupModalContainerForInstructions {
+  .mat-dialog-container {
+    padding: 16px !important;
+  }
+  em {
+    position: absolute;
+    right: -8px;
+    top: -6px;
+  }
+  .instructions-wrapper {
+    position: relative;
+    h5 {
+      margin: 0px 0 2px 0;
+      font-size: 20px;
+      color: $black;
+      font-weight: 550 !important;
+    }
+    ul {
+      padding: 8px 20px !important;
+      color: $light-black;
+      li {
+        padding-bottom: 0.25em;
+        font-size: 14px;
+        font-weight: 400;
+        ul {
+          padding: 8px 38px 0 38px !important;
+        }
+      }
+    }
+  }
 }
