@@ -100,21 +100,10 @@ export class CaEvaluationFormComponent implements OnInit {
   ngOnInit() {
     this.getMasters();
     if (this.candidateId) {
-      // this.getWorkExp();
       this.getEvaluationData(this.uid);
       this.nginitFunc();
       this.getCandidateDetails();
     }
-  }
-
-  getWorkExp() {
-    const apiData = {
-      user_id: this.candidateId
-    };
-    this.adminService.workExperienceList(apiData).subscribe((data: any)=> {
-      //
-      this.selectedPost = data?.selected_post && (data?.selected_post == 'get' || data?.selected_post == 'pget') ? true : false;
-    });
   }
 
   getMasters() {
