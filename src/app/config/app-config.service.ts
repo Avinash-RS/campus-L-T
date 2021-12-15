@@ -461,7 +461,9 @@ export class AppConfigService {
  async setCustomerConfiguration(data: any) {
     await this.setLocalData('selected_customer', data && data['customers'] && data['customers'][0] && data['customers'][0]['customer_code'] ? JSON.stringify(data['customers'][0]) : null);
     await this.setLocalData('customers', data && data['customers'] && data['customers'].length > 0 ? JSON.stringify(data['customers']) : []);
-    this.setDriveList();
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
+      this.setDriveList();
+    }
   }
 
   setDriveList() {
@@ -474,7 +476,7 @@ export class AppConfigService {
     // let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
     // this.setLocalData('driveId', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'][0] && selected_customer['driveDetails'][0]['drive_id'] ? selected_customer['driveDetails'][0]['drive_id'] : null);
     // this.setLocalData('driveList', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'].length > 0 ? JSON.stringify(selected_customer['driveDetails']) : []);
-    this.setLocalData('driveId', data && data['active_drive_id'] && data['active_drive_id'] ? data['active_drive_id'] : null);
+    this.setLocalData('driveId', data && data['active_drive_id']  ? data['active_drive_id'] : null);
   }
 
 }
