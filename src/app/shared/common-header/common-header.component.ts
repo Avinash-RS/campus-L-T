@@ -13,6 +13,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class CommonHeaderComponent implements OnInit {
 
   username: any;
+  logoURL: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -22,6 +23,7 @@ export class CommonHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : 'NA';
+    this.logoURL = this.appConfig.logoBasedOnCustomer();
   }
 
   goToHome() {
@@ -80,8 +82,5 @@ export class CommonHeaderComponent implements OnInit {
       }
     });
   }
-
-
-
 
 }
