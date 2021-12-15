@@ -23,6 +23,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
@@ -36,6 +37,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/hal+json')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
@@ -50,6 +52,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
@@ -63,6 +66,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*',
     })
       .set('Content-Type', 'multipart/form-data')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
@@ -76,6 +80,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/octet-stream')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
@@ -90,6 +95,7 @@ export class CandidateMappersService {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
+    .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
     .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
     .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
     .set('Content-Type', 'application/json')

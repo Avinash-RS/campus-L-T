@@ -69,7 +69,6 @@ export class VideoAssessEvaluationComponent implements OnInit, OnDestroy {
           this.appConfig.setLocalData('driveId', data && data.drive_id ? data.drive_id : null);
           this.appConfig.setLocalData('username', data && data.interviewer_name ? data.interviewer_name : 'Guest');
           this.appConfig.setLocalData('userId', data && data.interviewer_uid ? data.interviewer_uid : '');
-        console.log('this.videoAssessment', this.videoAssessment);
         } else {
           this.appConfig.routeNavigation('error');
         }

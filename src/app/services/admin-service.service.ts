@@ -35,6 +35,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
@@ -48,6 +49,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
@@ -61,6 +63,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/hal+json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*')
@@ -76,6 +79,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
@@ -89,6 +93,7 @@ export class AdminServiceService {
     })
       .set('Content-Type', 'application/json')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
@@ -101,6 +106,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('Access-Control-Allow-Origin', '*');
@@ -113,6 +119,7 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
+      .set('custCode', this.appConfig.getSelectedCustomerCode() ? this.appConfig.getSelectedCustomerCode() : '')
       .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
