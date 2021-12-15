@@ -23,7 +23,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*')
@@ -36,7 +36,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/hal+json')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*')
@@ -50,7 +50,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
@@ -63,7 +63,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*',
     })
       .set('Content-Type', 'multipart/form-data')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
@@ -76,7 +76,7 @@ export class CandidateMappersService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/octet-stream')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       // tslint:disable-next-line: quotemark
@@ -90,7 +90,7 @@ export class CandidateMappersService {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-    .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+    .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
     .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
     .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
@@ -103,7 +103,7 @@ export class CandidateMappersService {
   }
 
   getDriveId() {
-    return this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '';
+    return this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '';
   }
 
   forFetchCustomHeaders() {

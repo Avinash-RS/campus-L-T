@@ -58,7 +58,7 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
 getDriveList() {
   let drive = this.appConfig.getLocalData('driveList');
   this.driveList = drive ? JSON.parse(drive) : [];
-  this.activeDriveId = this.appConfig.getLocalData('driveId') ? Number(this.appConfig.getLocalData('driveId')) : null;
+  this.activeDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
  }
 
  driveChanged(e) {

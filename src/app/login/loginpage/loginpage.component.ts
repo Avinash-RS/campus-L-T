@@ -132,8 +132,7 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('masters', data && data.master_list && data.master_list.data ? JSON.stringify(data.master_list.data) : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
 
-            this.appConfig.setLocalData('driveId', data && data['drives'] && data['drives'][0] && data['drives'][0]['drive_id'] ? data['drives'][0]['drive_id'] : null);
-            this.appConfig.setLocalData('driveList', data && data['drives'] && data['drives'].length > 0 ? JSON.stringify(data['drives']) : []);
+            this.appConfig.setCustomerConfiguration(data);
 
             if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
@@ -154,7 +153,7 @@ export class LoginpageComponent implements OnInit {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              this.appConfig.setLocalData('driveId', data && data['active_drive_id'] && data['active_drive_id'] ? data['active_drive_id'] : null);
+              this.appConfig.setDriveIdForCandidate(data);
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');

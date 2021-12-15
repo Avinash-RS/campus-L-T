@@ -425,14 +425,6 @@ export class AppConfigService {
   downloadFile(path: any) {
     if (path) {
       window.open(path, '_blank');
-    // let link = document.createElement('a');
-    // link.setAttribute('type', 'hidden');
-    // link.href = path;
-    // link.download = path;
-    // link.target = '_blank';
-    // document.body.appendChild(link);
-    // link.click();
-    // link.remove();
   } else {
     this.warning('URL not Found');
   }
@@ -441,5 +433,49 @@ export class AppConfigService {
   getCurrentYear() {
     return new Date().getFullYear();
   }
+
+  getDriveId() {
+   return this.getLocalData('driveId');
+  }
+
+  getCustomerList() {
+    let customerList = JSON.parse(this.getLocalData('customers'));
+    return customerList;
+  }
+
+  getSelectedCustomerDetails() {
+    let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    return selected_customer;
+  }
+
+  getSelectedCustomerCode() {
+    let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    return selected_customer && selected_customer.customer_code ? selected_customer.customer_code : '';
+  }
+
+  getSelectedCustomerName() {
+    let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    return selected_customer && selected_customer.customer_name ? selected_customer.customer_name : '';
+  }
+
+ async setCustomerConfiguration(data: any) {
+    await this.setLocalData('selected_customer', data && data['customers'] && data['customers'][0] && data['customers'][0]['customer_code'] ? JSON.stringify(data['customers'][0]) : null);
+    await this.setLocalData('customers', data && data['customers'] && data['customers'].length > 0 ? JSON.stringify(data['customers']) : []);
+    this.setDriveList();
+  }
+
+  setDriveList() {
+    let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    this.setLocalData('driveId', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'][0] && selected_customer['driveDetails'][0]['drive_id'] ? selected_customer['driveDetails'][0]['drive_id'] : null);
+    this.setLocalData('driveList', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'].length > 0 ? JSON.stringify(selected_customer['driveDetails']) : []);
+  }
+
+  setDriveIdForCandidate(data: any) {
+    // let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    // this.setLocalData('driveId', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'][0] && selected_customer['driveDetails'][0]['drive_id'] ? selected_customer['driveDetails'][0]['drive_id'] : null);
+    // this.setLocalData('driveList', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'].length > 0 ? JSON.stringify(selected_customer['driveDetails']) : []);
+    this.setLocalData('driveId', data && data['active_drive_id'] && data['active_drive_id'] ? data['active_drive_id'] : null);
+  }
+
 }
 

@@ -25,7 +25,7 @@ export class ApiServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       // .set('X-CSRF-Token', this.appConfig.getSessionData('csrf'))
       .set('Access-Control-Allow-Origin', '*');
@@ -36,7 +36,7 @@ export class ApiServiceService {
       'Access-Control-Allow-Origin': '*'
     })
       .set('Content-Type', 'application/json')
-      .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+      .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
       .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
       .set('X-CSRF-Token', this.appConfig.getLocalData('csrf-login'))
       .set('Access-Control-Allow-Origin', '*');
@@ -46,7 +46,7 @@ export class ApiServiceService {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-    .set('driveId', this.appConfig.getLocalData('driveId') ? this.appConfig.getLocalData('driveId') : '')
+    .set('driveId', this.appConfig.getDriveId() ? this.appConfig.getDriveId() : '')
     .set('userId', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '')
     .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
