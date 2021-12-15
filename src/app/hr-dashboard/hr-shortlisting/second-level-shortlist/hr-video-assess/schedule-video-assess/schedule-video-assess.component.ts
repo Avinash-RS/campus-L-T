@@ -326,7 +326,7 @@ patchScheduleForm() {
       }
     });
     const apiData = {
-        driveId: this.appConfig.getLocalData('driveId'),
+        driveId: this.appConfig.getDriveId(),
         is_proctor:"1",
         shortListName: this.shortlist_name,
         orgId: 1,

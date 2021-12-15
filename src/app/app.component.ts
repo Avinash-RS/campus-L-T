@@ -82,17 +82,16 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getScreenSize();
     this.checkIE();
     this.listenToLoading();
-    this.selectedDriveId = this.appConfig.getLocalData('driveId') ? Number(this.appConfig.getLocalData('driveId')) : null;
+    this.selectedDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
   }
 
   checkNavigation() {
         this.router.events.subscribe((routerEvent: Event) => {
-          if (this.appConfig.getLocalData('driveId') == this.selectedDriveId) {
-            console.log('coming');
+          if (this.appConfig.getDriveId() == this.selectedDriveId) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => true;
             this.router.onSameUrlNavigation = 'ignore';
           } else {
-            this.selectedDriveId = this.appConfig.getLocalData('driveId') ? Number(this.appConfig.getLocalData('driveId')) : null;
+            this.selectedDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
           }
       if (routerEvent instanceof NavigationStart) {
       }
