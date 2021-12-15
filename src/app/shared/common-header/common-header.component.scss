@@ -25,26 +25,25 @@ mat-toolbar {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  height: 100%;
   align-items: center;
-  &.open {
-
-    &:before {
-      width: 235px;
-    }
-  }
-  &:before {
-    content: ' ';
-    visibility: hidden;
-    position: absolute;
-    width: 64px;
-    height: 4px;
-    background-color: #f1f1f1;
-    bottom: -4px;
-    left: 0;
-    box-shadow: 1px 5px 5px #0003 !important;
-  }
+  // &:before {
+  //   content: ' ';
+  //   visibility: hidden;
+  //   position: absolute;
+  //   width: 64px;
+  //   height: 4px;
+  //   background-color: #f1f1f1;
+  //   bottom: -4px;
+  //   left: 0;
+  //   box-shadow: 1px 5px 5px #0003 !important;
+  // }
 
   img {
+    height: 100%;
+    width: 100%;
+  }
+  .img-wrapper {
     height: 45px;
   }
   .title {

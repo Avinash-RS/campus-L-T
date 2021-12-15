@@ -475,5 +475,15 @@ export class AppConfigService {
     this.setLocalData('driveId', data && data['active_drive_id']  ? data['active_drive_id'] : null);
   }
 
+  logoBasedOnCustomer() {
+    let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    return selected_customer && selected_customer.customer_logo ? selected_customer.customer_logo : '';
+  }
+
+  supportEmailBasedOnCustomer() {
+    let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+    return selected_customer && selected_customer.support_email ? selected_customer.support_email : '';
+  }
+
 }
 

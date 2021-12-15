@@ -11,6 +11,7 @@ import { CONSTANT } from 'src/app/constants/app-constants.service';
 export class DashboardHeaderComponent implements OnInit {
   username: any;
   getCurrentYear = this.appConfig.getCurrentYear();
+  supportEmail: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -19,6 +20,7 @@ export class DashboardHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.appConfig.getLocalData('username') ? this.appConfig.getLocalData('username') : 'NA';
+    this.supportEmail = this.appConfig.supportEmailBasedOnCustomer();
   }
 
   logOut() {

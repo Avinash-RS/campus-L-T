@@ -1,7 +1,7 @@
 <mat-toolbar class="print">
   <ul>
     <li>
-      In case of any technical issues, contact us at <a style="color: inherit;" href="mailto:assess.support@lntedutech.com">assess.support@lntedutech.com</a>
+      In case of any technical issues, contact us at <a style="color: inherit;" [href]="'mailto:' + supportEmail">{{supportEmail}}</a>
     </li>
   </ul>
   <ul>
