@@ -17,7 +17,6 @@ export class LoginpageComponent implements OnInit {
 
   loginForm: FormGroup;
   isProduction = environment.production;
-  isWebrtc;
   toggleVisibility = true;
   toggleVisibilityConfirmPassword = true;
   subscribe1: Subscription;
@@ -122,8 +121,6 @@ export class LoginpageComponent implements OnInit {
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
           this.apiService.login(apiData).subscribe((data: any) => {
-
-            this.isProduction ? this.appConfig.setLocalData('webrtc', 'true') : this.isWebrtc ? this.appConfig.setLocalData('webrtc', 'true') : this.appConfig.setLocalData('webrtc', 'true');
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');

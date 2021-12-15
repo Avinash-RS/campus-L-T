@@ -809,7 +809,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             this.userList.push(element);
           }
         });
-        if (this.appConfig.isWebrtc()) {
+        let selectedDrivePermissions = this.appConfig.getSelectedDrivePermissions();
+        if (selectedDrivePermissions && selectedDrivePermissions.interview_assignment) {
           this.getInterview();
         } else {
           this.rowData = this.userList;

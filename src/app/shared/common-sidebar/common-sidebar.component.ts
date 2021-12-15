@@ -211,4 +211,9 @@ getDriveList() {
     return this.candidateService.checkKycOrJoiningForm() ? 'Joining Form' : 'Profile Form';
   }
 
+  isPermissionGranted() {
+    // let selectedDrivePermissions = this.appConfig.getSelectedDrivePermissions();
+    // return selectedDrivePermissions && selectedDrivePermissions.interview_assignment ? true : false;
+    return true;
+  }
 }

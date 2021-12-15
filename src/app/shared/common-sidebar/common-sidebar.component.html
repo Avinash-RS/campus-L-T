@@ -168,7 +168,7 @@
           </div>
         </div>
           <!-- Interview Component for Candidate Login -->
-        <app-join-interview *ngIf="role == 'candidate' && !showJoiningForm && appConfig.isWebrtc()"></app-join-interview>
+        <app-join-interview *ngIf="role == 'candidate' && !showJoiningForm && isPermissionGranted()"></app-join-interview>
         <div class="first-sidenav" *ngIf="subMenus && subMenus.length > 0">
           <div class="main-toolbar" [ngClass]="!subMenus || subMenus.length === 0 ? 'toolbar-bg' : ''">
             <ng-container *ngIf="subMenus && subMenus.length > 0">
