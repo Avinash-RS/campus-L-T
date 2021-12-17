@@ -33,9 +33,7 @@ export class CreateComponent implements OnInit {
   ) {
     if (this.router.url.includes(CONSTANT.ENDPOINTS.PASSWORD.RESET)) {
       this.verifyPassword();
-      // this.currentRoute = 'Create the password';
     } else {
-      // this.currentRoute = 'Reset the password';
     }
   }
 
@@ -54,10 +52,10 @@ export class CreateComponent implements OnInit {
         // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.RESET}`);
         this.passwordTempToken = params['temp-token'];
         this.prePoulteEmailId = params['mail'];
-        this.currentRoute = 'Create the password';
+        this.currentRoute = 'Create the Password';
         if (params['type'] === 'reset') {
           this.type = 'reset';
-          this.currentRoute = 'Reset the password';
+          this.currentRoute = 'Reset the Password';
         }
       } else {
         this.appConfig.error(`Reset password temp token is invalid`, '');
@@ -84,9 +82,9 @@ export class CreateComponent implements OnInit {
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.createForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(emailregex)]],
+      email: ['', [Validators.required, Validators.pattern(emailregex), Validators.maxLength(100)]],
       // temp: ['', [Validators.required]],
-      password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
+      password: ['', [Validators.required, FormCustomValidators.patternValidator(), Validators.maxLength(30)]],
       confirmpassword: ['', [Validators.required]]
     }, { validators: FormCustomValidators.identityRevealedValidator }
     )

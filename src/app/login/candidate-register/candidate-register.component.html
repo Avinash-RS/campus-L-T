@@ -1,51 +1,29 @@
-<!-- <app-signup-header></app-signup-header> -->
-<div class="main-wrapper-candidate">
-  <!-- <div class="layer-only">
-  </div> -->
-
-  <div class="sub-wrapper">
-
-    <div class="create-wrapper">
-      <div class="row container-reg200">
-        <div class="col-md-8 col-sm-12 col-12 border-right no_pl  no_pr">
-          <div class="main-logo">
-          <img alt="" class="beforeloginimg" style="width : 300px;" src="https://assets.lntedutech.com/edutech_logo.svg">
-        </div>
-        </div>
-        <div class="col-md-4 col-sm-12 col-12">
           <div class="wrap-reg">
-            <form [formGroup]="candidateForm" (ngSubmit)="submit()">
-              <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Welcome' }}</h1> <br>
-              <div style="margin-top:10px">
-
-                <mat-form-field appearance="outline">
+            <form [formGroup]="candidateForm" class="form-wrapper" (ngSubmit)="submit()">
+              <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Welcome' }}</h1>
+              <div>
+                <mat-form-field class="mat-form-spacing" appearance="outline">
                   <mat-label class="label-color">Name</mat-label>
-                  <input matInput  id="username1" #username1 [placeholder]="'Enter the name'"  formControlName="name"
+                  <input matInput id="username1" #username1 [placeholder]="'Enter the name'"  formControlName="name"
                   required>
                   <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('required')">{{'Name is required'}}</mat-error>
-                  <!-- <mat-error class="error" *ngIf="f.email.errors.required">Email ID is required</mat-error> -->
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('pattern')">{{'Alphabetic characters only allowed'}}</mat-error>
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('maxlength') && !candidateForm.get('name').hasError('pattern')">{{'Should not exceed 30 characters'}}</mat-error>
                 </mat-form-field>
-                <div class="space-20"></div>
 
-
-                <mat-form-field appearance="outline">
+                <mat-form-field class="mat-form-spacing" appearance="outline">
                   <mat-label class="label-color">Email</mat-label>
                   <input matInput  id="username" #username [placeholder]="'Enter the email'"  formControlName="email" maxlength="64"
                   required>
                   <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
                   <mat-error class="error" *ngIf="candidateForm.get('email').hasError('required')">{{'Email is required'}}</mat-error>
-                  <!-- <mat-error class="error" *ngIf="f.email.errors.required">Email ID is required</mat-error> -->
+                  <mat-error class="error" *ngIf="candidateForm.get('email').hasError('maxlength')">{{'100 Characters only allowed'}}</mat-error>
                   <mat-error class="error" *ngIf="candidateForm.get('email').hasError('pattern')">{{'Please enter a valid email address'}}</mat-error>
                 </mat-form-field>
-                <div class="space-20"></div>
 
-                <div class="" appCapslock (capsLock)="capsOn=$event">
-                  <!-- <label>Password</label> -->
-                  <!-- <div *ngIf="capsOn">{{'Caps lock is on !' | translate }}</div> -->
-                  <mat-form-field appearance="outline">
+                <div appCapslock (capsLock)="capsOn=$event">
+                  <mat-form-field class="mat-form-spacing" appearance="outline">
                     <mat-label  class="label-color">{{'Password' }}</mat-label>
                     <input matInput  [placeholder]="'Enter password'" [type]="!toggleVisibility ? 'text' : 'password'" formControlName="password" [ngClass]="{ 'is-invalid': password.touched && password.errors }" required>
                     <mat-icon class="icon-color" matPrefix>lock_outline</mat-icon>
@@ -53,51 +31,20 @@
                     <mat-icon class="icon-color-1">{{toggleVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </div>
                     <mat-error class="error" *ngIf="password.touched && password.errors?.required" >{{'Password is required' }}</mat-error>
+                    <mat-error class="error" *ngIf="password.touched && password.errors?.maxlength" >{{'30 Characters only allowed' }}</mat-error>
                     <mat-error class="error" *ngIf="password.touched && password.errors?.passwordvalidator" >{{'The password should consist of 1 uppercase, 1 lowercase,1 number and 1 special character.' }}</mat-error>
                   </mat-form-field>
-                  <div class="space-20"></div>
-
                 </div>
-                <div class="space-20"></div>
-
-
-                <!-- <div style="text-align: end;"> -->
-                  <!-- <mat-checkbox class="remember_me">
-                    {{'Keep me signed in' }}
-                  </mat-checkbox> -->
-                <!-- <mat-label>
-                <a  class="forgot" (click)="forgotPassword()">{{'Forgot password?'}}</a>
-                </mat-label></div> -->
-                <div style="text-align: center;">
-                  <mat-label>
-                     <a class="col" (click)="signIn()">{{'Go back to Sign in' }}</a></mat-label>
-                </div>
-
-                <div class="space-20"></div>
 
                 <div class="center">
                   <button class="btn" id="login" mat-raised-button [disabled]="candidateForm.invalid" type="submit">{{'Submit'}}</button>
-
                 </div>
-
-                <!-- <div class="sign_up">
-                  <span class="haveacc">Don't have an account?</span>
-                  <a><span class="col" (click)="candidateSignup()">{{'Sign up' }}</span></a> </div><br><br> -->
               </div>
+
+              <div class="next">
+                <mat-label>
+                   <a class="col" (click)="signIn()">{{'Go back to Sign in' }}</a></mat-label>
+              </div>
+
             </form>
           </div>
-
-          <div class="row footer20">
-            <div class="col-12 mt-5">
-              <span class="forgot1">© {{getCurrentYear}} Powered by L&T EduTech. All Rights Reserved</span>
-            </div>
-          </div>
-        </div>
-
-
-
-      </div>
-    </div>
-
-  </div>
-</div>

@@ -97,9 +97,6 @@ top: -4px;
   top: -4px;
 }
 
-.error{
-  margin-top: 10px;
-}
 .label-color{
   color: #5c6873;
 }
@@ -180,6 +177,13 @@ input.mat-input-element {
   color: $primary-hover-color !important;
 }
 :host ::ng-deep.mat-form-field-wrapper {
-  padding-bottom: .5em;
+  padding-bottom: 0;
 }
-
+:host ::ng-deep.mat-form-field-subscript-wrapper {
+    position: relative;
+    margin: 0 !important;
+    padding-top: 0 !important;
+}
+.error {
+  margin-top: 6px;
+}

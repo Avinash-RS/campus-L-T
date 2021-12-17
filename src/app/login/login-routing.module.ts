@@ -31,15 +31,15 @@ const routes: Routes = [
     path: `${CONSTANT.ROUTES.REGISTER.INSTITUTE}`, component: RegisterpageComponent
   },
   {
-    path: `${CONSTANT.ROUTES.REGISTER.CANDIDATE}`, component: CandidateRegisterComponent
-  },
-  {
     path: `${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`, component: EmailVerifierErrorPageComponent
   },
   {
     path: '', component: SignupComponent, children: [
       {
         path: `${CONSTANT.ROUTES.VERIFY.OTP}`, component: OtpComponent
+      },
+      {
+        path: `${CONSTANT.ROUTES.REGISTER.CANDIDATE}`, component: CandidateRegisterComponent
       },
       {
         path: `${CONSTANT.ROUTES.PASSWORD.SETUP}`, component: CreateComponent
@@ -58,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.VERIFY.OTP}`,
+        redirectTo: `${CONSTANT.ROUTES.LOGIN}`,
         pathMatch: 'full'
       }
     ]

@@ -96,8 +96,8 @@ export class LoginpageComponent implements OnInit {
   formInitialize() {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(emailregex)]],
-      password: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(emailregex)]],
+      password: ['', [Validators.required, Validators.maxLength(30)]],
     }), this.autoPopulateMail();
   }
 
