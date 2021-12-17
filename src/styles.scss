@@ -17,9 +17,14 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 @include angular-material-theme($lxp-theme);
 @import "./app/themes/themes.scss";
 @import "fonts";
-html {
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
 }
 
 body {

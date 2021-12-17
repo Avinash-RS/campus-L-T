@@ -2,18 +2,19 @@
 
 
 .headerShadow {
-  box-shadow: 0 3px 3px rgba(0, 0, 0, .2) !important;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .2) !important;
 }
 mat-toolbar {
   position: relative;
   width: 100%;
   box-sizing: border-box;
   height: 60px;
-  background: linear-gradient(to right,#fff 14%,#fc0 20%) !important;
-  margin-bottom: 3px;
+  background: #ffffff;
+  margin-bottom: 0;
   box-shadow: $header-shadow;
   display: flex;
   justify-content: space-between;
+  z-index: 9;
   // position: sticky !important;
   // position: -webkit-sticky !important;
   // top: 0 !important;

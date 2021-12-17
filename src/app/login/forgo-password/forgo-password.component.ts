@@ -31,7 +31,7 @@ export class ForgoPasswordComponent implements OnInit {
     const mobileRegex: RegExp = /^[1-9][0-9]{9}$/;
     this.forgotPasswordForm = this.fb.group({
       mobile: ['', [Validators.required, Validators.pattern(mobileRegex)]],
-      email: ['', [Validators.required, Validators.pattern(emailregex)]],
+      email: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(emailregex)]],
     });
   }
 

@@ -36,8 +36,8 @@ export class CandidateRegisterComponent implements OnInit {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.candidateForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
-      email: ['', [Validators.required, Validators.pattern(emailregex)]],
-      password: ['', [Validators.required, FormCustomValidators.patternValidator()]],
+      email: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(emailregex)]],
+      password: ['', [Validators.required, Validators.maxLength(30), FormCustomValidators.patternValidator()]],
     });
   }
 

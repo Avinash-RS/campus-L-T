@@ -1,8 +1,35 @@
-<app-signup-header></app-signup-header>
+<!-- <app-signup-header></app-signup-header> -->
 <div class="main-wrapper-login">
-    <!-- <div class="layer-only">
-      </div> -->
-        <div class="sub-wrapper">
+  <!-- <div class="border-right absolute-line">
+  </div> -->
+
+    <div class="sub-wrapper">
+      <div class="container-reg200">
+        <div class="left">
+          <div class="main-logo">
+          <img alt="" class="beforeloginimg" src="assets/images/login_home.svg">
+        </div>
+        </div>
+        <div class="right">
+          <h1 class="landing-heading"> {{'UNIFIED ASSESSMENT PLATFORM' }}</h1>
+          <div class="formWrapper">
             <router-outlet></router-outlet>
-</div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Footer area -->
+    <ng-container>
+      <div class="footer20">
+        <div class="col-12 m-0 p-0">
+          <span class="forgot1">{{getCurrentYear}} © L&T EduTech. All Rights Reserved</span>
+        </div>
+      </div>
+      <div class="footer-area">
+        <span class="sub-text">Powered by </span>
+        <img alt="" src="https://assets.lntedutech.com/edutech_logo.svg">
+      </div>
+    </ng-container>
+
+</div>
