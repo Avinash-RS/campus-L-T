@@ -2,11 +2,6 @@
 
 .wrap-reg {
   width: 100%;
-  padding-left: 40px;
-  padding-right: 40px;
-  border-radius: 0px !important;
-  margin-left: 0% !important;
-  overflow: hidden !important;
   display: flex;
   justify-content: center;
 }
@@ -17,6 +12,9 @@ mat-form-field {
 
 .form-wrapper {
   width: 75%;
+  @media only screen and (min-width: 1440px) {
+    width: 100%;
+  }
 }
 
 .forgot {
@@ -31,7 +29,6 @@ mat-form-field {
 }
 
 a:hover {
-  color: $primary-red !important;
   text-decoration: underline;
 }
 
@@ -62,11 +59,11 @@ font-size: 16px;
 }
 
 .signIn {
-  text-align: center !important;
-  color: $mediumGrey !important;
+  text-align: center;
+  color: $mediumGrey;
   font-size: 18px;
   font-weight: 500;
-  margin: 0 0 40px 0 !important;
+  margin: 0 0 40px 0;
   letter-spacing: 0.5px;
 }
 
@@ -80,18 +77,18 @@ font-size: 16px;
 
 
 ::placeholder {
-  color: $borderColor-2 !important;
+  color: $borderColor-2;
   }
 
 .icon-color{
-color:  #8c8c8c !important;
+color:  #8c8c8c;
 position: relative;
-margin: 0 !important;
+margin: 0;
 top: -4px;
 }
 
 .icon-color-1{
-  color:  #8c8c8c !important;
+  color:  #8c8c8c;
   position: relative;
   cursor: pointer;
   top: -4px;
@@ -105,17 +102,16 @@ top: -4px;
   margin-bottom: 20px;
 }
 
+.next {
+  text-align: center;
+  margin: 24px 16px 24px 0px;
+}
+
 // mobile
 @media (max-width: 480px) and (max-width: 320px) {
     .wrap-reg {
       text-align: center;
       width: 100%;
-      padding-left: 0px !important;
-      padding-right: 0px !important;
-      overflow: hidden !important;
-      height: 96vh;
-      border-radius: 0 !important;
-      margin-left: 0% !important;
       .form-wrapper {
         width: 100%;
       }
@@ -126,31 +122,16 @@ top: -4px;
 @media (max-width: 767px) {
   .wrap-reg {
       width: 100%;
-      padding-left: 0px !important;
-      padding-right: 0px !important;
-      overflow: hidden !important;
-      height: 96vh;
-      border-radius: 0 !important;
-      margin-left: 0% !important;
       .form-wrapper {
         width: 100%;
       }
   }
 }
 
-@media (min-width: 1500px) and (min-height: 800px) {
-  .form-wrapper {
-    width: 60%;
-  }
-}
 @media only screen and (max-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .wrap-reg {
       text-align: center;
       width: 100%;
-      margin-left: 0% !important;
-      .form-wrapper {
-        width: 90%;
-      }
   }
 }
 

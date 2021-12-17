@@ -13,8 +13,6 @@
             </mat-form-field>
 
             <div appCapslock (capsLock)="capsOn=$event">
-              <!-- <label>Password</label> -->
-              <!-- <div *ngIf="capsOn">{{'Caps lock is on !' | translate }}</div> -->
               <mat-form-field appearance="outline">
                 <mat-label  class="label-color">{{'Password' }}</mat-label>
                 <input matInput  [placeholder]="'Enter password'" [type]="!toggleVisibility ? 'text' : 'password'" formControlName="password" [ngClass]="{ 'is-invalid': password.touched && password.errors }" required>
