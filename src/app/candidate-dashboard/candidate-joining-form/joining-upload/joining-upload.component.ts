@@ -303,7 +303,7 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
          this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.patchCAArray(element, 'otherCert')) : this.getCertificationsArr.push(this.patchJoiningArray(element, 'otherCert'));
         });
       } else {
-        this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.CAinitArray('otherCert')) : this.getCertificationsArr.push(this.initJoiningArray('otherCert'));
+        this.selectedPost == 'ca' ? this.getCertificationsArr.push(this.CAinitArray('otherCert')) : '';
       }
 
       this.patchNotSubmittedReason();

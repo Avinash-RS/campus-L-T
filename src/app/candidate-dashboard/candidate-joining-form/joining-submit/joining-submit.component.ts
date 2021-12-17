@@ -18,6 +18,7 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
   checkFormValidRequest: Subscription;
   userName: any;
   joiningFormDataPassingSubscription: Subscription;
+  customerName: any = this.appConfig.getSelectedCustomerName();
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
