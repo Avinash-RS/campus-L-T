@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: 'app-signup',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  getCurrentYear = this.appConfig.getCurrentYear();
+
+  constructor(
+    private appConfig: AppConfigService
+  ) { }
 
   ngOnInit() {
   }

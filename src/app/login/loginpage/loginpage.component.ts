@@ -24,7 +24,6 @@ export class LoginpageComponent implements OnInit {
   capsOn; any;
   verifyArr = [];
   disableLogin = false;
-  getCurrentYear = this.appConfig.getCurrentYear();
   constructor(
     private fb: FormBuilder,
     private router: Router,

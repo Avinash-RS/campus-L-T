@@ -1,420 +1,101 @@
 @import "../../themes/themes.scss";
 
-// .create-wrapper {
-//   margin: 40px 0;
-//   .head {
-//     color: $secondary;
-//     font-size: 26px;
-//     margin: 0 0 20px 0;
-//     font-weight: 50;
-//   }
-//   form {
-//     .forms {
-//       .form-field {
-//         padding: 0 !important;
-//         margin: 20px 0em 0 0;
-//         label {
-//           display: flex;
-//           padding: 0 0 4px 0 !important;
-//           margin: 0 !important;
-//           color: $primary;
-//           font-size: 15px;
-//           font-weight: 100;
-//         }
-//         .input-box {
-//           // border-radius: 5px;
-//           // box-shadow: $shadow-light-black;
-//           border: solid $input-border 1px;
-//           width: 100%;
-//           display: flex;
-//           align-items: center;
-//           background: $white-primary;
-//           height: 40px;
-//           padding: 0em 20px 0 10px;
-//           margin: 0 !important;
-//           input {
-//             margin: 0 !important;
-//             width: 100%;
-//             font-size: 18px;
-//             color: $secondary;
-//             vertical-align: middle;
-//             border: none;
-//             outline: none;
-//             background: $white-primary;
-//             border-radius: 5px;
-//             display: flex !important;
-//             height: 35px !important;
-//           }
-//           .icon {
-//             display: flex;
-//             align-items: center;
-//             span {
-//               cursor: pointer;
-//               color: $light-blue;
-//             }
-//           }
-//         }
-//         .error {
-//           color: $red;
-//           font-size: 12px;
-//           font-weight: 200;
-//           text-align: left;
-//         }
-//       }
-//       .forgot-password {
-//         margin: 1em 0 0 0;
-//         text-align: right;
-//         span {
-//           cursor: pointer;
-//           color: $blue-1;
-//           font-size: 15px;
-//           font-weight: 100;
-//         }
-//       }
-//       .check-box {
-//         color: $blue-1;
-//         font-size: 15px;
-//         margin: 30px 0;
-//         font-weight: 100;
-//         text-align: left;
-//         input {
-//           background: transparent;
-//           vertical-align: middle;
-//           width: 16px;
-//           height: 16px;
-//           border: 1px solid $light-blue;
-//           border-radius: 7px;
-//         }
-//       }
-//       .submit-button {
-//         margin: 30px 0 40px 0;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         width: 100%;
-//         // button {
-//         //   justify-content: center;
-//         //   text-align: center;
-//         //   width: 70%;
-//         //   height: 45px;
-//         //   color: $white;
-//         //   font-weight: 700;
-//         //   font-size: 18px;
-//         //   outline: none;
-//         //   border: none;
-//         //   border-radius: 10px;
-//         //   background-color: $light-blue;
-//         // }
-//       }
-//       .no-account {
-//         text-align: center;
-//         span {
-//           padding: 0 0.5em 0.5em 0.5em;
-//           color: $green;
-//           font-weight: 100;
-//           font-size: 16px;
-//           cursor: pointer;
-//           border-bottom: solid $blue 1px;
-//         }
-//       }
-//     }
-//   }
-// }
-
-mat-card {
-  width: 22%;
-  margin: auto;
-  top: 10%;
-}
-
-.align {
-  text-align: right !important;
+.wrap-reg {
+  width: 100%;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 0px !important;
+  margin-left: 0% !important;
+  overflow: hidden !important;
+  display: flex;
+  justify-content: center;
 }
 
 mat-form-field {
   width: 100%;
 }
 
-.remember_me {
-  float: left !important;
-  font-size: 13px;
-  color: #9E9E9E !important;
-  bottom: 217px;
-  position: absolute;
-  left: 56px;
+.form-wrapper {
+  width: 75%;
 }
 
 .forgot {
-  color: $lxp-text ;
+  color: $mediumGrey;
   cursor: pointer;
   font-size: 13px;
 }
-.forgot1 {
-  color: $lxp-text ;
-  font-size: 13px;
+
+.forgot:hover {
+  transition: ease-out 0.3s;
+  color: $primary-red;
 }
 
 a:hover {
-  color: $lxp-theme-green !important;
-
-      text-decoration: underline;
-
+  color: $primary-red !important;
+  text-decoration: underline;
 }
 
-.link {
-  color: $white !important;
-}
-
-:host::ng-deep .mat-checkbox-inner-container {
-  height: 18px !important;
-  width: 18px !important;
-
-}
-
-:host ::ng-deep.mat-checkbox-layout .mat-checkbox-label {
-  line-height: 28px;
-}
-
-.haveacc {
-  color: $label !important;
-  font-size: 13px;
-}
-
-.forgot_ps {
-  text-align: center;
-  width: 100%;
-  color: $blue;
-  font-weight: 500;
-  font-size: 12px;
-  margin-top: 8%;
-}
-
-.col {
-  margin-top: 10%;
-  color: $lxp-theme-green !important;
-  margin-left: -10px;
-}
-
-:host ::ng-deep.p-t-77 {
-  padding-top: 21px !important;
-}
-
-:host ::ng-deep.sign_up {
-  margin-top: 12% !important;
-  text-align: center !important;
-  margin-left: 16px;
-}
-
-mat-card-title,
-.remember_me .a {
-  // color: $color-blue !important;
-  margin-top: -12px !important;
-  text-align: center !important;
-}
-
-:host ::ng-deep .mat-checkbox .mat-checkbox-frame {
-  border-color: $borderColor-2 !important;
-
-}
-:host ::ng-deep.mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
-  background-color: $lxp-text  !important;
-}
-
-mat-card-title {
-  font-weight: 400;
-}
-
-.fa {
-  cursor: pointer;
-  font-size: 16px;
-}
-
-
-:host ::ng-deep.errspan {
-  float: right;
-  margin-right: 10px;
-  margin-top: -29px;
-  position: relative;
-  z-index: 2;
-  font-size: 18px;
-  color: #9E9E9E;
-}
-
-:host ::ng-deep.mat-raised-button[disabled]:not([class*='mat-elevation-z']) {
-  color: #d2d1d1;
-  background: $lxp-theme-green !important;
-}
-
-
-:host ::ng-deep.pg {
-  position: absolute;
-  color: $white;
-  padding: 7px;
-  margin-top: 16px;
-  margin-left: 50% !important;
-  font-size: 14px;
-  font-weight: normal !important;
-}
-
-:host ::ng-deep.privcy {
-  position: absolute;
-  color: $white;
-  padding: 7px;
-  margin-top: 45%;
-  margin-left: 47% !important;
-  font-size: 14px;
-  font-weight: normal !important;
-}
-
-:host ::ng-deep .container-reg200 {
-  width: 100%;
-  height: 22vh !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-}
-
-:host ::ng-deep.lxplogo {
-  text-align: center;
-  margin-left: 94px;
-  margin-right: 94px;
-  width: 110px;
-}
-
-:host ::ng-deep.head1 {
-  text-align: center;
-  font-weight: normal !important;
-  font-size: 21px;
-  margin-top: 18px !important;
-}
-
-:host ::ng-deep.bgimg {
-  width: 99%;
-  height: 657px;
-}
-
-:host ::ng-deep.lnt_logo {
-  position: absolute;
-  width: 15%;
-  margin-top: 21px;
-  margin-left: 108px;
-}
-
-.reset {
-  cursor: pointer;
-}
-.space-20{
-    margin-top: 15px;
-}
-
-:host ::ng-deep .wrap-reg {
-  width: 100%;
-  padding-left: 40px;
-  padding-right: 40px;
-  // height: 610px;
-  border-radius: 0px !important;
-  margin-left: 0% !important;
-  overflow: hidden !important;
-
-}
-
-.hearder-logo {
-  height: 36px;
-}
-.mat-toolbar {
-  background: $lxp-theme-yellow-sec !important;
-  color: $gray-3;
-  position: absolute;
-  z-index: 4;
-}
-.headTit{
-  display: contents;
-  font-size: 14px;
-  font-style: oblique;
-  color: $gray-3;
-  margin-left: 2px;
-  font-weight: bold;
-}
-.example-spacer {
-  flex: 1 1 auto;
-}
-.border-right{
-  border-right: 1px solid $borderColor-2;
-}
-:host ::ng-deep.footertext{
-  font-size: 14px !important;
-  font-weight: 400;
-  padding: 18px;
-  position: absolute;
-  color: $lxp-footer-text;
-}
-
-// new changes
-input.mat-input-element {
-  margin-top: -3px !important;
-}
-
-:host ::ng-deep.mat-input-element {
-
-  margin: 3px !important;
-
-}
 .btn {
-       font-size: 16px;
-      background: $lxp-theme-green !important;
-      color: $white;
-      border-radius: 50px !important;
-      width: 54%;
-      height: 45px;
-      margin-left: 23%;
-      margin-right: 23%;
-      margin-top: 10%;
-
+  font-size: 16px;
+  background: $common-button-bg !important;
+  color: $white;
+  border-radius: 50px !important;
+  width: 50%;
+  margin-left: 23%;
+  margin-right: 23%;
+  padding: 5px 18px;
+  margin-top: 40px;
+}
+.btn:hover {
+  background: $primary-hover-color !important;
+  transition: ease-out .3s;
 }
 .center{
   text-align: center;
 }
-:host ::ng-deep .btn.disabled,
+.btn.disabled,
 .btn:disabled {
-opacity: 1 !important;
-color: $white !important;
+opacity: 1;
+color: $white;
 border-radius: .25rem;
 font-size: 16px;
 }
-.usericon input{
-  padding-left:25px;
+
+.signIn {
+  text-align: center !important;
+  color: $mediumGrey !important;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 40px 0 !important;
+  letter-spacing: 0.5px;
 }
+
+.ins-note {
+  margin-top: 1.5em;
+  color: $primary-red;
+  font-size: 12px;
+  text-align: left;
+  margin-top: 40px;
+}
+
 
 ::placeholder {
   color: $borderColor-2 !important;
   }
 
-:host ::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: $lxp-theme-green !important;
-}
-:host ::ng-deep.mat-form-field-appearance-outline .mat-form-field-wrapper {
-  margin: 0em 0 !important;
-}
-
-::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: $primary-red;
-}
-:host ::ng-deep.mat-form-field-wrapper {
-  padding-bottom: .5em;
-}
 .icon-color{
 color:  #8c8c8c !important;
 position: relative;
-top: -2px;
+margin: 0 !important;
+top: -4px;
 }
 
 .icon-color-1{
   color:  #8c8c8c !important;
   position: relative;
   cursor: pointer;
-  }
+  top: -4px;
+}
 
 .error{
   margin-top: 10px;
@@ -423,14 +104,13 @@ top: -2px;
   color: #5c6873;
 }
 
+.mat-form-spacing {
+  margin-bottom: 20px;
+}
+
 // mobile
 @media (max-width: 480px) and (max-width: 320px) {
-  .kauhalya {
-      margin-top: 11%;
-       margin-left: 0%  !important;
-      margin-right: 0% !important;
-  }
-  .wrap-reg {
+    .wrap-reg {
       text-align: center;
       width: 100%;
       padding-left: 0px !important;
@@ -439,30 +119,14 @@ top: -2px;
       height: 96vh;
       border-radius: 0 !important;
       margin-left: 0% !important;
+      .form-wrapper {
+        width: 100%;
+      }
   }
-
-  .row {
-      display: flex;
-      flex-wrap: wrap;
-      margin-right: 0px !important;
-      margin-left: 0px !important;
-  }
-
-  .linee {
-      border-left: 222px solid none !important;
-  }
-  .forgot1{
-      margin-left: -9%;
-    }
 }
 
 
-@media (max-width: 568px) {
-  .kauhalya {
-      margin-top: 11%;
-       margin-left: 0%  !important;
-      margin-right: 0% !important;
-  }
+@media (max-width: 767px) {
   .wrap-reg {
       width: 100%;
       padding-left: 0px !important;
@@ -471,124 +135,51 @@ top: -2px;
       height: 96vh;
       border-radius: 0 !important;
       margin-left: 0% !important;
+      .form-wrapper {
+        width: 100%;
+      }
   }
-
-  .row {
-      display: flex;
-      flex-wrap: wrap;
-      margin-right: 0px !important;
-      margin-left: 0px !important;
-  }
-  .powered {
-      font-size: 10px !important;
-      margin-left: -43px;
-      color: $label;
-  }
-  .footericon {
-      width: 100%;
-      position: absolute;
-      margin-left: 5px;
-      margin-top: 4px;
-  }
-  .footertext {
-      color: transparent;
-  }
-
-  .beforeloginimg {
-      width: 100%;
-       height: 0vh !important;
-       padding: 10px;
-  }
-  .footer20 {
-      position: absolute;
-      bottom: 25px;
-      text-align: center !important;
-  }
-  .linee {
-      border-left: 257px solid none !important;
-      margin-left: 33px !important;
-}
-.forgot1{
-  margin-left: -9%;
 }
 
+@media (min-width: 1500px) and (min-height: 800px) {
+  .form-wrapper {
+    width: 60%;
+  }
 }
-
 @media only screen and (max-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .col-md-4 {
-      flex: 0 0 100%;
-      max-width: 100%;
-  }
-
-  .row {
-      margin-right: 0px !important;
-      margin-left: 0px !important;
-  }
-
   .wrap-reg {
       text-align: center;
       width: 100%;
       margin-left: 0% !important;
+      .form-wrapper {
+        width: 90%;
+      }
   }
-
-  .form-group {
-      margin-bottom: 2rem;
-  }
-
-  label {
-      display: inline-block;
-      margin-bottom: 10px !important;
-  }
-
-  .forgot {
-      font-size: 13px !important;
-      // color: $color-border !important;
-  }
-
-  .reset {
-      font-size: 14px !important;
-  }
-
-  .haveacc {
-      font-size: 13px !important;
-
-  }
-
-  .beforeloginimg {
-      width: 100%;
-       height: 0vh !important;
-       padding: 10px;
-  }
-  .forgot1{
-      margin-left: -9%;
-    }
 }
 
-
-// .animated {
-//   animation-duration: 1s;
-//   animation-fill-mode: both;
-//   -webkit-animation-duration: 1s;
-//   -webkit-animation-fill-mode: both
-// }
-
-// .animatedFadeInUp {
-//   opacity: 0
-// }
-
-// .fadeInUp {
-//   opacity: 0;
-//   animation-name: fadeInUp;
-//   -webkit-animation-name: fadeInUp;
-// }
-.signIn {
-  text-align: center !important;
-  margin-top: 10% !important;
-    margin-bottom: 10px !important;
-  color: $lxp-gray !important;
-  font-size: 24px;
-  letter-spacing: 0.5px;
+input.mat-input-element {
+  margin-top: -3px !important;
 }
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: $primary-red !important;
+
+:host ::ng-deep.mat-input-element {
+  margin: 3px !important;
 }
+
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $primary-hover-color !important;
+}
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: 2px;
+}
+
+:host ::ng-deep.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0em 0 !important;
+}
+
+:host ::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: $primary-hover-color !important;
+}
+:host ::ng-deep.mat-form-field-wrapper {
+  padding-bottom: .5em;
+}
+

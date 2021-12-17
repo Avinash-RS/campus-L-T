@@ -1,17 +1,8 @@
-<div class="create-wrapper">
-  <div class="row container-reg200">
-    <div class="col-md-8 col-sm-12 col-12 border-right no_pl  no_pr">
-      <div class="main-logo">
-      <img alt="" class="beforeloginimg" style="width : 300px;" src="https://assets.lntedutech.com/edutech_logo.svg">
-    </div>
-    </div>
-    <div class="col-md-4 col-sm-12 col-12">
       <div class="wrap-reg">
-        <form [formGroup]="loginForm" (ngSubmit)="submit()">
-          <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Sign In to your account' }}</h1> <br><br>
-          <div style="margin-top:10px">
-
-            <mat-form-field appearance="outline">
+        <form [formGroup]="loginForm" class="form-wrapper" (ngSubmit)="submit()">
+          <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Sign In to your account' }}</h1>
+          <div>
+            <mat-form-field class="mat-form-spacing" appearance="outline">
               <mat-label class="label-color">Email</mat-label>
               <input matInput  id="username" #username [placeholder]="'Enter the email'"  formControlName="email" maxlength="64"
               required>
@@ -20,7 +11,6 @@
               <!-- <mat-error class="error" *ngIf="f.email.errors.required">Email ID is required</mat-error> -->
               <mat-error class="error" *ngIf="loginForm.get('email').hasError('pattern')">{{'Please enter a valid email address'}}</mat-error>
             </mat-form-field>
-            <div class="space-20"></div>
 
             <div class="" appCapslock (capsLock)="capsOn=$event">
               <!-- <label>Password</label> -->
@@ -34,58 +24,24 @@
                 </div>
                 <mat-error class="error" *ngIf="password.touched && password.errors" >{{'Password is required' }}</mat-error>
               </mat-form-field>
-              <div class="space-20"></div>
 
             </div>
-            <div class="space-20"></div>
 
 
             <div style="text-align: end;">
-              <!-- <mat-checkbox class="remember_me">
-                {{'Keep me signed in' }}
-              </mat-checkbox> -->
             <mat-label>
             <a  class="forgot" (click)="forgotPassword()">{{'Forgot password?'}}</a>
             </mat-label></div>
 
-            <div class="space-20"></div>
-
             <div class="center">
               <button class="btn" id="login" mat-raised-button [disabled]="loginForm.invalid || disableLogin" type="submit">{{'SIGN IN'}}</button>
-              <div style="
-              margin-top: 1.5em;
-             color: #C02222;
-             font-size: 15px;
-             text-align: left;
-         ">Note:
-         <ul>
-           <li style="margin-left: -1.5em;">Please clear browser cache before logging into the application for uploading the documents.</li>
-         </ul>
+              <div class="ins-note">
+         <span style="font-weight: 600;">Note: </span> <span>Please clear browser cache before logging into the application for uploading the documents.</span>
          </div>
 
             </div>
 
-            <!-- <div class="sign_up">
-              <span class="haveacc">Don't have an account?</span>
-              <a><span class="col" (click)="candidateSignup()">{{'Sign up' }}</span></a> </div><br><br> -->
-          </div>
+        </div>
         </form>
 
       </div>
-
-      <div class="row footer20">
-        <div class="col-12">
-          <span class="forgot1">© {{getCurrentYear}} Powered by L&T EduTech. All Rights Reserved</span>
-        </div>
-      </div>
-      <!-- <div class="col-4">
-        <span class="powered">
-          <img class="footericon" alt="" src="assets/learner/LT_small.svg">
-        </span>
-      </div> -->
-    </div>
-
-
-
-  </div>
-</div>

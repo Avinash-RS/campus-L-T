@@ -1,29 +1,16 @@
 @import "../../themes/themes.scss";
 
 .main-wrapper-candidate {
-  // background: url(../../../assets/images/BackgroundImage1.jpg);
-  // background-size: cover;
-  // background-repeat: repeat-y;
-  // background-position: center center;
-  // background-attachment: fixed;
-  // display: flex;
-  // position: relative;
-  // align-items: center;
-  // height: calc(100% - 90px);
-  // justify-content: center;
-  // box-sizing: border-box;
   background-size: cover;
   background-repeat: repeat-y;
   background-position: center center;
   background-attachment: fixed;
   display: flex;
-  align-items: center;
   position: relative;
-  // height: 100%;
-  // height: calc(100% - 90px);
   justify-content: center;
   box-sizing: border-box;
-  // top: 10%;
+  overflow: auto;
+  height: calc(100vh - 1px);
 
   .layer-only {
     background-color: $overlay-layer-bg;
@@ -34,19 +21,19 @@
     height: 100%;
     overflow: visible;
   }
-  .sub-wrapper { 
-    margin-top: -6em;
-    padding: 0 36px 0 40px;
+  .sub-wrapper {
+    padding: 20px 36px 20px 40px;
     color: $primary;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+    // justify-content: center;
+    margin-top: 2%;
     text-align: center;
     position: relative;
-    background: $wrapper-light-gray 0% 0% no-repeat padding-box; 
+    background: $wrapper-light-gray 0% 0% no-repeat padding-box;
+    // border-radius: 10px;
     width: 100%;
-    top: 120px;
     box-sizing: border-box;
- 
   }
 }
 
@@ -182,19 +169,9 @@
       font-weight: normal !important;
     }
 
-    :host ::ng-deep.privcy {
-      position: absolute;
-      color: $white;
-      padding: 7px;
-      margin-top: 45%;
-      margin-left: 47% !important;
-      font-size: 14px;
-      font-weight: normal !important;
-    }
-
     :host ::ng-deep .container-reg200 {
       width: 100%;
-      height: 22vh !important;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -202,35 +179,6 @@
       background-repeat: no-repeat !important;
     }
 
-    :host ::ng-deep.lxplogo {
-      text-align: center;
-      margin-left: 94px;
-      margin-right: 94px;
-      width: 110px;
-    }
-
-    :host ::ng-deep.head1 {
-      text-align: center;
-      font-weight: normal !important;
-      font-size: 21px;
-      margin-top: 18px !important;
-    }
-
-    :host ::ng-deep.bgimg {
-      width: 99%;
-      height: 657px;
-    }
-
-    :host ::ng-deep.lnt_logo {
-      position: absolute;
-      width: 15%;
-      margin-top: 21px;
-      margin-left: 108px;
-    }
-
-    .reset {
-      cursor: pointer;
-    }
     .space-20 {
       margin-top: 15px;
     }
@@ -245,40 +193,14 @@
       overflow: hidden !important;
     }
 
-    .hearder-logo {
-      height: 36px;
-    }
-    .mat-toolbar {
+   .mat-toolbar {
       background: $lxp-theme-yellow-sec !important;
       color: $gray-3;
       position: absolute;
       z-index: 4;
     }
-    .headTit {
-      display: contents;
-      font-size: 14px;
-      font-style: oblique;
-      color: $gray-3;
-      margin-left: 2px;
-      font-weight: bold;
-    }
-    .example-spacer {
-      flex: 1 1 auto;
-    }
     .border-right {
       border-right: 1px solid $borderColor-2;
-    }
-    .flex-design {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    :host ::ng-deep.footertext {
-      font-size: 14px !important;
-      font-weight: 400;
-      padding: 18px;
-      position: absolute;
-      color: $lxp-footer-text;
     }
 
     // new changes
@@ -352,11 +274,6 @@
 
     // mobile
     @media (max-width: 480px) and (max-width: 320px) {
-      .kauhalya {
-        margin-top: 11%;
-        margin-left: 0% !important;
-        margin-right: 0% !important;
-      }
       .wrap-reg {
         text-align: center;
         width: 100%;
@@ -375,20 +292,12 @@
         margin-left: 0px !important;
       }
 
-      .linee {
-        border-left: 222px solid none !important;
-      }
       .forgot1 {
         margin-left: -9%;
       }
     }
 
     @media (max-width: 568px) {
-      .kauhalya {
-        margin-top: 11%;
-        margin-left: 0% !important;
-        margin-right: 0% !important;
-      }
       .wrap-reg {
         width: 100%;
         padding-left: 0px !important;
@@ -405,17 +314,6 @@
         margin-right: 0px !important;
         margin-left: 0px !important;
       }
-      .powered {
-        font-size: 10px !important;
-        margin-left: -43px;
-        color: $label;
-      }
-      .footericon {
-        width: 100%;
-        position: absolute;
-        margin-left: 5px;
-        margin-top: 4px;
-      }
       .footertext {
         color: transparent;
       }
@@ -429,10 +327,6 @@
         position: absolute;
         bottom: 25px;
         text-align: center !important;
-      }
-      .linee {
-        border-left: 257px solid none !important;
-        margin-left: 33px !important;
       }
       .forgot1 {
         margin-left: -9%;
@@ -468,10 +362,6 @@
       .forgot {
         font-size: 13px !important;
         // color: $color-border !important;
-      }
-
-      .reset {
-        font-size: 14px !important;
       }
 
       .haveacc {
