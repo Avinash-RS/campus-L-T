@@ -31,7 +31,7 @@
                                   <div class="overall-input-wrapper min200 label-title">
                                       <!-- {{j + 1 }}.  -->
                                       <div class="readonlyTitle">
-                                          {{getJoiningArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
+                                          {{getJoiningArr.controls[j].get(form_label).value}}<span class="f_size_14 asterick">*</span>
                                       </div>
                                   </div>
 
@@ -114,8 +114,7 @@
                                       (opened)="setStep(0)">
                                       <mat-expansion-panel-header class="sub-header-accordion">
                                           <mat-panel-title class="f_size_14" style="color: #333333;">
-                                              {{getEducationArr.controls[i] && getEducationArr.controls[i].get(form_education_level).value}} Certificate Uploads<span class="f_size_14"
-                                                  style="color: #C02222;">*</span>
+                                              {{getEducationArr.controls[i] && getEducationArr.controls[i].get(form_education_level).value}} Certificate Uploads<span class="f_size_14 asterick">*</span>
                                           </mat-panel-title>
                                           <mat-panel-description>
                                           </mat-panel-description>
@@ -149,7 +148,7 @@
                                                       <!-- {{j + 1 }}.  -->
                                                       <div class="readonlyTitle1">
                                                           {{getSemesterArr(i).controls[j].get(form_label).value}}<span
-                                                              class="f_size_14" style="color: #C02222;">*</span>
+                                                              class="f_size_14 asterick">*</span>
                                                       </div>
                                                   </div>
 
@@ -261,7 +260,7 @@
                               <div class="row-wrapper flexEnd">
                                   <div class="overall-input-wrapper min200 top22">
                                       <div class="readonlyTitle">
-                                          {{getTransferArr.controls[j].get(form_label).value}}<span class="f_size_14" style="color: #C02222;">*</span>
+                                          {{getTransferArr.controls[j].get(form_label).value}}<span class="f_size_14 asterick">*</span>
                                       </div>
                                   </div>
 
@@ -337,7 +336,7 @@
                               <div class="row-wrapper flexEnd" [ngClass]="getResumeArr.controls[j].get(form_file_path).invalid && getResumeArr.controls[j].get(form_file_path).touched ? 'custom-error-border' : ''">
                                   <div class="overall-input-wrapper min200 top22">
                                       <div class="readonlyTitle">
-                                          {{getResumeArr.controls[j].get(form_label).value ? getResumeArr.controls[j].get(form_label).value : 'Resume'}}<span class="f_size_14" style="color: #C02222;">*</span>
+                                          {{getResumeArr.controls[j].get(form_label).value ? getResumeArr.controls[j].get(form_label).value : 'Resume'}}<span class="f_size_14 asterick">*</span>
                                       </div>
                                   </div>
 
@@ -423,7 +422,7 @@
 
                               <div class="row-wrapper flexEnd">
                                   <div class="overall-input-wrapper width-32">
-                                      <label>Bank Name<span style="color: #C02222;">*</span></label>
+                                      <label>Bank Name<span class="asterick">*</span></label>
                                       <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_label">
                                       <div class="form-error"
                                           *ngIf="getBankArr.controls[j].get(form_label).invalid && getBankArr.controls[j].get(form_label).touched">
@@ -438,7 +437,7 @@
                                   </div>
 
                                   <div class="overall-input-wrapper width-32">
-                                      <label>Bank Account No.<span style="color: #C02222;">*</span></label>
+                                      <label>Bank Account No.<span class="asterick">*</span></label>
                                       <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_acc_no">
                                       <div class="form-error"
                                           *ngIf="getBankArr.controls[j].get(form_acc_no).invalid && getBankArr.controls[j].get(form_acc_no).touched">
@@ -455,7 +454,7 @@
                                   </div>
 
                                   <div class="overall-input-wrapper width-32">
-                                      <label>Bank IFSC Code<span style="color: #C02222;">*</span></label>
+                                      <label>Bank IFSC Code<span class="asterick">*</span></label>
                                       <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_ifsc_code">
                                       <div class="form-error"
                                           *ngIf="getBankArr.controls[j].get(form_ifsc_code).invalid && getBankArr.controls[j].get(form_ifsc_code).touched">
@@ -472,7 +471,7 @@
                               </div>
                               <div class="row-wrapper flexEnd">
                                   <div class="overall-input-wrapper width-20">
-                                      <label>Branch Name<span style="color: #C02222;">*</span></label>
+                                      <label>Branch Name<span class="asterick">*</span></label>
                                       <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_branch">
                                       <div class="form-error"
                                           *ngIf="getBankArr.controls[j].get(form_branch).invalid && getBankArr.controls[j].get(form_branch).touched">
@@ -564,7 +563,7 @@
                           <div class="row-wrapper flexEnd">
                               <!-- <div class="overall-input-wrapper min200 top22"> -->
                               <div class="overall-input-wrapper width-20">
-                                      <label>Document Name<span style="color: #C02222;">*</span></label>
+                                      <label>Document Name<span class="asterick">*</span></label>
                                       <input [matTooltip]="getOtherCertArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getOtherCertArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
                                           type="text" [formControlName]="form_label" [readonly]="getOtherCertArr.controls[k].get(form_file_path).value ? true : false">
                                       <div class="form-error"
@@ -681,7 +680,7 @@
                             <div class="row-wrapper flexEnd">
                                 <!-- <div class="overall-input-wrapper min200 top22"> -->
                                 <div class="overall-input-wrapper width-20">
-                                        <label>Certificate Name<span style="color: #C02222;">*</span></label>
+                                        <label>Certificate Name<span class="asterick">*</span></label>
                                         <input [matTooltip]="getCertificationsArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getCertificationsArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
                                             type="text" [formControlName]="form_label" [readonly]="getCertificationsArr.controls[k].get(form_file_path).value ? true : false">
                                         <div class="form-error"
@@ -809,8 +808,8 @@
         <i matTooltip="Download" style="font-size: 26px; position: absolute; right: 30px;" (click)="downloadFile(pdfsrc)"
         class="icon-get_app_black_24dp ag-icon-font-size pointer"></i>
 
-          <i style="color: #C02222;" (click)="closeBox()"
-              class="icon-cancel_black ag-icon-font-size pointer"></i>
+          <i (click)="closeBox()"
+              class="icon-cancel_black ag-icon-font-size pointer primary-clr"></i>
       </div>
 
       <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>

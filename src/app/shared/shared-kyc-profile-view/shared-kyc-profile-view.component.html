@@ -2434,16 +2434,14 @@
               </div>
             </div>
             <div *ngIf="candidateService.checkKycOrJoiningForm()"
-              class="row-wrapper mt-2 w-100 justify-content-start checkbox-pad"
-              style="color: #c02222"
+              class="row-wrapper mt-2 w-100 justify-content-start checkbox-pad primary-clr"
             >
               Note: Please make sure to complete the form and fill the
               information’s correctly. You will not be able to edit after the
               submission.
             </div>
             <div *ngIf="!candidateService.checkKycOrJoiningForm()"
-              class="row-wrapper mt-2 w-100 justify-content-start checkbox-pad"
-              style="color: #c02222"
+              class="row-wrapper mt-2 w-100 justify-content-start checkbox-pad primary-clr"
             >
             Note: Please make sure to complete the form and fill the information’s correctly. You will not be able to edit after the shortlisting process.
             </div>
@@ -2570,8 +2568,8 @@
       <i matTooltip="Download" style="font-size: 26px; position: absolute; right: 30px;" (click)="downloadFile(pdfsrc)"
       class="icon-get_app_black_24dp ag-icon-font-size pointer"></i>
 
-      <i style="color: #C02222;" (click)="closeBox()"
-          class="icon-cancel_black ag-icon-font-size pointer"></i>
+      <i (click)="closeBox()"
+          class="icon-cancel_black ag-icon-font-size pointer primary-clr"></i>
   </div>
 
     <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
@@ -2816,7 +2814,7 @@
         <button
           (click)="closeBox()"
           mat-raised-button
-          class="submit"
+          class="common-button common-button-height-32"
           type="button"
         >
           Done
@@ -2880,7 +2878,7 @@
         <button
           (click)="closeBox()"
           mat-raised-button
-          class="submit"
+          class="common-button common-button-height-32"
           type="button"
         >
           Done
@@ -2930,7 +2928,7 @@
         <button
           (click)="closeBox()"
           mat-raised-button
-          class="submit"
+          class="common-button common-button-height-32"
           type="button"
         >
           Done

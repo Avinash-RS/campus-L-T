@@ -73,10 +73,10 @@
                     }
                     .input:focus,
                     .input:hover {
-                        border: 1px solid $primary-red;
+                        border: 1px solid $primary-hover-color;
                     }
                     .form-error {
-                        color: $primary-red;
+                        color: $primary-error-text;
                         font-size: 12px;
                     }
                     ::placeholder {
@@ -114,11 +114,11 @@
                     height: 24px;
                     transform: translate(-50%, -20%);
                     i {
-                        color: $primary-red;
+                        color: $primary-text-color;
                     }
                     i:hover {
                         color: white;
-                        background-color: $primary-red;
+                        background-color: $primary-hover-color;
                         border-radius: 50%;
                     }
                 }
@@ -213,7 +213,7 @@
 :host ::ng-deep .ant-select-selection:hover,
 :host ::ng-deep .ant-select-selection:focus,
 :host ::ng-deep .ant-select-selection:active {
-    border: solid $primary-red 1px !important;
+    border: solid $primary-hover-color 1px !important;
     border-radius: 0px !important;
     z-index: 0 !important;
     box-shadow: none !important;
@@ -221,9 +221,9 @@
 
 :host ::ng-deep input.ng-invalid.ng-touched,
 :host ::ng-deep nz-select.ng-invalid.ng-touched {
-    border: solid $primary-red 1px !important;
+    border: solid $primary-error-color 1px !important;
     .ant-select-selection {
-        border: solid $primary-red 1px !important;
+        border: solid $primary-error-color 1px !important;
     }
 }
 
@@ -319,7 +319,7 @@
 //mat-checkbox start
 :host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background: $primary-red !important;
+    background: $primary-color !important;
 }
 
 .date-relative {
