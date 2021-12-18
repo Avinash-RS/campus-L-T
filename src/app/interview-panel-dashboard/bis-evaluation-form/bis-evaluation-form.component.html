@@ -37,12 +37,11 @@
             <span class="head"> Date of interview<span class="asterick">*</span> </span>
           </div>
           <div class="col-7">
-            <mat-form-field class="date" appearance="none">
-              <input placeholder="Enter here" style="padding-left: 12px;" formControlName="interview_date" matInput [matDatepicker]="picker">
+            <div class="date height-35">
+              <input class="height-35" placeholder="Enter here" style="padding-left: 12px;" formControlName="interview_date" matInput [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
+              </div>
           </div>
           <ng-container *ngIf="interview_date.invalid && interview_date.touched">
             <div class="col-5">

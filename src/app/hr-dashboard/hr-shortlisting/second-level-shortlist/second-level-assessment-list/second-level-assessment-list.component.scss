@@ -127,3 +127,8 @@ padding: 4px 8px;
   align-items: center;
   cursor: pointer;
 }
+::ng-deep .ag-grid-header-center {
+  .ag-header-cell-label {
+    justify-content: center;
+  }
+}

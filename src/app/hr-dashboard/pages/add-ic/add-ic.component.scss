@@ -24,7 +24,7 @@ input.ng-touched.ng-invalid {
     text-align: left;
     max-width: 250px;
   }
-  
+
 .add-field {
     position: relative;
     left: 10px;
@@ -34,4 +34,19 @@ input.ng-touched.ng-invalid {
 }
 .hidden {
     visibility: hidden;
+}
+
+.mat-form-field-input-box {
+  border: solid $input-border 1px;
+  margin: 0;
+  width: 120%;
+  padding: .15em .5em;
+  font-size: 15px;
+  color: $light-black;
+  vertical-align: middle;
+  outline: none;
+  // background: $white-primary;
+  display: flex;
+  box-sizing: border-box;
+  min-height: 32px;
 }

@@ -83,3 +83,26 @@
   height: 48px !important;
   border-bottom: 0.1em solid #e8e8e8;
 }
+.mat-form-field-input-box {
+  border: solid $input-border 1px;
+  margin: 0;
+  width: 120%;
+  padding: .15em .5em;
+  font-size: 15px;
+  color: $light-black;
+  vertical-align: middle;
+  outline: none;
+  // background: $white-primary;
+  display: flex;
+  box-sizing: border-box;
+  min-height: 32px;
+}
+
+.list-wrapper {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+  .list-count {
+      position: absolute;
+      margin-top: 1em !important;
+  }
+}
