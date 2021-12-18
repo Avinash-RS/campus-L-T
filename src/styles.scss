@@ -707,7 +707,7 @@ th {
 }
 /* mat checkbox css ends */
 
-/* mat-select css*/
+/* mat select css*/
 .mat-select-custom {
   width: 100% !important;
   min-height: 32px;
@@ -739,18 +739,18 @@ th {
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled),
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-    color: $primary-red !important;
+    color: $primary-color !important;
 }
 
 .mat-form-field.mat-focused .mat-form-field-ripple,
 .mat-calendar-body-selected {
-    background-color: $primary-red !important;
+    background-color: $primary-color !important;
 }
 /* mat-select css ends*/
 
 /* mat date picker css */
 .mat-datepicker-toggle-active {
-  color: $primary-red;
+  color: $primary-color;
 }
 /* mat date picker css ends */
 

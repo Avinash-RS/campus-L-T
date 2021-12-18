@@ -105,9 +105,12 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
     }
     if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
       let initColumn: any = this.tabledefInit();
+      let normalColumn: any = this.normalAssessmentColumns();
       let videoColumn: any = this.videoAssessmentColumns();
-      let videoAssessColumnMerge = initColumn.concat(videoColumn);
-      this.columnDefs = videoAssessColumnMerge;
+      let normalAssessColumnMerge = initColumn.concat(normalColumn);
+      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 4, 0, videoColumn[0]);
+      normalAssessColumnMerge.pop();
+      this.columnDefs = normalAssessColumnMerge;
       return this.columnDefs;
     }
   }
@@ -227,58 +230,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
           return params.value;
         }
       },
-      // {
-      //   headerName: 'Assessment Results', field: 'status1',
-      //   filter: 'agSetColumnFilter',
-      //   filterParams: {
-      //     applyMiniFilterWhileTyping: true
-      //   },
-      //   minWidth: 140,
-      //   sortable: true,
-      //   tooltipField: 'status1',
-      //   getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
-      // {
-      //   headerName: 'Assessments Taken', field: 'exams_taken',
-      //   filter: 'agNumberColumnFilter',
-      //   minWidth: 140,
-      //   sortable: true,
-      //   tooltipField: 'exams_taken',
-      //   filterParams: {
-      //     buttons: ['reset'],
-      //   },
-      //     getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
-      // {
-      //   headerName: 'Yet to complete Assessments', field: 'notTaken',
-      //   filter: 'agNumberColumnFilter',
-      //   minWidth: 140,
-      //   sortable: true,
-      //   tooltipField: 'notTaken',
-      //   filterParams: {
-      //     buttons: ['reset'],
-      //   },
-      //     getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
-      // {
-      //   headerName: 'Available for shortlist', field: 'available',
-      //   filter: 'agNumberColumnFilter',
-      //   minWidth: 140,
-      //   sortable: true,
-      //   tooltipField: 'available',
-      //   filterParams: {
-      //     buttons: ['reset'],
-      //   },
-      //     getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
       {
         headerName: 'Action', field: 'buttons',
         minWidth: 120,
