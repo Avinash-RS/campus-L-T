@@ -398,7 +398,7 @@ mat-drawer ul li span img {
 :host ::ng-deep .ant-select-selection:hover,
 :host ::ng-deep .ant-select-selection:focus,
 :host ::ng-deep .ant-select-selection:active {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-hover-color 1px !important;
   border-radius: 0px !important;
   z-index: 0 !important;
   box-shadow: none !important;

@@ -236,14 +236,14 @@
 <div *ngIf="((addUserForm && addUserForm.value && addUserForm.value.role == 'candidate') || (addUserForm && addUserForm.value && addUserForm.value.role == 'institute')) && currentRole != 'institute'" class="overall-input-wrapper width-100">
   <mat-checkbox class="skipKyc" [formControlName]="'is_skip_kyc'">Skip KYC</mat-checkbox>
 </div>
-<div style="color: red;" *ngIf="addUserForm && addUserForm.value && addUserForm.value.role == 'candidate'" class="overall-input-wrapper width-100">
+<div *ngIf="addUserForm && addUserForm.value && addUserForm.value.role == 'candidate'" class="overall-input-wrapper width-100 primary-clr">
   *You are adding this candidate under the drive -> "{{selectedDrive}}"
 </div>
 
 </ng-container>
 <div class="overall-input-wrapper row-btn-wrapper width-100">
-  <button class="btn-add cancel" type="button" (click)="closeDialog()" mat-raised-button>Cancel</button>
-  <button class="btn-add add" type="submit" mat-raised-button>Add</button>
+  <button class="btn-add common-cancel-button common-button-height-33" type="button" (click)="closeDialog()" mat-raised-button>Cancel</button>
+  <button class="btn-add common-button common-button-height-33 ml-3" type="submit" mat-raised-button>Add</button>
 </div>
 
 </form>
