@@ -1139,7 +1139,6 @@ padding: 2.5em 1em 2.5em 1em;
   background: transparent;
   color: $primary-text-color;
   padding: 0 !important;
-  border-radius: 3px !important;
   border: 1px solid $outline-button-border !important;
   transition: background-color 580ms linear;
   span.mat-button-wrapper {
@@ -1162,7 +1161,7 @@ padding: 2.5em 1em 2.5em 1em;
   background: $common-button-bg;
   color: $white;
   padding: 0 !important;
-  border-radius: 3px !important;
+  border-radius: 4px;
   span.mat-button-wrapper {
     position: relative;
     min-width: 120px;

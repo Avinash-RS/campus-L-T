@@ -40,6 +40,10 @@ export const CONSTANT = {
       HOME: '/Unauthenticated',
       VIDEO_ASSESS: '/Unauthenticated/video-assessment-evaluation'
     },
+    CUSTOMERS: {
+      HOME: '/customer',
+      LANDING: '/customer/landing'
+    },
     ADMIN_DASHBOARD: {
       HOME: '/admin',
       DASHBOARD: '/admin/dashboard',
@@ -155,6 +159,10 @@ export const CONSTANT = {
     UNAUTHENTICATED: {
       HOME: 'Unauthenticated',
       VIDEO_ASSESS: 'video-assessment-evaluation'
+    },
+    CUSTOMERS: {
+      HOME: 'customer',
+      LANDING: 'landing',
     },
     ADMIN_DASHBOARD: {
       HOME: 'admin',

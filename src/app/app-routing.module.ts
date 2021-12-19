@@ -14,6 +14,9 @@ const routes: Routes = [
     path: '', loadChildren: './login/login.module#LoginModule', canActivate: [IsLoggedinGuard]
   },
   {
+    path: `${CONSTANT.ROUTES.CUSTOMERS.HOME}`, loadChildren: './customer-module/customer-module.module#CustomerModuleModule'
+  },
+  {
     path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`, loadChildren: './admin-dashboard/master-dashboard.module#MasterDashboardModule', canLoad: [ AdmincanloadGuard ]
   },
   {

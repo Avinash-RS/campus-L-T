@@ -1,0 +1,43 @@
+@import '../../../themes/themes.scss';
+
+.customer-header {
+  position: relative;
+  min-height: 100px;
+  background: $white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    background: transparent linear-gradient(
+      90deg, #16BEF0 0%, #54B952 100%) 0% 0% no-repeat padding-box;
+  }
+
+  .header-logo {
+    color: $primary-text-color;
+    font-size: 22px;
+    font-weight: 700;
+    padding-left: 10px;
+  }
+
+  .header-right-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: $black;
+    .welcome {
+      font-size: 18px;
+    }
+    em {
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+}
