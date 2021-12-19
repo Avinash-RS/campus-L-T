@@ -31,12 +31,6 @@ export class ModalBoxComponent implements OnInit {
   submit(dataToBeShared) {
     // To Delete User
     if (dataToBeShared.identity === 'user-list-delete') {
-      // this.adminService.deleteUser(dataToBeShared.componentData.uid).subscribe((data) => {
-      //   this.sharedService.updateUserlist.next();
-      //   this.appConfig.error('User deleted', '');
-      // }, (err) => {
-
-      // });
       this.dialogRef.close();
     }
     // To Add User

@@ -2,84 +2,36 @@
 * {
   margin: 0;
 }
-.video {
-  background: $white;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 8px 16px 16px 16px;
-  // justify-content: center;
-  box-sizing: border-box;
-  align-items: center;
-  .header {
-    color: $black;
-    font-size: 14px;
-    padding-bottom: 8px;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
-  vg-player {
-    // min-width: 800px;
-    width: 100%;
-    min-height: 400px;
-    max-height: 400px;
-  }
-  vg-controls {
-    background-color: #130e42 !important;
-  }
-}
 .modal-wrapper {
   background: $white;
   display: flex;
   flex-wrap: wrap;
-  padding: 24px;
-  justify-content: center;
-  box-sizing: border-box;
   flex-direction: column;
+  padding: 0;
+  min-width: 500px;
+  max-width: 600px;
+  .heading-wrapper {
+    padding: 8px 22px;
+    border-bottom: solid 1px lightgray;
+    .heading {
+      color: $black;
+      font-size: 22px;
+      font-weight: 550;
+    }
+  }
+  .body-wrapper {
+    padding: 24px 24px;
+  }
   .confirmation-text {
-    color: $light-black;
-    font-size: 15px;
-    font-weight: 200;
-    margin: 0em 0 0.5em 0;
+    color: $black;
+    font-size: 18px;
+    font-weight: 400;
   }
   .button-wrappers {
-    margin: 1em 0em 0em -1em;
-    text-align: center;
+    padding: 20px 0 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    // button {
-    //   min-width: 90px;
-    //   // color: $white;
-    //   font-size: 16px;
-    //   outline: none;
-    // }
-    // .delete-cancel {
-    //   background: $blue-2 0% 0% no-repeat padding-box;
-    // }
-    // .delete-confirm {
-    //   background: $red-1 0% 0% no-repeat padding-box;
-    //   margin: 0 0 0 1em;
-    // }
-    // .add-cancel {
-    //   background: $primary 0% 0% no-repeat padding-box;
-    // }
-    // .add-confirm {
-    //   background: $light-blue 0% 0% no-repeat padding-box;
-    //   margin: 0 0 0 1em;
-    // }
-    // .update-cancel {
-    //   background: $primary 0% 0% no-repeat padding-box;
-    // }
-    // .update-confirm {
-    //   background: $light-blue 0% 0% no-repeat padding-box;
-    //   margin: 0 0 0 1em;
-    // }
-
-    .ok {
-      background: $blue-2 0% 0% no-repeat padding-box;
-    }
   }
 }
 
@@ -107,7 +59,7 @@
     overflow-y: auto;
     .ul {
       ul {
-        margin: .75em 0;
+        margin: .75em 3em;
         li {
           margin: .25em 0;
         }
