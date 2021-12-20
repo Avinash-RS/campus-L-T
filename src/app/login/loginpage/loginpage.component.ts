@@ -121,6 +121,10 @@ export class LoginpageComponent implements OnInit {
 
             this.appConfig.setCustomerConfiguration(data);
 
+            let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
+            if (customersList.length > 1) {
+              this.appConfig.setLocalData('multiCustomer', 'true');
+            }
             if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
             }

@@ -2,15 +2,16 @@
   <app-customer-landing-header></app-customer-landing-header>
   <div class="customer-body-wrapper">
     <div class="customers">
-      <mat-card class="card" *ngFor="let customer of [0,1,2]; let i = index">
+      <ng-container *ngIf="customersList">
+      <mat-card class="card" *ngFor="let customer of customersList; let i = index">
         <div class="company-logo">
-          <img *ngIf="i==0" src="assets/images/EduTech_Logo.svg" alt="" srcset="">
-          <img *ngIf="i > 0" src="https://assets.lntedutech.com/edutech_logo.svg" alt="" srcset="">
+          <img [src]="customer.customer_logo" [alt]="customer.customer_name" srcset="">
         </div>
         <mat-card-footer class="card-footer">
-          <button class="customer-outline-button common-button-height-40" mat-raised-button><span class="mr-2">Go</span> <span class="icon-right-next"></span></button>
+          <button (click)="gotoDashboard(i)" class="customer-outline-button common-button-height-40" mat-raised-button><span class="mr-2">Go</span> <span class="icon-right-next"></span></button>
         </mat-card-footer>
       </mat-card>
+    </ng-container>
     </div>
   </div>
   </div>

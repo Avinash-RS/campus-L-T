@@ -455,10 +455,13 @@ export class AppConfigService {
   }
 
  async setCustomerConfiguration(data: any) {
-    await this.setLocalData('selected_customer', data && data['customers'] && data['customers'][0] && data['customers'][0]['customer_code'] ? JSON.stringify(data['customers'][0]) : null);
     await this.setLocalData('customers', data && data['customers'] && data['customers'].length > 0 ? JSON.stringify(data['customers']) : []);
-    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
-      this.setDriveList();
+    let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
+    if (customersList.length < 2) {
+      await this.setLocalData('selected_customer', data && data['customers'] && data['customers'][0] && data['customers'][0]['customer_code'] ? JSON.stringify(data['customers'][0]) : null);
+      if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
+        this.setDriveList();
+      }
     }
   }
 
