@@ -2,7 +2,7 @@
   <app-customer-landing-header></app-customer-landing-header>
   <div class="customer-body-wrapper">
     <div class="customers">
-      <mat-card class="card" *ngFor="let customer of [0,1,2]; let i = index" [ngClass]="customer && customer.length < 4 ? 'margin-increase' : ''">
+      <mat-card class="card" *ngFor="let customer of [0,1,2]; let i = index">
         <div class="company-logo">
           <img *ngIf="i==0" src="assets/images/EduTech_Logo.svg" alt="" srcset="">
           <img *ngIf="i > 0" src="https://assets.lntedutech.com/edutech_logo.svg" alt="" srcset="">
