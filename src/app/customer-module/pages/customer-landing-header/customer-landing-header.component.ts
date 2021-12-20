@@ -12,6 +12,8 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 })
 export class CustomerLandingHeaderComponent implements OnInit {
 
+  username = this.appConfig.getLocalData('username');
+
   constructor(
     private appConfig: AppConfigService,
     private matDialog: MatDialog,

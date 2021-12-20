@@ -144,7 +144,7 @@ export class LoginpageComponent implements OnInit {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              this.appConfig.setDriveIdForCandidate(data);
+              // this.appConfig.setDriveIdForCandidate(data);
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');

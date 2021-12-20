@@ -15,7 +15,7 @@ export class MultiCustomerLandingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCustomers()
+    this.getCustomers();
   }
 
   getCustomers() {
@@ -25,7 +25,7 @@ export class MultiCustomerLandingComponent implements OnInit {
   async gotoDashboard(i: any) {
     let customersList = this.appConfig.getCustomerList();
     await this.appConfig.setLocalData('selected_customer', customersList && customersList[i] && customersList[i]['customer_code'] ? JSON.stringify(customersList[i]) : null);
-    await this.appConfig.setDriveList();
+    await this.appConfig.getLocalData('roles') === 'candidate' ? this.appConfig.setDriveIdForCandidate(customersList[i]) : this.appConfig.setDriveList();
     this.redirectTo();
   }
 
