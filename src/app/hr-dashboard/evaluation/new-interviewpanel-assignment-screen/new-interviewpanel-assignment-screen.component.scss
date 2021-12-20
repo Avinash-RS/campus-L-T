@@ -192,7 +192,7 @@
 }
 .input:focus,
 .input:hover {
-  border: 1px solid $primary-red;
+  border: 1px solid $primary-hover-color;
 }
 
 .loading-button {
@@ -242,36 +242,6 @@
     display: flex;
     justify-content: center;
     margin: 2em 0 0 0;
-  }
-  .confirm {
-    background: $background 0% 0% no-repeat padding-box;
-    box-shadow: $shadow-light-black-1;
-    border-radius: 10px;
-    height: 25px;
-    color: $white;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 4px 16px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .cancel {
-    margin: 0 1em 0 0;
-    box-shadow: $shadow-light-black-1;
-    border: 1px solid $gray-dark;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    height: 25px;
-    color: $background;
-    font-size: 14px !important;
-    font-weight: 500;
-    padding: 4px 16px;
-    background: transparent;
-    justify-content: center;
-    flex-direction: column;
   }
 
 }

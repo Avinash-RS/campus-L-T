@@ -367,7 +367,7 @@ dateConvertionMonth(date) {
             },
             cellRenderer: (params) => {
               if (params['data']['kyc_exempted'] && params['data']['kyc_exempted'] == 'no') {
-                return `<span style="border-bottom: solid #C02222 1px; cursor: pointer; color: #C02222;">${params['data']['candidate_name']} </span>`;
+                return `<span style="border-bottom: solid #1b4e9b 1px; cursor: pointer; color: #1b4e9b;">${params['data']['candidate_name']} </span>`;
               } else {
                 return `${params['data']['candidate_name']}`
               }

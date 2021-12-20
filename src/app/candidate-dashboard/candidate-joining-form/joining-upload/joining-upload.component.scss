@@ -630,6 +630,9 @@ mat-expansion-panel-header {
     height: auto !important;
     position: static;
     overflow: hidden;
+    .mat-dialog-container {
+      overflow: hidden !important;
+    }
     .main-wrappers {
         position: relative;
         width: 100%;

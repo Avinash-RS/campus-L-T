@@ -1120,10 +1120,10 @@ padding: 2.5em 1em 2.5em 1em;
 }
 .common-outline-button-not-hover {
   background: transparent;
-  color: $primary-text-color;
+  color: $mediumGrey;
   padding: 0 !important;
   border-radius: 3px !important;
-  border: 1px solid $outline-button-border !important;
+  border: 1px solid $common-button-bg !important;
   transition: background-color 580ms linear;
   span.mat-button-wrapper {
     position: relative;
@@ -1169,6 +1169,13 @@ padding: 2.5em 1em 2.5em 1em;
     justify-content: space-around;
     align-items: center;
     padding: 0 12px;
+  }
+}
+.videoInterviewFlowPopup {
+  .min-width-80 {
+    span.mat-button-wrapper {
+      min-width: 80px !important;
+    }
   }
 }
 
@@ -1465,16 +1472,16 @@ padding: 2.5em 1em 2.5em 1em;
 .ant-select-selection:hover,
 .ant-select-selection:focus,
 .ant-select-selection:active {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-hover-color 1px !important;
   border-radius: 0px !important;
   z-index: 0 !important;
   box-shadow: none !important;
 }
 
 nz-select.ng-invalid.ng-touched {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-error-color 1px !important;
   .ant-select-selection {
-      border: solid $primary-red 1px !important;
+      border: solid $primary-error-color 1px !important;
   }
 }
 

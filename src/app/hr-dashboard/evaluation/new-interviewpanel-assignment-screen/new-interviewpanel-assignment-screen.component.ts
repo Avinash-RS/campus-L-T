@@ -281,7 +281,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         },
         cellRenderer: (params) => {
           if (params['data']['level'] && params['data']['level'] != ' ') {
-            return `<span style="border-bottom: solid #C02222 1px; cursor: pointer; color: #C02222;">${params['data']['email']} </span>`;
+            return `<span style="border-bottom: solid #1b4e9b 1px; cursor: pointer; color: #1b4e9b;">${params['data']['email']} </span>`;
           } else {
             return `${params['data']['email']}`
           }

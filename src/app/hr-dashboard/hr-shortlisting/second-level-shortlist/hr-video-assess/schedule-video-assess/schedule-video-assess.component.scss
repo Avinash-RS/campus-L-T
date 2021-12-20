@@ -45,16 +45,6 @@
         }
         .nextBtn {
             margin-top: 30px;
-            button {
-                padding: 6px 30px;
-                font-size: 16px;
-                font-weight: 400;
-                color: #ffffff;
-                line-height: normal;
-                background-color: #BE2423;
-                border-radius: 4px;
-                border: 0;
-            }
         }
     }
     .scheduleTab {
@@ -97,10 +87,10 @@
         }
 
         .input:focus,.input:hover {
-          border: 1px solid $primary-red;
+          border: 1px solid $primary-hover-color;
       }
       .form-error {
-          color: $primary-red;
+          color: $primary-error-text;
           font-size: 12px;
       }
       ::placeholder {
@@ -286,24 +276,6 @@
     display: flex;
     justify-content: center;
     margin-top: 50px !important;
-    button {
-        border: 0;
-        padding: 6px 25px;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: normal;
-        margin: 0 10px;
-        &.prev {
-            background-color: #ffffff;
-            color: #666666;
-            border: 1px solid #666666;
-        }
-        &.next {
-            background-color: #BE2423;
-            color: #ffffff;
-        }
-    }
 }
 //Ends
 
@@ -403,7 +375,7 @@
         }
         &.mat-tab-label-active {
             .mat-tab-label-content {
-                background-color: #BE2423;
+                background-color: $common-button-bg;
                 span {
                     color: #ffffff;
                     &:last-child {
@@ -493,7 +465,7 @@
 }
 input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
 {
-    border: solid $primary-red 1px !important;
+    border: solid $primary-error-color 1px !important;
 }
 .date-padding {
   padding-right: 28px !important;
@@ -501,21 +473,11 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
 .mat-icon {
   color: #bebebe;
 }
-.asterick {
-  color: $primary-red;
-}
-// Ant select drop down css
-// :host ::ng-deep .ant-select-selection {
-  // border: solid 0.8px #bebebe !important;
-  // height: 35px !important;
-  // padding: 4px 8px;
-  // border-radius: 0px !important;
-// }
 
 :host ::ng-deep .ant-select-selection:hover,
 :host ::ng-deep .ant-select-selection:focus,
 :host ::ng-deep .ant-select-selection:active {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-hover-color 1px !important;
   border-radius: 4px !important;
   z-index: 0 !important;
   box-shadow: none !important;
@@ -524,11 +486,11 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
 
 :host ::ng-deep input.ng-invalid.ng-touched,
 :host ::ng-deep textarea.ng-invalid.ng-touched {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-error-color 1px !important;
 }
 :host ::ng-deep nz-select.ng-invalid.ng-touched {
   .ant-select-selection {
-    border: solid $primary-red 1px !important;
+    border: solid $primary-error-color 1px !important;
     border-radius: 4px !important;
   }
 }
@@ -611,7 +573,7 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
   margin: auto;
   right: 0;
   bottom: 0;
-  color: $primary-red;
+  color: $primary-text-color;
   cursor: pointer;
 }
 .load-icon {
@@ -649,4 +611,17 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched
   background: no-repeat padding-box #fff;
   box-shadow: 2px 2px 5px #0000001a;
   border: 1px solid rgba(147,147,147,.5);
+}
+:host ::ng-deep {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgba(27, 78, 155, 0.54) !important;
+  }
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: $common-button-bg !important;
+  }
+}
+::ng-deep {
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: $common-button-bg !important;
+  }
 }
