@@ -353,6 +353,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   educationDetailsAllData: any;
   matDialogRefDocViewerPopUpRef: any;
   termsAndCondtionsPopRef: any;
+  customerName: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -367,6 +368,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnInit() {
+    this.customerName = this.appConfig.getSelectedCustomerName();
     this.formInitialization();
     this.getPreviewData();
     this.checkFormValidRequestFromRxjs();

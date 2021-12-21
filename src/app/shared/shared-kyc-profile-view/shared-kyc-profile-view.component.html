@@ -1825,7 +1825,7 @@
           </div>
         </div>
         <div *ngIf="workDetailsAlldata[this.form_is_ca_resaon_suitable]" class="overall-input-wrapper width-50 padding-1">
-          <label>Explain why you consider yourself suitable for L&T</label>
+          <label>Explain why you consider yourself suitable for {{customerName}}</label>
           <div class="inpu-preview size-16 bold-700 color-black">
             {{ workDetailsAlldata[this.form_is_ca_resaon_suitable] }}
           </div>
@@ -1837,7 +1837,7 @@
 
 
           <ng-container *ngIf="workDetails.relatives && workDetails.relatives.length > 0">
-            <div class="subDocumentTitle">Relatives / Acquaintances in L&T group of companies</div>
+            <div class="subDocumentTitle">Relatives / Acquaintances in {{customerName}} group of companies</div>
             <div
               class="row-wrapper mt-0"
               [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"

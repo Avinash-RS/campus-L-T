@@ -37,7 +37,7 @@
 
 <ng-template #searchFilter>
 <div class="search-bar">
-          <div class="search-icon mr-2">
+          <div class="search-icon" [ngClass]="selectedUserlist != 'institute' ? 'mr-2' : ''">
               <img src="assets/images/feather-search.svg" alt="" srcset="">
               <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
           </div>
@@ -51,7 +51,7 @@
 </button>
 </ng-template>
 
-      <div *ngIf="selectedUserlist == 'candidate'" class="ag-theme-alpine red-theme">
+      <div *ngIf="selectedUserlist == 'candidate'" class="ag-theme-alpine red-theme mb-2">
           <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
            [rowData]="rowData"
            [columnDefs]="columnDefs"
@@ -75,7 +75,7 @@
           </ag-grid-angular>
       </div>
 
-      <div *ngIf="selectedUserlist == 'hr'" class="ag-theme-alpine red-theme">
+      <div *ngIf="selectedUserlist == 'hr'" class="ag-theme-alpine red-theme mb-2">
         <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
          [rowData]="rowData"
          [columnDefs]="columnDefs"
@@ -98,7 +98,7 @@
         </ag-grid-angular>
     </div>
 
-    <div *ngIf="selectedUserlist =='invPanel'" class="ag-theme-alpine red-theme">
+    <div *ngIf="selectedUserlist =='invPanel'" class="ag-theme-alpine red-theme mb-2">
       <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
        [rowData]="rowData"
        [columnDefs]="columnDefs"
@@ -121,7 +121,7 @@
       </ag-grid-angular>
   </div>
 
-    <div *ngIf="selectedUserlist == 'institute'" class="ag-theme-alpine red-theme">
+    <div *ngIf="selectedUserlist == 'institute'" class="ag-theme-alpine red-theme mb-2">
       <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
        [rowData]="rowData"
        [columnDefs]="columnDefs"

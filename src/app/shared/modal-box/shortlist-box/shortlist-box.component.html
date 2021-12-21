@@ -29,15 +29,7 @@
       </div>
     </div>
   </div>
-  <div class="radio-group">
-    <mat-radio-group  style="display: flex; justify-content: space-between; width: 50%;" [(ngModel)]="radioValue">
-      <mat-radio-button value="pre">Pre-assessment
-      </mat-radio-button>
-      <mat-radio-button value="rec">Recruitment</mat-radio-button>
-    </mat-radio-group>
-
-  </div>
-  <div class="footer pt-2">
+  <div class="footer">
     Confirm to move the candidate details to assign assessment
   </div>
   <div class="buttons">
@@ -50,7 +42,7 @@
   <div class="bulk-upload-text">
     Please confirm the selected candidates for assessment shortlist
   </div>
-  <div class="radio-group">
+  <div class="radio-group pb-2">
       <mat-radio-group  style="display: flex; justify-content: space-between; width: 35%; margin-right: 6em;" [(ngModel)]="SecondShortlistradioValue">
           <mat-radio-button value="yes">Send mail
           </mat-radio-button>
@@ -59,7 +51,7 @@
 
   </div>
   <div class="buttons">
-    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-cancel-button common-button-height-33 mr-4" (click)="cancel()" mat-raised-button>Cancel</button>
     <button class="common-button common-button-height-35" (click)="secondShortlist()" mat-raised-button>Confirm</button>
   </div>
 </div>
