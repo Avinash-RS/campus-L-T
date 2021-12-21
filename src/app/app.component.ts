@@ -22,22 +22,12 @@ LicenseManager.setLicenseKey('CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'udap-registration';
-  showLoadingIndicator = true;
   screenHeight;
   screenWidth;
-  maintenanceStatus = false;
-
-  titles = 'connectionDetector';
-  status = 'ONLINE';
   screenBoolean = false;
-  // Hi
-  // initializing as online by default
-  isConnected = true;
   isIE = false;
   subscriptions: Subscription[] = [];
-  maintenanceMessage: any;
   loading: boolean = true;
-  selectedDriveId: number;
 
   constructor(
     private router: Router,
@@ -45,13 +35,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
   ) {
-    // this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
-    this.appConfig.clearLocalDataOne('personalFormTouched');
-    this.appConfig.clearLocalDataOne('educationalFormTouched');
-    this.appConfig.clearLocalDataOne('familyFormTouched');
-    this.appConfig.clearLocalDataOne('generalFormTouched');
-
     this.router.events
     .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
     .subscribe(event => {
@@ -63,49 +47,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       //  ..... // here your code when page is refresh
       }
     })
-    // this.router.events.subscribe((routerEvent: Event) => {
-    //   if (routerEvent instanceof NavigationStart) {
-    //   }
-    //   // On NavigationEnd or NavigationError or NavigationCancel
-    //   // set showLoadingIndicator to false
-    //   if (routerEvent instanceof NavigationEnd ||
-    //     routerEvent instanceof NavigationError ||
-    //     routerEvent instanceof NavigationCancel) {
-    //       if (environment.local != true) {
-    //         // this.commonService.initVersionCheck(environment.versionCheckURL);
-    //       }
-    //       }
-    // });
   }
 
   ngOnInit() {
     this.getScreenSize();
     this.checkIE();
     this.listenToLoading();
-    this.selectedDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
   }
 
-  checkNavigation() {
-        this.router.events.subscribe((routerEvent: Event) => {
-          if (this.appConfig.getDriveId() == this.selectedDriveId) {
-            this.router.routeReuseStrategy.shouldReuseRoute = () => true;
-            this.router.onSameUrlNavigation = 'ignore';
-          } else {
-            this.selectedDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
-          }
-      if (routerEvent instanceof NavigationStart) {
-      }
-      // On NavigationEnd or NavigationError or NavigationCancel
-      // set showLoadingIndicator to false
-      if (routerEvent instanceof NavigationEnd ||
-        routerEvent instanceof NavigationError ||
-        routerEvent instanceof NavigationCancel) {
-          if (environment.local != true) {
-            // this.commonService.initVersionCheck(environment.versionCheckURL);
-          }
-          }
-    });
-  }
   ngAfterViewInit() {
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
