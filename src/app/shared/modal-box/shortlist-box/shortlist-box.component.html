@@ -29,25 +29,12 @@
       </div>
     </div>
   </div>
-  <div class="radio-group">
-    <mat-radio-group  style="display: flex; justify-content: space-between; width: 50%;" [(ngModel)]="radioValue">
-      <mat-radio-button value="pre">Pre-assessment
-      </mat-radio-button>
-      <mat-radio-button value="rec">Recruitment</mat-radio-button>
-    </mat-radio-group>
-
-    <!-- <nz-radio-group [(ngModel)]="radioValue">
-      <label nz-radio nzValue="pre">Pre-assessment</label>
-      <label nz-radio nzValue="rec">Recruitment</label>
-    </nz-radio-group> -->
-
-  </div>
-  <div class="footer pt-2">
+  <div class="footer">
     Confirm to move the candidate details to assign assessment
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="confirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="confirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -55,21 +42,17 @@
   <div class="bulk-upload-text">
     Please confirm the selected candidates for assessment shortlist
   </div>
-  <div class="radio-group">
+  <div class="radio-group pb-2">
       <mat-radio-group  style="display: flex; justify-content: space-between; width: 35%; margin-right: 6em;" [(ngModel)]="SecondShortlistradioValue">
           <mat-radio-button value="yes">Send mail
           </mat-radio-button>
           <mat-radio-button value="no">Do not send mail</mat-radio-button>
         </mat-radio-group>
-    <!-- <nz-radio-group [(ngModel)]="SecondShortlistradioValue">
-      <label nz-radio nzValue="yes">Send mail</label>
-      <label nz-radio nzValue="no">Do not send mail</label>
-    </nz-radio-group> -->
 
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="secondShortlist()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-4" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="secondShortlist()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -80,7 +63,7 @@
       assessment</span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -89,8 +72,8 @@
     Press confirm to reject the selected candidates
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -99,8 +82,8 @@
     Confirm to upload candidate details and send mails to fill the registration form
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -109,13 +92,13 @@
     Confirm to upload candidate details{{skipKyc ? '.' : ' and send mails to fill the registration form'}}
   </div>
   <mat-checkbox *ngIf="data['role'] != 'institute'" class="skipKyc" [(ngModel)]="skipKyc">Skip KYC</mat-checkbox>
-  <div style="color: red;" class="bulk-upload-text mt-1 mb-1">
+  <div class="bulk-upload-text primary-clr mt-1 mb-1">
     *Make sure you have selected the correct drive, currently selected drive is "{{data['drive']}}"
   </div>
 
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -124,8 +107,8 @@
     Confirm to upload the selected candidate details
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -134,8 +117,8 @@
     Confirm to upload the selected candidate details
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -144,8 +127,8 @@
     Confirm to upload the declined candidate details
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -155,8 +138,8 @@
     Confirm to upload Interview panel details and send them mails to create an account
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -165,8 +148,8 @@
   <div class="bulk-upload-text">
     The selected candidate/candidates will receive an email to create an account.</div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -174,8 +157,8 @@
   <div class="bulk-upload-text">
     Confirm to upload candidate details</div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -184,8 +167,8 @@
     Confirm to upload institute details and send mails to TPO
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -193,8 +176,8 @@
   <div class="bulk-upload-text">
     Confirm to upload assessment details</div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -203,7 +186,7 @@
     <span>Assessment results has been uploaded successfully</span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -219,7 +202,7 @@
       been uploaded. Click Ok to see the error details. </span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -234,7 +217,7 @@
       been uploaded. Please go to reports to see the detailed error details. </span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancelWithData()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancelWithData()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -251,7 +234,7 @@
       been uploaded. Click Ok to see the error details.</span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -260,7 +243,7 @@
     <span>The mail has been sent successfully</span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -275,7 +258,7 @@
       been uploaded. Click Ok to see the error details.</span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -284,7 +267,7 @@
     Selected candidates have been shortlisted successfully
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -293,8 +276,8 @@
     Please confirm approval of {{data && data['instituteName'] ? data['instituteName'] : ''}}
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="adminApprove()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="adminApprove()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -314,8 +297,8 @@
   </div>
 
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="adminReject()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="adminReject()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -325,8 +308,8 @@
     creation
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -336,8 +319,8 @@
     creation.
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="confirmWithData()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="confirmWithData()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -348,8 +331,8 @@
     {{data['showText']}}
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -369,8 +352,8 @@
   </div>
 
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="reSubmit()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="reSubmit()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -379,8 +362,8 @@
       Confirm to submit the evaluation details for this candidate
     </div>
     <div class="buttons">
-      <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-      <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+      <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+      <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
     </div>
   </div>
 
@@ -389,8 +372,8 @@
         Confirm to submit the selected candidates
       </div>
       <div class="buttons">
-        <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-        <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+        <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+        <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
       </div>
     </div>
 <div class="modal-box-wrapper" *ngIf="data && data['interViwePanelAssign'] === 'assign'">
@@ -398,8 +381,8 @@
     “{{data['candidateCount']}}” {{data['candidate']}} have been assigned to “{{data['panel']}}” interview panel {{data['member']}}
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 <div class="modal-box-wrapper" *ngIf="data && data['interViwePanelAssign'] === 'noData'">
@@ -407,7 +390,7 @@
     {{data['dataToBeShared']['confirmText']}}
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -416,8 +399,8 @@
     Are you sure you want to send an email selected no. of {{data['candidate']}}: {{data['candidateCount']}}
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>No</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Yes</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>No</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Yes</button>
   </div>
 </div>
 
@@ -426,8 +409,8 @@
     Confirm to assign these candidates to the respective interview panels
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
   </div>
 </div>
 
@@ -442,7 +425,7 @@
       been assigned. Click Ok to see the error details.</span>
   </div>
   <div class="buttons">
-    <button class="ok" (click)="cancel()" mat-raised-button>Ok</button>
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
 </div>
 
@@ -451,8 +434,8 @@
     New version available. Please click on update to get the new version.
   </div>
   <div class="buttons">
-    <!-- <button class="cancel-btn btn-margin-space" (click)="updateCancel()" mat-raised-button>Cancel</button> -->
-    <button class="submit" (click)="updateAvailable()" mat-raised-button>Update</button>
+    <!-- <button class="common-cancel-button common-button-height-33 mr-3" (click)="updateCancel()" mat-raised-button>Cancel</button> -->
+    <button class="common-button common-button-height-35" (click)="updateAvailable()" mat-raised-button>Update</button>
   </div>
 </div>
 
@@ -461,7 +444,7 @@
     Please Confirm to Schedule the Video Assessments
   </div>
   <div class="buttons">
-    <button class="cancel-btn btn-margin-space" (click)="cancel()" mat-raised-button>Cancel</button>
-    <button class="submit" (click)="confirmWithData()" mat-raised-button>Confirm</button>
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="confirmWithData()" mat-raised-button>Confirm</button>
   </div>
 </div>

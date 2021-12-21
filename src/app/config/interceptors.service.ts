@@ -10,7 +10,7 @@ import {
   HttpEventType
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, retry, finalize } from 'rxjs/operators';
+import { map, catchError, retry, finalize, timeout } from 'rxjs/operators';
 import { AppConfigService } from './app-config.service';
 import { environment } from 'src/environments/environment';
 import { CONSTANT } from '../constants/app-constants.service';
@@ -59,7 +59,7 @@ export class InterceptorsService implements HttpInterceptor {
     }
 
     // Request Handling
-    return next.handle(clone).pipe(
+    return next.handle(clone).pipe(timeout(60000)).pipe(
       map((event: HttpEvent<any>) => {
         lastResponse = event;
       if (event instanceof HttpResponse) {
@@ -82,6 +82,11 @@ export class InterceptorsService implements HttpInterceptor {
 
         if (error && error['status'] !== 200) {
           // console.log(error ? error : '');
+        }
+
+        if (error && error.name && error.name.includes('TimeoutError')) {
+          this.appConfig.error(error && error.message ? error.message : 'Timeout occurs');
+          return throwError(error);
         }
 
         if (error.status === 0) {

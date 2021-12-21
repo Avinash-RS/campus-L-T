@@ -5,7 +5,7 @@
     Selected Template:
   </div>
     <div style="width: 280px;" class="input-wrapper">
-      <mat-form-field class="new-input-box mat-select-custom" appearance="none">
+      <mat-form-field class="mat-form-field-input-box mat-select-custom" appearance="none">
           <mat-select placeholder="Select Upload" (selectionChange)="changeTemplate($event)" [(ngModel)]="selectedTemplate">
             <mat-option *ngFor="let template of templates" [value]="template.value">
               {{template.name}}

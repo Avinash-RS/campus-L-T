@@ -169,3 +169,28 @@ th {
     }
 
 }
+:host ::ng-deep.mat-icon-button.mat-button-base {
+  height: 35px !important;
+}
+:host ::ng-deep.mat-icon-button.mat-datepicker-toggle {
+  right: 34px !important;
+  width: 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.table-btn {
+  background: #5c6873;
+  box-shadow: none;
+  color: $white;
+  font-weight: 200;
+  font-size: 13px;
+  border-radius: 0px !important;
+  height: 27px !important;
+  padding: 0 1em !important;
+  min-width: 100px !important;
+  max-width: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

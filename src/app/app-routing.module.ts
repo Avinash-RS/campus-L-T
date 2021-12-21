@@ -8,25 +8,29 @@ import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
 import { PageNotFoundComponent } from './unauthenticated-routes/page-not-found/page-not-found.component';
+import { MultiCustomerGuard } from './guards/canload/multi-customer.guard';
 
 const routes: Routes = [
   {
     path: '', loadChildren: './login/login.module#LoginModule', canActivate: [IsLoggedinGuard]
   },
   {
-    path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`, loadChildren: './admin-dashboard/master-dashboard.module#MasterDashboardModule', canLoad: [ AdmincanloadGuard ]
+    path: `${CONSTANT.ROUTES.CUSTOMERS.HOME}`, loadChildren: './customer-module/customer-module.module#CustomerModuleModule', canLoad: [ MultiCustomerGuard ], canActivate: [ MultiCustomerGuard ]
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HOME}`, loadChildren: './candidate-dashboard/candidate-dashboard.module#CandidateDashboardModule', canLoad: [ CanloadGuard ]
+    path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`, loadChildren: './admin-dashboard/master-dashboard.module#MasterDashboardModule', canLoad: [ AdmincanloadGuard ], canActivate: [ AdmincanloadGuard ]
   },
   {
-    path: `${CONSTANT.ROUTES.HR_DASHBOARD.HOME}`, loadChildren: './hr-dashboard/hr-dashboard.module#HrDashboardModule', canLoad: [ HrcanloadGuard ]
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HOME}`, loadChildren: './candidate-dashboard/candidate-dashboard.module#CandidateDashboardModule', canLoad: [ CanloadGuard ], canActivate: [ CanloadGuard ]
   },
   {
-    path: `${CONSTANT.ROUTES.TPO_DASHBOARD.HOME}`, loadChildren: './tpo-dashboard/tpo-dashboard.module#TpoDashboardModule', canLoad: [ TpocanloadGuard ]
+    path: `${CONSTANT.ROUTES.HR_DASHBOARD.HOME}`, loadChildren: './hr-dashboard/hr-dashboard.module#HrDashboardModule', canLoad: [ HrcanloadGuard ], canActivate: [ HrcanloadGuard ]
   },
   {
-    path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.HOME}`, loadChildren: './interview-panel-dashboard/interview-panel-dashboard.module#InterviewPanelDashboardModule', canLoad: [ InvpanelGuard ]
+    path: `${CONSTANT.ROUTES.TPO_DASHBOARD.HOME}`, loadChildren: './tpo-dashboard/tpo-dashboard.module#TpoDashboardModule', canLoad: [ TpocanloadGuard ], canActivate: [ TpocanloadGuard ]
+  },
+  {
+    path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.HOME}`, loadChildren: './interview-panel-dashboard/interview-panel-dashboard.module#InterviewPanelDashboardModule', canLoad: [ InvpanelGuard ], canActivate: [ InvpanelGuard ]
   },
   {
     path: `${CONSTANT.ROUTES.UNAUTHENTICATED.HOME}`, loadChildren: './unauthenticated-routes/unauthenticated.module#UnauthenticatedModule'

@@ -33,7 +33,7 @@
                         <p><span class="icon-Add"></span> Add Questions</p>
                     </div>
                     <div class="nextBtn d-flex justify-content-center">
-                        <button (click)="tabChange('1')">Next</button>
+                        <button mat-raised-button class="common-button common-button-height-35" (click)="tabChange('1')">Next</button>
                     </div>
                 </div>
             </mat-tab>
@@ -155,8 +155,8 @@
                             <mat-slide-toggle class="example-margin" [color]="color" [formControlName]="'type'"></mat-slide-toggle>
                         </div>
                         <div class="prevNext">
-                            <button class="prev" (click)="tabChange('0')">Previous</button>
-                            <button class="next" (click)="tabChange('2')">Next</button>
+                            <button mat-raised-button class="common-cancel-button common-button-height-33 mr-3" (click)="tabChange('0')">Previous</button>
+                            <button mat-raised-button class="common-button common-button-height-35" (click)="tabChange('2')">Next</button>
                         </div>
                     </form>
                 </div>
@@ -235,8 +235,8 @@
 
                     </div>
                     <div *ngIf="!hideForm" class="prevNext">
-                        <button (click)="tabChange('1')" class="prev">Previous</button>
-                        <button class="next" (click)="scheduleSubmit()">Confirm</button>
+                        <button mat-raised-button (click)="tabChange('1')" class="common-cancel-button common-button-height-33 mr-3">Previous</button>
+                        <button mat-raised-button class="common-button common-button-height-35" (click)="scheduleSubmit()">Confirm</button>
                     </div>
                 </div>
                 </ng-container>
@@ -257,7 +257,7 @@
         <div class="videoInterviewFlow">
             <div class="heading d-flex justify-content-between align-items-center">
                 <h3>Add Questions</h3>
-                <button *ngIf="questionList && questionList.length > 0" (click)="addQuestionstoArray()" class="add"><span class="icon-Add mr-1"></span> <span>Add</span></button>
+                <button mat-raised-button *ngIf="questionList && questionList.length > 0" (click)="addQuestionstoArray()" class="common-button-with-icon common-button-height-35 min-width-80"><span class="icon-Add mr-1"></span> <span>Add</span></button>
             </div>
             <div class="descriptionContent">
                 <div class="d-flex justify-content-between align-items-center">
@@ -416,7 +416,7 @@
       </div>
     </div>
     <div *ngIf="false" class="secondSection d-flex align-items-center justify-content-center mt-2">
-      <button (click)="reschedule()" class="submit reschedule">Reschedule</button>
+      <button mat-raised-button (click)="reschedule()" class="common-button common-button-height-35">Reschedule</button>
       </div>
 </div>
 </ng-template>

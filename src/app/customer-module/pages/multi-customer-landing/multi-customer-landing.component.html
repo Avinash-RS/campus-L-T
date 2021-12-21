@@ -1,0 +1,17 @@
+<div class="customer-wrapper">
+  <app-customer-landing-header></app-customer-landing-header>
+  <div class="customer-body-wrapper">
+    <div class="customers">
+      <ng-container *ngIf="customersList">
+      <mat-card class="card" *ngFor="let customer of customersList; let i = index">
+        <div class="company-logo">
+          <img [src]="customer.customer_logo" [alt]="customer.customer_name" srcset="">
+        </div>
+        <mat-card-footer class="card-footer">
+          <button (click)="gotoDashboard(i)" class="customer-outline-button common-button-height-40" mat-raised-button><span class="mr-2">Go</span> <span class="icon-right-next"></span></button>
+        </mat-card-footer>
+      </mat-card>
+    </ng-container>
+    </div>
+  </div>
+  </div>

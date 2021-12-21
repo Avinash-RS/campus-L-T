@@ -7,7 +7,6 @@ import { HrShortlistingComponent } from './hr-shortlisting/hr-shortlisting.compo
 import { FirstLevelShortlistComponent } from './hr-shortlisting/first-level-shortlist/first-level-shortlist.component';
 import { HrcanloadGuard } from '../guards/canload/hrcanload.guard';
 import { HrUserManagementComponent } from './hr-user-management/hr-user-management.component';
-import { ApplyCriteriaComponent } from './hr-shortlisting/first-level-shortlist/apply-criteria/apply-criteria.component';
 import { ShortlistedCandidateListComponent } from './hr-shortlisting/first-level-shortlist/shortlisted-candidate-list/shortlisted-candidate-list.component';
 import { HrReportsComponent } from './hr-reports/hr-reports.component';
 import { ReportsListComponent } from './hr-reports/reports-list/reports-list.component';
@@ -70,13 +69,6 @@ const routes: Routes = [
                 component: ShortlistedCandidateListComponent,
                 data: {
                   breadcrumb: ''
-                }
-              },
-              {
-                path: `${CONSTANT.ROUTES.HR_DASHBOARD.FIRSTSHORTLISTING_CRITERIA}`,
-                component: ApplyCriteriaComponent,
-                data: {
-                  breadcrumb: 'Filter'
                 }
               },
               {

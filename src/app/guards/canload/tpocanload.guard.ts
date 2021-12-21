@@ -16,7 +16,11 @@ export class TpocanloadGuard implements CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'institute')) {
+      if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+        return false;
+      }
+      if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'institute')) {
       return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {
@@ -39,6 +43,10 @@ export class TpocanloadGuard implements CanLoad {
     }
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+      return false;
+    }
     if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'institute')) {
       return true;
     } else {

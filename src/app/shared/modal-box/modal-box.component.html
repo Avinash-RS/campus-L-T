@@ -1,106 +1,59 @@
 <ng-container
   *ngIf="(data && data.dataToBeShared && data.dataToBeShared.type !== 'video') && data && data.dataToBeShared && data.dataToBeShared.type !== 'kyc-terms'">
   <div class="modal-wrapper">
+    <div class="heading-wrapper">
+      <div class="heading">
+      {{data.dataToBeShared.heading ? data.dataToBeShared.heading : 'Confirmation Message'}}
+      </div>
+    </div>
+    <div class="body-wrapper">
     <div class="confirmation-text">
       {{data.dataToBeShared.confirmText ? data.dataToBeShared.confirmText : ''}}
     </div>
     <div class="button-wrappers">
-
       <!-- Type Delete Buttons -->
       <button *ngIf="data.showCancel && data.dataToBeShared.type === 'delete'" (click)="cancel(data.dataToBeShared)"
-        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+        mat-raised-button class="common-cancel-button common-button-height-33 mr-3" type="button">{{data.showCancel}}</button>
       <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'delete'" (click)="submit(data.dataToBeShared)"
-        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+        mat-raised-button class="common-button common-button-height-35" type="button">{{data.showConfirm}}</button>
 
       <!-- Type Add Buttons -->
       <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add'" (click)="cancel(data.dataToBeShared)"
-        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+        mat-raised-button class="common-cancel-button common-button-height-33 mr-3" type="button">{{data.showCancel}}</button>
       <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add'" (click)="submit(data.dataToBeShared)"
-        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+        mat-raised-button class="common-button common-button-height-35" type="button">{{data.showConfirm}}</button>
 
       <!-- Type Add Buttons -->
       <button *ngIf="data.showCancel && data.dataToBeShared.type === 'add-tpo'" (click)="cancel(data.dataToBeShared)"
-        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+        mat-raised-button class="common-cancel-button common-button-height-33 mr-3" type="button">{{data.showCancel}}</button>
       <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'add-tpo'" (click)="submitTPOADDCandidate()"
-        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+        mat-raised-button class="common-button common-button-height-35" type="button">{{data.showConfirm}}</button>
 
       <!-- Type Confirm Buttons -->
       <button *ngIf="data.showCancel && data.dataToBeShared.type === 'confirm'" (click)="cancel(data.dataToBeShared)"
-        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+        mat-raised-button class="common-cancel-button common-button-height-33 mr-3" type="button">{{data.showCancel}}</button>
       <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'confirm'" (click)="submit(data.dataToBeShared)"
-        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+        mat-raised-button class="common-button common-button-height-35" type="button">{{data.showConfirm}}</button>
 
       <!-- Type Update Buttons -->
       <button *ngIf="data.showCancel && data.dataToBeShared.type === 'update'" (click)="cancel(data.dataToBeShared)"
-        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+        mat-raised-button class="common-cancel-button common-button-height-33 mr-3" type="button">{{data.showCancel}}</button>
       <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'update'" (click)="submit(data.dataToBeShared)"
-        mat-raised-button class="submit" type="button">{{data.showConfirm}}</button>
+        mat-raised-button class="common-button common-button-height-35" type="button">{{data.showConfirm}}</button>
 
-      <button *ngIf="data.showOk" (click)="ok()" mat-raised-button class="ok"
+      <button *ngIf="data.showOk" (click)="ok()" mat-raised-button class="common-button common-button-height-35"
         type="button">{{data.showConfirm}}</button>
 
       <!-- Type remove Buttons -->
       <button *ngIf="data.showCancel && data.dataToBeShared.type === 'remove'" (click)="cancel(data.dataToBeShared)"
-        mat-raised-button class="cancel-btn btn-margin-space-1" type="button">{{data.showCancel}}</button>
+        mat-raised-button class="common-cancel-button common-button-height-33 mr-3" type="button">{{data.showCancel}}</button>
       <button *ngIf="data.showConfirm && data.dataToBeShared.type === 'remove'" (click)="confirm()" mat-raised-button
-        class="submit" type="button">{{data.showConfirm}}</button>
+        class="common-button common-button-height-35" type="button">{{data.showConfirm}}</button>
     </div>
   </div>
-</ng-container>
-<ng-container *ngIf="data && data.dataToBeShared && data.dataToBeShared.type === 'video'">
-  <div class="video">
-    <div class="header">
-      <div class="text">
-        {{data.dataToBeShared.confirmText}}
-      </div>
-      <div class="icon">
-        <i (click)="cancel(false)" class="icon-close_black ag-icon-font-size pointer"></i>
-      </div>
-    </div>
-    <!-- <vg-player>
-      <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
-          <source src="assets/images/name.mp4" type="video/mp4">
-      </video>
-  </vg-player> -->
-    <vg-player>
-      <vg-overlay-play></vg-overlay-play>
-      <vg-buffering></vg-buffering>
-
-      <vg-scrub-bar>
-        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-      </vg-scrub-bar>
-
-      <vg-controls>
-        <vg-play-pause></vg-play-pause>
-        <vg-playback-button></vg-playback-button>
-
-        <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-
-        <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-        <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-
-        <vg-track-selector></vg-track-selector>
-        <vg-mute></vg-mute>
-        <vg-volume></vg-volume>
-
-        <vg-fullscreen></vg-fullscreen>
-      </vg-controls>
-
-      <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin>
-        <source src="https://www.dropbox.com/s/0x2ke57h7wv49ll/Sample_512x288.mp4" type="video/mp4">
-        <!-- <source src="https://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
-          <source src="http://static.videogular.com/assets/videos/videogular.webm" type="video/webm"> -->
-
-        <!-- <track kind="subtitles" label="English" src="http://static.videogular.com/assets/subs/pale-blue-dot.vtt" srclang="en" default>
-          <track kind="subtitles" label="Español" src="http://static.videogular.com/assets/subs/pale-blue-dot-es.vtt" srclang="es"> -->
-      </video>
-    </vg-player>
-
   </div>
 </ng-container>
+
 <ng-container *ngIf="data && data.dataToBeShared && data.dataToBeShared.type === 'kyc-terms'">
   <div class="wrapper-kyc-terms">
     <div class="header">
@@ -281,7 +234,7 @@
 
 
     <div class="button-wrappers">
-      <button (click)="cancel(false)" mat-raised-button class="submit" type="button">Done</button>
+      <button (click)="cancel(false)" mat-raised-button class="common-button common-button-height-32" type="button">Done</button>
     </div>
   </div>
 

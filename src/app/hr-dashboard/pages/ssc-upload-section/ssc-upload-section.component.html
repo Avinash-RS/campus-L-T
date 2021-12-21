@@ -26,12 +26,12 @@
             <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
             <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
             <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
-  
+
           </div>
         </div>
         <div class="buttons">
-          <button (click)="delete()" class="cancel-btn btn-margin-space" [ngClass]="url ? '' : 'hide'" mat-raised-button>Cancel</button>
-          <button (click)="upload()" class="submit" [ngClass]="url ? '' : 'hide'" mat-raised-button>Upload</button>
+          <button (click)="delete()" class="common-cancel-button common-button-height-30" [disabled]="url ? false : true" mat-raised-button>Cancel</button>
+          <button (click)="upload()" class="common-button common-button-height-30 ml-3" [disabled]="url ? false : true" mat-raised-button>Upload</button>
         </div>
       </div>
       <div class="download">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-  
+
     </div>
     <div class="ins" *ngIf="!enableList">
         <div class="head">
@@ -70,18 +70,17 @@
             </ul>
           </div>
             </div>
-  
+
     <div class="list-wrapper" *ngIf="enableList">
       <div class="list-count">
         Total number of candidates to assign : {{uploadedListArray ? uploadedListArray['length'] : ''}}
       </div>
       <app-shared-upload-previewer *ngIf="enableList" [status]="'resultUpload'" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
-  
-  
+
+
       <div class="button-wrapper">
-        <button (click)="backToUpload()" class="cancel-btn btn-margin-space" mat-raised-button>Cancel</button>
-        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="ok" mat-raised-button>Ok</button>
+        <button (click)="backToUpload()" class="common-cancel-button common-button-height-33 mr-3" mat-raised-button>Cancel</button>
+        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [ngClass]="uploadedListArray && uploadedListArray.length > 0 ? '' : 'hide'" (click)="submit()" class="common-button common-button-height-35" mat-raised-button>Ok</button>
       </div>
     </div>
   </div>
-  

@@ -37,14 +37,14 @@
           width: 100%;
         }
         .input-error {
-          border: 1px solid $primary-red;
+          border: 1px solid $primary-error-color;
         }
         .input:focus,
         .input:hover {
-          border: 1px solid $primary-red;
+          border: 1px solid $primary-hover-color;
         }
         .form-error {
-          color: $primary-red;
+          color: $primary-error-text;
           font-size: 12px;
         }
         ::placeholder {
@@ -163,7 +163,7 @@
           }
           .input:focus,
           .input:hover,textarea:focus,textarea:hover {
-            border: 1px solid $primary-red;
+            border: 1px solid $primary-hover-color;
           }
           .text-area {
             min-height: 80px !important;
@@ -216,7 +216,7 @@
             line-height: 30px !important;
           }
           .form-error {
-            color: $primary-red;
+            color: $primary-error-text;
             font-size: 12px;
           }
           ::placeholder {
@@ -304,16 +304,21 @@
     height: 24px;
     transform: translate(-50%, -20%);
     i {
-      color: $primary-red;
+      color: $primary-text-color;
     }
     i:hover {
       color: white;
-      background-color: $primary-red;
+      background-color: $primary-hover-color;
       border-radius: 50%;
     }
   }
 }
 
+.custom-error-border {
+  border-top: solid $primary-error-color 1px;
+  color: $primary-error-text;
+  font-size: 13px;
+}
 // Common nz-select wrapper
 
 :host ::ng-deep .mat-autocomplete-panel {
@@ -354,7 +359,7 @@
 :host ::ng-deep .ant-select-selection:hover,
 :host ::ng-deep .ant-select-selection:focus,
 :host ::ng-deep .ant-select-selection:active {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-hover-color 1px !important;
   border-radius: 0px !important;
   z-index: 0 !important;
   box-shadow: none !important;
@@ -364,9 +369,9 @@
 :host ::ng-deep input.ng-invalid.ng-touched,
 :host ::ng-deep textarea.ng-invalid.ng-touched,
 :host ::ng-deep nz-select.ng-invalid.ng-touched {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-error-color 1px !important;
   .ant-select-selection {
-    border: solid $primary-red 1px !important;
+    border: solid $primary-error-color 1px !important;
   }
 }
 
@@ -464,7 +469,7 @@
 //mat-checkbox start
 :host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background: $primary-red !important;
+  background: $primary-color !important;
 }
 
 .date-relative {
@@ -481,7 +486,7 @@
   ::ng-deep
   .mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-outer-circle {
-  border-color: $primary-red !important;
+  border-color: $primary-color !important;
 }
 :host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle,
 .mat-radio-button.mat-accent
@@ -489,10 +494,10 @@
   .mat-ripple-element:not(.mat-radio-persistent-ripple),
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
 .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: $primary-red !important;
+  background-color: $primary-color !important;
 }
 :host ::ng-deep .mat-radio-outer-circle {
-  border-color: $primary-red !important;
+  border-color: $primary-color !important;
 }
 .hide {
   visibility: hidden;

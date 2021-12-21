@@ -141,6 +141,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   sendPopupResultSubscription: Subscription;
   joiningFormDataPassingSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
+  customerName: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -154,6 +155,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit() {
+    this.customerName = this.appConfig.getSelectedCustomerName();
     this.formInitialize();
     this.getWorkApiDetails();
     this.saveRequestRxJs();
@@ -406,13 +408,13 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   initSkillsArray() {
     return this.fb.group({
-      [this.form_Skill]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
+      [this.form_Skill]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.skills255()]]
     })
   }
 
   SkillsArrayPatch(data) {
     return this.fb.group({
-      [this.form_Skill]: [data, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]]
+      [this.form_Skill]: [data, [RemoveWhitespace.whitespace(), this.glovbal_validators.skills255()]]
     })
   }
 
@@ -548,9 +550,12 @@ addToTrainingArray() {
     if (this.getRelativesArr.valid && this.getRelativesArr['controls'].length < 3) {
       if (this.getRelativesArr && this.getRelativesArr['controls'] && this.getRelativesArr['controls'][i] && this.getRelativesArr['controls'][i]['value'] && this.getRelativesArr['controls'][i]['value'][this.form_relatives_name]) {
         return this.getRelativesArr.push(this.initRelativesArray());
+      } else {
+        this.appConfig.nzNotification('error', 'Not Added', 'Please fill the existing Relatives / Acquaintances section');
+        this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
       }
     } else {
-      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
+      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Relatives / Acquaintances Section');
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
     }
   }

@@ -25,8 +25,7 @@
 
         </div>
         <div class="modal-footer">
-            <!-- <button class="submit" *ngIf="data && data['type'] == 'browser'" mat-raised-button data-dismiss="modal" (click)="logout()">Please Open Chrome</button> -->
-            <button class="submit" *ngIf="data && data['type'] != 'browser'" mat-raised-button data-dismiss="modal" (click)="cancel()">Close</button>
+            <button class="common-button common-button-height-35" *ngIf="data && data['type'] != 'browser'" mat-raised-button data-dismiss="modal" (click)="cancel()">Close</button>
         </div>
     </div>
 </div>

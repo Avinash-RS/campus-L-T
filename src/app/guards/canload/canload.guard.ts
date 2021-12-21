@@ -16,8 +16,12 @@ export class CanloadGuard implements CanLoad, CanActivate {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+      return false;
+    }
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
-      return true;
+    return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
@@ -40,7 +44,10 @@ export class CanloadGuard implements CanLoad, CanActivate {
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    //  && (!this.appConfig.getLocalData('noGoBack') || this.appConfig.getLocalData('noGoBack') != 'true')
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+      return false;
+    }
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
       return true;
     } else {

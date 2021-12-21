@@ -98,10 +98,10 @@
         border: none !important;
     }
     .input:focus,.input:hover {
-        border: 1px solid $primary-red;
+        border: 1px solid $primary-hover-color;
     }
     .form-error {
-        color: $primary-red;
+        color: $primary-error-text;
         font-size: 12px;
     }
     ::placeholder {
@@ -112,15 +112,15 @@
 }
 
 input.ng-invalid.ng-touched {
-  border: solid $primary-red 1px !important;
+  border: solid $primary-error-color 1px !important;
   .ant-select-selection {
-      border: solid $primary-red 1px !important;
+      border: solid $primary-error-color 1px !important;
   }
 }
 
 nz-select.ng-invalid.ng-touched {
   .ant-select-selection {
-    border: solid $primary-red 1px !important;
+    border: solid $primary-error-color 1px !important;
 }
 }
 
@@ -139,7 +139,7 @@ nz-select.ng-invalid.ng-touched {
 }
 
 .ant-select-selection:hover,.ant-select-selection:focus,.ant-select-selection:active{
-  border: solid $primary-red 1px !important;
+  border: solid $primary-hover-color 1px !important;
   border-radius: 0px !important;
   z-index: 0 !important;
   box-shadow: none !important;
@@ -163,24 +163,9 @@ nz-select.ng-invalid.ng-touched {
   flex-direction: row;
   margin: 18px 0 4px 0px;
 }
-.btn-add {
-  background: $primary-red;
-  color: $white;
-  width: 100px;
-  border-radius: 0px;
-  height: 35px;
-}
 .btn-add:hover {
   transform: perspective(1px) scale(1.02);
   transition: transform .5s ease;
-}
-
-.cancel {
-  margin-right: 1em;
-  background: $white;
-  color: #666;
-  width: 100px;
-  border: solid 1px $primary-red;
 }
 
 .skipKyc {
@@ -190,7 +175,7 @@ nz-select.ng-invalid.ng-touched {
 }
 .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background: $primary-red !important;
+    background: $primary-color !important;
 }
 .mat-checkbox-inner-container {
   width: 16px !important;
@@ -200,4 +185,7 @@ nz-select.ng-invalid.ng-touched {
   font-size: 14px !important;
   padding-top: 2px;
 }
+}
+.primary-clr {
+  color: $primary-text-color;
 }

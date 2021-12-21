@@ -155,17 +155,17 @@
       </div>
     </div>
     <div class="button-conatiner">
-      <button mat-raised-button class="common-outline-button-not-hover common-button-height-30" (click)="closePopup()">Cancel</button>
+      <button mat-raised-button class="common-outline-button-not-hover common-button-height-33 mr-3" (click)="closePopup()">Cancel</button>
       <ng-container *ngIf="buttonLoading else showButton">
         <button
         mat-raised-button
-        class="common-button-with-icon common-button-height-30 pl-2 pr-2 ml-2 loading-button"
+        class="common-button-with-icon common-button-height-35 pl-2 pr-2 ml-2 loading-button"
       >
       <span class="icon-Refresh load-icon mr-2"></span> <span>Scheduling...</span>
       </button>
       </ng-container>
       <ng-template #showButton>
-        <button mat-raised-button class="common-button common-button-height-30 ml-2" (click)="scheduleRoom()">
+        <button mat-raised-button class="common-button common-button-height-35 ml-2" (click)="scheduleRoom()">
           Schedule
         </button>
       </ng-template>

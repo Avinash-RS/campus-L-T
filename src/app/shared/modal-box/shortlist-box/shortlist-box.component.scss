@@ -7,7 +7,7 @@
   width: auto;
   padding: 1em 2em;
   font-size: 14px !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   background: $white 0% 0% no-repeat padding-box;
   box-shadow: $shadow-light-black-4;
   // border: 2px solid $secondary;
@@ -21,10 +21,10 @@
         color: $light-black;
         padding-top: 8px;
         padding-bottom: 14px;
-        font-weight: 500;
+        font-weight: 400;
         font-size: 14px;
         .validation {
-          color: $red;
+          color: $primary-error-text;
           font-size: 12px;
           max-width: 250px;
         }
@@ -36,7 +36,7 @@
         input {
           color: $secondary;
           height: 30px;
-          font-weight: 500;
+          font-weight: 400;
           font-size: 14px;
           padding: 4px 6px;
           background: $white 0% 0% no-repeat padding-box;
@@ -44,7 +44,7 @@
           outline: none;
         }
         .validation {
-          color: $red;
+          color: $primary-error-text;
           font-size: 12px;
           max-width: 250px;
         }
@@ -61,7 +61,7 @@
     font-size: 14px;
     color: $light-black;
     text-align: center;
-    font-weight: 500;
+    font-weight: 400;
   }
   .buttons {
     margin: 1em 0 0em 0;
@@ -75,7 +75,7 @@
       height: 25px;
       color: $white;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 400;
       padding: 4px 16px;
       display: flex;
       justify-content: center;
@@ -92,7 +92,7 @@
       height: 25px;
       color: $background;
       font-size: 14px !important;
-      font-weight: 500;
+      font-weight: 400;
       padding: 4px 16px;
       background: transparent;
       justify-content: center;
@@ -121,50 +121,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .confirm {
-      background: $background 0% 0% no-repeat padding-box;
-      box-shadow: $shadow-light-black-1;
-      border-radius: 10px;
-      height: 25px;
-      color: $white;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 4px 16px;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-    }
-    // .ok {
-      // background: $green-2 0% 0% no-repeat padding-box;
-      // box-shadow: $shadow-light-black-1;
-      // border-radius: 10px;
-      // height: 25px;
-      // color: $white;
-      // font-size: 13px;
-      // font-weight: 200;
-      // padding: 4px 16px;
-      // display: flex;
-      // justify-content: center;
-      // align-items: center;
-      // flex-direction: column;
-    // }
-    .cancel {
-      margin: 0 1em 0 0;
-      box-shadow: $shadow-light-black-1;
-      border: 1px solid $gray-dark;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      height: 25px;
-      color: $background;
-      font-size: 14px !important;
-      font-weight: 500;
-      padding: 4px 16px;
-      background: transparent;
-      justify-content: center;
-      flex-direction: column;
-    }
   }
   .text-input {
     margin: 0 0em 1em 0;
@@ -184,7 +140,7 @@
       outline: none;
     }
     .validation {
-      color: $red;
+      color: $primary-error-text;
       font-size: 11px;
       max-width: 250px;
       font-weight: 500;
@@ -201,12 +157,15 @@
 }
 .skipKyc {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   display: flex;
   justify-content: center;
   padding: 8px 0 0 0;
 }
+.primary-clr {
+  color: $primary-text-color;
+}
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background: $primary-red !important;
+    background: $primary-checkbox-color !important;
 }

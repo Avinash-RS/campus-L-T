@@ -85,6 +85,11 @@ export class GlobalValidatorService {
       return this.regexValidator(address255, {address255: true});
     }
 
+    skills255() {
+      const skills255: RegExp = /^([a-zA-Z0-9_ \-,.:+#*&/\r\n|\r|\n/]){0,255}$/;
+      return this.regexValidator(skills255, {skills255: true});
+    }
+
     offer() {
       const offer: RegExp = /^([a-zA-Z0-9_ \-,.:&/\r\n|\r|\n/]){0,255}$/;
       return this.regexValidator(offer, {offer: true});

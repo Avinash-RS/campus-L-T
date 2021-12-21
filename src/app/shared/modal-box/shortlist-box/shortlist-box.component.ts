@@ -19,7 +19,6 @@ export class ShortlistBoxComponent implements OnInit {
   shortlist = new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.minLength(3), Validators.pattern(this.regexRestriction)]);
   instituteRejection = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100), RemoveWhitespace.whitespace()]);
   reSubmission = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), RemoveWhitespace.whitespace()]);
-  radioValue = 'rec';
   SecondShortlistradioValue = 'yes';
   skipKyc: any;
   constructor(
@@ -36,11 +35,11 @@ export class ShortlistBoxComponent implements OnInit {
   }
 
   confirm() {
-    if (this.folder.valid && this.shortlist.valid && this.radioValue) {
+    if (this.folder.valid && this.shortlist.valid) {
       const apiFolders = {
         folderName: this.folder.value,
         shortlistName: this.shortlist.value,
-        type: this.radioValue
+        type: 'rec'
       };
       this.dialogRef.close(apiFolders);
     } else {

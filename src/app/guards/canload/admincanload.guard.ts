@@ -16,7 +16,11 @@ export class AdmincanloadGuard implements CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
+      if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+        return false;
+      }
+      if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
       return true;
     }
     else {
@@ -40,6 +44,10 @@ export class AdmincanloadGuard implements CanLoad {
     }
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+      return false;
+    }
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'administrator') {
       return true;
     }

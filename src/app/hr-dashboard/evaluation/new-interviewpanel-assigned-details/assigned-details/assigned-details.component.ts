@@ -211,9 +211,9 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         getQuickFilterText: (params) => {
           return params.value;
         },
-        cellStyle: { 'cursor': 'pointer', color: '#C02222' },
+        cellStyle: { 'cursor': 'pointer', color: '#1b4e9b' },
         cellRenderer: (params) => {
-          return `<span style="border-bottom: solid #C02222 1px">${params['data']['name']} </span>`;
+          return `<span style="border-bottom: solid #1b4e9b 1px">${params['data']['name']} </span>`;
         }
       },
       {

@@ -455,10 +455,16 @@ export class AppConfigService {
   }
 
  async setCustomerConfiguration(data: any) {
-    await this.setLocalData('selected_customer', data && data['customers'] && data['customers'][0] && data['customers'][0]['customer_code'] ? JSON.stringify(data['customers'][0]) : null);
     await this.setLocalData('customers', data && data['customers'] && data['customers'].length > 0 ? JSON.stringify(data['customers']) : []);
-    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
-      this.setDriveList();
+    let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
+    if (customersList.length < 2) {
+      await this.setLocalData('selected_customer', data && data['customers'] && data['customers'][0] && data['customers'][0]['customer_code'] ? JSON.stringify(data['customers'][0]) : null);
+      if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
+        this.setDriveList();
+      }
+      if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] == 'candidate') {
+        this.setDriveIdForCandidate(data['customers'][0]);
+      }
     }
   }
 
@@ -468,8 +474,8 @@ export class AppConfigService {
     this.setLocalData('driveList', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'].length > 0 ? JSON.stringify(selected_customer['driveDetails']) : []);
   }
 
-  setDriveIdForCandidate(data: any) {
-    // let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
+  setDriveIdForCandidate(data?: any) {
+    data = data ? data : this.getSelectedCustomerDetails();
     // this.setLocalData('driveId', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'][0] && selected_customer['driveDetails'][0]['drive_id'] ? selected_customer['driveDetails'][0]['drive_id'] : null);
     // this.setLocalData('driveList', selected_customer && selected_customer['driveDetails'] && selected_customer['driveDetails'].length > 0 ? JSON.stringify(selected_customer['driveDetails']) : []);
     this.setLocalData('driveId', data && data['active_drive_id']  ? data['active_drive_id'] : null);

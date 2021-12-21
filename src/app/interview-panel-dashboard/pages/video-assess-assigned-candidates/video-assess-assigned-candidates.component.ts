@@ -176,7 +176,7 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
         getQuickFilterText: (params) => {
           return params.value;
         },
-        cellStyle: { color: "#C02222" },
+        cellStyle: { color: "#1b4e9b" },
         cellRenderer: (params) => {
           return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image_url"]}"></span> <span>${params["data"]["candidate_name"]}</span> </span>`;
         },

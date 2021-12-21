@@ -16,14 +16,18 @@ export class InvpanelGuard implements CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'interview_panel')) {
+      if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+        return false;
+      }
+      if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'interview_panel')) {
       return true;
-    } else {
+      } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
-          this.appConfig.clearLocalData();
+        this.appConfig.clearLocalData();
 
-          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
           return false;
         }, (err) => {
           this.appConfig.clearLocalData();
@@ -39,6 +43,10 @@ export class InvpanelGuard implements CanLoad {
     }
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('multiCustomer') == 'true' && !this.appConfig.getLocalData('selected_customer')) {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.LANDING);
+      return false;
+    }
     if ((this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'interview_panel')) {
       return true;
     } else {

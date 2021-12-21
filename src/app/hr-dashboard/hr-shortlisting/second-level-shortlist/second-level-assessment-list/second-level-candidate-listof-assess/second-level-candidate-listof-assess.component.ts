@@ -419,7 +419,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
             if (second && second.field && second.field == 'va_test_status') {
               second.cellRenderer = (params) => {
                 if (params["data"] && params["data"]["va_scheduled_status"] && params["data"]["va_scheduled_status"] == '1' && params["data"]["va_test_status"] !="Yet to Start") {
-                  return `<span style="cursor: pointer; color:#C02222;">${params["data"]["va_test_status"]} </span>`;
+                  return `<span style="cursor: pointer; color:#1b4e9b;">${params["data"]["va_test_status"]} </span>`;
                 } else {
                   return `${params["data"]["va_test_status"]}`;
                 }

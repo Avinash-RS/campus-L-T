@@ -6,7 +6,7 @@
 
     <div class="grids-wrapper">
         <form class="workDetailsForm" [formGroup]="workDetailsForm" (ngSubmit)="formSubmit()">
-          <h5 class="mt-3">Add your Skills</h5>
+          <h5 class="mt-2">Add your Skills</h5>
           <div class="skills-wrapper" *ngIf="getSkillsArr && getSkillsArr.controls" [formArrayName]="form_Skills_Array">
             <div class="skill-name-wrapper" *ngFor="let item of getSkillsArr.controls; let i = index;" [formGroupName]="i">
               <div class="input" [ngClass]="getSkillsArr.controls[i].get(form_Skill).invalid ? 'input-error' : ''">
@@ -23,9 +23,8 @@
                 *ngIf="getSkillsArr.controls[i].get(form_Skill).errors?.required">
                 Skill Name is Required</div>
             <div
-                *ngIf="getSkillsArr.controls[i].get(form_Skill).errors?.address255">
-                Alpha numeric with maximum of 255 characters only
-                allowed</div>
+                *ngIf="getSkillsArr.controls[i].get(form_Skill).errors?.skills255">
+                Alpha numeric and Special characters (- , . : & / + # *) with maximum of 255 characters only allowed</div>
             </div>
         </div>
         <div class="skills-add" *ngIf="getSkillsArr && getSkillsArr.controls && getSkillsArr.controls.length < 10">
@@ -432,8 +431,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-error mt-2"
-                                style="border-top: solid red 1px; color: #C02222; font-size: 13px;"
+                            <div class="form-error mt-2 custom-error-border"
                                 *ngIf="getEmploymentArr.controls[i].invalid && getEmploymentArr.controls[i]?.errors && getEmploymentArr.controls[i]?.errors?.notSelected">
                                 *Make sure, you have entered all the fields value, If you enter any one of the value
                             </div>
@@ -540,7 +538,7 @@
                 <div class="overall-input-wrapper width-50">
                     <!-- <label>Total Experience<span></span></label> -->
                     <div class="input" style="line-height: 1.7em !important; border: none;">
-                        Apart from current drive, have you ever interviewed by L&T?
+                        Apart from current drive, have you ever interviewed by {{customerName}}?
                     </div>
                 </div>
 
@@ -602,7 +600,7 @@
 
             <!-- Relatives and Aquantices -->
             <div class="row-wrappper mt-3 hanging">
-              <mat-checkbox [formControl]="isRelatives" class="mr-2"></mat-checkbox> Is any of your Relatives / Acquaintances in L&T group of companies?
+              <mat-checkbox [formControl]="isRelatives" class="mr-2"></mat-checkbox> Is any of your Relatives / Acquaintances in {{customerName}} group of companies?
               </div>
               <ng-container *ngIf="isRelatives.value">
                   <ng-container *ngIf="getRelativesArr && getRelativesArr.controls" [formArrayName]="form_Relatives_Array">
@@ -744,7 +742,7 @@
                     </div>
                   </div>
                   <div class="overall-input-wrapper">
-                    <label>Explain why you consider yourself suitable for L&T<span></span></label>
+                    <label>Explain why you consider yourself suitable for {{customerName}}<span></span></label>
                     <textarea [formControlName]="form_is_ca_resaon_suitable" name="" id="" placeholder="Explain here..."></textarea>
                     <div class="form-error"
                     *ngIf="ca_resaon_suitable.invalid && ca_resaon_suitable.touched">

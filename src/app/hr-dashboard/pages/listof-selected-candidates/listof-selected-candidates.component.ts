@@ -256,9 +256,9 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         getQuickFilterText: (params) => {
           return params.value;
         },
-        cellStyle: { color: '#C02222' },
+        cellStyle: { color: '#1b4e9b' },
         cellRenderer: (params) => {
-          return `<span style="border-bottom: solid #C02222 1px; cursor: pointer">${params['data']['candidate_name']} </span>`;
+          return `<span style="border-bottom: solid #1b4e9b 1px; cursor: pointer">${params['data']['candidate_name']} </span>`;
         }
       },
       {

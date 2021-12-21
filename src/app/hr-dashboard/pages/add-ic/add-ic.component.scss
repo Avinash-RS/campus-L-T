@@ -15,16 +15,23 @@
         }
     }
 }
-input.ng-touched.ng-invalid {
-    border: solid $red 1px;
+.mat-form-field.ng-touched.ng-invalid,input.ng-touched.ng-invalid {
+    border: solid $primary-error-color 1px;
 }
+input:focus,input:hover {
+  border: 1px solid $primary-hover-color;
+}
+.mat-form-field:focus,.mat-form-field:hover {
+  border: 1px solid $primary-hover-color;
+}
+
 .error {
-    color: $red;
+    color: $primary-error-text;
     font-size: 12px;
     text-align: left;
     max-width: 250px;
   }
-  
+
 .add-field {
     position: relative;
     left: 10px;
@@ -34,4 +41,19 @@ input.ng-touched.ng-invalid {
 }
 .hidden {
     visibility: hidden;
+}
+
+.mat-form-field-input-box {
+  border: solid $input-border 1px;
+  margin: 0;
+  width: 120%;
+  padding: .15em .5em;
+  font-size: 15px;
+  color: $light-black;
+  vertical-align: middle;
+  outline: none;
+  // background: $white-primary;
+  display: flex;
+  box-sizing: border-box;
+  min-height: 32px;
 }

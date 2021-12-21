@@ -68,7 +68,7 @@
 }
 :host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background: none !important;
-  border-bottom: 3px solid #c02222;
+  border-bottom: 3px solid $primary-color;
 }
 
 :host ::ng-deep .mat-tab-label{
@@ -76,7 +76,7 @@
   height: 35px !important;
 }
 :host ::ng-deep .mat-tab-label:hover {
-  border-bottom: 3px solid #c02222;
+  border-bottom: 3px solid $primary-color;
 }
 :host ::ng-deep .mat-tab-label-content {
   background: 0 0 !important;

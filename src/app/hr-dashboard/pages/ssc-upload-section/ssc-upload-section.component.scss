@@ -102,18 +102,6 @@
         font-size: 14px;
         padding: 4px 1.8em;
       }
-      // .ok {
-      //   margin: 0 0 0 1em;
-      //   display: flex;
-      //   align-items: center;
-      //   height: 25px;
-      //   background: $light-blue 0% 0% no-repeat padding-box;
-      //   box-shadow: $shadow-light-black-1;
-      //   border-radius: 6px;
-      //   color: $white;
-      //   font-size: 14px;
-      //   padding: 4px 2.5em;
-      // }
     }
   }
 }
@@ -132,4 +120,13 @@
 .pos {
     bottom: 60px !important;
     margin-left: 1.5em !important;
+}
+
+.list-wrapper {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+  .list-count {
+      position: absolute;
+      margin-top: 1em !important;
+  }
 }

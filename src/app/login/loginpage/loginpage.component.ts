@@ -59,8 +59,6 @@ export class LoginpageComponent implements OnInit {
   }
 
   apiCalling() {
-    // this.apiService.getAllState().subscribe((datas: any) => {
-    // this.candidateService.getEducationList().subscribe((datas: any) => {
       this.apiService.emailVerification(this.verifyArr[0]).subscribe((data: any) => {
 
 
@@ -74,13 +72,6 @@ export class LoginpageComponent implements OnInit {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.VERIFY.EMAIL_ERROR);
         }
       });
-    // }, (err) => {
-      // if (err.status === 200) {
-      //   this.appConfig.setSessionData('csrf', err.error.text);
-      // }
-
-
-    // });
   }
 
 
@@ -130,6 +121,10 @@ export class LoginpageComponent implements OnInit {
 
             this.appConfig.setCustomerConfiguration(data);
 
+            let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
+            if (customersList.length > 1) {
+              this.appConfig.setLocalData('multiCustomer', 'true');
+            }
             if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
             }
@@ -149,7 +144,7 @@ export class LoginpageComponent implements OnInit {
               return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
             }
             if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              this.appConfig.setDriveIdForCandidate(data);
+              // this.appConfig.setDriveIdForCandidate(data);
               this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
               this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
