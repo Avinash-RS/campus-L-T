@@ -82,7 +82,7 @@ export class EvaluationFormComponent implements OnInit {
 
   getMasters() {
     // this.adminService.keyMastersList().subscribe((data: any)=> {
-      this.mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
+      this.mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : '';
       this.intervieweeAttendance = this.mastersList?.intervieweeAttendance;
       this.attendedStatusList = this.mastersList?.AttendedStatus;
       this.Notattended = this.mastersList?.notAttendedStatus;

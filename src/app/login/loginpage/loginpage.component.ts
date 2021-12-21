@@ -5,8 +5,8 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Subscription } from 'rxjs';
-import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { environment } from 'src/environments/environment';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-loginpage',
@@ -28,14 +28,14 @@ export class LoginpageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
-    private candidateService: CandidateMappersService,
+    private sharedService: SharedServiceService,
     private appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-
+    this.sharedService.sessionTimeStartSubject.next('end');
     this.verifyEmail();
     this.formInitialize();
   }
@@ -111,6 +111,7 @@ export class LoginpageComponent implements OnInit {
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
           this.apiService.login(apiData).subscribe((data: any) => {
+            this.sharedService.sessionTimeStartSubject.next('start');
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');
