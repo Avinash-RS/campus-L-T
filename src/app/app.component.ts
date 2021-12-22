@@ -208,8 +208,8 @@ sessionTimeStartRxjs() {
   }
 
   showSendTimerDialog(): void {
-    // this.sessionDialog();
-    this.continue();
+    this.sessionDialog();
+    // this.continue();
   }
   continue(): void {
     this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
