@@ -12,9 +12,7 @@ import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
 import { FormsModule } from '@angular/forms';
 import en from '@angular/common/locales/en';
-import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
-import * as AllIcons from '@ant-design/icons-angular/icons';
-import { IconDefinition } from '@ant-design/icons-angular';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
@@ -28,21 +26,11 @@ import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/scre
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { NgxChartsModule} from '@swimlane/ngx-charts';
-// import { AgGridModule } from 'ag-grid-angular';
 // ag grid enterprise
 import 'ag-grid-enterprise';
 import { AgGridModule } from 'ag-grid-angular';
 
 registerLocaleData(en);
-
-const ngZorroConfig: NzConfig = {
-  notification: { nzMaxStack: 1 }
-};
-
-const antDesignIcons = AllIcons as {
-  [key: string]: IconDefinition;
-};
-const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key]);
 
 @NgModule({
   declarations: [
@@ -73,8 +61,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
     { provide: NZ_I18N, useValue: en_US },
-    { provide: NZ_ICONS, useValue: icons },
-    { provide: NZ_CONFIG, useValue: ngZorroConfig },
      CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
   ],
   bootstrap: [AppComponent]

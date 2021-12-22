@@ -4,7 +4,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
 import * as XLSX from 'xlsx';
 import { ToastrService } from 'ngx-toastr';
 
@@ -30,8 +29,6 @@ export class AppConfigService {
     private router: Router,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private message: NzMessageService,
-    private notification: NzNotificationService,
     public toast: ToastrService
   ) {
   }
@@ -67,15 +64,8 @@ export class AppConfigService {
      }
      if (type == 'success') {
      return this.toast.success(text, title);
-     } else {
-           this.notification.create(
-      type,
-      title,
-      text,
-      { nzDuration: 3000 }
-    );
      }
-}
+  }
 
   errorToast(val) {
     this.toast.error(val);
@@ -131,34 +121,6 @@ export class AppConfigService {
   hideLoaderManual() {
     this.ManualSpinner.hide();
   }
-
-
-  // NZ Zorro message
-  nzsuccess(message: any, icon: any): void {
-    this.message.success(message, {
-      nzDuration: 3000
-    });
-  }
-  // nzerror(message: any, icon: any): void {
-  //   this.message.error(message, {
-  //     nzDuration: 100000000
-  //   });
-  // }
-  // FormError message
-  nzformerror(message: any, icon: any): void {
-    this.message.error('Please fill all the red highlighted fields to proceed further', {
-      nzDuration: 3000
-    });
-  }
-
-  // nzNotification(type: string, title: any, text: any): void {
-  //   this.notification.create(
-  //     type,
-  //     title,
-  //     text,
-  //     { nzDuration: 3000 }
-  //   );
-  // }
 
   // To get a local storage value
   getLocalData(key: string): any {
