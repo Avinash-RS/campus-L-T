@@ -14,17 +14,19 @@
     .head {
       font-size: 15px;
       color: $light-black;
-      font-weight: 200;
+      font-weight: 400;
       margin: .5em;
     }
     ul {
       font-size: 12px;
       color: $light-black;
-      font-weight: 200;
+      font-weight: 400;
+      margin-left: 2em;
       li {
         padding-bottom: .25em;
         ul {
-          font-weight: 100;
+          font-weight: 300;
+          margin-left: 3em;
         }
       }
     }
@@ -46,7 +48,7 @@
       color: $light-black;
       font-size: 13px;
       margin-bottom: 0 0 4px 0;
-      font-weight: 200;
+      font-weight: 400;
     }
     .button-wrapper {
       text-align: center;

@@ -222,77 +222,12 @@ body {
       visibility: hidden !important;
   }
 }
-
 // nz select css ends
-.ant-notification-notice {
-  position: relative;
-  margin-top: 20% !important;
-  // margin-bottom: 16px;
-  padding: 16px 24px;
-  overflow: hidden;
-  line-height: 1.5;
-  background: $secondary !important;
-  color: #fff !important;
-  font-weight: 200;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.ant-notification-notice-message {
-  color: #fff !important;
-}
 
 .mat-dialog-container {
   padding: 0 !important;
   // overflow: hidden !important;
 }
-
-
-/* snack bar */
-.mat-snack-bar-container {
-  position: absolute !important;
-  top: 30% !important;
-  left: 50% !important;
-  padding: 0.25em;
-  margin: 0 !important;
-  padding: 0.5em 0 !important;
-  display: grid !important;
-  align-items: center !important;
-  transform: translate(-50%, -50%) !important;
-}
-
-.warn-bg-color {
-  color: $white;
-  background-color: #ff0000;
-  font-weight: 200;
-  font-size: 16px;
-  border-radius: none;
-  height: 100%;
-  z-index: 20;
-  box-shadow: 0px 0px 5px #00000029;
-  border-radius: 10px;
-  z-index: 1000;
-  margin: 0 !important;
-  position: absolute;
-  height: auto !important;
-}
-
-.success-bg-color {
-  color: $white;
-  background-color: #1ccc3f;
-  font-weight: 200;
-  font-size: 16px;
-  border-radius: none;
-  height: 100%;
-  z-index: 20;
-  box-shadow: 0px 0px 5px #00000029;
-  border-radius: 10px;
-  z-index: 1000;
-  margin: 0 !important;
-  position: absolute;
-  height: auto !important;
-}
-/* snack bar css closes */
 
 // Fontsizes
 .f_size_12 {
@@ -527,7 +462,7 @@ mat-icon {
 .mat-tooltip {
     color: $white;
     font-size: 12.5px;
-    font-weight: 200;
+    font-weight: 400;
 }
 /* mat tool tip css ends */
 
@@ -593,7 +528,7 @@ tr.mat-row:hover {
         font-size: 20px !important;
         background: $white-primary 0% 0% no-repeat padding-box !important;
         color: $header-blue !important;
-        font-weight: 100 !important;
+        font-weight: 400 !important;
     }
 }
 
@@ -665,7 +600,7 @@ th {
   color: $black;
   background: $table-header !important;
   font-size: 13px;
-  font-weight: 200;
+  font-weight: 400;
   outline: none;
   border: none;
 }
@@ -824,7 +759,7 @@ align-items: center;
     justify-content: center;
     align-items: center;
     color: $light-black;
-    font-weight: 200;
+    font-weight: 400;
     font-size: 15px;
     background: $white-primary 0% 0% no-repeat padding-box;
     box-shadow: none;
@@ -887,7 +822,7 @@ position: relative !important;
 color: $red;
 text-align: center;
 margin: 8px 0 0 0;
-font-weight: 200;
+font-weight: 400;
 font-size: 11px;
 }
 
@@ -906,7 +841,7 @@ margin: 1em 0;
     height: 25px;
     color: $background;
     font-size: 13px;
-    font-weight: 200;
+    font-weight: 400;
     padding: 4px 26px;
     background: transparent;
     justify-content: center;
@@ -918,7 +853,7 @@ margin: 1em 0;
     height: 25px;
     color: $white;
     font-size: 13px;
-    font-weight: 200;
+    font-weight: 400;
     padding: 4px 26px;
     display: flex;
     align-items: center;
@@ -950,7 +885,7 @@ padding: 2.5em 1em 2.5em 1em;
         justify-content: center;
         align-items: center;
         color: $light-black;
-        font-weight: 200;
+        font-weight: 400;
         font-size: 15px;
         background: $white-primary 0% 0% no-repeat padding-box;
         box-shadow: none;
@@ -1179,7 +1114,7 @@ padding: 2.5em 1em 2.5em 1em;
   cursor: not-allowed;
   opacity: .6;
   background: transparent !important;
-  color: $primary-text-color !important;
+  color: $mediumGrey !important;
 }
 .common-button-height-32 {
   height: 32px;

@@ -3,7 +3,7 @@
 .mobile-verification {
   margin: 70px 0 40px 0;
   .label-head {
-    font-weight: 200;
+    font-weight: 400;
     font-size: 18px;
     color: $primary;
   }
@@ -29,7 +29,7 @@
       background: transparent !important;
       border: none !important;
       outline: none !important;
-      font-weight: 100;
+      font-weight: 400;
       box-shadow: none !important;
     }
     .dropdown-menu {
@@ -86,19 +86,19 @@
         font-size: 18px;
         min-width: 100px;
         max-width: 250px;
-        font-weight: 100;
+        font-weight: 400;
       }
     }
   }
   .error {
     color: $red;
     font-size: 12px;
-    font-weight: 200;
+    font-weight: 400;
     text-align: left;
   }
   .label-msg {
     color: $primary;
-    font-weight: 100;
+    font-weight: 400;
     font-size: 16px;
     margin: 30px 0 0 0;
   }
@@ -126,7 +126,7 @@
   .label-head {
     width: 70%;
     color: $primary;
-    font-weight: 200;
+    font-weight: 400;
     font-size: 18px;
   }
   .input-box {
@@ -147,12 +147,12 @@
   }
   .label-msg {
     color: $primary;
-    font-weight: 100;
+    font-weight: 400;
     font-size: 16px;
     margin: 20px 0;
     span {
       color: $red;
-      font-weight: 200;
+      font-weight: 400;
       font-weight: 16px;
       cursor: pointer;
     }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,7 +22,6 @@ export class AppConfigService {
   public IsWait = false;
 
   constructor(
-    private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private ManualSpinner: NgxSpinnerService,
     private router: Router,

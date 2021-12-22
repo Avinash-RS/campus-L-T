@@ -22,7 +22,7 @@
     background: $primary-gray;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 200;
+    font-weight: 400;
     color: $white;
     font-size: 16px;
   }
@@ -42,7 +42,7 @@
     border-radius: 6px;
     transition-delay: 10s;
     left: 0 !important;
-    font-weight: 200;
+    font-weight: 400;
     color: $white;
     text-align: right;
     font-size: 16px;
@@ -109,7 +109,7 @@
     .active {
       background: $common-button-bg !important;
       outline: none;
-      font-weight: 200;
+      font-weight: 400;
       color: #fff;
       img {
         filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
