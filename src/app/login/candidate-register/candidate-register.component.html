@@ -6,7 +6,8 @@
                   <mat-label class="label-color">Name</mat-label>
                   <input matInput id="username1" #username1 [placeholder]="'Enter the name'"  formControlName="name"
                   required>
-                  <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
+                  <em matPrefix class="icon-User icon-18 login-icon-color pr-1" style="font-size: 16px;
+                  padding-right: 5px !important; top: -1px;"></em>
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('required')">{{'Name is required'}}</mat-error>
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('pattern')">{{'Alphabetic characters only allowed'}}</mat-error>
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('maxlength') && !candidateForm.get('name').hasError('pattern')">{{'Should not exceed 30 characters'}}</mat-error>
@@ -16,7 +17,7 @@
                   <mat-label class="label-color">Email</mat-label>
                   <input matInput  id="username" #username [placeholder]="'Enter the email'"  formControlName="email" maxlength="64"
                   required>
-                  <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
+                  <em matPrefix class="icon-email_black_24dp icon-18 login-icon-color pr-1"></em>
                   <mat-error class="error" *ngIf="candidateForm.get('email').hasError('required')">{{'Email is required'}}</mat-error>
                   <mat-error class="error" *ngIf="candidateForm.get('email').hasError('maxlength')">{{'100 Characters only allowed'}}</mat-error>
                   <mat-error class="error" *ngIf="candidateForm.get('email').hasError('pattern')">{{'Please enter a valid email address'}}</mat-error>
@@ -26,9 +27,9 @@
                   <mat-form-field class="mat-form-spacing" appearance="outline">
                     <mat-label  class="label-color">{{'Password' }}</mat-label>
                     <input matInput  [placeholder]="'Enter password'" [type]="!toggleVisibility ? 'text' : 'password'" formControlName="password" [ngClass]="{ 'is-invalid': password.touched && password.errors }" required>
-                    <mat-icon class="icon-color" matPrefix>lock_outline</mat-icon>
-                    <div mat-icon-button matSuffix (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
-                    <mat-icon class="icon-color-1">{{toggleVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <em matPrefix class="icon-lock_black_24dp icon-18 login-icon-color pr-1"></em>
+                    <div class="login-icon-wrapper" mat-icon-button matSuffix (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
+                      <em matPrefix class="icon-18 login-icon-color pointer" [ngClass]="toggleVisibility ? 'icon-Hide' : 'icon-View'"></em>
                     </div>
                     <mat-error class="error" *ngIf="password.touched && password.errors?.required" >{{'Password is required' }}</mat-error>
                     <mat-error class="error" *ngIf="password.touched && password.errors?.maxlength" >{{'30 Characters only allowed' }}</mat-error>
