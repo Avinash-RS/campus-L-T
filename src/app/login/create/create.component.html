@@ -6,7 +6,7 @@
               <mat-label class="label-color">Email</mat-label>
               <input style="color: #333333; opacity: 0.8;" matInput id="username" #username [placeholder]="'Enter the email'" formControlName="email"
                 maxlength="64" required>
-              <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
+              <em matPrefix class="icon-email_black_24dp icon-18 login-icon-color pr-1"></em>
               <mat-error class="error" *ngIf="createForm.get('email').hasError('maxlength')">{{'100 Characters only allowed'}}
               </mat-error>
               <mat-error class="error" *ngIf="createForm.get('email').hasError('required')">{{'Email is required'}}
@@ -20,12 +20,11 @@
                 <mat-label class="label-color">{{'Password' }}</mat-label>
                 <input matInput [placeholder]="'Enter password'" [type]="!toggleVisibility ? 'text' : 'password'"
                   formControlName="password" [ngClass]="{ 'is-invalid': password.touched && password.errors }" required>
-                <mat-icon class="icon-color" matPrefix>lock_outline</mat-icon>
-                <div mat-icon-button matSuffix (click)="toggleVisibility = !toggleVisibility"
-                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
-                  <mat-icon class="icon-color-1">{{toggleVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <em matPrefix class="icon-lock_black_24dp icon-18 login-icon-color pr-1"></em>
+                <div class="login-icon-wrapper" mat-icon-button matSuffix (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
+                  <em matPrefix class="icon-18 login-icon-color pointer" [ngClass]="toggleVisibility ? 'icon-Hide' : 'icon-View'"></em>
                 </div>
-                <mat-error class="error" *ngIf="password.touched && password.errors?.required">
+                  <mat-error class="error" *ngIf="password.touched && password.errors?.required">
                   {{'Password is required' }}</mat-error>
                   <mat-error class="error" *ngIf="password.touched && !password.errors?.required && password.errors?.maxlength">{{'30 Characters only allowed'}}
                   </mat-error>
@@ -39,10 +38,9 @@
                 <mat-label class="label-color">{{'Confirm Password' }}</mat-label>
                 <input matInput [placeholder]="'Enter password'" [type]="!toggleVisibilityConfirmPassword ? 'text' : 'password'"
                   formControlName="confirmpassword" [ngClass]="{ 'is-invalid': confirmpassword.touched && confirmpassword.errors }" required>
-                <mat-icon class="icon-color" matPrefix>lock_outline</mat-icon>
-                <div mat-icon-button matSuffix (click)="toggleVisibilityConfirmPassword = !toggleVisibilityConfirmPassword"
-                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibilityConfirmPassword">
-                  <mat-icon class="icon-color-1">{{toggleVisibilityConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <em matPrefix class="icon-lock_black_24dp icon-18 login-icon-color pr-1"></em>
+                <div class="login-icon-wrapper" mat-icon-button matSuffix (click)="toggleVisibilityConfirmPassword = !toggleVisibilityConfirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibilityConfirmPassword">
+                  <em matPrefix class="icon-18 login-icon-color pointer" [ngClass]="toggleVisibilityConfirmPassword ? 'icon-Hide' : 'icon-View'"></em>
                 </div>
                 <mat-error class="error" *ngIf="confirmpassword.touched && confirmpassword.errors?.required">
                   {{'Confirm Password is required' }}</mat-error>

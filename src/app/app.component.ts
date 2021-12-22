@@ -212,7 +212,7 @@ sessionTimeStartRxjs() {
     // this.continue();
   }
   continue(): void {
-    this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+    this.matDialog.closeAll();
     // stop second timer and initiate first timer again
     NgIdleService.runSecondTimer = false;
     this.ngIdle.initilizeSessionTimeout();
@@ -222,7 +222,7 @@ sessionTimeStartRxjs() {
     // stop all timer and end the session
     NgIdleService.runTimer = false;
     NgIdleService.runSecondTimer = false;
-    this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+    this.matDialog.closeAll();
     this.logOutApi();
   }
 
@@ -245,11 +245,11 @@ sessionTimeStartRxjs() {
     const token = this.appConfig.getLocalData('logout-token');
     this.appConfig.clearLocalData();
     this.apiService.logout(token).subscribe((data: any) => {
-      this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+      this.matDialog.closeAll();
       this.appConfig.clearLocalData();
       this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
     }, (err) => {
-      this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+      this.matDialog.closeAll();
     });
   }
 
