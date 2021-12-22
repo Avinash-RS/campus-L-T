@@ -8,7 +8,7 @@
 ></ng-container>
 
 <ng-template #showInterview>
-  <mat-expansion-panel class="mt-3 hideExpansion" [hideToggle]="true" style="border: solid 1px #7070709e;" (click)="$event.prevenDefault()" [expanded]="true">
+  <mat-expansion-panel class="mt-3 hideExpansion" [hideToggle]="true" style="border: solid 1px #7070709e;" (click)="$event.preventDefault()" [expanded]="true">
     <mat-expansion-panel-header>
       <div class="cardTitle">
         <span class="icon-portrait ag-icon-font-size mr-2"></span>

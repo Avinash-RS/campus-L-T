@@ -264,7 +264,7 @@
 }
 
 mat-drawer-container {
-  height: calc(100vh - 64px) !important;
+  height: calc(100vh - 60px) !important;
 }
 
 mat-drawer ul li span img {
@@ -402,13 +402,6 @@ mat-drawer ul li span img {
   border-radius: 0px !important;
   z-index: 0 !important;
   box-shadow: none !important;
-}
-
-:host ::ng-deep .ant-select-selection__placeholder,
-:host ::ng-deep .ant-select-search__field__placeholder {
-    color: #a5a5a5 !important;
-    opacity: 0.6 !important;
-    font-size: 13px !important;
 }
 
 :host ::ng-deep .ant-select-selection__rendered {

@@ -160,12 +160,12 @@
 }
 .mat-expansion-panel-header {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 400;
   padding: 4px 18px;
 }
 :host ::ng-deep .mat-expansion-panel-header.mat-expanded {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 400;
   height: 48px !important;
   border-bottom: 0.1em solid #e8e8e8;
 }
@@ -218,7 +218,7 @@
     min-width: 550px;
     min-height: 140px;
     padding: 1em;
-    font-weight: 500;
+    font-weight: 400;
     max-width: 100%;
     margin: auto;
     flex-direction: column;

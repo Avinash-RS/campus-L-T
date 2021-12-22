@@ -121,7 +121,7 @@ th {
         }
       }
       span {
-        font-weight: 700;
+        font-weight: 600;
         color: #000;
         font-size: 18px;
       }
@@ -256,7 +256,7 @@ th {
               line-height: normal;
           }
           .red {
-            color: $primary-red !important;
+            color: $primary-error-text !important;
           }
       }
   }

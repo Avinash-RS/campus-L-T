@@ -46,10 +46,10 @@
         font-weight: 600;
       }
       :hover {
-        border-bottom: 3px solid #C02222;
+        border-bottom: 3px solid $common-button-bg;
       }
       .active {
-        border-bottom: 3px solid #C02222;
+        border-bottom: 3px solid $common-button-bg;
         font-weight: 400;
         color: #000;
         opacity: 1;
