@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { NzMessageService, NzNotificationService, NzConfigService } from 'ng-zorro-antd';
 import * as XLSX from 'xlsx';
 import { ToastrService } from 'ngx-toastr';
 
@@ -24,14 +22,11 @@ export class AppConfigService {
   public IsWait = false;
 
   constructor(
-    private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private ManualSpinner: NgxSpinnerService,
     private router: Router,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private message: NzMessageService,
-    private notification: NzNotificationService,
     public toast: ToastrService
   ) {
   }
@@ -67,15 +62,8 @@ export class AppConfigService {
      }
      if (type == 'success') {
      return this.toast.success(text, title);
-     } else {
-           this.notification.create(
-      type,
-      title,
-      text,
-      { nzDuration: 3000 }
-    );
      }
-}
+  }
 
   errorToast(val) {
     this.toast.error(val);
@@ -132,37 +120,9 @@ export class AppConfigService {
     this.ManualSpinner.hide();
   }
 
-
-  // NZ Zorro message
-  nzsuccess(message: any, icon: any): void {
-    this.message.success(message, {
-      nzDuration: 3000
-    });
-  }
-  // nzerror(message: any, icon: any): void {
-  //   this.message.error(message, {
-  //     nzDuration: 100000000
-  //   });
-  // }
-  // FormError message
-  nzformerror(message: any, icon: any): void {
-    this.message.error('Please fill all the red highlighted fields to proceed further', {
-      nzDuration: 3000
-    });
-  }
-
-  // nzNotification(type: string, title: any, text: any): void {
-  //   this.notification.create(
-  //     type,
-  //     title,
-  //     text,
-  //     { nzDuration: 3000 }
-  //   );
-  // }
-
   // To get a local storage value
   getLocalData(key: string): any {
-    return localStorage.getItem(key);
+    return sessionStorage.getItem(key);
   }
 
   // To get a Session storage value
@@ -172,7 +132,7 @@ export class AppConfigService {
 
   // To set localstorage key and value
   setLocalData(key: string, value: any): any {
-    return localStorage.setItem(key, value);
+    return sessionStorage.setItem(key, value);
   }
 
   // To set sessionstorage key and value
@@ -182,11 +142,11 @@ export class AppConfigService {
 
   // Clear local and session data
   clearLocalDataOne(key) {
-    return localStorage.removeItem(key);
+    return sessionStorage.removeItem(key);
   }
   // Clear local and session data
   clearLocalData() {
-    return localStorage.clear();
+    return sessionStorage.clear();
   }
 
   // Clear local and session data

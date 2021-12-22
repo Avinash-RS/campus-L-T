@@ -23,7 +23,7 @@
   .header-logo {
     color: $primary-text-color;
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 600;
     padding-left: 10px;
   }
 
@@ -32,6 +32,7 @@
     align-items: center;
     justify-content: flex-start;
     color: $black;
+    font-weight: 400;
     .welcome {
       font-size: 18px;
     }

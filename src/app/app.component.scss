@@ -1,8 +1,47 @@
-// ngx-spinner {
-//   color: #fff;
-//   size: medium;
-//   background: rgba(0, 0, 0, 0.5);
-// }
+@import './themes/themes.scss';
+.modal-wrapper {
+  background: $white;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 0;
+  min-width: 500px;
+  max-width: 600px;
+  .heading-wrapper {
+    padding: 8px 22px;
+    border-bottom: solid 1px lightgray;
+    .heading {
+      color: $black;
+      font-size: 22px;
+      font-weight: 500;
+    }
+  }
+  .body-wrapper {
+    padding: 20px 24px;
+  }
+  .confirmation-text {
+    color: $black;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .time-remains {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    span {
+      font-weight: 500;
+      color: $primary-error-text;
+    }
+  }
+  .button-wrappers {
+    padding: 20px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* loader */
 
 .loading-container {
   display: flex;

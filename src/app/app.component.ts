@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event, ResolveEnd
@@ -12,6 +12,10 @@ import { LoaderService } from './services/loader-service.service';
 import { delay, filter } from 'rxjs/operators';
 
 import { LicenseManager } from 'ag-grid-enterprise';
+import { NgIdleService } from './services/session-handling.service';
+import { ApiServiceService } from './services/api-service.service';
+import { CONSTANT } from './constants/app-constants.service';
+import { SharedServiceService } from './services/shared-service.service';
 LicenseManager.setLicenseKey('CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=L&T EduTech,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=3,LicensedProductionInstancesCount=3,AssetReference=AG-017299,ExpiryDate=15_July_2022_[v2]_MTY1NzgzOTYwMDAwMA==d6a472ece2e8481f35e75c20066f8e49');
 
 
@@ -19,39 +23,31 @@ LicenseManager.setLicenseKey('CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [
+    NgIdleService
+  ]
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('sessionDialog', {static: false}) sessionDialogRef: TemplateRef<any>;
   title = 'udap-registration';
-  showLoadingIndicator = true;
   screenHeight;
   screenWidth;
-  maintenanceStatus = false;
-
-  titles = 'connectionDetector';
-  status = 'ONLINE';
   screenBoolean = false;
-  // Hi
-  // initializing as online by default
-  isConnected = true;
   isIE = false;
   subscriptions: Subscription[] = [];
-  maintenanceMessage: any;
   loading: boolean = true;
-  selectedDriveId: number;
-
+  secondTimerLeft: string;
+  sessionDialogRefPopup: any;
   constructor(
+    private ngIdle: NgIdleService,
     private router: Router,
     public loadingService: LoaderService,
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
+    private apiService: ApiServiceService,
+    private sharedService: SharedServiceService,
   ) {
-    // this.connectionStatusMethod();
     // tslint:disable-next-line: deprecation
-    this.appConfig.clearLocalDataOne('personalFormTouched');
-    this.appConfig.clearLocalDataOne('educationalFormTouched');
-    this.appConfig.clearLocalDataOne('familyFormTouched');
-    this.appConfig.clearLocalDataOne('generalFormTouched');
-
     this.router.events
     .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
     .subscribe(event => {
@@ -63,49 +59,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       //  ..... // here your code when page is refresh
       }
     })
-    // this.router.events.subscribe((routerEvent: Event) => {
-    //   if (routerEvent instanceof NavigationStart) {
-    //   }
-    //   // On NavigationEnd or NavigationError or NavigationCancel
-    //   // set showLoadingIndicator to false
-    //   if (routerEvent instanceof NavigationEnd ||
-    //     routerEvent instanceof NavigationError ||
-    //     routerEvent instanceof NavigationCancel) {
-    //       if (environment.local != true) {
-    //         // this.commonService.initVersionCheck(environment.versionCheckURL);
-    //       }
-    //       }
-    // });
   }
+
 
   ngOnInit() {
     this.getScreenSize();
     this.checkIE();
     this.listenToLoading();
-    this.selectedDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
+    let token = this.appConfig.getLocalData('csrf-login');
+    token ? this.initSessionTimer() : '';
+    this.sessionTimeStartRxjs();
   }
 
-  checkNavigation() {
-        this.router.events.subscribe((routerEvent: Event) => {
-          if (this.appConfig.getDriveId() == this.selectedDriveId) {
-            this.router.routeReuseStrategy.shouldReuseRoute = () => true;
-            this.router.onSameUrlNavigation = 'ignore';
-          } else {
-            this.selectedDriveId = this.appConfig.getDriveId() ? Number(this.appConfig.getDriveId()) : null;
-          }
-      if (routerEvent instanceof NavigationStart) {
-      }
-      // On NavigationEnd or NavigationError or NavigationCancel
-      // set showLoadingIndicator to false
-      if (routerEvent instanceof NavigationEnd ||
-        routerEvent instanceof NavigationError ||
-        routerEvent instanceof NavigationCancel) {
-          if (environment.local != true) {
-            // this.commonService.initVersionCheck(environment.versionCheckURL);
-          }
-          }
-    });
-  }
   ngAfterViewInit() {
     // Hack: Scrolls to top of Page after page view initialized
     let top = document.getElementById('top');
@@ -113,6 +78,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       top.scrollIntoView();
       top = null;
     }
+}
+
+sessionTimeStartRxjs() {
+   this.sharedService.sessionTimeStartSubject.subscribe((data: any)=> {
+    data && data == 'start' ? this.initSessionTimer() : this.sessionHandlingDisabled();
+   }, (err)=> {
+
+   });
 }
 
   @HostListener('window:resize', ['$event'])
@@ -156,8 +129,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openDialog(component, data) {
     let dialogDetails: any;
-
-
     /**
      * Dialog modal window
      */
@@ -185,6 +156,101 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((loading) => {
         this.loading = loading;
       });
+  }
+
+  initSessionTimer(): void {
+    // Watcher on timer
+    this.ngIdle.initilizeSessionTimeout();
+    this.ngIdle.userIdlenessChecker.subscribe((status: string) => {
+      this.initiateFirstTimer(status);
+    });
+
+    this.ngIdle.secondLevelUserIdleChecker.subscribe((status: string) => {
+      this.initiateSecondTimer(status);
+    });
+   }
+
+   initiateFirstTimer = (status: string) => {
+    switch (status) {
+      case 'INITIATE_TIMER':
+        break;
+
+      case 'RESET_TIMER':
+        break;
+
+      case 'STOPPED_TIMER':
+        this.showSendTimerDialog();
+        break;
+
+      default:
+        // this.idleTimerLeft = this.formatTimeLeft(Number(status));
+        break;
+    }
+  }
+
+
+  initiateSecondTimer = (status: string) => {
+    switch (status) {
+      case 'INITIATE_SECOND_TIMER':
+        break;
+
+      case 'SECOND_TIMER_STARTED':
+        break;
+
+      case 'SECOND_TIMER_STOPPED':
+        this.logout();
+        break;
+
+      default:
+        this.secondTimerLeft = status;
+        break;
+    }
+  }
+
+  showSendTimerDialog(): void {
+    this.sessionDialog();
+    // this.continue();
+  }
+  continue(): void {
+    this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+    // stop second timer and initiate first timer again
+    NgIdleService.runSecondTimer = false;
+    this.ngIdle.initilizeSessionTimeout();
+  }
+
+  logout(): void {
+    // stop all timer and end the session
+    NgIdleService.runTimer = false;
+    NgIdleService.runSecondTimer = false;
+    this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+    this.logOutApi();
+  }
+
+  sessionHandlingDisabled() {
+    NgIdleService.runTimer = false;
+    NgIdleService.runSecondTimer = false;
+  }
+
+  sessionDialog() {
+    this.sessionDialogRefPopup = this.matDialog.open(this.sessionDialogRef, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      panelClass: 'sessionAlertPopUp',
+      disableClose: true
+    });
+  }
+
+  logOutApi() {
+    const token = this.appConfig.getLocalData('logout-token');
+    this.appConfig.clearLocalData();
+    this.apiService.logout(token).subscribe((data: any) => {
+      this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+      this.appConfig.clearLocalData();
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+    }, (err) => {
+      this.sessionDialogRefPopup ? this.sessionDialogRefPopup.close() : '';
+    });
   }
 
   ngOnDestroy(): void {

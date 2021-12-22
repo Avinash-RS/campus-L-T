@@ -22,7 +22,7 @@
     background: $primary-gray;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 200;
+    font-weight: 400;
     color: $white;
     font-size: 16px;
   }
@@ -42,7 +42,7 @@
     border-radius: 6px;
     transition-delay: 10s;
     left: 0 !important;
-    font-weight: 200;
+    font-weight: 400;
     color: $white;
     text-align: right;
     font-size: 16px;
@@ -109,7 +109,7 @@
     .active {
       background: $common-button-bg !important;
       outline: none;
-      font-weight: 200;
+      font-weight: 400;
       color: #fff;
       img {
         filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
@@ -264,7 +264,7 @@
 }
 
 mat-drawer-container {
-  height: calc(100vh - 64px) !important;
+  height: calc(100vh - 60px) !important;
 }
 
 mat-drawer ul li span img {
@@ -402,13 +402,6 @@ mat-drawer ul li span img {
   border-radius: 0px !important;
   z-index: 0 !important;
   box-shadow: none !important;
-}
-
-:host ::ng-deep .ant-select-selection__placeholder,
-:host ::ng-deep .ant-select-search__field__placeholder {
-    color: #a5a5a5 !important;
-    opacity: 0.6 !important;
-    font-size: 13px !important;
 }
 
 :host ::ng-deep .ant-select-selection__rendered {

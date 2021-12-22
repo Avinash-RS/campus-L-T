@@ -19,7 +19,22 @@
   <!-- </i> -->
 </ng-container>
 <router-outlet></router-outlet>
-<!-- <div style="z-index: 2; width: 100%; position: fixed; overflow: hidden; bottom: 0; margin: 0; padding: 0;">
-    <app-dashboard-header></app-dashboard-header>
-</div> -->
-<!-- <ngx-spinner></ngx-spinner> -->
+<ng-template #sessionDialog>
+  <div class="modal-wrapper">
+    <div class="heading-wrapper">
+      <div class="heading">
+      {{'Alert Message'}}
+      </div>
+    </div>
+    <div class="body-wrapper">
+    <div class="confirmation-text">
+      You're being timed out due to inactivity. Please choose to stay logged in or to logoff. Otherwise, you will be logged off automatically
+    </div>
+    <div class="time-remains mt-2">Time Remain - <span>{{secondTimerLeft}}</span></div>
+    <div class="button-wrappers">
+    <button class="common-cancel-button common-button-height-40 mr-3" (click)="logout()" mat-raised-button>Log Off</button>
+    <button class="common-button common-button-height-40" (click)="continue()" mat-raised-button>Stay Logged In</button>
+  </div>
+  </div>
+  </div>
+</ng-template>

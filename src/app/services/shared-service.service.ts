@@ -23,4 +23,5 @@ export class SharedServiceService {
   joiningFormDataPassing = new Subject();
 
   screenRefreshOnDriveChange = new Subject();
+  sessionTimeStartSubject = new Subject();
 }

@@ -207,7 +207,7 @@ constructor(
     private glovbal_validators: GlobalValidatorService
   ) {
     this.dateValidation();
-    let mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : [];
+    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
     this.mastersList = mastersList ? mastersList.education_master : [];
   }
 

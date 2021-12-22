@@ -10,6 +10,7 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 400 !important;
   ul:first-child {
     display: inline-flex;
     align-items: center;

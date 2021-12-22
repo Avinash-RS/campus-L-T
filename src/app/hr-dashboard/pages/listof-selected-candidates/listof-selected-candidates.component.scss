@@ -19,14 +19,14 @@
       width: 100%;
       justify-items: center;
           .b1,.b2,.b3 {
-              border: 1px solid $primary-red;
+              border: 1px solid $common-button-bg;
               background-color: $white;
               color: #666666;
               line-height: 2;
               border-radius: 4px;
               font-size: 14px;
               /* "to left" / "to right" - affects initial color */
-              background: linear-gradient(to left, white 50%, $primary-red 50%) right;
+              background: linear-gradient(to left, white 50%, $common-button-bg 50%) right;
               background-size: 200%;
               transition: .5s ease-out;
               width: 90px;

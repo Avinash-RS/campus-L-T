@@ -22,7 +22,7 @@ img {
       font-size: 18px;
       text-align: center;
       padding: 0em 0 0 0.5em;
-      font-weight: 700;
+      font-weight: 600;
       transform: translateY(18%);
       span {
         display: block;
@@ -33,13 +33,13 @@ img {
     display: inline-flex;
     .help-text {
       margin: 0 1em;
-      font-weight: 200 !important;
+      font-weight: 400 !important;
       button {
         border: 1px solid $blue;
         border-radius: 5px;
         outline: none;
         color: $light-black;
-        font-weight: 200 !important;
+        font-weight: 400 !important;
         padding: 0.15em 1.25em;
         text-align: center;
         background: transparent !important;
@@ -47,13 +47,13 @@ img {
       }
     }
     .home {
-      font-weight: 200 !important;
+      font-weight: 400 !important;
       button {
         border: 1px solid $blue;
         border-radius: 5px;
         outline: none;
         color: $light-black;
-        font-weight: 200 !important;
+        font-weight: 400 !important;
         padding: 0.15em 1.25em;
         text-align: center;
         background: transparent !important;

@@ -18,7 +18,7 @@ export class firstShortlistFilterModel {
   }
 
   getProfileList() {
-    let mastersList = localStorage.getItem('masters') ? JSON.parse(localStorage.getItem('masters')) : '';
+    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : '';
     let filter = mastersList?.education_master;
     filter.forEach(element => {
       element.checkbox = false;
