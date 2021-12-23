@@ -35,7 +35,7 @@ export class LoginpageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sharedService.sessionTimeStartSubject.next('end');
+    // this.sharedService.sessionTimeStartSubject.next('end');
     this.verifyEmail();
     this.formInitialize();
   }
@@ -111,7 +111,7 @@ export class LoginpageComponent implements OnInit {
     if (this.loginForm.valid) {
       if (apiData.name && apiData.pass) {
           this.apiService.login(apiData).subscribe((data: any) => {
-            this.sharedService.sessionTimeStartSubject.next('start');
+            // this.sharedService.sessionTimeStartSubject.next('start');
             this.appConfig.setLocalData('username', data && data.current_user.name ? data.current_user.name : '');
             this.appConfig.setLocalData('userId', data && data.current_user.uid ? data.current_user.uid : '');
             this.appConfig.setLocalData('userEmail', data && data.current_user.mail ? data.current_user.mail : '');

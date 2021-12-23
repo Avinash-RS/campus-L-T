@@ -9,8 +9,8 @@ const STORE_KEY =  'userLastAction';
 export class NgIdleService implements OnDestroy {
   public static runTimer: boolean;
   public static runSecondTimer: boolean;
-  public USER_IDLE_TIMER_VALUE_IN_MIN: number = 1;
-  public FINAL_LEVEL_TIMER_VALUE_IN_MIN: number = 1;
+  public USER_IDLE_TIMER_VALUE_IN_MIN: number = 1000;
+  public FINAL_LEVEL_TIMER_VALUE_IN_MIN: number = 20;
   public userIdlenessChecker: BehaviorSubject<string>;
   public secondLevelUserIdleChecker: BehaviorSubject<string>;
 

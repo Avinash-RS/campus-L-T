@@ -122,7 +122,8 @@ export class AppConfigService {
 
   // To get a local storage value
   getLocalData(key: string): any {
-    return sessionStorage.getItem(key);
+    return localStorage.getItem(key);
+    // return sessionStorage.getItem(key);
   }
 
   // To get a Session storage value
@@ -132,7 +133,7 @@ export class AppConfigService {
 
   // To set localstorage key and value
   setLocalData(key: string, value: any): any {
-    return sessionStorage.setItem(key, value);
+    return localStorage.setItem(key, value);
   }
 
   // To set sessionstorage key and value
@@ -142,11 +143,11 @@ export class AppConfigService {
 
   // Clear local and session data
   clearLocalDataOne(key) {
-    return sessionStorage.removeItem(key);
+    return localStorage.removeItem(key);
   }
   // Clear local and session data
   clearLocalData() {
-    return sessionStorage.clear();
+    return localStorage.clear();
   }
 
   // Clear local and session data

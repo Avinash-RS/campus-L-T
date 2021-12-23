@@ -1,13 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
 import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
-import moment from 'moment';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 // import all Enterprise modules
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
@@ -55,7 +51,6 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
-    // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING_ASSESSMENTCANDIDATE_LIST, 'assement_name' ? {data: 'assement_name'} : {data: 'none'});
     this.refreshOndriveChangeRXJS();
   }
 
@@ -92,7 +87,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       let normalColumn: any = this.normalAssessmentColumns();
       let videoColumn: any = this.videoAssessmentColumns();
       let normalAssessColumnMerge = initColumn.concat(normalColumn);
-      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 4, 0, videoColumn[0]);
+      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 3, 0, videoColumn[0]);
       this.columnDefs = normalAssessColumnMerge;
       return this.columnDefs;
     } else {
@@ -108,7 +103,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
       let normalColumn: any = this.normalAssessmentColumns();
       let videoColumn: any = this.videoAssessmentColumns();
       let normalAssessColumnMerge = initColumn.concat(normalColumn);
-      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 4, 0, videoColumn[0]);
+      normalAssessColumnMerge.splice(normalAssessColumnMerge.length - 3, 0, videoColumn[0]);
       normalAssessColumnMerge.pop();
       this.columnDefs = normalAssessColumnMerge;
       return this.columnDefs;
@@ -197,6 +192,10 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         minWidth: 140,
         headerClass: 'ag-grid-header-center',
         cellClass: 'ag-icon-custom',
+        valueFormatter: this.tooltipFormatter,
+        tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
+          return (params.valueFormatted);
+        },
         cellRenderer: (params) => {
           if (params['data']['va_scheduled_status'] == 'Scheduled') {
             return `<span class="icon-Info ag-icon-color pointer ag-icon-font-size-20"></span>`;
@@ -215,7 +214,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   normalAssessmentColumns() {
     return [
       {
-        headerName: 'Total No. of candidates', field: 'total_count',
+        headerName: 'No. of Applicants', field: 'total_count',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
@@ -231,33 +230,48 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Action', field: 'buttons',
+        headerName: 'View Details', field: 'buttons',
         minWidth: 120,
         headerClass: 'ag-grid-header-center',
         valueFormatter: this.tooltipFormatter,
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
         },
-        cellClass: 'ag-button-cellClass',
+        cellStyle: {'text-align': 'center'},
         cellRenderer: (params) => {
-          return `<button class="ag-button-custom ag-button-color common-button-height-28 pointer" mat-raised-button>Shortlist</button>`;
+            return `<span style="border-bottom: solid #1b4e9b 1px; cursor: pointer; color: #1b4e9b;">View</span>`;
         },
-        filterParams: {
-          buttons: ['reset'],
-        },
-          sortable: true,
+        filter: false,
+        sortable: false,
       },
       {
-        headerName: 'Shortlisted count', field: 'shortlisted',
-        filter: 'agNumberColumnFilter',
+        headerName: 'Shortlisted Details', field: 'view',
         minWidth: 140,
+        headerClass: 'ag-grid-header-center',
+        cellClass: 'ag-icon-custom',
+        valueFormatter: this.tooltipFormatter,
+        tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
+          return (params.valueFormatted);
+        },
+        cellRenderer: (params) => {
+          if (params['data']['shortlisted'] > 0) {
+            return `<span class="icon-View ag-icon-color pointer ag-icon-font-size"></span>`;
+          } else {
+            return '-';
+          }
+        },
+        filter: false,
+        sortable: false,
+      },
+      {
+        headerName: 'Shortlists', field: 'shortlisted',
+        filter: 'agNumberColumnFilter',
+        minWidth: 120,
+        maxWidth: 120,
         sortable: true,
         tooltipField: 'shortlisted',
         cellStyle: params => {
-          // if (params.value) {
               return {'text-align': 'center'}
-          // }
-        // return null;
         },
         filterParams: {
           buttons: ['reset'],
@@ -267,24 +281,14 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Report', field: 'view',
-        minWidth: 100,
-        maxWidth: 100,
-        headerClass: 'ag-grid-header-center',
-        cellClass: 'ag-icon-custom',
-        cellRenderer: (params) => {
-          if (params['data']['shortlisted'] > 0) {
-            return `<span class="icon-View ag-icon-color pointer ag-icon-font-size"></span>`;
-          }
-        },
-        filter: false,
-        sortable: false,
-      },
-      {
-        headerName: 'Assign to Panel', field: 'view1',
+        headerName: 'Panel Assignment', field: 'view1',
         minWidth: 120,
         headerClass: 'ag-grid-header-center',
         cellClass: 'ag-icon-custom',
+        valueFormatter: this.tooltipFormatter,
+        tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
+          return (params.valueFormatted);
+        },
         cellRenderer: (params) => {
           if (params['data']['shortlisted'] > 0) {
             return `<span class="icon-portrait ag-icon-color pointer ag-icon-font-size"></span>`;
@@ -299,7 +303,7 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   tabledefInit() {
     return [
       {
-        headerName: 'Shortlist name', field: 'shortlist_name',
+        headerName: 'Name', field: 'shortlist_name',
         filter: 'agTextColumnFilter',
         minWidth: 170,
         sortable: true,
@@ -318,11 +322,26 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
   }
 
   tooltipFormatter(params) {
-    // if (params.value == 'completed') {
-    //   return "Shortlisted";
-    // }
+    if (params.column.colId == 'buttons') {
+      return "Click to View Details";
+    }
+    if (params.column.colId == 'view') {
+      return params['data']['shortlisted'] > 0 ? 'Click to View Shortlisted Details' : 'No Shortlisted Details Available';
+    }
+    if (params.column.colId == 'view1' && params['data']['shortlisted'] > 0 ) {
+      return 'Click here to go to the Panel Assignment';
+    }
+    if (params.column.colId == 'va_scheduled_status') {
+      if (params['data']['va_scheduled_status'] == 'Scheduled') {
+        return `View Scheduled Details`;
+      } else {
+        return `Schedule Video Assessment`;
+      }
+    }
+    else {
+      return '';
+    }
     // if (params.value == 'waiting') {
-      return "Click to shortlist";
     // } else {
     //   return "No Candidates available for shortlist";
     // }
