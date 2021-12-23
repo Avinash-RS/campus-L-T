@@ -67,8 +67,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.checkIE();
     this.listenToLoading();
     let token = this.appConfig.getLocalData('csrf-login');
-    token ? this.initSessionTimer() : '';
-    this.sessionTimeStartRxjs();
+    // token ? this.initSessionTimer() : '';
+    // this.sessionTimeStartRxjs();
   }
 
   ngAfterViewInit() {
