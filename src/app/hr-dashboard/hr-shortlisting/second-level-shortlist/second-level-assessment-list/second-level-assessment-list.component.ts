@@ -241,10 +241,8 @@ export class SecondLevelAssessmentListComponent implements OnInit, OnDestroy {
         cellRenderer: (params) => {
             return `<span style="border-bottom: solid #1b4e9b 1px; cursor: pointer; color: #1b4e9b;">View</span>`;
         },
-        filterParams: {
-          buttons: ['reset'],
-        },
-          sortable: true,
+        filter: false,
+        sortable: false,
       },
       {
         headerName: 'Shortlisted Details', field: 'view',
