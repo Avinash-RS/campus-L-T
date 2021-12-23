@@ -82,7 +82,7 @@ const routes: Routes = [
             path: `${CONSTANT.ROUTES.HR_DASHBOARD.SECONDSHORTLISTING}`,
             component: SecondLevelShortlistComponent,
             data: {
-              breadcrumb: 'Shortlists'
+              breadcrumb: 'Applicants Shortlisted'
             },
             children: [
               {

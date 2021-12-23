@@ -27,7 +27,7 @@ export class HrShortlistingComponent implements OnInit {
       {
         icon: 'icon-reg',
         icons: true,
-        name: 'Shortlists',
+        name: 'Applicants Shortlisted',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTING
       }
     ];
