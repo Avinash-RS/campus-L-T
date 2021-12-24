@@ -354,6 +354,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   matDialogRefDocViewerPopUpRef: any;
   termsAndCondtionsPopRef: any;
   customerName: any;
+  customerCode: any;
+  lttsCustomerCode = '#LTTS';
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -373,6 +375,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     this.getPreviewData();
     this.checkFormValidRequestFromRxjs();
     this.joiningFormDataFromJoiningFormComponentRxjs();
+    this.customerCode = this.appConfig.getSelectedCustomerCode();
   }
 
   joiningFormDataFromJoiningFormComponentRxjs() {

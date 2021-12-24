@@ -2169,7 +2169,7 @@
                         class="mr-2"
                       ></mat-checkbox>
                       I agree to have read and understood the
-                      <span
+                      <span *ngIf="customerCode == lttsCustomerCode else nonLtts"
                         style="
                           color: #007bff;
                           cursor: pointer;
@@ -2199,15 +2199,14 @@
                         class="mr-2"
                       ></mat-checkbox>
                       I agree to have read and understood the
-                      <span
+                      <span *ngIf="customerCode == lttsCustomerCode else nonLtts"
                         style="
                           color: #007bff;
                           cursor: pointer;
                           text-decoration: underline;
                         "
                         (click)="matDialogOpenTerms('coc')"
-                        >Terms and Conditions</span
-                      >
+                        >Terms and Conditions</span>
                       of Code of Conduct and will abide by the same during the
                       assessment and the selection process.
                     </div>
@@ -2274,7 +2273,7 @@
                     >
                     </mat-checkbox>
                     I agree to have read and understood the
-                    <span
+                    <span *ngIf="customerCode == lttsCustomerCode else nonLtts"
                       style="
                         color: #007bff;
                         cursor: pointer;
@@ -2932,4 +2931,7 @@
       </div>
     </div>
   </div>
+</ng-template>
+<ng-template #nonLtts>
+  <span>Terms and Conditions</span>
 </ng-template>
