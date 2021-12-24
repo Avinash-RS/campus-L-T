@@ -5,7 +5,7 @@
             <mat-tab *ngIf="!hideForm">
                 <ng-template mat-tab-label>
                     <span class="icon-Layers"></span>
-                    <span>Question</span>
+                    <span>Select Questions</span>
                 </ng-template>
                 <div class="tabContent questionTab">
                   <ng-container *ngIf="selectedQuestionsArray && selectedQuestionsArray.length > 0 else noQuestionsMsg">
@@ -41,7 +41,7 @@
             <mat-tab *ngIf="!hideForm">
                 <ng-template mat-tab-label>
                     <span class="icon-insert_invitation"></span>
-                    <span>Schedule</span>
+                    <span>Set Date & Time</span>
                 </ng-template>
                 <div class="tabContent scheduleTab">
                     <form [formGroup]="scheduleForm">
