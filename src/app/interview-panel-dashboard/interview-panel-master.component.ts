@@ -28,13 +28,13 @@ export class InterviewPanelMasterComponent implements OnInit, OnDestroy {
       this.SideMenu = [
         {
           url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS,
-          name: 'Dashboard',
+          name: 'Final Interview Candidates',
           icon: 'icon-dashboard',
           hide: false
         },
         {
           url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_TAB_HOME,
-          name: 'Video Assessments',
+          name: 'Video Review',
           icon: 'icon-video_camera',
           hide: false
         }
@@ -43,7 +43,7 @@ export class InterviewPanelMasterComponent implements OnInit, OnDestroy {
       this.SideMenu = [
         {
           url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS,
-          name: 'Dashboard',
+          name: 'Final Interview Candidates',
           icon: 'icon-dashboard',
           hide: false
         },

@@ -251,7 +251,7 @@ patchScheduleForm() {
       description: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
       startTime: [null, [Validators.required]],
       endTime: [null, [Validators.required]],
-      type: [null],
+      type: [true],
     });
   }
 

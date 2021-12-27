@@ -23,7 +23,7 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS}`,
         component: InvCandidateDetailsComponent, canActivate: [InvpanelGuard],
         data: {
-          breadcrumb: 'Assigned Candidates'
+          breadcrumb: 'Final Interview Candidates List'
         },
         children: [
           {
@@ -51,14 +51,14 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_TAB_HOME}`,
         component: VideoAssessMainRouteComponent, canActivate: [InvpanelGuard],
         data: {
-          breadcrumb: 'Video Assessments'
+          breadcrumb: 'Video Review'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.INTERVIEW_PANEL_DASHBOARD.VIDEO_ASSESS_ASSIGNED_DETAILS}`,
             component: VideoAssessAssignedCandidatesComponent,
             data: {
-            breadcrumb: 'Assigned Candidates'
+            breadcrumb: ''
             }
           },
           {
