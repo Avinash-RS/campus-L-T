@@ -314,7 +314,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     let internArray = this.workDetailsAllData[this.form_training_Array] ? this.workDetailsAllData[this.form_training_Array] : [];
     if (this.workDetailsAllData[this.form_is_training_status] && this.workDetailsAllData[this.form_is_training_status] == 1) {
       this.getTrainingArr.clear();
-      if (internArray > 0) {
+      if (internArray && internArray.length > 0) {
       internArray.forEach(element => {
         element ? this.getTrainingArr.push(this.TrainingArrayPatch(element)) : '';
       });
