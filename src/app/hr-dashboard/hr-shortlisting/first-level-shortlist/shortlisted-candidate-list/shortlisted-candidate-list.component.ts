@@ -8,7 +8,6 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
 ModuleRegistry.registerModules(AllModules);
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
-import { ClickableStatusBarComponent } from './custom-get-selected-rows-count';
 import { firstShortlistFilterModel } from './firstShortlist_filtermodel';
 import { FormControl, FormGroup, FormBuilder, FormArray, Validators, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDatepicker } from '@angular/material';
@@ -138,8 +137,8 @@ pgInstitutesList: any;
   public rowModelType;
   public serverSideStoreType;
 
-  public frameworkComponents;
-  public statusBar;
+  // public frameworkComponents;
+  // public statusBar;
   public sideBar;
   public paginationNumberFormatter;
   public rowClassRules;
@@ -161,6 +160,7 @@ pgInstitutesList: any;
   getCandidateListForShortlistSubscription: Subscription;
   submitShortlistedCandidatesSubscription: Subscription;
   getAllEducationFormDropdownListSubscription: Subscription;
+  selecetedCount:any = 0;
   constructor(
     private appConfig: AppConfigService,
     private firstShortlistFilterModel: firstShortlistFilterModel,
@@ -291,12 +291,12 @@ dateConvertionMonth(date) {
     this.defaultColDef.enableRowGroup = false;
     this.defaultColDef.enablePivot = false;
     this.tableDef();
-    this.frameworkComponents = {
-      clickableStatusBarComponent: ClickableStatusBarComponent,
-    };
-    this.statusBar = {
-      statusPanels: [{ statusPanel: 'clickableStatusBarComponent' }],
-    };
+    // this.frameworkComponents = {
+    //   clickableStatusBarComponent: ClickableStatusBarComponent,
+    // };
+    // this.statusBar = {
+    //   statusPanels: [{ statusPanel: 'clickableStatusBarComponent' }],
+    // };
     this.educationDropdownValuesAPI();
     this.refreshOndriveChangeRXJS();
   }
@@ -310,6 +310,7 @@ dateConvertionMonth(date) {
 
   selectAll(e) {
     this.selectorUnselectAllCheckbox(e);
+    this.onSelectionChanged();
   }
 
   selectorUnselectAllCheckbox(condition) {
@@ -1366,7 +1367,9 @@ showInstitute(institute: string) {
   let replace = institute.slice(0, 55);
   return count <= 55 ? institute : (replace + '...');
 }
-
+onSelectionChanged(){
+  this.selecetedCount  = this.gridApi.getSelectedRows().length;
+}
 checkEducationalFilterAppliedOrNot() {
   let eduValue = this.getEducationArr.getRawValue();
   return eduValue.find(x => x.checked);
