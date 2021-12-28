@@ -19,7 +19,7 @@
 
   <div *ngIf="gridApi" class="d-flex justify-content-end align-items-center">
 
-    <div class="ml-2">
+    <!-- <div class="ml-2">
       <button
         [matTooltip]="checkFilterAppied() || lastAppliedFilter ? '' : 'No filter has been applied'"
         [ngClass]="(checkFilterAppied() || lastAppliedFilter) && !buttonLoading ? '' : 'disabled'"
@@ -41,16 +41,11 @@
       >
         Currently Applied Filter
       </button>
-    </div>
+    </div> -->
 
     <div class="ml-2">
-      <button
-        [matTooltip]="'Advanced Filter'"
-        (click)="customFilterOpen()"
-        class="common-button common-button-height-32"
-        mat-raised-button
-      >
-        Advanced Filter
+      <button  [matTooltip]="'Advanced Filter'" class="common-button-with-icon common-button-height-32 ml-2 min-width-100" (click)="customFilterOpen()" mat-raised-button>
+        <em class="icon-filter"></em> <span class="ml-2">Filter</span>
       </button>
     </div>
 
