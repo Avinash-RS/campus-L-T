@@ -70,7 +70,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
+  .icon-filter:before {
+    content: "\e9a2";
+  }
+  .icon-review:before {
+    content: "\e9a1";
+  }
   .icon-language_black_24dp:before {
     content: "\e991";
   }

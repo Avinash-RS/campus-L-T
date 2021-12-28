@@ -9,7 +9,11 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
+:host::ng-deep .min-width-100{
+  .mat-button-wrapper{
+     min-width: 100px!important;
+  }
+}
 ::ng-deep .popupModalContainerForcustomFilter {
   right: 0 !important;
   pointer-events: auto !important;
