@@ -6,6 +6,11 @@
       <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
     </div>
 
+    <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3">
+      <span class="label mr-2">Selected Candidates Count: </span>
+      <span class="count">{{selecetedCount}}</span>
+    </div>
+
     <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="common-button-with-icon common-button-height-32" (click)="selectAll(true)" mat-raised-button>
       <em class="icon-checked"></em> <span class="ml-2">Select All Candidates</span>
     </button>
@@ -99,8 +104,6 @@
     [enableRangeSelection]="true"
     (cellClicked)="onCellClicked($event)"
     (paginationChanged)="paginationChanged($event)"
-    [statusBar]="statusBar"
-    [frameworkComponents]="frameworkComponents"
     headerHeight="30"
     [rowClassRules]="rowClassRules"
     [sideBar]="false"
@@ -111,6 +114,7 @@
     [autoGroupColumnDef]="autoGroupColumnDef"
     (rowGroupOpened)="onGroupOpened($event)"
     [animateRows]="true"
+    (selectionChanged)="onSelectionChanged()"
   >
   </ag-grid-angular>
 </div>
