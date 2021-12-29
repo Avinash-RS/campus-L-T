@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 
@@ -119,41 +119,11 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
             this.appConfig.setLocalData('masters', data && data.master_list && data.master_list.data ? JSON.stringify(data.master_list.data) : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
-
-            this.appConfig.setCustomerConfiguration(data);
-
-            let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
-            if (customersList.length > 1) {
-              this.appConfig.setLocalData('multiCustomer', 'true');
-            }
-            if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
-            }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
-            }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
-            }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ic') {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
-            }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ssc_hr') {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
-            }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'interview_panel') {
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
-            }
-            if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
-              // this.appConfig.setDriveIdForCandidate(data);
-              this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
-              this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
-              this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
-              this.appConfig.setLocalData('form_submmited', data && data['form_submmited'] && data['form_submmited'] == '1' ? 'true' : 'false');
-              this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == 1 ? 'false' : 'true');
-              return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
-            } else {
-            }
+            this.appConfig.setCustomerConfiguration(data).then((response: any)=> {
+              this.loginRedirection(data);
+            }).catch((err)=> {
+              this.loginRedirection(data);
+            });
           }, (error) => {
             this.disableLogin = false;
           });
@@ -162,8 +132,40 @@ export class LoginpageComponent implements OnInit {
       this.disableLogin = false;
       this.validateAllFields(this.loginForm);
     }
+  }
 
-
+  loginRedirection(data: any) {
+    let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
+    if (customersList.length > 1) {
+      this.appConfig.setLocalData('multiCustomer', 'true');
+    }
+    if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.TPO_DASHBOARD.HOME);
+    }
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'administrator') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.ADMIN_DASHBOARD.HOME);
+    }
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'hr') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HOME);
+    }
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ic') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
+    }
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'ssc_hr') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.BUSINESSROUTE);
+    }
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'interview_panel') {
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.HOME);
+    }
+    if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] === 'candidate') {
+      this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
+      this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
+      this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
+      this.appConfig.setLocalData('form_submmited', data && data['form_submmited'] && data['form_submmited'] == '1' ? 'true' : 'false');
+      this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == 1 ? 'false' : 'true');
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
+    } else {
+    }
   }
 
   forgotPassword() {
