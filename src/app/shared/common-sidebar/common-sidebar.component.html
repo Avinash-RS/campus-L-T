@@ -34,6 +34,7 @@
             <span>
               <img src="assets/images/arrow_right-black-18dp.svg" alt="" srcset="">
             </span>
+            <div class="badge" *ngIf="menu.name == 'Video Review'">10</div>
           </li>
         </ng-container>
 
@@ -98,7 +99,7 @@
 
             <ng-container *ngIf="role == 'interview_panel'">
               <li [matTooltip]="menu.name" *ngFor="let menu of sideBar; let i = index" [routerLink]="menu.url" routerLinkActive="active">
-                <span><em class="{{menu.icon}}"></em></span>
+                <span><em class="{{menu.icon}}"></em> <div class="badge-Short" *ngIf="menu.name == 'Video Review'">10</div></span>
               </li>
             </ng-container>
 
