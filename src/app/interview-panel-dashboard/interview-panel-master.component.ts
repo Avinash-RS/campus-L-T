@@ -24,7 +24,8 @@ export class InterviewPanelMasterComponent implements OnInit, OnDestroy {
   }
 
   sendMenus() {
-    if (this.appConfig.getSelectedDrivePermissions() && this.appConfig.getSelectedDrivePermissions().video_assessment) {
+    let permission = this.appConfig.getSelectedDrivePermissions();
+    if (permission && permission.video_assessment) {
       this.SideMenu = [
         {
           url: this.appConstant.INTERVIEW_PANEL_DASHBOARD.CANDIDATE_DETAILS,
