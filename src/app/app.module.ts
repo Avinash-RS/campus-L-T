@@ -29,6 +29,7 @@ import { NgxChartsModule} from '@swimlane/ngx-charts';
 // ag grid enterprise
 import 'ag-grid-enterprise';
 import { AgGridModule } from 'ag-grid-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 registerLocaleData(en);
 
@@ -58,6 +59,7 @@ registerLocaleData(en);
   // providers: [],
   entryComponents: [ModalBoxComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [
+    NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
     { provide: NZ_I18N, useValue: en_US },
