@@ -90,6 +90,8 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
         'roomName':this.scheduleForm.value.title,
         'startTime': this.scheduleForm.value.startTime,
         'endTime': this.scheduleForm.value.endTime,
+        'emailStartTime': this.momentFormCustomizedDateString(this.scheduleForm.value.startTime),
+        'emailEndTime': this.momentFormCustomizedDateString(this.scheduleForm.value.endTime),
         "userDtl": userDetails,
         "createdByID" : this.appConfig.getLocalData('userEmail'),
         "createdByName": this.appConfig.getLocalData('username'),
@@ -115,6 +117,12 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  momentFormCustomizedDateString(date) {
+    if (date) {
+      const split = moment(date).format("LLL");
+      return split;
+    }
+  }
 
   momentForm(date) {
     if (date) {
