@@ -157,9 +157,9 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
         let tableHeaders = response && response.table_headers ? response.table_headers : [];
         this.userList = response && response.table_data ? response.table_data : [];
         this.userList.forEach(element => {
-          element.shortlisted_status = element.shortlisted_status == 1 ? 'Shortlisted' : 'Not Shortlisted';
+          element.shortlisted_status = element.shortlisted_status == 1 ? 'Moved to Final Interview' : 'Applicant Shortlisted';
           element.va_evaluation_status = (element.va_evaluation_status && element.va_evaluation_status == 'selected') ? 'Selected' : (element.va_evaluation_status && element.va_evaluation_status == 'rejected') ? 'Rejected' : element.va_evaluation_status;
-          ((element.va_test_status && element.va_test_status == 'Completed') && element.shortlisted_status == 'Not Shortlisted') ? this.videoAssessmentCompletedCandidates.push(element) : '';
+          ((element.va_test_status && element.va_test_status == 'Completed') && element.shortlisted_status == 'Applicant Shortlisted') ? this.videoAssessmentCompletedCandidates.push(element) : '';
         });
         this.showSendEmailButton = this.videoAssessmentCompletedCandidates.length > 0 ? true : false;
         this.rowData = this.userList;
@@ -438,7 +438,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check first
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
           params.node.selectable = true;
           return true;
         } else {
@@ -451,7 +451,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check second
     if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
           params.node.selectable = true;
           return true;
         } else {
@@ -464,7 +464,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // Drive condition check third
     if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
       apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
           params.node.selectable = true;
           return true;
         } else {
@@ -481,7 +481,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
 
   checkboxEnablingCondition(params: any) {
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
         params.node.selectable = true;
         return true;
       } else {
@@ -490,7 +490,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       }
     }
     if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && params.data.na_status) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
         params.node.selectable = true;
         return true;
       } else {
@@ -500,7 +500,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     }
 
     if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Shortlisted' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
         params.node.selectable = true;
         return true;
       } else {
