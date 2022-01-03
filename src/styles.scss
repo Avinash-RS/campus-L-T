@@ -182,6 +182,14 @@ body {
   align-items: center;
 }
 
+.ant-select-open {
+  .ant-select-selection {
+    border: solid 1px $primary-input-border-color !important;
+  }
+}
+.ant-select-open .ant-select-selection {
+  box-shadow: none;
+}
 .ant-select-selection__rendered {
   overflow: hidden !important;
   width: 100%;
@@ -919,6 +927,7 @@ padding: 2.5em 1em 2.5em 1em;
 }
 
 .ant-select-dropdown {
+  border-radius: 0;
   width: 200% !important;
 }
 
