@@ -24,7 +24,6 @@ import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { ToastrModule } from 'ngx-toastr';
 
-import { NgxChartsModule} from '@swimlane/ngx-charts';
 // ag grid enterprise
 import 'ag-grid-enterprise';
 import { AgGridModule } from 'ag-grid-angular';
@@ -43,7 +42,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-    NgxChartsModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-top-right',
