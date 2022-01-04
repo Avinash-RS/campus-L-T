@@ -15,6 +15,9 @@ export class MultiCustomerLandingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.appConfig.getLocalData('roles') && this.appConfig.getLocalData('roles') == 'candidate') {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
+    }
     this.getCustomers();
   }
 

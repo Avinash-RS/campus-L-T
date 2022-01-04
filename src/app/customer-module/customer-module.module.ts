@@ -6,10 +6,11 @@ import { MultiCustomerLandingComponent } from './pages/multi-customer-landing/mu
 import { CustomerLandingHeaderComponent } from './pages/customer-landing-header/customer-landing-header.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
+import { CandidateLandingPageComponent } from './pages/candidate-landing-page/candidate-landing-page.component';
 
 
 @NgModule({
-  declarations: [MultiCustomerLandingComponent, CustomerLandingHeaderComponent],
+  declarations: [MultiCustomerLandingComponent, CustomerLandingHeaderComponent, CandidateLandingPageComponent],
   imports: [
     CommonModule,
     CustomerModuleRoutingModule,

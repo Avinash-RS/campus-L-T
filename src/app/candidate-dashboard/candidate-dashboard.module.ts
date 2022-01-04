@@ -17,11 +17,10 @@ import { JoiningPreviewComponent } from './candidate-joining-form/joining-previe
 import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
 import { CandidateFaqComponent } from './candidate-faq/candidate-faq.component';
-import { CandidateLandingPageComponent } from './candidate-landing-page/candidate-landing-page.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent, CandidateLandingPageComponent],
+  declarations: [MasterDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent],
   imports: [
     CommonModule,
     MaterialModule,

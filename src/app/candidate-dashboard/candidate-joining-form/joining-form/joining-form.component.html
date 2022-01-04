@@ -1,3 +1,6 @@
+<!-- Interview Component for Candidate Login -->
+<app-join-interview *ngIf="role == 'candidate' && !showJoiningForm && isPermissionGranted()"></app-join-interview>
+
 <div class="joining-form-wrapper">
     <div *ngIf="!hideStepper" class="stepper">
         <div class="stepper-wrapper">

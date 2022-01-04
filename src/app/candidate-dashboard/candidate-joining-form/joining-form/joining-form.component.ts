@@ -19,6 +19,8 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   joiningFormStepperStatusSubscribe: Subscription;
   joiningFormActiveSelectorSubscribe: Subscription;
   activeStep: any = 'personal';
+  showJoiningForm: boolean;
+  role = this.appConfig.getLocalData('roles');
   valid = {
     personal: true,
     contact: false,
@@ -132,6 +134,7 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
     this.openPopupRequest();
     this.activeSelectorRxJs();
     this.stepperStatus();
+    this.checkJoiningComponentNeeded();
   }
 
   removeLocalStorage() {
@@ -376,6 +379,20 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  // Configuration for candidate role
+  checkJoiningComponentNeeded() {
+  if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
+    this.showJoiningForm = true;
+  }
+  }
+
+  isPermissionGranted() {
+    // let selectedDrivePermissions = this.appConfig.getSelectedDrivePermissions();
+    // return selectedDrivePermissions && selectedDrivePermissions.interview_assignment ? true : false;
+    return true;
+  }
+
   ngOnDestroy() {
     this.openJoiningRoutePopUpSubscribe ? this.openJoiningRoutePopUpSubscribe.unsubscribe() : '';
     this.joiningFormStepperStatusSubscribe ? this.joiningFormStepperStatusSubscribe.unsubscribe() : '';

@@ -56,22 +56,6 @@ export class ApiServiceService {
     return headers;
   }
 
-  // For generating new static token for before login requests
-  csrfToken() {
-    return this.http.get(`${this.BASE_URL}/rest/session/token`, { headers: this.withoutTokens() });
-  }
-  getToken() {
-    // this.csrfToken().subscribe((data: any) => {
-    //   console.log(data);
-
-    //
-    //   // localStorage.setItem('csrf', data);
-    // }, (err) => {
-    //   if (err.status === 200) {
-    //     this.appConfig.setSessionData('csrf', err.error.text);
-    //   }
-    // });
-  }
   // Registration
   RegistrationForm(formdata) {
     return this.http.post(`${this.BASE_URL}/api/institute_create`, formdata,

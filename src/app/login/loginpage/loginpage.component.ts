@@ -163,7 +163,7 @@ export class LoginpageComponent implements OnInit {
       this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
       this.appConfig.setLocalData('form_submmited', data && data['form_submmited'] && data['form_submmited'] == '1' ? 'true' : 'false');
       this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == 1 ? 'false' : 'true');
-      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
     } else {
     }
   }
