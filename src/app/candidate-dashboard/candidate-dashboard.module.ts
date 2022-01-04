@@ -5,9 +5,6 @@ import { CandidateDashboardRoutingModule } from './candidate-dashboard-routing.m
 import { MasterDashboardComponent } from './master-dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
-import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
-import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
-import { CandidateMainDashboardComponent } from './candidate-main-dashboard/candidate-main-dashboard.component';
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
@@ -20,11 +17,11 @@ import { JoiningPreviewComponent } from './candidate-joining-form/joining-previe
 import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
 import { CandidateFaqComponent } from './candidate-faq/candidate-faq.component';
-// import { JoinInterviewComponent } from './join-interview/join-interview.component';
+import { CandidateLandingPageComponent } from './candidate-landing-page/candidate-landing-page.component';
 
 
 @NgModule({
-  declarations: [MasterDashboardComponent, CandidateHallticketComponent, CandidateAssignedAssessmentListComponent, CandidateMainDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent],
+  declarations: [MasterDashboardComponent, CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent, CandidateLandingPageComponent],
   imports: [
     CommonModule,
     MaterialModule,

@@ -136,7 +136,7 @@ export class LoginpageComponent implements OnInit {
 
   loginRedirection(data: any) {
     let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
-    if (customersList.length > 1) {
+    if (customersList.length > 1 && (data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate')) {
       this.appConfig.setLocalData('multiCustomer', 'true');
     }
     if (data && data.current_user && data.current_user.roles && (data.current_user.roles[2] == 'institute' || data.current_user.roles[1] == 'institute')) {
