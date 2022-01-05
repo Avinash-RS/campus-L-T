@@ -42,7 +42,8 @@ export const CONSTANT = {
     },
     CUSTOMERS: {
       HOME: '/customer',
-      LANDING: '/customer/landing'
+      LANDING: '/customer/landing',
+      CANDIDATE_DASHBOARD: '/customer/candidate'
     },
     ADMIN_DASHBOARD: {
       HOME: '/admin',
@@ -163,6 +164,7 @@ export const CONSTANT = {
     CUSTOMERS: {
       HOME: 'customer',
       LANDING: 'landing',
+      CANDIDATE_DASHBOARD: 'candidate'
     },
     ADMIN_DASHBOARD: {
       HOME: 'admin',

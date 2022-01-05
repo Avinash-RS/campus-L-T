@@ -182,6 +182,14 @@ body {
   align-items: center;
 }
 
+.ant-select-open {
+  .ant-select-selection {
+    border: solid 1px $primary-input-border-color !important;
+  }
+}
+.ant-select-open .ant-select-selection {
+  box-shadow: none;
+}
 .ant-select-selection__rendered {
   overflow: hidden !important;
   width: 100%;
@@ -230,12 +238,20 @@ body {
 }
 
 // Fontsizes
+.f_size_10 {
+  font-size: 10px;
+}
+
+.f_size_11 {
+  font-size: 11px;
+}
+
 .f_size_12 {
-    font-size: 12px !important;
+    font-size: 12px;
 }
 
 .f_size_13 {
-    font-size: 13px !important;
+    font-size: 13px;
 }
 
 .f_size_14 {
@@ -919,6 +935,7 @@ padding: 2.5em 1em 2.5em 1em;
 }
 
 .ant-select-dropdown {
+  border-radius: 0;
   width: 200% !important;
 }
 

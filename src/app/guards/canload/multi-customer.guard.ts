@@ -21,6 +21,9 @@ export class MultiCustomerGuard implements CanLoad {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') && !this.appConfig.getLocalData('selected_customer')) {
       return true;
     }
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
+      return true;
+    }
     else {
      if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles')) {
       if (this.appConfig.getLocalData('roles') && this.appConfig.getLocalData('roles') == 'institute') {
@@ -75,6 +78,9 @@ export class MultiCustomerGuard implements CanLoad {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') && !this.appConfig.getLocalData('selected_customer')) {
+      return true;
+    }
+    if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
       return true;
     }
     else {

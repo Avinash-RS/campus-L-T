@@ -6,13 +6,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
-import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
 import { FormsModule } from '@angular/forms';
-import en from '@angular/common/locales/en';
-import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
@@ -23,15 +22,12 @@ import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
 import { CommonKycProfileViewComponent } from './shared/common-kyc-profile-view/common-kyc-profile-view.component';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 
-import { NgxChartsModule} from '@swimlane/ngx-charts';
 // ag grid enterprise
 import 'ag-grid-enterprise';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgxSpinnerService } from 'ngx-spinner';
-
-registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -46,7 +42,6 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-    NgxChartsModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-top-right',
@@ -62,7 +57,6 @@ registerLocaleData(en);
     NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
-    { provide: NZ_I18N, useValue: en_US },
      CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
   ],
   bootstrap: [AppComponent]

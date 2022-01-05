@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CONSTANT } from '../constants/app-constants.service';
 import { MultiCustomerLandingComponent } from './pages/multi-customer-landing/multi-customer-landing.component';
+import { CandidateLandingPageComponent } from './pages/candidate-landing-page/candidate-landing-page.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,12 @@ const routes: Routes = [
     component: MultiCustomerLandingComponent,
     data: {
       breadcrumb: 'Customers'
+    }
+  },
+  {
+    path: `${CONSTANT.ROUTES.CUSTOMERS.CANDIDATE_DASHBOARD}`, component: CandidateLandingPageComponent,
+    data: {
+      breadcrumb: 'Dashboard'
     }
   },
   {

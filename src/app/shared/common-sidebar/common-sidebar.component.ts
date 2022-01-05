@@ -27,7 +27,6 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
    sidebarOpen;
    subMenus: any;
    activeSubmenu;
-  showJoiningForm: boolean;
   driveList: any;
   activeDriveId: any;
 
@@ -79,22 +78,10 @@ getDriveList() {
       this.sharedService.screenRefreshOnDriveChange.next(currentUrl);
     }
   }
-  // this.appConfig.routeNavigation('/');
-  // this.appConfig.routeNavigationWithQueryParam(currentUrl, {data: this.activeDriveId});
  }
 
    ngOnInit() {
      this.sidebarOpen = true;
-
-     // // breadcrumb
-     // this.router.events.pipe(
-     //   filter((event) => event instanceof NavigationEnd),
-     //   distinctUntilChanged(),
-     // ).subscribe(() => {
-     //   this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-     //   // console.log(this.breadcrumbs);
-
-     // });
 
      this.router.events
        .pipe(filter(event => event instanceof NavigationEnd))
@@ -132,8 +119,6 @@ getDriveList() {
            });
          } while (currentRoute);
        });
-       this.rxjsSubjectForPrint();
-       this.checkJoiningComponentNeeded();
        this.getDriveList();
       }
 
@@ -183,26 +168,6 @@ getDriveList() {
      this.sidebarOpen = !this.sidebarOpen;
    }
 
-
-   // Configuration for candidate role
-
-   checkJoiningComponentNeeded() {
-    if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
-      this.showJoiningForm = true;
-    }
-   }
-   rxjsSubjectForPrint() {
-    this.sharedService.printSubject.subscribe((data: any)=> {
-      this.sidebarOpen = false;
-      setTimeout(() => {
-        window.print();
-      }, 1000);
-      // this.sidebarOpen = true;
-    }, (err)=> {
-
-    });
-  }
-
   checkJoiningRoute() {
     this.sharedService.joiningFormStepperStatus.next('dataFromMasterDashboard');
   }
@@ -211,9 +176,4 @@ getDriveList() {
     return this.candidateService.checkKycOrJoiningForm() ? 'Joining Form' : 'Profile Form';
   }
 
-  isPermissionGranted() {
-    // let selectedDrivePermissions = this.appConfig.getSelectedDrivePermissions();
-    // return selectedDrivePermissions && selectedDrivePermissions.interview_assignment ? true : false;
-    return true;
-  }
 }

@@ -11,8 +11,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { MasterDashboardComponent } from './master-dashboard.component';
 import { CONSTANT } from '../constants/app-constants.service';
 import { CanloadGuard } from '../guards/canload/canload.guard';
-import { CandidateHallticketComponent } from './candidate-hallticket/candidate-hallticket.component';
-import { CandidateAssignedAssessmentListComponent } from './candidate-hallticket/candidate-assigned-assessment-list/candidate-assigned-assessment-list.component';
 import { CandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { CandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
@@ -27,9 +25,6 @@ const routes: Routes = [
       breadcrumb: 'Home'
     },
     children: [
-      // {
-      //   path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DASHBOARD}`, component: CandidateHallticketComponent, canActivate: [CanloadGuard]
-      // },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
         component: JoiningFormComponent, canActivate: [CanloadGuard],
@@ -96,27 +91,6 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`,
-            pathMatch: 'full',
-          }
-        ]
-      },
-      {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET}`,
-        component: CandidateHallticketComponent, canActivate: [CanloadGuard],
-        data: {
-          breadcrumb: 'Hallticket'
-        },
-        children: [
-          {
-            path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`,
-            component: CandidateAssignedAssessmentListComponent,
-            data: {
-              breadcrumb: 'List'
-            }
-          },
-          {
-            path: '',
-            redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HALLTICKET_LIST}`,
             pathMatch: 'full',
           }
         ]
