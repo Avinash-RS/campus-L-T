@@ -2,79 +2,88 @@
   <app-customer-landing-header></app-customer-landing-header>
   <div class="customer-body-wrapper">
     <div class="customers">
+     <ng-container *ngIf="customerInfo && customerInfo.length > 0 else noData">
       <div class="instructions">
         <span class="icon-Info"></span> Choose your organisation by clicking on
         the right arrow (<span class="icon-RightArrow f_size_10"></span>);
       </div>
 
-      <div class="card">
+      <div class="card" *ngFor="let customer of customerInfo; let i = index">
         <div class="logo-wrapper">
-        <div class="logo">
-          <img
-            [src]="'https://assets.lntedutech.com/edutech_logo.svg'"
-            [alt]="'customer.customer_name'"
-            srcset=""
-          />
+          <div class="logo">
+            <img
+              [src]="customer.customer_logo"
+              [alt]="customer.customer_name"
+              srcset=""
+            />
+          </div>
         </div>
-      </div>
 
-        <div class="customer-section">
-          <div class="title">Adani Institute Of Infrastructure Management</div>
+        <div *ngIf="customer.driveDetails && customer.driveDetails.candidateStatus" class="customer-section">
+          <div class="title">{{customer.customer_name}}</div>
           <div class="candidate-status-wrapper">
             <div class="customer-details">
               <div class="form-group">
                 <label>Created By</label>
-                <div class="form-value">Aakash, Sriram Engineering College</div>
+                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_created_by}}</div>
               </div>
               <div class="form-group mb-0">
                 <label>Created Date</label>
-                <div class="form-value">14 Jan 2022</div>
+                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_created_date}}</div>
               </div>
             </div>
             <div class="profile-details">
               <div class="form-group pl-4">
                 <label>Profile Applied</label>
-                <div class="form-value">GET</div>
+                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_applied ? (customer.driveDetails.candidateStatus.profile_applied | uppercase) : '--'}}</div>
               </div>
               <div class="form-group mb-0 pl-4">
                 <label>Profile Applied Date</label>
-                <div class="form-value">14 Jan 2022</div>
+                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_applied_date ? (customer.driveDetails.candidateStatus.profile_applied_date  | date: 'dd MMM yyyy' ) : '--'}}</div>
               </div>
             </div>
             <div class="candidate-status">
               <div class="candidate-status-wrapper">
-                <div class="interview-details">
-                <button
-                  class="common-button common-button-height-33 custom-color"
-                  type="button"
-                  mat-raised-button
-                >
-                  Interview Scheduled
-                </button>
-                <div class="schedule">
-                  <span class="icon-DateTime pr-1"></span> <span>March 23 2021 at 01:00 PM</span>
+                <div *ngIf="false" class="interview-details">
+                  <button
+                    class="common-button common-button-height-33 custom-color"
+                    type="button"
+                    mat-raised-button
+                  >
+                    Interview Scheduled
+                  </button>
+                  <div class="schedule">
+                    <span class="icon-DateTime pr-1"></span>
+                    <span>March 23 2021 at 01:00 PM</span>
+                  </div>
                 </div>
-              </div>
                 <div class="status-checks">
-                  <div class="checkmark">
-                    <div class="icon-CheckMark"></div>
-                    <div class="status-label">Update Profile</div>
+                  <ng-container *ngIf="customer.driveDetails.actions && customer.driveDetails.actions.length > 0 else noAction">
+                    <ng-container *ngFor="let actions of customer.driveDetails.actions; let j = index">
+                  <div *ngIf="actions.value == 1" class="checkmark line">
+                    <em (click)="customerSelection(customer, i, actions)" class="icon-CheckMark"></em>
+                    <div (click)="customerSelection(customer, i, actions)" class="status-label">{{actions.label}}</div>
                   </div>
-                  <div class="checkmark icn">
-                    <div class="icon-CheckMark"></div>
-                    <div class="status-label">Upload Documents</div>
-                  </div>
-
+                  </ng-container>
+                </ng-container>
+                <ng-template #noAction>
+                  <div *ngIf="customer.driveDetails.candidateStatus != 1" class="no-action">No Action Required</div>
+                </ng-template>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="redirection">
+        <div (click)="customerSelection(customer, i, null)" class="redirection">
           <span class="icon-RightArrow f_size_20"></span>
         </div>
-
       </div>
+    </ng-container>
     </div>
   </div>
 </div>
+<ng-template #noData>
+  <div class="box">
+    No Data Available
+  </div>
+</ng-template>
