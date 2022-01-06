@@ -21,6 +21,10 @@ export class CanloadGuard implements CanLoad, CanActivate {
     //   return false;
     // }
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
+      if (!this.appConfig.getLocalData('selected_customer')) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
+        return false;
+      }
     return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {
@@ -49,6 +53,10 @@ export class CanloadGuard implements CanLoad, CanActivate {
     //   return false;
     // }
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
+      if (!this.appConfig.getLocalData('selected_customer')) {
+        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
+        return false;
+      }
       return true;
     } else {
       if (this.appConfig.getLocalData('logout-token')) {

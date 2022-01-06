@@ -370,6 +370,13 @@ export class AppConfigService {
     return selectedDrivePermissions ? selectedDrivePermissions : '';
   }
 
+  getSelectedDriveDetails() {
+    let driveList = this.getLocalData('driveList') ? JSON.parse(this.getLocalData('driveList')) : [];
+    let driveId = this.getLocalData('driveId');
+    let selectedDrive = driveList.find(drive => drive.drive_id == driveId);
+    return selectedDrive ? selectedDrive : '';
+  }
+
   minImageSizeValidation(fileSize) {
     if(fileSize >= 10000) {
       return true;
@@ -416,6 +423,7 @@ export class AppConfigService {
   }
 
  async setCustomerConfiguration(data: any) {
+  if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
     await this.setLocalData('customers', data && data['customers'] && data['customers'].length > 0 ? JSON.stringify(data['customers']) : []);
     let customersList = data['customers'] && data['customers'] ? data['customers'] : [];
     if (customersList.length < 2) {
@@ -423,10 +431,8 @@ export class AppConfigService {
       if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] != 'candidate') {
         this.setDriveList();
       }
-      if (data && data.current_user && data.current_user.roles && data.current_user.roles[1] == 'candidate') {
-        this.setDriveIdForCandidate(data['customers'][0]);
-      }
     }
+   }
   }
 
   setDriveList() {
