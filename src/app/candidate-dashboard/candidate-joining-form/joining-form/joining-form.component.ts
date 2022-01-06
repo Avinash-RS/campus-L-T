@@ -388,8 +388,8 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
 
   isPermissionGranted() {
-    // let selectedDrivePermissions = this.appConfig.getSelectedDrivePermissions();
-    // return selectedDrivePermissions && selectedDrivePermissions.interview_assignment ? true : false;
+    let selectedDrivePermissions = this.appConfig.getSelectedDriveDetails();
+    return selectedDrivePermissions && selectedDrivePermissions.candidateStatus && selectedDrivePermissions.candidateStatus.interviewSchedule == '1' ? true : false;
     return true;
   }
 

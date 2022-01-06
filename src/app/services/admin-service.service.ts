@@ -129,7 +129,7 @@ export class AdminServiceService {
 
   // Reference API
   getCampusReferences() {
-    return this.http.get(`${this.BASE_URL}/profile/candidateDashboard?user_id=21037`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+    return this.http.get(`${this.BASE_URL}/profile/candidateDashboard`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   // Users List

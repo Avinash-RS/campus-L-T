@@ -44,8 +44,8 @@
             </div>
             <div class="candidate-status">
               <div class="candidate-status-wrapper">
-                <div *ngIf="false" class="interview-details">
-                  <button
+                <div *ngIf="customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewSchedule == '1' && (customer.driveDetails.candidateStatus.invStatus && customer.driveDetails.candidateStatus.invStatus == 'Yet to Start' || customer.driveDetails.candidateStatus.invStatus == 'Join Interview')" class="interview-details">
+                  <button (click)="customerSelection(customer, i, null)"
                     class="common-button common-button-height-33 custom-color"
                     type="button"
                     mat-raised-button
@@ -54,7 +54,8 @@
                   </button>
                   <div class="schedule">
                     <span class="icon-DateTime pr-1"></span>
-                    <span>March 23 2021 at 01:00 PM</span>
+                    <span>{{customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewStartdate ? (customer.driveDetails.candidateStatus.interviewStartdate | date: "dd MMM yyyy 'at' HH:mm a") : '--'}}</span>
+                    <!-- <span>March 23 2021 at 01:00 PM</span> -->
                   </div>
                 </div>
                 <div class="status-checks">
@@ -67,7 +68,7 @@
                   </ng-container>
                 </ng-container>
                 <ng-template #noAction>
-                  <div *ngIf="customer.driveDetails.candidateStatus != 1" class="no-action">No Action Required</div>
+                  <div *ngIf="customer.driveDetails.candidateStatus.interviewSchedule != '1' || (customer.driveDetails.candidateStatus.invStatus && customer.driveDetails.candidateStatus.invStatus != 'Yet to Start' && customer.driveDetails.candidateStatus.invStatus != 'Join Interview')" class="no-action">No Action Required</div>
                 </ng-template>
                 </div>
               </div>
