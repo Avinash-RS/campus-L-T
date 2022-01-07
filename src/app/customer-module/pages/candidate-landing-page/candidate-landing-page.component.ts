@@ -119,7 +119,7 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
       if ((data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == '1')) {
         isEditAllowed = true;
       } else {
-        if ((data && data['first_shortlist'] && data['first_shortlist'] != '1')) {
+        if ((data['first_shortlist'] != '1')) {
           isEditAllowed = true;
         }
       }
