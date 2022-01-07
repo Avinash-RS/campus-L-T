@@ -21,29 +21,20 @@ export class JoiningSubmitComponent implements OnInit, AfterViewInit, OnDestroy 
   customerName: any = this.appConfig.getSelectedCustomerName();
   constructor(
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
     private sharedService: SharedServiceService,
-    public candidateService: CandidateMappersService,
-    private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    public candidateService: CandidateMappersService
   ) {
   }
 
   ngOnInit() {
+    if (this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
+      this.appConfig.setLocalData('form_submmited', 'true');
+    }
     if (this.appConfig.getLocalData('joiningFormAccess') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
-      this.appConfig.setLocalData('form_submmited', 'true');
-      this.appConfig.setLocalData('secondShortlist', 'true');
-      this.appConfig.setLocalData('firstShortlist', 'true');
+      this.appConfig.setLocalData('isEditAllowed', 'false');
     }
-    if (this.appConfig.getLocalData('firstShortlist') == '0' && this.appConfig.getLocalData('firstShortlist') == 'false' && this.appConfig.getLocalData('isKYCNotExempted') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
-      this.appConfig.setLocalData('form_submmited', 'true');
-    }
-    if (this.appConfig.getLocalData('firstShortlist') == 'false' && this.appConfig.getLocalData('isKYCNotExempted') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
-      this.appConfig.setLocalData('form_submmited', 'true');
-    }
-    if (this.appConfig.getLocalData('firstShortlist') == 'true' && this.appConfig.getLocalData('secondShortlist') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
-      this.appConfig.setLocalData('form_submmited', 'true');
+    if (this.appConfig.getLocalData('isKYCNotExempted') == 'false' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1') {
+      this.appConfig.setLocalData('isEditAllowed', 'false');
     }
     this.checkFormValidRequestFromRxjs();
     this.getUserName();

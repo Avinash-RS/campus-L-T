@@ -17,7 +17,7 @@ export class MasterDashboardComponent implements OnInit {
   constructor(
     private appConfig: AppConfigService,
   ) {
-    if (this.appConfig.getLocalData('secondShortlist') && this.appConfig.getLocalData('secondShortlist') === 'true' && this.appConfig.getLocalData('joiningFormAccess') !== 'true') {
+    if (this.appConfig.getLocalData('showDocumentsTab') && this.appConfig.getLocalData('showDocumentsTab') === 'true' && this.appConfig.getLocalData('joiningFormAccess') !== 'true') {
       this.showDocuments = true;
     }
     if (this.appConfig.getLocalData('joiningFormAccess') && this.appConfig.getLocalData('joiningFormAccess') === 'true') {
