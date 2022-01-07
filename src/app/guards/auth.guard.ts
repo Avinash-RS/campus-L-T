@@ -18,7 +18,12 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       let isEditAllowed = this.appConfig.getLocalData('isEditAllowed');
-      if (isEditAllowed == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted != '1') {
+      let isJoiningForm = this.appConfig.getLocalData('joiningFormAccess');
+
+      if (isJoiningForm == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted != '1') {
+        return true;
+      }
+      if (isEditAllowed == 'true' && isJoiningForm != 'true') {
         return true;
       }
       return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);

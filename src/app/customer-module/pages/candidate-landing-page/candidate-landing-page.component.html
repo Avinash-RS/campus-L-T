@@ -2,7 +2,8 @@
   <app-customer-landing-header></app-customer-landing-header>
   <div class="customer-body-wrapper">
     <div class="customers">
-     <ng-container *ngIf="customerInfo && customerInfo.length > 0 else noData">
+      <ng-container *ngIf="showPage else noData">
+     <ng-container *ngIf="customerInfo && customerInfo.length > 0">
       <div class="instructions">
         <span class="icon-Info"></span> Choose your organisation by clicking on
         the right arrow (<span class="icon-RightArrow f_size_10"></span>)
@@ -80,6 +81,7 @@
         </div>
       </div>
     </ng-container>
+  </ng-container>
     </div>
   </div>
 </div>
