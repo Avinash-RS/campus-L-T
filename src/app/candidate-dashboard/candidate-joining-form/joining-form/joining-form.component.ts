@@ -143,13 +143,10 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
   activeSelectorRxJs() {
     this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.pipe(delay(0)).subscribe((data: any)=> {
+      this.hideStepper = this.appConfig.getLocalData('isEditAllowed') == 'true' ? false : true;
       let datas = this.candidateService.getLocalsection_flags();
-      // if (datas && datas[data] == '1') {
         this.routingSelection = null;
         this.routingSelection = data ? data : this.routingSelection;
-      // } else {
-      //   this.statusOfForms();
-      // }
     });
   }
 
@@ -164,22 +161,16 @@ export class JoiningFormComponent implements OnInit, OnDestroy {
   }
 
   checkFormSubmitted() {
+    this.hideStepper = this.appConfig.getLocalData('isEditAllowed') == 'true' ? false : true;
     if (this.appConfig.getLocalData('joiningFormAccess') == 'true') {
-      this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
-     return this.redirectToPreview = false;
+      return this.redirectToPreview = false;
     }
-    if (this.appConfig.getLocalData('form_submmited') == 'false' && this.appConfig.getLocalData('isKYCNotExempted') == 'false') {
-      this.hideStepper = this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted == '1' ? true : false;
-     return this.redirectToPreview = false;
-    } else {
-      if (this.appConfig.getLocalData('secondShortlist') == 'true' || this.appConfig.getLocalData('firstShortlist') == 'true') {
-        this.redirectToPreview = true;
-        this.hideStepper = true;
-    } else {
+    if (this.appConfig.getLocalData('joiningFormAccess') != 'true' && this.appConfig.getLocalData('isEditAllowed') == 'true') {
+      return this.redirectToPreview = false;
+    }
+     else {
       this.redirectToPreview = false;
-      this.hideStepper = false;
     }
-  }
   }
 
   statusOfForms(param?: any) {

@@ -27,6 +27,8 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     this.appConfig.clearLocalDataOne('driveId');
     this.appConfig.clearLocalDataOne('profileData');
     this.appConfig.clearLocalDataOne('secondShortlist');
+    this.appConfig.clearLocalDataOne('isEditAllowed');
+    this.appConfig.clearLocalDataOne('showDocumentsTab');
     this.appConfig.clearLocalDataOne('joiningFormAccess');
     this.appConfig.clearLocalDataOne('firstShortlist');
     this.appConfig.clearLocalDataOne('form_submmited');
@@ -46,12 +48,6 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
   }
 
   getActions(customerInfo) {
-    /*
-    form_submmited
-    first_shortlist
-    second_shortlist
-    is_kyc_exempted
-    */
     customerInfo.forEach((element, i) => {
       if (element && element.driveDetails && element.driveDetails.candidateStatus) {
         element.driveDetails.actions = [];
@@ -60,9 +56,9 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
         let endTime = element.driveDetails.candidateStatus && element.driveDetails.candidateStatus.interviewEnddate ? element.driveDetails.candidateStatus.interviewEnddate : '';
         let status = element.driveDetails.candidateStatus && element.driveDetails.candidateStatus.interviewStatus ? element.driveDetails.candidateStatus.interviewStatus : '';
         element.driveDetails.candidateStatus.invStatus = this.isTimeExpired(startTime, endTime, status);
-        element.driveDetails.candidateStatus.interviewSchedule = '1';
         let config = element.driveDetails.candidateStatus;
         if (config && (config.update_joining_form == 1 || config.update_joining_form == 2)) {
+          element.driveDetails.candidateStatus && element.driveDetails.candidateStatus.interviewSchedule ? element.driveDetails.candidateStatus.interviewSchedule = 0 : '';
           config.update_joining_form == 1 ? array.push({label: 'Update Joining', value: 1}) : '';
           config.update_joining_form == 2 ? array.push({label: 'No Action Required', value: 2}) : '';
           this.formSubmitted = config.update_joining_form == 2 ? true : false;
@@ -82,7 +78,6 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
         element.driveDetails.actions = array.filter(data => data.value == 1 );
       }
     });
-    console.log('customers', this.customerInfo);
   }
 
   customerSelection (customers: any, i: any, action: any) {
@@ -105,12 +100,32 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
  async setCustomerData(customer) {
    await this.appConfig.setLocalData('selected_customer', customer && customer['customer_code'] ? JSON.stringify(customer) : null);
    let data = customer.driveDetails[0] && customer.driveDetails[0].candidateStatus ? customer.driveDetails[0].candidateStatus : '';
-   await this.appConfig.setLocalData('secondShortlist', data && data['second_shortlist'] && data['second_shortlist'] == '1' ? 'true' : 'false');
-   await this.appConfig.setLocalData('joiningFormAccess', data && data['joiningform'] && data['joiningform'] == '1' ? 'true' : 'false');
-   await this.appConfig.setLocalData('firstShortlist', data && data['first_shortlist'] && data['first_shortlist'] == '1' ? 'true' : 'false');
-   await this.appConfig.setLocalData('form_submmited', this.formSubmitted ? 'true' : 'false');
-   await this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == '1' ? 'false' : 'true');
-   await this.appConfig.setDriveList();
+   await this.setFormEditorNot(data);
+  await this.appConfig.setLocalData('form_submmited', this.formSubmitted ? 'true' : 'false');
+  await this.appConfig.setDriveList();
+  }
+
+  setFormEditorNot(data) {
+    let isEditAllowed: Boolean = false;
+    let showDocuments: any = false;
+    this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == '1' ? 'false' : 'true');
+    this.appConfig.setLocalData('joiningFormAccess', data && data['update_joining_form'] == '1' ? 'true' : 'false');
+    if (data && (data['second_shortlist'] && data['second_shortlist'] == '1') && (data['update_joining_form'] != '1')) {
+      showDocuments = true;
+    }
+    if (data && data['update_joining_form'] == '1') {
+      isEditAllowed = true;
+    } else {
+      if ((data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == '1')) {
+        isEditAllowed = true;
+      } else {
+        if ((data && data['first_shortlist'] && data['first_shortlist'] != '1')) {
+          isEditAllowed = true;
+        }
+      }
+    }
+    this.appConfig.setLocalData('isEditAllowed', isEditAllowed);
+    this.appConfig.setLocalData('showDocumentsTab', showDocuments);
   }
 
   isTimeExpired(startTime, endTime, status) {

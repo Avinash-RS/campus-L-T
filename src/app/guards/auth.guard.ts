@@ -17,16 +17,11 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.appConfig.getLocalData('joiningFormAccess') == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted != '1') {
-      return true;
-    }
-    if ((this.appConfig.getLocalData('secondShortlist') == 'false' && this.appConfig.getLocalData('firstShortlist') == 'false')) {
-      return true;
-    }
-    if ((this.appConfig.getLocalData('form_submmited') == 'false' && this.appConfig.getLocalData('isKYCNotExempted') == 'false')) {
-      return true;
-    }
-    return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+      let isEditAllowed = this.appConfig.getLocalData('isEditAllowed');
+      if (isEditAllowed == 'true' && this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().submitted != '1') {
+        return true;
+      }
+      return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
   }
 
 
