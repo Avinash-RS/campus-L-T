@@ -16,6 +16,7 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
   customerInfo: any;
   getCampusReferencesSubscription: Subscription;
   formSubmitted: any;
+  showPage = true;
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService
@@ -41,9 +42,10 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     this.getCampusReferencesSubscription = this.adminService.getCampusReferences().subscribe((res: any)=> {
       this.references = res ? res : null;
       this.customerInfo = res && res.customers ? res.customers : '';
+      res && res.customers ? null : this.showPage = false;
       this.customerInfo && this.customerInfo.length > 0 ? this.getActions(this.customerInfo) : '';
     }, (err)=> {
-
+      this.showPage = false;
     });
   }
 
