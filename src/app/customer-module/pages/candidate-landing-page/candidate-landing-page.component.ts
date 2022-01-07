@@ -111,12 +111,12 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     let isEditAllowed: Boolean = false;
     let showDocuments: any = false;
     this.appConfig.setLocalData('isKYCNotExempted', data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == '1' ? 'false' : 'true');
-    this.appConfig.setLocalData('joiningFormAccess', data && data['update_joining_form'] == '1' ? 'true' : 'false');
-    if (data && (data['second_shortlist'] && data['second_shortlist'] == '1') && (data['update_joining_form'] != '1')) {
+    this.appConfig.setLocalData('joiningFormAccess', data && (data['update_joining_form'] == '1' || data['update_joining_form'] == '2') ? 'true' : 'false');
+    if (data && (data['second_shortlist'] && data['second_shortlist'] == '1') && (data['update_joining_form'] != '1' || data['update_joining_form'] != '2')) {
       showDocuments = true;
     }
-    if (data && data['update_joining_form'] == '1') {
-      isEditAllowed = true;
+    if (data && (data['update_joining_form'] == '1' || data['update_joining_form'] == '2')) {
+      data['update_joining_form'] == '1' ? isEditAllowed = true : '';
     } else {
       if ((data && data['is_kyc_exempted'] && data['is_kyc_exempted'] == '1')) {
         isEditAllowed = true;
