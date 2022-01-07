@@ -415,7 +415,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
                 }
             });
           }
-            if (this.drivePermissions.video_assessment && first && first.headerName && first.headerName == 'Video Assessment') {
+            if (this.drivePermissions.video_assessment && first && first.headerName && first.headerName == 'Scheduled Video Assessments') {
             if (second && second.field && second.field == 'va_test_status') {
               second.cellRenderer = (params) => {
                 if (params["data"] && params["data"]["va_scheduled_status"] && params["data"]["va_scheduled_status"] == '1' && params["data"]["va_test_status"] !="Yet to Start") {
