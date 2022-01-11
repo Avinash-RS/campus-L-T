@@ -59,7 +59,7 @@ export class InterceptorsService implements HttpInterceptor {
     }
 
     // Request Handling
-    return next.handle(clone).pipe(timeout(180000)).pipe(
+    return next.handle(clone).pipe(timeout(1800000)).pipe(
       map((event: HttpEvent<any>) => {
         lastResponse = event;
       if (event instanceof HttpResponse) {
