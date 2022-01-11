@@ -16,8 +16,6 @@ import { CandidateUploadDocumentComponent } from './candidate-document/candidate
 import { JoiningFormComponent } from './candidate-joining-form/joining-form/joining-form.component';
 import { JoiningPersonalComponent } from './candidate-joining-form/joining-personal/joining-personal.component';
 import { AuthGuard } from '../guards/auth.guard';
-
-
 const routes: Routes = [
   {
     path: '', component: MasterDashboardComponent,
@@ -25,6 +23,15 @@ const routes: Routes = [
       breadcrumb: 'Home'
     },
     children: [
+      {
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
+        component: JoiningFormComponent, canActivate: [CanloadGuard],
+        data: {
+          breadcrumb: JSON.parse(localStorage.getItem('selected_customer'))?.customer_name
+        },
+
+        
+      },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
         component: JoiningFormComponent, canActivate: [CanloadGuard],
@@ -129,7 +136,8 @@ const routes: Routes = [
         pathMatch: 'full',
 
       }
-    ]
+    ],
+    
   },
 ];
 

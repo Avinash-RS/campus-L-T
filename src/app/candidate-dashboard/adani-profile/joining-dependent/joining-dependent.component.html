@@ -1,0 +1,177 @@
+<div class="joining-personal-wrapper">
+    <h5>
+        Dependent Details
+    </h5>
+
+    <div class="grids-wrapper">
+        <form class="dependentForm" [formGroup]="dependentForm" (ngSubmit)="formSubmit()">
+            <ng-container *ngIf="getDependentArr && getDependentArr.controls" [formArrayName]="form_dependentArray">
+                <ng-container *ngFor="let item of getDependentArr.controls; let i = index;" [formGroupName]="i">
+                    <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">
+                    <div class="form-grouping">
+                        <div class="row-wrapper">
+                            <div class="overall-input-wrapper width-32">
+                                <label>Name of the Dependent<span>*</span></label>
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                    [formControlName]="form_dependent_name">
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_name).invalid && getDependentArr.controls[i].get(form_dependent_name).touched">
+                                    <div *ngIf="getDependentArr.controls[i].get(form_dependent_name).errors?.required">
+                                        Name
+                                        of the dependent is Required</div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_name).errors?.alphaNum255">
+                                        Alpha numeric with maximum of 255 characters only
+                                        allowed</div>
+                                </div>
+                            </div>
+                            <div class="overall-input-wrapper width-32">
+                                <label>Date of Birth<span>*</span></label>
+                                <div class="date-relative">
+                                    <input matInput class="input" [min]="minDate" [max]="maxDate"
+                                        [matDatepicker]="picker" placeholder="DD-MM-YYYY"
+                                        [formControlName]="form_dependent_dob">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </div>
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_dob).invalid && getDependentArr.controls[i].get(form_dependent_dob).touched">
+                                    <div *ngIf="getDependentArr.controls[i].get(form_dependent_dob)?.errors?.required">
+                                        Date
+                                        of Birth is Required</div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerMax">
+                                        {{getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerMax.max) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerMin">
+                                        {{getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerMin.min) : ''}}
+                                    </div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_dob)?.errors?.matDatepickerParse">
+                                        Invalid Date Format</div>
+                                </div>
+                            </div>
+                            <div class="overall-input-wrapper width-32">
+                                <label>Relationship<span>*</span></label>
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                    [formControlName]="form_dependent_relationship">
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_relationship).invalid && getDependentArr.controls[i].get(form_dependent_relationship).touched">
+                                    <div *ngIf="getDependentArr.controls[i].get(form_dependent_relationship).errors?.required">
+                                        Relationship is Required</div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_relationship).errors?.alphaNum255">
+                                        Alpha numeric with maximum of 255 characters only
+                                        allowed</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row-wrapper">
+                            <div class="overall-input-wrapper width-32">
+                                <label>Occupation<span></span></label>
+                                <input matInput placeholder="Enter here" class="input" type="text"
+                                    [formControlName]="form_dependent_occupation">
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_occupation).invalid && getDependentArr.controls[i].get(form_dependent_occupation).touched">
+                                    <div *ngIf="getDependentArr.controls[i].get(form_dependent_occupation).errors?.required">
+                                        Occupation is Required</div>
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_occupation).errors?.alphaNum255">
+                                        Alpha numeric with maximum of 255 characters only
+                                        allowed</div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                            <div class="overall-input-wrapper width-32">
+                                <label>Differently Abled<span>*</span></label>
+                                <nz-select class="input select" [formControlName]="form_dependent_differently_abled"
+                                    nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label"
+                                        [nzValue]="diff.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_differently_abled).invalid && getDependentArr.controls[i].get(form_dependent_differently_abled).touched">
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_differently_abled)?.errors?.required">
+                                        Differently Abled is Required</div>
+                                </div>
+                            </div>
+                            <div class="overall-input-wrapper width-32">
+                                <label>Status<span>*</span></label>
+                                <nz-select class="input select" [formControlName]="form_dependent_status" nzAllowClear
+                                    nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label"
+                                        [nzValue]="active.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_dependent_status).invalid && getDependentArr.controls[i].get(form_dependent_status).touched">
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_dependent_status)?.errors?.required">
+                                        Status is Required</div>
+                                </div>
+                            </div>
+                            </ng-container>
+                        </div>
+
+                        <div *ngIf="candidateService.checkKycOrJoiningForm()" class="row-wrapper">
+                            <div class="overall-input-wrapper width-32">
+                                <label>Is Dependent<span></span></label>
+                                <nz-select class="input select" [formControlName]="form_isDependent" nzAllowClear
+                                    nzShowSearch nzPlaceHolder="Select">
+                                    <nz-option *ngFor="let dependent of diffAbledDropdownList" [nzLabel]="dependent.label"
+                                        [nzValue]="dependent.value"></nz-option>
+                                </nz-select>
+                                <div class="form-error"
+                                    *ngIf="getDependentArr.controls[i].get(form_isDependent).invalid && getDependentArr.controls[i].get(form_isDependent).touched">
+                                    <div
+                                        *ngIf="getDependentArr.controls[i].get(form_isDependent)?.errors?.required">
+                                        Is Dependent is Required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="remove-wrapper">
+                        <div (click)="removeDependentArray(i)" *ngIf="i !==0  && i !==1 " matTooltip="Remove" class="remove">
+                            <i class="icon-remove_circle pointer ag-icon-font-size"></i>
+                        </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <div *ngIf="getDependentArr && getDependentArr.controls && getDependentArr.controls.length < 5 " class="row-wrapper mt-3">
+                <div class="overall-input-wrapper">
+                    <button class="onFocusButton common-button-height-35 ml-3" mat-raised-button type="button" (click)="addToDependentArray()">+ Add</button>
+                </div>
+            </div>
+
+            <div class="row-wrapper justify-content-between align-items-center mt-5 mb-3 footer" style="width: 80%;">
+                <div (click)="routeNext('contact')"
+                    class="d-flex align-content-center align-items-center position-relative" style="cursor: pointer;">
+                    <div class="left-arrow position-absolute"></div>
+                    <div class="sections left-space">
+                        <div class="label">Previous Section</div>
+                        <div class="value">Contact Details</div>
+                    </div>
+                </div>
+                <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button type="submit">Save &
+                    Continue</button>
+                <div (click)="routeNext('education')"
+                    class="d-flex align-content-center align-items-center text-right position-relative pointer"
+                    style="cursor: pointer;">
+                    <div class="right-arrow position-absolute"></div>
+                    <div class="sections right-space">
+                        <div class="label">Next Section</div>
+                        <div class="value">Education Details</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="photo-wrapper">
+        </div>
+    </div>
+
+</div>
