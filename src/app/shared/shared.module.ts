@@ -33,7 +33,8 @@ import { SharedReportsSectionComponent } from './user-management/shared-reports-
 import { SharedVideoAssessViewComponent } from './shared-video-assess-view/shared-video-assess-view.component';
 import { PageNotFoundComponent } from '../unauthenticated-routes/page-not-found/page-not-found.component';
 import { JoinInterviewComponent } from '../candidate-dashboard/larsen-module/join-interview/join-interview.component';
-import { AdaniJoinInterviewComponent } from '../candidate-dashboard/adani-module/join-interview/join-interview.component';
+import { AdaniJoinInterviewComponent } from '../candidate-dashboard/adani-module/adani-join-interview/join-interview.component';
+
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({

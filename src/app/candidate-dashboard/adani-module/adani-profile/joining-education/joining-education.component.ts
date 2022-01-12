@@ -522,7 +522,7 @@ validSelectedPost() {
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Education details is updated');
         this.sharedService.joiningFormStepperStatus.next();
-        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
+        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK);
       });
       } else {
         this.appConfig.nzNotification('error', 'Not Submitted', entryValid?.value?.label == 'gct' ? '12th or Diploma and Undergraduate are mandatory' : entryValid?.value?.label == 'pgct' ? '12th or Diploma, Undergraduate and Postgraduate are mandatory' : entryValid?.value?.label == 'det' ? 'Diploma is mandatory' : 'CA or IGWA or CS is mandatory');
@@ -559,7 +559,7 @@ validSelectedPost() {
   routeNext(route) {
     if (!this.educationForm.dirty) {
       if (route == 'dependent') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT);
       } else {
         if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().education_details == '1') {
           return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK);

@@ -9,9 +9,6 @@ import { AdaniJoiningPreviewComponent } from './adani-profile/joining-preview/jo
 import { AdaniJoiningSubmitComponent } from './adani-profile/joining-submit/joining-submit.component';
 import { AdaniJoiningUploadComponent } from './adani-profile/joining-upload/joining-upload.component';
 import { AdaniJoiningWorkDetailsComponent } from './adani-profile/joining-work-details/joining-work-details.component';
-import { AdaniCandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
-import { AdaniCandidateDocumentComponent } from './candidate-document/candidate-document.component';
-import { AdaniCandidateFaqComponent } from './candidate-faq/candidate-faq.component';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -19,6 +16,9 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { AdaniGuard } from 'src/app/guards/canload/candidate_components_authguards/adani.guard';
 import { AdaniComponentsAuthGuard } from 'src/app/guards/canload/candidate_components_authguards/adani_components_auth.guards';
 import { AdaniMasterComponent } from './adani-master/adani-master.component';
+import { AdaniCandidateFaqComponent } from './adani-candidate-faq/candidate-faq.component';
+import { AdaniCandidateDocumentComponent } from './adani-candidate-document/candidate-document.component';
+import { AdaniCandidateUploadDocumentComponent } from './adani-candidate-document/adani-candidate-upload-document/candidate-upload-document.component';
 
 
 const routes: Routes = [

@@ -1024,7 +1024,7 @@ export class AdaniJoiningUploadComponent implements OnInit, AfterViewInit, OnDes
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Upload details is updated');
         this.sharedService.joiningFormStepperStatus.next();
-        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW);
       });
   }
 

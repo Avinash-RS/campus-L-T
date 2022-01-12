@@ -164,7 +164,7 @@ export class AdaniCandidateUploadDocumentComponent implements OnInit, AfterViewI
   }
 
   goToProfile() {
-    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
+    this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING);
   }
 
   ngAfterViewInit() {
