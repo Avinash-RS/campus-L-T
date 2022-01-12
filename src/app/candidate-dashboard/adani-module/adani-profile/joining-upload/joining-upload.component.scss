@@ -1,5 +1,4 @@
-@import "../../../themes/themes.scss";
-
+@import "../../../../themes/themes.scss";
 .joining-personal-wrapper {
     width: 100%;
     .grids-wrapper {
@@ -46,7 +45,6 @@
                 .width-100 {
                     width: 100%;
                 }
-
                 .overall-input-wrapper {
                     display: flex;
                     flex-direction: column;
@@ -85,14 +83,13 @@
                         color: $primary-error-text;
                         font-size: 12px;
                     }
-                    ::placeholder {
+                     ::placeholder {
                         color: #a5a5a5 !important;
                         opacity: 1;
                         font-size: 13px;
                     }
                 }
             }
-
             .animation {
                 -webkit-transform: translateZ(0);
                 -moz-transform: translateZ(0);
@@ -117,11 +114,9 @@
                 border-radius: 5px;
                 margin-top: 0.5em;
             }
-
             .form-grouping {
                 width: 80%;
             }
-
             .remove-wrapper {
                 // width: 20%;
                 position: relative;
@@ -191,7 +186,6 @@
                     z-index: 9;
                     transition: background 0.3s ease-in-out;
                 }
-
                 .onHover {
                     position: absolute;
                     display: flex;
@@ -202,7 +196,6 @@
                     display: none;
                     align-items: center;
                 }
-
                 .sub-card-wrapper:hover {
                     transition: 250ms ease-in-out;
                     transform: scale(1.05);
@@ -215,7 +208,6 @@
                     }
                 }
             }
-
             .readonlyTitle {
                 border: none !important;
                 width: auto !important;
@@ -238,13 +230,13 @@
                 position: relative;
                 height: 100%;
             }
-
             .label-title {
                 padding: 4px 4px;
                 position: relative;
                 min-height: 54px;
                 max-height: 100%;
-                .readonlyTitle, .readonlyTitle1 {
+                .readonlyTitle,
+                .readonlyTitle1 {
                     position: absolute !important;
                     left: 0 !important;
                     top: 50% !important;
@@ -322,11 +314,9 @@
             .preview:hover {
                 border: 1px solid $primary-hover-color;
             }
-
             .btnView {
                 line-height: 1.9em !important;
             }
-
             .flexEnd {
                 align-items: flex-start !important;
             }
@@ -389,10 +379,10 @@
 }
 
 .primary-clr {
-  color: $primary-text-color !important;
+    color: $primary-text-color !important;
 }
-// Common nz-select wrapper
 
+// Common nz-select wrapper
 :host ::ng-deep .mat-autocomplete-panel {
     border: 1px solid #bebebe !important;
 }
@@ -469,6 +459,7 @@
     right: 18px !important;
     margin-top: -7px !important;
 }
+
 :host ::ng-deep .anticon.ant-select-arrow-icon::after {
     display: inline-block;
     margin-left: 0.255em;
@@ -513,7 +504,6 @@
 }
 
 // Ant Select dropdown css close
-
 // Date picker start
 :host ::ng-deep mat-datepicker-toggle {
     position: absolute !important;
@@ -532,8 +522,8 @@
     min-height: 35px !important;
     max-height: 35px !important;
 }
-// Date picker end
 
+// Date picker end
 //mat-checkbox start
 :host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
@@ -550,6 +540,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .dateInput {
     position: relative;
     left: 35px !important;
@@ -570,15 +561,18 @@
 :host ::ng-deep .mat-button-wrapper {
     padding-top: 1.5px !important;
 }
+
 mat-expansion-panel {
     box-shadow: 2px 2px 5px #0000001a !important;
     margin-top: 1em !important;
     border: 1px solid rgba(147, 147, 149, 0.5) !important;
 }
+
 mat-expansion-panel-header {
     height: 40px !important;
     padding: 0px 16px !important;
 }
+
 .example-action-buttons {
     padding-bottom: 20px;
 }
@@ -594,22 +588,26 @@ mat-expansion-panel-header {
     color: #000 !important;
 }
 
-.example-headers-align .mat-form-field + .mat-form-field {
+.example-headers-align .mat-form-field+.mat-form-field {
     margin-left: 8px;
 }
 
 :host ::ng-deep .mat-expansion-indicator::after {
     color: rgb(0, 0, 0, 0.6) !important;
 }
+
 :host ::ng-deep .mat-expansion-panel-body {
     padding: 8px 16px !important;
 }
+
 :host ::ng-deep .mat-expansion-panel-spacing {
     margin: 0 !important;
 }
+
 .sub-header-accordion {
- background: #EAEAEA !important;
+    background: #EAEAEA !important;
 }
+
 .sub-header-accordion:hover {
     background: rgb(0, 0, 0, 0.1) !important;
 }
@@ -631,7 +629,7 @@ mat-expansion-panel-header {
     position: static;
     overflow: hidden;
     .mat-dialog-container {
-      overflow: hidden !important;
+        overflow: hidden !important;
     }
     .main-wrappers {
         position: relative;
@@ -694,7 +692,6 @@ mat-expansion-panel-header {
                 margin-left: 2.5em;
             }
         }
-
         .nested {
             padding-left: 0em;
             padding-right: 2em;
@@ -722,7 +719,6 @@ mat-expansion-panel-header {
                 text-overflow: ellipsis;
             }
         }
-
         .text-area {
             min-height: 80px !important;
             line-height: 1.3em !important;
@@ -761,7 +757,6 @@ mat-expansion-panel-header {
             .width-100 {
                 width: 100%;
             }
-
             .overall-input-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -800,7 +795,7 @@ mat-expansion-panel-header {
                     color: $primary-error-text;
                     font-size: 12px;
                 }
-                ::placeholder {
+                 ::placeholder {
                     color: #a5a5a5 !important;
                     opacity: 1;
                     font-size: 13px;
@@ -809,50 +804,60 @@ mat-expansion-panel-header {
         }
     }
 }
+
 .no-cursor {
     cursor: not-allowed;
     pointer-events: none;
     opacity: .8;
-    background: rgb(0,0,0, .1) !important;
+    background: rgb(0, 0, 0, .1) !important;
 }
+
 .non-edit {
     background-color: #eaeaea !important;
 }
+
 .cus-ht {
     height: 68px !important;
 }
+
 .cus-wt {
     width: 230px !important;
 }
+
 .alert {
     color: $primary-error-text;
     font-size: 14px;
     margin: 0;
     padding: 0 0 0px 0;
-  }
+}
+
 .cl {
     color: $primary-text-color;
     font-size: 12px;
 }
+
 .custom-error-border {
-  border: solid 1px $primary-error-color !important;
-  padding-bottom: 1.5em;
+    border: solid 1px $primary-error-color !important;
+    padding-bottom: 1.5em;
 }
+
 .caProfileNote {
-  color: $primary-text-color;
-  box-shadow: 0px 0px 5px #00000029;
-  padding: 4px;
+    color: $primary-text-color;
+    box-shadow: 0px 0px 5px #00000029;
+    padding: 4px;
 }
+
 .caError {
-  border-top: 1px solid $primary-error-color;
-  margin-top: 4px;
-  padding: 0 2em;
+    border-top: 1px solid $primary-error-color;
+    margin-top: 4px;
+    padding: 0 2em;
 }
+
 .pdf-viewer-close {
-  position: relative;
-  right: 4px;
-  padding-top: 4px;
-  text-align: right;
-  margin: 0;
-  padding-bottom: 0;
+    position: relative;
+    right: 4px;
+    padding-top: 4px;
+    text-align: right;
+    margin: 0;
+    padding-bottom: 0;
 }

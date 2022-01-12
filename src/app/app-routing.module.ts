@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CONSTANT } from '../app/constants/app-constants.service';
-import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
@@ -9,6 +8,7 @@ import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
 import { InvpanelGuard } from './guards/canload/invpanel.guard';
 import { PageNotFoundComponent } from './unauthenticated-routes/page-not-found/page-not-found.component';
 import { MultiCustomerGuard } from './guards/canload/multi-customer.guard';
+import { CandidateCanloadGuard } from './guards/canload/candidate_canload.guard';
 
 const routes: Routes = [
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
     path: `${CONSTANT.ROUTES.ADMIN_DASHBOARD.HOME}`, loadChildren: './admin-dashboard/master-dashboard.module#MasterDashboardModule', canLoad: [ AdmincanloadGuard ], canActivate: [ AdmincanloadGuard ]
   },
   {
-    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HOME}`, loadChildren: './candidate-dashboard/candidate-dashboard.module#CandidateDashboardModule', canLoad: [ CanloadGuard ], canActivate: [ CanloadGuard ]
+    path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.HOME}`, loadChildren: './candidate-dashboard/candidate-dashboard.module#CandidateDashboardModule', canLoad: [ CandidateCanloadGuard ], canActivate: [ CandidateCanloadGuard ]
   },
   {
     path: `${CONSTANT.ROUTES.HR_DASHBOARD.HOME}`, loadChildren: './hr-dashboard/hr-dashboard.module#HrDashboardModule', canLoad: [ HrcanloadGuard ], canActivate: [ HrcanloadGuard ]
@@ -35,11 +35,11 @@ const routes: Routes = [
   {
     path: `${CONSTANT.ROUTES.UNAUTHENTICATED.HOME}`, loadChildren: './unauthenticated-routes/unauthenticated.module#UnauthenticatedModule'
   },
-  {
-    path: `**`,
-    pathMatch: 'full',
-    component: PageNotFoundComponent
-  }
+  // {
+  //   path: `**`,
+  //   pathMatch: 'full',
+  //   component: PageNotFoundComponent
+  // }
 ];
 
 @NgModule({

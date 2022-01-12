@@ -24,7 +24,6 @@ import { SharedUploadPreviewerComponent } from './shared-upload-previewer/shared
 import { ScreenresolutionBoxComponent } from './screenresolution-box/screenresolution-box.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CommonSidebarComponent } from './common-sidebar/common-sidebar.component';
-import { JoinInterviewComponent } from '../candidate-dashboard/join-interview/join-interview.component';
 import { SharedKycProfileViewComponent } from './shared-kyc-profile-view/shared-kyc-profile-view.component';
 import { UserListsComponent } from './user-management/user-lists/user-lists.component';
 import { CommonUploadsComponent } from './user-management/common-uploads/common-uploads.component';
@@ -33,10 +32,12 @@ import { AgGridModule } from 'ag-grid-angular';
 import { SharedReportsSectionComponent } from './user-management/shared-reports-section/shared-reports-section.component';
 import { SharedVideoAssessViewComponent } from './shared-video-assess-view/shared-video-assess-view.component';
 import { PageNotFoundComponent } from '../unauthenticated-routes/page-not-found/page-not-found.component';
+import { JoinInterviewComponent } from '../candidate-dashboard/larsen-module/join-interview/join-interview.component';
+import { AdaniJoinInterviewComponent } from '../candidate-dashboard/adani-module/join-interview/join-interview.component';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent,AdaniJoinInterviewComponent , SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent
 ],
   imports: [
     CommonModule,

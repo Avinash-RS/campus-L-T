@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MasterDashboardComponent } from './master-dashboard.component';
 import { CONSTANT } from '../constants/app-constants.service';
-import { LarsenGuard } from '../guards/canload/larsen.guard';
-import { AdaniGuard } from '../guards/canload/adani.guard';
+import { AdaniGuard } from '../guards/canload/candidate_components_authguards/adani.guard';
+import { LarsenGuard } from '../guards/canload/candidate_components_authguards/larsen.guard';
+import { LarsenComponentsAuthGuard } from '../guards/canload/candidate_components_authguards/larsen_components_auth.guard';
 
 const routes: Routes = [
   {

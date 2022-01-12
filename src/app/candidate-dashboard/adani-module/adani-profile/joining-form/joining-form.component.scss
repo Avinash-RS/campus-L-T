@@ -1,5 +1,4 @@
-@import "../../../themes/themes.scss";
-
+@import "../../../../themes/themes.scss";
 .joining-form-wrapper {
     width: 100%;
     display: flex;
@@ -19,7 +18,6 @@
             transform: translateX(-10%);
             display: block;
             counter-reset: step;
-
             ul {
                 list-style: none;
                 position: relative;
@@ -40,7 +38,6 @@
                     height: 17px;
                     left: -9px;
                     border-radius: 50%;
-
                 }
                 li:hover {
                     font-weight: 600;
@@ -78,7 +75,6 @@
                 .noCursor:hover {
                     font-weight: 400;
                 }
-
             }
             ul::after {
                 content: ' ';
@@ -94,6 +90,7 @@
         }
     }
 }
+
 .check {
     border-radius: 0px;
     display: inline-block;
@@ -112,16 +109,19 @@
     margin-left: 0px;
     width: 100%;
 }
+
 .routerLeft {
     margin-left: 0em;
 }
 
 :host ::ng-deep .mat-button-focus-overlay {
     display: none !important;
-  }
+}
+
 .mat-button.no-hover ::ng-deep .mat-button-focus-overlay {
     background: none !important;
-  }
+}
+
 ::ng-deep .popupModalContainerForForms {
     .main-wrapper {
         padding: 1em;
@@ -134,13 +134,15 @@
             text-align: center;
         }
         .button-wrapper-form-pop-up {
-        display: grid;
-        margin: 1em 0 0.5em 0;
-        grid-template-columns: 110px 110px 110px;
-        justify-content: center;
-        width: 100%;
-        justify-items: center;
-            .b1,.b2,.b3 {
+            display: grid;
+            margin: 1em 0 0.5em 0;
+            grid-template-columns: 110px 110px 110px;
+            justify-content: center;
+            width: 100%;
+            justify-items: center;
+            .b1,
+            .b2,
+            .b3 {
                 border: 1px solid $common-button-bg;
                 background-color: $white;
                 color: #666666;
@@ -153,7 +155,9 @@
                 transition: .5s ease-out;
                 width: 90px;
             }
-            .b1:hover,.b2:hover,.b3:hover {
+            .b1:hover,
+            .b2:hover,
+            .b3:hover {
                 background-position: left;
                 color: white;
             }
@@ -172,7 +176,6 @@
         }
     }
 }
-
 
 .font-600 {
     font-weight: 600;

@@ -1,32 +1,29 @@
-@import "../../themes/themes.scss";
-
+@import "../../../themes/themes.scss";
 .joinInterviewWrapper {
-  .interview-wrapper {
-    display: flex;
-    align-items: center;
-    padding: 0px 30px 0 0;
-  }
+    .interview-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 0px 30px 0 0;
+    }
     // padding: 15px;
     &.candidate {
-    padding: 10px 24px 10px 22px;
-    display: flex;
-    flex-direction: row;
-    .iconinfo {
-        flex-grow: 0.5;
+        padding: 10px 24px 10px 22px;
         display: flex;
-        justify-content: center;
-        em {
-            font-size: 24px
+        flex-direction: row;
+        .iconinfo {
+            flex-grow: 0.5;
+            display: flex;
+            justify-content: center;
+            em {
+                font-size: 24px
+            }
+            &+div {
+                flex-grow: 15;
+                ;
+            }
         }
-
-        &+ div {
-            flex-grow: 15;;
-        }
-    }
     }
 }
-
-
 
 .interview {
     h5 {
@@ -45,47 +42,51 @@
         }
     }
 }
+
 .interviewers-joinInterview {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  padding: 24px 16px 0 16px !important;
-  min-height: 140px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding: 24px 16px 0 16px !important;
+    min-height: 140px;
 }
+
 .inner-left-interviewer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  h2 {
-    font-size: 22px;
-    color: #1b4e9b;
-    margin: 0;
-    font-weight: 500;
-    line-height: normal;
-  }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+        font-size: 22px;
+        color: #1b4e9b;
+        margin: 0;
+        font-weight: 500;
+        line-height: normal;
+    }
 }
 
 .meetingID {
-  font-size: 12px;
-  font-weight: normal;
-  color: $primary;
+    font-size: 12px;
+    font-weight: normal;
+    color: $primary;
 }
-.timing, .note {
-  font-size: 12px;
-  font-weight: normal;
-  color: $primary;
-  margin: 0;
-  em {
-      margin-right: 4px;
-  }
+
+.timing,
+.note {
+    font-size: 12px;
+    font-weight: normal;
+    color: $primary;
+    margin: 0;
+    em {
+        margin-right: 4px;
+    }
 }
 
 .joinInterview {
     padding: 20px 0 0 0;
     display: flex;
     flex-direction: column;
-    > div {
+    >div {
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -116,45 +117,53 @@
 }
 
 .join-button-wrapper {
-  width: 20%;
+    width: 20%;
 }
 
 .YettoStart {
-  background-color: #1B4E9B !important;
-  cursor: not-allowed;
+    background-color: #1B4E9B !important;
+    cursor: not-allowed;
 }
+
 .Completed {
-  background-color: #48cc83 !important;
-  cursor: not-allowed;
+    background-color: #48cc83 !important;
+    cursor: not-allowed;
 }
+
 .not-scheduled {
-  background-color: #bababa !important;
-  cursor: not-allowed;
+    background-color: #bababa !important;
+    cursor: not-allowed;
 }
+
 .mat-expansion-panel {
-  background: #F0F0F0 0% 0% no-repeat padding-box !important;
-  box-shadow: 0px 3px 6px #00000029;
+    background: #F0F0F0 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 3px 6px #00000029;
 }
+
 .mat-expansion-panel-header {
-  border-radius: 0px;
-  border-bottom: none;
-  margin: 0 12px 0 12px;
-  padding: 0px 16px 0 8px;
-  background: #F0F0F0 0% 0% no-repeat padding-box !important;
+    border-radius: 0px;
+    border-bottom: none;
+    margin: 0 12px 0 12px;
+    padding: 0px 16px 0 8px;
+    background: #F0F0F0 0% 0% no-repeat padding-box !important;
 }
+
 .mat-expansion-panel-header.mat-expanded {
-  background: #F0F0F0 0% 0% no-repeat padding-box !important;
-  border-bottom: solid 1px #7070709e;
-  height: 56px !important;
+    background: #F0F0F0 0% 0% no-repeat padding-box !important;
+    border-bottom: solid 1px #7070709e;
+    height: 56px !important;
 }
+
 .hideExpansion {
-  .mat-expansion-panel-header.mat-expanded {
-    pointer-events: none !important;
-  }
+    .mat-expansion-panel-header.mat-expanded {
+        pointer-events: none !important;
+    }
 }
+
 .mat-expansion-panel-header:hover {
-  background: #F0F0F0 0% 0% no-repeat padding-box !important;
+    background: #F0F0F0 0% 0% no-repeat padding-box !important;
 }
+
 // :host ::ng-deep .mat-expansion-panel-header.mat-expanded {
 //   font-size: 20px;
 //   font-weight: 400;
@@ -162,92 +171,99 @@
 //   border-bottom: 0.1em solid #e8e8e8;
 // }
 .cardTitle {
-  display: flex;
-  align-items: center;
-  font-size: 22px;
-  color: $black;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    color: $black;
 }
+
 :host ::ng-deep.mat-expansion-indicator::after {
-  color: $black;
+    color: $black;
 }
+
 .candidate-interview-wrapper {
-  width: 100%;
+    width: 100%;
 }
+
 .nocard {
-align-items: center;
-font-size: 18px;
-font-weight: 600;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .feedback {
-  width: 29%;
-  margin-left: 2em;
-  label {
-    color: #444444;
-    font-size: 14px;
-    margin: 0;
-  }
-  .text-area {
-    background: #FCFCFC 0% 0% no-repeat padding-box;
-    border: 0.5px solid #bababa;
-    border-radius: 5px;
-    min-height: 35px;
-    padding: 4px;
-  }
+    width: 29%;
+    margin-left: 2em;
+    label {
+        color: #444444;
+        font-size: 14px;
+        margin: 0;
+    }
+    .text-area {
+        background: #FCFCFC 0% 0% no-repeat padding-box;
+        border: 0.5px solid #bababa;
+        border-radius: 5px;
+        min-height: 35px;
+        padding: 4px;
+    }
 }
+
 // :host ::ng-deep .mat-expansion-panel-body {
 //   max-height: 300px;
 //   overflow: auto;
 // }
 .box-wrapper {
-  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
-  margin: 4px 14px 8px 14px;
+    box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 12%) !important;
+    margin: 4px 14px 8px 14px;
 }
+
 .join-button-wrapper-candidate {
-  display: flex;
-  align-items: center;
-  .icon-Info {
-    margin-left: 10px;
-  }
+    display: flex;
+    align-items: center;
+    .icon-Info {
+        margin-left: 10px;
+    }
 }
 
 .interview-only {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 75%;
 }
+
 .interview-only-width {
-  width: 70% !important;
+    width: 70% !important;
 }
+
 ::ng-deep.popupModalContainerForInstructions {
-  .mat-dialog-container {
-    padding: 16px !important;
-  }
-  em {
-    position: absolute;
-    right: -8px;
-    top: -6px;
-  }
-  .instructions-wrapper {
-    position: relative;
-    h5 {
-      margin: 0px 0 2px 0;
-      font-size: 20px;
-      color: $black;
-      font-weight: 500 !important;
+    .mat-dialog-container {
+        padding: 16px !important;
     }
-    ul {
-      padding: 8px 20px !important;
-      color: $black;
-      li {
-        padding-bottom: 0.25em;
-        font-size: 14px;
-        font-weight: 400;
-        ul {
-          padding: 8px 38px 0 38px !important;
+    em {
+        position: absolute;
+        right: -8px;
+        top: -6px;
+    }
+    .instructions-wrapper {
+        position: relative;
+        h5 {
+            margin: 0px 0 2px 0;
+            font-size: 20px;
+            color: $black;
+            font-weight: 500 !important;
         }
-      }
+        ul {
+            padding: 8px 20px !important;
+            color: $black;
+            li {
+                padding-bottom: 0.25em;
+                font-size: 14px;
+                font-weight: 400;
+                ul {
+                    padding: 8px 38px 0 38px !important;
+                }
+            }
+        }
     }
-  }
 }

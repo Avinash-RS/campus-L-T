@@ -14,61 +14,63 @@ import { JoiningUploadComponent } from './candidate-joining-form/joining-upload/
 import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
 import { Routes } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { CanloadGuard } from 'src/app/guards/canload/canload.guard';
-import { AuthGuard } from 'src/app/guards/auth.guard';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { LarsenComponentsAuthGuard } from 'src/app/guards/canload/candidate_components_authguards/larsen_components_auth.guard';
+import { CandidateCanloadGuard } from 'src/app/guards/canload/candidate_canload.guard';
+import { LarsenGuard } from 'src/app/guards/canload/candidate_components_authguards/larsen.guard';
+import { LarsenMasterComponent } from './larsen-master/larsen-master.component';
 
 
 const routes: Routes = [
   {
-    path: '',
+    path: '',component: LarsenMasterComponent,
     children: [
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
-        component: JoiningFormComponent, canActivate: [CanloadGuard],
+        component: JoiningFormComponent,
         data: {
           breadcrumb: 'Joining Form'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_PERSONAL}`,
-            component: JoiningPersonalComponent, canActivate: [AuthGuard],
+            component: JoiningPersonalComponent, canActivate: [LarsenComponentsAuthGuard],
             data: {
               breadcrumb: 'Personal Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_CONTACT}`,
-            component: JoiningContactComponent, canActivate: [AuthGuard],
+            component: JoiningContactComponent, canActivate: [LarsenComponentsAuthGuard],
             data: {
               breadcrumb: 'Contact Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}`,
-            component: JoiningDependentComponent, canActivate: [AuthGuard],
+            component: JoiningDependentComponent, canActivate: [LarsenComponentsAuthGuard],
             data: {
               breadcrumb: 'Dependent Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_EDUCATION}`,
-            component: JoiningEducationComponent, canActivate: [AuthGuard],
+            component: JoiningEducationComponent, canActivate: [LarsenComponentsAuthGuard],
             data: {
               breadcrumb: 'Education Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_WORK}`,
-            component: JoiningWorkDetailsComponent, canActivate: [AuthGuard],
+            component: JoiningWorkDetailsComponent, canActivate: [LarsenComponentsAuthGuard],
             data: {
               breadcrumb: 'Work Experience Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_UPLOAD}`,
-            component: JoiningUploadComponent, canActivate: [AuthGuard],
+            component: JoiningUploadComponent, canActivate: [LarsenComponentsAuthGuard],
             data: {
               breadcrumb: 'Upload Documents'
             }
@@ -96,7 +98,7 @@ const routes: Routes = [
       },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.DOCUMENT}`,
-        component: CandidateDocumentComponent, canActivate: [CanloadGuard],
+        component: CandidateDocumentComponent, canActivate: [LarsenGuard],
         data: {
           breadcrumb: 'Upload Documents'
         },
@@ -117,16 +119,16 @@ const routes: Routes = [
       },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING_FAQ}`,
-        component: CandidateFaqComponent, canActivate: [CanloadGuard],
+        component: CandidateFaqComponent, canActivate: [LarsenGuard],
         data: {
           breadcrumb: 'FAQ'
         },
       },
-      {
-        path: '',
-        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
-        pathMatch: 'full',
-      }
+      // {
+      //   path: '',
+      //   redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
+      //   pathMatch: 'full',
+      // }
     ]
   }
 ]

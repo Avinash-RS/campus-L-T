@@ -84,6 +84,7 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
 
   selectRoute(routeToJoining, data) {
     if (data == '#LTTS') {
+      console.log('ss', routeToJoining, data);
       return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT;
     }
     if (data == '#Adani') {

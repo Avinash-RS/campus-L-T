@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route, UrlSegment } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route, UrlSegment, CanLoad } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
-import { AppConfigService } from '../../config/app-config.service';
-import { CONSTANT } from '../../constants/app-constants.service';
+
 
 
 @Injectable()
-export class LarsenGuard implements CanActivate {
+export class LarsenGuard implements CanLoad {
   // For KYC submission page
   constructor(
     private appConfig: AppConfigService,
@@ -19,7 +20,9 @@ export class LarsenGuard implements CanActivate {
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
+      console.log('ca')
       if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
+        console.log('co')
         return true;
       }else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
@@ -49,7 +52,9 @@ export class LarsenGuard implements CanActivate {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
-      if (this.appConfig.getSelectedCustomerCode() == '#adani') {
+      console.log('ca')
+      if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
+        console.log('co')
         return true;
       }else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);

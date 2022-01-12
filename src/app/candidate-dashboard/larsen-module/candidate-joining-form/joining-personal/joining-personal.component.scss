@@ -1,5 +1,4 @@
-@import "../../../themes/themes.scss";
-
+@import "../../../../themes/themes.scss";
 .joining-personal-wrapper {
     width: 100%;
     .grids-wrapper {
@@ -10,10 +9,10 @@
             padding-right: 3em;
             font-size: 14px;
             .sub-heading {
-            width: 100%;
-            margin: 1em 0 0 0;
-            font-size: 16px;
-            font-weight: 400;
+                width: 100%;
+                margin: 1em 0 0 0;
+                font-size: 16px;
+                font-weight: 400;
             }
             .row-wrapper {
                 margin-top: .5em;
@@ -37,7 +36,6 @@
                 .width-22 {
                     width: 17.5%;
                 }
-
                 .width-32 {
                     width: 32%;
                 }
@@ -47,7 +45,6 @@
                 .width-100 {
                     width: 100%;
                 }
-
                 .overall-input-wrapper {
                     display: flex;
                     flex-direction: column;
@@ -79,18 +76,19 @@
                         padding: 0px !important;
                         border: none !important;
                     }
-                    .input:focus,.input:hover {
+                    .input:focus,
+                    .input:hover {
                         border: 1px solid $primary-hover-color;
                     }
                     .form-error {
                         color: $primary-error-text;
                         font-size: 12px;
                     }
-                    ::placeholder {
+                     ::placeholder {
                         color: #A5A5A5 !important;
                         opacity: 1;
                         font-size: 13px;
-                      }
+                    }
                 }
             }
         }
@@ -123,7 +121,7 @@
                             width: 24px;
                             height: 24px;
                         }
-                      }
+                    }
                     label {
                         display: block !important;
                         margin: 0 !important;
@@ -169,19 +167,14 @@
                     input[type="file"] {
                         cursor: pointer;
                         opacity: 0;
-
                         /* IE 8 */
                         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-
                         /* IE 5-7 */
                         filter: alpha(opacity=0);
-
                         /* Netscape or and older firefox browsers */
                         -moz-opacity: 0;
-
                         /* older Safari browsers */
                         -khtml-opacity: 0;
-
                         position: absolute;
                         top: 0;
                         left: 0;
@@ -189,10 +182,10 @@
                         right: 0;
                         width: 100%;
                         height: 100%;
-                      }
-                      #file-upload-button {
-                          cursor: pointer !important;
-                      }
+                    }
+                    #file-upload-button {
+                        cursor: pointer !important;
+                    }
                 }
                 .error-section {
                     margin-top: .5em;
@@ -208,43 +201,42 @@
         }
     }
     .language-wrapper {
-      display: flex;
-      align-self: flex-start;
-      justify-content: space-between;
-      width: 100%;
-      .language-name-wrapper {
-        width: 45%;
-      }
-      .language-knowns {
         display: flex;
+        align-self: flex-start;
         justify-content: space-between;
-        width: 50%;
-        line-height: 35px;
-        height: 35px;
-      }
-      .close-icon {
-        position: relative;
-        cursor: pointer;
-        height: 24px;
-        padding-top: 6px;
-        i {
-            color: $primary-error-text;
+        width: 100%;
+        .language-name-wrapper {
+            width: 45%;
         }
-        i:hover {
-            color: white;
-            background-color: $primary-hover-color;
-            border-radius: 50%;
+        .language-knowns {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            line-height: 35px;
+            height: 35px;
         }
-      }
-      .hideClose {
-        visibility: hidden;
-      }
-      .custom-border {
-        border: 1px solid $primary-error-color !important;
-      }
+        .close-icon {
+            position: relative;
+            cursor: pointer;
+            height: 24px;
+            padding-top: 6px;
+            i {
+                color: $primary-error-text;
+            }
+            i:hover {
+                color: white;
+                background-color: $primary-hover-color;
+                border-radius: 50%;
+            }
+        }
+        .hideClose {
+            visibility: hidden;
+        }
+        .custom-border {
+            border: 1px solid $primary-error-color !important;
+        }
     }
     .footer {
-
         .left-arrow {
             border: solid #A5A5A5 !important;
             border-width: 0 1px 1px 0 !important;
@@ -284,23 +276,21 @@
         .right-space {
             margin-right: 16px;
         }
-
-    .joining-form-submit {
-        min-width: 150px !important;
-        border-radius: 18px !important;
-        min-height: 34px !important;
-        font-size: 14px !important;
-        align-items: center !important;
-        display: flex !important;
-     }
+        .joining-form-submit {
+            min-width: 150px !important;
+            border-radius: 18px !important;
+            min-height: 34px !important;
+            font-size: 14px !important;
+            align-items: center !important;
+            display: flex !important;
+        }
     }
 }
 
 // Common nz-select wrapper
-
 :host ::ng-deep .mat-autocomplete-panel {
-      border: 1px solid #BEBEBE !important;
-  }
+    border: 1px solid #BEBEBE !important;
+}
 
 :host ::ng-deep .mat-option {
     white-space: nowrap !important;
@@ -333,21 +323,25 @@
     border-radius: 0px !important;
 }
 
-:host ::ng-deep .ant-select-selection:hover,:host ::ng-deep .ant-select-selection:focus,:host ::ng-deep .ant-select-selection:active{
+:host ::ng-deep .ant-select-selection:hover,
+:host ::ng-deep .ant-select-selection:focus,
+:host ::ng-deep .ant-select-selection:active {
     border: solid $primary-hover-color 1px !important;
     border-radius: 0px !important;
     z-index: 0 !important;
     box-shadow: none !important;
 }
 
-:host ::ng-deep input.ng-invalid.ng-touched, :host ::ng-deep nz-select.ng-invalid.ng-touched {
+:host ::ng-deep input.ng-invalid.ng-touched,
+ :host ::ng-deep nz-select.ng-invalid.ng-touched {
     border: solid $primary-error-color 1px !important;
     .ant-select-selection {
         border: solid $primary-error-color 1px !important;
     }
-  }
+}
 
-:host ::ng-deep .ant-select-selection__placeholder, :host ::ng-deep .ant-select-search__field__placeholder {
+:host ::ng-deep .ant-select-selection__placeholder,
+ :host ::ng-deep .ant-select-search__field__placeholder {
     color: #A5A5A5 !important;
     opacity: .6 !important;
     font-size: 13px !important;
@@ -370,6 +364,7 @@
     right: 18px !important;
     margin-top: -7px !important;
 }
+
 :host ::ng-deep .anticon.ant-select-arrow-icon::after {
     display: inline-block;
     margin-left: 0.255em;
@@ -391,7 +386,8 @@
     margin-top: 1px !important;
 }
 
-::ng-deep .ant-select-dropdown-menu-item:first-child, ::ng-deep .ant-select-dropdown-menu-item:last-child {
+::ng-deep .ant-select-dropdown-menu-item:first-child,
+ ::ng-deep .ant-select-dropdown-menu-item:last-child {
     border: none !important;
     border-radius: 0px !important;
 }
@@ -413,7 +409,6 @@
 }
 
 // Ant Select dropdown css close
-
 // Date picker start
 :host ::ng-deep mat-datepicker-toggle {
     position: absolute !important;
@@ -432,10 +427,12 @@
     min-height: 35px !important;
     max-height: 35px !important;
 }
-// Date picker end
 
+// Date picker end
 .date-relative {
-    position: relative; margin: 0 !important; padding: 0 !important;
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 :host ::ng-deep .mat-input-element:disabled {
@@ -448,15 +445,16 @@
     font-size: 14px;
     margin: 0;
     padding: 0 0 4px 0;
-  }
+}
 
-  .language-knowns {
-    ::ng-deep .mat-checkbox-inner-container {
-     width: 28px !important;
-     height: 28px !important;
-     }
-   }
-   :host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
-   .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-       background: $primary-color !important;
-   }
+.language-knowns {
+     ::ng-deep .mat-checkbox-inner-container {
+        width: 28px !important;
+        height: 28px !important;
+    }
+}
+
+ :host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-color !important;
+}

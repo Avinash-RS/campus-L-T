@@ -13,63 +13,65 @@ import { AdaniCandidateUploadDocumentComponent } from './candidate-document/cand
 import { AdaniCandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { AdaniCandidateFaqComponent } from './candidate-faq/candidate-faq.component';
 import { AdaniJoinInterviewComponent } from './join-interview/join-interview.component';
-import { CanloadGuard } from 'src/app/guards/canload/canload.guard';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { AuthGuard } from 'src/app/guards/auth.guard';
 import { Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/material/material.module';
+import { AdaniGuard } from 'src/app/guards/canload/candidate_components_authguards/adani.guard';
+import { AdaniComponentsAuthGuard } from 'src/app/guards/canload/candidate_components_authguards/adani_components_auth.guards';
+import { AdaniMasterComponent } from './adani-master/adani-master.component';
+import { LarsenMasterComponent } from '../larsen-module/larsen-master/larsen-master.component';
 
 
 const routes: Routes = [
   { 
-    path: '', 
+    path: '', component: AdaniMasterComponent,
     children: [
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING}`,
-        component: AdaniJoiningFormComponent, canActivate: [CanloadGuard],
+        component: AdaniJoiningFormComponent, canActivate: [AdaniGuard],
         data: {
           breadcrumb: 'Joining Form'
         },
         children: [
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_PERSONAL}`,
-            component: AdaniJoiningPersonalComponent, canActivate: [AuthGuard],
+            component: AdaniJoiningPersonalComponent, canActivate: [AdaniComponentsAuthGuard],
             data: {
               breadcrumb: 'Personal Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT}`,
-            component: AdaniJoiningContactComponent, canActivate: [AuthGuard],
+            component: AdaniJoiningContactComponent, canActivate: [AdaniComponentsAuthGuard],
             data: {
               breadcrumb: 'Contact Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT}`,
-            component: AdaniJoiningDependentComponent, canActivate: [AuthGuard],
+            component: AdaniJoiningDependentComponent, canActivate: [AdaniComponentsAuthGuard],
             data: {
               breadcrumb: 'Dependent Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION}`,
-            component: AdaniJoiningEducationComponent, canActivate: [AuthGuard],
+            component: AdaniJoiningEducationComponent, canActivate: [AdaniComponentsAuthGuard],
             data: {
               breadcrumb: 'Education Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK}`,
-            component: AdaniJoiningWorkDetailsComponent, canActivate: [AuthGuard],
+            component: AdaniJoiningWorkDetailsComponent, canActivate: [AdaniComponentsAuthGuard],
             data: {
               breadcrumb: 'Work Experience Details'
             }
           },
           {
             path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_UPLOAD}`,
-            component: AdaniJoiningUploadComponent, canActivate: [AuthGuard],
+            component: AdaniJoiningUploadComponent, canActivate: [AdaniComponentsAuthGuard],
             data: {
               breadcrumb: 'Upload Documents'
             }
@@ -97,7 +99,7 @@ const routes: Routes = [
       },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_DOCUMENT}`,
-        component: AdaniCandidateDocumentComponent, canActivate: [CanloadGuard],
+        component: AdaniCandidateDocumentComponent, canActivate: [AdaniGuard],
         data: {
           breadcrumb: 'Upload Documents'
         },
@@ -118,7 +120,7 @@ const routes: Routes = [
       },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING_FAQ}`,
-        component: AdaniCandidateFaqComponent, canActivate: [CanloadGuard],
+        component: AdaniCandidateFaqComponent, canActivate: [AdaniGuard],
         data: {
           breadcrumb: 'FAQ'
         },
@@ -133,7 +135,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdaniCandidateDocumentComponent, AdaniCandidateUploadDocumentComponent,AdaniJoinInterviewComponent, AdaniCandidateFaqComponent,AdaniJoiningContactComponent,AdaniJoiningDependentComponent,AdaniJoiningEducationComponent,AdaniJoiningFormComponent,AdaniJoiningPersonalComponent,AdaniJoiningPreviewComponent,AdaniJoiningSubmitComponent,AdaniJoiningUploadComponent,AdaniJoiningWorkDetailsComponent],
+  declarations: [AdaniCandidateDocumentComponent, AdaniCandidateUploadDocumentComponent,AdaniJoinInterviewComponent, AdaniCandidateFaqComponent,AdaniJoiningContactComponent,AdaniJoiningDependentComponent,AdaniJoiningEducationComponent,AdaniJoiningFormComponent,AdaniJoiningPersonalComponent,AdaniJoiningPreviewComponent,AdaniJoiningSubmitComponent,AdaniJoiningUploadComponent,AdaniJoiningWorkDetailsComponent, AdaniMasterComponent, LarsenMasterComponent],
   imports: [
     CommonModule,
     MaterialModule,
