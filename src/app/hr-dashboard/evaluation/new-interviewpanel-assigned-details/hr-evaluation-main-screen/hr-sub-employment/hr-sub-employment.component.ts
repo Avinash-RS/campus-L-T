@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./hr-sub-employment.component.scss']
 })
 export class HrSubEmploymentComponent implements OnInit {
-
+  customerCode = this.appConfig.getSelectedCustomerCode();
   appConstant = CONSTANT.ENDPOINTS;
   nameOfAssessment: any;
   candidateId: any;

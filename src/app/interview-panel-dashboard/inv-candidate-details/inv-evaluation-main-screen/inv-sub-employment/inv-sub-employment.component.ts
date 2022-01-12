@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./inv-sub-employment.component.scss']
 })
 export class InvSubEmploymentComponent implements OnInit, OnChanges {
-
+  customerCode = this.appConfig.getSelectedCustomerCode();
   @Input() passT0TabProfile;
   appConstant = CONSTANT.ENDPOINTS;
   nameOfAssessment: any;

@@ -1,6 +1,7 @@
 <div class="profile-popup-wrapper">
-<div class="remove">
-  <em (click)="close()" class="icon-close_black ag-icon-font-size pointer"></em>
-</div>
-<app-shared-kyc-profile-view *ngIf="data" [nonCandidate]="data"></app-shared-kyc-profile-view>
+    <div class="remove">
+        <em (click)="close()" class="icon-close_black ag-icon-font-size pointer"></em>
+    </div>
+    <app-shared-kyc-profile-view *ngIf="data && customerCode == '#LTTS'" [nonCandidate]="data"></app-shared-kyc-profile-view>
+    <app-adani-shared-kyc-profile-view *ngIf="data && customerCode == '#ADANI'" [nonCandidate]="data"></app-adani-shared-kyc-profile-view>
 </div>
