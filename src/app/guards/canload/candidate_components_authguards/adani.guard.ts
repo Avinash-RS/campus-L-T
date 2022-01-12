@@ -7,7 +7,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 
 
 @Injectable()
-export class AdaniGuard implements CanLoad {
+export class AdaniGuard implements CanLoad, CanActivate {
   // For KYC submission page
   constructor(
     private appConfig: AppConfigService,
@@ -19,13 +19,13 @@ export class AdaniGuard implements CanLoad {
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
-      if (this.appConfig.getSelectedCustomerCode() == '#Adani') {
+      if (this.appConfig.getSelectedCustomerCode() == '#ADANI') {
         return true;
       }else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
         return false;
       }
-    
+
     } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
@@ -49,7 +49,7 @@ export class AdaniGuard implements CanLoad {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
-      if (this.appConfig.getSelectedCustomerCode() == '#Adani') {
+      if (this.appConfig.getSelectedCustomerCode() == '#ADANI') {
         return true;
       }else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);

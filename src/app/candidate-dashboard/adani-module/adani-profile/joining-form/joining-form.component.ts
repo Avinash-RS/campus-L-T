@@ -129,7 +129,6 @@ export class AdaniJoiningFormComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.removeLocalStorage();
     this.statusOfForms();
     this.openPopupRequest();
     this.activeSelectorRxJs();
@@ -137,10 +136,6 @@ export class AdaniJoiningFormComponent implements OnInit, OnDestroy {
     this.checkJoiningComponentNeeded();
   }
 
-  removeLocalStorage() {
-    this.appConfig.clearLocalDataOne('kycForm');
-    this.appConfig.clearLocalDataOne('KYCAPI');
-  }
   activeSelectorRxJs() {
     this.joiningFormActiveSelectorSubscribe = this.sharedService.joiningFormActiveSelector.pipe(delay(0)).subscribe((data: any)=> {
       this.hideStepper = this.appConfig.getLocalData('isEditAllowed') == 'true' ? false : true;

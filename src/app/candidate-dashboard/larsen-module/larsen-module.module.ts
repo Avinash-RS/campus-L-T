@@ -12,23 +12,23 @@ import { JoiningPreviewComponent } from './candidate-joining-form/joining-previe
 import { JoiningSubmitComponent } from './candidate-joining-form/joining-submit/joining-submit.component';
 import { JoiningUploadComponent } from './candidate-joining-form/joining-upload/joining-upload.component';
 import { JoiningWorkDetailsComponent } from './candidate-joining-form/joining-work-details/joining-work-details.component';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LarsenComponentsAuthGuard } from 'src/app/guards/canload/candidate_components_authguards/larsen_components_auth.guard';
-import { CandidateCanloadGuard } from 'src/app/guards/canload/candidate_canload.guard';
 import { LarsenGuard } from 'src/app/guards/canload/candidate_components_authguards/larsen.guard';
 import { LarsenMasterComponent } from './larsen-master/larsen-master.component';
 
 
 const routes: Routes = [
   {
-    path: '',component: LarsenMasterComponent,
+    path: '',
+    component: LarsenMasterComponent, canActivate: [LarsenGuard],
     children: [
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
-        component: JoiningFormComponent,
+        component: JoiningFormComponent, canActivate: [LarsenGuard],
         data: {
           breadcrumb: 'Joining Form'
         },
@@ -124,18 +124,19 @@ const routes: Routes = [
           breadcrumb: 'FAQ'
         },
       },
-      // {
-      //   path: '',
-      //   redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
-      //   pathMatch: 'full',
-      // }
+      {
+        path: '',
+        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.JOINING}`,
+        pathMatch: 'full',
+      }
     ]
   }
 ]
 
 @NgModule({
-  declarations: [CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent],
+  declarations: [CandidateDocumentComponent, CandidateUploadDocumentComponent, JoiningFormComponent, JoiningPersonalComponent, JoiningContactComponent, JoiningDependentComponent, JoiningEducationComponent, JoiningUploadComponent, JoiningPreviewComponent, JoiningSubmitComponent, JoiningWorkDetailsComponent, CandidateFaqComponent, LarsenMasterComponent],
   imports: [
+    RouterModule.forChild(routes),
     CommonModule,
     MaterialModule,
     SharedModule

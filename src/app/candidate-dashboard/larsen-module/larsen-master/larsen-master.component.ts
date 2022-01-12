@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LarsenMasterComponent implements OnInit {
 
-  constructor() { 
-    console.log('in larsen')
+  constructor() {
   }
 
   ngOnInit() {
+    console.log('in larsen');
   }
 
 }

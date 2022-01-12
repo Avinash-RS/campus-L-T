@@ -8,7 +8,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 
 
 @Injectable()
-export class LarsenGuard implements CanLoad {
+export class LarsenGuard implements CanLoad, CanActivate {
   // For KYC submission page
   constructor(
     private appConfig: AppConfigService,
@@ -28,7 +28,7 @@ export class LarsenGuard implements CanLoad {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
         return false;
       }
-    
+
     } else {
       if (this.appConfig.getLocalData('logout-token')) {
         this.apiService.logout(this.appConfig.getLocalData('logout-token')).subscribe((data: any) => {
