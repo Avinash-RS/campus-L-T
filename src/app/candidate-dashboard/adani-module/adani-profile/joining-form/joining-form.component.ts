@@ -179,47 +179,47 @@ export class AdaniJoiningFormComponent implements OnInit, OnDestroy {
       this.checkFormSubmitted();
       if ((data && data.submitted == '1') || this.redirectToPreview) {
         this.valid.tillsbmit();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW);
         return this.activeStep = 'preview';
       }
 
       if (data && data.previewed == '1') {
         this.valid.tillpreview();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_SUBMIT);
         return this.activeStep = 'submit';
       }
       if (data && data.personal_details == '0') {
         this.valid.tillPersonal();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PERSONAL);
         return this.activeStep = 'personal';//, this.routingSelection = param ? param : 'contact';
       }
       if (data && data.contact_details == '0') {
         this.valid.tillContact();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT);
         return this.activeStep = 'contact';
       }
       if (data && data.dependent_details == '0') {
         this.valid.tilldependent();
-       param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+       param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT);
        return this.activeStep = 'dependent';//, this.routingSelection = param ? param : 'education';
       }
       if (data && data.education_details == '0') {
         this.valid.tilleducation();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION);
         return this.activeStep = 'education';
       }
       if (data && data.experience_details == '0') {
           this.valid.tillwork();
-          param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
+          param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK);
           return this.activeStep = 'work';
       }
       if (data && data.document_details == '0') {
         this.valid.tillupload();
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_UPLOAD);
         return this.activeStep = 'upload';
       }
       else {
-        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+        param ? null : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW);
         return this.activeStep = 'preview';//, this.routingSelection = param ? param : 'personal';
       }
     } else {
@@ -239,56 +239,56 @@ export class AdaniJoiningFormComponent implements OnInit, OnDestroy {
 
     if (clickedStep == 'personal') {
       if (this.routingSelection != 'personal') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PERSONAL}
         this.sharedService.StepperNavigationCheck.next(data);
       }
     //  this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
     }
     if (clickedStep == 'contact') {
       if (this.routingSelection != 'contact') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
     }
     if (clickedStep == 'dependent') {
       if (this.routingSelection != 'dependent') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
     }
     if (clickedStep == 'education') {
       if (this.routingSelection != 'education') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
     if (clickedStep == 'work') {
       if (this.routingSelection != 'work') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
     if (clickedStep == 'upload') {
       if (this.routingSelection != 'upload') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_UPLOAD}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
     if (clickedStep == 'preview') {
       if (this.routingSelection != 'preview') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
     }
     if (clickedStep == 'submit') {
       if (this.routingSelection != 'submit') {
-        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_SUBMIT}
+        let data = {current: this.routingSelection, goto: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_SUBMIT}
         this.sharedService.StepperNavigationCheck.next(data);
       }
       // this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);

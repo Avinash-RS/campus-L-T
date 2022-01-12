@@ -242,13 +242,13 @@ dateConvertion(date) {
   routeNext(route) {
     if (!this.dependentForm.dirty) {
       if (route == 'contact') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT);
       } else {
         if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().dependent_details == '1') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION);
         } else {
          if (this.dependentForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(route == 'contact' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'contact' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION);
           }
           this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
           this.ngAfterViewInit();
@@ -256,7 +256,7 @@ dateConvertion(date) {
         }
       }
     } else {
-      return this.sharedService.openJoiningRoutePopUp.next(route == 'contact' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+      return this.sharedService.openJoiningRoutePopUp.next(route == 'contact' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION);
     }
   }
 

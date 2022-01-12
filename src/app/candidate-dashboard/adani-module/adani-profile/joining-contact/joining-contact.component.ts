@@ -196,7 +196,7 @@ export class AdaniJoiningContactComponent implements OnInit, AfterViewInit, OnDe
           this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
           this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Contact details is updated');
           this.sharedService.joiningFormStepperStatus.next();
-          return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+          return this.appConfig.routeNavigation(routeValue ? routeValue : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT);
       });
     } else {
       this.ngAfterViewInit();
@@ -228,13 +228,13 @@ export class AdaniJoiningContactComponent implements OnInit, AfterViewInit, OnDe
   routeNext(route) {
     if (!this.contactForm.dirty) {
       if (route == 'personal') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL);
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PERSONAL);
       } else {
         if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().contact_details == '1') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT);
         } else {
          if (this.contactForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(route == 'personal' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PERSONAL : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_DEPENDENT);
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'personal' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PERSONAL : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_DEPENDENT);
             }
           this.glovbal_validators.validateAllFields(this.contactForm);
           this.ngAfterViewInit();

@@ -57,7 +57,6 @@ export const CONSTANT = {
     },
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
-      DASHBOARD: '/candidate/dashboard',
       // Lnt Profile Routes Start
       CANDIDATE_LARSEN: '/candidate/larsen',
       JOINING: '/candidate/larsen/joining',

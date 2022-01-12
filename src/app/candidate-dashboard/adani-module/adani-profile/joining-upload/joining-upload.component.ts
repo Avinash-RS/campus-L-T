@@ -1390,19 +1390,19 @@ onEducationFileUpload(event, mainIndex, subIndex, form) {
   routeNext(route) {
     if (!this.uploadForm.dirty) {
       if (route == 'work') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK);
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK);
       } else {
         if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().document_details == '1') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW);
         } else {
          if (this.uploadForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(route == 'work' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+          return this.sharedService.openJoiningRoutePopUp.next(route == 'work' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW);
           }
           this.formSubmit();
         }
       }
     } else {
-      return this.sharedService.openJoiningRoutePopUp.next(route == 'work' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_WORK : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_PREVIEW);
+      return this.sharedService.openJoiningRoutePopUp.next(route == 'work' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_WORK : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_PREVIEW);
     }
   }
 

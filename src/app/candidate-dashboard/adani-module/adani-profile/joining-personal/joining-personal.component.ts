@@ -405,7 +405,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
         this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
         this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Personal details is updated');
         this.sharedService.joiningFormStepperStatus.next();
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT);
       });
     } else {
       this.ngAfterViewInit();
@@ -439,17 +439,17 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
   routeNext() {
     if (!this.personalForm.dirty) {
       if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().personal_details == '1') {
-        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+        return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT);
       } else {
         if(this.personalForm.valid) {
-          return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+          return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT);
         }
         this.glovbal_validators.validateAllFields(this.personalForm);
         this.ngAfterViewInit();
         this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       }
     } else {
-      return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_CONTACT);
+      return this.sharedService.openJoiningRoutePopUp.next(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_CONTACT);
       }
     }
 

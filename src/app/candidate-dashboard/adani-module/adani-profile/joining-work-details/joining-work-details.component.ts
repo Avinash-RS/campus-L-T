@@ -732,13 +732,13 @@ addToTrainingArray() {
   routeNext(route) {
       if (!this.workDetailsForm.dirty) {
         if (route == 'education') {
-          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION);
+          return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION);
         } else {
           if(this.candidateService.getLocalsection_flags() && this.candidateService.getLocalsection_flags().experience_details == '1') {
-            return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+            return this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_UPLOAD);
           } else {
             if (this.workDetailsForm.valid) {
-              return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+              return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_UPLOAD);
             }
             this.glovbal_validators.validateAllFields(this.workDetailsForm);
             this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
@@ -747,7 +747,7 @@ addToTrainingArray() {
           }
         }
       } else {
-        return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+        return this.sharedService.openJoiningRoutePopUp.next(route == 'education' ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_EDUCATION : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING_UPLOAD);
       }
   }
 
