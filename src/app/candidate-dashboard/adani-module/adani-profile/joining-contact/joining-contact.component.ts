@@ -1,14 +1,14 @@
 import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { GlobalValidatorService } from './../../../custom-form-validators/globalvalidators/global-validator.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CandidateMappersService } from './../../../services/candidate-mappers.service';
-import { SharedServiceService } from './../../../services/shared-service.service';
-import { AdminServiceService } from './../../../services/admin-service.service';
-import { ApiServiceService } from './../../../services/api-service.service';
-import { AppConfigService } from './../../../config/app-config.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { AppConfigService } from 'src/app/config/app-config.service';
+import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
+import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-adani-joining-contact',

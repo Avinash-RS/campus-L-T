@@ -82,14 +82,24 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  selectRoute(routeToJoining, data) {
+    if (data == '#LTTS') {
+      return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT;
+    }
+    if (data == '#Adani') {
+      return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_DOCUMENT;
+    }
+  }
+
   customerSelection (customers: any, i: any, action: any) {
     let selectedCustomer = this.clone(customers);
+    let customerCode = selectedCustomer.customer_code;
     selectedCustomer.driveDetails = [selectedCustomer.driveDetails];
     this.setCustomerData(selectedCustomer).then((response: any)=> {
       if (action && action.label == 'Upload Document') {
-        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT);
+        this.appConfig.routeNavigation(this.selectRoute(false, customerCode));
       } else {
-        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING);
+        this.appConfig.routeNavigation(this.selectRoute(true, customerCode));
       }
     }).catch((err)=> {
       console.log(err);

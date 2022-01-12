@@ -58,22 +58,37 @@ export const CONSTANT = {
     CANDIDATE_DASHBOARD: {
       HOME: '/candidate',
       DASHBOARD: '/candidate/dashboard',
-      JOINING: '/candidate/joining',
-      JOINING_PERSONAL: '/candidate/joining/personal',
-      JOINING_CONTACT: '/candidate/joining/contact',
-      JOINING_DEPENDENT: '/candidate/joining/dependent',
-      JOINING_EDUCATION: '/candidate/joining/education',
-      JOINING_WORK: '/candidate/joining/work',
-      JOINING_UPLOAD: '/candidate/joining/upload',
-      JOINING_PREVIEW: '/candidate/joining/preview',
-      JOINING_SUBMIT: '/candidate/joining/submit',
-      JOINING_FAQ: '/candidate/faq',
-      KYC_THANKS: '/candidate/kyc/submitted',
-      HALLTICKET: '/candidate/hallticket',
-      HALLTICKET_LIST: '/candidate/hallticket/list',
-      DOCUMENT: '/candidate/document',
-      DOCUMENT_LIST: '/candidate/document/list',
-      REGISTRATION_CLOSE: '/candidate/registration-close'
+      // Lnt Profile Routes Start
+      CANDIDATE_LARSEN: '/candidate/larsen',
+      JOINING: '/candidate/larsen/joining',
+      JOINING_PERSONAL: '/candidate/larsen/joining/personal',
+      JOINING_CONTACT: '/candidate/larsen/joining/contact',
+      JOINING_DEPENDENT: '/candidate/larsen/joining/dependent',
+      JOINING_EDUCATION: '/candidate/larsen/joining/education',
+      JOINING_WORK: '/candidate/larsen/joining/work',
+      JOINING_UPLOAD: '/candidate/larsen/joining/upload',
+      JOINING_PREVIEW: '/candidate/larsen/joining/preview',
+      JOINING_SUBMIT: '/candidate/larsen/joining/submit',
+      JOINING_FAQ: '/candidate/larsen/faq',
+      DOCUMENT: '/candidate/larsen/document',
+      DOCUMENT_LIST: '/candidate/larsen/document/list',
+      // Lnt Profile Routes End
+      // ADANI Profile Routes Start
+      CANDIDATE_ADANI: '/candidate/adani',
+      ADANI_JOINING: '/candidate/adani/joining',
+      ADANI_JOINING_PERSONAL: '/candidate/adani/joining/personal',
+      ADANI_JOINING_CONTACT: '/candidate/adani/joining/contact',
+      ADANI_JOINING_DEPENDENT: '/candidate/adani/joining/dependent',
+      ADANI_JOINING_EDUCATION: '/candidate/adani/joining/education',
+      ADANI_JOINING_WORK: '/candidate/adani/joining/work',
+      ADANI_JOINING_UPLOAD: '/candidate/adani/joining/upload',
+      ADANI_JOINING_PREVIEW: '/candidate/adani/joining/preview',
+      ADANI_JOINING_SUBMIT: '/candidate/adani/joining/submit',
+      ADANI_JOINING_FAQ: '/candidate/adani/faq',
+      ADANI_DOCUMENT: '/candidate/adani/document',
+      ADANI_DOCUMENT_LIST: '/candidate/adani/document/list',
+      // ADANI Profile Routes End
+      
     },
     HR_DASHBOARD: {
       HOME: '/hr',
@@ -179,6 +194,8 @@ export const CONSTANT = {
     CANDIDATE_DASHBOARD: {
       HOME: 'candidate',
       DASHBOARD: 'dashboard',
+      // Lnt Profile Routes Start
+      CANDIDATE_LARSEN: 'larsen',
       JOINING: 'joining',
       JOINING_PERSONAL: 'personal',
       JOINING_CONTACT: 'contact',
@@ -189,12 +206,24 @@ export const CONSTANT = {
       JOINING_PREVIEW: 'preview',
       JOINING_SUBMIT: 'submit',
       JOINING_FAQ: 'faq',
-      KYC_THANKS: 'kyc/submitted',
-      HALLTICKET: 'hallticket',
-      HALLTICKET_LIST: 'list',
       DOCUMENT: 'document',
       DOCUMENT_LIST: 'list',
-      REGISTRATION_CLOSE: 'registration-close'
+      // Lnt Profile Routes End
+      // ADANI Profile Routes Start
+      CANDIDATE_ADANI: 'adani',
+      ADANI_JOINING: 'joining',
+      ADANI_JOINING_PERSONAL: 'personal',
+      ADANI_JOINING_CONTACT: 'contact',
+      ADANI_JOINING_DEPENDENT: 'dependent',
+      ADANI_JOINING_EDUCATION: 'education',
+      ADANI_JOINING_WORK: 'work',
+      ADANI_JOINING_UPLOAD: 'upload',
+      ADANI_JOINING_PREVIEW: 'preview',
+      ADANI_JOINING_SUBMIT: 'submit',
+      ADANI_JOINING_FAQ: 'faq',
+      ADANI_DOCUMENT: 'document',
+      ADANI_DOCUMENT_LIST: 'list',
+      // ADANI Profile Routes End
     },
     HR_DASHBOARD: {
       HOME: 'hr',
