@@ -20,9 +20,7 @@ export class LarsenGuard implements CanLoad, CanActivate {
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
-      console.log('ca')
       if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
-        console.log('co')
         return true;
       }else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);
@@ -52,9 +50,7 @@ export class LarsenGuard implements CanLoad, CanActivate {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.appConfig.getLocalData('csrf-login') && this.appConfig.getLocalData('roles') == 'candidate') {
-      console.log('ca')
       if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
-        console.log('co')
         return true;
       }else {
         this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD);

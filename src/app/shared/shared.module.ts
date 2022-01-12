@@ -77,6 +77,7 @@ ModuleRegistry.registerModules(AllModules);
     DateMonthYearDirective,
     CommonSidebarComponent,
     JoinInterviewComponent,
+    AdaniJoinInterviewComponent,
     SharedKycProfileViewComponent,
     UserListsComponent,
     CommonUploadsComponent,

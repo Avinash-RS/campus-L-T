@@ -16,7 +16,7 @@ export class InvJoinInterviewComponent implements OnInit, OnChanges {
 
   @Input() passT0TabVideoInterview;
   queryParams: { data: any; id: any; name: any; status: any; tag: any; uid: any; email: any; form: any; };
-
+  customerCode = this.appConfig.getSelectedCustomerCode();
   constructor(
     public appConfig: AppConfigService,
     private apiService: ApiServiceService,

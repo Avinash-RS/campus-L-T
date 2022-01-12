@@ -12,7 +12,6 @@ import { AdaniJoiningWorkDetailsComponent } from './adani-profile/joining-work-d
 import { AdaniCandidateUploadDocumentComponent } from './candidate-document/candidate-upload-document/candidate-upload-document.component';
 import { AdaniCandidateDocumentComponent } from './candidate-document/candidate-document.component';
 import { AdaniCandidateFaqComponent } from './candidate-faq/candidate-faq.component';
-import { AdaniJoinInterviewComponent } from './join-interview/join-interview.component';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -134,7 +133,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdaniCandidateDocumentComponent, AdaniCandidateUploadDocumentComponent,AdaniJoinInterviewComponent, AdaniCandidateFaqComponent,AdaniJoiningContactComponent,AdaniJoiningDependentComponent,AdaniJoiningEducationComponent,AdaniJoiningFormComponent,AdaniJoiningPersonalComponent,AdaniJoiningPreviewComponent,AdaniJoiningSubmitComponent,AdaniJoiningUploadComponent,AdaniJoiningWorkDetailsComponent, AdaniMasterComponent],
+  declarations: [AdaniCandidateDocumentComponent, AdaniCandidateUploadDocumentComponent, AdaniCandidateFaqComponent,AdaniJoiningContactComponent,AdaniJoiningDependentComponent,AdaniJoiningEducationComponent,AdaniJoiningFormComponent,AdaniJoiningPersonalComponent,AdaniJoiningPreviewComponent,AdaniJoiningSubmitComponent,AdaniJoiningUploadComponent,AdaniJoiningWorkDetailsComponent, AdaniMasterComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

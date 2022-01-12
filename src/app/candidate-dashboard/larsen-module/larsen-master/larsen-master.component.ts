@@ -11,7 +11,6 @@ export class LarsenMasterComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('in larsen');
   }
 
 }

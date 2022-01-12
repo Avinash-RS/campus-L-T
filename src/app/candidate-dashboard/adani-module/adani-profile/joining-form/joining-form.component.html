@@ -1,47 +1,39 @@
 <!-- Interview Component for Candidate Login -->
-<app-join-interview *ngIf="role == 'candidate' && !showJoiningForm && isPermissionGranted()"></app-join-interview>
+<app-adani-join-interview *ngIf="role == 'candidate' && !showJoiningForm && isPermissionGranted()"></app-adani-join-interview>
 
 <div class="joining-form-wrapper">
     <div *ngIf="!hideStepper" class="stepper">
         <div class="stepper-wrapper">
             <ul>
-                <li (click)="validCheck('personal')"
-                    [ngClass]="[activeStep == 'personal' ? 'active' : (activeStep == 'personal' || activeStep == 'contact' || activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'personal' ? 'font-600' : '']">
+                <li (click)="validCheck('personal')" [ngClass]="[activeStep == 'personal' ? 'active' : (activeStep == 'personal' || activeStep == 'contact' || activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'personal' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'personal'" class="check"></div>
                     Personal Details
                 </li>
-                <li (click)="validCheck('contact')"
-                    [ngClass]="[activeStep == 'contact' ? 'active' : (activeStep == 'contact' || activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'contact' ? 'font-600' : '']">
+                <li (click)="validCheck('contact')" [ngClass]="[activeStep == 'contact' ? 'active' : (activeStep == 'contact' || activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'contact' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'contact'" class="check"></div>
                     Contact Details
                 </li>
-                <li (click)="validCheck('dependent')"
-                    [ngClass]="[activeStep == 'dependent' ? 'active' : (activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'dependent' ? 'font-600' : '']">
+                <li (click)="validCheck('dependent')" [ngClass]="[activeStep == 'dependent' ? 'active' : (activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'dependent' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'dependent'" class="check"></div>
                     Dependent Details
                 </li>
-                <li (click)="validCheck('education')"
-                    [ngClass]="[activeStep == 'education' ? 'active' : (activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'education' ? 'font-600' : '']" >
+                <li (click)="validCheck('education')" [ngClass]="[activeStep == 'education' ? 'active' : (activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'education' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'education'" class="check"></div>
                     Education Details
                 </li>
-                <li (click)="validCheck('work')"
-                [ngClass]="[activeStep == 'work' ? 'active' : (activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'work' ? 'font-600' : '']" >
+                <li (click)="validCheck('work')" [ngClass]="[activeStep == 'work' ? 'active' : (activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'work' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'work'" class="check"></div>
                     Work Experience Details
                 </li>
-                <li (click)="validCheck('upload')"
-                    [ngClass]="[activeStep == 'upload' ? 'active' : (activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'upload' ? 'font-600' : '']">
+                <li (click)="validCheck('upload')" [ngClass]="[activeStep == 'upload' ? 'active' : (activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'upload' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'upload'" class="check"></div>
                     Upload Documents
                 </li>
-                <li (click)="validCheck('preview')"
-                    [ngClass]="[activeStep == 'preview' ? 'active' : (activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'preview' ? 'font-600' : '']">
+                <li (click)="validCheck('preview')" [ngClass]="[activeStep == 'preview' ? 'active' : (activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'preview' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'preview'" class="check"></div>
                     Preview & Submit
                 </li>
-                <li (click)="validCheck('submit')"
-                    [ngClass]="[activeStep == 'submit' ? 'active' : (activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'submit' ? 'font-600' : '']">
+                <li (click)="validCheck('submit')" [ngClass]="[activeStep == 'submit' ? 'active' : (activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'submit' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'submit'" class="check"></div>
                     Thankyou
                 </li>
@@ -55,7 +47,7 @@
 
 <ng-template #matDialog>
     <div class="main-wrapper">
-<div class="text">Do you want to change in the existing form?</div>
+        <div class="text">Do you want to change in the existing form?</div>
         <div class="button-wrapper-form-pop-up" [ngStyle]="{'grid-template-columns': !noSave ? '110px 110px 110px' : '110px 110px'}">
             <button class="b1" (click)="closeDialog('save')" type="button" mat-raised-button>Save</button>
             <button *ngIf="!noSave" class="b2" (click)="closeDialog('noSave')" type="button" mat-raised-button>Don't Save</button>
@@ -63,4 +55,4 @@
         </div>
     </div>
 
-  </ng-template>
+</ng-template>
