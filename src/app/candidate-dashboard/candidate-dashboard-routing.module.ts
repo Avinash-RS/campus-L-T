@@ -14,17 +14,17 @@ const routes: Routes = [
     },
     children: [
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.CANDIDATE_LARSEN}`, loadChildren: './larsen-module/larsen-module.module#LarsenModuleModule', canLoad: [ LarsenGuard ], canActivate: [ LarsenGuard ]
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.CANDIDATE_LARSEN}`, loadChildren: () => import('./larsen-module/larsen-module.module').then(m => m.LarsenModuleModule), canLoad: [ LarsenGuard ], canActivate: [ LarsenGuard ]
       },
       {
-        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.CANDIDATE_ADANI}`, loadChildren: './adani-module/adani-module.module#AdaniModuleModule', canLoad: [ AdaniGuard ], canActivate: [ AdaniGuard ]
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.CANDIDATE_ADANI}`, loadChildren: () => import('./adani-module/adani-module.module').then(m => m.AdaniModuleModule), canLoad: [ AdaniGuard ], canActivate: [ AdaniGuard ]
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.CUSTOMERS.CANDIDATE_DASHBOARD}`,
+        redirectTo: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.CANDIDATE_ADANI}`,
         pathMatch: 'full',
       }
-    ],    
+    ],
   },
 ];
 

@@ -14,18 +14,17 @@ import { AdaniCandidateDocumentComponent } from './candidate-document/candidate-
 import { AdaniCandidateFaqComponent } from './candidate-faq/candidate-faq.component';
 import { AdaniJoinInterviewComponent } from './join-interview/join-interview.component';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { AdaniGuard } from 'src/app/guards/canload/candidate_components_authguards/adani.guard';
 import { AdaniComponentsAuthGuard } from 'src/app/guards/canload/candidate_components_authguards/adani_components_auth.guards';
 import { AdaniMasterComponent } from './adani-master/adani-master.component';
-import { LarsenMasterComponent } from '../larsen-module/larsen-master/larsen-master.component';
 
 
 const routes: Routes = [
-  { 
-    path: '', component: AdaniMasterComponent,
+  {
+    path: '', component: AdaniMasterComponent, canActivate: [AdaniGuard],
     children: [
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.ADANI_JOINING}`,
@@ -135,8 +134,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdaniCandidateDocumentComponent, AdaniCandidateUploadDocumentComponent,AdaniJoinInterviewComponent, AdaniCandidateFaqComponent,AdaniJoiningContactComponent,AdaniJoiningDependentComponent,AdaniJoiningEducationComponent,AdaniJoiningFormComponent,AdaniJoiningPersonalComponent,AdaniJoiningPreviewComponent,AdaniJoiningSubmitComponent,AdaniJoiningUploadComponent,AdaniJoiningWorkDetailsComponent, AdaniMasterComponent, LarsenMasterComponent],
+  declarations: [AdaniCandidateDocumentComponent, AdaniCandidateUploadDocumentComponent,AdaniJoinInterviewComponent, AdaniCandidateFaqComponent,AdaniJoiningContactComponent,AdaniJoiningDependentComponent,AdaniJoiningEducationComponent,AdaniJoiningFormComponent,AdaniJoiningPersonalComponent,AdaniJoiningPreviewComponent,AdaniJoiningSubmitComponent,AdaniJoiningUploadComponent,AdaniJoiningWorkDetailsComponent, AdaniMasterComponent],
   imports: [
+    RouterModule.forChild(routes),
     CommonModule,
     MaterialModule,
     SharedModule
