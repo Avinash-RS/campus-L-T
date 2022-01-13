@@ -10,6 +10,9 @@ import { AppConfigService } from '../config/app-config.service';
 export class MasterDashboardComponent implements OnInit {
 
   appConstant = CONSTANT.ENDPOINTS;
+  customerCode = this.appConfig.getSelectedCustomerCode();
+  profileRedirection = this.customerCode == '#ADANI' ? this.appConstant.CANDIDATE_DASHBOARD.ADANI_JOINING : this.appConstant.CANDIDATE_DASHBOARD.JOINING;
+  documentRedirection = this.customerCode == '#ADANI' ? this.appConstant.CANDIDATE_DASHBOARD.ADANI_DOCUMENT : this.appConstant.CANDIDATE_DASHBOARD.DOCUMENT;
   showProfileOnly = false;
   showDocuments = false;
   showJoiningForm: boolean;
@@ -30,7 +33,7 @@ export class MasterDashboardComponent implements OnInit {
   sendMenus() {
       this.candidateSideMenu = [
         {
-          url: this.appConstant.CANDIDATE_DASHBOARD.JOINING,
+          url: this.profileRedirection,
           name: this.showJoiningForm ? 'Joining Form' : 'Profile Form',
           icon: 'icon-Assessment',
           hide: false,
@@ -39,7 +42,7 @@ export class MasterDashboardComponent implements OnInit {
       ]
       if (this.showDocuments) {
         let add = {
-          url: this.appConstant.CANDIDATE_DASHBOARD.DOCUMENT,
+          url: this.documentRedirection,
           name: 'Documents',
           icon: 'icon-Role',
           hide: false

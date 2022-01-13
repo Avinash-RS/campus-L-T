@@ -1,3 +1,4 @@
 <div class="hr-evaluation-sub-edu">
-  <app-shared-kyc-profile-view *ngIf="profileViewData && passT0TabProfile" [nonCandidate]="profileViewData"></app-shared-kyc-profile-view>
-    </div>
+    <app-shared-kyc-profile-view *ngIf="profileViewData && passT0TabProfile && customerCode == '#LTTS'" [nonCandidate]="profileViewData"></app-shared-kyc-profile-view>
+    <app-adani-shared-kyc-profile-view *ngIf="profileViewData && passT0TabProfile && customerCode == '#ADANI'" [nonCandidate]="profileViewData"></app-adani-shared-kyc-profile-view>
+</div>

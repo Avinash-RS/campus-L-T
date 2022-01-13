@@ -12,10 +12,8 @@ import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { CanloadGuard } from './guards/canload/canload.guard';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
-import { AuthGuard } from './guards/auth.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
 import { ShortlistBoxComponent } from './shared/modal-box/shortlist-box/shortlist-box.component';
 import { TpocanloadGuard } from './guards/canload/tpocanload.guard';
@@ -28,6 +26,11 @@ import { ToastrModule } from 'ngx-toastr';
 import 'ag-grid-enterprise';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LarsenComponentsAuthGuard } from './guards/canload/candidate_components_authguards/larsen_components_auth.guard';
+import { AdaniGuard } from './guards/canload/candidate_components_authguards/adani.guard';
+import { CandidateCanloadGuard } from './guards/canload/candidate_canload.guard';
+import { AdaniComponentsAuthGuard } from './guards/canload/candidate_components_authguards/adani_components_auth.guards';
+import { LarsenGuard } from './guards/canload/candidate_components_authguards/larsen.guard';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
-     CanloadGuard, AdmincanloadGuard, IsLoggedinGuard, AuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
+    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard,AdaniGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
   ],
   bootstrap: [AppComponent]
 })

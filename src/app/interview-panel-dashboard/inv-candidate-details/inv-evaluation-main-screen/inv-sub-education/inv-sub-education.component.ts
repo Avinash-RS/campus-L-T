@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: 'app-inv-sub-education',
@@ -9,13 +10,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class InvSubEducationComponent implements OnInit {
 
-
+  customerCode = this.appConfig.getSelectedCustomerCode();
   queryParams: any;
   profileViewData: { candidate_user_id: any; candidateName: any; documents: boolean; documentsOnly: boolean; };
 
   constructor(
     private sharedService: SharedServiceService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private appConfig: AppConfigService,
   ) {
     // // Sub-Navigation menus. This will be retrieved in Admin master component
     const subWrapperMenus = [];
