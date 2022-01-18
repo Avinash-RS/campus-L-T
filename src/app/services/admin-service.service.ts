@@ -438,6 +438,11 @@ export class AdminServiceService {
     return this.http.post(`${this.BASE_URL}/api/evaluation_form_result`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
+  getAdaniEvaluationDetails(data) {
+    data.form = this.appConfig.getSelectedDriveFormDetails().id;
+    return this.http.post(`${this.BASE_URL}/evaluation/get-evaluation-feedback`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
 
   interviewPanelShortlist2() {
     return this.http.get(`${this.BASE_URL}/api/interview_panel`,
@@ -456,6 +461,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  postEvaluationAdaniCandidateData(data) {
+    return this.http.post(`${this.BASE_URL}/evaluation/save-evaluation-feedback`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   // Submitting Form
   invSubmittingCandidates(data) {
     return this.http.post(`${this.BASE_URL}/profile/update_evaluation_status`, data,
@@ -466,6 +476,11 @@ export class AdminServiceService {
   invSubmittedCandidatesList(data) {
     return this.http.post(`${this.BASE_URL}/profile/get_candidate_hrassigned_evaluation`, data,
       { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+  }
+
+  adaniInvSubmittedCandidatesList() {
+    return this.http.get(`${this.BASE_URL}/evaluation/get-assigned-candidates`,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
   // get assessment details

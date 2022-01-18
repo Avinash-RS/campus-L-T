@@ -8,10 +8,10 @@
             <div>
                 <span>{{candidatesEvaluated.length}}</span> Candidates Evaluated
             </div>
-            <div>
+            <div *ngIf="customerCode!=='#ADANI'">
                 <span>{{selectedCount.length}}</span> Shortlisted
             </div>
-            <div>
+            <div *ngIf="customerCode!=='#ADANI'">
                 <span>{{rejectedCount.length}}</span> Rejected
             </div>
             <div>
@@ -24,7 +24,7 @@
             </div>
             <div class="search-bar">
               <div class="headerbtn" *ngIf="rowData && rowData.length > 0" [ngClass]="buttonCheck ? '' : 'disabled'">
-                <button (click)="finalSubmit()" class="common-button-with-icon" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>
+                <button *ngIf="customerCode!=='#ADANI'" (click)="finalSubmit()" class="common-button-with-icon" [ngClass]="buttonCheck ? '' : 'disabled'" mat-raised-button>
                 <span class="icon-checked mr-2"></span> <span>Send to HR for Processing</span>
               </button>
             </div>

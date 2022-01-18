@@ -24,10 +24,11 @@ import { CaEvaluationFormComponent } from './evaluation-form/ca-evaluation-form/
 import { VideoAssessMainRouteComponent } from './pages/video-assess-main-route/video-assess-main-route.component';
 import { VideoAssessAssignedCandidatesComponent } from './pages/video-assess-assigned-candidates/video-assess-assigned-candidates.component';
 import { VideoAssessEvaluationScreenComponent } from './pages/video-assess-evaluation-screen/video-assess-evaluation-screen.component';
+import { AdaniEvaluationFormComponent } from './evaluation-form/adani-evaluation-form/adani-evaluation-form.component';
 
 
 @NgModule({
-  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, InvJoinInterviewComponent, CaEvaluationFormComponent, VideoAssessMainRouteComponent, VideoAssessAssignedCandidatesComponent, VideoAssessEvaluationScreenComponent],
+  declarations: [InterviewPanelMasterComponent, InvCandidateDetailsComponent, InvParticularAssessmentCandidatesComponent, InvEvaluationMainScreenComponent, InvSubAssessmentsComponent, InvSubEducationComponent, InvSubEmploymentComponent, InvSubEvaluateComponent, EvaluationFormComponent, SubSharedInvPanelHeaderComponent, BisEvaluationFormComponent, InvUnifiedreportsComponent, InvJoinInterviewComponent, AdaniEvaluationFormComponent, VideoAssessMainRouteComponent, VideoAssessAssignedCandidatesComponent, VideoAssessEvaluationScreenComponent, CaEvaluationFormComponent],
   imports: [
     CommonModule,
     SharedModule,
