@@ -277,24 +277,26 @@ dateConvertion(date) {
 
   patching(data) {
     return this.fb.group({
-      [this.form_dependent_name]: [data[this.form_dependent_name], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob]), [Validators.required]],
+      [this.form_dependent_name]: [data[this.form_dependent_name], [RemoveWhitespace.whitespace(),this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
       [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_dependent_status]: [data[this.form_dependent_status], this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
+      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], this.candidateService.checkKycOrJoiningForm()],
+      [this.form_dependent_status]: [data[this.form_dependent_status], this.candidateService.checkKycOrJoiningForm()],
       [this.form_isDependent]: [data[this.form_isDependent]]
     })
   }
 
   initDependentArray() {
     return this.fb.group({
-      [this.form_dependent_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_dob]: [null, [Validators.required]],
+      [this.form_dependent_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_dob]: [null],
       [this.form_dependent_occupation]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_relationship]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_dependent_status]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
+      [this.form_dependent_relationship]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_differently_abled]: [null, this.candidateService.checkKycOrJoiningForm() ],
+      // ? [Validators.required] : []
+      [this.form_dependent_status]: [null, this.candidateService.checkKycOrJoiningForm() ],
+      // ? [Validators.required] : []
       [this.form_isDependent]: [null]
     })
   }

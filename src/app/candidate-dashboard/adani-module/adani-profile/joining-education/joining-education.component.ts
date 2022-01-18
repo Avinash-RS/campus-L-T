@@ -278,7 +278,7 @@ constructor(
     if (this.selectedPost == 'get' || this.selectedPost == 'gct') {
       this.initalPatchWithValidations(3);
     }
-    if (this.selectedPost == 'pget' || this.selectedPost == 'pgct' || this.selectedPost == 'pgt') {
+    if (this.selectedPost == 'pget' || this.selectedPost == 'pgct' || this.selectedPost == 'pgt' || this.selectedPost == 'mt') {
       this.initalPatchWithValidations(4);
     }
     if (this.selectedPost == 'ca') {
@@ -322,7 +322,7 @@ constructor(
 
   getEducationLength(education) {
     let sp = this.selectedPost;
-    let label = sp == 'det' ? 'Diploma' : (sp == 'get' || sp == 'gct') ? 'UG' : (sp == 'pget' || sp == 'pgct' || sp == 'pgt') ? 'PG' : '';
+    let label = sp == 'det' ? 'Diploma' : (sp == 'get' || sp == 'gct') ? 'UG' : (sp == 'pget' || sp == 'pgct' || sp == 'pgt' || sp == 'mt') ? 'PG' : '';
     const findIndex = education.findIndex(data => data.level == label);
     this.educationLength = findIndex != -1 ? findIndex + 1 : 1;
   }
@@ -463,7 +463,7 @@ validSelectedPost() {
         value
       }
     }
-    if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt') {
+    if (this.selectedPost == 'pgct' || this.selectedPost == 'pget' || this.selectedPost == 'pgt' || this.selectedPost == 'mt' ) {
       this.getEducationArr.controls.forEach((element: any, j) => {
         if (element['controls'][this.form_qualification_type]['value'] == 'HSC' || element['controls'][this.form_qualification_type]['value'] == 'Diploma') {
           value.hscDiploma = true;
