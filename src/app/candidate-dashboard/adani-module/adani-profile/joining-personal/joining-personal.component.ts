@@ -59,8 +59,16 @@ export class AdaniJoiningPersonalComponent implements OnInit, AfterViewInit, OnD
       value: 'Unmarried'
     },
     {
-      name: 'Widow',
+      name: 'Widowed',
       value: 'Widow'
+    },
+    {
+      name: 'Separated',
+      value: 'Separated'
+    },
+    {
+      name: 'Others',
+      value: 'Others'
     }
   ];
   no_children_list = ['0', '1', '2', '3', '4', '5'];
@@ -618,7 +626,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null, [Validators.required]],
       [this.form_nationality]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
+      [this.form_mother_tongue]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],

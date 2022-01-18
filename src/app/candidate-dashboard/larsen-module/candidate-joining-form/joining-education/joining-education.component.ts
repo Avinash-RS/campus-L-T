@@ -208,7 +208,13 @@ constructor(
   ) {
     this.dateValidation();
     let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
-    this.mastersList = mastersList ? mastersList.education_master : [];
+    const valueToRemove = 'mt';
+    if(mastersList){
+      const filteredItems = mastersList.education_master.filter(item => item.value !== valueToRemove)
+      this.mastersList = mastersList ? filteredItems : [];
+    }else {
+      this.mastersList = mastersList ? mastersList.education_master : [];
+    }
   }
 
   ngOnInit() {
