@@ -1,0 +1,101 @@
+[
+    {
+        "id": 1,
+        "name": "Technical knowledge",
+        "expoints": [
+            {
+                "line": "-The candidate was able to display understanding of engineering/technical concepts"
+            },
+            {
+                "line": "-The candidate was able to connect various engineering concepts"
+            }
+        ],
+        "veryGood": "Displayed high understanding of desired traits",
+        "good": "Demonstrated consistent understanding of desired traits",
+        "average": "Demonstrated low understanding of desired traits",
+        "level": 1
+    },
+    {
+        "id": 2,
+        "name": "Application based understanding",
+        "expoints": [
+            {
+                "line": "-The candidate was able to corelate understanding of engineering/technical concepts to industrial applications."
+            },
+            {
+                "line": "-The candidate was able to think through and give examples of possible applications from an industrial context."
+            }
+        ],
+        "veryGood": "Displayed high understanding of desired traits",
+        "good": "Demonstrated consistent understanding of desired traits",
+        "average": "Demonstrated low understanding of desired traits",
+        "level": 2
+    },
+    {
+        "id": 3,
+        "name": "Communication & ability to express ideas",
+        "expoints": [
+            {
+                "line": "-The candidate was able to freely articulate his thoughts"
+            },
+            {
+                "line": "-The candidate was also able to make a positive impact while communicating with the panel members"
+            }
+        ],
+        "veryGood": "Displayed high understanding of desired traits",
+        "good": "Demonstrated consistent understanding of desired traits",
+        "average": "Demonstrated low understanding of desired traits",
+        "level": 3
+    },
+    {
+        "id": 4,
+        "name": "Analytical & logical skills for decision making",
+        "expoints": [
+            {
+                "line": "-The candidate was able to deconstruct information into smaller categories and consequently draw logical conclusions."
+            },
+            {
+                "line": "-The candidate was also able to evaluate possibilities in the given scenarios and come to a single viable solution."
+            }
+        ],
+        "veryGood": "Displayed high understanding of desired traits",
+        "good": "Demonstrated consistent understanding of desired traits",
+        "average": "Demonstrated low understanding of desired traits",
+        "level": 4
+    },
+    {
+        "id": 5,
+        "name": "Executive Presence",
+        "expoints": [
+            {
+                "line": "-The candidate displayed confidence during the interactions."
+            },
+            {
+                "line": "-The candidate had an approachable attitude and a sense of authenticity"
+            }
+        ],
+        "veryGood": "Displayed high understanding of desired traits",
+        "good": "Demonstrated consistent understanding of desired traits",
+        "average": "Demonstrated low understanding of desired traits",
+        "level": 5
+    },
+    {
+        "id": 6,
+        "name": "Potential for further growth",
+        "expoints": [
+            {
+                "line": "-The candidate displayed traits around either of the following"
+            },
+            {
+                "line": "    -Self-motivator with a drive to accomplish goal"
+            },
+            {
+                "line": "    -Process driven"
+            }
+        ],
+        "veryGood": "Displayed high understanding of desired traits",
+        "good": "Demonstrated consistent understanding of desired traits",
+        "average": "Demonstrated low understanding of desired traits",
+        "level": 6
+    }
+]

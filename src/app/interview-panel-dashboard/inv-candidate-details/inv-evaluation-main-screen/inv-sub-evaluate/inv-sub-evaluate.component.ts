@@ -40,6 +40,7 @@ export class InvSubEvaluateComponent implements OnInit, OnChanges {
   formDetails: any;
   formId: any;
   queryParams: any;
+  customerCode = this.appConfig.getSelectedCustomerCode();
   constructor(
     private formBuilder: FormBuilder,
     private appConfig: AppConfigService,
