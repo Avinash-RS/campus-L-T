@@ -460,7 +460,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
             return `<button class="btn-outline">${params["data"]["normal_evaluation_btn"]}</button>`;
           }
           if(params["data"] && params["data"]["normal_evaluation_btn"] == "Closed") {
-            return `<button class="btn-outline checked completed-bg" click=""><em class="icon-cancel_black"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
+            return `<button class="rejected btn-outline checked " click=""><em class="icon-close_black"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
           }
         },
       },

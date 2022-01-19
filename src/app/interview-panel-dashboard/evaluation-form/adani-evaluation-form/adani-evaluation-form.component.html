@@ -154,8 +154,8 @@
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
 
-          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 2 ? true : false"
-            (change)="setAssessmentLevel(assessment, 2)" [name]="assessment.id" value="2">
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 3 ? true : false"
+            (change)="setAssessmentLevel(assessment, 3)" [name]="assessment.id" value="2">
             <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;" matTooltip="{{assessment.good}}"></i>
           </mat-radio-button>
           
@@ -165,8 +165,8 @@
       <ng-container matColumnDef="veryGood">
         <th class="headerCell" mat-header-cell *matHeaderCellDef>Excellent </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
-          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 3 ? true : false"
-            (change)="setAssessmentLevel(assessment, 3)" [name]="assessment.id" value="1">
+          <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 5 ? true : false"
+            (change)="setAssessmentLevel(assessment, 5)" [name]="assessment.id" value="1">
             <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;" matTooltip="{{assessment.veryGood}}"></i>
           </mat-radio-button>
         </td>
