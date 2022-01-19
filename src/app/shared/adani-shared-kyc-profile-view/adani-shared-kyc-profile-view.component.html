@@ -110,12 +110,12 @@
                             </div>
                         </div>
 
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <!-- <div class="overall-input-wrapper mt-3 width-32">
                             <label>Caste Category<span></span></label>
                             <div class="inpu-preview size-16 bold-700 color-black">
                                 {{ personalDetailsMap[form_category] }}
                             </div>
-                        </div>
+                        </div> -->
 
                         <div *ngIf="candidateService.checkKycOrJoiningForm() && !currentForm" class="overall-input-wrapper mt-3 width-32">
                             <label>Mother Tongue<span></span></label>
@@ -301,26 +301,26 @@
                         </div>
 
                         <h6 class="h6-sub-heading">Health Related Details</h6>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <!-- <div class="overall-input-wrapper mt-3 width-32">
                             <label>Most Serious Recent Illness<span></span></label>
                             <div class="inpu-preview size-16 bold-700 color-black">
                                 {{ personalDetailsMap[form_serious_illness] }}
                             </div>
-                        </div>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        </div> -->
+                        <!-- <div class="overall-input-wrapper mt-3 width-32">
                             <label>No. of Days Ill<span></span></label>
                             <div class="inpu-preview size-16 bold-700 color-black">
                                 {{ personalDetailsMap[form_no_of_days] }}
                             </div>
-                        </div>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        </div> -->
+                        <!-- <div class="overall-input-wrapper mt-3 width-32">
                             <label>Nature of Illness<span></span></label>
                             <div class="inpu-preview size-16 bold-700 color-black">
                                 {{ personalDetailsMap[form_nature_of_illness] }}
                             </div>
-                        </div>
+                        </div> -->
                         <div class="overall-input-wrapper mt-3 width-32">
-                            <label>Physical Disability (if any)<span></span></label>
+                            <label>Special  Disability (if any)<span></span></label>
                             <div class="inpu-preview size-16 bold-700 color-black">
                                 {{ personalDetailsMap[form_physical_disability] }}
                             </div>
@@ -332,12 +332,12 @@
                             </div>
                         </div>
 
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <!-- <div class="overall-input-wrapper mt-3 width-32">
                             <label>Left Eye Power/Right Eye Power<span></span></label>
                             <div class="inpu-preview size-16 bold-700 color-black">
                                 {{ personalDetails && personalDetails[form_left_eyepower_glass] ? personalDetailsMap[form_left_eyepower_glass] : "NA" }} / {{ personalDetails && personalDetails[form_right_eye_power_glass] ? personalDetailsMap[form_right_eye_power_glass] : "NA" }}
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </ng-container>
             </div>
@@ -1446,7 +1446,7 @@
           </div>
   
           </ng-container>
-            <ng-container
+            <!-- <ng-container
               *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show"
             >
               <div class="row-wrappper mt-0 border-wrapper">
@@ -1651,7 +1651,7 @@
                   </div>
                 </div>
               </div>
-            </ng-container>
+            </ng-container> -->
           </ng-container>
         </div>
   
