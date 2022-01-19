@@ -53,6 +53,8 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   errorTemplateRefVar: any;
   errorReportDetailsArray: any = [];
   candidatesEvaluated: any = [];
+  customerCode = this.appConfig.getSelectedCustomerCode();
+
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -453,13 +455,17 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           }
           if (params["data"] && params["data"]["normal_evaluation_btn"] == "Submitted") {
             return `<button class="btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
-          } else {
+          } 
+          if(params["data"] && params["data"]["normal_evaluation_btn"] == "Yet to Evaluate") {
             return `<button class="btn-outline">${params["data"]["normal_evaluation_btn"]}</button>`;
+          }
+          if(params["data"] && params["data"]["normal_evaluation_btn"] == "Closed") {
+            return `<button class="rejected btn-outline checked " click=""><em class="icon-close_black"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
           }
         },
       },
       {
-        headerName: "Evaluation Status",
+        headerName: "Interview Status",
         headerClass: 'ag-grid-header-center',
         field: "normal_assessment.interview_status",
         filter: 'agSetColumnFilter',
@@ -761,13 +767,14 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     setTimeout(() => {
       this.gridApi.showLoadingOverlay();
     }, 0);
-   this.invSubmittedCandidatesListSubscription = this.adminService.invSubmittedCandidatesList(apiData).subscribe(
+    let apcall = this.customerCode == '#ADANI'?this.adminService.adaniInvSubmittedCandidatesList():this.adminService.invSubmittedCandidatesList(apiData)
+   this.invSubmittedCandidatesListSubscription = apcall.subscribe(
       (datas: any) => {
         const align = datas ? datas : [];
         this.userList = [];
         align.forEach((element) => {
           if (element) {
-            element["normal_evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : 'Yet to Evaluate';
+            element["normal_evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : element.normal_assessment.evaluation_status == '0'?'Closed':'Yet to Evaluate';
             element.video_assessment = element.video_assessment ? element.video_assessment : {};
             element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "YetToStart" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'InProgress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] ? element["video_assessment"]["test_status"] : '');
             element.video_assessment.evaluation_status = element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'on hold') ? 'On Hold' : '';
@@ -848,6 +855,9 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
+    if(status == 0 ){
+      return false
+    }
     this.appConfig.setLocalData('tabIndex', 4);
     this.appConfig.routeNavigationWithQueryParam(
       CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.INTERVIEW_PANEL_EVALUATION,

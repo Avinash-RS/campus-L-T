@@ -208,6 +208,14 @@ th {
       justify-content: center !important;
       cursor: pointer;
     }
+    &.rejected {
+      border: none;
+      background-color: #c02222;
+      color: #fff;
+      flex-direction: row !important;
+      justify-content: center !important;
+      cursor: pointer;
+    }
     em {
       margin-right: 7px;
     }
