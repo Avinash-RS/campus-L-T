@@ -60,7 +60,8 @@ export class AdaniEvaluationFormComponent implements OnInit {
   adaform_interview_date = 'interview_date';
   adaform_interview_place = 'interview_place';
   adaform_remarks = 'comments';
-  adaform_technical_subject = 'technical_subject';
+  adaform_technical_subject = 'technical_knowledge';
+  adaform_application_understanding = 'application_based_understanding';
   adaform_communication = 'communication';
   adaform_analytical = 'analytical';
   adaform_executive_presence = 'executive_presence';
@@ -118,6 +119,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
           [this.adaform_interview_place]: data && data[this.adaform_interview_place] ? data[this.adaform_interview_place] : null,
           [this.adaform_remarks]: data && data[this.adaform_remarks] ? data[this.adaform_remarks] : null,
           [this.adaform_technical_subject]: data && data[this.adaform_technical_subject] ? data[this.adaform_technical_subject] : null,
+          [this.adaform_application_understanding]: data && data[this.adaform_application_understanding] ? data[this.adaform_application_understanding] : null,
           [this.adaform_communication]: data && data[this.adaform_communication] ? data[this.adaform_communication] : null,
           [this.adaform_analytical]: data && data[this.adaform_analytical] ? data[this.adaform_analytical] : null,
           [this.adaform_executive_presence]: data && data[this.adaform_executive_presence] ? data[this.adaform_executive_presence] : null,
@@ -129,20 +131,21 @@ export class AdaniEvaluationFormComponent implements OnInit {
             element['isChecked'] = data[this.adaform_technical_subject] ? data[this.adaform_technical_subject] : null
           }
           if (element['id'] === 2) {
-            element['isChecked'] = data[this.adaform_communication] ? data[this.adaform_communication] : null
+            element['isChecked'] = data[this.adaform_application_understanding] ? data[this.adaform_application_understanding] : null
           }
           if (element['id'] === 3) {
-            element['isChecked'] = data[this.adaform_analytical] ? data[this.adaform_analytical] : null
+            element['isChecked'] = data[this.adaform_communication] ? data[this.adaform_communication] : null
           }
           if (element['id'] === 4) {
-            element['isChecked'] = data[this.adaform_executive_presence] ? data[this.adaform_executive_presence] : null
+            element['isChecked'] = data[this.adaform_analytical] ? data[this.adaform_analytical] : null
           }
           if (element['id'] === 5) {
-            element['isChecked'] = data[this.adaform_growth] ? data[this.adaform_growth] : null
+            element['isChecked'] = data[this.adaform_executive_presence] ? data[this.adaform_executive_presence] : null
           }
           if (element['id'] === 6) {
-            // element['isChecked'] = data[this.adaform_valuesIntegrity] ? data[this.adaform_valuesIntegrity] : null
+            element['isChecked'] = data[this.adaform_growth] ? data[this.adaform_growth] : null
           }
+         
         });
         this.statusChange({value: data[this.adaform_isattendedorNot]});
         this.status != '2' ?  '' : this.evaluationForm.disable();
@@ -176,6 +179,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
       [this.adaform_interview_place]: new FormControl('', [RemoveWhitespace.whitespace(), myGlobals.req, myGlobals.alphaNum30]),
       [this.adaform_remarks]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]),
       [this.adaform_technical_subject]: new FormControl(null, [Validators.required]),
+      [this.adaform_application_understanding]: new FormControl(null, [Validators.required]),
       [this.adaform_communication]: new FormControl(null, [Validators.required]),
       [this.adaform_analytical]: new FormControl(null, [Validators.required]),
       [this.adaform_executive_presence]: new FormControl(null, [Validators.required]),
@@ -199,6 +203,9 @@ export class AdaniEvaluationFormComponent implements OnInit {
 
         this.evaluationForm['controls'][this.adaform_technical_subject].clearValidators();
         this.evaluationForm['controls'][this.adaform_technical_subject].updateValueAndValidity();
+
+        this.evaluationForm['controls'][this.adaform_application_understanding].clearValidators();
+        this.evaluationForm['controls'][this.adaform_application_understanding].updateValueAndValidity();
 
         this.evaluationForm['controls'][this.adaform_communication].clearValidators();
         this.evaluationForm['controls'][this.adaform_communication].updateValueAndValidity();
@@ -226,6 +233,9 @@ export class AdaniEvaluationFormComponent implements OnInit {
 
         this.evaluationForm['controls'][this.adaform_technical_subject].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_technical_subject].updateValueAndValidity();
+
+        this.evaluationForm['controls'][this.adaform_application_understanding].setValidators([Validators.required]);
+        this.evaluationForm['controls'][this.adaform_application_understanding].updateValueAndValidity();
 
         this.evaluationForm['controls'][this.adaform_communication].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_communication].updateValueAndValidity();
@@ -266,6 +276,9 @@ export class AdaniEvaluationFormComponent implements OnInit {
   get technical_subject() {
     return this.evaluationForm.get(this.adaform_technical_subject);
   }
+  get app_understanding() {
+    return this.evaluationForm.get(this.adaform_application_understanding);
+  }
   get knowledgeExperience() {
     return this.evaluationForm.get(this.adaform_communication);
   }
@@ -289,29 +302,30 @@ export class AdaniEvaluationFormComponent implements OnInit {
       ...assessment,
       level: value
     };
-    // if (assessment['id'] == 6) {
-    //   this.evaluationForm.patchValue({
-    //     [this.adaform_valuesIntegrity]: value
-    //   });
-    // }
-    if (assessment['id'] == 5) {
+    
+    if (assessment['id'] == 6) {
       this.evaluationForm.patchValue({
         [this.adaform_growth]: value
       });
     }
-    if (assessment['id'] == 4) {
+    if (assessment['id'] == 5) {
       this.evaluationForm.patchValue({
         [this.adaform_executive_presence]: value
       });
     }
-    if (assessment['id'] == 3) {
+    if (assessment['id'] == 4) {
       this.evaluationForm.patchValue({
         [this.adaform_analytical]: value
       });
     }
-    if (assessment['id'] == 2) {
+    if (assessment['id'] == 3) {
       this.evaluationForm.patchValue({
         [this.adaform_communication]: value
+      });
+    }
+    if (assessment['id'] == 2) {
+      this.evaluationForm.patchValue({
+        [this.adaform_application_understanding]: value
       });
     }
     if (assessment['id'] == 1) {

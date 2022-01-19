@@ -189,13 +189,12 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="(technical_subject.touched && technical_subject.errors) || (knowledgeExperience.touched && knowledgeExperience.errors) ||
+    <div *ngIf="(technical_subject.touched && technical_subject.errors) || (app_understanding.touched && app_understanding.errors) ||(knowledgeExperience.touched && knowledgeExperience.errors) ||
   (communicationskillOrExpression.touched && communicationskillOrExpression.errors) || (taskEffectiveness.touched && taskEffectiveness.errors) ||
   (applicationOfKnowledge.touched && applicationOfKnowledge.errors)" class="mand validation1">
-      <span *ngIf="(technical_subject.errors?.required) || (knowledgeExperience.errors?.required) ||
+      <span *ngIf="(technical_subject.errors?.required) || (app_understanding.errors?.required) || (knowledgeExperience.errors?.required) ||
       (communicationskillOrExpression.errors?.required) || (taskEffectiveness.errors?.required) ||
-      (applicationOfKnowledge.errors?.required)
-    ">Make sure you have selected the radio buttons for all the above rows</span>
+      (applicationOfKnowledge.errors?.required)">Make sure you have selected the radio buttons for all the above rows</span>
     </div>
     <div class="space"></div>
     <!-- <div class="row bg"> -->
@@ -475,7 +474,7 @@
   </ng-container>
   <div class="space"></div>
   <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
-    <button class="common-button common-button-height-30" mat-raised-button>Save</button>
+    <button class="common-button common-button-height-30" mat-raised-button>Submit</button>
   </div>
 </form>
 <div class="space"></div>
