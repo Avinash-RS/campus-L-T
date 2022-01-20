@@ -855,7 +855,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   submit(cid, name, status, tag, uid, email, form, videoSchedule, shortlist, videoShow, evaluationShow) {
-    if(status == 0 ){
+    if(status === "0" ){
       return false
     }
     this.appConfig.setLocalData('tabIndex', 4);
