@@ -208,13 +208,10 @@ constructor(
   ) {
     this.dateValidation();
     let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
-    const valueToRemove = 'mt';
-    if(mastersList){
-      const filteredItems = mastersList.education_master.filter(item => item.value !== valueToRemove)
-      this.mastersList = mastersList ? filteredItems : [];
-    }else {
-      this.mastersList = mastersList ? mastersList.education_master : [];
-    }
+    // Filter education details baised on customer code 
+    this.mastersList = mastersList ? mastersList.education_master : [];
+    let positive_array = this.mastersList.filter(value => value.customer_code == '#LTTS');
+    this.mastersList = mastersList ? positive_array : [];
   }
 
   ngOnInit() {

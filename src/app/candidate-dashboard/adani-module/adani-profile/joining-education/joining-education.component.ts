@@ -209,6 +209,9 @@ constructor(
     this.dateValidation();
     let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
     this.mastersList = mastersList ? mastersList.education_master : [];
+    // Filter education details baised on customer code 
+    let positive_array = this.mastersList.filter(value => value.customer_code == '#ADANI');
+    this.mastersList = positive_array;
   }
 
   ngOnInit() {

@@ -7,7 +7,7 @@
             Note: Information provided here will be used in our records and during the background verification. Please make sure to complete the form and fill correctly.
         </ng-container>
         <ng-container *ngIf="!candidateService.checkKycOrJoiningForm()">
-            • Note: You are requested to fill out this form completely. You will not be able to edit the form once the same is shortlisted.
+            Note: You are requested to fill out this form completely. You will not be able to edit the form once the same is shortlisted.
         </ng-container>
     </div>
     <div class="grids-wrapper">
@@ -131,7 +131,7 @@
                         </div>
                     </div>
 
-                    <div class="overall-input-wrapper width-45">
+                    <div class="overall-input-wrapper width-45" *ngIf="candidateService.checkKycOrJoiningForm()">
                         <label>Place of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                         <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_place_of_birth">
                         <div class="form-error" *ngIf="place_of_birth?.invalid && place_of_birth?.touched">
@@ -139,7 +139,7 @@
                             <div *ngIf="place_of_birth?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed</div>
                         </div>
                     </div>
-                    <div class="overall-input-wrapper width-45">
+                    <div class="overall-input-wrapper width-45" *ngIf="candidateService.checkKycOrJoiningForm()">
                         <label>State of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                         <nz-select class="input select" [formControlName]="form_state_of_birth" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                             <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
@@ -169,7 +169,7 @@
                         </div>
                     </div>
 
-                    <div class="overall-input-wrapper width-45">
+                    <div class="overall-input-wrapper width-45" *ngIf="candidateService.checkKycOrJoiningForm()">
                         <label>Religion<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                         <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_religion">
                         <div class="form-error" *ngIf="religion?.invalid && religion?.touched">
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="overall-input-wrapper width-45">
+                    <div class="overall-input-wrapper width-45" *ngIf="candidateService.checkKycOrJoiningForm()">
                         <label>Blood Group<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                         <nz-select class="input select" [formControlName]="form_blood_group" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                             <nz-option *ngFor="let blood of bloodGroupDropdownList" [nzLabel]="blood.bloodgroup_name" [nzValue]="blood.bloodgroup_id"></nz-option>
@@ -288,7 +288,7 @@
                     </div>
                 </ng-container>
 
-                <h6 class="sub-heading">Languages Known(s)</h6>
+                <h6 class="sub-heading">Language(s) Known</h6>
                 <div class="overall-input-wrapper width-100">
                     <ng-container *ngIf="getLanguageArr && getLanguageArr.controls" [formArrayName]="form_language_array">
                         <label>Language Name<span></span></label>
@@ -583,7 +583,7 @@
 
                 <div class="error-section">
                     <div class="notes mb-1" style="color: red" *ngIf="profilePictureFormControl.touched && profilePictureFormControl.invalid && !profilePicture.file_path"> *Profile Picture is Required</div>
-                    <div class="notes" *ngIf="!showSizeError.image"> .jpeg and .png only supported</div>
+                    <div class="notes" *ngIf="!showSizeError.image">Supported formats are .jpeg and .png </div>
                     <div class="notes"> Size: Maximum 2MB</div>
                     <div class="error" *ngIf="showSizeError.image">.jpeg and .png only supported</div>
                     <div class="error" *ngIf="showSizeError.minsize">Minimum File Size: 10KB!</div>
