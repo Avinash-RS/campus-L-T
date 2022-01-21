@@ -12,6 +12,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { de } from 'date-fns/locale';
 
 export const MY_FORMATS = {
   parse: {
@@ -194,9 +195,15 @@ dateConvertion(date) {
     if(this.dependentForm.valid) {
       let formArray = this.dependentForm.getRawValue()[this.form_dependentArray];
       formArray.forEach(element => {
+        console.log(element)
         if (element[this.form_dependent_dob]) {
           element[this.form_dependent_dob] = element[this.form_dependent_dob];
         }
+
+        if(element.name_of_your_family == null){
+            element.name_of_your_family = " "
+        }
+
       });
       const DependentApiRequestDetails = {
         form_name: "joining",
