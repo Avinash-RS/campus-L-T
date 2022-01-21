@@ -158,14 +158,14 @@ export class AppConfigService {
   // To print logs
   consoleLog(optional?: any, printText?: any) {
     if (environment) {
-      console.log(optional ? optional : null, printText ? printText : null);
+      // console.log(optional ? optional : null, printText ? printText : null);
     }
   }
 
   // To print error logs
   errorLog(optional?: any, printText?: any) {
     if (environment) {
-      console.log(optional ? optional : null, printText ? printText : null);
+      // console.log(optional ? optional : null, printText ? printText : null);
     }
   }
 

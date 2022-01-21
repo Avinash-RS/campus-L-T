@@ -34,7 +34,7 @@
       <div class="col-4">
         <div class="row no-center-align">
           <div class="col-5">
-            <span class="head"> Date of interview<span class="asterick">*</span> </span>
+            <span class="head"> Date of evaluation<span class="asterick">*</span> </span>
           </div>
           <div class="col-7">
               <div class="date height-35">
@@ -49,7 +49,7 @@
               <span>&#160;</span>
             </div>
             <div style="margin-top: .25em;" class="col-7 validation">
-              <span *ngIf="interview_date.errors?.required">Interview Date is required</span>
+              <span *ngIf="interview_date.errors?.required">Evaluation Date is required</span>
             </div>
           </ng-container>
         </div>
@@ -86,7 +86,7 @@
       <div class="col-4">
         <div class="row no-center-align">
           <div style="white-space: nowrap;" class="col-5">
-            <span class="head">Place of interview<span class="asterick">*</span> </span>
+            <span class="head">Place of evaluation<span class="asterick">*</span> </span>
           </div>
           <div class="col-7">
             <input class="place" placeholder="Enter here" [formControlName]="adaform_interview_place" matInput>
@@ -96,7 +96,7 @@
               <span>&#160;</span>
             </div>
             <div style="margin-top: .25em;" class="col-7 validation">
-              <span *ngIf="interview_place.errors?.required">Interview place is required</span>
+              <span *ngIf="interview_place.errors?.required">Evaluation place is required</span>
               <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
             </div>
           </ng-container>
@@ -186,7 +186,7 @@
             </ul>
           </td>
           <td *ngFor="let item of receivedData?.feedbacks.technical_knowledge">
-            <div class="performance">
+            <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
             </div>
@@ -203,7 +203,7 @@
             </ul>
           </td>
           <td *ngFor="let item of receivedData?.feedbacks.application_based_understanding">
-            <div class="performance">
+            <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
             </div>
@@ -218,7 +218,7 @@
             </ul>
           </td>
           <td *ngFor="let item of receivedData?.feedbacks.communication">
-            <div class="performance">
+            <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
             </div>
@@ -235,7 +235,7 @@
             </ul>
           </td>
           <td *ngFor="let item of receivedData?.feedbacks.analytical">
-            <div class="performance">
+            <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
             </div>
@@ -250,7 +250,7 @@
             </ul>
           </td>
           <td *ngFor="let item of receivedData?.feedbacks.executive_presence">
-            <div class="performance">
+            <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
             </div>
@@ -266,7 +266,7 @@
             </ul>
           </td>
           <td *ngFor="let item of receivedData?.feedbacks.potential_for_future_growth">
-            <div class="performance">
+            <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
             </div>
@@ -312,7 +312,7 @@
           <span class="text">Overall Remarks<span class="asterick">*</span>
           </span>
         </div>
-        <div class="col-8">
+        <div class="col-8" style="padding-right: 0px;">
           <textarea matInput placeholder="Enter here" [formControlName]="adaform_hr_comments"></textarea>
           <div class="charCount">
             {{evaluationForm.value.hr_comments.length}}/255 characters

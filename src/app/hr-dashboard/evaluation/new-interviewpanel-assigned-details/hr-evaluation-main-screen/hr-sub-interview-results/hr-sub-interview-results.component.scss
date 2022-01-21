@@ -241,14 +241,14 @@ input.ng-touched.ng-invalid {
 
 // Table Starts
 .evaluationTable {
-  width: 96%;
+  width: 96% !important;
   margin: 0 auto;
   border-radius: 5px;
   border: 1px solid rgba(170, 170, 170, 0.4);
   thead {
     tr {
       th {
-        padding: 5px 24px;
+        padding: 5px 24px !important;
         background-color: #EDEDED;
         .attribute {
           font-size: 16px;
@@ -274,7 +274,7 @@ input.ng-touched.ng-invalid {
   tbody {
     tr {
       td {
-        padding: 16px 24px;
+        padding: 16px 24px !important;
         border-bottom: 1px solid rgba(170, 170, 170, 0.4);
         .performance {
           display: flex;

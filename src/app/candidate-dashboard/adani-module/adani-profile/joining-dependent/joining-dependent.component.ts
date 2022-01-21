@@ -195,7 +195,7 @@ dateConvertion(date) {
     if(this.dependentForm.valid) {
       let formArray = this.dependentForm.getRawValue()[this.form_dependentArray];
       formArray.forEach(element => {
-        console.log(element)
+        // console.log(element)
         if (element[this.form_dependent_dob]) {
           element[this.form_dependent_dob] = element[this.form_dependent_dob];
         }

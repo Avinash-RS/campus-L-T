@@ -594,7 +594,7 @@ mat-paginator {
 /* Table related css */
 td,
 th {
-    padding: 0px 8px;
+    padding: 0px 8px !important;
 }
 
 th {
@@ -617,7 +617,7 @@ td {
 
 th {
   color: $black;
-  background: $table-header;
+  background: $table-header !important;
   font-size: 13px;
   font-weight: 400;
   outline: none;
