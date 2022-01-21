@@ -177,7 +177,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
       [this.adaform_NotattendedReason]: new FormControl('', [Validators.required]),
       [this.adaform_interview_date]: new FormControl('', [Validators.required]),
       [this.adaform_interview_place]: new FormControl('', [RemoveWhitespace.whitespace(), myGlobals.req, myGlobals.alphaNum30]),
-      [this.adaform_remarks]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]),
+      [this.adaform_remarks]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), myGlobals.alphaNum]),
       [this.adaform_technical_subject]: new FormControl(null, [Validators.required]),
       [this.adaform_application_understanding]: new FormControl(null, [Validators.required]),
       [this.adaform_communication]: new FormControl(null, [Validators.required]),
@@ -195,7 +195,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_NotattendedReason].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_NotattendedReason].updateValueAndValidity();
 
-        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
+        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
         this.evaluationForm['controls'][this.adaform_remarks].updateValueAndValidity();
 
         this.evaluationForm['controls'][this.adaform_interview_date].clearValidators();

@@ -70,8 +70,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .icon-checkbox:before {
+    content: "\e9a4";
+  }
+  .icon-person_remove:before {
+    content: "\e98b";
+  }
+  .icon-thumsreview:before {
+    content: "\e9a3";
+  }
   .icon-filter:before {
     content: "\e9a2";
+    color: #757575;
   }
   .icon-review:before {
     content: "\e9a1";
@@ -564,7 +574,4 @@
   }
   .icon-Youtube:before {
     content: "\e96b";
-  }
-  .icon-person_remove:before {
-    content: "\e98b";
   }

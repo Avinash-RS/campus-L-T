@@ -1,4 +1,4 @@
-@import "../../../themes/themes.scss";
+@import "../../../../../themes/themes.scss";
 .main-evaluation {
   height: 100%;
   background: $wrapper-light-gray;
@@ -36,7 +36,7 @@ th.mat-header-cell {
   font-weight: 600;
   margin-bottom: 0.5em;
   .col-12 {
-    padding:0 ;
+    padding: 0;
   }
 }
 .bg-2 {
@@ -174,7 +174,6 @@ textarea {
   textarea:hover {
     border: solid 1px $primary-input-border-color;
   }
-
 }
 
 .col-7 {
@@ -195,7 +194,8 @@ textarea {
 textarea {
   border: 1px solid #d9d9d9;
 }
-textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
+textarea.ng-touched.ng-invalid,
+input.ng-touched.ng-invalid {
   border: solid $red 1px;
 }
 .row {
@@ -210,7 +210,9 @@ textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
   text-align: center;
 }
 
-:host ::ng-deep .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+:host ::ng-deep .mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled
+  .mat-form-field-infix::after {
   cursor: not-allowed !important;
 }
 :host ::ng-deep .mat-radio-disabled {
@@ -230,10 +232,36 @@ textarea.ng-touched.ng-invalid, input.ng-touched.ng-invalid {
     width: 20px;
   }
 }
-.subPoint{
-font-size: 12px;
-margin-left: 10px;
-list-style: none;
+.subPoint {
+  font-size: 12px;
+  margin-left: 10px;
+  list-style: none;
+}
+
+table {
+td
+ {  
+  font-weight: 500; 
+  .Average {
+    color: red;
+    font-size: 20px;
+  }
+  .Very {
+    color: orange;
+    font-size: 20px;
+  }
+  .Excellent {
+    color: green;
+    font-size: 20px;
+  } 
+  }
+  
+  li{
+    font-size: 12px;
+  }
+  ul{
+    margin-left:10px;
+  }
 }
 .charCount{
   display: flex;
