@@ -226,7 +226,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_NotattendedReason].clearValidators();
         this.evaluationForm['controls'][this.adaform_NotattendedReason].updateValueAndValidity();
 
-        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]);
+        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), myGlobals.alphaNum]);
         this.evaluationForm['controls'][this.adaform_remarks].updateValueAndValidity();
 
         this.evaluationForm['controls'][this.adaform_interview_date].setValidators([Validators.required]);
