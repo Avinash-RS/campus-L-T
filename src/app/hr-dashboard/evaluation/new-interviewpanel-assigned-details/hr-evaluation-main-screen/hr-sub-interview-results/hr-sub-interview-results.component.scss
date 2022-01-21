@@ -78,12 +78,13 @@ th.mat-header-cell {
   margin-left: 5px;
 }
 
-table {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  background: $wrapper-light-gray;
-}
+// table {
+//   width: 100%;
+//   overflow-x: auto;
+//   overflow-y: hidden;
+//   background: $wrapper-light-gray;
+// }
+
 .radioButtonCell {
   width: 75px;
   text-align: center;
@@ -238,34 +239,105 @@ input.ng-touched.ng-invalid {
   list-style: none;
 }
 
-table {
-td
- {  
-  font-weight: 500; 
-  .Average {
-    color: red;
-    font-size: 20px;
+// Table Starts
+.evaluationTable {
+  width: 96%;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 1px solid rgba(170, 170, 170, 0.4);
+  thead {
+    tr {
+      th {
+        padding: 5px 24px;
+        background-color: #EDEDED;
+        .attribute {
+          font-size: 16px;
+          font-weight: 500;
+          color: #232323;
+          line-height: normal;
+        }
+        div {
+          font-size: 15px;
+          font-weight: 400;
+          color: #222222;
+          span {
+            width: 120px;
+            display: inline-block;
+            color: #666666;
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
   }
-  .Very {
-    color: orange;
-    font-size: 20px;
-  }
-  .Excellent {
-    color: green;
-    font-size: 20px;
-  } 
-  }
-  
-  li{
-    font-size: 12px;
-  }
-  ul{
-    margin-left:10px;
+  tbody {
+    tr {
+      td {
+        padding: 16px 24px;
+        border-bottom: 1px solid rgba(170, 170, 170, 0.4);
+        .performance {
+          display: flex;
+          align-items: center;
+          em {
+            font-size: 25px;
+            &.Average {
+              color: #C02222;
+            }
+            &.Good {
+              color: #FFA700;
+            }
+            &.Excellent {
+              color: #5EBA69;
+            }
+          }
+          span {
+            margin-left: 5px;
+            color: #333333;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: normal;
+          }
+        }
+        h4 {
+          font-size: 16px;
+          font-weight: 500;
+          color: #222222;
+          line-height: normal;
+        }
+        ul {
+          list-style-type: none;
+          margin: 10px 0 0 15px;
+          li {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666666;
+            line-height: normal;
+            margin-bottom: 10px;
+            position: relative;
+            &::before {
+              content: '';
+              position: absolute;
+              left: -12px;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 6px;
+              height: 1px;
+              background-color: #666666;
+            }
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
   }
 }
-.charCount{
+
+.charCount {
   display: flex;
   font-size: 12px;
-  color:grey;
+  color: grey;
   justify-content: flex-end;
 }

@@ -158,75 +158,119 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table> -->
-    <table >
+    <table class="evaluationTable">
       <thead>
         <tr>
-          <th><b>Attributes</b></th>
+          <th>
+            <span class="attribute">Attributes</span>
+          </th>
           <th *ngFor="let item of receivedData.feedbacks.interviewers">
-            <b>{{item.interviewer_name}}</b>
-          
-          <div>
-            Date of Interview: {{item.interview_date}}
-          </div>
-          <div>
-            Place of interview: {{item.interview_place}}
-          </div>
+            <div> 
+              <span>Interviewer Name</span>: {{item.interviewer_name}}</div>
+            <div>
+              <span>Date of Interview</span>: {{item.interview_date}}
+            </div>
+            <div>
+              <span>Place of interview</span>: {{item.interview_place}}
+            </div>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>Technical knowledge</strong>
+          <td>
+            <h4>Technical knowledge</h4>
             <ul>
               <li>The candidate was able to display understanding of engineering/technical concepts</li>
               <li>The candidate was able to connect various engineering concepts</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.technical_knowledge"><i class="icon-checkbox" [ngClass]="itemchek(item)"></i>{{itemchek(item)}}</td>
+          <td *ngFor="let item of receivedData.feedbacks.technical_knowledge">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
         </tr>
         <tr>
-          <td><strong>Application based understanding</strong>
+          <td>
+            <h4>Application based understanding</h4>
             <ul>
-              <li>The candidate was able to corelate understanding of engineering/technical concepts to industrial applications.</li>
-              <li>The candidate was able to think through and give examples of possible applications from an industrial context.</li>
+              <li>The candidate was able to corelate understanding of engineering/technical concepts to industrial
+                applications.</li>
+              <li>The candidate was able to think through and give examples of possible applications from an industrial
+                context.</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.application_based_understanding"><i class="icon-checkbox" [ngClass]="itemchek(item)"></i>{{itemchek(item)}}</td>
+          <td *ngFor="let item of receivedData.feedbacks.application_based_understanding">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
         </tr>
         <tr>
-          <td><strong>Communication & ability to express ideas</strong>
+          <td>
+            <h4>Communication & ability to express ideas</h4>
             <ul>
               <li>The candidate was able to freely articulate his thoughts</li>
               <li>The candidate was also able to make a positive impact while communicating with the panel members</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.communication"><i class="icon-checkbox" [ngClass]="itemchek(item)"></i>{{itemchek(item)}}</td>
+          <td *ngFor="let item of receivedData.feedbacks.communication">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
         </tr>
         <tr>
-          <td><strong>Analytical & logical skills for decision making</strong>
+          <td>
+            <h4>Analytical & logical skills for decision making</h4>
             <ul>
-              <li>The candidate was able to deconstruct information into smaller categories and consequently draw logical conclusions.</li>
-              <li>The candidate was also able to evaluate possibilities in the given scenarios and come to a single viable solution.</li>
+              <li>The candidate was able to deconstruct information into smaller categories and consequently draw logical
+                conclusions.</li>
+              <li>The candidate was also able to evaluate possibilities in the given scenarios and come to a single viable
+                solution.</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.analytical"><i class="icon-checkbox" [ngClass]="itemchek(item)"></i>{{itemchek(item)}}</td>
+          <td *ngFor="let item of receivedData.feedbacks.analytical">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
         </tr>
         <tr>
-          <td><strong>Executive Presence</strong>
+          <td>
+            <h4>Executive Presence</h4>
             <ul>
               <li>The candidate displayed confidence during the interactions.</li>
               <li>The candidate had an approachable attitude and a sense of authenticity</li>
-            </ul></td>
-          <td *ngFor="let item of receivedData.feedbacks.executive_presence"><i class="icon-checkbox" [ngClass]="itemchek(item)"></i>{{itemchek(item)}}</td>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData.feedbacks.executive_presence">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
         </tr>
         <tr>
-          <td><strong>Potential for further growth</strong>
+          <td>
+            <h4>Potential for further growth</h4>
             <ul>
               <li>The candidate displayed traits around either of the following</li>
               <li>Self-motivator with a drive to accomplish goal</li>
               <li>Process driven</li>
-            </ul></td>
-          <td *ngFor="let item of receivedData.feedbacks.potential_for_future_growth"><i class="icon-checkbox" [ngClass]="itemchek(item)"></i>{{itemchek(item)}}</td>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData.feedbacks.potential_for_future_growth">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>Comments</strong> </td>
@@ -236,15 +280,10 @@
           <td><strong>Total Score</strong></td>
           <td *ngFor="let item of receivedData.feedbacks.interview_score">{{item}}</td>
         </tr>
-        
-
       </tbody>
-      
     </table>
   
     <div class="space"></div>
-  
-  
     <div style="margin-left: 10px;">
       <div class="row pad-bootom">
         <div class="col-4">
