@@ -28,6 +28,7 @@ export class HrEvaluationMainScreenComponent implements OnInit, OnDestroy {
   form: any;
   queryParams: any;
   TabIndex = 0;
+  customerCode = this.appConfig.getSelectedCustomerCode();
 
   refreshSubscription: Subscription;
 

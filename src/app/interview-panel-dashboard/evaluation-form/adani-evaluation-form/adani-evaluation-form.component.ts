@@ -55,7 +55,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
   expValidation = "^[a-zA-Z0-9 ]*";
   selectedPost: any;
 
-  adaform_isattendedorNot = 'attend_status';
+  caform_isattendedorNot = 'attend_status';
   adaform_NotattendedReason = 'not_attend_reason';
   adaform_interview_date = 'interview_date';
   adaform_interview_place = 'interview_place';
@@ -113,7 +113,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
       const data = success ? success : null;
       if (data) {
         this.evaluationForm.patchValue({
-          [this.adaform_isattendedorNot]: data && data[this.adaform_isattendedorNot] ? data[this.adaform_isattendedorNot] : null,
+          [this.caform_isattendedorNot]: data ? data[this.caform_isattendedorNot].toString() : null,
           [this.adaform_NotattendedReason]: data && data[this.adaform_NotattendedReason] ? data[this.adaform_NotattendedReason] : null,
           [this.adaform_interview_date]: data && data[this.adaform_interview_date] ? data[this.adaform_interview_date] : null,
           [this.adaform_interview_place]: data && data[this.adaform_interview_place] ? data[this.adaform_interview_place] : null,
@@ -126,6 +126,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
           [this.adaform_growth]: data && data[this.adaform_growth] ? data[this.adaform_growth] : null,
           // [this.adaform_valuesIntegrity]: data && data[this.adaform_valuesIntegrity] ? data[this.adaform_valuesIntegrity] : null
         });
+        console.log(data[this.caform_isattendedorNot] );
         this.assessments.forEach(element => {
           if (element['id'] === 1) {
             element['isChecked'] = data[this.adaform_technical_subject] ? data[this.adaform_technical_subject] : null
@@ -147,7 +148,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
           }
          
         });
-        this.statusChange({value: data[this.adaform_isattendedorNot]});
+        this.statusChange({value: data[this.caform_isattendedorNot]});
         this.status != '2' ?  '' : this.evaluationForm.disable();
       } else {
         this.assessments.forEach((element: any) => {
@@ -173,11 +174,11 @@ export class AdaniEvaluationFormComponent implements OnInit {
   nginitFunc() {
     this.dataSource = new MatTableDataSource<PeriodicElement>(this.assessments);
     this.evaluationForm = this.formBuilder.group({
-      [this.adaform_isattendedorNot]: new FormControl('', [Validators.required]),
+      [this.caform_isattendedorNot]: new FormControl('', [Validators.required]),
       [this.adaform_NotattendedReason]: new FormControl('', [Validators.required]),
       [this.adaform_interview_date]: new FormControl('', [Validators.required]),
       [this.adaform_interview_place]: new FormControl('', [RemoveWhitespace.whitespace(), myGlobals.req, myGlobals.alphaNum30]),
-      [this.adaform_remarks]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(100), myGlobals.alphaNum]),
+      [this.adaform_remarks]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), myGlobals.alphaNum]),
       [this.adaform_technical_subject]: new FormControl(null, [Validators.required]),
       [this.adaform_application_understanding]: new FormControl(null, [Validators.required]),
       [this.adaform_communication]: new FormControl(null, [Validators.required]),
@@ -195,7 +196,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
         this.evaluationForm['controls'][this.adaform_NotattendedReason].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.adaform_NotattendedReason].updateValueAndValidity();
 
-        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(100), myGlobals.alphaNum]);
+        this.evaluationForm['controls'][this.adaform_remarks].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(250), myGlobals.alphaNum]);
         this.evaluationForm['controls'][this.adaform_remarks].updateValueAndValidity();
 
         this.evaluationForm['controls'][this.adaform_interview_date].clearValidators();
@@ -257,7 +258,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
   }
 
   get isattendedorNot() {
-    return this.evaluationForm.get(this.adaform_isattendedorNot);
+    return this.evaluationForm.get(this.caform_isattendedorNot);
   }
   get NotattendedReason() {
     return this.evaluationForm.get(this.adaform_NotattendedReason);

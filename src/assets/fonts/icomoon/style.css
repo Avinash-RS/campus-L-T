@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?4p7uey');
-  src:  url('fonts/icomoon.eot?4p7uey#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?4p7uey') format('truetype'),
-    url('fonts/icomoon.woff?4p7uey') format('woff'),
-    url('fonts/icomoon.svg?4p7uey#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?g9xo1d');
+  src:  url('fonts/icomoon.eot?g9xo1d#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?g9xo1d') format('truetype'),
+    url('fonts/icomoon.woff?g9xo1d') format('woff'),
+    url('fonts/icomoon.svg?g9xo1d#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -24,8 +24,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-thumsreview:before {
-  content: "\e9a3";
+
+.icon-checkbox:before {
+  content: "\e9a4";
+}
+.icon-person_remove:before {
+  content: "\e98b";
 }
 .icon-thumsreview:before {
   content: "\e9a3";
@@ -525,7 +529,4 @@
 }
 .icon-Youtube:before {
   content: "\e96b";
-}
-.icon-person_remove:before {
-  content: "\e98b";
 }

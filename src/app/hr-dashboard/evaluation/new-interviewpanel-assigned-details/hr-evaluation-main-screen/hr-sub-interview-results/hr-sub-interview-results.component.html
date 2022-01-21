@@ -1,0 +1,338 @@
+<form class="main-evaluation" [formGroup]="evaluationForm" (ngSubmit)="submitHrInterviewForm()">
+  <div class="contant">
+
+    <div class="row bg">
+      <div class="col-12">
+        <div>Adani Interview Evaluation Form
+        </div>
+      </div>
+    </div><br>
+
+    <div class="row no-center-align">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-5">
+            <span class="head"> Candidate name </span>
+          </div>
+          <div style="white-space: nowrap;" class="col-7 indent">
+            <span class="ans">: {{getCandidateData?.name}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-4">
+            <span class="head">Discipline </span>
+          </div>
+          <div class="col-8 indent">
+            <span class="ans">: {{getCandidateData?.field_discipline}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-5">
+            <span class="head"> Date of interview<span class="asterick">*</span> </span>
+          </div>
+          <div class="col-7">
+              <div class="date height-35">
+              <input class="height-35" style="padding-left: 12px;" placeholder="Enter here" [formControlName]="adaform_interview_date" matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+
+          </div>
+          <ng-container *ngIf="interview_date.invalid && interview_date.touched">
+            <div class="col-5">
+              <span>&#160;</span>
+            </div>
+            <div style="margin-top: .25em;" class="col-7 validation">
+              <span *ngIf="interview_date.errors?.required">Interview Date is required</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+
+    <div class="row no-center-align">
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-5">
+            <span class="head">Date of birth </span>
+          </div>
+          <div style="white-space: nowrap;" class="col-7 indent">
+            <span class="ans">: {{getCandidateData?.field_dob}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div class="col-4">
+            <span class="head">Institute name </span>
+          </div>
+          <div class="col-8 indent">
+
+            <span class="ans">: {{getCandidateData && getCandidateData['education'] && getCandidateData['education'][0]
+              && getCandidateData['education'][0]['field_institute'] ?
+              getCandidateData['education'][0]['field_institute'] : ''}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="row no-center-align">
+          <div style="white-space: nowrap;" class="col-5">
+            <span class="head">Place of interview<span class="asterick">*</span> </span>
+          </div>
+          <div class="col-7">
+            <input class="place" placeholder="Enter here" [formControlName]="adaform_interview_place" matInput>
+          </div>
+          <ng-container *ngIf="interview_place.invalid && interview_place.touched">
+            <div class="col-5">
+              <span>&#160;</span>
+            </div>
+            <div style="margin-top: .25em;" class="col-7 validation">
+              <span *ngIf="interview_place.errors?.required">Interview place is required</span>
+              <span *ngIf="interview_place.errors?.pattern">Alpha numerics with maximum length of 30 only allowed</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="space"></div>
+
+  <ng-container >
+    <br>
+    <!-- <table id="assessmentsTable" mat-table [dataSource]="dataSource"> -->
+      <!-- <ng-container matColumnDef="name" >
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
+        <td style="width: 390px;" mat-cell  *matCellDef="let assessment">{{assessment.name}}<span
+            class="asterick">*</span>
+            <br>
+            <ul>
+              <li *ngFor="let item of assessment.expoints" class="subPoint">{{item.line}}</li>
+            </ul>
+          </td>
+      </ng-container> -->
+<!-- 
+      <ng-container *ngFor="let iv of dynCol" matColumnDef="{{iv.colName}}">
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> Average
+        </th>
+        <td class="radioButtonCell" mat-cell *matCellDef="">
+          {{assessment.average}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table> -->
+
+
+
+    <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="name" >
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Attributes</th>
+        <td style="width: 390px;" mat-cell  *matCellDef="let assessment">{{assessment.name}}<span
+            class="asterick">*</span>
+            <br>
+            <ul>
+              <li *ngFor="let item of assessment.expoints" class="subPoint">{{item.line}}</li>
+            </ul>
+          </td>
+      </ng-container>
+
+      <ng-container
+        *ngFor="let columnName of dynCol"
+        [matColumnDef]="columnName"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ columnName }}</th>
+        <td mat-cell *matCellDef="let row">{{ row[columnName] }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table> -->
+    <table class="evaluationTable">
+      <thead>
+        <tr>
+          <th>
+            <span class="attribute">Attributes</span>
+          </th>
+          <th *ngFor="let item of receivedData?.feedbacks.interviewers">
+            <div> 
+              <span>Interviewer</span>: {{item.interviewer_name}}</div>
+            <div>
+              <span>Date</span>: {{item.interview_date|date:'dd/MM/yyyy'}}
+            </div>
+            <div>
+              <span>Place</span>: {{item.interview_place}}
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <h4>Technical knowledge</h4>
+            <ul>
+              <li>The candidate was able to display understanding of engineering/technical concepts</li>
+              <li>The candidate was able to connect various engineering concepts</li>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData?.feedbacks.technical_knowledge">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>Application based understanding</h4>
+            <ul>
+              <li>The candidate was able to corelate understanding of engineering/technical concepts to industrial
+                applications.</li>
+              <li>The candidate was able to think through and give examples of possible applications from an industrial
+                context.</li>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData?.feedbacks.application_based_understanding">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>Communication & ability to express ideas</h4>
+            <ul>
+              <li>The candidate was able to freely articulate his thoughts</li>
+              <li>The candidate was also able to make a positive impact while communicating with the panel members</li>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData?.feedbacks.communication">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>Analytical & logical skills for decision making</h4>
+            <ul>
+              <li>The candidate was able to deconstruct information into smaller categories and consequently draw logical
+                conclusions.</li>
+              <li>The candidate was also able to evaluate possibilities in the given scenarios and come to a single viable
+                solution.</li>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData?.feedbacks.analytical">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>Executive Presence</h4>
+            <ul>
+              <li>The candidate displayed confidence during the interactions.</li>
+              <li>The candidate had an approachable attitude and a sense of authenticity</li>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData?.feedbacks.executive_presence">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4>Potential for further growth</h4>
+            <ul>
+              <li>The candidate displayed traits around either of the following</li>
+              <li>Self-motivator with a drive to accomplish goal</li>
+              <li>Process driven</li>
+            </ul>
+          </td>
+          <td *ngFor="let item of receivedData?.feedbacks.potential_for_future_growth">
+            <div class="performance">
+              <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
+              <span>{{itemchek(item)}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Comments</strong> </td>
+          <td *ngFor="let item of receivedData?.feedbacks.comments">{{item}}</td>
+        </tr>
+        <tr>
+          <td><strong>Total Score</strong></td>
+          <td *ngFor="let item of receivedData?.feedbacks.interview_score">{{item}}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="space"></div>
+    <div class="assesmentremarks">
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Overall Suitablity for the position<span class="asterick">*</span>
+          </span>
+        </div>
+        <div class="col-8">
+          <mat-radio-group class="d-flex w-50 justify-content-between"
+          [formControlName]="adaform_hr_selection_decision">
+          <mat-radio-button value="Selected">
+           Selected
+          </mat-radio-button>
+          <mat-radio-button value="Hold">
+           Can be considered
+          </mat-radio-button>
+          <mat-radio-button value="Rejected">
+           Not Selected
+          </mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+      </div>
+      <div class="space"></div>
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Overall Remarks<span class="asterick">*</span>
+          </span>
+        </div>
+        <div class="col-8">
+          <textarea matInput placeholder="Enter here" [formControlName]="adaform_hr_comments"></textarea>
+          <div class="charCount">
+            {{evaluationForm.value.hr_comments.length}}/255 characters
+          </div>
+          <div *ngIf="remarks.touched && remarks.errors" class="mand validation1">
+            <span *ngIf="remarks.errors?.required">Overall remarks is required</span>
+            <span *ngIf="remarks.errors?.maxlength">Maxlength of 255 characters only allowed</span>
+            <span *ngIf="remarks.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+
+  <div class="space"></div>
+  <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
+    <button class="common-button common-button-height-30" mat-raised-button>Submit</button>
+  </div>
+</form>
+<div class="space"></div>

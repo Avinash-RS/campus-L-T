@@ -604,6 +604,15 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
   }
 
+  getCandidateInterviewResult(data) {
+    return this.http.post(`${this.BASE_URL}/evaluation/get-all-evaluation-feedbacks`, data,
+      { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+  }
+  submitHRResultOnCandidates(data) {
+    return this.http.post(`${this.BASE_URL}/evaluation/processing-feedbacks`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   assignToHR(data) {
     return this.http.post(`${this.BASE_URL}/profile/evaluation_hr_assign`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
