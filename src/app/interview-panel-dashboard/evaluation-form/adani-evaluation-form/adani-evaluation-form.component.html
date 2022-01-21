@@ -207,14 +207,14 @@
 
 <div class="space"></div>
     <br>
-    <div style="margin-left: 10px;">
+    <div class="assesmentremarks">
 
       <div class="row pad-bootom">
         <div class="col-4">
           <span class="text">Overall Remarks<span class="asterick">*</span>
           </span>
         </div>
-        <div class="col-8">
+        <div class="col-8" style="padding-right: 0px;">
           <!-- <mat-form-field class="example-full-width"> -->
           <textarea matInput placeholder="Enter here" [formControlName]="adaform_remarks"></textarea>
           <div class="charCount">
@@ -242,7 +242,7 @@
       <div class="d-flex w-50">
         <mat-radio-group class="d-flex w-25 justify-content-between" aria-label="Select an option"
           [formControlName]="adaform_NotattendedReason">
-          <mat-radio-button *ngFor="let Notattended of Notattended" [value]="Notattended.value">
+          <mat-radio-button *ngFor="let Notattended of Notattended" [value]="Notattended.label">
             {{Notattended.label}}
           </mat-radio-button>
         </mat-radio-group>
