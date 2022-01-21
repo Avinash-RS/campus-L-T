@@ -118,7 +118,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
             [this.adaform_hr_comments]: data && data[this.adaform_hr_comments] ? data[this.adaform_hr_comments] : null,
             [this.adaform_hr_selection_decision]: data && data[this.adaform_hr_selection_decision] ? data[this.adaform_hr_selection_decision] : null,
           });
-          if(this.receivedData.hr_selection_decision!=""){
+          if(this.receivedData.hr_selection_decision!="" ){
             this.status='2';
           }
           this.status != '2' ? '' : this.evaluationForm.disable();
