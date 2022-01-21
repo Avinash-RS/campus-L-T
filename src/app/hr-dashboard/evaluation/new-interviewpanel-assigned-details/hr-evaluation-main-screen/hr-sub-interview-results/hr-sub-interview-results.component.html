@@ -164,7 +164,7 @@
           <th>
             <span class="attribute">Attributes</span>
           </th>
-          <th *ngFor="let item of receivedData.feedbacks.interviewers">
+          <th *ngFor="let item of receivedData?.feedbacks.interviewers">
             <div> 
               <span>Interviewer</span>: {{item.interviewer_name}}</div>
             <div>
@@ -185,7 +185,7 @@
               <li>The candidate was able to connect various engineering concepts</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.technical_knowledge">
+          <td *ngFor="let item of receivedData?.feedbacks.technical_knowledge">
             <div class="performance">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -202,7 +202,7 @@
                 context.</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.application_based_understanding">
+          <td *ngFor="let item of receivedData?.feedbacks.application_based_understanding">
             <div class="performance">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -217,7 +217,7 @@
               <li>The candidate was also able to make a positive impact while communicating with the panel members</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.communication">
+          <td *ngFor="let item of receivedData?.feedbacks.communication">
             <div class="performance">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -234,7 +234,7 @@
                 solution.</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.analytical">
+          <td *ngFor="let item of receivedData?.feedbacks.analytical">
             <div class="performance">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -249,7 +249,7 @@
               <li>The candidate had an approachable attitude and a sense of authenticity</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.executive_presence">
+          <td *ngFor="let item of receivedData?.feedbacks.executive_presence">
             <div class="performance">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -265,7 +265,7 @@
               <li>Process driven</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData.feedbacks.potential_for_future_growth">
+          <td *ngFor="let item of receivedData?.feedbacks.potential_for_future_growth">
             <div class="performance">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -274,11 +274,11 @@
         </tr>
         <tr>
           <td><strong>Comments</strong> </td>
-          <td *ngFor="let item of receivedData.feedbacks.comments">{{item}}</td>
+          <td *ngFor="let item of receivedData?.feedbacks.comments">{{item}}</td>
         </tr>
         <tr>
           <td><strong>Total Score</strong></td>
-          <td *ngFor="let item of receivedData.feedbacks.interview_score">{{item}}</td>
+          <td *ngFor="let item of receivedData?.feedbacks.interview_score">{{item}}</td>
         </tr>
       </tbody>
     </table>
