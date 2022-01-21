@@ -199,11 +199,6 @@ dateConvertion(date) {
         if (element[this.form_dependent_dob]) {
           element[this.form_dependent_dob] = element[this.form_dependent_dob];
         }
-
-        if(element.name_of_your_family == null){
-            element.name_of_your_family = " "
-        }
-
       });
       const DependentApiRequestDetails = {
         form_name: "joining",
