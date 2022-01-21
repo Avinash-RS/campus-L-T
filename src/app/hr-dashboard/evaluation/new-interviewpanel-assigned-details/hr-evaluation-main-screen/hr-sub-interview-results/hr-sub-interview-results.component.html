@@ -108,7 +108,7 @@
   <div class="space"></div>
 
   <ng-container >
-    <hr>
+    <br>
     <!-- <table id="assessmentsTable" mat-table [dataSource]="dataSource"> -->
       <!-- <ng-container matColumnDef="name" >
         <th class="headerCell" mat-header-cell *matHeaderCellDef> </th>
@@ -166,12 +166,12 @@
           </th>
           <th *ngFor="let item of receivedData.feedbacks.interviewers">
             <div> 
-              <span>Interviewer Name</span>: {{item.interviewer_name}}</div>
+              <span>Interviewer</span>: {{item.interviewer_name}}</div>
             <div>
-              <span>Date of Interview</span>: {{item.interview_date}}
+              <span>Date</span>: {{item.interview_date|date:'dd/MM/yyyy'}}
             </div>
             <div>
-              <span>Place of interview</span>: {{item.interview_place}}
+              <span>Place</span>: {{item.interview_place}}
             </div>
           </th>
         </tr>
@@ -284,7 +284,7 @@
     </table>
   
     <div class="space"></div>
-    <div style="margin-left: 10px;">
+    <div class="assesmentremarks">
       <div class="row pad-bootom">
         <div class="col-4">
           <span class="text">Overall Suitablity for the position<span class="asterick">*</span>
