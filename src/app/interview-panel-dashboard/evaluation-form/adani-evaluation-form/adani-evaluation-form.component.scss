@@ -249,7 +249,7 @@ list-style: none;
 
 // Table Starts
 ::ng-deep.evaluationTable {
-  width: 96%;
+  width: 96% !important;
   margin: 0 auto;
   border-radius: 5px;
   border: 1px solid rgba(170, 170, 170, 0.4);

@@ -94,7 +94,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
     if(item==1){
       status = "Average"
     }else if(item==3){
-      status = "Very Good"
+      status = "Good"
     }else if(item==5){
       status = "Excellent"
     }
@@ -118,9 +118,11 @@ export class HrSubInterviewResultsComponent implements OnInit {
             [this.adaform_hr_comments]: data && data[this.adaform_hr_comments] ? data[this.adaform_hr_comments] : null,
             [this.adaform_hr_selection_decision]: data && data[this.adaform_hr_selection_decision] ? data[this.adaform_hr_selection_decision] : null,
           });
-          console.log(this.displayedColumns)
-          
-          console.log(this.assessments)
+          if(this.receivedData.hr_selection_decision!=""){
+            this.status='2';
+          }
+          this.status != '2' ? '' : this.evaluationForm.disable();
+
           this.dataSource = new MatTableDataSource<any>(this.assessments);
           this.dynCol = []
           data.feedbacks.interviewers.forEach((iver, i) => {
