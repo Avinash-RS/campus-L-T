@@ -81,7 +81,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
         
       
     }
-    console.log(this.assessments)
+    // console.log(this.assessments)
     // this.getInterviewResults();
     if (this.candidateId) {
       this.getEvaluationData(this.uid);
@@ -126,18 +126,18 @@ export class HrSubInterviewResultsComponent implements OnInit {
           this.dataSource = new MatTableDataSource<any>(this.assessments);
           this.dynCol = []
           data.feedbacks.interviewers.forEach((iver, i) => {
-            console.log(iver)
+            // console.log(iver)
             this.displayedColumns=[...this.displayedColumns,"interviewer" + i]
             this.dynCol=[...this.dynCol,"interviewer" + i ]
             this.assessments.forEach(item => {
            
               item['interviewer' + i] = "1"
-              console.log(item)
+              // console.log(item)
             
           });
 
           });
-          console.log(this.dynCol,'sdfsdf')
+          // console.log(this.dynCol,'sdfsdf')
         }
       }, (err) => {
 
@@ -223,7 +223,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
       formData.shortlist_name = this.shortlist_name ? this.shortlist_name : '';
       formData.form_type_id = this.appConfig.getSelectedDriveFormDetails().id;
       const apiData = formData;
-      console.log(apiData);
+      // console.log(apiData);
       this.adminService.submitHRResultOnCandidates(apiData).subscribe((res: any) => {
 
         this.appConfig.success('Action on candidate saved', '');

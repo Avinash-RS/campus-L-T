@@ -126,7 +126,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
           [this.adaform_growth]: data && data[this.adaform_growth] ? data[this.adaform_growth] : null,
           // [this.adaform_valuesIntegrity]: data && data[this.adaform_valuesIntegrity] ? data[this.adaform_valuesIntegrity] : null
         });
-        console.log(data[this.caform_isattendedorNot] );
+        // console.log(data[this.caform_isattendedorNot] );
         this.assessments.forEach(element => {
           if (element['id'] === 1) {
             element['isChecked'] = data[this.adaform_technical_subject] ? data[this.adaform_technical_subject] : null
@@ -298,7 +298,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
 
 
   setAssessmentLevel(assessment, value) {
-    console.log(assessment,value)
+    // console.log(assessment,value)
     this.assessments[this.assessments.indexOf(assessment)] = {
       ...assessment,
       level: value
@@ -356,7 +356,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
     formData.shortlist_name = this.shortlist_name ? this.shortlist_name : '';
     formData.form_type_id = this.appConfig.getSelectedDriveFormDetails().id;
     const apiData = formData;
-    console.log(apiData);
+    // console.log(apiData);
     this.adminService.postEvaluationAdaniCandidateData(apiData).subscribe((res: any) => {
 
       this.appConfig.success('Evaluation completed successfully', '');
