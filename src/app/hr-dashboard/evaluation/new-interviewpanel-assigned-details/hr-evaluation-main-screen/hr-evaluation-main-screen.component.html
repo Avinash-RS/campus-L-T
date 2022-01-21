@@ -14,13 +14,13 @@
         </div>
     </mat-tab>
 
-  <mat-tab label="Assessment Results" *ngIf="customerCode=='#ADANI'">
+  <mat-tab label="Assessment Results">
     <div *ngIf="TabIndex == 1" class="selected-div">
         <app-hr-sub-education></app-hr-sub-education>
     </div>
   </mat-tab>
 
-  <mat-tab label="Interview Results">
+  <mat-tab label="Interview Results" *ngIf="customerCode=='#ADANI'">
     <div *ngIf="TabIndex == 2" class="selected-div">
        <app-hr-sub-interview-results [shortlist_name]='queryParams.shortlist_name' 
        [uid]='queryParams.uid' 
