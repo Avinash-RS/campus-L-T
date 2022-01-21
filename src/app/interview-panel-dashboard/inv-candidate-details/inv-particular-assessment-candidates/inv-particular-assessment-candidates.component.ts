@@ -774,7 +774,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         this.userList = [];
         align.forEach((element) => {
           if (element) {
-            element["normal_evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : element.normal_assessment.evaluation_status == '0'?'Closed':'Yet to Evaluate';
+            element["normal_evaluation_btn"] = element.normal_assessment.evaluation_status == '1' ? 'Evaluated' : element.normal_assessment.evaluation_status == '2' ? 'Submitted' : (element.normal_assessment.evaluation_status == '0'&&this.customerCode == '#ADANI')?'Closed':'Yet to Evaluate';
             element.video_assessment = element.video_assessment ? element.video_assessment : {};
             element.video_assessment.test_status = element["video_assessment"] && element["video_assessment"]["test_status"] == "YetToStart" ? 'Yet to Start' : (element["video_assessment"] && element["video_assessment"]["test_status"] == 'InProgress' ? 'In Progress' : element["video_assessment"] && element["video_assessment"]["test_status"] ? element["video_assessment"]["test_status"] : '');
             element.video_assessment.evaluation_status = element["video_assessment"] && element["video_assessment"]["evaluation_status"] == "selected" ? 'Selected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'rejected') ? 'Rejected' : (element["video_assessment"] && element["video_assessment"]["evaluation_status"] == 'on hold') ? 'On Hold' : '';
