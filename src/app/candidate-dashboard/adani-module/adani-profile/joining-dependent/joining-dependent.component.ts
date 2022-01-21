@@ -201,7 +201,7 @@ dateConvertion(date) {
         }
 
         if(element.name_of_your_family == null){
-            element.name_of_your_family = 'NA'
+            element.name_of_your_family = " "
         }
 
       });
