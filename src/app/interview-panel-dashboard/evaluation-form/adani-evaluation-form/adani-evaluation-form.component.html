@@ -136,7 +136,7 @@
 <br>
     <table class="evaluationTable" id="assessmentsTable" mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name" >
-        <th class="headerCell text-left" mat-header-cell *matHeaderCellDef><strong>Attributes</strong> </th>
+        <th class="headerCell text-left" mat-header-cell *matHeaderCellDef ><strong>Attributes</strong> </th>
         <td style="width: 390px;" mat-cell  *matCellDef="let assessment"><strong>{{assessment.name}}</strong><span
             class="asterick">*</span>
             <br>
@@ -147,7 +147,7 @@
       </ng-container>
 
       <ng-container matColumnDef="average">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef> <strong>Average </strong> <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;cursor: pointer;" matTooltip="{{assessments[0].good}}"></i>
+        <th class="headerCell" mat-header-cell *matHeaderCellDef> <strong>Average </strong> <div style="font-size: 11px;">{{assessments[0].average}}</div>
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 1 ? true : false"
@@ -158,7 +158,7 @@
       </ng-container>
 
       <ng-container matColumnDef="good">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef><strong>Good </strong> <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative; cursor: pointer;" matTooltip="{{assessments[0].good}}"></i>
+        <th class="headerCell" mat-header-cell *matHeaderCellDef><strong>Good </strong> <div style="font-size: 11px;">{{assessments[0].good}}</div>
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
 
@@ -171,7 +171,7 @@
       </ng-container>
 
       <ng-container matColumnDef="veryGood">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef><strong>Excellent </strong> <i class="icon-Info" style="top: 1px; font-size: 13.5px; position: relative;cursor: pointer;" matTooltip="{{assessments[0].veryGood}}"></i></th>
+        <th class="headerCell" mat-header-cell *matHeaderCellDef><strong>Excellent </strong> <div style="font-size: 11px;">{{assessments[0].veryGood}}</div></th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 5 ? true : false"
             (change)="setAssessmentLevel(assessment, 5)" [name]="assessment.id" value="1">
