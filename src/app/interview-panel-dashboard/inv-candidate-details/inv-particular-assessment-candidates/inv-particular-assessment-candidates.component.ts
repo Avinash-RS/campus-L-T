@@ -487,7 +487,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           }
           if (
             params["data"] &&
-            params["data"]["normal_assessment"]["interview_status"] == "Rejected"
+            (params["data"]["normal_assessment"]["interview_status"] == "Rejected"||params["data"]["normal_assessment"]["interview_status"] == "Not Selected")
           ) {
             return `<span class="status-field rejected-color">Rejected</span>`;
           } else {
