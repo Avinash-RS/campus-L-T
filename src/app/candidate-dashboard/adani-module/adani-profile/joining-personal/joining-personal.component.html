@@ -484,11 +484,11 @@
                 </div>
 
                 <div class="overall-input-wrapper width-45">
-                    <label>Special  Disability (if any)<span></span></label>
+                    <label>Specially Abled (if any)<span></span></label>
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_physical_disability">
                     <div class="form-error" *ngIf="physical_disability?.invalid && physical_disability?.touched">
-                        <div *ngIf="physical_disability?.errors?.required">Special Disability is Required</div>
-                        <div *ngIf="physical_disability?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
+                        <div *ngIf="physical_disability?.errors?.required">Specially Abled is Required</div>
+                        <div *ngIf="physical_disability?.errors?.alphaNum255">Specially Alpha numeric with maximum of 255 characters only allowed
                         </div>
                     </div>
                 </div>
