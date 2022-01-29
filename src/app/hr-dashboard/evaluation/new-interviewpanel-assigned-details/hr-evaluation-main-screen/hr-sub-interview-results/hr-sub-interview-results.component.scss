@@ -271,6 +271,11 @@ input.ng-touched.ng-invalid {
       }
     }
   }
+  tbody> tr:hover{
+    background-color: #ceddf347;
+    border-right: 1px solid #4e9fc2 !important;
+    border-left: 1px solid #4e9fc2 !important;
+  }
   tbody {
     tr {
       td {
@@ -345,3 +350,27 @@ input.ng-touched.ng-invalid {
   width: 96%;
   margin: 0 auto;
 }
+
+.suitablity{
+  display: flex;
+  justify-content: space-between;
+  &.Average {
+    padding: 5px;
+    border-radius: 5px;
+    color:white;
+    background-color: #C02222;
+  }
+  &.Good {
+    padding: 5px;
+    border-radius: 5px;
+    color:white;
+    background-color: #FFA700;
+  }
+  &.Excellent {
+    padding: 5px;
+    border-radius: 5px;
+    color:white;
+    background-color: #5EBA69;
+  }
+}
+

@@ -85,7 +85,7 @@
 
       <div class="col-4">
         <div class="row no-center-align">
-          <div style="white-space: nowrap;" class="col-5">
+          <div  class="col-5">
             <span class="head">Place of evaluation<span class="asterick">*</span> </span>
           </div>
           <div class="col-7">
@@ -120,7 +120,7 @@
             </ul>
           </td>
       </ng-container> -->
-<!-- 
+<!--
       <ng-container *ngFor="let iv of dynCol" matColumnDef="{{iv.colName}}">
         <th class="headerCell" mat-header-cell *matHeaderCellDef> Average
         </th>
@@ -165,7 +165,7 @@
             <span class="attribute">Attributes</span>
           </th>
           <th *ngFor="let item of receivedData?.feedbacks.interviewers">
-            <div> 
+            <div>
               <span>Interviewer</span>: {{item.interviewer_name}}</div>
             <div>
               <span>Date</span>: {{item.interview_date|date:'dd/MM/yyyy'}}
@@ -282,12 +282,26 @@
         </tr>
       </tbody>
     </table>
-  
+
     <div class="space"></div>
     <div class="assesmentremarks">
       <div class="row pad-bootom">
         <div class="col-4">
           <span class="text">Overall Suitablity for the position<span class="asterick">*</span>
+          </span>
+        </div>
+        <div class="col-8 ">
+        <div class="suitablity w-50">
+          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.average_min && receivedData?.total_score <= receivedData?.score_configs.average_max)?'Average':''"><strong>Average</strong></div>
+          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.good_min && receivedData?.total_score <= receivedData?.score_configs.good_max)?'Good':''"><strong>Good</strong></div>
+          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.excellent_min && receivedData?.total_score <= receivedData?.score_configs.excellent_max)?'Excellent':''"><strong>Excellent</strong></div>
+        </div>
+      </div>
+      </div>
+      <div class="space"></div>
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Selection Decision<span class="asterick">*</span>
           </span>
         </div>
         <div class="col-8">
@@ -296,10 +310,10 @@
           <mat-radio-button value="Selected">
            Selected
           </mat-radio-button>
-          <mat-radio-button value="Hold">
+          <mat-radio-button value="Can be considered">
            Can be considered
           </mat-radio-button>
-          <mat-radio-button value="Rejected">
+          <mat-radio-button value="Not Selected">
            Not Selected
           </mat-radio-button>
         </mat-radio-group>
@@ -307,7 +321,7 @@
       </div>
       </div>
       <div class="space"></div>
-      <div class="row pad-bootom">
+      <div class="row pad-bootom" style="display: none;">
         <div class="col-4">
           <span class="text">Overall Remarks<span class="asterick">*</span>
           </span>
@@ -331,7 +345,7 @@
 
 
   <div class="space"></div>
-  <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0;">
+  <div *ngIf="status != '2'" class="last-button" style="text-align: center; padding: 1em 0; display: none;">
     <button class="common-button common-button-height-30" mat-raised-button>Submit</button>
   </div>
 </form>

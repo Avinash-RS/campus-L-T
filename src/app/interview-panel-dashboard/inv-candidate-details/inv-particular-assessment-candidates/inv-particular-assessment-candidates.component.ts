@@ -289,7 +289,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       {
         headerName: "Candidate Id",
         field: "candidate_id",
-        filter: 'agNumberColumnFilter',
+        filter: 'agTextColumnFilter',
         minWidth: 180,
         sortable: true,
         tooltipField: "candidate_id",
@@ -455,7 +455,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           }
           if (params["data"] && params["data"]["normal_evaluation_btn"] == "Submitted") {
             return `<button class="btn-outline checked completed-bg"><em class="icon-checked"></em>${params["data"]["normal_evaluation_btn"]}</button>`;
-          } 
+          }
           if(params["data"] && params["data"]["normal_evaluation_btn"] == "Yet to Evaluate") {
             return `<button class="btn-outline">${params["data"]["normal_evaluation_btn"]}</button>`;
           }
@@ -487,7 +487,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           }
           if (
             params["data"] &&
-            params["data"]["normal_assessment"]["interview_status"] == "Rejected"
+            (params["data"]["normal_assessment"]["interview_status"] == "Rejected"||params["data"]["normal_assessment"]["interview_status"] == "Not Selected")
           ) {
             return `<span class="status-field rejected-color">Rejected</span>`;
           } else {
