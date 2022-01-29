@@ -243,6 +243,7 @@ input.ng-touched.ng-invalid {
 .evaluationTable {
   width: 96% !important;
   margin: 0 auto;
+  margin-bottom: 20px;
   border-radius: 5px;
   border: 1px solid rgba(170, 170, 170, 0.4);
   thead {
@@ -354,19 +355,20 @@ input.ng-touched.ng-invalid {
 .suitablity{
   display: flex;
   justify-content: space-between;
-  &.Average {
+  text-align: center;
+  .Average {
     padding: 5px;
     border-radius: 5px;
     color:white;
     background-color: #C02222;
   }
-  &.Good {
+  .Good {
     padding: 5px;
     border-radius: 5px;
     color:white;
     background-color: #FFA700;
   }
-  &.Excellent {
+  .Excellent {
     padding: 5px;
     border-radius: 5px;
     color:white;

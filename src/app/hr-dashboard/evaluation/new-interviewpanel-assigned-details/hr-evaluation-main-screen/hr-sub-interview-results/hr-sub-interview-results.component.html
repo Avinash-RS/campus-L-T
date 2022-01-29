@@ -284,39 +284,32 @@
     </table>
 
     <div class="space"></div>
+    <div class="space"></div>
     <div class="assesmentremarks">
       <div class="row pad-bootom">
-        <div class="col-4">
-          <span class="text">Overall Suitablity for the position<span class="asterick">*</span>
+        <div class="col-3">
+          <span class="text">Overall Suitablity for the position
           </span>
         </div>
-        <div class="col-8 ">
+        <div class="col-9 ">
         <div class="suitablity w-50">
-          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.average_min && receivedData?.total_score <= receivedData?.score_configs.average_max)?'Average':''"><strong>Average</strong></div>
-          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.good_min && receivedData?.total_score <= receivedData?.score_configs.good_max)?'Good':''"><strong>Good</strong></div>
-          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.excellent_min && receivedData?.total_score <= receivedData?.score_configs.excellent_max)?'Excellent':''"><strong>Excellent</strong></div>
+          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.average_min && receivedData?.total_score <= receivedData?.score_configs.average_max)?'Average':''"><strong>Average</strong><div style="border-top: 1px solid grey;">{{receivedData?.score_configs.average_min}} - {{receivedData?.score_configs.average_max}}</div></div>
+          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.good_min && receivedData?.total_score <= receivedData?.score_configs.good_max)?'Good':''"><strong>Good</strong> <div style="border-top: 1px solid grey;">{{receivedData?.score_configs.good_min}} - {{receivedData?.score_configs.good_max}}</div></div>
+          <div [ngClass]="(receivedData?.total_score >= receivedData?.score_configs.excellent_min && receivedData?.total_score <= receivedData?.score_configs.excellent_max)?'Excellent':''"><strong>Excellent</strong> <div style="border-top: 1px solid grey;">{{receivedData?.score_configs.excellent_min}} - {{receivedData?.score_configs.excellent_max}}</div></div>
         </div>
       </div>
       </div>
       <div class="space"></div>
       <div class="row pad-bootom">
-        <div class="col-4">
-          <span class="text">Selection Decision<span class="asterick">*</span>
-          </span>
+        <div class="col-3">
+          <span class="text">Selection Decision</span>
         </div>
-        <div class="col-8">
-          <mat-radio-group class="d-flex w-50 justify-content-between"
-          [formControlName]="adaform_hr_selection_decision">
-          <mat-radio-button value="Selected">
-           Selected
-          </mat-radio-button>
-          <mat-radio-button value="Can be considered">
-           Can be considered
-          </mat-radio-button>
-          <mat-radio-button value="Not Selected">
-           Not Selected
-          </mat-radio-button>
-        </mat-radio-group>
+        <div class="col-9">
+          <div class="suitablity d-flex w-50 -">
+          <div [class]="receivedData?.hr_selection_decision=='Selected'?'Excellent':''">Selected</div>
+          <div [class]="receivedData?.hr_selection_decision=='Can be considered'?'Good':''">Can be considered</div>
+          <div [class]="receivedData?.hr_selection_decision=='Not Selected'?'Average':''">Not Selected</div>
+        </div>
 
       </div>
       </div>
