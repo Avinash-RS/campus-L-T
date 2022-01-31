@@ -23,7 +23,7 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
   objList: any;
   toggleVisibility = true;
   buttonLoading = false;
-
+  customerCode = this.appConfig.getSelectedCustomerCode();
   constructor(
     private fb: FormBuilder,
     private matDialog: MatDialog,
