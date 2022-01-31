@@ -45,13 +45,25 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
 
   scheduleformInitialize() {
     this.attendeesList = this.data;
-    this.scheduleForm = this.fb.group({
-      title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
-      password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
-      startTime: [null, [Validators.required]],
-      endTime: [null, [Validators.required]],
-      type: ['1', [Validators.required]]
-    })
+
+    if(this.customerCode == '#LTTS'){
+      this.scheduleForm = this.fb.group({
+        title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+        password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
+        startTime: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+        type: ['1', [Validators.required]]
+      })
+    }else{
+      this.scheduleForm = this.fb.group({
+        title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+        password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
+        startTime: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+        type: ['2', [Validators.required]]
+      })
+    }
+
   }
 
   dateChange(){
