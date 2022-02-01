@@ -18,8 +18,12 @@ export class firstShortlistFilterModel {
   }
 
   getProfileList() {
-    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : '';
-    let filter = mastersList?.education_master;
+    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
+    // Filter education details baised on customer code 
+    let filter = mastersList ? mastersList.education_master : [];
+    let positive_array = filter.filter(value => value.customer_code == this.appConfig.getSelectedCustomerCode());
+    filter = mastersList ? positive_array : [];
+
     filter.forEach(element => {
       element.checkbox = false;
     });
