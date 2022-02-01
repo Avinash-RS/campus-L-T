@@ -95,6 +95,7 @@ export class VideoAssessEvaluationScreenComponent implements OnInit, OnDestroy {
           profile_image_url: data && data.profile_image_url ? data.profile_image_url : 'assets/images/img_avatar2.jpg',
           redirectedFrom: 'evaluator',
           showTopBar: true,
+          assigned_by: data && data.assigned_by ? data.assigned_by : ''
       };
        },
       (err) => {}
