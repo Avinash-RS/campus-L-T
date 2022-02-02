@@ -1,243 +1,144 @@
 <div class="new-inv-particular-assessment-candidate">
-  <div>
-    <mat-accordion #firstAccordion="matAccordion">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title> Filter </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="top-wrapper">
-          <div class="left">
-            <div class="flex-wrap">
-              <div class="label">
-                Shortlist name<span class="asterick">*</span>
-              </div>
-              <div class="input-box">
-                <nz-select
-                  class="input select"
-                  [(ngModel)]="selectedShortlistname"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="--Select Shortlist name--"
-                >
-                  <nz-option
-                    *ngFor="let level of allShortlistNames"
-                    [nzLabel]="level.shortlist_name"
-                    [nzValue]="level.shortlist_name"
-                  ></nz-option>
-                </nz-select>
-              </div>
-            </div>
+    <div>
+        <mat-accordion #firstAccordion="matAccordion">
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> Filter </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="top-wrapper">
+                    <div class="left">
+                        <div class="flex-wrap">
+                            <div class="label">
+                                Shortlist name<span class="asterick">*</span>
+                            </div>
+                            <div class="input-box">
+                                <nz-select class="input select" [(ngModel)]="selectedShortlistname" nzAllowClear nzShowSearch nzPlaceHolder="--Select Shortlist name--">
+                                    <nz-option *ngFor="let level of allShortlistNames" [nzLabel]="level.shortlist_name" [nzValue]="level.shortlist_name"></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
 
-            <div class="flex-wrap">
-              <div class="label">
-                Institute name<span class="asterick"></span>
-              </div>
-              <div class="input-box">
-                <nz-select
-                  class="input select"
-                  [(ngModel)]="selectedInstitute"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="--Select Institute name--"
-                >
-                  <nz-option
-                    *ngFor="let level of allInstitutes"
-                    [nzLabel]="level.institute_name"
-                    [nzValue]="level.institute_name"
-                  ></nz-option>
-                </nz-select>
-              </div>
-            </div>
-            <div class="flex-wrap">
-              <div class="label">Education level</div>
-              <div class="input-box">
-                <nz-select
-                  class="input select"
-                  [(ngModel)]="selectedEdu"
-                  (ngModelChange)="instituteChange()"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="All"
-                >
-                  <nz-option
-                    *ngFor="let level of allEducations"
-                    [nzLabel]="level.label"
-                    [nzValue]="level.name"
-                  >
-                  </nz-option>
-                </nz-select>
-              </div>
-            </div>
-            <div class="flex-wrap">
-              <div class="label">Status<span class="asterick">*</span></div>
-              <div class="input-box">
-                <nz-select
-                  class="input select"
-                  [(ngModel)]="selectedStatus"
-                  (ngModelChange)="instituteChange()"
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="--Select Status--"
-                >
-                  <nz-option
-                    *ngFor="let level of statusList"
-                    [nzLabel]="level.name"
-                    [nzValue]="level.value"
-                  >
-                  </nz-option>
-                </nz-select>
-              </div>
-            </div>
-            <div class="flex-wrap applybtn">
-              <div class="input-box">
-                <div style="display: flex; justify-content: center">
-                  <ng-container *ngIf="buttonLoading else showButton">
-                    <button
-                    mat-raised-button
-                    class="common-button-with-icon common-button-height-30 pl-2 pr-2 mr-2 loading-button"
-                  >
+                        <div class="flex-wrap">
+                            <div class="label">
+                                Institute name<span class="asterick"></span>
+                            </div>
+                            <div class="input-box">
+                                <nz-select class="input select" [(ngModel)]="selectedInstitute" nzAllowClear nzShowSearch nzPlaceHolder="--Select Institute name--">
+                                    <nz-option *ngFor="let level of allInstitutes" [nzLabel]="level.institute_name" [nzValue]="level.institute_name"></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="flex-wrap">
+                            <div class="label">Education level</div>
+                            <div class="input-box">
+                                <nz-select class="input select" [(ngModel)]="selectedEdu" (ngModelChange)="instituteChange()" nzAllowClear nzShowSearch nzPlaceHolder="All">
+                                    <nz-option *ngFor="let level of allEducations" [nzLabel]="level.label" [nzValue]="level.name">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="flex-wrap">
+                            <div class="label">Status<span class="asterick">*</span></div>
+                            <div class="input-box">
+                                <nz-select class="input select" [(ngModel)]="selectedStatus" (ngModelChange)="instituteChange()" nzAllowClear nzShowSearch nzPlaceHolder="--Select Status--">
+                                    <nz-option *ngFor="let level of statusList" [nzLabel]="level.name" [nzValue]="level.value">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="flex-wrap applybtn">
+                            <div class="input-box">
+                                <div style="display: flex; justify-content: center">
+                                    <ng-container *ngIf="buttonLoading else showButton">
+                                        <button mat-raised-button class="common-button-with-icon common-button-height-30 pl-2 pr-2 mr-2 loading-button">
                   <span class="icon-Refresh load-icon"></span> <span>Applying...</span>
                   </button>
-                  </ng-container>
+                                    </ng-container>
 
-                  <ng-template #showButton>
-                    <button
-                    [disabled]="
+                                    <ng-template #showButton>
+                                        <button [disabled]="
                       selectedShortlistname && selectedStatus ? false : true
-                    "
-                    class="common-button common-button-height-30"
-                    (click)="candidateFilterApply()"
-                    mat-raised-button
-                  >
+                    " class="common-button common-button-height-30" (click)="candidateFilterApply()" mat-raised-button>
                     Apply
                   </button>
-                  </ng-template>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-  <div class="button-wrapper mt-2 mr-1">
-    <button
-      class="common-button common-button-height-30"
-      [disabled]="
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="button-wrapper mt-2 mr-1">
+        <button class="common-button common-button-height-30" [disabled]="
       userList && userList.length > 0 && userListHR && userListHR.length > 0
         ? false
         : true
-    "
-      (click)="openConfirmationPopUp()"
-      mat-raised-button
-    >
+    " (click)="openConfirmationPopUp()" mat-raised-button>
       {{'Schedule'}}
     </button>
-  </div>
-  <div class="user-list-wrapper">
-    <div class="total-wrap" #scrollbox>
-      <div class="lefttable">
-        <div class="head-flex">
-          <div class="text">Candidates list</div>
-          <div class="search-bar">
-            <div class="search-icon">
-              <img src="assets/images/feather-search.svg" alt="" srcset="" />
-              <input
-                matInput
-                (keyup)="onQuickFilterChanged()"
-                [(ngModel)]="quickSearchValue"
-                placeholder="Search…."
-              />
-            </div>
-          </div>
-        </div>
-        <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
-          <ag-grid-angular
-            style="width: 99%; height: 450px; margin: auto !important"
-            class="ag-theme-alpine"
-            [rowData]="rowData"
-            [columnDefs]="columnDefs"
-            [defaultColDef]="defaultColDef"
-            [pagination]="true"
-            [suppressRowClickSelection]="true"
-            [paginationPageSize]="paginationPageSize"
-            [rowSelection]="'multiple'"
-            [cacheBlockSize]="cacheBlockSize"
-            (gridReady)="onGridReady($event)"
-            (sortChanged)="sortevent($event)"
-            (cellClicked)="onCellClicked($event)"
-            (filterModified)="getModel($event)"
-            headerHeight="40"
-            (selectionChanged)="onCandidateSelect($event)"
-            [animateRows]="true"
-          >
-          </ag-grid-angular>
-        </div>
-      </div>
-
-      <!-- second table -->
-      <div class="righttable">
-        <div class="head-flex">
-          <div class="text">Interview Panel list</div>
-          <div class="search-bar">
-            <div class="search-icon">
-              <img src="assets/images/feather-search.svg" alt="" srcset="" />
-              <input
-                matInput
-                (keyup)="onQuickFilterChangedHR()"
-                [(ngModel)]="quickSearchValueHR"
-                placeholder="Search…."
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'"
-        >
-          <ag-grid-angular
-            style="width: 99%; height: 450px; margin: auto !important"
-            class="ag-theme-alpine"
-            [rowData]="rowDataHR"
-            [columnDefs]="columnDefsHR"
-            [defaultColDef]="defaultColDefHR"
-            [pagination]="true"
-            [suppressRowClickSelection]="true"
-            [paginationPageSize]="paginationPageSizeHR"
-            [rowSelection]="'multiple'"
-            [cacheBlockSize]="cacheBlockSizeHR"
-            (gridReady)="onGridReadyHR($event)"
-            (sortChanged)="sorteventHR($event)"
-            (cellClicked)="onCellClickedHR($event)"
-            (filterModified)="getModelHR($event)"
-            headerHeight="40"
-            (selectionChanged)="onInterviewerSelect($event)"
-            [animateRows]="true"
-          >
-          </ag-grid-angular>
-        </div>
-      </div>
     </div>
-  </div>
+    <div class="user-list-wrapper">
+        <div class="total-wrap" #scrollbox>
+            <div class="lefttable">
+                <div class="head-flex">
+                    <div class="text">Candidates list</div>
+                    <div class="search-bar">
+                        <div class="search-icon">
+                            <img src="assets/images/feather-search.svg" alt="" srcset="" />
+                            <input matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search…." />
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
+                    <ag-grid-angular style="width: 99%; height: 450px; margin: auto !important" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
+                        [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40" (selectionChanged)="onCandidateSelect($event)"
+                        [animateRows]="true">
+                    </ag-grid-angular>
+                </div>
+            </div>
+
+            <!-- second table -->
+            <div class="righttable">
+                <div class="head-flex">
+                    <div class="text">Interview Panel list</div>
+                    <div class="search-bar">
+                        <div class="search-icon">
+                            <img src="assets/images/feather-search.svg" alt="" srcset="" />
+                            <input matInput (keyup)="onQuickFilterChangedHR()" [(ngModel)]="quickSearchValueHR" placeholder="Search…." />
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'">
+                    <ag-grid-angular style="width: 99%; height: 450px; margin: auto !important" class="ag-theme-alpine" [rowData]="rowDataHR" [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSizeHR"
+                        [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSizeHR" (gridReady)="onGridReadyHR($event)" (sortChanged)="sorteventHR($event)" (cellClicked)="onCellClickedHR($event)" (filterModified)="getModelHR($event)" headerHeight="40"
+                        (selectionChanged)="onInterviewerSelect($event)" [animateRows]="true">
+                    </ag-grid-angular>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <ng-template #withSchedulingConfirmationBox>
-  <div class="confirmation-box">
-    <div class="confirmText">
-      Please click any one of the below option to proceed.
-    </div>
-    <div class="radio-group">
-      <mat-radio-group [(ngModel)]="confirmationValue">
-        <mat-radio-button value="1">Schedule with Video Interview
-        </mat-radio-button>
-        <mat-radio-button value="2">Schedule without Video Interview</mat-radio-button>
-      </mat-radio-group>
-    </div>
-    <div class="confirmation-button">
-      <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancelConfirmation()" mat-raised-button>Cancel</button>
-      <button class="common-button common-button-height-35" (click)="confirmConfirmation()" mat-raised-button>Confirm</button>
-    </div>
+    <div class="confirmation-box">
+        <div class="confirmText">
+            Please select mode of interview.
+        </div>
+        <div class="radio-group">
+            <mat-radio-group [(ngModel)]="confirmationValue">
+                <mat-radio-button value="1">Online
+                </mat-radio-button>
+                <mat-radio-button class="radio-left" value="2">Offline</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="confirmation-button">
+            <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancelConfirmation()" mat-raised-button>Cancel</button>
+            <button class="common-button common-button-height-35" (click)="confirmConfirmation()" mat-raised-button>Confirm</button>
+        </div>
 
-  </div>
+    </div>
 </ng-template>
