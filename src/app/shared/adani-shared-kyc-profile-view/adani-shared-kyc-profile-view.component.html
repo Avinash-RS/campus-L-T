@@ -1,9 +1,10 @@
 <div class="joining-personal-wrapper pb-2">
     <div class="grids-wrapper">
-        <div class="dependentForm">
+        <div class="dependentForm" id="pdfTable" #pdfTable>
             <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section">
                 <div class="header d-flex justify-content-between mb-1 align-items-center">
                     <h6>Primary Details</h6>
+                    <!-- <button mat-button (click)="downloadAsPDF()">Download</button> -->
                     <div *ngIf="!formSubmitted" class="icon">
                         <span (click)="editRoute('personal')" class="icon-Edit ag-icon-font-size edit-icon"></span>
                     </div>

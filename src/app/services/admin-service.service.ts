@@ -752,7 +752,7 @@ VideoSchedulingSubmit(data) {
 
 // Proctor
 getProctorVideo(id,type){
-  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=50&count=1&filter[type]=`+type, {headers: this.proctorToken(), withCredentials: false});
+  return this.http.get(`${this.PROCTOR_URL}/api/chat/`+id+`?limit=20&count=1&filter[type]=`+type, {headers: this.proctorToken(), withCredentials: false});
 }
 
 getproctorToken(data) {
