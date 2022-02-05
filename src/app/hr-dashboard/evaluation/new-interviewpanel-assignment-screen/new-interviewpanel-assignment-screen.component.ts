@@ -111,6 +111,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   getParticularInterviewpanelistSubscription: Subscription;
   assignToHRSubscription: Subscription;
   scheduleRoomsSubscription: Subscription;
+  customerCode = this.appConfig.getSelectedCustomerCode();
   constructor(
     public appConfig: AppConfigService,
     private router: Router,
@@ -773,7 +774,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.appConfig.warningWithTitle('Please select a candidate','');
       return false;
     }
-    if(this.selectedCandidate.length > 1){
+    if(this.selectedCandidate.length > 1 && this.customerCode == '#LTTS'){
       this.appConfig.warningWithTitle('Please select one candidate at a time','');
       return false;
     }

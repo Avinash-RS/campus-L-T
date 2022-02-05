@@ -23,7 +23,7 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
   objList: any;
   toggleVisibility = true;
   buttonLoading = false;
-
+  customerCode = this.appConfig.getSelectedCustomerCode();
   constructor(
     private fb: FormBuilder,
     private matDialog: MatDialog,
@@ -45,13 +45,25 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
 
   scheduleformInitialize() {
     this.attendeesList = this.data;
-    this.scheduleForm = this.fb.group({
-      title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
-      password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
-      startTime: [null, [Validators.required]],
-      endTime: [null, [Validators.required]],
-      type: ['1', [Validators.required]]
-    })
+
+    if(this.customerCode == '#ADANI'){
+      this.scheduleForm = this.fb.group({
+        title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+        password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
+        startTime: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+        type: ['2', [Validators.required]]
+      })
+    }else{
+      this.scheduleForm = this.fb.group({
+        title: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.address255()]],
+        password: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(1000)]],
+        startTime: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+        type: ['1', [Validators.required]]
+      })
+    }
+
   }
 
   dateChange(){

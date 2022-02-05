@@ -626,21 +626,23 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
    this.getScheduledListSubscription = this.adminService.getScheduledList(obj).subscribe(
       (result: any) => {
         if (result && result.success) {
+          var length = result.data.length;
           this.scheduleListDetails = result.data;
+          var j=0;
           this.scheduleListDetails.forEach((element, i) => {
+              if((length-1) == j){
             if (element.userDtl) {
-              element.link =
-                element.userDtl && element.userDtl ? element.userDtl : "";
+              element.link = element.userDtl && element.userDtl ? element.userDtl : "";
               let candidateData = this.removeInterviewer(element.userDtl);
-              element.emailId =
-                candidateData && candidateData.emailId
-                  ? candidateData.emailId
-                  : "";
+              //element.emailId = candidateData.emailId
+              this.mergePhpAndEdgeService(candidateData,this.scheduleListDetails[j]);
             }
+          }
+          j++
           });
-          this.mergePhpAndEdgeService(this.scheduleListDetails);
         } else {
           this.rowData = this.userList;
+
         }
       },
       (err) => {
@@ -649,20 +651,20 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     );
   }
 
-  mergePhpAndEdgeService(edgeSeviceData) {
+  mergePhpAndEdgeService(edgeSeviceData,scheduleServiceStartEndTime) {
     this.userList.forEach((element) => {
       edgeSeviceData.forEach((edgeData) => {
         if (element.email == edgeData.emailId) {
-          element.feedback = edgeData.feedback ? edgeData.feedback : '-';
-          element.videoInvStatus = edgeData.status ? edgeData.status : 'Time Expired';
-          element.Video_Interview_assigned_by = edgeData.createdByName
-            ? edgeData.createdByName
+          element.feedback = scheduleServiceStartEndTime.feedback ? scheduleServiceStartEndTime.feedback : '-';
+          element.videoInvStatus = scheduleServiceStartEndTime.status ? scheduleServiceStartEndTime.status : 'Time Expired';
+          element.Video_Interview_assigned_by = scheduleServiceStartEndTime.createdByName
+            ? scheduleServiceStartEndTime.createdByName
             : "-";
-          element.Video_Interview_startTime = this.momentForm(edgeData.startTime);
-          element.Video_Interview_endTime = this.momentForm(edgeData.endTime);
+          element.Video_Interview_startTime = this.momentForm(scheduleServiceStartEndTime.startTime);
+          element.Video_Interview_endTime = this.momentForm(scheduleServiceStartEndTime.endTime);
           element.Video_Interview_join_interview = this.isTimeExpired(
-            edgeData.startTime,
-            edgeData.endTime,
+            scheduleServiceStartEndTime.startTime,
+            scheduleServiceStartEndTime.endTime,
             element.videoInvStatus
           );
         }
@@ -670,7 +672,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     });
 
     this.rowData = this.userList;
-
     this.getSummaryCount();
   }
 
@@ -697,7 +698,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   removeInterviewer(userDetail) {
-    return userDetail.find((element) => element.type == "candidate");
+    return userDetail.filter((element) => element.type == "candidate");
   }
 
   getSummaryCount() {
@@ -767,7 +768,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     setTimeout(() => {
       this.gridApi.showLoadingOverlay();
     }, 0);
-    let apcall = this.customerCode == '#ADANI'?this.adminService.adaniInvSubmittedCandidatesList():this.adminService.invSubmittedCandidatesList(apiData)
+    let apcall = this.customerCode == '#ADANI' ? this.adminService.adaniInvSubmittedCandidatesList():this.adminService.invSubmittedCandidatesList(apiData)
    this.invSubmittedCandidatesListSubscription = apcall.subscribe(
       (datas: any) => {
         const align = datas ? datas : [];
