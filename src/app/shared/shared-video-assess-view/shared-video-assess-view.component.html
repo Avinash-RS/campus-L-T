@@ -1,297 +1,297 @@
 <div class="overall-video-assess-preview-wrapper">
-  <ng-container *ngIf="isAccessGranted() else permissionDenied">
-  <div *ngIf="videoAssessment && videoAssessment.showTopBar && videoAssessment.scheduled_status == 1" class="header-wrapper">
-    <div class="profileinfo">
-      <div>
-        <div class="img">
-          <img [src]="videoAssessment && videoAssessment.profile_image_url ? videoAssessment.profile_image_url : ''" alt="name" />
-        </div>
-      </div>
-    </div>
+    <ng-container *ngIf="isAccessGranted() else permissionDenied">
+        <div *ngIf="videoAssessment && videoAssessment.showTopBar && videoAssessment.scheduled_status == 1" class="header-wrapper">
+            <div class="profileinfo">
+                <div>
+                    <div class="img">
+                        <img [src]="videoAssessment && videoAssessment.profile_image_url ? videoAssessment.profile_image_url : ''" alt="name" />
+                    </div>
+                </div>
+            </div>
 
-    <div class="summary-wrapper">
-      <div class="group">
-        <span class="label-group">
+            <div class="summary-wrapper">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Candidate Name</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{videoAssessment && videoAssessment.candidate_name ? videoAssessment.candidate_name : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Candidate Id</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{videoAssessment && videoAssessment.candidate_id ? videoAssessment.candidate_id : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Shortlist Name</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{videoAssessment && videoAssessment.shortlist_name ? videoAssessment.shortlist_name : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">{{videoAssessment && videoAssessment.redirectedFrom == 'evaluator' ? 'Assigned by' : 'Created by'}}</span><span class="colon">:</span>
-        </span>
-        <span *ngIf="videoAssessment && videoAssessment.redirectedFrom == 'evaluator' else nonevaluator" class="value">
+                    </span>
+                    <span *ngIf="videoAssessment && videoAssessment.redirectedFrom == 'evaluator' else nonevaluator" class="value">
           {{videoAssessment && videoAssessment.assigned_by ? videoAssessment.assigned_by : '-'}}
         </span>
-        <ng-template #nonevaluator>
-          <span class="value">
+                    <ng-template #nonevaluator>
+                        <span class="value">
             {{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : '-'}}
           </span>
 
-        </ng-template>
-      </div>
+                    </ng-template>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Assessment Status</span><span class="colon">:</span>
-        </span>
-        <span class="value" [ngClass]="videoAssessment.test_status ? videoAssessment.test_status : ''">
+                    </span>
+                    <span class="value" [ngClass]="videoAssessment.test_status ? videoAssessment.test_status : ''">
           {{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Evaluation Status</span><span class="colon">:</span>
-        </span>
-        <span class="value" [ngClass]="videoAssessment.evaluation_status ? videoAssessment.evaluation_status : ''">
+                    </span>
+                    <span class="value" [ngClass]="videoAssessment.evaluation_status ? videoAssessment.evaluation_status : ''">
           {{videoAssessment && videoAssessment.evaluation_status ? videoAssessment.evaluation_status : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Evaluated by</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{videoAssessment && videoAssessment.evaluated_by ? videoAssessment.evaluated_by : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Total Marks</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{testDetailsArray && testDetailsArray.totalMarks  ? testDetailsArray.totalMarks : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group group-assess">
-        <span class="label-group">
+                <div class="group group-assess">
+                    <span class="label-group">
           <span class="label">Assessment Time</span><span class="colon">:</span>
-        </span>
-        <span class="value" style="max-width: 300px;">
+                    </span>
+                    <span class="value" style="max-width: 300px;">
           {{videoAssessment && videoAssessment.start_datetime ? videoAssessment.start_datetime : '-'}}
           to
           {{videoAssessment && videoAssessment.end_datetime ? videoAssessment.end_datetime : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Duration</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{testDetailsArray && testDetailsArray.totalDuration  ? (testDetailsArray.totalDuration + checkDurationMins(testDetailsArray.totalDuration)) : '-'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group">
-        <span class="label-group">
+                <div class="group">
+                    <span class="label-group">
           <span class="label">Shortlist Status</span><span class="colon">:</span>
-        </span>
-        <span class="value">
+                    </span>
+                    <span class="value">
           {{videoAssessment && videoAssessment.showSubmitButton ? 'Yet to Shortlist' : 'Shortlisted'}}
         </span>
-      </div>
+                </div>
 
-      <div class="group" style="max-width: 100%;">
-        <span class="label-group">
+                <div class="group" style="max-width: 100%;">
+                    <span class="label-group">
           <span class="label">Remarks</span><span class="colon">:</span>
-        </span>
-        <span class="value" style="max-width: 100%;">
+                    </span>
+                    <span class="value" style="max-width: 100%;">
           {{videoAssessment && videoAssessment.remarks ? videoAssessment.remarks : '-'}}
         </span>
-      </div>
+                </div>
 
-    </div>
+            </div>
 
-  </div>
+        </div>
 
-  <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1 else scheduleNotCreatedRef">
-<div class="scheduleDetails-wrapper">
-  <ng-container *ngIf="videoAssessment && !videoAssessment.showTopBar && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1" [ngTemplateOutlet]="scheduleDetails"></ng-container>
-</div>
+        <ng-container *ngIf="videoAssessment && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1 else scheduleNotCreatedRef">
+            <div class="scheduleDetails-wrapper">
+                <ng-container *ngIf="videoAssessment && !videoAssessment.showTopBar && videoAssessment.scheduled_status && videoAssessment.scheduled_status == 1" [ngTemplateOutlet]="scheduleDetails"></ng-container>
+            </div>
 
-<div class="video-assessments">
-    <ng-container *ngIf="currentItem && currentItem.src else noVideoRef">
-      <div class="leftHalf">
-          <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
-      </div>
-      <div class="rightHalf">
-      <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
-      <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
-      <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton && (videoAssessment.test_status && videoAssessment.test_status == 'Completed')" [ngTemplateOutlet]="selectionbuttons"></ng-container>
-      </div>
+            <div class="video-assessments">
+                <ng-container *ngIf="currentItem && currentItem.src else noVideoRef">
+                    <div class="leftHalf">
+                        <ng-container *ngIf="true" [ngTemplateOutlet]="showQuestionsArray"></ng-container>
+                    </div>
+                    <div class="rightHalf">
+                        <ng-container *ngIf="true" [ngTemplateOutlet]="showVideo"></ng-container>
+                        <ng-container [ngTemplateOutlet]="showFeedbackTemplate"></ng-container>
+                        <ng-container *ngIf="videoAssessment && videoAssessment.showSubmitButton && (videoAssessment.test_status && videoAssessment.test_status == 'Completed')" [ngTemplateOutlet]="selectionbuttons"></ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
     </ng-container>
-</div>
-</ng-container>
-</ng-container>
 </div>
 
 <ng-template #showQuestionsArray>
-  <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
-    <h5>Questions</h5>
-            <div class="qusCard">
-                <div (click)="active = i" class="qusAlign" [ngClass]="{active: active == i}" *ngFor="let qus of questionDetailsArray; let i = index">
-                    <span style="white-space: nowrap;">Q{{i + 1}}. {{qus?.questionDetails?.categoryName}}: </span> <span>{{qus?.questionDetails?.question}}</span>
-                </div>
+    <ng-container *ngIf="questionDetailsArray && questionDetailsArray.length > 0">
+        <h5>Questions</h5>
+        <div class="qusCard">
+            <div (click)="active = i" class="qusAlign" [ngClass]="{active: active == i}" *ngFor="let qus of questionDetailsArray; let i = index">
+                <span style="white-space: nowrap;">Q{{i + 1}}. {{qus?.questionDetails?.categoryName}}: </span> <span>{{qus?.questionDetails?.question}}</span>
             </div>
-</ng-container>
+        </div>
+    </ng-container>
 </ng-template>
 
 <ng-template #showFeedbackTemplate>
-  <div [ngClass]="showFeedback ? 'showFeedback' : 'hideFeedback'" class="feedbackwrapper">
-    <div class="feedback-header">
-      <span class="header-text">Interviewer Feedback</span> <span (click)="showFeedback = false" style="color: white;" class="icon-close_black ag-icon-font-size pointer"></span>
-    </div>
-    <div class="feedback-body">
-        <textarea [formControl]="feedbackformControl" class="text-area text-area-div" placeholder="Enter here..."></textarea>
-        <div class="form-error" *ngIf="feedbackformControl?.invalid && feedbackformControl?.touched">
-          <div *ngIf="feedbackformControl?.errors?.required">Feedback is Required</div>
-          <div *ngIf="feedbackformControl.errors?.address255">Alpha numeric with maximum of 255 characters only allowed
-          </div>
-      </div>
-        <div class="button-wrapper">
-          <button class="cancel" (click)="showFeedback = false" mat-raised-button>Cancel</button>
-          <button *ngIf="!feedbackApiLoading" class="common-button-with-icon ml-2 pl-2 pr-2 mr-2" (click)="sendFeedback()" mat-raised-button>Send</button>
-          <button *ngIf="feedbackApiLoading" class="common-button-with-icon ml-2 pl-2 pr-2 mr-2 loading-button" (click)="sendFeedback()" mat-raised-button>
+    <div [ngClass]="showFeedback ? 'showFeedback' : 'hideFeedback'" class="feedbackwrapper">
+        <div class="feedback-header">
+            <span class="header-text">Interviewer Feedback</span> <span (click)="showFeedback = false" style="color: white;" class="icon-close_black ag-icon-font-size pointer"></span>
+        </div>
+        <div class="feedback-body">
+            <textarea [formControl]="feedbackformControl" class="text-area text-area-div" placeholder="Enter here..."></textarea>
+            <div class="form-error" *ngIf="feedbackformControl?.invalid && feedbackformControl?.touched">
+                <div *ngIf="feedbackformControl?.errors?.required">Feedback is Required</div>
+                <div *ngIf="feedbackformControl.errors?.address255">Alpha numeric with maximum of 255 characters only allowed
+                </div>
+            </div>
+            <div class="button-wrapper">
+                <button class="cancel" (click)="showFeedback = false" mat-raised-button>Cancel</button>
+                <button *ngIf="!feedbackApiLoading" class="common-button-with-icon ml-2 pl-2 pr-2 mr-2" (click)="sendFeedback()" mat-raised-button>Send</button>
+                <button *ngIf="feedbackApiLoading" class="common-button-with-icon ml-2 pl-2 pr-2 mr-2 loading-button" (click)="sendFeedback()" mat-raised-button>
             <span class="icon-Refresh load-icon"></span> <span>Sending...</span></button>
+            </div>
         </div>
     </div>
-  </div>
 </ng-template>
 
 <ng-template #showVideo>
-  <div *ngIf="!videoAssessment.showSubmitButton && videoAssessment.redirectedFrom != 'previewOnly'" class="info mb-2">
-    <p><i class="icon-checked shortlisted-icon"></i> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
-  </div>
+    <div *ngIf="!videoAssessment.showSubmitButton && videoAssessment.redirectedFrom != 'previewOnly'" class="info mb-2">
+        <p><i class="icon-checked shortlisted-icon"></i> Selected Candidate has been Shortlisted already, You can't able to evaluate him now.</p>
+    </div>
 
-  <div class="video-container">
-    <ng-container *ngIf="(videoEndedFalse || true) else novideoOverlayref">
+    <div class="video-container">
+        <ng-container *ngIf="(videoEndedFalse || true) else novideoOverlayref">
             <div *ngIf="currentItem && currentItem.src" class="video">
                 <video controls id="myVideo" name="media" class="video-player" (ended)="nextVideo()">
                 <source id="sourceVideo" [src]="currentItem.src" type="video/mp4">
             </video>
             </div>
-          </ng-container>
-          <ng-container *ngIf="!videoEndedFalse" [ngTemplateOutlet]="novideoOverlayref"></ng-container>
-          <ng-template #novideoOverlayref>
+        </ng-container>
+        <ng-container *ngIf="!videoEndedFalse" [ngTemplateOutlet]="novideoOverlayref"></ng-container>
+        <ng-template #novideoOverlayref>
             <div class="overlay-ended">
-              <h3>Video has been ended</h3>
-              <button mat-raised-button (click)="playVideo()">Play Again</button>
+                <h3>Video has been ended</h3>
+                <button mat-raised-button (click)="playagainVideo()">Play Again</button>
             </div>
-          </ng-template>
-  </div>
+        </ng-template>
+    </div>
 </ng-template>
 
 <ng-template #selectionbuttons>
-  <div class="selectionbuttons mb-1">
-    <div (click)="showFeedback = true; selectedStatus = 'selected'" class="select"><span class="selection-border"><span>Select</span></span></div>
-    <!-- <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div> -->
-    <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject ml-5"><span class="selection-border"><span>Reject</span></span></div>
-  </div>
+    <div class="selectionbuttons mb-1">
+        <div (click)="showFeedback = true; selectedStatus = 'selected'" class="select"><span class="selection-border"><span>Select</span></span>
+        </div>
+        <!-- <div (click)="showFeedback = true; selectedStatus = 'on hold'" class="hold"><span class="selection-border"><span>Hold</span></span></div> -->
+        <div (click)="showFeedback = true; selectedStatus = 'rejected'" class="reject ml-5"><span class="selection-border"><span>Reject</span></span>
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #scheduleDetails>
-  <!-- <div class="schedule-wrapper"> -->
+    <!-- <div class="schedule-wrapper"> -->
     <h6 style="font-weight: 600;" class="mt-2">Schedule Details:</h6>
     <div class="scheduleDetails">
-      <div *ngIf="false" class="field-wrapper">
-        <label>Schedule Name:</label>
-        <div class="field">Angular Assessment</div>
-      </div>
-
-      <div class="field-wrapper">
-        <label>Schedule Created by:</label>
-        <div class="field">{{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : ''}}</div>
-      </div>
-
-      <div class="field-wrapper">
-        <label>Assessment Time:</label>
-        <div class="field">{{videoAssessment && videoAssessment.start_datetime ? videoAssessment.start_datetime : ''}}
-          to
-          {{videoAssessment && videoAssessment.end_datetime ? videoAssessment.end_datetime : ''}}
+        <div *ngIf="false" class="field-wrapper">
+            <label>Schedule Name:</label>
+            <div class="field">Angular Assessment</div>
         </div>
-      </div>
 
-      <div class="field-wrapper">
-        <label>Duration:</label>
-        <div class="field">{{testDetailsArray && testDetailsArray.totalDuration ? (testDetailsArray.totalDuration + checkDurationMins(testDetailsArray.totalDuration)) : ''}}</div>
-      </div>
+        <div class="field-wrapper">
+            <label>Schedule Created by:</label>
+            <div class="field">{{videoAssessment && videoAssessment.scheduled_by ? videoAssessment.scheduled_by : ''}}</div>
+        </div>
 
-      <div class="field-wrapper">
-        <label>Total Marks:</label>
-        <div class="field">{{testDetailsArray?.totalMarks}}</div>
-      </div>
+        <div class="field-wrapper">
+            <label>Assessment Time:</label>
+            <div class="field">{{videoAssessment && videoAssessment.start_datetime ? videoAssessment.start_datetime : ''}} to {{videoAssessment && videoAssessment.end_datetime ? videoAssessment.end_datetime : ''}}
+            </div>
+        </div>
 
-      <div class="field-wrapper">
-        <label>Test Status:</label>
-        <div class="field">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : ''}}</div>
-      </div>
+        <div class="field-wrapper">
+            <label>Duration:</label>
+            <div class="field">{{testDetailsArray && testDetailsArray.totalDuration ? (testDetailsArray.totalDuration + checkDurationMins(testDetailsArray.totalDuration)) : ''}}</div>
+        </div>
 
-      <div *ngIf="videoAssessment && videoAssessment.evaluation_status" class="field-wrapper">
-        <label>Evaluation Status:</label>
-        <div class="field">{{videoAssessment && videoAssessment.evaluation_status ? videoAssessment.evaluation_status : 'Yet to Evaluate'}}</div>
-      </div>
+        <div class="field-wrapper">
+            <label>Total Marks:</label>
+            <div class="field">{{testDetailsArray?.totalMarks}}</div>
+        </div>
 
-      <div *ngIf="videoAssessment && videoAssessment.evaluated_by" class="field-wrapper">
-        <label>Evaluated By:</label>
-        <div class="field">{{videoAssessment && videoAssessment.evaluated_by ? videoAssessment.evaluated_by : 'Not Evaluated'}}</div>
-      </div>
+        <div class="field-wrapper">
+            <label>Test Status:</label>
+            <div class="field">{{videoAssessment && videoAssessment.test_status ? videoAssessment.test_status : ''}}</div>
+        </div>
 
-      <div *ngIf="videoAssessment && videoAssessment.remarks" class="field-wrapper">
-        <label>Remarks:</label>
-        <div class="field">{{videoAssessment && videoAssessment.remarks ? videoAssessment.remarks : ''}}</div>
-      </div>
+        <div *ngIf="videoAssessment && videoAssessment.evaluation_status" class="field-wrapper">
+            <label>Evaluation Status:</label>
+            <div class="field">{{videoAssessment && videoAssessment.evaluation_status ? videoAssessment.evaluation_status : 'Yet to Evaluate'}}</div>
+        </div>
+
+        <div *ngIf="videoAssessment && videoAssessment.evaluated_by" class="field-wrapper">
+            <label>Evaluated By:</label>
+            <div class="field">{{videoAssessment && videoAssessment.evaluated_by ? videoAssessment.evaluated_by : 'Not Evaluated'}}</div>
+        </div>
+
+        <div *ngIf="videoAssessment && videoAssessment.remarks" class="field-wrapper">
+            <label>Remarks:</label>
+            <div class="field">{{videoAssessment && videoAssessment.remarks ? videoAssessment.remarks : ''}}</div>
+        </div>
 
     </div>
-  <!-- </div> -->
+    <!-- </div> -->
 </ng-template>
 <ng-template #noVideoRef>
-  <div class="no-video">
-    <ng-container>
-    <h5> No Video Available...</h5>
-  </ng-container>
+    <div class="no-video">
+        <ng-container>
+            <h5> No Video Available...</h5>
+        </ng-container>
 
-</div>
+    </div>
 </ng-template>
 <ng-template #permissionDenied>
-  <div class="no-video">
-    <ng-container>
-    <h5>You are not granted access to view this screen</h5>
-  </ng-container>
+    <div class="no-video">
+        <ng-container>
+            <h5>You are not granted access to view this screen</h5>
+        </ng-container>
 
-</div>
+    </div>
 </ng-template>
 
 <ng-template #scheduleNotCreatedRef>
-  <div class="no-video">
-    <ng-container>
-    <h5>No Schedule Details Available</h5>
-  </ng-container>
+    <div class="no-video">
+        <ng-container>
+            <h5>No Schedule Details Available</h5>
+        </ng-container>
 
-</div>
+    </div>
 </ng-template>

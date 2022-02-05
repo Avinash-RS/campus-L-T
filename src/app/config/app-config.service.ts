@@ -394,6 +394,17 @@ export class AppConfigService {
   }
   }
 
+  downloadPDF(src, filename) {
+    let link = document.createElement('a');
+    link.setAttribute('type', 'hidden');
+    link.href = src;
+    link.download = src;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   getCurrentYear() {
     return new Date().getFullYear();
   }
