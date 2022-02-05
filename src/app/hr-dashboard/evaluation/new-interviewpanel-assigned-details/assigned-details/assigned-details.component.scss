@@ -116,3 +116,37 @@
     margin: 10px 0;
     padding: 1em !important;
 }
+::ng-deep .btn-outline {
+  margin-top: 5px;
+  height: 27px;
+  border: 1px solid #c02222;
+  background-color: #fff;
+  border-radius: 4px;
+  min-width: 110px;
+  color: #666;
+  cursor: none;
+
+  &.checked {
+    border: none;
+    background-color: #48cc83;
+    color: #fff;
+    flex-direction: row !important;
+    justify-content: center !important;
+    cursor: pointer;
+  }
+  &.rejected {
+    border: none;
+    background-color: #c02222;
+    color: #fff;
+    flex-direction: row !important;
+    justify-content: center !important;
+    cursor: pointer;
+  }
+  em {
+    margin-right: 7px;
+  }
+}
+::ng-deep .inprogress-bg {
+  background-color: #ffbc00 !important;
+  color: #fff;
+  }
