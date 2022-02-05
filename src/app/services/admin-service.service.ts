@@ -682,6 +682,13 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  // Download profile doc
+
+  getprofileDoc(uid){
+    return this.http.get(`${this.BASE_URL}/doc-download/eaf_download?user_id=${uid}`,
+    { headers: this.getAfterCustomHeaders(), withCredentials: true});
+  }
+
   addIC(data) {
     return this.http.post(`${this.BASE_URL}/profile/ic_panel_upload`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

@@ -14,6 +14,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import * as moment from 'moment'; //in your component
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { LoaderService } from 'src/app/services/loader-service.service';
+import { environment } from 'src/environments/environment';
 
 export const MY_FORMATS = {
   parse: {
@@ -356,6 +357,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   customerName: any;
   customerCode: any;
   lttsCustomerCode = '#LTTS';
+  BASE_URL = environment.API_BASE_URL;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -364,7 +366,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     public candidateService: CandidateMappersService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private adminService: AdminServiceService,
   ) {
     this.dateValidation();
   }
@@ -377,6 +380,22 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     this.joiningFormDataFromJoiningFormComponentRxjs();
     this.customerCode = this.appConfig.getSelectedCustomerCode();
   }
+
+  downloadAsPDF(){
+    let uid = this.nonCandidate.candidate_user_id;
+     this.adminService.getprofileDoc(uid).subscribe((data: any) => {
+       if (data) {
+         const documents = `${this.BASE_URL}/${data}`;
+         this.appConfig.downloadPDF(documents,'')
+       } else {
+         this.appConfig.warning('No Documents Available');
+       }
+     }, (err) => {
+     });;
+   }
+ 
+ 
+ 
 
   joiningFormDataFromJoiningFormComponentRxjs() {
    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {

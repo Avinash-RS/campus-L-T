@@ -139,7 +139,6 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
           });
         });
 
-        // reverse array getting from response 
         // In response last recorded video coming first that's why reverse function used
         this.playVideoList = [...this.playVideoList].reverse()
         this.currentItem =  this.playVideoList[this.currentIndex];
@@ -152,9 +151,9 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
 
   nextVideo() {
     this.currentIndex++;
+    // console.log(this.currentIndex,'this.currentIndex',this.playVideoList.length)
     if (this.currentIndex === this.playVideoList.length) {
       this.currentIndex = 0;
-     
       this.videoEndedFalse = false;
       return this.playEnd();
     }
@@ -174,6 +173,13 @@ export class SharedVideoAssessViewComponent implements OnInit, OnChanges, OnDest
     .catch(error => {
     });
   }
+}
+
+playagainVideo(){
+    this.currentIndex = 0;
+    this.videoEndedFalse = false;
+    this.currentItem = this.playVideoList[this.currentIndex];
+    this.playVideo();
 }
 
 playEnd() {
