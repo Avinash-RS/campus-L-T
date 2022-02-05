@@ -314,6 +314,34 @@
       </div>
       </div>
       <div class="space"></div>
+      <div class="row pad-bootom">
+        <div class="col-3">
+          <span class="text">Prefered work location</span>
+        </div>
+        <div class="col-9">
+          <div class="suitablity d-flex w-50 -">
+          <div>
+            {{receivedData?.work_location}}
+          </div>
+        </div>
+
+      </div>
+      </div>
+      <div class="space"></div>
+      <div class="row pad-bootom">
+        <div class="col-3">
+          <span class="text">Prefered Business Unit</span>
+        </div>
+        <div class="col-9">
+          <div class="suitablity d-flex w-50 -">
+          <div>
+            {{receivedData?.work_bu}}
+          </div>
+        </div>
+
+      </div>
+      </div>
+      <div class="space"></div>
       <div class="row pad-bootom" style="display: none;">
         <div class="col-4">
           <span class="text">Overall Remarks<span class="asterick">*</span>
@@ -322,7 +350,7 @@
         <div class="col-8" style="padding-right: 0px;">
           <textarea matInput placeholder="Enter here" [formControlName]="adaform_hr_comments"></textarea>
           <div class="charCount">
-            {{evaluationForm.value.hr_comments.length}}/255 characters
+            {{evaluationForm.value?.hr_comments?.length}}/255 characters
           </div>
           <div *ngIf="remarks.touched && remarks.errors" class="mand validation1">
             <span *ngIf="remarks.errors?.required">Overall remarks is required</span>
