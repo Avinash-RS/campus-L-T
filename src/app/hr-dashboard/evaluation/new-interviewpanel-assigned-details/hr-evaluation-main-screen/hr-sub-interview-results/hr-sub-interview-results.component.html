@@ -350,7 +350,7 @@
         <div class="col-8" style="padding-right: 0px;">
           <textarea matInput placeholder="Enter here" [formControlName]="adaform_hr_comments"></textarea>
           <div class="charCount">
-            {{evaluationForm.value?.hr_comments?.length}}/255 characters
+            {{evaluationForm?.value?.hr_comments?.length}}/255 characters
           </div>
           <div *ngIf="remarks.touched && remarks.errors" class="mand validation1">
             <span *ngIf="remarks.errors?.required">Overall remarks is required</span>
