@@ -153,7 +153,7 @@
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 1 ? true : false"
             (change)="setAssessmentLevel(assessment,1)" [name]="assessment.id" value="3">
           </mat-radio-button>
-          
+
         </td>
       </ng-container>
 
@@ -164,9 +164,9 @@
 
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 3 ? true : false"
             (change)="setAssessmentLevel(assessment, 3)" [name]="assessment.id" value="2">
-            
+
           </mat-radio-button>
-          
+
         </td>
       </ng-container>
 
@@ -175,22 +175,22 @@
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 5 ? true : false"
             (change)="setAssessmentLevel(assessment, 5)" [name]="assessment.id" value="1">
-            
+
           </mat-radio-button>
         </td>
       </ng-container>
 
-      
 
-      
+
+
 
       <ng-container matColumnDef="notSuitable">
-        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable 
+        <th class="headerCell" mat-header-cell *matHeaderCellDef>Not Suitable
         </th>
         <td class="radioButtonCell" mat-cell *matCellDef="let assessment; let index = i">
           <mat-radio-button [disabled]="status !=2 ? false : true" [checked]="assessment['isChecked'] == 'notSuitable' ? true : false"
             (change)="setAssessmentLevel(assessment, 'notSuitable')" [name]="assessment.id" value="4">
-            
+
           </mat-radio-button>
         </td>
       </ng-container>
@@ -224,6 +224,45 @@
             <span *ngIf="remarks.errors?.required">Overall remarks is required</span>
             <span *ngIf="remarks.errors?.maxlength">Maxlength of 255 characters only allowed</span>
             <span *ngIf="remarks.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Work Location<span class="asterick d-none">*</span>
+          </span>
+        </div>
+        <div class="col-8" style="padding-right: 0px;">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput placeholder="Enter here" [formControlName]="adaform_l1"></textarea>
+          <!-- <div class="charCount">
+            {{remarks.value?remarks.value.length:0}}/255 characters
+          </div> -->
+          <div *ngIf="lb1.touched && lb1.errors" class="mand validation1">
+            <!-- <span *ngIf="remarks.errors?.required">Overall remarks is required</span> -->
+            <span *ngIf="lb1.errors?.maxlength">Maxlength of 255 characters only allowed</span>
+            <span *ngIf="lb1.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Business Unit<span class="asterick d-none">*</span>
+          </span>
+        </div>
+        <div class="col-8" style="padding-right: 0px;">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput placeholder="Enter here" [formControlName]="adaform_l2"></textarea>
+          <!-- <div class="charCount">
+            {{remarks.value?remarks.value.length:0}}/255 characters
+          </div> -->
+          <div *ngIf="lb2.touched && lb2.errors" class="mand validation1">
+            <!-- <span *ngIf="remarks.errors?.required">Overall remarks is required</span> -->
+            <span *ngIf="lb2.errors?.maxlength">Maxlength of 255 characters only allowed</span>
+            <span *ngIf="lb2.errors?.pattern">Alpha numerics only allowed</span>
           </div>
 
         </div>
