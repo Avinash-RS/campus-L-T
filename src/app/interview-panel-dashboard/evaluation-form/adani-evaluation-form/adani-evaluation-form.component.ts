@@ -60,6 +60,8 @@ export class AdaniEvaluationFormComponent implements OnInit {
   adaform_interview_date = 'interview_date';
   adaform_interview_place = 'interview_place';
   adaform_remarks = 'comments';
+  adaform_l1 = 'work_location';
+  adaform_l2 = 'work_bu';
   adaform_technical_subject = 'technical_knowledge';
   adaform_application_understanding = 'application_based_understanding';
   adaform_communication = 'communication';
@@ -124,6 +126,8 @@ export class AdaniEvaluationFormComponent implements OnInit {
           [this.adaform_analytical]: data && data[this.adaform_analytical] ? data[this.adaform_analytical] : null,
           [this.adaform_executive_presence]: data && data[this.adaform_executive_presence] ? data[this.adaform_executive_presence] : null,
           [this.adaform_growth]: data && data[this.adaform_growth] ? data[this.adaform_growth] : null,
+          [this.adaform_l1]: data && data[this.adaform_l1] ? data[this.adaform_l1] : null,
+          [this.adaform_l2]: data && data[this.adaform_l2] ? data[this.adaform_l2] : null,
           // [this.adaform_valuesIntegrity]: data && data[this.adaform_valuesIntegrity] ? data[this.adaform_valuesIntegrity] : null
         });
         // console.log(data[this.caform_isattendedorNot] );
@@ -146,7 +150,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
           if (element['id'] === 6) {
             element['isChecked'] = data[this.adaform_growth] ? data[this.adaform_growth] : null
           }
-         
+
         });
         this.statusChange({value: data[this.caform_isattendedorNot]});
         this.status != '2' ?  '' : this.evaluationForm.disable();
@@ -185,6 +189,8 @@ export class AdaniEvaluationFormComponent implements OnInit {
       [this.adaform_analytical]: new FormControl(null, [Validators.required]),
       [this.adaform_executive_presence]: new FormControl(null, [Validators.required]),
       [this.adaform_growth]: new FormControl(null, [Validators.required]),
+      [this.adaform_l1]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]),
+      [this.adaform_l2]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]),
       // [this.adaform_valuesIntegrity]: new FormControl(null, [Validators.required])
     });
     this.status != '2' ?  '' : this.evaluationForm.disable();
@@ -273,6 +279,12 @@ export class AdaniEvaluationFormComponent implements OnInit {
   get remarks() {
     return this.evaluationForm.get(this.adaform_remarks);
   }
+  get lb1() {
+    return this.evaluationForm.get(this.adaform_l1);
+  }
+  get lb2() {
+    return this.evaluationForm.get(this.adaform_l2);
+  }
 
   get technical_subject() {
     return this.evaluationForm.get(this.adaform_technical_subject);
@@ -303,7 +315,7 @@ export class AdaniEvaluationFormComponent implements OnInit {
       ...assessment,
       level: value
     };
-    
+
     if (assessment['id'] == 6) {
       this.evaluationForm.patchValue({
         [this.adaform_growth]: value
