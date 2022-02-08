@@ -8,6 +8,7 @@ const specialCharacterValidation = "^[a-zA-Z0-9 ]*";
 const alphaNumericwithCommonSpecialCharactersMaxLength255: RegExp = /^([a-zA-Z0-9_ \-,.\r\n]){0,255}$/;
 const alphaNumericwithCommonSpecialCharactersMaxLength30: RegExp = /^([a-zA-Z0-9_ \-,.\r\n]){0,30}$/;
 const alphaNumericwithCommonSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.\r\n])*$/;
+const alphaNumericwithSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.:+#*&/\r\n|\r|\n/]){0,255}$/;
 
 export const textVal: any = [
   Validators.pattern(/^(.|\s)*\S(.|\s)*$/),
@@ -24,3 +25,5 @@ export const alphaNum30: any = Validators.pattern(alphaNumericwithCommonSpecialC
 export const alphaWithDots: any = Validators.pattern(alphaNumericwithCommonSpecialCharacters);
 
 export const alphaNum: any = Validators.pattern(alphaNumericwithCommonSpecialCharacters);
+
+export const alphaNumericSpecialCharacters: any = Validators.pattern(alphaNumericwithSpecialCharacters);

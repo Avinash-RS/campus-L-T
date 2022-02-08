@@ -221,7 +221,55 @@
     </div>
     <div class="space"></div>
     <div style="margin-left: 10px;">
-      <div class="row pad-bootom mt-2 mb-2">
+      <div class="row pad-bootom mt-2">
+        <div class="col-4">
+          <span class="text">CP Rating<span class="asterick">*</span></span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput placeholder="Enter here" [formControlName]="caform_cprating"></textarea>
+          <div *ngIf="cpRating.touched && cpRating.errors" class="mand validation1">
+            <span *ngIf="cpRating.errors?.required">CP Rating is required</span>
+            <span *ngIf="cpRating.errors?.pattern">Alpha numerics with Maxlength of 255 characters only allowed</span>
+          </div>
+
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Position Preference 1</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput placeholder="Enter here" [formControlName]="caform_postionReference1"></textarea>
+          <div *ngIf="postionReference1.touched && postionReference1.errors" class="mand validation1">
+            <span *ngIf="postionReference1.errors?.maxlength">Maxlength of 255 characters only allowed</span>
+            <span *ngIf="postionReference1.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row pad-bootom">
+        <div class="col-4">
+          <span class="text">Position Preference 2</span>
+        </div>
+        <div class="col-8">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <textarea matInput placeholder="Enter here" [formControlName]="caform_postionReference2"></textarea>
+          <div *ngIf="postionReference2.touched && postionReference2.errors" class="mand validation1">
+            <span *ngIf="postionReference2.errors?.maxlength">Maxlength of 255 characters only allowed</span>
+            <span *ngIf="postionReference2.errors?.pattern">Alpha numerics only allowed</span>
+          </div>
+
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row pad-bootom mb-1">
         <div class="col-4">
           <span class="text">STATUS<span class="asterick">*</span></span>
         </div>
@@ -244,7 +292,7 @@
 
       </div>
 
-      <div class="row pad-bootom">
+      <div class="row pad-bootom mt-2 mb-1">
         <div class="col-4">
           <span class="text">WILLING TO WORK AT SITE<span class="asterick">*</span></span>
         </div>

@@ -81,6 +81,9 @@ export class CaEvaluationFormComponent implements OnInit {
   caform_applicationOfKnowledge = 'ca_application_knowledge';
   caform_valuesIntegrity = 'ca_values';
   caform_suitability_other_position = 'ca_suitability_other_position';
+  caform_cprating = 'cp_rating';
+  caform_postionReference1 = 'position_reference_1';
+  caform_postionReference2 = 'position_reference_2';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -151,7 +154,10 @@ export class CaEvaluationFormComponent implements OnInit {
           [this.caform_communicationskillOrExpression]: data && data[this.caform_communicationskillOrExpression] ? data[this.caform_communicationskillOrExpression] : null,
           [this.caform_taskEffectiveness]: data && data[this.caform_taskEffectiveness] ? data[this.caform_taskEffectiveness] : null,
           [this.caform_applicationOfKnowledge]: data && data[this.caform_applicationOfKnowledge] ? data[this.caform_applicationOfKnowledge] : null,
-          [this.caform_valuesIntegrity]: data && data[this.caform_valuesIntegrity] ? data[this.caform_valuesIntegrity] : null
+          [this.caform_valuesIntegrity]: data && data[this.caform_valuesIntegrity] ? data[this.caform_valuesIntegrity] : null,
+          [this.caform_cprating]: data && data[this.caform_cprating] ? data[this.caform_cprating] : null,
+          [this.caform_postionReference1]: data && data[this.caform_postionReference1] ? data[this.caform_postionReference1] : null,
+          [this.caform_postionReference2]: data && data[this.caform_postionReference2] ? data[this.caform_postionReference2] : null
         });
         this.assessments.forEach(element => {
           if (element['id'] === 1) {
@@ -224,7 +230,10 @@ export class CaEvaluationFormComponent implements OnInit {
       [this.caform_communicationskillOrExpression]: new FormControl(null, [Validators.required]),
       [this.caform_taskEffectiveness]: new FormControl(null, [Validators.required]),
       [this.caform_applicationOfKnowledge]: new FormControl(null, [Validators.required]),
-      [this.caform_valuesIntegrity]: new FormControl(null, [Validators.required])
+      [this.caform_valuesIntegrity]: new FormControl(null, [Validators.required]),
+      [this.caform_cprating]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.required, myGlobals.alphaNumericSpecialCharacters]),
+      [this.caform_postionReference1]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum]),
+      [this.caform_postionReference2]: new FormControl('', [RemoveWhitespace.whitespace(), Validators.maxLength(255), myGlobals.alphaNum])
     });
     this.status != '2' ?  '' : this.evaluationForm.disable();
   }
@@ -273,6 +282,10 @@ export class CaEvaluationFormComponent implements OnInit {
 
         this.evaluationForm['controls'][this.caform_valuesIntegrity].clearValidators();
         this.evaluationForm['controls'][this.caform_valuesIntegrity].updateValueAndValidity();
+
+        this.evaluationForm['controls'][this.caform_cprating].setValidators([RemoveWhitespace.whitespace(), myGlobals.alphaNumericSpecialCharacters]);
+        this.evaluationForm['controls'][this.caform_cprating].updateValueAndValidity();
+
       } else {
         this.evaluationForm['controls'][this.caform_NotattendedReason].clearValidators();
         this.evaluationForm['controls'][this.caform_NotattendedReason].updateValueAndValidity();
@@ -315,6 +328,10 @@ export class CaEvaluationFormComponent implements OnInit {
 
         this.evaluationForm['controls'][this.caform_valuesIntegrity].setValidators([Validators.required]);
         this.evaluationForm['controls'][this.caform_valuesIntegrity].updateValueAndValidity();
+
+        this.evaluationForm['controls'][this.caform_cprating].setValidators([RemoveWhitespace.whitespace(), Validators.required, myGlobals.alphaNumericSpecialCharacters]);
+        this.evaluationForm['controls'][this.caform_cprating].updateValueAndValidity();
+
       }
     }, 100);
 
@@ -373,6 +390,15 @@ export class CaEvaluationFormComponent implements OnInit {
   }
   get remarks() {
     return this.evaluationForm.get(this.caform_remarks);
+  }
+  get cpRating() {
+    return this.evaluationForm.get(this.caform_cprating);
+  }
+  get postionReference1() {
+    return this.evaluationForm.get(this.caform_postionReference1);
+  }
+  get postionReference2() {
+    return this.evaluationForm.get(this.caform_postionReference2);
   }
   get overallAssessmentStatus() {
     return this.evaluationForm.get(this.caform_overallAssessmentStatus);
