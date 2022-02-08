@@ -237,10 +237,10 @@ margin-left: 10px;
 list-style: none;
 }
 .charCount{
-  display: flex;
+  position: absolute;
   font-size: 12px;
   color:grey;
-  justify-content: flex-end;
+  right: 0;
 }
 
 .evaluationTable{
