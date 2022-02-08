@@ -55,6 +55,7 @@ export class AdaniSharedKycProfileViewComponent implements OnInit, AfterViewInit
   @ViewChild('matDialogDocViewer', { static: false }) matDialogRefDocViewer: TemplateRef<any>;
 
   @Input() nonCandidate: any;
+  role = this.appConfig.getLocalData('roles');
   category = [
     {
       name: 'Scheduled Caste',
