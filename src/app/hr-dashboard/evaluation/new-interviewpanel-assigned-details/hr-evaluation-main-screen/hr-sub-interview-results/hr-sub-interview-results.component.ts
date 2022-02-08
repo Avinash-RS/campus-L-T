@@ -1,7 +1,7 @@
 
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import SampleJson from '../../../../../../assets/files/adani_evaluation_form.json';
 import { FormControl, FormGroup, FormBuilder, NgModel, Validators, FormArray } from '@angular/forms';
 import * as myGlobals from '../../../../../custom-form-validators/validation';
@@ -11,7 +11,7 @@ import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespac
 import { ApiServiceService } from 'src/app/services/api-service.service.js';
 import { SharedServiceService } from 'src/app/services/shared-service.service.js';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 
@@ -22,11 +22,21 @@ import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/sh
   templateUrl: './hr-sub-interview-results.component.html',
   styleUrls: ['./hr-sub-interview-results.component.scss'],
   providers: [
+    // {
+    //   provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+    //   useValue: { useUtc: true }
+    // },
+        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
     {
-      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-      useValue: { useUtc: true }
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
-  ],
+
+    { provide: MAT_DATE_FORMATS, useValue: myGlobals.MY_FORMATS },
+  ]
 })
 
 export class HrSubInterviewResultsComponent implements OnInit {
@@ -78,8 +88,8 @@ export class HrSubInterviewResultsComponent implements OnInit {
         name: iterator.name,
         expoints: iterator.expoints
       }]
-        
-      
+
+
     }
     // console.log(this.assessments)
     // this.getInterviewResults();
@@ -121,7 +131,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
           if(this.receivedData.hr_selection_decision!="" ){
             this.status='2';
           }
-          this.status != '2' ? '' : this.evaluationForm.disable();
+          this.evaluationForm.disable();
 
           this.dataSource = new MatTableDataSource<any>(this.assessments);
           this.dynCol = []
@@ -130,10 +140,10 @@ export class HrSubInterviewResultsComponent implements OnInit {
             this.displayedColumns=[...this.displayedColumns,"interviewer" + i]
             this.dynCol=[...this.dynCol,"interviewer" + i ]
             this.assessments.forEach(item => {
-           
+
               item['interviewer' + i] = "1"
               // console.log(item)
-            
+
           });
 
           });
@@ -155,7 +165,7 @@ export class HrSubInterviewResultsComponent implements OnInit {
     }
 
     nginitFunc() {
-      
+
       this.evaluationForm = this.formBuilder.group({
         [this.adaform_interview_date]: new FormControl('', [Validators.required]),
         [this.adaform_interview_place]: new FormControl('', [RemoveWhitespace.whitespace(), myGlobals.req, myGlobals.alphaNum30]),

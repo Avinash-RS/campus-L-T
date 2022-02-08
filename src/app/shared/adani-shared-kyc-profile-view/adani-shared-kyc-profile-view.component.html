@@ -4,7 +4,7 @@
             <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section">
                 <div class="header d-flex justify-content-between mb-1 align-items-center">
                     <h6>Primary Details</h6>
-                    <button mat-button (click)="downloadAsPDF()">Download</button>
+                    <button *ngIf="personalDetailsMap" mat-raised-button class="common-button common-button-height-32" (click)="downloadAsPDF()">Download</button>
                     <div *ngIf="!formSubmitted" class="icon">
                         <span (click)="editRoute('personal')" class="icon-Edit ag-icon-font-size edit-icon"></span>
                     </div>
@@ -363,7 +363,7 @@
                 </div>
               </div>
             </div>
-  
+
             <div class="row-wrapper mt-0">
               <div class="overall-input-wrapper mt-3 width-32">
                 <label>City<span></span></label>
@@ -1224,7 +1224,7 @@
                 </div>
               </div>
             </div>
-  
+
             <ng-container
               *ngIf="
                 workDetails.workDetails &&
@@ -1258,7 +1258,7 @@
                 </div>
               </div>
             </ng-container>
-  
+
             <ng-container
               *ngIf="
                 workDetails.workDetails &&
@@ -1298,12 +1298,12 @@
               </div>
             </ng-container>
           </ng-container>
-  
+
             <ng-container
             *ngIf="workDetailsAlldata && workDetailsAlldata[this.form_training_Array] && workDetailsAlldata[this.form_training_Array].length > 0"
           >
             <div class="subDocumentTitle">Articleship/Training Details</div>
-  
+
             <div
               class="row-wrapper mt-0"
               [ngClass]="i == 0 ? 'padding-1' : 'border-wrapper'"
@@ -1316,14 +1316,14 @@
                     {{ training[form_training_employer_name] }}
                   </div>
                 </div>
-  
+
                 <div class="overall-input-wrapper mt-0 width-20">
                   <label>Duration From</label>
                   <div class="inpu-preview f_size_16 bold-700 color-black">
                     {{ dateConvertion(training[form_training_from_date]) }}
                   </div>
                 </div>
-  
+
                 <div class="overall-input-wrapper mt-0 width-20">
                   <label>Duration To</label>
                   <div class="inpu-preview f_size_16 bold-700 color-black">
@@ -1331,7 +1331,7 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="row-wrapper mt-0">
                 <div class="overall-input-wrapper mt-3 width-40">
                   <label>Details of Work Responsibility</label>
@@ -1342,7 +1342,7 @@
               </div>
             </div>
           </ng-container>
-  
+
           <ng-container
           *ngIf="workDetailsAlldata[this.form_training_Array] && workDetailsAlldata[this.form_training_Array].length > 0"
         >
@@ -1373,7 +1373,7 @@
             </div>
           </div>
         </ng-container>
-  
+
         <ng-container *ngIf="workDetailsAlldata[this.form_ca_achivement] || workDetailsAlldata[this.form_is_ca_resaon_suitable]">
           <div
           class="row-wrapper mt-0">
@@ -1389,12 +1389,12 @@
               {{ workDetailsAlldata[this.form_is_ca_resaon_suitable] }}
             </div>
           </div>
-  
+
         </div>
-  
+
         </ng-container>
-  
-  
+
+
             <ng-container *ngIf="workDetails.relatives && workDetails.relatives.length > 0">
               <div class="subDocumentTitle">Relatives / Acquaintances in {{customerName}} group of companies</div>
               <div
@@ -1409,21 +1409,21 @@
                       {{ relatives[form_relatives_name] }}
                     </div>
                   </div>
-  
+
                   <div class="overall-input-wrapper width-24">
                     <label>Relationship</label>
                     <div class="inpu-preview size-16 bold-700 color-black">
                       {{ relatives[form_relatives_relationship] }}
                     </div>
                   </div>
-  
+
                   <div class="overall-input-wrapper width-24">
                     <label>Position</label>
                     <div class="inpu-preview size-16 bold-700 color-black">
                       {{ relatives[form_relatives_position] }}
                     </div>
                   </div>
-  
+
                   <div class="overall-input-wrapper width-24">
                     <label>Company</label>
                     <div class="inpu-preview size-16 bold-700 color-black">
@@ -1433,7 +1433,7 @@
                 </div>
               </div>
           </ng-container>
-  
+
           <ng-container *ngIf="workDetails.faculty && workDetails.faculty.length > 0">
             <div class="subDocumentTitle">Faculty References</div>
             <div
@@ -1445,14 +1445,14 @@
               </div>
             </div>
           </div>
-  
+
           </ng-container>
             <!-- <ng-container
               *ngIf="workDetails.bgvDetails && workDetails.bgvDetails.show"
             >
               <div class="row-wrappper mt-0 border-wrapper">
                 <div class="subDocumentTitle m-0 p-0">Disciplinary Details</div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1469,7 +1469,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1488,7 +1488,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1505,7 +1505,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1524,7 +1524,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1541,7 +1541,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1559,7 +1559,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1576,7 +1576,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1594,7 +1594,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1611,7 +1611,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1631,7 +1631,7 @@
                     >
                   </div>
                 </div>
-  
+
                 <div
                   *ngIf="
                     workDetails.bgvDetails &&
@@ -1655,7 +1655,7 @@
             </ng-container> -->
           </ng-container>
         </div>
-  
+
         <!-- Acknowledge -->
         <ng-container *ngIf="!formSubmitted && !nonCandidate">
           <form
@@ -1690,7 +1690,7 @@
                     persons and agree to hold such persons harmless with respect
                     to any information that may give.
                   </div>
-  
+
                   <div
                     *ngIf="candidateService.checkKycOrJoiningForm()"
                     class="content-2 mt-2"
@@ -1821,7 +1821,7 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="row-wrapper-preview checkbox-pad">
                 <div class="overall-input-wrapper width-45">
                   <label>Place<span></span></label>

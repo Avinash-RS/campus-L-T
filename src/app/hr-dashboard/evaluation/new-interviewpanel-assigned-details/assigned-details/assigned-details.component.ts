@@ -331,7 +331,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
     ];
     if( this.customerCode == '#ADANI'){
       let adanistatus:any =  {
-        headerName: 'Status', field: 'interview_status',
+        headerName: 'Interview Status', field: 'interview_status',
         filter: 'agSetColumnFilter',
         minWidth: 140,
         sortable: false,
@@ -341,7 +341,6 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         },
         cellClass: 'ag-button-cellClass',
         cellRenderer: (params:any) => {
-          console.log(params)
           if (
             params.data && (params.data.interview_status == "Can be considered")
           ) {

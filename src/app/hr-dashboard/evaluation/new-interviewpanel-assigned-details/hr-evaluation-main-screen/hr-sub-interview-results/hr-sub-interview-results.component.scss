@@ -1,4 +1,7 @@
 @import "../../../../../themes/themes.scss";
+// * {
+//   word-break: break-all;
+// }
 .main-evaluation {
   height: 100%;
   background: $wrapper-light-gray;
@@ -247,8 +250,11 @@ input.ng-touched.ng-invalid {
   border-radius: 5px;
   border: 1px solid rgba(170, 170, 170, 0.4);
   thead {
+    background: #E6E3E3 !important;
     tr {
       th {
+        width: 24;
+        min-width: 24%;
         padding: 5px 24px !important;
         background-color: #EDEDED;
         .attribute {
@@ -261,12 +267,21 @@ input.ng-touched.ng-invalid {
           font-size: 15px;
           font-weight: 400;
           color: #222222;
-          span {
-            width: 75px;
+          display: grid;
+          margin-top: 2px;
+          grid-template-columns: 50% 50%;
+          grid-auto-rows: initial;
+          .field,.value {
+            white-space: normal;
             display: inline-block;
             color: #666666;
             font-size: 14px;
             font-weight: 500;
+          }
+          .field {
+            display: flex !important;
+            padding-right: 8px;
+            justify-content: space-between;
           }
         }
       }
@@ -280,6 +295,8 @@ input.ng-touched.ng-invalid {
   tbody {
     tr {
       td {
+        width: 24%;
+        min-width: 24%;
         padding: 16px 24px !important;
         border-bottom: 1px solid rgba(170, 170, 170, 0.4);
         .performance {
@@ -355,7 +372,7 @@ input.ng-touched.ng-invalid {
 .suitablity{
   display: flex;
   justify-content: space-between;
-  text-align: center;
+  text-align: left;
   .Average {
     padding: 5px;
     border-radius: 5px;
