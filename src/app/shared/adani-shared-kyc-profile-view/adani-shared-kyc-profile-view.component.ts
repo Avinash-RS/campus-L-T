@@ -548,7 +548,7 @@ export class AdaniSharedKycProfileViewComponent implements OnInit, AfterViewInit
      }, (err) => {
      });;
    }
- 
+
 
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
