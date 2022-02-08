@@ -472,7 +472,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
-        minWidth: 130,
+        minWidth: 140,
         sortable: true,
         getQuickFilterText: (params) => {
           return params.value;

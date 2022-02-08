@@ -332,29 +332,29 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
     if( this.customerCode == '#ADANI'){
       let adanistatus:any =  {
         headerName: 'Status', field: 'interview_status',
-        filter: 'agTextColumnFilter',
+        filter: 'agSetColumnFilter',
         minWidth: 140,
         sortable: false,
         tooltipField: 'interview_status',
         getQuickFilterText: (params) => {
           return params.value;
-        }
-        ,
+        },
+        cellClass: 'ag-button-cellClass',
         cellRenderer: (params:any) => {
           console.log(params)
           if (
             params.data && (params.data.interview_status == "Can be considered")
           ) {
-              return `<button class="btn-outline checked inprogress-bg"><em class="icon-checked"></em>${params.data.interview_status}</button>`;
+              return `<button class="ag-button-custom inprogress-color common-button-height-28">${params.data.interview_status}</button>`;
           }
           if (params.data && (params.data.interview_status) =="Selected") {
-            return `<button class="btn-outline checked completed-bg"><em class="icon-checked"></em>${params.data.interview_status}</button>`;
+            return `<button class="ag-button-custom completed-color common-button-height-28">${params.data.interview_status}</button>`;
           }
           if(params.data.interview_status == "" || params.data.interview_status == null) {
-            return `<button class="btn-outline">Yet to evaluate</button>`;
+            return `<button class="ag-button-custom yet-to-start-color common-button-height-28">Yet to evaluate</button>`;
           }
           if(params.data.interview_status == "Not Selected") {
-            return `<button class="rejected btn-outline checked " click=""><em class="icon-close_black"></em>${params.data.interview_status}</button>`;
+            return `<button class="ag-button-custom rejected-color common-button-height-28">${params.data.interview_status}</button>`;
           }
         }
       }
