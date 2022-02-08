@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatTableDataSource, MatDialog, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -29,11 +29,21 @@ export interface PeriodicElement {
   templateUrl: './bis-evaluation-form.component.html',
   styleUrls: ['./bis-evaluation-form.component.scss'],
   providers: [
+    // {
+    //   provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+    //   useValue: { useUtc: true }
+    // },
+        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
     {
-      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-      useValue: { useUtc: true }
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
-  ]
+
+    { provide: MAT_DATE_FORMATS, useValue: myGlobals.MY_FORMATS },
+  ],
 })
 export class BisEvaluationFormComponent implements OnInit {
   @Input() candidateId;

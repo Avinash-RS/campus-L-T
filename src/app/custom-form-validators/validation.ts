@@ -24,3 +24,16 @@ export const alphaNum30: any = Validators.pattern(alphaNumericwithCommonSpecialC
 export const alphaWithDots: any = Validators.pattern(alphaNumericwithCommonSpecialCharacters);
 
 export const alphaNum: any = Validators.pattern(alphaNumericwithCommonSpecialCharacters);
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+    // dateInput: 'DD MMM YYYY', // output ->  01 May 1995
+    dateInput: 'DD-MM-YYYY', // output ->  01-10-1995
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
