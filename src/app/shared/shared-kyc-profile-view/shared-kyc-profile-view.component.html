@@ -4,7 +4,7 @@
             <div *ngIf="!nonCandidate || nonCandidate.documentsOnly != true" class="section">
                 <div class="header d-flex justify-content-between mb-1 align-items-center">
                     <h6>Primary Details</h6>
-                    <button class="download" mat-button (click)="downloadAsPDF()">Download</button>
+                    <button *ngIf="personalDetailsMap && role != 'candidate'" mat-raised-button class="common-button common-button-height-32" (click)="downloadAsPDF()">Download</button>
                     <div *ngIf="!formSubmitted" class="icon">
                         <span (click)="editRoute('personal')" class="icon-Edit ag-icon-font-size edit-icon"></span>
                     </div>

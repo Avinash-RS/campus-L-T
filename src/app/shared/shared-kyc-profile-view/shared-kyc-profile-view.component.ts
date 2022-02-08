@@ -58,6 +58,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   @ViewChild('matDialogDocViewer', { static: false }) matDialogRefDocViewer: TemplateRef<any>;
 
   @Input() nonCandidate: any;
+  role = this.appConfig.getLocalData('roles');
   category = [
     {
       name: 'Scheduled Caste',
@@ -393,9 +394,9 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
      }, (err) => {
      });;
    }
- 
- 
- 
+
+
+
 
   joiningFormDataFromJoiningFormComponentRxjs() {
    this.joiningFormDataPassingSubscription = this.sharedService.joiningFormDataPassing.subscribe((data: any)=> {
