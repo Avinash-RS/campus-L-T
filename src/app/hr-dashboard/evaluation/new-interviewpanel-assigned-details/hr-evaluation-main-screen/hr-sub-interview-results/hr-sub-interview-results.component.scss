@@ -1,7 +1,7 @@
 @import "../../../../../themes/themes.scss";
-// * {
-//   word-break: break-all;
-// }
+* {
+  word-break: break-word;
+}
 .main-evaluation {
   height: 100%;
   background: $wrapper-light-gray;
@@ -12,7 +12,7 @@
 
   .head {
     font-weight: 400;
-    color: #808080;
+    color: #1b0303;
     font-size: 13px;
   }
   .ans {
@@ -269,7 +269,7 @@ input.ng-touched.ng-invalid {
           color: #222222;
           display: grid;
           margin-top: 2px;
-          grid-template-columns: 50% 50%;
+          grid-template-columns: 33% 67%;
           grid-auto-rows: initial;
           .field,.value {
             white-space: normal;
