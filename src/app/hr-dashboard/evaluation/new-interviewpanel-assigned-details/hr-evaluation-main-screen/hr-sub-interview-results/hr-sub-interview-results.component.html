@@ -115,7 +115,7 @@
           <th>
             <span class="attribute">Attributes</span>
           </th>
-          <th *ngFor="let item of receivedData?.feedbacks.interviewers">
+          <th *ngFor="let item of receivedData?.feedbacks?.interviewers">
             <div>
               <span class="field"><span>Interviewer</span> : </span> <span class="value">{{item.interviewer_name}}</span></div>
             <div>
@@ -136,7 +136,7 @@
               <li>The candidate was able to connect various engineering concepts</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData?.feedbacks.technical_knowledge">
+          <td *ngFor="let item of receivedData?.feedbacks?.technical_knowledge">
             <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -153,7 +153,7 @@
                 context.</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData?.feedbacks.application_based_understanding">
+          <td *ngFor="let item of receivedData?.feedbacks?.application_based_understanding">
             <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -168,7 +168,7 @@
               <li>The candidate was also able to make a positive impact while communicating with the panel members</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData?.feedbacks.communication">
+          <td *ngFor="let item of receivedData?.feedbacks?.communication">
             <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -185,7 +185,7 @@
                 solution.</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData?.feedbacks.analytical">
+          <td *ngFor="let item of receivedData?.feedbacks?.analytical">
             <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -200,7 +200,7 @@
               <li>The candidate had an approachable attitude and a sense of authenticity</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData?.feedbacks.executive_presence">
+          <td *ngFor="let item of receivedData?.feedbacks?.executive_presence">
             <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -216,7 +216,7 @@
               <li>Process driven</li>
             </ul>
           </td>
-          <td *ngFor="let item of receivedData?.feedbacks.potential_for_future_growth">
+          <td *ngFor="let item of receivedData?.feedbacks?.potential_for_future_growth">
             <div class="performance" *ngIf="item">
               <em class="icon-checkbox" [ngClass]="itemchek(item)"></em>
               <span>{{itemchek(item)}}</span>
@@ -224,12 +224,20 @@
           </td>
         </tr>
         <tr>
+          <td><strong>Preferred work location</strong> </td>
+          <td *ngFor="let item of receivedData?.feedbacks?.work_location">{{item}}</td>
+        </tr>
+        <tr>
+          <td><strong>Preferred Business Unit</strong> </td>
+          <td *ngFor="let item of receivedData?.feedbacks?.work_bu">{{item}}</td>
+        </tr>
+        <tr>
           <td><strong>Comments</strong> </td>
-          <td *ngFor="let item of receivedData?.feedbacks.comments">{{item}}</td>
+          <td *ngFor="let item of receivedData?.feedbacks?.comments">{{item}}</td>
         </tr>
         <tr>
           <td><strong>Total Score</strong></td>
-          <td *ngFor="let item of receivedData?.feedbacks.interview_score">{{item}}</td>
+          <td *ngFor="let item of receivedData?.feedbacks?.interview_score">{{item}}</td>
         </tr>
       </tbody>
     </table>
@@ -237,34 +245,6 @@
     <div class="space"></div>
     <div class="space"></div>
     <div class="assesmentremarks">
-      <div class="row pad-bootom">
-        <div class="col-3">
-          <span class="text">Preferred work location</span>
-        </div>
-        <div class="col-9">
-          <div class="suitablity d-flex w-50 -">
-          <div>
-            {{receivedData?.work_location}}
-          </div>
-        </div>
-
-      </div>
-      </div>
-      <div class="space"></div>
-      <div class="row pad-bootom">
-        <div class="col-3">
-          <span class="text">Preferred Business Unit</span>
-        </div>
-        <div class="col-9">
-          <div class="suitablity d-flex w-50 -">
-          <div>
-            {{receivedData?.work_bu}}
-          </div>
-        </div>
-
-      </div>
-      </div>
-      <div class="space"></div>
       <div class="row pad-bootom">
         <div class="col-3">
           <span class="text">Overall Suitablity for the position
