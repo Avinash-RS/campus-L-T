@@ -122,6 +122,26 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'offer-Details-bulk-hr-mapping'">
+  <div class="bulk-upload-text">
+    Confirm to upload the offer details
+  </div>
+  <div class="buttons">
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'PMEC-Details-bulk-hr-mapping'">
+  <div class="bulk-upload-text">
+    Confirm to upload the PMEC details
+  </div>
+  <div class="buttons">
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'selected-candidate-bulk-declined-upload'">
   <div class="bulk-upload-text">
     Confirm to upload the declined candidate details

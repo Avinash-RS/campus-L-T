@@ -1,12 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import moment from 'moment';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
-import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx';
@@ -39,63 +35,78 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   dateFormatExist: boolean;
   firstForm = 'selectedCandidates';
   secondForm = 'hrMapping';
-  thirdForm = 'decliners_upload'
-  selectedTemplate = this.firstForm;
+  thirdForm = 'decliners_upload';
+  fourthForm = 'medical_upload';
+  fifthForm = 'offer_status_upload';
   templates = [
     {
       value: this.firstForm,
-      name: 'Upload Selected Candidates'
+      name: 'Upload Selected Candidates',
+      path: `${this.BASE_URL}/sites/default/files/Selected_Candidates_Template.csv`
     },
     {
       value: this.secondForm,
-      name: 'HR Details Mapping'
+      name: 'HR Details Mapping',
+      path: `${this.BASE_URL}/sites/default/files/Joiners_Template.csv`
     },
     {
       value: this.thirdForm,
-      name: 'Offer Declined Candidates Upload'
-    }
-  ]
+      name: 'Offer Declined Candidates Upload',
+      path: `${this.BASE_URL}/sites/default/files/Decliners_Template.csv`
+    },
+  ];
+  larsenSpecificUploads = [{
+    value: this.fourthForm,
+    name: 'PEMC Upload',
+    path: `${this.BASE_URL}/sites/default/files/PEMC_Template.csv`
+  },
+  {
+    value: this.fifthForm,
+    name: 'Offer Acceptance Upload',
+    path: `${this.BASE_URL}/sites/default/files/Offer_Template.csv`
+  }];
+
+  selectedTemplate = this.templates[0];
+  selectedTemplatePath: any = `${this.BASE_URL}/sites/default/files/Selected_Candidates_Template.csv`;
   constructor(
-    private candidateService: CandidateMappersService,
-    private fb: FormBuilder,
     private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
     private adminService: AdminServiceService,
-    private sharedService: SharedServiceService,
     private matDialog: MatDialog,
-  ) { }
+  ) {
+    if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
+      this.templates = this.templates.concat(this.larsenSpecificUploads);
+    }
+  }
 
   ngOnInit() {
   }
 
   changeTemp(e) {
     this.delete();
-    if (e.value == this.firstForm) {
-      this.selectedTemplate = this.firstForm;
-    }
-    if (e.value == this.secondForm) {
-      this.selectedTemplate = this.secondForm;
-    }
-    if (e.value == this.thirdForm) {
-      this.selectedTemplate = this.thirdForm;
-    }
   }
   nextTab(index) {
     this.tabChange.emit(index);
   }
 
   downloadTemplate() {
-    if (this.selectedTemplate == this.firstForm) {
-      const excel = `${this.BASE_URL}/sites/default/files/Selected_Candidates_Template.csv`;
-      window.open(excel, '_blank');
-    } else if (this.selectedTemplate == this.secondForm) {
-      const excel = `${this.BASE_URL}/sites/default/files/Joiners_Template.csv`;
-      window.open(excel, '_blank');
-    } else {
-      const excel = `${this.BASE_URL}/sites/default/files/Decliners_Template.csv`;
-      window.open(excel, '_blank');
-    }
+    const excel = this.selectedTemplate.path;
+    window.open(excel, '_blank');
   }
+
+  submitOfferStatus() {
+    const data = {
+      bulk_upload: 'offer-Details-bulk-hr-mapping'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
+  }
+
+  submitPMEC() {
+    const data = {
+      bulk_upload: 'PMEC-Details-bulk-hr-mapping'
+    };
+    this.openDialog(ShortlistBoxComponent, data);
+  }
+
   submit() {
     const data = {
       bulk_upload: 'selected-candidate-bulk'
@@ -151,9 +162,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   }
   uploadListToAPI() {
     const date = new Date();
-    const currentDate = this.getDateFormat1(date);
-    // const time = this.tConvert(`${date.getHours()}:${minutes}`);
-
     this.uploadedListArray.forEach(element => {
       let minutes;
       if (date.getMinutes().toString().length === 1) {
@@ -165,9 +173,8 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       element['field_user_created_by'] = this.appConfig.getLocalData('userId');
       element['time'] = this.tConvert(`${date.getHours()}:${minutes}`);
     });
-    // let data;
 
-    if (this.selectedTemplate == this.firstForm) {
+    if (this.selectedTemplate.value == this.firstForm) {
       this.adminService.SelectedCandidatesBulkUpload(this.uploadedListArray).subscribe((data: any) => {
 
         const datas = {
@@ -180,7 +187,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       });
     }
-    else if (this.selectedTemplate == this.secondForm) {
+    else if (this.selectedTemplate.value == this.secondForm) {
       this.adminService.SelectedCandidatesHRMappingBulkUpload(this.uploadedListArray).subscribe((data: any) => {
 
         const datas = {
@@ -193,7 +200,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       });
     }
-    else {
+    else if (this.selectedTemplate.value == this.thirdForm) {
       this.adminService.declinedCandidatesUpload(this.uploadedListArray).subscribe((data: any) => {
 
         const datas = {
@@ -206,13 +213,35 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       });
     }
+    else if (this.selectedTemplate.value == this.fourthForm) {
+      this.adminService.PMECDetailsBulkUpload(this.uploadedListArray).subscribe((data: any) => {
+
+        const datas = {
+          bulk_upload_ic: 'ic-bulk',
+          totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
+          errorLength: data ? data?.length : 0,
+        };
+        this.openDialog1(ShortlistBoxComponent, datas);
+      }, (err) => {
+
+      });
+    }
+    else if (this.selectedTemplate.value == this.fifthForm) {
+      this.adminService.OfferDetailsBulkUpload(this.uploadedListArray).subscribe((data: any) => {
+
+        const datas = {
+          bulk_upload_ic: 'ic-bulk',
+          totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
+          errorLength: data ? data?.length : 0,
+        };
+        this.openDialog1(ShortlistBoxComponent, datas);
+      }, (err) => {
+
+      });
+    } else { }
   }
   upload() {
-
     this.validFile = false;
-    const apiData = {
-      source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
-    };
     /* wire up file reader */
     const target: DataTransfer = (this.selectedTarget) as DataTransfer;
     if (target.files.length !== 1) {
@@ -234,30 +263,16 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 5 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Candidate Email Id') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Business Name')) {
-        // this.enableList = true;
-
         this.totalCount(this.SavedData);
       } else {
         this.validFile = true;
-
       }
     };
     reader.readAsBinaryString(target.files[0]);
-    // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
-    //   console.log(datas);
-    //
-
-    // }, (err) => {
-
-    // });
   }
 
   uploadHRDetails() {
-
     this.validFile = false;
-    const apiData = {
-      source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
-    };
     /* wire up file reader */
     const target: DataTransfer = (this.selectedTarget) as DataTransfer;
     if (target.files.length !== 1) {
@@ -288,30 +303,16 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         (this.SavedData && this.SavedData[0] && this.SavedData[0][8] && this.SavedData[0][8].trim() === 'DH_PSNO') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][9] && this.SavedData[0][9].trim() === 'HR_PSNO')
         ) {
-        // this.enableList = true;
-
         this.totalCountHR(this.SavedData);
       } else {
         this.validFile = true;
-
       }
     };
     reader.readAsBinaryString(target.files[0]);
-    // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
-    //   console.log(datas);
-    //
-
-    // }, (err) => {
-
-    // });
   }
 
   uploadDeclinersDetails() {
-
     this.validFile = false;
-    const apiData = {
-      source_file: this.url ? this.url.replace('data:text/csv;base64,', '').toString() : ''
-    };
     /* wire up file reader */
     const target: DataTransfer = (this.selectedTarget) as DataTransfer;
     if (target.files.length !== 1) {
@@ -333,22 +334,212 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email') &&
         (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Remarks') && (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Declined_date')) {
-        // this.enableList = true;
-
         this.totalCountDeclinersDetails(this.SavedData);
       } else {
         this.validFile = true;
-
       }
     };
     reader.readAsBinaryString(target.files[0]);
-    // this.adminService.uploadCSV(apiData).subscribe((datas: any) => {
-    //   console.log(datas);
-    //
+  }
 
-    // }, (err) => {
+  uploadPMECDetails() /*Fourth Form*/ {
+    this.validFile = false;
+    /* wire up file reader */
+    const target: DataTransfer = (this.selectedTarget) as DataTransfer;
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
 
-    // });
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary', cellDates: true });
+
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      if ((this.SavedData && this.SavedData[1] && this.SavedData[1].length === 5) &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][0] && this.SavedData[1][0].trim() === 'Email ID') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][1] && this.SavedData[1][1].trim() === 'Examination Date') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][2] && this.SavedData[1][2].trim() === 'Fitness Status') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][3] && this.SavedData[1][3].trim() === 'Description') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][4] && this.SavedData[1][4].trim() === 'Filepath')
+        ) {
+        this.totalCountPMECDetails(this.SavedData);
+      } else {
+        this.validFile = true;
+      }
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+  uploadOfferAcceptanceDetails() /*Fourth Form*/ {
+    this.validFile = false;
+    /* wire up file reader */
+    const target: DataTransfer = (this.selectedTarget) as DataTransfer;
+    if (target.files.length !== 1) {
+      throw new Error('Cannot use multiple files');
+    }
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
+
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary', cellDates: true });
+
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 4) &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email ID') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Offer Sent Date') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Offer Status') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'Filepath')
+        ) {
+        this.totalCountOfferStatusDetails(this.SavedData);
+      } else {
+        this.validFile = true;
+      }
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+  totalCountOfferStatusDetails(data) {
+    this.dateFormatExist = false;
+    this.enableList = true;
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let email; let offerSentDate; let offerStatus; let filepath;
+      if (i > 0 && dup) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 4) {
+            if (index == 0) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                email = element ? element : '';
+              }
+            }
+            if (index == 1) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                offerSentDate = element ? this.momentForm(element) : '';
+              } else {
+                offerSentDate = element ? element : '';
+              }
+            }
+            if (index == 2) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                offerStatus = element ? element : '';
+              }
+            }
+            if (index == 4) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                filepath = element ? element : '';
+              }
+            }
+          }
+        });
+        const value = {
+          email: email ? email.toString().trim() : '',
+          offersent_date: offerSentDate ? offerSentDate.toString().trim() : '',
+          offer_status: offerStatus ? offerStatus.toString().trim() : '',
+          file_path: filepath ? filepath.toString().trim() : '',
+        };
+
+        if (email && email.toString().trim()) {
+          listArray.push(value);
+        }
+      }
+    });
+
+    this.uploadedListArray = listArray;
+    this.totalCountofCandidates = count - 1;
+  }
+
+  totalCountPMECDetails(data) {
+    this.dateFormatExist = false;
+    this.enableList = true;
+    let count = 0;
+    const listArray = [];
+    data.forEach((dup, i) => {
+      let email; let examination_date; let fitnessStatus; let description; let filepath;
+      if (i > 1 && dup) {
+        count += 1;
+        dup.forEach((element, index) => {
+          if (index < 5) {
+            if (index == 0) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                email = element ? element : '';
+              }
+            }
+            if (index == 1) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                examination_date = element ? this.momentForm(element) : '';
+              } else {
+                examination_date = element ? element : '';
+              }
+            }
+            if (index == 2) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                fitnessStatus = element ? element : '';
+              }
+            }
+            if (index == 3) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                description = element ? element : '';
+              }
+            }
+            if (index == 4) {
+              if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+                this.enableList = false;
+                this.dateFormatExist = true;
+              } else {
+                filepath = element ? element : '';
+              }
+            }
+          }
+        });
+        const value = {
+          email: email ? email.toString().trim() : '',
+          examination_date: examination_date ? examination_date.toString().trim() : '',
+          fitness_status: fitnessStatus ? fitnessStatus.toString().trim() : '',
+          description: description ? description : '',
+          file_path: filepath ? filepath.toString().trim() : '',
+        };
+
+        if (email && email.toString().trim()) {
+          listArray.push(value);
+        }
+      }
+    });
+
+    this.uploadedListArray = listArray;
+    this.totalCountofCandidates = count - 1;
   }
 
   totalCountHR(data) {
@@ -466,6 +657,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     this.uploadedListArray = listArray;
     this.totalCountofCandidates = count - 1;
   }
+
 
   totalCountDeclinersDetails(data) {
     this.dateFormatExist = false;
@@ -608,37 +800,39 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   }
 
   uploadType() {
-    if (this.selectedTemplate == this.firstForm) {
+    if (this.selectedTemplate.value == this.firstForm) {
       this.upload();
     }
-    if (this.selectedTemplate == this.secondForm) {
+    if (this.selectedTemplate.value == this.secondForm) {
       this.uploadHRDetails();
-    } else {
+    }
+    if (this.selectedTemplate.value == this.thirdForm) {
       this.uploadDeclinersDetails();
+    }
+    if (this.selectedTemplate.value == this.fourthForm) {
+      this.uploadPMECDetails();
+    }
+    if (this.selectedTemplate.value == this.fifthForm) {
+      this.uploadOfferAcceptanceDetails();
     }
   }
 
   submitType() {
-    if (this.selectedTemplate == this.firstForm) {
+    if (this.selectedTemplate.value == this.firstForm) {
       this.submit();
-    } else if (this.selectedTemplate == this.secondForm) {
+    } else if (this.selectedTemplate.value == this.secondForm) {
       this.submitHR();
-    } else {
+    } else if (this.selectedTemplate.value == this.thirdForm) {
       this.submitDecliners();
-    }
+    } else if (this.selectedTemplate.value == this.fourthForm) {
+      this.submitPMEC();
+    } else if (this.selectedTemplate.value == this.fifthForm) {
+      this.submitOfferStatus();
+    } else { }
   }
   // Open dailog
   openDialog(component, data) {
     let dialogDetails: any;
-
-    // dialogDetails = {
-    //   iconName: data.iconName,
-    //   showCancel: data.showCancel,
-    //   showConfirm: data.showConfirm,
-    //   showOk: data.showOk,
-    //   dataToBeShared: data.sharedData,
-    // };
-
     /**
      * Dialog modal window
      */
