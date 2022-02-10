@@ -10,7 +10,7 @@
             <!-- <mat-label>Choose IC</mat-label> -->
             <mat-select placeholder="Select business" (selectionChange)="changeTemp($event)" [(ngModel)]="selectedTemplate">
               <!-- <mat-option>--</mat-option> -->
-              <mat-option *ngFor="let template of templates" [value]="template.value">
+              <mat-option *ngFor="let template of templates" [value]="template">
                 {{template.name}}
               </mat-option>
             </mat-select>
@@ -43,12 +43,12 @@
             <div *ngIf="showSizeError['size']" class="error">Maximum file size limit is 2 MB</div>
             <div *ngIf="showSizeError['image']" class="error">Accept only .csv files</div>
             <div *ngIf="validFile" class="error">Please upload file with correct headers</div>
-            <div *ngIf="dateFormatExist" class="error">Data should not be in the date format</div>
+            <div *ngIf="dateFormatExist" class="error">Only date columns should contain data in date format</div>
 
         </div>
         <div class="buttons">
           <button (click)="delete()" class="common-cancel-button common-button-height-30" [disabled]="url ? false : true" mat-raised-button>Cancel</button>
-          <button (click)="upload()" class="common-button common-button-height-30 ml-3" [disabled]="url ? false : true" mat-raised-button>Upload</button>
+          <button (click)="uploadType()" class="common-button common-button-height-30 ml-3" [disabled]="url ? false : true" mat-raised-button>Upload</button>
         </div>
       </div>
       <div class="download">
@@ -88,11 +88,11 @@
           </div>
             </div>
 
-    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate == this.secondForm}" *ngIf="enableList">
+    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate?.value == this.secondForm}" *ngIf="enableList">
       <div class="list-count">
         Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
       </div>
-      <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
+      <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate?.value" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
 
 
       <div class="button-wrapper">

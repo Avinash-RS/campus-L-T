@@ -662,6 +662,16 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  PMECDetailsBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/bulk-upload/PEMC_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
+  OfferDetailsBulkUpload(data) {
+    return this.http.post(`${this.BASE_URL}/bulk-upload/Offer_upload`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   declinedCandidatesUpload(data) {
     return this.http.post(`${this.BASE_URL}/profile/decliners_upload`, data,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
