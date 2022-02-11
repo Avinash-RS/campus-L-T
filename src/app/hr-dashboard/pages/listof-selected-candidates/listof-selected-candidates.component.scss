@@ -54,3 +54,9 @@
 ::ng-deep .common-joining-form {
   height: 600px !important;
 }
+:host ::ng-deep .ag-header-cell-label .ag-header-cell-text {
+  white-space: normal !important;
+  text-align: left;
+  height: auto;
+  overflow-wrap: normal;
+}
