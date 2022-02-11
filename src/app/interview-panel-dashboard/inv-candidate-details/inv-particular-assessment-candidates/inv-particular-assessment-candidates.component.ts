@@ -625,7 +625,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     };
    this.getScheduledListSubscription = this.adminService.getScheduledList(obj).subscribe(
       (result: any) => {
-        if (result && result.success) {
+        if (result && result.success && result.data.length > 0) {
           var length = result.data.length;
           this.scheduleListDetails = result.data;
           var j=0;
