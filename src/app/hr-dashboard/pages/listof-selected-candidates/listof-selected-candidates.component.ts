@@ -212,32 +212,6 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         headerName: ''
       },
       {
-        headerName: 'Mail', field: 'mailed',
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        minWidth: 95,
-        sortable: true,
-        tooltipField: 'mailed',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Form Status', field: 'is_editable',
-        filter: 'agSetColumnFilter',
-        filterParams: {
-          applyMiniFilterWhileTyping: true
-        },
-        minWidth: 110,
-        sortable: true,
-        tooltipField: 'is_editable',
-        getQuickFilterText: (params) => {
-          return params.value;
-        },
-      },
-      {
         headerName: 'Candidate Id', field: 'candidate_id',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
@@ -277,12 +251,38 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
-        minWidth: 90,
+        minWidth: 110,
         sortable: true,
         tooltipField: 'selectedpost',
         getQuickFilterText: (params) => {
           return params.value;
         }
+      },
+      {
+        headerName: 'Mail', field: 'mailed',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 95,
+        sortable: true,
+        tooltipField: 'mailed',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
+        headerName: 'Joining Form Status', field: 'is_editable',
+        filter: 'agSetColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 130,
+        sortable: true,
+        tooltipField: 'is_editable',
+        getQuickFilterText: (params) => {
+          return params.value;
+        },
       },
       {
         headerName: 'Institute', field: 'institute',
@@ -337,7 +337,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
       {
         headerName: 'Date & Time of Upload', field: 'date_time',
         filter: 'agTextColumnFilter',
-        minWidth: 120,
+        minWidth: 140,
         sortable: true,
         tooltipField: 'date_time',
         getQuickFilterText: (params) => {
@@ -359,11 +359,11 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         filter: false,
         // headerTooltip: 'Download documents',
         valueFormatter: this.tooltipFormatter,
-        minWidth: 60,
+        minWidth: 125,
         tooltipValueGetter: (params) => {//This will show valueFormatted if is present, if no just show the value.
           return (params.valueFormatted);
       },
-      cellStyle: {'justify-content': 'flex-start !important'},
+      cellStyle: {'justify-content': 'center !important'},
       cellClass: 'ag-icon-custom',
       cellRenderer: (params) => {
             return `<span class="icon-download ag-icon-color pointer ag-icon-font-size-20"></span>`;
@@ -393,7 +393,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
             }
           }
         },
-        minWidth: 120,
+        minWidth: 125,
       },
       {
         headerName: 'Verified/Reverted by', field: 'verifier_name',
@@ -409,6 +409,32 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         }
       },
     ];
+
+    const LarsenSpecificColumns = [{
+      headerName: 'Offer Status', field: 'offer_status',
+      filter: 'agSetColumnFilter',
+      minWidth: 120,
+      sortable: true,
+      tooltipField: 'offer_status',
+      getQuickFilterText: (params) => {
+        return params.value;
+      }
+    },
+    {
+      headerName: 'Medical Status', field: 'fitness_status',
+      filter: 'agSetColumnFilter',
+      minWidth: 120,
+      sortable: true,
+      tooltipField: 'fitness_status',
+      getQuickFilterText: (params) => {
+        return params.value;
+      }
+    }];
+
+    if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
+      this.columnDefs.splice(6, 0 , LarsenSpecificColumns[0]);
+      this.columnDefs.splice(8, 0 , LarsenSpecificColumns[1]);
+    }
 
     this.isRowSelectable = function (rowNode) {
       return rowNode.data && rowNode.data.decline_status == 'Yes' ? false : true;
@@ -541,6 +567,8 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         element['verified'] = element['verified'] == '1' ? 'Verified' : 'Verify';
         element['is_editable'] = element['mailed'] == 'Not Sent' ? '-' : (element['mailed'] == 'Sent' && element['is_editable'] == 'No') ? 'Submitted' : 'Open';
         element['is_checked'] = element['decline_status'] == '1' ? '' : false;
+        element['offer_status'] = element['offer_status'] ? element['offer_status'] : '--';
+        element['fitness_status'] = element['fitness_status'] ? element['fitness_status'] : '--';
         element['decline_status'] = element['decline_status'] == '1' ? 'Yes' : 'No';
         element['details'] = count;
       });
