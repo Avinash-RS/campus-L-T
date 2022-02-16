@@ -774,7 +774,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       this.appConfig.warningWithTitle('Please select a candidate','');
       return false;
     }
-    if(this.selectedCandidate.length > 1 && this.customerCode == '#LTTS'){
+    if(this.selectedCandidate.length > 1 && this.customerCode != '#ADANI'){
       this.appConfig.warningWithTitle('Please select one candidate at a time','');
       return false;
     }

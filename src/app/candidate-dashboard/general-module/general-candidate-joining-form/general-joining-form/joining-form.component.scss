@@ -1,0 +1,182 @@
+@import "../../../../themes/themes.scss";
+.joining-form-wrapper {
+    width: 100%;
+    display: flex;
+    position: relative;
+    padding-bottom: 1em;
+    .stepper {
+        margin-right: 0em;
+        width: 230px !important;
+        min-width: 230px !important;
+        position: sticky;
+        top: 70px;
+        height: 390px;
+        .stepper-wrapper {
+            margin-top: 1em;
+            position: absolute;
+            left: 10%;
+            transform: translateX(-10%);
+            display: block;
+            counter-reset: step;
+            ul {
+                list-style: none;
+                position: relative;
+                padding-left: 5px;
+                li {
+                    padding: 10px 0 10px 20px;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    position: relative;
+                }
+                li:before {
+                    content: '';
+                    position: absolute;
+                    background: white;
+                    border: 1px solid #D3D3D3;
+                    width: 17px;
+                    height: 17px;
+                    left: -9px;
+                    border-radius: 50%;
+                }
+                li:hover {
+                    font-weight: 600;
+                }
+                li.active {
+                    color: $primary-text-color;
+                    transition: color .5s ease-out;
+                }
+                li.routeActive {
+                    color: $primary-text-color;
+                    transition: color .5s ease-out;
+                }
+                li.valid {
+                    color: #228B22;
+                    transition: color .5s ease-out;
+                }
+                li.active::before {
+                    border: none;
+                    background: $primary-text-color !important;
+                    transition: .5s ease-in;
+                }
+                li.valid::before {
+                    border: none;
+                    background: #32BA7C !important;
+                    transition: 180ms linear;
+                }
+                .noCursor {
+                    cursor: not-allowed;
+                    // pointer-events: none;
+                }
+                .noCursor:active {
+                    // cursor: not-allowed;
+                    pointer-events: none;
+                }
+                .noCursor:hover {
+                    font-weight: 400;
+                }
+            }
+            ul::after {
+                content: ' ';
+                position: absolute;
+                width: 1px;
+                height: calc(100% - 40px);
+                left: 4px;
+                top: 0;
+                background: #50635a;
+                z-index: -1;
+                margin-top: 18px;
+            }
+        }
+    }
+}
+
+.check {
+    border-radius: 0px;
+    display: inline-block;
+    transform: rotate( 45deg);
+    height: 8px;
+    width: 4px;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    position: absolute;
+    margin-left: -22px;
+    margin-bottom: 2px;
+    transition: 0.5s linear;
+}
+
+.router {
+    margin-left: 0px;
+    width: 100%;
+}
+
+.routerLeft {
+    margin-left: 0em;
+}
+
+:host ::ng-deep .mat-button-focus-overlay {
+    display: none !important;
+}
+
+.mat-button.no-hover ::ng-deep .mat-button-focus-overlay {
+    background: none !important;
+}
+
+::ng-deep .popupModalContainerForForms {
+    .main-wrapper {
+        padding: 1em;
+        background-color: white;
+        display: block;
+        width: 100%;
+        .text {
+            margin-top: .5em;
+            font-size: 15px;
+            text-align: center;
+        }
+        .button-wrapper-form-pop-up {
+            display: grid;
+            margin: 1em 0 0.5em 0;
+            grid-template-columns: 110px 110px 110px;
+            justify-content: center;
+            width: 100%;
+            justify-items: center;
+            .b1,
+            .b2,
+            .b3 {
+                border: 1px solid $common-button-bg;
+                background-color: $white;
+                color: #666666;
+                line-height: 2;
+                border-radius: 4px;
+                font-size: 14px;
+                /* "to left" / "to right" - affects initial color */
+                background: linear-gradient(to left, white 50%, $common-button-bg 50%) right;
+                background-size: 200%;
+                transition: .5s ease-out;
+                width: 90px;
+            }
+            .b1:hover,
+            .b2:hover,
+            .b3:hover {
+                background-position: left;
+                color: white;
+            }
+            .animation {
+                -webkit-transform: translateZ(0);
+                -moz-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                -o-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            .animation-zoom:hover {
+                transform: perspective(1px) scale(1.02);
+                // font-size: 15px;
+                transition: transform .5s ease;
+            }
+        }
+    }
+}
+
+.font-600 {
+    font-weight: 600;
+}

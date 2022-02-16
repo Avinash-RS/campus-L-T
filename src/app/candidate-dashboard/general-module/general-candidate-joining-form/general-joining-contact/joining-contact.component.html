@@ -1,0 +1,214 @@
+<div class="joining-personal-wrapper">
+    <h5>
+        Contact Details
+    </h5>
+
+    <div class="grids-wrapper">
+        <form class="contactForm" [formGroup]="contactForm" (ngSubmit)="formSubmit()">
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-100">
+                    <label>Present Address 1<span>*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_present_address_1">
+                    <div class="form-error" *ngIf="present_address_1.invalid && present_address_1.touched">
+                        <div *ngIf="present_address_1.errors?.required">Address 1 is Required</div>
+                        <div *ngIf="present_address_1.errors?.address255">Maximum of 255 Characters only allowed.</div>
+                        <div *ngIf="present_address_1.errors?.address255">Allowed special characters <span style="font-size: 13px;"> - . , : / .</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-100">
+                    <label>Present Address 2<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_present_address_2">
+                    <div class="form-error" *ngIf="present_address_2.invalid && present_address_2.touched">
+                        <div *ngIf="present_address_2.errors?.required">Address 2 is Required</div>
+                        <div *ngIf="present_address_2.errors?.address255">Maximum of 255 Characters only allowed.</div>
+                        <div *ngIf="present_address_2.errors?.address255">Allowed special characters <span style="font-size: 13px;"> - . , : / .</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-100">
+                    <label>Present Address 3<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_present_address_3">
+                    <div class="form-error" *ngIf="present_address_3.invalid && present_address_3.touched">
+                        <div *ngIf="present_address_3.errors?.required">Address 3 is Required</div>
+                        <div *ngIf="present_address_3.errors?.address255">Maximum of 255 Characters only allowed.</div>
+                        <div *ngIf="present_address_3.errors?.address255">Allowed special characters <span style="font-size: 13px;"> - . , : / .</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-45">
+                    <label>Present State/Province<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <nz-select class="input select" (ngModelChange)="disableOrEnableState(form_present_state)" [formControlName]="form_present_state" nzAllowClear nzShowSearch
+                        nzPlaceHolder="Select">
+                        <nz-option *ngFor="let state of allStatesList" [nzLabel]="state.name"
+                            [nzValue]="state.id"></nz-option>
+                    </nz-select>
+                    <div class="form-error" *ngIf="present_state?.invalid && present_state?.touched">
+                        <div *ngIf="present_state?.errors?.required">Present state is Required</div>
+                    </div>
+                </div>
+                <div [matTooltip]="contactForm.value[form_present_state] ? '' : 'Select State and then select city'" class="overall-input-wrapper width-45">
+                    <label>Present City<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <nz-select class="input select" [formControlName]="form_present_city" nzAllowClear nzShowSearch
+                        nzPlaceHolder="Select">
+                        <nz-option *ngFor="let city of allPresentCityList" [nzLabel]="city.name"
+                            [nzValue]="city.id"></nz-option>
+                    </nz-select>
+                    <div class="form-error" *ngIf="present_city?.invalid && present_city?.touched">
+                        <div *ngIf="present_city?.errors?.required">Present city is Required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-45">
+                    <label>Present Postal/Zip code<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <input matInput placeholder="Enter here" class="input" type="text"
+                        [formControlName]="form_present_zip_code">
+                    <div class="form-error" *ngIf="present_zip_code?.invalid && present_zip_code?.touched">
+                        <div *ngIf="present_zip_code?.errors?.required">Present zip code is Required</div>
+                        <div *ngIf="present_zip_code?.errors?.zipOnly">Should be numberic only and should be exact 6 digits</div>
+                    </div>
+                </div>
+                <div class="overall-input-wrapper width-45">
+                    <label>Present Country/Region<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <nz-select class="input select" [formControlName]="form_present_region" nzAllowClear nzShowSearch
+                        nzPlaceHolder="<--Select-->">
+                        <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"
+                        [nzValue]="region.value"></nz-option>
+                    </nz-select>
+                    <div class="form-error" *ngIf="present_region?.invalid && present_region?.touched">
+                        <div *ngIf="present_region?.errors?.required">Present country is Required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-wrapper">
+                <div class="overall-input-wrapper width-100">
+                        <mat-checkbox (change)="matchangeYes($event)" [formControlName]="form_same_as_checkbox">Same as present address</mat-checkbox>
+                        </div>
+                        </div>
+
+<!-- Permanent -->
+<ng-container *ngIf="!contactForm['value'][form_same_as_checkbox]">
+<div class="row-wrapper">
+    <div class="overall-input-wrapper width-100">
+        <label>Permanent Address 1<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <input matInput placeholder="Enter here" class="input" type="text"
+            [formControlName]="form_permanent_address_1">
+        <div class="form-error" *ngIf="permanent_address_1.invalid && permanent_address_1.touched">
+            <div *ngIf="permanent_address_1.errors?.required">Address 1 is Required</div>
+            <div *ngIf="permanent_address_1.errors?.address255">Maximum of 255 Characters only allowed.</div>
+            <div *ngIf="permanent_address_1.errors?.address255">Allowed special characters <span style="font-size: 13px;"> - . , : / .</span></div>
+</div>
+    </div>
+</div>
+
+<div class="row-wrapper">
+    <div class="overall-input-wrapper width-100">
+        <label>Permanent Address 2<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <input matInput placeholder="Enter here" class="input" type="text"
+            [formControlName]="form_permanent_address_2">
+        <div class="form-error" *ngIf="permanent_address_2.invalid && permanent_address_2.touched">
+            <div *ngIf="permanent_address_2.errors?.required">Address 2 is Required</div>
+            <div *ngIf="permanent_address_2.errors?.address255">Maximum of 255 Characters only allowed.</div>
+            <div *ngIf="permanent_address_2.errors?.address255">Allowed special characters <span style="font-size: 13px;"> - . , : / .</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="row-wrapper">
+    <div class="overall-input-wrapper width-100">
+        <label>Permanent Address 3<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <input matInput placeholder="Enter here" class="input" type="text"
+            [formControlName]="form_permanent_address_3">
+        <div class="form-error" *ngIf="permanent_address_3.invalid && permanent_address_3.touched">
+            <div *ngIf="permanent_address_3.errors?.required">Address 3 is Required</div>
+            <div *ngIf="permanent_address_3.errors?.address255">Maximum of 255 Characters only allowed.</div>
+            <div *ngIf="permanent_address_3.errors?.address255">Allowed special characters <span style="font-size: 13px;"> - . , : / .</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="row-wrapper">
+    <div class="overall-input-wrapper width-45">
+        <label>Permanent State/Province<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <nz-select class="input select" (ngModelChange)="disableOrEnableState(form_permanent_state)" [formControlName]="form_permanent_state" nzAllowClear nzShowSearch
+            nzPlaceHolder="Select">
+            <nz-option *ngFor="let state of allStatesList" [nzLabel]="state.name"
+                [nzValue]="state.id"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="permanent_state?.invalid && permanent_state?.touched">
+            <div *ngIf="permanent_state?.errors?.required">Permanent state is Required</div>
+        </div>
+    </div>
+    <div [matTooltip]="contactForm.value[form_permanent_state] ? '' : 'Select State and then select city'" class="overall-input-wrapper width-45">
+        <label>Permanent City<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <nz-select class="input select" [formControlName]="form_permanent_city" nzAllowClear nzShowSearch
+            nzPlaceHolder="Select">
+            <nz-option *ngFor="let city of allPermanentCityList" [nzLabel]="city.name"
+                [nzValue]="city.id"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="permanent_city?.invalid && permanent_city?.touched">
+            <div *ngIf="permanent_city?.errors?.required">Permanent city is Required</div>
+        </div>
+    </div>
+</div>
+
+<div class="row-wrapper">
+    <div class="overall-input-wrapper width-45">
+        <label>Permanent Postal/Zip code<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <input matInput placeholder="Enter here" class="input" type="text"
+            [formControlName]="form_permanent_zip_code">
+        <div class="form-error" *ngIf="permanent_zip_code?.invalid && permanent_zip_code?.touched">
+            <div *ngIf="permanent_zip_code?.errors?.required">Permanent zip code is Required</div>
+            <div *ngIf="permanent_zip_code?.errors?.zipOnly">Should be numberic only and should be exact 6 digits</div>
+        </div>
+    </div>
+    <div class="overall-input-wrapper width-45">
+        <label>Permanent Country/Region<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+        <nz-select class="input select" [formControlName]="form_permanent_region" nzAllowClear nzShowSearch
+            nzPlaceHolder="<--Select-->">
+            <nz-option *ngFor="let region of regionList" [nzLabel]="region.label"
+                [nzValue]="region.value"></nz-option>
+        </nz-select>
+        <div class="form-error" *ngIf="permanent_region?.invalid && permanent_region?.touched">
+            <div *ngIf="permanent_region?.errors?.required">Permanent country is Required</div>
+        </div>
+    </div>
+</div>
+</ng-container>
+            <div class="row-wrapper justify-content-between  align-items-center mt-4 mb-3 footer">
+                <div (click)="routeNext('personal')" class="d-flex align-content-center align-items-center position-relative" style="cursor: pointer;">
+                    <div class="left-arrow position-absolute"></div>
+                    <div class="sections left-space">
+                        <div class="label">Previous Section</div>
+                        <div class="value">Personal Details</div>
+                    </div>
+                </div>
+                <button class="common-button joining-form-submit mt-1 animation-zoom" mat-raised-button type="submit">Save &
+                    Continue</button>
+                <div (click)="routeNext('dependent')" class="d-flex align-content-center align-items-center text-right position-relative pointer" style="cursor: pointer;">
+                    <div class="right-arrow position-absolute"></div>
+                    <div class="sections right-space">
+                        <div class="label">Next Section</div>
+                        <div class="value">Dependent Details</div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="photo-wrapper">
+        </div>
+    </div>
+
+</div>

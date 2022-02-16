@@ -11,8 +11,9 @@ export class MasterDashboardComponent implements OnInit {
 
   appConstant = CONSTANT.ENDPOINTS;
   customerCode = this.appConfig.getSelectedCustomerCode();
-  profileRedirection = this.customerCode == '#ADANI' ? this.appConstant.CANDIDATE_DASHBOARD.ADANI_JOINING : this.appConstant.CANDIDATE_DASHBOARD.JOINING;
-  documentRedirection = this.customerCode == '#ADANI' ? this.appConstant.CANDIDATE_DASHBOARD.ADANI_DOCUMENT : this.appConstant.CANDIDATE_DASHBOARD.DOCUMENT;
+  customerRoute = this.appConfig.getCandidateRoute();
+  profileRedirection = this.customerRoute.profileRoute;
+  documentRedirection = this.customerRoute.DocumentRoute;
   showProfileOnly = false;
   showDocuments = false;
   showJoiningForm: boolean;
