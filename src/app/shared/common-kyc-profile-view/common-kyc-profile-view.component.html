@@ -4,4 +4,5 @@
     </div>
     <app-shared-kyc-profile-view *ngIf="data && customerCode == '#LTTS'" [nonCandidate]="data"></app-shared-kyc-profile-view>
     <app-adani-shared-kyc-profile-view *ngIf="data && customerCode == '#ADANI'" [nonCandidate]="data"></app-adani-shared-kyc-profile-view>
+    <app-general-shared-kyc-profile-view *ngIf="data && (customerCode != '#LTTS' && customerCode != '#ADANI')" [nonCandidate]="data"></app-general-shared-kyc-profile-view>
 </div>

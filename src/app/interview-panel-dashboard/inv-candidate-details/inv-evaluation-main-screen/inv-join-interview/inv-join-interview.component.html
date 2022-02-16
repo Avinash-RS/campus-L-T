@@ -1,5 +1,6 @@
 <app-join-interview *ngIf="passT0TabVideoInterview && customerCode == '#LTTS'"></app-join-interview>
 <app-join-interview *ngIf="passT0TabVideoInterview && customerCode == '#ADANI'"></app-join-interview>
+<app-general-join-interview *ngIf="passT0TabVideoInterview && (customerCode != '#ADANI' && customerCode != '#LTTS')"></app-general-join-interview>
 <div *ngIf="false" class="noData">
     Coming Soon...
 </div>

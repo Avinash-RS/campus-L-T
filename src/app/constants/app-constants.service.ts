@@ -72,6 +72,23 @@ export const CONSTANT = {
       DOCUMENT: '/candidate/l&t/document',
       DOCUMENT_LIST: '/candidate/l&t/document/list',
       // Lnt Profile Routes End
+
+      // General Profile Routes Start
+      GENERAL_CANDIDATE: '/candidate/general',
+      GENERAL_JOINING: '/candidate/general/joining',
+      GENERAL_JOINING_PERSONAL: '/candidate/general/joining/personal',
+      GENERAL_JOINING_CONTACT: '/candidate/general/joining/contact',
+      GENERAL_JOINING_DEPENDENT: '/candidate/general/joining/dependent',
+      GENERAL_JOINING_EDUCATION: '/candidate/general/joining/education',
+      GENERAL_JOINING_WORK: '/candidate/general/joining/work',
+      GENERAL_JOINING_UPLOAD: '/candidate/general/joining/upload',
+      GENERAL_JOINING_PREVIEW: '/candidate/general/joining/preview',
+      GENERAL_JOINING_SUBMIT: '/candidate/general/joining/submit',
+      GENERAL_JOINING_FAQ: '/candidate/general/faq',
+      GENERAL_DOCUMENT: '/candidate/general/document',
+      GENERAL_DOCUMENT_LIST: '/candidate/general/document/list',
+      // General Profile Routes End
+
       // ADANI Profile Routes Start
       CANDIDATE_ADANI: '/candidate/adani',
       ADANI_JOINING: '/candidate/adani/joining',
@@ -87,7 +104,7 @@ export const CONSTANT = {
       ADANI_DOCUMENT: '/candidate/adani/document',
       ADANI_DOCUMENT_LIST: '/candidate/adani/document/list',
       // ADANI Profile Routes End
-      
+
     },
     HR_DASHBOARD: {
       HOME: '/hr',
@@ -208,6 +225,23 @@ export const CONSTANT = {
       DOCUMENT: 'document',
       DOCUMENT_LIST: 'list',
       // Lnt Profile Routes End
+
+      // General Profile Routes Start
+      GENERAL_CANDIDATE: 'general',
+      GENERAL_JOINING: 'joining',
+      GENERAL_JOINING_PERSONAL: 'personal',
+      GENERAL_JOINING_CONTACT: 'contact',
+      GENERAL_JOINING_DEPENDENT: 'dependent',
+      GENERAL_JOINING_EDUCATION: 'education',
+      GENERAL_JOINING_WORK: 'work',
+      GENERAL_JOINING_UPLOAD: 'upload',
+      GENERAL_JOINING_PREVIEW: 'preview',
+      GENERAL_JOINING_SUBMIT: 'submit',
+      GENERAL_JOINING_FAQ: 'faq',
+      GENERAL_DOCUMENT: 'document',
+      GENERAL_DOCUMENT_LIST: 'list',
+      // General Profile Routes End
+
       // ADANI Profile Routes Start
       CANDIDATE_ADANI: 'adani',
       ADANI_JOINING: 'joining',

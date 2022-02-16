@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import * as XLSX from 'xlsx';
 import { ToastrService } from 'ngx-toastr';
+import { CONSTANT } from '../constants/app-constants.service';
 
 // tslint:disable-next-line: class-name
 export interface modalBox {
@@ -467,6 +468,40 @@ export class AppConfigService {
   supportEmailBasedOnCustomer() {
     let selected_customer = JSON.parse(this.getLocalData('selected_customer'));
     return selected_customer && selected_customer.support_email ? selected_customer.support_email : '';
+  }
+
+  CustomCustomerConfiguration() {
+    let customerConfig = [
+      {
+        cust_code: '#LTTS',
+        profileRoute: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING,
+        DocumentRoute: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT,
+      },
+      {
+        cust_code: '#ADANI',
+        profileRoute: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING,
+        DocumentRoute: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_DOCUMENT,
+      }
+    ];
+
+    return customerConfig;
+  }
+
+  defaultCustomerConfig() {
+    let customerConfig =
+      {
+        cust_code: '#GENERAL',
+        profileRoute: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.GENERAL_JOINING,
+        DocumentRoute: CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.GENERAL_DOCUMENT,
+      };
+    return customerConfig;
+  }
+
+  getCandidateRoute(custCode?:any) {
+    let CustomerCode = custCode ? custCode : this.getSelectedCustomerCode();
+    let getCustomerConfig = this.CustomCustomerConfiguration();
+    let findCusotmer = getCustomerConfig.find(ele => ele.cust_code == CustomerCode);
+    return findCusotmer ? findCusotmer : this.defaultCustomerConfig();
   }
 
 }

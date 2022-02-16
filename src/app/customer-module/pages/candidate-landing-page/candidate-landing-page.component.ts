@@ -83,12 +83,14 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
   }
 
   selectRoute(routeToJoining, data) {
-    if (data == '#LTTS') {
-      return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT;
-    }
-    if (data == '#ADANI') {
-      return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_DOCUMENT;
-    }
+    let selectedCustomerConfig = this.appConfig.getCandidateRoute(data);
+    return routeToJoining ? selectedCustomerConfig.profileRoute : selectedCustomerConfig.DocumentRoute;
+    // if (data == '#LTTS') {
+    //   return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.DOCUMENT;
+    // }
+    // if (data == '#ADANI') {
+    //   return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_DOCUMENT;
+    // }
   }
 
   customerSelection (customers: any, i: any, action: any) {

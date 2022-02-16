@@ -4,7 +4,7 @@ import { MasterDashboardComponent } from './master-dashboard.component';
 import { CONSTANT } from '../constants/app-constants.service';
 import { AdaniGuard } from '../guards/canload/candidate_components_authguards/adani.guard';
 import { LarsenGuard } from '../guards/canload/candidate_components_authguards/larsen.guard';
-import { LarsenComponentsAuthGuard } from '../guards/canload/candidate_components_authguards/larsen_components_auth.guard';
+import { GeneralProfileGuard } from '../guards/canload/candidate_components_authguards/general-profile.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +18,9 @@ const routes: Routes = [
       },
       {
         path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.CANDIDATE_ADANI}`, loadChildren: () => import('./adani-module/adani-module.module').then(m => m.AdaniModuleModule), canLoad: [ AdaniGuard ], canActivate: [ AdaniGuard ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.CANDIDATE_DASHBOARD.GENERAL_CANDIDATE}`, loadChildren: () => import('./general-module/general-module.module').then(m => m.GeneralModuleModule), canLoad: [ GeneralProfileGuard ], canActivate: [ GeneralProfileGuard ]
       },
       {
         path: '',
