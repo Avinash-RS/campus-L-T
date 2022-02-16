@@ -19,9 +19,10 @@ export class firstShortlistFilterModel {
 
   getProfileList() {
     let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
-    // Filter education details baised on customer code 
+    // Filter education details baised on customer code
     let filter = mastersList ? mastersList.education_master : [];
-    let positive_array = filter.filter(value => value.customer_code == this.appConfig.getSelectedCustomerCode());
+    let customerCode = (this.appConfig.getSelectedCustomerCode() != '#LTTS' && this.appConfig.getSelectedCustomerCode() != '#ADANI') ? '#LTTS' : this.appConfig.getSelectedCustomerCode();
+    let positive_array = filter.filter(value => value.customer_code == customerCode);
     filter = mastersList ? positive_array : [];
 
     filter.forEach(element => {

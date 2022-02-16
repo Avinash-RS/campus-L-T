@@ -11,7 +11,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
 import { FormsModule } from '@angular/forms';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { AdmincanloadGuard } from './guards/canload/admincanload.guard';
 import { IsLoggedinGuard } from './guards/canload/is-loggedin.guard';
 import { HrcanloadGuard } from './guards/canload/hrcanload.guard';
@@ -31,6 +31,8 @@ import { AdaniGuard } from './guards/canload/candidate_components_authguards/ada
 import { CandidateCanloadGuard } from './guards/canload/candidate_canload.guard';
 import { AdaniComponentsAuthGuard } from './guards/canload/candidate_components_authguards/adani_components_auth.guards';
 import { LarsenGuard } from './guards/canload/candidate_components_authguards/larsen.guard';
+import { GeneralProfileGuard } from './guards/canload/candidate_components_authguards/general-profile.guard';
+import { GeneralProfileComponentGuard } from './guards/canload/candidate_components_authguards/general-profile-component.guard';
 
 @NgModule({
   declarations: [
@@ -57,10 +59,11 @@ import { LarsenGuard } from './guards/canload/candidate_components_authguards/la
   // providers: [],
   entryComponents: [ModalBoxComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [
+    { provide: NZ_I18N, useValue: en_US },
     NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
-    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard,AdaniGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
+    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard, AdaniGuard, GeneralProfileGuard, GeneralProfileComponentGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
   ],
   bootstrap: [AppComponent]
 })
