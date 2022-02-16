@@ -284,6 +284,22 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         }
       },
       {
+        headerName: 'Assigned Count', field: 'panel_count',
+        filter: 'agNumberColumnFilter',
+        filterParams: {
+          applyMiniFilterWhileTyping: true
+        },
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'panel_count',
+        valueGetter: (params) => {
+          return params && params.data &&  params.data.panel_count ? params.data.panel_count : '-'
+        },
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Panel assigned', field: 'panel_assigned',
         filter: 'agSetColumnFilter',
         filterParams: {
@@ -357,7 +373,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
           }
         }
       }
-      colVal.splice(6, 0, adanistatus);
+      colVal.splice(7, 0, adanistatus);
     }
     return colVal
   }
@@ -385,7 +401,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
           }
       }
     ]
-    }
+  }
 
   onCellClicked(event) {
     if (event.colDef.field === 'name'||event.colDef.field === 'interview_status') {
