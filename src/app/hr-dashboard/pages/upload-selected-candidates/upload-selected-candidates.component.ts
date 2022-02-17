@@ -364,7 +364,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
       if ((this.SavedData && this.SavedData[1] && this.SavedData[1].length === 5) &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][0] && this.SavedData[1][0].trim() === 'Email ID') &&
-        (this.SavedData && this.SavedData[1] && this.SavedData[1][1] && this.SavedData[1][1].trim() === 'Examination Date') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][1] && this.SavedData[1][1].trim() === 'Medical Test Date') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][2] && this.SavedData[1][2].trim() === 'Fitness Status') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][3] && this.SavedData[1][3].trim() === 'Description') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][4] && this.SavedData[1][4].trim() === 'Filepath')
