@@ -1,20 +1,15 @@
 <div class="main-wrapper-uploaded-list">
-    <!-- <div class="line">
-    </div> -->
     <div class="selectedTemp d-flex align-items-center" *ngIf="!enableList">
       <div class="mr-3">
       Selected Template:
     </div>
       <div style="width: 280px;" class="input-wrapper">
         <mat-form-field class="mat-form-field-input-box mat-select-custom" appearance="none">
-            <!-- <mat-label>Choose IC</mat-label> -->
             <mat-select placeholder="Select business" (selectionChange)="changeTemp($event)" [(ngModel)]="selectedTemplate">
-              <!-- <mat-option>--</mat-option> -->
               <mat-option *ngFor="let template of templates" [value]="template">
                 {{template.name}}
               </mat-option>
             </mat-select>
-            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
           </mat-form-field>
     </div>
 
@@ -25,9 +20,7 @@
         <div class="upload">
             <div class="text-wrapper">
               <label class="inner-wrapper" for="fileInput" *ngIf="!url">
-                <!-- <div class="inner-wrapper"> -->
                 <img src="assets/images/file-upload.svg" alt=""> Upload candidate details
-                <!-- </div> -->
                 <input [matTooltip]="url ? '' : 'No File Chosen'" matTooltipPostion="after" title=""
                   (click)="files.value = null" id="fileInput" #files type='file' name="profile" accept=".csv, text/csv"
                   (change)="onSelectFile($event)">
@@ -81,7 +74,6 @@
               <li>The candidate details which are not uploaded are available in “Selected Candidates Bulk Upload Reports” tab.
                 <ul>
                   <li>For missing details, update the mandatory details and upload.</li>
-                  <!-- <li>For duplicate email ID, one user with the email ID has been uploaded successfully.</li> -->
                 </ul>
               </li>
             </ul>

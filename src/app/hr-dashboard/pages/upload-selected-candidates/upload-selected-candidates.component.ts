@@ -397,11 +397,11 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
       /* save data */
       this.SavedData = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 4) &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Email ID') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Offer Sent Date') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Offer Status') &&
-        (this.SavedData && this.SavedData[0] && this.SavedData[0][3] && this.SavedData[0][3].trim() === 'Filepath')
+      if ((this.SavedData && this.SavedData[1] && this.SavedData[1].length === 4) &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][0] && this.SavedData[1][0].trim() === 'Email ID') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][1] && this.SavedData[1][1].trim() === 'Offer Sent Date') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][2] && this.SavedData[1][2].trim() === 'Offer Status') &&
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][3] && this.SavedData[1][3].trim() === 'Filepath')
         ) {
         this.totalCountOfferStatusDetails(this.SavedData);
       } else {
@@ -418,7 +418,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     const listArray = [];
     data.forEach((dup, i) => {
       let email; let offerSentDate; let offerStatus; let filepath;
-      if (i > 0 && dup) {
+      if (i > 1 && dup) {
         count += 1;
         dup.forEach((element, index) => {
           if (index < 4) {
@@ -445,7 +445,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
                 offerStatus = element ? element : '';
               }
             }
-            if (index == 4) {
+            if (index == 3) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
                 this.enableList = false;
                 this.dateFormatExist = true;
