@@ -367,7 +367,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         (this.SavedData && this.SavedData[1] && this.SavedData[1][1] && this.SavedData[1][1].trim() === 'Medical Test Date') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][2] && this.SavedData[1][2].trim() === 'Fitness Status') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][3] && this.SavedData[1][3].trim() === 'Description') &&
-        (this.SavedData && this.SavedData[1] && this.SavedData[1][4] && this.SavedData[1][4].trim() === 'Filepath')
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][4] && this.SavedData[1][4].trim() === 'Filename')
         ) {
         this.totalCountPMECDetails(this.SavedData);
       } else {
@@ -401,7 +401,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
         (this.SavedData && this.SavedData[1] && this.SavedData[1][0] && this.SavedData[1][0].trim() === 'Email ID') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][1] && this.SavedData[1][1].trim() === 'Offer Sent Date') &&
         (this.SavedData && this.SavedData[1] && this.SavedData[1][2] && this.SavedData[1][2].trim() === 'Offer Status') &&
-        (this.SavedData && this.SavedData[1] && this.SavedData[1][3] && this.SavedData[1][3].trim() === 'Filepath')
+        (this.SavedData && this.SavedData[1] && this.SavedData[1][3] && this.SavedData[1][3].trim() === 'Filename')
         ) {
         this.totalCountOfferStatusDetails(this.SavedData);
       } else {
