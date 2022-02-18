@@ -98,6 +98,22 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
       this.dataSource.sort = this.sort;
     }
 
+    if (this.status === 'removalofPanelist') {
+      this.displayedColumns = ['user_email', 'shortlist_name', 'hr_email', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'removalofPanelistError') {
+      this.displayedColumns = ['user_email', 'shortlist_name', 'hr_email', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
     if (this.status === 'interview') {
       this.displayedColumns = ['name', 'employee_id', 'email', 'discipline', 'delete'];
       this.userList = this.previewerArray;
@@ -108,6 +124,14 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
 
     if (this.status === 'invPanelError') {
       this.displayedColumns = ['name', 'employee_id', 'email', 'discipline', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'ICUploadsError') {
+      this.displayedColumns = ['email', 'company', 'date', 'time', 'reason'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;

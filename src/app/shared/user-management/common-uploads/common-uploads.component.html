@@ -1,5 +1,5 @@
 <div class="main-wrapper-uploaded-list">
-  <ng-container *ngIf="currentRole != 'institute' && selectedTemplate != Upload_CandidateAssigntoInterviewPanel">
+  <ng-container *ngIf="currentRole != 'institute'">
   <div class="selectedTemp d-flex align-items-center">
     <div class="mr-3">
     Selected Template:
@@ -61,14 +61,12 @@
           <mat-panel-title>
            Upload Instructions
           </mat-panel-title>
-          <!-- <mat-panel-description>
-            This is a summary of the content
-          </mat-panel-description> -->
         </mat-expansion-panel-header>
         <ng-container *ngIf="selectedTemplate == Upload_Candidates" [ngTemplateOutlet]="candidate"></ng-container>
         <ng-container *ngIf="selectedTemplate == Upload_Institutes" [ngTemplateOutlet]="institute"></ng-container>
         <ng-container *ngIf="selectedTemplate == Upload_InterviewPanel" [ngTemplateOutlet]="invPanel"></ng-container>
         <ng-container *ngIf="selectedTemplate == Upload_CandidateAssigntoInterviewPanel" [ngTemplateOutlet]="assignCandidateToInvPanel"></ng-container>
+        <ng-container *ngIf="selectedTemplate == Upload_CandidateAssigneeRemoval" [ngTemplateOutlet]="unassignCandidateToInvPanel"></ng-container>
 
       </mat-expansion-panel>
       </mat-accordion>
@@ -190,6 +188,33 @@
           </li>
           <li>Click on confirm button.</li>
           <li>The successfully uploaded candidate details will be available in “Assigned details” tab.</li>
+          <li>The candidate details which are not uploaded are available in “Bulk assign reports” tab.
+            <ul>
+              <li>For missing details, update the mandatory details and upload.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+        </div>
+
+</ng-template>
+
+<ng-template #unassignCandidateToInvPanel>
+  <div class="ins">
+    <div class="ul">
+        <ul>
+          <li>Click on "Download template" button and open the file in excel program.</li>
+          <li>All fields are mandatory.</li>
+          <li>From Screen, click Upload details link to select a file.</li>
+          <li>Maximum 500 users can be uploaded at one time.</li>
+          <li>Please do not refresh or go back while upload is processing.</li>
+          <li>Click upload button.</li>
+          <li>Screen will provide a preview.</li>
+          <li>Candidate details can be removed by clicking on "x" on preview screen. These candidate details will not be
+            unassigned.
+          </li>
+          <li>Click on confirm button.</li>
+          <!-- <li>The successfully unassigned candidate details be available in “Assigned details” tab.</li> -->
           <li>The candidate details which are not uploaded are available in “Bulk assign reports” tab.
             <ul>
               <li>For missing details, update the mandatory details and upload.</li>

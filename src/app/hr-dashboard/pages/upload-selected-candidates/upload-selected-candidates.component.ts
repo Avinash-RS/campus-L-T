@@ -26,18 +26,21 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   selectedImage: any;
   fileName: any;
   fileSize: any;
-  enableList: boolean;
   selectedTarget: any;
   SavedData: any;
   eventSaver: any;
   totalCountofCandidates: any;
-  uploadedListArray: any;
+  uploadedListArray: any = [];
   dateFormatExist: boolean;
   firstForm = 'selectedCandidates';
   secondForm = 'hrMapping';
   thirdForm = 'decliners_upload';
   fourthForm = 'medical_upload';
   fifthForm = 'offer_status_upload';
+  errorReportsStatus: any;
+  errorReports: any = [];
+  ICUploadErrorStatus = 'ICUploadsError';
+
   templates = [
     {
       value: this.firstForm,
@@ -182,7 +185,13 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
           errorLength: data ? data?.length : 0,
         };
-        this.openDialog1(ShortlistBoxComponent, datas);
+        if(datas['errorLength'] == 0) {
+          this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully uploaded.' : '', 'Bulk Upload Success');
+          this.nextTab('0');
+        } else {
+          this.openDialog1(ShortlistBoxComponent, datas);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+        }
       }, (err) => {
 
       });
@@ -195,7 +204,13 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
           errorLength: data ? data?.length : 0,
         };
-        this.openDialog1(ShortlistBoxComponent, datas);
+        if(datas['errorLength'] == 0) {
+          this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully uploaded.' : '', 'Bulk Upload Success');
+          this.nextTab('0');
+        } else {
+          this.openDialog1(ShortlistBoxComponent, datas);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+        }
       }, (err) => {
 
       });
@@ -208,7 +223,13 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
           errorLength: data ? data?.length : 0,
         };
-        this.openDialog1(ShortlistBoxComponent, datas);
+        if(datas['errorLength'] == 0) {
+          this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Declined Candidates have been successfully uploaded.' : '', 'Bulk Upload Success');
+          this.nextTab('0');
+        } else {
+          this.openDialog1(ShortlistBoxComponent, datas);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+        }
       }, (err) => {
 
       });
@@ -221,7 +242,13 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
           errorLength: data ? data?.length : 0,
         };
-        this.openDialog1(ShortlistBoxComponent, datas);
+        if(datas['errorLength'] == 0) {
+          this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' PMEC details have been successfully uploaded.' : '', 'Bulk Upload Success');
+          this.nextTab('0');
+        } else {
+          this.openDialog1(ShortlistBoxComponent, datas);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+        }
       }, (err) => {
 
       });
@@ -234,12 +261,29 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
           errorLength: data ? data?.length : 0,
         };
-        this.openDialog1(ShortlistBoxComponent, datas);
+        if(datas['errorLength'] == 0) {
+          this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Offer details have been successfully uploaded.' : '', 'Bulk Upload Success');
+          this.nextTab('0');
+        } else {
+          this.openDialog1(ShortlistBoxComponent, datas);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+        }
       }, (err) => {
 
       });
     } else { }
   }
+
+  passNotUploadedListToPreview(data, form) {
+    if (data && data.length > 0) {
+      this.uploadedListArray = [];
+      this.errorReportsStatus = form;
+      this.errorReports = data;
+    } else {
+      this.delete();
+    }
+  }
+
   upload() {
     this.validFile = false;
     /* wire up file reader */
@@ -413,7 +457,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
   totalCountOfferStatusDetails(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -424,7 +467,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           if (index < 4) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
@@ -439,7 +481,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 2) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 offerStatus = element ? element : '';
@@ -447,7 +488,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 3) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 filepath = element ? element : '';
@@ -474,7 +514,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
   totalCountPMECDetails(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -485,7 +524,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           if (index < 5) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
@@ -500,7 +538,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 2) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 fitnessStatus = element ? element : '';
@@ -508,7 +545,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 3) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 description = element ? element : '';
@@ -516,7 +552,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 4) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 filepath = element ? element : '';
@@ -544,7 +579,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
   totalCountHR(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -555,7 +589,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           if (index < 10) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
@@ -563,7 +596,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 1) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 cadre = element ? element : '';
@@ -571,7 +603,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 2) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 designation = element ? element : '';
@@ -586,7 +617,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 4) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 job_code = element ? element : '';
@@ -594,7 +624,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 5) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 function1 = element ? element : '';
@@ -602,7 +631,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 6) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 sub_function = element ? element : '';
@@ -610,7 +638,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 7) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 is_ps_no = element ? element : '';
@@ -618,7 +645,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 8) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 dh_ps_no = element ? element : '';
@@ -626,7 +652,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 9) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 hr_ps_no = element ? element : '';
@@ -661,7 +686,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
   totalCountDeclinersDetails(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -672,7 +696,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           if (index < 3) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
@@ -680,7 +703,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 1) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 remarks = element ? element : '';
@@ -722,7 +744,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
   totalCount(data) {
     this.dateFormatExist = false;
-    this.enableList = true;
     let count = 0;
     const listArray = [];
     data.forEach((dup, i) => {
@@ -733,7 +754,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           if (index < 5) {
             if (index == 0) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 email = element ? element : '';
@@ -741,7 +761,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 1) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 businessName = element ? element : '';
@@ -749,7 +768,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
             }
             if (index == 2) {
               if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
-                this.enableList = false;
                 this.dateFormatExist = true;
               } else {
                 hr_offer_reference = element ? element : '';
@@ -796,7 +814,6 @@ export class UploadSelectedCandidatesComponent implements OnInit {
 
   backToUpload() {
     this.validFile = false;
-    this.enableList = false;
   }
 
   uploadType() {
@@ -893,6 +910,8 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     this.validFile = false;
     this.dateFormatExist = false;
     this.url = null;
+    this.errorReports = [];
+    this.uploadedListArray = [];
   }
 
   // Open dailog
@@ -911,15 +930,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.enableList = false;
       if (result) {
-        const success = result?.totalLength - result?.errorLength;
-        const redirect = success > result?.errorLength;
-        if (success >= result?.errorLength) {
-          this.nextTab('0');
-        } else {
-          this.nextTab('2');
-        }
       }
     });
   }

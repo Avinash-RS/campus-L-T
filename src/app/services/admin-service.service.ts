@@ -628,6 +628,11 @@ export class AdminServiceService {
       { headers: this.getAfterCustomHeaders(), withCredentials: true });
   }
 
+  AssignedPanelistRemoval(data) {
+    return this.http.post(`${this.BASE_URL}/evaluation/remove-panel-members`, data,
+      { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  }
+
   bulkUploadInvAssignReports() {
     return this.http.get(`${this.BASE_URL}/profile/evaluation_assignment_errors`,
       { headers: this.getAfterCustomHeaders(), withCredentials: true });

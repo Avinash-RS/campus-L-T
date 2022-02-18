@@ -45,11 +45,13 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
   Upload_Institutes = 'institute';
   Upload_InterviewPanel = 'interview';
   Upload_CandidateAssigntoInterviewPanel = 'bulkAssign';
+  Upload_CandidateAssigneeRemoval = 'removalofPanelist';
   errorReports: any = [];
   candidateErrorStatus = 'candidateError';
   instituteErrorStatus = 'instituteError';
   invPanelErrorStatus = 'invPanelError';
   candidateAssigntoInterviewPanelErrorStatus = 'bulkAssignError';
+  Upload_CandidateAssigneeRemovalErrorStatus = 'removalofPanelistError';
   errorReportsStatus: any;
   selectedTemplate = this.Upload_Candidates;
   templates = [
@@ -96,10 +98,16 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
  isBulkAssign() {
    if (this.isAssignCandidateToInterviewPanel) {
     this.selectedTemplate = this.Upload_CandidateAssigntoInterviewPanel;
-  //  let bulkAssign = {
-  //   value: this.Upload_CandidateAssigntoInterviewPanel,
-  //   name: 'Assign Candidates to Interview Panel'
-  // };
+    this.templates = [
+      {
+        value: this.Upload_CandidateAssigntoInterviewPanel,
+        name: 'Bulk Assign'
+      },
+      {
+        value: this.Upload_CandidateAssigneeRemoval,
+        name: 'Unassign Interview Panelist'
+      }
+    ];
 }
 
  }
@@ -127,6 +135,12 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       const excel = `${this.BASE_URL}/sites/default/files/HR_Bulk_Assign_Template.csv`;
       window.open(excel, '_blank');
     }
+
+    if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
+      const excel = `${this.BASE_URL}/sites/default/files/HR_Bulk_Assign_Template.csv`;
+      window.open(excel, '_blank');
+    }
+
 
   }
   submit() {
@@ -159,6 +173,14 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
       };
       this.openDialog(ShortlistBoxComponent, data);
     }
+
+    if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
+      const data = {
+        bulk_upload: 'unassign'
+      };
+      this.openDialog(ShortlistBoxComponent, data);
+    }
+
   }
 
   tConvert(time) {
@@ -278,6 +300,58 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
     }
     }
 
+    if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
+      if ((this.SavedData && this.SavedData[0] && this.SavedData[0].length === 3 && this.SavedData[0][0] && this.SavedData[0][0].trim() === 'Shortlist Name') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][1] && this.SavedData[0][1].trim() === 'Candidate Email ID') &&
+        (this.SavedData && this.SavedData[0] && this.SavedData[0][2] && this.SavedData[0][2].trim() === 'Interview Panel Email ID')) {
+      this.removalOfInvpanelExceltoJsonFormatter(this.SavedData);
+    } else {
+      this.validFile = true;
+    }
+    }
+
+
+}
+
+removalOfInvpanelExceltoJsonFormatter(data) {
+  this.dateFormatExist = false;
+  let count = 0;
+  const listArray = [];
+  data.forEach((dup, i) => {
+    let Shortlist_Name; let candidate_email_id; let inv_panel_email_id;
+    if (i > 0 && dup) {
+      count += 1;
+      dup.forEach((element, index) => {
+        if (index < 3) {
+          if (index == 0) {
+            Shortlist_Name = element ? element : '';
+          }
+          if (index == 1) {
+            if (element && typeof element == 'object' && element.toString().endsWith('(India Standard Time)')) {
+              this.dateFormatExist = true;
+            } else {
+              candidate_email_id = element ? element : '';
+            }
+          }
+          if (index == 2) {
+            inv_panel_email_id = element ? element : '';
+          }
+        }
+      });
+      const value = {
+        shortlist_name: Shortlist_Name ? Shortlist_Name.toString().trim() : '',
+        user_email: candidate_email_id ? candidate_email_id.toString().trim() : '',
+        hr_email: inv_panel_email_id ? inv_panel_email_id.toString().trim() : ''
+      };
+
+
+      if ((Shortlist_Name && Shortlist_Name.toString().trim()) || (candidate_email_id && candidate_email_id.toString().trim()) || (inv_panel_email_id && inv_panel_email_id.toString().trim())) {
+        listArray.push(value);
+      }
+    }
+  });
+  this.uploadedListArray = listArray;
+  this.totalCountofCandidates = count - 1;
 }
 
 assignCandidatetoInvpanelExceltoJsonFormatter(data) {
@@ -522,6 +596,38 @@ insitituteExceltoJsonFormatter(data) {
     if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
       this.assignCandidatetoInvpanelBulkUploadAPI();
     }
+
+    if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
+      this.removalOfInvpanelBulkUploadAPI();
+    }
+
+  }
+
+  removalOfInvpanelBulkUploadAPI() {
+    const apiData = {
+      field_user_created_by: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '',
+      remove_feedback_only: 0,
+      entries: this.uploadedListArray
+    }
+
+    this.adminService.AssignedPanelistRemoval(apiData).subscribe((data: any) => {
+      const datas = {
+        inv_assign_bulk_upload_removal: 'removal',
+        totalLength: apiData && apiData.entries ? apiData.entries.length : 0,
+        errorLength: data ? data.length : 0,
+      };
+      if(datas['errorLength'] == 0) {
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully assigned.' : '', 'Bulk Upload Success');
+        if(this.appConfig.getLocalData('roles') == 'hr') {
+          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
+        }
+      } else {
+        this.openDialog1(ShortlistBoxComponent, datas);
+        this.passNotUploadedListToPreview(data, this.Upload_CandidateAssigneeRemovalErrorStatus);
+      }
+    }, (err) => {
+
+    });
   }
 
   assignCandidatetoInvpanelBulkUploadAPI() {
@@ -708,6 +814,9 @@ insitituteExceltoJsonFormatter(data) {
     }
     if (this.selectedTemplate == this.Upload_CandidateAssigntoInterviewPanel) {
       return 'Upload Candidate Details'
+    }
+    if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
+      return 'Upload Details'
     }
   }
 
