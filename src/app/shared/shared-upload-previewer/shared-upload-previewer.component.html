@@ -177,20 +177,77 @@
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
       <!-- Name Column -->
       <ng-container matColumnDef="shortlist_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist Name </th>
         <td mat-cell *matCellDef="let element"> {{element.shortlist_name ? element.shortlist_name : '-'}} </td>
       </ng-container>
 
       <!-- Position Column -->
       <ng-container matColumnDef="user_email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate email ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate Email ID </th>
         <td mat-cell *matCellDef="let element"> {{element.user_email ? element.user_email : '-'}}
         </td>
       </ng-container>
 
       <!-- Weight Column -->
       <ng-container matColumnDef="hr_email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview Panel email ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview Panel Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.hr_email ? element.hr_email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remove </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <img style="cursor: pointer; padding-left: 1em;" (click)="removeSelectedCandidate(i)"
+            src="assets/images/005-close-1.svg" alt="" srcset="">
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="status === 'removalofPanelist'">
+  <div class="user-list-wrapper">
+    <div class="search-bar">
+      <div class="search-icon">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- Name Column -->
+      <ng-container matColumnDef="shortlist_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.shortlist_name ? element.shortlist_name : '-'}} </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="user_email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.user_email ? element.user_email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="hr_email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview Panel Email ID </th>
         <td mat-cell *matCellDef="let element"> {{element.hr_email ? element.hr_email : '-'}}
         </td>
       </ng-container>
@@ -916,20 +973,76 @@
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
       <!-- Name Column -->
       <ng-container matColumnDef="shortlist_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist Name </th>
         <td mat-cell *matCellDef="let element"> {{element.shortlist_name ? element.shortlist_name : '-'}} </td>
       </ng-container>
 
       <!-- Position Column -->
       <ng-container matColumnDef="user_email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate email ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate Email ID </th>
         <td mat-cell *matCellDef="let element"> {{element.user_email ? element.user_email : '-'}}
         </td>
       </ng-container>
 
       <!-- Weight Column -->
       <ng-container matColumnDef="hr_email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview Panel email ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview Panel Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.hr_email ? element.hr_email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+        <td style="color: red !important;" mat-cell *matCellDef="let element"> {{element.reason ? element.reason : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
+<!-- Assign candidate to Inv panel error -->
+<ng-container *ngIf="status === 'removalofPanelistError'">
+  <div class="user-list-wrapper">
+    <div class="search-bar">
+      <div class="search-icon">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- Name Column -->
+      <ng-container matColumnDef="shortlist_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Shortlist Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.shortlist_name ? element.shortlist_name : '-'}} </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="user_email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidate Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.user_email ? element.user_email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="hr_email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Interview Panel Email ID </th>
         <td mat-cell *matCellDef="let element"> {{element.hr_email ? element.hr_email : '-'}}
         </td>
       </ng-container>

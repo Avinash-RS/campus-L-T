@@ -434,6 +434,17 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'unassign'">
+  <div class="bulk-upload-text">
+    Confirm to unassign these candidates from the respective interview panelists
+  </div>
+  <div class="buttons">
+    <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
+    <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
+  </div>
+</div>
+
+
 <div class="modal-box-wrapper" *ngIf="data && data['inv_assign_bulk_upload_ok']">
   <div class="bulk-upload-text">
     <span
@@ -449,12 +460,26 @@
   </div>
 </div>
 
+<div class="modal-box-wrapper" *ngIf="data && data['inv_assign_bulk_upload_removal'] == 'removal'">
+  <div class="bulk-upload-text">
+    <span
+      *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Panelist have been successfully unassigned.' : ''}}</span>
+    <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Panelist has not been successfully
+      unassigned.</span> <br> <span
+      *ngIf="data && data['errorLength']">{{data && data['errorLength'] ? data['errorLength'] : ''}}
+      {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'panelist' : 'panelist'}} has not
+      been unassigned. Click Ok to see the error details.</span>
+  </div>
+  <div class="buttons">
+    <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
+  </div>
+</div>
+
 <div class="modal-box-wrapper" *ngIf="data && data['update'] === 'update-available'">
   <div class="bulk-upload-text">
     New version available. Please click on update to get the new version.
   </div>
   <div class="buttons">
-    <!-- <button class="common-cancel-button common-button-height-33 mr-3" (click)="updateCancel()" mat-raised-button>Cancel</button> -->
     <button class="common-button common-button-height-35" (click)="updateAvailable()" mat-raised-button>Update</button>
   </div>
 </div>
