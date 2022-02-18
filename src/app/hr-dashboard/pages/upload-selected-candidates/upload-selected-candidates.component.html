@@ -1,5 +1,5 @@
 <div class="main-wrapper-uploaded-list">
-    <div class="selectedTemp d-flex align-items-center" *ngIf="!enableList">
+    <div class="selectedTemp d-flex align-items-center">
       <div class="mr-3">
       Selected Template:
     </div>
@@ -14,7 +14,7 @@
     </div>
 
     </div>
-    <div class="upload-wrapper" *ngIf="!enableList">
+    <div class="upload-wrapper">
 
       <div class="top-wrapper">
         <div class="upload">
@@ -53,7 +53,7 @@
       </div>
 
     </div>
-    <div class="ins" *ngIf="!enableList">
+    <div class="ins" *ngIf="errorReports.length < 1 && uploadedListArray.length < 1">
         <div class="head">
           Instructions:
         </div>
@@ -80,16 +80,15 @@
           </div>
             </div>
 
-    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate?.value == this.secondForm}" *ngIf="enableList">
+    <div class="list-wrapper" [ngClass]="{'width-95': selectedTemplate?.value == this.secondForm}" *ngIf="errorReports.length > 0 || uploadedListArray.length > 0">
+      <h4 class="h4heading">{{uploadedListArray.length > 0 ? 'Preview Screen' : 'Error Report'}}</h4>
       <div class="list-count">
-        Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}
-      </div>
-      <app-shared-upload-previewer *ngIf="enableList" [status]="selectedTemplate?.value" [previewerArray]="uploadedListArray"></app-shared-upload-previewer>
-
-
-      <div class="button-wrapper">
-        <button (click)="backToUpload()" class="common-cancel-button common-button-height-30" mat-raised-button>Cancel</button>
-        <button [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" (click)="submitType()" class="common-button common-button-height-30 ml-3" mat-raised-button>Submit</button>
-    </div>
+        <ng-container *ngIf="uploadedListArray.length > 0">Total number of candidates : {{uploadedListArray ? uploadedListArray['length'] : ''}}</ng-container>
+        <ng-container *ngIf="errorReports.length > 0">Total number of not uploaded candidates : {{errorReports ? errorReports['length'] : ''}}</ng-container>
+        </div>
+        <app-shared-upload-previewer [status]="errorReports.length > 0 ? errorReportsStatus : selectedTemplate?.value" [previewerArray]="errorReports.length > 0 ? errorReports : uploadedListArray"></app-shared-upload-previewer>
+        <div *ngIf="uploadedListArray.length > 0" class="button-wrapper">
+          <button class="common-button common-button-height-30" [disabled]="uploadedListArray && uploadedListArray.length > 0 ? false : true" (click)="submitType()" mat-raised-button>Submit</button>
+        </div>
     </div>
   </div>

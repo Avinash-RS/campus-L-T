@@ -130,6 +130,14 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
       this.dataSource.sort = this.sort;
     }
 
+    if (this.status === 'ICUploadsError') {
+      this.displayedColumns = ['email', 'company', 'date', 'time', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
     if (this.status === 'selectedCandidates') {
       this.displayedColumns = ['email', 'name', 'reference', 'offDate', 'offValidity', 'delete'];
       this.userList = this.previewerArray;
