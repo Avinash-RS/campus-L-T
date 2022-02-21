@@ -299,6 +299,16 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         }
       },
       {
+        headerName: 'Assigned Panel Count', field: 'panel_count',
+        filter: 'agNumberColumnFilter',
+        minWidth: 140,
+        sortable: true,
+        tooltipField: 'panel_count',
+        getQuickFilterText: (params) => {
+          return params.value;
+        }
+      },
+      {
         headerName: 'Is KYC Skipped', field: 'kyc_exempted',
         filter: 'agSetColumnFilter',
         minWidth: 120,
