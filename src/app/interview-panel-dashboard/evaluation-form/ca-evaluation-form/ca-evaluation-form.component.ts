@@ -91,9 +91,9 @@ export class CaEvaluationFormComponent implements OnInit {
   caform_applicationOfKnowledge = 'ca_application_knowledge';
   caform_valuesIntegrity = 'ca_values';
   caform_suitability_other_position = 'ca_suitability_other_position';
-  caform_cprating = 'cp_rating';
-  caform_postionReference1 = 'position_reference_1';
-  caform_postionReference2 = 'position_reference_2';
+  caform_cprating = 'ca_cp_rating';
+  caform_postionReference1 = 'ca_position_pref_1';
+  caform_postionReference2 = 'ca_position_pref_2';
 
   constructor(
     private formBuilder: FormBuilder,
