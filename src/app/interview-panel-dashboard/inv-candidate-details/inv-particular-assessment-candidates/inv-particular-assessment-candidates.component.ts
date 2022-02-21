@@ -642,11 +642,12 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           });
         } else {
           this.rowData = this.userList;
-
+          this.getSummaryCount();
         }
       },
       (err) => {
         this.rowData = this.userList;
+        this.getSummaryCount();
       }
     );
   }
@@ -706,41 +707,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
     this.rejectedCount = [];
     this.candidatesEvaluated = [];
     this.sentToHr = [];
-  //   if (this.appConfig.getSelectedDrivePermissions().video_assessment && this.appConfig.getSelectedDrivePermissions().normal_assessment) {
-  //     this.userList.forEach((element) => {
-  //       if (element.normal_assessment.evaluation_status == '2' && element.video_assessment.sent_to_hr == 1) {
-  //         this.sentToHr.push(element);
-  //       }
-  //       if (element.normal_assessment.evaluation_status == '1' && (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1)) {
-  //         this.candidatesEvaluated.push(element);
-  //       }
-  //       if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Selected' && element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected' && element.video_assessment.sent_to_hr != 1) {
-  //         this.buttonCheck = true;
-  //         this.selectedCount.push(element);
-  //       }
-  //       if (element.normal_assessment.evaluation_status == '1' && element.normal_assessment.interview_status == 'Rejected' || (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected')) {
-  //         this.rejectedCount.push(element);
-  //       }
-  //   });
-  // } else {
-  //   if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
-  //   this.userList.forEach((element) => {
-  //     if (element.video_assessment.sent_to_hr == 1) {
-  //       this.sentToHr.push(element);
-  //     }
-  //     if (element.video_assessment.evaluated_by && element.video_assessment.sent_to_hr != 1) {
-  //       this.candidatesEvaluated.push(element);
-  //     }
-  //     if ((element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'selected') && element.video_assessment.sent_to_hr != 1) {
-  //       this.buttonCheck = true;
-  //       this.selectedCount.push(element);
-  //     }
-  //     if (element.video_assessment.evaluation_status && element.video_assessment.evaluation_status == 'rejected') {
-  //       this.rejectedCount.push(element);
-  //     }
-  //   });
-  // }
-  if (this.appConfig.getSelectedDrivePermissions().normal_assessment || true) {
     this.userList.forEach((element) => {
       element.normal_assessment.evaluation_status == '2' ? this.sentToHr.push(element) : element.normal_assessment.evaluation_status == '1' ? (this.buttonCheck = true && this.candidatesEvaluated.push(element)) : '';
       if (
@@ -752,7 +718,6 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
           : this.rejectedCount.push(element);
       }
     });
-   }
   }
 // }
   // To get all users
