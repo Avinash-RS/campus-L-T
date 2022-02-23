@@ -137,7 +137,7 @@ export class CommonUploadsComponent implements OnInit, AfterViewInit {
     }
 
     if (this.selectedTemplate == this.Upload_CandidateAssigneeRemoval) {
-      const excel = `${this.BASE_URL}/sites/default/files/HR_Bulk_Assign_Template.csv`;
+      const excel = `${this.BASE_URL}/sites/default/files/HR_Bulk_Unassign_Template.csv`;
       window.open(excel, '_blank');
     }
 
@@ -617,7 +617,7 @@ insitituteExceltoJsonFormatter(data) {
         errorLength: data ? data.length : 0,
       };
       if(datas['errorLength'] == 0) {
-        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidates have been successfully assigned.' : '', 'Bulk Upload Success');
+        this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Interview Panelist has been successfully unassigned.' : '', 'Unassign Success');
         if(this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED);
         }
