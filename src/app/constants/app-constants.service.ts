@@ -1,4 +1,7 @@
 export const CONSTANT = {
+  SECRET_KEY: {
+    UNIFIED_REPORT: 'unifiedReports',
+  },
   MIMETypes: {
     TXT: 'text/plain',
     DOCX: 'application/vnd.openxmlformats-officedocument.wordprocessingm1.document',

@@ -76,7 +76,16 @@ h1,h2,h3,h4,h5,h6 {
 	margin-left:auto;
 	display:flex;
   justify-content:center;
-  margin-top: 2em;
+  margin-top: 4px;
+}
+
+.btn-container {
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3em;
 }
 
 .table {
