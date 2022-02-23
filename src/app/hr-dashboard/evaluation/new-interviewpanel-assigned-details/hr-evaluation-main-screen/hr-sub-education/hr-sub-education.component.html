@@ -1,8 +1,10 @@
 <div class="reportContainer">
-  <!-- <div class="noData">
-    Click here to see <span class="eTest" (click)="eTest()">E-Test Results</span>
-  </div> -->
 
+  <ng-container *ngIf="assessmentMarksArray && assessmentMarksArray.length > 0">
+    <div class="btn-container">
+      <button class="common-button common-button-height-30 mr-3" (click)="eTest()" mat-raised-button>E-Test Results</button>
+    </div>
+  </ng-container>
   <ng-container *ngIf="assessmentMarksArray && assessmentMarksArray.length > 0 else noResults">
     <div class="container">
 

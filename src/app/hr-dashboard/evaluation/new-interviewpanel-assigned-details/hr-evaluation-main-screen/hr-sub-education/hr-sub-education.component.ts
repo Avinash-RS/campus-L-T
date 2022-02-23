@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-hr-sub-education',
@@ -21,6 +22,7 @@ export class HrSubEducationComponent implements OnInit, OnDestroy {
   getCandidateAssessmentsAPISubscription: Subscription;
   assessmentMarks: any;
   assessmentMarksArray: any;
+  emailId: any;
 
   constructor(
     public appConfig: AppConfigService,
@@ -51,12 +53,21 @@ export class HrSubEducationComponent implements OnInit, OnDestroy {
         form: params['form']
       };
       this.getCandidateAssessments(params['shortlist_name'], params['uid']);
+      this.emailId = params['email'] ? params['email'] : ''
     });
   }
 
   eTest() {
-    window.open(environment.UNIFIEDREPORTS, '_blank');
-    // this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.INTERVIEW_PANEL_DASHBOARD.JOIN_INTERVIEW, this.queryParams);
+    let details = {
+      type: 'microcert',
+      email: this.emailId ? this.emailId : null,
+      //assessmentId: null
+    };
+    let unified_encrypt_key = CONSTANT.SECRET_KEY.UNIFIED_REPORT;
+    var emailEncrypt = this.apiService.encryptForUnifiedReports(JSON.stringify(details.email), unified_encrypt_key);
+    var encryptDetail = this.apiService.encryptForUnifiedReports(JSON.stringify(details), unified_encrypt_key);
+    let redirectionLink = environment.UNIFIEDREPORTS+"auth/reports/viewreport/"+  encodeURIComponent(emailEncrypt) + "?details="+ encodeURIComponent(encryptDetail);
+    window.open(redirectionLink, 'redirection');
   }
 
   getCandidateAssessments(shortlist_name, uid) {

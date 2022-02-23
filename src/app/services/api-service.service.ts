@@ -136,6 +136,15 @@ export class ApiServiceService {
     }
   }
 
+ encryptForUnifiedReports(data, encryptionKey) {
+    try {
+      return CryptoJS.AES.encrypt(data, encryptionKey.trim()).toString();
+    } catch (e) {
+      return data;
+    }
+  }
+
+
   decrypt(data) {
     try {
       const bytes = CryptoJS.AES.decrypt(data, this.EncryptKEY);
