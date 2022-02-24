@@ -304,6 +304,9 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
         minWidth: 140,
         sortable: true,
         tooltipField: 'panel_count',
+        valueGetter: (params) => {
+          return params && params.data &&  params.data.panel_count ? Number(params.data.panel_count) : 0
+        },
         getQuickFilterText: (params) => {
           return params.value;
         }

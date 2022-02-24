@@ -293,7 +293,7 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         sortable: true,
         tooltipField: 'panel_count',
         valueGetter: (params) => {
-          return params && params.data &&  params.data.panel_count ? params.data.panel_count : '-'
+          return params && params.data &&  params.data.panel_count ? Number(params.data.panel_count) : 0
         },
         getQuickFilterText: (params) => {
           return params.value;
