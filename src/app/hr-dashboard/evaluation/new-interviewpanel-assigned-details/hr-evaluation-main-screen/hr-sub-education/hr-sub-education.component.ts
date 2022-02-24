@@ -59,7 +59,7 @@ export class HrSubEducationComponent implements OnInit, OnDestroy {
 
   eTest() {
     let details = {
-      type: 'microcert',
+      type: 'campus',
       email: this.emailId ? this.emailId : null,
       //assessmentId: null
     };
