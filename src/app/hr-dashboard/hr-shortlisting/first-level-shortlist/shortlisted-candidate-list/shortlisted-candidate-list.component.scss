@@ -7,7 +7,7 @@
   display: flex;
   margin: 8px 16px 4px 0;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 :host::ng-deep .min-width-100{
   .mat-button-wrapper{
@@ -550,4 +550,25 @@ input.ng-invalid.ng-touched, nz-select.ng-invalid.ng-touched {
   .count {
     font-weight: 600;
   }
+}
+.grid-icons {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 6px 13px;
+  background-color: var(--ag-header-background-color, #f8f8f8);
+  border: solid 1px var(--ag-border-color, #babfc7);
+  border-bottom: none;
+  width: 98%;
+  margin: auto !important;
+}
+:host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-color !important;
+}
+
+:host ::ng-deep .mat-checkbox-label {
+  padding-top: 2px;
+  color: #222222;
+  font-weight: 500;
 }

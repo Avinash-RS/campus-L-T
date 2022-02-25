@@ -1,26 +1,5 @@
 <div class="shortlist-candidates-wrapper">
   <div class="sub-headers-wrapper">
-    <div class="d-flex justify-content-start align-items-center">
-    <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3 ml-3">
-      <span class="label mr-2">Filtered Candidates Count: </span>
-      <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
-    </div>
-
-    <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3">
-      <span class="label mr-2">Selected Candidates Count: </span>
-      <span class="count">{{selecetedCount}}</span>
-    </div>
-
-    <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="common-button-with-icon common-button-height-32" (click)="selectAll(true)" mat-raised-button>
-      <em class="icon-checked"></em> <span class="ml-2">Select All Candidates</span>
-    </button>
-
-    <button *ngIf="(userList && userList.length > 0)" matTooltip="Unselect All candidates on this page" class="common-button-with-icon common-button-height-32 ml-2" (click)="selectAll(false)" mat-raised-button>
-      <em class="icon-checked"></em> <span class="ml-2">Unselect All Candidates</span>
-    </button>
-
-
-  </div>
 
   <div *ngIf="gridApi" class="d-flex justify-content-end align-items-center">
 
@@ -48,6 +27,10 @@
       </button>
     </div> -->
 
+    <div class="ml-2 d-flex align-items-center" *ngIf="gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 1">
+      <mat-checkbox [formControl]="selectAllCheckbox">Select all {{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}} candidates</mat-checkbox>
+    </div>
+
     <div class="ml-2">
       <button  [matTooltip]="'Advanced Filter'" class="common-button-with-icon common-button-height-32 ml-2 min-width-100" (click)="customFilterOpen()" mat-raised-button>
         <em class="icon-filter" style="color: white"></em> <span class="ml-2">Filter</span>
@@ -57,18 +40,18 @@
     <div class="ml-2" *ngIf="userList && userList.length > 0">
       <button
         (click)="
-          gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
+          ((gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0) || selectAllCheckbox.value)
             ? shortlist()
             : ''
         "
         [matTooltip]="
-          gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
+          ((gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0) || selectAllCheckbox.value)
             ? ''
             : 'Please select the candidates'
         "
         class="common-button common-button-height-32"
         [ngClass]="
-          gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0
+          ((gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0) || selectAllCheckbox.value)
             ? ''
             : 'disabled'
         "
@@ -80,6 +63,29 @@
 
     </div>
   </div>
+  <div class="position-relative">
+    <div class="d-flex grid-icons">
+      <button *ngIf="(userList && userList.length > 0)" matTooltip="Select All candidates on this page" class="common-button-with-icon common-button-height-28" (click)="selectAll(true)" mat-raised-button>
+        <em class="icon-checked"></em> <span class="ml-2">Select All Candidates</span>
+      </button>
+
+      <button *ngIf="(userList && userList.length > 0)" matTooltip="Unselect All candidates on this page" class="common-button-with-icon common-button-height-28 ml-2" (click)="selectAll(false)" mat-raised-button>
+        <em class="icon-checked"></em> <span class="ml-2">Unselect All Candidates</span>
+      </button>
+
+      <div class="d-flex justify-content-start align-items-center">
+        <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3" [ngClass]="(userList && userList.length > 0) ? 'ml-5' : 'ml-2'">
+          <span class="label mr-2">Filtered Candidates Count: </span>
+          <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
+        </div>
+
+        <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3">
+          <span class="label mr-2">Selected Candidates Count: </span>
+          <span class="count">{{selecetedCount}}</span>
+        </div>
+      </div>
+
+     </div>
   <ag-grid-angular
     style="width: 98%; height: calc(100vh - 235px); margin: auto !important"
     class="ag-theme-alpine"
@@ -117,6 +123,7 @@
     (selectionChanged)="onSelectionChanged()"
   >
   </ag-grid-angular>
+</div>
 </div>
 
 <ng-template #lastAppliedFilterViewPopUp>

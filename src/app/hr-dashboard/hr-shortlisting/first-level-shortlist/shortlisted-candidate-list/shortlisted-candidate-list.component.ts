@@ -119,6 +119,7 @@ pgInstitutesList: any;
   form_education_checked = 'checked';
 
   instituteList = DropdownListForKYC.institutes;
+  selectAllCheckbox = new FormControl(false);
   // serverSide Things
   rowSelection: any;
   userList: any = [];
