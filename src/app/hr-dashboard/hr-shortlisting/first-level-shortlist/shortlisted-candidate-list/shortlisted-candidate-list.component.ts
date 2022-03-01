@@ -854,6 +854,7 @@ dateConvertionMonth(date) {
     this.backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
     this.dateFrom.setValue(null);
     this.dateTo.setValue(null);
+    this.checkFilterAppied() || this.lastAppliedFilter ? this.clearAllFilters() : '';
   }
 
   clearAllFilters() {
