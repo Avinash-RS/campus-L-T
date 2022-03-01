@@ -106,4 +106,8 @@ export class ShortlistBoxComponent implements OnInit {
     this.dialogRef.close(this.data);
   }
 
+  logout() {
+    this.appConfig.logoutWhenAuthorized();
+    this.dialogRef.close();
+  }
 }

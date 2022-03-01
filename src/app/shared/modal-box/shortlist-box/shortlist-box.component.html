@@ -493,3 +493,22 @@
     <button class="common-button common-button-height-35" (click)="confirmWithData()" mat-raised-button>Confirm</button>
   </div>
 </div>
+
+  <div class="modal-wrapper">
+    <div class="heading-wrapper">
+      <div class="heading d-flex align-items-center">
+      <span class="icon-warning_amber_black_24dp icon-24 mr-1" style="color: red;"></span> {{'Alert Message'}}
+      </div>
+    </div>
+    <div class="body-wrapper">
+    <div class="confirmation-text">
+      You're being timed out due to inactivity.
+    </div>
+    <div class="confirmation-text pt-2">
+      Please click OK to login again.
+    </div>
+    <div class="button-wrappers">
+    <button class="common-button common-button-height-40" (click)="logout()" mat-raised-button>Ok</button>
+  </div>
+  </div>
+  </div>
