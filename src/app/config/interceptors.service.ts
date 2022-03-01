@@ -15,6 +15,8 @@ import { AppConfigService } from './app-config.service';
 import { environment } from 'src/environments/environment';
 import { CONSTANT } from '../constants/app-constants.service';
 import { LoaderService } from '../services/loader-service.service';
+import { MatDialog } from '@angular/material';
+import { ShortlistBoxComponent } from '../shared/modal-box/shortlist-box/shortlist-box.component';
 
 @Injectable()
 export class InterceptorsService implements HttpInterceptor {
@@ -28,7 +30,8 @@ export class InterceptorsService implements HttpInterceptor {
   private totalRequests = 0;
   constructor(
     private appConfig: AppConfigService,
-    private loadingService: LoaderService
+    private loadingService: LoaderService,
+    private matdialog: MatDialog
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -111,13 +114,11 @@ export class InterceptorsService implements HttpInterceptor {
             this.appConfig.error('Session expired. Please log in again', '');
             this.appConfig.logoutWhenAuthorized();
           } else {
-            this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-              ? error.error.message : '403 Forbidden', '');
+            // this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+            //   ? error.error.message : '403 Forbidden', '');
+            this.openSessionTimeoutPopUp();
             return throwError(error);
           }
-          // this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-          //   ? error.error.message : '401 UnAuthorized', '');
-          // return throwError(error);
         }
 
         if (error.status === 422) {
@@ -180,5 +181,16 @@ export class InterceptorsService implements HttpInterceptor {
         // }
       })
     );
+  }
+
+  openSessionTimeoutPopUp() {
+    if (this.matdialog.openDialogs && this.matdialog.openDialogs.length > 0) return;
+    this.matdialog.open(ShortlistBoxComponent, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      panelClass: 'sessionAlertPopUp',
+      disableClose: true
+    });
   }
 }
