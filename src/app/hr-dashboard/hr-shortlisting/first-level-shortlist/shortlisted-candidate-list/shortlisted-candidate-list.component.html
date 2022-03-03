@@ -143,6 +143,13 @@
         <span>Filters</span>
       </div>
       <div class="d-flex justify-content-center align-items-center pr-3 pl-3">
+        <div class="ml-2 d-flex align-items-start pt-1">
+          <div>Date Range: </div>
+          <div class="d-flex ml-1">
+            <ng-container [ngTemplateOutlet]="dateRangeFilter"></ng-container>
+          </div>
+        </div>
+
         <div class="selected-candidates-box d-flex justify-content-center align-items-center pr-2 pl-2 mr-3 ml-3">
           <span class="label mr-2">Filtered Candidates Count: </span>
           <span class="count">{{gridApi && gridApi.paginationProxy && gridApi.paginationProxy.masterRowCount && !buttonLoading && this.userList && this.userList.length > 0 ? gridApi.paginationProxy.masterRowCount : 0}}</span>
@@ -1160,5 +1167,93 @@
   <ng-template #noFilterToShow>
     <h6 style="font-weight: 600; padding: 1em 1em .5em 1em; text-align: cente">No Filter has been applied</h6>
   </ng-template>
+  </div>
+</ng-template>
+<ng-template #dateRangeFilter>
+  <div class="overall-input-wrapper mt-0 dateRangeOverall">
+    <div class="date-relative">
+      <input
+        matInput
+        class="input"
+        [min]="minDate"
+        [max]="DateRangemaxDate"
+        [matDatepicker]="picker_dateFromRange"
+        (dateChange)="RangedateValidCustomCheck(true)"
+        (dateInput)="RangedateValidCustomCheck(true)"
+        placeholder="From"
+        [formControl]="dateRangeFrom"
+      />
+      <mat-datepicker-toggle
+        matSuffix class="date-icon"
+        [for]="picker_dateFromRange"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker_dateFromRange></mat-datepicker>
+    </div>
+    <div class="form-error" *ngIf="dateRangeFrom?.invalid && dateRangeFrom?.touched">
+      <div *ngIf="dateRangeFrom?.errors?.required">Date From is Required</div>
+      <div *ngIf="dateRangeFrom?.errors?.matDatepickerMax">
+        {{
+          dateRangeFrom?.errors?.matDatepickerMax?.max
+            ? "Maximum date should be " +
+              momentForm(dateRangeFrom?.errors?.matDatepickerMax.max)
+            : ""
+        }}
+      </div>
+      <div *ngIf="dateRangeFrom?.errors?.matDatepickerMin">
+        {{
+          dateRangeFrom?.errors?.matDatepickerMin?.min
+            ? "Minimum date should be " +
+              momentForm(dateRangeFrom?.errors?.matDatepickerMin.min)
+            : ""
+        }}
+      </div>
+      <div *ngIf="dateRangeFrom?.errors?.matDatepickerParse">
+        Invalid Date Format
+      </div>
+    </div>
+  </div>
+  <div class="overall-input-wrapper ml-3 mt-0 dateRangeOverall">
+    <!-- <label>Date To</label> -->
+    <div class="date-relative">
+      <input
+        matInput
+        class="input"
+        [min]="minDate"
+        [max]="DateRangemaxDate"
+        [matDatepicker]="picker_dateToRange"
+        (dateChange)="RangedateValidCustomCheck(false)"
+        (dateInput)="RangedateValidCustomCheck(false)"
+        placeholder="To"
+        [formControl]="dateRangeTo"
+      />
+      <mat-datepicker-toggle
+        matSuffix class="date-icon"
+        [for]="picker_dateToRange"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker_dateToRange></mat-datepicker>
+    </div>
+    <div class="form-error" *ngIf="dateRangeTo?.invalid && dateRangeTo?.touched">
+      <div *ngIf="dateRangeTo?.errors?.required">Date To is Required</div>
+      <div *ngIf="dateRangeTo?.errors?.notValid">End Date cannot be lesser than Start Date</div>
+      <div *ngIf="dateRangeTo?.errors?.matDatepickerMax">
+        {{
+          dateRangeTo?.errors?.matDatepickerMax?.max
+            ? "Maximum date should be " +
+              momentForm(dateRangeTo?.errors?.matDatepickerMax.max)
+            : ""
+        }}
+      </div>
+      <div *ngIf="dateRangeTo?.errors?.matDatepickerMin">
+        {{
+          dateRangeTo?.errors?.matDatepickerMin?.min
+            ? "Minimum date should be " +
+              momentForm(dateRangeTo?.errors?.matDatepickerMin.min)
+            : ""
+        }}
+      </div>
+      <div *ngIf="dateRangeTo?.errors?.matDatepickerParse">
+        Invalid Date Format
+      </div>
+    </div>
   </div>
 </ng-template>

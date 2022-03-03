@@ -236,8 +236,8 @@
       color: #6B6B6B;
       outline: none;
       box-sizing: border-box;
-      min-height: 35px !important;
-      max-height: 35px !important;
+      min-height: 35px;
+      max-height: 35px;
       line-height: 35px;
       padding: 4px 8px;
       background-color: $white;
@@ -396,6 +396,7 @@ mat-datepicker-toggle {
   right: 0 !important;
   box-sizing: border-box !important;
   border-left: 1px solid #A5A5A5;
+  height: 100%;
   .mat-icon-button {
     min-height: 34px !important;
     max-height: 34px !important;
@@ -547,6 +548,8 @@ input.ng-invalid.ng-touched, nz-select.ng-invalid.ng-touched {
   background: white;
   box-shadow: 0px 2px 3px #00000040;
   line-height: 25px;
+  height: 25px;
+
   .count {
     font-weight: 600;
   }
@@ -571,4 +574,40 @@ input.ng-invalid.ng-touched, nz-select.ng-invalid.ng-touched {
   padding-top: 2px;
   color: #222222;
   font-weight: 500;
+}
+::ng-deep .date-icon {
+  position: absolute;
+  right: 0;
+  margin: auto;
+  height: 25px;
+  button {
+    height: 25px !important;
+    width: 25px !important;
+    position: relative !important;
+    .mat-button-wrapper {
+      height: 25px !important;
+      display: flex !important;
+      svg {
+        width: 16px !important;
+        top: 0px;
+        position: absolute;
+        left: 4.5px;
+      }
+    }
+  }
+  .mat-datepicker-toggle-default-icon {
+    width: 16px !important;
+  }
+  .popupModalContainerForlastViewPopup mat-datepicker-toggle .mat-icon-button, .popupModalContainerForcustomFilter mat-datepicker-toggle .mat-icon-button{
+    min-height: 25px !important;
+    max-height: 25px !important;
+  }
+}
+.dateRangeOverall {
+  width: 110px !important;
+  min-width: 110px !important;
+  input {
+    min-height: 25px !important;
+    height: 25px !important;
+  }
 }
