@@ -105,6 +105,9 @@ pgInstitutesList: any;
   dateFrom = new FormControl(null);
   dateTo = new FormControl(null);
 
+  dateRangeFrom = new FormControl(null);
+  dateRangeTo = new FormControl(null);
+
   educationForm: FormGroup;
   form_education_array = 'Education_Array';
   form_education_level = 'level';
@@ -162,6 +165,7 @@ pgInstitutesList: any;
   submitShortlistedCandidatesSubscription: Subscription;
   getAllEducationFormDropdownListSubscription: Subscription;
   selecetedCount:any = 0;
+  DateRangemaxDate: Date;
   constructor(
     private appConfig: AppConfigService,
     private firstShortlistFilterModel: firstShortlistFilterModel,
@@ -216,11 +220,38 @@ pgInstitutesList: any;
      }
   }
 
+  RangedateValidCustomCheck(isDateFrom) {
+    if (isDateFrom) {
+      let startDate = this.dateRangeFrom.value;
+      if (this.dateRangeTo && this.dateRangeTo.value && startDate) {
+      let dateFrom = moment(startDate).format();
+      let dateTo = moment(this.dateRangeTo.value).format();
+      let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
+      isEndDateBeforeStartDate ? this.dateRangeTo.setErrors({notValid: true}) : this.dateRangeTo.setErrors(null);
+      if (!isEndDateBeforeStartDate) {
+        this.dateRangeTo.updateValueAndValidity();
+      }
+    }
+   } else {
+      let endDate = this.dateRangeTo.value;
+      if (this.dateRangeFrom && this.dateRangeFrom.value && endDate) {
+        let dateFrom = moment(this.dateRangeFrom.value).format();
+        let dateTo = moment(endDate).format();
+        let isEndDateBeforeStartDate = moment(dateTo).isBefore(dateFrom);
+        isEndDateBeforeStartDate ? this.dateRangeTo.setErrors({notValid: true}) : this.dateRangeTo.setErrors(null);
+        if (!isEndDateBeforeStartDate) {
+          this.dateRangeTo.updateValueAndValidity();
+        }
+      }
+   }
+}
+
+
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 0, 1);
-    // this.maxDate = new Date(currentYear + 20, 11, 31);
+    this.DateRangemaxDate = new Date(currentYear + 2, 0, 0);
     // this.maxDate = new Date(currentYear - 16, 0, 1);
     this.maxDate = new Date();
   }
@@ -636,6 +667,8 @@ dateConvertionMonth(date) {
         let apiData: any = params;
           if (params.request && params.request.groupKeys && params.request.groupKeys.length == 0) {
             this.gridApi.hideOverlay();
+            params.request.submittedFromDate = this.dateRangeFrom.value ? this.dateConvertionForFiltering(this.dateRangeFrom.value) : null;
+            params.request.submittedToDate = this.dateRangeTo.value ? this.dateConvertionForFiltering(this.dateRangeTo.value) : null;
             this.buttonLoading = true;
            this.getCandidateListForShortlistSubscription = this.adminService.getCandidateListForShortlist(params.request).subscribe((data1: any) => {
               this.buttonLoading = false;
@@ -755,7 +788,9 @@ dateConvertionMonth(date) {
   shortlist() {
 
     const data = {
-      shortlist: 'first'
+      shortlist: 'first',
+      count: this.selectAllCheckbox.value ? (this.gridApi && this.gridApi.paginationProxy && this.gridApi.paginationProxy.masterRowCount && !this.buttonLoading && this.userList && this.userList.length > 0 ? this.gridApi.paginationProxy.masterRowCount : 0)
+             : this.selecetedCount
     };
     this.openDialog(ShortlistBoxComponent, data);
   }
@@ -774,18 +809,20 @@ dateConvertionMonth(date) {
       }
     });
     apiData = {
-      candidates: user_ids,
+      candidates: this.selectAllCheckbox.value ? [] : user_ids,
       folder_name: apiDatas && apiDatas['folderName'] ? apiDatas['folderName'] : '',
       shortlist_name: apiDatas && apiDatas['shortlistName'] ? apiDatas['shortlistName'] : '',
       field_assement_type: apiDatas && apiDatas['type'] ? apiDatas['type'] : 'rec',
       shortlistby: this.appConfig.getLocalData('username')
     };
+    apiData.shortlistAllCandidates = this.selectAllCheckbox.value;
     this.submitShortlistedCandidatesSubscription = this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
       const datas = {
         first_level_shortlist_success: 'first_level_shortlist_success'
       };
       this.gridApi.deselectAll();
       this.clearAllFilters();
+      this.selectAllCheckbox.setValue(false);
       this.openDialog1(ShortlistBoxComponent, datas);
     }, (err) => {
 
@@ -854,6 +891,8 @@ dateConvertionMonth(date) {
     this.backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
     this.dateFrom.setValue(null);
     this.dateTo.setValue(null);
+    this.dateRangeFrom.setValue(null);
+    this.dateRangeTo.setValue(null);
     this.checkFilterAppied() || this.lastAppliedFilter ? this.clearAllFilters() : '';
   }
 

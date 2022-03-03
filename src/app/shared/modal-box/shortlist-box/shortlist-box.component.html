@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="footer">
-    Confirm to move the candidate details to assign assessment
+    Confirm to move the selected <span style="font-weight: 500;">{{data['count']}}</span> candidate details to assign assessment
   </div>
   <div class="buttons">
     <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
@@ -494,7 +494,7 @@
   </div>
 </div>
 
-  <div class="modal-wrapper">
+  <div class="modal-wrapper" *ngIf="data && data['expiration']">
     <div class="heading-wrapper">
       <div class="heading d-flex align-items-center">
       <span class="icon-warning_amber_black_24dp icon-24 mr-1" style="color: red;"></span> {{'Alert Message'}}
