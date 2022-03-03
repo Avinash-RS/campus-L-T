@@ -160,6 +160,11 @@ export class InterceptorsService implements HttpInterceptor {
             ? error.error.message : '409 Conflict error', '');
           return throwError(error);
         }
+        if (error.status === 405) {
+          this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+            ? error.error.message : '405 Method Not Allowed', '');
+          return throwError(error);
+        }
         if (error.status === 200) {
         } else {
           if (error.status != 403) {
@@ -190,7 +195,10 @@ export class InterceptorsService implements HttpInterceptor {
       height: 'auto',
       autoFocus: false,
       panelClass: 'sessionAlertPopUp',
-      disableClose: true
+      disableClose: true,
+      data: {
+        expiration: true
+      }
     });
   }
 }
