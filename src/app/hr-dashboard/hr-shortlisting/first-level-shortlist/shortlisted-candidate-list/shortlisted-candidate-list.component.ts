@@ -1182,11 +1182,11 @@ ApplyFilter() {
     educationArray: educationArrayValues
   };
 
-  if (JSON.stringify(previous) == JSON.stringify(this.lastAppliedFilter)) {
-    this.buttonLoading = false;
-  } else {
+  // if (JSON.stringify(previous) == JSON.stringify(this.lastAppliedFilter)) {
+  //   this.buttonLoading = false;
+  // } else {
     this.filterApiBindingCustomizationData(this.lastAppliedFilter);
-  }
+  // }
 }
 
 filterApiBindingCustomizationData(appliedFilter) {
