@@ -114,9 +114,8 @@ export class InterceptorsService implements HttpInterceptor {
             this.appConfig.error('Session expired. Please log in again', '');
             this.appConfig.logoutWhenAuthorized();
           } else {
-            // this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-            //   ? error.error.message : '403 Forbidden', '');
-            this.openSessionTimeoutPopUp();
+            this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+              ? error.error.message : '403 Forbidden', '');
             return throwError(error);
           }
         }
@@ -142,12 +141,10 @@ export class InterceptorsService implements HttpInterceptor {
             ? error.error.message : 'Please try again later', 'Something went wrong');
           return throwError(error);
         }
-        // if (error.status === 403) {
-        //   this.appConfig.hideLoader();
-        //   this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
-        //     ? error.error.message : '403 Forbidden', '');
-        //   return throwError(error);
-        // }
+        if (error.status === 406) {
+          this.openSessionTimeoutPopUp();
+          return throwError(error);
+        }
         if (error.status === 404) {
           if (error && error.error && error.error.FailureReason && !error.error.FailureReason.message.includes('yet to submit his/her profile')) {
             this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
