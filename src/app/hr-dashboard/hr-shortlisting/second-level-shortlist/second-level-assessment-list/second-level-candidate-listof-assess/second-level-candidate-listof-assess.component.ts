@@ -6,7 +6,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
+import { ModuleRegistry, AllModules, IsRowSelectable } from '@ag-grid-enterprise/all-modules';
 ModuleRegistry.registerModules(AllModules);
 
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
@@ -72,19 +72,21 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   public components;
   public getNodeChildDetails;
   public rowSelection;
-  public isRowSelectable;
+  // public isRowSelectable;
   resultsLength:any;
   fres: any;
   refreshSubscription: Subscription;
   filterSecondLevelSubscription: Subscription;
   secondShortlistAPISubscription: Subscription;
-  drivePermissions: any;
   VideoAssessdialogRef: any;
   userListApiResponse: any;
   videoAssessment: any;
   videoAssessmentCompletedCandidates: any = [];
   showSendEmailButton: any;
   videoScheduleDetailsSubscription: Subscription;
+  drivePermissions: any = this.appConfig.getSelectedDrivePermissions();
+  public isRowSelectable: IsRowSelectable;
+
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
@@ -103,13 +105,51 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     };
 
     this.editRouteParamGetter();
+    this.checkboxEnableDisable();
   }
 
   ngOnInit() {
-    this.drivePermissions = this.appConfig.getSelectedDrivePermissions();
     this.refreshOndriveChangeRXJS();
   }
 
+  onFilterChanged(e) {
+    this.gridApi.deselectAll();
+  }
+
+  checkboxEnableDisable() {
+    // Drive condition check first
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
+      this.isRowSelectable = function (params) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    // Drive condition check second
+    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
+      this.isRowSelectable = function (params) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    // Drive condition check third
+    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+      this.isRowSelectable = function (params) {
+        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+  }
   isRowSelectableMethod() {
     this.rowSelection = "multiple";
   }
@@ -435,44 +475,44 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     apiResultSet[0].children[0].headerCheckboxSelectionFilteredOnly = true;
     apiResultSet[0].children[0].checkboxSelection = true;
 
-    // Drive condition check first
-    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
-      apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
-          params.node.selectable = true;
-          return true;
-        } else {
-          params.node.selectable = false;
-          return false;
-        }
-      }
-    }
+    // // Drive condition check first
+    // if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
+    //   apiResultSet[0].children[0].checkboxSelection = function (params) {
+    //     if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+    //       params.node.selectable = true;
+    //       return true;
+    //     } else {
+    //       params.node.selectable = false;
+    //       return false;
+    //     }
+    //   }
+    // }
 
-    // Drive condition check second
-    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
-      apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
-          params.node.selectable = true;
-          return true;
-        } else {
-          params.node.selectable = false;
-          return false;
-        }
-    }
-    }
+    // // Drive condition check second
+    // if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
+    //   apiResultSet[0].children[0].checkboxSelection = function (params) {
+    //     if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
+    //       params.node.selectable = true;
+    //       return true;
+    //     } else {
+    //       params.node.selectable = false;
+    //       return false;
+    //     }
+    // }
+    // }
 
-    // Drive condition check third
-    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
-      apiResultSet[0].children[0].checkboxSelection = function (params) {
-        if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
-          params.node.selectable = true;
-          return true;
-        } else {
-          params.node.selectable = false;
-          return false;
-        }
-      }
-    }
+    // // Drive condition check third
+    // if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
+    //   apiResultSet[0].children[0].checkboxSelection = function (params) {
+    //     if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
+    //       params.node.selectable = true;
+    //       return true;
+    //     } else {
+    //       params.node.selectable = false;
+    //       return false;
+    //     }
+    //   }
+    // }
 
   }
 
