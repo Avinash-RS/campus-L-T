@@ -181,6 +181,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
 
 
   getModel(e) {
+    this.gridApi.deselectAll();
     setTimeout(() => {
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
       if (filteredArray && filteredArray.length === 0) {

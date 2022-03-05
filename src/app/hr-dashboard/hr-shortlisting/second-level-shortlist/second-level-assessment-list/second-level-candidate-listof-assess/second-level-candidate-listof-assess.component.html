@@ -16,7 +16,6 @@
 
     <div class="w-100 mb-2">
       <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay" [suppressRowClickSelection]="true" [statusBar]="statusBar"
-      (filterChanged)="onFilterChanged($event)"
           (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" [enableCharts]="true" [rowGroupPanelShow]="'always'" [rowClassRules]="rowClassRules" [sideBar]="true" (firstDataRendered)="onFirstDataRendered($event)"
           [animateRows]="true" [masterDetail]="true" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [detailCellRendererParams]="detailCellRendererParams" [enableRangeSelection]="true" (filterModified)="getModel($event)" headerHeight="40" [pivotPanelShow]="'always'" [rowDragManaged]="false">
       </ag-grid-angular>

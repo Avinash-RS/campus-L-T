@@ -114,10 +114,6 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     this.refreshOndriveChangeRXJS();
   }
 
-  onFilterChanged(e) {
-    this.gridApi.deselectAll();
-  }
-
   checkboxEnableDisable() {
     // Drive condition check first
     if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
@@ -418,6 +414,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   getModel(e) {
+    this.gridApi.deselectAll();
     setTimeout(() => {
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
       if (filteredArray && filteredArray.length === 0) {
