@@ -213,6 +213,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   }
 
   getModel(e) {
+    this.gridApi.deselectAll();
     setTimeout(() => {
       const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
       if (filteredArray && filteredArray.length === 0) {

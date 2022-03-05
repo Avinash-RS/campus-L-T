@@ -385,7 +385,8 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   emailTriggerSeletedNodes() {
     const data = {
-      bulk_upload: 'tpo-candidate-bulk'
+      bulk_upload: 'tpo-candidate-bulk',
+      count: this.gridApi.getSelectedNodes().length
     };
     this.openDialog(ShortlistBoxComponent, data);
   }

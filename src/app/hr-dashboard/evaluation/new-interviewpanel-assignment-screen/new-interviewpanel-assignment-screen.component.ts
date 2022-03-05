@@ -239,6 +239,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   getModel(e) {
+    this.gridApi.deselectAll();
     // console.log(e);
     setTimeout(() => {
     const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
@@ -402,6 +403,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   }
 
   getModelHR(e) {
+    this.gridApiHR.deselectAll();
     // console.log(e);
     setTimeout(() => {
     const filteredArray = this.gridApiHR.getModel().rootNode.childrenAfterFilter;
@@ -424,6 +426,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
     this.columnDefsHR = [
       {
         headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
         maxWidth: 50,
         checkboxSelection: true,
         filter: false,
