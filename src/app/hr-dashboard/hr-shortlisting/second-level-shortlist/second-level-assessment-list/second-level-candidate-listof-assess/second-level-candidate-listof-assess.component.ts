@@ -22,6 +22,7 @@ ModuleRegistry.registerModules([GridChartsModule]);
 export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('videoAssessDialog', {static: false}) videoAssessDialog: TemplateRef<any>;
+  @ViewChild('secondShortlistPreview', {static: false}) secondShortlistPreview: TemplateRef<any>;
   showSendEvaluationButton = true;
   userList: any;
   assessmentName: any;
@@ -86,6 +87,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   videoScheduleDetailsSubscription: Subscription;
   drivePermissions: any = this.appConfig.getSelectedDrivePermissions();
   public isRowSelectable: IsRowSelectable;
+  openPreviewDialogRef: any;
 
   constructor(
     private appConfig: AppConfigService,
@@ -223,11 +225,30 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     let check = Object.keys(savedFilterModel).length === 0 && savedFilterModel.constructor === Object ? true : false;
     return !check;
   }
-  submit() {
+
+  openPreviewDialog() {
     this.selectedCandidatesForShortlist = [];
     this.selectedCandidatesForShortlist = this.gridApi.getSelectedNodes();
+    this.openPreviewDialogRef = this.matDialog.open(this.secondShortlistPreview, {
+      width: 'auto',
+      height: 'auto',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: true,
+      panelClass: 'popupModalContainerForVideoAssess'
+    });
+  }
+
+  previewSubmit() {
+    this.submit();
+  }
+
+  submit() {
+    // this.selectedCandidatesForShortlist = [];
+    // this.selectedCandidatesForShortlist = this.gridApi.getSelectedNodes();
     const data = {
-      shortlist: 'second'
+      shortlist: 'second',
+      count: this.selectedCandidatesForShortlist ? this.selectedCandidatesForShortlist.length : 0
     };
     this.openDialog(ShortlistBoxComponent, data);
   }
@@ -250,6 +271,7 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
       });
       apiData.shortlisted_ids = candidatesArr;
      this.secondShortlistAPISubscription = this.adminService.secondShortlistAPI(apiData).subscribe((data: any) => {
+        this.openPreviewDialogRef ? this.openPreviewDialogRef.close() : '';
         this.appConfig.success(apiData.emai_sent ? 'The mail has been sent successfully to shortlisted candidates' : 'Selected Candidates have been shortlisted successfully');
         this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.SECONDSHORTLISTED_CANDIDATE_REPORT, { data: this.nameOfAssessment ? this.nameOfAssessment : 'none' });
       }, (err) => {
@@ -386,7 +408,8 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
   }
 
   closeDialog(e) {
-    this.VideoAssessdialogRef.close();
+    this.openPreviewDialogRef ? this.openPreviewDialogRef.close() : '';
+    this.VideoAssessdialogRef ? this.VideoAssessdialogRef.close() : '';
   }
 
   refresh() {
@@ -475,81 +498,10 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     apiResultSet[0].children[0].headerCheckboxSelectionFilteredOnly = true;
     apiResultSet[0].children[0].checkboxSelection = true;
 
-    // // Drive condition check first
-    // if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
-    //   apiResultSet[0].children[0].checkboxSelection = function (params) {
-    //     if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
-    //       params.node.selectable = true;
-    //       return true;
-    //     } else {
-    //       params.node.selectable = false;
-    //       return false;
-    //     }
-    //   }
-    // }
-
-    // // Drive condition check second
-    // if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
-    //   apiResultSet[0].children[0].checkboxSelection = function (params) {
-    //     if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
-    //       params.node.selectable = true;
-    //       return true;
-    //     } else {
-    //       params.node.selectable = false;
-    //       return false;
-    //     }
-    // }
-    // }
-
-    // // Drive condition check third
-    // if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
-    //   apiResultSet[0].children[0].checkboxSelection = function (params) {
-    //     if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
-    //       params.node.selectable = true;
-    //       return true;
-    //     } else {
-    //       params.node.selectable = false;
-    //       return false;
-    //     }
-    //   }
-    // }
 
   }
 
     this.columnDefs = apiResultSet;
-  }
-
-  checkboxEnablingCondition(params: any) {
-    if (this.drivePermissions && this.drivePermissions.normal_assessment && this.drivePermissions.video_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
-        params.node.selectable = true;
-        return true;
-      } else {
-        params.node.selectable = false;
-        return false;
-      }
-    }
-    if (this.drivePermissions && this.drivePermissions.normal_assessment && !this.drivePermissions.video_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && params.data.na_status) {
-        params.node.selectable = true;
-        return true;
-      } else {
-        params.node.selectable = false;
-        return false;
-      }
-    }
-
-    if (this.drivePermissions && this.drivePermissions.video_assessment && !this.drivePermissions.normal_assessment) {
-      if (params.data && params.data.shortlisted_status && params.data.shortlisted_status != 'Moved to Final Interview' && (params.data.va_evaluation_status && (params.data.va_evaluation_status == 'Selected' || params.data.va_evaluation_status == 'Rejected'))) {
-        params.node.selectable = true;
-        return true;
-      } else {
-        params.node.selectable = false;
-        return false;
-      }
-    }
-
-
   }
 
   redirectVideo() {

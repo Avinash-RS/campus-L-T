@@ -178,6 +178,14 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
       this.dataSource.sort = this.sort;
     }
 
+    if (this.status === 'secondshortlistpreview') {
+      this.displayedColumns = ['candidate_id', 'candidate_name', 'email_id', 'shortlisted_status', 'delete'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
   }
 
   ngAfterViewInit() {

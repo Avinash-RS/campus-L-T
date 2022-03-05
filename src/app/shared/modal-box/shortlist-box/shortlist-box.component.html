@@ -40,7 +40,7 @@
 
 <div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'second'">
   <div class="bulk-upload-text">
-    Please confirm the selected candidates for assessment shortlist
+    Please confirm the selected <span style="font-weight: 500;">{{data['count']}}</span> candidates for assessment shortlist
   </div>
   <div class="radio-group pb-2">
       <mat-radio-group  style="display: flex; justify-content: space-between; width: 35%; margin-right: 6em;" [(ngModel)]="SecondShortlistradioValue">
