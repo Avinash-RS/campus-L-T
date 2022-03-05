@@ -10,7 +10,7 @@
       </div>
 
       <div class="ml-2" *ngIf="userList && userList.length > 0">
-        <button (click)="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? submit() : ''" [matTooltip]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the candidates'" class="common-button common-button-height-30" [ngClass]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" mat-raised-button>Assign to Final Interview</button>
+        <button (click)="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? openPreviewDialog() : ''" [matTooltip]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the candidates'" class="common-button common-button-height-30" [ngClass]="gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" mat-raised-button>Assign to Final Interview</button>
       </div>
   </div>
 
@@ -30,6 +30,29 @@
     </div>
 
     <app-shared-video-assess-view (refreshGrid)="refresh()" [videoAssessment]="videoAssessment"></app-shared-video-assess-view>
+  </div>
+
+</ng-template>
+
+
+<ng-template #secondShortlistPreview>
+  <div class="main-wrapper">
+    <div style="float: right; margin: -25px;" class="remove">
+      <mat-icon style="font-size: 20px !important; cursor: pointer;" (click)="closeDialog($event)" class="close-icon">close</mat-icon>
+    </div>
+
+    <div class="list-wrapper position-relative">
+      <h4 class="h4heading text-center">{{'Preview Screen'}}</h4>
+      <div class="list-count" style="position: absolute; top: 50px;">
+        <ng-container>Total number of candidates : {{selectedCandidatesForShortlist ? selectedCandidatesForShortlist['length'] : ''}}</ng-container>
+      </div>
+      <!-- <div class="previewer-component-wrapper"> -->
+      <app-shared-upload-previewer [status]="'secondshortlistpreview'" [previewerArray]="selectedCandidatesForShortlist"></app-shared-upload-previewer>
+    <!-- </div> -->
+      <div *ngIf="selectedCandidatesForShortlist.length > 0" class="button-wrapper d-flex justify-content-center mt-3">
+        <button class="common-button common-button-height-30" [disabled]="selectedCandidatesForShortlist && selectedCandidatesForShortlist.length > 0 ? false : true" (click)="previewSubmit()" mat-raised-button>Submit</button>
+      </div>
+    </div>
   </div>
 
 </ng-template>

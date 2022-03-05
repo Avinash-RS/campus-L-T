@@ -51,4 +51,8 @@
           text-align: center;
       }
   }
+  .previewer-component-wrapper {
+    max-height: 400px;
+    overflow: auto;
+  }
 }
