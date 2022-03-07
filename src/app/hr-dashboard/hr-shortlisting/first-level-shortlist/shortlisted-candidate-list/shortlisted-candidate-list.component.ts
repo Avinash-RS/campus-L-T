@@ -166,6 +166,7 @@ pgInstitutesList: any;
   getAllEducationFormDropdownListSubscription: Subscription;
   selecetedCount:any = 0;
   DateRangemaxDate: Date;
+  lastRequestJson: any;
   constructor(
     private appConfig: AppConfigService,
     private firstShortlistFilterModel: firstShortlistFilterModel,
@@ -671,6 +672,7 @@ dateConvertionMonth(date) {
             params.request.submittedToDate = this.dateRangeTo.value ? this.dateConvertionForFiltering(this.dateRangeTo.value) : null;
             this.buttonLoading = true;
            this.getCandidateListForShortlistSubscription = this.adminService.getCandidateListForShortlist(params.request).subscribe((data1: any) => {
+              this.lastRequestJson = JSON.stringify(params.request);
               this.buttonLoading = false;
               this.userList = data1 && data1['data'] ? data1['data'] : [];
               this.userList.forEach(element => {
@@ -816,6 +818,7 @@ dateConvertionMonth(date) {
       shortlistby: this.appConfig.getLocalData('username')
     };
     apiData.shortlistAllCandidates = this.selectAllCheckbox.value;
+    apiData.filteringObj = this.lastRequestJson ? this.lastRequestJson : '';
     this.submitShortlistedCandidatesSubscription = this.adminService.submitShortlistedCandidates(apiData).subscribe((data: any) => {
       const datas = {
         first_level_shortlist_success: 'first_level_shortlist_success'
