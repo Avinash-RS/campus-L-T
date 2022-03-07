@@ -893,6 +893,7 @@ dateConvertionMonth(date) {
     this.dateTo.setValue(null);
     this.dateRangeFrom.setValue(null);
     this.dateRangeTo.setValue(null);
+    this.selectAllCheckbox.setValue(false);
     this.checkFilterAppied() || this.lastAppliedFilter ? this.clearAllFilters() : '';
   }
 
