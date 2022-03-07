@@ -907,6 +907,9 @@ dateConvertionMonth(date) {
     this.backlogsDropDownValues = this.firstShortlistFilterModel.getBacklogsList();
     this.dateFrom.setValue(null);
     this.dateTo.setValue(null);
+    this.dateRangeFrom.setValue(null);
+    this.dateRangeTo.setValue(null);
+    this.selectAllCheckbox.setValue(false);
     this.gridApi.paginationGoToFirstPage();
     this.gridApi.setFilterModel(null);
     this.gridApi.setSortModel(null);

@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="footer">
-    Confirm to move the selected <span style="font-weight: 500;">{{data['count']}}</span> candidate details to assign assessment
+    <span style="font-weight: 500;">{{data['count']}}</span> {{data['count'] > 1 ? 'candidates' : 'candidate'}} selected for shortlist.
   </div>
   <div class="buttons">
     <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
@@ -40,7 +40,7 @@
 
 <div class="modal-box-wrapper" *ngIf="data && data['shortlist'] === 'second'">
   <div class="bulk-upload-text">
-    Please confirm the selected <span style="font-weight: 500;">{{data['count']}}</span> candidates for assessment shortlist
+    <span style="font-weight: 500;">{{data['count']}}</span> {{data['count'] > 1 ? 'candidates' : 'candidate'}} selected for shortlist.
   </div>
   <div class="radio-group pb-2">
       <mat-radio-group  style="display: flex; justify-content: space-between; width: 35%; margin-right: 6em;" [(ngModel)]="SecondShortlistradioValue">
