@@ -214,7 +214,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
       },
       {
         headerName: 'Candidate Id', field: 'candidate_id',
-        filter: 'agNumberColumnFilter',
+        filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
         tooltipField: 'candidate_id',

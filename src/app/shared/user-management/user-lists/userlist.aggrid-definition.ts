@@ -205,7 +205,7 @@ export class userListDefinition {
       // },
       {
         headerName: 'Employee Id', field: 'field_employee_id', colId: 'pfield_employee_id',
-        filter: 'agNumberColumnFilter',
+        filter: "agTextColumnFilter",
         minWidth: 140,
         sortable: true,
         resizable:true,
@@ -298,7 +298,7 @@ export class userListDefinition {
       // },
       {
         headerName: 'Institute Id', field: 'id', colId: 'iid',
-        filter: 'agNumberColumnFilter',
+        filter: "agTextColumnFilter",
         minWidth: 140,
         sortable: true,
         tooltipField: 'id',
