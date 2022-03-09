@@ -41,6 +41,9 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
 
   ngOnInit() {
     this.getUsersList();
+    if (this.status === 'secondshortlistpreview') {
+      this.filterPredicate();
+    }
   }
   ngOnChanges() {
     this.getUsersList();
@@ -195,6 +198,18 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
     }
   }
 
+  filterPredicate() {
+    this.dataSource.filterPredicate = (data, filter: string)  => {
+      const arr = [];
+      data?.data?.candidate_id ? arr.push(data?.data?.candidate_id) : '';
+      data?.data?.candidate_name ? arr.push(data?.data?.candidate_name) : '';
+      data?.data?.email_id ? arr.push(data?.data?.email_id) : '';
+      data?.data?.shortlisted_status ? arr.push(data?.data?.shortlisted_status) : '';
+      const jsonS = JSON.stringify(arr).toLowerCase();
+      return jsonS.indexOf(filter) != -1;
+    };
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -211,6 +226,9 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
   removeSelectedCandidate(i) {
     this.userList.splice(i, 1);
     this.dataSource = new MatTableDataSource(this.userList);
+    if (this.status === 'secondshortlistpreview') {
+      this.filterPredicate();
+    }
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
