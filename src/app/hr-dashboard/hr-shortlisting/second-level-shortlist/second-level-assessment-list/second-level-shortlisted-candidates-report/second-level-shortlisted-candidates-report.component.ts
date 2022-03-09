@@ -151,7 +151,7 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
       },
       {
         headerName: 'Candidate id', field: 'candidate_id',
-        filter: 'agNumberColumnFilter',
+        filter: 'agTextColumnFilter',
         sortable: true,
         tooltipField: 'candidate_id',
         filterParams: {
