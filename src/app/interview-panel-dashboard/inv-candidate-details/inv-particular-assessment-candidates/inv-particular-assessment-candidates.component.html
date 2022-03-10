@@ -40,7 +40,7 @@
 
         <ag-grid-angular style="width: 100%;" [ngStyle]="{ height: (agheight.offsetHeight - 75) + 'px' }" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true"
             [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)"
-            [rowSelection]="rowSelection" [isRowSelectable]="isRowSelectable" headerHeight="35" [animateRows]="true">
+            [rowSelection]="rowSelection" [isRowSelectable]="isRowSelectable" headerHeight="35" [statusBar]="statusBar" [animateRows]="true">
         </ag-grid-angular>
     </div>
 </div>

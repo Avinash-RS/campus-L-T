@@ -95,7 +95,7 @@
                 </div>
                 <div [ngClass]="userList && userList.length > 0 ? 'scroll' : 'scroll1'">
                     <ag-grid-angular style="width: 99%; height: 450px; margin: auto !important" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize"
-                        [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40" (selectionChanged)="onCandidateSelect($event)"
+                        [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="40" (selectionChanged)="onCandidateSelect($event)" [statusBar]="statusBar"
                         [animateRows]="true">
                     </ag-grid-angular>
                 </div>
@@ -115,7 +115,7 @@
                 <div [ngClass]="userListHR && userListHR.length > 0 ? 'scroll' : 'scroll1'">
                     <ag-grid-angular style="width: 99%; height: 450px; margin: auto !important" class="ag-theme-alpine" [rowData]="rowDataHR" [columnDefs]="columnDefsHR" [defaultColDef]="defaultColDefHR" [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSizeHR"
                         [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSizeHR" (gridReady)="onGridReadyHR($event)" (sortChanged)="sorteventHR($event)" (cellClicked)="onCellClickedHR($event)" (filterModified)="getModelHR($event)" headerHeight="40"
-                        (selectionChanged)="onInterviewerSelect($event)" [animateRows]="true">
+                        (selectionChanged)="onInterviewerSelect($event)" [statusBar]="statusBarHR" [animateRows]="true">
                     </ag-grid-angular>
                 </div>
             </div>

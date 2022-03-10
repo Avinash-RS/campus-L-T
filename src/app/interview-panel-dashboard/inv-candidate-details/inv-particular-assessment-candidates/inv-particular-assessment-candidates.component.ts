@@ -44,6 +44,15 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
   rejectedCount: any = [];
   scheduleListDetails: any;
   sentToHr: any = [];
+  public statusBar = {
+  statusPanels: [
+  // { statusPanel: 'agTotalRowCountComponent', align: 'left'},
+  { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
+  { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
+  { statusPanel: 'agAggregationComponent', align: 'right' },
+  ],
+  };
+
 
   refreshSubscription: Subscription;
   getScheduledListSubscription: Subscription;
@@ -889,6 +898,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
       this.getSelectedCandidates = this.gridApi.getSelectedNodes();
       const data = {
         evaluation: "candidates",
+        count: this.getSelectedCandidates.length
       };
       this.openDialog(ShortlistBoxComponent, data);
     } else {

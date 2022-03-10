@@ -95,7 +95,7 @@
 </div>
 </form>
 <div class="card-container">
-    <div class="header-label">Attendees</div>
+    <div class="header-label">Attendees <span class="pl-1">(Candidate Count: <span>{{candidateCount}}</span>;</span> <span class="pl-2">Interview Panel Count: <span>{{panelCount}}</span>)</span> </div>
     <div class="attendees-list d-flex justify-content-between flex-wrap">
         <ng-container *ngFor="let attendees of attendeesList">
             <div class="card-details">
