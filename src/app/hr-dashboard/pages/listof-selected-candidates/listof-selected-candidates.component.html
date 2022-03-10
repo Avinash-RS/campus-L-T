@@ -12,7 +12,7 @@
         </div>
         <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
             [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true"
-            (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [animateRows]="true">
+            (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [statusBar]="statusBar" [animateRows]="true">
         </ag-grid-angular>
     </div>
 </div>

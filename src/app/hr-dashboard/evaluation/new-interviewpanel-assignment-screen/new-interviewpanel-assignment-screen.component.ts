@@ -69,6 +69,23 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
   allHRDisciplines: any;
   userListHR: any;
   selectedUserDetailHR: any;
+  public statusBar = {
+  statusPanels: [
+  // { statusPanel: 'agTotalRowCountComponent', align: 'left'},
+  { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
+  { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
+  { statusPanel: 'agAggregationComponent', align: 'right' },
+  ],
+  };
+  public statusBarHR = {
+    statusPanels: [
+    // { statusPanel: 'agTotalRowCountComponent', align: 'left'},
+    { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
+    { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
+    { statusPanel: 'agAggregationComponent', align: 'right' },
+    ],
+    };
+
 
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
@@ -803,7 +820,7 @@ export class NewInterviewpanelAssignmentScreenComponent implements OnInit, After
       width: 'auto',
       height: 'auto',
       autoFocus: false,
-      data: this.attendeesList,
+      data: {list: this.attendeesList, candidateCount: this.selectedCandidate.length, panelCount: this.selectedInterviewer.length},
       disableClose: true,
       panelClass: 'custom-modalbox'
     });

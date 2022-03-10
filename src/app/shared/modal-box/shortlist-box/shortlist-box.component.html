@@ -389,7 +389,7 @@
 
   <div class="modal-box-wrapper" *ngIf="data && data['evaluation'] === 'candidates'">
       <div class="bulk-upload-text">
-        Confirm to submit the selected candidates
+        Confirm to submit the selected <span style="font-weight: 500;">{{data['count']}}</span> {{data['count'] > 1 ? 'candidates' : 'candidate'}}
       </div>
       <div class="buttons">
         <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>

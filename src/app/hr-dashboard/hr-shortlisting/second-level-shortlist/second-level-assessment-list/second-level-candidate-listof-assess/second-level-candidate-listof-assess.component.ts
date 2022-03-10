@@ -52,6 +52,8 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     // headerCheckboxSelectionFilteredOnly: true,
   };
   tooltipShowDelay = 0;
+  paginationPageSize = 500;
+  cacheBlockSize: any = 500;
   rowData: any;
   searchBox = false;
   filterValue: string;

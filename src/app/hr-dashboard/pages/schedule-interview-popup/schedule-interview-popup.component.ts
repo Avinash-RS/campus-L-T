@@ -24,6 +24,8 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
   toggleVisibility = true;
   buttonLoading = false;
   customerCode = this.appConfig.getSelectedCustomerCode();
+  candidateCount: any;
+  panelCount: any;
   constructor(
     private fb: FormBuilder,
     private matDialog: MatDialog,
@@ -44,7 +46,9 @@ export class ScheduleInterviewPopupComponent implements OnInit, OnDestroy {
   }
 
   scheduleformInitialize() {
-    this.attendeesList = this.data;
+    this.attendeesList = this.data?.list;
+    this.candidateCount = this.data?.candidateCount;
+    this.panelCount = this.data?.panelCount;
 
     if(this.customerCode == '#ADANI'){
       this.scheduleForm = this.fb.group({

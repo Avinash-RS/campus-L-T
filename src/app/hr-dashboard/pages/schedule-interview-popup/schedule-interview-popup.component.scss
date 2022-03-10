@@ -30,6 +30,16 @@
       font-size: 14px;
       color: #808080;
       margin-bottom: 5px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      span {
+        color: inherit;
+        font-size: 13px;
+        span:first-child {
+          font-weight: 500;
+        }
+      }
     }
     .card-details {
       display: inline-block;

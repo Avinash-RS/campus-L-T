@@ -10,6 +10,7 @@ import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { IsRowSelectable } from 'ag-grid-community';
 
 @Component({
   selector: 'app-listof-selected-candidates',
@@ -32,9 +33,17 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
   quickSearchValue = '';
   rowStyle = { background: '#fcfcfc' };
   getRowStyle: any;
-  public isRowSelectable;
+  public isRowSelectable: IsRowSelectable;
   userList: any;
   popUpdata: any;
+  public statusBar = {
+    statusPanels: [
+    // { statusPanel: 'agTotalRowCountComponent', align: 'left'},
+    { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
+    { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
+    { statusPanel: 'agAggregationComponent', align: 'right' },
+    ],
+    };
 
   refreshSubscription: Subscription;
   excelExportSelectedCandidatesSubscription: Subscription;
