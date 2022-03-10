@@ -10,7 +10,7 @@
 }
 
 .header-wrapper {
-  padding: 6px 18px;
+  padding: 6px 14px;
   justify-content: space-between;
   align-items: center;
 }
@@ -188,4 +188,13 @@ nz-select.ng-invalid.ng-touched {
 }
 .primary-clr {
   color: $primary-text-color;
+}
+.ins-note {
+  padding: 4px 12px 10px 12px;
+  color: #c02222;
+  font-weight: 500;
+  em {
+    font-size: 14px;
+    vertical-align: bottom;
+  }
 }
