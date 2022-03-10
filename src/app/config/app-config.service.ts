@@ -57,6 +57,10 @@ export class AppConfigService {
     this.toast.warning(val, title);
   }
 
+  successWithTitle(val, title) {
+    this.toast.success(val, title);
+  }
+
    nzNotification(type: string, title: any, text: any): any {
      if (type == 'error') {
      return this.toast.warning(text, title);
@@ -412,6 +416,11 @@ export class AppConfigService {
 
   getDriveId() {
    return this.getLocalData('driveId');
+  }
+
+  getDriveList() {
+   const DriveList = this.getLocalData('driveList') ? JSON.parse(this.getLocalData('driveList')) : [];
+   return DriveList ? DriveList : [];
   }
 
   getCustomerList() {

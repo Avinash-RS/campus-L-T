@@ -661,7 +661,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.appConfig.error(data && data[0] && data[0]['reason'] ? data[0]['reason'] : 'Candidate not added.. Try Again', '');
           } else {
             this.addUserForm.reset();
-            this.appConfig.success('Candidate added successfully', '');
+            this.currentRole == 'institute' ? this.appConfig.successWithTitle('You may now trigger mail to the newly added candidates.', 'Candidate added successfully') : this.appConfig.success('Candidate added successfully', '');
             this.closeDialog();
             if (this.selectedUserlist == 'candidate') {
               this.gridApi.purgeInfiniteCache();
