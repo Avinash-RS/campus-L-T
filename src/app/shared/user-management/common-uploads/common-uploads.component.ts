@@ -763,10 +763,16 @@ insitituteExceltoJsonFormatter(data) {
         bulk_upload_ok: 'candidate-bulk',
         totalLength: this.uploadedListArray ? this.uploadedListArray.length : 0,
         errorLength: data ? data.length : 0,
+        role: this.appConfig.getLocalData('roles')
       };
       // if(datas['totalLength'] - datas['errorLength'] !== 0) {
       if(datas['errorLength'] == 0) {
+        if (this.currentRole == 'institute') {
+          this.appConfig.successWithTitle( 'You may now trigger mail to the newly added candidates.', datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : 'Bulk Upload Success');
+        } else {
           this.appConfig.success(datas && datas['totalLength'] ? datas['totalLength'] - datas['errorLength'] + ' Candidate details have been successfully uploaded.' : '', 'Bulk Upload Success');
+        }
+
         if(this.appConfig.getLocalData('roles') == 'hr') {
           this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_USER_MANAGEMENT_USERS_LIST, {id: 1});
         }

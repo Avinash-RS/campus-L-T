@@ -212,7 +212,7 @@
 
 
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload_ok']">
-  <div class="bulk-upload-text">
+  <div class="bulk-upload-text" style="line-height: 2em;">
     <span
       *ngIf="data['totalLength'] - data['errorLength'] !== 0">{{data && data['totalLength'] ? data['totalLength'] - data['errorLength'] + ' Candidate details have been successfully uploaded.' : ''}}</span>
     <span *ngIf="data['totalLength'] - data['errorLength'] == 0">Candidate details has not been successfully
@@ -221,6 +221,9 @@
       {{data && data['errorLength'] && data && data['errorLength'] == 1 ? 'candidate' : 'candidates'}} has not
       been uploaded. Click Ok to see the error details. </span>
   </div>
+  <ng-container *ngIf="(data && data['role'] == 'institute') && data['totalLength'] - data['errorLength'] != 0">
+      <div style="margin-top: .5em; width: 550px;"><span style="font-weight: 500; color: #c02222;">Note:</span> This step will not automatically trigger email notification to candidates. To send an email notification, please go to the "User Details" list screen, select the required candidates and click on the send email button.</div>
+  </ng-container>
   <div class="buttons">
     <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
   </div>
