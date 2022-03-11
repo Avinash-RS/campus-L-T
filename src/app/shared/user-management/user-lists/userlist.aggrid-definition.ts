@@ -33,7 +33,7 @@ export class userListDefinition {
         suppressMenu: true,
         field: 'candidate_id',
         headerName: '',
-        // colId: 'cheader'
+        colId: 'cheader'
       },
       // {
       //   headerName: 'S no', //colId: 'csno',
@@ -51,7 +51,7 @@ export class userListDefinition {
       //   }
       // },
       {
-        headerName: 'Candidate Id', field: 'candidate_id', //colId: 'ccandidate_id',
+        headerName: 'Candidate Id', field: 'candidate_id', colId: 'candidate_id',
         minWidth: 140,
         filter: "agTextColumnFilter",
         filterParams: {
