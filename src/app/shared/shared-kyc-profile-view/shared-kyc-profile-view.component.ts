@@ -997,12 +997,24 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_physical_disability]: this.personalDetails?.[this.form_physical_disability] ? this.personalDetails[this.form_physical_disability] : 'NA',
       [this.form_left_eyepower_glass]: this.personalDetails?.[this.form_left_eyepower_glass] ? this.personalDetails[this.form_left_eyepower_glass] : 'NA',
       [this.form_right_eye_power_glass]: this.personalDetails?.[this.form_right_eye_power_glass] ? this.personalDetails[this.form_right_eye_power_glass] : 'NA',
-      [this.form_location_preference]: this.personalDetails?.[this.form_location_preference] ? this.personalDetails[this.form_location_preference] : []
+      [this.form_location_preference]: this.personalDetails?.[this.form_location_preference] ? this.patchLocationReference(this.personalDetails?.[this.form_location_preference]) : []
     };
     this.url = this.personalDetails?.profile_image.file_path;
     this.personalDetailsMap = data;
   }
 
+  patchLocationReference(dataArray: any) {
+    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
+    let locationList = mastersList ? mastersList.PreferredLocations : [];
+    let locations = locationList.filter(data => data.value == this.patchLoopThrough(data.value, dataArray));
+    return locations;
+  }
+
+  patchLoopThrough(data, dataArray) {
+    let values = dataArray;
+    let result = values.find(ele => ele == data);
+    return result ? result : false
+  }
 
   checkFormValidRequestFromRxjs() {
     this.checkFormValidRequest = this.sharedService.StepperNavigationCheck.subscribe((data: any) => {

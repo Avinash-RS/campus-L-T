@@ -318,11 +318,11 @@
 
               <h6 class="sub-heading">Location Preference</h6>
               <div class="overall-input-wrapper width-45">
-                <label>Preferred Location<span></span></label>
+                <label>Preferred Location<span>*</span></label>
                 <nz-select nzMode="multiple" [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" class="input select" [formControlName]="form_location_preference" nzAllowClear nzShowSearch
                     nzPlaceHolder="<--Select-->">
-                    <nz-option *ngFor="let location of locationList" [nzLabel]="location.name"
-                        [nzValue]="location"></nz-option>
+                    <nz-option *ngFor="let location of locationList" [nzLabel]="location.label"
+                        [nzValue]="location.value"></nz-option>
                 </nz-select>
                 <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
                 <div class="form-error" *ngIf="location_preference?.invalid && location_preference?.touched">

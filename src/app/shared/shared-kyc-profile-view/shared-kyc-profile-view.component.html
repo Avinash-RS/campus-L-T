@@ -215,15 +215,18 @@
                                 </div>
                             </div>
                         </div>
-                        <ng-container *ngIf="personalDetailsMap && personalDetailsMap[form_location_preference] && personalDetailsMap[form_location_preference].length > 0">
                         <h6 class="h6-sub-heading">Location Preference</h6>
                         <div class="overall-input-wrapper mt-3 width-32">
                           <label>Preferred Location<span></span></label>
                           <div class="inpu-preview size-16 bold-700 color-black">
-                              <span *ngFor="let location of personalDetailsMap[form_location_preference]; let i = index">{{location.name}}<span *ngIf="i == (personalDetailsMap[form_location_preference].length - 1) ? false : true">, </span> </span>
+                            <ng-container *ngIf="personalDetailsMap && personalDetailsMap[form_location_preference] && personalDetailsMap[form_location_preference].length > 0 else notFound">
+                              <span *ngFor="let location of personalDetailsMap[form_location_preference]; let i = index">{{location.label}}<span *ngIf="i == (personalDetailsMap[form_location_preference].length - 1) ? false : true">, </span> </span>
+                            </ng-container>
+                            <ng-template #notFound>
+                              NA
+                            </ng-template>
                           </div>
                       </div>
-                    </ng-container>
                         <h6 class="h6-sub-heading">Languages Known</h6>
                         <div class="overall-input-wrapper mt-3 width-66">
                             <ng-container *ngIf="
