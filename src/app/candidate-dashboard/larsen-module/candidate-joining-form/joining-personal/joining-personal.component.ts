@@ -98,6 +98,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
       caste: 'Other'
     },
   ];
+  locationList: any;
   minDate: Date;
   minDateDOB: Date;
   maxDate: Date;
@@ -157,6 +158,7 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
   form_domicile_state = 'domicile_state';
   form_no_of_children = 'no_of_children';
 
+  form_location_preference = 'preferred_location';
   form_language_array = 'languages_known';
   form_language_name = 'language';
   form_language_is_read = 'is_read';
@@ -230,6 +232,8 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     private loadingService: LoaderService
   ) {
     this.dateValidation();
+    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
+    this.locationList = mastersList ? mastersList.PreferredLocations : [];
   }
 
   ngOnInit() {
@@ -391,6 +395,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
        [this.form_physical_disability]: rawPersonalFormValue[this.form_physical_disability],
        [this.form_left_eyepower_glass]: rawPersonalFormValue[this.form_left_eyepower_glass],
        [this.form_right_eye_power_glass]: rawPersonalFormValue[this.form_right_eye_power_glass],
+       [this.form_location_preference]: rawPersonalFormValue[this.form_location_preference],
        [this.form_language_array]: this.languageArrRequestJsonConversion(rawPersonalFormValue[this.form_language_array]),
        profile_image: this.profilePicture,
        user_id: this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : ''
@@ -564,7 +569,8 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_nature_of_illness]: this.personalDetails[this.form_nature_of_illness],
       [this.form_physical_disability]: this.personalDetails[this.form_physical_disability],
       [this.form_left_eyepower_glass]: this.personalDetails[this.form_left_eyepower_glass],
-      [this.form_right_eye_power_glass]: this.personalDetails[this.form_right_eye_power_glass]
+      [this.form_right_eye_power_glass]: this.personalDetails[this.form_right_eye_power_glass],
+      [this.form_location_preference]: this.personalDetails[this.form_location_preference]
     });
     this.profilePicture = {
       name: this.personalDetails.profile_image[this.form_file_label_name],
@@ -622,6 +628,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],
+      [this.form_location_preference]: [null],
       [this.form_blood_group]: [null, [Validators.required]],
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
@@ -733,7 +740,6 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       this.personalForm.controls[this.form_place_of_birth].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
       this.personalForm.controls[this.form_state_of_birth].setValidators(null);
       this.personalForm.controls[this.form_nationality].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
-      this.personalForm.controls[this.form_mother_tongue].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
       this.personalForm.controls[this.form_religion].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
       this.personalForm.controls[this.form_caste].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
       this.personalForm.controls[this.form_category].setValidators(null);
@@ -925,6 +931,9 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     return this.personalForm.get(this.form_right_eye_power_glass);
   }
 
+  get location_preference() {
+    return this.personalForm.get(this.form_location_preference);
+  }
 
 ngOnDestroy() {
   this.sendPopupResultSubscription ? this.sendPopupResultSubscription.unsubscribe() : '';

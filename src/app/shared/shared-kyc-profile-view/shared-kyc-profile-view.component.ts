@@ -162,6 +162,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   form_domicile_state = 'domicile_state';
   form_no_of_children = 'no_of_children';
 
+  form_location_preference = 'preferred_location';
   form_language_array = 'languages_known';
   form_language_name = 'language';
   form_language_is_read = 'is_read';
@@ -995,7 +996,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_nature_of_illness]: this.personalDetails?.[this.form_nature_of_illness] ? this.personalDetails[this.form_nature_of_illness] : 'NA',
       [this.form_physical_disability]: this.personalDetails?.[this.form_physical_disability] ? this.personalDetails[this.form_physical_disability] : 'NA',
       [this.form_left_eyepower_glass]: this.personalDetails?.[this.form_left_eyepower_glass] ? this.personalDetails[this.form_left_eyepower_glass] : 'NA',
-      [this.form_right_eye_power_glass]: this.personalDetails?.[this.form_right_eye_power_glass] ? this.personalDetails[this.form_right_eye_power_glass] : 'NA'
+      [this.form_right_eye_power_glass]: this.personalDetails?.[this.form_right_eye_power_glass] ? this.personalDetails[this.form_right_eye_power_glass] : 'NA',
+      [this.form_location_preference]: this.personalDetails?.[this.form_location_preference] ? this.personalDetails[this.form_location_preference] : []
     };
     this.url = this.personalDetails?.profile_image.file_path;
     this.personalDetailsMap = data;

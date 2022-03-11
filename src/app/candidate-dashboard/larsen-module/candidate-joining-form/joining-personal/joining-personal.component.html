@@ -174,9 +174,8 @@
                             allowed</div>
                     </div>
                 </div>
-                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                   <div class="overall-input-wrapper width-45">
-                    <label>Mother Tongue<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <label>Mother Tongue<span>*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_mother_tongue">
                     <div class="form-error" *ngIf="mother_tongue?.invalid && mother_tongue?.touched">
@@ -186,7 +185,8 @@
                     </div>
                 </div>
 
-                <div class="overall-input-wrapper width-45">
+                <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
+                  <div class="overall-input-wrapper width-45">
                     <label>Religion<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_religion">
@@ -315,6 +315,23 @@
                     </div>
                 </div>
               </ng-container>
+
+              <h6 class="sub-heading">Location Preference</h6>
+              <div class="overall-input-wrapper width-45">
+                <label>Preferred Location<span></span></label>
+                <nz-select nzMode="multiple" [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" class="input select" [formControlName]="form_location_preference" nzAllowClear nzShowSearch
+                    nzPlaceHolder="<--Select-->">
+                    <nz-option *ngFor="let location of locationList" [nzLabel]="location.name"
+                        [nzValue]="location"></nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+                <div class="form-error" *ngIf="location_preference?.invalid && location_preference?.touched">
+                    <div *ngIf="location_preference?.errors?.required">Preferred Location is Required</div>
+                    <div *ngIf="location_preference?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
+                        allowed</div>
+                </div>
+            </div>
+
 
               <h6 class="sub-heading">Languages Known</h6>
               <div class="overall-input-wrapper width-100">
