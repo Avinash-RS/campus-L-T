@@ -184,7 +184,7 @@ export class JoiningEducationComponent implements OnInit, AfterViewInit, OnDestr
 
 educationDetails: any;
 mastersList: any;
-selectedPost: any;
+selectedPost: any = null;
 selectedPostLabel: any;
 educationLength: any;
 maxDateStartField: any;
@@ -207,11 +207,13 @@ constructor(
     private glovbal_validators: GlobalValidatorService
   ) {
     this.dateValidation();
-    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
-    // Filter education details baised on customer code 
-    this.mastersList = mastersList ? mastersList.education_master : [];
+    let driveList = this.appConfig.getDriveList();
+    let selectedDrive = driveList && driveList.length > 0 ? driveList[0] : null;
+    // Filter education details baised on customer code
+    this.mastersList = selectedDrive && selectedDrive.education_master ? selectedDrive.education_master : [];
     let positive_array = this.mastersList.filter(value => value.customer_code == '#LTTS');
-    this.mastersList = mastersList ? positive_array : [];
+    this.mastersList = selectedDrive ? positive_array : [];
+    this.selectedPost = this.mastersList && this.mastersList.length == 1 ? ((this.mastersList[0] && this.mastersList[0].value) ? this.mastersList[0].value : null) : null;
   }
 
   ngOnInit() {
@@ -294,7 +296,7 @@ constructor(
     if (this.candidateService.getLocalProfileData()) {
       this.formInitialize();
       this.educationDetails = this.candidateService.getLocaleducation_details().educations;
-      this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+      this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : this.selectedPost;
       this.candidateService.getLocaleducation_details().ca_bothgroup_status ? this.ca_bothgroup_status.setValue(true) : this.ca_bothgroup_status.setValue(false);
       this.getSelectedPost();
       this.educationDetails && this.educationDetails.length > 0 ? this.ifEducationDetails() : this.ifNotEducationDetails();

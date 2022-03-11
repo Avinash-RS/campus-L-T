@@ -18,17 +18,30 @@ export class firstShortlistFilterModel {
   }
 
   getProfileList() {
-    let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
-    // Filter education details baised on customer code
-    let filter = mastersList ? mastersList.education_master : [];
-    let customerCode = (this.appConfig.getSelectedCustomerCode() != '#LTTS' && this.appConfig.getSelectedCustomerCode() != '#ADANI') ? '#LTTS' : this.appConfig.getSelectedCustomerCode();
-    let positive_array = filter.filter(value => value.customer_code == customerCode);
-    filter = mastersList ? positive_array : [];
+    if (this.appConfig.getSelectedCustomerCode() == '#LTTS') {
+      let mastersList = this.appConfig.getSelectedDriveDetails();
+      // Filter education details baised on customer code
+      let filter = mastersList && mastersList.config && mastersList.config.education_master ? mastersList.config.education_master : [];
+      let customerCode = this.appConfig.getSelectedCustomerCode();
+      let positive_array = filter.filter(value => value.customer_code == customerCode);
+      filter = mastersList ? positive_array : [];
+      filter.forEach(element => {
+        element.checkbox = false;
+      });
+      return filter;
+    } else {
+      let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
+      // Filter education details baised on customer code
+      let filter = mastersList ? mastersList.education_master : [];
+      let customerCode = (this.appConfig.getSelectedCustomerCode() != '#LTTS' && this.appConfig.getSelectedCustomerCode() != '#ADANI') ? '#LTTS' : this.appConfig.getSelectedCustomerCode();
+      let positive_array = filter.filter(value => value.customer_code == customerCode);
+      filter = mastersList ? positive_array : [];
 
-    filter.forEach(element => {
-      element.checkbox = false;
-    });
-    return filter;
+      filter.forEach(element => {
+        element.checkbox = false;
+      });
+      return filter;
+    }
   }
 
   getGenderList() {
