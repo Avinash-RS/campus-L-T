@@ -5,7 +5,7 @@
     <ng-container *ngIf="currentRole != 'institute'" [ngTemplateOutlet]="notInstitute"></ng-container>
     <ng-container *ngIf="currentRole == 'institute'" [ngTemplateOutlet]="isInstitute"></ng-container>
     <ng-container *ngIf="selectedUserlist != 'candidate'" [ngTemplateOutlet]="searchFilter"></ng-container>
-    <ng-container *ngIf="selectedUserlist == 'candidate'" [ngTemplateOutlet]="addButton"></ng-container>
+    <ng-container *ngIf="selectedUserlist == 'candidate' && currentRole != 'institute'" [ngTemplateOutlet]="addButton"></ng-container>
   </div>
 
 <ng-template #notInstitute>
@@ -22,16 +22,36 @@
 </ng-template>
 
 <ng-template #isInstitute>
+  <div class="radio-group">
+    <mat-radio-group (change)="selectionRadioChange($event)" [(ngModel)]="selectionType">
+        <mat-radio-button class="ml-0" value="1">All Candidates on this Grid
+        </mat-radio-button>
+        <mat-radio-button class="radio-left" value="2">All Candidates on this Drive</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
   <div class="d-flex">
+  <ng-container *ngIf="selectionType == '1'">
   <button class="common-outline-button-primary common-button-height-32" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(true)" mat-raised-button>
     <em class="icon-checked mr-2"></em> <span>Select All Candidates</span>
   </button>
   <button class="common-outline-button-primary common-button-height-32 ml-2" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(false)" mat-raised-button>
     <em class="icon-checked mr-2"></em> <span>Unselect All Candidates</span>
   </button>
-  <button class="common-outline-button-primary common-button-height-32 ml-2" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
-    <em class="icon-checked mr-2"></em> <span>Send Email to Selected Candidates</span>
+  </ng-container>
+  <ng-container *ngIf="selectionType == '2' else selectionOne">
+  <button class="common-outline-button-primary common-button-height-32 ml-2" (click)="emailTriggerSeletedNodes()" mat-raised-button>
+    <em class="icon-checked mr-2"></em> <span>Send Email to All Candidates on this Drive</span>
   </button>
+</ng-container>
+  <ng-template #selectionOne>
+    <button class="common-outline-button-primary common-button-height-32 ml-2" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
+      <em class="icon-checked mr-2"></em> <span>Send Email to Selected Candidates</span>
+    </button>
+  </ng-template>
+  <div class="ml-2">
+  <ng-container *ngIf="selectedUserlist == 'candidate'" [ngTemplateOutlet]="addButton"></ng-container>
+  </div>
 </div>
 </ng-template>
 
