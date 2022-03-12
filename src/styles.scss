@@ -1064,6 +1064,36 @@ padding: 2.5em 1em 2.5em 1em;
   transition: background-color 580ms linear;
 }
 
+.common-outline-button-primary {
+  background: transparent;
+  color: $cancel-btn;
+  padding: 0 !important;
+  border: 1px solid $primary-color !important;
+  transition: background-color 580ms linear;
+  span.mat-button-wrapper {
+    position: relative;
+    min-width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 12px;
+  }
+}
+.common-outline-button-primary:hover {
+  background-color: $common-button-bg;
+  color: $white;
+  border: none !important;
+  transition: background-color 580ms linear;
+}
+.common-outline-button-primary:disabled,.common-outline-button-primary.disabled {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+  border: solid 1px !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  cursor: not-allowed !important;
+  color: rgba(51, 51, 51, 0.6) !important;
+}
+
+
 .common-button-with-icon,.statusButtons {
   background: $common-button-bg;
   color: $white;

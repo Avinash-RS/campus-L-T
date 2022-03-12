@@ -23,13 +23,13 @@
 
 <ng-template #isInstitute>
   <div class="d-flex">
-  <button class="common-button-with-icon" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(true)" mat-raised-button>
+  <button class="common-outline-button-primary common-button-height-32" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(true)" mat-raised-button>
     <em class="icon-checked mr-2"></em> <span>Select All Candidates</span>
   </button>
-  <button class="common-button-with-icon ml-2" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(false)" mat-raised-button>
+  <button class="common-outline-button-primary common-button-height-32 ml-2" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(false)" mat-raised-button>
     <em class="icon-checked mr-2"></em> <span>Unselect All Candidates</span>
   </button>
-  <button class="common-button-with-icon ml-2" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
+  <button class="common-outline-button-primary common-button-height-32 ml-2" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
     <em class="icon-checked mr-2"></em> <span>Send Email to Selected Candidates</span>
   </button>
 </div>
@@ -46,8 +46,8 @@
 </ng-template>
 
 <ng-template #addButton>
-<button class="common-button-with-icon" (click)="openUserFormDialog()" mat-raised-button matTooltip="Add User">
-  <span class="icon-user_add icon-24"></span> <span>Add User</span>
+<button class="common-outline-button-primary common-button-height-32" (click)="openUserFormDialog()" mat-raised-button matTooltip="Add User">
+  <span class="icon-user_add icon-24 pr-1"></span> <span>Add User</span>
 </button>
 </ng-template>
 
