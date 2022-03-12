@@ -283,8 +283,8 @@ dateConvertion(date) {
       [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
       [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], this.candidateService.checkKycOrJoiningForm()],
-      [this.form_dependent_status]: [data[this.form_dependent_status], this.candidateService.checkKycOrJoiningForm()],
+      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled]],
+      [this.form_dependent_status]: [data[this.form_dependent_status]],
       [this.form_isDependent]: [data[this.form_isDependent]]
     })
   }

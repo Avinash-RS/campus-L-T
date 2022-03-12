@@ -61,6 +61,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   hrAddUserSubscription: Subscription;
   bulkUploadCandidatesSubscription: Subscription;
   selectedDrive: any;
+  selectionType: any = '1';
   constructor(
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
@@ -367,14 +368,20 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  selectionRadioChange(e) {
+    if (e.value == 2) {
+      this.selectorUnselectAllCheckbox(false, true);
+    }
+  }
+
   // Select and Unselect all functions for TPO candidate list
   selectAll(e) {
     this.selectorUnselectAllCheckbox(e);
   }
 
-  selectorUnselectAllCheckbox(condition) {
+  selectorUnselectAllCheckbox(condition, isStartIndex?:Boolean) {
     let endIndex = this.gridApi.paginationProxy.bottomDisplayedRowIndex;
-    let startIndex = endIndex - 99;
+    let startIndex = isStartIndex ? 0 : (endIndex - 99);
 
     this.gridApi.forEachNode((row, index) => {
       if (index >= startIndex && index <= endIndex) {
@@ -386,6 +393,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   emailTriggerSeletedNodes() {
     const data = {
       bulk_upload: 'tpo-candidate-bulk',
+      fullDrive: this.selectionType == '2' ? true : false,
       count: this.gridApi.getSelectedNodes().length
     };
     this.openDialog(ShortlistBoxComponent, data);
@@ -393,7 +401,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sendEmail() {
     let selectedCandidates = this.gridApi.getSelectedNodes();
-    const apiData = {
+    let apiData: any = {
       id: []
     };
     selectedCandidates.forEach(element => {
@@ -401,7 +409,11 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
         apiData['id'].push(element['data']['user_id']);
       }
     });
-
+    apiData.emailAllCandidates = false;
+    if (this.selectionType == '2') {
+      apiData.id = [];
+      apiData.emailAllCandidates = true;
+    }
     this.tpoBulkMailSentSubscription = this.adminService.tpoBulkMailSent(apiData).subscribe((datas: any) => {
       this.gridApi.deselectAll();
       this.gridApi.purgeInfiniteCache();
