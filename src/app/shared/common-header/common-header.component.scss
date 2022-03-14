@@ -66,3 +66,20 @@ mat-toolbar {
   font-weight: 400;
 }
 
+.user-ins {
+  cursor: pointer;
+  em {
+    font-size: 16px;
+    top: -1px;
+    position: relative;
+  }
+}
+.user-guide {
+  color: #0000EE;
+  font-size: 14px;
+}
+.user-guide:hover {
+  color: #000080;
+  transition: 580ms linear;
+  text-decoration: underline;
+}
