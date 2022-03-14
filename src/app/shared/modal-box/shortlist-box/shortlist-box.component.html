@@ -96,6 +96,10 @@
     *Make sure you have selected the correct drive, currently selected drive is "{{data['drive']}}"
   </div>
 
+  <div *ngIf="data['role'] == 'institute'">
+    <div style="margin-top: .5em;"><span style="font-weight: 500; color: #c02222;">Note:</span> This step will not automatically trigger email notification to candidates. To send an email notification, please go to the "User Details" list screen and click on the send email button.</div>
+  </div>
+
   <div class="buttons">
     <button class="common-cancel-button common-button-height-33 mr-3" (click)="cancel()" mat-raised-button>Cancel</button>
     <button class="common-button common-button-height-35" (click)="bulkConfirm()" mat-raised-button>Confirm</button>
@@ -167,7 +171,7 @@
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'tpo-candidate-bulk'">
   <div class="bulk-upload-text">
     <ng-container *ngIf="data['fullDrive'] else notFullDrive">
-      All the Candidates in this drive  will receive an email to create an account.
+      All the {{data['count']}} {{data['count'] <= 1 ? 'candidate' : 'candidates'}} in this drive  will receive an email to create an account.
     </ng-container>
     <ng-template #notFullDrive>
       The selected {{data['count']}} {{data['count'] <= 1 ? 'candidate' : 'candidates'}}  will receive an email to create an account.
@@ -228,7 +232,7 @@
       been uploaded. Click Ok to see the error details. </span>
   </div>
   <ng-container *ngIf="(data && data['role'] == 'institute') && data['totalLength'] - data['errorLength'] != 0">
-      <div style="margin-top: .5em; width: 550px;"><span style="font-weight: 500; color: #c02222;">Note:</span> This step will not automatically trigger email notification to candidates. To send an email notification, please go to the "User Details" list screen, select the required candidates and click on the send email button.</div>
+      <div style="margin-top: .5em; width: 550px;"><span style="font-weight: 500; color: #c02222;">Note:</span> This step will not automatically trigger email notification to candidates. To send an email notification, please go to the "User Details" list screen and click on the send email button.</div>
   </ng-container>
   <div class="buttons">
     <button class="common-button common-button-height-35" (click)="cancel()" mat-raised-button>Ok</button>
