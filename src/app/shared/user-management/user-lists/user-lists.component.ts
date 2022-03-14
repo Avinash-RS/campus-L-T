@@ -61,7 +61,9 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   hrAddUserSubscription: Subscription;
   bulkUploadCandidatesSubscription: Subscription;
   selectedDrive: any;
-  selectionType: any = '1';
+  selectionType: any = '2';
+  instructionBox = false;
+  totalDriveCount: any;
   constructor(
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
@@ -195,6 +197,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
             element['counter'] = count;
             element['created_date'] = element['created_date'] ? element['created_date'] : '';
           });
+          this.totalDriveCount = data1 && data1['total_candidates_count'] ? data1['total_candidates_count'] : 0;
           this.pageRowCount = data1 && data1['total_count'] ? data1['total_count'] : 0;
           params.successCallback(
             this.userList, this.pageRowCount
@@ -391,10 +394,11 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   emailTriggerSeletedNodes() {
+    this.selectionType == '2' ? this.selectorUnselectAllCheckbox(false, true) : '';
     const data = {
       bulk_upload: 'tpo-candidate-bulk',
       fullDrive: this.selectionType == '2' ? true : false,
-      count: this.gridApi.getSelectedNodes().length
+      count: this.selectionType == '2' ? this.totalDriveCount : this.gridApi.getSelectedNodes().length
     };
     this.openDialog(ShortlistBoxComponent, data);
   }

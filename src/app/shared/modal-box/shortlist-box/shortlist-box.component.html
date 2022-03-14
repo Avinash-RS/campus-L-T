@@ -167,7 +167,7 @@
 <div class="modal-box-wrapper" *ngIf="data && data['bulk_upload'] === 'tpo-candidate-bulk'">
   <div class="bulk-upload-text">
     <ng-container *ngIf="data['fullDrive'] else notFullDrive">
-      All the Candidates in this drive  will receive an email to create an account.
+      All the {{data['count']}} {{data['count'] <= 1 ? 'candidate' : 'candidates'}} in this drive  will receive an email to create an account.
     </ng-container>
     <ng-template #notFullDrive>
       The selected {{data['count']}} {{data['count'] <= 1 ? 'candidate' : 'candidates'}}  will receive an email to create an account.

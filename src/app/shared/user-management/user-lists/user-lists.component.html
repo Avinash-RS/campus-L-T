@@ -24,29 +24,21 @@
 <ng-template #isInstitute>
   <div class="radio-group">
     <mat-radio-group (change)="selectionRadioChange($event)" [(ngModel)]="selectionType">
-        <mat-radio-button class="ml-0" value="1">All Candidates on this Grid
+        <mat-radio-button class="ml-0" value="2">All candidates in this drive
         </mat-radio-button>
-        <mat-radio-button class="radio-left" value="2">All Candidates on this Drive</mat-radio-button>
+        <mat-radio-button class="radio-left" value="1">Specific candidates from list</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="d-flex">
-  <ng-container *ngIf="selectionType == '1'">
-  <button class="common-outline-button-primary common-button-height-32" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(true)" mat-raised-button>
-    <em class="icon-checked mr-2"></em> <span>Select All Candidates</span>
-  </button>
-  <button class="common-outline-button-primary common-button-height-32 ml-2" [disabled]="userList && userList.length > 0 ? false : true" (click)="selectAll(false)" mat-raised-button>
-    <em class="icon-checked mr-2"></em> <span>Unselect All Candidates</span>
-  </button>
-  </ng-container>
   <ng-container *ngIf="selectionType == '2' else selectionOne">
-  <button class="common-outline-button-primary common-button-height-32 ml-2" (click)="emailTriggerSeletedNodes()" mat-raised-button>
-    <em class="icon-checked mr-2"></em> <span>Send Email to All Candidates on this Drive</span>
+  <button class="common-outline-button-primary common-button-height-32 ml-2" [matTooltip]="totalDriveCount && totalDriveCount > 0 ? '' : 'No Candidates Available'" [ngClass]="totalDriveCount && totalDriveCount > 0 ? '' : 'disabled'" (click)="totalDriveCount && totalDriveCount > 0 ? emailTriggerSeletedNodes() : ''" mat-raised-button>
+    <em class="icon-checked mr-2"></em> <span>Send Email</span>
   </button>
 </ng-container>
   <ng-template #selectionOne>
     <button class="common-outline-button-primary common-button-height-32 ml-2" [matTooltip]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'Please select the checkboxes to send mail'" [ngClass]="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? '' : 'disabled'" (click)="gridApi && gridApi.getSelectedNodes() && gridApi.getSelectedNodes().length > 0 ? emailTriggerSeletedNodes() : ''"  mat-raised-button>
-      <em class="icon-checked mr-2"></em> <span>Send Email to Selected Candidates</span>
+      <em class="icon-checked mr-2"></em> <span>Send Email</span>
     </button>
   </ng-template>
   <div class="ml-2">
@@ -71,8 +63,69 @@
 </button>
 </ng-template>
 
-      <div *ngIf="selectedUserlist == 'candidate'" class="ag-theme-alpine red-theme mb-2">
-        <div *ngIf="currentRole == 'institute' && (userList && userList.length > 0)" class="ins-note"><em class="icon-Info"></em> To send an email notification to candidates, select the required candidates and click on the send email button.</div>
+      <div *ngIf="selectedUserlist == 'candidate'" class="ag-theme-alpine red-theme mb-2 position-relative">
+       <div *ngIf="currentRole == 'institute'" class="grid-icons justify-content-between">
+         <div [ngClass]="instructionBox ? 'border-bottom' : ''" class="d-flex justify-content-between instruction-header">
+        <div class="d-flex">
+          <ng-container *ngIf="selectionType == '1'">
+            <div style="cursor: pointer;" class="select-all" [ngClass]="userList && userList.length > 0 ? '' : 'dis'" (click)="selectAll(true)">
+              <em style="font-size: 12px;" class="icon-checked mr-1"></em> <span>Select All</span>
+            </div>
+            <div style="cursor: pointer;" class="select-all ml-3" [ngClass]="userList && userList.length > 0 ? '' : 'dis'" (click)="selectAll(false)">
+              <em style="font-size: 12px;" class="icon-checked mr-1"></em> <span>Unselect All</span>
+            </div>
+            </ng-container>
+         </div>
+         <div class="d-flex align-items-center">
+           <ng-container *ngIf="currentRole == 'institute' && (userList && userList.length > 0)">
+        <div>
+          <div *ngIf="selectionType == '1'" class="ins-note"><em class="icon-Info"></em> To send an email notification to specific candidates, select the required candidates and click on the send email button.</div>
+          <div *ngIf="selectionType == '2'" class="ins-note"><em class="icon-Info"></em> To send an email notification to all candidates in this drive, please click on the send email button.</div>
+        </div>
+          <div [matTooltip]="'Click to see more info'" (click)="instructionBox = !instructionBox" class="down-arrow ml-2"><em class="icon-DownArrow"></em></div>
+          </ng-container>
+         </div>
+        </div>
+        <div [ngClass]="instructionBox ? 'accordion-box' : ''">
+          <div [ngClass]="instructionBox ? 'acc-open' : 'acc-close'">
+          <div class="d-flex justify-content-between">
+            <h5>Steps to Trigger Email</h5>
+            <button class="common-outline-button-primary common-button-height-30" (click)="instructionBox = !instructionBox" mat-raised-button matTooltip="Close Info">
+              <span class="icon-close_black icon-20 pr-1"></span> <span>Close</span>
+            </button>
+          </div>
+            <ng-container *ngIf="selectionType == '2' else selected_candidates">
+            <div class="ins">
+              <div class="ul">
+                <ul>
+                  <li>Please select required drive from “Selected Drive” dropdown.</li>
+                  <li>Select option “Selected candidates from grid”.
+                    <ul>
+                      <li>In grid / list, select required candidates by clicking on the checkboxes.</li>
+                    </ul>
+                  </li>
+                  <li>Click “Send Email” button.</li>
+                  <li>On completion, confirmation message will be displayed.</li>
+                </ul>
+              </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #selected_candidates>
+                    <div class="ins">
+                      <div class="ul">
+                        <ul>
+                          <li>Please select required drive from “Selected Drive” dropdown.</li>
+                          <li>Select option “Send email to all candidates in this drive”.</li>
+                          <li>Click “Send Email” button.</li>
+                          <li>On completion, confirmation message will be displayed.</li>
+                        </ul>
+                      </div>
+                            </div>
+                  </ng-template>
+          </div>
+        </div>
+        </div>
+
         <ag-grid-angular style="width: 98%; height: calc(100vh - 182px); margin:auto !important;" class="ag-theme-alpine"
            [rowData]="rowData"
            [columnDefs]="columnDefs"

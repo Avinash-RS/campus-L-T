@@ -1060,7 +1060,7 @@ padding: 2.5em 1em 2.5em 1em;
 .common-outline-button:hover {
   background-color: $common-button-bg;
   color: $white;
-  border: none !important;
+  border-color: transparent !important;
   transition: background-color 580ms linear;
 }
 
@@ -1082,7 +1082,7 @@ padding: 2.5em 1em 2.5em 1em;
 .common-outline-button-primary:hover {
   background-color: $common-button-bg;
   color: $white;
-  border: none !important;
+  border-color: transparent !important;
   transition: background-color 580ms linear;
 }
 .common-outline-button-primary:disabled,.common-outline-button-primary.disabled {
