@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-redirection:before {
+  content: "\e9a6";
+}
+.icon-user_guide:before {
+  content: "\e9a5";
+}
 .icon-checkbox:before {
   content: "\e9a4";
 }

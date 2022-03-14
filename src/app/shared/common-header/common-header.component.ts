@@ -4,6 +4,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { MatDialog } from '@angular/material';
 import { ModalBoxComponent } from '../modal-box/modal-box.component';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-common-header',
@@ -14,6 +15,8 @@ export class CommonHeaderComponent implements OnInit {
 
   username: any;
   logoURL: any;
+  BASE_URL = environment.API_BASE_URL;
+  currentRole = this.appConfig.getLocalData('roles');
 
   constructor(
     private appConfig: AppConfigService,
@@ -28,6 +31,25 @@ export class CommonHeaderComponent implements OnInit {
 
   goToHome() {
     // this.logOut();
+  }
+
+  openManual() {
+    if (this.currentRole == 'candidate') {
+      const candidatePDF = `${this.BASE_URL}/sites/default/files/candidate-userguide.pdf`;
+      const newWin = window.open(candidatePDF, 'redirection');
+      // add a load listener to the window so that the title gets changed on page load
+      newWin.addEventListener("load", function() {
+        newWin.document.title = 'User Manual';
+    });
+    }
+    if (this.currentRole == 'institute') {
+      const tpoPDF = `${this.BASE_URL}/sites/default/files/tpo-userguide.pdf`;
+      const newWin = window.open(tpoPDF, 'redirection');
+        // add a load listener to the window so that the title gets changed on page load
+        newWin.addEventListener("load", function() {
+          newWin.document.title = 'User Manual';
+      });
+    }
   }
 
   logOut() {

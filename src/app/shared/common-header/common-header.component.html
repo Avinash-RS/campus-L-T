@@ -4,6 +4,10 @@
       <img [src]="logoURL" alt="">
     </span>
     <span class="rightlog">
+      <span *ngIf="currentRole && (currentRole == 'candidate' || currentRole == 'institute')" (click)="openManual()" class="d-flex align-items-center user-ins mr-4">
+        <em class="icon-redirection mr-1"></em> <span class="user-guide">{{'User Manual'}}</span>
+      </span>
+
       <span class="title">
         {{username ? 'Welcome, ' + username : ''}}
       </span>
