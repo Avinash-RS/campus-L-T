@@ -242,18 +242,12 @@ export class SecondLevelShortlistedCandidatesReportComponent implements OnInit, 
       },
       {
         headerName: 'Year of passing', field: 'dateofpassing',
-        filter: 'agDateColumnFilter',
+        filter: 'agTextColumnFilter',
         sortable: true,
-        comparator: dateComparator,
         tooltipField: 'dateofpassing',
         minWidth: 210,
         filterParams: {
-          buttons: ['apply', 'cancel', 'reset'],
-          closeOnApply: true,
-          // debounceMs: 500,
-          comparator: (filterLocalDateAtMidnight, cellValue) => {
-            return this.datecomparatorForAgGrid(filterLocalDateAtMidnight, cellValue, true);
-        },
+          buttons: ['reset']
         },
         getQuickFilterText: (params) => {
           return params.value;
