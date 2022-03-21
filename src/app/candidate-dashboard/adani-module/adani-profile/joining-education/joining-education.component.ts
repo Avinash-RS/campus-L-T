@@ -209,7 +209,7 @@ constructor(
     this.dateValidation();
     let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
     this.mastersList = mastersList ? mastersList.education_master : [];
-    // Filter education details baised on customer code 
+    // Filter education details baised on customer code
     let positive_array = this.mastersList.filter(value => value.customer_code == '#ADANI');
     this.mastersList = positive_array;
   }
@@ -487,25 +487,32 @@ validSelectedPost() {
     }
 
 }
+
+assignNecessaryFieldsValue() {
+  if (this.getEducationArr && this.getEducationArr.length > 0) {
+  this.getEducationArr.controls.forEach((element: any, j) => {
+    if (element['controls'][this.form_qualification_type]['value'] == 'CA' || element['controls'][this.form_qualification_type]['value'] == 'ICWA' || element['controls'][this.form_qualification_type]['value'] == 'CS') {
+      this.getEducationArr.at(j).patchValue({
+        [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
+      })
+    }
+    if (element['controls'][this.form_qualification_type]['value'] == 'SSLC') {
+      this.getEducationArr.at(j).patchValue({
+        [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
+      })
+    }
+    if (element['controls'][this.form_qualification_type]['value'] == 'HSC') {
+      this.getEducationArr.at(j).patchValue({
+        [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
+      })
+    }
+  });
+ }
+}
+
   formSubmit(routeValue?: any) {
     // if (this.candidateService.checkKycOrJoiningForm()) {
-    this.getEducationArr.controls.forEach((element: any, j) => {
-      if (element['controls'][this.form_qualification_type]['value'] == 'CA' || element['controls'][this.form_qualification_type]['value'] == 'ICWA' || element['controls'][this.form_qualification_type]['value'] == 'CS') {
-        this.getEducationArr.at(j).patchValue({
-          [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
-        })
-      }
-      if (element['controls'][this.form_qualification_type]['value'] == 'SSLC') {
-        this.getEducationArr.at(j).patchValue({
-          [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
-        })
-      }
-      if (element['controls'][this.form_qualification_type]['value'] == 'HSC') {
-        this.getEducationArr.at(j).patchValue({
-          [this.form_Finalcgpa]: element['controls'][this.form_cgpa]['value']
-        })
-      }
-    });
+      this.assignNecessaryFieldsValue()
   // }
     if (this.educationForm.valid && this.selectedPost) {
       let entryValid = this.validSelectedPost();
@@ -683,6 +690,9 @@ validSelectedPost() {
   }
 
   addToEducationArray() {
+    if (this.getEducationArr.length < 3) {
+      this.assignNecessaryFieldsValue();
+    }
     if (this.educationForm.valid) {
      return this.getEducationArr.push(this.initEducationArray());
     }
