@@ -198,22 +198,22 @@ export class AdaniJoiningUploadComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getDocuments() {
-    if (this.candidateService.getLocalProfileData()) {
-      this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
-      let apiDocumentDetails = this.candidateService.getLocaldocument_details();
-      this.formInitialize();
-      this.ifDocumentDetails(apiDocumentDetails);
-    } else {
-      // let apiData = {
-      //   form_name: 'joining',
-      //   section_name: ''
-      // }
-      // this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-      //   this.candidateService.saveAllProfileToLocal(data);
-      //   let apiDocumentDetails = this.candidateService.getLocaldocument_details();
-      //   this.ifDocumentDetails(apiDocumentDetails);
-      // });
-    }
+    // if (this.candidateService.getLocalProfileData()) {
+    //   this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+    //   let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+    //   this.formInitialize();
+    //   this.ifDocumentDetails(apiDocumentDetails);
+    // } else {
+      let apiData = {
+        form_name: 'joining',
+        section_name: ''
+      }
+      this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
+        this.candidateService.saveAllProfileToLocal(data);
+        let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+        this.ifDocumentDetails(apiDocumentDetails);
+      });
+    // }
   }
 
   ifDocumentDetails(data) {
