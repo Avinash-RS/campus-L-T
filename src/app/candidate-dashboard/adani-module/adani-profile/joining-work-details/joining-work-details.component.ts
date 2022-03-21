@@ -134,7 +134,7 @@ export class AdaniJoiningWorkDetailsComponent implements OnInit, AfterViewInit, 
   workDetails: any;
 
   isWorkExp = new FormControl(null);
-  isRelatives = new FormControl(null);
+  isRelatives = new FormControl('0');
   showWorkExp: any = '0';
   workDetailsAllData: any;
   checkFormValidRequest: Subscription;
@@ -305,7 +305,7 @@ export class AdaniJoiningWorkDetailsComponent implements OnInit, AfterViewInit, 
 
     if (this.workDetailsAllData && this.workDetailsAllData.relatives_in_company && this.workDetailsAllData.relatives_in_company.length > 0) {
       this.getRelativesArr.clear();
-      this.isRelatives.setValue(true);
+      this.isRelatives.setValue('1');
       this.workDetailsAllData.relatives_in_company.forEach(element => {
         element ? this.getRelativesArr.push(this.RelativesArrayPatch(element)) : '';
       });
@@ -570,6 +570,13 @@ addToTrainingArray() {
       this.requiredValidator(e.value, this.form_oc, this.form_payslip);
     } else {
       this.requiredValidator(e.value, this.form_post, this.form_when_interview);
+    }
+  }
+
+  relativesRadioChange(e) {
+    if (e.value == '0') {
+      this.getRelativesArr.clear();
+      this.getRelativesArr.push(this.initRelativesArray());
     }
   }
 

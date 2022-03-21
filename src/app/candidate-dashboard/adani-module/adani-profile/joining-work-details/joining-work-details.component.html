@@ -511,10 +511,25 @@
             </div>
 
             <!-- Relatives and Aquantices -->
-            <div class="row-wrappper mt-3 hanging">
-                <mat-checkbox [formControl]="isRelatives" class="mr-2"></mat-checkbox> Is any of your Relatives / Acquaintances in {{customerName}} group of companies?
+            <div class="row-wrapper mt-3 hanging">
+                <!-- <mat-checkbox [formControl]="isRelatives" class="mr-2"></mat-checkbox>  -->
+                <div class="overall-input-wrapper width-50"> Are there any of your Relatives / Acquaintances in {{customerName}} group of companies?</div>
+                <div class="overall-input-wrapper width-50">
+
+                <mat-radio-group class="radio-grp adani-work-details-form" style="margin-left: 18px;
+                top: -4px;
+                position: relative;" (change)="relativesRadioChange($event)" [formControl]="isRelatives">
+                  <mat-radio-button value="1">Yes
+                  </mat-radio-button>
+                  <mat-radio-button value="0">No</mat-radio-button>
+              </mat-radio-group>
+              </div>
+
             </div>
-            <ng-container *ngIf="isRelatives.value">
+
+<!-- add -->
+
+            <ng-container *ngIf="isRelatives?.value && isRelatives?.value == '1'">
                 <ng-container *ngIf="getRelativesArr && getRelativesArr.controls" [formArrayName]="form_Relatives_Array">
                     <ng-container *ngFor="let item of getRelativesArr.controls; let i = index;" [formGroupName]="i">
                         <div class="container-wrapper flex-container d-flex justify-content-between align-items-center">

@@ -637,8 +637,8 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_email]: [{value: this.appConfig.getLocalData('userEmail'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
       [this.form_aadhar]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
       [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]],
-      [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]],
-      [this.form_offer_date]: [null, [Validators.required]],
+      [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.offer()]],
+      [this.form_offer_date]: [null],
       [this.form_height]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
       [this.form_weight]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]],
       [this.form_identification_mark1]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
@@ -715,8 +715,8 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.personalForm.controls[this.form_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]);
     this.personalForm.controls[this.form_aadhar].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]);
     this.personalForm.controls[this.form_pan].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]);
-    this.personalForm.controls[this.form_offer_reference].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]);
-    this.personalForm.controls[this.form_offer_date].setValidators([Validators.required]);
+    this.personalForm.controls[this.form_offer_reference].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.offer()]);
+    this.personalForm.controls[this.form_offer_date].setValidators(null);
     this.personalForm.controls[this.form_height].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]);
     this.personalForm.controls[this.form_weight].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.numberDecimals()]);
     this.personalForm.controls[this.form_identification_mark1].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
