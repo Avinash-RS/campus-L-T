@@ -218,22 +218,22 @@ export class AdaniJoiningUploadComponent implements OnInit, AfterViewInit, OnDes
 
   ifDocumentDetails(data) {
     this.getJoiningDocuments = data && data['joining_details'] ? data['joining_details'] : [];
-    // this.getEducationDocuments = data && data['education_documents'] ? data['education_documents'] : [];
+    this.getEducationDocuments = data && data['education_documents'] ? data['education_documents'] : [];
     // Commented the above code to fix the upload documents education array mapping issue. For the issue fix, below code was used,
     /* code used to issue fix -> Start*/
-     let getEduDocs = data && data['education_documents'] ? data['education_documents'] : [];
-     this.getEducationDocuments = [];
-     let education_levels = this.candidateService.getLocaleducation_details().educations;
-     if (getEduDocs && getEduDocs.length > 0 && education_levels && education_levels.length > 0) {
-     getEduDocs.forEach(ele => {
-      education_levels.forEach(element => {
-            if (ele && element && ele.education_level == element.level) {
-              const findDoc = this.getEducationDocuments.find(data => data.education_level == element.education_level);
-              findDoc ? '' : this.getEducationDocuments.push(ele);
-            }
-          });
-     });
-    };
+    //  let getEduDocs = data && data['education_documents'] ? data['education_documents'] : [];
+    //  this.getEducationDocuments = [];
+    //  let education_levels = this.candidateService.getLocaleducation_details().educations;
+    //  if (getEduDocs && getEduDocs.length > 0 && education_levels && education_levels.length > 0) {
+    //  getEduDocs.forEach(ele => {
+    //   education_levels.forEach(element => {
+    //         if (ele && element && ele.education_level == element.level) {
+    //           const findDoc = this.getEducationDocuments.find(data => data.education_level == element.education_level);
+    //           findDoc ? '' : this.getEducationDocuments.push(ele);
+    //         }
+    //       });
+    //  });
+    // };
     /* code used to issue fix -> End*/
     this.getResumeDocuments = data && data['resume'] ? data['resume'] : [];
     this.getTransferDocuments = data && data['transfer_certificate'] ? data['transfer_certificate'] : [];
