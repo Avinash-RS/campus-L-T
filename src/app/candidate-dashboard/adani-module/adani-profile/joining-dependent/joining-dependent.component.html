@@ -1,6 +1,6 @@
 <div class="joining-personal-wrapper">
     <h5>
-        Dependent Details
+        Family/Dependent Details
     </h5>
 
     <div class="grids-wrapper">
@@ -11,12 +11,12 @@
                         <div class="form-grouping">
                             <div class="row-wrapper">
                                 <div class="overall-input-wrapper width-32">
-                                    <label>Name of the Dependent</label>
+                                    <label>Name of the Dependent<span *ngIf="i>1">*</span></label>
                                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_dependent_name">
                                     <div class="form-error" *ngIf="getDependentArr.controls[i].get(form_dependent_name).invalid && getDependentArr.controls[i].get(form_dependent_name).touched">
-                                        <!-- <div *ngIf="getDependentArr.controls[i].get(form_dependent_name).errors?.required">
+                                        <div *ngIf="getDependentArr.controls[i].get(form_dependent_name).errors?.required">
                                         Name
-                                        of the dependent is Required</div> -->
+                                        of the dependent is Required</div>
                                         <div *ngIf="getDependentArr.controls[i].get(form_dependent_name).errors?.alphaNum255">
                                             Alpha numeric with maximum of 255 characters only allowed
                                         </div>
@@ -72,7 +72,7 @@
                                 <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                                     <div class="overall-input-wrapper width-32">
                                         <label>Differently Abled<span></span></label>
-                                        <nz-select class="input select" [formControlName]="form_dependent_differently_abled" nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                        <nz-select class="input select" [formControlName]="form_dependent_differently_abled" nzShowSearch nzPlaceHolder="Select">
                                             <nz-option *ngFor="let diff of diffAbledDropdownList" [nzLabel]="diff.label" [nzValue]="diff.value"></nz-option>
                                         </nz-select>
                                         <div class="form-error" *ngIf="getDependentArr.controls[i].get(form_dependent_differently_abled).invalid && getDependentArr.controls[i].get(form_dependent_differently_abled).touched">
@@ -82,8 +82,8 @@
                                         </div>
                                     </div>
                                     <div class="overall-input-wrapper width-32">
-                                        <label>Status<span>*</span></label>
-                                        <nz-select class="input select" [formControlName]="form_dependent_status" nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                        <label>Status<span></span></label>
+                                        <nz-select class="input select" [formControlName]="form_dependent_status" nzShowSearch nzPlaceHolder="Select">
                                             <nz-option *ngFor="let active of activeDropdownList" [nzLabel]="active.label" [nzValue]="active.value"></nz-option>
                                         </nz-select>
                                         <div class="form-error" *ngIf="getDependentArr.controls[i].get(form_dependent_status).invalid && getDependentArr.controls[i].get(form_dependent_status).touched">
@@ -98,7 +98,7 @@
                             <div *ngIf="candidateService.checkKycOrJoiningForm()" class="row-wrapper">
                                 <div class="overall-input-wrapper width-32">
                                     <label>Is Dependent<span></span></label>
-                                    <nz-select class="input select" [formControlName]="form_isDependent" nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                                    <nz-select class="input select" [formControlName]="form_isDependent" nzShowSearch nzPlaceHolder="Select">
                                         <nz-option *ngFor="let dependent of diffAbledDropdownList" [nzLabel]="dependent.label" [nzValue]="dependent.value"></nz-option>
                                     </nz-select>
                                     <div class="form-error" *ngIf="getDependentArr.controls[i].get(form_isDependent).invalid && getDependentArr.controls[i].get(form_isDependent).touched">

@@ -1509,3 +1509,8 @@ nz-select.ng-invalid.ng-touched {
     transform: scale(.8);
   }
 }
+::ng-deep .adani-work-details-form {
+  .mat-radio-label-content {
+    padding-left: 34px !important;
+  }
+}
