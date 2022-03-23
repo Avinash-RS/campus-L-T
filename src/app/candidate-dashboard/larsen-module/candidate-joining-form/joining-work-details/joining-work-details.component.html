@@ -391,6 +391,9 @@
                                             *ngIf="getEmploymentArr.controls[i].get(form_hr_email)?.errors?.required">
                                             HR Email ID is Required</div>
                                         <div
+                                            *ngIf="getEmploymentArr.controls[i].get(form_hr_email)?.errors?.maxlength">
+                                            255 characters only allowed</div>
+                                        <div
                                             *ngIf="getEmploymentArr.controls[i].get(form_hr_email).errors?.email">
                                             Not an Valid Email ID</div>
                                     </div>

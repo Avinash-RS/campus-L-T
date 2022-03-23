@@ -633,7 +633,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
       [this.form_mobile]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
-      [this.form_email]: [{value: this.appConfig.getLocalData('userEmail'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+      [this.form_email]: [{value: this.appConfig.getLocalData('userEmail'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), this.glovbal_validators.email()]],
       [this.form_aadhar]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]],
       [this.form_pan]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]],
       [this.form_offer_reference]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]],
@@ -644,7 +644,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_identification_mark2]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact_relation]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_personal_email]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+      [this.form_personal_email]: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), this.glovbal_validators.email()]],
       [this.form_domicile_state]: [null, [Validators.required]],
       [this.form_marital_status]: [null, [Validators.required]],
       [this.form_no_of_children]: [null],
@@ -711,7 +711,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.personalForm.controls[this.form_father_name].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
     this.personalForm.controls[this.form_emergency_contact].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]);
     this.personalForm.controls[this.form_mobile].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]);
-    this.personalForm.controls[this.form_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]);
+    this.personalForm.controls[this.form_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), this.glovbal_validators.email()]);
     this.personalForm.controls[this.form_aadhar].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.aadhaar()]);
     this.personalForm.controls[this.form_pan].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.panNo()]);
     this.personalForm.controls[this.form_offer_reference].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.offer()]);
@@ -722,7 +722,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.personalForm.controls[this.form_identification_mark2].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
     this.personalForm.controls[this.form_emergency_contact_name].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
     this.personalForm.controls[this.form_emergency_contact_relation].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]);
-    this.personalForm.controls[this.form_personal_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]);
+    this.personalForm.controls[this.form_personal_email].setValidators([RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), this.glovbal_validators.email()]);
     this.personalForm.controls[this.form_domicile_state].setValidators([Validators.required]);
     this.personalForm.controls[this.form_marital_status].setValidators([Validators.required]);
     this.personalForm.controls[this.form_passport_number].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
@@ -756,7 +756,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       this.personalForm.controls[this.form_identification_mark2].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
       this.personalForm.controls[this.form_emergency_contact_name].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
       this.personalForm.controls[this.form_emergency_contact_relation].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);
-      this.personalForm.controls[this.form_personal_email].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.email()]);
+      this.personalForm.controls[this.form_personal_email].setValidators([RemoveWhitespace.whitespace(), Validators.maxLength(255), this.glovbal_validators.email()]);
       this.personalForm.controls[this.form_domicile_state].setValidators(null);
       this.personalForm.controls[this.form_marital_status].setValidators(null);
       this.personalForm.controls[this.form_passport_number].setValidators([RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]);

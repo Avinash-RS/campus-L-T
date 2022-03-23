@@ -498,7 +498,7 @@ export class UserListsComponent implements OnInit, AfterViewInit, OnDestroy {
         role: [this.currentRole == 'institute' ? 'candidate' : null, [Validators.required]],
         is_skip_kyc: [false],
         name: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-        email: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.email()]],
+        email: [null, [RemoveWhitespace.whitespace(), Validators.required, Validators.maxLength(255), this.glovbal_validators.email()]],
         tag: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
         employee_id: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
         discipline: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]]

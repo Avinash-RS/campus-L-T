@@ -39,6 +39,7 @@
                     <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_email">
                     <div class="form-error" *ngIf="email?.invalid && email?.touched">
                         <div *ngIf="email?.errors?.required">Email ID is Required</div>
+                        <div *ngIf="email?.errors?.maxlength">Maximum of 255 characters only allowed</div>
                         <div *ngIf="email?.errors?.email">Not an Valid Email ID</div>
                     </div>
                 </div>
@@ -255,6 +256,7 @@
                             <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
                             <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
                                 <div *ngIf="personal_email?.errors?.required">Alternate Email ID is Required</div>
+                                <div *ngIf="personal_email?.errors?.maxlength">Maximum of 255 characters only allowed</div>
                                 <div *ngIf="personal_email?.errors?.email">Not an Valid Email ID</div>
                             </div>
                         </div>

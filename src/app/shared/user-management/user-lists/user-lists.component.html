@@ -244,6 +244,7 @@
       [formControlName]="'email'">
   <div class="form-error" *ngIf="email?.invalid && email?.touched">
       <div *ngIf="email?.errors?.required">Email ID is Required</div>
+      <div *ngIf="email?.errors?.maxlength">255 Characters only allowed</div>
       <div *ngIf="email.errors?.email">Invalid Email Id</div>
   </div>
 </div>
