@@ -489,8 +489,9 @@ validSelectedPost() {
     }
 
 }
-  formSubmit(routeValue?: any) {
-    // if (this.candidateService.checkKycOrJoiningForm()) {
+
+assignNecessaryFieldsValue() {
+  if (this.getEducationArr && this.getEducationArr.length > 0) {
     this.getEducationArr.controls.forEach((element: any, j) => {
       if (element['controls'][this.form_qualification_type]['value'] == 'CA' || element['controls'][this.form_qualification_type]['value'] == 'ICWA' || element['controls'][this.form_qualification_type]['value'] == 'CS') {
         this.getEducationArr.at(j).patchValue({
@@ -508,6 +509,11 @@ validSelectedPost() {
         })
       }
     });
+  }
+}
+  formSubmit(routeValue?: any) {
+    // if (this.candidateService.checkKycOrJoiningForm()) {
+      this.assignNecessaryFieldsValue();
   // }
     if (this.educationForm.valid && this.selectedPost) {
       let entryValid = this.validSelectedPost();
@@ -685,6 +691,9 @@ validSelectedPost() {
   }
 
   addToEducationArray() {
+    if (this.getEducationArr.length < 3) {
+      this.assignNecessaryFieldsValue();
+    }
     if (this.educationForm.valid) {
      return this.getEducationArr.push(this.initEducationArray());
     }
