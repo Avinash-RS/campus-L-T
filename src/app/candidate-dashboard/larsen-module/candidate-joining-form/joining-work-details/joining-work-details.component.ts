@@ -616,6 +616,13 @@ addToTrainingArray() {
     this.workDetailsForm.get(this.form_full_particulars).updateValueAndValidity(), { emitEvent: false };
   }
 
+  relativesArrayChange(e) {
+    if (!e.checked) {
+      this.getRelativesArr.clear();
+      this.getRelativesArr.push(this.initRelativesArray());
+    }
+  }
+
   formSubmit(routeValue?: any) {
     // this.requiredDesc();
     let some = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : this.getEmploymentArr.clear();

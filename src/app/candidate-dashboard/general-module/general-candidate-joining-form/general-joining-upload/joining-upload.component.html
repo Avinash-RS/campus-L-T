@@ -657,7 +657,7 @@
                     </ng-container>
                     <ng-template #caUploadsOtherUploads>
                       <!-- Certificates Upload -->
-                      <mat-expansion-panel [expanded]="selectedPost == 'ca' ? true : false">
+                      <mat-expansion-panel [ngClass]="selectedPost == 'ca' ? 'caCertificate' : ''" [expanded]="selectedPost == 'ca' ? true : false">
                           <mat-expansion-panel-header [ngClass]="selectedPost == 'ca' ? 'sub-header-accordion' : ''">
                               <mat-panel-title>
                                   <h6 class="mt-0 mb-0 ml-0 mr-0">{{selectedPost == 'ca' ? 'CA Certificate Uploads' : 'Certificate Uploads'}}</h6>

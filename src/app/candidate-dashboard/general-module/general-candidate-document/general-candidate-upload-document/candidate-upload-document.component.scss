@@ -596,9 +596,9 @@ mat-expansion-panel-header {
     padding: 8px 16px !important;
 }
 
-:host ::ng-deep .mat-expansion-panel-spacing {
-    margin: 0 !important;
-}
+// :host ::ng-deep .mat-expansion-panel-spacing {
+//     margin: 0 !important;
+// }
 
 .sub-header-accordion {
     background: #EAEAEA !important;

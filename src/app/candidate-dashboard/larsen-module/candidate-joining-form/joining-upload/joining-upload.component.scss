@@ -600,9 +600,9 @@ mat-expansion-panel-header {
     padding: 8px 16px !important;
 }
 
-:host ::ng-deep .mat-expansion-panel-spacing {
-    margin: 0 !important;
-}
+// :host ::ng-deep .mat-expansion-panel-spacing {
+//     margin: 0 !important;
+// }
 
 .sub-header-accordion {
     background: #EAEAEA !important;
@@ -860,4 +860,8 @@ mat-expansion-panel-header {
     text-align: right;
     margin: 0;
     padding-bottom: 0;
+}
+
+.caCertificate {
+  margin-top: 9px !important;
 }
