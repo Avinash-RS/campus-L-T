@@ -603,7 +603,7 @@
 
             <!-- Relatives and Aquantices -->
             <div class="row-wrappper mt-3 hanging">
-              <mat-checkbox [formControl]="isRelatives" class="mr-2"></mat-checkbox> Is any of your Relatives / Acquaintances in {{customerName}} group of companies?
+              <mat-checkbox (change)="relativesArrayChange($event)" [formControl]="isRelatives" class="mr-2"></mat-checkbox> Is any of your Relatives / Acquaintances in {{customerName}} group of companies?
               </div>
               <ng-container *ngIf="isRelatives.value">
                   <ng-container *ngIf="getRelativesArr && getRelativesArr.controls" [formArrayName]="form_Relatives_Array">

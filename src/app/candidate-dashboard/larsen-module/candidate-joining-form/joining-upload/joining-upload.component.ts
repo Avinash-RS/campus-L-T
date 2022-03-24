@@ -209,9 +209,10 @@ export class JoiningUploadComponent implements OnInit, AfterViewInit, OnDestroy 
         section_name: ''
       }
       this.candidateService.newGetProfileData(apiData).subscribe((data: any)=> {
-        this.candidateService.saveAllProfileToLocal(data);
-        let apiDocumentDetails = this.candidateService.getLocaldocument_details();
-        this.ifDocumentDetails(apiDocumentDetails);
+      this.candidateService.saveAllProfileToLocal(data);
+      let apiDocumentDetails = this.candidateService.getLocaldocument_details();
+      this.selectedPost = this.candidateService.getLocaleducation_details().selected_post ? this.candidateService.getLocaleducation_details().selected_post : null;
+      this.ifDocumentDetails(apiDocumentDetails);
       });
     // }
   }
