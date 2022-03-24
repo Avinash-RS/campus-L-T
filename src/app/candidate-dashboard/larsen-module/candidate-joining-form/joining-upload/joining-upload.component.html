@@ -115,17 +115,17 @@
                                         (opened)="setStep(0)">
                                         <mat-expansion-panel-header class="sub-header-accordion">
                                             <mat-panel-title class="f_size_14" style="color: #333333;">
-                                                {{getEducationArr.controls[i] && getEducationArr.controls[i].get(form_education_level).value}} Certificate Uploads<span class="f_size_14 asterick">*</span>
+                                                {{getEducationArr.controls[i] && getEducationArr.controls[i].get(form_education_level).value}} Certificate Uploads<span class="f_size_14 asterick">{{getEducationArr.controls[i] && (getEducationArr.controls[i].get(form_education_level).value != 'HSC' && getEducationArr.controls[i].get(form_education_level).value != 'SSLC') ? '' : '*'}}</span>
                                             </mat-panel-title>
                                             <mat-panel-description>
                                             </mat-panel-description>
                                         </mat-expansion-panel-header>
 
                                         <ng-container *ngIf="getEducationArr.controls[i] && getEducationArr.controls[i].get(form_education_level).value != 'SSLC' && getEducationArr.controls[i].get(form_education_level).value != 'HSC'">
-                                            <div class="row-wrapper flexEnd">
+                                            <div class="row-wrapper flexEnd" style="flex-direction: column;">
                                                 <div class="overall-input-wrapper width-100 align-items-center flex-row">
-                                                    <label class="f_size_14" style="min-width: 28%;">Please select number of semesters <span>*</span></label>
-                                                    <nz-select class="input select" (ngModelChange)="changeSemesterCount(education, i)" style="width: 9%;" [formControlName]="form_noofSemester" nzAllowClear nzShowSearch
+                                                  <label class="f_size_14" style="min-width: 28%;">Please select the number of semesters in your {{getEducationArr.controls[i].get(form_education_level).value ? getEducationArr.controls[i].get(form_education_level).value : ''}} program<span>*</span></label>
+                                                    <nz-select class="input select ml-2" (ngModelChange)="changeSemesterCount(education, i)" style="width: 9%;" [formControlName]="form_noofSemester" nzAllowClear nzShowSearch
                                                         nzPlaceHolder="Select">
                                                         <nz-option *ngFor="let sem of semesterList" [nzLabel]="sem" [nzValue]="sem"></nz-option>
                                                     </nz-select>
@@ -135,6 +135,12 @@
                                                             No. of Semesters is Required</div>
                                                     </div>
                                                 </div>
+                                                <div class="overall-input-wrapper width-100 align-items-center flex-row pt-2">
+                                                  <div class="alert">
+                                                    (If you don't have certificates/marksheets for all/some of the semesters, you can provide the reason in the next screen later.)
+                                                  </div>
+                                                  </div>
+
                                             </div>
                                         </ng-container>
 
@@ -149,7 +155,7 @@
                                                         <!-- {{j + 1 }}.  -->
                                                         <div class="readonlyTitle1">
                                                             {{getSemesterArr(i).controls[j].get(form_label).value}}<span
-                                                                class="f_size_14 asterick">*</span>
+                                                                class="f_size_14 asterick"></span>
                                                         </div>
                                                     </div>
 
@@ -261,7 +267,7 @@
                                 <div class="row-wrapper flexEnd">
                                     <div class="overall-input-wrapper min200 top22">
                                         <div class="readonlyTitle">
-                                            {{getTransferArr.controls[j].get(form_label).value}}<span class="f_size_14 asterick">*</span>
+                                            {{getTransferArr.controls[j].get(form_label).value}}<span class="f_size_14 asterick"></span>
                                         </div>
                                     </div>
 
