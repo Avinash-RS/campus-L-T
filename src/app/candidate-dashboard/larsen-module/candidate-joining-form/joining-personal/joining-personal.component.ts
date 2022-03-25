@@ -221,6 +221,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
   newGetProfileDataSubscription: Subscription;
   getBloodGroupsSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
+  orderPrefference: any[];
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -281,6 +282,34 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     //     this.personalDetails ? this.patchPersonalForm() : '';
     //   });
     }
+  }
+
+  patchLoopThroughValues(data, dataArray) {
+    let values = dataArray;
+    if (values && values.length > 0) {
+      let result = values.find(ele => ele.value == data);
+      return result ? result : false
+    } else {
+      return false;
+    }
+  }
+
+  locationChanged() {
+    let enteredLocValues = this.personalForm.value[this.form_location_preference] && this.personalForm.value[this.form_location_preference].length > 0 ? this.personalForm.value[this.form_location_preference] : [];
+    let orderPrefference = [];
+    if (enteredLocValues.length > 0) {
+      enteredLocValues.forEach(data => {
+        let getValue = this.patchLoopThroughValues(data, this.locationList);
+        if (data == (getValue && getValue.value)) {
+          orderPrefference.push(getValue.label);
+        }
+      });
+    }
+    this.orderPrefference = orderPrefference;
+  }
+
+  trackByFn(index, item) {
+    return index; // or item.id
   }
 
   getStateAPI() {
@@ -584,6 +613,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.profilePictureFormControl.setValue(this.personalDetails.profile_image[this.form_file_path]);
     this.patchLanguageForm();
     this.checkIsMarried();
+    this.locationChanged();
   }
 
   patchLanguageForm() {
@@ -628,7 +658,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],
-      [this.form_location_preference]: [null, [Validators.required]],
+      [this.form_location_preference]: [null, [Validators.required, this.glovbal_validators.locationPreferenceValidation(this.locationList ? this.locationList : [])]],
       [this.form_blood_group]: [null, [Validators.required]],
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],

@@ -1006,14 +1006,27 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   patchLocationReference(dataArray: any) {
     let mastersList = this.appConfig.getLocalData('masters') ? JSON.parse(this.appConfig.getLocalData('masters')) : [];
     let locationList = mastersList ? mastersList.PreferredLocations : [];
-    let locations = locationList.filter(data => data.value == this.patchLoopThrough(data.value, dataArray));
-    return locations;
+    let enteredLocValues = dataArray && dataArray.length > 0 ? dataArray : [];
+    let orderPrefference = [];
+    if (enteredLocValues.length > 0) {
+      enteredLocValues.forEach(data => {
+        let getValue = this.patchLoopThrough(data, locationList);
+        if (data == (getValue && getValue.value)) {
+          orderPrefference.push(getValue.label);
+        }
+      });
+    }
+    return orderPrefference;
   }
 
   patchLoopThrough(data, dataArray) {
     let values = dataArray;
-    let result = values.find(ele => ele == data);
-    return result ? result : false
+    if (values && values.length > 0) {
+      let result = values.find(ele => ele.value == data);
+      return result ? result : false
+    } else {
+      return false;
+    }
   }
 
   checkFormValidRequestFromRxjs() {

@@ -216,11 +216,11 @@
                             </div>
                         </div>
                         <h6 class="h6-sub-heading">Location Preference</h6>
-                        <div class="overall-input-wrapper mt-3 width-32">
+                        <div class="overall-input-wrapper mt-3 width-100">
                           <label>Preferred Location<span></span></label>
                           <div class="inpu-preview size-16 bold-700 color-black">
                             <ng-container *ngIf="personalDetailsMap && personalDetailsMap[form_location_preference] && personalDetailsMap[form_location_preference].length > 0 else notFound">
-                              <span *ngFor="let location of personalDetailsMap[form_location_preference]; let i = index">{{location.label}}<span *ngIf="i == (personalDetailsMap[form_location_preference].length - 1) ? false : true">, </span> </span>
+                              <span *ngFor="let location of personalDetailsMap[form_location_preference]; let i = index">{{location}}<span *ngIf="i == (personalDetailsMap[form_location_preference].length - 1) ? false : true">, </span> </span>
                             </ng-container>
                             <ng-template #notFound>
                               NA

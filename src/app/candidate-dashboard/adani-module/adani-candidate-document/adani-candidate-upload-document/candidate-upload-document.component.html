@@ -467,7 +467,7 @@
                                               *ngIf="getBankArr.controls[j].get(form_ifsc_code).errors?.required">
                                               IFSC code is Required</div>
                                           <div
-                                              *ngIf="getBankArr.controls[j].get(form_ifsc_code).errors?.alphaNum255">
+                                              *ngIf="getBankArr.controls[j].get(form_ifsc_code).errors?.alphaNum50">
                                               Alpha numeric with maximum of 50 characters only
                                               allowed</div>
                                       </div>
