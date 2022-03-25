@@ -27,6 +27,9 @@
                 .width-45 {
                     width: 45%;
                 }
+                .width-50 {
+                  width: 50%;
+                }
                 .width-15 {
                     width: 15%;
                 }
@@ -36,6 +39,9 @@
                 .width-22 {
                     width: 17.5%;
                 }
+                .width-42 {
+                  width: 42%;
+              }
                 .width-32 {
                     width: 32%;
                 }
@@ -70,6 +76,18 @@
                         background-color: $white;
                         width: 100%;
                     }
+                    .input-custom {
+                      position: relative;
+                      border: solid .8px #BEBEBE;
+                      border-radius: 2px;
+                      color: #6B6B6B;
+                      outline: none;
+                      box-sizing: border-box;
+                      min-height: 35px !important;
+                      padding: 4px 8px;
+                      background-color: $white;
+                      width: 100%;
+                    }
                     .select {
                         display: flex;
                         align-items: center;
@@ -78,6 +96,10 @@
                     }
                     .input:focus,
                     .input:hover {
+                        border: 1px solid $primary-hover-color;
+                    }
+                    .input-custom:focus,
+                    .input-custom:hover {
                         border: 1px solid $primary-hover-color;
                     }
                     .form-error {
@@ -321,6 +343,12 @@
     height: 35px !important;
     padding: 4px 8px;
     border-radius: 0px !important;
+}
+
+:host ::ng-deep .input-custom {
+  .ant-select-selection {
+    height: auto !important;
+  }
 }
 
 :host ::ng-deep .ant-select-selection:hover,

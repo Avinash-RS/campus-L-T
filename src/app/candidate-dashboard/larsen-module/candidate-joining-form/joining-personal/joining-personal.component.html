@@ -318,10 +318,11 @@
                 </div>
               </ng-container>
 
-              <h6 class="sub-heading">Location Preference</h6>
-              <div class="overall-input-wrapper width-45">
-                <label>Preferred Location<span>*</span></label>
-                <nz-select nzMode="multiple" [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" class="input select" [formControlName]="form_location_preference" nzAllowClear nzShowSearch
+              <h6 class="sub-heading pt-2">Location Preference</h6>
+              <div class="overall-input-wrapper width-100 flex-row align-items-end">
+               <div class="overall-input-wrapper width-42 mt-0">
+                <label style="white-space: nowrap;">Preferred Location<span>*</span> <span class="ml-1" style="color: red; font-size: 13px;">(Please pick four locations in your order of your preferences)</span></label>
+                <nz-select (ngModelChange)="locationChanged()" nzMode="multiple" [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" class="input-custom select" [formControlName]="form_location_preference" nzAllowClear nzShowSearch
                     nzPlaceHolder="<--Select-->">
                     <nz-option *ngFor="let location of locationList" [nzLabel]="location.label"
                         [nzValue]="location.value"></nz-option>
@@ -329,10 +330,22 @@
                 <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
                 <div class="form-error" *ngIf="location_preference?.invalid && location_preference?.touched">
                     <div *ngIf="location_preference?.errors?.required">Preferred Location is Required</div>
-                    <div *ngIf="location_preference?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only
-                        allowed</div>
+                    <div *ngIf="location_preference?.errors?.location">All the {{locationList && locationList.length > 0 ? locationList.length : ''}} locations needs to be selected</div>
+                </div>
+              </div>
+              <div *ngIf="orderPrefference && orderPrefference.length > 0" class="overall-input-wrapper width-75 mt-0 flex-row" style="font-size: 13px;">
+                <span class="ml-3" style="white-space: nowrap;">Order of Preference:</span>
+                <span class="d-flex ml-2" style="font-weight: 500;">
+                  <ol class="d-flex" style="flex-wrap: wrap;">
+                  <li class="ml-4" *ngFor="let order of orderPrefference; let i = index; trackBy: trackByFn">{{order}}</li>
+                  </ol>
+                </span>
                 </div>
             </div>
+            <div *ngIf="false" class="overall-input-wrapper width-100 flex-row align-items-end mt-0 pt-1">
+              <span style="font-size: 13px;" class="alert">Disclaimer: (Please pick four locations in your order of your preferences)</span>
+            </div>
+
 
 
               <h6 class="sub-heading">Languages Known</h6>

@@ -187,4 +187,18 @@ export class GlobalValidatorService {
       };
     }
 
+    locationPreferenceValidation(locationList): ValidatorFn {
+        let error = {location: true}
+        return (control: AbstractControl): {[key: string]: any} => {
+          if (!control.value) {
+            return null;
+          }
+          if(control.value && control.value.length == locationList.length) {
+            return null;
+          } else {
+            return error;
+          }
+        };
+    }
+
 }
