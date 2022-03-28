@@ -254,7 +254,7 @@ pgInstitutesList: any;
     this.minDate = new Date(currentYear - 90, 0, 1);
     this.DateRangemaxDate = new Date(currentYear + 2, 0, 0);
     // this.maxDate = new Date(currentYear - 16, 0, 1);
-    this.maxDate = new Date();
+    this.maxDate = new Date(currentYear + 3, 0, 0);
   }
 
 chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>, i, formname) {
