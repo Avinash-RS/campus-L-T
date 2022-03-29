@@ -649,7 +649,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
     this.personalForm = this.fb.group({
       // [this.form_title]: [null, [Validators.required]],
       [this.form_name]: [{value: this.appConfig.getLocalData('username'), disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dob]: [null, [Validators.required]],
+      [this.form_dob]: [{value: null, disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted)}, [Validators.required]],
       [this.form_gender]: [{value: null, disabled: (this.candidateService.checkKycOrJoiningForm() && this.isKYCNotExempted)}, [Validators.required]],
       [this.form_place_of_birth]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_state_of_birth]: [null, [Validators.required]],
@@ -658,7 +658,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],
-      [this.form_location_preference]: [null, [Validators.required, this.glovbal_validators.locationPreferenceValidation(this.locationList ? this.locationList : [])]],
+      [this.form_location_preference]: [null, [this.glovbal_validators.locationPreferenceValidation(this.locationList ? this.locationList : [])]],
       [this.form_blood_group]: [null, [Validators.required]],
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],

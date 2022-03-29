@@ -61,7 +61,7 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
         let config = element.driveDetails.candidateStatus;
         if (config && (config.update_joining_form == 1 || config.update_joining_form == 2)) {
           element.driveDetails.candidateStatus && element.driveDetails.candidateStatus.interviewSchedule ? element.driveDetails.candidateStatus.interviewSchedule = 0 : '';
-          config.update_joining_form == 1 ? array.push({label: 'Update Joining', value: 1}) : '';
+          config.update_joining_form == 1 ? array.push({label: 'Update Joining Details', value: 1}) : '';
           config.update_joining_form == 2 ? array.push({label: 'No Action Required', value: 2}) : '';
           this.formSubmitted = config.update_joining_form == 2 ? true : false;
         } else {
@@ -71,8 +71,8 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
             this.formSubmitted = config.update_profile == 2 ? true : false;
           }
           if (config && (config.upload_document == 1 || config.upload_document == 2)) {
-            config.upload_document == 1 ? array.push({label: 'Upload Document', value: 1}) : '';
-            config.upload_document == 2 ? array.push({label: 'Upload Document', value: 2}) : '';
+            config.upload_document == 1 ? array.push({label: 'Upload Documents', value: 1}) : '';
+            config.upload_document == 2 ? array.push({label: 'Upload Documents', value: 2}) : '';
           }
         }
         array.push({label: 'Update Profile', value: 2});
@@ -98,7 +98,7 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     let customerCode = selectedCustomer.customer_code;
     selectedCustomer.driveDetails = [selectedCustomer.driveDetails];
     this.setCustomerData(selectedCustomer).then((response: any)=> {
-      if (action && action.label == 'Upload Document') {
+      if (action && action.label == 'Upload Documents') {
         this.appConfig.routeNavigation(this.selectRoute(false, customerCode));
       } else {
         this.appConfig.routeNavigation(this.selectRoute(true, customerCode));

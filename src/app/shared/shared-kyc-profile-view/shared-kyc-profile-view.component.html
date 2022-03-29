@@ -215,6 +215,7 @@
                                 </div>
                             </div>
                         </div>
+                    <ng-container *ngIf="false">
                         <h6 class="h6-sub-heading">Location Preference</h6>
                         <div class="overall-input-wrapper mt-3 width-100">
                           <label>Preferred Location<span></span></label>
@@ -227,6 +228,7 @@
                             </ng-template>
                           </div>
                       </div>
+                    </ng-container>
                         <h6 class="h6-sub-heading">Languages Known</h6>
                         <div class="overall-input-wrapper mt-3 width-66">
                             <ng-container *ngIf="
@@ -458,28 +460,28 @@
                             <div class="overall-input-wrapper width-24">
                                 <label>Name of the Dependent</label>
                                 <div class="inpu-preview size-16 bold-700 color-black">
-                                    {{ dependent[form_dependent_name] }}
+                                    {{ dependent[form_dependent_name] ? dependent[form_dependent_name] : 'NA' }}
                                 </div>
                             </div>
 
                             <div class="overall-input-wrapper width-24">
                                 <label>Relationship</label>
                                 <div class="inpu-preview size-16 bold-700 color-black">
-                                    {{ dependent[form_dependent_relationship] }}
+                                    {{ dependent[form_dependent_relationship] ? dependent[form_dependent_relationship] : 'NA' }}
                                 </div>
                             </div>
 
                             <div class="overall-input-wrapper width-24">
                                 <label>Date of Birth</label>
                                 <div class="inpu-preview size-16 bold-700 color-black">
-                                    {{ dependent[form_dependent_dob] }}
+                                    {{ dependent[form_dependent_dob] ? dependent[form_dependent_dob] : 'NA' }}
                                 </div>
                             </div>
 
                             <div class="overall-input-wrapper width-24">
                                 <label>Occupation</label>
                                 <div class="inpu-preview size-16 bold-700 color-black">
-                                    {{ dependent[form_dependent_occupation] }}
+                                    {{ dependent[form_dependent_occupation] ? dependent[form_dependent_occupation] : 'NA' }}
                                 </div>
                             </div>
 
@@ -1324,21 +1326,21 @@
               <div class="overall-input-wrapper mt-0 width-56">
                 <label>Name of Employer</label>
                 <div class="inpu-preview f_size_16 bold-700 color-black">
-                  {{ training[form_training_employer_name] }}
+                  {{ training[form_training_employer_name] ? training[form_training_employer_name] : 'NA' }}
                 </div>
               </div>
 
               <div class="overall-input-wrapper mt-0 width-20">
                 <label>Duration From</label>
                 <div class="inpu-preview f_size_16 bold-700 color-black">
-                  {{ dateConvertion(training[form_training_from_date]) }}
+                  {{ training[form_training_from_date] ? dateConvertion(training[form_training_from_date]) : 'NA' }}
                 </div>
               </div>
 
               <div class="overall-input-wrapper mt-0 width-20">
                 <label>Duration To</label>
                 <div class="inpu-preview f_size_16 bold-700 color-black">
-                  {{ dateConvertion(training[form_training_to_date]) }}
+                  {{ training[form_training_to_date] ? dateConvertion(training[form_training_to_date]) : 'NA' }}
                 </div>
               </div>
             </div>
@@ -1347,7 +1349,7 @@
               <div class="overall-input-wrapper mt-3 width-40">
                 <label>Details of Work Responsibility</label>
                 <div class="inpu-preview f_size_16 bold-700 color-black">
-                  {{ training[form_training_work_responsiability] }}
+                  {{ training[form_training_work_responsiability] ? training[form_training_work_responsiability] : 'NA' }}
                 </div>
               </div>
             </div>
@@ -1417,28 +1419,28 @@
                 <div class="overall-input-wrapper width-24">
                   <label>Name</label>
                   <div class="inpu-preview size-16 bold-700 color-black">
-                    {{ relatives[form_relatives_name] }}
+                    {{ relatives[form_relatives_name] ? relatives[form_relatives_name] : 'NA' }}
                   </div>
                 </div>
 
                 <div class="overall-input-wrapper width-24">
                   <label>Relationship</label>
                   <div class="inpu-preview size-16 bold-700 color-black">
-                    {{ relatives[form_relatives_relationship] }}
+                    {{ relatives[form_relatives_relationship] ? relatives[form_relatives_relationship] : 'NA' }}
                   </div>
                 </div>
 
                 <div class="overall-input-wrapper width-24">
                   <label>Position</label>
                   <div class="inpu-preview size-16 bold-700 color-black">
-                    {{ relatives[form_relatives_position] }}
+                    {{ relatives[form_relatives_position] ? relatives[form_relatives_position] : 'NA' }}
                   </div>
                 </div>
 
                 <div class="overall-input-wrapper width-24">
                   <label>Company</label>
                   <div class="inpu-preview size-16 bold-700 color-black">
-                    {{ relatives[form_relatives_company] }}
+                    {{ relatives[form_relatives_company] ? relatives[form_relatives_company] : 'NA' }}
                   </div>
                 </div>
               </div>

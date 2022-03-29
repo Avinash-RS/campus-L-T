@@ -193,6 +193,9 @@ export class GlobalValidatorService {
           if (!control.value) {
             return null;
           }
+          if (control.value.length < 1) {
+            return null;
+          }
           if(control.value && control.value.length == locationList.length) {
             return null;
           } else {
