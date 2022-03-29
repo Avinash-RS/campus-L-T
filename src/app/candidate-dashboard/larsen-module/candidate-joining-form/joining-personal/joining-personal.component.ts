@@ -658,7 +658,7 @@ profilePictureFormControl = new FormControl(null, [Validators.required]);
       [this.form_religion]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_caste]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
       [this.form_category]: [null, [Validators.required]],
-      [this.form_location_preference]: [null, [Validators.required, this.glovbal_validators.locationPreferenceValidation(this.locationList ? this.locationList : [])]],
+      [this.form_location_preference]: [null, [this.glovbal_validators.locationPreferenceValidation(this.locationList ? this.locationList : [])]],
       [this.form_blood_group]: [null, [Validators.required]],
       [this.form_father_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_emergency_contact]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.mobileRegex()]],
