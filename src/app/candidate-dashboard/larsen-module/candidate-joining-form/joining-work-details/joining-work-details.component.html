@@ -669,8 +669,8 @@
                                                 *ngIf="getRelativesArr.controls[i].get(form_relatives_company)?.errors?.required">
                                                 Company is Required</div>
                                             <div
-                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_company).errors?.address50">
-                                                Alpha numeric with maximum of 50 characters only
+                                                *ngIf="getRelativesArr.controls[i].get(form_relatives_company).errors?.address255">
+                                                Alpha numeric with maximum of 255 characters only
                                                 allowed</div>
 
                                         </div>
