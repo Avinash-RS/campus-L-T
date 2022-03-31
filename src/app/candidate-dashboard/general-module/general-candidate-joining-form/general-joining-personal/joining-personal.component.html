@@ -289,7 +289,7 @@
                 </ng-container>
 
                 <div class="overall-input-wrapper width-45">
-                    <label>Offer Reference<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <label>Offer Reference<span *ngIf="candidateService.checkKycOrJoiningForm()"></span></label>
                     <input matInput placeholder="Enter here" class="input" type="text"
                         [formControlName]="form_offer_reference">
                     <div class="form-error" *ngIf="offer_reference?.invalid && offer_reference?.touched">
@@ -298,7 +298,7 @@
                     </div>
                 </div>
                 <div class="overall-input-wrapper width-45">
-                    <label>Offer Date<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <label>Offer Date<span *ngIf="candidateService.checkKycOrJoiningForm()"></span></label>
                     <div class="date-relative">
                         <input matInput class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker_offer"
                             placeholder="DD-MM-YYYY" [formControlName]="form_offer_date">
