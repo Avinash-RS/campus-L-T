@@ -40,6 +40,10 @@ export class UploadSelectedCandidatesComponent implements OnInit {
   errorReportsStatus: any;
   errorReports: any = [];
   ICUploadErrorStatus = 'ICUploadsError';
+  ICUploadErrorSelectedCandidatesStatus = 'ICUploadsSelectedCandidatesError';
+  ICUploadErrorJoinerTemplateStatus = 'ICUploadsJoinerTemplateError';
+  ICUploadErrorPMECStatus = 'ICUploadsPMECStatusError';
+  ICUploadErrorOfferAcceptanceStatus = 'ICUploadsOfferAcceptanceStatusError';
 
   templates = [
     {
@@ -190,7 +194,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           this.nextTab('0');
         } else {
           this.openDialog1(ShortlistBoxComponent, datas);
-          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorSelectedCandidatesStatus);
         }
       }, (err) => {
 
@@ -209,7 +213,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           this.nextTab('0');
         } else {
           this.openDialog1(ShortlistBoxComponent, datas);
-          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorJoinerTemplateStatus);
         }
       }, (err) => {
 
@@ -247,7 +251,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           this.nextTab('0');
         } else {
           this.openDialog1(ShortlistBoxComponent, datas);
-          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorPMECStatus);
         }
       }, (err) => {
 
@@ -266,7 +270,7 @@ export class UploadSelectedCandidatesComponent implements OnInit {
           this.nextTab('0');
         } else {
           this.openDialog1(ShortlistBoxComponent, datas);
-          this.passNotUploadedListToPreview(data, this.ICUploadErrorStatus);
+          this.passNotUploadedListToPreview(data, this.ICUploadErrorOfferAcceptanceStatus);
         }
       }, (err) => {
 

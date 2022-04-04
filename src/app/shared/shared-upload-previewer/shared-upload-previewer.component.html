@@ -1134,6 +1134,310 @@
   </div>
 </ng-container>
 
+<ng-container *ngIf="status === 'ICUploadsSelectedCandidatesError'">
+  <div class="user-list-wrapper">
+    <div class="search-bar">
+      <div class="search-icon">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="company">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Company </th>
+        <td mat-cell *matCellDef="let element"> {{element.company ? element.company : '-'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="hr_offer_reference">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Reference </th>
+        <td mat-cell *matCellDef="let element"> {{element.hr_offer_reference ? element.hr_offer_reference : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="hr_offer_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.hr_offer_date ? element.hr_offer_date : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="offer_validity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Validity </th>
+        <td mat-cell *matCellDef="let element"> {{element.offer_validity ? element.offer_validity : '-'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+        <td style="color: red !important;" mat-cell *matCellDef="let element"> {{element.reason ? element.reason : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="status === 'ICUploadsJoinerTemplateError'">
+  <div class="user-list-wrapper">
+    <div class="search-bar">
+      <div class="search-icon">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="company">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Company </th>
+        <td mat-cell *matCellDef="let element"> {{element.company ? element.company : '-'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="cadre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cadre </th>
+        <td mat-cell *matCellDef="let element"> {{element.cadre ? element.cadre : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Designation </th>
+        <td mat-cell *matCellDef="let element"> {{element.designation ? element.designation : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="job_code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Job_Code </th>
+        <td mat-cell *matCellDef="let element"> {{element.job_code ? element.job_code : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="function">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Function </th>
+        <td mat-cell *matCellDef="let element"> {{element.function ? element.function : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="sub_function">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub_Function </th>
+        <td mat-cell *matCellDef="let element"> {{element.sub_function ? element.sub_function : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="is_ps_no">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> IS_PS_NO </th>
+        <td mat-cell *matCellDef="let element"> {{element.is_ps_no ? element.is_ps_no : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="dh_ps_no">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> DH_PS_NO </th>
+        <td mat-cell *matCellDef="let element"> {{element.dh_ps_no ? element.dh_ps_no : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="hr_ps_no">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> HR_PS_NO </th>
+        <td mat-cell *matCellDef="let element"> {{element.hr_ps_no ? element.hr_ps_no : '-'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+        <td style="color: red !important;" mat-cell *matCellDef="let element"> {{element.reason ? element.reason : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="status === 'ICUploadsPMECStatusError'">
+  <div class="user-list-wrapper">
+    <div class="search-bar">
+      <div class="search-icon">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="medical_test_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Medical Test Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.medical_test_date ? element.medical_test_date : '-'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="fitness_status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fitness Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.fitness_status ? element.fitness_status : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description ? element.description : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="filename">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Filename </th>
+        <td mat-cell *matCellDef="let element"> {{element.filename ? element.filename : '-'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+        <td style="color: red !important;" mat-cell *matCellDef="let element"> {{element.reason ? element.reason : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="status === 'ICUploadsOfferAcceptanceStatusError'">
+  <div class="user-list-wrapper">
+    <div class="search-bar">
+      <div class="search-icon">
+        <img src="assets/images/feather-search.svg" alt="" srcset="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search….">
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email ? element.email : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="offersent_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Sent Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.offersent_date ? element.offersent_date : '-'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="offer_status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Offer Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.offer_status ? element.offer_status : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="filename">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Filename </th>
+        <td mat-cell *matCellDef="let element"> {{element.filename ? element.filename : '-'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+        <td style="color: red !important;" mat-cell *matCellDef="let element"> {{element.reason ? element.reason : '-'}}
+        </td>
+      </ng-container>
+
+      <!-- fifth Header row first group -->
+      <div [ngClass]="userList && userList.length === 0 ? '' : 'hide'" matColumnDef="fifth-header-row-first-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="10">
+          {{'No Data Available'}}
+        </th>
+      </div>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="no-data-available" [ngClass]="userList && userList.length === 0 ? '' : 'hide'" mat-header-row
+        *matHeaderRowDef="['fifth-header-row-first-group']">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+        [ngClass]="i % 2 == 0 ? 'light-bg' : 'dark-bg'"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 100, 500]"></mat-paginator>
+  </div>
+</ng-container>
+
 <ng-container *ngIf="status === 'secondshortlistpreview'">
   <div class="user-list-wrapper">
     <div class="search-bar">
