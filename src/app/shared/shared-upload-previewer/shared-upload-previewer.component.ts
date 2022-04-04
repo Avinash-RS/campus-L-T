@@ -1,9 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { AppConfigService } from 'src/app/config/app-config.service';
-import { ApiServiceService } from 'src/app/services/api-service.service';
-import { AdminServiceService } from 'src/app/services/admin-service.service';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-shared-upload-previewer',
@@ -32,10 +28,6 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
   radioCheck;
 
   constructor(
-    private appConfig: AppConfigService,
-    private apiService: ApiServiceService,
-    private adminService: AdminServiceService,
-    private sharedService: SharedServiceService
   ) {
   }
 
@@ -135,6 +127,38 @@ export class SharedUploadPreviewerComponent implements OnInit, OnChanges, AfterV
 
     if (this.status === 'ICUploadsError') {
       this.displayedColumns = ['email', 'company', 'date', 'time', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'ICUploadsSelectedCandidatesError') {
+      this.displayedColumns = ['email', 'company', 'hr_offer_reference', 'hr_offer_date', 'offer_validity', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'ICUploadsJoinerTemplateError') {
+      this.displayedColumns = ['email', 'company', 'cadre', 'designation', 'job_code', 'function', 'sub_function', 'is_ps_no', 'dh_ps_no', 'hr_ps_no', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'ICUploadsPMECStatusError') {
+      this.displayedColumns = ['email', 'medical_test_date', 'fitness_status', 'description', 'filename', 'reason'];
+      this.userList = this.previewerArray;
+      this.dataSource = new MatTableDataSource(this.userList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    if (this.status === 'ICUploadsOfferAcceptanceStatusError') {
+      this.displayedColumns = ['email', 'offersent_date', 'offer_status', 'filename', 'reason'];
       this.userList = this.previewerArray;
       this.dataSource = new MatTableDataSource(this.userList);
       this.dataSource.paginator = this.paginator;
