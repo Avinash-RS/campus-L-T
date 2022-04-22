@@ -1,0 +1,33 @@
+<div class="vertical-wrapper">
+  <div *ngIf="headingTitle" class="headingTitle">{{headingTitle}}</div>
+<ngx-charts-bar-vertical
+  [view]="widthHeight"
+  [scheme]="colorScheme"
+  [results]="chartData"
+  [animations]="animations"
+  [legend]="legend"
+  [legendTitle]="legendTitle"
+  [legendPosition]="legendPosition"
+  [xAxis]="true"
+  [yAxis]="true"
+  [showGridLines]="showGridLines"
+  [roundDomains]="roundDomains"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [trimXAxisTicks]="trimXAxisTicks"
+  [trimYAxisTicks]="trimYAxisTicks"
+  [rotateXAxisTicks]="rotateXAxisTicks"
+  [maxXAxisTickLength]="maxXAxisTickLength"
+  [maxYAxisTickLength]="maxYAxisTickLength"
+  [showDataLabel]="showDataLabel"
+  [noBarWhenZero]="noBarWhenZero"
+  [gradient]="gradient"
+  [barPadding]="barPadding"
+  [tooltipDisabled]="tooltipDisabled"
+  [roundEdges]="roundEdges"
+  [yScaleMax]="yScale"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical>
+</div>

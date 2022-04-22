@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardOverviewComponent implements OnInit {
 
+  verticalChartOptions: any;
   constructor() { }
 
   ngOnInit() {

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
@@ -59,6 +59,7 @@ import { GeneralProfileComponentGuard } from './guards/canload/candidate_compone
   // providers: [],
   entryComponents: [ModalBoxComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [
+    {provide: APP_BASE_HREF, useValue: '/'},
     { provide: NZ_I18N, useValue: en_US },
     NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},

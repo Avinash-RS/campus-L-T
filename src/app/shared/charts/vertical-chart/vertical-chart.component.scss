@@ -1,0 +1,17 @@
+.vertical-wrapper {
+  position: relative;
+  height: 100%;
+  min-height: 400px;
+  min-width: 400px;
+  .headingTitle {
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: #565656;
+    margin: 4px 0;
+  }
+}
+:host ::ng-deep .textDataLabel {
+  font-size: 16px !important;
+  font-weight: 600;
+}
