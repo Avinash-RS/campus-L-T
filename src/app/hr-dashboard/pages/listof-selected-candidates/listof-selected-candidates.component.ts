@@ -508,8 +508,8 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
     }
    this.documentVerificationSubscription = this.adminService.documentVerification(apiData).subscribe((data: any)=> {
       this.appConfig.success(status == '0' ? 'Verification Reverted' : 'Documents Verified Successfully');
-      this.rowData[selectedIndex].verified = this.rowData[selectedIndex].verified == 'Verified' ? 'Verify' : 'Verified';
-      this.rowData[selectedIndex].verifier_name = this.appConfig.getLocalData('username');
+      this.gridApi.rowModel.rowsToDisplay[selectedIndex].data.verified = this.gridApi?.rowModel?.rowsToDisplay[selectedIndex]?.data?.verified == 'Verified' ? 'Verify' : 'Verified';
+      this.gridApi.rowModel.rowsToDisplay[selectedIndex].data.verifier_name = this.appConfig.getLocalData('username');
       this.gridApi.applyTransaction({ update: this.rowData});
     }, (err)=> {
 
