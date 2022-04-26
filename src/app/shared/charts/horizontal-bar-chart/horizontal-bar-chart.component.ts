@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-vertical-chart',
-  templateUrl: './vertical-chart.component.html',
-  styleUrls: ['./vertical-chart.component.scss']
+  selector: 'app-horizontal-bar-chart',
+  templateUrl: './horizontal-bar-chart.component.html',
+  styleUrls: ['./horizontal-bar-chart.component.scss']
 })
-export class VerticalChartComponent implements OnInit {
+export class HorizontalBarChartComponent implements OnInit {
 
   @Input() chartOptions: any;
   // options

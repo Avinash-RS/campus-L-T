@@ -40,11 +40,12 @@ import { GeneralSharedKycProfileViewComponent } from './general-shared-kyc-profi
 import { VerticalChartComponent } from './charts/vertical-chart/vertical-chart.component';
 import { PieDoughnutChartComponent } from './charts/pie-doughnut-chart/pie-doughnut-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HorizontalBarChartComponent } from './charts/horizontal-bar-chart/horizontal-bar-chart.component';
 
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent, HorizontalBarChartComponent
 ],
   imports: [
     CommonModule,
@@ -96,7 +97,8 @@ ModuleRegistry.registerModules(AllModules);
     GeneralSharedKycProfileViewComponent,
     NzSelectModule,
     VerticalChartComponent,
-    PieDoughnutChartComponent
+    PieDoughnutChartComponent,
+    HorizontalBarChartComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

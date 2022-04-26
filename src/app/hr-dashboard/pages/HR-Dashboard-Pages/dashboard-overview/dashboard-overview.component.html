@@ -43,10 +43,13 @@
       </div>
       <div class="content-wrapper">
         <div>
-          <app-vertical-chart [chartOption]="verticalChartOptions"></app-vertical-chart>
+          <app-vertical-chart [chartOptions]="verticalChartOptions"></app-vertical-chart>
         </div>
         <div>
-          <app-vertical-chart [chartOption]="verticalChartOptions"></app-vertical-chart>
+          <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions"></app-horizontal-bar-chart>
+        </div>
+        <div>
+          <app-pie-doughnut-chart [chartOptions]="pieChartOptions"></app-pie-doughnut-chart>
         </div>
       </div>
     </mat-card>

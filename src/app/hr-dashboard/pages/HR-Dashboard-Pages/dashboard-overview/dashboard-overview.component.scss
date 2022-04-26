@@ -72,11 +72,16 @@
       display: flex;
       position: relative;
       justify-content: space-between;
+      flex-wrap: wrap;
       >div {
-        flex-basis: 32%;
+        margin-top: 16px;
+        position: relative;
+        flex-basis: 60%;
         background: #FFFFFF 0% 0% no-repeat padding-box;
         box-shadow: 0px 1px 6px #00000029;
         padding: 12px;
+        height: 350px;
+        flex-wrap: wrap;
       }
     }
   }
