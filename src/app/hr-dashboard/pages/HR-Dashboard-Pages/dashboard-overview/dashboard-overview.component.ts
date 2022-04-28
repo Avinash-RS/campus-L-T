@@ -10,6 +10,7 @@ export class DashboardOverviewComponent implements OnInit {
   verticalChartOptions: any;
   horizontalChartOptions: any;
   pieChartOptions: any;
+  chartType: any;
   constructor() { }
 
   ngOnInit() {
@@ -19,52 +20,66 @@ export class DashboardOverviewComponent implements OnInit {
   }
 
   verticalChartInit() {
-    this.verticalChartOptions = {
-      headingTitle: 'Application Details',
-      widthHeight: undefined,
-      // widthHeight: [450, 290],
-      chartData: [
-        {
-          "name": "Total Application",
-          "value": 450
+    this.chartType = 'chartJS';
+    if (this.chartType == 'chartJS') {
+      this.verticalChartOptions = {
+        headingTitle: 'Application Details',
+        widthHeight: undefined,
+        // widthHeight: [450, 290],
+        labels: ['Total Application', 'Profile Submitted', 'Profile Shortlisted'],
+        dataSets: [450, 200, 150],
+        background: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+        hoverBackground: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+        legend: false,
+      };
+    } else {
+      this.verticalChartOptions = {
+        headingTitle: 'Application Details',
+        widthHeight: undefined,
+        // widthHeight: [450, 290],
+        chartData: [
+          {
+            "name": "Total Application",
+            "value": 450
+          },
+          {
+            "name": "Profile Submitted",
+            "value": 200
+          },
+          {
+            "name": "Profile Shortlisted",
+            "value": 150
+          }
+        ],
+        colorScheme: {
+          domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
         },
-        {
-          "name": "Profile Submitted",
-          "value": 200
-        },
-        {
-          "name": "Profile Shortlisted",
-          "value": 150
-        }
-      ],
-      colorScheme: {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-      },
-      animations: true,
-      legend: false, // Show legend or not
-      legendTitle: 'Legend',
-      legendPosition: 'right', // ['right', 'below'],
-      xAxis: true, // Show x axis or not
-      yAxis: true, // Show y axis or not
-      showGridLines: true,
-      roundDomains: false,
-      showXAxisLabel: true,
-      showYAxisLabel: true,
-      xAxisLabel: '',
-      yAxisLabel: '',
-      trimXAxisTicks: true,
-      trimYAxisTicks: true,
-      rotateXAxisTicks: true,
-      maxXAxisTickLength: 25,
-      maxYAxisTickLength: 25,
-      showDataLabel: true,
-      noBarWhenZero: true,
-      gradient: false,
-      barPadding: 30,
-      tooltipDisabled: false,
-      roundEdges: false,
-      yScaleTickValue: 100
-    };
+        animations: true,
+        legend: false, // Show legend or not
+        legendTitle: 'Legend',
+        legendPosition: 'right', // ['right', 'below'],
+        xAxis: true, // Show x axis or not
+        yAxis: true, // Show y axis or not
+        showGridLines: true,
+        roundDomains: false,
+        showXAxisLabel: true,
+        showYAxisLabel: true,
+        xAxisLabel: '',
+        yAxisLabel: '',
+        trimXAxisTicks: true,
+        trimYAxisTicks: true,
+        rotateXAxisTicks: true,
+        maxXAxisTickLength: 25,
+        maxYAxisTickLength: 25,
+        showDataLabel: true,
+        noBarWhenZero: true,
+        gradient: false,
+        barPadding: 30,
+        tooltipDisabled: false,
+        roundEdges: false,
+        yScaleTickValue: 100
+      };
+    }
   }
 
   horizontalChartInit() {

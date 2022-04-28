@@ -1,33 +1,46 @@
 <div class="vertical-wrapper">
-  <div *ngIf="headingTitle" class="headingTitle">{{headingTitle}}</div>
+  <ng-container *ngIf="chartType == 'ngx'">
+  <div *ngIf="ngxChartOptions?.headingTitle" class="headingTitle">{{ngxChartOptions?.headingTitle}}</div>
 <ngx-charts-bar-vertical
-  [view]="widthHeight"
-  [scheme]="colorScheme"
-  [results]="chartData"
-  [animations]="animations"
-  [legend]="legend"
-  [legendTitle]="legendTitle"
-  [legendPosition]="legendPosition"
-  [xAxis]="true"
-  [yAxis]="true"
-  [showGridLines]="showGridLines"
-  [roundDomains]="roundDomains"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [trimXAxisTicks]="trimXAxisTicks"
-  [trimYAxisTicks]="trimYAxisTicks"
-  [rotateXAxisTicks]="rotateXAxisTicks"
-  [maxXAxisTickLength]="maxXAxisTickLength"
-  [maxYAxisTickLength]="maxYAxisTickLength"
-  [showDataLabel]="showDataLabel"
-  [noBarWhenZero]="noBarWhenZero"
-  [gradient]="gradient"
-  [barPadding]="barPadding"
-  [tooltipDisabled]="tooltipDisabled"
-  [roundEdges]="roundEdges"
-  [yScaleMax]="yScale"
+  [view]="ngxChartOptions?.widthHeight"
+  [scheme]="ngxChartOptions?.colorScheme"
+  [results]="ngxChartOptions?.chartData"
+  [animations]="ngxChartOptions?.animations"
+  [legend]="ngxChartOptions?.legend"
+  [legendTitle]="ngxChartOptions?.legendTitle"
+  [legendPosition]="ngxChartOptions?.legendPosition"
+  [xAxis]="ngxChartOptions?.xAxis"
+  [yAxis]="ngxChartOptions?.yAxis"
+  [showGridLines]="ngxChartOptions?.showGridLines"
+  [roundDomains]="ngxChartOptions?.roundDomains"
+  [showXAxisLabel]="ngxChartOptions?.showXAxisLabel"
+  [showYAxisLabel]="ngxChartOptions?.showYAxisLabel"
+  [xAxisLabel]="ngxChartOptions?.xAxisLabel"
+  [yAxisLabel]="ngxChartOptions?.yAxisLabel"
+  [trimXAxisTicks]="ngxChartOptions?.trimXAxisTicks"
+  [trimYAxisTicks]="ngxChartOptions?.trimYAxisTicks"
+  [rotateXAxisTicks]="ngxChartOptions?.rotateXAxisTicks"
+  [maxXAxisTickLength]="ngxChartOptions?.maxXAxisTickLength"
+  [maxYAxisTickLength]="ngxChartOptions?.maxYAxisTickLength"
+  [showDataLabel]="ngxChartOptions?.showDataLabel"
+  [noBarWhenZero]="ngxChartOptions?.noBarWhenZero"
+  [gradient]="ngxChartOptions?.gradient"
+  [barPadding]="ngxChartOptions?.barPadding"
+  [tooltipDisabled]="ngxChartOptions?.tooltipDisabled"
+  [roundEdges]="ngxChartOptions?.roundEdges"
+  [yScaleMax]="ngxChartOptions?.yScale"
   (select)="onSelect($event)">
 </ngx-charts-bar-vertical>
+</ng-container>
+<ng-container *ngIf="chartType == 'chartJS'">
+  <div *ngIf="ngxChartOptions?.headingTitle" class="headingTitle">{{ngxChartOptions?.headingTitle}}</div>
+    <canvas baseChart
+    [datasets]="chartjsChartOptions?.barChartData"
+    [labels]="chartjsChartOptions?.ChartLabels"
+    [options]="chartjsChartOptions?.chartOptions"
+    [plugins]="chartjsChartOptions?.barChartPlugins"
+    [chartType]="chartjsChartOptions?.barChartType">
+  </canvas>
+</ng-container>
+
 </div>

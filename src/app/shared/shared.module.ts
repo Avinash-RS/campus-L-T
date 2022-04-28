@@ -41,6 +41,7 @@ import { VerticalChartComponent } from './charts/vertical-chart/vertical-chart.c
 import { PieDoughnutChartComponent } from './charts/pie-doughnut-chart/pie-doughnut-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HorizontalBarChartComponent } from './charts/horizontal-bar-chart/horizontal-bar-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 ModuleRegistry.registerModules(AllModules);
 
@@ -60,7 +61,8 @@ ModuleRegistry.registerModules(AllModules);
     NgMultiSelectDropDownModule.forRoot(),
     NgxChartsModule,
     // Ant design Modules
-    NzSelectModule
+    NzSelectModule,
+    ChartsModule
   ],
   exports: [
     FormsModule,
