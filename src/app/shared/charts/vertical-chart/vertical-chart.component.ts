@@ -67,7 +67,6 @@ export class VerticalChartComponent implements OnInit, OnChanges {
   }
 
   chartJSValueMapping() {
-    console.log('chartType', this.chartType);
     this.chartjsChartOptionsObj = {
       responsive: true,
       hover: {
@@ -230,6 +229,11 @@ export class VerticalChartComponent implements OnInit, OnChanges {
     console.log(event);
   }
 
+  barCustomColors() {
+    let result = [];
+    result.push({'name': 'Inprogress', value: '#eee'});
+    return result;
+  }
 
   // events
   // public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {

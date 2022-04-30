@@ -2,6 +2,9 @@
   height: 100%;
   width: 100%;
   min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  // height: 300px;
   .heading-title {
     color: #565656;
     font-weight: 600;
@@ -34,27 +37,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .horizontal-chart {
-      width: 250px;
-      height: 300px;
-      position: relative;
-      @media only screen and (min-width: 481px) {
-        width: 500px;
-        height: 300px;
-      }
-      @media only screen and (min-width: 700px) {
-        width: 500px;
-        height: 300px;
-      }
-      @media only screen and (min-width: 1600px) {
-        width: 600px;
-        height: 300px;
+    .demo-funnel {
+      min-width: 420px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      @media (min-width: 100px) and (max-width: 480px) {
+        min-width: 250px;
       }
     }
   }
-
-}
-:host ::ng-deep .textDataLabel {
-  font-size: 16px !important;
-  font-weight: 600;
 }

@@ -43,13 +43,13 @@
       </div>
       <div class="content-wrapper">
         <div>
-          <app-vertical-chart [chartOptions]="verticalChartOptions" [chartType]="chartType"></app-vertical-chart>
+          <app-funnel-chart [chartOptions]="funnelChartOptions"></app-funnel-chart>
+        </div>
+        <div>
+          <app-ag-grid-shared [agGridValueObj]="tpoBasedAgGridValues"></app-ag-grid-shared>
         </div>
         <div>
           <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions"></app-horizontal-bar-chart>
-        </div>
-        <div>
-          <app-pie-doughnut-chart [chartOptions]="pieChartOptions"></app-pie-doughnut-chart>
         </div>
       </div>
     </mat-card>

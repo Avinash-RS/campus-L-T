@@ -16,11 +16,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      @media only screen and (min-width: 100px) and (max-width: 480px) {
+        flex-wrap: wrap;
+      }
       .single-card {
         display: flex;
         align-items: center;
         justify-content: space-between;
         min-height: 85px;
+        min-width: 150px;
         flex-basis: 32%;
         padding: 10px;
         margin-right: 24px;
@@ -58,6 +62,7 @@
     box-shadow: 0px 3px 6px #00000029;
     padding: 0;
     margin: 1em 0;
+    height: 100%;
     .header {
       border-bottom: 1px solid #DCDCDC;
       padding: 25px 35px 12px 35px;
@@ -70,17 +75,31 @@
     .content-wrapper {
       padding: 35px;
       display: flex;
-      position: relative;
+      height: 100%;
+      // position: relative;
       justify-content: space-between;
+      align-items: flex-start;
       flex-wrap: wrap;
+      @media only screen and (min-width: 100px) and (max-width: 480px) {
+        padding: 8px;
+      }
       >div {
         margin-top: 16px;
-        position: relative;
-        flex-basis: 60%;
+        flex-basis: 48%;
+        height: 100%;
+        min-height: 500px;
         background: #FFFFFF 0% 0% no-repeat padding-box;
         box-shadow: 0px 1px 6px #00000029;
         padding: 12px;
         flex-wrap: wrap;
+        min-width: 250px;
+        // overflow: auto;
+        @media only screen and (min-width: 100px) and (max-width: 480px) {
+          flex-grow: 1;
+        }
+      }
+      >div:not(:first-child) {
+        position: relative;
       }
     }
   }

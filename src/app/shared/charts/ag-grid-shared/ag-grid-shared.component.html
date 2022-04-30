@@ -1,0 +1,28 @@
+<div class="dashboard-ag-wrapper">
+<div *ngIf="agGridValueObj?.headingTitle" class="heading-title"><span>{{agGridValueObj?.headingTitle}}</span></div>
+<div class="card-content-wrapper">
+<div class="ag-wrapper">
+<ag-grid-angular style="width: 100%; min-width: 350px; height: 100%; margin:auto !important;" class="ag-grid ag-theme-alpine"
+[rowData]="rowData"
+[columnDefs]="columnDefs"
+[defaultColDef]="defaultColDef"
+[maintainColumnOrder]="true"
+[pagination]="true"
+[suppressRowClickSelection]="true"
+[paginationPageSize]="paginationPageSize"
+[rowSelection]="'multiple'"
+[cacheBlockSize]="cacheBlockSize"
+(gridReady)="onGridReady($event)"
+(sortChanged)="sortevent($event)"
+[enableCharts]="true"
+[enableRangeSelection]="true"
+(filterModified)="getModel($event)"
+(cellClicked)="onCellClicked($event)"
+(paginationChanged)="paginationChanged($event)"
+headerHeight="40"
+[animateRows]="true">
+</ag-grid-angular>
+</div>
+
+</div>
+</div>

@@ -1,6 +1,8 @@
 <div class="vertical-wrapper">
-  <div *ngIf="headingTitle" class="headingTitle">{{headingTitle}}</div>
-<ngx-charts-bar-horizontal
+  <div *ngIf="headingTitle" class="heading-title"><span>{{headingTitle}}</span></div>
+<div class="card-content-wrapper">
+  <div class="horizontal-chart">
+<ngx-charts-bar-horizontal-stacked
   [view]="widthHeight"
   [scheme]="colorScheme"
   [results]="chartData"
@@ -27,7 +29,9 @@
   [barPadding]="barPadding"
   [tooltipDisabled]="tooltipDisabled"
   [roundEdges]="roundEdges"
-  [yScaleMax]="yScale"
+  [xScaleMax]="yScale"
   (select)="onSelect($event)">
-</ngx-charts-bar-horizontal>
+</ngx-charts-bar-horizontal-stacked>
+</div>
+</div>
 </div>

@@ -42,11 +42,13 @@ import { PieDoughnutChartComponent } from './charts/pie-doughnut-chart/pie-dough
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HorizontalBarChartComponent } from './charts/horizontal-bar-chart/horizontal-bar-chart.component';
 import { ChartsModule } from 'ng2-charts';
+import { FunnelChartComponent } from './charts/funnel-chart/funnel-chart.component';
+import { AgGridSharedComponent } from './charts/ag-grid-shared/ag-grid-shared.component';
 
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent, HorizontalBarChartComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent, HorizontalBarChartComponent, FunnelChartComponent, AgGridSharedComponent
 ],
   imports: [
     CommonModule,
@@ -100,7 +102,9 @@ ModuleRegistry.registerModules(AllModules);
     NzSelectModule,
     VerticalChartComponent,
     PieDoughnutChartComponent,
-    HorizontalBarChartComponent
+    HorizontalBarChartComponent,
+    FunnelChartComponent,
+    AgGridSharedComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

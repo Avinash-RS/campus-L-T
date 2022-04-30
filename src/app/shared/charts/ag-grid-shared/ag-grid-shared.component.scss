@@ -1,11 +1,14 @@
-.vertical-wrapper {
+.dashboard-ag-wrapper {
   height: 100%;
   width: 100%;
   min-height: 500px;
+  display: flex;
+  flex-direction: column;
   .heading-title {
     color: #565656;
     font-weight: 600;
     font-size: 18px;
+    // height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +25,7 @@
   }
   .heading-title:after {
     display: block;
-    border-bottom: solid 1px #dcdcdc;
+    border-bottom: solid 1px #DCDCDC;
     content: "";
     width: 100%;
     position: absolute;
@@ -31,30 +34,11 @@
   .card-content-wrapper {
     height: 450px;
     overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .horizontal-chart {
-      width: 250px;
-      height: 300px;
-      position: relative;
-      @media only screen and (min-width: 481px) {
-        width: 500px;
-        height: 300px;
-      }
-      @media only screen and (min-width: 700px) {
-        width: 500px;
-        height: 300px;
-      }
-      @media only screen and (min-width: 1600px) {
-        width: 600px;
-        height: 300px;
-      }
+    padding: 4px;
+    .ag-wrapper {
+      width: 100%;
+      height: calc(100% - 50px);
+      overflow: auto;
     }
   }
-
-}
-:host ::ng-deep .textDataLabel {
-  font-size: 16px !important;
-  font-weight: 600;
 }
