@@ -32,18 +32,21 @@
     bottom: 0;
   }
   .card-content-wrapper {
+    min-height: 100%;
     height: 450px;
     overflow: auto;
     display: flex;
     align-items: center;
+    width: 100%;
     justify-content: center;
     .demo-funnel {
-      min-width: 420px;
+      width: 520px;
+      overflow: auto;
       display: flex;
       justify-content: center;
       text-align: center;
       @media (min-width: 100px) and (max-width: 480px) {
-        min-width: 250px;
+        width: 350px;
       }
     }
   }

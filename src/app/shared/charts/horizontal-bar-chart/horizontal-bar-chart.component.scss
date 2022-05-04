@@ -35,20 +35,21 @@
     align-items: center;
     justify-content: center;
     .horizontal-chart {
-      width: 250px;
-      height: 300px;
+      width: 450px;
+      height: 100%;
       position: relative;
+      overflow: auto;
+      overflow-y: hidden;
+      display: flex;
+      align-items: center;
       @media only screen and (min-width: 481px) {
         width: 500px;
-        height: 300px;
       }
       @media only screen and (min-width: 700px) {
         width: 500px;
-        height: 300px;
       }
       @media only screen and (min-width: 1600px) {
         width: 600px;
-        height: 300px;
       }
     }
   }

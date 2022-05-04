@@ -11,6 +11,7 @@ export class DashboardOverviewComponent implements OnInit {
   horizontalChartOptions: any;
   funnelChartOptions: any;
   tpoBasedAgGridValues: any;
+  domainBasedAgGridValues: any;
   constructor() {
     this.hrDashboardDriveSummaryConfigInstance = new hrDashboardDriveSummaryConfig(null);
   }
@@ -19,6 +20,7 @@ export class DashboardOverviewComponent implements OnInit {
     this.horizontalChartInit();
     this.funnelChartInit();
     this.TPOBasedCandidatesAgGrid();
+    this.DomainBasedCandidatesAgGrid();
   }
 
   TPOBasedCandidatesAgGrid() {
@@ -580,6 +582,35 @@ export class DashboardOverviewComponent implements OnInit {
     }
   }
 
+  DomainBasedCandidatesAgGrid() {
+    let columnDefs = this.hrDashboardDriveSummaryConfigInstance.domainBasedSummaryColumns();
+    this.domainBasedAgGridValues = {
+      headingTitle: 'Domain wise Candidates',
+      columnDefs: columnDefs,
+      paginationPageSize: 500,
+      cacheBlockSize: 500,
+      quickSearchValue: '',
+      rowData: [
+        {
+          domain: 'Computer Science',
+          shortlisted_for_assessment: 150,
+          candidates_appeared: 100,
+          shortlisted_for_interview: 80,
+          assigned_panel: 70,
+          interview_completed: 70
+        },
+        {
+          domain: 'Electrical and Electronics Engineering',
+          shortlisted_for_assessment: 250,
+          candidates_appeared: 200,
+          shortlisted_for_interview: 180,
+          assigned_panel: 170,
+          interview_completed: 170
+        },
+      ]
+    }
+  }
+
   funnelChartInit() {
     this.funnelChartOptions = {
       data: [
@@ -627,7 +658,7 @@ export class DashboardOverviewComponent implements OnInit {
     this.horizontalChartOptions = {
       headingTitle: 'Interview Summary',
       // widthHeight: undefined,
-      // widthHeight: [450, 290],
+      widthHeight: [450, 290],
       chartData: [
         {
           "name": "Appeared for Interview",
@@ -683,8 +714,8 @@ export class DashboardOverviewComponent implements OnInit {
       trimXAxisTicks: true,
       trimYAxisTicks: true,
       rotateXAxisTicks: true,
-      maxXAxisTickLength: 25,
-      maxYAxisTickLength: 25,
+      maxXAxisTickLength: 16,
+      maxYAxisTickLength: 16,
       showDataLabel: true,
       noBarWhenZero: true,
       gradient: false,
