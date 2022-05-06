@@ -12,6 +12,7 @@ export class DashboardOverviewComponent implements OnInit {
   funnelChartOptions: any;
   tpoBasedAgGridValues: any;
   domainBasedAgGridValues: any;
+  chartType: string;
   constructor() {
     this.hrDashboardDriveSummaryConfigInstance = new hrDashboardDriveSummaryConfig(null);
   }
@@ -590,24 +591,7 @@ export class DashboardOverviewComponent implements OnInit {
       paginationPageSize: 500,
       cacheBlockSize: 500,
       quickSearchValue: '',
-      rowData: [
-        {
-          domain: 'Computer Science',
-          shortlisted_for_assessment: 150,
-          candidates_appeared: 100,
-          shortlisted_for_interview: 80,
-          assigned_panel: 70,
-          interview_completed: 70
-        },
-        {
-          domain: 'Electrical and Electronics Engineering',
-          shortlisted_for_assessment: 250,
-          candidates_appeared: 200,
-          shortlisted_for_interview: 180,
-          assigned_panel: 170,
-          interview_completed: 170
-        },
-      ]
+      rowData: []
     }
   }
 
@@ -655,75 +639,31 @@ export class DashboardOverviewComponent implements OnInit {
   }
 
   horizontalChartInit() {
-    this.horizontalChartOptions = {
-      headingTitle: 'Interview Summary',
-      // widthHeight: undefined,
-      widthHeight: [450, 290],
-      chartData: [
-        {
-          "name": "Appeared for Interview",
-          "series": [
-            {
-              "name": "Selected",
-              "value": 70
-            },
-            {
-              "name": "Rejected",
-              "value": 10
-            }
-          ]
+    this.chartType = 'chartJS';
+      this.horizontalChartOptions = {
+        headingTitle: 'Interview Summary',
+        headingSubTitle: '2780',
+        widthHeight: undefined,
+        labels: ['Appeared for Interview', 'Not Appeared for Interview', 'Awaiting Feedback'],
+        singleDataSet: {
+          dataSets: [1000, 200, 150],
+          background: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+          hoverBackground: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
         },
-        {
-          "name": "Not Appeared for Interview",
-          "series": [
-            {
-              "name": "Reschedule",
-              "value": 20
-            },
-            {
-              "name": "No Show",
-              "value": 30
-            }
-          ]
+        multipleDataSet: {
+          data1: {
+            dataSets: [1500, 400, 950],
+            background: ['#5AA454', '#2F86A2', '#E2BF37'],
+            hoverBackground: ['#5AA454', '#2F86A2', '#E2BF37']
+          },
+          data2: {
+            dataSets: [500, 10],
+            background: ['#BCE3AD', '#A1CDDB', '#E2BF37'],
+            hoverBackground: ['#BCE3AD', '#A1CDDB', '#E2BF37']
+          },
         },
-        {
-          "name": "Awaiting Feedback",
-          "series": [
-            {
-              "name": "Inprogress",
-              "value": 20
-            },
-          ]
-        }
-      ],
-      colorScheme: {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#08558C']
-      },
-      animations: true,
-      legend: true, // Show legend or not
-      legendTitle: 'Legend',
-      legendPosition: 'below', // ['right', 'below'],
-      xAxis: true, // Show x axis or not
-      yAxis: true, // Show y axis or not
-      showGridLines: true,
-      roundDomains: false,
-      showXAxisLabel: true,
-      showYAxisLabel: true,
-      xAxisLabel: '',
-      yAxisLabel: '',
-      trimXAxisTicks: true,
-      trimYAxisTicks: true,
-      rotateXAxisTicks: true,
-      maxXAxisTickLength: 16,
-      maxYAxisTickLength: 16,
-      showDataLabel: true,
-      noBarWhenZero: true,
-      gradient: false,
-      barPadding: 30,
-      tooltipDisabled: false,
-      roundEdges: false,
-      yScaleTickValue: 200
-    };
+        legend: false,
+      };
   }
 
 

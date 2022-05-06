@@ -1,9 +1,10 @@
 .dashboard-ag-wrapper {
+  display: block;
+  box-sizing: border-box;
+  min-width: 250px;
+  position: relative;
+  padding: 0;
   height: 100%;
-  width: 100%;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
   .heading-title {
     color: #565656;
     font-weight: 600;
@@ -12,13 +13,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 0 10px 0;
-    padding-top: 10px;
-    padding-bottom: 14px;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
     text-align: left;
     position: relative;
-    width: calc(100% + 24px);
-    left: -12px;
+    width: 100%;
+    box-sizing: border-box;
     span {
       padding-left: 24px;
     }
@@ -32,16 +33,16 @@
     bottom: 0;
   }
   .card-content-wrapper {
-    min-height: 100%;
-    height: 450px;
-    overflow: auto;
-    padding: 4px;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+    height: calc(100% - 60px);
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    box-sizing: border-box;
     .ag-wrapper {
       width: 100%;
-      height: calc(100% - 50px);
-      overflow: auto;
       min-height: calc(100% - 50px);
       flex-grow: 1;
     }

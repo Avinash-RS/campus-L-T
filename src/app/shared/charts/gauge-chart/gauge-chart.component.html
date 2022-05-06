@@ -1,0 +1,28 @@
+<div class="vertical-wrapper">
+  <div *ngIf="headingTitle" class="heading-title"><span>{{headingTitle}}</span></div>
+<div class="card-content-wrapper">
+  <div class="gauge-chart">
+<ngx-charts-gauge
+  [view]="widthHeight"
+  [scheme]="colorScheme"
+  [results]="chartData"
+  [animations]="animations"
+  [legend]="legend"
+  [legendTitle]="legendTitle"
+  [legendPosition]="legendPosition"
+  [showText]="showText"
+  [min]="min"
+  [max]="max"
+  [showAxis]="showAxis"
+  [bigSegments]="bigSegments"
+  [smallSegments]="smallSegments"
+  [tooltipDisabled]="tooltipDisabled"
+  (select)="onSelect($event)">
+  <ng-template #tooltipTemplate let-model="model">
+    <div class="pt-1">{{model.name}}</div>
+    <div class="pt-0 pb-1">{{model.value}}</div>
+</ng-template>
+</ngx-charts-gauge>
+</div>
+</div>
+</div>

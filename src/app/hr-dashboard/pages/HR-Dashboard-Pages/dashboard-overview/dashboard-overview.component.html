@@ -52,7 +52,10 @@
           <app-ag-grid-shared [agGridValueObj]="domainBasedAgGridValues"></app-ag-grid-shared>
         </div>
         <div>
-          <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions"></app-horizontal-bar-chart>
+          <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions" [chartType]="chartType"></app-horizontal-bar-chart>
+        </div>
+        <div>
+          <app-gauge-chart [chartOptions]="''"></app-gauge-chart>
         </div>
       </div>
     </mat-card>

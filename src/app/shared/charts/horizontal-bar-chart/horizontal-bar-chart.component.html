@@ -1,37 +1,42 @@
 <div class="vertical-wrapper">
-  <div *ngIf="headingTitle" class="heading-title"><span>{{headingTitle}}</span></div>
+  <div *ngIf="chartjsChartOptions?.headingTitle" class="heading-title"><span>{{chartjsChartOptions?.headingTitle}}</span></div>
 <div class="card-content-wrapper">
   <div class="horizontal-chart">
-<ngx-charts-bar-horizontal-stacked
-  [view]="widthHeight"
-  [scheme]="colorScheme"
-  [results]="chartData"
-  [animations]="animations"
-  [legend]="legend"
-  [legendTitle]="legendTitle"
-  [legendPosition]="legendPosition"
-  [xAxis]="true"
-  [yAxis]="true"
-  [showGridLines]="showGridLines"
-  [roundDomains]="roundDomains"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [trimXAxisTicks]="trimXAxisTicks"
-  [trimYAxisTicks]="trimYAxisTicks"
-  [rotateXAxisTicks]="rotateXAxisTicks"
-  [maxXAxisTickLength]="maxXAxisTickLength"
-  [maxYAxisTickLength]="maxYAxisTickLength"
-  [showDataLabel]="showDataLabel"
-  [noBarWhenZero]="noBarWhenZero"
-  [gradient]="gradient"
-  [barPadding]="barPadding"
-  [tooltipDisabled]="tooltipDisabled"
-  [roundEdges]="roundEdges"
-  [xScaleMax]="yScale"
-  (select)="onSelect($event)">
-</ngx-charts-bar-horizontal-stacked>
+    <div *ngIf="chartjsChartOptions?.headingSubTitle" class="headingTitleSub"> <span>Assigned to Panel</span> <span>{{chartjsChartOptions?.headingSubTitle}}</span></div>
+    <div class="chart-wrapper">
+    <canvas baseChart
+    [datasets]="chartjsChartOptions?.barChartData"
+    [labels]="chartjsChartOptions?.ChartLabels"
+    [options]="chartjsChartOptions?.chartOptions"
+    [plugins]="chartjsChartOptions?.barChartPlugins"
+    [chartType]="chartjsChartOptions?.barChartType">
+  </canvas>
+</div>
+
+  <div class="legend-wrapper">
+    <div class="legend">
+      <div class="value"> <span class="background green"></span> <span class="pl-2 val">30</span> </div>
+      <div class="label">Selected</div>
+    </div>
+    <div class="legend">
+      <div class="value"> <span class="background lgreen"></span> <span class="pl-2 val">30</span> </div>
+      <div class="label">Not Selected</div>
+    </div>
+    <div class="legend">
+      <div class="value"> <span class="background blue"></span> <span class="pl-2 val">30</span> </div>
+      <div class="label">Request for Reschedule</div>
+    </div>
+    <div class="legend">
+      <div class="value"> <span class="background lblue"></span> <span class="pl-2 val">30</span> </div>
+      <div class="label">No Show</div>
+    </div>
+    <div class="legend">
+      <div class="value"> <span class="background feedback"></span> <span class="pl-2 val">30</span> </div>
+      <div class="label">Awaiting Feedback</div>
+    </div>
+
+  </div>
+
 </div>
 </div>
 </div>
