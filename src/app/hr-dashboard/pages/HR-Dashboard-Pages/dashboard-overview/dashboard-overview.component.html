@@ -9,7 +9,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Institutes_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div>{{headerSummary?.no_of_institutions}}</div>
+              <div *ngIf="headerSummary?.no_of_institutions else loading">{{headerSummary?.no_of_institutions}}</div>
               <div>Number of Institutions</div>
             </div>
           </mat-card>
@@ -19,7 +19,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Profile_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div>{{headerSummary?.no_of_profiles}}</div>
+              <div *ngIf="headerSummary?.no_of_profiles else loading">{{headerSummary?.no_of_profiles}}</div>
               <div>Number of Profiles</div>
             </div>
           </mat-card>
@@ -29,7 +29,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Discipline_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div>{{headerSummary?.no_of_disciplines}}</div>
+              <div *ngIf="headerSummary?.no_of_disciplines else loading">{{headerSummary?.no_of_disciplines}}</div>
               <div>Number of Disciplines</div>
             </div>
           </mat-card>
@@ -60,3 +60,9 @@
       </div>
     </mat-card>
 </div>
+
+<ng-template #loading>
+  <ngx-skeleton-loader count="1" appearance="line" animation="progress" [theme]="{
+    width: '150px',
+    margin: '0'}"></ngx-skeleton-loader>
+</ng-template>

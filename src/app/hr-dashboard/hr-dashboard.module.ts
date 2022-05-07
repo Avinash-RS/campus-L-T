@@ -52,6 +52,7 @@ import { EvaluatorAssignForVideoAssessComponent } from './pages/evaluator-assign
 import { RouteEvaluatorAssignForVideoAssessComponent } from './pages/route-evaluator-assign-for-video-assess/route-evaluator-assign-for-video-assess.component';
 import { HrSubInterviewResultsComponent } from './evaluation/new-interviewpanel-assigned-details/hr-evaluation-main-screen/hr-sub-interview-results/hr-sub-interview-results.component';
 import { DashboardOverviewComponent } from './pages/HR-Dashboard-Pages/dashboard-overview/dashboard-overview.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
@@ -64,7 +65,8 @@ ModuleRegistry.registerModules(AllModules);
     HrDashboardRoutingModule,
     AgGridModule.withComponents([ClickableStatusBarComponent]),
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    NgxSkeletonLoaderModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   entryComponents: [ScheduleInterviewPopupComponent]

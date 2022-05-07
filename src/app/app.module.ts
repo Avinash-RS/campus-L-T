@@ -33,7 +33,7 @@ import { AdaniComponentsAuthGuard } from './guards/canload/candidate_components_
 import { LarsenGuard } from './guards/canload/candidate_components_authguards/larsen.guard';
 import { GeneralProfileGuard } from './guards/canload/candidate_components_authguards/general-profile.guard';
 import { GeneralProfileComponentGuard } from './guards/canload/candidate_components_authguards/general-profile-component.guard';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 @NgModule({
   declarations: [
     AppComponent
@@ -47,6 +47,7 @@ import { GeneralProfileComponentGuard } from './guards/canload/candidate_compone
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    NgxSkeletonLoaderModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-top-right',

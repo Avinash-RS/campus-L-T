@@ -45,6 +45,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FunnelChartComponent } from './charts/funnel-chart/funnel-chart.component';
 import { AgGridSharedComponent } from './charts/ag-grid-shared/ag-grid-shared.component';
 import { GaugeChartComponent } from './charts/gauge-chart/gauge-chart.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 ModuleRegistry.registerModules(AllModules);
 
@@ -65,7 +66,8 @@ ModuleRegistry.registerModules(AllModules);
     NgxChartsModule,
     // Ant design Modules
     NzSelectModule,
-    ChartsModule
+    ChartsModule,
+    NgxSkeletonLoaderModule
   ],
   exports: [
     FormsModule,

@@ -34,7 +34,9 @@ export class GaugeChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.chartValueMapping();
+    if (this.chartOptions?.chartData) {
+      this.chartValueMapping();
+    }
   }
 
   chartValueMapping() {

@@ -26,15 +26,15 @@
             <div class="label">Not Selected</div>
           </div>
           <div class="legend">
-            <div class="value"> <span class="background blue"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.request_for_reschedule}}</span> </div>
+            <div class="value"> <span class="background blue"></span> <span class="pl-2 val">{{chartLegendData?.not_appeared?.request_for_reschedule}}</span> </div>
             <div class="label">Request for Reschedule</div>
           </div>
           <div class="legend">
-            <div class="value"> <span class="background lblue"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.no_show}}</span> </div>
+            <div class="value"> <span class="background lblue"></span> <span class="pl-2 val">{{chartLegendData?.not_appeared?.no_show}}</span> </div>
             <div class="label">No Show</div>
           </div>
           <div class="legend">
-            <div class="value"> <span class="background feedback"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.awaiting_feedback}}</span> </div>
+            <div class="value"> <span class="background feedback"></span> <span class="pl-2 val">{{chartLegendData?.awaiting_feedback}}</span> </div>
             <div class="label">Awaiting Feedback</div>
           </div>
         </div>
@@ -45,5 +45,8 @@
 </div>
 
 <ng-template #loading>
-  Loading...
+  <ngx-skeleton-loader style="flex-grow: 1;" count="8" [theme]="{
+    height: '30px',
+    padding: '8px'
+  }" appearance="line" animation="progress"></ngx-skeleton-loader>
 </ng-template>

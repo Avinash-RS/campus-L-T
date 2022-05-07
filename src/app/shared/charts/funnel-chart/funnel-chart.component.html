@@ -2,9 +2,11 @@
 
   <div *ngIf="this.chartOptions?.headingTitle" class="heading-title"><span>{{this.chartOptions?.headingTitle}}</span>
   </div>
-  <div [ngClass]="this.chartOptions?.data ? '' : 'hide'" class="card-content-wrapper">
-    <div class="demo-funnel" id="funnel"></div>
+  <div class="card-content-wrapper">
+    <div [ngClass]="this.chartOptions?.data ? '' : 'hide'" class="demo-funnel" id="funnel"></div>
+    <ngx-skeleton-loader style="width:100%; flex-grow: 1;" *ngIf="!this.chartOptions?.data" count="8" [theme]="{
+      height: '30px',
+      padding: '8px'
+    }" appearance="line" animation="progress"></ngx-skeleton-loader>
   </div>
-
-  <div *ngIf="!this.chartOptions?.data"> Loading </div>
 </div>

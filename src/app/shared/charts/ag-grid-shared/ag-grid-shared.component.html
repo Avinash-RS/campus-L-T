@@ -25,7 +25,11 @@ headerHeight="40"
 </div>
 
 <ng-template #loading>
-  Loading...
+  <ngx-skeleton-loader style="flex-grow: 1;" count="8" [theme]="{
+    height: '30px',
+    padding: '8px'
+  }" appearance="line" animation="progress"></ngx-skeleton-loader>
+
 </ng-template>
 
 </div>

@@ -1,38 +1,42 @@
 <div class="vertical-wrapper">
-  <div *ngIf="headingTitle" class="heading-title"><span>{{headingTitle}}</span></div>
-<div class="card-content-wrapper">
-  <ng-container *ngIf="chartData else loading">
-    <div class="gauge-chart">
-      <ngx-charts-gauge
-        [view]="widthHeight"
-        [scheme]="colorScheme"
-        [results]="chartData"
-        [animations]="animations"
-        [legend]="legend"
-        [legendTitle]="legendTitle"
-        [legendPosition]="legendPosition"
-        [showText]="showText"
-        [min]="min"
-        [max]="max"
-        [showAxis]="showAxis"
-        [bigSegments]="bigSegments"
-        [smallSegments]="smallSegments"
-        [tooltipDisabled]="tooltipDisabled"
-        (select)="onSelect($event)">
-        <ng-template #tooltipTemplate let-model="model">
-          <div class="pt-1">{{model.name}}</div>
-          <div class="pt-0 pb-1">{{model.value}}</div>
-      </ng-template>
-      </ngx-charts-gauge>
-      <div class="gauge-center-text">
-        <span class="fontLarge">{{chartOptions?.total}}</span>
+  <div *ngIf="chartOptions?.headingTitle" class="heading-title"><span>{{chartOptions?.headingTitle}}</span></div>
+  <ng-container *ngIf="chartOptions?.chartData else loading">
+    <div class="card-content-wrapper">
+      <div class="gauge-chart">
+        <ngx-charts-gauge
+          [view]="widthHeight"
+          [scheme]="colorScheme"
+          [results]="chartData"
+          [animations]="animations"
+          [legend]="legend"
+          [legendTitle]="legendTitle"
+          [legendPosition]="legendPosition"
+          [showText]="showText"
+          [min]="min"
+          [max]="max"
+          [showAxis]="showAxis"
+          [bigSegments]="bigSegments"
+          [smallSegments]="smallSegments"
+          [tooltipDisabled]="tooltipDisabled"
+          (select)="onSelect($event)">
+          <ng-template #tooltipTemplate let-model="model">
+            <div class="pt-1">{{model.name}}</div>
+            <div class="pt-0 pb-1">{{model.value}}</div>
+        </ng-template>
+        </ngx-charts-gauge>
+        <div class="gauge-center-text">
+          <span class="fontLarge">{{chartOptions?.total}}</span>
+        </div>
       </div>
     </div>
   </ng-container>
 </div>
 
 <ng-template #loading>
-  Loading...
+  <div class="mt-3 p-2" *ngIf="!chartOptions?.chartData">
+    <ngx-skeleton-loader *ngIf="!chartData" style="flex-grow: 1;" count="8" [theme]="{
+      height: '30px',
+      padding: '8px'
+    }" appearance="line" animation="progress"></ngx-skeleton-loader>
+  </div>
 </ng-template>
-
-
