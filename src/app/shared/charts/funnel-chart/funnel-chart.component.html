@@ -1,6 +1,10 @@
 <div class="vertical-wrapper">
-  <div *ngIf="this.chartOptions?.headingTitle" class="heading-title"><span>{{this.chartOptions?.headingTitle}}</span></div>
-  <div class="card-content-wrapper">
-  <div class="demo-funnel" id="funnel"></div>
+
+  <div *ngIf="this.chartOptions?.headingTitle" class="heading-title"><span>{{this.chartOptions?.headingTitle}}</span>
   </div>
+  <div [ngClass]="this.chartOptions?.data ? '' : 'hide'" class="card-content-wrapper">
+    <div class="demo-funnel" id="funnel"></div>
+  </div>
+
+  <div *ngIf="!this.chartOptions?.data"> Loading </div>
 </div>

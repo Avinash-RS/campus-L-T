@@ -1,7 +1,7 @@
 <div class="overview-component-wrapper">
     <mat-card class="overview-card">
       <div class="header">
-        <div class="header-text">Drive 2022</div>
+        <div class="header-text">{{driveName}}</div>
       </div>
         <mat-card-content class="content-wrapper">
           <mat-card class="single-card">
@@ -9,8 +9,8 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Institutes_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div>150</div>
-              <div>Number of Institutes</div>
+              <div>{{headerSummary?.no_of_institutions}}</div>
+              <div>Number of Institutions</div>
             </div>
           </mat-card>
 
@@ -19,7 +19,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Profile_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div>2300</div>
+              <div>{{headerSummary?.no_of_profiles}}</div>
               <div>Number of Profiles</div>
             </div>
           </mat-card>
@@ -29,7 +29,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Discipline_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div>40</div>
+              <div>{{headerSummary?.no_of_disciplines}}</div>
               <div>Number of Disciplines</div>
             </div>
           </mat-card>
@@ -52,10 +52,10 @@
           <app-ag-grid-shared [agGridValueObj]="domainBasedAgGridValues"></app-ag-grid-shared>
         </div>
         <div>
-          <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions" [chartType]="chartType"></app-horizontal-bar-chart>
+          <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions" [chartLegendData]="InterviewSummaryhorizontalChartAPIData"></app-horizontal-bar-chart>
         </div>
         <div>
-          <app-gauge-chart [chartOptions]="''"></app-gauge-chart>
+          <app-gauge-chart [chartOptions]="gaugeChartOptions"></app-gauge-chart>
         </div>
       </div>
     </mat-card>

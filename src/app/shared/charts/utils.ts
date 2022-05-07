@@ -22,33 +22,33 @@ export class hrDashboardDriveSummaryConfig {
       //     },
       // },
       {
-        headerName: 'Institute / HR', field: 'hr_name', colId: 'ihr_name',
+        headerName: 'Institute / HR', field: 'college_name', colId: 'icollege_name',
         filter: "agTextColumnFilter",
         minWidth: 140,
         sortable: true,
-        tooltipField: 'hr_name',
+        tooltipField: 'college_name',
         // comparator: this.customComparator,
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'No. of Candidates', field: 'candidates_count', colId: 'icandidates_count',
+        headerName: 'No. of Candidates', field: 'no_of_candidates', colId: 'ino_of_candidates',
         filter: 'agNumberColumnFilter',
         minWidth: 100,
         sortable: true,
-        tooltipField: 'candidates_count',
+        tooltipField: 'no_of_candidates',
         // comparator: this.customComparator,
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Emails Triggered', field: 'email_triggered', colId: 'iemail_triggered',
+        headerName: 'Emails Triggered', field: 'emails_triggered', colId: 'iemails_triggered',
         filter: 'agNumberColumnFilter',
         minWidth: 100,
         sortable: true,
-        tooltipField: 'email_triggered',
+        tooltipField: 'emails_triggered',
         getQuickFilterText: (params) => {
           return params.value;
         }

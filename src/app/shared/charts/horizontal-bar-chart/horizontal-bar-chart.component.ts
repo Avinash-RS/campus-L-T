@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Label } from 'ng2-charts';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -8,11 +8,11 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
   templateUrl: './horizontal-bar-chart.component.html',
   styleUrls: ['./horizontal-bar-chart.component.scss']
 })
-export class HorizontalBarChartComponent implements OnInit {
+export class HorizontalBarChartComponent implements OnInit, OnChanges {
 
   @Input() chartOptions: any;
+  @Input() chartLegendData: any;
 
-  @Input() chartType: any;
   public chartPlugins = [pluginDataLabels];
   public chartjsChartOptionsObj: any;//ChartOptions;
   public barChartLabels: Label[];
@@ -29,11 +29,13 @@ export class HorizontalBarChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chartJSValueMapping();
+  }
+
+  ngOnChanges() {
+      this.chartJSValueMapping();
   }
 
   chartJSValueMapping() {
-
     this.chartjsChartOptionsObj = {
       responsive: true,
       maintainAspectRatio: false,

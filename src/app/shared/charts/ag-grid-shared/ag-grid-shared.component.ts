@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import moment from 'moment';
 
@@ -7,7 +7,7 @@ import moment from 'moment';
   templateUrl: './ag-grid-shared.component.html',
   styleUrls: ['./ag-grid-shared.component.scss']
 })
-export class AgGridSharedComponent implements OnInit {
+export class AgGridSharedComponent implements OnInit, OnChanges {
   @Input() agGridValueObj: any;
   gridApi: any;
   defaultColDef = this.appConfig.agGridWithAllFunc();
@@ -20,9 +20,11 @@ export class AgGridSharedComponent implements OnInit {
     private appConfig: AppConfigService
   ) { }
 
-  ngOnInit() {
-    this.agGridValueAssign();
-  // this.gridApi.setColumnDefs(this.agGridDefinition.panelList())
+ngOnInit() {
+}
+
+ngOnChanges() {
+  this.agGridValueAssign();
 }
 
 agGridValueAssign() {

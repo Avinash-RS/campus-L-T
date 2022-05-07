@@ -813,4 +813,14 @@ videoAssessmentEvaluationDetails(data) {
   return this.http.post(`${this.BASE_URL}/video-assessment/va-evaluation-detail`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
+getHRDashboardSummaryAPI() {//2
+  return this.http.get(`${this.BASE_URL}/dashboard/drive_summary?drive_id=${this.appConfig.getDriveId()}`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+  // return this.http.get(`${this.BASE_URL}/dashboard/drive_summary?drive_id=2`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+getTPODashboardSummaryAPI() {//6
+  return this.http.get(`${this.BASE_URL}/dashboard/tpo_based_count?drive_id=${this.appConfig.getDriveId()}`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+  // return this.http.get(`${this.BASE_URL}/dashboard/tpo_based_count?drive_id=6}`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
 }

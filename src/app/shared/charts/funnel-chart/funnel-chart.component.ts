@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import D3Funnel from 'd3-funnel';
 
 @Component({
@@ -6,7 +6,7 @@ import D3Funnel from 'd3-funnel';
   templateUrl: './funnel-chart.component.html',
   styleUrls: ['./funnel-chart.component.scss']
 })
-export class FunnelChartComponent implements OnInit {
+export class FunnelChartComponent implements OnInit, OnChanges {
   @Input() chartOptions: any;
 
   public funnel;
@@ -17,14 +17,20 @@ export class FunnelChartComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
     this.drawFunnelChart();
   }
 
   drawFunnelChart(): void {
-    let data = this.chartOptions?.data;
-    let options = this.chartOptions?.options;
-    this.funnel = new D3Funnel('#funnel');
-    this.funnel.draw(data, options);
+    console.log('this.chartOptions?.data', this.chartOptions?.data);
+    if (this.chartOptions?.data) {
+      let data = this.chartOptions?.data;
+      let options = this.chartOptions?.options;
+      this.funnel = new D3Funnel('#funnel');
+      this.funnel.draw(data, options);
+    }
   }
 
 }

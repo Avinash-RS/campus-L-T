@@ -1,42 +1,49 @@
 <div class="vertical-wrapper">
-  <div *ngIf="chartjsChartOptions?.headingTitle" class="heading-title"><span>{{chartjsChartOptions?.headingTitle}}</span></div>
-<div class="card-content-wrapper">
-  <div class="horizontal-chart">
-    <div *ngIf="chartjsChartOptions?.headingSubTitle" class="headingTitleSub"> <span>Assigned to Panel</span> <span>{{chartjsChartOptions?.headingSubTitle}}</span></div>
-    <div class="chart-wrapper">
-    <canvas baseChart
-    [datasets]="chartjsChartOptions?.barChartData"
-    [labels]="chartjsChartOptions?.ChartLabels"
-    [options]="chartjsChartOptions?.chartOptions"
-    [plugins]="chartjsChartOptions?.barChartPlugins"
-    [chartType]="chartjsChartOptions?.barChartType">
-  </canvas>
-</div>
+  <div *ngIf="this.chartOptions?.headingTitle" class="heading-title"><span>{{this.chartOptions?.headingTitle}}</span></div>
+  <div class="card-content-wrapper">
+    <ng-container *ngIf="this.chartOptions?.multipleDataSet else loading">
+      <div class="horizontal-chart">
+        <div *ngIf="chartjsChartOptions?.headingSubTitle" class="headingTitleSub"> <span>Assigned to Panel - </span> <span>{{chartjsChartOptions?.headingSubTitle}}</span>
+        </div>
 
-  <div class="legend-wrapper">
-    <div class="legend">
-      <div class="value"> <span class="background green"></span> <span class="pl-2 val">30</span> </div>
-      <div class="label">Selected</div>
-    </div>
-    <div class="legend">
-      <div class="value"> <span class="background lgreen"></span> <span class="pl-2 val">30</span> </div>
-      <div class="label">Not Selected</div>
-    </div>
-    <div class="legend">
-      <div class="value"> <span class="background blue"></span> <span class="pl-2 val">30</span> </div>
-      <div class="label">Request for Reschedule</div>
-    </div>
-    <div class="legend">
-      <div class="value"> <span class="background lblue"></span> <span class="pl-2 val">30</span> </div>
-      <div class="label">No Show</div>
-    </div>
-    <div class="legend">
-      <div class="value"> <span class="background feedback"></span> <span class="pl-2 val">30</span> </div>
-      <div class="label">Awaiting Feedback</div>
-    </div>
+        <div class="chart-wrapper" *ngIf="this.chartjsChartOptions?.headingSubTitle">
+          <canvas baseChart
+          [datasets]="chartjsChartOptions?.barChartData"
+          [labels]="chartjsChartOptions?.ChartLabels"
+          [options]="chartjsChartOptions?.chartOptions"
+          [plugins]="chartjsChartOptions?.barChartPlugins"
+          [chartType]="chartjsChartOptions?.barChartType">
+          </canvas>
+        </div>
 
+        <div class="legend-wrapper">
+          <div class="legend">
+            <div class="value"> <span class="background green"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.selected}}</span> </div>
+            <div class="label">Selected</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background lgreen"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.not_selected}}</span> </div>
+            <div class="label">Not Selected</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background blue"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.request_for_reschedule}}</span> </div>
+            <div class="label">Request for Reschedule</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background lblue"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.no_show}}</span> </div>
+            <div class="label">No Show</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background feedback"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.awaiting_feedback}}</span> </div>
+            <div class="label">Awaiting Feedback</div>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
   </div>
+</div>
 
-</div>
-</div>
-</div>
+<ng-template #loading>
+  Loading...
+</ng-template>

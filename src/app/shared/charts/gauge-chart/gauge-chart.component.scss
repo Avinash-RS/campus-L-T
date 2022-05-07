@@ -1,3 +1,4 @@
+@import '../../../themes/themes.scss';
 .vertical-wrapper {
   display: block;
   box-sizing: border-box;
@@ -79,3 +80,38 @@
     width: 100% !important;
   }
 }
+
+.gauge-center-text {
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  @include mobile {
+    font-size: 3px;
+  }
+  @include sm {
+    font-size: 10px;
+  }
+
+  @include md {
+    font-size: 12px;
+  }
+
+  @include lg {
+    font-size: 14px;
+  }
+
+  @include xl {
+    font-size: 14px;
+  }
+  .fontLarge {
+    font-size: 3em;
+  }
+}
+
+// :host ::ng-deep .gauge {
+//   >text {
+//     font-size: 1px !important;
+//   }
+// }
