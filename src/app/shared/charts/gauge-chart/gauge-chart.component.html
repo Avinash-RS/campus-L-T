@@ -1,0 +1,49 @@
+<div class="vertical-wrapper">
+  <div *ngIf="chartOptions?.headingTitle" class="heading-title"><span>{{chartOptions?.headingTitle}}</span></div>
+  <ng-container *ngIf="!this.chartOptions?.loadingFailed else loadingFailed">
+    <ng-container *ngIf="chartOptions?.chartData else loading">
+    <div class="card-content-wrapper">
+      <div class="gauge-chart">
+        <ngx-charts-gauge
+          [view]="widthHeight"
+          [scheme]="colorScheme"
+          [results]="chartData"
+          [animations]="animations"
+          [legend]="legend"
+          [legendTitle]="legendTitle"
+          [legendPosition]="legendPosition"
+          [showText]="showText"
+          [min]="min"
+          [max]="max"
+          [showAxis]="showAxis"
+          [bigSegments]="bigSegments"
+          [smallSegments]="smallSegments"
+          [tooltipDisabled]="tooltipDisabled"
+          (select)="onSelect($event)">
+          <ng-template #tooltipTemplate let-model="model">
+            <div class="pt-1">{{model.name}}</div>
+            <div class="pt-0 pb-1">{{model.value}}</div>
+        </ng-template>
+        </ngx-charts-gauge>
+        <div class="gauge-center-text">
+          <span class="fontLarge">{{chartOptions?.total}}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+</div>
+
+<ng-template #loading>
+  <div class="mt-3 p-2" *ngIf="!chartOptions?.chartData">
+    <ngx-skeleton-loader style="flex-grow: 1;" count="8" [theme]="{
+      height: '30px',
+      padding: '8px'
+    }" appearance="line" animation="progress"></ngx-skeleton-loader>
+  </div>
+</ng-template>
+<ng-template #loadingFailed>
+  <div class="oops">
+    Oops, Something went wrong. Please try again later.
+  </div>
+</ng-template>

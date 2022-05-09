@@ -1,0 +1,60 @@
+<div class="vertical-wrapper">
+  <div *ngIf="this.chartOptions?.headingTitle" class="heading-title"><span>{{this.chartOptions?.headingTitle}}</span></div>
+  <div class="card-content-wrapper">
+  <ng-container *ngIf="!this.chartOptions?.loadingFailed else loadingFailed">
+
+    <ng-container *ngIf="this.chartOptions?.multipleDataSet else loading">
+      <div class="horizontal-chart">
+        <div *ngIf="chartjsChartOptions?.headingSubTitle" class="headingTitleSub"> <span>Assigned to Panel - </span> <span>{{chartjsChartOptions?.headingSubTitle}}</span>
+        </div>
+
+        <div class="chart-wrapper" *ngIf="this.chartjsChartOptions?.headingSubTitle">
+          <canvas baseChart
+          [datasets]="chartjsChartOptions?.barChartData"
+          [labels]="chartjsChartOptions?.ChartLabels"
+          [options]="chartjsChartOptions?.chartOptions"
+          [plugins]="chartjsChartOptions?.barChartPlugins"
+          [chartType]="chartjsChartOptions?.barChartType">
+          </canvas>
+        </div>
+
+        <div class="legend-wrapper">
+          <div class="legend">
+            <div class="value"> <span class="background green"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.selected}}</span> </div>
+            <div class="label">Selected</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background lgreen"></span> <span class="pl-2 val">{{chartLegendData?.appeared?.not_selected}}</span> </div>
+            <div class="label">Not Selected</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background blue"></span> <span class="pl-2 val">{{chartLegendData?.not_appeared?.request_for_reschedule}}</span> </div>
+            <div class="label">Request for Reschedule</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background lblue"></span> <span class="pl-2 val">{{chartLegendData?.not_appeared?.no_show}}</span> </div>
+            <div class="label">No Show</div>
+          </div>
+          <div class="legend">
+            <div class="value"> <span class="background feedback"></span> <span class="pl-2 val">{{chartLegendData?.awaiting_feedback}}</span> </div>
+            <div class="label">Awaiting Feedback</div>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loading>
+  <ngx-skeleton-loader style="flex-grow: 1;" count="8" [theme]="{
+    height: '30px',
+    padding: '8px'
+  }" appearance="line" animation="progress"></ngx-skeleton-loader>
+</ng-template>
+<ng-template #loadingFailed>
+  <div class="oops">
+    Oops, Something went wrong. Please try again later.
+  </div>
+</ng-template>

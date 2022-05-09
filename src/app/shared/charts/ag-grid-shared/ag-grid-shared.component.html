@@ -1,0 +1,45 @@
+<div class="dashboard-ag-wrapper">
+<div *ngIf="agGridValueObj?.headingTitle" class="heading-title"><span>{{agGridValueObj?.headingTitle}}</span></div>
+<div class="card-content-wrapper">
+
+<ng-container *ngIf="!this.agGridValueObj?.loadingFailed else loadingFailed">
+
+<div *ngIf="this.agGridValueObj?.rowData else loading" class="ag-wrapper">
+<ag-grid-angular style="width: 100%; height: 100%; margin:auto !important;" class="ag-grid ag-theme-alpine"
+[rowData]="rowData"
+[columnDefs]="columnDefs"
+[defaultColDef]="defaultColDef"
+[maintainColumnOrder]="true"
+[pagination]="true"
+[suppressRowClickSelection]="true"
+[paginationPageSize]="paginationPageSize"
+[rowSelection]="'multiple'"
+[cacheBlockSize]="cacheBlockSize"
+(gridReady)="onGridReady($event)"
+(sortChanged)="sortevent($event)"
+[enableCharts]="true"
+[enableRangeSelection]="true"
+(filterModified)="getModel($event)"
+(cellClicked)="onCellClicked($event)"
+(paginationChanged)="paginationChanged($event)"
+headerHeight="40"
+[animateRows]="true">
+</ag-grid-angular>
+</div>
+</ng-container>
+
+<ng-template #loading>
+  <ngx-skeleton-loader style="flex-grow: 1;" count="8" [theme]="{
+    height: '30px',
+    padding: '8px'
+  }" appearance="line" animation="progress"></ngx-skeleton-loader>
+
+</ng-template>
+
+</div>
+</div>
+<ng-template #loadingFailed>
+  <div class="oops">
+    Oops, Something went wrong. Please try again later.
+  </div>
+</ng-template>

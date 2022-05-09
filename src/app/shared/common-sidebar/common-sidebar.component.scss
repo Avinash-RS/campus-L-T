@@ -382,17 +382,30 @@ mat-drawer ul li span img {
   min-height: calc(100% - 30px);
   position: relative;
   width: 100%;
-  padding: 0 6px;
+  padding: 0 10px;
   box-sizing: border-box;
+  @media (min-width: 100px) and (max-width: 480px) {
+    padding: 0 4px;
+  }
 }
 .drive-wrapper {
   padding-bottom: 10px;
   padding-right: 10px;
+// mobile
+  @media (min-width: 100px) and (max-width: 480px) {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center !important;
+  }
   .drive {
     display: flex;
-    min-width: 311px;
+    min-width: 250px;
     align-items: center;
     max-width: 100%;
+    @media (min-width: 100px) and (max-width: 480px) {
+      flex-direction: column;
+    }
   }
   label {
     color: #565656;
@@ -418,7 +431,7 @@ mat-drawer ul li span img {
 }
 .select {
     display: flex;
-    min-width: 300px;
+    min-width: 250px;
     align-items: center;
     padding: 0px !important;
     border: none !important;

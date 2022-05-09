@@ -1,0 +1,33 @@
+<div class="vertical-wrapper">
+  <div *ngIf="this.chartOptions?.headingTitle" class="heading-title">
+    <span>{{ this.chartOptions?.headingTitle }}</span>
+  </div>
+  <div class="card-content-wrapper">
+    <ng-container *ngIf="!this.chartOptions?.loadingFailed else loadingFailed">
+    <ng-container *ngIf="this.chartOptions?.data else loading">
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          [datasets]="chartjsChartOptions?.barChartData"
+          [labels]="chartjsChartOptions?.ChartLabels"
+          [options]="chartjsChartOptions?.chartOptions"
+          [plugins]="chartjsChartOptions?.barChartPlugins"
+          [chartType]="chartjsChartOptions?.barChartType"
+        >
+        </canvas>
+      </div>
+    </ng-container>
+    </ng-container>
+  </div>
+</div>
+<ng-template #loading>
+  <ngx-skeleton-loader style="flex-grow: 1;" count="8" [theme]="{
+    height: '30px',
+    padding: '8px'
+  }" appearance="line" animation="progress"></ngx-skeleton-loader>
+</ng-template>
+<ng-template #loadingFailed>
+  <div class="oops">
+    Oops, Something went wrong. Please try again later.
+  </div>
+</ng-template>

@@ -37,11 +37,20 @@ import { AdaniJoinInterviewComponent } from '../candidate-dashboard/adani-module
 import { AdaniSharedKycProfileViewComponent } from './adani-shared-kyc-profile-view/adani-shared-kyc-profile-view.component';
 import { GeneralJoinInterviewComponent } from '../candidate-dashboard/general-module/general-join-interview/join-interview.component';
 import { GeneralSharedKycProfileViewComponent } from './general-shared-kyc-profile-view/general-shared-kyc-profile-view.component';
+import { VerticalChartComponent } from './charts/vertical-chart/vertical-chart.component';
+import { PieDoughnutChartComponent } from './charts/pie-doughnut-chart/pie-doughnut-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HorizontalBarChartComponent } from './charts/horizontal-bar-chart/horizontal-bar-chart.component';
+import { ChartsModule } from 'ng2-charts';
+import { FunnelChartComponent } from './charts/funnel-chart/funnel-chart.component';
+import { AgGridSharedComponent } from './charts/ag-grid-shared/ag-grid-shared.component';
+import { GaugeChartComponent } from './charts/gauge-chart/gauge-chart.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent, HorizontalBarChartComponent, FunnelChartComponent, AgGridSharedComponent, GaugeChartComponent
 ],
   imports: [
     CommonModule,
@@ -54,9 +63,11 @@ ModuleRegistry.registerModules(AllModules);
     AgGridModule.withComponents([]),
     PdfViewerModule,
     NgMultiSelectDropDownModule.forRoot(),
-
+    NgxChartsModule,
     // Ant design Modules
-    NzSelectModule
+    NzSelectModule,
+    ChartsModule,
+    NgxSkeletonLoaderModule
   ],
   exports: [
     FormsModule,
@@ -91,7 +102,13 @@ ModuleRegistry.registerModules(AllModules);
     PageNotFoundComponent,
     AdaniSharedKycProfileViewComponent,
     GeneralSharedKycProfileViewComponent,
-    NzSelectModule
+    NzSelectModule,
+    VerticalChartComponent,
+    PieDoughnutChartComponent,
+    HorizontalBarChartComponent,
+    FunnelChartComponent,
+    AgGridSharedComponent,
+    GaugeChartComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

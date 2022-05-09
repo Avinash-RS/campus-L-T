@@ -1,0 +1,23 @@
+<div class="vertical-wrapper">
+  <div *ngIf="headingTitle" class="headingTitle">{{headingTitle}}</div>
+<ngx-charts-pie-chart
+  [view]="widthHeight"
+  [scheme]="colorScheme"
+  [results]="chartData"
+  [animations]="animations"
+  [labels]="labels"
+  [trimLabels]="trimLabels"
+  [maxLabelLength]="maxLabelLength"
+  [legend]="legend"
+  [legendTitle]="legendTitle"
+  [legendPosition]="legendPosition"
+  [explodeSlices]="explodeSlices"
+  [doughnut]="doughnut"
+  [arcWidth]="arcWidth"
+  [gradient]="gradient"
+  [tooltipDisabled]="tooltipDisabled"
+  (onDeactivate)="onDeactivate($event)"
+  (onActivate)="onActivate($event)"
+  (select)="onSelect($event)">
+</ngx-charts-pie-chart>
+</div>

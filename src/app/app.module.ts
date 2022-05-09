@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorsService } from './config/interceptors.service';
 import { ModalBoxComponent } from './shared/modal-box/modal-box.component';
@@ -33,7 +33,8 @@ import { AdaniComponentsAuthGuard } from './guards/canload/candidate_components_
 import { LarsenGuard } from './guards/canload/candidate_components_authguards/larsen.guard';
 import { GeneralProfileGuard } from './guards/canload/candidate_components_authguards/general-profile.guard';
 import { GeneralProfileComponentGuard } from './guards/canload/candidate_components_authguards/general-profile-component.guard';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { DashboardActivateGuard } from './guards/canload/dashboard_activate/dashboard-activate.guard';
 @NgModule({
   declarations: [
     AppComponent
@@ -47,6 +48,7 @@ import { GeneralProfileComponentGuard } from './guards/canload/candidate_compone
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    NgxSkeletonLoaderModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-top-right',
@@ -59,11 +61,12 @@ import { GeneralProfileComponentGuard } from './guards/canload/candidate_compone
   // providers: [],
   entryComponents: [ModalBoxComponent, ShortlistBoxComponent, CommonKycProfileViewComponent, ScreenresolutionBoxComponent],
   providers: [
+    {provide: APP_BASE_HREF, useValue: '/'},
     { provide: NZ_I18N, useValue: en_US },
     NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
-    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard, AdaniGuard, GeneralProfileGuard, GeneralProfileComponentGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
+    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard, AdaniGuard, GeneralProfileGuard, GeneralProfileComponentGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard, DashboardActivateGuard
   ],
   bootstrap: [AppComponent]
 })

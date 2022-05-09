@@ -1,0 +1,71 @@
+<div class="overview-component-wrapper">
+    <mat-card class="overview-card">
+      <div class="header">
+        <div class="header-text">{{driveName}}</div>
+      </div>
+        <mat-card-content class="content-wrapper">
+          <mat-card class="single-card">
+            <div class="icon">
+              <img src="assets/Yet_to_Insert_in_icomoon/Institutes_icon.svg" alt="" srcset="">
+            </div>
+            <div class="content">
+              <div *ngIf="headerSummary?.no_of_institutions else loading">{{headerSummary?.no_of_institutions | number}}</div>
+              <div>Number of Institutions</div>
+            </div>
+          </mat-card>
+
+          <mat-card class="single-card">
+            <div class="icon">
+              <img src="assets/Yet_to_Insert_in_icomoon/Profile_icon.svg" alt="" srcset="">
+            </div>
+            <div class="content">
+              <div *ngIf="headerSummary?.no_of_profiles else loading">{{headerSummary?.no_of_profiles | number}}</div>
+              <div>Number of Profiles</div>
+            </div>
+          </mat-card>
+
+          <mat-card class="single-card">
+            <div class="icon">
+              <img src="assets/Yet_to_Insert_in_icomoon/Discipline_icon.svg" alt="" srcset="">
+            </div>
+            <div class="content">
+              <div *ngIf="headerSummary?.no_of_disciplines else loading">{{headerSummary?.no_of_disciplines | number}}</div>
+              <div>Number of Disciplines</div>
+            </div>
+          </mat-card>
+
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="application-info">
+      <div class="header">
+        <div class="header-text">Application Information</div>
+      </div>
+      <div class="content-wrapper">
+        <div>
+          <app-funnel-chart [chartOptions]="funnelChartOptions"></app-funnel-chart>
+        </div>
+        <div>
+          <app-ag-grid-shared [agGridValueObj]="tpoBasedAgGridValues"></app-ag-grid-shared>
+        </div>
+        <div class="full-width">
+          <app-ag-grid-shared [agGridValueObj]="domainBasedAgGridValues"></app-ag-grid-shared>
+        </div>
+        <div>
+          <app-horizontal-bar-chart [chartOptions]="horizontalChartOptions" [chartLegendData]="InterviewSummaryhorizontalChartAPIData"></app-horizontal-bar-chart>
+        </div>
+        <div>
+          <app-gauge-chart [chartOptions]="gaugeChartOptions"></app-gauge-chart>
+        </div>
+        <div class="full-width">
+          <app-vertical-chart [chartOptions]="verticalComboChartOptions"></app-vertical-chart>
+        </div>
+      </div>
+    </mat-card>
+</div>
+
+<ng-template #loading>
+  <ngx-skeleton-loader count="1" appearance="line" animation="progress" [theme]="{
+    width: '150px',
+    margin: '0'}"></ngx-skeleton-loader>
+</ng-template>
