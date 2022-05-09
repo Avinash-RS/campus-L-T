@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { hrDashboardDriveSummaryConfig } from 'src/app/shared/charts/utils';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { finalize } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 export interface status_count {
   total_application: number | 0,
@@ -64,7 +65,7 @@ export interface BUSummary {
   templateUrl: './dashboard-overview.component.html',
   styleUrls: ['./dashboard-overview.component.scss']
 })
-export class DashboardOverviewComponent implements OnInit, OnDestroy {
+export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private hrDashboardDriveSummaryConfigInstance: hrDashboardDriveSummaryConfig;
   horizontalChartOptions: any;
@@ -92,9 +93,11 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
   interviewSummaryHeading = 'Interview Summary';
   selectedCandidatesHeading = 'Selected Candidates Summary';
   businessSummaryHeading = 'Business Unit Summary';
+  refreshSubscription: Subscription;
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
+    private sharedService: SharedServiceService
   ) {
     this.hrDashboardDriveSummaryConfigInstance = new hrDashboardDriveSummaryConfig(null);
   }
@@ -105,9 +108,36 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
     this.tpoDashboardCandidatesAPI();
     this.BUDashboardCandidatesAPI();
     this.domainDashboardCandidatesAPI();
+    this.refreshOndriveChangeRXJS();
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.DASHBOARD)) {
+        this.initialInitialization();
+        this.dashboardSummaryAPI();
+        this.tpoDashboardCandidatesAPI();
+        this.BUDashboardCandidatesAPI();
+        this.domainDashboardCandidatesAPI();
+        }
+    });
+  }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 
   initialInitialization() {
+    this.headerSummary = null;
     this.initiateFunnel();
     this.initiateTPOAgGrid();
     this.initiateHorizontalChart();
@@ -404,6 +434,9 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.summaryAPISubscription ? this.summaryAPISubscription.unsubscribe() : '';
     this.tpoBasedCandidatesAPISubscription ? this.tpoBasedCandidatesAPISubscription.unsubscribe() : '';
+    this.domainBasedCandidatesAPISubscription ? this.domainBasedCandidatesAPISubscription.unsubscribe() : '';
+    this.buDashboardAPISubscription ? this.buDashboardAPISubscription.unsubscribe() : '';
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
   }
 
 }

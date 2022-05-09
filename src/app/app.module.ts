@@ -34,6 +34,7 @@ import { LarsenGuard } from './guards/canload/candidate_components_authguards/la
 import { GeneralProfileGuard } from './guards/canload/candidate_components_authguards/general-profile.guard';
 import { GeneralProfileComponentGuard } from './guards/canload/candidate_components_authguards/general-profile-component.guard';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { DashboardActivateGuard } from './guards/canload/dashboard_activate/dashboard-activate.guard';
 @NgModule({
   declarations: [
     AppComponent
@@ -65,7 +66,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     NgxSpinnerService,
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true},
-    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard, AdaniGuard, GeneralProfileGuard, GeneralProfileComponentGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard
+    CandidateCanloadGuard, AdmincanloadGuard, IsLoggedinGuard,LarsenGuard, AdaniGuard, GeneralProfileGuard, GeneralProfileComponentGuard, LarsenComponentsAuthGuard,AdaniComponentsAuthGuard, HrcanloadGuard, TpocanloadGuard, InvpanelGuard, DashboardActivateGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -68,7 +68,8 @@ export class HrMasterComponent implements OnInit {
         icon: 'icon-track_changes',
         hide: false
       },
-  ]
+  ];
+  this.appConfig.getSelectedCustomerCode() == '#LTTS' ? '' : this.hrSideMenu.shift();
 }
 if (this.role == 'ic') {
   this.hrSideMenu = [

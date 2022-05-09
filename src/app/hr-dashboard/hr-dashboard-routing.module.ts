@@ -34,6 +34,7 @@ import { AssignedDetailsComponent } from './evaluation/new-interviewpanel-assign
 import { ScheduleVideoAssessComponent } from './hr-shortlisting/second-level-shortlist/hr-video-assess/schedule-video-assess/schedule-video-assess.component';
 import { RouteEvaluatorAssignForVideoAssessComponent } from './pages/route-evaluator-assign-for-video-assess/route-evaluator-assign-for-video-assess.component';
 import { EvaluatorAssignForVideoAssessComponent } from './pages/evaluator-assign-for-video-assess/evaluator-assign-for-video-assess.component';
+import { DashboardActivateGuard } from '../guards/canload/dashboard_activate/dashboard-activate.guard';
 
 const routes: Routes = [
   {
@@ -45,7 +46,7 @@ const routes: Routes = [
     children: [
       {
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.DASHBOARD}`,
-        component: HrMainDashboardComponent, canActivate: [HrcanloadGuard],
+        component: HrMainDashboardComponent, canActivate: [DashboardActivateGuard, HrcanloadGuard],
         data: {
           breadcrumb: 'Dashboard'
         }
@@ -319,7 +320,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.USER_MANAGEMENT}`,
+        redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.DASHBOARD}`,
         pathMatch: 'full',
 
       }

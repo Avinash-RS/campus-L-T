@@ -29,6 +29,8 @@ export class FunnelChartComponent implements OnInit, OnChanges {
       let options = this.chartOptions?.options;
       this.funnel = new D3Funnel('#funnel');
       this.funnel.draw(data, options);
+    } else {
+      this.funnel ? this.funnel.destroy() : '';
     }
   }
 
