@@ -1,6 +1,8 @@
 <div class="vertical-wrapper">
   <div *ngIf="this.chartOptions?.headingTitle" class="heading-title"><span>{{this.chartOptions?.headingTitle}}</span></div>
   <div class="card-content-wrapper">
+  <ng-container *ngIf="!this.chartOptions?.loadingFailed else loadingFailed">
+
     <ng-container *ngIf="this.chartOptions?.multipleDataSet else loading">
       <div class="horizontal-chart">
         <div *ngIf="chartjsChartOptions?.headingSubTitle" class="headingTitleSub"> <span>Assigned to Panel - </span> <span>{{chartjsChartOptions?.headingSubTitle}}</span>
@@ -41,6 +43,7 @@
 
       </div>
     </ng-container>
+    </ng-container>
   </div>
 </div>
 
@@ -49,4 +52,9 @@
     height: '30px',
     padding: '8px'
   }" appearance="line" animation="progress"></ngx-skeleton-loader>
+</ng-template>
+<ng-template #loadingFailed>
+  <div class="oops">
+    Oops, Something went wrong. Please try again later.
+  </div>
 </ng-template>

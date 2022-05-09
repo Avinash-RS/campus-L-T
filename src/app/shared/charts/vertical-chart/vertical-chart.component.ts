@@ -11,9 +11,9 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 export class VerticalChartComponent implements OnInit, OnChanges {
 
   @Input() chartOptions: any;
-  @Input() chartType: any;
+
   public chartPlugins = [pluginDataLabels];
-  public chartjsChartOptionsObj: ChartOptions;
+  public chartjsChartOptionsObj: any;
   public barChartLabels: Label[];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
@@ -22,64 +22,43 @@ export class VerticalChartComponent implements OnInit, OnChanges {
   public barChartData: ChartDataSets[];
 
   chartjsChartOptions: any;
-  // ngx chart options
-  ngxChartOptions = {
-    chartMode: null,
-    headingTitle: null,
-    chartData: null,
-    widthHeight: null,
-    colorScheme: null,
-    animations: null,
-    legend: null,
-    legendTitle: null,
-    legendPosition: null,
-    xAxis: null,
-    yAxis: null,
-    showGridLines: null,
-    roundDomains: null,
-    showXAxisLabel: null,
-    showYAxisLabel: null,
-    xAxisLabel: null,
-    yAxisLabel: null,
-    trimXAxisTicks: null,
-    trimYAxisTicks: null,
-    rotateXAxisTicks: null,
-    maxXAxisTickLength: null,
-    maxYAxisTickLength: null,
-    showDataLabel: null,
-    noBarWhenZero: null,
-    gradient: null,
-    barPadding: null,
-    tooltipDisabled: null,
-    roundEdges: null,
-    yScale: null
-  }
 
   constructor() {
   }
 
   ngOnInit() {
-    this.ngxChartValueMapping();
-    this.chartJSValueMapping();
   }
 
   ngOnChanges() {
+    this.chartJSValueMapping();
   }
 
   chartJSValueMapping() {
+    let delayed;
     this.chartjsChartOptionsObj = {
       responsive: true,
+      maintainAspectRatio: false,
       hover: {
-        animationDuration: 0
+        animationDuration: 500
       },
       animation: {
-        duration: 1,
+        duration: 1000,
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context) => {
+          let delay = 0;
+          if (context.type === 'data' && context.mode === 'default' && !delayed) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
       },
       tooltips:{
         enabled : true,
         // displayColors: false,
         // backgroundColor: 'white',
-        // mode: 'index',
+        // mode: 'label',
         // titleFontColor: '#c02222',
         // bodyFontColor: '#49ae31',
         // borderColor: '#999',
@@ -87,23 +66,28 @@ export class VerticalChartComponent implements OnInit, OnChanges {
         // footerFontColor:'#eee',
         // footerMarginTop:8,
         // footerSpacing:8,
-        // callbacks: {
-        //   label:function(tooltipItem, data){
-        //     console.log('tooltipItem', tooltipItem, data);
-        //     return ""
-        //   }
-        // }
+        // titleMarginBottom: 7,
+        // bodySpacing: 7,
+        // yAlign: 'center',
       },
       title: {
-        text: this.chartOptions?.headingTitle,
-        display: false,
-        fontSize: 16,
-        fontColor: '#565656'
+        text: this.chartOptions?.chartTitle,
+        display: true,
+        position: 'bottom',
+        fontSize: 14,
+        font: {
+          weight: '500'
+        },
+        fontColor: '#333333'
       },
       legend: {
         display: this.chartOptions?.legend,
-        labels: {
-          fontColor: 'rgb(255, 99, 132)'
+        position: 'bottom',
+        title: {
+          color: '#444444',
+          font: {
+            size: '12'
+          }
         }
       },
       plugins: {
@@ -111,6 +95,9 @@ export class VerticalChartComponent implements OnInit, OnChanges {
           anchor: "end",
           align: "end",
           color: '#565656',
+          display: function(context) {
+            return context?.dataset?.type == 'bar' ? true : false;
+          },
           font: {
             size: 16,
             weight: "bold"
@@ -123,125 +110,69 @@ export class VerticalChartComponent implements OnInit, OnChanges {
       },
       layout:{
         padding: {
-          left: 0,
-          right: 0,
-          top: 20,
+          left: 20,
+          right: 50,
+          top: 30,
           bottom: 0
       }
       },
       scales:{
         xAxes:[{
+          grid: {
+            drawTicks: true
+          },
           offset: true,
           ticks: {
+            padding: 0,
             beginAtZero: false,
             display: true,
         },
           gridLines:{
-            display:false,
+            offsetGridLines: false,
+            display: false,
           },
         }],
         yAxes:[{
-          offset: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Number of Candidates',
+            fontColor: '#333333',
+            fontStyle: 'medium',
+            fontSize: '14'
+          },
+          grid: {
+            drawTicks: false
+          },
+          offset: false,
           ticks: {
             padding: 0,
             beginAtZero: true,
             display: true,
-            // min: 0,
-            // max: 500,
-            // stepSize:100,
-            callback: function(value) {
-              // console.log('value', value);
-              return value + '  '
-            }
+            min: 0,
+            stepSize:50,
           },
           gridLines:{
+            offsetGridLines: false,
             display: true,
-            borderDash: [1, 3],
             color: "#b3b3b3"
           }
         }],
-      },
-      elements:
-      {
-        point:
-        {
-          radius: 1,
-          hitRadius: 5,
-          hoverRadius: 10,
-          hoverBorderWidth: 2
-        }
       }
     }
 
     this.barChartLabels = this.chartOptions?.labels;
-    this.barChartData = [
-      {
-        data: this.chartOptions?.dataSets,
-        backgroundColor: this.chartOptions?.background,
-        hoverBackgroundColor: this.chartOptions?.hoverBackground
-      }
-    ];
+    this.barChartData = this.chartOptions?.data?.dataSets;
 
     this.chartjsChartOptions  = {
       ChartLabels: this.barChartLabels,
       barChartType: this.barChartType,
-      barChartLegend: true,
+      barChartLegend: this.barChartLegend,
       barChartPlugins: this.barChartPlugins,
       barChartData: this.barChartData,
       chartOptions: this.chartjsChartOptionsObj,
-      headingTitle: this.chartOptions?.headingTitle
+      headingTitle: this.chartOptions?.headingTitle,
       }
 
   }
-  ngxChartValueMapping() {
-    this.ngxChartOptions.chartMode = 'chartJs'//this.chartOptions.chartMode;
-    this.ngxChartOptions.headingTitle = this.chartOptions.headingTitle;
-    this.ngxChartOptions.chartData = this.chartOptions.chartData;
-    this.ngxChartOptions.widthHeight = this.chartOptions.widthHeight;
-    this.ngxChartOptions.colorScheme = this.chartOptions.colorScheme;
-    this.ngxChartOptions.animations = this.chartOptions.animations;
-    this.ngxChartOptions.legend = this.chartOptions.legend;
-    this.ngxChartOptions.legendTitle = this.chartOptions.legendTitle;
-    this.ngxChartOptions.legendPosition = this.chartOptions.legendPosition;
-    this.ngxChartOptions.xAxis = this.chartOptions.xAxis;
-    this.ngxChartOptions.yAxis = this.chartOptions.yAxis;
-    this.ngxChartOptions.showGridLines = this.chartOptions.showGridLines;
-    this.ngxChartOptions.roundDomains = this.chartOptions.roundDomains;
-    this.ngxChartOptions.showXAxisLabel = this.chartOptions.showXAxisLabel;
-    this.ngxChartOptions.showYAxisLabel = this.chartOptions.showYAxisLabel;
-    this.ngxChartOptions.xAxisLabel = this.chartOptions.xAxisLabel;
-    this.ngxChartOptions.yAxisLabel = this.chartOptions.yAxisLabel;
-    this.ngxChartOptions.trimXAxisTicks = this.chartOptions.trimXAxisTicks;
-    this.ngxChartOptions.trimYAxisTicks = this.chartOptions.trimYAxisTicks;
-    this.ngxChartOptions.rotateXAxisTicks = this.chartOptions.rotateXAxisTicks;
-    this.ngxChartOptions.maxXAxisTickLength = this.chartOptions.maxXAxisTickLength;
-    this.ngxChartOptions.maxYAxisTickLength = this.chartOptions.maxYAxisTickLength;
-    this.ngxChartOptions.showDataLabel = this.chartOptions.showDataLabel;
-    this.ngxChartOptions.noBarWhenZero = this.chartOptions.noBarWhenZero;
-    this.ngxChartOptions.gradient = this.chartOptions.gradient;
-    this.ngxChartOptions.barPadding = this.chartOptions.barPadding;
-    this.ngxChartOptions.tooltipDisabled = this.chartOptions.tooltipDisabled;
-    this.ngxChartOptions.roundEdges = this.chartOptions.roundEdges;
-    this.ngxChartOptions.yScale = this.chartOptions.yScaleTickValue;
-  }
-
-  onSelect(event) {
-    console.log(event);
-  }
-
-  barCustomColors() {
-    let result = [];
-    result.push({'name': 'Inprogress', value: '#eee'});
-    return result;
-  }
-
-  // events
-  // public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-  //   console.log(event, active);
-  // }
-
-  // public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-  //   console.log(event, active);
-  // }
 
 }

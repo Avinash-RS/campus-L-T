@@ -109,11 +109,11 @@ export class hrDashboardDriveSummaryConfig {
   domainBasedSummaryColumns() {
     return [
       {
-        headerName: 'Domain', field: 'domain', colId: 'idomain',
+        headerName: 'Domain', field: 'discipline', colId: 'idiscipline',
         filter: "agTextColumnFilter",
         minWidth: 140,
         sortable: true,
-        tooltipField: 'domain',
+        tooltipField: 'discipline',
         // comparator: this.customComparator,
         getQuickFilterText: (params) => {
           return params.value;
@@ -141,27 +141,27 @@ export class hrDashboardDriveSummaryConfig {
         }
       },
       {
-        headerName: 'Shortlisted for Interview', field: 'shortlisted_for_interview', colId: 'ishortlisted_for_interview',
+        headerName: 'Shortlisted for Interview', field: 'candidates_shortlisted_for_interview', colId: 'icandidates_shortlisted_for_interview',
         filter: 'agNumberColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
         minWidth: 100,
         sortable: true,
-        tooltipField: 'shortlisted_for_interview',
+        tooltipField: 'candidates_shortlisted_for_interview',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Assigned to Panel', field: 'assigned_panel', colId: 'iassigned_panel',
+        headerName: 'Assigned to Panel', field: 'assigned_to_panel', colId: 'iassigned_to_panel',
         filter: 'agNumberColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
         minWidth: 100,
         sortable: true,
-        tooltipField: 'assigned_panel',
+        tooltipField: 'assigned_to_panel',
         getQuickFilterText: (params) => {
           return params.value;
         }

@@ -24,7 +24,6 @@ export class FunnelChartComponent implements OnInit, OnChanges {
   }
 
   drawFunnelChart(): void {
-    console.log('this.chartOptions?.data', this.chartOptions?.data);
     if (this.chartOptions?.data) {
       let data = this.chartOptions?.data;
       let options = this.chartOptions?.options;

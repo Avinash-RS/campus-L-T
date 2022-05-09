@@ -1,6 +1,7 @@
 <div class="vertical-wrapper">
   <div *ngIf="chartOptions?.headingTitle" class="heading-title"><span>{{chartOptions?.headingTitle}}</span></div>
-  <ng-container *ngIf="chartOptions?.chartData else loading">
+  <ng-container *ngIf="!this.chartOptions?.loadingFailed else loadingFailed">
+    <ng-container *ngIf="chartOptions?.chartData else loading">
     <div class="card-content-wrapper">
       <div class="gauge-chart">
         <ngx-charts-gauge
@@ -30,6 +31,7 @@
       </div>
     </div>
   </ng-container>
+</ng-container>
 </div>
 
 <ng-template #loading>
@@ -38,5 +40,10 @@
       height: '30px',
       padding: '8px'
     }" appearance="line" animation="progress"></ngx-skeleton-loader>
+  </div>
+</ng-template>
+<ng-template #loadingFailed>
+  <div class="oops">
+    Oops, Something went wrong. Please try again later.
   </div>
 </ng-template>

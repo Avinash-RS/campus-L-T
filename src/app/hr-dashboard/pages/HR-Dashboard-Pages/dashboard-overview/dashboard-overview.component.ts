@@ -52,6 +52,13 @@ export interface tpoBased {
   profile_submitted: number | 0
 }
 
+export interface BUSummary {
+  total: number | 0,
+  company_name: string,
+  accepted: number | 0,
+  declined: number | 0
+}
+
 @Component({
   selector: 'app-dashboard-overview',
   templateUrl: './dashboard-overview.component.html',
@@ -65,6 +72,7 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
   gaugeChartOptions: any;
   tpoBasedAgGridValues: any;
   domainBasedAgGridValues: any;
+  verticalComboChartOptions: any;
   summaryAPISubscription: Subscription;
   summaryAPIData: any;
   headerSummary: any;
@@ -74,11 +82,16 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
   SelectedCandidatesSummarygaugeChartAPIData: sc_summary;
   tpoBasedAPIData: tpoBased[];
   tpoBasedCandidatesAPISubscription: Subscription;
-  funnelLoadingCompleted = false;
-  tpoLoadingCompleted = false;
-  horizontalChartLoadingCompleted = false;
-  gaugeLoadingCompleted = false;
-  funnelLoading = false;
+  BUSummaryAPIData: BUSummary[];
+  disciplineBasedAPIData: any;
+  domainBasedCandidatesAPISubscription: Subscription;
+  buDashboardAPISubscription: Subscription;
+  funnelHeading = 'Drive Summary';
+  TPOHeading = 'TPO based Candidates';
+  domainHeading = 'Domain wise Candidates';
+  interviewSummaryHeading = 'Interview Summary';
+  selectedCandidatesHeading = 'Selected Candidates Summary';
+  businessSummaryHeading = 'Business Unit Summary';
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
@@ -90,7 +103,8 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
     this.initialInitialization();
     this.dashboardSummaryAPI();
     this.tpoDashboardCandidatesAPI();
-    this.DomainBasedCandidatesAgGrid();
+    this.BUDashboardCandidatesAPI();
+    this.domainDashboardCandidatesAPI();
   }
 
   initialInitialization() {
@@ -98,6 +112,8 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
     this.initiateTPOAgGrid();
     this.initiateHorizontalChart();
     this.initiateGaugeChart();
+    this.initiateVerticalComboChart();
+    this.initiateDomainWiseAgGrid();
   }
 
   dashboardSummaryAPI() {
@@ -106,8 +122,17 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
       this.headerSummary = this.summaryAPIData?.headers_count ? this.summaryAPIData?.headers_count : null;
       this.valueMapping(this.summaryAPIData);
     }, (err)=> {
-
+      this.valueMapping(null);
     });
+  }
+
+  valueMapping(summaryData) {
+    this.StatusSummaryFunnalAPIData = summaryData?.status_count;
+    this.StatusSummaryFunnalAPIData ? this.funnelChartInit() : this.initiateFunnel(true);
+    this.InterviewSummaryhorizontalChartAPIData = summaryData?.interview_summary;
+    this.InterviewSummaryhorizontalChartAPIData ? this.horizontalChartInit() : this.initiateHorizontalChart(true);
+    this.SelectedCandidatesSummarygaugeChartAPIData = summaryData?.sc_summary;
+    this.SelectedCandidatesSummarygaugeChartAPIData ? this.gaugeChartInit() : this.initiateGaugeChart(true);
   }
 
   tpoDashboardCandidatesAPI() {
@@ -115,40 +140,83 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
       this.tpoBasedAPIData = response ? response : [];
       this.TPOBasedCandidatesAgGrid();
     }, (err)=> {
-
+      this.initiateTPOAgGrid(true);
     });
   }
 
-  valueMapping(summaryData) {
-      this.StatusSummaryFunnalAPIData = summaryData?.status_count;
-      this.funnelChartInit();
-      this.InterviewSummaryhorizontalChartAPIData = summaryData?.interview_summary;
-      this.horizontalChartInit();
-      this.SelectedCandidatesSummarygaugeChartAPIData = summaryData?.sc_summary;
-      this.gaugeChartInit();
+  domainDashboardCandidatesAPI() {
+    this.domainBasedCandidatesAPISubscription = this.adminService.getDisciplineDashboardSummaryAPI().subscribe((response: any)=> {
+      this.disciplineBasedAPIData = response ? response : [];
+      this.disciplineBasedAPIData[0].assigned_to_panel = 1000;
+      this.DomainBasedCandidatesAgGrid();
+    }, (err)=> {
+      this.initiateDomainWiseAgGrid(true);
+    });
   }
 
-  initiateFunnel() {
+  BUDashboardCandidatesAPI() {
+    this.buDashboardAPISubscription = this.adminService.getBUunitSummaryAPI().subscribe((response: any)=> {
+      this.BUSummaryAPIData = response ? response : [];
+      let BUData = {
+        labels: [],
+        assigned: [],
+        accepted: [],
+        rejected: []
+      }
+      this.BUSummaryAPIData.forEach((element, i) => {
+        let obj:BUSummary = element;
+        if (element) {
+          BUData.labels.push(obj.company_name);
+          BUData.assigned.push(obj.total);
+          BUData.accepted.push(obj.accepted);
+          BUData.rejected.push(obj.declined);
+        }
+      });
+      this.verticalComboChartInit(BUData);
+    }, (err)=> {
+      this.initiateVerticalComboChart(true);
+    });
+  }
+
+  initiateFunnel(loadingFailed?:Boolean) {
     this.funnelChartOptions = {
-      headingTitle: 'Drive Summary'
+      headingTitle: this.funnelHeading,
+      loadingFailed: loadingFailed
     }
   }
 
-  initiateTPOAgGrid() {
+  initiateTPOAgGrid(loadingFailed?:Boolean) {
     this.tpoBasedAgGridValues = {
-      headingTitle: 'TPO based Candidates'
+      headingTitle: this.TPOHeading,
+      loadingFailed: loadingFailed
     }
   }
 
-  initiateHorizontalChart() {
+  initiateDomainWiseAgGrid(loadingFailed?:Boolean) {
+    this.domainBasedAgGridValues = {
+      headingTitle: this.domainHeading,
+      loadingFailed: loadingFailed
+    }
+  }
+
+  initiateHorizontalChart(loadingFailed?:Boolean) {
     this.horizontalChartOptions = {
-      headingTitle: 'Interview Summary'
+      headingTitle: this.interviewSummaryHeading,
+      loadingFailed: loadingFailed
     }
   }
 
-  initiateGaugeChart() {
+  initiateGaugeChart(loadingFailed?:Boolean) {
     this.gaugeChartOptions = {
-      headingTitle: 'Interview Summary'
+      headingTitle: this.selectedCandidatesHeading,
+      loadingFailed: loadingFailed
+    }
+  }
+
+  initiateVerticalComboChart(loadingFailed?:Boolean) {
+    this.verticalComboChartOptions = {
+      headingTitle: this.businessSummaryHeading,
+      loadingFailed: loadingFailed
     }
   }
 
@@ -165,7 +233,7 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
         {label: 'Candidate Selected', value: this.StatusSummaryFunnalAPIData?.candidate_selected, backgroundColor: '#CC8F8F', labelColor: 'fff'},
         {label: 'Business Unit Assigned', value: this.StatusSummaryFunnalAPIData?.interview_completed, backgroundColor: '#88D376', labelColor: 'fff'}
       ],
-      headingTitle: 'Drive Summary',
+      headingTitle: this.funnelHeading,
       options: {
         chart: {
           height: 380,
@@ -197,28 +265,28 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
 
   gaugeChartInit() {
     this.gaugeChartOptions = {
-      headingTitle: 'Selected Candidates Summary',
-      total: this.SelectedCandidatesSummarygaugeChartAPIData.total,
+      headingTitle: this.selectedCandidatesHeading,
+      total: this.SelectedCandidatesSummarygaugeChartAPIData?.total,
       chartData: [
         {
-          "name": `Mailed (${this.SelectedCandidatesSummarygaugeChartAPIData.mailed})`,
-          "value": this.SelectedCandidatesSummarygaugeChartAPIData.mailed
+          "name": `Mailed (${this.SelectedCandidatesSummarygaugeChartAPIData?.mailed})`,
+          "value": this.SelectedCandidatesSummarygaugeChartAPIData?.mailed
         },
         {
-          "name": `JF Submitted (${this.SelectedCandidatesSummarygaugeChartAPIData.jf_submitted})`,
-          "value": this.SelectedCandidatesSummarygaugeChartAPIData.jf_submitted
+          "name": `JF Submitted (${this.SelectedCandidatesSummarygaugeChartAPIData?.jf_submitted})`,
+          "value": this.SelectedCandidatesSummarygaugeChartAPIData?.jf_submitted
         },
         {
-          "name": `Verified (${this.SelectedCandidatesSummarygaugeChartAPIData.verified})`,
-          "value": this.SelectedCandidatesSummarygaugeChartAPIData.verified
+          "name": `Verified (${this.SelectedCandidatesSummarygaugeChartAPIData?.verified})`,
+          "value": this.SelectedCandidatesSummarygaugeChartAPIData?.verified
         },
         {
-          "name": `Business Unit Assigned (${this.SelectedCandidatesSummarygaugeChartAPIData.ic_assigned})`,
-          "value": this.SelectedCandidatesSummarygaugeChartAPIData.ic_assigned
+          "name": `Business Unit Assigned (${this.SelectedCandidatesSummarygaugeChartAPIData?.ic_assigned})`,
+          "value": this.SelectedCandidatesSummarygaugeChartAPIData?.ic_assigned
         },
         {
-          "name": `Pre Employment Medical Checkup (${this.SelectedCandidatesSummarygaugeChartAPIData.pemc})`,
-          "value": this.SelectedCandidatesSummarygaugeChartAPIData.pemc
+          "name": `Pre Employment Medical Checkup (${this.SelectedCandidatesSummarygaugeChartAPIData?.pemc})`,
+          "value": this.SelectedCandidatesSummarygaugeChartAPIData?.pemc
         }
       ],
       widthHeight: undefined,//[490, 400],
@@ -230,7 +298,7 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
       legendPosition: 'below',
       showText: false,
       min: 0,
-      max: this.SelectedCandidatesSummarygaugeChartAPIData.total > 10 ? this.SelectedCandidatesSummarygaugeChartAPIData.total : 10,
+      max: this.SelectedCandidatesSummarygaugeChartAPIData?.total > 10 ? this.SelectedCandidatesSummarygaugeChartAPIData?.total : 10,
       bigSegments: 10,
       smallSegments: 0,
       showAxis: true,
@@ -242,7 +310,7 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
     let columnDefs = this.hrDashboardDriveSummaryConfigInstance.tpoBasedSummaryColumns();
     this.tpoBasedAgGridValues =
     {
-      headingTitle: 'TPO based Candidates',
+      headingTitle: this.TPOHeading,
       columnDefs: columnDefs,
       paginationPageSize: 500,
       cacheBlockSize: 500,
@@ -254,18 +322,18 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
   DomainBasedCandidatesAgGrid() {
     let columnDefs = this.hrDashboardDriveSummaryConfigInstance.domainBasedSummaryColumns();
     this.domainBasedAgGridValues = {
-      headingTitle: 'Domain wise Candidates',
+      headingTitle: this.domainHeading,
       columnDefs: columnDefs,
       paginationPageSize: 500,
       cacheBlockSize: 500,
       quickSearchValue: '',
-      rowData: []
+      rowData: this.disciplineBasedAPIData
     }
   }
 
   horizontalChartInit() {
       this.horizontalChartOptions = {
-        headingTitle: 'Interview Summary',
+        headingTitle: this.interviewSummaryHeading,
         headingSubTitle: this.InterviewSummaryhorizontalChartAPIData?.total,
         widthHeight: undefined,
         labels: ['Appeared for Interview', 'Not Appeared for Interview', 'Awaiting Feedback'],
@@ -285,6 +353,53 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
       };
   }
 
+  verticalComboChartInit(responseData) {
+    this.verticalComboChartOptions = {
+      headingTitle: this.businessSummaryHeading,
+      chartTitle: 'Company List',
+      widthHeight: [400, 300],
+      labels: responseData.labels,
+      data: {
+          dataSets: [
+            {
+              label: 'Assigned',
+              barThickness: 30,
+              data: responseData.assigned,
+              borderColor:'#23A4C9',
+              backgroundColor:'#23A4C9',
+              hoverBackgroundColor: '#23A4C9',
+              type: 'bar',
+              order: 2
+            },
+            {
+              label: 'Accepted',
+              barThickness: 30,
+              data: responseData.accepted,
+              borderColor:'#33A02B',
+              backgroundColor:'#33A02B',
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: '#33A02B',
+              fill: false,
+              type: 'line',
+              order: 0
+            },
+            {
+              label: 'Rejected',
+              barThickness: 30,
+              data: responseData.rejected,
+              borderColor: '#BD2020',
+              backgroundColor: '#BD2020',
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: '#BD2020',
+              fill: false,
+              type: 'line',
+              order: 1
+            }
+          ],
+      },
+      legend: true,
+    };
+  }
 
   ngOnDestroy() {
     this.summaryAPISubscription ? this.summaryAPISubscription.unsubscribe() : '';

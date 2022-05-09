@@ -36,14 +36,25 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges {
   }
 
   chartJSValueMapping() {
+    let delayed;
     this.chartjsChartOptionsObj = {
       responsive: true,
       maintainAspectRatio: false,
       hover: {
-        animationDuration: 0
+        animationDuration: 500
       },
       animation: {
-        duration: 1,
+        duration: 1000,
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context) => {
+          let delay = 0;
+          if (context.type === 'data' && context.mode === 'default' && !delayed) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
       },
       tooltips:{
         enabled : true,
@@ -69,7 +80,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges {
               if (tooltipItem.datasetIndex == 0) {
                 return 'Selected: ' + tooltipItem.value;
               } else {
-                return 'Rejected: ' + tooltipItem.value;
+                return 'Not Selected: ' + tooltipItem.value;
               }
             }
             if (tooltipItem.index == 1) {
@@ -132,7 +143,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges {
       layout:{
         padding: {
           left: 0,
-          right: 100,
+          right: 50,
           top: 20,
           bottom: 0
       }
