@@ -261,7 +261,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDest
         {label: 'Assigned to Panel', value: this.StatusSummaryFunnalAPIData?.assigned_to_panel, backgroundColor: '#778860', labelColor: 'fff'},
         {label: 'Interview Completed', value: this.StatusSummaryFunnalAPIData?.interview_completed, backgroundColor: '#8CA6CE', labelColor: 'fff'},
         {label: 'Candidate Selected', value: this.StatusSummaryFunnalAPIData?.candidate_selected, backgroundColor: '#CC8F8F', labelColor: 'fff'},
-        {label: 'Business Unit Assigned', value: this.StatusSummaryFunnalAPIData?.interview_completed, backgroundColor: '#88D376', labelColor: 'fff'}
+        {label: 'Business Unit Assigned', value: this.StatusSummaryFunnalAPIData?.business_unit_assigned, backgroundColor: '#88D376', labelColor: 'fff'}
       ],
       headingTitle: this.funnelHeading,
       options: {
