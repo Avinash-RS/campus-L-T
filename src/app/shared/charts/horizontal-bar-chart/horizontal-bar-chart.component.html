@@ -5,10 +5,10 @@
 
     <ng-container *ngIf="this.chartOptions?.multipleDataSet else loading">
       <div class="horizontal-chart">
-        <div *ngIf="chartjsChartOptions?.headingSubTitle" class="headingTitleSub"> <span>Assigned to Panel - </span> <span>{{chartjsChartOptions?.headingSubTitle}}</span>
+        <div class="headingTitleSub"> <span>Assigned to Panel - </span> <span>{{chartjsChartOptions?.headingSubTitle ? chartjsChartOptions?.headingSubTitle : 0}}</span>
         </div>
 
-        <div class="chart-wrapper" *ngIf="this.chartjsChartOptions?.headingSubTitle">
+        <div class="chart-wrapper">
           <canvas baseChart
           [datasets]="chartjsChartOptions?.barChartData"
           [labels]="chartjsChartOptions?.ChartLabels"
