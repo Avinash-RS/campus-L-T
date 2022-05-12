@@ -118,6 +118,10 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDest
       }))
       .subscribe((data: any)=> {
       if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.DASHBOARD)) {
+        this.summaryAPISubscription ? this.summaryAPISubscription.unsubscribe() : '';
+        this.tpoBasedCandidatesAPISubscription ? this.tpoBasedCandidatesAPISubscription.unsubscribe() : '';
+        this.domainBasedCandidatesAPISubscription ? this.domainBasedCandidatesAPISubscription.unsubscribe() : '';
+        this.buDashboardAPISubscription ? this.buDashboardAPISubscription.unsubscribe() : '';
         this.initialInitialization();
         this.dashboardSummaryAPI();
         this.tpoDashboardCandidatesAPI();
