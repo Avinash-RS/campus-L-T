@@ -157,7 +157,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges {
           stacked: true,
           ticks: {
             padding: 0,
-            beginAtZero: false,
+            beginAtZero: true,
             display: true,
         },
           gridLines:{
