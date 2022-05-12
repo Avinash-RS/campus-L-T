@@ -9,7 +9,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Institutes_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div *ngIf="headerSummary?.no_of_institutions else loading">{{headerSummary?.no_of_institutions | number}}</div>
+              <div *ngIf="(headerSummary?.no_of_institutions || headerSummary?.no_of_institutions == 0)  else loading">{{headerSummary?.no_of_institutions | number}}</div>
               <div>Number of Institutions</div>
             </div>
           </mat-card>
@@ -19,7 +19,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Profile_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div *ngIf="headerSummary?.no_of_profiles else loading">{{headerSummary?.no_of_profiles | number}}</div>
+              <div *ngIf="(headerSummary?.no_of_profiles || headerSummary?.no_of_profiles == 0) else loading">{{headerSummary?.no_of_profiles | number}}</div>
               <div>Number of Profiles</div>
             </div>
           </mat-card>
@@ -29,7 +29,7 @@
               <img src="assets/Yet_to_Insert_in_icomoon/Discipline_icon.svg" alt="" srcset="">
             </div>
             <div class="content">
-              <div *ngIf="headerSummary?.no_of_disciplines else loading">{{headerSummary?.no_of_disciplines | number}}</div>
+              <div *ngIf="(headerSummary?.no_of_disciplines || headerSummary?.no_of_disciplines == 0) else loading">{{headerSummary?.no_of_disciplines | number}}</div>
               <div>Number of Disciplines</div>
             </div>
           </mat-card>
