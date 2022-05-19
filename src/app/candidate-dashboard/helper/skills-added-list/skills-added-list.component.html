@@ -1,5 +1,10 @@
 <div *ngIf="selectedSkills && selectedSkills.length > 0" class="selected-skills-list-wrapper">
-    <div class="skills" *ngFor="let skill of selectedSkills; let i = index">
-        <span class="value">{{skill.name}}</span> <span (click)="removeSkill(i)" class="icon icon-close_black"></span>
-    </div>
+    <ng-container *ngFor="let skill of selectedSkills; let i = index">
+        <ng-container *ngIf="skill?.saved">
+            <div class="skills">
+                <span class="value">{{ skill.name }}</span>
+                <span (click)="removeSkill(i)" class="icon icon-close_black"></span>
+            </div>
+        </ng-container>
+    </ng-container>
 </div>

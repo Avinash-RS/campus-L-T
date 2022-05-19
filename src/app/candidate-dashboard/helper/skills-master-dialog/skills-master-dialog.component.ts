@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, take, filter, toArray, tap, map, mergeAll } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, take, filter, toArray, tap, map, delay } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-skills-master-dialog',
@@ -11,6 +12,7 @@ import { SharedServiceService } from 'src/app/services/shared-service.service';
   styleUrls: ['./skills-master-dialog.component.scss']
 })
 export class SkillsMasterDialogComponent implements OnInit {
+  unSavedSkills = [];
   skillData = [  
     {  
       "name":"Analytical ability",
@@ -267,8 +269,10 @@ export class SkillsMasterDialogComponent implements OnInit {
   ];
   skillTerm = new FormControl(null);
   skillMasterResult: any[];
+  maxLength = 20;
+  loading: boolean;
   constructor(public dialogRef: MatDialogRef<SkillsMasterDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private sharedService: SharedServiceService) { }
 
   ngOnInit() {
@@ -287,47 +291,77 @@ export class SkillsMasterDialogComponent implements OnInit {
 
   skillMasterApi(term?: any) {
     let skill$ = of(...this.skillData);
+    this.loading = true;
     let skillLimit$ = skill$.pipe(
+      delay(4000),
       filter((data: any, index) => {
         if (term) {
           return data.name.toLowerCase().includes(term.toLowerCase());
         }
-        return index < 20;
+        return index < this.maxLength;
       }),
-      filter((data, index) => index < 20),
+      filter((data, index) => index < this.maxLength),
       toArray(),
       tap(results => {
+        this.loading = false;
         results.sort((a, b)=> {
           return a.name < b.name ? -1 : 1;
         })
       }),
       map((data)=> {
-        console.log('data', data);
         if (data.length < 1) {
+          let isAlreadyExist = this.dialogData.skills.find(item => item.name.toLowerCase() === term.toLowerCase());
+          if (isAlreadyExist) {
+            data.unshift(isAlreadyExist);
+            data.length > this.maxLength ? data.pop() : '';
+            return data;
+          }
           return [{name: term, value: term, newSkill: true}];
         } 
-        // else {
-        //   data.forEach((item)=> {
-
-        //   });
-        // }
+        else {
+          if (term && term.length >= 2) {
+            let isAlreadyExist = data.filter(item => item.name.toLowerCase() === term.toLowerCase());
+            if (isAlreadyExist.length < 1) {
+              data.unshift({name: term, value: term, newSkill: true});
+              data.length > this.maxLength ? data.pop() : '';
+            }
+          }
+          data = _.map(data, (item) => {
+            let index = _.findIndex(this.dialogData.skills, {name: item.name});
+             if (index != -1) {
+               return this.dialogData.skills[index];
+             }
+               return item;
+           });
+        }
         return data;
       }),
     ).subscribe((res) => {
       this.skillMasterResult = res;
+      this.unSavedSkills = this.dialogData.skills;
       console.log('ad', res);
-    })
+    }, (err) => {}, () => skillLimit$ ? skillLimit$.unsubscribe() : '');
   }
 
   selectSkill(skill) {
     skill.checked = skill?.checked == true ? false : true;
+    let unSavedSkillsItemindex = _.findIndex(this.unSavedSkills, {name: skill.name});
+    if (skill.checked) {
+      unSavedSkillsItemindex == -1 ? this.unSavedSkills.push(skill) : '';
+    }
+    unSavedSkillsItemindex >= 0 ? this.unSavedSkills.splice(unSavedSkillsItemindex, 1) : '';
   }
+
   saveSkills() {
-    let savedSkill = this.skillMasterResult.filter((res) => res?.checked);
-    console.log('saved', savedSkill);
-    this.sharedService.selectedSkillsFetch.next(savedSkill);
+    let mappedsavedSkill = this.unSavedSkills.map((data) => {
+      data.saved = true;
+      return data;
+    });
+    console.log('saved', mappedsavedSkill);
+    this.sharedService.selectedSkillsFetch.next(mappedsavedSkill);
     this.dialogRef.close();
   }
+
   close() {
     this.dialogRef.close();
   }

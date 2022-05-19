@@ -804,17 +804,19 @@ addToTrainingArray() {
   }
 
   openSkillsTab() {
-    this.skillsList = this.skillsListchild.selectedSkills;
-    console.log('sdad', this.skillsList);  
     const skillTabDialog = this.matDialog.open(SkillsMasterDialogComponent, {
       panelClass: 'skillsTabMaster',
-      data: {name: 'larsen', skills: this.skillsListchild.selectedSkills},
+      data: {name: 'larsen', skills: this.skillsList ? this.skillsList : []},
       disableClose: true
     });
 
     skillTabDialog.afterClosed().subscribe((res: any)=> {
-      this.skillsList = this.skillsListchild.selectedSkills;
-      console.log('sdad', this.skillsList);  
+      this.skillsList = this.skillsListchild.selectedSkills.map(res => {
+        if (res?.saved) {
+          res.checked = true;
+          return res;
+        }
+      });
     });
   }
 
