@@ -1,0 +1,26 @@
+<div class="skills-master-wrapper">
+    <div class="heading-wrapper">
+        <div class="left-wrapper">
+            <div class="heading">Add Skills</div>
+        </div>
+        <div class="right-wrapper">
+            <div class="heading"><span (click)="close()" class="icon icon-close_black"></span></div>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <div class="input-wrapper">
+            <input placeholder="Type Relevant Skills..." class="search-Input" matInput [formControl]="skillTerm" type="text" name="" id="">
+        </div>
+        <div class="result-wrapper">
+            <div class="title">Select your relevant skills…</div>
+            <div class="results">
+                <div (click)="selectSkill(skills)" class="chips" [ngClass]="{'chip-active': skills?.checked}" *ngFor="let skills of skillMasterResult">
+                    {{skills.name}}
+                </div>
+            </div>
+        </div>
+        <div class="save">
+            <button (click)="saveSkills()" mat-raised-button class="save-btn" type="button">Save</button>
+        </div>
+    </div>
+</div>

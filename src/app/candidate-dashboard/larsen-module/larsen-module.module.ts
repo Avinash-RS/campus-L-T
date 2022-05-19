@@ -19,6 +19,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { LarsenComponentsAuthGuard } from 'src/app/guards/canload/candidate_components_authguards/larsen_components_auth.guard';
 import { LarsenGuard } from 'src/app/guards/canload/candidate_components_authguards/larsen.guard';
 import { LarsenMasterComponent } from './larsen-master/larsen-master.component';
+import { HelperModule } from '../helper/helper/helper.module';
 
 
 const routes: Routes = [
@@ -139,7 +140,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    HelperModule
   ]
 })
 export class LarsenModuleModule { }

@@ -1,7 +1,7 @@
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { SkillsMasterDialogComponent } from 'src/app/candidate-dashboard/helper/skills-master-dialog/skills-master-dialog.component';
+import { SkillsAddedListComponent } from 'src/app/candidate-dashboard/helper/skills-added-list/skills-added-list.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -45,7 +47,7 @@ export const MY_FORMATS = {
   ]
 })
 export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  @ViewChild(SkillsAddedListComponent, {static: false}) skillsListchild;
   workDetailsForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -142,6 +144,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   joiningFormDataPassingSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
   customerName: any;
+  skillsList: any;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -149,7 +152,8 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     private sharedService: SharedServiceService,
     public candidateService: CandidateMappersService,
     private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private matDialog: MatDialog
   ) {
     this.dateValidation();
   }
@@ -797,6 +801,21 @@ addToTrainingArray() {
         });
 
       }
+  }
+
+  openSkillsTab() {
+    this.skillsList = this.skillsListchild.selectedSkills;
+    console.log('sdad', this.skillsList);  
+    const skillTabDialog = this.matDialog.open(SkillsMasterDialogComponent, {
+      panelClass: 'skillsTabMaster',
+      data: {name: 'larsen', skills: this.skillsListchild.selectedSkills},
+      disableClose: true
+    });
+
+    skillTabDialog.afterClosed().subscribe((res: any)=> {
+      this.skillsList = this.skillsListchild.selectedSkills;
+      console.log('sdad', this.skillsList);  
+    });
   }
 
   // Form getters
