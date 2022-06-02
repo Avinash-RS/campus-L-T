@@ -20,10 +20,12 @@
                 <div *ngIf="loading" class="chips-s d-flex align-items-center">
                     <ng-template [ngTemplateOutlet]="loaderTemplate"></ng-template>
                 </div>
+                <ng-container *ngIf="(skillMasterResult && skillMasterResult.length > 0) else noData">
                 <ng-container *ngFor="let skills of skillMasterResult">
                     <div (click)="selectSkill(skills)" class="chips" [ngClass]="{ 'chip-active': skills?.checked }">
-                        {{ skills.name }}
+                        {{ skills.skillName }}
                     </div>
+                </ng-container>
                 </ng-container>
             </div>
         </div>
@@ -40,4 +42,9 @@
         <span class="loader"><span class="loader-box"></span><span class="loader-box"></span><span class="loader-box"></span></span>
         <span>Loading...</span>
     </div>
+</ng-template>
+<ng-template #noData>
+    <ng-container *ngIf="!loading">
+    No Data Available
+    </ng-container>
 </ng-template>

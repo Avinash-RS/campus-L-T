@@ -13,6 +13,7 @@ export class AdminServiceService {
   WEBRTC_NODE_API = environment.WEBRTC_NODE_API;
   NODE_API = environment.NODE_API_BASE_URL;
   PROCTOR_URL = environment.PROCTOR_URL;
+  UNIFIEDREPORTSAPI = environment.UNIFIEDREPORTSAPI;
   httpOptions: { headers: HttpHeaders };
 
 
@@ -827,6 +828,14 @@ getDisciplineDashboardSummaryAPI() {//6
 
 getBUunitSummaryAPI() {//6
   return this.http.get(`${this.BASE_URL}/dashboard/businessunit_summary?drive_id=${this.appConfig.getDriveId()}`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+getSkills(data) {
+  return this.http.post(`${this.UNIFIEDREPORTSAPI}/getSkill`,data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
+}
+
+postSkills(data) {
+  return this.http.post(`${this.UNIFIEDREPORTSAPI}/addSkill`,data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
 }
 
 }

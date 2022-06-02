@@ -48,6 +48,12 @@
             background: #FFFFFF 0% 0% no-repeat padding-box;
             border: 1px solid #848484;
             border-radius: 3px;
+            font-size: 16px;
+            color: #222222;
+        }
+        .search-Input:hover {
+          border: 1px solid #1b4e9b;
+          transition: linear ease-in-out 380ms;
         }
       }
       .result-wrapper {

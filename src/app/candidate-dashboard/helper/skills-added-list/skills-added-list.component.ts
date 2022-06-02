@@ -23,6 +23,7 @@ export class SkillsAddedListComponent implements OnInit, OnChanges, OnDestroy {
 
   fetchSkills() {
    this.selectedSkillsFetchSubscription = this.sharedService.selectedSkillsFetch.subscribe((res: any[])=> {
+     console.log('res', res);
       this.selectedSkills = res.filter(item => item.checked && item.saved);
     }, (err)=> {
 

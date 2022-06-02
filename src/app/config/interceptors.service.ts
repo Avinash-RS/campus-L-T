@@ -146,9 +146,13 @@ export class InterceptorsService implements HttpInterceptor {
           return throwError(error);
         }
         if (error.status === 404) {
+          console.log('er', error);
           if (error && error.error && error.error.FailureReason && !error.error.FailureReason.message.includes('yet to submit his/her profile')) {
             this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
               ? error.error.message : '404 Not found', '');
+          } else {
+            this.appConfig.error(error.error.FailureReason ? error.error.FailureReason.message : error.error.message
+              ? error.error.message : '404 Not found', '');  
           }
           return throwError(error);
         }
