@@ -302,6 +302,10 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
     // if (this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0) {
       this.skillsList = this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0 ? this.workDetailsAllData[this.form_Skills_Array] : [];
+      this.skillsList.forEach(element => {
+            element.checked = true;
+            element.saved = true;        
+      });
       setTimeout(() => {
         this.sharedService.selectedSkillsFetch.next(this.skillsList);        
       }, 500);
@@ -635,7 +639,7 @@ addToTrainingArray() {
       this.skillsList.forEach(element => {
         if (element && element.skillName && element.saved) {
           let skill = {
-            name: element.skillName,
+            skillName: element.skillName,
             _id: element._id ? element._id : element.value
           }
           skills.push(skill);
