@@ -1,7 +1,7 @@
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { SkillsMasterDialogComponent } from 'src/app/candidate-dashboard/helper/skills-master-dialog/skills-master-dialog.component';
+import { SkillsAddedListComponent } from 'src/app/candidate-dashboard/helper/skills-added-list/skills-added-list.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -45,7 +47,7 @@ export const MY_FORMATS = {
   ]
 })
 export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  @ViewChild(SkillsAddedListComponent, {static: false}) skillsListchild;
   workDetailsForm: FormGroup;
   minDate: Date;
   maxDate: Date;
@@ -142,6 +144,8 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   joiningFormDataPassingSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
   customerName: any;
+  skillsList: any = [];
+  newSkillToMongoSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -149,7 +153,8 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     private sharedService: SharedServiceService,
     public candidateService: CandidateMappersService,
     private fb: FormBuilder,
-    private glovbal_validators: GlobalValidatorService
+    private glovbal_validators: GlobalValidatorService,
+    private matDialog: MatDialog
   ) {
     this.dateValidation();
   }
@@ -295,12 +300,13 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       this.getEmploymentArr.push(this.initEmploymentArray());
     }
 
-    if (this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0) {
-      this.getSkillsArr.clear();
-      this.workDetailsAllData[this.form_Skills_Array].forEach(element => {
-        element ? this.getSkillsArr.push(this.SkillsArrayPatch(element)) : '';
-      });
-    }
+    // if (this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0) {
+      this.skillsList = this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0 ? this.workDetailsAllData[this.form_Skills_Array] : [];
+      setTimeout(() => {
+        this.sharedService.selectedSkillsFetch.next(this.skillsList);        
+      }, 500);
+
+    // }
 
     if (this.workDetailsAllData && this.workDetailsAllData.relatives_in_company && this.workDetailsAllData.relatives_in_company.length > 0) {
       this.getRelativesArr.clear();
@@ -405,18 +411,6 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     )
   }
 
-  initSkillsArray() {
-    return this.fb.group({
-      [this.form_Skill]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.skills255()]]
-    })
-  }
-
-  SkillsArrayPatch(data) {
-    return this.fb.group({
-      [this.form_Skill]: [data, [RemoveWhitespace.whitespace(), this.glovbal_validators.skills255()]]
-    })
-  }
-
   initTrainingArray() {
     return this.fb.group({
       [this.form_training_employer_name]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
@@ -479,7 +473,6 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       [this.form_faculty_reference]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_faculty_reference_1]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_Employment_Array]: this.fb.array([]),
-      [this.form_Skills_Array]: this.fb.array([this.initSkillsArray()]),
       [this.form_Relatives_Array]: this.fb.array([this.initRelativesArray()]),
       [this.form_training_Array]: this.fb.array([this.initTrainingArray()]),
       [this.form_is_training_status]: [null],
@@ -520,18 +513,6 @@ addToTrainingArray() {
   }
 }
 
-  addSkills() {
-    let i = this.getSkillsArr['controls'].length - 1;
-    if (this.getSkillsArr.valid && this.getSkillsArr['controls'].length < 10) {
-      if (this.getSkillsArr && this.getSkillsArr['controls'] && this.getSkillsArr['controls'][i] && this.getSkillsArr['controls'][i]['value'] && this.getSkillsArr['controls'][i]['value'][this.form_Skill]) {
-        return this.getSkillsArr.push(this.initSkillsArray());
-      }
-    } else {
-      this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Skill Section');
-      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
-    }
-  }
-
   removeTrainingArray(i) {
     this.getTrainingArr.removeAt(i);
   }
@@ -540,9 +521,6 @@ addToTrainingArray() {
     this.getEmploymentArr.removeAt(i);
   }
 
-  removeSkillsArray(i) {
-    this.getSkillsArr.removeAt(i);
-  }
 
   addRelatives() {
     let i = this.getRelativesArr['controls'].length - 1;
@@ -551,11 +529,11 @@ addToTrainingArray() {
         return this.getRelativesArr.push(this.initRelativesArray());
       } else {
         this.appConfig.nzNotification('error', 'Not Added', 'Please fill the existing Relatives / Acquaintances section');
-        this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+        this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray);
       }
     } else {
       this.appConfig.nzNotification('error', 'Not Added', 'Please fix all the red highlighted fields in the Relatives / Acquaintances Section');
-      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray);
     }
   }
 
@@ -654,9 +632,13 @@ addToTrainingArray() {
       const employments = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : [];
 
       let skills = [];
-      this.workDetailsForm.getRawValue()[this.form_Skills_Array].forEach(element => {
-        if (element && element[this.form_Skill]) {
-          skills.push(element[this.form_Skill]);
+      this.skillsList.forEach(element => {
+        if (element && element.skillName && element.saved) {
+          let skill = {
+            name: element.skillName,
+            _id: element._id ? element._id : element.value
+          }
+          skills.push(skill);
         }
       });
       let intern = [];
@@ -697,22 +679,47 @@ addToTrainingArray() {
       }
 
      this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails).subscribe((data: any) => {
-        this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
-        this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
-        this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
-        this.sharedService.joiningFormStepperStatus.next();
-        return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+        this.sendNewSkillstoMongo().then((res)=> {
+          this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+          this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+          this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
+          this.sharedService.joiningFormStepperStatus.next();
+          return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);  
+        }).catch((err) => {
+          this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+          this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+          this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
+          this.sharedService.joiningFormStepperStatus.next();
+          return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);  
+        });
+      }, (err)=> {
+        // this.sendNewSkillstoMongo().then((res)=> {
+        // }).catch(err => {
+        // });
       });
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
       this.glovbal_validators.validateAllFields(this.workDetailsForm);
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Employment_Array]) as FormArray);
-      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Skills_Array]) as FormArray);
+      this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray);
     }
 
   }
 
+ async sendNewSkillstoMongo() {
+    let filteredSkill = this.skillsList.filter(data => data.saved && data.newSkill);
+    let skills = filteredSkill.map(data => {
+      data.createdBy = this.appConfig.getLocalData('userEmail');
+      return data;
+    });
+    this.newSkillToMongoSubscription = await this.adminService.postSkills(skills).subscribe((res: any) => {
+        if (res.success) {
+        } else {
+        }
+    }, (err) => {
+    });
+  }
 
   saveRequestRxJs() {
     this.sendPopupResultSubscription = this.sharedService.sendPopupResult.subscribe((result: any) => {
@@ -799,11 +806,26 @@ addToTrainingArray() {
       }
   }
 
+  openSkillsTab() {
+    const skillTabDialog = this.matDialog.open(SkillsMasterDialogComponent, {
+      panelClass: 'skillsTabMaster',
+      data: {name: 'larsen', skills: this.skillsList ? this.skillsList.filter(data => data.saved) : []},
+      disableClose: true
+    });
+
+    skillTabDialog.afterClosed().subscribe((res: any)=> {
+      this.skillsList = this.skillsListchild.selectedSkills.map(res => {
+        if (res?.saved) {
+          res.checked = true;
+          return res;
+        }
+      });
+    });
+  }
+
   // Form getters
   // convenience getters for easy access to form fields
   get getRelativesArr() { return this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray; }
-
-  get getSkillsArr() { return this.workDetailsForm.get([this.form_Skills_Array]) as FormArray; }
 
   get getEmploymentArr() { return this.workDetailsForm.get([this.form_Employment_Array]) as FormArray; }
 
@@ -899,6 +921,7 @@ addToTrainingArray() {
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
     this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
     this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
+    this.newSkillToMongoSubscription ? this.newSkillToMongoSubscription.unsubscribe() : '';
     }
 
 }

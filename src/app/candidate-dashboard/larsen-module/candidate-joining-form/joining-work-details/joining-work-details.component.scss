@@ -7,51 +7,6 @@
         .skills-wrapper {
             display: flex;
             flex-wrap: wrap;
-            .skill-name-wrapper {
-                width: 250px;
-                padding: .5em;
-                .input {
-                    display: flex;
-                    position: relative;
-                    border: solid 0.8px #bebebe;
-                    border-radius: 2px;
-                    color: #6b6b6b;
-                    outline: none;
-                    box-sizing: border-box;
-                    min-height: 35px !important;
-                    max-height: 35px !important;
-                    line-height: 35px;
-                    padding: 4px 8px;
-                    background-color: $white;
-                    width: 100%;
-                }
-                .input-1 {
-                    border: none !important;
-                    border-radius: 0px;
-                    color: #6b6b6b;
-                    outline: none;
-                    padding: 2px 2px;
-                    box-sizing: border-box;
-                    background-color: $white;
-                    width: 100%;
-                }
-                .input-error {
-                    border: 1px solid $primary-error-color;
-                }
-                .input:focus,
-                .input:hover {
-                    border: 1px solid $primary-hover-color;
-                }
-                .form-error {
-                    color: $primary-error-text;
-                    font-size: 12px;
-                }
-                 ::placeholder {
-                    color: #a5a5a5 !important;
-                    opacity: 1;
-                    font-size: 13px;
-                }
-            }
             .skills-add {
                 padding: 6px;
                 width: max-content;

@@ -1,0 +1,137 @@
+.skills-master-wrapper {
+  min-width: 800px;
+  max-width: 800px;
+  background: white;
+  .heading-wrapper {
+    display: flex;
+    width: 100%;
+    position: relative;
+    padding: 1em;
+    > div {
+      flex-grow: 1;
+      flex-basis: 50%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    > div:last-child {
+      justify-content: flex-end;
+    }
+    .left-wrapper .heading {
+      color: #222222;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .right-wrapper .heading .icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+  }
+  .heading-wrapper::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background: #707070;
+  } 
+  .main-wrapper {
+      padding: 20px;
+      .input-wrapper {
+          width: 100%;
+        .search-Input {
+            width: 100%;
+            outline: none;
+            padding: 4px 8px;
+            line-height: 35px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 1px solid #848484;
+            border-radius: 3px;
+            font-size: 16px;
+            color: #222222;
+        }
+        .search-Input:hover {
+          border: 1px solid #1b4e9b;
+          transition: linear ease-in-out 380ms;
+        }
+      }
+      .result-wrapper {
+          width: 100%;
+          margin-top: 1em;
+          .title {
+            color: #222222;
+            margin-bottom: .2em;
+          }
+          .results {
+            background: #F0F0F0 0% 0% no-repeat padding-box;
+            border-radius: 10px;  
+            padding: 6px;
+            display: flex;
+            gap: 1em;
+            flex-wrap: wrap;
+            max-height: 280px;
+            overflow: auto;
+            .chips {
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                border: 1px solid #004684;
+                border-radius: 20px;
+                font-size: 15px;
+                padding: 4px 8px;
+                color: #222222;
+                cursor: pointer;
+            }
+            .chips:hover:not(.chip-active) {
+                transition: background ease-out 380ms;
+                background: #c0c0c0 0% 0% no-repeat padding-box;
+                color: #222222;
+            }
+            .chip-active {
+                transition: background ease-out 580ms;
+                background: #004684 0% 0% no-repeat padding-box;
+                color: #FFFFFF;
+            }
+          }
+      }
+      .save {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 1em;
+          .save-btn {
+            background: #1B4E9B 0% 0% no-repeat padding-box;
+            border-radius: 20px;
+            padding: 8px 16px;
+            width: 100px;
+            line-height: 20px;
+            color: #ffffff;
+            font-size: 18px;
+          }
+      }
+  }
+}
+.loader {
+  height : 8px;
+  width  : 36px; /* (6 * <margin: 2px>) + (3 * <width: 8px>) */
+}
+
+.loader-box {
+  display                   : inline-block;
+  height                    : 8px;
+  width                     : 8px;
+  margin                    : 0px 2px;
+  background-color          : rgb(0,146,255);
+  animation-name            : fadeOutIn;
+  animation-duration        : 500ms;
+  animation-iteration-count : infinite;
+  animation-direction       : alternate;
+}
+
+.loader-box:nth-child(1) { animation-delay: 250ms; } /* (1/2) * <animation-duration: 500ms */
+.loader-box:nth-child(2) { animation-delay: 500ms; } /* (2/2) * <animation-duration: 500ms */
+.loader-box:nth-child(3) { animation-delay: 750ms; } /* (3/2) * <animation-duration: 500ms */
+
+@keyframes fadeOutIn {
+  0%   { background-color : rgba(0,146,255,1); }
+  100% { background-color : rgba(0,146,255,0); }
+}

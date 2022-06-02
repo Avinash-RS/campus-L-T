@@ -1,0 +1,50 @@
+<div class="skills-master-wrapper">
+    <div class="heading-wrapper">
+        <div class="left-wrapper">
+            <div class="heading">Add Skills</div>
+        </div>
+        <div class="right-wrapper">
+            <div class="heading">
+                <span (click)="close()" class="icon icon-close_black"></span>
+            </div>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <div class="input-wrapper">
+            <input placeholder="Type Relevant Skills..." class="search-Input" matInput [formControl]="skillTerm"
+                type="text" name="" id="" />
+        </div>
+        <div class="result-wrapper">
+            <div class="title">Select your relevant skills…</div>
+            <div class="results">
+                <div *ngIf="loading" class="chips-s d-flex align-items-center">
+                    <ng-template [ngTemplateOutlet]="loaderTemplate"></ng-template>
+                </div>
+                <ng-container *ngIf="(skillMasterResult && skillMasterResult.length > 0) else noData">
+                <ng-container *ngFor="let skills of skillMasterResult">
+                    <div (click)="selectSkill(skills)" class="chips" [ngClass]="{ 'chip-active': skills?.checked }">
+                        {{ skills.skillName }}
+                    </div>
+                </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="save">
+            <button (click)="saveSkills()" mat-raised-button class="save-btn" type="button">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+
+<ng-template #loaderTemplate> 
+    <div>
+        <span class="loader"><span class="loader-box"></span><span class="loader-box"></span><span class="loader-box"></span></span>
+        <span>Loading...</span>
+    </div>
+</ng-template>
+<ng-template #noData>
+    <ng-container *ngIf="!loading">
+    No Data Available
+    </ng-container>
+</ng-template>

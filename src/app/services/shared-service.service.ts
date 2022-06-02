@@ -23,4 +23,6 @@ export class SharedServiceService {
 
   screenRefreshOnDriveChange = new Subject();
   sessionTimeStartSubject = new Subject();
+
+  selectedSkillsFetch = new Subject();
 }
