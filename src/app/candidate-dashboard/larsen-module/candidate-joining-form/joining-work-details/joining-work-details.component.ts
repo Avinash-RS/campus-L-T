@@ -639,7 +639,7 @@ addToTrainingArray() {
       this.skillsList.forEach(element => {
         if (element && element.skillName && element.saved) {
           let skill = {
-            name: element.skillName,
+            skillName: element.skillName,
             _id: element._id ? element._id : element.value
           }
           skills.push(skill);
