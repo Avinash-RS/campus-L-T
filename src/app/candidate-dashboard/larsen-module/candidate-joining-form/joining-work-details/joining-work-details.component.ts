@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@ang
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Subscription, of, forkJoin } from 'rxjs';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
@@ -15,6 +15,7 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { SkillsMasterDialogComponent } from 'src/app/candidate-dashboard/helper/skills-master-dialog/skills-master-dialog.component';
 import { SkillsAddedListComponent } from 'src/app/candidate-dashboard/helper/skills-added-list/skills-added-list.component';
+import { switchMap, catchError, map, mergeMap } from 'rxjs/operators';
 
 export const MY_FORMATS = {
   parse: {
@@ -303,6 +304,7 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
     // if (this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0) {
       this.skillsList = this.workDetailsAllData && this.workDetailsAllData[this.form_Skills_Array] && this.workDetailsAllData[this.form_Skills_Array].length > 0 ? this.workDetailsAllData[this.form_Skills_Array] : [];
       this.skillsList.forEach(element => {
+            element._id ? '' : element.newSkill = true;
             element.checked = true;
             element.saved = true;        
       });
@@ -640,7 +642,7 @@ addToTrainingArray() {
         if (element && element.skillName && element.saved) {
           let skill = {
             skillName: element.skillName,
-            _id: element._id ? element._id : element.value
+            _id: element._id ? element._id : null
           }
           skills.push(skill);
         }
@@ -682,25 +684,31 @@ addToTrainingArray() {
         saving_data: apiData
       }
 
-     this.newSaveProfileDataSubscription = this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails).subscribe((data: any) => {
-        this.sendNewSkillstoMongo().then((res)=> {
-          this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
-          this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
-          this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
-          this.sharedService.joiningFormStepperStatus.next();
-          return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);  
-        }).catch((err) => {
-          this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
-          this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
-          this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
-          this.sharedService.joiningFormStepperStatus.next();
-          return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);  
-        });
-      }, (err)=> {
-        // this.sendNewSkillstoMongo().then((res)=> {
-        // }).catch(err => {
-        // });
+      let filteredSkill = this.skillsList.filter(data => data.saved && data.newSkill);
+      let skillsToMongo = filteredSkill.map(data => {
+        delete data?._id;
+        data.isAdmin = false;
+        data.createdBy = this.appConfig.getLocalData('userEmail');
+        return data;
       });
+
+     let saveWork = this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails);
+     let skillAdd = this.adminService.postSkills(skillsToMongo).pipe(
+      catchError(err => {
+        return of([]);
+      })
+    )
+    this.newSaveProfileDataSubscription = forkJoin([saveWork, skillAdd]).subscribe((res: any)=> {
+      let data = res[0];
+      this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
+      this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
+      this.appConfig.nzNotification('success', 'Saved', data && data.message ? data.message : 'Work Experience details is updated');
+      this.sharedService.joiningFormStepperStatus.next();
+      return routeValue ? this.appConfig.routeNavigation(routeValue) : this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.JOINING_UPLOAD);
+    }, (err)=> {
+
+    });
+  
     } else {
       this.ngAfterViewInit();
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
@@ -717,12 +725,17 @@ addToTrainingArray() {
       data.createdBy = this.appConfig.getLocalData('userEmail');
       return data;
     });
-    this.newSkillToMongoSubscription = await this.adminService.postSkills(skills).subscribe((res: any) => {
+    try {
+      this.newSkillToMongoSubscription = await this.adminService.postSkills(skills).subscribe((res: any) => {
         if (res.success) {
         } else {
         }
     }, (err) => {
     });
+    }
+    catch (err) {
+      console.log('err', err);
+    }
   }
 
   saveRequestRxJs() {
