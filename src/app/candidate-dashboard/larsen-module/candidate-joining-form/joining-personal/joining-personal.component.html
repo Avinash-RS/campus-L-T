@@ -26,7 +26,7 @@
                 </div> -->
                 <div class="overall-input-wrapper width-100">
                     <label>Name (as per Aadhar)<span>*</span></label>
-                    <input matInput class="input" placeholder="Name (as per Aadhar)" type="text" [formControlName]="form_name">
+                    <input [id]="form_name" matInput class="input" placeholder="Name (as per Aadhar)" type="text" [formControlName]="form_name">
                     <div class="form-error" *ngIf="fname?.invalid && fname?.touched">
                         <div *ngIf="fname?.errors?.required">Name (as per Aadhar) is Required</div>
                         <div *ngIf="fname.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -36,7 +36,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Email ID<span>*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_email">
+                    <input [id]="form_email" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_email">
                     <div class="form-error" *ngIf="email?.invalid && email?.touched">
                         <div *ngIf="email?.errors?.required">Email ID is Required</div>
                         <div *ngIf="email?.errors?.maxlength">Maximum of 255 characters only allowed</div>
@@ -46,7 +46,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Mobile No.<span>*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_mobile">
+                    <input [id]="form_mobile" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_mobile">
                     <div class="form-error" *ngIf="mobile?.invalid && mobile?.touched">
                         <div *ngIf="mobile?.errors?.required">Mobile No. is Required</div>
                         <div *ngIf="mobile?.errors?.mobileRegex">Please enter a valid 10 digit mobile number</div>
@@ -55,7 +55,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Aadhar No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
+                    <input [id]="form_aadhar" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_aadhar">
                     <div class="form-error" *ngIf="aadhar?.invalid && aadhar?.touched">
                         <div *ngIf="aadhar?.errors?.required">Aadhaar No. is Required</div>
                         <div *ngIf="aadhar?.errors?.aadhaar">Aadhaar No. should be exact 12 digits and should match spacing as per Aadhaar card</div>
@@ -65,7 +65,7 @@
                 <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                     <div class="overall-input-wrapper width-45">
                         <label>PAN No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
+                        <input [id]="form_pan" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_pan">
                         <div class="form-error" *ngIf="pan?.invalid && pan?.touched">
                             <div *ngIf="pan?.errors?.required">PAN No. is Required</div>
                             <div *ngIf="pan?.errors?.panNo">Invalid PAN Card Number. (Note: This Field is Case Sensitive)</div>
@@ -76,7 +76,7 @@
                 <div class="overall-input-wrapper width-45">
                     <label>Date of Birth (as per Std X certificate)<span>*</span></label>
                     <div class="date-relative">
-                        <input matInput class="input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker" placeholder="DD-MM-YYYY" [formControlName]="form_dob">
+                        <input [id]="form_dob" matInput class="input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker" placeholder="DD-MM-YYYY" [formControlName]="form_dob">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </div>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="overall-input-wrapper width-45">
                     <label>Gender<span>*</span></label>
-                    <nz-select class="input select" [formControlName]="form_gender" nzAllowClear nzShowSearch nzPlaceHolder="Select">
+                    <nz-select [id]="form_gender" class="input select" [formControlName]="form_gender" nzAllowClear nzShowSearch nzPlaceHolder="Select">
                         <nz-option *ngFor="let gender of genderDropdownList" [nzLabel]="gender.label" [nzValue]="gender.value"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="gender?.invalid && gender?.touched">
@@ -103,7 +103,7 @@
 
                 <div class="overall-input-wrapper" [ngClass]="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married') || (personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow') ? 'width-22' : 'width-45'">
                     <label>Marital Status<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <nz-select class="input select" (ngModelChange)="maritalStatusChange()" [formControlName]="form_marital_status" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                    <nz-select [id]="form_marital_status" class="input select" (ngModelChange)="maritalStatusChange()" [formControlName]="form_marital_status" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let marital of marital_list" [nzLabel]="marital.name" [nzValue]="marital.value"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="marital_status?.invalid && marital_status?.touched">
@@ -114,7 +114,7 @@
                 <div *ngIf="(personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Married' || personalForm && personalForm.value && personalForm.value[form_marital_status] && personalForm.value[form_marital_status]=='Widow')"
                     class="overall-input-wrapper width-22">
                     <label>No. of Children<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <nz-select class="input select" [formControlName]="form_no_of_children" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                    <nz-select [id]="form_no_of_children" class="input select" [formControlName]="form_no_of_children" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let children of no_children_list" [nzLabel]="children" [nzValue]="children"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="no_of_children?.invalid && no_of_children?.touched">
@@ -124,7 +124,7 @@
                 <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                     <div class="overall-input-wrapper width-45">
                         <label>Domicile State<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <nz-select class="input select" [formControlName]="form_domicile_state" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                        <nz-select [id]="form_domicile_state" class="input select" [formControlName]="form_domicile_state" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                             <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
                         </nz-select>
                         <div class="form-error" *ngIf="domicile_state?.invalid && domicile_state?.touched">
@@ -134,7 +134,7 @@
 
                     <div class="overall-input-wrapper width-45">
                         <label>Place of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_place_of_birth">
+                        <input [id]="form_place_of_birth" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_place_of_birth">
                         <div class="form-error" *ngIf="place_of_birth?.invalid && place_of_birth?.touched">
                             <div *ngIf="place_of_birth?.errors?.required">Place of Birth is Required</div>
                             <div *ngIf="place_of_birth?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed</div>
@@ -142,7 +142,7 @@
                     </div>
                     <div class="overall-input-wrapper width-45">
                         <label>State of Birth<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <nz-select class="input select" [formControlName]="form_state_of_birth" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                        <nz-select [id]="form_state_of_birth" class="input select" [formControlName]="form_state_of_birth" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                             <nz-option *ngFor="let state of getAllStates" [nzLabel]="state.name" [nzValue]="state.id"></nz-option>
                         </nz-select>
                         <div class="form-error" *ngIf="state_of_birth?.invalid && state_of_birth?.touched">
@@ -153,7 +153,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Nationality<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_nationality">
+                    <input [id]="form_nationality" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_nationality">
                     <div class="form-error" *ngIf="nationality?.invalid && nationality?.touched">
                         <div *ngIf="nationality?.errors?.required">Nationality is Required</div>
                         <div *ngIf="nationality?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -162,7 +162,7 @@
                 </div>
                 <div class="overall-input-wrapper width-45">
                     <label>Mother Tongue<span>*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_mother_tongue">
+                    <input [id]="form_mother_tongue" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_mother_tongue">
                     <div class="form-error" *ngIf="mother_tongue?.invalid && mother_tongue?.touched">
                         <div *ngIf="mother_tongue?.errors?.required">Mother Tongue is Required</div>
                         <div *ngIf="mother_tongue?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed</div>
@@ -172,7 +172,7 @@
                 <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                     <div class="overall-input-wrapper width-45">
                         <label>Religion<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_religion">
+                        <input [id]="form_religion" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_religion">
                         <div class="form-error" *ngIf="religion?.invalid && religion?.touched">
                             <div *ngIf="religion?.errors?.required">Religion is Required</div>
                             <div *ngIf="religion?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -181,7 +181,7 @@
                     </div>
                     <div class="overall-input-wrapper width-45">
                         <label>Blood Group<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <nz-select class="input select" [formControlName]="form_blood_group" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                        <nz-select [id]="form_blood_group" class="input select" [formControlName]="form_blood_group" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                             <nz-option *ngFor="let blood of bloodGroupDropdownList" [nzLabel]="blood.bloodgroup_name" [nzValue]="blood.bloodgroup_id"></nz-option>
                         </nz-select>
                         <div class="form-error" *ngIf="blood_group?.invalid && blood_group?.touched">
@@ -192,7 +192,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Caste Category<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <nz-select class="input select" [formControlName]="form_category" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                    <nz-select [id]="form_category" class="input select" [formControlName]="form_category" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let category of category" [nzLabel]="category.name" [nzValue]="category.caste"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="category1?.invalid && category1?.touched">
@@ -204,7 +204,7 @@
                 <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                     <div class="overall-input-wrapper width-45">
                         <label>Caste Name<span></span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_caste">
+                        <input [id]="form_caste" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_caste">
                         <div class="form-error" *ngIf="caste?.invalid && caste?.touched">
                             <div *ngIf="caste?.errors?.required">Caste is Required</div>
                             <div *ngIf="caste?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -214,7 +214,7 @@
 
                     <div class="overall-input-wrapper width-45">
                         <label>Father Name<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_father_name">
+                        <input [id]="form_father_name" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_father_name">
                         <div class="form-error" *ngIf="father_name?.invalid && father_name?.touched">
                             <div *ngIf="father_name?.errors?.required">Father Name is Required</div>
                             <div *ngIf="father_name?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -223,7 +223,7 @@
                     </div>
                     <div class="overall-input-wrapper width-45">
                         <label>Emergency Contact No.<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_emergency_contact">
+                        <input [id]="form_emergency_contact" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_emergency_contact">
                         <div class="form-error" *ngIf="emergency_contact?.invalid && emergency_contact?.touched">
                             <div *ngIf="emergency_contact?.errors?.required">Emergency Contact No. is Required</div>
                             <div *ngIf="emergency_contact?.errors?.mobileRegex">Please enter a valid 10 digit mobile number
@@ -233,7 +233,7 @@
 
                     <div class="overall-input-wrapper width-45">
                         <label>Emergency Contact Person Name<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_emergency_contact_name">
+                        <input [id]="form_emergency_contact_name" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_emergency_contact_name">
                         <div class="form-error" *ngIf="emergency_contact_name?.invalid && emergency_contact_name?.touched">
                             <div *ngIf="emergency_contact_name?.errors?.required">Contact Person Name is Required</div>
                             <div *ngIf="emergency_contact_name?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -242,7 +242,7 @@
                     </div>
                     <div class="overall-input-wrapper width-45">
                         <label>Relation with Emergency Contact<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_emergency_contact_relation">
+                        <input [id]="form_emergency_contact_relation" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_emergency_contact_relation">
                         <div class="form-error" *ngIf="emergency_contact_relation?.invalid && emergency_contact_relation?.touched">
                             <div *ngIf="emergency_contact_relation?.errors?.required">Relation is Required</div>
                             <div *ngIf="emergency_contact_relation?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -253,7 +253,7 @@
                     <ng-container *ngIf="candidateService.checkKycOrJoiningForm()">
                         <div class="overall-input-wrapper width-45">
                             <label>Alternate Email ID<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                            <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
+                            <input [id]="form_personal_email" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_personal_email">
                             <div class="form-error" *ngIf="personal_email?.invalid && personal_email?.touched">
                                 <div *ngIf="personal_email?.errors?.required">Alternate Email ID is Required</div>
                                 <div *ngIf="personal_email?.errors?.maxlength">Maximum of 255 characters only allowed</div>
@@ -264,7 +264,7 @@
 
                     <div class="overall-input-wrapper width-45">
                         <label>Offer Reference<span *ngIf="candidateService.checkKycOrJoiningForm()"></span></label>
-                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_offer_reference">
+                        <input [id]="form_offer_reference" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_offer_reference">
                         <div class="form-error" *ngIf="offer_reference?.invalid && offer_reference?.touched">
                             <div *ngIf="offer_reference?.errors?.required">Offer Reference is Required</div>
                             <div *ngIf="offer_reference?.errors?.offer">Alpha numeric and Special characters (- , . : & /) with maximum of 255 characters only allowed</div>
@@ -273,7 +273,7 @@
                     <div class="overall-input-wrapper width-45">
                         <label>Offer Date<span *ngIf="candidateService.checkKycOrJoiningForm()"></span></label>
                         <div class="date-relative">
-                            <input matInput class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker_offer" placeholder="DD-MM-YYYY" [formControlName]="form_offer_date">
+                            <input [id]="form_offer_date" matInput class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker_offer" placeholder="DD-MM-YYYY" [formControlName]="form_offer_date">
                             <mat-datepicker-toggle matSuffix [for]="picker_offer"></mat-datepicker-toggle>
                             <mat-datepicker #picker_offer></mat-datepicker>
                         </div>
@@ -295,7 +295,7 @@
                 <div class="overall-input-wrapper width-100 flex-row align-items-end">
                     <div class="overall-input-wrapper width-42 mt-0">
                         <label style="white-space: nowrap;">Preferred Location<span>*</span> <span class="ml-1" style="color: red; font-size: 13px;">(Please pick four locations in your order of your preferences)</span></label>
-                        <nz-select (ngModelChange)="locationChanged()" nzMode="multiple" [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" class="input-custom select" [formControlName]="form_location_preference" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
+                        <nz-select [id]="form_location_preference" (ngModelChange)="locationChanged()" nzMode="multiple" [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" class="input-custom select" [formControlName]="form_location_preference" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                             <nz-option *ngFor="let location of locationList" [nzLabel]="location.label" [nzValue]="location.value"></nz-option>
                         </nz-select>
                         <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
@@ -326,7 +326,7 @@
                         <ng-container *ngFor="let item of getLanguageArr.controls; let i = index;" [formGroupName]="i">
                             <div class="language-wrapper" [ngClass]="i != 0 ? 'mt-2' : ''">
                                 <div class="language-name-wrapper">
-                                    <input matInput placeholder="Enter Language name" class="input" type="text" [ngClass]="getLanguageArr.controls[i].get(form_language_is_read).errors?.notSelected ? 'custom-border' : ''" [formControlName]="form_language_name">
+                                    <input [id]="'languageName' + i" matInput placeholder="Enter Language name" class="input" type="text" [ngClass]="getLanguageArr.controls[i].get(form_language_is_read).errors?.notSelected ? 'custom-border' : ''" [formControlName]="form_language_name">
                                     <div class="form-error" *ngIf="getLanguageArr.controls[i].invalid">
                                         <div *ngIf="getLanguageArr.controls[i].get(form_language_is_read).errors?.notSelected">Make sure, you have entered Language name and selected any one of the language proficiency</div>
                                         <div *ngIf="getLanguageArr.controls[i].get(form_language_name).touched && getLanguageArr.controls[i].get(form_language_name).errors?.address255">Alpha numeric with maximum of 255 characters only allowed</div>
@@ -336,15 +336,15 @@
                                 <div class="flex-box language-knowns">
                                     <div>
                                         <label class="language-label mr-1">Read</label>
-                                        <mat-checkbox [formControlName]="form_language_is_read" class="mr-2"></mat-checkbox>
+                                        <mat-checkbox [id]="'languageRead' + i" [formControlName]="form_language_is_read" class="mr-2"></mat-checkbox>
                                     </div>
                                     <div>
                                         <label class="language-label mr-1">Write</label>
-                                        <mat-checkbox [formControlName]="form_language_is_write" class="mr-2"></mat-checkbox>
+                                        <mat-checkbox [id]="'languageWrite' + i" [formControlName]="form_language_is_write" class="mr-2"></mat-checkbox>
                                     </div>
                                     <div>
                                         <label class="language-label mr-1">Speak</label>
-                                        <mat-checkbox [formControlName]="form_language_is_speak" class="mr-2"></mat-checkbox>
+                                        <mat-checkbox [id]="'languageSpeak' + i" [formControlName]="form_language_is_speak" class="mr-2"></mat-checkbox>
                                     </div>
 
                                     <div [ngClass]="i == 0 ? 'hideClose' : ''" matTooltip="Remove" class="close-icon">
@@ -365,7 +365,7 @@
                 <h6 class="sub-heading">Passport Details</h6>
                 <div class="overall-input-wrapper width-45">
                     <label>Passport Number<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_passport_number">
+                    <input [id]="form_passport_number" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_passport_number">
                     <div class="form-error" *ngIf="passport_number?.invalid && passport_number?.touched">
                         <div *ngIf="passport_number?.errors?.required">Passport Number is Required</div>
                         <div *ngIf="passport_number?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -375,7 +375,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Name as in Passport<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_name_as_in_passport">
+                    <input [id]="form_name_as_in_passport" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_name_as_in_passport">
                     <div class="form-error" *ngIf="name_as_in_passport?.invalid && name_as_in_passport?.touched">
                         <div *ngIf="name_as_in_passport?.errors?.required">Name is Required</div>
                         <div *ngIf="name_as_in_passport?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -385,7 +385,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Profession as in Passport<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_profession_as_in_passport">
+                    <input [id]="form_profession_as_in_passport" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_profession_as_in_passport">
                     <div class="form-error" *ngIf="profession_as_in_passport?.invalid && profession_as_in_passport?.touched">
                         <div *ngIf="profession_as_in_passport?.errors?.required">Profession as in Passport is Required</div>
                         <div *ngIf="profession_as_in_passport?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -396,7 +396,7 @@
                 <div class="overall-input-wrapper width-45">
                     <label>Issued Date<span></span></label>
                     <div class="date-relative">
-                        <input matInput class="input" [min]="minDate" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker_dateofIssue" placeholder="DD-MM-YYYY" [formControlName]="form_date_of_issue">
+                        <input [id]="form_date_of_issue" matInput class="input" [min]="minDate" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker_dateofIssue" placeholder="DD-MM-YYYY" [formControlName]="form_date_of_issue">
                         <mat-datepicker-toggle matSuffix [for]="picker_dateofIssue"></mat-datepicker-toggle>
                         <mat-datepicker #picker_dateofIssue></mat-datepicker>
                     </div>
@@ -415,7 +415,7 @@
                 <div class="overall-input-wrapper width-45">
                     <label>Valid Upto<span></span></label>
                     <div class="date-relative">
-                        <input matInput class="input" [min]="passportValidminDate" [max]="passportValidmaxDate" [matDatepicker]="picker_dateValidUpto" placeholder="DD-MM-YYYY" [formControlName]="form_valid_upto">
+                        <input [id]="form_valid_upto" matInput class="input" [min]="passportValidminDate" [max]="passportValidmaxDate" [matDatepicker]="picker_dateValidUpto" placeholder="DD-MM-YYYY" [formControlName]="form_valid_upto">
                         <mat-datepicker-toggle matSuffix [for]="picker_dateValidUpto"></mat-datepicker-toggle>
                         <mat-datepicker #picker_dateValidUpto></mat-datepicker>
                     </div>
@@ -433,7 +433,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Place of Issue<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_place_of_issue">
+                    <input [id]="form_place_of_issue" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_place_of_issue">
                     <div class="form-error" *ngIf="place_of_issue?.invalid && place_of_issue?.touched">
                         <div *ngIf="place_of_issue?.errors?.required">Place of Issue is Required</div>
                         <div *ngIf="place_of_issue?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -443,7 +443,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Countries Valid for<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_country_valid_for">
+                    <input [id]="form_country_valid_for" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_country_valid_for">
                     <div class="form-error" *ngIf="country_valid_for?.invalid && country_valid_for?.touched">
                         <div *ngIf="country_valid_for?.errors?.required">Countries Valid for is Required</div>
                         <div *ngIf="country_valid_for?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -455,7 +455,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Most Serious Recent Illness<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_serious_illness">
+                    <input [id]="form_serious_illness" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_serious_illness">
                     <div class="form-error" *ngIf="serious_illness?.invalid && serious_illness?.touched">
                         <div *ngIf="serious_illness?.errors?.required">Illness is Required</div>
                         <div *ngIf="serious_illness?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -465,7 +465,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>No. of Days Ill<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_no_of_days">
+                    <input [id]="form_no_of_days" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_no_of_days">
                     <div class="form-error" *ngIf="no_of_days?.invalid && no_of_days?.touched">
                         <div *ngIf="no_of_days?.errors?.required">No. of Days is Required</div>
                         <div *ngIf="no_of_days?.errors?.maxlength">Maximum of 5 characters only allowed</div>
@@ -475,7 +475,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Nature of Illness<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_nature_of_illness">
+                    <input [id]="form_nature_of_illness" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_nature_of_illness">
                     <div class="form-error" *ngIf="nature_of_illness?.invalid && nature_of_illness?.touched">
                         <div *ngIf="nature_of_illness?.errors?.required">Nature of Illness is Required</div>
                         <div *ngIf="nature_of_illness?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -485,7 +485,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Physical Disability (if any)<span></span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_physical_disability">
+                    <input [id]="form_physical_disability" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_physical_disability">
                     <div class="form-error" *ngIf="physical_disability?.invalid && physical_disability?.touched">
                         <div *ngIf="physical_disability?.errors?.required">Physical Disability is Required</div>
                         <div *ngIf="physical_disability?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
@@ -495,7 +495,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Height (in Cms)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
+                    <input [id]="form_height" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_height">
                     <div class="form-error" *ngIf="height?.invalid && height?.touched">
                         <div *ngIf="height?.errors?.required">Height (in Cms) is Required</div>
                         <div *ngIf="height?.errors?.numberDecimals">Numerics only allowed with 2 succeeding decimals
@@ -505,7 +505,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Weight (in Kgs)<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
-                    <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_weight">
+                    <input [id]="form_weight" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_weight">
                     <div class="form-error" *ngIf="weight?.invalid && weight?.touched">
                         <div *ngIf="weight?.errors?.required">Weight (in Kgs) is Required</div>
                         <div *ngIf="weight?.errors?.numberDecimals">Numerics only allowed with 2 succeeding decimals
@@ -515,7 +515,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Power of Eye glass (Left Eye)<span></span></label>
-                    <input matInput placeholder="Left Eye Power" class="input" type="text" [formControlName]="form_left_eyepower_glass">
+                    <input [id]="form_left_eyepower_glass" matInput placeholder="Left Eye Power" class="input" type="text" [formControlName]="form_left_eyepower_glass">
                     <div class="form-error" *ngIf="left_eyepower_glass?.invalid && left_eyepower_glass?.touched">
                         <div *ngIf="left_eyepower_glass?.errors?.required">Left Eye Power is Required</div>
                         <div *ngIf="left_eyepower_glass?.errors?.eyenumberDecimals">Should allow only Numeric Decimals and ('+' or '-') signs</div>
@@ -524,7 +524,7 @@
 
                 <div class="overall-input-wrapper width-45">
                     <label>Power of Eye glass (Right Eye)<span></span></label>
-                    <input matInput placeholder="Left Eye Power" class="input" type="text" [formControlName]="form_right_eye_power_glass">
+                    <input [id]="form_right_eye_power_glass" matInput placeholder="Left Eye Power" class="input" type="text" [formControlName]="form_right_eye_power_glass">
                     <div class="form-error" *ngIf="right_eye_power_glass?.invalid && right_eye_power_glass?.touched">
                         <div *ngIf="right_eye_power_glass?.errors?.required">Right Eye Power is Required</div>
                         <div *ngIf="right_eye_power_glass?.errors?.eyenumberDecimals">Should allow only Numeric Decimals and ('+' or '-') signs</div>
@@ -536,14 +536,14 @@
                     <div class="overall-input-wrapper width-100">
                         <label>Identification Mark<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                         <div class="d-flex align-content-start">
-                            <span class="mr-1 mt-2">1.</span> <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_identification_mark1">
+                            <span class="mr-1 mt-2">1.</span> <input [id]="form_identification_mark1" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_identification_mark1">
                         </div>
                         <div class="form-error" *ngIf="identification_mark1?.invalid && identification_mark1?.touched">
                             <div *ngIf="identification_mark1?.errors?.required">Identification Mark is Required</div>
                             <div *ngIf="identification_mark1?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed</div>
                         </div>
                         <div class="d-flex align-content-start">
-                            <span class="mr-1 mt-3">2.</span> <input style="margin-top: .4em;" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_identification_mark2">
+                            <span class="mr-1 mt-3">2.</span> <input [id]="form_identification_mark2" style="margin-top: .4em;" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_identification_mark2">
                         </div>
                         <div class="form-error" *ngIf="identification_mark2?.invalid && identification_mark2?.touched">
                             <div *ngIf="identification_mark2?.errors?.required">Identification Mark is Required</div>
