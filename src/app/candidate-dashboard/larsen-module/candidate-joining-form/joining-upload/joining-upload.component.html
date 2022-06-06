@@ -39,7 +39,7 @@
 
                                     <div class="overall-input-wrapper width-20">
                                         <label>Document Description<span></span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                        <input [id]="form_description + j" matInput placeholder="Enter here" class="input" type="text"
                                             [formControlName]="form_description">
                                         <div class="form-error"
                                             *ngIf="getJoiningArr.controls[j].get(form_description).invalid && getJoiningArr.controls[j].get(form_description).touched">
@@ -125,7 +125,7 @@
                                             <div class="row-wrapper flexEnd" style="flex-direction: column;">
                                                 <div class="overall-input-wrapper width-100 align-items-center flex-row">
                                                   <label class="f_size_14" style="min-width: 28%;">Please select the number of semesters in your {{getEducationArr.controls[i].get(form_education_level).value ? getEducationArr.controls[i].get(form_education_level).value : ''}} program<span>*</span></label>
-                                                    <nz-select class="input select ml-2" (ngModelChange)="changeSemesterCount(education, i)" style="width: 9%;" [formControlName]="form_noofSemester" nzAllowClear nzShowSearch
+                                                    <nz-select [id]="form_noofSemester + i" class="input select ml-2" (ngModelChange)="changeSemesterCount(education, i)" style="width: 9%;" [formControlName]="form_noofSemester" nzAllowClear nzShowSearch
                                                         nzPlaceHolder="Select">
                                                         <nz-option *ngFor="let sem of semesterList" [nzLabel]="sem" [nzValue]="sem"></nz-option>
                                                     </nz-select>
@@ -161,7 +161,7 @@
 
                                                     <div class="overall-input-wrapper width-20">
                                                         <label>Document Description<span></span></label>
-                                                        <input matInput placeholder="Enter here" class="input"
+                                                        <input [id]="form_noofSemester + i + j" matInput placeholder="Enter here" class="input"
                                                             type="text" [formControlName]="form_description">
                                                         <div class="form-error"
                                                             *ngIf="getSemesterArr(i).controls[j].get(form_description).invalid && getSemesterArr(i).controls[j].get(form_description).touched">
@@ -273,7 +273,7 @@
 
                                     <div class="overall-input-wrapper width-20">
                                         <label>Document Description<span></span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                        <input [id]="form_description + j" matInput placeholder="Enter here" class="input" type="text"
                                             [formControlName]="form_description">
                                         <div class="form-error"
                                             *ngIf="getTransferArr.controls[j].get(form_description).invalid && getTransferArr.controls[j].get(form_description).touched">
@@ -349,7 +349,7 @@
 
                                     <div class="overall-input-wrapper width-20">
                                         <label>Document Description<span></span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text"
+                                        <input [id]="form_description + j" matInput placeholder="Enter here" class="input" type="text"
                                             [formControlName]="form_description">
                                         <div class="form-error"
                                             *ngIf="getResumeArr.controls[j].get(form_description).invalid && getResumeArr.controls[j].get(form_description).touched">
@@ -430,7 +430,7 @@
                                 <div class="row-wrapper flexEnd">
                                     <div class="overall-input-wrapper width-32">
                                         <label>Bank Name<span class="asterick">*</span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_label">
+                                        <input [id]="form_label + j" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_label">
                                         <div class="form-error"
                                             *ngIf="getBankArr.controls[j].get(form_label).invalid && getBankArr.controls[j].get(form_label).touched">
                                             <div
@@ -445,7 +445,7 @@
 
                                     <div class="overall-input-wrapper width-32">
                                         <label>Bank Account No.<span class="asterick">*</span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_acc_no">
+                                        <input [id]="form_acc_no + j" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_acc_no">
                                         <div class="form-error"
                                             *ngIf="getBankArr.controls[j].get(form_acc_no).invalid && getBankArr.controls[j].get(form_acc_no).touched">
                                             <div
@@ -462,7 +462,7 @@
 
                                     <div class="overall-input-wrapper width-32">
                                         <label>Bank IFSC Code<span class="asterick">*</span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_ifsc_code">
+                                        <input [id]="form_ifsc_code + j" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_ifsc_code">
                                         <div class="form-error"
                                             *ngIf="getBankArr.controls[j].get(form_ifsc_code).invalid && getBankArr.controls[j].get(form_ifsc_code).touched">
                                             <div
@@ -479,7 +479,7 @@
                                 <div class="row-wrapper flexEnd">
                                     <div class="overall-input-wrapper width-20">
                                         <label>Branch Name<span class="asterick">*</span></label>
-                                        <input matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_branch">
+                                        <input [id]="form_branch + j" matInput placeholder="Enter here" class="input" type="text" [formControlName]="form_branch">
                                         <div class="form-error"
                                             *ngIf="getBankArr.controls[j].get(form_branch).invalid && getBankArr.controls[j].get(form_branch).touched">
                                             <div
@@ -569,7 +569,7 @@
                                 <!-- <div class="overall-input-wrapper min200 top22"> -->
                                 <div class="overall-input-wrapper width-20">
                                         <label>Document Name<span class="asterick">*</span></label>
-                                        <input [matTooltip]="getOtherCertArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getOtherCertArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
+                                        <input [id]="form_label + k" [matTooltip]="getOtherCertArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getOtherCertArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
                                             type="text" [formControlName]="form_label" [readonly]="getOtherCertArr.controls[k].get(form_file_path).value ? true : false">
                                         <div class="form-error"
                                             *ngIf="getOtherCertArr.controls[k].get(form_label).invalid && getOtherCertArr.controls[k].get(form_label).touched">
@@ -686,7 +686,7 @@
                                   <!-- <div class="overall-input-wrapper min200 top22"> -->
                                   <div class="overall-input-wrapper width-20">
                                           <label>Certificate Name<span class="asterick">*</span></label>
-                                          <input [matTooltip]="getCertificationsArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getCertificationsArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
+                                          <input [id]="form_label + k" [matTooltip]="getCertificationsArr.controls[k].get(form_file_path).value ? 'Non-Editable' : ''" matInput placeholder="Enter here" class="input" [ngClass]="getCertificationsArr.controls[k].get(form_file_path).value ? 'non-edit' : ''"
                                               type="text" [formControlName]="form_label" [readonly]="getCertificationsArr.controls[k].get(form_file_path).value ? true : false">
                                           <div class="form-error"
                                               *ngIf="getCertificationsArr.controls[k].get(form_label).invalid && getCertificationsArr.controls[k].get(form_label).touched">
