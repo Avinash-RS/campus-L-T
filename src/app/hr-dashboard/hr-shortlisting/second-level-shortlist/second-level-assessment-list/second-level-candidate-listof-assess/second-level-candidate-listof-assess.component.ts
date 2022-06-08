@@ -12,6 +12,7 @@ ModuleRegistry.registerModules(AllModules);
 import { GridChartsModule } from '@ag-grid-enterprise/charts';
 import { ShortlistBoxComponent } from 'src/app/shared/modal-box/shortlist-box/shortlist-box.component';
 import { finalize } from 'rxjs/operators';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
 ModuleRegistry.registerModules([GridChartsModule]);
 
 @Component({
@@ -315,11 +316,39 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
     return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
   };
 
+    // Open dailog
+    openDialog1(component, data) {
+      let dialogDetails: any;
+  
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.matDialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+    }
+  
   onCellClicked(event) {
     if (event.colDef.field == 'va_test_status') {
     if (event["data"] && event["data"]["va_scheduled_status"] && event["data"]["va_scheduled_status"] == '1' && event['data']['va_test_status'] !="Yet to Start") {
       this.openMatDialog(event["data"]);
     }
+    }
+    if (event.colDef.field === 'candidate_name') {
+      const data = {
+        candidate_user_id: event['data'] && event['data']['candidate_user_id'] ? event['data']['candidate_user_id'] : '',
+        candidateName: event['data'] && event['data']['candidate_name'] ? event['data']['candidate_name'] : '',
+      };
+      this.openDialog1(CommonKycProfileViewComponent, data);
     }
   }
 
@@ -468,6 +497,16 @@ export class SecondLevelCandidateListofAssessComponent implements OnInit, AfterV
           if (index == 0) {
             first.children[index1] = {...second, ...header};
             first.children[index1].tooltipField = second.field;
+            // Color added for candidate name field indicating it can open profile popup.
+            if (first?.children[index1]?.field == 'candidate_name') {
+              first.children[index1].cellRenderer = (params: any) => {
+                if (true) {
+                  return `<span style="border-bottom: solid #1b4e9b 1px; cursor: pointer; color: #1b4e9b;">${params['data']['candidate_name']} </span>`;
+                } else {
+                  return `${params['data']['candidate_name']}`
+                }
+              }
+            }
           }
           if (second && second.children && second.children.length > 0) {
             second.children.forEach((third, index2) => {

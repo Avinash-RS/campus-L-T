@@ -122,6 +122,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDest
         this.tpoBasedCandidatesAPISubscription ? this.tpoBasedCandidatesAPISubscription.unsubscribe() : '';
         this.domainBasedCandidatesAPISubscription ? this.domainBasedCandidatesAPISubscription.unsubscribe() : '';
         this.buDashboardAPISubscription ? this.buDashboardAPISubscription.unsubscribe() : '';
+        this.driveName = this.appConfig.getDriveName();
         this.initialInitialization();
         this.dashboardSummaryAPI();
         this.tpoDashboardCandidatesAPI();
@@ -181,7 +182,6 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDest
   domainDashboardCandidatesAPI() {
     this.domainBasedCandidatesAPISubscription = this.adminService.getDisciplineDashboardSummaryAPI().subscribe((response: any)=> {
       this.disciplineBasedAPIData = response ? response : [];
-      this.disciplineBasedAPIData[0].assigned_to_panel = 1000;
       this.DomainBasedCandidatesAgGrid();
     }, (err)=> {
       this.initiateDomainWiseAgGrid(true);
