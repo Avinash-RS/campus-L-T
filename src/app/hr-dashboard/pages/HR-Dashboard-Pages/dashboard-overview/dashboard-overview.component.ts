@@ -182,7 +182,6 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDest
   domainDashboardCandidatesAPI() {
     this.domainBasedCandidatesAPISubscription = this.adminService.getDisciplineDashboardSummaryAPI().subscribe((response: any)=> {
       this.disciplineBasedAPIData = response ? response : [];
-      this.disciplineBasedAPIData[0].assigned_to_panel = 1000;
       this.DomainBasedCandidatesAgGrid();
     }, (err)=> {
       this.initiateDomainWiseAgGrid(true);
