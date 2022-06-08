@@ -26,12 +26,12 @@ export class HrMasterComponent implements OnInit {
   sendMenus() {
     if (this.role == 'hr') {
     this.hrSideMenu = [
-      {
-        url: this.appConstant.HR_DASHBOARD.DASHBOARD,
-        name: 'Dashboard',
-        icon: 'icon-dashboard',
-        hide: false
-      },
+      // {
+      //   url: this.appConstant.HR_DASHBOARD.DASHBOARD,
+      //   name: 'Dashboard',
+      //   icon: 'icon-dashboard',
+      //   hide: false
+      // },
       {
         url: this.appConstant.HR_DASHBOARD.USER_MANAGEMENT,
         name: 'User Management',
