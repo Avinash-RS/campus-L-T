@@ -19,6 +19,7 @@ import { AdaniMasterComponent } from './adani-master/adani-master.component';
 import { AdaniCandidateFaqComponent } from './adani-candidate-faq/candidate-faq.component';
 import { AdaniCandidateDocumentComponent } from './adani-candidate-document/candidate-document.component';
 import { AdaniCandidateUploadDocumentComponent } from './adani-candidate-document/adani-candidate-upload-document/candidate-upload-document.component';
+import { HelperModule } from '../helper/helper/helper.module';
 
 
 const routes: Routes = [
@@ -138,7 +139,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    HelperModule
   ]
 })
 export class AdaniModuleModule { }

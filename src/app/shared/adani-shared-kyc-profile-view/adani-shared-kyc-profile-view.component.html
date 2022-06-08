@@ -1088,7 +1088,7 @@
                     <ng-container *ngIf="workDetails.skills && workDetails.skills.length > 0">
                         <div class="subDocumentTitle">Skills</div>
                         <div class="d-flex skills-wrapper">
-                            <div class="mr-2 mt-2 skill-name" *ngFor="let skills of workDetails.skills; let i = index">{{skills}}</div>
+                            <div class="mr-2 mt-2 skill-name" *ngFor="let skills of workDetails.skills; let i = index">{{skills?.skillName}}</div>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="workDetails.Employment && workDetails.Employment.length > 0">

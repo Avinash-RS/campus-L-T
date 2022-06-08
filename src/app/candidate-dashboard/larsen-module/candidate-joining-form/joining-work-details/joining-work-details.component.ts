@@ -146,7 +146,6 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
   newSaveProfileDataSubscription: Subscription;
   customerName: any;
   skillsList: any = [];
-  newSkillToMongoSubscription: Subscription;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -693,12 +692,12 @@ addToTrainingArray() {
       });
 
      let saveWork = this.candidateService.newSaveProfileData(WorkExperienceApiRequestDetails);
-     let skillAdd = this.adminService.postSkills(skillsToMongo).pipe(
-      catchError(err => {
-        return of([]);
-      })
-    )
-    this.newSaveProfileDataSubscription = forkJoin([saveWork, skillAdd]).subscribe((res: any)=> {
+    //  let skillAdd = this.adminService.postSkills(skillsToMongo).pipe(
+    //   catchError(err => {
+    //     return of([]);
+    //   })
+    // )
+    this.newSaveProfileDataSubscription = forkJoin([saveWork]).subscribe((res: any)=> {
       let data = res[0];
       this.candidateService.saveFormtoLocalDetails(data.section_name, data.saved_data);
       this.candidateService.saveFormtoLocalDetails('section_flags', data.section_flags);
@@ -717,25 +716,6 @@ addToTrainingArray() {
       this.glovbal_validators.validateAllFormArrays(this.workDetailsForm.get([this.form_Relatives_Array]) as FormArray);
     }
 
-  }
-
- async sendNewSkillstoMongo() {
-    let filteredSkill = this.skillsList.filter(data => data.saved && data.newSkill);
-    let skills = filteredSkill.map(data => {
-      data.createdBy = this.appConfig.getLocalData('userEmail');
-      return data;
-    });
-    try {
-      this.newSkillToMongoSubscription = await this.adminService.postSkills(skills).subscribe((res: any) => {
-        if (res.success) {
-        } else {
-        }
-    }, (err) => {
-    });
-    }
-    catch (err) {
-      console.log('err', err);
-    }
   }
 
   saveRequestRxJs() {
@@ -938,7 +918,6 @@ addToTrainingArray() {
     this.checkFormValidRequest ? this.checkFormValidRequest.unsubscribe() : '';
     this.joiningFormDataPassingSubscription ? this.joiningFormDataPassingSubscription.unsubscribe() : '';
     this.newSaveProfileDataSubscription ? this.newSaveProfileDataSubscription.unsubscribe() : '';
-    this.newSkillToMongoSubscription ? this.newSkillToMongoSubscription.unsubscribe() : '';
     }
 
 }
