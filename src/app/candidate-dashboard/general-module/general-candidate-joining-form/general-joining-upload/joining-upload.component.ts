@@ -311,6 +311,7 @@ export class GeneralJoiningUploadComponent implements OnInit, AfterViewInit, OnD
 
     }
     // Resume
+    this.getResumeArr.clear();
     if (this.getResumeDocuments && this.getResumeDocuments.length > 0 && this.getResumeDocuments[0] && this.getResumeDocuments[0][this.form_name]) {
       this.getResumeDocuments.forEach(element => {
         this.checkNotSubmittedReasonAndDate(element);
