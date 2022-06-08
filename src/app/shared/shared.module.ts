@@ -41,7 +41,7 @@ import { VerticalChartComponent } from './charts/vertical-chart/vertical-chart.c
 import { PieDoughnutChartComponent } from './charts/pie-doughnut-chart/pie-doughnut-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HorizontalBarChartComponent } from './charts/horizontal-bar-chart/horizontal-bar-chart.component';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule, ThemeService } from 'ng2-charts';
 import { FunnelChartComponent } from './charts/funnel-chart/funnel-chart.component';
 import { AgGridSharedComponent } from './charts/ag-grid-shared/ag-grid-shared.component';
 import { GaugeChartComponent } from './charts/gauge-chart/gauge-chart.component';
@@ -110,6 +110,7 @@ ModuleRegistry.registerModules(AllModules);
     AgGridSharedComponent,
     GaugeChartComponent
   ],
+  providers: [ThemeService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SharedModule { }

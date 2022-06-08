@@ -122,6 +122,7 @@ export class DashboardOverviewComponent implements OnInit, AfterViewInit, OnDest
         this.tpoBasedCandidatesAPISubscription ? this.tpoBasedCandidatesAPISubscription.unsubscribe() : '';
         this.domainBasedCandidatesAPISubscription ? this.domainBasedCandidatesAPISubscription.unsubscribe() : '';
         this.buDashboardAPISubscription ? this.buDashboardAPISubscription.unsubscribe() : '';
+        this.driveName = this.appConfig.getDriveName();
         this.initialInitialization();
         this.dashboardSummaryAPI();
         this.tpoDashboardCandidatesAPI();
