@@ -19,6 +19,7 @@ import { GeneralCandidateUploadDocumentComponent } from './general-candidate-doc
 import { GeneralCandidateFaqComponent } from './general-candidate-faq/candidate-faq.component';
 import { GeneralProfileGuard } from 'src/app/guards/canload/candidate_components_authguards/general-profile.guard';
 import { GeneralProfileComponentGuard } from 'src/app/guards/canload/candidate_components_authguards/general-profile-component.guard';
+import { HelperModule } from '../helper/helper/helper.module';
 
 
 const routes: Routes = [
@@ -139,7 +140,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    HelperModule
   ]
 })
 export class GeneralModuleModule { }
