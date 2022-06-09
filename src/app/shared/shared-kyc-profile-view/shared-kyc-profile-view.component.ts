@@ -259,6 +259,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   form_terms_conditions = 'terms_conditions';
   form_ack_place = 'ack_place';
   form_ack_date = 'ack_date';
+  form_skill_ack = 'skill_ack';
 
   // Work details
   //form Variables
@@ -360,6 +361,8 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   customerCode: any;
   lttsCustomerCode = '#LTTS';
   BASE_URL = environment.API_BASE_URL;
+  isProfileForm: boolean;
+  isSkillExchangeEnabled: boolean;
   constructor(
     private appConfig: AppConfigService,
     private apiService: ApiServiceService,
@@ -502,6 +505,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
         [this.form_joining]: ackData.joining && (ackData.joining == '1' || ackData.joining == true) ? false : false,
         [this.form_terms_conditions]: ackData.terms_conditions && (ackData.terms_conditions == '1' || ackData.terms_conditions == true) ? false : false,
         [this.form_ack_place]: ackData.ack_place ? ackData.ack_place : null,
+        [this.form_skill_ack]: ackData[this.form_skill_ack] ? ackData[this.form_skill_ack] : (ackData[this.form_skill_ack] == null ? 1 : ackData[this.form_skill_ack]),
         [this.form_ack_date]: ackData.ack_date ? this.dateConvertionForm(new Date()) : this.dateConvertionForm(new Date()),
       }
       this.actualDate = ackData.ack_date;
@@ -583,6 +587,12 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   }
 
   checkFormSubmitted() {
+    this.isProfileForm = this.appConfig.getLocalData('joiningFormAccess') == 'true' ? false : true;
+    let drive = this.appConfig.getLocalData('driveList') ? JSON.parse(this.appConfig.getLocalData('driveList')) : [];
+    drive = drive ? drive : [];
+    let driveId = this.appConfig.getLocalData('driveId');
+    let driveDetails = drive.find(data => data.drive_id == driveId);
+    this.isSkillExchangeEnabled = driveDetails?.skill_exchange ? true : false;
     if (this.nonCandidate) {
       return this.formSubmitted = true;
     }
@@ -681,6 +691,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
       [this.form_coc]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
       [this.form_joining]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.requiredTrue] : []],
       [this.form_terms_conditions]: [null, [Validators.requiredTrue]],
+      [this.form_skill_ack]: [null],
       [this.form_ack_place]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
       [this.form_ack_date]: [{ value: this.dateConvertionForm(new Date()), disabled: true }, [Validators.required]]
     });
@@ -1156,6 +1167,7 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
     ackForm[this.form_joining] = ackForm[this.form_joining] && (ackForm[this.form_joining] == '1' || ackForm[this.form_joining] == true) ? '1' : '0';
     ackForm[this.form_caste_preview] = ackForm[this.form_caste_preview] && (ackForm[this.form_caste_preview] == '1' || ackForm[this.form_caste_preview] == true) ? '1' : '0';
     ackForm[this.form_terms_conditions] = ackForm[this.form_terms_conditions] && (ackForm[this.form_terms_conditions] == '1' || ackForm[this.form_terms_conditions] == true) ? '1' : '0';
+    ackForm[this.form_skill_ack] = (ackForm[this.form_skill_ack] == true || ackForm[this.form_skill_ack] == 1) ? 1 : 0;
     let apiData = {
       selected_post: this.selectedPost,
       acknowledgement: ackForm,
@@ -1222,6 +1234,10 @@ export class SharedKycProfileViewComponent implements OnInit, AfterViewInit, OnD
   get ack_date() {
     return this.acknowledgmentForm.get(this.form_ack_date);
   }
+  get skill_ack() {
+    return this.acknowledgmentForm.get(this.form_skill_ack);
+  }
+
 
 
   async uploadImage(file) {
