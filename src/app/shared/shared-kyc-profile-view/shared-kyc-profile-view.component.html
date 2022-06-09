@@ -1807,6 +1807,24 @@
                 </div>
             </div>
             </ng-container>
+            <ng-container *ngIf="isProfileForm && isSkillExchangeEnabled">
+              <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
+                <h6 class="d-head">Skill Exchange Enrollment</h6>
+                <div>
+                    <mat-checkbox [formControlName]="form_skill_ack" class="mr-2">
+                    </mat-checkbox>
+                    I would like to get enrolled in Skills Exchange Program where recruiters can search my profile and contact me for the Job requirements.
+                  </div>
+                  <div
+                    class="form-error mt-1"
+                    *ngIf="
+                      skill_ack?.invalid && skill_ack?.touched
+                    "
+                  >
+                    Please click on the above checkbox.
+                  </div>
+                </div>
+            </ng-container>
             <div class="row-wrapper mt-2 w-100 justify-content-start hanging flex-column">
                 <h6 class="d-head">Terms and Conditions Declaration</h6>
                 <div>
