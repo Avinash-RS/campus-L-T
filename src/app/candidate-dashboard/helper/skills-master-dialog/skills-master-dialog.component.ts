@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, take, filter, toArray, tap, map, delay } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
@@ -15,7 +15,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 })
 export class SkillsMasterDialogComponent implements OnInit {
   unSavedSkills = [];
-  skillTerm = new FormControl(null);
+  skillTerm = new FormControl(null, [Validators.maxLength(100)]);
   skillMasterResult: any[];
   maxLength = 50;
   loading: boolean;
@@ -33,7 +33,9 @@ export class SkillsMasterDialogComponent implements OnInit {
       debounceTime(1000),
       distinctUntilChanged(),
     ).subscribe((res: any)=> {
+      if (this.skillTerm.valid) {
       this.skillMasterApi(res);
+      }
     });
   }
 

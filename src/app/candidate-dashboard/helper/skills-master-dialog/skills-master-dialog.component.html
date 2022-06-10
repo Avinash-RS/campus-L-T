@@ -13,6 +13,9 @@
         <div class="input-wrapper">
             <input placeholder="Type Relevant Skills..." class="search-Input" matInput [formControl]="skillTerm"
                 type="text" name="" id="" />
+                <mat-error class="form-error" *ngIf="skillTerm?.invalid">
+                    <div>Maximum of 100 characters only allowed</div>
+                </mat-error>
         </div>
         <div class="result-wrapper">
             <div class="title">Select your relevant skills…</div>
