@@ -1995,7 +1995,20 @@
           <i (click)="closeBox()" class="icon-cancel_black ag-icon-font-size pointer primary-clr"></i>
       </div>
 
-      <pdf-viewer [src]="pdfsrc" [original-size]="true"></pdf-viewer>
+      <pdf-viewer
+      [src]="pdfsrc" 
+      [rotation]="0"
+      [original-size]="false"
+      [show-all]="true"
+      [fit-to-page]="false"
+      [zoom]="1"
+      [zoom-scale]="'page-width'"
+      [stick-to-page]="false"
+      [render-text]="true"
+      [external-link-target]="'blank'"
+      [autoresize]="true"
+      [show-borders]="false"
+      [original-size]="false"></pdf-viewer>
   </div>
 </ng-template>
 
