@@ -113,7 +113,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Uploaded by', field: 'uploader_name', //colId: 'cuploader_name',
+        headerName: 'Uploaded By', field: 'uploader_name', //colId: 'cuploader_name',
         filter: 'agTextColumnFilter',
         filterParams: {
           suppressAndOrCondition: true,
@@ -252,7 +252,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Uploaded by', field: 'field_uploaded_by', colId: 'pfield_uploaded_by',
+        headerName: 'Uploaded By', field: 'field_uploaded_by', colId: 'pfield_uploaded_by',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
@@ -486,7 +486,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Created by', field: 'created_by', colId: 'hcreated_by',
+        headerName: 'Created By', field: 'created_by', colId: 'hcreated_by',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
@@ -499,7 +499,7 @@ export class userListDefinition {
         }
       },
       {
-        headerName: 'Created date', field: 'created_date', colId: 'hcreated_date',
+        headerName: 'Created Date', field: 'created_date', colId: 'hcreated_date',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,

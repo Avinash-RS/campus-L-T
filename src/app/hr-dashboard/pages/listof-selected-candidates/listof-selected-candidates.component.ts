@@ -325,7 +325,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Assigned to', field: 'company',
+        headerName: 'Assigned To', field: 'company',
         filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
@@ -335,7 +335,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         }
       },
       {
-        headerName: 'Uploaded by', field: 'uploaded_by',
+        headerName: 'Uploaded By', field: 'uploaded_by',
         filter: 'agTextColumnFilter',
         minWidth: 120,
         sortable: true,
@@ -406,7 +406,7 @@ export class ListofSelectedCandidatesComponent implements OnInit, OnDestroy {
         minWidth: 125,
       },
       {
-        headerName: 'Verified/Reverted by', field: 'verifier_name',
+        headerName: 'Verified/Reverted By', field: 'verifier_name',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
