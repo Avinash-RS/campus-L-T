@@ -204,7 +204,7 @@ export class VideoAssessAssignedCandidatesComponent implements OnInit, OnDestroy
         },
       },
       {
-        headerName: "Assigned by",
+        headerName: "Assigned By",
         field: "scheduled_by",
         filter: 'agSetColumnFilter',
         filterParams: {

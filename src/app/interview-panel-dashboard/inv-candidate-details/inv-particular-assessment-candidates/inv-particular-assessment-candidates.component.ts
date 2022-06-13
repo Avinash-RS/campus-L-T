@@ -345,7 +345,7 @@ export class InvParticularAssessmentCandidatesComponent implements OnInit, OnDes
         },
       },
       {
-        headerName: "Assigned by",
+        headerName: "Assigned By",
         field: "normal_assessment.scheduled_by",
         filter: 'agSetColumnFilter',
         filterParams: {
