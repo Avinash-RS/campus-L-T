@@ -85,6 +85,7 @@ export class AdaniJoiningDependentComponent implements OnInit, AfterViewInit, On
   sendPopupResultSubscription: Subscription;
   joiningFormDataPassingSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
+  DOBMaxDate: Date;
 
   constructor(
     private appConfig: AppConfigService,
@@ -171,6 +172,7 @@ export class AdaniJoiningDependentComponent implements OnInit, AfterViewInit, On
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 0, 1);
     this.maxDate = new Date(currentYear + 20, 11, 31);
+    this.DOBMaxDate = new Date();
 }
 
 momentForm(date) {

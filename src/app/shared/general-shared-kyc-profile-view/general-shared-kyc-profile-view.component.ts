@@ -1040,7 +1040,7 @@ export class GeneralSharedKycProfileViewComponent implements OnInit, AfterViewIn
   }
   matDialogOpen() {
     const dialogRef = this.dialog.open(this.matDialogRef, {
-      width: '400px',
+      width: '500px',
       height: 'auto',
       autoFocus: false,
       closeOnNavigation: true,

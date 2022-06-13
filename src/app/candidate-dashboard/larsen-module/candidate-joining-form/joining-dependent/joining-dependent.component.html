@@ -28,7 +28,7 @@
                             <div class="overall-input-wrapper width-32">
                                 <label>Date of Birth<span>*</span></label>
                                 <div class="date-relative">
-                                    <input [id]="form_dependent_dob + i" matInput class="input" [min]="minDate" [max]="maxDate"
+                                    <input [id]="form_dependent_dob + i" matInput class="input" [min]="minDate" [max]="DOBMaxDate"
                                         [matDatepicker]="picker" placeholder="DD-MM-YYYY"
                                         [formControlName]="form_dependent_dob">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

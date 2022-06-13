@@ -1974,7 +1974,8 @@
 <ng-template #matDialog>
   <div class="main-wrapper">
       <div class="text">
-          Please confirm the information. Once you have submitted the form, you cannot change it anymore.
+            <ng-container *ngIf="candidateService.checkKycOrJoiningForm()"> Please confirm the information. Once you have submitted the form, you will not be able to edit it.</ng-container>
+            <ng-container *ngIf="!candidateService.checkKycOrJoiningForm()"> Please confirm the information. Once you have submitted the form, you will not be able to edit after the shortlisting process.</ng-container>
       </div>
       <div class="button-wrapper-form-pop-up">
           <button class="b1" (click)="closeDialog('save')" type="button" mat-raised-button>

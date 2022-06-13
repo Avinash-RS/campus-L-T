@@ -84,6 +84,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
   sendPopupResultSubscription: Subscription;
   joiningFormDataPassingSubscription: Subscription;
   newSaveProfileDataSubscription: Subscription;
+  DOBMaxDate: Date;
 
   constructor(
     private appConfig: AppConfigService,
@@ -170,6 +171,7 @@ export class JoiningDependentComponent implements OnInit, AfterViewInit, OnDestr
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 0, 1);
     this.maxDate = new Date(currentYear + 20, 11, 31);
+    this.DOBMaxDate = new Date();
 }
 
 momentForm(date) {
