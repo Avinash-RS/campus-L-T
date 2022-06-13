@@ -15,7 +15,6 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
   references: any;
   customerInfo: any;
   getCampusReferencesSubscription: Subscription;
-  formSubmitted: any;
   showPage = true;
   constructor(
     private appConfig: AppConfigService,
@@ -59,16 +58,17 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
         let status = element.driveDetails.candidateStatus && element.driveDetails.candidateStatus.interviewStatus ? element.driveDetails.candidateStatus.interviewStatus : '';
         element.driveDetails.candidateStatus.invStatus = this.isTimeExpired(startTime, endTime, status);
         let config = element.driveDetails.candidateStatus;
+        element.driveDetails.form_submitted_value = false;
         if (config && (config.update_joining_form == 1 || config.update_joining_form == 2)) {
           element.driveDetails.candidateStatus && element.driveDetails.candidateStatus.interviewSchedule ? element.driveDetails.candidateStatus.interviewSchedule = 0 : '';
           config.update_joining_form == 1 ? array.push({label: 'Update Joining Details', value: 1}) : '';
           config.update_joining_form == 2 ? array.push({label: 'No Action Required', value: 2}) : '';
-          this.formSubmitted = config.update_joining_form == 2 ? true : false;
+          element.driveDetails.form_submitted_value = config.update_joining_form == 2 ? true : false;
         } else {
           if (config && (config.update_profile == 1 || config.update_profile == 2)) {
             config.update_profile == 1 ? array.push({label: 'Update Profile', value: 1}) : '';
             config.update_profile == 2 ? array.push({label: 'Profile Completed', value: 2}) : '';
-            this.formSubmitted = config.update_profile == 2 ? true : false;
+            element.driveDetails.form_submitted_value = config.update_profile == 2 ? true : false;
           }
           if (config && (config.upload_document == 1 || config.upload_document == 2)) {
             config.upload_document == 1 ? array.push({label: 'Upload Documents', value: 1}) : '';
@@ -114,8 +114,9 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
  async setCustomerData(customer) {
    await this.appConfig.setLocalData('selected_customer', customer && customer['customer_code'] ? JSON.stringify(customer) : null);
    let data = customer.driveDetails[0] && customer.driveDetails[0].candidateStatus ? customer.driveDetails[0].candidateStatus : '';
+   let formsubmit = customer.driveDetails[0] ? customer.driveDetails[0] : '';
    await this.setFormEditorNot(data);
-  await this.appConfig.setLocalData('form_submmited', this.formSubmitted ? 'true' : 'false');
+  await this.appConfig.setLocalData('form_submmited', formsubmit?.form_submitted_value ? 'true' : 'false');
   await this.appConfig.setDriveList();
   }
 
