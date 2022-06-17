@@ -59,8 +59,12 @@ export class AdaniJoiningPersonalComponent implements OnInit, AfterViewInit, OnD
       value: 'Married'
     },
     {
-      name: 'Widowed',
+      name: 'Widow',
       value: 'Widow'
+    },
+    {
+      name: 'Divorced',
+      value: 'Divorced'
     },
     {
       name: 'Separated',
