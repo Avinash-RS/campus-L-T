@@ -124,6 +124,10 @@ export class AdaniSharedKycProfileViewComponent implements OnInit, AfterViewInit
     {
       label: 'Female',
       value: 'Female'
+    },
+    {
+      label: 'Others',
+      value: 'Others'
     }
   ]
   // Form control name declaration Start

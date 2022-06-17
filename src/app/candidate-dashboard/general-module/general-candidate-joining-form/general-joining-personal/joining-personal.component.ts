@@ -120,6 +120,10 @@ export class GeneralJoiningPersonalComponent implements OnInit, AfterViewInit, O
     {
       label: 'Female',
       value: 'Female'
+    },
+    {
+      label: 'Others',
+      value: 'Others'
     }
   ]
   // Form control name declaration Start
