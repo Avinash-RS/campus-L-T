@@ -191,12 +191,12 @@
                 </ng-container>
 
                 <div class="overall-input-wrapper width-45">
-                    <label>Caste Category<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
+                    <label>Community<span *ngIf="candidateService.checkKycOrJoiningForm()">*</span></label>
                     <nz-select [id]="form_category" class="input select" [formControlName]="form_category" nzAllowClear nzShowSearch nzPlaceHolder="<--Select-->">
                         <nz-option *ngFor="let category of category" [nzLabel]="category.name" [nzValue]="category.caste"></nz-option>
                     </nz-select>
                     <div class="form-error" *ngIf="category1?.invalid && category1?.touched">
-                        <div *ngIf="category1?.errors?.required">Caste Category is Required</div>
+                        <div *ngIf="category1?.errors?.required">Community is Required</div>
                         <div *ngIf="category1?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
                         </div>
                     </div>

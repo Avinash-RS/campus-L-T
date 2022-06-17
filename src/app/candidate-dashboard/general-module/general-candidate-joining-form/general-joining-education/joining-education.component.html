@@ -12,7 +12,7 @@
         <div class="row-wrapper">
 
     <div class="overall-input-wrapper w-75 d-flex align-items-center f_size_14 mt-2 mb-2" style="color: #565656;">
-        <div style="width: 170px;">Profile Applied For*: </div>
+        <div style="width: 170px;">Profile*: </div>
         <nz-select class="input select selectedPost" [(ngModel)]="selectedPost" (ngModelChange)="profileChanged()" [nzDisabled]="candidateService.checkKycOrJoiningForm() && isKYCNotExempted ? true : false" nzShowSearch nzPlaceHolder="Select">
         <nz-option *ngFor="let level of mastersList" [nzLabel]="level.label"
             [nzValue]="level.value"></nz-option>

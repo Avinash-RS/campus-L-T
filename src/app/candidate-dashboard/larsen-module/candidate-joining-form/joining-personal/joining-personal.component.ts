@@ -51,16 +51,28 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
 
   marital_list = [
     {
+      name: 'Single',
+      value: 'Single'
+    },
+    {
       name: 'Married',
       value: 'Married'
     },
     {
-      name: 'Unmarried',
-      value: 'Unmarried'
-    },
-    {
       name: 'Widow',
       value: 'Widow'
+    },
+    {
+      name: 'Divorced',
+      value: 'Divorced'
+    },
+    {
+      name: 'Separated',
+      value: 'Separated'
+    },
+    {
+      name: 'Others',
+      value: 'Others'
     }
   ];
   no_children_list = ['0', '1', '2', '3', '4', '5'];
@@ -121,6 +133,10 @@ export class JoiningPersonalComponent implements OnInit, AfterViewInit, OnDestro
     {
       label: 'Female',
       value: 'Female'
+    },
+    {
+      label: 'Others',
+      value: 'Others'
     }
   ]
   // Form control name declaration Start

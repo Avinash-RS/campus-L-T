@@ -73,6 +73,17 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
       value: '0'
     }
   ];
+
+  yesNoList = [
+    {
+      label: 'Yes',
+      value: '1'
+    },
+    {
+      label: 'No',
+      value: '0'
+    }
+  ];
   //form Variables
   form_workDetails = "workDetails";
   form_total_exp_years = "total_exp_years";
@@ -346,19 +357,18 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   OtherConditionsPatch(data) {
     this.workDetailsForm.patchValue({
-      [this.form_convicted_by_Court]: data[this.form_convicted_by_Court] && data[this.form_convicted_by_Court] == '1' ? true : false,
-      [this.form_arrested]: data[this.form_arrested] && data[this.form_arrested] == '1' ? true : false,
-      [this.form_prosecuted]: data[this.form_prosecuted] && data[this.form_prosecuted] == '1' ? true : false,
-      [this.form_detention]: data[this.form_detention] && data[this.form_detention] == '1' ? true : false,
-      [this.form_fined_by_court]: data[this.form_fined_by_court] && data[this.form_fined_by_court] == '1' ? true : false,
-      [this.form_debarred_exam_university]: data[this.form_debarred_exam_university] && data[this.form_debarred_exam_university] == '1' ? true : false,
-      [this.form_debarred_psc_company]: data[this.form_debarred_psc_company] && data[this.form_debarred_psc_company] == '1' ? true : false,
-      [this.form_court_case_pending]: data[this.form_court_case_pending] && data[this.form_court_case_pending] == '1' ? true : false,
-      [this.form_university_case_pending]: data[this.form_university_case_pending] && data[this.form_university_case_pending] == '1' ? true : false,
-      [this.form_disciplinary_proceedings]: data[this.form_disciplinary_proceedings] && data[this.form_disciplinary_proceedings] == '1' ? true : false,
+      [this.form_convicted_by_Court]: data[this.form_convicted_by_Court] ? '1' : '0',
+      [this.form_arrested]: data[this.form_arrested] ? '1' : '0',
+      [this.form_prosecuted]: data[this.form_prosecuted] ? '1' : '0',
+      [this.form_detention]: data[this.form_detention] ? '1' : '0',
+      [this.form_fined_by_court]: data[this.form_fined_by_court] ? '1' : '0',
+      [this.form_debarred_exam_university]: data[this.form_debarred_exam_university] ? '1' : '0',
+      [this.form_debarred_psc_company]: data[this.form_debarred_psc_company] ? '1' : '0',
+      [this.form_court_case_pending]: data[this.form_court_case_pending] ? '1' : '0',
+      [this.form_university_case_pending]: data[this.form_university_case_pending] ? '1' : '0',
+      [this.form_disciplinary_proceedings]: data[this.form_disciplinary_proceedings] ? '1' : '0',
       [this.form_full_particulars]: data[this.form_full_particulars]
     });
-    this.requiredDesc();
   }
 
   OtherDetailsPatch(data) {
@@ -455,16 +465,16 @@ export class JoiningWorkDetailsComponent implements OnInit, AfterViewInit, OnDes
 
   formInitialize() {
     this.workDetailsForm = this.fb.group({
-      [this.form_convicted_by_Court]: [null],
-      [this.form_arrested]: [null],
-      [this.form_prosecuted]: [null],
-      [this.form_detention]: [null],
-      [this.form_fined_by_court]: [null],
-      [this.form_debarred_exam_university]: [null],
-      [this.form_debarred_psc_company]: [null],
-      [this.form_court_case_pending]: [null],
-      [this.form_university_case_pending]: [null],
-      [this.form_disciplinary_proceedings]: [null],
+      [this.form_convicted_by_Court]: ['0', [Validators.required]],
+      [this.form_arrested]: ['0', [Validators.required]],
+      [this.form_prosecuted]: ['0', [Validators.required]],
+      [this.form_detention]: ['0', [Validators.required]],
+      [this.form_fined_by_court]: ['0', [Validators.required]],
+      [this.form_debarred_exam_university]: ['0', [Validators.required]],
+      [this.form_debarred_psc_company]: ['0', [Validators.required]],
+      [this.form_court_case_pending]: ['0', [Validators.required]],
+      [this.form_university_case_pending]: ['0', [Validators.required]],
+      [this.form_disciplinary_proceedings]: ['0', [Validators.required]],
       [this.form_full_particulars]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.address255()]],
       [this.form_total_exp_years]: [null],
       [this.form_total_exp_months]: [null],
@@ -578,16 +588,16 @@ addToTrainingArray() {
   requiredDesc() {
     let formValues = this.workDetailsForm.getRawValue();
     const bgvDetails = {
-      [this.form_convicted_by_Court]: formValues[this.form_convicted_by_Court] && (formValues[this.form_convicted_by_Court] == '1' || formValues[this.form_convicted_by_Court] == true) ? '1' : '0',
-      [this.form_arrested]: formValues[this.form_arrested] && (formValues[this.form_arrested] == '1' || formValues[this.form_arrested] == true) ? '1' : '0',
-      [this.form_prosecuted]: formValues[this.form_prosecuted] && (formValues[this.form_prosecuted] == '1' || formValues[this.form_prosecuted] == true) ? '1' : '0',
-      [this.form_detention]: formValues[this.form_detention] && (formValues[this.form_detention] == '1' || formValues[this.form_detention] == true) ? '1' : '0',
-      [this.form_fined_by_court]: formValues[this.form_fined_by_court] && (formValues[this.form_fined_by_court] == '1' || formValues[this.form_fined_by_court] == true) ? '1' : '0',
-      [this.form_debarred_exam_university]: formValues[this.form_debarred_exam_university] && (formValues[this.form_debarred_exam_university] == '1' || formValues[this.form_debarred_exam_university] == true) ? '1' : '0',
-      [this.form_debarred_psc_company]: formValues[this.form_debarred_psc_company] && (formValues[this.form_debarred_psc_company] == '1' || formValues[this.form_debarred_psc_company] == true) ? '1' : '0',
-      [this.form_court_case_pending]: formValues[this.form_court_case_pending] && (formValues[this.form_court_case_pending] == '1' || formValues[this.form_court_case_pending] == true) ? '1' : '0',
-      [this.form_university_case_pending]: formValues[this.form_university_case_pending] && (formValues[this.form_university_case_pending] == '1' || formValues[this.form_university_case_pending] == true) ? '1' : '0',
-      [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings] && (formValues[this.form_disciplinary_proceedings] == '1' || formValues[this.form_disciplinary_proceedings] == true) ? '1' : '0',
+      [this.form_convicted_by_Court]: formValues[this.form_convicted_by_Court],
+      [this.form_arrested]: formValues[this.form_arrested],
+      [this.form_prosecuted]: formValues[this.form_prosecuted],
+      [this.form_detention]: formValues[this.form_detention],
+      [this.form_fined_by_court]: formValues[this.form_fined_by_court],
+      [this.form_debarred_exam_university]: formValues[this.form_debarred_exam_university],
+      [this.form_debarred_psc_company]: formValues[this.form_debarred_psc_company],
+      [this.form_court_case_pending]: formValues[this.form_court_case_pending],
+      [this.form_university_case_pending]: formValues[this.form_university_case_pending],
+      [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings],
       [this.form_full_particulars]: formValues[this.form_full_particulars]
     }
     if (bgvDetails[this.form_convicted_by_Court] == '1' || bgvDetails[this.form_arrested] == '1' || bgvDetails[this.form_prosecuted] == '1' || bgvDetails[this.form_detention] == '1' || bgvDetails[this.form_fined_by_court] == '1' || bgvDetails[this.form_debarred_exam_university] == '1' || bgvDetails[this.form_debarred_psc_company] == '1' || bgvDetails[this.form_court_case_pending] == '1' || bgvDetails[this.form_university_case_pending] == '1' || bgvDetails[this.form_disciplinary_proceedings] == '1') {
@@ -622,16 +632,16 @@ addToTrainingArray() {
         [this.form_when_interview]: formValues[this.form_when_interview]
       };
       const bgv_details = {
-        [this.form_convicted_by_Court]: formValues[this.form_convicted_by_Court] && (formValues[this.form_convicted_by_Court] == '1' || formValues[this.form_convicted_by_Court] == true) ? '1' : '0',
-        [this.form_arrested]: formValues[this.form_arrested] && (formValues[this.form_arrested] == '1' || formValues[this.form_arrested] == true) ? '1' : '0',
-        [this.form_prosecuted]: formValues[this.form_prosecuted] && (formValues[this.form_prosecuted] == '1' || formValues[this.form_prosecuted] == true) ? '1' : '0',
-        [this.form_detention]: formValues[this.form_detention] && (formValues[this.form_detention] == '1' || formValues[this.form_detention] == true) ? '1' : '0',
-        [this.form_fined_by_court]: formValues[this.form_fined_by_court] && (formValues[this.form_fined_by_court] == '1' || formValues[this.form_fined_by_court] == true) ? '1' : '0',
-        [this.form_debarred_exam_university]: formValues[this.form_debarred_exam_university] && (formValues[this.form_debarred_exam_university] == '1' || formValues[this.form_debarred_exam_university] == true) ? '1' : '0',
-        [this.form_debarred_psc_company]: formValues[this.form_debarred_psc_company] && (formValues[this.form_debarred_psc_company] == '1' || formValues[this.form_debarred_psc_company] == true) ? '1' : '0',
-        [this.form_court_case_pending]: formValues[this.form_court_case_pending] && (formValues[this.form_court_case_pending] == '1' || formValues[this.form_court_case_pending] == true) ? '1' : '0',
-        [this.form_university_case_pending]: formValues[this.form_university_case_pending] && (formValues[this.form_university_case_pending] == '1' || formValues[this.form_university_case_pending] == true) ? '1' : '0',
-        [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings] && (formValues[this.form_disciplinary_proceedings] == '1' || formValues[this.form_disciplinary_proceedings] == true) ? '1' : '0',
+        [this.form_convicted_by_Court]: formValues[this.form_convicted_by_Court],
+        [this.form_arrested]: formValues[this.form_arrested],
+        [this.form_prosecuted]: formValues[this.form_prosecuted],
+        [this.form_detention]: formValues[this.form_detention],
+        [this.form_fined_by_court]: formValues[this.form_fined_by_court],
+        [this.form_debarred_exam_university]: formValues[this.form_debarred_exam_university],
+        [this.form_debarred_psc_company]: formValues[this.form_debarred_psc_company],
+        [this.form_court_case_pending]: formValues[this.form_court_case_pending],
+        [this.form_university_case_pending]: formValues[this.form_university_case_pending],
+        [this.form_disciplinary_proceedings]: formValues[this.form_disciplinary_proceedings],
         [this.form_full_particulars]: formValues[this.form_full_particulars]
       }
       const employments = this.showWorkExp == '1' ? this.workDetailsForm.getRawValue()[this.form_Employment_Array] : [];

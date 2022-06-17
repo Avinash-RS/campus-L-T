@@ -265,7 +265,7 @@ dateConvertion(date) {
   patchDependentForm() {
     this.getDependentArr.clear();
     this.dependedentDetails.forEach((element, i) => {
-      this.getDependentArr.push(this.patching(element));
+      this.getDependentArr.push(this.patching(element, i));
     });
     this.getDependentArr.at(0).patchValue({
       [this.form_dependent_relationship]: 'Father',
@@ -277,27 +277,29 @@ dateConvertion(date) {
     this.getDependentArr.controls[1]['controls'][this.form_dependent_relationship].disable({ emitEvent: false });
   }
 
-  patching(data) {
+  patching(data, index) {
     return this.fb.group({
-      [this.form_dependent_name]: [data[this.form_dependent_name], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob]), [Validators.required]],
+      [this.form_dependent_name]: [data[this.form_dependent_name], index > 1 ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()] : [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_dob]: [this.dateConvertion(data[this.form_dependent_dob])],
       [this.form_dependent_occupation]: [data[this.form_dependent_occupation], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [data[this.form_dependent_differently_abled], this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_dependent_status]: [data[this.form_dependent_status], this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_isDependent]: [data[this.form_isDependent]]
+      [this.form_dependent_relationship]: [data[this.form_dependent_relationship], [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_differently_abled]: [(data[this.form_dependent_differently_abled] == 1 || data[this.form_dependent_differently_abled] == 0) ? (data[this.form_dependent_differently_abled] == 1 ? 1 : 0) : 0],
+      [this.form_dependent_status]: [(data[this.form_dependent_status] == 1 || data[this.form_dependent_status] == 0) ? ((data[this.form_dependent_status] == 0 && data[this.form_dependent_status] != '') ? 0 : 1) : 1],
+      [this.form_isDependent]: [(data[this.form_isDependent] == 1 || data[this.form_isDependent] == 0) ? (data[this.form_isDependent] == 1 ? 1 : 0) : 0]
     })
   }
 
-  initDependentArray() {
+  initDependentArray(dependentArrayLength?: any) {
     return this.fb.group({
-      [this.form_dependent_name]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_dob]: [null, [Validators.required]],
+      [this.form_dependent_name]: [null, dependentArrayLength >= 2 ? [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()] : [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_dob]: [null],
       [this.form_dependent_occupation]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_relationship]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.glovbal_validators.alphaNum255()]],
-      [this.form_dependent_differently_abled]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_dependent_status]: [null, this.candidateService.checkKycOrJoiningForm() ? [Validators.required] : []],
-      [this.form_isDependent]: [null]
+      [this.form_dependent_relationship]: [null, [RemoveWhitespace.whitespace(), this.glovbal_validators.alphaNum255()]],
+      [this.form_dependent_differently_abled]: [0],
+      // ? [Validators.required] : []
+      [this.form_dependent_status]: [1],
+      // ? [Validators.required] : []
+      [this.form_isDependent]: [0]
     })
   }
 
@@ -309,7 +311,8 @@ dateConvertion(date) {
 
   addToDependentArray() {
     if (this.dependentForm.valid) {
-     return this.getDependentArr.push(this.initDependentArray());
+      let dependentArrayLength = this.getDependentArr.length;
+     return this.getDependentArr.push(this.initDependentArray(dependentArrayLength));
     }
     this.glovbal_validators.validateAllFormArrays(this.dependentForm.get([this.form_dependentArray]) as FormArray);
   }

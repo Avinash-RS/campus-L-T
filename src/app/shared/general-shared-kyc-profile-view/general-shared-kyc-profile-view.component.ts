@@ -127,6 +127,10 @@ export class GeneralSharedKycProfileViewComponent implements OnInit, AfterViewIn
     {
       label: 'Female',
       value: 'Female'
+    },
+    {
+      label: 'Others',
+      value: 'Others'
     }
   ]
   // Form control name declaration Start

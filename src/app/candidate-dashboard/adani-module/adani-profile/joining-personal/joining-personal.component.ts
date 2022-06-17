@@ -51,16 +51,20 @@ export class AdaniJoiningPersonalComponent implements OnInit, AfterViewInit, OnD
 
   marital_list = [
     {
+      name: 'Single',
+      value: 'Single'
+    },
+    {
       name: 'Married',
       value: 'Married'
     },
     {
-      name: 'Unmarried',
-      value: 'Unmarried'
+      name: 'Widow',
+      value: 'Widow'
     },
     {
-      name: 'Widowed',
-      value: 'Widow'
+      name: 'Divorced',
+      value: 'Divorced'
     },
     {
       name: 'Separated',
@@ -128,6 +132,10 @@ export class AdaniJoiningPersonalComponent implements OnInit, AfterViewInit, OnD
     {
       label: 'Female',
       value: 'Female'
+    },
+    {
+      label: 'Others',
+      value: 'Others'
     }
   ]
   // Form control name declaration Start
