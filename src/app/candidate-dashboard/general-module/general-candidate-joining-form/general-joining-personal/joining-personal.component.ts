@@ -51,12 +51,12 @@ export class GeneralJoiningPersonalComponent implements OnInit, AfterViewInit, O
 
   marital_list = [
     {
-      name: 'Married',
-      value: 'Married'
+      name: 'Single',
+      value: 'Single'
     },
     {
-      name: 'Unmarried',
-      value: 'Unmarried'
+      name: 'Married',
+      value: 'Married'
     },
     {
       name: 'Widow',
