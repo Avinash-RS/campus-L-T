@@ -1,1 +1,88 @@
-<p>misc-colleges works!</p>
+<div class="misc-college-wrapper">
+  <div class="form-wrapper">
+    <div class="div-wrapper">
+      <label class="label">College Type</label>
+      <div class="input-wrapper">
+        <nz-select
+          class="nzselect"
+          [formControl]="collegeType"
+          nzAllowClear
+          nzShowSearch
+          nzPlaceHolder="Select"
+        >
+          <nz-option
+            *ngFor="let college of collegeTypeList"
+            [nzLabel]="college.name"
+            [nzValue]="college.value"
+          ></nz-option>
+        </nz-select>
+        <ng-container *ngIf="collegeType.touched && collegeType.invalid">
+          <div class="mat-error">College Type Required</div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="div-wrapper">
+      <label class="label">College Name</label>
+      <div class="input-wrapper">
+        <input
+          matInput
+          type="text"
+          [formControl]="collegeName"
+          placeholder="Enter College Name"
+          name=""
+          id="college"
+        />
+        <ng-container *ngIf="collegeName.touched && collegeName.invalid">
+          <div class="mat-error">College Name Required</div>
+        </ng-container>
+      </div>
+      <button
+        [disabled]="collegeName.invalid || collegeType.invalid"
+        class="submit-btn"
+        mat-button
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+
+    <div
+      class="college-grid-wrapper"
+      [ngClass]="addedCollegesList && addedCollegesList.length > 0 ? '' : ''"
+    >
+      <div class="search-bar">
+        <div class="search-icon">
+          <img src="assets/images/feather-search.svg" alt="" srcset="" />
+          <input
+            style="border: none; outline: none"
+            matInput
+            (keyup)="onQuickFilterChanged()"
+            [(ngModel)]="quickSearchValue"
+            placeholder="Search…."
+          />
+        </div>
+      </div>
+      <!-- </mat-form-field> -->
+
+      <ag-grid-angular
+        style="width: 98%; height: calc(100vh - 182px); margin: auto !important"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [tooltipShowDelay]="tooltipShowDelay"
+        [pagination]="true"
+        [suppressRowClickSelection]="true"
+        [paginationPageSize]="paginationPageSize"
+        [rowSelection]="'multiple'"
+        [cacheBlockSize]="cacheBlockSize"
+        (gridReady)="onGridReady($event)"
+        (sortChanged)="sortevent($event)"
+        (cellClicked)="onCellClicked($event)"
+        (filterModified)="getModel($event)"
+        headerHeight="40"
+        [animateRows]="true"
+      >
+      </ag-grid-angular>
+    </div>
+</div>
