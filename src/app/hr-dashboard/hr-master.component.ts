@@ -68,12 +68,12 @@ export class HrMasterComponent implements OnInit {
         icon: 'icon-track_changes',
         hide: false
       },
-      {
-        url: this.appConstant.HR_DASHBOARD.HR_MISCELLANEOUS,
-        name: `Miscellaneous`,
-        icon: 'icon-track_changes',
-        hide: false
-      }
+      // {
+      //   url: this.appConstant.HR_DASHBOARD.HR_MISCELLANEOUS,
+      //   name: `Miscellaneous`,
+      //   icon: 'icon-track_changes',
+      //   hide: false
+      // }
   ];
   this.appConfig.getSelectedCustomerCode() == '#LTTS' ? this.hrSideMenu.shift() : this.hrSideMenu.shift();
 }
