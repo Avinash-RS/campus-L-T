@@ -80,6 +80,11 @@ export class GlobalValidatorService {
       return this.regexValidator(alphaNumericwithCommonSpecialCharactersMaxLength30, {alphaNum255: true});
     }
 
+    alphaNum100() {
+      const alphaNumericwithCommonSpecialCharactersMaxLength30: RegExp = /^([a-zA-Z0-9_ \-,.\r\n]){0,100}$/;
+      return this.regexValidator(alphaNumericwithCommonSpecialCharactersMaxLength30, {alphaNum100: true});
+    }
+
     address255() {
       const address255: RegExp = /^([a-zA-Z0-9_ \-,.:/\r\n|\r|\n/]){0,255}$/;
       return this.regexValidator(address255, {address255: true});

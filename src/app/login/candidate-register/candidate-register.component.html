@@ -1,6 +1,8 @@
           <div class="wrap-reg">
+            <!--  (ngSubmit)="checkCaptchaSignIn(captchaRef)" --> 
+            <!-- Above line is for submit with google captcha -->
             <form [formGroup]="candidateForm" class="form-wrapper" (ngSubmit)="submit()">
-              <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Welcome' }}</h1>
+              <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Job-Seeker Registration' }}</h1>
               <div>
                 <mat-form-field class="mat-form-spacing" appearance="outline">
                   <mat-label class="label-color">Name</mat-label>
@@ -9,36 +11,21 @@
                   <em matPrefix class="icon-User icon-18 login-icon-color pr-1" style="font-size: 16px;
                   padding-right: 5px !important; top: -1px;"></em>
                   <mat-error class="error" *ngIf="candidateForm.get('name').hasError('required')">{{'Name is required'}}</mat-error>
-                  <mat-error class="error" *ngIf="candidateForm.get('name').hasError('pattern')">{{'Alphabetic characters only allowed'}}</mat-error>
-                  <mat-error class="error" *ngIf="candidateForm.get('name').hasError('maxlength') && !candidateForm.get('name').hasError('pattern')">{{'Should not exceed 30 characters'}}</mat-error>
+                  <mat-error class="error" *ngIf="candidateForm.get('name').hasError('alphaNum100')">{{'Alpha numeric with maximum of 100 characters only allowed'}}</mat-error>
+                  <mat-error class="error" *ngIf="candidateForm.get('name').hasError('maxlength') && !candidateForm.get('name').hasError('alphaNum100')">{{'Should not exceed 100 characters'}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="mat-form-spacing" appearance="outline">
                   <mat-label class="label-color">Email</mat-label>
-                  <input matInput  id="username" #username [placeholder]="'Enter the email'"  formControlName="email" maxlength="64"
+                  <input matInput  id="username" #username [placeholder]="'Enter the email'"  formControlName="email"
                   required>
                   <em matPrefix class="icon-email_black_24dp icon-18 login-icon-color pr-1"></em>
                   <mat-error class="error" *ngIf="candidateForm.get('email').hasError('required')">{{'Email is required'}}</mat-error>
-                  <mat-error class="error" *ngIf="candidateForm.get('email').hasError('maxlength')">{{'100 Characters only allowed'}}</mat-error>
-                  <mat-error class="error" *ngIf="candidateForm.get('email').hasError('pattern')">{{'Please enter a valid email address'}}</mat-error>
+                  <mat-error class="error" *ngIf="candidateForm.get('email').hasError('maxlength')">{{'Should not exceed 100 characters'}}</mat-error>
+                  <mat-error class="error" *ngIf="candidateForm.get('email').hasError('email')">{{'Please enter a valid email address'}}</mat-error>
                 </mat-form-field>
-
-                <div appCapslock (capsLock)="capsOn=$event">
-                  <mat-form-field class="mat-form-spacing" appearance="outline">
-                    <mat-label  class="label-color">{{'Password' }}</mat-label>
-                    <input matInput  [placeholder]="'Enter password'" [type]="!toggleVisibility ? 'text' : 'password'" formControlName="password" [ngClass]="{ 'is-invalid': password.touched && password.errors }" required>
-                    <em matPrefix class="icon-lock_black_24dp icon-18 login-icon-color pr-1"></em>
-                    <div class="login-icon-wrapper" mat-icon-button matSuffix (click)="toggleVisibility = !toggleVisibility" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="toggleVisibility">
-                      <em matPrefix class="icon-18 login-icon-color pointer" [ngClass]="toggleVisibility ? 'icon-Hide' : 'icon-View'"></em>
-                    </div>
-                    <mat-error class="error" *ngIf="password.touched && password.errors?.required" >{{'Password is required' }}</mat-error>
-                    <mat-error class="error" *ngIf="password.touched && password.errors?.maxlength" >{{'30 Characters only allowed' }}</mat-error>
-                    <mat-error class="error" *ngIf="password.touched && password.errors?.passwordvalidator" >{{'The password should consist of 1 uppercase, 1 lowercase,1 number and 1 special character.' }}</mat-error>
-                  </mat-form-field>
-                </div>
-
                 <div class="center">
-                  <button class="btn" id="login" mat-raised-button [disabled]="candidateForm.invalid" type="submit">{{'Submit'}}</button>
+                  <button class="btn" id="login" mat-raised-button [disabled]="candidateForm.invalid" type="submit">{{'Register'}}</button>
                 </div>
               </div>
 
@@ -49,3 +36,8 @@
 
             </form>
           </div>
+<!-- <re-captcha #captchaRef="reCaptcha"  (resolved)="resolvedSignIn($event)" size='invisible' (error)="onError($event)"
+
+errorMode="handled" [siteKey]="captachaSiteKey">
+
+</re-captcha> -->

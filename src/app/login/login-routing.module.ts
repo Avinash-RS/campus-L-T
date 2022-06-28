@@ -31,13 +31,13 @@ const routes: Routes = [
     path: `${CONSTANT.ROUTES.REGISTER.INSTITUTE}`, component: RegisterpageComponent
   },
   {
-    path: `${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`, component: EmailVerifierErrorPageComponent
-  },
-  {
     path: '', component: SignupComponent, children: [
       {
         path: `${CONSTANT.ROUTES.VERIFY.OTP}`, component: OtpComponent
       },
+      {
+        path: `${CONSTANT.ROUTES.VERIFY.EMAIL_ERROR}`, component: EmailVerifierErrorPageComponent
+      },    
       {
         path: `${CONSTANT.ROUTES.REGISTER.CANDIDATE}`, component: CandidateRegisterComponent
       },

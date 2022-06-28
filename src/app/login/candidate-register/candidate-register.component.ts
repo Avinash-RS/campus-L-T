@@ -6,81 +6,92 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { FormCustomValidators } from 'src/app/custom-form-validators/autocompleteDropdownMatch';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { RecaptchaErrorParameters } from 'ng-recaptcha';
+import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 
 @Component({
-  selector: 'app-candidate-register',
-  templateUrl: './candidate-register.component.html',
-  styleUrls: ['./candidate-register.component.scss']
+  selector: "app-candidate-register",
+  templateUrl: "./candidate-register.component.html",
+  styleUrls: ["./candidate-register.component.scss"],
 })
 export class CandidateRegisterComponent implements OnInit {
-
   candidateForm: FormGroup;
   toggleVisibility = true;
   capsOn: any;
   getCurrentYear = this.appConfig.getCurrentYear();
+  captachaSiteKey = "6Lf-qfEcAAAAAH2zsrdDz1K6DmUOHjgHzGmH3PN7";
+  recaptchaStr = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiServiceService,
     private appConfig: AppConfigService,
-  ) { }
+    private glovbal_validators: GlobalValidatorService,
+  ) {}
 
   ngOnInit() {
     this.formInitialize();
   }
 
   formInitialize() {
-    const onlyAlpha: RegExp = /^[a-zA-Z ]*$/;
-    const trimSpace: RegExp = /^[ \t]+|[ \t]+$/;
-    const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.candidateForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(onlyAlpha), RemoveWhitespace.whitespace()]],
-      email: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(emailregex)]],
-      password: ['', [Validators.required, Validators.maxLength(30), FormCustomValidators.patternValidator()]],
+      name: [
+        null,
+        [
+          RemoveWhitespace.whitespace(),
+          Validators.required,
+          this.glovbal_validators.alphaNum100()
+        ],
+      ],
+      email: [
+        "",
+        [
+          RemoveWhitespace.whitespace(),
+          Validators.required,
+          Validators.maxLength(100),
+          this.glovbal_validators.email()
+        ],
+      ],
     });
   }
 
   get name() {
-    return this.candidateForm.get('name');
+    return this.candidateForm.get("name");
   }
   get email() {
-    return this.candidateForm.get('email');
-  }
-  get password() {
-    return this.candidateForm.get('password');
+    return this.candidateForm.get("email");
   }
 
-  submit() {
-
+  submit(captcha?:any) {
     if (this.candidateForm.valid) {
       // API
       const datas = {
         // name: [{ value: this.candidateForm.value.name }],
         // mail: [{ value: this.candidateForm.value.email }],
-        // pass: [{value: this.candidateForm.value.password}]
         // field_registration_role: [{ target_id: 'candidate' }],
-        mail: this.candidateForm.value.email,
-        pass: this.candidateForm.value.password,
-        field_user_name: this.candidateForm.value.name
-
+        name: this.candidateForm.value.name,
+        email: this.candidateForm.value.email
       };
       // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
-      this.apiService.CandidateRegistrationForm(datas).subscribe((data: any) => {
-
-        this.appConfig.success(`Email has been captured. Further instructions have been sent to your email ID`, '');
-        this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
-      }, (error) => {
-      });
+      this.apiService.OffCampusCandidateRegistrationForm(datas).subscribe(
+        (data: any) => {
+          this.appConfig.success(
+            `Your registration is successful. Please check your mailbox to complete the email verification process.`,
+            ""
+          );
+          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+        },
+        (error) => {}
+      );
     } else {
       this.validateAllFields(this.candidateForm);
     }
-
   }
   // To validate all fields after submit
   validateAllFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
+    Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
@@ -94,5 +105,18 @@ export class CandidateRegisterComponent implements OnInit {
     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.LOGIN);
   }
 
+  checkCaptchaSignIn(captchaSignIn) {
+    if (this.recaptchaStr) {
+      captchaSignIn.reset();
+    }
+    captchaSignIn.execute();
+  }
+  resolvedSignIn(captchaSignInResponse: string) {
+    this.recaptchaStr = captchaSignInResponse;
+    if (this.recaptchaStr) {
+        this.submit(this.recaptchaStr);
+    }
+  }
 
+  onError(errorDetails: RecaptchaErrorParameters): void {}
 }

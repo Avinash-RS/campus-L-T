@@ -144,7 +144,10 @@ export const CONSTANT = {
       HR_STATUS_RECRUITMENT: '/hr/status/recruitment',
       BUSINESSROUTE: '/hr/ic',
       IC_ADDorLIST: '/hr/ic/list',
-      OfferedCandidatesLIST: '/hr/ic/candidates'
+      OfferedCandidatesLIST: '/hr/ic/candidates',
+      HR_MISCELLANEOUS: '/hr/miscellaneous',
+      HR_MISCELLANEOUS_COLLEGES: '/hr/miscellaneous/colleges',
+      HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE: '/hr/miscellaneous/name-change'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -296,7 +299,10 @@ export const CONSTANT = {
       HR_STATUS_RECRUITMENT: 'recruitment',
       BUSINESSROUTE: 'ic',
       IC_ADDorLIST: 'list',
-      OfferedCandidatesLIST: 'candidates'
+      OfferedCandidatesLIST: 'candidates',
+      HR_MISCELLANEOUS: 'miscellaneous',
+      HR_MISCELLANEOUS_COLLEGES: 'colleges',
+      HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE: 'name-change'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',

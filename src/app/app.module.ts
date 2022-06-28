@@ -50,7 +50,7 @@ import { DashboardActivateGuard } from './guards/canload/dashboard_activate/dash
     NgZorroAntdModule,
     NgxSkeletonLoaderModule,
     ToastrModule.forRoot({
-      timeOut: 4000,
+      timeOut: 5000,
       positionClass: 'toast-top-right',
       maxOpened: 1,
       preventDuplicates: true,

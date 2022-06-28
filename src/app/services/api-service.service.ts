@@ -67,6 +67,11 @@ export class ApiServiceService {
       { headers: this.withoutTokens(), withCredentials: true });
   }
 
+  OffCampusCandidateRegistrationForm(formdata) {
+    return this.http.post(`${this.BASE_URL}/profile/create_account`, formdata,
+      { headers: this.withoutTokens(), withCredentials: true });
+  }
+
   emailVerification(data) {
     return this.http.post(`${this.BASE_URL}/rest/verify-account?_format=json`, data,
       { headers: this.getCustomHeaders(), withCredentials: true });

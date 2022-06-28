@@ -52,10 +52,10 @@ export class CreateComponent implements OnInit {
         // this.appConfig.routeNavigation(`/${CONSTANT.ROUTES.PASSWORD.RESET}`);
         this.passwordTempToken = params['temp-token'];
         this.prePoulteEmailId = params['mail'];
-        this.currentRoute = 'Create the Password';
+        this.currentRoute = 'Create Password';
         if (params['type'] === 'reset') {
           this.type = 'reset';
-          this.currentRoute = 'Reset the Password';
+          this.currentRoute = 'Reset Password';
         }
       } else {
         this.appConfig.error(`Reset password temp token is invalid`, '');

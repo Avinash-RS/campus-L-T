@@ -1,0 +1,86 @@
+@import '../../../../styles.scss';
+.form-wrapper {
+    width: 50%;
+    margin: 1rem 0;
+    .div-wrapper {
+        display: flex;
+        align-items: flex-start;    
+        color: #5C6873;
+        margin-bottom: 12px;
+        .label {
+            flex-basis: 20%;
+            font-size: 13px;
+            padding-top: 5px;
+        }
+        .input-wrapper {
+            flex-basis: 50%;
+            input {
+                width: 100%;
+                font-size: 15px;
+                border: solid 1px #BEBEBE;
+                outline: none;
+                height: 35px;
+                padding: 4px 8px;
+                box-sizing: border-box;
+            }
+            input:hover {
+                border: solid #004684 1px !important;
+            }
+            .nzselect {
+                width: 100%;
+                font-size: 15px;
+            }
+            nz-select.ng-invalid.ng-touched {
+                border: none !important;
+            }
+            input.ng-invalid.ng-touched {
+                border: solid red 1px !important;
+            }
+            .mat-error {
+                font-size: 12px;
+                color: red;
+            }
+        }
+        .submit-btn {
+            flex-basis: 15%;
+            background: #1B4E9B;
+            color: #fff;
+            font-size: 15px;
+            padding: 4px 8px;
+            height: 35px;
+            margin-left: 20px;
+        }
+        .mat-button[disabled] {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+        @include cus-width(200px, 480px) {
+            flex-direction: column;
+            margin-bottom: 4px;
+            >* {
+                flex-basis: 100%;
+                width: 100%;
+            }
+            .label {
+                padding: 0 0 4px 0;
+            }
+            .submit-btn {
+                margin: 8px 0 0 0;
+                padding: 0;
+                width: 50%;
+                line-height: 35px;
+            }
+        }
+    }
+    @include cus-width(200px, 480px) {
+        width: 80%;
+    }
+}
+.college-grid-wrapper {
+    margin-bottom: 1rem;
+    .search-bar {
+        padding: 0.25em 1em;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+}

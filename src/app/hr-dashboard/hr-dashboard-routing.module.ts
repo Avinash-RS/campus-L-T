@@ -35,6 +35,9 @@ import { ScheduleVideoAssessComponent } from './hr-shortlisting/second-level-sho
 import { RouteEvaluatorAssignForVideoAssessComponent } from './pages/route-evaluator-assign-for-video-assess/route-evaluator-assign-for-video-assess.component';
 import { EvaluatorAssignForVideoAssessComponent } from './pages/evaluator-assign-for-video-assess/evaluator-assign-for-video-assess.component';
 import { DashboardActivateGuard } from '../guards/canload/dashboard_activate/dashboard-activate.guard';
+import { MiscellaneousMasterComponent } from './pages/miscellaneous-master/miscellaneous-master.component';
+import { MiscCollegesComponent } from './pages/misc-colleges/misc-colleges.component';
+import { MiscCandidateNameChangeComponent } from './pages/misc-candidate-name-change/misc-candidate-name-change.component';
 
 const routes: Routes = [
   {
@@ -314,6 +317,34 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.OfferedCandidatesLIST}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_MISCELLANEOUS}`,
+        component: MiscellaneousMasterComponent,
+        data: {
+          breadcrumb: 'Miscellaneous'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_MISCELLANEOUS_COLLEGES}`,
+            component: MiscCollegesComponent,
+            data: {
+              breadcrumb: 'Colleges'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE}`,
+            component: MiscCandidateNameChangeComponent,
+            data: {
+              breadcrumb: 'Name Change'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_MISCELLANEOUS_COLLEGES}`,
             pathMatch: 'full',
           }
         ]
