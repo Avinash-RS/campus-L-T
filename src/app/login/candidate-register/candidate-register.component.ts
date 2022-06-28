@@ -19,7 +19,7 @@ export class CandidateRegisterComponent implements OnInit {
   toggleVisibility = true;
   capsOn: any;
   getCurrentYear = this.appConfig.getCurrentYear();
-  captachaSiteKey = "6Lf-qfEcAAAAAH2zsrdDz1K6DmUOHjgHzGmH3PN7";
+  captachaSiteKey = "6LdnlaYgAAAAAP-v2pcAGw8CxbB8dEPZn_J44l3w";
   recaptchaStr = '';
 
   constructor(
@@ -67,24 +67,21 @@ export class CandidateRegisterComponent implements OnInit {
     if (this.candidateForm.valid) {
       // API
       const datas = {
-        // name: [{ value: this.candidateForm.value.name }],
-        // mail: [{ value: this.candidateForm.value.email }],
-        // field_registration_role: [{ target_id: 'candidate' }],
         name: this.candidateForm.value.name,
-        email: this.candidateForm.value.email
+        email: this.candidateForm.value.email,
+        clientResponse: captcha
       };
-      // this.appConfig.consoleLog('Registration Data which is passed to API', datas);
 
-      this.apiService.OffCampusCandidateRegistrationForm(datas).subscribe(
-        (data: any) => {
-          this.appConfig.success(
-            `Your registration is successful. Please check your mailbox to complete the email verification process.`,
-            ""
-          );
-          this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
-        },
-        (error) => {}
-      );
+      // this.apiService.OffCampusCandidateRegistrationForm(datas).subscribe(
+      //   (data: any) => {
+      //     this.appConfig.success(
+      //       `Your registration is successful. Please check your mailbox to complete the email verification process.`,
+      //       ""
+      //     );
+      //     this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+      //   },
+      //   (error) => {}
+      // );
     } else {
       this.validateAllFields(this.candidateForm);
     }
