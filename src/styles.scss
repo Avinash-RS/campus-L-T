@@ -25,6 +25,7 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 
 html, body {
     height: 100%;
+    box-sizing: border-box;
 }
 
 body {
