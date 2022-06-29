@@ -1,16 +1,243 @@
 <div class="campus-profile">
-    <div class="lorem">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita dolores nobis tempore. Quis nemo veniam sit beatae ex alias atque iusto repudiandae sed, aliquid quod doloremque corrupti nobis? Earum, itaque.
-        Facilis modi, earum quo mollitia autem, fuga consequuntur numquam sed deserunt maiores voluptate eveniet repellendus nulla et eius hic. Nobis, reiciendis quo id eum animi sequi quis magni corporis impedit!
-        Quas et qui nostrum, quibusdam vero neque voluptates cupiditate veritatis dolor officiis commodi illum, iste voluptas esse sequi porro eligendi nulla, repellendus optio! Sequi possimus aspernatur, voluptas quas iusto officia.
-        Optio vel reiciendis nihil dolorem deserunt tempora labore nemo explicabo dolores facilis est, hic incidunt in, sapiente numquam error odio soluta exercitationem quis? Eos iusto veritatis ipsam eveniet. Sint, consectetur?
-        Voluptatem, eveniet alias expedita magni consectetur amet. Neque sed asperiores autem esse necessitatibus nam quisquam odit officiis voluptate. Suscipit, deserunt ab. Voluptatibus, dolor? Eligendi totam molestias exercitationem eaque sunt magni!
-        Quibusdam veniam odio ad minus architecto pariatur sequi fugiat expedita, porro eum necessitatibus. Accusamus, voluptatibus nobis odit quis vero officia ratione harum aspernatur vel? Repellat earum sint incidunt aliquid aliquam.
-        Expedita aspernatur iusto quaerat unde rem provident ad vitae! Excepturi veniam atque vero quod laborum illo consectetur recusandae harum dignissimos esse temporibus earum fugit dicta error, eaque explicabo quae distinctio.
-        Molestiae sunt et, quae culpa numquam dolorem perferendis enim consectetur modi autem mollitia, voluptas ab atque voluptates error voluptatibus harum non iste? Omnis animi, itaque dicta ut soluta quaerat non.
-        Quidem tenetur ipsa sunt. Soluta totam, temporibus accusantium cumque consectetur nemo id eaque placeat a dicta. Ullam ex facere deleniti, aliquid nemo rem similique totam vero veniam laborum? Laborum, voluptates.
-        Libero odio illum beatae eaque ducimus unde, aliquid quas veniam autem, blanditiis culpa odit saepe, provident eius reiciendis totam? Nulla cumque reprehenderit maxime voluptatem dolorem, labore odit corrupti modi quaerat?
-        Facilis at praesentium impedit quisquam a odit eaque hic. Adipisci ab beatae perferendis aspernatur soluta facilis facere quo dicta illo nesciunt obcaecati unde omnis repellat iure, corrupti aliquam at eligendi!
-        Commodi quia quidem quam s
+    <div class="off-profile-wrapper">
+    <div class="off-profile-container">
+        <h3 class="h3-heading">RECRUITMENT PLATFORM</h3>
+        <div class="form-container">
+            <div class="driveName">Off Campus Drive - GET 2022</div>
+            <div class="driveinstruction">
+                <span class="icon-Info"></span>
+                <span>Apply to this recruitment drive only if your year of passing is 2022</span>
+            </div>    
+            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusFormSubmit()" #form="ngForm">
+                <div class="sub-heading">
+                    Basic Details
+                </div>
+                <div class="row-wrapper">
+                    <div class="form-field-wrapper mt-0 flex-100">
+                        <label class="label">Name (as per Aadhar)<span class="asterick">*</span></label>
+                        <input [id]="form_name" matInput placeholder="Enter your name" class="form-input" type="text" [formControlName]="form_name">
+                        <div class="form-error" *ngIf="name?.invalid && name?.touched">
+                            <div *ngIf="name?.errors?.required">Name is Required</div>
+                            <div *ngIf="name?.errors?.alphaNum255">Alpha numeric with maximum of 255 characters only allowed
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Email Id<span class="asterick">*</span></label>
+                        <input [id]="form_email" matInput placeholder="Enter your email address" class="form-input" type="text" [formControlName]="form_email">
+                        <div class="form-error" *ngIf="email?.invalid && email?.touched">
+                            <div *ngIf="email?.errors?.required">Email Id is Required</div>
+                            <div *ngIf="email?.errors?.email">Please enter valid Email Id</div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Mobile Number<span class="asterick">*</span></label>
+                        <input [id]="form_mobile" matInput placeholder="Enter your mobile number" class="form-input" type="text" [formControlName]="form_mobile">
+                        <div class="form-error" *ngIf="mobile?.invalid && mobile?.touched">
+                            <div *ngIf="mobile?.errors?.required">Mobile Number is Required</div>
+                            <div *ngIf="mobile?.errors?.mobileRegex">Please enter a valid 10 digit mobile number</div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Date of Birth<span class="asterick">*</span></label>
+                        <div class="date-relative">
+                            <input [id]="form_dob" matInput class="input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker" placeholder="Format: DD-MM-YYYY" [formControlName]="form_dob">
+                            <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </div>
+                        <div class="form-error" *ngIf="dob?.invalid && dob?.touched">
+                            <div *ngIf="dob?.errors?.required">Date of Birth is Required</div>
+                            <div *ngIf="dob?.errors?.matDatepickerMax">
+                                {{dob?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(dob?.errors?.matDatepickerMax.max) : ''}}
+                            </div>
+                            <div *ngIf="dob?.errors?.matDatepickerMin">
+                                {{dob?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(dob?.errors?.matDatepickerMin.min) : ''}}
+                            </div>
+                            <div *ngIf="dob?.errors?.matDatepickerParse">Invalid Date Format</div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Gender<span class="asterick">*</span></label>
+                        <nz-select
+                        [id]="form_gender"
+                        class="nzselect"
+                        [formControlName]="form_gender"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="<--Select-->"
+                        >
+                        <nz-option
+                          *ngFor="let gender of genderDropdownList"
+                          [nzLabel]="gender.label"
+                          [nzValue]="gender.value"
+                        ></nz-option>
+                        </nz-select>
+                        <div class="form-error" *ngIf="gender?.invalid && gender?.touched">
+                            <div *ngIf="gender?.errors?.required">Gender is Required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-heading">
+                    Education Details
+                </div>
+                <div class="row-wrapper">
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">10th Marks(%)<span class="asterick">*</span></label>
+                        <input [id]="form_education_10th_percentage" matInput placeholder="Enter your 10th marks in percentage" class="form-input" type="text" [formControlName]="form_education_10th_percentage">
+                        <div class="form-error" *ngIf="education_10th_percentage?.invalid && education_10th_percentage?.touched">
+                            <div *ngIf="education_10th_percentage?.errors?.required">Percentage is Required</div>
+                            <div *ngIf="education_10th_percentage?.errors?.percentage">Percentage should be in the range of 10 to 100</div>
+                            <div *ngIf="education_10th_percentage?.errors?.maxlength">Number with 2 Decimal points only allowed</div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">12th Marks(%)<span class="asterick">*</span></label>
+                        <input [id]="form_education_12th_percentage" matInput placeholder="Enter your 12th marks in percentage" class="form-input" type="text" [formControlName]="form_education_12th_percentage">
+                        <div class="form-error" *ngIf="education_12th_percentage?.invalid && education_12th_percentage?.touched">
+                            <div *ngIf="education_12th_percentage?.errors?.required">Percentage is Required</div>
+                            <div *ngIf="education_12th_percentage?.errors?.percentage">Percentage should be in the range of 10 to 100</div>
+                            <div *ngIf="education_12th_percentage?.errors?.maxlength">Number with 2 Decimal points only allowed</div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">College Name<span class="asterick">*</span></label>
+                        <nz-select
+                        [id]="form_education_UG_clg_name"
+                        class="nzselect"
+                        [formControlName]="form_education_UG_clg_name"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="<--Select-->"
+                        >
+                        <nz-option
+                          *ngFor="let gender of genderDropdownList"
+                          [nzLabel]="gender.label"
+                          [nzValue]="gender.value"
+                        ></nz-option>
+                        </nz-select>
+                        <div class="form-error" *ngIf="education_UG_clg_name?.invalid && education_UG_clg_name?.touched">
+                            <div *ngIf="education_UG_clg_name?.errors?.required">College Name is Required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Qualification<span class="asterick">*</span></label>
+                        <nz-select
+                        [id]="form_education_UG_clg_qualification"
+                        class="nzselect"
+                        [formControlName]="form_education_UG_clg_qualification"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="<--Select-->"
+                        >
+                        <nz-option
+                          *ngFor="let gender of genderDropdownList"
+                          [nzLabel]="gender.label"
+                          [nzValue]="gender.value"
+                        ></nz-option>
+                        </nz-select>
+                        <div class="form-error" *ngIf="education_UG_clg_qualification?.invalid && education_UG_clg_qualification?.touched">
+                            <div *ngIf="education_UG_clg_qualification?.errors?.required">Qualification is Required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Discipline<span class="asterick">*</span></label>
+                        <nz-select
+                        [id]="form_education_UG_clg_discipline"
+                        class="nzselect"
+                        [formControlName]="form_education_UG_clg_discipline"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="<--Select-->"
+                        >
+                        <nz-option
+                          *ngFor="let gender of genderDropdownList"
+                          [nzLabel]="gender.label"
+                          [nzValue]="gender.value"
+                        ></nz-option>
+                        </nz-select>
+                        <div class="form-error" *ngIf="education_UG_clg_discipline?.invalid && education_UG_clg_discipline?.touched">
+                            <div *ngIf="education_UG_clg_discipline?.errors?.required">Discipline is Required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Year of Passing<span class="asterick">*</span></label>
+                        <div class="date-relative">
+                            <input [id]="form_education_UG_clg_year_passing" matInput class="input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing">
+                            <mat-datepicker-toggle class="date-toggle" matSuffix [for]="pickerYear"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerYear></mat-datepicker>
+                        </div>
+                        <div class="form-error" *ngIf="education_UG_clg_year_passing?.invalid && education_UG_clg_year_passing?.touched">
+                            <div *ngIf="education_UG_clg_year_passing?.errors?.required">Year of Passing is Required</div>
+                            <div *ngIf="education_UG_clg_year_passing?.errors?.matDatepickerMax">
+                                {{education_UG_clg_year_passing?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(education_UG_clg_year_passing?.errors?.matDatepickerMax.max) : ''}}
+                            </div>
+                            <div *ngIf="education_UG_clg_year_passing?.errors?.matDatepickerMin">
+                                {{education_UG_clg_year_passing?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(education_UG_clg_year_passing?.errors?.matDatepickerMin.min) : ''}}
+                            </div>
+                            <div *ngIf="education_UG_clg_year_passing?.errors?.matDatepickerParse">Invalid Date Format</div>
+                        </div>
+                    </div>
+
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Graduation Marks(%)<span class="asterick">*</span></label>
+                        <input [id]="form_education_UG_clg_marks" matInput placeholder="Enter your graduation marks in percentage" class="form-input" type="text" [formControlName]="form_education_UG_clg_marks">
+                        <div class="form-error" *ngIf="education_UG_clg_marks?.invalid && education_UG_clg_marks?.touched">
+                            <div *ngIf="education_UG_clg_marks?.errors?.required">Percentage is Required</div>
+                            <div *ngIf="education_UG_clg_marks?.errors?.percentage">Percentage should be in the range of 10 to 100</div>
+                            <div *ngIf="education_UG_clg_marks?.errors?.maxlength">Number with 2 Decimal points only allowed</div>
+                        </div>
+                    </div>
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">No.of Backlog(s) (If any)<span class="asterick">*</span></label>
+                        <input [id]="form_education_UG_clg_backlogs" matInput placeholder="Enter the number of backlog(s)" class="form-input" type="text" [formControlName]="form_education_UG_clg_backlogs">
+                        <div class="form-error" *ngIf="education_UG_clg_backlogs?.invalid && education_UG_clg_backlogs?.touched">
+                            <div *ngIf="education_UG_clg_backlogs?.errors?.required">No. of Backlogs is Required</div>
+                            <div *ngIf="education_UG_clg_backlogs?.errors?.backlog">Accept Numbers only and Maximum of 2 digits only Allowed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ack-section">
+                    <h4 class="ack-heading">Acknowledgements and Declarations</h4>
+                    <div class="ack-content">
+                        I hereby declare that I am not connected with any director of the company as his partner or his relative as detailed as under section 6 of companies act 1956.
+                    </div>
+                    <div class="ack-content">
+                        I hereby affirm that my answers to the foregoing questions are true and correct and I understand and agree that misrepresentation or omission of facts called for in this application or other company records shall automatically resigned the contract of employment. I authorize inquiry with regard to my character, ability and habits to any and all persons and agree to hold such persons harmless with respect to any information that may give.
+                    </div>
+                    <h4 class="ack-heading">Terms and Conditions</h4>
+                    <div class="acceptance">
+                        <mat-checkbox [formControlName]="form_t_c" class="mr-2">
+                        </mat-checkbox>
+                        <span class>I agree to have read and understood the and will abide by the same during the assessment and selection process.</span>
+                    </div>
+                    <div class="form-error" *ngIf="t_c?.invalid && t_c?.touched">
+                        Please click on the above checkbox to agree the Terms and Conditions
+                    </div>
+    
+                </div>
+
+                <div class="button-wrapper">
+                    <button class="reset-button" mat-raised-button type="button">
+                        Reset
+                    </button>
+                    <button class="submit-button" mat-raised-button type="button">
+                        Register
+                    </button>              
+                </div>
+            </form>
+        </div>
     </div>
+    <div class="footer">
+        <div class="content">
+            In case of any technical issues, contact us at <a href="mailto:assess.support@adani.co.in">assess.support@adani.co.in</a>
+        </div>
+        <div class="copyright">
+            © 2022 Powered by L&T EduTech. All Rights Reserved
+        </div>
+    </div>
+</div>
 </div>

@@ -1,8 +1,278 @@
+@import '../../../themes/themes.scss';
 .campus-profile {
     display: block;
     overflow: auto;
     width: 100%;
-    height: calc(100% - 60px);
-    padding: 8px;
+    height: calc(100% - #{$headerHeight});
     background: #F2F2F2 0% 0% no-repeat padding-box;
+    font-size: 14px;
+    @include sm() {
+        font-size: 14px;
+        height: calc(100% - #{$headerHeight-sm});
+    }
+    @include md() {
+        font-size: 14px;
+        height: calc(100% - #{$headerHeight-md});
+    }
+    @include lg() {
+        font-size: 14px;
+        height: calc(100% - #{$headerHeight-lg});
+    }
+    @include xl() {
+        font-size: 14px;        
+        height: calc(100% - #{$headerHeight-xl});
+    }
+    @include xxl() {
+        font-size: 15px;        
+        height: calc(100% - #{$headerHeight-xl});
+    }
+    .off-profile-wrapper {
+        display: block;
+        position: relative;
+        max-width: 95%;
+        margin: 1em auto;
+        background-color: #FFFFFF;
+        border: solid .5px #707070;
+        border-radius: 4px;
+        min-height: calc(100% - 2.1em);
+        @include lg() {
+            max-width: 90%;
+            margin: 2em auto;
+            min-height: calc(100% - 4.1em);
+        }
+        @include xl() {
+            max-width: 90%;
+            margin: 2em auto;
+            min-height: calc(100% - 4.1em);
+        }
+        .off-profile-container {
+            position: relative;
+            display: block;
+            overflow: auto;
+            max-width: 90%;
+            margin: 2.5em auto;
+            padding: 4px;
+            padding-bottom: 100px;
+            .h3-heading {
+                display: block;
+                color: #1B4E9B;
+                font-weight: 600;
+                font-size: 22px;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 1em;
+                line-height: 20px;
+            }
+            .form-container {
+                position: relative;
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                @include md() {
+                    flex-basis: 100%;
+                }
+                @include lg() {
+                    flex-basis: 85%;
+                } 
+                @include xl() {
+                    flex-basis: 85%;
+                }
+                .driveName {
+                    display: block;
+                    color: #222222;
+                    font-weight: 500;
+                    font-size: 22px;
+                    width: 100%;
+                    text-align: left;
+                    margin-bottom: 1em;
+                    line-height: 20px;
+                }
+                .driveinstruction {
+                    background-color: #1A4E9B27;
+                    color: #164160;
+                    padding: 4px;
+                    display: flex;
+                    align-items: center;
+                    width: 98%;
+                    span:nth-of-type(1) {
+                        padding: 0 8px;
+                    }
+                }    
+                .form-wrapper {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    width: 100%;
+                    height: 100%;
+                    .sub-heading {
+                        display: block;
+                        width: 100%;
+                        color: #666666;
+                        font-size: 18px;
+                        font-weight: 500;
+                        margin: 1em 0 0.7em 0;
+                    }
+                    .row-wrapper {
+                        position: relative;
+                        display: flex;
+                        align-items: flex-start;
+                        flex-wrap: wrap;
+                        width: 100%;
+                        height: 100%;
+                        gap: 1em;
+                        .flex-100 {
+                            flex-basis: 98%;
+                        }
+                        .flex-50 {
+                            flex-basis: 98%;
+                            @include md() {
+                                flex-basis: 48.25%;
+                            }
+                            @include lg() {
+                                flex-basis: 48.25%;
+                            } 
+                            @include xl() {
+                                flex-basis: 48.25%;
+                            }
+                        }
+                    }
+                    .form-field-wrapper {
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        height: 100%;
+                        .form-error {
+                            color: $primary-error-text;
+                            font-size: 12px;
+                            width: 100%;
+                        }
+                        .label {
+                            display: block;
+                            width: 100%;
+                            color: #666666;
+                            font-size: 14px;
+                            margin: 0;
+                            padding: 0 0 5px 0;
+                        }
+                        .form-input {
+                            background: #FFFFFF 0% 0% no-repeat padding-box;
+                            border: 0.7px solid #B4B4B4;
+                            border-radius: 2px;
+                            height: 40px;
+                            line-height: 40px;
+                            padding: 8px;
+                            width: 100%;
+                            color: #212121;
+                            outline: none;
+                        }
+                    }
+                    .ack-section {
+                        margin-top: 1em;
+                        .ack-heading {
+                            display: block;
+                            width: 100%;
+                            color: #222222;
+                            font-size: 14px;
+                            font-weight: 600;
+                            margin: 2em 0 1em 0;    
+                        }
+                        .ack-content {
+                            color: #212121;
+                            font-size: 14px;
+                            margin-bottom: .25em;
+                        }
+                        .acceptance {
+                            display: flex;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            color: #212121;
+                            font-size: 14px;
+                            margin-bottom: .25em;
+                        }
+                        .form-error {
+                            color: $primary-error-text;
+                            font-size: 12px;
+                            width: 100%;
+                        }
+                    }
+                    .button-wrapper {
+                        margin-top: 2em;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        .reset-button {
+                            margin-right: 2em;
+                            color: #004684;
+                            border: 1px solid #004684;
+                            border-radius: 4px;
+                            background: #FFFFFF;
+                            font-size: 14px;
+                            font-weight: 500;
+                            min-width: 100px;
+                            letter-spacing: 1px;
+                        }
+                        .submit-button {
+                            color: #FFFFFF;
+                            border: 1px solid #004684;
+                            border-radius: 4px;
+                            background-color: #004684;
+                            font-size: 14px;
+                            font-weight: 500;
+                            min-width: 100px;
+                            letter-spacing: 1px;
+                        }
+                    }
+                }
+            }
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            color: #000000;
+            font-size: 12px;
+            background: #F2F3F5;
+        }
+    }
+}
+
+:host ::ng-deep .mat-icon-button.mat-button-base {
+    line-height: 35px !important;
+    height: 35px !important;
+}
+.date-relative {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    mat-datepicker-toggle {
+        height: 35px;
+        border: solid 0.8px #bebebe;
+        border-left: none;
+        bottom: 1px;
+        position: relative;
+        right: 1px;
+    }
+}
+:host ::ng-deep .ant-select-selection--single {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 0.7px solid #B4B4B4;
+    border-radius: 2px;
+    height: 40px;
+    line-height: 40px;
+    padding: 8px;
+    width: 100%;
+    color: #212121;
+    outline: none;
+}
+.nzselect.ng-invalid.ng-touched {
+    border: none !important;
 }
