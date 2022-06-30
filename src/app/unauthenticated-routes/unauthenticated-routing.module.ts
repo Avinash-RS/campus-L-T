@@ -5,6 +5,7 @@ import { VideoAssessEvaluationComponent } from './video-assess-evaluation/video-
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OffCampusMasterComponent } from './off-campus-master/off-campus-master.component';
 import { OffCampusProfileComponent } from './off-campus-master/off-campus-profile/off-campus-profile.component';
+import { OffCampusSubmittedConfirmationComponent } from './off-campus-master/off-campus-submitted-confirmation/off-campus-submitted-confirmation.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,13 @@ const routes: Routes = [
         component: OffCampusProfileComponent,
         data: {
           breadcrumb: 'Profile'
+        }
+      },
+      {
+        path: `${CONSTANT.ROUTES.UNAUTHENTICATED.OFF_CAMPUS_THANKS}`,
+        component: OffCampusSubmittedConfirmationComponent,
+        data: {
+          breadcrumb: 'Thanks'
         }
       },
       {

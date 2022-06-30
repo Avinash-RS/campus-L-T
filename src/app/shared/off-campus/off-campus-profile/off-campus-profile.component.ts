@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialog, MatDatepicker } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
 import { LoaderService } from 'src/app/services/loader-service.service';
 import { Subscription } from 'rxjs';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -40,8 +41,10 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class OffCampusProfileComponent implements OnInit, OnDestroy {
+export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('matDialogTerms', { static: false }) matDialogRefTerms: TemplateRef<any>;
+  @ViewChild('matDialogRefConfirmationPopUp', { static: false }) matDialogRefConfirmationPopUp: TemplateRef<any>;
+  @ViewChild('pickerYear', {static: false}) private pickerYear: MatDatepicker<Date>; 
 
   offCampusRegistrationForm: FormGroup;
 
@@ -92,6 +95,8 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
   pgDisciplineList: any;
   ugInstitutesList: any;
   pgInstitutesList: any;
+  selectedYear: any;
+  formSubmitted: boolean;
 
 
 
@@ -105,8 +110,19 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.appConfig.setLocalData('submitted', false);
+    this.dateValidation();
     this.registrationFormInit();
     this.educationDropdownValues();
+  }
+
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 
   dateValidation() {
@@ -125,6 +141,14 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
       return split;
     }
   }
+
+  momentFormYear(date) {
+    if (date) {
+      const split = moment(date).format('YYYY');
+      return split;
+    }
+  }
+
 
   dateConvertion(date) {
     if (date) {
@@ -149,7 +173,10 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
       this.ugDisciplineList = data && data.ug_disciplines ? data.ug_disciplines : [];
       this.pgDisciplineList = data && data.pg_disciplines ? data.pg_disciplines : [];
       const list = data && data.ug_pg_colleges ? data.ug_pg_colleges : [];
-      this.ugInstitutesList = list;
+      const findUgOthers = list.find((data: any) => data.college_name == 'Others');
+      const UgexceptOthers = list.filter((data: any) => data.college_name !== 'Others');
+      UgexceptOthers.unshift(findUgOthers);
+      this.ugInstitutesList = UgexceptOthers;
       const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
       this.pgInstitutesList = exceptOthers;
     }, (err) => {
@@ -158,8 +185,36 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
   }
 
 
+  offCampusFormSubmitConfirmation() {
+    if (this.offCampusRegistrationForm.valid) {
+    let confirmationPopUpref = this.dialog.open(this.matDialogRefConfirmationPopUp, {
+      width: '600px',
+      height: 'auto',
+      id: '2',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'form-confirmation-pop-up'
+    });
+    } else {
+      this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+      this.resume.markAllAsTouched();
+      this.gv.validateAllFields(this.offCampusRegistrationForm);
+    }
+  }
+  
   offCampusFormSubmit() {
+    this.closeBox('2');
+    this.formSubmitted=true;
+    this.appConfig.setLocalData('submitted', true);
+    setTimeout(() => {
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.UNAUTHENTICATED.OFF_CAMPUS_THANKS);      
+    }, 500);
+  }
 
+  resetForm() {
+    this.offCampusRegistrationForm.reset();
+    return this.appConfig.nzNotification('success', 'Resetted', 'Form Resetted Successfully');
   }
 
   registrationFormInit() {
@@ -174,7 +229,7 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
       [this.form_education_UG_clg_name]: [null, [Validators.required]],
       [this.form_education_UG_clg_qualification]: [null, [Validators.required]],
       [this.form_education_UG_clg_discipline]: [null, [Validators.required]],
-      [this.form_education_UG_clg_year_passing]: [null, [Validators.required]],
+      [this.form_education_UG_clg_year_passing]: [{value: '2022', disabled: true}, [Validators.required]],
       [this.form_education_UG_clg_marks]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.percentageNew(), this.gv.percentage(), Validators.maxLength(5)]],
       [this.form_education_UG_clg_backlogs]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.backlog()]],
       [this.form_resume]: this.initResumeArray(),
@@ -197,6 +252,7 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
     let termsAndCondtionsPopRef = this.dialog.open(this.matDialogRefTerms, {
     width: '890px',
     height: 'auto',
+    id: '1',
     autoFocus: false,
     closeOnNavigation: true,
     disableClose: false,
@@ -204,10 +260,22 @@ export class OffCampusProfileComponent implements OnInit, OnDestroy {
   });
 }
 
-closeBox() {
-  this.dialog.closeAll();
+
+closeBox(id: any) {
+  // this.matDialogRefTerms.
+  let customDialog = this.dialog.getDialogById(id);
+  customDialog.close();
 }
 
+chosenYearHandler(ev, input){
+  let { _d } = ev;
+  this.selectedYear = _d;
+  let customYear = this.momentFormYear(this.selectedYear);
+  this.offCampusRegistrationForm.patchValue({
+    [this.form_education_UG_clg_year_passing]: customYear
+  });
+  this.pickerYear.close();
+  }
 
   removeFile() {
     this[this.form_resume].patchValue({

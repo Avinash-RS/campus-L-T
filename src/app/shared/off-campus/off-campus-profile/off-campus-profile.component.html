@@ -1,4 +1,4 @@
-<div class="campus-profile">
+<div id="top" class="campus-profile">
     <div class="off-profile-wrapper">
     <div class="off-profile-container">
         <h3 class="h3-heading">RECRUITMENT PLATFORM</h3>
@@ -8,7 +8,7 @@
                 <span class="icon-Info"></span>
                 <span>Apply to this recruitment drive only if your year of passing is 2022</span>
             </div>    
-            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusFormSubmit()" #form="ngForm">
+            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusFormSubmitConfirmation()" #form="ngForm">
                 <div class="sub-heading">
                     Basic Details
                 </div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="form-field-wrapper flex-50">
-                        <label class="label">College Name<span class="asterick">*</span> <span [matTooltip]="'Please click others'" matTooltipPosition="after" matTooltipClass="offCamps-tooltip" class="ml-1 icon-Info"></span></label>
+                        <label class="label">College Name<span class="asterick">*</span> <span [matTooltip]="'If you are not able to find your college, please select \'Others\' option.'" matTooltipPosition="after" matTooltipClass="offCamps-tooltip" class="ml-1 icon-Info"></span></label>
                         <nz-select
                         [id]="form_education_UG_clg_name"
                         class="nzselect"
@@ -164,10 +164,12 @@
 
                     <div class="form-field-wrapper flex-50">
                         <label class="label">Year of Passing<span class="asterick">*</span></label>
-                        <div class="date-relative">
-                            <input [id]="form_education_UG_clg_year_passing" matInput class="form-input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing">
+                        <div [matTooltip]="'Non-Editable'" matTooltipPosition="above" class="date-relative">
+                            <input [id]="form_education_UG_clg_year_passing" matInput class="form-input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing" appYearOnly>
                             <mat-datepicker-toggle class="date-toggle" matSuffix [for]="pickerYear"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerYear></mat-datepicker>
+                            <mat-datepicker #pickerYear
+                            startView="multi-year"
+                            (yearSelected)="chosenYearHandler($event, pickerYear)"></mat-datepicker>
                         </div>
                         <div class="form-error" *ngIf="education_UG_clg_year_passing?.invalid && education_UG_clg_year_passing?.touched">
                             <div *ngIf="education_UG_clg_year_passing?.errors?.required">Year of Passing is Required</div>
@@ -233,6 +235,9 @@
                                     *ngIf="filepath?.errors?.required">
                                     Resume is Required</div>
                             </div>
+                            <div class="instructions">
+                                *Accepted Formats (.pdf) (Maximum file size 2MB)
+                            </div>
 
                         </div>
 
@@ -264,20 +269,23 @@
     
                 </div>
 
-                <div class="button-wrapper">
-                    <button class="reset-button" mat-raised-button type="button">
+                <div *ngIf="!formSubmitted" class="button-wrapper">
+                    <button (click)="resetForm()" class="reset-button" mat-raised-button type="button">
                         Reset
                     </button>
-                    <button class="submit-button" mat-raised-button type="button">
+                    <button class="submit-button" mat-raised-button type="submit">
                         Register
                     </button>              
                 </div>
+                <!-- <div *ngIf="formSubmitted" class="formsubmitted">
+                    You have been successfully registered.
+                </div> -->
             </form>
         </div>
     </div>
     <div class="footer">
         <div class="content">
-            In case of any technical issues, contact us at <a href="mailto:assess.support@adani.co.in">assess.support@adani.co.in</a>
+            In case of any technical issues, contact us at <a href="mailto:assess.support@lntedutech.com">assess.support@lntedutech.com</a>
         </div>
         <div class="copyright">
             © 2022 Powered by L&T EduTech. All Rights Reserved
@@ -293,7 +301,7 @@
                 <span> &#160; </span>
                 <span> Terms and Conditions </span>
                 <span class="icons">
-          <i (click)="closeBox()" class="icon-cancel_black ag-icon-font-size pointer"></i>
+          <i (click)="closeBox('1')" class="icon-cancel_black ag-icon-font-size pointer"></i>
         </span>
             </div>
         </div>
@@ -461,10 +469,33 @@
             </div>
 
             <div class="button-wrappers">
-                <button (click)="closeBox()" mat-raised-button class="common-button common-button-height-32" type="button">
+                <button (click)="closeBox('1')" mat-raised-button class="common-button common-button-height-32" type="button">
           Done
         </button>
             </div>
         </div>
     </div>
 </ng-template>
+
+<ng-template #matDialogRefConfirmationPopUp>
+    <div class="form-confirmation">
+        <div class="icon-div">
+            <span class="icon-Info icon-Info-1"></span>
+        </div>
+        <div class="bold-content">
+            Are you sure you want to submit?
+        </div>
+        <div class="content">
+            You won’t be able to edit once profile submitted
+        </div>
+        <div class="confirmation-button-wrapper">
+            <button (click)="closeBox('2')" class="reset-button" mat-raised-button type="button">
+                CANCEL
+            </button>
+            <button (click)="offCampusFormSubmit()" class="submit-button" mat-raised-button type="button">
+                YES, CONFIRM
+            </button>              
+        </div>
+    </div>
+</ng-template>
+
