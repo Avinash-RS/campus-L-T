@@ -107,7 +107,10 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     private candidateService: CandidateMappersService,
     private loadingService: LoaderService,
     private dialog: MatDialog
-  ) { }
+  ) { 
+    this.appConfig.setLocalData('driveId', 1);
+    this.appConfig.setLocalData('userId', 21147);
+  }
 
   ngOnInit() {
     this.appConfig.setLocalData('submitted', false);
