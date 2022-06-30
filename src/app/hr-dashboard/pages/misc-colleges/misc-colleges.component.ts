@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
+import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 
 @Component({
   selector: 'app-misc-colleges',
@@ -22,7 +24,7 @@ export class MiscCollegesComponent implements OnInit {
   ];
 
   collegeType = new FormControl(null, [Validators.required]);
-  collegeName = new FormControl(null, [Validators.required]);
+  collegeName = new FormControl(null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.alphaNum100()]);
   addedCollegesList: any;
 
   quickSearchValue: any;
@@ -38,6 +40,7 @@ export class MiscCollegesComponent implements OnInit {
   constructor(
     private appConfig: AppConfigService,
     private adminService: AdminServiceService,
+    private gv: GlobalValidatorService
   ) { }
 
   ngOnInit() {
@@ -96,7 +99,7 @@ export class MiscCollegesComponent implements OnInit {
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'email_id',
+        tooltipField: 'college_name',
         getQuickFilterText: (params) => {
           return params.value;
         }
@@ -106,7 +109,7 @@ export class MiscCollegesComponent implements OnInit {
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'name',
+        tooltipField: 'college_type',
         getQuickFilterText: (params) => {
           return params.value;
         }

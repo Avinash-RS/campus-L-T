@@ -46,11 +46,14 @@ import { FunnelChartComponent } from './charts/funnel-chart/funnel-chart.compone
 import { AgGridSharedComponent } from './charts/ag-grid-shared/ag-grid-shared.component';
 import { GaugeChartComponent } from './charts/gauge-chart/gauge-chart.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { OffCampusProfileComponent } from './off-campus/off-campus-profile/off-campus-profile.component';
+import { OffCampusHeaderComponent } from './off-campus/off-campus-header/off-campus-header.component';
+import { YearOnlyDirective } from '../directives/customDateFormats/year-only.directive';
 
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent, HorizontalBarChartComponent, FunnelChartComponent, AgGridSharedComponent, GaugeChartComponent
+  declarations: [SignupHeaderComponent, HomeHeaderComponent, DashboardHeaderComponent, ModalBoxComponent, CandidateStatusComponent, ShortlistBoxComponent, CommonHeaderComponent, CdkDetailRowDirective, CommonKycProfileViewComponent, SharedUploadPreviewerComponent, ScreenresolutionBoxComponent, YearMonthDirective, DateMonthYearDirective, CommonSidebarComponent, JoinInterviewComponent, AdaniJoinInterviewComponent, GeneralJoinInterviewComponent, SharedKycProfileViewComponent, UserListsComponent, CommonUploadsComponent, SharedReportsSectionComponent, SharedVideoAssessViewComponent, PageNotFoundComponent, AdaniSharedKycProfileViewComponent, GeneralSharedKycProfileViewComponent, VerticalChartComponent, PieDoughnutChartComponent, HorizontalBarChartComponent, FunnelChartComponent, AgGridSharedComponent, GaugeChartComponent, OffCampusProfileComponent, OffCampusHeaderComponent, YearOnlyDirective
 ],
   imports: [
     CommonModule,
@@ -108,7 +111,10 @@ ModuleRegistry.registerModules(AllModules);
     HorizontalBarChartComponent,
     FunnelChartComponent,
     AgGridSharedComponent,
-    GaugeChartComponent
+    GaugeChartComponent,
+    OffCampusProfileComponent,
+    OffCampusHeaderComponent,
+    YearOnlyDirective
   ],
   providers: [ThemeService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

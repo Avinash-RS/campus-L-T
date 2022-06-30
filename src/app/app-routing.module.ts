@@ -35,11 +35,11 @@ const routes: Routes = [
   {
     path: `${CONSTANT.ROUTES.UNAUTHENTICATED.HOME}`, loadChildren: './unauthenticated-routes/unauthenticated.module#UnauthenticatedModule'
   },
-  // {
-  //   path: `**`,
-  //   pathMatch: 'full',
-  //   component: PageNotFoundComponent
-  // }
+  {
+    path: `**`,
+    pathMatch: 'full',
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

@@ -1,1 +1,97 @@
-<p>misc-candidate-name-change works!</p>
+<div class="misc-college-wrapper">
+    <div class="form-wrapper">
+      <div class="div-wrapper">
+        <label class="label">Candidate Email</label>
+        <div class="input-wrapper">
+            <input
+              matInput
+              type="text"
+              [formControl]="candidateEmail"
+              placeholder="Enter Candidate Email"
+              name=""
+              id="candidate_email"
+            />
+            <ng-container *ngIf="candidateEmail.touched && candidateEmail.invalid">
+              <div *ngIf="candidateEmail?.errors?.required" class="mat-error">Candidate Email Required</div>
+              <div *ngIf="candidateEmail?.errors?.email" class="mat-error">Please Enter Vaild Email Id</div>
+            </ng-container>
+          </div>
+          <button 
+            type="button"
+            (click)="candidateEmailSubmit()"
+            [disabled]="candidateEmail.invalid"
+            class="submit-btn"
+            mat-button
+          >
+            Submit
+          </button>
+        </div>
+      <div class="div-wrapper">
+        <label class="label">Candidate Name</label>
+        <div class="input-wrapper">
+          <input
+            matInput
+            type="text"
+            [formControl]="candidateName"
+            placeholder="Enter Candidate Name"
+            name=""
+            id="candidate_name"
+          />
+          <ng-container *ngIf="candidateName.touched && candidateName.invalid">
+            <div *ngIf="candidateName?.errors?.required" class="mat-error">Candidate Name Required</div>
+            <div *ngIf="candidateName?.errors?.alphaNum100" class="mat-error">Alpha numeric with maximum of 100 characters only allowed</div>
+          </ng-container>
+        </div>
+        <button
+          [disabled]="candidateEmail.invalid || candidateName.invalid"
+          type="button"
+          (click)="candidateUpdatedNameSubmit()"
+          class="submit-btn"
+          mat-button
+        >
+          Change
+        </button>
+      </div>
+    </div>
+  
+      <div
+        class="college-grid-wrapper"
+        [ngClass]="addedCollegesList && addedCollegesList.length > 0 ? '' : ''"
+      >
+        <div class="search-bar">
+          <div class="search-icon">
+            <img src="assets/images/feather-search.svg" alt="" srcset="" />
+            <input
+              style="border: none; outline: none"
+              matInput
+              (keyup)="onQuickFilterChanged()"
+              [(ngModel)]="quickSearchValue"
+              placeholder="Search…."
+            />
+          </div>
+        </div>
+        <!-- </mat-form-field> -->
+  
+        <ag-grid-angular
+          style="width: 98%; height: calc(100vh - 182px); margin: auto !important"
+          class="ag-theme-alpine"
+          [rowData]="rowData"
+          [columnDefs]="columnDefs"
+          [defaultColDef]="defaultColDef"
+          [tooltipShowDelay]="tooltipShowDelay"
+          [pagination]="true"
+          [suppressRowClickSelection]="true"
+          [paginationPageSize]="paginationPageSize"
+          [rowSelection]="'multiple'"
+          [cacheBlockSize]="cacheBlockSize"
+          (gridReady)="onGridReady($event)"
+          (sortChanged)="sortevent($event)"
+          (cellClicked)="onCellClicked($event)"
+          (filterModified)="getModel($event)"
+          headerHeight="40"
+          [animateRows]="true"
+        >
+        </ag-grid-angular>
+      </div>
+  </div>
+  
