@@ -123,9 +123,11 @@
                         gap: 1em;
                         .flex-100 {
                             flex-basis: 98%;
+                            overflow: hidden;
                         }
                         .flex-50 {
                             flex-basis: 98%;
+                            overflow: hidden;
                             @include md() {
                                 flex-basis: 48.25%;
                             }
@@ -167,6 +169,10 @@
                             color: #212121;
                             outline: none;
                         }
+                        .form-input:hover {
+                            transition: 380ms ease-in;
+                            border: solid 1px $primary-hover-color;
+                        }
                     }
                     .ack-section {
                         margin-top: 1em;
@@ -195,6 +201,53 @@
                             color: $primary-error-text;
                             font-size: 12px;
                             width: 100%;
+                        }
+                    }
+                    .upload-wrapperr {
+                        margin: 0;
+                        padding: 0;
+                        .choose-file {
+                            color: #848484;
+                            border: 0.8px solid #BEBEBE;
+                            border-radius: 4px;
+                            background: #FFFFFF;
+                            font-size: 14px;
+                            font-weight: 400;
+                            min-width: 100px;
+                            padding: 8px 12px;
+                            cursor: pointer;
+                            .content {
+                                margin-left: 8px;
+                            }
+                        }
+                        .choose-file:hover {
+                            color: $white;
+                            background-color: $common-button-bg;
+                            transition: 380ms ease-in;            
+                        }
+                        .uploaded-view {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            color: #848484;
+                            border: 0.8px solid #BEBEBE;
+                            border-radius: 4px;
+                            background: #FFFFFF;
+                            font-size: 14px;
+                            font-weight: 400;
+                            padding: 0;
+                            .ufilename {
+                                flex-basis: 90%;
+                                border-right: 0.8px solid #BEBEBE;
+                                padding: 8px;
+                                background: #eee;
+                                color: #007bff;
+                                cursor: pointer;
+                            }
+                            i {
+                                flex-basis: 10%;
+                                padding: 8px;
+                            }
                         }
                     }
                     .button-wrapper {
@@ -254,19 +307,19 @@
     margin: 0;
     padding: 0;
     mat-datepicker-toggle {
-        height: 35px;
-        border: solid 0.8px #bebebe;
-        border-left: none;
-        bottom: 1px;
-        position: relative;
+        height: 100%;
+        bottom: 0;
+        position: absolute;
         right: 1px;
+        border: none;
+        border-left: solid 0.8px #bebebe;
     }
 }
 :host ::ng-deep .ant-select-selection--single {
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 0.7px solid #B4B4B4;
-    border-radius: 2px;
-    height: 40px;
+    border: 0.7px solid #B4B4B4 !important;
+    border-radius: 2px !important;
+    height: 40px !important;
     line-height: 40px;
     padding: 8px;
     width: 100%;
@@ -275,4 +328,76 @@
 }
 .nzselect.ng-invalid.ng-touched {
     border: none !important;
+}
+input.ng-invalid.ng-touched {
+    border: solid 1px $primary-error-color !important;
+    transition: 380ms ease-in !important;
+}
+
+::ng-deep .ant-select-dropdown {
+    width: 100% !important;
+}
+::ng-deep .ant-select-dropdown-menu-item {
+    white-space: pre-wrap !important;
+}
+
+::ng-deep .offCamps-tooltip {
+    color: #164160 !important;
+    border: solid 1px #16BEF0 !important;
+    background: #1A4E9B27 !important;
+}
+:host ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: $primary-color !important;
+}
+
+.wrapper-kyc-terms {
+    max-width: 890px;
+    .header {
+        padding: 1em 0.5em;
+        box-shadow: 0 3px 6px rgb(0 0 0 / 20%) !important;
+        background: #fafafa;
+        .text {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .icons {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+    .main-text {
+        padding: 1em 1.25em;
+        max-height: 450px;
+        overflow-y: auto;
+        .ul {
+            ul {
+                margin: .75em 3em;
+                li {
+                    margin: .25em 0;
+                }
+            }
+        }
+        .text {
+            margin: 1em 0 0 0;
+        }
+        .text-half {
+            margin: .5em 0 0 0;
+        }
+        .bold {
+            font-weight: 600 !important;
+        }
+        .no-top {
+            margin: 0;
+        }
+        .button-wrappers {
+            margin: 2em 0 1em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 }

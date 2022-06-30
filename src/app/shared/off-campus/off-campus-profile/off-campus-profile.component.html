@@ -41,7 +41,7 @@
                     <div class="form-field-wrapper flex-50">
                         <label class="label">Date of Birth<span class="asterick">*</span></label>
                         <div class="date-relative">
-                            <input [id]="form_dob" matInput class="input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker" placeholder="Format: DD-MM-YYYY" [formControlName]="form_dob">
+                            <input [id]="form_dob" matInput class="form-input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker" placeholder="Format: DD-MM-YYYY" [formControlName]="form_dob">
                             <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </div>
@@ -91,8 +91,8 @@
                         </div>
                     </div>
                     <div class="form-field-wrapper flex-50">
-                        <label class="label">12th Marks(%)<span class="asterick">*</span></label>
-                        <input [id]="form_education_12th_percentage" matInput placeholder="Enter your 12th marks in percentage" class="form-input" type="text" [formControlName]="form_education_12th_percentage">
+                        <label class="label">12th/Diploma Marks(%)<span class="asterick">*</span></label>
+                        <input [id]="form_education_12th_percentage" matInput placeholder="Enter your 12th/Diploma marks in percentage" class="form-input" type="text" [formControlName]="form_education_12th_percentage">
                         <div class="form-error" *ngIf="education_12th_percentage?.invalid && education_12th_percentage?.touched">
                             <div *ngIf="education_12th_percentage?.errors?.required">Percentage is Required</div>
                             <div *ngIf="education_12th_percentage?.errors?.percentage">Percentage should be in the range of 10 to 100</div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="form-field-wrapper flex-50">
-                        <label class="label">College Name<span class="asterick">*</span></label>
+                        <label class="label">College Name<span class="asterick">*</span> <span [matTooltip]="'Please click others'" matTooltipPosition="after" matTooltipClass="offCamps-tooltip" class="ml-1 icon-Info"></span></label>
                         <nz-select
                         [id]="form_education_UG_clg_name"
                         class="nzselect"
@@ -110,9 +110,9 @@
                         nzPlaceHolder="<--Select-->"
                         >
                         <nz-option
-                          *ngFor="let gender of genderDropdownList"
-                          [nzLabel]="gender.label"
-                          [nzValue]="gender.value"
+                          *ngFor="let college of ugInstitutesList"
+                          [nzLabel]="college.college_name"
+                          [nzValue]="college.college_name"
                         ></nz-option>
                         </nz-select>
                         <div class="form-error" *ngIf="education_UG_clg_name?.invalid && education_UG_clg_name?.touched">
@@ -131,9 +131,9 @@
                         nzPlaceHolder="<--Select-->"
                         >
                         <nz-option
-                          *ngFor="let gender of genderDropdownList"
-                          [nzLabel]="gender.label"
-                          [nzValue]="gender.value"
+                          *ngFor="let qualification of ugQualificationList"
+                          [nzLabel]="qualification.specification_name"
+                          [nzValue]="qualification.specification_name"
                         ></nz-option>
                         </nz-select>
                         <div class="form-error" *ngIf="education_UG_clg_qualification?.invalid && education_UG_clg_qualification?.touched">
@@ -152,9 +152,9 @@
                         nzPlaceHolder="<--Select-->"
                         >
                         <nz-option
-                          *ngFor="let gender of genderDropdownList"
-                          [nzLabel]="gender.label"
-                          [nzValue]="gender.value"
+                          *ngFor="let discipline of ugDisciplineList"
+                          [nzLabel]="discipline.discipline_name"
+                          [nzValue]="discipline.discipline_name"
                         ></nz-option>
                         </nz-select>
                         <div class="form-error" *ngIf="education_UG_clg_discipline?.invalid && education_UG_clg_discipline?.touched">
@@ -165,7 +165,7 @@
                     <div class="form-field-wrapper flex-50">
                         <label class="label">Year of Passing<span class="asterick">*</span></label>
                         <div class="date-relative">
-                            <input [id]="form_education_UG_clg_year_passing" matInput class="input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing">
+                            <input [id]="form_education_UG_clg_year_passing" matInput class="form-input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing">
                             <mat-datepicker-toggle class="date-toggle" matSuffix [for]="pickerYear"></mat-datepicker-toggle>
                             <mat-datepicker #pickerYear></mat-datepicker>
                         </div>
@@ -199,6 +199,46 @@
                         </div>
                     </div>
                 </div>
+                <ng-container *ngIf="form_resume">
+                <div [formGroupName]="form_resume" class="row-wrapper mt-3">
+                    <div class="form-field-wrapper flex-50">
+                        <label class="label">Resume<span class="asterick">*</span></label>
+
+                        <div class="upload-wrapperr">
+                            <label class="label-upload"
+                                [ngClass]="!filepath.value ? 'choose-button' : 'preview'"
+                                [for]="'label'">
+                                <ng-container *ngIf="!filepath?.value">
+                                    <div class="choose-file">
+                                        <i class="icon-upload ag-icon-font-size-14"></i>
+                                        <span class="content">Choose a File</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="filepath?.value">
+                                    <div class="uploaded-view">
+                                        <div [matTooltip]="'Choose another file'" class="ufilename">
+                                            {{filename.value ? filename.value : ''}}
+                                        </div>
+                                        <i [matTooltip]="'Remove'"
+                                            (click)="removeFile(); $event.preventDefault()"
+                                            class="icon-cancel_black ag-icon-font-size pointer"></i>
+                                    </div>
+                                </ng-container>
+                            </label>
+                            <input [id]="'label'" type="file" accept=".pdf" (click)="files.value = null" #files
+                                (change)="onSelectFile($event)" hidden>
+                            <div class="form-error"
+                                *ngIf="filepath?.invalid && filepath?.touched">
+                                <div
+                                    *ngIf="filepath?.errors?.required">
+                                    Resume is Required</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </ng-container>
 
                 <div class="ack-section">
                     <h4 class="ack-heading">Acknowledgements and Declarations</h4>
@@ -212,7 +252,11 @@
                     <div class="acceptance">
                         <mat-checkbox [formControlName]="form_t_c" class="mr-2">
                         </mat-checkbox>
-                        <span class>I agree to have read and understood the and will abide by the same during the assessment and selection process.</span>
+                        <span class>I agree to have read and understood the <span style="
+                            color: #007bff;
+                            cursor: pointer;
+                            text-decoration: underline;
+                          " (click)="matDialogOpenTerms()">Terms and Conditions</span> and will abide by the same during the assessment and selection process.</span>
                     </div>
                     <div class="form-error" *ngIf="t_c?.invalid && t_c?.touched">
                         Please click on the above checkbox to agree the Terms and Conditions
@@ -241,3 +285,186 @@
     </div>
 </div>
 </div>
+
+<ng-template #matDialogTerms>
+    <div class="wrapper-kyc-terms">
+        <div class="header">
+            <div class="text">
+                <span> &#160; </span>
+                <span> Terms and Conditions </span>
+                <span class="icons">
+          <i (click)="closeBox()" class="icon-cancel_black ag-icon-font-size pointer"></i>
+        </span>
+            </div>
+        </div>
+        <div class="main-text">
+            <div class="text bold">Exam Terms and Conditions</div>
+            <div class="no-top">
+                THESE TERMS ARE SUBJECT TO CHANGE FROM TIME TO TIME IN LARSEN & TOUBRO’S SOLE DISCRETION. IT IS YOUR RESPONSIBILITY TO REVIEW THESE TERMS CAREFULLY AS YOU MUST COMPLY WITH THE MOST CURRENT VERSION OF THE AGREEMENT.
+            </div>
+
+            <div class="text bold">Details</div>
+            <div class="no-top">
+                Larsen & Toubro’s Exam Terms and Conditions (the "Terms") are entered into between the examinee ("You") and Larsen & Toubro LLC. ("Larsen & Toubro") as of the date you click "I agree" below (the "Effective Date").
+            </div>
+
+            <div class="text bold">Eligibility</div>
+            <div class="no-top">
+                Larsen & Toubro’s Exams: you must be at least 18 years of age to be eligible for any Larsen & Toubro exam.
+            </div>
+
+            <div class="text bold">Confidential Information</div>
+            <div class="no-top">
+                The content of the Exam, including without limitation, questions, answers, or any communication, including oral communication, regarding or related to the Exam is Larsen & Toubro’s confidential information ("Confidential Information"). Any disclosure
+                of Confidential Information is a violation of these Terms and could compromise the integrity and security of this exam. Larsen & Toubro makes exams available to you solely for the purpose of demonstrating competency in the content area
+                assessed by the Exam. You are expressly prohibited from disclosing, publishing, reproducing, copying, selling, posting, downloading or transmitting any Confidential Information, in whole or in part, in any form or by any means, oral or
+                written, electronic or mechanical, for any purpose
+            </div>
+
+            <div class="text bold">Certification/Revocation</div>
+            <div class="no-top">
+                If you violate these Terms, you may be prohibited from taking the Exam and/or any other Larsen & Toubro Exam; you may be decertified from any Larsen & Toubro Certification Program; and Larsen & Toubro, in its sole discretion, may terminate any applicable
+                business relationship with you and prohibit you from accessing any of our exam services.
+            </div>
+
+            <div class="text bold">Misconduct</div>
+            <div class="no-top">
+                If Larsen & Toubro discovers that you have violated these Terms or assisted others in doing so:
+                <div class="ul">
+                    <ul>
+                        <li>you may lose all Larsen & Toubro certifications</li>
+                        <li>you may be barred from taking or retaking any exam, and</li>
+                        <li>
+                            Larsen & Toubro, at its sole discretion, may choose to terminate any applicable relationship with you, if one exists.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text">
+                Examples of misconduct and/or misuse of the Exam include but are not limited to:
+                <div class="ul">
+                    <ul>
+                        <li>Providing false or fraudulent identification</li>
+                        <li>Providing or accepting improper assistance</li>
+                        <li>
+                            Disseminating actual Exam content by any means including, but not limited to, web postings, formal or informal test preparation or discussion groups, reconstruction through memorization or any other method
+                        </li>
+                        <li>
+                            Having non-authorized items in your possession during the Exam
+                        </li>
+                        <li>
+                            Using unauthorized materials (including brain-dump material and/or unauthorized publication of Exam questions with or without answers) to prepare for the Exam
+                        </li>
+                        <li>Making notes of any kind during the Exam</li>
+                        <li>
+                            Removing or attempting to remove Exam material (in any format)
+                        </li>
+                        <li>
+                            Intentionally causing a disturbance of any kind during the Exam
+                        </li>
+                        <li>
+                            Modifying and/or altering the results and/or score report for this Exam or any other Exam record
+                        </li>
+                        <li>Circumventing the Exam retake policy, if any</li>
+                        <li>Misrepresentation of certification status</li>
+                        <li>Misconduct as determined by statistical analysis</li>
+                        <li>
+                            Unauthorized accessing of Exam or Exam content (including access of materials in forums, chat rooms, discussion groups, blogs or other sharing sites with intent to circumvent Exam procedures)
+                        </li>
+                        <li>Failing and/or Retaking the Exam</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">Personal Information and Privacy</div>
+            <div class="no-top">
+                When we collect and process your personal information during participation in the Exam, your personal information is handled in accordance with Larsen & Toubro’s Privacy Policy, as well as the additional Exam Privacy and Policies Terms below.
+            </div>
+
+            <div class="text">
+                In providing Exam services, we may collect personal information such as:
+                <div class="ul">
+                    <ul>
+                        <li>Your answers to exam questions and the results of the exam</li>
+                        <li>
+                            A record of your interactions with our performance-based exams
+                        </li>
+                        <li>Your certification status</li>
+                        <li>
+                            Photographic and/or video recordings taken to confirm your identity, prevent fraud, and to otherwise help administer and score the test
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">Larsen & Toubro Exam Privacy and Policies</div>
+            <div class="no-top">
+                Below is the Exam Privacy and Policies agreement that is presented to the examinee during the registration process.
+            </div>
+
+            <div class="text bold">Instructions to examinee</div>
+            <div class="no-top">
+                Read the following terms carefully. If you accept the terms, please click the checkbox next to the Start button alongside. If you do not accept the terms of this agreement, you will not be permitted to take the exam.
+            </div>
+
+            <div class="text bold">Privacy</div>
+            <div class="no-top">
+                As part of taking the Exam, Larsen & Toubro will capture your personal information which includes, but is not limited to, your photograph, your digital keystroke patterns, and your personally identifying information (including, but not limited to, name,
+                address, company, title). In addition, as part of the online proctoring of each Exam, if applicable, Larsen & Toubro or an agent of Larsen & Toubro may be watching a live webcast of you at your session (and can communicate with you, tell
+                you to stop taking cell phone calls, etc.). All information collected in connection with the Exam shall collectively be referred to as "Exam Information". The Larsen & Toubro Privacy Policy describes how we treat personal information when
+                you use Larsen & Toubro’s products and services, including the Exam Information. In addition, the following describes our privacy practices that are specific to the Exam. All Exam Information you submit to Larsen & Toubro is collected
+                by Larsen & Toubro or its authorized agents in India, as well as the jurisdiction where you take the Exam. Exam Information may be shared with our affiliates, subsidiaries or joint ventures in other jurisdictions for Exam purposes. This
+                Policy is governed by the laws of India.
+            </div>
+
+            <div class="text bold">How will Exam Information be used?</div>
+            <div class="no-top">
+                The Exam Information you submit is used for the following purposes:
+                <div class="ul">
+                    <ul>
+                        <li>Registering test takers to take exams</li>
+                        <li>Ensuring the security of the Exam process</li>
+                        <li>Your Choices</li>
+                        <li>
+                            Submitting your Exam Information is voluntary. However, if you choose not to submit your Exam Information, you will not be permitted to take the Exam.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">Who may access your data?</div>
+            <div class="no-top">
+                Larsen & Toubro employees, affiliated companies or entities acting on behalf of Larsen & Toubro process Exam Information for the purposes listed above. Larsen & Toubro takes appropriate technical, organizational, and legal steps to protect Exam Information.
+                Affiliate companies or entities acting on behalf of Larsen & Toubro with whom we share your Exam Information will be bound by terms of confidentiality.
+            </div>
+
+            <div class="text bold">Does Larsen & Toubro keep your data?</div>
+            <div class="no-top">
+                Exam Information is retained in accordance with local law. We may also retain Exam Information to:
+                <div class="ul">
+                    <ul>
+                        <li>Dispute resolutions around test taking and passing</li>
+                        <li>
+                            Do demographic and similar non-personally identifiable analyses regarding the test taker populations, pass rates, and other behaviours
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text bold">Contacting Us</div>
+            <div class="no-top">
+                For more information about our privacy practices, please contact us through this website any time, or write to us at:
+                <div class="text-half">Larsen & Toubro</div>
+                <div class="text-half">HQ Chennai</div>
+                <div class="text-half">Manapakkam</div>
+            </div>
+
+            <div class="button-wrappers">
+                <button (click)="closeBox()" mat-raised-button class="common-button common-button-height-32" type="button">
+          Done
+        </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
