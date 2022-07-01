@@ -44,7 +44,7 @@ export const MY_FORMATS = {
 export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('matDialogTerms', { static: false }) matDialogRefTerms: TemplateRef<any>;
   @ViewChild('matDialogRefConfirmationPopUp', { static: false }) matDialogRefConfirmationPopUp: TemplateRef<any>;
-  @ViewChild('pickerYear', {static: false}) private pickerYear: MatDatepicker<Date>; 
+  @ViewChild('pickerYear', { static: false }) private pickerYear: MatDatepicker<Date>;
 
   offCampusRegistrationForm: FormGroup;
 
@@ -63,20 +63,20 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
       value: 'Others'
     }
   ];
-  
-  form_name = 'name';
+
+  form_name = 'full_name';
   form_email = 'email';
-  form_mobile = 'mobile';
-  form_dob = 'dob';
+  form_mobile = 'mobile_number';
+  form_dob = 'date_of_birth';
   form_gender = 'gender';
-  form_education_10th_percentage = '10thPercentage';
-  form_education_12th_percentage = '12thPercentage';
-  form_education_UG_clg_name = 'clg_name';
-  form_education_UG_clg_qualification = 'clg_qualification';
-  form_education_UG_clg_discipline = 'clg_discipline';
-  form_education_UG_clg_year_passing = 'clg_year_passing';
-  form_education_UG_clg_marks = 'clg_marks';
-  form_education_UG_clg_backlogs = 'clg_backlogs';
+  form_education_10th_percentage = 'sslc_marks';
+  form_education_12th_percentage = 'hsc_marks';
+  form_education_UG_clg_name = 'college_name';
+  form_education_UG_clg_qualification = 'qualification';
+  form_education_UG_clg_discipline = 'discipline';
+  form_education_UG_clg_year_passing = 'year_of_passing';
+  form_education_UG_clg_marks = 'graduation_marks';
+  form_education_UG_clg_backlogs = 'backlogs';
   form_resume = 'resume';
   form_t_c = 'terms';
 
@@ -89,14 +89,13 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   minDateDOB: Date;
   passportDateOfIssueMaxDate: Date;
   getAllEducationFormDropdownListSubscription: Subscription;
+  OffCampusFormSubmissionSubscription: Subscription;
   ugQualificationList: any;
-  pgQualificationList: any;
   ugDisciplineList: any;
-  pgDisciplineList: any;
   ugInstitutesList: any;
-  pgInstitutesList: any;
   selectedYear: any;
   formSubmitted: boolean;
+  driveName: any;
 
 
 
@@ -107,16 +106,32 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     private candidateService: CandidateMappersService,
     private loadingService: LoaderService,
     private dialog: MatDialog
-  ) { 
-    this.appConfig.setLocalData('driveId', 1);
-    this.appConfig.setLocalData('userId', 21147);
+  ) {
   }
 
   ngOnInit() {
     this.appConfig.setLocalData('submitted', false);
     this.dateValidation();
     this.registrationFormInit();
-    this.educationDropdownValues();
+    this.getOffCampusDriveCollegeMasterDetails();
+  }
+
+  patchValue() {
+    // Below is the sample function for development purpose, we can reuse this function whenever there is a need to update form values.
+    this.offCampusRegistrationForm.patchValue({
+      [this.form_education_UG_clg_backlogs]: "89",
+      [this.form_education_UG_clg_name]: "A. P. Shah Institute Of Technology",
+      [this.form_dob]: this.dateConvertion("29-10-1998"),
+      [this.form_education_UG_clg_year_passing]: "2022",
+      [this.form_resume]: {
+        [this.form_label]: 'Resume',
+        [this.form_file_size]: '2933',
+        [this.form_file_path]: 'add',
+        [this.form_file_name]: '2933.pdf',
+        [this.form_file_type]: null,
+        [this.form_file_id]: '2933'  
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -131,8 +146,8 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
-    this.minDateDOB = new Date(currentYear - 90, 0, 1);
-    this.passportDateOfIssueMaxDate = new Date();
+    this.minDateDOB = new Date(1998, 0, 1);
+    this.passportDateOfIssueMaxDate = new Date(1998 + 5, 11, 31);
     // this.maxDate = new Date(currentYear + 20, 11, 31);
     // this.passportValidminDate = new Date(currentYear - 15, 0, 1);
     // this.passportValidmaxDate = new Date(currentYear + 40, 0, 1);
@@ -164,55 +179,57 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-  educationDropdownValues() {
-    const api = {
-      level: '',
-      discipline: '',
-      specification: ''
-    };
-   this.getAllEducationFormDropdownListSubscription = this.candidateService.getAllEducationFormDropdownList(api).subscribe((data: any) => {
-      this.ugQualificationList = data && data.ug_specifications ? data.ug_specifications : [];
-      this.pgQualificationList = data && data.pg_specifications ? data.pg_specifications : [];
-      this.ugDisciplineList = data && data.ug_disciplines ? data.ug_disciplines : [];
-      this.pgDisciplineList = data && data.pg_disciplines ? data.pg_disciplines : [];
-      const list = data && data.ug_pg_colleges ? data.ug_pg_colleges : [];
-      const findUgOthers = list.find((data: any) => data.college_name == 'Others');
-      const UgexceptOthers = list.filter((data: any) => data.college_name !== 'Others');
-      UgexceptOthers.unshift(findUgOthers);
-      this.ugInstitutesList = UgexceptOthers;
-      const exceptOthers = list.filter((data: any) => data.college_name !== 'Others');
-      this.pgInstitutesList = exceptOthers;
+  getOffCampusDriveCollegeMasterDetails() {
+    this.getAllEducationFormDropdownListSubscription = this.candidateService.OffCampusDriveCollegeMasterDetails().subscribe((data: any) => {
+      data = data?.drive_details && data?.drive_details[0] ? data?.drive_details[0] : null;
+      this.appConfig.setLocalData('driveId', data?.drive_id);
+      this.driveName = data?.drive_name;
+      if (data) {
+        this.ugQualificationList = data && data.specifications ? data.specifications : [];
+        this.ugDisciplineList = data && data.disciplines ? data.disciplines : [];
+        const list = data && data.colleges ? data.colleges : [];
+        const findUgOthers = list.find((data: any) => data.college_name == 'Others');
+        const UgexceptOthers = list.filter((data: any) => data.college_name !== 'Others');
+        findUgOthers ? UgexceptOthers.unshift(findUgOthers) : '';
+        this.ugInstitutesList = UgexceptOthers;
+      }
     }, (err) => {
 
     });
   }
 
-
   offCampusFormSubmitConfirmation() {
-    if (this.offCampusRegistrationForm.valid || true) {
-    let confirmationPopUpref = this.dialog.open(this.matDialogRefConfirmationPopUp, {
-      width: '600px',
-      height: 'auto',
-      id: '2',
-      autoFocus: false,
-      closeOnNavigation: true,
-      disableClose: false,
-      panelClass: 'form-confirmation-pop-up'
-    });
+    if (this.offCampusRegistrationForm.valid) {
+      let confirmationPopUpref = this.dialog.open(this.matDialogRefConfirmationPopUp, {
+        width: '600px',
+        height: 'auto',
+        id: '2',
+        autoFocus: false,
+        closeOnNavigation: true,
+        disableClose: false,
+        panelClass: 'form-confirmation-pop-up'
+      });
     } else {
       this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
-      this.resume.markAllAsTouched();
       this.gv.validateAllFields(this.offCampusRegistrationForm);
     }
   }
-  
+
   offCampusFormSubmit() {
     this.closeBox('2');
-    this.formSubmitted=true;
-    this.appConfig.setLocalData('submitted', true);
-    setTimeout(() => {
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.UNAUTHENTICATED.OFF_CAMPUS_THANKS);      
-    }, 500);
+    let formValues = this.offCampusRegistrationForm.getRawValue();
+    delete formValues[this.form_t_c];
+    formValues[this.form_dob] = this.momentForm(formValues[this.form_dob]);
+    formValues[this.form_resume] = formValues[this.form_resume][this.form_file_id];
+    let apiRequestValues = formValues;
+    this.OffCampusFormSubmissionSubscription = this.candidateService.OffCampusFormSubmission(apiRequestValues).subscribe((data: any) => {
+      this.formSubmitted = true;
+      this.appConfig.setLocalData('submitted', true);
+      this.offCampusRegistrationForm.reset();
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.UNAUTHENTICATED.OFF_CAMPUS_THANKS);
+    }, (err) => {
+
+    });
   }
 
   resetForm() {
@@ -232,7 +249,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
       [this.form_education_UG_clg_name]: [null, [Validators.required]],
       [this.form_education_UG_clg_qualification]: [null, [Validators.required]],
       [this.form_education_UG_clg_discipline]: [null, [Validators.required]],
-      [this.form_education_UG_clg_year_passing]: [{value: '2022', disabled: true}, [Validators.required]],
+      [this.form_education_UG_clg_year_passing]: [{ value: '2022', disabled: true }, [Validators.required]],
       [this.form_education_UG_clg_marks]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.percentageNew(), this.gv.percentage(), Validators.maxLength(5)]],
       [this.form_education_UG_clg_backlogs]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.backlog()]],
       [this.form_resume]: this.initResumeArray(),
@@ -253,31 +270,31 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
 
   matDialogOpenTerms() {
     let termsAndCondtionsPopRef = this.dialog.open(this.matDialogRefTerms, {
-    width: '890px',
-    height: 'auto',
-    id: '1',
-    autoFocus: false,
-    closeOnNavigation: true,
-    disableClose: false,
-    panelClass: 'wrapper-kyc-terms'
-  });
-}
+      width: '890px',
+      height: 'auto',
+      id: '1',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'wrapper-kyc-terms'
+    });
+  }
 
 
-closeBox(id: any) {
-  // this.matDialogRefTerms.
-  let customDialog = this.dialog.getDialogById(id);
-  customDialog.close();
-}
+  closeBox(id: any) {
+    // this.matDialogRefTerms.
+    let customDialog = this.dialog.getDialogById(id);
+    customDialog.close();
+  }
 
-chosenYearHandler(ev, input){
-  let { _d } = ev;
-  this.selectedYear = _d;
-  let customYear = this.momentFormYear(this.selectedYear);
-  this.offCampusRegistrationForm.patchValue({
-    [this.form_education_UG_clg_year_passing]: customYear
-  });
-  this.pickerYear.close();
+  chosenYearHandler(ev, input) {
+    let { _d } = ev;
+    this.selectedYear = _d;
+    let customYear = this.momentFormYear(this.selectedYear);
+    this.offCampusRegistrationForm.patchValue({
+      [this.form_education_UG_clg_year_passing]: customYear
+    });
+    this.pickerYear.close();
   }
 
   removeFile() {
@@ -287,57 +304,54 @@ chosenYearHandler(ev, input){
       [this.form_file_path]: null,
       [this.form_file_name]: null,
       [this.form_file_type]: null,
-      [this.form_file_id]:   null,
+      [this.form_file_id]: null,
     });
   }
   async uploadImage(file) {
     try {
       this.loadingService.setLoading(true);
-      const data = await (await this.candidateService.uploadJoiningDocs(file)).json();
+      const data = await (await this.candidateService.uploadoffCampusDocs(file)).json();
       if (data && data.error_code) {
-        console.log('coming1')
         this.loadingService.setLoading(false);
-       return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
+        return this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
       }
       this.loadingService.setLoading(false);
       if (data && data.file_id) {
-        console.log('coming2');
         this[this.form_resume].patchValue({
           [this.form_label]: 'Resume',
           [this.form_file_size]: data.file_size,
           [this.form_file_path]: data.file_path,
           [this.form_file_name]: data.file_name,
           [this.form_file_type]: data.type,
-          [this.form_file_id]:   data.file_id,
+          [this.form_file_id]: data.file_id,
         });
         return this.appConfig.nzNotification('success', 'Uploaded', 'Document uploaded successfully');
       }
-    }  
+    }
     catch (e) {
-      console.log('coming4', e);
       this.loadingService.setLoading(false);
       this.appConfig.nzNotification('error', 'Not Uploaded', 'Please try again');
     }
   }
-  
+
   onSelectFile(event) {
     const fd = new FormData();
     this.filepath.markAsTouched();
     if (event.target.files && (event.target.files[0].type.includes('application/pdf'))) {
       if (event.target.files[0].size < 2000000) {
         if (this.appConfig.minImageSizeValidation(event.target.files[0].size)) {
-        let image = event.target.files[0];
+          let image = event.target.files[0];
 
-        fd.append('user_id', this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '');
-        fd.append('description', 'off-campus Resume');
-        fd.append('label', 'off-campus Resume');
-        fd.append('level', 'off-campus Resume');
-        fd.append('product_image', image);
-        this.uploadImage(fd);
+          fd.append('user_id', this.email.value ? this.email.value : 'off-campus-user');
+          fd.append('description', 'off-campus Resume');
+          fd.append('label', 'off-campus Resume');
+          fd.append('level', 'off-campus Resume');
+          fd.append('product_image', image);
+          this.uploadImage(fd);
+        }
+      } else {
+        this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
       }
-     } else {
-      this.appConfig.nzNotification('error', 'Not Uploaded', 'Maximum file size is 2 MB');
-     }
     } else {
       return this.appConfig.nzNotification('error', 'Invalid Format', 'Please upload .PDF files only');
     }
@@ -397,5 +411,6 @@ chosenYearHandler(ev, input){
 
   ngOnDestroy() {
     this.getAllEducationFormDropdownListSubscription ? this.getAllEducationFormDropdownListSubscription.unsubscribe() : '';
+    this.OffCampusFormSubmissionSubscription ? this.OffCampusFormSubmissionSubscription.unsubscribe() : '';
   }
 }

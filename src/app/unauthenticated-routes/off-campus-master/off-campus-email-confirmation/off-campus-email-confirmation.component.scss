@@ -74,6 +74,14 @@
             height: 75%;
         }
       }
+      .error-wrapper {
+        padding: 0.5em .5em 2em 0.5em;
+        box-shadow: 2px 2px 5px #0000001a;
+        border: solid 1px #0000001a;
+        @include md() {
+          padding: 1em 5em 4em 5em;
+        }
+      }
       .icon-div {
         display: flex;
         justify-content: center;
@@ -90,6 +98,13 @@
                 width: 90%;
             }
         }
+        .icon-Close-offcampus {
+          background: #C02222;
+          color: white;
+          padding: .75em;
+          border-radius: 50%;
+          font-size: 20px;
+        }
       }
       .content {
         display: block;
@@ -98,6 +113,36 @@
         font-weight: 400;
         margin: 0;
       }
+      .content-error {
+        display: block;
+        color: #222222;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin: 0;
+      }
+      .content-error-normal {
+        display: block;
+        color: #222222;
+        font-size: .9em;
+        font-weight: 400;
+        padding-top: 1.4em;        
+      }
     }
 
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  color: #000000;
+  font-size: 12px;
+  background: #f2f3f5;
+  display: none;
+  @include lg() {
+    display: flex;
+  }
 }

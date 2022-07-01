@@ -40,12 +40,12 @@ export const CONSTANT = {
     LOGIN: '/login',
     LOGOUT: '/logout',
     UNAUTHENTICATED: {
-      HOME: '/unauthenticated',
-      VIDEO_ASSESS: '/unauthenticated/video-assessment-evaluation',
-      OFF_CAMPUS: '/unauthenticated/off-campus',
-      OFF_CAMPUS_PROFILE: '/unauthenticated/off-campus/profile',
-      OFF_CAMPUS_THANKS: '/unauthenticated/off-campus/thanks',
-      OFF_CAMPUS_EMAIL: '/unauthenticated/off-campus/email-confirmation'
+      HOME: '/open',
+      VIDEO_ASSESS: '/open/video-assessment-evaluation',
+      OFF_CAMPUS: '/open/off-campus',
+      OFF_CAMPUS_PROFILE: '/open/off-campus/profile',
+      OFF_CAMPUS_THANKS: '/open/off-campus/thanks',
+      OFF_CAMPUS_EMAIL: '/open/off-campus/email-confirmation'
     },
     CUSTOMERS: {
       HOME: '/customer',
@@ -199,7 +199,7 @@ export const CONSTANT = {
     LOGIN: 'login',
     LOGOUT: 'logout',
     UNAUTHENTICATED: {
-      HOME: 'unauthenticated',
+      HOME: 'open',
       VIDEO_ASSESS: 'video-assessment-evaluation',
       OFF_CAMPUS: 'off-campus',
       OFF_CAMPUS_PROFILE: 'profile',
