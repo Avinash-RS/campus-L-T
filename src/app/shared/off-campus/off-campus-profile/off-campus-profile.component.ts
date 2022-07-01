@@ -189,7 +189,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
 
 
   offCampusFormSubmitConfirmation() {
-    if (this.offCampusRegistrationForm.valid) {
+    if (this.offCampusRegistrationForm.valid || true) {
     let confirmationPopUpref = this.dialog.open(this.matDialogRefConfirmationPopUp, {
       width: '600px',
       height: 'auto',

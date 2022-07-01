@@ -60,11 +60,14 @@
         display: block;
         color: #1b4e9b;
         font-weight: 600;
-        font-size: 22px;
+        font-size: 20px;
         width: 100%;
         text-align: center;
         margin-bottom: 1em;
         line-height: 35px;
+        @include md() {
+          font-size: 22px;
+        }
       }
       .form-container {
         position: relative;
@@ -84,11 +87,14 @@
           display: block;
           color: #222222;
           font-weight: 500;
-          font-size: 22px;
+          font-size: 20px;
           width: 100%;
           text-align: left;
           margin-bottom: 1em;
           line-height: 20px;
+          @include md() {
+            font-size: 22px;
+          }  
         }
         .driveinstruction {
           background-color: #1a4e9b27;
@@ -269,9 +275,7 @@
               border: 1px solid #004684;
               border-radius: 4px;
               background: #ffffff;
-              font-size: 14px;
               font-weight: 500;
-              min-width: 100px;
               letter-spacing: 1px;
             }
             .submit-button {
@@ -279,10 +283,26 @@
               border: 1px solid #004684;
               border-radius: 4px;
               background-color: #004684;
-              font-size: 14px;
               font-weight: 500;
-              min-width: 100px;
-              letter-spacing: 1px;
+              letter-spacing: 1px;      
+            }
+            button {
+              text-transform: uppercase;
+              @include mobile() {
+                width: auto;
+                min-width: 50px;
+                height: 30px;
+                font-size: 12px;
+              }
+              @include sm() {
+                height: 35px;
+                min-width: 100px;
+                font-size: 14px;
+              }
+              @include md() {
+                height: 40px;
+                min-width: 100px;
+              }      
             }
             button:hover {
               transition: 250ms ease-in-out;
@@ -424,35 +444,51 @@ input.ng-invalid.ng-touched {
   background-color: #ffffff;
   margin: 0 auto;
   font-size: 14px;
+  text-align: center;
   .form-confirmation {
-    padding: 2em 0 4em 0;
+    padding: 2em 0 2em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 80%;
     margin: 0 auto;
+    @include md() {
+      padding: 2em 0 4em 0;
+    }
     .icon-div {
       display: flex;
       justify-content: center;
-      margin: 2em 0 1em 0;
+      margin: 0;
+      @include md() {
+        margin: 2em 0 1em 0;
+      }  
       .icon-Info-1 {
         color: #1b4e9b;
-        font-size: 60px;
+        font-size: 35px;
+        @include md() {
+          font-size: 60px;
+        }
       }
     }
     .bold-content {
       display: block;
       color: #222222;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 500;
       margin: 1em 0 0 0;
+      @include md() {
+        font-size: 20px;
+      }
     }
     .content {
       display: block;
       color: #222222;
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 400;
       margin: 0.75em 0;
+      @include md() {
+        font-size: 17px;
+      }
     }
     .confirmation-button-wrapper {
       margin-top: 1em;
@@ -466,9 +502,7 @@ input.ng-invalid.ng-touched {
         border: 1px solid #004684;
         border-radius: 4px;
         background: #ffffff;
-        font-size: 14px;
         font-weight: 500;
-        min-width: 100px;
         letter-spacing: 1px;
       }
       .submit-button {
@@ -476,10 +510,25 @@ input.ng-invalid.ng-touched {
         border: 1px solid #004684;
         border-radius: 4px;
         background-color: #004684;
-        font-size: 14px;
         font-weight: 500;
-        min-width: 100px;
         letter-spacing: 1px;
+      }
+      button {
+        @include mobile() {
+          width: auto;
+          min-width: 50px;
+          height: 30px;
+          font-size: 12px;
+        }
+        @include sm() {
+          height: 35px;
+          min-width: 100px;
+          font-size: 14px;
+        }
+        @include md() {
+          height: 40px;
+          min-width: 100px;
+        }
       }
     }
   }

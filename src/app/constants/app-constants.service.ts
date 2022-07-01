@@ -44,7 +44,8 @@ export const CONSTANT = {
       VIDEO_ASSESS: '/unauthenticated/video-assessment-evaluation',
       OFF_CAMPUS: '/unauthenticated/off-campus',
       OFF_CAMPUS_PROFILE: '/unauthenticated/off-campus/profile',
-      OFF_CAMPUS_THANKS: '/unauthenticated/off-campus/thanks'
+      OFF_CAMPUS_THANKS: '/unauthenticated/off-campus/thanks',
+      OFF_CAMPUS_EMAIL: '/unauthenticated/off-campus/email-confirmation'
     },
     CUSTOMERS: {
       HOME: '/customer',
@@ -203,6 +204,7 @@ export const CONSTANT = {
       OFF_CAMPUS: 'off-campus',
       OFF_CAMPUS_PROFILE: 'profile',
       OFF_CAMPUS_THANKS: 'thanks',
+      OFF_CAMPUS_EMAIL: 'email-confirmation',
     },
     CUSTOMERS: {
       HOME: 'customer',

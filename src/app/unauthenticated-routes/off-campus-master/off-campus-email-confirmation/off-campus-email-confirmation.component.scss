@@ -1,0 +1,103 @@
+@import '../../../themes/themes.scss';
+.thanks-wrapper {
+    background: #F2F2F2;
+    height: calc(100% - #{$headerHeight});
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .form-confirmation {
+      font-size: 13px;
+      background-color: #ffffff;
+      padding: 2em 2em 2em 2em;
+      border: 0.5px solid #70707085;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1200px;
+      text-align: center;
+      width: 90%;
+      height: 70%;
+      justify-content: center;
+      margin: 0 auto;
+      position: relative;
+      @include md() {
+        font-size: 14px;
+        width: 75%;
+        height: 80%;
+        justify-content: flex-start;
+    }
+      @include lg() {
+        width: 75%;
+        height: 90%;
+      }
+      @include xl() {
+        width: 75%;
+        height: 90%;
+      }
+      .h3-heading {
+        display: block;
+        color: #1b4e9b;
+        font-weight: 600;
+        font-size: 20px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1.25em;
+        line-height: 35px;
+        @include md() {
+          font-size: 22px;
+        }
+      }
+      .driveName {
+        display: block;
+        color: #222222;
+        font-weight: 500;
+        font-size: 18px;
+        width: 100%;
+        text-align: left;
+        line-height: 20px;
+        @include md() {
+          font-size: 22px;
+        }  
+      }
+      .sub-wrapper {
+        position: relative;
+        height: 70%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        @include md() {
+            height: 75%;
+        }
+      }
+      .icon-div {
+        display: flex;
+        justify-content: center;
+        padding: 2em 0 2em 0;
+        img {
+            width: 50%;
+            @include md() {
+                width: 60%;
+            }
+            @include md() {
+                width: 75%;
+            }
+            @include xl() {
+                width: 90%;
+            }
+        }
+      }
+      .content {
+        display: block;
+        color: #222222;
+        font-size: 1.22em;
+        font-weight: 400;
+        margin: 0;
+      }
+    }
+
+}
