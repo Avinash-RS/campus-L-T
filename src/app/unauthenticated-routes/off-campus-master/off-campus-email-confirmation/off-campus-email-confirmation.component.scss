@@ -1,0 +1,148 @@
+@import '../../../themes/themes.scss';
+.thanks-wrapper {
+    background: #F2F2F2;
+    height: calc(100% - #{$headerHeight});
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .form-confirmation {
+      font-size: 13px;
+      background-color: #ffffff;
+      padding: 2em 2em 2em 2em;
+      border: 0.5px solid #70707085;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1200px;
+      text-align: center;
+      width: 90%;
+      height: 70%;
+      justify-content: center;
+      margin: 0 auto;
+      position: relative;
+      @include md() {
+        font-size: 14px;
+        width: 75%;
+        height: 80%;
+        justify-content: flex-start;
+    }
+      @include lg() {
+        width: 75%;
+        height: 90%;
+      }
+      @include xl() {
+        width: 75%;
+        height: 90%;
+      }
+      .h3-heading {
+        display: block;
+        color: #1b4e9b;
+        font-weight: 600;
+        font-size: 20px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1.25em;
+        line-height: 35px;
+        @include md() {
+          font-size: 22px;
+        }
+      }
+      .driveName {
+        display: block;
+        color: #222222;
+        font-weight: 500;
+        font-size: 18px;
+        width: 100%;
+        text-align: left;
+        line-height: 20px;
+        @include md() {
+          font-size: 22px;
+        }  
+      }
+      .sub-wrapper {
+        position: relative;
+        height: 70%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        @include md() {
+            height: 75%;
+        }
+      }
+      .error-wrapper {
+        padding: 0.5em .5em 2em 0.5em;
+        box-shadow: 2px 2px 5px #0000001a;
+        border: solid 1px #0000001a;
+        @include md() {
+          padding: 1em 5em 4em 5em;
+        }
+      }
+      .icon-div {
+        display: flex;
+        justify-content: center;
+        padding: 2em 0 2em 0;
+        img {
+            width: 50%;
+            @include md() {
+                width: 60%;
+            }
+            @include md() {
+                width: 75%;
+            }
+            @include xl() {
+                width: 90%;
+            }
+        }
+        .icon-Close-offcampus {
+          background: #C02222;
+          color: white;
+          padding: .75em;
+          border-radius: 50%;
+          font-size: 20px;
+        }
+      }
+      .content {
+        display: block;
+        color: #222222;
+        font-size: 1.22em;
+        font-weight: 400;
+        margin: 0;
+      }
+      .content-error {
+        display: block;
+        color: #222222;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin: 0;
+      }
+      .content-error-normal {
+        display: block;
+        color: #222222;
+        font-size: .9em;
+        font-weight: 400;
+        padding-top: 1.4em;        
+      }
+    }
+
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  color: #000000;
+  font-size: 12px;
+  background: #f2f3f5;
+  display: none;
+  @include lg() {
+    display: flex;
+  }
+}

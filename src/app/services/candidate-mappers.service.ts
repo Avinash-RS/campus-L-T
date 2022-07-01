@@ -436,6 +436,16 @@ export class CandidateMappersService {
 
     }
 
+    uploadoffCampusDocs(documentData) {
+      // this.datas is api body data
+      return fetch(`${this.BASE_URL}/offcampus/upload_docs`, {
+        method: 'POST',
+        body: documentData,
+        headers: new Headers(this.forFetchCustomHeaders())
+      });
+
+    }
+
 
      joiningFormGetPreviewDetails() {
       let userId = this.appConfig.getLocalData('userId') ? this.appConfig.getLocalData('userId') : '';
@@ -454,5 +464,16 @@ export class CandidateMappersService {
          { headers: this.getAfterCustomHeaders(), withCredentials: true});
      }
 
+     OffCampusDriveCollegeMasterDetails() {
+      return this.http.get(`${this.BASE_URL}/offcampus/drive-details`, { headers: this.withoutTokens(), withCredentials: true });
+    }
+
+    OffCampusFormSubmission(formData: any) {
+      return this.http.post(`${this.BASE_URL}/offcampus/offcampus_registration`, formData, { headers: this.withoutTokens(), withCredentials: true });
+    }
+
+    offCampusEmailVerification(data: any) {
+      return this.http.post(`${this.BASE_URL}/offcampus/verify-account`, data, { headers: this.withoutTokens(), withCredentials: true });
+    }
 
 }

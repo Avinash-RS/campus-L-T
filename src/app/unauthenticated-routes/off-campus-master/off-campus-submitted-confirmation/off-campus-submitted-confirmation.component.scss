@@ -9,21 +9,33 @@
     align-items: center;
     justify-content: center;
     .form-confirmation {
+      font-size: 13px;
+      background-color: #ffffff;
+      padding: 2em 2em 4em 2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 550px;
+      text-align: center;
+      width: 90%;
+      margin: 0 auto;
+      position: relative;
+      @include md() {
         font-size: 14px;
-        background-color: #ffffff;
-        padding: 2em 0 4em 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        width: 75%;
+      }
+      @include lg() {
+        width: 75%;
+      }
+      @include xl() {
         width: 50%;
-        margin: 0 auto;
-        position: relative;
+      }
       .icon-div {
         display: flex;
         justify-content: center;
         margin: 2em 0 1em 0;
         .icon-Tick-1 {
-            font-size: 30px;
+            font-size: 2.15em;
             background: #37AF02;
             border-radius: 50%;
             color: white;
@@ -33,14 +45,14 @@
       .bold-content {
         display: block;
         color: #222222;
-        font-size: 20px;
+        font-size: 1.45em;
         font-weight: 500;
         margin: 1em 0 1em 0;
       }
       .content {
         display: block;
         color: #222222;
-        font-size: 17px;
+        font-size: 1.22em;
         font-weight: 400;
         margin: 0;
       }

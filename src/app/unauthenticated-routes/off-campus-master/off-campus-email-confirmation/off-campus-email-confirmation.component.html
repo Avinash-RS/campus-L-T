@@ -1,0 +1,46 @@
+<div class="thanks-wrapper">
+  <div class="form-confirmation">
+    <h3 class="h3-heading">RECRUITMENT PLATFORM</h3>
+    <ng-container *ngIf="!emailVerificationInprogress else loading">
+    <ng-container *ngIf="emailVerificationSuccess">
+      <div class="driveName">{{driveName}}</div>
+      <div class="sub-wrapper">
+        <div class="icon-div">
+          <img
+            src="assets/Yet_to_Insert_in_icomoon/Envelope.svg"
+            alt=""
+            srcset=""
+          />
+        </div>
+        <div class="content">Thanks for confirming your mail id.</div>
+        <div class="content">
+          You will be notified once your profile gets shortlisted.
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!emailVerificationSuccess">
+    <div class="sub-wrapper">
+      <div class="error-wrapper">
+      <div class="icon-div">
+        <span class="icon-Close icon-Close-offcampus"></span>
+      </div>
+      <div class="content-error">Email Verification Failed!</div>
+      <div class="content-error-normal">Please contact support team at <a href="mailto:assess.support@lntedutech.com">assess.support@lntedutech.com</a>.</div>
+    </div>
+    </div>
+    </ng-container>
+  </ng-container>
+      <ng-template #loading>
+      </ng-template>
+      <div class="footer">
+        <div class="content">
+            In case of any technical issues, contact us at <a href="mailto:assess.support@lntedutech.com">assess.support@lntedutech.com</a>
+        </div>
+        <div class="copyright">
+            © 2022 Powered by L&T EduTech. All Rights Reserved
+        </div>
+    </div>
+
+  </div>
+</div>

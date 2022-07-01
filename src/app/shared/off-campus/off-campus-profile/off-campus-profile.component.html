@@ -3,7 +3,7 @@
     <div class="off-profile-container">
         <h3 class="h3-heading">RECRUITMENT PLATFORM</h3>
         <div class="form-container">
-            <div class="driveName">Off Campus Drive - GET 2022</div>
+            <div class="driveName">{{driveName}}</div>
             <div class="driveinstruction">
                 <span class="icon-Info"></span>
                 <span>Apply to this recruitment drive only if your year of passing is 2022</span>
@@ -43,7 +43,7 @@
                         <div class="date-relative">
                             <input [id]="form_dob" matInput class="form-input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="picker" placeholder="Format: DD-MM-YYYY" [formControlName]="form_dob">
                             <mat-datepicker-toggle class="date-toggle" matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-datepicker [startAt]="minDateDOB" #picker></mat-datepicker>
                         </div>
                         <div class="form-error" *ngIf="dob?.invalid && dob?.touched">
                             <div *ngIf="dob?.errors?.required">Date of Birth is Required</div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="form-field-wrapper flex-50">
-                        <label class="label">College Name<span class="asterick">*</span> <span [matTooltip]="'If you are not able to find your college, please select \'Others\' option.'" matTooltipPosition="after" matTooltipClass="offCamps-tooltip" class="ml-1 icon-Info"></span></label>
+                        <label class="label">College Name<span class="asterick">*</span> <span [matTooltip]="'If you are not able to find your college, please select \'Others\' option.'" matTooltipPosition="after" #otherstooltip="matTooltip" (click)="otherstooltip.toggle()" matTooltipClass="offCamps-tooltip" class="ml-1 icon-Info"></span></label>
                         <nz-select
                         [id]="form_education_UG_clg_name"
                         class="nzselect"
@@ -164,8 +164,8 @@
 
                     <div class="form-field-wrapper flex-50">
                         <label class="label">Year of Passing<span class="asterick">*</span></label>
-                        <div [matTooltip]="'Non-Editable'" matTooltipPosition="above" class="date-relative">
-                            <input [id]="form_education_UG_clg_year_passing" matInput class="form-input" [min]="minDateDOB" [max]="passportDateOfIssueMaxDate" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing" appYearOnly>
+                        <div [matTooltip]="'Non-Editable'" #yoptooltip="matTooltip" (click)="yoptooltip.toggle()" matTooltipPosition="above" class="date-relative">
+                            <input [id]="form_education_UG_clg_year_passing" matInput class="form-input" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing" appYearOnly>
                             <mat-datepicker-toggle class="date-toggle" matSuffix [for]="pickerYear"></mat-datepicker-toggle>
                             <mat-datepicker #pickerYear
                             startView="multi-year"
@@ -184,7 +184,7 @@
                     </div>
 
                     <div class="form-field-wrapper flex-50">
-                        <label class="label">Graduation Marks(%)<span class="asterick">*</span></label>
+                        <label class="label">Engineering Graduation Marks(%)<span class="asterick">*</span></label>
                         <input [id]="form_education_UG_clg_marks" matInput placeholder="Enter your graduation marks in percentage" class="form-input" type="text" [formControlName]="form_education_UG_clg_marks">
                         <div class="form-error" *ngIf="education_UG_clg_marks?.invalid && education_UG_clg_marks?.touched">
                             <div *ngIf="education_UG_clg_marks?.errors?.required">Percentage is Required</div>
@@ -193,7 +193,7 @@
                         </div>
                     </div>
                     <div class="form-field-wrapper flex-50">
-                        <label class="label">No.of Backlog(s) (If any)<span class="asterick">*</span></label>
+                        <label class="label">No.of Backlog(s)/History of Backlog(s) (If any)<span class="asterick">*</span></label>
                         <input [id]="form_education_UG_clg_backlogs" matInput placeholder="Enter the number of backlog(s)" class="form-input" type="text" [formControlName]="form_education_UG_clg_backlogs">
                         <div class="form-error" *ngIf="education_UG_clg_backlogs?.invalid && education_UG_clg_backlogs?.touched">
                             <div *ngIf="education_UG_clg_backlogs?.errors?.required">No. of Backlogs is Required</div>
@@ -236,7 +236,7 @@
                                     Resume is Required</div>
                             </div>
                             <div class="instructions">
-                                *Accepted Formats (.pdf) (Maximum file size 2MB)
+                                *Accepted Formats (.pdf) (Minimum file size 10KB; Maximum file size 2MB)
                             </div>
 
                         </div>
@@ -274,7 +274,7 @@
                         Reset
                     </button>
                     <button class="submit-button" mat-raised-button type="submit">
-                        Register
+                        Apply
                     </button>              
                 </div>
                 <!-- <div *ngIf="formSubmitted" class="formsubmitted">

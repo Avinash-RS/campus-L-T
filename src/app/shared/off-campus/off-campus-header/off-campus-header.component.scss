@@ -1,6 +1,8 @@
 @import "../../../themes/themes.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
 .headerShadow {
+  font-family: 'Roboto Condensed', sans-serif;
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -51,5 +53,8 @@
   img {
     height: 100%;
     padding: 16px;
+    @media screen and (max-width: 330px) {
+      width: 90%;
+    }
   }
 }
