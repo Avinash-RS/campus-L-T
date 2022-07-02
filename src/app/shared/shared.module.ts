@@ -49,6 +49,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { OffCampusProfileComponent } from './off-campus/off-campus-profile/off-campus-profile.component';
 import { OffCampusHeaderComponent } from './off-campus/off-campus-header/off-campus-header.component';
 import { YearOnlyDirective } from '../directives/customDateFormats/year-only.directive';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 ModuleRegistry.registerModules(AllModules);
 
@@ -70,7 +71,9 @@ ModuleRegistry.registerModules(AllModules);
     // Ant design Modules
     NzSelectModule,
     ChartsModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   exports: [
     FormsModule,

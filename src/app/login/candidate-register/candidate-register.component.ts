@@ -8,6 +8,7 @@ import { FormCustomValidators } from 'src/app/custom-form-validators/autocomplet
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
 import { RecaptchaErrorParameters } from 'ng-recaptcha';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: "app-candidate-register",
@@ -19,7 +20,7 @@ export class CandidateRegisterComponent implements OnInit {
   toggleVisibility = true;
   capsOn: any;
   getCurrentYear = this.appConfig.getCurrentYear();
-  captachaSiteKey = "6LdnlaYgAAAAAP-v2pcAGw8CxbB8dEPZn_J44l3w";
+  captachaSiteKey = environment.captachaSiteKey;
   recaptchaStr = '';
 
   constructor(

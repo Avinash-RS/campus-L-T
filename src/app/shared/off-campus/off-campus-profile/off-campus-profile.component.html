@@ -5,10 +5,35 @@
         <div class="form-container">
             <div class="driveName">{{driveName}}</div>
             <div class="driveinstruction">
-                <span class="icon-Info"></span>
-                <span>Apply to this recruitment drive only if your year of passing is 2022</span>
+                <h5 class="drive-info-head">
+                    Eligibility Criteria:
+                </h5>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>You should be born on or after 01.07.1998.</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>4 years / 8 semester Degree (full-time) course after 10+2 for degree (Students expecting to graduate by 30th June 2022).</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>Aggregate for B.E. / B.Tech should be more than or equal to 65%.</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>No backlogs (past or live) during B.E. / B.Tech Course. All subjects should be cleared in first attempt only.</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>Any subject / paper not cleared during usual attempt and re-attempted for whatsoever reason will be considered as second attempt.</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>Aggregate for 10th & HSC/12th should be more than or equal to 70%.</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>Post 10th, students should have completed 12th within 2 years from the completion of 10th.</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon-RightArrow"></span> <span>Foreign nationals are not eligible.</span>
+                </div>
             </div>    
-            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusFormSubmitConfirmation()" #form="ngForm">
+            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusRegistrationForm.valid ? checkCaptchaBeforeSubmit(captchaRef) : formNotValid()" #form="ngForm">
                 <div class="sub-heading">
                     Basic Details
                 </div>
@@ -53,7 +78,7 @@
                             <div *ngIf="dob?.errors?.matDatepickerMin">
                                 {{dob?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(dob?.errors?.matDatepickerMin.min) : ''}}
                             </div>
-                            <div *ngIf="dob?.errors?.matDatepickerParse">Invalid Date Format</div>
+                            <div *ngIf="dob?.errors?.matDatepickerParse">Date Format should be 'DD-MM-YYYY'(Ex: 29-12-1998)</div>
                         </div>
                     </div>
                     <div class="form-field-wrapper flex-50">
@@ -164,22 +189,22 @@
 
                     <div class="form-field-wrapper flex-50">
                         <label class="label">Year of Passing<span class="asterick">*</span></label>
-                        <div [matTooltip]="'Non-Editable'" #yoptooltip="matTooltip" (click)="yoptooltip.toggle()" matTooltipPosition="above" class="date-relative">
-                            <input [id]="form_education_UG_clg_year_passing" matInput class="form-input" [matDatepicker]="pickerYear" placeholder="Format: YYYY" [formControlName]="form_education_UG_clg_year_passing" appYearOnly>
-                            <mat-datepicker-toggle class="date-toggle" matSuffix [for]="pickerYear"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerYear
-                            startView="multi-year"
-                            (yearSelected)="chosenYearHandler($event, pickerYear)"></mat-datepicker>
-                        </div>
+                        <nz-select
+                        [id]="form_education_UG_clg_year_passing"
+                        class="nzselect"
+                        [formControlName]="form_education_UG_clg_year_passing"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="<--Select-->"
+                        >
+                        <nz-option
+                          *ngFor="let yop of yearofPassingList"
+                          [nzLabel]="yop"
+                          [nzValue]="yop"
+                        ></nz-option>
+                        </nz-select>
                         <div class="form-error" *ngIf="education_UG_clg_year_passing?.invalid && education_UG_clg_year_passing?.touched">
                             <div *ngIf="education_UG_clg_year_passing?.errors?.required">Year of Passing is Required</div>
-                            <div *ngIf="education_UG_clg_year_passing?.errors?.matDatepickerMax">
-                                {{education_UG_clg_year_passing?.errors?.matDatepickerMax?.max ? 'Maximum date should be ' + momentForm(education_UG_clg_year_passing?.errors?.matDatepickerMax.max) : ''}}
-                            </div>
-                            <div *ngIf="education_UG_clg_year_passing?.errors?.matDatepickerMin">
-                                {{education_UG_clg_year_passing?.errors?.matDatepickerMin?.min ? 'Minimum date should be ' + momentForm(education_UG_clg_year_passing?.errors?.matDatepickerMin.min) : ''}}
-                            </div>
-                            <div *ngIf="education_UG_clg_year_passing?.errors?.matDatepickerParse">Invalid Date Format</div>
                         </div>
                     </div>
 
@@ -192,83 +217,102 @@
                             <div *ngIf="education_UG_clg_marks?.errors?.maxlength">Number with 2 Decimal points only allowed</div>
                         </div>
                     </div>
-                    <div class="form-field-wrapper flex-50">
+                    <!-- <div class="form-field-wrapper flex-50">
                         <label class="label">No.of Backlog(s)/History of Backlog(s) (If any)<span class="asterick">*</span></label>
                         <input [id]="form_education_UG_clg_backlogs" matInput placeholder="Enter the number of backlog(s)" class="form-input" type="text" [formControlName]="form_education_UG_clg_backlogs">
                         <div class="form-error" *ngIf="education_UG_clg_backlogs?.invalid && education_UG_clg_backlogs?.touched">
                             <div *ngIf="education_UG_clg_backlogs?.errors?.required">No. of Backlogs is Required</div>
                             <div *ngIf="education_UG_clg_backlogs?.errors?.backlog">Accept Numbers only and Maximum of 2 digits only Allowed</div>
                         </div>
-                    </div>
-                </div>
-                <ng-container *ngIf="form_resume">
-                <div [formGroupName]="form_resume" class="row-wrapper mt-3">
-                    <div class="form-field-wrapper flex-50">
-                        <label class="label">Resume<span class="asterick">*</span></label>
+                    </div> -->
+                    <ng-container *ngIf="form_resume">
+                        <div [formGroupName]="form_resume" class="form-field-wrapper flex-50">
+                            <label class="label">Resume<span class="asterick">*</span></label>
 
-                        <div class="upload-wrapperr">
-                            <label class="label-upload"
-                                [ngClass]="!filepath.value ? 'choose-button' : 'preview'"
-                                [for]="'label'">
-                                <ng-container *ngIf="!filepath?.value">
-                                    <div class="choose-file">
-                                        <i class="icon-upload ag-icon-font-size-14"></i>
-                                        <span class="content">Choose a File</span>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="filepath?.value">
-                                    <div class="uploaded-view">
-                                        <div [matTooltip]="'Choose another file'" class="ufilename">
-                                            {{filename.value ? filename.value : ''}}
+                            <div class="upload-wrapperr">
+                                <label class="label-upload"
+                                    [ngClass]="!filepath.value ? 'choose-button' : 'preview'"
+                                    [for]="'label'">
+                                    <ng-container *ngIf="!filepath?.value">
+                                        <div class="choose-file">
+                                            <i class="icon-upload ag-icon-font-size-14"></i>
+                                            <span class="content">Choose a File</span>
                                         </div>
-                                        <i [matTooltip]="'Remove'"
-                                            (click)="removeFile(); $event.preventDefault()"
-                                            class="icon-cancel_black ag-icon-font-size pointer"></i>
-                                    </div>
-                                </ng-container>
-                            </label>
-                            <input [id]="'label'" type="file" accept=".pdf" (click)="files.value = null" #files
-                                (change)="onSelectFile($event)" hidden>
-                            <div class="form-error"
-                                *ngIf="filepath?.invalid && filepath?.touched">
-                                <div
-                                    *ngIf="filepath?.errors?.required">
-                                    Resume is Required</div>
-                            </div>
-                            <div class="instructions">
-                                *Accepted Formats (.pdf) (Minimum file size 10KB; Maximum file size 2MB)
+                                    </ng-container>
+                                    <ng-container *ngIf="filepath?.value">
+                                        <div class="uploaded-view">
+                                            <div [matTooltip]="'Choose another file'" class="ufilename">
+                                                {{filename.value ? filename.value : ''}}
+                                            </div>
+                                            <i [matTooltip]="'Remove'"
+                                                (click)="removeFile(); $event.preventDefault()"
+                                                class="icon-cancel_black ag-icon-font-size pointer"></i>
+                                        </div>
+                                    </ng-container>
+                                </label>
+                                <input [id]="'label'" type="file" accept=".pdf" (click)="files.value = null" #files
+                                    (change)="onSelectFile($event)" hidden>
+                                <div class="form-error"
+                                    *ngIf="filepath?.invalid && filepath?.touched">
+                                    <div
+                                        *ngIf="filepath?.errors?.required">
+                                        Resume is Required</div>
+                                </div>
+                                <div class="instructions">
+                                    *Accepted Formats (.pdf) (Minimum file size 10KB; Maximum file size 2MB)
+                                </div>
+
                             </div>
 
                         </div>
-
-                    </div>
+                    </ng-container>
+        
                 </div>
-            </ng-container>
 
-                <div class="ack-section">
+            <ng-container *ngIf="form_t_c">
+                <div [formGroupName]="form_t_c" class="ack-section">
                     <h4 class="ack-heading">Acknowledgements and Declarations</h4>
-                    <div class="ack-content">
-                        I hereby declare that I am not connected with any director of the company as his partner or his relative as detailed as under section 6 of companies act 1956.
+                    <div class="acceptance">
+                        <mat-checkbox [formControlName]="form_eligible" class="mr-2">
+                        </mat-checkbox>
+                        <span>I hearby declare that I meet all eligibility criteria mentioned above.</span>
                     </div>
-                    <div class="ack-content">
-                        I hereby affirm that my answers to the foregoing questions are true and correct and I understand and agree that misrepresentation or omission of facts called for in this application or other company records shall automatically resigned the contract of employment. I authorize inquiry with regard to my character, ability and habits to any and all persons and agree to hold such persons harmless with respect to any information that may give.
+
+                    <div class="acceptance">
+                        <mat-checkbox [formControlName]="form_backlogsHistory" class="mr-2">
+                        </mat-checkbox>
+                        <span>I hearby declare that I do not have any backlog / history of arrears.</span>
+                    </div>
+
+                    <div class="acceptance">
+                        <mat-checkbox [formControlName]="form_otherCompanyContract" class="mr-2">
+                        </mat-checkbox>
+                        <span>I hereby declare that I am not connected with any director of the company as his partner or his relative as detailed as under section 6 of companies act 1956.</span>
+                    </div>
+                    <div class="acceptance">
+                        <mat-checkbox [formControlName]="form_misrepresentation" class="mr-2">
+                        </mat-checkbox>
+                        <span>I hereby affirm that my answers to the foregoing questions are true and correct and I understand and agree that misrepresentation or omission of facts called for in this application or other company records shall automatically resigned the contract of employment. I authorize inquiry with regard to my character, ability and habits to any and all persons and agree to hold such persons harmless with respect to any information that may give.</span>
+                    </div>
+                    <div class="form-error" *ngIf="(eligible?.invalid && eligible?.touched) || (backlogsHistory?.invalid && backlogsHistory?.touched) || (otherCompanyContract?.invalid && otherCompanyContract?.touched) || (misrepresentation?.invalid && misrepresentation?.touched)">
+                        Make sure you have checked all the above Acknowledgements and Declarations.
                     </div>
                     <h4 class="ack-heading">Terms and Conditions</h4>
                     <div class="acceptance">
-                        <mat-checkbox [formControlName]="form_t_c" class="mr-2">
+                        <mat-checkbox [formControlName]="form_terms_conditions" class="mr-2">
                         </mat-checkbox>
-                        <span class>I agree to have read and understood the <span style="
+                        <span>I agree to have read and understood the <span style="
                             color: #007bff;
                             cursor: pointer;
                             text-decoration: underline;
                           " (click)="matDialogOpenTerms()">Terms and Conditions</span> and will abide by the same during the assessment and selection process.</span>
                     </div>
-                    <div class="form-error" *ngIf="t_c?.invalid && t_c?.touched">
-                        Please click on the above checkbox to agree the Terms and Conditions
+                    <div class="form-error" *ngIf="terms_conditions?.invalid && terms_conditions?.touched">
+                        Please click on the above checkbox to agree the Terms and Conditions.
                     </div>
     
                 </div>
-
+            </ng-container>
                 <div *ngIf="!formSubmitted" class="button-wrapper">
                     <button (click)="resetForm()" class="reset-button" mat-raised-button type="button">
                         Reset
@@ -499,3 +543,8 @@
     </div>
 </ng-template>
 
+<re-captcha #captchaRef="reCaptcha"  (resolved)="resolvedSignIn($event)" size='invisible' (error)="onError($event)"
+
+errorMode="handled" [siteKey]="captachaSiteKey">
+
+</re-captcha>

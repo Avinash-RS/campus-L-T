@@ -10,6 +10,8 @@ import { CandidateMappersService } from 'src/app/services/candidate-mappers.serv
 import { LoaderService } from 'src/app/services/loader-service.service';
 import { Subscription } from 'rxjs';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
+import { environment } from 'src/environments/environment';
+import { RecaptchaErrorParameters } from 'ng-recaptcha';
 
 export const MY_FORMATS = {
   parse: {
@@ -47,6 +49,8 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('pickerYear', { static: false }) private pickerYear: MatDatepicker<Date>;
 
   offCampusRegistrationForm: FormGroup;
+  captachaSiteKey = environment.captachaSiteKey;
+  recaptchaStr = '';
 
   // Gender DropDown List
   genderDropdownList = [
@@ -64,6 +68,10 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     }
   ];
 
+  yearofPassingList = [
+    '2022'
+  ]
+
   form_name = 'full_name';
   form_email = 'email';
   form_mobile = 'mobile_number';
@@ -79,6 +87,11 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   form_education_UG_clg_backlogs = 'backlogs';
   form_resume = 'resume';
   form_t_c = 'terms';
+  form_eligible = 'eligible';
+  form_backlogsHistory = 'backlogsHistory';
+  form_otherCompanyContract = 'otherCompanyContract';
+  form_misrepresentation = 'misrepresentation';
+  form_terms_conditions = 'terms_conditions';
 
   form_file_path = 'file_path';
   form_file_type = 'filetype';
@@ -96,6 +109,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   selectedYear: any;
   formSubmitted: boolean;
   driveName: any;
+  yopDate: Date;
 
 
 
@@ -116,10 +130,25 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     this.getOffCampusDriveCollegeMasterDetails();
   }
 
+  checkCaptchaBeforeSubmit(captchaSignIn) {
+    if (this.recaptchaStr) {
+      captchaSignIn.reset();
+    }
+    captchaSignIn.execute();
+  }
+  resolvedSignIn(captchaSignInResponse: string) {
+    this.recaptchaStr = captchaSignInResponse;
+    if (this.recaptchaStr) {
+        this.offCampusFormSubmitConfirmation(this.recaptchaStr);
+    }
+  }
+
+  onError(errorDetails: RecaptchaErrorParameters): void {}
+
   patchValue() {
     // Below is the sample function for development purpose, we can reuse this function whenever there is a need to update form values.
     this.offCampusRegistrationForm.patchValue({
-      [this.form_education_UG_clg_backlogs]: "89",
+      // [this.form_education_UG_clg_backlogs]: "89",
       [this.form_education_UG_clg_name]: "A. P. Shah Institute Of Technology",
       [this.form_dob]: this.dateConvertion("29-10-1998"),
       [this.form_education_UG_clg_year_passing]: "2022",
@@ -146,8 +175,9 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   dateValidation() {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
-    this.minDateDOB = new Date(1998, 0, 1);
+    this.minDateDOB = new Date(1998, 6, 1);
     this.passportDateOfIssueMaxDate = new Date(1998 + 5, 11, 31);
+    this.yopDate = new Date(2022, 0, 1);
     // this.maxDate = new Date(currentYear + 20, 11, 31);
     // this.passportValidminDate = new Date(currentYear - 15, 0, 1);
     // this.passportValidmaxDate = new Date(currentYear + 40, 0, 1);
@@ -190,7 +220,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
         const list = data && data.colleges ? data.colleges : [];
         const findUgOthers = list.find((data: any) => data.college_name == 'Others');
         const UgexceptOthers = list.filter((data: any) => data.college_name !== 'Others');
-        findUgOthers ? UgexceptOthers.unshift(findUgOthers) : '';
+        findUgOthers ? UgexceptOthers.unshift(findUgOthers) : {college_name: 'Others', id: 'Others'};
         this.ugInstitutesList = UgexceptOthers;
       }
     }, (err) => {
@@ -198,7 +228,12 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  offCampusFormSubmitConfirmation() {
+  formNotValid() {
+    this.appConfig.nzNotification('error', 'Not Saved', 'Please fill all the red highlighted fields to proceed further');
+    this.gv.validateAllFields(this.offCampusRegistrationForm);
+  }
+
+  offCampusFormSubmitConfirmation(captcharef?:any) {
     if (this.offCampusRegistrationForm.valid) {
       let confirmationPopUpref = this.dialog.open(this.matDialogRefConfirmationPopUp, {
         width: '600px',
@@ -221,6 +256,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     delete formValues[this.form_t_c];
     formValues[this.form_dob] = this.momentForm(formValues[this.form_dob]);
     formValues[this.form_resume] = formValues[this.form_resume][this.form_file_id];
+    formValues['clientResponse'] = this.recaptchaStr ? this.recaptchaStr : '';
     let apiRequestValues = formValues;
     this.OffCampusFormSubmissionSubscription = this.candidateService.OffCampusFormSubmission(apiRequestValues).subscribe((data: any) => {
       this.formSubmitted = true;
@@ -234,7 +270,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
 
   resetForm() {
     this.offCampusRegistrationForm.reset();
-    return this.appConfig.nzNotification('success', 'Resetted', 'Form Resetted Successfully');
+    return this.appConfig.nzNotification('success', 'Reset', 'Form has been reset successfully');
   }
 
   registrationFormInit() {
@@ -249,11 +285,21 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
       [this.form_education_UG_clg_name]: [null, [Validators.required]],
       [this.form_education_UG_clg_qualification]: [null, [Validators.required]],
       [this.form_education_UG_clg_discipline]: [null, [Validators.required]],
-      [this.form_education_UG_clg_year_passing]: [{ value: '2022', disabled: true }, [Validators.required]],
+      [this.form_education_UG_clg_year_passing]: [null, [Validators.required]],
       [this.form_education_UG_clg_marks]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.percentageNew(), this.gv.percentage(), Validators.maxLength(5)]],
-      [this.form_education_UG_clg_backlogs]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.backlog()]],
+      // [this.form_education_UG_clg_backlogs]: [null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.backlog()]],
       [this.form_resume]: this.initResumeArray(),
-      [this.form_t_c]: [null, [Validators.requiredTrue]]
+      [this.form_t_c]: this.initTermsConditions(),
+    })
+  }
+
+  initTermsConditions() {
+    return this.fb.group({
+      [this.form_eligible]: [null, [Validators.requiredTrue]],
+      [this.form_backlogsHistory]: [null, [Validators.requiredTrue]],
+      [this.form_otherCompanyContract]: [null, [Validators.requiredTrue]],
+      [this.form_misrepresentation]: [null, [Validators.requiredTrue]],
+      [this.form_terms_conditions]: [null, [Validators.requiredTrue]]
     })
   }
 
@@ -393,9 +439,9 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   get education_UG_clg_marks() {
     return this.offCampusRegistrationForm.get(this.form_education_UG_clg_marks);
   }
-  get education_UG_clg_backlogs() {
-    return this.offCampusRegistrationForm.get(this.form_education_UG_clg_backlogs);
-  }
+  // get education_UG_clg_backlogs() {
+  //   return this.offCampusRegistrationForm.get(this.form_education_UG_clg_backlogs);
+  // }
   get resume() {
     return this.offCampusRegistrationForm.get(this.form_resume);
   }
@@ -408,6 +454,22 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   get t_c() {
     return this.offCampusRegistrationForm.get(this.form_t_c);
   }
+  get terms_conditions() {
+    return this.offCampusRegistrationForm.get(`${this.form_t_c}.${this.form_terms_conditions}`);
+  }
+  get eligible() {
+    return this.offCampusRegistrationForm.get(`${this.form_t_c}.${this.form_eligible}`);
+  }
+  get backlogsHistory() {
+    return this.offCampusRegistrationForm.get(`${this.form_t_c}.${this.form_backlogsHistory}`);
+  }
+  get otherCompanyContract() {
+    return this.offCampusRegistrationForm.get(`${this.form_t_c}.${this.form_otherCompanyContract}`);
+  }
+  get misrepresentation() {
+    return this.offCampusRegistrationForm.get(`${this.form_t_c}.${this.form_misrepresentation}`);
+  }
+
 
   ngOnDestroy() {
     this.getAllEducationFormDropdownListSubscription ? this.getAllEducationFormDropdownListSubscription.unsubscribe() : '';
