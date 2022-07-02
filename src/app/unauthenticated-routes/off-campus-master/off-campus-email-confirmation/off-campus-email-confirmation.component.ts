@@ -14,6 +14,7 @@ export class OffCampusEmailConfirmationComponent implements OnInit {
   driveName: any;
   emailVerificationInprogress: boolean = true;
   emailVerificationSuccess: boolean;
+  driveMessage: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -44,6 +45,7 @@ export class OffCampusEmailConfirmationComponent implements OnInit {
     };
     this.candidateService.offCampusEmailVerification(apiData).subscribe((success: any) => {
       this.driveName = success?.drive_name;
+      this.driveMessage = success?.message?.message;
       this.emailVerificationSuccess = true;
       this.emailVerificationInprogress = false;
     }, (error) => {
