@@ -5,42 +5,42 @@
     <div *ngIf="!hideStepper" class="stepper">
         <div class="stepper-wrapper">
             <ul>
-                <li (click)="validCheck('personal')"
+                <li [id]="'nav_personal'" (click)="validCheck('personal')"
                     [ngClass]="[activeStep == 'personal' ? 'active' : (activeStep == 'personal' || activeStep == 'contact' || activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'personal' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'personal'" class="check"></div>
                     Personal Details
                 </li>
-                <li (click)="validCheck('contact')"
+                <li [id]="'nav_contact'" (click)="validCheck('contact')"
                     [ngClass]="[activeStep == 'contact' ? 'active' : (activeStep == 'contact' || activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'contact' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'contact'" class="check"></div>
                     Contact Details
                 </li>
-                <li (click)="validCheck('dependent')"
+                <li [id]="'nav_dependent'" (click)="validCheck('dependent')"
                     [ngClass]="[activeStep == 'dependent' ? 'active' : (activeStep == 'dependent' || activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'dependent' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'dependent'" class="check"></div>
                     Dependent Details
                 </li>
-                <li (click)="validCheck('education')"
+                <li [id]="'nav_education'" (click)="validCheck('education')"
                     [ngClass]="[activeStep == 'education' ? 'active' : (activeStep == 'education' || activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'education' ? 'font-600' : '']" >
                     <div *ngIf="activeStep != 'education'" class="check"></div>
                     Education Details
                 </li>
-                <li (click)="validCheck('work')"
+                <li [id]="'nav_work'" (click)="validCheck('work')"
                 [ngClass]="[activeStep == 'work' ? 'active' : (activeStep == 'work' || activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'work' ? 'font-600' : '']" >
                     <div *ngIf="activeStep != 'work'" class="check"></div>
                     Work Experience Details
                 </li>
-                <li (click)="validCheck('upload')"
+                <li [id]="'nav_upload'" (click)="validCheck('upload')"
                     [ngClass]="[activeStep == 'upload' ? 'active' : (activeStep == 'upload' || activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'upload' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'upload'" class="check"></div>
                     Upload Documents
                 </li>
-                <li (click)="validCheck('preview')"
+                <li [id]="'nav_submit'" (click)="validCheck('preview')"
                     [ngClass]="[activeStep == 'preview' ? 'active' : (activeStep == 'preview' || activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'preview' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'preview'" class="check"></div>
                     Preview & Submit
                 </li>
-                <li (click)="validCheck('submit')"
+                <li [id]="'nav_thankyou'" (click)="validCheck('submit')"
                     [ngClass]="[activeStep == 'submit' ? 'active' : (activeStep == 'submit') ? 'valid' : 'noCursor', routingSelection == 'submit' ? 'font-600' : '']">
                     <div *ngIf="activeStep != 'submit'" class="check"></div>
                     Thankyou
