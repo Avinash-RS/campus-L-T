@@ -1856,7 +1856,7 @@
             <div class="row-wrapper-preview checkbox-pad">
               <div class="overall-input-wrapper width-45">
                 <label>Place<span></span></label>
-                    <input matInput [formControlName]="form_ack_place" placeholder="Enter here" class="input" type="text" />
+                    <input [id]="'ack_place'" matInput [formControlName]="form_ack_place" placeholder="Enter here" class="input" type="text" />
                     <div class="form-error" *ngIf="ack_place?.invalid && ack_place?.touched">
                         <div *ngIf="ack_place?.errors?.required">
                             Place is Required
@@ -1869,7 +1869,7 @@
                 <div class="overall-input-wrapper width-30">
                     <label>Date<span></span></label>
                     <div class="date-relative">
-                        <input matInput [formControlName]="form_ack_date" class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="DD-MM-YYYY" />
+                        <input [id]="'ack_date'" matInput [formControlName]="form_ack_date" class="input" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="DD-MM-YYYY" />
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </div>
