@@ -36,6 +36,10 @@ const routes: Routes = [
     path: `${CONSTANT.ROUTES.UNAUTHENTICATED.HOME}`, loadChildren: './unauthenticated-routes/unauthenticated.module#UnauthenticatedModule'
   },
   {
+    path: `get2022`,
+    redirectTo: `${CONSTANT.ROUTES.UNAUTHENTICATED.HOME}/${CONSTANT.ROUTES.UNAUTHENTICATED.OFF_CAMPUS}`
+  },
+  {
     path: `**`,
     pathMatch: 'full',
     component: PageNotFoundComponent
