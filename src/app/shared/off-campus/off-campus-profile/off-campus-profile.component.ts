@@ -220,7 +220,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
         const list = data && data.colleges ? data.colleges : [];
         const findUgOthers = list.find((data: any) => data.college_name == 'Others');
         const UgexceptOthers = list.filter((data: any) => data.college_name !== 'Others');
-        findUgOthers ? UgexceptOthers.unshift(findUgOthers) : {college_name: 'Others', id: 'Others'};
+        findUgOthers ? UgexceptOthers.unshift(findUgOthers) :  UgexceptOthers.unshift({college_name: 'Others', id: 'Others'});
         this.ugInstitutesList = UgexceptOthers;
       }
     }, (err) => {
