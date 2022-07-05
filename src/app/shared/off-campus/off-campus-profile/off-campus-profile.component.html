@@ -259,7 +259,7 @@
                                         Resume is Required</div>
                                 </div>
                                 <div class="instructions">
-                                    *Accepted Formats (.pdf) (Minimum file size 10KB; Maximum file size 2MB)
+                                    *Accepted Format (.pdf) (Minimum file size 10KB; Maximum file size 2MB)
                                 </div>
 
                             </div>
@@ -271,7 +271,7 @@
 
             <ng-container *ngIf="form_t_c">
                 <div [formGroupName]="form_t_c" class="ack-section">
-                    <h4 class="ack-heading">Acknowledgements and Declarations</h4>
+                    <h4 class="ack-heading">Acknowledgement and Declaration</h4>
                     <div class="acceptance">
                         <mat-checkbox [formControlName]="form_eligible" class="mr-2">
                         </mat-checkbox>
@@ -281,10 +281,10 @@
                     <div class="acceptance">
                         <mat-checkbox [formControlName]="form_misrepresentation" class="mr-2">
                         </mat-checkbox>
-                        <span>I hereby declare that all the information and particulars given by me in this form are true & correct. If any of the above statements made by me are at any time found to be untrue and / or incomplete, or if any information is found to have been suppressed or omitted there by me, I am liable to be disqualified for employment and I accept the Company’s right to terminate my services without notice or pay in lieu of notice.</span>
+                        <span>I hereby declare that all the information and particulars given by me in this form are true & correct. If any of the above statements made by me are at any time found to be untrue and / or incomplete, or if any information is found to have been suppressed or omitted there by me, I am liable to be disqualified for employment and I accept the company’s right to terminate my services without notice or pay in lieu of notice.</span>
                     </div>
                     <div class="form-error" *ngIf="(eligible?.invalid && eligible?.touched) || (misrepresentation?.invalid && misrepresentation?.touched)">
-                        Make sure you have checked both the above mentioned Acknowledgements and Declarations.
+                        Make sure you have checked both the above mentioned Acknowledgement and Declaration.
                     </div>
                     <ng-conainer *ngIf="false">
                     <h4 class="ack-heading">Terms and Conditions</h4>

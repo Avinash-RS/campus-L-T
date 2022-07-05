@@ -53,8 +53,8 @@
   img {
     height: 100%;
     padding: 16px;
-    @media screen and (max-width: 330px) {
-      width: 90%;
+    @media screen and (max-width: 450px) {
+      width: 100%;
     }
   }
 }
