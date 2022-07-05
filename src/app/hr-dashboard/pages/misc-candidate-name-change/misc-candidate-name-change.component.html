@@ -17,13 +17,14 @@
             </ng-container>
           </div>
           <button 
+            #submitref
             type="button"
-            (click)="candidateEmailSubmit()"
+            (click)="candidateEmailSubmit(!buttonLabel ? 'Reset' : 'Submit'); buttonLabel = !buttonLabel"
             [disabled]="candidateEmail.invalid"
             class="submit-btn"
             mat-button
           >
-            Submit
+            {{!buttonLabel ? 'Reset' : 'Submit'}}
           </button>
         </div>
       <div class="div-wrapper">
@@ -43,7 +44,7 @@
           </ng-container>
         </div>
         <button
-          [disabled]="candidateEmail.invalid || candidateName.invalid"
+          [disabled]="candidateEmail.disabled && candidateName.valid ? false : true"
           type="button"
           (click)="candidateUpdatedNameSubmit()"
           class="submit-btn"

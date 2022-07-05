@@ -9,10 +9,10 @@
                     Eligibility Criteria:
                 </h5>
                 <div class="list-item">
-                    <span class="icon-RightArrow"></span> <span>You should be born on or after 01.07.1998.</span>
+                    <span class="icon-RightArrow"></span> <span>4 years / 8 semester Degree (full-time) course after 10+2 for degree (Students expecting to graduate by 30th June 2022).</span>
                 </div>
                 <div class="list-item">
-                    <span class="icon-RightArrow"></span> <span>4 years / 8 semester Degree (full-time) course after 10+2 for degree (Students expecting to graduate by 30th June 2022).</span>
+                    <span class="icon-RightArrow"></span> <span>Born on or after 01.07.1998.</span>
                 </div>
                 <div class="list-item">
                     <span class="icon-RightArrow"></span> <span>Aggregate for B.E. / B.Tech should be more than or equal to 65%.</span>
@@ -275,28 +275,18 @@
                     <div class="acceptance">
                         <mat-checkbox [formControlName]="form_eligible" class="mr-2">
                         </mat-checkbox>
-                        <span>I hearby declare that I meet all eligibility criteria mentioned above.</span>
+                        <span>I hereby confirm that I qualify the eligibility criteria indicated above, including first attempt for all subjects, as defined in the above criteria.</span>
                     </div>
 
-                    <div class="acceptance">
-                        <mat-checkbox [formControlName]="form_backlogsHistory" class="mr-2">
-                        </mat-checkbox>
-                        <span>I hearby declare that I do not have any backlog / history of arrears.</span>
-                    </div>
-
-                    <div class="acceptance">
-                        <mat-checkbox [formControlName]="form_otherCompanyContract" class="mr-2">
-                        </mat-checkbox>
-                        <span>I hereby declare that I am not connected with any director of the company as his partner or his relative as detailed as under section 6 of companies act 1956.</span>
-                    </div>
                     <div class="acceptance">
                         <mat-checkbox [formControlName]="form_misrepresentation" class="mr-2">
                         </mat-checkbox>
-                        <span>I hereby affirm that my answers to the foregoing questions are true and correct and I understand and agree that misrepresentation or omission of facts called for in this application or other company records shall automatically resigned the contract of employment. I authorize inquiry with regard to my character, ability and habits to any and all persons and agree to hold such persons harmless with respect to any information that may give.</span>
+                        <span>I hereby declare that all the information and particulars given by me in this form are true & correct. If any of the above statements made by me are at any time found to be untrue and / or incomplete, or if any information is found to have been suppressed or omitted there by me, I am liable to be disqualified for employment and I accept the Company’s right to terminate my services without notice or pay in lieu of notice.</span>
                     </div>
-                    <div class="form-error" *ngIf="(eligible?.invalid && eligible?.touched) || (backlogsHistory?.invalid && backlogsHistory?.touched) || (otherCompanyContract?.invalid && otherCompanyContract?.touched) || (misrepresentation?.invalid && misrepresentation?.touched)">
-                        Make sure you have checked all the above Acknowledgements and Declarations.
+                    <div class="form-error" *ngIf="(eligible?.invalid && eligible?.touched) || (misrepresentation?.invalid && misrepresentation?.touched)">
+                        Make sure you have checked both the above mentioned Acknowledgements and Declarations.
                     </div>
+                    <ng-conainer *ngIf="false">
                     <h4 class="ack-heading">Terms and Conditions</h4>
                     <div class="acceptance">
                         <mat-checkbox [formControlName]="form_terms_conditions" class="mr-2">
@@ -310,6 +300,7 @@
                     <div class="form-error" *ngIf="terms_conditions?.invalid && terms_conditions?.touched">
                         Please click on the above checkbox to agree the Terms and Conditions.
                     </div>
+                </ng-conainer>
     
                 </div>
             </ng-container>

@@ -4,6 +4,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-misc-colleges',
@@ -15,7 +16,7 @@ export class MiscCollegesComponent implements OnInit {
   collegeTypeList = [
     {
       name: 'UG/PG',
-      value: 'ugpg'
+      value: 'ug_pg'
     },
     {
       name: 'Diploma',
@@ -36,6 +37,8 @@ export class MiscCollegesComponent implements OnInit {
   tooltipShowDelay = 0;
   rowData: any;
   filterValue: string;
+  miscCollegeListSubscription: Subscription;
+  miscAddCollegeSubscription: Subscription;
 
   constructor(
     private appConfig: AppConfigService,
@@ -48,9 +51,44 @@ export class MiscCollegesComponent implements OnInit {
     this.tabledef();
   }
 
+  miscCollegesList() {
+    const apiData = {
+      "college_type" : ""
+    }
+    this.miscCollegeListSubscription = this.adminService.miscCollegeList(apiData).subscribe((res: any)=> {
+      this.rowData = res ? res : [];
+      this.addedCollegesList = this.rowData;
+      console.log(res)
+    }, (err)=> {
+
+    });
+  }
+
+  miscAddCollege(college, type) {
+    const apiData = {
+      college_type : type,
+      college_name : college
+    };
+    this.miscAddCollegeSubscription = this.adminService.miscAddCollege(apiData).subscribe((res: any)=> {
+      this.gridApi.applyTransaction({
+        add: [apiData],
+        addIndex: 0,
+      })!;
+      this.collegeName.reset();
+      this.collegeType.reset();
+      this.appConfig.success('College Added Successfully');
+    }, (err)=> {
+
+    });
+  }
+
+  addCollege(collegeName: any, collegeType: any) {
+    this.miscAddCollege(collegeName, collegeType);
+  }
+
   onGridReady(params: any) {
     this.gridApi = params.api;
-    this.getAddedCollegesList();
+    this.miscCollegesList();
   }
 
   sortevent(e) {
@@ -115,21 +153,6 @@ export class MiscCollegesComponent implements OnInit {
         }
       },
     ];
-  }
-
-
-  // To get all users
-  getAddedCollegesList() {
-    this.rowData = [
-      {
-        college_name: 'SRM Institute of Technology',
-        college_type: 'UG/PG'
-      },
-      {
-        college_name: 'Seshasayee Institute of Technology',
-        college_type: 'Diploma'
-      }
-    ]
   }
 
 }

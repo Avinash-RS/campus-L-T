@@ -39,6 +39,7 @@
       <button
         [disabled]="collegeName.invalid || collegeType.invalid"
         class="submit-btn"
+        (click)="addCollege(collegeName.value, collegeType.value)"
         mat-button
       >
         Submit

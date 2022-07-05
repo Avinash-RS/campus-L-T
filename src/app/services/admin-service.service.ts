@@ -838,4 +838,20 @@ postSkills(data) {
   return this.http.post(`${this.UNIFIEDREPORTSAPI}/addSkill`,data, {headers: this.withoutTokens(), reportProgress: true, withCredentials: false});
 }
 
+miscCollegeList(data) {
+  return this.http.post(`${this.BASE_URL}/college/getCollegeList`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+miscAddCollege(data) {
+  return this.http.post(`${this.BASE_URL}/college/addCollege`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+miscCheckEmail(data) {
+  return this.http.post(`${this.BASE_URL}/miscellaneous/getCandidateDetails`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+miscChangeCandidateName(data) {
+  return this.http.post(`${this.BASE_URL}/miscellaneous/editUserName`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
 }
