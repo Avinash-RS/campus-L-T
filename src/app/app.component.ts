@@ -73,8 +73,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getScreenSize();
-    this.checkIE();
     this.listenToLoading();
     let token = this.appConfig.getLocalData("csrf-login");
     // token ? this.initSessionTimer() : '';

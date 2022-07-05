@@ -1,10 +1,14 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, HostListener } from '@angular/core';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, distinctUntilChanged} from 'rxjs/operators';
 import { CandidateMappersService } from 'src/app/services/candidate-mappers.service';
+import { MatDialog } from '@angular/material';
+import { environment } from 'src/environments/environment';
+import { ScreenresolutionBoxComponent } from '../screenresolution-box/screenresolution-box.component';
+import { ApiServiceService } from 'src/app/services/api-service.service';
 
 export interface IBreadCrumb {
   label: string;
@@ -19,6 +23,11 @@ export interface IBreadCrumb {
 export class CommonSidebarComponent implements OnInit, AfterViewInit {
 
   @Input() sideBar;
+  screenHeight;
+  screenWidth;
+  screenBoolean = false;
+  isIE = false;
+
    // public breadcrumbs: IBreadCrumb[];
    breadcrumbs: Array<any>;
 
@@ -35,6 +44,8 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
      private sharedService: SharedServiceService,
      private router: Router,
      private candidateService: CandidateMappersService,
+     private matDialog: MatDialog,
+     private apiService: ApiServiceService,
      private activatedRoute: ActivatedRoute) {
      // Assigning sub menus for the current router
      this.sharedService.subMenuSubject.subscribe((data: any) => {
@@ -52,6 +63,85 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
       top.scrollIntoView();
       top = null;
     }
+}
+
+@HostListener("window:resize", ["$event"])
+getScreenSize(event?) {
+  if (this.appConfig.getLocalData("roles")) {
+    if (environment.production || true) {
+      this.screenHeight = window.innerHeight;
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth < 1000 || this.screenHeight < 400) {
+        // this.show = true;
+        const data = {
+          data: true,
+          type: "resize",
+        };
+        if (!this.screenBoolean) {
+          this.openDialog(ScreenresolutionBoxComponent, data);
+        }
+      } else {
+        if (this.screenBoolean) {
+          this.matDialog.closeAll();
+        }
+      }
+    }
+  }
+}
+
+@HostListener("window:mousemove", ["$event"])
+checkIE(event?) {
+  const isIEOrEdge = /msie\s|trident\//i.test(window.navigator.userAgent);
+  if (isIEOrEdge) {
+    this.isIE = true;
+    const data = {
+      data: true,
+      type: "browser",
+    };
+    if (!this.screenBoolean) {
+      this.openDialog(ScreenresolutionBoxComponent, data);
+    }
+  } else {
+  }
+}
+
+openDialog(component, data) {
+  let dialogDetails: any;
+  /**
+   * Dialog modal window
+   */
+  // tslint:disable-next-line: one-variable-per-declaration
+  this.screenBoolean = true;
+  const dialogRef = this.matDialog.open(component, {
+    width: "auto",
+    height: "auto",
+    closeOnNavigation: false,
+    autoFocus: false,
+    disableClose: true,
+    data,
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+    this.screenBoolean = false;
+    this.logOutApi();
+    if (result) {
+    }
+  });
+}
+
+logOutApi() {
+  const token = this.appConfig.getLocalData("logout-token");
+  this.appConfig.clearLocalData();
+  this.apiService.logout(token).subscribe(
+    (data: any) => {
+      this.matDialog.closeAll();
+      this.appConfig.clearLocalData();
+      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HOME);
+    },
+    (err) => {
+      this.matDialog.closeAll();
+    }
+  );
 }
 
 getDriveList() {
@@ -81,6 +171,8 @@ getDriveList() {
  }
 
    ngOnInit() {
+    this.getScreenSize();
+    this.checkIE();
      this.sidebarOpen = true;
 
      this.router.events
