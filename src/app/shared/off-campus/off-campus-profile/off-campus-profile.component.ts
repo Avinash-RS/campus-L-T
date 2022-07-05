@@ -296,10 +296,10 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
   initTermsConditions() {
     return this.fb.group({
       [this.form_eligible]: [null, [Validators.requiredTrue]],
-      [this.form_backlogsHistory]: [null, [Validators.requiredTrue]],
-      [this.form_otherCompanyContract]: [null, [Validators.requiredTrue]],
+      // [this.form_backlogsHistory]: [null, [Validators.requiredTrue]],
+      // [this.form_otherCompanyContract]: [null, [Validators.requiredTrue]],
       [this.form_misrepresentation]: [null, [Validators.requiredTrue]],
-      [this.form_terms_conditions]: [null, [Validators.requiredTrue]]
+      // [this.form_terms_conditions]: [null, [Validators.requiredTrue]]
     })
   }
 
