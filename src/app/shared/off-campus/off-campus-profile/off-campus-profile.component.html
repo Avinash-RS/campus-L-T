@@ -32,7 +32,8 @@
                 <div class="list-item">
                     <span class="icon-RightArrow"></span> <span>Foreign nationals are not eligible.</span>
                 </div>
-            <!-- </div>    checkCaptchaBeforeSubmit(captchaRef) -->
+            </div>    
+            <!-- checkCaptchaBeforeSubmit(captchaRef) -->
             <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusRegistrationForm.valid ? offCampusFormSubmitConfirmation() : formNotValid()" #form="ngForm">
                 <div class="sub-heading">
                     Basic Details
