@@ -22,6 +22,7 @@
                 height: 35px;
                 padding: 4px 8px;
                 box-sizing: border-box;
+                color: #222222;
             }
             input:hover {
                 border: solid #004684 1px !important;
@@ -29,6 +30,7 @@
             .nzselect {
                 width: 100%;
                 font-size: 15px;
+                color: #222222;
             }
             nz-select.ng-invalid.ng-touched {
                 border: none !important;
@@ -47,8 +49,10 @@
             color: #fff;
             font-size: 15px;
             padding: 4px 8px;
-            height: 35px;
+            height: 30px;
             margin-left: 20px;
+            margin-top: 2px;
+
         }
         .mat-button[disabled] {
             opacity: .6;
@@ -83,4 +87,9 @@
         display: flex;
         flex-direction: row-reverse;
     }
+}
+.mat-input-element:disabled {
+    color: rgba(0, 0, 0, 0.38) !important;
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, 0.1);
 }

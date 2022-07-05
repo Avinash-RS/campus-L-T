@@ -4,6 +4,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { GlobalValidatorService } from 'src/app/custom-form-validators/globalvalidators/global-validator.service';
 import { RemoveWhitespace } from 'src/app/custom-form-validators/removewhitespace';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-misc-candidate-name-change',
@@ -14,9 +15,9 @@ export class MiscCandidateNameChangeComponent implements OnInit {
 
 
   candidateEmail = new FormControl(null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.email()]);
-  candidateName = new FormControl(null, [RemoveWhitespace.whitespace(), Validators.required, this.gv.alphaNum100()]);
+  candidateName = new FormControl({value: null, disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.gv.alphaNum100()]);
   addedCollegesList: any;
-
+  buttonLabel = true;
   quickSearchValue: any;
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
@@ -24,8 +25,11 @@ export class MiscCandidateNameChangeComponent implements OnInit {
   columnDefs = [];
   defaultColDef : any;
   tooltipShowDelay = 0;
-  rowData: any;
+  rowData: any = [];
   filterValue: string;
+  miscCheckEmailSubscription: Subscription;
+  selectedEmailIdDetails: any;
+  miscChangeCandidateNameSubscription: Subscription;
 
   constructor(
     private appConfig: AppConfigService,
@@ -40,7 +44,7 @@ export class MiscCandidateNameChangeComponent implements OnInit {
 
   onGridReady(params: any) {
     this.gridApi = params.api;
-    this.getAddedCandidateNameList();
+    // this.getAddedCandidateNameList();
   }
 
   sortevent(e) {
@@ -117,12 +121,47 @@ export class MiscCandidateNameChangeComponent implements OnInit {
     ];
   }
 
-  candidateEmailSubmit() {
-    this.candidateName.patchValue('Avinash');
+  candidateEmailSubmit(type: any) {
+    if (type == 'Reset') {
+     this.candidateName.disable();
+     this.candidateEmail.enable();
+     return this.candidateName.reset();
+    }
+    this.candidateEmailCheck();
+  }
+
+  candidateEmailCheck() {
+    const apiData = {
+      email : this.candidateEmail.value,
+    };
+    this.miscCheckEmailSubscription = this.adminService.miscCheckEmail(apiData).subscribe((res: any)=> {
+      this.candidateName.enable();
+      this.candidateEmail.disable();
+      this.selectedEmailIdDetails = res ? res : null;
+      this.candidateName.patchValue(this.selectedEmailIdDetails?.field_user_name_value);
+      console.log('res', res);
+    }, (err)=> {
+
+    });
   }
 
   candidateUpdatedNameSubmit() {
-    console.log('coming');
+    const apiData = {
+      user_id : this.selectedEmailIdDetails?.uid,
+      user_name: this.candidateName.value
+    };
+    this.miscChangeCandidateNameSubscription = this.adminService.miscChangeCandidateName(apiData).subscribe((res: any)=> {
+      this.appConfig.success('Candidate Name Updated Successfully');
+      this.candidateName.reset();
+      this.candidateEmail.reset();
+      this.selectedEmailIdDetails = null;
+      this.buttonLabel = !this.buttonLabel;
+      this.candidateEmail.enable();
+      this.candidateName.disable();
+      console.log('res', res);
+    }, (err)=> {
+
+    });
   }
 
   // To get all users
