@@ -372,6 +372,9 @@
   color: #212121;
   outline: none;
 }
+:host ::ng-deep .ant-select-selection:hover, .ant-select-selection:focus, .ant-select-selection:active {
+  border: 1px solid #004684 !important;
+}
 .nzselect.ng-invalid.ng-touched {
   border: none !important;
 }
