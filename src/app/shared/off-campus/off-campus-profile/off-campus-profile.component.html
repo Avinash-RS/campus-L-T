@@ -33,8 +33,8 @@
                     <span class="icon-RightArrow"></span> <span>Foreign nationals are not eligible.</span>
                 </div>
             </div>    
-            <!-- checkCaptchaBeforeSubmit(captchaRef) -->
-            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusRegistrationForm.valid ? offCampusFormSubmitConfirmation() : formNotValid()" #form="ngForm">
+            <!-- offCampusFormSubmitConfirmation() -->
+            <form class="form-wrapper" [formGroup]="offCampusRegistrationForm" (ngSubmit)="offCampusRegistrationForm.valid ? checkCaptchaBeforeSubmit(captchaRef) : formNotValid()" #form="ngForm">
                 <div class="sub-heading">
                     Basic Details
                 </div>
@@ -535,8 +535,8 @@
     </div>
 </ng-template>
 
-<!-- <re-captcha #captchaRef="reCaptcha"  (resolved)="resolvedSignIn($event)" size='invisible' (error)="onError($event)"
+<re-captcha #captchaRef="reCaptcha"  (resolved)="resolvedSignIn($event)" size='invisible' (error)="onError($event)"
 
 errorMode="handled" [siteKey]="captachaSiteKey">
 
-</re-captcha> -->
+</re-captcha>
