@@ -45,7 +45,8 @@ export const CONSTANT = {
       OFF_CAMPUS: '/open/off-campus',
       OFF_CAMPUS_PROFILE: '/open/off-campus/profile',
       OFF_CAMPUS_THANKS: '/open/off-campus/thanks',
-      OFF_CAMPUS_EMAIL: '/open/off-campus/email-confirmation'
+      OFF_CAMPUS_EMAIL: '/open/off-campus/email-confirmation',
+      OFF_CAMPUS_CLOSED: '/open/off-campus/closed'
     },
     CUSTOMERS: {
       HOME: '/customer',
@@ -205,6 +206,7 @@ export const CONSTANT = {
       OFF_CAMPUS_PROFILE: 'profile',
       OFF_CAMPUS_THANKS: 'thanks',
       OFF_CAMPUS_EMAIL: 'email-confirmation',
+      OFF_CAMPUS_CLOSED: 'closed'
     },
     CUSTOMERS: {
       HOME: 'customer',
