@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./candidate-book-slot.component.scss']
 })
 export class CandidateBookSlotComponent implements OnInit {
-  @ViewChild('confirmation',{static: true}) confirmationDialog: TemplateRef<any>;
-  @ViewChild('confirmed',{static: true}) slotConfirmed: TemplateRef<any>;
+  @ViewChild('confirmation', {static: true}) confirmationDialog: TemplateRef<any>;
+  @ViewChild('confirmed', {static: true}) slotConfirmed: TemplateRef<any>;
   slotsArray: any;
   driveName: any;
   constructor(
@@ -33,27 +33,27 @@ export class CandidateBookSlotComponent implements OnInit {
   }
 
   getRouteParams() {
-    this.activatedRoute.queryParamMap.subscribe((params: any)=> {
+    this.activatedRoute.queryParamMap.subscribe((params: any) => {
       this.driveName = params?.params?.dId;
     });
   }
 
   getSlots() {
-    let apiData = {
+    const apiData = {
       email: this.appconfig.getLocalData('userEmail')
     };
-    this.candidateservice.getAssessmentSlots(apiData).subscribe((res: any)=> {
+    this.candidateservice.getAssessmentSlots(apiData).subscribe((res: any) => {
       this.slotsArray = res && res.slots && res.slots.length > 0 ? res.slots : [];
-    }, (err)=> {
+    }, (err) => {
 
     });
   }
 
   slotConfirmation(parentIndex, ChildIndex) {
-    let selectedParentSlot = this.slotsArray[parentIndex];
-    let selectedChildSlot = this.slotsArray[parentIndex].slots[ChildIndex];
+    const selectedParentSlot = this.slotsArray[parentIndex];
+    const selectedChildSlot = this.slotsArray[parentIndex].slots[ChildIndex];
     if (selectedChildSlot.remaining_count > 0) {
-      let slotConfirmationref = this.matdialog.open(this.confirmationDialog, {
+      const slotConfirmationref = this.matdialog.open(this.confirmationDialog, {
         width: '400px',
         height: 'auto',
         autoFocus: false,
@@ -61,10 +61,10 @@ export class CandidateBookSlotComponent implements OnInit {
         data: {selectedParentSlot, selectedChildSlot},
         closeOnNavigation: true,
         disableClose: true,
-        panelClass: 'slotConfirmation'  
+        panelClass: 'slotConfirmation'
       });
-      slotConfirmationref.afterClosed().subscribe((res: any)=> {
-        if(res) {
+      slotConfirmationref.afterClosed().subscribe((res: any) => {
+        if (res) {
           this.slotBookAPI(selectedChildSlot?.slot_id);
         }
       });
@@ -76,15 +76,15 @@ export class CandidateBookSlotComponent implements OnInit {
       email: this.appconfig.getLocalData('userEmail'),
       slot_id: slotId
     };
-    this.candidateservice.BookAssessmentSlots(apiData).subscribe((res: any)=> {
+    this.candidateservice.BookAssessmentSlots(apiData).subscribe((res: any) => {
       this.slotConfirmedPopup();
-    }, (err)=> {
+    }, (err) => {
 
     });
   }
 
   slotConfirmedPopup() {
-      let slotConfirmedref = this.matdialog.open(this.slotConfirmed, {
+      const slotConfirmedref = this.matdialog.open(this.slotConfirmed, {
         width: '400px',
         height: 'auto',
         autoFocus: false,
@@ -103,7 +103,7 @@ export class CandidateBookSlotComponent implements OnInit {
   momentFormDate(date) {
     if (date) {
       const split = moment(date).format('DD MMM YYYY');
-     return split;
+      return split;
     }
   }
   
