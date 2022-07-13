@@ -2,14 +2,19 @@
   <app-customer-landing-header></app-customer-landing-header>
   <div class="customer-body-wrapper">
     <div class="customers">
+    <div class="header-wrapper">
+        <div class="left-wrapper">
+            <div class="title">
+                Active Drives
+            </div>
+        </div>
+    </div>
+
       <ng-container *ngIf="showPage else noData">
      <ng-container *ngIf="customerInfo && customerInfo.length > 0">
-      <div class="instructions">
-        <span class="icon-Info"></span> Choose your organisation by clicking on
-        the right arrow (<span class="icon-RightArrow f_size_10"></span>)
-      </div>
-
+      <div class="card-wrapper">
       <div class="card" *ngFor="let customer of customerInfo; let i = index">
+        <div class="top-wrapper">
         <div class="logo-wrapper">
           <div class="logo">
             <img
@@ -23,42 +28,31 @@
         <div *ngIf="customer.driveDetails && customer.driveDetails.candidateStatus" class="customer-section">
           <div class="title">{{customer.customer_name}}</div>
           <div class="candidate-status-wrapper">
+            <div class="inline-flex-wrapper">
             <div class="customer-details">
               <div class="form-group">
                 <label>Created By</label>
-                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_created_by}}</div>
+                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_created_by ? customer.driveDetails.candidateStatus.profile_created_by : '-'}}</div>
               </div>
-              <div class="form-group mb-0">
+              <div class="form-group">
                 <label>Created Date</label>
-                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_created_date}}</div>
+                <div class="form-value">{{customer.driveDetails.candidateStatus.profile_created_date ? customer.driveDetails.candidateStatus.profile_created_date : '-'}}</div>
               </div>
             </div>
-            <div class="profile-details">
-              <div class="form-group pl-4">
+            <div class="customer-details">
+              <div class="form-group">
                 <label>Profile Applied</label>
                 <div class="form-value">{{customer.driveDetails.candidateStatus.profile_applied ? (customer.driveDetails.candidateStatus.profile_applied | uppercase) : '--'}}</div>
               </div>
-              <div class="form-group mb-0 pl-4">
+              <div class="form-group">
                 <label>Profile Applied Date</label>
                 <div class="form-value">{{customer.driveDetails.candidateStatus.profile_applied_date ? (customer.driveDetails.candidateStatus.profile_applied_date  | date: 'dd MMM yyyy' ) : '--'}}</div>
               </div>
             </div>
-            <div class="candidate-status">
+          </div>
+          <!-- Below condition has to be removed once tested -->
+            <div *ngIf="false" class="candidate-status">
               <div class="candidate-status-wrapper">
-                <div *ngIf="customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewSchedule == '1' && (customer.driveDetails.candidateStatus.invStatus && customer.driveDetails.candidateStatus.invStatus == 'Yet to Start' || customer.driveDetails.candidateStatus.invStatus == 'Join Interview')" class="interview-details">
-                  <button (click)="customerSelection(customer, i, null)"
-                    class="common-button common-button-height-33 custom-color"
-                    type="button"
-                    mat-raised-button
-                  >
-                    Interview Scheduled
-                  </button>
-                  <div class="schedule">
-                    <span class="icon-DateTime pr-1"></span>
-                    <span>{{customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewStartdate ? (customer.driveDetails.candidateStatus.interviewStartdate | date: "dd MMM yyyy 'at' HH:mm a") : '--'}}</span>
-                    <!-- <span>March 23 2021 at 01:00 PM</span> -->
-                  </div>
-                </div>
                 <div class="status-checks">
                   <ng-container *ngIf="customer.driveDetails.actions && customer.driveDetails.actions.length > 0 else noAction">
                     <ng-container *ngFor="let actions of customer.driveDetails.actions; let j = index">
@@ -76,9 +70,37 @@
             </div>
           </div>
         </div>
-        <div (click)="customerSelection(customer, i, null)" class="redirection">
-          <span class="icon-RightArrow f_size_20"></span>
+        <ng-container *ngIf="customer?.driveDetails?.slot_booking == 1 else normalFlow">
+        <button (click)="BookaSlot(customer, i, customer.driveDetails.actions[0])"
+        class="common-button common-button-height-33 custom-color-1"
+        type="button"
+        mat-raised-button
+      >
+        {{'Book A Slot'}}
+      </button>
+      </ng-container>
+        <ng-template #normalFlow>
+          <button (click)="customerSelection(customer, i, customer.driveDetails.actions[0])"
+          class="common-button common-button-height-33 custom-color-1"
+          type="button"
+          mat-raised-button
+        >
+          {{customer.driveDetails.actions && customer.driveDetails.actions.length > 0 ? customer.driveDetails.actions[0]?.label : 'View Profile' }}
+        </button>  
+        </ng-template>
+    </div>
+        <div class="bottom-section">
+          <div class="other-details">
+            <div *ngIf="(customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewSchedule == '1' && (customer.driveDetails.candidateStatus.invStatus && customer.driveDetails.candidateStatus.invStatus == 'Yet to Start' || customer.driveDetails.candidateStatus.invStatus == 'Join Interview'))" class="interview-schedule">
+              <div class="inv-details">
+                <div class="status"><span>&nbsp;</span> <span>Interview Scheduled</span></div>
+                <div class="inv-date">{{customer?.driveDetails?.candidateStatus && customer?.driveDetails?.candidateStatus?.interviewStartdate ? (customer.driveDetails.candidateStatus.interviewStartdate | date: "dd MMM yyyy 'at' HH:mm a") : '--'}}</div>
+              </div>
+              <div (click)="customerSelection(customer, i, null)" class="inv-join"><span>{{customer.driveDetails.candidateStatus.invStatus == 'Join Interview' ? 'Join Interview' : 'View Details'}}</span></div>
+            </div>
+          </div>
         </div>
+      </div>
       </div>
     </ng-container>
   </ng-container>
@@ -87,6 +109,6 @@
 </div>
 <ng-template #noData>
   <div class="box">
-    No Data Available
+    No Drive Available
   </div>
 </ng-template>

@@ -476,4 +476,11 @@ export class CandidateMappersService {
       return this.http.post(`${this.BASE_URL}/offcampus/verify-account`, data, { headers: this.withoutTokens(), withCredentials: true });
     }
 
+    getAssessmentSlots(data: any) {
+      return this.http.post(`${this.BASE_URL}/offcampus/assessment-slots`, data, { headers: this.withoutTokens(), withCredentials: true });
+    }
+
+    BookAssessmentSlots(data: any) {
+      return this.http.post(`${this.BASE_URL}/offcampus/book-assessment-slot`, data, { headers: this.withoutTokens(), withCredentials: true });
+    }
 }

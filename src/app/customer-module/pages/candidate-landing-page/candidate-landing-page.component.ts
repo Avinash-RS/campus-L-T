@@ -92,7 +92,10 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     //   return routeToJoining ? CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_JOINING : CONSTANT.ENDPOINTS.CANDIDATE_DASHBOARD.ADANI_DOCUMENT;
     // }
   }
-
+  BookaSlot(customers: any, i: any, action: any) {
+    this.appConfig.setLocalData('driveId', customers?.driveDetails?.drive_id);
+    this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD_BOOK_SLOT, {dId: customers?.driveDetails?.drive_name});
+  }
   customerSelection (customers: any, i: any, action: any) {
     let selectedCustomer = this.clone(customers);
     let customerCode = selectedCustomer.customer_code;
@@ -105,7 +108,7 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
       }
     }).catch((err)=> {
       console.log(err);
-    });
+    });  
   }
 
   clone (src) {

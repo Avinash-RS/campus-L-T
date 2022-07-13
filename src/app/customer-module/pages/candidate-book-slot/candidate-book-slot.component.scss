@@ -1,0 +1,308 @@
+@import '../../../themes/themes.scss';
+.customer-wrapper-candidate-landing {
+  position: relative;
+  background: #f2f2f2 0% 0% no-repeat padding-box;
+  height: 100%;
+
+  .slot-wrapper {
+    position: relative;
+    display: block;
+    max-width: 1200px;
+    margin: auto;
+    padding: 1em;
+    .header-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      align-items: center;
+      padding: 8px 0;
+      flex-wrap: wrap;
+      .left-wrapper {
+        .title {
+          font-size: 18px;
+          span:nth-of-type(1) {
+            color: #222222;
+          }
+          span:nth-of-type(2) {
+            color: #1b4e9b;
+          }
+        }
+      }
+      .right-wrapper {
+        .slot-btn {
+          background: #ffffff 0% 0% no-repeat padding-box;
+          border: 1px solid #004684;
+          border-radius: 4px;
+          padding: 4px 6px;
+          height: 35px;
+          color: #004684;
+          span:nth-of-type(1) {
+            top: -1px;
+            position: relative;
+          }
+        }
+      }
+    }
+    .header-wrapper:after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      background-color: #707070;
+      width: 100%;
+      bottom: 0;
+    }
+    .slot-booking {
+      position: relative;
+      margin-top: 1em;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 2em;
+      justify-content: flex-start;
+      font-size: 14px;
+      .slot-row {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 1em;
+        width: 100%;
+        @include md() {
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: flex-start;
+            gap: 4em;
+            width: 100%;
+        }
+        .slot-date-section {
+          position: relative;
+          display: flex;
+          justify-content: flex-start;
+          align-items: stretch;
+          white-space: nowrap;
+          width: 100%;
+          @include md() {
+            width: auto;
+          }
+          .slot-date {
+            display: block;
+            color: #222222;
+            padding: 10px 20px;
+            position: relative;
+            width: 100%;
+            text-align: center;
+            .date {
+              font-size: 1.57em;
+              font-weight: 500;
+            }
+            .day {
+              font-size: 1.4em;
+            }
+          }
+        }
+        .slot-date-section::after {
+            position: absolute;
+            content: "";
+            height: 2px;
+            width: 100%;
+            background-color: #1b4e9b;
+            bottom: 0;
+          @include md() {
+            position: absolute;
+            content: "";
+            height: 100%;
+            width: 3px;
+            background-color: #1b4e9b;
+            }
+        }
+        .slot-lots {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-basis: 100%;
+          .slot-card-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1em;
+            align-content: center;
+            flex-wrap: wrap;
+            .slot-card {
+              display: block;
+              position: relative;
+              border-radius: 8px;
+              padding: 10px;
+              min-width: 190px;
+              flex-basis: 23%;
+              color: #222222;
+              cursor: pointer;
+              -webkit-transform: translateZ(0);
+              -moz-transform: translateZ(0);
+              -ms-transform: translateZ(0);
+              -o-transform: translateZ(0);
+              transform: translateZ(0);
+              .slot-dates {
+                font-size: 1.14em;
+              }
+              .slot-available {
+                font-size: 1em;
+                margin-top: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                span:nth-of-type(2) {
+                  span {
+                    font-weight: 500;
+                    font-size: 1.08em;
+                  }
+                }
+              }
+            }
+            .slot-card:hover {
+                transition: ease-in-out 180ms;
+                box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+                transform: scale(1.05);
+            }
+            .slot-green {
+                color: #54B954;
+                border: 1px solid #54B954;
+            }
+            .slot-green:hover {
+                background-color: rgb(84, 185, 84, 0.1);
+            }
+            .slot-orange {
+                color: #EB8D00;
+                border: 1px solid #feb74d;
+            }
+            .slot-orange:hover {
+                background-color: rgba(235, 141, 0, 0.1);
+            }
+            .slot-red {
+                color: #A70000;
+                border: 1px solid #A70000;
+            }
+            .slot-red:hover {
+                background-color: rgba(167, 0, 0, 0.1);
+            }
+            .slot-grey {
+                background-color: #DBDBDB;
+                color: #222222;
+                border: none;
+                cursor: not-allowed;
+            }
+            .slot-grey:hover {
+                background-color: #DBDBDB;
+                color: #222222;
+                border: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@mixin name {
+} 
+
+::ng-deep.slotConfirmation {
+    background-color: #ffffff;
+    .confirmation {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+        padding: 2em 1em 1em 1em;
+        .icon {
+            span {
+                color: #EB8D00;
+                font-size: 3em;
+                margin-bottom: 10px;
+            }
+        }
+        .content-1,.content-2 {
+            color: #000000;
+            font-size: 15px;
+        }
+        .content-3 {
+            color: #1B4E9B;
+            font-size: 14px;
+        }
+        .btn-wrapper {
+            display: flex;
+            margin: 0.5em auto 1em auto;
+            .confirm {
+                background: #004684 0% 0% no-repeat padding-box;
+                border-radius: 4px;
+                padding: 4px 12px;
+                height: 35px;
+                color: #ffffff;
+                margin-left: 1.5em;
+                min-width: 90px;      
+            }
+            .cancel {
+                background: #ffffff 0% 0% no-repeat padding-box;
+                border: 1px solid #004684;
+                border-radius: 4px;
+                padding: 4px 12px;
+                height: 35px;
+                color: #004684;      
+                min-width: 90px;
+            }
+        }
+    }
+}
+
+::ng-deep.slotConfirmed {
+    background-color: #ffffff;
+    .confirmed {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+        padding: 1em 1em 1em 1em;
+        .icon {
+            span {
+                color: #ffffff;
+                background-color: #37AF02;
+                border-radius: 50%;
+                font-size: 3em;
+                margin-bottom: 12px;
+            }
+        }
+        .content-1 {
+            color: #000000;
+            font-size: 15px;
+        }
+        .btn-wrapper {
+            display: flex;
+            margin: 0.5em auto 1em auto;
+            .confirm {
+                background: #004684 0% 0% no-repeat padding-box;
+                border-radius: 4px;
+                padding: 4px 12px;
+                height: 35px;
+                color: #ffffff;
+                min-width: 90px;      
+            }
+        }
+    }
+}
+.noSlots {
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    color: #222222;
+    font-size: 20px;
+    background: #fff;
+    border: 0.5px solid rgba(112, 112, 112, 0.5);
+    border-radius: 5px;
+    transform: translate(-50%, 50%);
+    padding: 1em;
+    margin-top: 2em;
+    text-align: center;
+    min-width: 300px;
+}

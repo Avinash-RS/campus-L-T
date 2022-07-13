@@ -1,0 +1,77 @@
+<div class="customer-wrapper-candidate-landing">
+    <app-customer-landing-header></app-customer-landing-header>
+    <div class="slot-wrapper">
+        <div class="header-wrapper">
+            <div class="left-wrapper">
+                <div class="title">
+                    <span>Book A Slot - </span> <span>{{driveName}}</span>
+                </div>
+            </div>
+            <div class="right-wrapper">
+                <button (click)="backtoCandidateDashboard()" class="slot-btn" type="button" mat-button><span class="icon-Back mr-2"></span><span>GO BACK</span></button>
+            </div>
+        </div>
+        <div *ngIf="slotsArray && slotsArray.length > 0 else noSlots" class="slot-booking">
+            <div *ngFor="let dateSlot of slotsArray; let i = index" class="slot-row">
+                <div class="slot-date-section">
+                    <div class="slot-date">
+                        <div class="date">{{momentFormDate(dateSlot?.slot_date)}}</div>
+                        <div class="day">{{dateSlot?.slot_day_name}}</div>
+                    </div>
+                </div>
+                <div class="slot-lots">
+                    <div class="slot-card-wrapper">
+                        <div (click)="slotConfirmation(i,j)" class="slot-card" *ngFor="let slot of dateSlot?.slots; let j = index" [ngClass]="{'slot-grey': slot?.remaining_count == 0, 'slot-green': ((slot?.remaining_count / slot?.total_count) * 100 > 20),'slot-orange': ((slot?.remaining_count / slot?.total_count) * 100 <=20), 'slot-red': ((slot?.remaining_count / slot?.total_count) * 100 <=10)}">
+                            <div class="slot-dates">{{slot?.slot_timings}}</div>
+                            <div class="slot-available">
+                                <span class="icon-PassageTime mr-2"></span>
+                                <span><span>{{slot?.remaining_count > 0 ? slot?.remaining_count : ''}}</span> {{slot?.remaining_count < 1 ? 'No ' : ''}}Seats Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noSlots>
+    <div class="noSlots">
+        No Slots Available
+    </div>
+</ng-template>
+
+<ng-template #confirmation>
+    <div class="confirmation">
+        <div class="icon">
+            <span class="icon-Info"></span>
+        </div>
+        <div class="content-1">
+            Are you sure?
+        </div>
+        <div class="content-2">
+            You want to book this Slot
+        </div>
+        <div class="content-3">
+            {{momentFormDate(matdialog.getDialogById('slot1')?._containerInstance?._config?.data?.selectedParentSlot?.slot_date)}} | {{matdialog.getDialogById('slot1')?._containerInstance?._config?.data?.selectedChildSlot?.slot_timings}}
+        </div>
+        <div class="btn-wrapper">
+            <button (click)="matdialog?.closeAll()" class="cancel" mat-button>CANCEL</button>
+            <button (click)="matdialog.getDialogById('slot1').close(true)" class="confirm" mat-button>CONFIRM</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #confirmed>
+    <div class="confirmed">
+        <div class="icon">
+            <span class="icon-CheckMark"></span>
+        </div>
+        <div class="content-1">
+            Your Assessment Slot has been confirmed
+        </div>
+        <div class="btn-wrapper">
+            <button (click)="slotBooked()" class="confirm" mat-button>OK</button>
+        </div>
+    </div>
+</ng-template>
