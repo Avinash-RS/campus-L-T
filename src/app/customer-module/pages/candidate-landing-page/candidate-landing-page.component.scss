@@ -1,9 +1,5 @@
 @import "../../../themes/themes.scss";
 
-.customer-wrapper-candidate-landing {
-  position: relative;
-  background: #f2f2f2 0% 0% no-repeat padding-box;
-  min-height: 100%;
   .customer-body-wrapper {
     position: relative;
     display: block;
@@ -238,7 +234,6 @@
       }
     }
   }
-}
 .box {
   padding: 20px;
   font-size: 24px;
