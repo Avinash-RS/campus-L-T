@@ -2,7 +2,7 @@
 .customer-wrapper-candidate-landing {
   position: relative;
   background: #f2f2f2 0% 0% no-repeat padding-box;
-  height: 100%;
+  min-height: 100%;
 
   .slot-wrapper {
     position: relative;
@@ -60,7 +60,10 @@
       flex-direction: column;
       gap: 2em;
       justify-content: flex-start;
-      font-size: 14px;
+      font-size: 13px;
+      @include sm() {
+        font-size: 14px;
+      }
       .slot-row {
         position: relative;
         display: flex;
@@ -75,6 +78,18 @@
             justify-content: flex-start;
             gap: 4em;
             width: 100%;
+        }
+        &::after {
+          position: absolute;
+          content: '';
+          bottom: -14px;
+          left: 0;
+          border-top: rgba(0,0,0,0.17) 2px dashed;
+          height: 1px;
+          width: 100%;
+          @include sm() {
+            display: none;
+          }
         }
         .slot-date-section {
           position: relative;
@@ -132,8 +147,8 @@
               display: block;
               position: relative;
               border-radius: 8px;
-              padding: 10px;
-              min-width: 190px;
+              padding: 6px;
+              min-width: 150px;
               flex-basis: 23%;
               color: #222222;
               cursor: pointer;
@@ -142,8 +157,16 @@
               -ms-transform: translateZ(0);
               -o-transform: translateZ(0);
               transform: translateZ(0);
+              @include sm() {
+                padding: 10px;
+                min-width: 190px;
+              }
               .slot-dates {
                 font-size: 1.14em;
+                font-weight: 500;
+                @include sm() {
+                  font-weight: 400;
+                }  
               }
               .slot-available {
                 font-size: 1em;
@@ -152,6 +175,8 @@
                 align-items: center;
                 justify-content: flex-start;
                 span:nth-of-type(2) {
+                  display: inline-block;
+                  white-space: nowrap;
                   span {
                     font-weight: 500;
                     font-size: 1.08em;
@@ -304,5 +329,5 @@
     padding: 1em;
     margin-top: 2em;
     text-align: center;
-    min-width: 300px;
+    min-width: 280px;
 }
