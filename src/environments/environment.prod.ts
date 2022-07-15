@@ -19,7 +19,7 @@ export const environment = {
   NODE_API_BASE_URL: 'https://uapedgeservicedev.lntedutech.com',
   PROCTOR_URL: 'https://lntproctordev.lntedutech.com',
   PROCTOR_VIDEO_URL : 'http://lntproctordev.lntedutech.com/api/storage/',
-  UNIFIEDREPORTSAPI: 'https://candidatedev.lntedutech.com'
+  UNIFIEDREPORTSAPI: 'https://uapedgeservicedev.lntedutech.com'
   // PROCTOR_URL: 'https://lntproctor.lntedutech.com',
   // PROCTOR_VIDEO_URL : 'http://lntproctor.lntedutech.com/api/storage/'
 };
