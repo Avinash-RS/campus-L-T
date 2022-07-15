@@ -1,10 +1,10 @@
 <mat-toolbar>
-  <ul>
-    <li>
-      In case of any technical issues, contact us at <a style="color: inherit;" [href]="'mailto:' + supportEmail">{{supportEmail}}</a>
-    </li>
-  </ul>
-  <ul>
-    <li>© {{getCurrentYear}} Powered by L&T EduTech. All Rights Reserved</li>
-  </ul>
+  <div class="footer-wrap">
+    <div class="footer-c">
+      In case of any technical issues, contact us at <a style="color: inherit;" [href]="'mailto:' + (supportEmail ? supportEmail : 'assess.support@lntedutech.com')">{{supportEmail ? supportEmail : 'assess.support@lntedutech.com'}}</a>
+    </div>
+  </div>
+  <div class="footer-wrap-1">
+    <div class="footer-c">© {{getCurrentYear}} Powered by L&T EduTech. All Rights Reserved</div>
+  </div>
 </mat-toolbar>

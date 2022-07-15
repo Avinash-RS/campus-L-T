@@ -9,7 +9,7 @@
       <em class="icon-logout logout" matTooltip="Logout" (click)="logOut()"></em>
     </div>
     <div class="mobile">
-      <div class="welcome" [matMenuTriggerFor]="menu">A</div>
+      <div class="welcome" [matMenuTriggerFor]="menu">{{username ? username.charAt(0) : 'NA'}}</div>
       <mat-menu class="profile-menu" #menu="matMenu">
         <button (click)="logOut()" mat-menu-item>Logout</button>
       </mat-menu>

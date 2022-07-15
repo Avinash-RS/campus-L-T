@@ -96,6 +96,17 @@ export class CandidateLandingPageComponent implements OnInit, OnDestroy {
     this.appConfig.setLocalData('driveId', customers?.driveDetails?.drive_id);
     this.appConfig.routeNavigationWithQueryParam(CONSTANT.ENDPOINTS.CUSTOMERS.CANDIDATE_DASHBOARD_BOOK_SLOT, {dId: customers?.driveDetails?.drive_name});
   }
+  isSlotDateExpited(date) {
+    if (date) {
+      let custom = moment(date).diff(moment.now(), "minutes");
+      if (custom != NaN && custom >= -1440) {
+        return true;
+      }
+      return false;
+    } else {
+      return false;
+    }
+  }
   customerSelection (customers: any, i: any, action: any) {
     let selectedCustomer = this.clone(customers);
     let customerCode = selectedCustomer.customer_code;

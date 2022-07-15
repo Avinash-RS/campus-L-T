@@ -79,7 +79,9 @@ export class CandidateBookSlotComponent implements OnInit {
     this.candidateservice.BookAssessmentSlots(apiData).subscribe((res: any) => {
       this.slotConfirmedPopup();
     }, (err) => {
-
+      if (err?.error?.slots && err?.error?.slots.length > 0) {
+        this.slotsArray = err?.error?.slots;
+      }
     });
   }
 

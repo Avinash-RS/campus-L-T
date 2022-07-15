@@ -194,13 +194,54 @@
                   .status {
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    justify-content: flex-start;
                     font-size: 14px;
                     span:nth-of-type(1) {
                       width: 8px;
                       height: 8px;
                       background-color: #49ae31;
                       border-radius: 50%;
+                      position: relative;
+                      top: -1px;
+                    }
+                    span:nth-of-type(2) {
+                      padding-left: 2px;
+                    }
+                  }
+                  .inv-date {
+                    font-size: 11px;
+                    color: #848484;
+                  }
+                }
+                .inv-join {
+                  span:nth-of-type(1) {
+                    font-size: 13px;
+                    color: #1B4E9B;
+                    text-decoration: underline;
+                    cursor: pointer;
+                  }
+                }
+              }
+              .slot-booked {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1em;
+                .inv-details {
+                  font-size: 14px;
+                  color: #49ae31;
+                  .status {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    font-size: 14px;
+                    span:nth-of-type(1) {
+                      width: 8px;
+                      height: 8px;
+                      background-color: #49ae31;
+                      border-radius: 50%;
+                      position: relative;
+                      top: -1px;
                     }
                     span:nth-of-type(2) {
                       padding-left: 2px;

@@ -2,7 +2,7 @@
 
 .customer-header {
   position: relative;
-  min-height: 100px;
+  min-height: 80px;
   background: $white;
   padding: 20px 20px;
   display: flex;
@@ -21,6 +21,9 @@
   }
   @include sm() {
     padding: 20px 30px;
+  }
+  @include md() {
+    min-height: 100px;
   }
 
   .header-logo {

@@ -89,6 +89,7 @@
     </div>
         <div class="bottom-section">
           <div class="other-details">
+            <ng-container *ngIf="(customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewSchedule == '1' && (customer.driveDetails.candidateStatus.invStatus && customer.driveDetails.candidateStatus.invStatus == 'Yet to Start' || customer.driveDetails.candidateStatus.invStatus == 'Join Interview')) else showSlot">
             <div *ngIf="(customer.driveDetails.candidateStatus && customer.driveDetails.candidateStatus.interviewSchedule == '1' && (customer.driveDetails.candidateStatus.invStatus && customer.driveDetails.candidateStatus.invStatus == 'Yet to Start' || customer.driveDetails.candidateStatus.invStatus == 'Join Interview'))" class="interview-schedule">
               <div class="inv-details">
                 <div class="status"><span>&nbsp;</span> <span>Interview Scheduled</span></div>
@@ -96,6 +97,15 @@
               </div>
               <div (click)="customerSelection(customer, i, null)" class="inv-join"><span>{{customer.driveDetails.candidateStatus.invStatus == 'Join Interview' ? 'Join Interview' : 'View Details'}}</span></div>
             </div>
+          </ng-container>
+          <ng-template #showSlot>
+            <div *ngIf="(customer.driveDetails && customer.driveDetails.slot_booking == '2' && isSlotDateExpited(customer?.driveDetails?.slot_details?.slot_date))" class="slot-booked">
+              <div class="inv-details">
+                <div class="status"><span>&nbsp;</span> <span>Slot Booked</span></div>
+                <div class="inv-date">{{customer?.driveDetails?.slot_details?.slot_date && customer?.driveDetails?.slot_details?.slot_date ? (customer?.driveDetails?.slot_details?.slot_date | date: "dd MMM yyyy") : '--'}} | {{customer?.driveDetails?.slot_details?.slot_timing && customer?.driveDetails?.slot_details?.slot_timing ? customer?.driveDetails?.slot_details?.slot_timing : '--'}}</div>
+              </div>
+            </div>
+            </ng-template >
           </div>
         </div>
       </div>
