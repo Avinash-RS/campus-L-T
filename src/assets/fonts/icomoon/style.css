@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?g9xo1d');
-  src:  url('fonts/icomoon.eot?g9xo1d#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?g9xo1d') format('truetype'),
-    url('fonts/icomoon.woff?g9xo1d') format('woff'),
-    url('fonts/icomoon.svg?g9xo1d#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?nxkcle');
+  src:  url('fonts/icomoon.eot?nxkcle#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?nxkcle') format('truetype'),
+    url('fonts/icomoon.woff?nxkcle') format('woff'),
+    url('fonts/icomoon.svg?nxkcle#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,17 +25,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-hourglass:before {
+  content: "\e9a7";
+}
 .icon-redirection:before {
   content: "\e9a6";
 }
 .icon-user_guide:before {
   content: "\e9a5";
-}
-.icon-checkbox:before {
-  content: "\e9a4";
-}
-.icon-person_remove:before {
-  content: "\e98b";
 }
 .icon-thumsreview:before {
   content: "\e9a3";
@@ -487,29 +484,8 @@
 .icon-UpArrow:before {
   content: "\e95e";
 }
-.icon-UPI .path1:before {
+.icon-UPI:before {
   content: "\e95f";
-  color: rgb(0, 0, 0);
-}
-.icon-UPI .path2:before {
-  content: "\e960";
-  margin-left: -1em;
-  color: rgb(255, 255, 255);
-}
-.icon-UPI .path3:before {
-  content: "\e961";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.icon-UPI .path4:before {
-  content: "\e962";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.icon-UPI .path5:before {
-  content: "\e963";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
 }
 .icon-Upload:before {
   content: "\e964";
@@ -534,4 +510,10 @@
 }
 .icon-Youtube:before {
   content: "\e96b";
+}
+.icon-checkbox:before {
+  content: "\e9a4";
+}
+.icon-person_remove:before {
+  content: "\e98b";
 }

@@ -22,7 +22,7 @@
                         <div (click)="slotConfirmation(i,j)" class="slot-card" *ngFor="let slot of dateSlot?.slots; let j = index" [ngClass]="{'slot-grey': slot?.remaining_count == 0, 'slot-green': ((slot?.remaining_count / slot?.total_count) * 100 > 20),'slot-orange': ((slot?.remaining_count / slot?.total_count) * 100 <=20), 'slot-red': ((slot?.remaining_count / slot?.total_count) * 100 <=10)}">
                             <div class="slot-dates">{{slot?.slot_timings}}</div>
                             <div class="slot-available">
-                                <span class="icon-PassageTime mr-2"></span>
+                                <span class="icon-hourglass mr-2"></span>
                                 <span><span>{{slot?.remaining_count > 0 ? slot?.remaining_count : ''}}</span> {{slot?.remaining_count < 1 ? 'No ' : ''}}Seats Available</span>
                             </div>
                         </div>

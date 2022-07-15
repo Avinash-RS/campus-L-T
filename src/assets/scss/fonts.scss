@@ -39,8 +39,14 @@
 // Icon Fonts - Icomoon
 @font-face {
     font-family: 'icomoon';
-    src:  url('/assets/fonts/icomoon/fonts/icomoon.woff?bkp143') format('woff'),
-          url('/assets/fonts/icomoon/fonts/icomoon.svg?bkp143#icomoon') format('svg');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?nxkcle');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?nxkcle#iefix') format('embedded-opentype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.ttf?nxkcle') format('truetype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.woff?nxkcle') format('woff'),
+      url('/assets/fonts/icomoon/fonts/icomoon.svg?nxkcle#icomoon') format('svg');
+
+    // src:  url('/assets/fonts/icomoon/fonts/icomoon.woff?bkp143') format('woff'),
+    //       url('/assets/fonts/icomoon/fonts/icomoon.svg?bkp143#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -70,17 +76,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .icon-hourglass:before {
+    content: "\e9a7";
+  }  
   .icon-redirection:before {
     content: "\e9a6";
   }
   .icon-user_guide:before {
     content: "\e9a5";
-  }
-  .icon-checkbox:before {
-    content: "\e9a4";
-  }
-  .icon-person_remove:before {
-    content: "\e98b";
   }
   .icon-thumsreview:before {
     content: "\e9a3";
@@ -580,3 +583,9 @@
   .icon-Youtube:before {
     content: "\e96b";
   }
+  .icon-checkbox:before {
+    content: "\e9a4";
+  }
+  .icon-person_remove:before {
+    content: "\e98b";
+  }  
