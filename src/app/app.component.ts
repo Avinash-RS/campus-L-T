@@ -15,6 +15,7 @@ import {
   NavigationError,
   Event,
   ResolveEnd,
+  ActivatedRoute,
 } from "@angular/router";
 import { AppConfigService } from "./config/app-config.service";
 import { Observable, Subscription, fromEvent } from "rxjs";
@@ -29,6 +30,7 @@ import { NgIdleService } from "./services/session-handling.service";
 import { ApiServiceService } from "./services/api-service.service";
 import { CONSTANT } from "./constants/app-constants.service";
 import { SharedServiceService } from "./services/shared-service.service";
+declare var gtag;
 LicenseManager.setLicenseKey(
   "CompanyName=LARSEN & TOUBRO LIMITED,LicensedGroup=L&T EduTech,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=3,LicensedProductionInstancesCount=3,AssetReference=AG-017299,ExpiryDate=15_July_2022_[v2]_MTY1NzgzOTYwMDAwMA==d6a472ece2e8481f35e75c20066f8e49"
 );
@@ -59,12 +61,40 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
     private apiService: ApiServiceService,
+    private activatedRoute: ActivatedRoute,
     private sharedService: SharedServiceService
   ) {
+    if (environment.production) {
+    const gaScript = document.createElement("script");
+    gaScript.innerHTML = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-177278337-1');
+    `;
+    document.head.appendChild(gaScript);
+    }
     // tslint:disable-next-line: deprecation
     this.router.events
       .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
       .subscribe((event) => {
+        if (environment.production) {
+          const titledat = this.getChild(this.activatedRoute);
+          titledat.data.subscribe((data) => {
+            let user_id = null;
+            user_id = this.appConfig.getLocalData("userId")
+              ? this.appConfig.getLocalData("userId")
+              : null;
+            gtag("event", "page_view", {
+              page_title: data?.title,
+              page_location: window.location.href,
+              page_path: this.router.url,
+              user_id: user_id,
+              // send_to: '<GA_MEASUREMENT_ID>'
+            });
+          });
+        }
+
         if (event.id === 1 && event.url === event.urlAfterRedirects) {
           this.appConfig.clearLocalDataOne("profileData");
           //  ..... // here your code when page is refresh
@@ -95,7 +125,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           ? this.initSessionTimer()
           : this.sessionHandlingDisabled();
       },
-      (err) => { }
+      (err) => {}
     );
   }
 
@@ -269,6 +299,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         this.matDialog.closeAll();
       }
     );
+  }
+
+  getChild(activatedRoute: ActivatedRoute) {
+    if (activatedRoute.firstChild) {
+      return this.getChild(activatedRoute.firstChild);
+    } else {
+      return activatedRoute;
+    }
   }
 
   ngOnDestroy(): void {
