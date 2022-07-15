@@ -18,7 +18,7 @@ export class CandidateBookSlotComponent implements OnInit {
   driveName: any;
   constructor(
     private appconfig: AppConfigService,
-    protected matdialog: MatDialog,
+    public matdialog: MatDialog,
     private candidateservice: CandidateMappersService,
     private activatedRoute: ActivatedRoute
   ) { }
