@@ -45,12 +45,14 @@ export const CONSTANT = {
       OFF_CAMPUS: '/open/off-campus',
       OFF_CAMPUS_PROFILE: '/open/off-campus/profile',
       OFF_CAMPUS_THANKS: '/open/off-campus/thanks',
-      OFF_CAMPUS_EMAIL: '/open/off-campus/email-confirmation'
+      OFF_CAMPUS_EMAIL: '/open/off-campus/email-confirmation',
+      OFF_CAMPUS_CLOSED: '/open/off-campus/closed'
     },
     CUSTOMERS: {
       HOME: '/customer',
       LANDING: '/customer/landing',
-      CANDIDATE_DASHBOARD: '/customer/candidate'
+      CANDIDATE_DASHBOARD: '/customer/candidate',
+      CANDIDATE_DASHBOARD_BOOK_SLOT: '/customer/book/slot'
     },
     ADMIN_DASHBOARD: {
       HOME: '/admin',
@@ -205,11 +207,13 @@ export const CONSTANT = {
       OFF_CAMPUS_PROFILE: 'profile',
       OFF_CAMPUS_THANKS: 'thanks',
       OFF_CAMPUS_EMAIL: 'email-confirmation',
+      OFF_CAMPUS_CLOSED: 'closed'
     },
     CUSTOMERS: {
       HOME: 'customer',
       LANDING: 'landing',
-      CANDIDATE_DASHBOARD: 'candidate'
+      CANDIDATE_DASHBOARD: 'candidate',
+      CANDIDATE_DASHBOARD_BOOK_SLOT: 'book/slot'
     },
     ADMIN_DASHBOARD: {
       HOME: 'admin',

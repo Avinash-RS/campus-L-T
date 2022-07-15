@@ -8,10 +8,11 @@ import { OffCampusMasterComponent } from './off-campus-master/off-campus-master.
 import { OffCampusProfileComponent } from './off-campus-master/off-campus-profile/off-campus-profile.component';
 import { OffCampusSubmittedConfirmationComponent } from './off-campus-master/off-campus-submitted-confirmation/off-campus-submitted-confirmation.component';
 import { OffCampusEmailConfirmationComponent } from './off-campus-master/off-campus-email-confirmation/off-campus-email-confirmation.component';
+import { FormClosedComponent } from './off-campus-master/form-closed/form-closed.component';
 
 
 @NgModule({
-  declarations: [VideoAssessEvaluationComponent, OffCampusMasterComponent, OffCampusProfileComponent, OffCampusSubmittedConfirmationComponent, OffCampusEmailConfirmationComponent],
+  declarations: [VideoAssessEvaluationComponent, OffCampusMasterComponent, OffCampusProfileComponent, OffCampusSubmittedConfirmationComponent, OffCampusEmailConfirmationComponent, FormClosedComponent],
   imports: [
     CommonModule,
     UnauthenticatedRoutingModule,

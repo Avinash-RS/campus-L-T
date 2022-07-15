@@ -18,18 +18,14 @@ export class MiscCandidateNameChangeComponent implements OnInit {
   candidateName = new FormControl({value: null, disabled: true}, [RemoveWhitespace.whitespace(), Validators.required, this.gv.alphaNum100()]);
   addedCollegesList: any;
   buttonLabel = true;
-  quickSearchValue: any;
-  paginationPageSize = 500;
-  cacheBlockSize: any = 500;
-  gridApi: any;
-  columnDefs = [];
-  defaultColDef : any;
-  tooltipShowDelay = 0;
-  rowData: any = [];
-  filterValue: string;
   miscCheckEmailSubscription: Subscription;
   selectedEmailIdDetails: any;
   miscChangeCandidateNameSubscription: Subscription;
+  candidateViewDetails = {
+    updated_name: '',
+    email: '',
+    old_name: ''
+  };
 
   constructor(
     private appConfig: AppConfigService,
@@ -38,87 +34,6 @@ export class MiscCandidateNameChangeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.defaultColDef = this.appConfig.agGridWithAllFunc();
-    this.tabledef();
-  }
-
-  onGridReady(params: any) {
-    this.gridApi = params.api;
-    // this.getAddedCandidateNameList();
-  }
-
-  sortevent(e) {
-  }
-
-  customComparator = (valueA, valueB) => {
-    return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
-  }
-
-  onCellClicked(event) {
-  }
-
-  getModel(e) {
-    setTimeout(() => {
-      const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
-      if (filteredArray && filteredArray.length === 0) {
-        this.appConfig.warning('No search results found');
-      }
-    }, 500);
-  }
-
-  onQuickFilterChanged() {
-    this.gridApi.setQuickFilter(this.quickSearchValue);
-    const filteredArray = this.gridApi.getModel().rootNode.childrenAfterFilter;
-    if (filteredArray && filteredArray.length === 0) {
-      this.appConfig.warning('No search results found');
-    }
-  }
-  tabledef() {
-
-    this.columnDefs = [
-      {
-        headerName: 'S no',
-        minWidth: 80,
-        maxWidth: 120,
-        sortable: true,
-        resizable:true,
-        filter: 'agNumberColumnFilter',
-        valueGetter: (params) => {
-          const i = +params.node.id + 1;
-          return i ? i : 'Loading...';
-        },
-      },
-      {
-        headerName: 'Candidate Name', field: 'candidate_name',
-        filter: 'agTextColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'candidate_name',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Candidate Email ID', field: 'candidate_email',
-        filter: 'agTextColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'candidate_email',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      },
-      {
-        headerName: 'Old Candidate Name', field: 'old_name',
-        filter: 'agTextColumnFilter',
-        minWidth: 140,
-        sortable: true,
-        tooltipField: 'old_name',
-        getQuickFilterText: (params) => {
-          return params.value;
-        }
-      }
-    ];
   }
 
   candidateEmailSubmit(type: any) {
@@ -132,14 +47,15 @@ export class MiscCandidateNameChangeComponent implements OnInit {
 
   candidateEmailCheck() {
     const apiData = {
-      email : this.candidateEmail.value,
+      email : this.candidateEmail.value.trim(),
     };
     this.miscCheckEmailSubscription = this.adminService.miscCheckEmail(apiData).subscribe((res: any)=> {
       this.candidateName.enable();
       this.candidateEmail.disable();
       this.selectedEmailIdDetails = res ? res : null;
       this.candidateName.patchValue(this.selectedEmailIdDetails?.field_user_name_value);
-      console.log('res', res);
+      this.candidateViewDetails.old_name = this.selectedEmailIdDetails?.field_user_name_value;
+      this.candidateViewDetails.email = '';
     }, (err)=> {
 
     });
@@ -147,37 +63,22 @@ export class MiscCandidateNameChangeComponent implements OnInit {
 
   candidateUpdatedNameSubmit() {
     const apiData = {
-      user_id : this.selectedEmailIdDetails?.uid,
+      email: this.candidateEmail.value.trim(),
       user_name: this.candidateName.value
     };
     this.miscChangeCandidateNameSubscription = this.adminService.miscChangeCandidateName(apiData).subscribe((res: any)=> {
       this.appConfig.success('Candidate Name Updated Successfully');
+      this.candidateViewDetails.email = apiData.email;
+      this.candidateViewDetails.updated_name = apiData.user_name;
       this.candidateName.reset();
       this.candidateEmail.reset();
       this.selectedEmailIdDetails = null;
       this.buttonLabel = !this.buttonLabel;
       this.candidateEmail.enable();
       this.candidateName.disable();
-      console.log('res', res);
     }, (err)=> {
 
     });
-  }
-
-  // To get all users
-  getAddedCandidateNameList() {
-    this.rowData = [
-      {
-        candidate_name: 'Avinash Updated',
-        candidate_email: 'Avinash@gmail.com',
-        old_name: 'Avinash'
-      },
-      {
-        candidate_name: 'Abv Updated',
-        candidate_email: 'Abv@gmail.com',
-        old_name: 'Abv old'
-      }
-    ]
   }
 
 }

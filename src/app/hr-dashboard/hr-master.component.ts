@@ -68,13 +68,14 @@ export class HrMasterComponent implements OnInit {
         icon: 'icon-track_changes',
         hide: false
       },
-      // {
-      //   url: this.appConstant.HR_DASHBOARD.HR_MISCELLANEOUS,
-      //   name: `Miscellaneous`,
-      //   icon: 'icon-track_changes',
-      //   hide: false
-      // }
+      {
+        url: this.appConstant.HR_DASHBOARD.HR_MISCELLANEOUS,
+        name: `Miscellaneous`,
+        icon: 'icon-WebDevelopment',
+        hide: false
+      }
   ];
+  (this.appConfig.getLocalData('misc') && this.appConfig.getLocalData('misc') =='1') ? '' : this.hrSideMenu.pop();
   this.appConfig.getSelectedCustomerCode() == '#LTTS' ? this.hrSideMenu.shift() : this.hrSideMenu.shift();
 }
 if (this.role == 'ic') {

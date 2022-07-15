@@ -36,6 +36,7 @@
     "ag-grid-angular": "^25.3.0",
     "ag-grid-community": "^25.3.0",
     "ag-grid-enterprise": "^25.3.0",
+    "angular-gtag": "^1.0.4",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "chartjs-plugin-datalabels": "^0.7.0",

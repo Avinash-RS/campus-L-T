@@ -68,7 +68,7 @@ export class CommonSidebarComponent implements OnInit, AfterViewInit {
 @HostListener("window:resize", ["$event"])
 getScreenSize(event?) {
   if (this.appConfig.getLocalData("roles")) {
-    if (environment.production || true) {
+    if (environment.production) {
       this.screenHeight = window.innerHeight;
       this.screenWidth = window.innerWidth;
       if (this.screenWidth < 1000 || this.screenHeight < 400) {

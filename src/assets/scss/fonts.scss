@@ -39,8 +39,14 @@
 // Icon Fonts - Icomoon
 @font-face {
     font-family: 'icomoon';
-    src:  url('/assets/fonts/icomoon/fonts/icomoon.woff?bkp143') format('woff'),
-          url('/assets/fonts/icomoon/fonts/icomoon.svg?bkp143#icomoon') format('svg');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?xqxpf0');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?xqxpf0#iefix') format('embedded-opentype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.ttf?xqxpf0') format('truetype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.woff?xqxpf0') format('woff'),
+      url('/assets/fonts/icomoon/fonts/icomoon.svg?xqxpf0#icomoon') format('svg');
+
+    // src:  url('/assets/fonts/icomoon/fonts/icomoon.woff?bkp143') format('woff'),
+    //       url('/assets/fonts/icomoon/fonts/icomoon.svg?bkp143#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -70,17 +76,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .icon-Discipline_icon:before {
+    content: "\e960";
+  }
+  .icon-Institutes_icon:before {
+    content: "\e961";
+  }
+  .icon-Profile_icon:before {
+    content: "\e962";
+  }  
+  .icon-hourglass:before {
+    content: "\e9a7";
+  }  
   .icon-redirection:before {
     content: "\e9a6";
   }
   .icon-user_guide:before {
     content: "\e9a5";
-  }
-  .icon-checkbox:before {
-    content: "\e9a4";
-  }
-  .icon-person_remove:before {
-    content: "\e98b";
   }
   .icon-thumsreview:before {
     content: "\e9a3";
@@ -580,3 +592,9 @@
   .icon-Youtube:before {
     content: "\e96b";
   }
+  .icon-checkbox:before {
+    content: "\e9a4";
+  }
+  .icon-person_remove:before {
+    content: "\e98b";
+  }  

@@ -254,6 +254,7 @@ export class OffCampusProfileComponent implements OnInit, AfterViewInit, OnDestr
     this.closeBox('2');
     let formValues = this.offCampusRegistrationForm.getRawValue();
     delete formValues[this.form_t_c];
+    formValues[this.form_email] = formValues[this.form_email].trim();
     formValues[this.form_dob] = this.momentForm(formValues[this.form_dob]);
     formValues[this.form_resume] = formValues[this.form_resume][this.form_file_id];
     formValues['clientResponse'] = this.recaptchaStr ? this.recaptchaStr : '';

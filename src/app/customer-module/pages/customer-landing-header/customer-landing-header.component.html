@@ -4,8 +4,16 @@
   </div>
 
   <div class="header-right-wrapper">
-    <div class="welcome mr-2">Welcome, {{username}}</div>
-    <em class="icon-logout logout" matTooltip="Logout" (click)="logOut()"></em>
+    <div class="non-mobile">
+      <div class="welcome mr-2">Welcome, {{username}}</div>
+      <em class="icon-logout logout" matTooltip="Logout" (click)="logOut()"></em>
+    </div>
+    <div class="mobile">
+      <div class="welcome" [matMenuTriggerFor]="menu">{{username ? username.charAt(0) : 'NA'}}</div>
+      <mat-menu class="profile-menu" #menu="matMenu">
+        <button (click)="logOut()" mat-menu-item>Logout</button>
+      </mat-menu>
+    </div>
   </div>
 
 </mat-toolbar>

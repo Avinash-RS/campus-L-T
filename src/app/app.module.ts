@@ -35,6 +35,7 @@ import { GeneralProfileGuard } from './guards/canload/candidate_components_authg
 import { GeneralProfileComponentGuard } from './guards/canload/candidate_components_authguards/general-profile-component.guard';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { DashboardActivateGuard } from './guards/canload/dashboard_activate/dashboard-activate.guard';
+import { GtagModule } from 'angular-gtag';
 @NgModule({
   declarations: [
     AppComponent
@@ -49,6 +50,7 @@ import { DashboardActivateGuard } from './guards/canload/dashboard_activate/dash
     HttpClientModule,
     NgZorroAntdModule,
     NgxSkeletonLoaderModule,
+    // GtagModule.forRoot({ trackingId: 'UA-177278337-1', trackPageviews: true }),
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

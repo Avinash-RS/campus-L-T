@@ -1,0 +1,42 @@
+@import '../../../themes/themes.scss';
+
+.customer-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: white;
+    z-index: 1;
+}
+.customer-wrapper-candidate-landing {
+    margin: 0;
+    padding-top: 80px;
+    position: relative;
+    background: #f2f2f2 0% 0% no-repeat padding-box;
+    display: block;
+    height: 100%;
+    @include md() {
+        padding-top: 100px;
+    }
+    .routlet-customer {
+        display: block;
+        min-height: 100%;
+        position: relative;
+        background: #f2f2f2 0% 0% no-repeat padding-box;
+        padding-bottom: 100px;
+        @include mobile-normal() {
+            padding-bottom: 80px;
+        }
+        @include sm() {
+            padding-bottom: 60px;
+        }
+        @include lg() {
+            padding-bottom: 30px;
+        }
+    }
+    .customer-footer {
+        position: absolute;
+        left: 0;
+        bottom: 0.6px;
+        width: 100%;
+    }
+}  

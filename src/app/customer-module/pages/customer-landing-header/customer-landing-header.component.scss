@@ -1,30 +1,47 @@
-@import '../../../themes/themes.scss';
+@import "../../../themes/themes.scss";
 
 .customer-header {
   position: relative;
-  min-height: 100px;
+  min-height: 80px;
   background: $white;
-  padding: 20px 30px;
+  padding: 20px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
     height: 5px;
-    background: transparent linear-gradient(
-      90deg, #16BEF0 0%, #54B952 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(90deg, #16bef0 0%, #54b952 100%) 0%
+      0% no-repeat padding-box;
+  }
+  @include sm() {
+    padding: 20px 30px;
+  }
+  @include md() {
+    min-height: 100px;
   }
 
   .header-logo {
     color: $primary-text-color;
     font-size: 22px;
     font-weight: 600;
-    padding-left: 10px;
+    @include mobile() {
+      font-size: 18px;
+    }
+    @include sm() {
+      font-size: 20px;
+      padding-left: 10px;
+    }
+    @include md() {
+      font-size: 22px;
+      padding-left: 10px;
+    }
+
   }
 
   .header-right-wrapper {
@@ -33,12 +50,52 @@
     justify-content: flex-start;
     color: $black;
     font-weight: 400;
-    .welcome {
-      font-size: 18px;
+    .non-mobile {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      display: none;
+      @include sm() {
+        display: flex;
+      }
+      .welcome {
+        font-size: 18px;
+      }
+      em {
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
-    em {
-      font-size: 20px;
-      cursor: pointer;
+    .mobile {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      display: flex;
+      @include sm() {
+        display: none;
+      }
+      .welcome {
+        vertical-align: middle;
+        width: 40px;
+        display: flex;
+        height: 40px;
+        border-radius: 50%;
+        background: #1b4e9b42;
+        opacity: 1;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
     }
+  }
+}
+::ng-deep.profile-menu {
+  .mat-menu-item {
+    border-bottom: solid 1px rgba(0, 0, 0,0.2);
+    height: 50px;
+    font-size: 16px;
+  }
+  .mat-menu-item:hover {
+      background-color: solid 1px rgba(0, 0, 0,0.5);
   }
 }
