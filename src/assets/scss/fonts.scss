@@ -39,11 +39,11 @@
 // Icon Fonts - Icomoon
 @font-face {
     font-family: 'icomoon';
-    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?nxkcle');
-    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?nxkcle#iefix') format('embedded-opentype'),
-      url('/assets/fonts/icomoon/fonts/icomoon.ttf?nxkcle') format('truetype'),
-      url('/assets/fonts/icomoon/fonts/icomoon.woff?nxkcle') format('woff'),
-      url('/assets/fonts/icomoon/fonts/icomoon.svg?nxkcle#icomoon') format('svg');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?xqxpf0');
+    src:  url('/assets/fonts/icomoon/fonts/icomoon.eot?xqxpf0#iefix') format('embedded-opentype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.ttf?xqxpf0') format('truetype'),
+      url('/assets/fonts/icomoon/fonts/icomoon.woff?xqxpf0') format('woff'),
+      url('/assets/fonts/icomoon/fonts/icomoon.svg?xqxpf0#icomoon') format('svg');
 
     // src:  url('/assets/fonts/icomoon/fonts/icomoon.woff?bkp143') format('woff'),
     //       url('/assets/fonts/icomoon/fonts/icomoon.svg?bkp143#icomoon') format('svg');
@@ -76,6 +76,15 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .icon-Discipline_icon:before {
+    content: "\e960";
+  }
+  .icon-Institutes_icon:before {
+    content: "\e961";
+  }
+  .icon-Profile_icon:before {
+    content: "\e962";
+  }  
   .icon-hourglass:before {
     content: "\e9a7";
   }  

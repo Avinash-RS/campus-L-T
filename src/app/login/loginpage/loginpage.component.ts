@@ -119,6 +119,7 @@ export class LoginpageComponent implements OnInit {
             this.appConfig.setLocalData('logout-token', data && data.logout_token ? data.logout_token : '');
             this.appConfig.setLocalData('masters', data && data.master_list && data.master_list.data ? JSON.stringify(data.master_list.data) : '');
             this.appConfig.setLocalData('roles', data && data.current_user && data.current_user.roles && data.current_user.roles[1] ? data.current_user.roles[1] : null);
+            this.appConfig.setLocalData('misc', data && data?.miscellaneous_hr ? data?.miscellaneous_hr : '0');
             this.appConfig.setCustomerConfiguration(data).then((response: any)=> {
               this.loginRedirection(data);
             }).catch((err)=> {

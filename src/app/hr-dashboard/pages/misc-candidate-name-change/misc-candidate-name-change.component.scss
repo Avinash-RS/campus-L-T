@@ -80,12 +80,22 @@
         width: 80%;
     }
 }
-.college-grid-wrapper {
-    margin-bottom: 1rem;
-    .search-bar {
-        padding: 0.25em 1em;
-        display: flex;
-        flex-direction: row-reverse;
+.changed-data {
+    width: 50%;
+    .name-update-table {
+        padding: 1em;
+        thead {
+            height: 40px;
+            border: 1px solid #BABFC7;
+            background: #F8F8F8 0% 0% no-repeat padding-box;
+            th {
+                font-weight: 500;
+            }
+        }
+        tbody {
+            height: 40px;
+            border: 1px solid #BABFC7;
+        }
     }
 }
 .mat-input-element:disabled {

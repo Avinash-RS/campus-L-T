@@ -20,12 +20,14 @@ export class MiscellaneousMasterComponent implements OnInit {
     // Sub-Navigation menus. This will be retrieved in Admin master component
     let subWrapperMenus = [
       {
-        icon: '002-group-1.svg',
+        icon: 'icon-Institutes_icon',
+        icons: true,
         name: 'Colleges',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_MISCELLANEOUS_COLLEGES
       },
       {
-        icon: '001-group.svg',
+        icon: 'icon-person_search',
+        icons: true,
         name: 'Name Change',
         router: CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE
       },
