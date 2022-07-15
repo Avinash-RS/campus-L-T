@@ -125,6 +125,31 @@
               font-weight: 600;
             }  
           }
+          .list-item-closedForm {
+            font-size: 14px;
+            color: #164160;
+            display: flex;
+            gap: 1em;
+            justify-content: flex-start;
+            align-items: flex-start;
+            .infoIcon {
+              background-color: #1B4E9B;
+              color: white;
+              font-size: 18px;
+              border: solid 1px white;
+              border-radius: 50%;
+            }
+            .closed-content {
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+              font-size: 14px;
+              color: #164160;  
+              span:nth-of-type(1) {
+                font-weight: 500;
+              }
+            }
+          }
         }
         .form-wrapper {
           position: relative;
