@@ -847,11 +847,11 @@ miscAddCollege(data) {
 }
 
 miscCheckEmail(data) {
-  return this.http.post(`${this.BASE_URL}/miscellaneous/getCandidateDetails`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  return this.http.post(`${this.BASE_URL}/profile/getCandidateDetails`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
 miscChangeCandidateName(data) {
-  return this.http.post(`${this.BASE_URL}/miscellaneous/editUserName`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+  return this.http.post(`${this.BASE_URL}/profile/editUserName`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
 }
