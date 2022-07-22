@@ -38,6 +38,10 @@ import { DashboardActivateGuard } from '../guards/canload/dashboard_activate/das
 import { MiscellaneousMasterComponent } from './pages/miscellaneous-master/miscellaneous-master.component';
 import { MiscCollegesComponent } from './pages/misc-colleges/misc-colleges.component';
 import { MiscCandidateNameChangeComponent } from './pages/misc-candidate-name-change/misc-candidate-name-change.component';
+import { EmailTriggerMasterComponent } from './pages/email-trigger-master/email-trigger-master.component';
+import { EmailTriggerFunctionComponent } from './pages/email-trigger-master/email-trigger-function/email-trigger-function.component';
+import { EmailJobsMasterComponent } from './pages/email-jobs-master/email-jobs-master.component';
+import { EmailJobsComponent } from './pages/email-jobs-master/email-jobs/email-jobs.component';
 
 const routes: Routes = [
   {
@@ -345,6 +349,48 @@ const routes: Routes = [
           {
             path: '',
             redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_MISCELLANEOUS_COLLEGES}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_TRIGGER}`,
+        component: EmailTriggerMasterComponent,
+        data: {
+          breadcrumb: 'Trigger'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_TRIGGER_FUNCTION}`,
+            component: EmailTriggerFunctionComponent,
+            data: {
+              breadcrumb: 'Email'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_TRIGGER_FUNCTION}`,
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS}`,
+        component: EmailJobsMasterComponent,
+        data: {
+          breadcrumb: 'Jobs'
+        },
+        children: [
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL}`,
+            component: EmailJobsComponent,
+            data: {
+              breadcrumb: 'Email'
+            }
+          },
+          {
+            path: '',
+            redirectTo: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL}`,
             pathMatch: 'full',
           }
         ]

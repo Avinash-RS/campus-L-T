@@ -1,0 +1,83 @@
+.row-container {
+    position: relative;
+    width: 100%;
+    padding: 4px;
+    // max-width: 990px;
+    margin: 0 auto;
+    .email-stepper {
+        margin-top: 1em;
+    }
+}
+:host ::ng-deep .mat-step-label {
+    .mat-step-text-label {
+        color:  #004684;
+        font-size: 14px;
+        font-weight: 400;
+    }
+}
+:host ::ng-deep.mat-step-label-selected {
+    .mat-step-text-label {
+        font-weight: 500;
+    }
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header.mat-step-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+    width: 60%;
+}
+
+:host ::ng-deep .mat-step-icon {
+    padding: 18px;
+    background: #CCDAE6;
+    span {
+        color: #004684;
+    }
+}
+:host ::ng-deep.mat-step-icon-selected {
+    background: #08558C;
+    span {
+        color: #ffffff;
+    }
+}
+
+:host ::ng-deep .mat-stepper-horizontal-line {
+    background: #004684;
+    height: 1px;
+    width: 25px !important;
+    margin: 0 auto;
+    position: relative;
+    cursor: pointer;
+    max-width: 25px;
+    &:before,
+    &:after {
+        content: "";
+        background: #004684;
+        position: absolute;
+        height: 1px;
+        width: 8px;
+    }
+  
+    &:before {
+        right: 0px;
+        bottom: -7px;
+        transform: rotate(-45deg);
+        top: 2px;
+    }
+  
+    &:after {
+        right: 0px;
+        top: -4px;
+        transform: rotate(45deg);
+    }
+}
+
+
+:host::ng-deep .mat-horizontal-content-container {
+    padding: 0;
+}

@@ -1,0 +1,30 @@
+<div class="grid-wrapper mt-3">
+    <div class="heading-wrapper">
+        <div class="heading">
+            Candidate List
+        </div>
+        <div class="search">
+            <div class="stage-bar">
+                <label>Stage: </label>
+                <nz-select class="select-group" [(ngModel)]="selectedValue" nzPlaceHolder="Choose" nzShowSearch>
+                    <nz-option-group class="group-selection" *ngFor="let group of stagesList" [nzLabel]="group?.group_name">
+                      <nz-option *ngFor="let stage of group?.stages" [nzValue]="stage.stage_id" [nzLabel]="stage.stage_name"></nz-option>
+                    </nz-option-group>
+                  </nz-select>
+            </div>
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">    
+            </div>
+
+        </div>
+    </div>
+
+    <div class="aggrid-wrapper">
+        <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
+        [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true"
+        (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [statusBar]="statusBar" [animateRows]="true">
+    </ag-grid-angular>
+    </div>
+
+</div>

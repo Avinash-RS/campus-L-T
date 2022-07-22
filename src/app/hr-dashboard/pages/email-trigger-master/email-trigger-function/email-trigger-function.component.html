@@ -1,0 +1,51 @@
+<div class="row-container">
+
+    <div class="email-stepper">
+        <mat-horizontal-stepper [linear]="true" #stepper>
+            <ng-template matStepperIcon="edit">
+                <span *ngIf="stepper.selectedIndex == 0" class="icon-assess"></span>
+                <span *ngIf="stepper.selectedIndex == 1" class="icon-mail-assess"></span>
+                <span *ngIf="stepper.selectedIndex == 2" class="icon-mail-find"></span>
+                <span *ngIf="stepper.selectedIndex == 3" class="icon-like"></span>
+            </ng-template>
+                
+            <!-- changed step icons -->
+            <ng-template matStepperIcon="first">
+                <span class="icon-assess"></span>
+            </ng-template>
+
+            <ng-template matStepperIcon="home">
+                <span class="icon-mail-assess"></span>
+            </ng-template>
+            <ng-template matStepperIcon="form">
+                <span class="icon-mail-find"></span>
+            </ng-template>
+            <ng-template matStepperIcon="last">
+                <span class="icon-like"></span>
+            </ng-template>
+          
+            <mat-step label="Select Candidate" state="first" [stepControl]="true">
+                <app-selected-candidate></app-selected-candidate>
+            </mat-step>
+            <mat-step label="Choose Email Template" state="home" [stepControl]="true">
+                <ng-template matStepperIcon="home">
+                    <span class="icon-mail-assess"></span>
+                </ng-template>
+    
+                hi2
+            </mat-step>
+            <mat-step label="Preview and Submit" state="form" [stepControl]="true">
+                hi3
+            </mat-step>
+            <mat-step label="Confirm" [stepControl]="true" state="last">
+              <!-- <ng-template matStepLabel>Done</ng-template> -->
+              You are now done.
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+    </div>
+
+</div>
