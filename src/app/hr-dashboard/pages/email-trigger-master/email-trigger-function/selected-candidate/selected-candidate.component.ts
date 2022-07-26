@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { IsRowSelectable } from 'ag-grid-community';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
@@ -8,7 +8,9 @@ import { AppConfigService } from 'src/app/config/app-config.service';
   templateUrl: './selected-candidate.component.html',
   styleUrls: ['./selected-candidate.component.scss']
 })
-export class SelectedCandidateComponent implements OnInit {
+export class SelectedCandidateComponent implements OnInit, OnChanges {
+  @Input() nextClick: any;
+  @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
   gridApi: any;
@@ -71,6 +73,16 @@ export class SelectedCandidateComponent implements OnInit {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.GetRowStyle();
+  }
+
+  ngOnChanges() {
+    if (this.nextClick == 1) {
+      let data= {
+        stage: 'first',
+        data: this.gridApi.getSelectedNodes()
+      }
+      this.nextClickEmitter.emit(data);
+    }
   }
 
   GetRowStyle() {
