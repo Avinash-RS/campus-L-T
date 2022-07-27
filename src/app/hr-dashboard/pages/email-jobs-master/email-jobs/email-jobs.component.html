@@ -1,1 +1,35 @@
-<p>email-jobs works!</p>
+<div class="grid-wrapper">
+    <div class="heading-wrapper">
+        <div class="heading">
+            Email Jobs Lists
+        </div>
+        <div class="search">
+            <div class="stage-bar">
+            </div>
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="aggrid-wrapper">
+        <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
+            [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true" (sortChanged)="sortevent($event)"
+            (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [animateRows]="true">
+        </ag-grid-angular>
+    </div>
+
+</div>
+
+<ng-template #email>
+    <h2 mat-dialog-title>View Template</h2>
+    <mat-dialog-content class="mat-typography">
+        <div [innerHTML]="">Greetings!!! We are happy to announce that you have cleared the assessment process and is shortlisted for the interview process.Please click on the following link to upload your resume and other academic documents for further process: Click here
+            Wishing you all the best on your journey forward. Thanks, Campus Recruitment Team Note: This is an auto generated email. Kindly do not reply / respond to this email. For any further queries, please contact assess.support@lntedutech.com.</div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button class="closeBtn" mat-button mat-dialog-close>CLOSE</button>
+    </mat-dialog-actions>
+</ng-template>
