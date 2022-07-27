@@ -28,35 +28,44 @@
                 <span class="icon-like"></span>
             </ng-template>
           
-            <mat-step label="Select Candidate" state="first" [stepControl]="true">
+            <mat-step label="Select Candidate" completed="false" state="first" [stepControl]="true">
                 <div class="route">
-                    <app-selected-candidate (nextClickEmitter)="nextClickEmitter($event)" [nextClick]="stageClick"></app-selected-candidate>
+                    <app-selected-candidate (nextClickEmitter)="nextClickEmitter($event)" [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-selected-candidate>
                 </div>
                 <div class="footer">
                     <ng-container *ngTemplateOutlet="first"></ng-container>
                 </div>      
                 <ng-template #first>
-                    <div class="first">
-                        <button class="first-btn ml-2" (click)="next('first')" mat-raised-button>
+                    <div class="first footer-common">
+                        <button class="normal-btn ml-2" (click)="firstStagenext()" mat-raised-button>
                             <span class="mr-2">Next</span> <em class="icon-right-next"></em>
                           </button>
                     
                     </div>
                 </ng-template>      
             </mat-step>
-            <mat-step label="Choose Email Template" state="home" [stepControl]="true">
+            <mat-step label="Choose Email Template" completed="false" state="home" [stepControl]="true">
                 <div class="route">
-                    <app-choose-template (nextClickEmitter)="nextClickEmitter($event)" [nextClick]="stageClick"></app-choose-template>
+                    <app-choose-template (nextClickEmitter)="nextClickEmitter($event)" [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-choose-template>
                 </div>
                 <div class="footer">
                     <ng-container *ngTemplateOutlet="second"></ng-container>
                 </div>
                 <ng-template #second>
-                    <div class="first">
-                        <button class="first-btn ml-2" (click)="next('second')" mat-raised-button>
-                            <span class="mr-2">Next</span> <em class="icon-right-next"></em>
-                          </button>
-                    
+                    <div class="second footer-common">
+                        <div class="left-wrapper">
+                            <button class="outline-btn" (click)="firstStagenext()" mat-raised-button>
+                                <em class="icon-Back"></em><span class="ml-2">Select Candidate</span>
+                              </button>    
+                        </div>
+                        <div class="right-wrapper">
+                            <button class="outline-btn" (click)="firstStagenext()" mat-raised-button>
+                                <em class="icon-FileEdit"></em><span class="ml-2">Edit Content</span>
+                              </button>    
+                            <button class="normal-btn ml-2" (click)="firstStagenext()" mat-raised-button>
+                                <span class="mr-2">Next</span> <em class="icon-right-next"></em>
+                              </button>    
+                        </div>                    
                     </div>
                 </ng-template>
             </mat-step>

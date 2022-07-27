@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChildren, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ViewChild, TemplateRef, AfterViewInit } from '@angular/core';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material';
+import { SelectedCandidateComponent } from './selected-candidate/selected-candidate.component';
 
 @Component({
   selector: 'app-email-trigger-function',
@@ -10,9 +11,10 @@ import { MatStepper } from '@angular/material';
     provide: MAT_STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }
   }]
 })
-export class EmailTriggerFunctionComponent implements OnInit {
+export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit {
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
-  stageClick: any;
+  @ViewChild(SelectedCandidateComponent, {static: false}) selectedCandidatesComponent: any;
+  stageWiseDetails: any;
   stageData: any;
   constructor() {
 
@@ -22,31 +24,22 @@ export class EmailTriggerFunctionComponent implements OnInit {
 
   }
 
-  next(stage) {
-    if (stage == 'first') {
-      this.stageClick = 1;
-    }
-    if (stage == 'second') {
-      this.stageClick = 1;
-    }
+  ngAfterViewInit() {
+    
   }
 
-  nextClickEmitter(event) {
-    console.log('event', event);
-    setTimeout(() => {
-      if (event.stage == 'first') {
-        this.stageClick = this.stageClick ? null : this.stageClick;
-        this.stageData = event.data;
-        this.firststage(this.stageData);
-      }
-    }, 0);
-    console.log('event', event);
-  }
-
-  firststage(data) {
-    console.log('stage', data);
-    if (data.length > 0) {
+  firstStagenext() {
+    this.stageWiseDetails = {
+      selectedCandidates: this.selectedCandidatesComponent.gridApi.getSelectedNodes() ? this.selectedCandidatesComponent.gridApi.getSelectedNodes() : [],
+      selectedStageValue: this.selectedCandidatesComponent.selectedValue,
+      stagesList: this.selectedCandidatesComponent.stagesList
+    };
+    if (this.stageWiseDetails && this.stageWiseDetails.selectedCandidates.length > 0 && this.stageWiseDetails.selectedStageValue) {
       this.stepper.next();
     }
+  }
+
+  nextClickEmitter() {
+
   }
 }

@@ -1,15 +1,17 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { IsRowSelectable } from 'ag-grid-community';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-selected-candidate',
   templateUrl: './selected-candidate.component.html',
   styleUrls: ['./selected-candidate.component.scss']
 })
-export class SelectedCandidateComponent implements OnInit, OnChanges {
-  @Input() nextClick: any;
+export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() stageWiseDetails: any;
+  @Input() stepperIndex: any;
   @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
@@ -36,33 +38,9 @@ export class SelectedCandidateComponent implements OnInit, OnChanges {
   };
 
 
-  stagesList = [
-    {
-      group_name: 'Profile',
-      group_id: '1',
-      stages: [
-        {
-          stage_name: 'Incompleted Profile',
-          stage_id: '1'
-        }
-      ]
-    },
-    {
-      group_name: 'Applicants Shortlist',
-      group_id: '2',
-      stages: [
-        {
-          stage_name: 'Shortlisted for Assessment',
-          stage_id: '2',
-        },
-        {
-          stage_name: 'Awaiting for Shortlist',
-          stage_id: '3',
-        }
-      ]
-    },
-  ];
-  selectedValue = this.stagesList[0].stages[0].stage_id;
+  stagesList = [];
+  stagesListSubscription: Subscription;
+  selectedValue: any;
 
   constructor(
     private adminService: AdminServiceService,
@@ -73,16 +51,20 @@ export class SelectedCandidateComponent implements OnInit, OnChanges {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
     this.GetRowStyle();
+    this.getStagesList();
   }
 
   ngOnChanges() {
-    if (this.nextClick == 1) {
-      let data= {
-        stage: 'first',
-        data: this.gridApi.getSelectedNodes()
-      }
-      this.nextClickEmitter.emit(data);
-    }
+    
+  }
+
+  getStagesList() {
+    this.stagesListSubscription = this.adminService.stagesList().subscribe((res: any)=> {
+      this.stagesList = res && res?.stages_list && res?.stages_list.length > 0 ? res?.stages_list : [];
+      this.selectedValue = this.stagesList[0].stages[0].stage_id;
+    }, (err)=> {
+
+    });
   }
 
   GetRowStyle() {
@@ -290,8 +272,8 @@ export class SelectedCandidateComponent implements OnInit, OnChanges {
     //   });
   }
 
-  fns(step) {
-    console.log('sass', step);
+  ngOnDestroy() {
+    this.stagesListSubscription ? this.stagesListSubscription.unsubscribe() : '';
   }
 
 }

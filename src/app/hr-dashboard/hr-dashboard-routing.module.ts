@@ -42,6 +42,7 @@ import { EmailTriggerMasterComponent } from './pages/email-trigger-master/email-
 import { EmailTriggerFunctionComponent } from './pages/email-trigger-master/email-trigger-function/email-trigger-function.component';
 import { EmailJobsMasterComponent } from './pages/email-jobs-master/email-jobs-master.component';
 import { EmailJobsComponent } from './pages/email-jobs-master/email-jobs/email-jobs.component';
+import { BatchwiseEmailJobsComponent } from './pages/email-jobs-master/batchwise-email-jobs/batchwise-email-jobs.component';
 
 const routes: Routes = [
   {
@@ -386,6 +387,13 @@ const routes: Routes = [
             component: EmailJobsComponent,
             data: {
               breadcrumb: 'Email'
+            }
+          },
+          {
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH}`,
+            component: BatchwiseEmailJobsComponent,
+            data: {
+              breadcrumb: 'Email Batch'
             }
           },
           {

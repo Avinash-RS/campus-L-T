@@ -15,21 +15,35 @@
     <div class="main-wrapper">
         <div class="template-flex">
             <div class="template-section">
-                <div class="card active">
+                <ng-container *ngIf="templateList.length > 0 else noTemplate">
+                <div class="card" *ngFor="let template of templateList; let i = index" [ngClass]="template.template_id == activeTemplate.template_id ? 'active' : ''" (click)="selectedTemplate(template)">
                         <label class="label">Template Name</label>
-                        <div class="name">Shortlisted for Interview</div>
+                        <div class="name">{{template?.template_name}}</div>
                         <div class="checked"><span class="icon-Tick"></span></div>
                 </div>
+            </ng-container>
+            <ng-template #noTemplate>
                 <div class="card">
                     <label class="label">Template Name</label>
-                    <div class="name">Rejected for Interview</div>
+                    <div class="name">--</div>
                     <div class="checked"><span class="icon-Tick"></span></div>
                 </div>
+            </ng-template>
             </div>
             <div class="template-content">
                 <div class="template-heading">
-                    Shortlisted for Interview
+                    {{activeTemplate?.template_name}}
                 </div>
+                <div class="editor_wrapper" [ngClass]="editorConfig.editable ? '' : 'blocked'">
+                    <div class="subject-wrapper">
+                        <span class="subject">Subject: </span>
+                        <input type="text" matInput [formControl]="selectedSubject">
+                    </div>
+                    <div class="editor">
+                        <angular-editor [placeholder]="'Enter text here...'"
+                        [(ngModel)]="htmlContent" id="editor1" [config]="editorConfig"></angular-editor>   
+                    </div>
+                  </div>
             </div>
 
         </div>

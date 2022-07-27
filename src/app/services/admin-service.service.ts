@@ -854,4 +854,11 @@ miscChangeCandidateName(data) {
   return this.http.post(`${this.BASE_URL}/profile/editUserName`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
+stagesList() {
+  return this.http.get(`${this.BASE_URL}/broadcast/configuration`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+getTemplatesBasedonStageId(id) {
+  return this.http.post(`${this.BASE_URL}/broadcast/templates-list`, id, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
 }

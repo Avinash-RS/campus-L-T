@@ -157,7 +157,8 @@ export const CONSTANT = {
       HR_EMAIL_TRIGGER: '/hr/trigger',
       HR_EMAIL_TRIGGER_FUNCTION: '/hr/trigger/email',
       HR_EMAIL_JOBS: '/hr/jobs',
-      HR_EMAIL_JOBS_EMAIL: '/hr/jobs/email'
+      HR_EMAIL_JOBS_EMAIL: '/hr/jobs/email',
+      HR_EMAIL_JOBS_EMAIL_BATCH: '/hr/jobs/batch'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -322,7 +323,8 @@ export const CONSTANT = {
       HR_EMAIL_TRIGGER: 'trigger',
       HR_EMAIL_TRIGGER_FUNCTION: 'email',
       HR_EMAIL_JOBS: 'jobs',
-      HR_EMAIL_JOBS_EMAIL: 'email'
+      HR_EMAIL_JOBS_EMAIL: 'email',
+      HR_EMAIL_JOBS_EMAIL_BATCH: 'batch'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',

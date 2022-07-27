@@ -62,10 +62,13 @@ import { EmailJobsMasterComponent } from './pages/email-jobs-master/email-jobs-m
 import { EmailJobsComponent } from './pages/email-jobs-master/email-jobs/email-jobs.component';
 import { SelectedCandidateComponent } from './pages/email-trigger-master/email-trigger-function/selected-candidate/selected-candidate.component';
 import { ChooseTemplateComponent } from './pages/email-trigger-master/email-trigger-function/choose-template/choose-template.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { BatchwiseEmailJobsComponent } from './pages/email-jobs-master/batchwise-email-jobs/batchwise-email-jobs.component';
 ModuleRegistry.registerModules(AllModules);
 
 @NgModule({
-  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, ShortlistedCandidateListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, EvaluationComponent, UserListComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, SecondLevelShortlistedCandidatesReportComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, NewInterviewpanelAssignmentScreenComponent, NewInterviewpanelAssignedDetailsComponent, NewInterviewpanelResultsUploadComponent, IcAddorListComponent, OfferedCandidatesListComponent, AddICComponent, ListofICComponent, UploadSelectedCandidatesComponent, ListofSelectedCandidatesComponent, UploadSelectedCandidatesErrorReportComponent, BusinesspanelRouteComponent, SscUploadSectionComponent, BulkUploadsComponent, ClickableStatusBarComponent, ScheduleInterviewPopupComponent, AssignedDetailsComponent, ScheduleVideoAssessComponent, EvaluatorAssignForVideoAssessComponent, RouteEvaluatorAssignForVideoAssessComponent, HrSubInterviewResultsComponent, DashboardOverviewComponent, MiscellaneousMasterComponent, MiscCollegesComponent, MiscCandidateNameChangeComponent, EmailTriggerMasterComponent, EmailTriggerFunctionComponent, EmailJobsMasterComponent, EmailJobsComponent, SelectedCandidateComponent, ChooseTemplateComponent],
+  declarations: [HrMasterComponent, HrShortlistingComponent, FirstLevelShortlistComponent, HrMainDashboardComponent, HrUserManagementComponent, ShortlistedCandidateListComponent, HrReportsComponent, ReportsListComponent, FirstLevelShorlistReportsComponent, EvaluationComponent, UserListComponent, HrCandidateStatusComponent, HrPreAssessmentComponent, HrRecruitmentComponent, SecondLevelShortlistComponent, SecondLevelAssessmentListComponent, SecondLevelCandidateListofAssessComponent, SharedSubHeaderSecondLevelShortlistComponent, SecondLevelShortlistedCandidatesReportComponent, HrEvaluationMainScreenComponent, HrSubAssessmentsComponent, HrSubEducationComponent, HrSubEmploymentComponent, SubSharedEvaluationHeaderComponent, NewInterviewpanelAssignmentScreenComponent, NewInterviewpanelAssignedDetailsComponent, NewInterviewpanelResultsUploadComponent, IcAddorListComponent, OfferedCandidatesListComponent, AddICComponent, ListofICComponent, UploadSelectedCandidatesComponent, ListofSelectedCandidatesComponent, UploadSelectedCandidatesErrorReportComponent, BusinesspanelRouteComponent, SscUploadSectionComponent, BulkUploadsComponent, ClickableStatusBarComponent, ScheduleInterviewPopupComponent, AssignedDetailsComponent, ScheduleVideoAssessComponent, EvaluatorAssignForVideoAssessComponent, RouteEvaluatorAssignForVideoAssessComponent, HrSubInterviewResultsComponent, DashboardOverviewComponent, MiscellaneousMasterComponent, MiscCollegesComponent, MiscCandidateNameChangeComponent, EmailTriggerMasterComponent, EmailTriggerFunctionComponent, EmailJobsMasterComponent, EmailJobsComponent, SelectedCandidateComponent, ChooseTemplateComponent, BatchwiseEmailJobsComponent],
 
   imports: [
     CommonModule,
@@ -75,7 +78,9 @@ ModuleRegistry.registerModules(AllModules);
     AgGridModule.withComponents([ClickableStatusBarComponent]),
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    AngularFontAwesomeModule,
+    AngularEditorModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   entryComponents: [ScheduleInterviewPopupComponent]
