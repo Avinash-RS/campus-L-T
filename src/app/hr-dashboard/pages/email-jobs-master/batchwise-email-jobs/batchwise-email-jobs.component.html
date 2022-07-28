@@ -1,1 +1,43 @@
-<p>batchwise-email-jobs works!</p>
+<div class="grid-wrapper">
+    <div class="heading-wrapper">
+        <div class="heading">
+            <div class="totalSummary">
+                <div class="subTitle">Total Email Count</div>
+                <div class="emailCount">10000</div>
+            </div>
+            <div class="totalSummary">
+                <div class="subTitle">Sent</div>
+                <div class="SentCount">3000</div>
+            </div>
+            <div class="totalSummary">
+                <div class="subTitle">Delivered</div>
+                <div class="DeliveredCount">6500</div>
+            </div>
+            <div class="totalSummary">
+                <div class="subTitle">Queued</div>
+                <div class="QueuedCount">300</div>
+            </div>
+            <div class="totalSummary">
+                <div class="subTitle">Bounced</div>
+                <div class="BouncedCount">200</div>
+            </div>
+        </div>
+        <div class="search">
+            <div class="stage-bar">
+            </div>
+            <div class="search-icon">
+                <img src="assets/images/feather-search.svg" alt="" srcset="">
+                <input style="border: none; outline: none;" matInput (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Search….">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="aggrid-wrapper">
+        <ag-grid-angular [rowStyle]="rowStyle" [getRowStyle]="getRowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
+            [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true" (sortChanged)="sortevent($event)"
+            (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [animateRows]="true">
+        </ag-grid-angular>
+    </div>
+
+</div>
