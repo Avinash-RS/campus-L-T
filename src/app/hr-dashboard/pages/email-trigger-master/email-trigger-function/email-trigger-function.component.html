@@ -1,10 +1,11 @@
 <div class="row-container">
 
     <div class="email-stepper">
-        <mat-horizontal-stepper [linear]="true" #stepper>
-            <ng-template matStepperIcon="done">
-                <span *ngIf="stepper.selectedIndex == 0" class="icon-assess"></span>
-            </ng-template>
+        <mat-horizontal-stepper [disableRipple]="true" (selectionChange)="onStepChange()" [linear]="true" #stepper>
+            <!-- <ng-template matStepperIcon="done">
+                <span *ngIf="stepper.selectedIndex == 1" class="icon-assess"></span>
+            </ng-template> -->
+
 
             <ng-template matStepperIcon="edit">
                 <span *ngIf="stepper.selectedIndex == 0" class="icon-assess"></span>
@@ -28,9 +29,9 @@
                 <span class="icon-like"></span>
             </ng-template>
           
-            <mat-step label="Select Candidate" completed="false" state="first" [stepControl]="true">
+            <mat-step label="Select Candidate" state="first" [stepControl]="true">
                 <div class="route">
-                    <app-selected-candidate (nextClickEmitter)="nextClickEmitter($event)" [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-selected-candidate>
+                    <app-selected-candidate (nextClickEmitter)="loadSelectedCandidatesTrue = false" [stepperIndex]="stepper.selectedIndex" [loadSelectedCandidatesTrue]="loadSelectedCandidatesTrue"></app-selected-candidate>
                 </div>
                 <div class="footer">
                     <ng-container *ngTemplateOutlet="first"></ng-container>
@@ -42,11 +43,14 @@
                           </button>
                     
                     </div>
-                </ng-template>      
+                </ng-template>   
+                <!-- <ng-template matStepperIcon="done">
+                    <span class="icon-assess"></span>
+               </ng-template>    -->
             </mat-step>
-            <mat-step label="Choose Email Template" completed="false" state="home" [stepControl]="true">
+            <mat-step label="Choose Email Template" state="home" [stepControl]="true">
                 <div class="route">
-                    <app-choose-template (nextClickEmitter)="nextClickEmitter($event)" [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-choose-template>
+                    <app-choose-template [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-choose-template>
                 </div>
                 <div class="footer">
                     <ng-container *ngTemplateOutlet="second"></ng-container>
@@ -54,15 +58,15 @@
                 <ng-template #second>
                     <div class="second footer-common">
                         <div class="left-wrapper">
-                            <button class="outline-btn" (click)="firstStagenext()" mat-raised-button>
+                            <button class="outline-btn" (click)="backtoStage1()" mat-raised-button>
                                 <em class="icon-Back"></em><span class="ml-2">Select Candidate</span>
                               </button>    
                         </div>
                         <div class="right-wrapper">
                             <button class="outline-btn" (click)="firstStagenext()" mat-raised-button>
                                 <em class="icon-FileEdit"></em><span class="ml-2">Edit Content</span>
-                              </button>    
-                            <button class="normal-btn ml-2" (click)="firstStagenext()" mat-raised-button>
+                              </button>
+                            <button class="normal-btn ml-2" (click)="emailContentConfirmationPopup()" mat-raised-button>
                                 <span class="mr-2">Next</span> <em class="icon-right-next"></em>
                               </button>    
                         </div>                    
@@ -70,17 +74,80 @@
                 </ng-template>
             </mat-step>
             <mat-step label="Preview and Submit" state="form" [stepControl]="true">
-                hi3
+                <div class="route">
+                    <app-email-trigger-preview [stepperIndex]="stepper.selectedIndex" [templateComponent]="ChooseTemplateComponent" [stageWiseDetails]="selectedCandidatesComponent"></app-email-trigger-preview>
+                </div>
+                <div class="footer">
+                    <ng-container *ngTemplateOutlet="third"></ng-container>
+                </div>
+                <ng-template #third>
+                    <div class="second footer-common">
+                        <div class="left-wrapper">
+                            <button class="outline-btn" (click)="backtoStage1()" mat-raised-button>
+                                <em class="icon-Back"></em><span class="ml-2">Edit Email Template</span>
+                              </button>    
+                        </div>
+                        <div class="right-wrapper">
+                            <button class="normal-btn ml-2" (click)="emailTriggerConfirmationPopup()" mat-raised-button>
+                                <span class="mr-2">Submit</span> <em class="icon-right-next"></em>
+                              </button>    
+                        </div>                    
+                    </div>
+                </ng-template>
             </mat-step>
             <mat-step label="Confirm" [stepControl]="true" state="last">
-              <!-- <ng-template matStepLabel>Done</ng-template> -->
-              You are now done.
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-              </div>
+                <div class="route">
+                    <app-email-trigger-confirmation (nextClickEmitter)="gotoStepBasedOnIndex($event)" [stepperIndex]="stepper.selectedIndex" [templateComponent]="ChooseTemplateComponent" [stageWiseDetails]="selectedCandidatesComponent"></app-email-trigger-confirmation>
+                </div>
             </mat-step>
           </mat-horizontal-stepper>
     </div>
 
 </div>
+
+<ng-template #emailTriggerConfirmation>
+    <div class="form-confirmation">
+        <div class="icon-div">
+            <span class="icon-Info icon-Info-1"></span>
+        </div>
+        <div class="bold-content">
+            Are you sure?
+        </div>
+        <div class="content">
+            To send “{{templateName}}” Mail to {{selectedCandidates?.length}} {{selectedCandidates?.length > 1 ? 'Candidates' : 'Candidate'}}
+        </div>
+        <div class="confirmation-button-wrapper">
+            <button (click)="closeBox('2', false)" class="reset-button" mat-raised-button type="button">
+                CANCEL
+            </button>
+            <button (click)="closeBox('2', true)" class="submit-button" mat-raised-button type="button">
+                CONFIRM
+            </button>              
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #emailContentConfirmation>
+    <div class="form-confirmation">
+        <div class="icon-div">
+            <span class="icon-Info icon-Info-1"></span>
+        </div>
+        <div class="bold-content">
+            Are you sure?
+        </div>
+        <div class="content mb-0">
+            The changes you have made is only applicable for this instance.
+        </div>
+        <div class="content mt-1">
+            Your template will not get change.
+        </div>
+        <div class="confirmation-button-wrapper">
+            <button (click)="closeBox('1', false)" class="reset-button" mat-raised-button type="button">
+                CANCEL
+            </button>
+            <button (click)="closeBox('1', true)" class="submit-button" mat-raised-button type="button">
+                CONFIRM
+            </button>              
+        </div>
+    </div>
+</ng-template>

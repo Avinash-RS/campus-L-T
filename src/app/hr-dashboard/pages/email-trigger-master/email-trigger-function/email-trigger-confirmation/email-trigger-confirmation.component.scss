@@ -1,0 +1,78 @@
+@import "../../../../../themes/themes.scss";
+
+.grid-wrapper {
+  position: relative;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  min-height: 100%;
+  .heading-wrapper {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 8px;
+    .heading {
+      color: #262626;
+      font-weight: 500;
+      font-size: 18px;
+    }
+  }
+  .main-wrapper {
+    display: block;
+    position: relative;
+    padding: 0;
+    position: relative;
+    min-height: 100%;
+    .sub-wrapper {
+        position: relative;
+        height: 100%;
+        min-height: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .icon-div {
+            img {
+                width: 85px;
+                margin: 2em 0;
+            }
+        }
+        .bold-content {
+            display: block;
+            color: #222222;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+          }
+          .content {
+            display: block;
+            color: #222222;
+            font-size: 1.22em;
+            font-weight: 400;
+            margin: .5em 0;
+        }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2em 0 3.5em 0;
+            .outline-btn {
+                border: 1px solid #004684;
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                color: #004683;
+                font-size: 14px;
+                height: 32px;
+            }    
+            .normal-btn {
+                background-color: #004684;
+                color: white;
+                font-size: 14px;
+                height: 32px;
+            }    
+        }
+    }
+
+  }
+}

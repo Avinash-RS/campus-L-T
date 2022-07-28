@@ -1,0 +1,53 @@
+<div *ngIf="stepperIndex == 2" class="grid-wrapper">
+    <div class="heading-wrapper">
+        <div class="heading">
+            Preview and Submit
+        </div>
+        <div class="search">
+            <div class="stage-bar">
+                <label>Stage: </label>
+                <nz-select class="select-group" [(ngModel)]="selectedValue" nzDisabled nzPlaceHolder="Choose" nzShowSearch>
+                      <nz-option [nzValue]="selectedValue" [nzLabel]="selectedValue"></nz-option>
+                  </nz-select>
+            </div>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Candidate Details
+                </mat-panel-title>
+                <mat-panel-description>
+                    [ Total No.of Candidates - {{rowData ? rowData.length : 0}} ]
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="ag-grid">
+                <ag-grid-angular style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
+                [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true"
+                (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [animateRows]="true">
+                </ag-grid-angular>    
+            </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <div class="template-wrapper">
+              <div class="template-heading">
+                Email Template - {{activeTemplate?.template_name}}
+              </div>
+              <div class="editor_wrapper blocked">
+                <div class="subject-wrapper">
+                    <span class="subject">Subject: </span>
+                    <input type="text" matInput [value]="selectedSubject" readonly>
+                </div>
+                <div class="editor">
+                    <angular-editor [placeholder]="'Enter text here...'"
+                    [(ngModel)]="htmlContent" id="editorpreview" [config]="editorConfig"></angular-editor>   
+                </div>
+              </div>
+
+          </div>
+    </div>
+</div>

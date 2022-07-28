@@ -18,7 +18,6 @@ import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 export class ChooseTemplateComponent implements OnInit, OnChanges, OnDestroy {
   @Input() stageWiseDetails: any;
   @Input() stepperIndex: any;
-  @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   editorConfig: AngularEditorConfig = {
       editable: false,

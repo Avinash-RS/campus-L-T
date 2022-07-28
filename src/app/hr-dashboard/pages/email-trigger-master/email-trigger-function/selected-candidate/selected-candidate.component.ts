@@ -10,8 +10,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./selected-candidate.component.scss']
 })
 export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() stageWiseDetails: any;
   @Input() stepperIndex: any;
+  @Input() loadSelectedCandidatesTrue: any;
   @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
@@ -24,7 +24,6 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
   filterValue: string;
   quickSearchValue = '';
   rowStyle = { background: '#fcfcfc' };
-  getRowStyle: any;
   public isRowSelectable: IsRowSelectable;
   userList: any;
   popUpdata: any;
@@ -50,36 +49,28 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
   ngOnInit() {
     this.defaultColDef = this.appConfig.agGridWithAllFunc();
     this.tabledef();
-    this.GetRowStyle();
     this.getStagesList();
   }
 
   ngOnChanges() {
-    
+    if (this.loadSelectedCandidatesTrue) {
+      this.getStagesList();
+    }
   }
 
   getStagesList() {
     this.stagesListSubscription = this.adminService.stagesList().subscribe((res: any)=> {
       this.stagesList = res && res?.stages_list && res?.stages_list.length > 0 ? res?.stages_list : [];
       this.selectedValue = this.stagesList[0].stages[0].stage_id;
+      this.getUsersList();
     }, (err)=> {
 
     });
   }
 
-  GetRowStyle() {
-    this.getRowStyle = (params) => {
-      let rowsArray = params.node.rowModel.rowsToDisplay;
-      let rowI = params.node.rowIndex;
-      if (rowsArray[rowI].data.decline_status == 'Yes') {
-          return {opacity: '0.5'};
-      }
-  };
-  }
 
   onGridReady(params: any) {
     this.gridApi = params.api;
-    this.getUsersList();
   }
 
   sortevent(e) {
@@ -235,6 +226,7 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
 
     // To get all users
     getUsersList() {
+      this.nextClickEmitter.emit();
       this.rowData = [
         {
           is_checked: false,
@@ -246,6 +238,18 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
           discipline: 'Computer Science',
           mailed: 'yes',
           date_time: '24 May 2022 12:00 PM',
+          log: 'View Log'
+        },
+        {
+          is_checked: false,
+          candidate_id: '13134',
+          candidate_name: 'karthi',
+          email: 'karthi@mailinator.com',
+          mobile_number: '9865257783',
+          institute: 'SRM Institute of Technology',
+          discipline: 'Computer Science',
+          mailed: 'no',
+          date_time: '24 May 2022 11:00 PM',
           log: 'View Log'
         }
       ];
