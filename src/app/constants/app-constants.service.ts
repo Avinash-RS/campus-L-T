@@ -153,7 +153,12 @@ export const CONSTANT = {
       OfferedCandidatesLIST: '/hr/ic/candidates',
       HR_MISCELLANEOUS: '/hr/miscellaneous',
       HR_MISCELLANEOUS_COLLEGES: '/hr/miscellaneous/colleges',
-      HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE: '/hr/miscellaneous/name-change'
+      HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE: '/hr/miscellaneous/name-change',
+      HR_EMAIL_TRIGGER: '/hr/trigger',
+      HR_EMAIL_TRIGGER_FUNCTION: '/hr/trigger/email',
+      HR_EMAIL_JOBS: '/hr/jobs',
+      HR_EMAIL_JOBS_EMAIL: '/hr/jobs/email',
+      HR_EMAIL_JOBS_EMAIL_BATCH: '/hr/jobs/batch'
     },
     TPO_DASHBOARD: {
       HOME: '/tpo',
@@ -314,7 +319,12 @@ export const CONSTANT = {
       OfferedCandidatesLIST: 'candidates',
       HR_MISCELLANEOUS: 'miscellaneous',
       HR_MISCELLANEOUS_COLLEGES: 'colleges',
-      HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE: 'name-change'
+      HR_MISCELLANEOUS_CANDIDATE_NAME_CHANGE: 'name-change',
+      HR_EMAIL_TRIGGER: 'trigger',
+      HR_EMAIL_TRIGGER_FUNCTION: 'email',
+      HR_EMAIL_JOBS: 'jobs',
+      HR_EMAIL_JOBS_EMAIL: 'email',
+      HR_EMAIL_JOBS_EMAIL_BATCH: 'batch'
     },
     TPO_DASHBOARD: {
       HOME: 'tpo',

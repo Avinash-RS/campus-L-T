@@ -1,0 +1,29 @@
+<div *ngIf="stepperIndex == 3" class="grid-wrapper">
+  <div class="heading-wrapper">
+    <div class="heading">Confirmation</div>
+  </div>
+  <div class="main-wrapper">
+    <div class="sub-wrapper">
+        <div class="icon-div">
+          <img
+            src="assets/Yet_to_Insert_in_icomoon/Envelope.svg"
+            alt=""
+            srcset=""
+          />
+        </div>
+        <div class="content">
+            Thank You! Email has been successfully queued for delivery
+        </div>
+        <div class="bold-content"> Batch Job Id - {{joblist_id?.batch_job_id}}</div>
+        <div class="button-wrapper">
+            <button class="outline-btn mr-3" (click)="backtoHome()" mat-raised-button>
+                Back to home
+            </button>    
+            <button class="normal-btn" (click)="jobstatus(joblist_id)" mat-raised-button>
+                View Job Status
+            </button>
+
+        </div>
+      </div>
+  </div>
+</div>

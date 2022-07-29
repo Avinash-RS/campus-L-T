@@ -1,0 +1,104 @@
+@import '../../../../themes/themes.scss';
+.grid-wrapper {
+    position: relative;
+    width: 100%;
+    // border: 1px solid #D9D9D9;
+    .heading-wrapper {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-flow: row-reverse;
+        gap: 1em;
+        padding: 8px;
+        .heading {
+            display: flex;
+            gap: 3em;
+            align-items: center;
+            justify-content: flex-start;
+            .totalSummary:nth-of-type(5) {
+                &::after {
+                    display: none;
+                }
+            }
+            .totalSummary {
+                position: relative;
+                &::after {
+                    position: absolute;
+                    content: '';
+                    padding: 0;
+                    background: #707070;
+                    height: 100%;
+                    width: 1px;
+                    top: 0;
+                    right: -20px;
+                }
+                .subTitle {
+                    font-size: 14px;
+                    color: #262626;
+                }
+                .emailCount {
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+            }
+        }
+        .search {
+            display: flex;
+            gap: 0px;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            .batch-id {
+                position: relative;
+                color: #262626;
+                font-weight: 500;
+                font-size: 20px;
+            }
+            .batch-name {
+                position: relative;
+                font-size: 15px;
+                font-weight: 400;
+                color: #262626;
+            }
+        }
+    }
+    .aggrid-wrapper {
+        width: 100%;
+        padding: 0 8px;
+    }
+}
+
+:host ::ng-deep .select-group {
+    .ant-select-selection {
+        height: 31px !important;
+    }
+}
+
+::ng-deep .ant-select-dropdown-menu-item-group-list {
+    .ant-select-dropdown-menu-item {
+        color: #373331;
+        font-size: 14px;
+    }
+    .ant-select-dropdown-menu-item:hover {
+        background-color: #004684 !important;
+        color: #ffffff;
+    }
+}
+
+::ng-deep .ant-select-dropdown-menu-item-group-title {
+    font-size: 13px;
+    color: #848484;
+    font-weight: 500;
+}
+
+::ng-deep .profileAvatar {
+    width: 35px;
+    height: 35px;
+    img {
+        width: 35px;
+        height: 35px;
+        margin-top: 2px;
+        border-radius: 50%;
+    }
+}

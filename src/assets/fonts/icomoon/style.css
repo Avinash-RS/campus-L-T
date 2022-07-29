@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?xqxpf0');
-  src:  url('fonts/icomoon.eot?xqxpf0#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?xqxpf0') format('truetype'),
-    url('fonts/icomoon.woff?xqxpf0') format('woff'),
-    url('fonts/icomoon.svg?xqxpf0#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?tcijsf');
+  src:  url('fonts/icomoon.eot?tcijsf#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?tcijsf') format('truetype'),
+    url('fonts/icomoon.woff?tcijsf') format('woff'),
+    url('fonts/icomoon.svg?tcijsf#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-assess:before {
+  content: "\e963";
+}
+.icon-like:before {
+  content: "\e9a8";
+}
+.icon-mail-assess:before {
+  content: "\e9a9";
+}
+.icon-mail-find:before {
+  content: "\e9aa";
+}
+.icon-mail-opened:before {
+  content: "\e9ab";
+}
+.icon-mail-outline:before {
+  content: "\e9ac";
+}
 .icon-Discipline_icon:before {
   content: "\e960";
 }

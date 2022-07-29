@@ -1508,3 +1508,12 @@ nz-select.ng-invalid.ng-touched {
 //   top: 50% !important;
 //   right: 10px !important;
 // }
+// Below code is writter for HR Email Trigger Wizard Static footer left alignment
+.sidebarOpened1 {
+  .footer-emailTrigger {
+    left: -252px !important;
+    .footer-common {
+      padding-left: 252px !important;
+    }
+  }
+}

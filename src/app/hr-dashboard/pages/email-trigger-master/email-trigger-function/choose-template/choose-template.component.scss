@@ -1,0 +1,232 @@
+@import '../../../../../themes/themes.scss';
+
+.grid-wrapper {
+    position: relative;
+    width: 100%;
+    border: 1px solid #D9D9D9;
+    .heading-wrapper {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+        padding: 8px;
+        &::after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #D9D9D9;                
+        }
+        .heading {
+            color: #262626;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        .search {
+            display: flex;
+            gap: 1em;
+            align-items: center;
+            .stage-bar {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                label {
+                    margin: 0;
+                    padding: 0;
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+                .select-group {
+                    width: 200px;
+                }
+            }
+        }
+
+    }
+    .main-wrapper {
+        display: block;
+        position: relative;
+        padding: 0;
+        .template-flex {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 2em;
+            .template-section {
+                flex-basis: 25%;
+                display: flex;
+                position: relative;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 0 10px 10px;
+                .card {
+                    display: flex;
+                    position: relative;
+                    flex-direction: column;
+                    width: 100%;
+                    background: #FFFFFF 0% 0% no-repeat padding-box;
+                    box-shadow: 0px 3px 6px #00000029;
+                    gap: 4px;
+                    padding: 12px;
+                    cursor: pointer;
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        height: 100%;
+                        background-color: #004683;
+                        width: 3px;
+                        left: 0;
+                        top: 0;
+                        border-radius: 5px;
+                    }
+                    label {
+                        margin: 0;
+                        padding: 0;
+                        font-size: 12px;
+                        color: #262626;
+                    }
+                    .name {
+                        color: #262626;
+                        font-size: 15px;
+                        font-weight: 500;
+                        text-overflow: ellipsis;
+                    }
+                    .checked{
+                        position: absolute;
+                        right: 6px;
+                        top: 9px;
+                        background: #DBDBDB 0% 0% no-repeat padding-box;
+                        transform: translate(-50%, 50%);
+                        border-radius: 50%;
+                        padding: 6px;
+                        width: 25px;
+                        height: 25px;
+                        display: flex;
+                        span {
+                            color: white;
+                            font-size: 13px;
+                        }
+                    }
+                }
+                .card.active {
+                    &::before {
+                        background-color: #49AE31;
+                    }
+                    .checked {
+                        background-color: #49AE31;
+                    }
+                }
+            }
+            .template-content {
+                display: block;
+                flex-basis: 75%;
+                padding: 10px;
+                position: relative;
+                &::before {
+                    position: absolute;
+                    content: "";
+                    height: 100%;
+                    width: 1px;
+                    top: 0;
+                    left: -8px;
+                    background-color: #D9D9D9;
+                }
+
+                .template-heading {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .heading {
+                        display: block;
+                        position: relative;
+                        color: #262626;
+                        font-size: 18px;
+                        font-weight: 500;
+                        margin-bottom: 8px;
+                    }
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        gap: 2px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        padding-right: 2px;
+                        span:nth-of-type(1) {
+                            color: #004683;
+                            font-weight: 600;
+                        }
+                        span:nth-of-type(2) {
+                            color: #004683;
+                            font-size: 14px;
+                        }
+                    }
+                }
+                .editor_wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0;
+                    .subject-wrapper {
+                        border: 1px solid #848484;
+                        width: 100%;
+                        padding: 12px;
+                        border-bottom: none;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        .subject {
+                            font-size: 15px;
+                            margin-right: 8px;
+                            font-weight: 500;
+                            color: #262626;
+                        }
+                        input {
+                            height: 100%;
+                            width: 100%;
+                            outline: none;
+                            border: none;
+                            font-size: 15px;
+                            color: #373331;
+                            font-weight: 500;
+                            background: transparent;
+                        }
+                    }
+                    .editor {
+                        border: 1px solid #848484;
+                    }
+                }
+                .blocked {
+                    background: #F2F2F2 0% 0% no-repeat padding-box;
+                }
+            }
+        }
+    }
+}
+
+:host ::ng-deep.ant-select-disabled .ant-select-selection {
+    cursor: not-allowed;
+    background: #D9D9D9 0% 0% no-repeat padding-box;
+    border: 1px solid #BEBEBE;
+    color: #6B6B6B;
+}
+
+:host ::ng-deep #backgroundColorPicker-editor1 {
+    height: 28px;
+}
+:host ::ng-deep #foregroundColorPicker-editor1 {
+    height: 28px;
+}
+:host ::ng-deep .angular-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+:host ::ng-deep .angular-editor-textarea {
+    border: none !important;
+    outline: none;
+}
+:host ::ng-deep .select-font {
+    display: none !important;
+}
