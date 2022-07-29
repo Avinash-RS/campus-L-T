@@ -858,7 +858,29 @@ stagesList() {
   return this.http.get(`${this.BASE_URL}/broadcast/configuration`, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
 
+getCandidatesBasedonStageId(data) {
+  return this.http.post(`${this.BASE_URL}/broadcast/candidate-list`, data, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
 getTemplatesBasedonStageId(id) {
   return this.http.post(`${this.BASE_URL}/broadcast/templates-list`, id, { headers: this.getAfterCustomHeaders(), withCredentials: true });
 }
+
+getCommunicationLogsbasedOnCandidateId(id) {
+  return this.http.post(`${this.BASE_URL}/broadcast/communication-logs`, id, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+triggerEmailtoSelectedCandidates(data) {
+  return this.http.post(`${this.BASE_URL}/broadcast/save-email-job`, data, { headers: this.getAfterCustomHeaders(), withCredentials: true });
+}
+
+emailJobList() {
+  return this.http.get(`${this.BASE_URL}/broadcast/email-job-list`, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+emailJobListbyId(id) {
+  return this.http.post(`${this.BASE_URL}/broadcast/email-job-candidate-list`, id, { headers: this.getAfterCustomHeaders(), reportProgress: true, withCredentials: true });
+}
+
+
 }

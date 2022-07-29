@@ -50,7 +50,7 @@
             </mat-step>
             <mat-step label="Choose Email Template" state="home" [stepControl]="true">
                 <div class="route">
-                    <app-choose-template [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-choose-template>
+                    <app-choose-template (nextClickEmitter)="editEmailContentOption = false; cancelEditedContent = false" [cancelEditedContent]="cancelEditedContent" [editEmailContentOption]="editEmailContentOption" [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-choose-template>
                 </div>
                 <div class="footer">
                     <ng-container *ngTemplateOutlet="second"></ng-container>
@@ -58,17 +58,32 @@
                 <ng-template #second>
                     <div class="second footer-common">
                         <div class="left-wrapper">
-                            <button class="outline-btn" (click)="backtoStage1()" mat-raised-button>
-                                <em class="icon-Back"></em><span class="ml-2">Select Candidate</span>
-                              </button>    
+                            <ng-container *ngIf="editEmailContentOption else selectCandidatebtn">
+                                <div>&nbsp;</div>
+                            </ng-container>
+                            <ng-template #selectCandidatebtn>
+                                <button class="outline-btn" (click)="backtoStage1()" mat-raised-button>
+                                    <em class="icon-Back"></em><span class="ml-2">Select Candidate</span>
+                                  </button>        
+                            </ng-template>
                         </div>
                         <div class="right-wrapper">
-                            <button class="outline-btn" (click)="firstStagenext()" mat-raised-button>
-                                <em class="icon-FileEdit"></em><span class="ml-2">Edit Content</span>
-                              </button>
+                            <ng-container *ngIf="editEmailContentOption else showNonEditedOption">
+                            <div (click)="editEmailContentOption = false;cancelEditedContent = true;" class="cancel-text-btn">
+                                Cancel
+                            </div>
                             <button class="normal-btn ml-2" (click)="emailContentConfirmationPopup()" mat-raised-button>
-                                <span class="mr-2">Next</span> <em class="icon-right-next"></em>
-                              </button>    
+                                <em class="icon-Tick"></em> <span class="ml-2">Save Changes</span>
+                              </button>
+                            </ng-container>
+                            <ng-template #showNonEditedOption>
+                                <button class="outline-btn" (click)="editContent()" mat-raised-button>
+                                    <em class="icon-FileEdit"></em><span class="ml-2">Edit Content</span>
+                                  </button>
+                                <button class="normal-btn ml-2" (click)="nextStage()" mat-raised-button>
+                                    <span class="mr-2">Next</span> <em class="icon-right-next"></em>
+                                  </button>    
+                            </ng-template>
                         </div>                    
                     </div>
                 </ng-template>
@@ -97,7 +112,7 @@
             </mat-step>
             <mat-step label="Confirm" [stepControl]="true" state="last">
                 <div class="route">
-                    <app-email-trigger-confirmation (nextClickEmitter)="gotoStepBasedOnIndex($event)" [stepperIndex]="stepper.selectedIndex" [templateComponent]="ChooseTemplateComponent" [stageWiseDetails]="selectedCandidatesComponent"></app-email-trigger-confirmation>
+                    <app-email-trigger-confirmation (nextClickEmitter)="gotoStepBasedOnIndex($event)" [joblist_id]="joblist_id" [stepperIndex]="stepper.selectedIndex" [templateComponent]="ChooseTemplateComponent" [stageWiseDetails]="selectedCandidatesComponent"></app-email-trigger-confirmation>
                 </div>
             </mat-step>
           </mat-horizontal-stepper>

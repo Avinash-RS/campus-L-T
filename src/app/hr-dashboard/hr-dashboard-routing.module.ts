@@ -379,7 +379,7 @@ const routes: Routes = [
         path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS}`,
         component: EmailJobsMasterComponent,
         data: {
-          breadcrumb: 'Jobs'
+          breadcrumb: 'Email Jobs'
         },
         children: [
           {
@@ -390,7 +390,7 @@ const routes: Routes = [
             }
           },
           {
-            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH}`,
+            path: `${CONSTANT.ROUTES.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH}/:id`,
             component: BatchwiseEmailJobsComponent,
             data: {
               breadcrumb: 'Email Batch'

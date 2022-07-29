@@ -1,22 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import { IsRowSelectable } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { DatePipe } from '@angular/common';
+import { finalize } from 'rxjs/operators';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-email-jobs',
   templateUrl: './email-jobs.component.html',
-  styleUrls: ['./email-jobs.component.scss']
+  styleUrls: ['./email-jobs.component.scss'],
+  providers: [DatePipe],
 })
-export class EmailJobsComponent implements OnInit {
-  @Input() stageWiseDetails: any;
-  @Input() stepperIndex: any;
-  @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
+export class EmailJobsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('email', {static: false}) emails: TemplateRef<any>;
- emaildialogRef:any;
+  sideBar = {
+    toolPanels: [ 
+    {id: 'filters',
+    labelDefault: 'Filters',
+    labelKey: 'filters',
+    iconKey: 'filter',
+    toolPanel: 'agFiltersToolPanel',
+    }
+    ], defaultToolPanel: ''
+  };
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
   gridApi: any;
@@ -24,52 +33,53 @@ export class EmailJobsComponent implements OnInit {
   defaultColDef: any;
   tooltipShowDelay = 0;
   rowData: any;
-  searchBox = false;
-  filterValue: string;
   quickSearchValue = '';
   rowStyle = { background: '#fcfcfc' };
-  getRowStyle: any;
-  public isRowSelectable: IsRowSelectable;
   userList: any;
-  popUpdata: any;
-  stagesList = [];
-  stagesListSubscription: Subscription;
-  selectedValue: any;
-
+  emailJobListSubscription: Subscription;
+  refreshSubscription: Subscription;
+  selectedTemplate: any;
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private datePipe: DatePipe,
+    private sharedService: SharedServiceService
   ) { }
 
   ngOnInit() {
-    this.defaultColDef = this.appConfig.agGridWithAllFunc();
+    this.defaultColDef = this.appConfig.agGridWithAllFuncWithSideBar();
     this.tabledef();
-    this.GetRowStyle();
-    this.getStagesList();
+    this.refreshOndriveChangeRXJS();
   }
 
-  ngOnChanges() {
-    
+  ngOnChanges() {    
   }
 
-  getStagesList() {
-    this.stagesListSubscription = this.adminService.stagesList().subscribe((res: any)=> {
-      this.stagesList = res && res?.stages_list && res?.stages_list.length > 0 ? res?.stages_list : [];
-      this.selectedValue = this.stagesList[0].stages[0].stage_id;
-    }, (err)=> {
-
-    });
+  ngAfterViewInit() {
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 
-  GetRowStyle() {
-    this.getRowStyle = (params) => {
-      let rowsArray = params.node.rowModel.rowsToDisplay;
-      let rowI = params.node.rowIndex;
-      if (rowsArray[rowI].data.decline_status == 'Yes') {
-          return {opacity: '0.5'};
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL)) {
+        this.quickSearchValue = '';
+        this.userList = null;
+        this.rowData = null;
+        setTimeout(() => {
+          this.getUsersList();
+        }, 100);
       }
-  };
+    });
   }
 
   onGridReady(params: any) {
@@ -86,11 +96,16 @@ export class EmailJobsComponent implements OnInit {
 
   onCellClicked(event) {
     if(event && event.colDef && event.colDef.headerName == 'Details'){
-      this.appConfig.routeNavigation(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH);
+      this.appConfig.routeNavigationWithQueryParamAndParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH, event.data.joblist_id, {name: event.data.template_name});
       }
       if(event && event.colDef && event.colDef.headerName == 'View Template'){
-        this.openEmailTemplate()
+        this.selectedTemplate = {
+          template_name: event.data.template_name,
+          subject: event.data.email_content.subject_line,
+          content: event.data.email_content.body_content
         }
+        this.openEmailTemplate()
+      }
   }
 
   getModel(e) {
@@ -115,87 +130,87 @@ export class EmailJobsComponent implements OnInit {
 
     this.columnDefs = [
       {
-        headerName: 'Batch Job ID', field: 'candidate_id',
+        headerName: 'Batch Job ID', field: 'batch_job_id',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'Batch Job ID',
+        tooltipField: 'batch_job_id',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Sent Date and Time', field: 'candidate_name',
-        filter: 'agDateColumnFilter',
-        minWidth: 140,
+        headerName: 'Sent Date and Time', field: 'triggered_date',
+        filter: 'agTextColumnFilter',
+        minWidth: 190,
         sortable: true,
-        tooltipField: 'Sent Date and Time',
+        tooltipField: 'triggered_date',
         getQuickFilterText: (params) => {
           return params.value;
         },
-
+        cellRenderer: (params) => {
+          return `<span>${params['data']['triggered_date'] ? this.datePipe.transform(params['data']['triggered_date'], 'dd MMM yyyy') : '-'}</span> <span>${params['data']['triggered_date'] ? this.datePipe.transform(params['data']['triggered_date'], 'HH:mm a') : ''}</span>`;
+        }
       },
       {
-        headerName: 'Triggered By', field: 'email',
+        headerName: 'Triggered By', field: 'triggered_by',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'Triggered By',
+        tooltipField: 'triggered_by',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Email Template', field: 'mobile_number',
+        headerName: 'Email Template', field: 'template_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'Email Template',
+        tooltipField: 'template_name',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Count', field: 'institute',
+        headerName: 'Count', field: 'count',
         filter: 'agNumberColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'Count',
+        tooltipField: 'count',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Status', field: 'discipline',
-        filter: 'agTextColumnFilter',
+        headerName: 'Status', field: 'job_status',
+        filter: 'agSetColumnFilter',
         minWidth: 120,
         sortable: true,
-        tooltipField: 'Status',
+        tooltipField: 'job_status',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Details', field: 'mailed',
-        filter: 'agTextColumnFilter',
+        headerName: 'Details', field: 'joblist_id',
+        filter: false,
         minWidth: 85,
         sortable: true,
-        tooltipField: 'Details',
         getQuickFilterText: (params) => {
           return params.value;
         },
         cellStyle: { color: '#004684' },
         cellRenderer: (params) => {
-          return `<span style="color: #004684; cursor: pointer; text-decoration: underline;">View Details </span>`;
+          return `<span style="color: #004684; cursor: pointer; text-decoration: underline;">View Details</span>`;
         }
       },
       {
-        headerName: 'View Template', field: 'date_time',
-        filter: 'agTextColumnFilter',
+        headerName: 'View Template', field: 'joblist_id',
+        filter: false,
         minWidth: 150,
         maxWidth: 150,
         sortable: true,
-        tooltipField: 'View Template',
         getQuickFilterText: (params) => {
           return params.value;
         },
@@ -210,33 +225,26 @@ export class EmailJobsComponent implements OnInit {
 
     // To get all users
     getUsersList() {
-      this.rowData = [
-        {
-          is_checked: false,
-          candidate_id: '13133',
-          candidate_name: 'Avinash',
-          email: 'Avinash@mailinator.com',
-          mobile_number: '9865257782',
-          institute: 'Seshasayee Institute of Technology',
-          discipline: 'Computer Science',
-          mailed: 'yes',
-          date_time: '24 May 2022 12:00 PM',
-          log: 'View Log'
-        }
-      ];
-
+      this.gridApi.showLoadingOverlay();
+      this.emailJobListSubscription = this.adminService.emailJobList().subscribe((res: any)=> {
+          this.userList = res && res.length > 0 ? res : [];
+          this.rowData = this.userList;
+      }, (err)=> {
+        this.rowData = [];
+        this.userList = [];
+      })
   }
 
   openEmailTemplate() {
-    this.emaildialogRef = this.matDialog.open(this.emails, {
+    this.matDialog.open(this.emails, {
       width: '803px',
-      height: '592px',
-      panelClass: 'loginpopover',
+      panelClass: 'viewtemplatepopover',
     });
   }
 
   ngOnDestroy() {
-    this.stagesListSubscription ? this.stagesListSubscription.unsubscribe() : '';
+    this.emailJobListSubscription ? this.emailJobListSubscription.unsubscribe() : '';
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
   }
 
 }

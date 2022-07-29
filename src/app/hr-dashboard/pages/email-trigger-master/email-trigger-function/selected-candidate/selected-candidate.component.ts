@@ -1,18 +1,33 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { IsRowSelectable } from 'ag-grid-community';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-selected-candidate',
   templateUrl: './selected-candidate.component.html',
-  styleUrls: ['./selected-candidate.component.scss']
+  styleUrls: ['./selected-candidate.component.scss'],
+  providers: [DatePipe]
 })
 export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy {
   @Input() stepperIndex: any;
   @Input() loadSelectedCandidatesTrue: any;
   @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('viewLog', { static: false }) viewLog: TemplateRef<any>;
+  sideBar = {
+    toolPanels: [ 
+    {id: 'filters',
+    labelDefault: 'Filters',
+    labelKey: 'filters',
+    iconKey: 'filter',
+    toolPanel: 'agFiltersToolPanel',
+    }
+    ], defaultToolPanel: ''
+  };
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
   gridApi: any;
@@ -29,7 +44,6 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
   popUpdata: any;
   public statusBar = {
     statusPanels: [
-    // { statusPanel: 'agTotalRowCountComponent', align: 'left'},
     { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left'},
     { statusPanel: 'agSelectedRowCountComponent', align: 'right' },
     { statusPanel: 'agAggregationComponent', align: 'right' },
@@ -40,14 +54,20 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
   stagesList = [];
   stagesListSubscription: Subscription;
   selectedValue: any;
+  SelectedCandidatesListSubscription: Subscription;
+  selectedCandidatePopUp: any;
+  communicationLogs: any;
+  CommunicationLogsListSubscription: Subscription;
 
   constructor(
     private adminService: AdminServiceService,
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
-    this.defaultColDef = this.appConfig.agGridWithAllFunc();
+    this.defaultColDef = this.appConfig.agGridWithAllFuncWithSideBar();
     this.tabledef();
     this.getStagesList();
   }
@@ -62,7 +82,7 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
     this.stagesListSubscription = this.adminService.stagesList().subscribe((res: any)=> {
       this.stagesList = res && res?.stages_list && res?.stages_list.length > 0 ? res?.stages_list : [];
       this.selectedValue = this.stagesList[0].stages[0].stage_id;
-      this.getUsersList();
+      this.getUsersList(this.selectedValue);
     }, (err)=> {
 
     });
@@ -81,7 +101,43 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   onCellClicked(event) {
+    if(event && event.colDef && event.colDef.headerName == 'Communication Log'){
+      const apiData = {
+        candidate_user_id: event['data']['user_id']
+      }
+      this.selectedCandidatePopUp = event['data'];
+      this.viewLogPopup(apiData);
+    }
+    if (event.colDef.field === 'user_name') {
+      const data = {
+        candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+        candidateName: event['data'] && event['data']['user_name'] ? event['data']['user_name'] : '',
+      };
+      this.openDialog5(CommonKycProfileViewComponent, data);
+    }
+
   }
+    // Open dailog
+    openDialog5(component, data) {
+      let dialogDetails: any;
+
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.dialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+  }
+  
 
   getModel(e) {
     this.gridApi.deselectAll();
@@ -102,7 +158,6 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
     }
   }
   tabledef() {
-
     this.columnDefs = [
       {
         headerCheckboxSelection: true,
@@ -126,17 +181,17 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
         }
       },
       {
-        headerName: 'Name', field: 'candidate_name',
+        headerName: 'Name', field: 'user_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'candidate_name',
+        tooltipField: 'user_name',
         getQuickFilterText: (params) => {
           return params.value;
         },
         cellStyle: { color: '#1b4e9b' },
         cellRenderer: (params) => {
-          return `<span style="color: #1b4e9b; cursor: pointer">${params['data']['candidate_name']} </span>`;
+          return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image"]}"></span> <span class="ml-1">${params["data"]["user_name"]}</span> </span>`;
         }
       },
       {
@@ -150,23 +205,29 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
         }
       },
       {
-        headerName: 'Phone', field: 'mobile_number',
+        headerName: 'Phone', field: 'phone',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'mobile_number',
+        tooltipField: 'phone',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return params['data']['phone'] ? `${params['data']['phone']}` : '-';
         }
       },
       {
-        headerName: 'College', field: 'institute',
+        headerName: 'College', field: 'college',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'institute',
+        tooltipField: 'college',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return params['data']['college'] ? `${params['data']['college']}` : '-';
         }
       },
       {
@@ -177,30 +238,36 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
         tooltipField: 'discipline',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return params['data']['discipline'] ? `${params['data']['discipline']}` : '-';
         }
       },
       {
-        headerName: 'Email Sent', field: 'mailed',
+        headerName: 'Email Sent', field: 'email_sent',
         filter: 'agSetColumnFilter',
         filterParams: {
           applyMiniFilterWhileTyping: true
         },
         minWidth: 95,
         sortable: true,
-        tooltipField: 'mailed',
+        tooltipField: 'email_sent',
         getQuickFilterText: (params) => {
           return params.value;
         }
       },
       {
-        headerName: 'Date & Time', field: 'date_time',
+        headerName: 'Date & Time', field: 'triggered_date',
         filter: 'agTextColumnFilter',
-        minWidth: 120,
-        maxWidth: 120,
+        minWidth: 190,
+        maxWidth: 190,
         sortable: true,
-        tooltipField: 'date_time',
+        tooltipField: 'triggered_date',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return `<span>${params['data']['triggered_date'] ? this.datePipe.transform(params['data']['triggered_date'], 'dd MMM yyyy') : '-'}</span> <span>${params['data']['triggered_date'] ? this.datePipe.transform(params['data']['triggered_date'], 'HH:mm a') : ''}</span>`;
         }
       },
       {
@@ -223,61 +290,65 @@ export class SelectedCandidateComponent implements OnInit, OnChanges, OnDestroy 
     };
   }
 
-
+  stageListChange(stageId: any) {
+    setTimeout(() => {
+      this.getUsersList(this.selectedValue);
+    }, 100);
+  }
     // To get all users
-    getUsersList() {
-      this.nextClickEmitter.emit();
-      this.rowData = [
-        {
-          is_checked: false,
-          candidate_id: '13133',
-          candidate_name: 'Avinash',
-          email: 'Avinash@mailinator.com',
-          mobile_number: '9865257782',
-          institute: 'Seshasayee Institute of Technology',
-          discipline: 'Computer Science',
-          mailed: 'yes',
-          date_time: '24 May 2022 12:00 PM',
-          log: 'View Log'
-        },
-        {
-          is_checked: false,
-          candidate_id: '13134',
-          candidate_name: 'karthi',
-          email: 'karthi@mailinator.com',
-          mobile_number: '9865257783',
-          institute: 'SRM Institute of Technology',
-          discipline: 'Computer Science',
-          mailed: 'no',
-          date_time: '24 May 2022 11:00 PM',
-          log: 'View Log'
-        }
-      ];
-    //   const role = this.appConfig.getLocalData('roles');
-    //   const apiData = {
-    //     company: role == 'ic' ? this.appConfig.getLocalData('userId') : ''
-    //   }
-    //  this.gridApi.showLoadingOverlay();
-    //  this.SelectedCandidatesListSubscription = this.adminService.SelectedCandidatesList(apiData).subscribe((datas: any) => {
-    //     this.userList = datas ? datas : [];
-    //     let count = 0;
-    //     this.userList.forEach(element => {
-    //       count = count + 1;
-    //       element['verified'] = element['verified'] == '1' ? 'Verified' : 'Verify';
-    //       element['is_editable'] = element['mailed'] == 'Not Sent' ? '-' : (element['mailed'] == 'Sent' && element['is_editable'] == 'No') ? 'Submitted' : 'Open';
-    //       element['is_checked'] = element['decline_status'] == '1' ? '' : false;
-    //       element['offer_status'] = element['offer_status'] ? element['offer_status'] : '--';
-    //       element['fitness_status'] = element['fitness_status'] ? element['fitness_status'] : '--';
-    //       element['decline_status'] = element['decline_status'] == '1' ? 'Yes' : 'No';
-    //       element['details'] = count;
-    //     });
-    //     this.rowData = this.userList;
-    //   }, (err) => {
-    //   });
+    getUsersList(stageId: any) {
+      const apiData = {
+        stage_id: stageId
+      };
+     this.gridApi.showLoadingOverlay();
+     this.SelectedCandidatesListSubscription = this.adminService.getCandidatesBasedonStageId(apiData).subscribe((res: any) => {
+        this.userList = res && res.candidate_list && res.candidate_list.length > 0 ? res.candidate_list : [];
+        this.userList.forEach(element => {
+          element['is_checked'] = false;
+          element.log = 'View Log';
+          element["profile_image"] = element["profile_image"] ? element["profile_image"] : 'assets/images/img_avatar2.jpg';
+        });
+        this.rowData = this.userList;
+        this.nextClickEmitter.emit();
+      }, (err) => {
+        this.userList = [];
+        this.rowData = [];
+    });
+  }
+
+  viewLogPopup(apiData) {
+    this.dialog.open(this.viewLog, {
+      width: '600px',
+      height: 'auto',
+      id: 'viewLogPopup',
+      autoFocus: false,
+      closeOnNavigation: true,
+      disableClose: false,
+      panelClass: 'viewLog-wrapper'
+    }).afterOpened().subscribe((res)=> {
+      this.communicationLogs = [];
+      this.getCommunicationLogs(apiData);
+    });
+  }
+
+  getCommunicationLogs(apiData: any) {
+    this.CommunicationLogsListSubscription = this.adminService.getCommunicationLogsbasedOnCandidateId(apiData).subscribe((res: any) => {
+      this.communicationLogs = res && res?.communication_logs && res?.communication_logs.length > 0 ? res?.communication_logs : [];
+    }, (err) => {
+      this.communicationLogs = [];
+  });
+  }
+
+  closeBox(id: any, message) {
+    // this.matDialogRefTerms.
+    let customDialog = this.dialog.getDialogById(id);
+    customDialog.close(message);
   }
 
   ngOnDestroy() {
     this.stagesListSubscription ? this.stagesListSubscription.unsubscribe() : '';
+    this.SelectedCandidatesListSubscription ? this.SelectedCandidatesListSubscription.unsubscribe() : '';
+    this.CommunicationLogsListSubscription ? this.CommunicationLogsListSubscription.unsubscribe() : '';
   }
 
 }

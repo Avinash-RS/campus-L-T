@@ -26,6 +26,15 @@
             padding: 8px;
             padding-left: 80px;
         }
+        .cancel-text-btn {
+          color: #004683;
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: underline;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+        }
         .outline-btn {
             border: 1px solid #004684;
             background: #FFFFFF 0% 0% no-repeat padding-box;

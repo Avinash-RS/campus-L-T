@@ -32,7 +32,12 @@
             </div>
             <div class="template-content">
                 <div class="template-heading">
+                    <div class="heading">
                     {{activeTemplate?.template_name}}
+                    </div>
+                    <div (click)="reset()" class="icon">
+                        <span class="icon-Refresh mr-1"></span> <span>Reset to Default</span>
+                    </div>
                 </div>
                 <div class="editor_wrapper" [ngClass]="editorConfig.editable ? '' : 'blocked'">
                     <div class="subject-wrapper">

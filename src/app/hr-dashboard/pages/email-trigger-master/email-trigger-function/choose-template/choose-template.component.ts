@@ -18,6 +18,9 @@ import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 export class ChooseTemplateComponent implements OnInit, OnChanges, OnDestroy {
   @Input() stageWiseDetails: any;
   @Input() stepperIndex: any;
+  @Input() cancelEditedContent: any;
+  @Input() editEmailContentOption: any;
+  @Output() nextClickEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   editorConfig: AngularEditorConfig = {
       editable: false,
@@ -32,8 +35,8 @@ export class ChooseTemplateComponent implements OnInit, OnChanges, OnDestroy {
       showToolbar: false,
       placeholder: 'Enter text here...',
       defaultParagraphSeparator: '',
-      defaultFontName: '',
-      defaultFontSize: '',
+      defaultFontName: 'Arial',
+      defaultFontSize: '2',
       fonts: [
         {class: 'arial', name: 'Arial'},
         {class: 'times-new-roman', name: 'Times New Roman'},
@@ -63,7 +66,7 @@ export class ChooseTemplateComponent implements OnInit, OnChanges, OnDestroy {
       ['insertImage', 'insertVideo'],
       ['strikeThrough',
       'subscript',
-      'superscript', 'toggleEditorMode']
+      'superscript', 'toggleEditorMode'],
       // ['bold', 'italic'],
       // ['fontSize']
     ]
@@ -113,8 +116,10 @@ toolbarHiddenButtons: [
   // <div style="margin-top: 2em; position: relative; display: inline-block;" contentEditable="false" readonly>Note: This is an auto generated email. Kindly do not reply / respond to this email. For any further queries, please contact assess.support@lntedutech.com.</div>`;
   selectedValue = '';
   selectedSubject = new FormControl({value: 'Custom Subject', disabled: true});
+  savedSubject = new FormControl({value: 'Custom Subject', disabled: true});
   templateList: any = [];
   activeTemplate: any;
+  savedContent: any;
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService
@@ -130,7 +135,25 @@ toolbarHiddenButtons: [
         selectedStageValue: this.stageWiseDetails.selectedValue,
         stagesList: this.stageWiseDetails.stagesList
       };
-      this.getSelectedStageName(stageDetail.selectedStageValue, stageDetail.stagesList);
+      if (!this.htmlContent) {
+        this.getSelectedStageName(stageDetail.selectedStageValue, stageDetail.stagesList);
+      }
+      if (this.cancelEditedContent) {
+        this.htmlContent = this.savedContent;
+        this.selectedSubject.setValue(this.savedSubject.value);
+      } else {
+        this.savedContent = this.htmlContent;
+        this.savedSubject.setValue(this.selectedSubject.value);
+      }
+    }
+    if (this.editEmailContentOption) {
+      this.editorConfig.editable = true;
+      this.editorConfig.showToolbar = true;
+      this.selectedSubject.enable();
+    } else {
+      this.editorConfig.editable = false;
+      this.editorConfig.showToolbar = false;
+      this.selectedSubject.disable();
     }
   }
 
@@ -156,9 +179,20 @@ toolbarHiddenButtons: [
   }
 
   selectedTemplate(template) {
-    this.activeTemplate = template;
+      this.activeTemplate = template;
+      this.selectedSubject.setValue(template?.email_content?.subject_line);
+      this.htmlContent = template?.email_content?.body_content;
+      this.savedContent = this.htmlContent;
+      this.savedSubject.setValue(template?.email_content?.subject_line);
+      this.nextClickEmitter.emit(true);
+  }
+  reset() {
+    let template = this.templateList.find(data => data.template_id == this.activeTemplate.template_id);
     this.selectedSubject.setValue(template?.email_content?.subject_line);
     this.htmlContent = template?.email_content?.body_content;
+    this.savedContent = this.htmlContent;
+    this.savedSubject.setValue(template?.email_content?.subject_line);
+    this.nextClickEmitter.emit(true);
   }
 
   

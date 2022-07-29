@@ -6,7 +6,7 @@
         <div class="search">
             <div class="stage-bar">
                 <label>Stage: </label>
-                <nz-select class="select-group" [(ngModel)]="selectedValue" nzPlaceHolder="Choose" nzShowSearch>
+                <nz-select class="select-group" (ngModelChange)="stageListChange(selectedValue)" [(ngModel)]="selectedValue" nzPlaceHolder="Choose" nzShowSearch>
                     <nz-option-group class="group-selection" *ngFor="let group of stagesList" [nzLabel]="group?.group_name">
                       <nz-option *ngFor="let stage of group?.stages" [nzValue]="stage.stage_id" [nzLabel]="stage.stage_name"></nz-option>
                     </nz-option-group>
@@ -21,10 +21,58 @@
     </div>
 
     <div class="aggrid-wrapper">
-        <ag-grid-angular [rowStyle]="rowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [tooltipShowDelay]="tooltipShowDelay"
+        <ag-grid-angular [rowStyle]="rowStyle" style="width: 100%; height: calc(100vh - 212px); margin:auto !important;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [sideBar]="sideBar" [tooltipShowDelay]="tooltipShowDelay"
         [pagination]="true" [suppressRowClickSelection]="true" [paginationPageSize]="paginationPageSize" [rowSelection]="'multiple'" [isRowSelectable]="isRowSelectable" [cacheBlockSize]="cacheBlockSize" (gridReady)="onGridReady($event)" [animateRows]="true"
         (sortChanged)="sortevent($event)" (cellClicked)="onCellClicked($event)" (filterModified)="getModel($event)" headerHeight="50" [statusBar]="statusBar" [animateRows]="true">
     </ag-grid-angular>
     </div>
 
 </div>
+
+
+<ng-template #viewLog>
+    <div class="viewLog">
+        <div class="heading">
+            Communication Log
+        </div>
+        <div class="candidate-details">
+            <div class="avatar">
+                <img [src]="selectedCandidatePopUp?.profile_image" alt="" srcset="">
+            </div>
+            <div class="details">
+                <div class="name">{{selectedCandidatePopUp?.user_name}}</div>
+                <div class="email">{{selectedCandidatePopUp?.email}}</div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="width-20">Date and Time</th>
+                    <th class="width-40">Email Template</th>
+                    <th class="width-20">Triggered By</th>
+                    <th class="width-20">Email Status</th>
+                </tr>
+            </thead>
+            <tbody class="tbodyFixed">
+                <ng-container *ngIf="communicationLogs && communicationLogs.length > 0 else noLog">
+                <tr *ngFor="let log of communicationLogs; let i = index">
+                    <td class="width-20"><div>{{log?.triggered_date | date: "dd MMM yyyy"}}</div> <div>{{log?.triggered_date | date: "HH:mm a"}}</div></td>
+                    <td class="width-40">{{log?.template_name}}</td>
+                    <td class="width-20">{{log?.triggered_by}}</td>
+                    <td class="width-20">{{log?.email_status}}</td>
+                </tr>
+                </ng-container>
+                <ng-template #noLog>
+                    <tr>
+                        <td style="text-align: center !important;" colspan="4">No Logs Available</td>
+                    </tr>    
+                </ng-template>
+            </tbody>
+        </table>
+        <div class="confirmation-button-wrapper">
+            <button (click)="closeBox('viewLogPopup', false)" class="reset-button" mat-raised-button type="button">
+                CLOSE
+            </button>
+        </div>
+    </div>
+</ng-template>

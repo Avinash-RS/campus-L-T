@@ -1,9 +1,14 @@
-import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef, OnDestroy } from '@angular/core';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatStepper, MatDialog } from '@angular/material';
 import { SelectedCandidateComponent } from './selected-candidate/selected-candidate.component';
 import { ChooseTemplateComponent } from './choose-template/choose-template.component';
 import { AppConfigService } from 'src/app/config/app-config.service';
+import { Subscription } from 'rxjs';
+import { AdminServiceService } from 'src/app/services/admin-service.service';
+import { finalize } from 'rxjs/operators';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { CONSTANT } from 'src/app/constants/app-constants.service';
 
 @Component({
   selector: 'app-email-trigger-function',
@@ -13,7 +18,7 @@ import { AppConfigService } from 'src/app/config/app-config.service';
     provide: MAT_STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }
   }]
 })
-export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit {
+export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
   @ViewChild('emailTriggerConfirmation', { static: false }) emailTriggerConfirmation: TemplateRef<any>;
   @ViewChild('emailContentConfirmation', { static: false }) emailContentConfirmation: TemplateRef<any>;
@@ -24,22 +29,48 @@ export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit {
   loadSelectedCandidatesTrue: boolean;
   templateName: any;
   selectedCandidates: any = [];
+  editEmailContentOption = false;
+  cancelEditedContent = false;
+  triggerEmailtoSelectedCandidatesSubscription: Subscription;
+  joblist_id: any;
+  refreshSubscription: Subscription;
   constructor(
     private dialog: MatDialog,
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
+    private adminService: AdminServiceService,
+    private sharedService: SharedServiceService
   ) {
 
   }
 
   ngOnInit() {
-
+    this.refreshOndriveChangeRXJS();
   }
 
   ngAfterViewInit() {
-    
+      // Hack: Scrolls to top of Page after page view initialized
+      let top = document.getElementById('top');
+      if (top !== null) {
+        top.scrollIntoView();
+        top = null;
+      }    
+  }
+
+  refreshOndriveChangeRXJS() {
+    this.refreshSubscription = this.sharedService.screenRefreshOnDriveChange
+    .pipe(
+    finalize(()=> {
+      }))
+      .subscribe((data: any)=> {
+      if (data.includes(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_TRIGGER_FUNCTION)) {
+        this.gotoStepBasedOnIndex(0);
+      }
+    });
   }
 
   onStepChange() {
+    this.editEmailContentOption = false;
+    this.cancelEditedContent = false;
     // console.log(this.stepper);
   }
 
@@ -93,10 +124,32 @@ export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit {
       panelClass: 'form-confirmation-pop-up'
     }).beforeClosed().subscribe((res)=> {
       if (res) {
-        this.nextStage();
+        this.triggerEmailtoSelectedCandidates();
       }
     });
+  }
 
+  triggerEmailtoSelectedCandidates() {
+    let selectedCandidates = this.selectedCandidatesComponent.gridApi.getSelectedNodes() ? this.selectedCandidatesComponent.gridApi.getSelectedNodes() : [];
+    let candidateIds = selectedCandidates.map((ele: any) => {
+      return ele?.data?.user_id;
+    });
+    let apiData = {
+      "candidate_ids": candidateIds,
+      "stage_id": this.selectedCandidatesComponent?.selectedValue,
+      "template_id" : this.ChooseTemplateComponent?.activeTemplate?.template_id,
+      "subject_line" : this.ChooseTemplateComponent?.selectedSubject?.value,
+      "body_content" : this.ChooseTemplateComponent?.htmlContent
+    }
+    this.triggerEmailtoSelectedCandidatesSubscription = this.adminService.triggerEmailtoSelectedCandidates(apiData).subscribe((res: any)=> {
+      console.log('res', res);
+      if (res?.joblist_id) {
+        this.joblist_id = res?.joblist_id;
+      }
+      this.nextStage();
+    }, (err) => {
+
+    });
   }
 
   emailContentConfirmationPopup() {
@@ -124,6 +177,15 @@ export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit {
 
   emailTriggerConfirmationOk() {
     this.nextStage();
+  }
+
+  editContent() {
+    this.editEmailContentOption = true;
+  }
+
+  ngOnDestroy() {
+    this.triggerEmailtoSelectedCandidatesSubscription ? this.triggerEmailtoSelectedCandidatesSubscription.unsubscribe() : '';
+    this.refreshSubscription ? this.refreshSubscription.unsubscribe() : '';
   }
 
 }

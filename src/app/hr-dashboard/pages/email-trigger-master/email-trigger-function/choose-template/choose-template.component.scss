@@ -136,12 +136,33 @@
                 }
 
                 .template-heading {
-                    display: block;
-                    position: relative;
-                    color: #262626;
-                    font-size: 18px;
-                    font-weight: 500;
-                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .heading {
+                        display: block;
+                        position: relative;
+                        color: #262626;
+                        font-size: 18px;
+                        font-weight: 500;
+                        margin-bottom: 8px;
+                    }
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        gap: 2px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        padding-right: 2px;
+                        span:nth-of-type(1) {
+                            color: #004683;
+                            font-weight: 600;
+                        }
+                        span:nth-of-type(2) {
+                            color: #004683;
+                            font-size: 14px;
+                        }
+                    }
                 }
                 .editor_wrapper {
                     display: flex;
@@ -192,10 +213,10 @@
     color: #6B6B6B;
 }
 
-:host ::ng-deep #backgroundColorPicker- {
+:host ::ng-deep #backgroundColorPicker-editor1 {
     height: 28px;
 }
-:host ::ng-deep #foregroundColorPicker- {
+:host ::ng-deep #foregroundColorPicker-editor1 {
     height: 28px;
 }
 :host ::ng-deep .angular-editor-toolbar {
@@ -205,4 +226,7 @@
 :host ::ng-deep .angular-editor-textarea {
     border: none !important;
     outline: none;
+}
+:host ::ng-deep .select-font {
+    display: none !important;
 }

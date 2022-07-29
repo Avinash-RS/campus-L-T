@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { AppConfigService } from 'src/app/config/app-config.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { CommonKycProfileViewComponent } from 'src/app/shared/common-kyc-profile-view/common-kyc-profile-view.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-email-trigger-preview',
@@ -61,7 +63,16 @@ export class EmailTriggerPreviewComponent implements OnInit, OnChanges {
     // ['fontSize']
   ]
 };
-
+  sideBar = {
+    toolPanels: [ 
+    {id: 'filters',
+    labelDefault: 'Filters',
+    labelKey: 'filters',
+    iconKey: 'filter',
+    toolPanel: 'agFiltersToolPanel',
+    }
+    ], defaultToolPanel: ''
+  };
   paginationPageSize = 500;
   cacheBlockSize: any = 500;
   gridApi: any;
@@ -80,11 +91,13 @@ export class EmailTriggerPreviewComponent implements OnInit, OnChanges {
   activeTemplate: any;
   constructor(
     private adminService: AdminServiceService,
-    private appConfig: AppConfigService
+    private appConfig: AppConfigService,
+    private dialog: MatDialog
   ) { 
   }
 
   ngOnInit() {
+    this.appConfig.agGridWithAllFuncWithSideBar();
   }
 
   ngOnChanges() {
@@ -124,6 +137,33 @@ export class EmailTriggerPreviewComponent implements OnInit, OnChanges {
   }
 
   onCellClicked(event) {
+    if (event.colDef.field === 'user_name') {
+      const data = {
+        candidate_user_id: event['data'] && event['data']['user_id'] ? event['data']['user_id'] : '',
+        candidateName: event['data'] && event['data']['user_name'] ? event['data']['user_name'] : '',
+      };
+      this.openDialog5(CommonKycProfileViewComponent, data);
+    }
+  }
+    // Open dailog
+    openDialog5(component, data) {
+      let dialogDetails: any;
+
+      /**
+       * Dialog modal window
+       */
+      // tslint:disable-next-line: one-variable-per-declaration
+      const dialogRef = this.dialog.open(component, {
+        width: 'auto',
+        height: 'auto',
+        autoFocus: false,
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
   }
 
   getModel(e) {
@@ -157,17 +197,17 @@ export class EmailTriggerPreviewComponent implements OnInit, OnChanges {
         }
       },
       {
-        headerName: 'Name', field: 'candidate_name',
+        headerName: 'Name', field: 'user_name',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'candidate_name',
+        tooltipField: 'user_name',
         getQuickFilterText: (params) => {
           return params.value;
         },
         cellStyle: { color: '#1b4e9b' },
         cellRenderer: (params) => {
-          return `<span style="color: #1b4e9b; cursor: pointer">${params['data']['candidate_name']} </span>`;
+          return `<span style="cursor: pointer"><span class="profileAvatar"><img src="${params["data"]["profile_image"]}"></span> <span class="ml-1">${params["data"]["user_name"]}</span> </span>`;
         }
       },
       {
@@ -181,23 +221,29 @@ export class EmailTriggerPreviewComponent implements OnInit, OnChanges {
         }
       },
       {
-        headerName: 'Phone', field: 'mobile_number',
+        headerName: 'Phone', field: 'phone',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'mobile_number',
+        tooltipField: 'phone',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return params['data']['phone'] ? `${params['data']['phone']}` : '-';
         }
       },
       {
-        headerName: 'College', field: 'institute',
+        headerName: 'College', field: 'college',
         filter: 'agTextColumnFilter',
         minWidth: 140,
         sortable: true,
-        tooltipField: 'institute',
+        tooltipField: 'college',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return params['data']['college'] ? `${params['data']['college']}` : '-';
         }
       },
       {
@@ -208,6 +254,9 @@ export class EmailTriggerPreviewComponent implements OnInit, OnChanges {
         tooltipField: 'discipline',
         getQuickFilterText: (params) => {
           return params.value;
+        },
+        cellRenderer: (params) => {
+          return params['data']['discipline'] ? `${params['data']['discipline']}` : '-';
         }
       },
     ];
