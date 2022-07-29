@@ -33,7 +33,7 @@
                 <div class="route">
                     <app-selected-candidate (nextClickEmitter)="loadSelectedCandidatesTrue = false" [stepperIndex]="stepper.selectedIndex" [loadSelectedCandidatesTrue]="loadSelectedCandidatesTrue"></app-selected-candidate>
                 </div>
-                <div class="footer">
+                <div class="footer-emailTrigger">
                     <ng-container *ngTemplateOutlet="first"></ng-container>
                 </div>      
                 <ng-template #first>
@@ -52,7 +52,7 @@
                 <div class="route">
                     <app-choose-template (nextClickEmitter)="editEmailContentOption = false; cancelEditedContent = false" [cancelEditedContent]="cancelEditedContent" [editEmailContentOption]="editEmailContentOption" [stepperIndex]="stepper.selectedIndex" [stageWiseDetails]="selectedCandidatesComponent"></app-choose-template>
                 </div>
-                <div class="footer">
+                <div class="footer-emailTrigger">
                     <ng-container *ngTemplateOutlet="second"></ng-container>
                 </div>
                 <ng-template #second>
@@ -92,7 +92,7 @@
                 <div class="route">
                     <app-email-trigger-preview [stepperIndex]="stepper.selectedIndex" [templateComponent]="ChooseTemplateComponent" [stageWiseDetails]="selectedCandidatesComponent"></app-email-trigger-preview>
                 </div>
-                <div class="footer">
+                <div class="footer-emailTrigger">
                     <ng-container *ngTemplateOutlet="third"></ng-container>
                 </div>
                 <ng-template #third>

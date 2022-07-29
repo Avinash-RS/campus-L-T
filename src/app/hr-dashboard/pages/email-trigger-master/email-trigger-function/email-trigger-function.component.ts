@@ -142,11 +142,13 @@ export class EmailTriggerFunctionComponent implements OnInit, AfterViewInit, OnD
       "body_content" : this.ChooseTemplateComponent?.htmlContent
     }
     this.triggerEmailtoSelectedCandidatesSubscription = this.adminService.triggerEmailtoSelectedCandidates(apiData).subscribe((res: any)=> {
-      console.log('res', res);
       if (res?.joblist_id) {
-        this.joblist_id = res?.joblist_id;
+        this.joblist_id = {
+          joblist_id: res?.joblist_id,
+          batch_job_id: res?.batch_job_id
+        };
+        this.nextStage();
       }
-      this.nextStage();
     }, (err) => {
 
     });

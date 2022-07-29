@@ -1,30 +1,22 @@
 <div class="grid-wrapper">
     <div class="heading-wrapper">
         <div class="heading">
-            <div class="totalSummary">
-                <div class="subTitle">Total Email Count</div>
-                <div class="emailCount">10000</div>
+            <ng-container *ngIf="candidateStatus && candidateStatus.length > 0 else noStatus">
+            <div *ngFor="let status of candidateStatus;" class="totalSummary">
+                <div class="subTitle">{{status?.label}}</div>
+                <div class="emailCount" [ngStyle]="{color: status?.color_code ? status?.color_code : '#262626'}">{{status?.count}}</div>
             </div>
-            <div class="totalSummary">
-                <div class="subTitle">Sent</div>
-                <div class="SentCount">3000</div>
-            </div>
-            <div class="totalSummary">
-                <div class="subTitle">Delivered</div>
-                <div class="DeliveredCount">6500</div>
-            </div>
-            <div class="totalSummary">
-                <div class="subTitle">Queued</div>
-                <div class="QueuedCount">300</div>
-            </div>
-            <div class="totalSummary">
-                <div class="subTitle">Bounced</div>
-                <div class="BouncedCount">200</div>
-            </div>
+            </ng-container>
+            <ng-template #noStatus>
+                <div *ngFor="" class="totalSummary">
+                    <div class="subTitle">Total Email Count</div>
+                    <div class="emailCount" style="color: #262626;">0</div>
+                </div>    
+            </ng-template>
         </div>
         <div class="search">
             <div class="batch-id">
-                Batch Job Details - {{selectedJobListId}}
+                Batch Job Details - {{batchJob}}
             </div>
             <div class="batch-name">
                 Email Template - {{template_name}}

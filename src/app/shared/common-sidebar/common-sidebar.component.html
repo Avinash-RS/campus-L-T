@@ -78,7 +78,7 @@
         </ng-container>
       </ul>
     </mat-drawer>
-    <mat-drawer-content class="main-container content">
+    <mat-drawer-content class="main-container content" [ngClass]="sidebarOpen ? 'sidebarOpened0' : 'sidebarOpened1'">
       <mat-drawer class="side-iconmenu" [class.nil]="!sidebarOpen" mode="side" [opened]="sidebarOpen">
         <div class="sidemenu">
           <ul>

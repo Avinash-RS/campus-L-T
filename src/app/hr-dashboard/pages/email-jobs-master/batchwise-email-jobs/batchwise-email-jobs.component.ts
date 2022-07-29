@@ -43,6 +43,8 @@ export class BatchwiseEmailJobsComponent implements OnInit, AfterViewInit, OnDes
   selectedJobListId: any;
   template_name: any;
   refreshSubscription: Subscription;
+  candidateStatus: any;
+  batchJob: any;
   constructor(
     private adminService: AdminServiceService,
     private appConfig: AppConfigService,
@@ -91,12 +93,15 @@ export class BatchwiseEmailJobsComponent implements OnInit, AfterViewInit, OnDes
         return {
           params: results && results[0] ? results[0]?.id : null,
           queryParams: results && results[1] ? results[1]?.name : null,
+          batchJob: results && results[1] ? results[1]?.batchId : null,
         };
       })
     ).subscribe((res)=> {
+      console.log('para', res);
     if (res?.params) {
         this.selectedJobListId = res?.params;
         this.template_name = res?.queryParams;
+        this.batchJob = res?.batchJob;
         this.getUsersList(this.selectedJobListId);
       } else {
         this.appConfig.warning('Joblist Id Missing');
@@ -268,7 +273,8 @@ export class BatchwiseEmailJobsComponent implements OnInit, AfterViewInit, OnDes
         joblist_id: jobListId
       } 
       this.batchemailJobListSubscription = this.adminService.emailJobListbyId(apiData).subscribe((res: any)=> {
-          this.userList = res && res.length > 0 ? res : [];
+          this.userList = res && res?.candidate_details && res?.candidate_details.length > 0 ? res?.candidate_details : [];
+          this.candidateStatus = res && res?.status_counts && res?.status_counts.length > 0 ? res?.status_counts : [];
           this.userList.forEach(element => {
             element["profile_image"] = element["profile_image"] ? element["profile_image"] : 'assets/images/img_avatar2.jpg';
           });  
@@ -276,6 +282,7 @@ export class BatchwiseEmailJobsComponent implements OnInit, AfterViewInit, OnDes
       }, (err)=> {
         this.rowData = [];
         this.userList = [];
+        this.candidateStatus = [];
       })
   }
 

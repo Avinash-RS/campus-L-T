@@ -96,7 +96,7 @@ export class EmailJobsComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
   onCellClicked(event) {
     if(event && event.colDef && event.colDef.headerName == 'Details'){
-      this.appConfig.routeNavigationWithQueryParamAndParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH, event.data.joblist_id, {name: event.data.template_name});
+      this.appConfig.routeNavigationWithQueryParamAndParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH, event.data.joblist_id, {name: event.data.template_name, batchId: event.data.batch_job_id});
       }
       if(event && event.colDef && event.colDef.headerName == 'View Template'){
         this.selectedTemplate = {

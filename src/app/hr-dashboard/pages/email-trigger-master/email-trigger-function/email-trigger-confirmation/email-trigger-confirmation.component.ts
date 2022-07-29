@@ -39,7 +39,7 @@ export class EmailTriggerConfirmationComponent implements OnInit, OnChanges {
   }
 
   jobstatus(joblist_id) {
-    this.appConfig.routeNavigationWithQueryParamAndParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH, joblist_id, {name: this.templateComponent?.activeTemplate?.template_name});
+    this.appConfig.routeNavigationWithQueryParamAndParam(CONSTANT.ENDPOINTS.HR_DASHBOARD.HR_EMAIL_JOBS_EMAIL_BATCH, joblist_id?.joblist_id, {name: this.templateComponent?.activeTemplate?.template_name, batchId: joblist_id?.batch_job_id});
   }
 
 }
