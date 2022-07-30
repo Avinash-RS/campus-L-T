@@ -99,6 +99,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           this.appConfig.clearLocalDataOne("profileData");
           //  ..... // here your code when page is refresh
         }
+        console.log('eve', event);
+        this.getScreenSize(event.url.includes('/candidate/'));
+        this.checkIE();    
       });
   }
 
@@ -129,45 +132,45 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  // @HostListener("window:resize", ["$event"])
-  // getScreenSize(event?) {
-  //   if (this.appConfig.getLocalData("roles")) {
-  //     if (environment.production) {
-  //       this.screenHeight = window.innerHeight;
-  //       this.screenWidth = window.innerWidth;
-  //       if (this.screenWidth < 1000 || this.screenHeight < 400) {
-  //         // this.show = true;
-  //         const data = {
-  //           data: true,
-  //           type: "resize",
-  //         };
-  //         if (!this.screenBoolean) {
-  //           this.openDialog(ScreenresolutionBoxComponent, data);
-  //         }
-  //       } else {
-  //         if (this.screenBoolean) {
-  //           this.matDialog.closeAll();
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-  // @HostListener("window:mousemove", ["$event"])
-  // checkIE(event?) {
-  //   const isIEOrEdge = /msie\s|trident\//i.test(window.navigator.userAgent);
-  //   if (isIEOrEdge) {
-  //     this.isIE = true;
-  //     const data = {
-  //       data: true,
-  //       type: "browser",
-  //     };
-  //     if (!this.screenBoolean) {
-  //       this.openDialog(ScreenresolutionBoxComponent, data);
-  //     }
-  //   } else {
-  //   }
-  // }
+  @HostListener("window:resize", ["$event"])
+  getScreenSize(event?) {
+    if (this.appConfig.getLocalData("roles")) {
+      if ((this.appConfig.getLocalData("roles") != 'candidate' || (this.appConfig.getLocalData("roles") == 'candidate' && event))) {
+        this.screenHeight = window.innerHeight;
+        this.screenWidth = window.innerWidth;
+        if (this.screenWidth < 1000 || this.screenHeight < 400) {
+          // this.show = true;
+          const data = {
+            data: true,
+            type: "resize",
+          };
+          if (!this.screenBoolean) {
+            this.openDialog(ScreenresolutionBoxComponent, data);
+          }
+        } else {
+          if (this.screenBoolean) {
+            this.matDialog.closeAll();
+          }
+        }
+      }
+    }
+  }
+  
+  @HostListener("window:mousemove", ["$event"])
+  checkIE(event?) {
+    const isIEOrEdge = /msie\s|trident\//i.test(window.navigator.userAgent);
+    if (isIEOrEdge) {
+      this.isIE = true;
+      const data = {
+        data: true,
+        type: "browser",
+      };
+      if (!this.screenBoolean) {
+        this.openDialog(ScreenresolutionBoxComponent, data);
+      }
+    } else {
+    }
+  }
 
   openDialog(component, data) {
     let dialogDetails: any;

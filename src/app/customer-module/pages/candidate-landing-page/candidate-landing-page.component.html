@@ -14,7 +14,7 @@
       <div class="card" *ngFor="let customer of customerInfo; let i = index">
         <div class="top-wrapper">
         <div class="logo-wrapper">
-          <div class="logo">
+          <div [matTooltip]="customer.customer_name" matTooltipPosition="above" class="logo">
             <img
               [src]="customer.customer_logo"
               [alt]="customer.customer_name"
@@ -24,7 +24,7 @@
         </div>
 
         <div *ngIf="customer.driveDetails && customer.driveDetails.candidateStatus" class="customer-section">
-          <div class="title">{{customer.customer_name}}</div>
+          <div class="title">{{customer?.driveDetails?.drive_name ? customer?.driveDetails?.drive_name : '-'}}</div>
           <div class="candidate-status-wrapper">
             <div class="inline-flex-wrapper">
             <div class="customer-details">

@@ -57,12 +57,15 @@
           flex-direction: column;
           position: relative;
           min-height: 150px;
+          max-width: 280px;
           gap: 1em;
           @include mobile() {
             min-width: 240px;
+            max-width: 280px;
           }
           @include sm() {
             min-width: 280px;
+            max-width: 300px;
           }
           .top-wrapper {
             display: flex;
