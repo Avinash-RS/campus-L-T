@@ -99,7 +99,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           this.appConfig.clearLocalDataOne("profileData");
           //  ..... // here your code when page is refresh
         }
-        console.log('eve', event);
         this.getScreenSize(event.url.includes('/candidate/'));
         this.checkIE();    
       });

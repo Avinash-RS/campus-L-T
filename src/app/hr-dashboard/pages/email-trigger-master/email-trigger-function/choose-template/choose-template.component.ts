@@ -34,7 +34,7 @@ export class ChooseTemplateComponent implements OnInit, OnChanges, OnDestroy {
       enableToolbar: true,
       showToolbar: false,
       placeholder: 'Enter text here...',
-      defaultParagraphSeparator: '',
+      defaultParagraphSeparator: 'p',
       defaultFontName: 'Arial',
       defaultFontSize: '2',
       fonts: [
@@ -60,7 +60,7 @@ export class ChooseTemplateComponent implements OnInit, OnChanges, OnDestroy {
     // ],
     uploadUrl: 'v1/image',
     uploadWithCredentials: false,
-    sanitize: true,
+    sanitize: false,
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
       ['insertImage', 'insertVideo'],
