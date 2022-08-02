@@ -230,3 +230,7 @@
 :host ::ng-deep .select-font {
     display: none !important;
 }
+
+:host ::ng-deep .angular-editor-textarea {
+    max-width: 900px;
+}

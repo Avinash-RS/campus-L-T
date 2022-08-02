@@ -18,8 +18,8 @@ $lxp-theme: mat-light-theme($lxp-theme-primary, $lxp-theme-accent, $lxp-theme-wa
 @import "./app/themes/themes.scss";
 @import "fonts";
 * {
-  margin: 0;
-  padding: 0;
+  // margin: 0;
+  // padding: 0;
   box-sizing: border-box;
 }
 
