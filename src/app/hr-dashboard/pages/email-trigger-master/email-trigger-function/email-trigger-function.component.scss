@@ -136,8 +136,8 @@
 
 :host::ng-deep .mat-horizontal-content-container {
     padding: 0 4px;
-    max-height: 408px;
-    min-height: 408px;
+    max-height: calc(100vh - 280px);
+    height: 100vh;
     overflow: auto;
     margin-top: 1em;
 }
