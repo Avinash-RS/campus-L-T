@@ -7,6 +7,7 @@ import { AdminServiceService } from 'src/app/services/admin-service.service';
 import { DatePipe } from '@angular/common';
 import { finalize } from 'rxjs/operators';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-email-jobs',
@@ -44,7 +45,8 @@ export class EmailJobsComponent implements OnInit, OnChanges, AfterViewInit, OnD
     private appConfig: AppConfigService,
     private matDialog: MatDialog,
     private datePipe: DatePipe,
-    private sharedService: SharedServiceService
+    private sharedService: SharedServiceService,
+    public sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
