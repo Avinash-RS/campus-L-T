@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CONSTANT } from 'src/app/constants/app-constants.service';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { AgProgressBarComponent } from './ag-progress-bar/ag-progress-bar.component';
 
 @Component({
   selector: 'app-assigned-details',
@@ -78,27 +79,6 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    // Sub-Navigation menus. This will be retrieved in Admin master component
-    const subWrapperMenus = [
-      {
-        icon: '002-cv.svg',
-        name: 'Panel Assignment',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNMENT
-      },
-      {
-        icon: '002-cv.svg',
-        name: 'Assigned Details',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_ASSIGNED
-      },
-      {
-        icon: '002-group-1.svg',
-        name: 'Bulk Assign',
-        router: CONSTANT.ENDPOINTS.HR_DASHBOARD.NEW_INTERVIEW_PANEL_RESULTS_UPLOAD
-      }
-
-      ];
-      this.sharedService.subMenuSubject.next(subWrapperMenus);
-
     this.editRouteParamGetter();
    }
 
@@ -283,6 +263,8 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
           return params.value;
         }
       },
+    ];
+    let LTTSandADANI:any =  [
       {
         headerName: 'Assigned Count', field: 'panel_count',
         filter: 'agNumberColumnFilter',
@@ -314,38 +296,14 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
         getQuickFilterText: (params) => {
           return params.value;
         }
-      },
-      // {
-      //   headerName: 'Documents submitted', field: 'document_submit',
-      //   filter: true,
-      //   floatingFilterComponentParams: { suppressFilterButton: true },
-      //   minWidth: 140,
-      //   sortable: true,
-      //   tooltipField: 'document_submit',
-      //   getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
-      // {
-      //   headerName: 'Status', field: 'total_count',
-      //   filter: true,
-      //   floatingFilterComponentParams: { suppressFilterButton: true },
-      //   sortable: true,
-      //   valueGetter: (params) => {
-      //     const total = +params.data.total_count;
-      //     // console.log(params, total, 'vg');
-      //     if (total === +params.data.updated_count + +params.data.success_count) {
-      //       return 'All success';
-      //     } else if (total === +params.data.duplicate_count + +params.data.existing_count + +params.data.failure_count) {
-      //       return 'All failure';
-      //     } else { return 'Partial success'; }
-      //   },
-      //   getQuickFilterText: (params) => {
-      //     return params.value;
-      //   }
-      // },
+      }
     ];
-    if( this.customerCode == '#ADANI'){
+
+    if(this.customerCode == '#LTTS'){
+      colVal = colVal.concat(LTTSandADANI);
+    }
+    if(this.customerCode == '#ADANI'){
+      colVal = colVal.concat(LTTSandADANI);
       let adanistatus:any =  {
         headerName: 'Interview Status', field: 'interview_status',
         filter: 'agSetColumnFilter',
@@ -375,7 +333,65 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
       }
       colVal.splice(7, 0, adanistatus);
     }
-    return colVal
+    if(this.customerCode != '#LTTS' && this.customerCode != '#ADANI') {
+      let GeneralCol = [
+        {
+          headerName: 'Additional Info', field: 'panel_assigned',
+          filter: 'agSetColumnFilter',
+          filterParams: {
+            applyMiniFilterWhileTyping: true
+          },
+          minWidth: 140,
+          sortable: true,
+          cellStyle: {'text-align': 'center'},
+          tooltipField: 'panel_assigned',
+          valueGetter: (params) => {
+            return params && params.data &&  params.data.panel_assigned ? params.data.panel_assigned : 'Unassigned'
+          },
+          getQuickFilterText: (params) => {
+            return params.value;
+          }
+        },
+        {
+          headerName: 'Feedback Received', field: 'received_count',
+          filter: 'agNumberColumnFilter',
+          filterParams: {
+            applyMiniFilterWhileTyping: true
+          },
+          minWidth: 140,
+          sortable: true,
+          tooltipField: 'received_count',
+          // getQuickFilterText: (params) => {
+          //   return params.value;
+          // },
+          cellRendererFramework: AgProgressBarComponent
+        },    
+        {
+          headerName: 'Interview Status', field: 'interview_status',
+          filter: 'agSetColumnFilter',
+          minWidth: 140,
+          sortable: false,
+          tooltipField: 'interview_status',
+          getQuickFilterText: (params) => {
+            return params.value;
+          },
+          cellClass: 'ag-button-cellClass',
+          cellRenderer: (params:any) => {
+            if (params.data && (params.data.interview_status) =="Selected") {
+              return `<button class="ag-button-custom completed-color common-button-height-28">${params.data.interview_status}</button>`;
+            }
+            if(params.data.interview_status == "" || params.data.interview_status == null) {
+              return `<button class="ag-button-custom yet-to-start-color common-button-height-28">Yet to evaluate</button>`;
+            }
+            if(params.data.interview_status == "Not Selected") {
+              return `<button class="ag-button-custom rejected-color common-button-height-28">${params.data.interview_status}</button>`;
+            }
+          }
+        }  
+      ];
+      colVal = colVal.concat(GeneralCol);
+    }
+    return colVal;
   }
 
   WithVideoSchedulingColumns() {
@@ -500,6 +516,20 @@ export class AssignedDetailsComponent implements OnInit, AfterViewInit, OnDestro
 
       if(!this.pannel) { return } else {this.pannel.close()}
       this.rowData = data ? data : [];
+      this.rowData = [
+        {
+          panel_assigned: '1',
+          interview_status: 'Selected',
+          received_count: 1,
+          total_count: 5
+        },
+        {
+          panel_assigned: '1',
+          interview_status: 'Selected',
+          received_count: 0,
+          total_count: 0
+        }
+      ]
       if (this.appConfig.getSelectedDrivePermissions().video_assessment) {
       this.rowData.forEach(element => {
         if (element) {
